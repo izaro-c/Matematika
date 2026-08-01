@@ -7,16 +7,21 @@ import type {
   DiagramPoint,
   DiagramSceneItem,
   DiagramSceneState,
+  DiagramGroup,
+  DiagramLayer,
+  DiagramSlider,
   DiagramSpecV2,
+  DiagramStep,
   DiagramStepObjectState,
   DiagramStepOverlay,
   DiagramVisualStyle,
+  DiagramViewport,
 } from './types';
 import type { DiagramSpecV3 } from './v3';
 import { evaluateMathExpression, extractMathExpressionIdentifiers } from './expressions';
 import { interpolateDiagramTemplate } from './infoPanels';
 import { legacyElementCapabilities } from './semantics';
-import { projectDiagramSpecV3ToV2 } from './v3Compatibility';
+import { toWorkingSceneV2 } from './v3Compatibility';
 import {
   clampLinearParameterToHalfPlane,
   computeHalfPlaneSide,
@@ -30,6 +35,20 @@ import {
   clampCurveCoordinatesForBounds,
   sampleCurveFromSpec,
 } from './curveGeometry';
+
+/** Campos de escena V2 legibles (V2 o modelo de editor materializado). */
+export type DiagramSceneBag = {
+  points: DiagramPoint[];
+  elements: DiagramElement[];
+  sliders: DiagramSlider[];
+  constraints?: DiagramConstraint[];
+  dependencies?: DiagramDependency[];
+  viewport: DiagramViewport;
+  layers: DiagramLayer[];
+  groups: DiagramGroup[];
+  showLabels?: boolean;
+  steps: DiagramStep[];
+};
 
 export interface DiagramDependencyEdge {
   sourceId: string;
@@ -93,7 +112,7 @@ function expressionUsesSource(source: string | undefined, sourceId: string): boo
  * visibleWhen y las reglas de texto no introducen ciclos geométricos.
  */
 export function dependencyDeterminesConstructionOrder(
-  spec: DiagramSpecV2,
+  spec: DiagramSceneBag,
   dependency: DiagramDependency,
 ): boolean {
   if (dependency.relation === 'construction') return true;
@@ -139,7 +158,7 @@ export function evaluateStepOverlayContent(overlay: DiagramStepOverlay, variable
   }
 }
 
-function resolveExpressionPoint(spec: DiagramSpecV2, point: DiagramPoint, visiting: Set<string>): Coordinates {
+function resolveExpressionPoint(spec: DiagramSceneBag, point: DiagramPoint, visiting: Set<string>): Coordinates {
   const variables: Record<string, number> = {};
   for (const dependencyId of point.dependencies ?? []) {
     const coordinates = resolvePointCoordinates(spec, dependencyId, new Set(visiting));
@@ -160,7 +179,7 @@ function resolveExpressionPoint(spec: DiagramSpecV2, point: DiagramPoint, visiti
   }
 }
 
-function resolveConstructedPoint(spec: DiagramSpecV2, derived: DiagramElement, visiting: Set<string>): Coordinates | undefined {
+function resolveConstructedPoint(spec: DiagramSceneBag, derived: DiagramElement, visiting: Set<string>): Coordinates | undefined {
   if (derived.kind === 'intersection') {
     const first = linearSupportCarrier(spec, derived.refs[0], visiting);
     const second = linearSupportCarrier(spec, derived.refs[1], visiting);
@@ -196,7 +215,7 @@ function resolveConstructedPoint(spec: DiagramSpecV2, derived: DiagramElement, v
 }
 
 function resolveReflectedPoint(
-  spec: DiagramSpecV2,
+  spec: DiagramSceneBag,
   direct: DiagramPoint,
   constraint: DiagramConstraint,
   visiting: Set<string>,
@@ -238,7 +257,7 @@ function resolveReflectedPoint(
   return undefined;
 }
 
-export function resolvePointCoordinates(spec: DiagramSpecV2, id: string, visiting = new Set<string>()): Coordinates | undefined {
+export function resolvePointCoordinates(spec: DiagramSceneBag, id: string, visiting = new Set<string>()): Coordinates | undefined {
   const direct = spec.points.find(point => point.id === id);
   if (visiting.has(id)) return undefined;
   visiting.add(id);
@@ -266,7 +285,7 @@ export function resolvePointCoordinates(spec: DiagramSpecV2, id: string, visitin
 }
 
 function linearSupportCarrier(
-  spec: DiagramSpecV2,
+  spec: DiagramSceneBag,
   id: string,
   visiting: Set<string>,
 ): { a: { x: number; y: number }; b: { x: number; y: number } } | undefined {
@@ -303,7 +322,7 @@ function linearSupportCarrier(
   return undefined;
 }
 
-export function expressionVariables(spec: DiagramSpecV2): Record<string, number> {
+export function expressionVariables(spec: DiagramSceneBag): Record<string, number> {
   const variables: Record<string, number> = {};
   spec.points.forEach(point => {
     const coordinates = resolvePointCoordinates(spec, point.id);
@@ -368,11 +387,11 @@ export function angleMeasureRadians(
   return oriented < 0 ? oriented + Math.PI * 2 : oriented;
 }
 
-export function supportElements(spec: DiagramSpecV2): DiagramElement[] {
+export function supportElements(spec: DiagramSceneBag): DiagramElement[] {
   return spec.elements.filter(item => legacyElementCapabilities(item.kind).has('support'));
 }
 
-function projectToCircle(spec: DiagramSpecV2, support: DiagramElement, coordinates: Coordinates): Coordinates {
+function projectToCircle(spec: DiagramSceneBag, support: DiagramElement, coordinates: Coordinates): Coordinates {
   const center = resolvePointCoordinates(spec, support.refs[0]);
   const edge = resolvePointCoordinates(spec, support.refs[1]);
   if (!center || !edge) return coordinates;
@@ -407,14 +426,14 @@ function linearProjectionDirection(support: DiagramElement, a: Coordinates, b: C
   return { x: dx, y: dy };
 }
 
-function activePointConstraints(spec: DiagramSpecV2, point: DiagramPoint): DiagramConstraint[] {
+function activePointConstraints(spec: DiagramSceneBag, point: DiagramPoint): DiagramConstraint[] {
   return (point.constraintIds ?? [])
     .map(constraintId => (spec.constraints ?? []).find(item => item.id === constraintId && item.enabled))
     .filter((constraint): constraint is DiagramConstraint => Boolean(constraint));
 }
 
 /** Soporte de deslizamiento: `glider` directo o relación `on` en relaciones combinadas. */
-export function onSupportTargetId(spec: DiagramSpecV2, point: DiagramPoint): string | undefined {
+export function onSupportTargetId(spec: DiagramSceneBag, point: DiagramPoint): string | undefined {
   if (point.constraint === 'glider' && point.gliderTarget) return point.gliderTarget;
   if (point.constraint === 'constrained') {
     const on = activePointConstraints(spec, point).find(constraint => (
@@ -426,7 +445,7 @@ export function onSupportTargetId(spec: DiagramSpecV2, point: DiagramPoint): str
 }
 
 /** Punto cuya posición en el soporte mantiene JSXGraph sin re-resolución pasiva. */
-function isJsxgraphOnSupportPoint(spec: DiagramSpecV2, point: DiagramPoint): boolean {
+function isJsxgraphOnSupportPoint(spec: DiagramSceneBag, point: DiagramPoint): boolean {
   if (!onSupportTargetId(spec, point)) return false;
   if (point.constraint === 'glider') return true;
   return point.constraint === 'constrained' && activePointConstraints(spec, point).length === 1;
@@ -437,7 +456,7 @@ function asGliderPoint(point: DiagramPoint, supportId: string): DiagramPoint {
 }
 
 export function projectPointToSupport(
-  spec: DiagramSpecV2,
+  spec: DiagramSceneBag,
   point: DiagramPoint,
   coordinates: { x: number; y: number },
 ): { x: number; y: number } {
@@ -466,7 +485,7 @@ function compareSceneItemOrder(left: DiagramSceneItem, right: DiagramSceneItem):
   return left.order - right.order || left.id.localeCompare(right.id);
 }
 
-function buildSceneItemVisualRanks(spec: DiagramSpecV2): Map<string, number> {
+function buildSceneItemVisualRanks(spec: DiagramSceneBag): Map<string, number> {
   const ranks = new Map<string, number>();
   const itemsByLayer = new Map<string, DiagramSceneItem[]>();
   [...spec.points, ...spec.elements, ...spec.sliders].forEach(item => {
@@ -480,7 +499,8 @@ function buildSceneItemVisualRanks(spec: DiagramSpecV2): Map<string, number> {
   return ranks;
 }
 
-export function createScenePlan(spec: DiagramSpecV2, state: DiagramSceneState = {}): PlannedSceneItem[] {
+export function createScenePlan(input: DiagramSpecV2 | DiagramSpecV3, state: DiagramSceneState = {}): PlannedSceneItem[] {
+  const spec = input.version === 3 ? prepareSceneSpec(input) : input;
   const highlighted = new Set(state.highlightedIds ?? []);
   const selected = new Set(state.selectedIds ?? []);
   const activeStep = state.activeStepId ? spec.steps.find(step => step.id === state.activeStepId) : undefined;
@@ -536,10 +556,11 @@ function creationDependencies(item: DiagramSceneItem): string[] {
   return [];
 }
 
-export function createSceneConstructionPlan(spec: DiagramSpecV2): PlannedSceneItem[] {
+export function createSceneConstructionPlan(spec: DiagramSpecV2 | DiagramSpecV3): PlannedSceneItem[] {
   const scene = createScenePlan(spec);
   const itemIds = new Set(scene.map(entry => entry.item.id));
-  const graphEdges = buildDependencyGraph(spec).edges.filter(dependency => dependencyDeterminesConstructionOrder(spec, dependency));
+  const bag = prepareSceneSpec(spec);
+  const graphEdges = buildDependencyGraph(bag).edges.filter(dependency => dependencyDeterminesConstructionOrder(bag, dependency));
   const entries = new Map(scene.map(entry => [entry.item.id, entry]));
   const dependencies = new Map(scene.map(entry => [entry.item.id, new Set(
     creationDependencies(entry.item).filter(sourceId => itemIds.has(sourceId)),
@@ -588,12 +609,12 @@ function boundsFromCoordinates(coordinates: Array<{ x: number; y: number }>): Di
   return [Math.min(...xs), Math.max(...ys), Math.max(...xs), Math.min(...ys)];
 }
 
-function curveCoordinates(spec: DiagramSpecV2, element: DiagramElement): Coordinates[] {
-  const samples = sampleCurveFromSpec(spec, element);
+function curveCoordinates(spec: DiagramSceneBag, element: DiagramElement): Coordinates[] {
+  const samples = sampleCurveFromSpec(spec as DiagramSpecV2, element);
   return clampCurveCoordinatesForBounds(samples, spec.viewport.home);
 }
 
-function elementCoordinates(spec: DiagramSpecV2, element: DiagramElement): Array<{ x: number; y: number }> {
+function elementCoordinates(spec: DiagramSceneBag, element: DiagramElement): Array<{ x: number; y: number }> {
   if (element.kind === 'intersection') {
     const intersection = resolvePointCoordinates(spec, element.id);
     return intersection ? [intersection] : [];
@@ -611,7 +632,8 @@ function elementCoordinates(spec: DiagramSpecV2, element: DiagramElement): Array
   ];
 }
 
-export function contentBounds(spec: DiagramSpecV2, itemIds?: readonly string[]): DiagramBounds | null {
+export function contentBounds(input: DiagramSpecV2 | DiagramSpecV3, itemIds?: readonly string[]): DiagramBounds | null {
+  const spec = input.version === 3 ? prepareSceneSpec(input) : input;
   const filter = itemIds ? new Set(itemIds) : null;
   const coordinates: Array<{ x: number; y: number }> = [];
   spec.points.forEach(point => {
@@ -634,12 +656,13 @@ export function padBounds(bounds: DiagramBounds, padding: number): DiagramBounds
 }
 
 export function fitViewport(
-  spec: DiagramSpecV2,
+  input: DiagramSpecV2 | DiagramSpecV3,
   itemIds?: readonly string[],
-  padding = spec.viewport.padding,
+  padding?: number,
 ): DiagramBounds {
+  const spec = input.version === 3 ? prepareSceneSpec(input) : input;
   const bounds = contentBounds(spec, itemIds);
-  return bounds ? padBounds(bounds, padding) : spec.viewport.home;
+  return bounds ? padBounds(bounds, padding ?? spec.viewport.padding) : spec.viewport.home;
 }
 
 export function zoomViewport(spec: DiagramSpecV2, bounds: DiagramBounds, factor: number): DiagramBounds {
@@ -685,7 +708,7 @@ export function recoverViewport(spec: DiagramSpecV2, selectedIds: readonly strin
   return offscreen.length > 0 ? fitViewport(spec) : spec.viewport.bounds;
 }
 
-export function withViewportBounds(spec: DiagramSpecV2, bounds: DiagramBounds): DiagramSpecV2 {
+export function withViewportBounds<T extends DiagramSceneBag & { viewport: DiagramViewport }>(spec: T, bounds: DiagramBounds): T {
   return { ...spec, viewport: { ...spec.viewport, bounds } };
 }
 
@@ -711,9 +734,36 @@ export function materializeSameSideConstraints(spec: DiagramSpecV2): DiagramSpec
   return { ...spec, constraints };
 }
 
+/** Normaliza V2|V3 a V2 materializado para el pipeline de escena/runtime (Fase 1). */
+export function prepareSceneSpec(inputSpec: DiagramSpecV2 | DiagramSpecV3): DiagramSpecV2 {
+  if (inputSpec.version !== 3) {
+    return withResolvedPointConstraints(materializeSameSideConstraints(inputSpec));
+  }
+  const projected = toWorkingSceneV2(inputSpec);
+  // Overrides enumerables (workbench / preview) ganan sobre la proyección interna.
+  type SceneOverrides = Partial<Pick<DiagramSpecV2, 'points' | 'elements' | 'sliders' | 'constraints' | 'dependencies'>>;
+  const compatibility = inputSpec as DiagramSpecV3 & SceneOverrides;
+  if (!Object.prototype.propertyIsEnumerable.call(inputSpec, 'points')) {
+    return withResolvedPointConstraints(materializeSameSideConstraints(projected));
+  }
+  const merged: DiagramSpecV2 = {
+    ...projected,
+    points: Array.isArray(compatibility.points) ? [...compatibility.points] : projected.points,
+    elements: Array.isArray(compatibility.elements) ? [...compatibility.elements] : projected.elements,
+    sliders: Array.isArray(compatibility.sliders) ? [...compatibility.sliders] : projected.sliders,
+    ...(Object.prototype.propertyIsEnumerable.call(inputSpec, 'constraints')
+      ? { constraints: compatibility.constraints }
+      : {}),
+    ...(Object.prototype.propertyIsEnumerable.call(inputSpec, 'dependencies')
+      ? { dependencies: compatibility.dependencies }
+      : {}),
+  };
+  return withResolvedPointConstraints(materializeSameSideConstraints(merged));
+}
+
 export function withMovedPoint(inputSpec: DiagramSpecV2 | DiagramSpecV3, pointId: string, x: number, y: number): DiagramSpecV2 {
   const spec = materializeSameSideConstraints(
-    inputSpec.version === 3 ? projectDiagramSpecV3ToV2(inputSpec) : inputSpec,
+    inputSpec.version === 3 ? toWorkingSceneV2(inputSpec) : inputSpec,
   );
   const point = spec.points.find(item => item.id === pointId);
   if (!point || point.fixed || point.constraint === 'fixed' || point.constraint === 'derived') return spec;
@@ -727,7 +777,7 @@ export function withMovedPoint(inputSpec: DiagramSpecV2 | DiagramSpecV3, pointId
 
 type Coordinates = { x: number; y: number };
 
-function applyDistanceConstraint(spec: DiagramSpecV2, result: Coordinates, other: Coordinates, constraint: DiagramConstraint): Coordinates {
+function applyDistanceConstraint(spec: DiagramSceneBag, result: Coordinates, other: Coordinates, constraint: DiagramConstraint): Coordinates {
   const variables = expressionVariables(spec);
   const distance = constraint.value ?? (constraint.expression ? evaluateMathExpression(constraint.expression, variables) : 0);
   const dx = result.x - other.x;
@@ -736,7 +786,7 @@ function applyDistanceConstraint(spec: DiagramSpecV2, result: Coordinates, other
   return { x: other.x + dx / length * distance, y: other.y + dy / length * distance };
 }
 
-function applyEqualLengthConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+function applyEqualLengthConstraint(spec: DiagramSceneBag, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
   if (constraint.refs.length < 3) return result;
   const anchor = resolvePointCoordinates(spec, constraint.refs[1]);
   const sourceSegment = spec.elements.find(element => element.id === constraint.refs[2] && element.kind === 'segment');
@@ -755,7 +805,7 @@ function applyEqualLengthConstraint(spec: DiagramSpecV2, point: DiagramPoint, re
   return { x: anchor.x + directionX * desiredLength, y: anchor.y + directionY * desiredLength };
 }
 
-function applyEqualAngleConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+function applyEqualAngleConstraint(spec: DiagramSceneBag, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
   if (constraint.refs.length < 5) return result;
   const vertex = resolvePointCoordinates(spec, constraint.refs[1]);
   const fixedRayPoint = resolvePointCoordinates(spec, constraint.refs[2]);
@@ -787,14 +837,14 @@ function applyEqualAngleConstraint(spec: DiagramSpecV2, point: DiagramPoint, res
   return { x: vertex.x + direction.x * radius, y: vertex.y + direction.y * radius };
 }
 
-function applyMidpointConstraint(spec: DiagramSpecV2, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+function applyMidpointConstraint(spec: DiagramSceneBag, result: Coordinates, constraint: DiagramConstraint): Coordinates {
   if (constraint.refs.length < 3) return result;
   const first = resolvePointCoordinates(spec, constraint.refs[1]);
   const second = resolvePointCoordinates(spec, constraint.refs[2]);
   return first && second ? { x: (first.x + second.x) / 2, y: (first.y + second.y) / 2 } : result;
 }
 
-function applyInsideDiskConstraint(spec: DiagramSpecV2, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+function applyInsideDiskConstraint(spec: DiagramSceneBag, result: Coordinates, constraint: DiagramConstraint): Coordinates {
   if (constraint.refs.length < 3) return result;
   const center = resolvePointCoordinates(spec, constraint.refs[1]);
   const boundary = resolvePointCoordinates(spec, constraint.refs[2]);
@@ -807,7 +857,7 @@ function applyInsideDiskConstraint(spec: DiagramSpecV2, result: Coordinates, con
 }
 
 function linearSupportFrame(
-  spec: DiagramSpecV2,
+  spec: DiagramSceneBag,
   support: DiagramElement,
 ): { origin: Coordinates; direction: Coordinates; minParameter: number } | undefined {
   const a = resolvePointCoordinates(spec, support.refs[0]);
@@ -913,7 +963,7 @@ function isPointInPersistedHalfPlane(
  * `sameSide` solo impide cruzar).
  */
 function clampOnSupportToSameSide(
-  spec: DiagramSpecV2,
+  spec: DiagramSceneBag,
   supportId: string,
   sameSideConstraint: DiagramConstraint,
   point: DiagramPoint,
@@ -945,7 +995,7 @@ function clampOnSupportToSameSide(
 }
 
 function sameSideAllowsPoint(
-  spec: DiagramSpecV2,
+  spec: DiagramSceneBag,
   point: DiagramPoint,
   sameSideConstraint: DiagramConstraint,
   coordinates: Coordinates,
@@ -957,7 +1007,7 @@ function sameSideAllowsPoint(
   return isPointInPersistedHalfPlane(baseA, baseB, side, coordinates);
 }
 
-function applySameSideConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+function applySameSideConstraint(spec: DiagramSceneBag, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
   if (constraint.refs.length < 3) return result;
   const baseA = resolvePointCoordinates(spec, constraint.refs[1]);
   const baseB = resolvePointCoordinates(spec, constraint.refs[2]);
@@ -972,15 +1022,15 @@ function applySameSideConstraint(spec: DiagramSpecV2, point: DiagramPoint, resul
   return constrainToHalfPlaneWithSide(baseA, baseB, side, result);
 }
 
-function applyInsideAreaConstraint(spec: DiagramSpecV2, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+function applyInsideAreaConstraint(spec: DiagramSceneBag, result: Coordinates, constraint: DiagramConstraint): Coordinates {
   if (constraint.refs.length < 2) return result;
   const area = spec.elements.find(element => element.id === constraint.refs[1]);
   if (!area) return result;
-  const resolver = (model: DiagramSpecV2, id: string) => resolvePointCoordinates(model, id);
-  return constrainPointForAreaMembership(spec, area, result, constraint.areaMembership ?? 'interior', resolver);
+  const resolver = (model: DiagramSceneBag, id: string) => resolvePointCoordinates(model, id);
+  return constrainPointForAreaMembership(spec as DiagramSpecV2, area, result, constraint.areaMembership ?? 'interior', resolver as (model: DiagramSpecV2, id: string) => Coordinates | undefined);
 }
 
-function applyLinearConstraint(spec: DiagramSpecV2, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+function applyLinearConstraint(spec: DiagramSceneBag, result: Coordinates, constraint: DiagramConstraint): Coordinates {
   if (constraint.refs.length < 3) return result;
   const baseA = resolvePointCoordinates(spec, constraint.refs[1]);
   const baseB = resolvePointCoordinates(spec, constraint.refs[2]);
@@ -992,7 +1042,7 @@ function applyLinearConstraint(spec: DiagramSpecV2, result: Coordinates, constra
   return stabilizedProjectionOnDirection(origin, targetDirection, result);
 }
 
-function applyConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
+function applyConstraint(spec: DiagramSceneBag, point: DiagramPoint, result: Coordinates, constraint: DiagramConstraint): Coordinates {
   const otherId = constraint.refs.find(ref => ref !== point.id);
   const other = otherId ? resolvePointCoordinates(spec, otherId) : undefined;
   switch (constraint.kind) {
@@ -1015,7 +1065,7 @@ function applyConstraint(spec: DiagramSpecV2, point: DiagramPoint, result: Coord
 }
 
 export function constrainPointCoordinates(
-  spec: DiagramSpecV2,
+  spec: DiagramSceneBag,
   point: DiagramPoint,
   coordinates: { x: number; y: number },
 ): { x: number; y: number } {
@@ -1051,7 +1101,7 @@ export function constrainPointCoordinates(
   return result;
 }
 
-function angleMagnitude(spec: DiagramSpecV2, angle: DiagramElement): number | undefined {
+function angleMagnitude(spec: DiagramSceneBag, angle: DiagramElement): number | undefined {
   const first = resolvePointCoordinates(spec, angle.refs[0]);
   const vertex = resolvePointCoordinates(spec, angle.refs[1]);
   const second = resolvePointCoordinates(spec, angle.refs[2]);
@@ -1074,7 +1124,7 @@ function dot(first: { x: number; y: number }, second: { x: number; y: number }):
 }
 
 function pointOnLinearSupportAtEqualLength(
-  spec: DiagramSpecV2,
+  spec: DiagramSceneBag,
   point: DiagramPoint,
   requested: { x: number; y: number },
   supportId: string,
@@ -1122,10 +1172,10 @@ function pointOnLinearSupportAtEqualLength(
   };
 }
 
-export function withResolvedPointConstraints(
-  spec: DiagramSpecV2,
+export function withResolvedPointConstraints<T extends DiagramSceneBag>(
+  spec: T,
   options?: { skipPointIds?: readonly string[] },
-): DiagramSpecV2 {
+): T {
   const skipPointIds = new Set(options?.skipPointIds ?? []);
   let current = spec;
   const maximumPasses = Math.max(1, spec.points.length);
@@ -1183,7 +1233,7 @@ export function withResolvedPointConstraints(
   return current;
 }
 
-export function buildDependencyGraph(spec: DiagramSpecV2): DiagramDependencyGraph {
+export function buildDependencyGraph(spec: DiagramSceneBag): DiagramDependencyGraph {
   const edges: DiagramDependencyEdge[] = [];
   spec.points.forEach(point => {
     if (point.constraint === 'glider' && point.gliderTarget) edges.push({ sourceId: point.gliderTarget, targetId: point.id, relation: 'constraint' });

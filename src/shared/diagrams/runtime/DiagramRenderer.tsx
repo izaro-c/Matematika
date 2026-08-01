@@ -7,17 +7,14 @@ import { useDiagramStepSync } from '@/shared/lib/DiagramStepSyncContext';
 import {
   DIAGRAM_RENDERER_ID,
   createScenePlan,
-  materializeSameSideConstraints,
+  prepareSceneSpec,
   sceneGeometryRevision,
   sceneStackRevision,
-  withResolvedPointConstraints,
   zoomViewport,
   type DiagramBounds,
   type DiagramElement,
   type DiagramSpecV3,
-  type DiagramSpec,
   type DiagramSpecV2,
-  projectDiagramSpecV3ToV2,
 } from '../spec';
 
 import { useDiagramSelection } from './useDiagramSelection';
@@ -68,22 +65,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   onViewportChange,
   stepControls,
 }) => {
-  const spec = useMemo(() => {
-    if (inputSpec.version !== 3) return withResolvedPointConstraints(materializeSameSideConstraints(inputSpec));
-    const projected = projectDiagramSpecV3ToV2(inputSpec);
-    // Un spread v2 sobre una spec v3 puede materializar vistas deprecadas.
-    // Se respetan durante la ventana de compatibilidad, sin persistirlas.
-    const compatibility = inputSpec as DiagramSpec;
-    const materialized = Object.prototype.propertyIsEnumerable.call(inputSpec, 'points')
-      ? {
-        ...projected,
-        points: Array.isArray(compatibility.points) ? [...compatibility.points] : projected.points,
-        elements: Array.isArray(compatibility.elements) ? [...compatibility.elements] : projected.elements,
-        sliders: Array.isArray(compatibility.sliders) ? [...compatibility.sliders] : projected.sliders,
-      }
-      : projected;
-    return withResolvedPointConstraints(materializeSameSideConstraints(materialized));
-  }, [inputSpec]);
+  const spec = useMemo(() => prepareSceneSpec(inputSpec), [inputSpec]);
 
   const {
     interactionCallbacksRef,

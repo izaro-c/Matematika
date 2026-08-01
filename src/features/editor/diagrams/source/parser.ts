@@ -1,4 +1,5 @@
-import { DiagramSpecMigrationError, migrateDiagramSpec, projectDiagramSpecV3ToV2 } from '../../../../shared/diagrams/spec';
+import { DiagramSpecMigrationError, migrateDiagramSpec } from '../../../../shared/diagrams/spec';
+import { fromEditorV2, editorV2 } from '../model/editorModel';
 import type { VisualDiagramModel } from '../model/types';
 import type { DiagramDiagnostic } from './generator';
 import { generateDiagramSource, SPEC_END, SPEC_START } from './generator';
@@ -45,12 +46,16 @@ function migrationDiagnostic(error: unknown): DiagramDiagnostic {
   };
 }
 
+function toWorkbenchModel(spec: ReturnType<typeof migrateDiagramSpec>['spec']): VisualDiagramModel {
+  return fromEditorV2(editorV2(spec));
+}
+
 export function parseDiagramSourceLocally(source?: string, _metadataType = ''): VisualDiagramModel | null {
   if (!source) return null;
   const json = extractV2Json(source) ?? extractLegacyJson(source);
   if (!json) return null;
   try {
-    return projectDiagramSpecV3ToV2(migrateDiagramSpec(JSON.parse(json)).spec);
+    return toWorkbenchModel(migrateDiagramSpec(JSON.parse(json)).spec);
   } catch {
     return null;
   }
@@ -68,10 +73,11 @@ export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''
   }
 
   const componentName = exportedComponentName(source);
+  const editorModel = toWorkbenchModel(migrated.spec);
   if (!componentName) {
     return {
       status: 'code-preview',
-      previewModel: projectDiagramSpecV3ToV2(migrated.spec),
+      previewModel: editorModel,
       diagnostics: [{
         code: 'embedded-spec-without-export',
         severity: 'warning',
@@ -81,7 +87,6 @@ export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''
     };
   }
 
-  const editorModel = projectDiagramSpecV3ToV2(migrated.spec);
   const generated = generateDiagramSource(editorModel, componentName);
   if (generated.ok && generated.source === source && migrated.migratedFrom === null) {
     return { status: 'visual-exact', model: editorModel, diagnostics: [] };

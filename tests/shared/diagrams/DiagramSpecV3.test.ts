@@ -1,14 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import fixture from '../../fixtures/diagrams/diagram-spec-v2.json';
-import {
-  migrateDiagramSpec,
+import {migrateDiagramSpec,
   parseDiagramSpecV3,
-  projectDiagramSpecV3ToV2,
   referenceSlotsForLegacyKind,
   type DiagramElementKind,
   type DiagramSpecV3,
-  type PointObject,
-} from '../../../src/shared/diagrams/public';
+  type PointObject} from '../../../src/shared/diagrams/public';
+import { toWorkingSceneV2 } from '../../../src/shared/diagrams/spec/v3Compatibility';
 
 function migrated(): DiagramSpecV3 {
   return structuredClone(migrateDiagramSpec(fixture).spec);
@@ -31,7 +29,7 @@ describe('DiagramSpec v3 semantic contract', () => {
     const parsed = parseDiagramSpecV3(spec);
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
-    const projected = projectDiagramSpecV3ToV2(parsed.data);
+    const projected = toWorkingSceneV2(parsed.data);
     expect(projected.elements.find(element => element.id === 'fromMidpoint')?.refs).toEqual(['midAB', 'pA']);
   });
 

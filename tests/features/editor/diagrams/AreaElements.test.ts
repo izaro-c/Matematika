@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { diagramConstraint, element, point } from '../../../../src/features/editor/diagrams/model/diagramElements';
-import { migrateDiagramSpecV2ToV3, projectDiagramSpecV3ToV2 } from '../../../../src/shared/diagrams/spec';
+import { migrateDiagramSpecV2ToV3 } from '../../../../src/shared/diagrams/spec';
+import { toWorkingSceneV2 } from '../../../../src/shared/diagrams/spec/v3Compatibility';
 import { constrainPointCoordinates } from '../../../../src/shared/diagrams/spec/scene';
 import { pointInsideAreaElement } from '../../../../src/shared/diagrams/spec/areaRegions';
 import { diagramSpecV3Schema } from '../../../../src/shared/diagrams/spec/schemaV3';
@@ -47,7 +48,7 @@ describe('area elements', () => {
     expect(diagramSpecV3Schema.safeParse(v3).success).toBe(true);
     expect(v3.objects.some(object => object.objectType === 'area' && object.geometry.type === 'half-plane')).toBe(true);
     expect(v3.relations.some(relation => relation.type === 'inside-area')).toBe(true);
-    const roundtrip = projectDiagramSpecV3ToV2(v3);
+    const roundtrip = toWorkingSceneV2(v3);
     expect(roundtrip.elements.some(elementItem => elementItem.kind === 'halfPlane')).toBe(true);
     expect(roundtrip.constraints?.some(constraint => constraint.kind === 'insideArea')).toBe(true);
   });

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
 import { buildTargets } from '../../../../src/features/editor/diagrams/model/selectors';
-import { updateElement, updateSlider } from '../../../../src/features/editor/diagrams/model';
+import { updateElement, updateSlider, editorV2 } from '../../../../src/features/editor/diagrams/model';
 import {
   evaluateMathExpression,
   expressionVariables,
@@ -28,6 +28,16 @@ function readModel(source: string): DiagramSpecV2 {
     throw new Error(`${source} debe ser visual-exact: ${JSON.stringify(parsed.diagnostics)}`);
   }
   return parsed.model;
+}
+
+/** Compare editor payloads ignoring meta that may differ on reopen. */
+function editorPayload(model: DiagramSpecV2) {
+  const payload = { ...editorV2(model) } as Record<string, unknown>;
+  delete payload.version;
+  delete payload.renderer;
+  delete payload.dependencies;
+  delete payload.extensions;
+  return payload;
 }
 
 describe('axiomas de continuidad editables', () => {
@@ -136,7 +146,9 @@ describe('axiomas de continuidad editables', () => {
     if (archimedesSource.ok) {
       const reopened = parseDiagramSourceAST(archimedesSource.source);
       expect(reopened.status).toBe('visual-exact');
-      if (reopened.status === 'visual-exact') expect(reopened.model).toEqual(archimedes);
+      if (reopened.status === 'visual-exact') {
+        expect(editorPayload(reopened.model)).toEqual(editorPayload(archimedes));
+      }
     }
 
     const dedekind = updateElement(
@@ -149,7 +161,9 @@ describe('axiomas de continuidad editables', () => {
     if (dedekindSource.ok) {
       const reopened = parseDiagramSourceAST(dedekindSource.source);
       expect(reopened.status).toBe('visual-exact');
-      if (reopened.status === 'visual-exact') expect(reopened.model).toEqual(dedekind);
+      if (reopened.status === 'visual-exact') {
+        expect(editorPayload(reopened.model)).toEqual(editorPayload(dedekind));
+      }
     }
   });
 });

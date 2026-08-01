@@ -1,4 +1,4 @@
-import { migrateDiagramSpec, projectDiagramSpecV3ToV2 } from '../../../../shared/diagrams/spec';
+import { toEditorModel } from './editorModel';
 import type { VisualDiagramModel } from './types';
 import { renameDiagramId } from './graphCommands';
 
@@ -15,6 +15,5 @@ export function renameSlider(model: VisualDiagramModel, oldId: string, newId: st
 }
 
 export function normalizeVisualModel(value: unknown, _metadataType: string): VisualDiagramModel | null {
-  try { return projectDiagramSpecV3ToV2(migrateDiagramSpec(value).spec); }
-  catch { return null; }
+  return toEditorModel(value);
 }

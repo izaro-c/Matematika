@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { materializeSameSideConstraints } from '@/shared/diagrams/spec/scene';
-import { projectDiagramSpecV3ToV2 } from '@/shared/diagrams/spec/v3Compatibility';
+import { toWorkingSceneV2 } from '@/shared/diagrams/spec/v3Compatibility';
 import type { DiagramSpecV3 } from '@/shared/diagrams/spec/v3';
 
 const minimalSameSideV3: DiagramSpecV3 = {
@@ -45,13 +45,13 @@ const minimalSameSideV3: DiagramSpecV3 = {
 
 describe('v3Compatibility', () => {
   it('no materializa side en proyección v3→v2', () => {
-    const v2 = projectDiagramSpecV3ToV2(minimalSameSideV3);
+    const v2 = toWorkingSceneV2(minimalSameSideV3);
     const projectedSameA = v2.constraints.find(constraint => constraint.id === 'sameA');
     expect(projectedSameA?.side).toBeUndefined();
   });
 
   it('materializa side bajo demanda con materializeSameSideConstraints', () => {
-    const v2 = projectDiagramSpecV3ToV2(minimalSameSideV3);
+    const v2 = toWorkingSceneV2(minimalSameSideV3);
     const materialized = materializeSameSideConstraints(v2);
     const materializedSameA = materialized.constraints.find(constraint => constraint.id === 'sameA');
     expect(materializedSameA?.side).toBe(1);

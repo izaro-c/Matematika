@@ -7,6 +7,7 @@ import {
   parseDiagramSpecV2,
   type DiagramSpecV2,
 } from '../../../src/shared/diagrams/public';
+import { toWorkingSceneV2 } from '../../../src/shared/diagrams/spec/v3Compatibility';
 
 describe('DiagramSpec v2 schema and migrations', () => {
   it('validates the representative v2 fixture without normalization loss', () => {
@@ -73,7 +74,7 @@ describe('DiagramSpec v2 schema and migrations', () => {
     expect(result.migratedFrom).toBe(1);
     expect(result.spec.version).toBe(3);
     expect(result.spec.viewport.bounds).toEqual(legacyFixture.boundingBox);
-    expect(result.spec.points.map(point => [point.id, point.x, point.y])).toEqual(
+    expect(toWorkingSceneV2(result.spec).points.map(point => [point.id, point.x, point.y])).toEqual(
       legacyFixture.points.map(point => [point.id, point.x, point.y]),
     );
     expect(result.warnings[0]).toContain('v3');

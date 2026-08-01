@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { parseDiagramSpecV2, resolveInfoPanelBlock } from '../../../src/shared/diagrams/public';
+import { toWorkingSceneV2 } from '../../../src/shared/diagrams/spec/v3Compatibility';
 import { TrianguloSpec } from '../../../src/widgets/diagrams/Definiciones/Triangulo';
+
+const triangulo = toWorkingSceneV2(TrianguloSpec);
 
 function triangleVariables(
   points: { A: [number, number]; B: [number, number]; C: [number, number] },
@@ -21,7 +24,7 @@ function triangleVariables(
 }
 
 describe('composite information panels', () => {
-  const panel = TrianguloSpec.elements.find(element => element.id === 'infoPanel26')!;
+  const panel = triangulo.elements.find(element => element.id === 'infoPanel26')!;
   const [sides, angles] = panel.properties!.infoPanelBlocks!;
 
   it('classifies exact geometric cases without using display rounding', () => {
@@ -53,8 +56,8 @@ describe('composite information panels', () => {
 
   it('validates every nested condition and alternative expression', () => {
     const invalid = {
-      ...TrianguloSpec,
-      elements: TrianguloSpec.elements.map(element => element.id === panel.id
+      ...triangulo,
+      elements: triangulo.elements.map(element => element.id === panel.id
         ? {
             ...element,
             properties: {

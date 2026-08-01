@@ -1,22 +1,20 @@
 import { describe, expect, it } from 'vitest';
 import v2Fixture from '../../fixtures/diagrams/diagram-spec-v2.json';
-import {
-  computeAutoFitBounds,
+import {computeAutoFitBounds,
   fitVisibleItemsAtStep,
   isEffectivelyVisibleAtStep,
   isEffectivelyVisibleInAnyStep,
   limitsFromBounds,
   migrateDiagramSpec,
   normalizeViewportBounds,
+  prepareSceneSpec,
   offscreenVisibleItemIds,
-  projectDiagramSpecV3ToV2,
   resolveHomeViewport,
   resolveInitialCamera,
   unionBounds,
-  type DiagramSpecV2,
-} from '../../../src/shared/diagrams/public';
+  type DiagramSpecV2} from '../../../src/shared/diagrams/public';
 
-const baseSpec = projectDiagramSpecV3ToV2(migrateDiagramSpec(v2Fixture).spec);
+const baseSpec = prepareSceneSpec(migrateDiagramSpec(v2Fixture).spec);
 
 function makeSpec(overrides: Partial<DiagramSpecV2> = {}): DiagramSpecV2 {
   return { ...baseSpec, ...overrides };

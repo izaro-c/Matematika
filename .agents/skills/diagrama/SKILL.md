@@ -24,7 +24,7 @@ Reservar `code-preview` para fuentes heredadas no intervenidas. Al modificar un 
 
 1. Leer [references/visual-authoring.md](references/visual-authoring.md).
 2. Inventariar objetos visibles y auxiliares, relaciones, restricciones, expresiones, estilos, controles, pasos, overlays, targets y operaciones visuales requeridas.
-3. Comparar el inventario con `DiagramSpecV3`, el registro de capacidades de `spec/semantics.ts`, `DiagramRenderer`, `DiagramToolbar`, `DiagramInspector`, `DiagramCanvas` y `DiagramWorkbench`.
+3. Comparar el inventario con `DiagramSpecV3`, el registro de capacidades de `spec/semantics.ts`, `DiagramRenderer`, `WorkbenchToolbar`, `WorkbenchElementInspector`, `CanvasStage` y `DiagramWorkbench`.
 4. Si falta cualquier capacidad, detener la creación del diagrama y ampliar primero schema, semántica, renderer, controles visuales, persistencia y pruebas. Incluir esa ampliación en la misma tarea; no aplazarla como deuda.
 5. Crear el diagrama mediante el modelo visual y el adaptador canónico. No escribir lógica manual en el componente publicado.
 6. Reabrirlo en el workbench, modificar visualmente al menos una propiedad de cada capacidad nueva, guardar y comprobar el roundtrip exacto.
@@ -52,10 +52,10 @@ Implementar una sección vertical completa:
 
 1. Tipos discriminados en `spec/v3.ts`, schema estricto en `schemaV3.ts`, capacidades en `semantics.ts` y migración en `migrations.ts`/`v3Compatibility.ts`.
 2. Primitiva Arts & Crafts en `MathFactory` y render en `DiagramRenderer`.
-3. Herramienta o construcción en `model/commands.ts` y `DiagramToolbar.tsx`.
-4. Todos los controles de propiedades en `DiagramInspector.tsx`.
-5. Selección, manipulación directa y teclado en `DiagramCanvas.tsx` o el renderer.
-6. Orquestación de crear, borrar, reordenar, pasos, targets y undo/redo en `DiagramWorkbench.tsx`.
+3. Herramienta o construcción en `model/commands.ts` y `ui/WorkbenchToolbar.tsx`.
+4. Todos los controles de propiedades en `ui/WorkbenchElementInspector.tsx` (+ `ui/inspector/`).
+5. Selección, manipulación directa y teclado en `ui/canvas/CanvasStage.tsx` o el renderer.
+6. Orquestación de crear, borrar, reordenar, pasos, targets y undo/redo en `ui/DiagramWorkbench.tsx`.
 7. Roundtrip lossless en generador, parser, reducer y repositorio.
 8. Pruebas de schema, renderer, UI, accesibilidad, persistencia y `generate → parse → generate`.
 

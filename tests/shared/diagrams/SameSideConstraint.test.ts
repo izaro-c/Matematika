@@ -11,7 +11,7 @@
 import { describe, expect, it } from 'vitest';
 import { diagramConstraint, point } from '../../../src/features/editor/diagrams/model/diagramElements';
 import { materializeSameSideConstraints, withMovedPoint } from '../../../src/shared/diagrams/spec/scene';
-import { projectDiagramSpecV3ToV2 } from '../../../src/shared/diagrams/spec/v3Compatibility';
+import { toWorkingSceneV2 } from '../../../src/shared/diagrams/spec/v3Compatibility';
 import type { VisualDiagramModel } from '../../../src/features/editor/diagrams/model/types';
 import type { DiagramSpecV3 } from '../../../src/shared/diagrams/spec/v3';
 
@@ -185,7 +185,7 @@ describe('restricción sameSide ("en el mismo semiplano")', () => {
     // La proyección v3 -> v2 debe permanecer libre de cálculo: `side` solo se
     // materializa cuando `materializeSameSideConstraints` lo necesita, para
     // que `generateDiagramSource` pueda reproducir el TSX byte a byte.
-    const v2 = projectDiagramSpecV3ToV2(v3Spec);
+    const v2 = toWorkingSceneV2(v3Spec);
     const projectedSameA = v2.constraints.find(constraint => constraint.id === 'sameA');
     expect(projectedSameA?.side).toBeUndefined();
 

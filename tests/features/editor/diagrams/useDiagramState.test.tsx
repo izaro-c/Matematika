@@ -97,7 +97,7 @@ describe('useDiagramState safety policy', () => {
       points: [...model.points, { ...model.points[0] }],
     }));
     expect(result.current.state.diagnostics).toContainEqual(expect.objectContaining({
-      code: 'invalid-diagram-spec-v2-0',
+      code: 'invalid-diagram-spec-v3-0',
       severity: 'error',
       source: 'model',
     }));

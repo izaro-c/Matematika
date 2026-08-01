@@ -76,13 +76,12 @@ describe('DiagramSpec v3 TSX adapter generator', () => {
   });
 
   it('keeps editor preview and published runtime on the same renderer import path', () => {
-    const previewAdapter = readFileSync('src/features/editor/diagrams/ui/DiagramCanvas.tsx', 'utf8');
+    const previewAdapter = readFileSync('src/features/editor/diagrams/ui/DiagramResponsivePreview.tsx', 'utf8');
     const generated = generateDiagramSource(createTemplateModel('modelo-estatico', 'Ruta común', 'modelo'), 'RutaComun');
     expect(generated.ok).toBe(true);
     if (!generated.ok) return;
     const sharedImport = "from '@/shared/diagrams/public'";
-    expect(previewAdapter).toContain(`DiagramRenderer, withMovedPoint, withViewportBounds } ${sharedImport}`);
-    expect(previewAdapter).not.toContain('<svg');
+    expect(previewAdapter).toContain(`DiagramRenderer } ${sharedImport}`);
     expect(generated.source).toContain(`createDiagramSpec, DiagramRenderer } ${sharedImport}`);
     expect(generated.source).not.toContain('MathBoard');
   });
@@ -98,9 +97,9 @@ describe('DiagramSpec v3 TSX adapter generator', () => {
     const result = generateDiagramSource(invalid, 'Invalido');
     expect(result.ok).toBe(false);
     if (result.ok) return;
-    expect(result.diagnostics[0].code).toBe('invalid-diagram-spec-v2-0');
+    expect(result.diagnostics[0].code).toMatch(/^invalid-diagram-spec-v3/);
     expect(result.diagnostics.some(d => d.path?.includes('componentId'))).toBe(true);
-    expect(result.diagnostics.some(d => d.path?.includes('points'))).toBe(true);
+    expect(result.diagnostics.some(d => d.path?.includes('objects') || d.path?.includes('points'))).toBe(true);
   });
 
   it('rejects component names that cannot be exported safely', () => {

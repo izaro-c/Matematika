@@ -2,20 +2,20 @@ import {
   isAreaElement,
   legacyItemHasCapability,
   legacyReferenceCandidates,
-  migrateDiagramSpecV2ToV3,
   objectHasCapability,
   type DiagramCapability,
   type DiagramElement,
   type DiagramSceneItem,
 } from '../../../../shared/diagrams/spec';
 import type { DiagramObject, DiagramSpecV3 } from '../../../../shared/diagrams/spec/v3';
+import { editorV2, toCanonicalV3 } from './editorModel';
 import type { VisualDiagramModel } from './types';
 
 const REFLECTION_AXIS_KINDS = new Set(['segment', 'line', 'ray']);
 
-/** Proyección explícita del modelo v2 del editor al contrato v3. */
+/** Reify del modelo de editor al contrato v3 puro. */
 export function projectEditorModelToV3(model: VisualDiagramModel): DiagramSpecV3 {
-  return migrateDiagramSpecV2ToV3(model);
+  return toCanonicalV3(model);
 }
 
 /** Objetos v3 que declaran la capacidad pedida. */
@@ -23,9 +23,9 @@ export function v3ObjectsWithCapability(model: VisualDiagramModel, capability: D
   return projectEditorModelToV3(model).objects.filter(object => objectHasCapability(object, capability));
 }
 
-/** Candidatos de escena v2 filtrados por capacidad semántica. */
+/** Candidatos de escena filtrados por capacidad semántica. */
 export function legacySceneCandidates(model: VisualDiagramModel, capability: DiagramCapability): DiagramSceneItem[] {
-  return legacyReferenceCandidates(model, capability);
+  return legacyReferenceCandidates(editorV2(model), capability);
 }
 
 export function pointLikeCandidates(model: VisualDiagramModel): DiagramSceneItem[] {

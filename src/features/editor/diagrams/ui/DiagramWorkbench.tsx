@@ -1,141 +1,97 @@
-import React, { useRef, useState } from 'react';
-import type { EditorDiagramReference } from '../../core/editorTypes';
-import type { ConstructionKind, VisualDiagramModel } from '../model/types';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { useDiagramState } from '../hooks/useDiagramState';
-import { buildTargets } from '../model/selectors';
 import { useDiagramDiagnostics } from '../hooks/useDiagramDiagnostics';
-import { DiagramCanvas } from './DiagramCanvas';
-import { DiagramInspector } from './DiagramInspector';
-import { DiagramStatusBar } from './DiagramStatusBar';
-import { DiagramReferencesPanel } from './DiagramReferencesPanel';
-import { DiagramCodePanel } from './DiagramCodePanel';
-import { DiagramValidationPanel } from './DiagramValidationPanel';
-import { DiagramStepsEditor } from './DiagramStepsEditor';
-import { DiagramTargetSelector } from './DiagramTargetSelector';
-import { DiagramObjectList } from './DiagramObjectList';
-import { DiagramOrganizationPanel } from './DiagramOrganizationPanel';
-import { DiagramToolGuidance } from './DiagramToolGuidance';
-import { DiagramWorkbenchNotices } from './DiagramWorkbenchNotices';
-import { DiagramSectionOutlet } from './DiagramSectionOutlet';
-import { DiagramGuidedConstructions } from './DiagramGuidedConstructions';
-import { DiagramMovementAidsPanel } from './DiagramMovementAidsPanel';
-import { DiagramResponsivePreview } from './DiagramResponsivePreview';
-import { DiagramHeaderReadingsEditor } from './DiagramHeaderReadingsEditor';
-import { generateDiagramSource } from '../source/generator';
-import {
-  buildDeleteConfirmationMessage,
-  saveDiagramInFileMode,
-  shouldShowCodeFallback,
-  sourceCanRegenerate,
-  useWorkbenchActions,
-  type DeleteConfirmationRequest,
-} from '../hooks/useWorkbenchActions';
-import { DiagramConfirmDialog } from './DiagramConfirmDialog';
-import { useWorkbenchKeyboard } from '../hooks/useWorkbenchKeyboard';
-import { useModalFocus } from '../../ui/hooks/useModalFocus';
 import { useDiagramClipboard } from '../hooks/useDiagramClipboard';
+import { useWorkbenchKeyboard } from '../hooks/useWorkbenchKeyboard';
+import { createTemplateModel } from '../model/templateModels';
 import { useDiagramWorkbenchLoader, type DiagramWorkbenchMode } from '../hooks/useDiagramWorkbenchLoader';
-import { getDiagramUsages } from '../references/usageIndex';
-import { pageTypeFromContentPath } from '../model/publishedDiagramLayout';
-import { ReferencePickProvider } from './relations/ReferencePickContext';
-import { useReferencePick } from './relations/useReferencePick';
-import { WorkbenchHeader } from './workbench/WorkbenchHeader';
-import { WorkbenchWorkspaceNav } from './workbench/WorkbenchWorkspaceNav';
-import { CanvasToolbarDock } from './workbench/CanvasToolbarDock';
-import { CanvasControlsDock } from './workbench/CanvasControlsDock';
+import type {
+  CanvasTool,
+  TemplateKind,
+  VisualPoint,
+  VisualElement,
+  VisualSlider,
+  VisualStep,
+  VisualDiagramModel,
+  ElementKind,
+} from '../model/types';
+import {
+  refsNeededForTool,
+  toolReferencesAreReady,
+  addToolReference,
+  KIND_LABELS,
+  refsForKind,
+  generatedElementId,
+  elementColorForKind,
+  defaultElementProperties,
+  element,
+  nextLayerItemOrder,
+  deleteDiagramCascade,
+  updatePoint,
+  updateElement,
+  updateSlider,
+  point,
+  nextPointId,
+  supportElements,
+  projectPointToSupport,
+} from '../model';
+import {
+  confirmWorkbench,
+  makeVisibleInEveryStep,
+  workbenchIsBlocked,
+} from '../hooks/useWorkbenchActions';
+import { buildTargets } from '../model/selectors';
+import type { EditorDiagramReference } from '../../core/editorTypes';
+import { WorkbenchHeader } from './WorkbenchHeader';
+import { WorkbenchToolbar } from './WorkbenchToolbar';
+import { CanvasStage } from './canvas/CanvasStage';
+import type { CanvasFrameMode } from './canvas/canvasFrameMode';
+import { WorkbenchSceneTree } from './WorkbenchSceneTree';
+import { WorkbenchElementInspector } from './WorkbenchElementInspector';
+import { WorkbenchStepsEditor } from './WorkbenchStepsEditor';
+import { WorkbenchDiagnosticsPanel } from './WorkbenchDiagnosticsPanel';
+import { PresetsModal } from './modals/PresetsModal';
+import { CodeModal } from './modals/CodeModal';
+import { DiagramSettingsModal } from './modals/DiagramSettingsModal';
+import { MdxLinkModal } from './modals/MdxLinkModal';
+import { GuidedConstructionsModal } from './modals/GuidedConstructionsModal';
+import { DiagramConfirmDialog } from './DiagramConfirmDialog';
+import { DiagramDivergenceDialog } from './DiagramDivergenceDialog';
+import {
+  effectiveSelection,
+  primaryIdForSelection,
+  repairBrokenReferences,
+  syncStepObjectVisibility,
+  toggleAdditiveSelection,
+} from './workbenchSelection';
 
-if (typeof window !== 'undefined') {
-  if (!('popover' in HTMLElement.prototype)) {
-    import('@oddbird/popover-polyfill').catch(console.error);
-  }
-  if (!('anchorName' in document.documentElement.style)) {
-    import('@oddbird/css-anchor-positioning').catch(console.error);
-  }
-}
+type InspectorTab = 'scene' | 'properties' | 'steps' | 'diagnostics';
 
-export type { DiagramWorkbenchMode } from '../hooks/useDiagramWorkbenchLoader';
+const ANNOTATION_KINDS = new Set(['infoPanel', 'text', 'label', 'formula']);
 
-type CanvasProps = React.ComponentProps<typeof DiagramCanvas>;
-
-const DiagramCanvasWithReferencePick: React.FC<Omit<CanvasProps, 'referencePickActive' | 'onReferencePick'>> = (props) => {
-  const { session, rejectMessage, handleCanvasId, clearPick } = useReferencePick();
-  return (
-    <div className="space-y-2">
-      {session && (
-        <div className="rounded border border-pavo/30 bg-pavo/10 px-2 py-1.5 text-[10px] font-medium text-pavo" role="status">
-          {session.hint}
-          {' · '}
-          <button type="button" className="underline" onClick={clearPick}>Cancelar (Esc)</button>
-        </div>
-      )}
-      {rejectMessage && (
-        <div className="rounded border border-ocre/25 bg-ocre/10 px-2 py-1.5 text-[10px] font-medium text-ocre" role="status">
-          {rejectMessage}
-        </div>
-      )}
-      <DiagramCanvas
-        {...props}
-        referencePickActive={Boolean(session)}
-        onReferencePick={handleCanvasId}
-      />
-    </div>
-  );
-};
-
-type DiagramWorkbenchCoreProps = {
-  isOpen: boolean;
-  mode: DiagramWorkbenchMode;
-  metadataType: string;
-  onClose: () => void;
-  onConfirm: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
-};
-
-function paneDisplay(active: boolean, display: 'block' | 'flex'): string {
-  if (!active) return 'hidden';
-  return display;
-}
-
-function publicationPageType(metadataType: string, mode: DiagramWorkbenchMode): string {
-  if (metadataType) return metadataType;
-  const diagramId = mode.kind === 'file' || mode.kind === 'rewrite' ? mode.path : mode.componentName;
-  if (!diagramId) return '';
-  return pageTypeFromContentPath(getDiagramUsages(diagramId)[0]?.contentPath);
-}
-
-function effectiveWorkbenchSelection(
-  model: VisualDiagramModel | null,
-  localSelection: readonly string[],
-  primaryId: string,
-): string[] {
-  if (!model) return [];
-  const validIds = new Set([...model.points, ...model.elements, ...model.sliders].map(item => item.id));
-  const retained = localSelection.filter(id => validIds.has(id));
-  if (retained.length > 0) return retained;
-  return primaryId && validIds.has(primaryId) ? [primaryId] : [];
-}
-
-function toggledWorkbenchSelection(
-  current: readonly string[],
-  id: string,
-  primaryId: string,
-): { ids: string[]; primaryId: string } {
-  if (!current.includes(id)) return { ids: [...current, id], primaryId: id };
-  const ids = current.filter(selected => selected !== id);
+function ensureLayer(
+  model: VisualDiagramModel,
+  layerId: string,
+  label: string,
+  order: number,
+): VisualDiagramModel {
+  if (model.layers.some(layer => layer.id === layerId)) return model;
   return {
-    ids,
-    primaryId: primaryId === id ? ids[ids.length - 1] ?? '' : primaryId,
+    ...model,
+    layers: [...model.layers, { id: layerId, label, order, visible: true, locked: false }],
   };
 }
 
-function primaryIdForSelection(ids: readonly string[], preferredId?: string): string {
-  if (preferredId && ids.includes(preferredId)) return preferredId;
-  return ids[ids.length - 1] ?? '';
+interface DiagramWorkbenchProps {
+  mode?: DiagramWorkbenchMode;
+  metadataType?: string;
+  onClose?: () => void;
+  onConfirm?: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
 }
 
-export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
-  isOpen,
+export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   mode,
-  metadataType,
+  metadataType = 'demostración',
   onClose,
   onConfirm,
 }) => {
@@ -156,31 +112,16 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     resolveDivergence,
     saveDiagram,
     linkToMdxPage,
-    mdxLinkNotice,
   } = useDiagramState();
+  const sandboxMode = !mode;
 
-  const [workspace, setWorkspace] = useState<'build' | 'steps' | 'targets' | 'check' | 'source'>('build');
-  const [canvasDisplay, setCanvasDisplay] = useState<'edit' | 'preview'>('edit');
-  const [showAllObjects, setShowAllObjects] = useState(false);
-  const [mobilePane, setMobilePane] = useState<'scene' | 'canvas' | 'properties'>('canvas');
-  const [leftPanel, setLeftPanel] = useState<'objects' | 'organization' | 'diagram'>('objects');
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const previewPageType = publicationPageType(metadataType, mode);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const workbenchRef = useModalFocus<HTMLDivElement>(isOpen, onClose, closeButtonRef);
+  const model = state.currentModel;
+  const canUndo = state.modelHistory?.past ? state.modelHistory.past.length > 0 : false;
+  const canRedo = state.modelHistory?.future ? state.modelHistory.future.length > 0 : false;
 
-  const [previewHighlightId, setPreviewHighlightId] = useState('');
-  const [selectedTargetId, setSelectedTargetId] = useState('');
-
-  const [constructionKind, setConstructionKind] = useState<ConstructionKind>('mediatriz');
-  const [constructionRefs, setConstructionRefs] = useState<Record<string, string>>({ a: '', b: '', c: '' });
-
-  const [pendingRefs, setPendingRefs] = useState<string[]>([]);
-  const [deleteConfirmation, setDeleteConfirmation] = useState<DeleteConfirmationRequest | null>(null);
-  const isFileMode = mode.kind === 'file' || mode.kind === 'rewrite';
   useDiagramWorkbenchLoader({
-    isOpen,
-    mode,
+    isOpen: Boolean(mode),
+    mode: mode ?? { kind: 'new', componentName: 'TrianguloInteractivo' },
     metadataType,
     loadDiagram,
     loadInlineDiagram,
@@ -188,433 +129,776 @@ export const DiagramWorkbenchCore: React.FC<DiagramWorkbenchCoreProps> = ({
     loadDiagramForRewrite,
   });
 
-  const effectiveSelectedIds = effectiveWorkbenchSelection(state.currentModel, selectedIds, state.selectedId);
+  useEffect(() => {
+    if (!mode && !state.currentModel) {
+      const initial = createTemplateModel('triangulo-deformable', 'Triángulo Interactivo', 'demostración');
+      loadNewDiagram('TrianguloInteractivo', initial);
+    }
+  }, [loadNewDiagram, mode, state.currentModel]);
 
-  const selectOnly = (id: string) => {
-    setSelectedIds(id ? [id] : []);
-    selectElement(id);
-  };
-  const selectMany = (ids: string[], primaryId?: string) => {
-    const uniqueIds = [...new Set(ids)];
-    setSelectedIds(uniqueIds);
-    selectElement(primaryIdForSelection(uniqueIds, primaryId));
-  };
-  const toggleSelection = (id: string) => {
-    const next = toggledWorkbenchSelection(effectiveSelectedIds, id, state.selectedId);
-    selectMany(next.ids, next.primaryId);
-  };
+  const [selectedIds, setSelectedIds] = useState<readonly string[]>([]);
+  const [pendingRefs, setPendingRefs] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState<InspectorTab>('scene');
+  const [activeStepIndex, setActiveStepIndex] = useState<number | null>(null);
+  const [frameMode, setFrameMode] = useState<CanvasFrameMode>('editor');
+  const [showAllObjects, setShowAllObjects] = useState(false);
+
+  const [presetsOpen, setPresetsOpen] = useState(false);
+  const [codeOpen, setCodeOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [mdxLinksOpen, setMdxLinksOpen] = useState(false);
+  const [guidedOpen, setGuidedOpen] = useState(false);
+  const [pendingDeleteIds, setPendingDeleteIds] = useState<string[] | null>(null);
+  const [statusMessage, setStatusMessage] = useState('');
+  const [divergenceDismissed, setDivergenceDismissed] = useState(false);
+
+  useEffect(() => {
+    if (!statusMessage) return;
+    const timer = window.setTimeout(() => setStatusMessage(''), 2200);
+    return () => window.clearTimeout(timer);
+  }, [statusMessage]);
+
+  useEffect(() => {
+    if (state.status !== 'diverged') setDivergenceDismissed(false);
+  }, [state.status]);
+
+  const activeTool = state.canvasTool;
+  const effectiveSelectedIds = useMemo(
+    () => effectiveSelection(model, selectedIds),
+    [model, selectedIds],
+  );
+  const primarySelectedId = primaryIdForSelection(effectiveSelectedIds);
+
+  const { enrichedDiagnostics, diagnosticSummary, passiveErrorHighlightIds, saveCapability } = useDiagramDiagnostics(
+    state.diagnostics,
+    model,
+    primarySelectedId,
+    state,
+    primarySelectedId,
+  );
+
+  const errorCount = diagnosticSummary.errorCount;
+  const warningCount = diagnosticSummary.warningCount;
+
+  const selectMany = useCallback(
+    (ids: string[], primaryId?: string) => {
+      const uniqueIds = [...new Set(ids)];
+      setSelectedIds(uniqueIds);
+      if (uniqueIds.length === 0) {
+        selectElement('');
+        return;
+      }
+      const primary = primaryId && uniqueIds.includes(primaryId) ? primaryId : uniqueIds[0];
+      selectElement(primary);
+    },
+    [selectElement],
+  );
+
+  const handleTitleChange = useCallback(
+    (newTitle: string) => {
+      if (!model) return;
+      handleVisualEdit({ ...model, title: newTitle }, { label: 'Renombrar diagrama' });
+    },
+    [handleVisualEdit, model]
+  );
+
+  const handleAddElementWithRefs = useCallback(
+    (kind: ElementKind, explicitRefs: string[]) => {
+      if (!model) return;
+      const elementRefs = refsForKind(kind, explicitRefs);
+      const newId = generatedElementId(kind, elementRefs, model.elements);
+      const defaultProps = defaultElementProperties(kind) || {};
+      const isAnnotation = ANNOTATION_KINDS.has(kind);
+      const layerId = isAnnotation ? 'annotations' : 'geometry';
+
+      const extraProperties =
+        kind === 'infoPanel'
+          ? {
+              title: 'Panel Informativo',
+              anchorMode: 'viewport' as const,
+              viewportPosition: [0.08, 0.22] as [number, number],
+            }
+          : kind === 'text' || kind === 'label' || kind === 'formula'
+          ? {
+              text: 'Texto explicativo $A$',
+            }
+          : {};
+
+      const workingModel = isAnnotation
+        ? ensureLayer(model, 'annotations', 'Anotaciones & Texto', 20)
+        : model;
+
+      const baseElement = element(
+        newId,
+        KIND_LABELS[kind] || kind,
+        kind,
+        elementRefs,
+        elementColorForKind(kind),
+        kind !== 'label',
+        {
+          properties: { ...defaultProps, ...extraProperties },
+          text: kind === 'infoPanel' ? 'Explicación del teorema o propiedad matemática en KaTeX: $a^2 + b^2 = c^2$' : undefined,
+        }
+      );
+      const nextElement = {
+        ...baseElement,
+        layerId,
+        order: nextLayerItemOrder(workingModel, layerId),
+      };
+      const nextModel = makeVisibleInEveryStep(
+        {
+          ...workingModel,
+          elements: [...workingModel.elements, nextElement],
+          dependencies: [
+            ...(workingModel.dependencies || []),
+            ...elementRefs.map(sourceId => ({ sourceId, targetId: newId, relation: 'construction' as const })),
+          ],
+        },
+        newId
+      );
+
+      handleVisualEdit(nextModel, { label: `Añadir ${KIND_LABELS[kind] || kind}` });
+      selectMany([newId]);
+      setActiveTab('properties');
+    },
+    [handleVisualEdit, model, selectMany]
+  );
+
+  const handleSelectTool = useCallback(
+    (tool: CanvasTool) => {
+      if (tool !== 'select' && tool !== 'point' && refsNeededForTool(tool) === 0) {
+        handleAddElementWithRefs(tool as ElementKind, []);
+        setCanvasTool('select');
+        setPendingRefs([]);
+        return;
+      }
+      setCanvasTool(tool);
+      setPendingRefs([]);
+    },
+    [handleAddElementWithRefs, setCanvasTool]
+  );
+
+  const handleSelectObjects = useCallback(
+    (ids: string[], additive = false) => {
+      if (additive && ids.length === 1) {
+        const next = toggleAdditiveSelection(effectiveSelectedIds, ids[0]);
+        selectMany(next);
+        return;
+      }
+      selectMany(ids);
+    },
+    [effectiveSelectedIds, selectMany],
+  );
+
+  const handleChooseReferenceForTool = useCallback(
+    (refId: string): boolean => {
+      if (activeTool === 'select' || activeTool === 'point' || refsNeededForTool(activeTool) === 0) {
+        return false;
+      }
+      const nextRefs = addToolReference(activeTool, pendingRefs, refId);
+      const isOpenEnded = activeTool === 'polygon' || activeTool === 'areaIntersection';
+      if (!isOpenEnded && nextRefs.every(Boolean) && toolReferencesAreReady(activeTool, nextRefs)) {
+        handleAddElementWithRefs(activeTool as ElementKind, nextRefs);
+        setPendingRefs([]);
+        setCanvasTool('select');
+      } else {
+        setPendingRefs(nextRefs);
+        selectMany([refId]);
+      }
+      return true;
+    },
+    [activeTool, handleAddElementWithRefs, pendingRefs, selectMany, setCanvasTool]
+  );
+
+  const handleCompleteTool = useCallback(() => {
+    if (
+      (activeTool === 'polygon' || activeTool === 'areaIntersection')
+      && toolReferencesAreReady(activeTool, pendingRefs)
+    ) {
+      handleAddElementWithRefs(activeTool, pendingRefs);
+      setPendingRefs([]);
+      setCanvasTool('select');
+    }
+  }, [activeTool, handleAddElementWithRefs, pendingRefs, setCanvasTool]);
+
+  const handleCancelTool = useCallback(() => {
+    setCanvasTool('select');
+    setPendingRefs([]);
+  }, [setCanvasTool]);
+
+  const handleAddSliderClick = useCallback(() => {
+    if (!model) return;
+    const newId = `slider${Date.now().toString(36).slice(-3)}`;
+    const newSlider: VisualSlider = {
+      id: newId,
+      label: 'Parámetro k',
+      x: -4,
+      y: -4,
+      min: -5,
+      max: 5,
+      value: 1,
+      step: 0.1,
+      color: 'pavo',
+      layerId: 'controls',
+      order: nextLayerItemOrder(model, 'controls'),
+      visible: true,
+      locked: false,
+      groupIds: [],
+      target: true,
+      selection: { selectable: true, role: 'annotation' },
+    };
+    handleVisualEdit(
+      makeVisibleInEveryStep({ ...model, sliders: [...model.sliders, newSlider] }, newId),
+      { label: 'Añadir deslizador' },
+    );
+    selectMany([newId]);
+    setActiveTab('properties');
+  }, [handleVisualEdit, model, selectMany]);
+
+  const handleAddGliderPoint = useCallback(
+    (supportId?: string) => {
+      if (!model) return;
+      const candidates = supportElements(model);
+      const support = candidates.find(item => item.id === supportId) ?? candidates[0];
+      if (!support) return;
+      const id = nextPointId(model.points);
+      const nextPoint = {
+        ...point(id, id.replace(/^p/, ''), 0, 0, false, 'ocre', 'glider', support.id),
+        order: nextLayerItemOrder(model, 'geometry'),
+      };
+      const projected = projectPointToSupport(model, nextPoint, { x: 0, y: 0 });
+      handleVisualEdit(
+        makeVisibleInEveryStep(
+          { ...model, points: [...model.points, { ...nextPoint, ...projected }] },
+          id,
+        ),
+        { label: `Añadir punto sobre ${support.id}` },
+      );
+      selectMany([id]);
+      setActiveTab('properties');
+      setCanvasTool('select');
+    },
+    [handleVisualEdit, model, selectMany, setCanvasTool],
+  );
+
+  const handleAddStepClick = useCallback(() => {
+    if (!model) return;
+    const nextIdx = (model.steps || []).length + 1;
+    const allObjectIds = [
+      ...model.points.map((p: VisualPoint) => p.id),
+      ...model.elements.map((e: VisualElement) => e.id),
+      ...model.sliders.map((s: VisualSlider) => s.id),
+    ];
+    const newStep: VisualStep = {
+      id: `step${nextIdx}`,
+      label: `Paso ${nextIdx}`,
+      description: 'Descripción del nuevo paso de la demostración.',
+      visibleTargets: allObjectIds,
+    };
+    handleVisualEdit({ ...model, steps: [...(model.steps || []), newStep] }, { label: `Añadir paso ${nextIdx}` });
+    setActiveTab('steps');
+    setActiveStepIndex(nextIdx - 1);
+    setActiveStep(newStep.id);
+  }, [handleVisualEdit, model, setActiveStep]);
+
+  const handleSelectStepIndex = useCallback(
+    (index: number | null) => {
+      setActiveStepIndex(index);
+      if (index === null || !model?.steps[index]) {
+        setActiveStep('');
+        setShowAllObjects(true);
+        return;
+      }
+      setShowAllObjects(false);
+      setActiveStep(model.steps[index].id);
+    },
+    [model, setActiveStep],
+  );
+
+  const handleUpdatePoint = useCallback(
+    (id: string, updates: Partial<VisualPoint>) => {
+      if (!model) return;
+      handleVisualEdit(updatePoint(model, id, updates), { label: `Editar punto ${id}` });
+    },
+    [handleVisualEdit, model]
+  );
+
+  const handleUpdateElement = useCallback(
+    (id: string, updates: Partial<VisualElement>) => {
+      if (!model) return;
+      handleVisualEdit(updateElement(model, id, updates), { label: `Editar elemento ${id}` });
+    },
+    [handleVisualEdit, model]
+  );
+
+  const handleUpdateSlider = useCallback(
+    (id: string, updates: Partial<VisualSlider>) => {
+      if (!model) return;
+      handleVisualEdit(updateSlider(model, id, updates), { label: `Editar deslizador ${id}` });
+    },
+    [handleVisualEdit, model]
+  );
+
+  const handleUpdateModel = useCallback(
+    (nextModel: VisualDiagramModel, label: string) => {
+      handleVisualEdit(nextModel, { label });
+    },
+    [handleVisualEdit]
+  );
+
+  const requestDeleteIds = useCallback((ids: string[]) => {
+    const unique = [...new Set(ids)].filter(Boolean);
+    if (unique.length === 0) return;
+    setPendingDeleteIds(unique);
+  }, []);
+
+  const handleDeleteSelected = useCallback(
+    (id: string) => {
+      requestDeleteIds([id]);
+    },
+    [requestDeleteIds],
+  );
+
+  const confirmDeleteIds = useCallback(() => {
+    if (!model || !pendingDeleteIds?.length) {
+      setPendingDeleteIds(null);
+      return;
+    }
+    let nextModel = model;
+    for (const id of pendingDeleteIds) {
+      nextModel = deleteDiagramCascade(nextModel, id).model;
+    }
+    handleVisualEdit(nextModel, {
+      label: pendingDeleteIds.length === 1
+        ? `Eliminar ${pendingDeleteIds[0]}`
+        : `Eliminar ${pendingDeleteIds.length} objetos`,
+    });
+    selectMany(effectiveSelectedIds.filter(id => !pendingDeleteIds.includes(id)));
+    setStatusMessage(
+      pendingDeleteIds.length === 1
+        ? `Eliminado ${pendingDeleteIds[0]}`
+        : `Eliminados ${pendingDeleteIds.length} objetos`,
+    );
+    setPendingDeleteIds(null);
+  }, [effectiveSelectedIds, handleVisualEdit, model, pendingDeleteIds, selectMany]);
+
+  const handleToggleObjectInAllSteps = useCallback(
+    (objectId: string, makeVisible: boolean) => {
+      if (!model || !model.steps) return;
+      const nextSteps = model.steps.map(st => syncStepObjectVisibility(st, objectId, makeVisible));
+      handleVisualEdit({ ...model, steps: nextSteps }, { label: `Actualizar visibilidad masiva de ${objectId}` });
+    },
+    [handleVisualEdit, model]
+  );
+
+  const handleSelectPreset = useCallback(
+    (kind: TemplateKind, title: string) => {
+      const template = createTemplateModel(kind, title, 'demostración');
+      const compName = title.replace(/[^A-Za-z0-9]/g, '') || 'DiagramaPreset';
+      loadNewDiagram(compName, template);
+      selectMany([]);
+      setActiveStepIndex(null);
+      setActiveStep('');
+      setCanvasTool('select');
+      setPendingRefs([]);
+    },
+    [loadNewDiagram, selectMany, setActiveStep, setCanvasTool]
+  );
+
+  const handleResetViewport = useCallback(() => {
+    if (!model) return;
+    const home = model.viewport.home ?? model.viewport.bounds ?? [-5, 5, 5, -5];
+    handleVisualEdit(
+      {
+        ...model,
+        viewport: { ...model.viewport, bounds: [...home] as [number, number, number, number] },
+      },
+      { label: 'Restablecer vista a coordenadas iniciales' }
+    );
+  }, [handleVisualEdit, model]);
+
+  const handleAutoFixBrokenReferences = useCallback(() => {
+    if (!model) return;
+    handleVisualEdit(repairBrokenReferences(model), { label: 'Auto-reparar referencias rotas' });
+    setStatusMessage('Referencias reparadas');
+  }, [handleVisualEdit, model]);
+
+  const handleCloseEditor = useCallback(() => {
+    if (isDirty && !window.confirm('Hay cambios sin guardar. ¿Cerrar el editor de todos modos?')) return;
+    if (onClose) {
+      onClose();
+      return;
+    }
+    if (window.history.length > 1) window.history.back();
+    else window.location.href = '/';
+  }, [isDirty, onClose]);
+
+  const handleSaveAndConfirm = useCallback(() => {
+    if (!model || !mode || !onConfirm) {
+      void saveDiagram();
+      return;
+    }
+    const isFileMode = mode.kind === 'file' || mode.kind === 'rewrite';
+    void confirmWorkbench({
+      shouldSave: isFileMode,
+      blocked: workbenchIsBlocked(
+        state.status,
+        state.diagnostics.some(diagnostic => diagnostic.severity === 'error'),
+      ),
+      save: saveDiagram,
+      reference: {
+        componentName: state.componentName,
+        category: model.category,
+        path: isFileMode ? mode.path : '',
+        importPath: isFileMode ? mode.path : '',
+        source: state.currentSource,
+        targets: buildTargets(model),
+        mode: model.mode,
+        visualModel: model as unknown as Record<string, unknown>,
+      },
+      onConfirm,
+    });
+  }, [
+    mode,
+    model,
+    onConfirm,
+    saveDiagram,
+    state.componentName,
+    state.currentSource,
+    state.diagnostics,
+    state.status,
+  ]);
+
+  const handleSave = onConfirm ? handleSaveAndConfirm : () => { void saveDiagram(); };
+
+  const confirmBlocked = workbenchIsBlocked(
+    state.status,
+    state.diagnostics.some(diagnostic => diagnostic.severity === 'error'),
+  );
+  const effectiveSaveCapability = onConfirm
+    ? { ...saveCapability, allowed: Boolean(model) && !confirmBlocked }
+    : saveCapability;
 
   const clipboard = useDiagramClipboard({
-    model: state.currentModel,
+    model,
     selectedIds: effectiveSelectedIds,
     onModelEdit: handleVisualEdit,
     onSelectMany: selectMany,
-    onShowObjects: () => setMobilePane('scene'),
+    onShowObjects: () => setActiveTab('scene'),
   });
 
-  const componentName = state.componentName || 'DiagramaInteractivo';
-  const actions = useWorkbenchActions({
-    model: state.currentModel,
-    mode,
-    isFileMode,
-    componentName,
-    currentSource: state.currentSource,
-    status: state.status,
-    diagnostics: state.diagnostics,
-    selectedId: state.selectedId,
-    constructionKind,
-    constructionRefs,
-    pendingRefs,
-    handleVisualEdit,
-    selectOnly,
-    setCanvasTool,
-    setPendingRefs,
-    saveDiagram,
-    onConfirm,
-    onRequestDeleteConfirmation: setDeleteConfirmation,
-  });
-
-  const keyboard = useWorkbenchKeyboard({
-    canvasTool: state.canvasTool,
-    selectedId: state.selectedId,
+  const { onKeyDown } = useWorkbenchKeyboard({
+    canvasTool: activeTool,
+    selectedId: primarySelectedId,
     handleClipboardKeyDown: clipboard.handleKeyDown,
-    selectTool: () => actions.activateCanvasTool('select'),
-    deleteSelected: actions.handleDeleteSelected,
+    selectTool: handleCancelTool,
+    deleteSelected: () => {
+      if (effectiveSelectedIds.length > 0) requestDeleteIds([...effectiveSelectedIds]);
+    },
     undo,
     redo,
   });
 
-  const diagnostics = useDiagramDiagnostics(
-    state.diagnostics,
-    state.currentModel,
-    state.selectedId,
-    state,
-    previewHighlightId,
-  );
-
-  const navigationOptions = {
-    setWorkspace,
-    setLeftPanel,
-    setMobilePane,
-    selectOnly,
-    setPreviewHighlightId,
-  };
-
-  const navigateToDiagnostic = (diagnostic: Parameters<typeof diagnostics.navigateToDiagnostic>[0]) => {
-    diagnostics.navigateToDiagnostic(diagnostic, navigationOptions);
-  };
-
-  const openDiagnostics = () => {
-    diagnostics.openDiagnostics(setWorkspace);
-  };
-
-  if (!isOpen) return null;
-
-  const model: VisualDiagramModel | null = state.currentModel;
-  const saveCapability = diagnostics.saveCapability;
-  const saveCodeOnlyDiagram = () => saveDiagramInFileMode(isFileMode, saveDiagram);
-
-  if (shouldShowCodeFallback(model, state.currentSource, state.diagnostics.length)) {
-    return (
-        <div ref={workbenchRef} className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans" role="dialog" aria-modal="true" aria-label="Editor de diagramas en código">
-          <header className="flex items-center justify-between gap-3 border-b border-carbon/15 px-4 py-3 bg-carbon/5">
-            <div className="min-w-0 flex-1">
-              <h2 className="text-sm font-bold text-carbon">Editor de diagramas: código TSX</h2>
-              <p className="text-[11px] text-carbon/55 font-mono">{state.filePath}</p>
-            </div>
-            <div className="flex shrink-0 items-center gap-2">
-              <DiagramStatusBar
-                variant="inline"
-                status={state.status}
-                isDirty={isDirty}
-                saveCapability={isFileMode ? saveCapability : undefined}
-                onSave={saveCodeOnlyDiagram}
-                onOpenDiagnostics={openDiagnostics}
-              />
-              <button
-                ref={closeButtonRef}
-                type="button"
-                onClick={onClose}
-                className="rounded border border-carbon/20 px-3 py-1 text-xs font-bold text-carbon/75 hover:bg-carbon/5 transition-all"
-              >
-                Cerrar
-              </button>
-            </div>
-          </header>
-          <DiagramCodePanel
-            source={state.currentSource}
-            sourceTouched={isDirty}
-            filePath={state.filePath}
-            componentName={componentName}
-            onSourceChange={handleSourceEdit}
-          />
-          <DiagramValidationPanel
-            diagnostics={diagnostics.enrichedDiagnostics}
-            targets={[]}
-            selectedTargetId=""
-            focusedDiagnosticId={diagnostics.focusedDiagnosticId}
-            onSelectTarget={() => {}}
-            onNavigate={navigateToDiagnostic}
-          />
-        </div>
-    );
-  }
-  if (!model) {
-    return (
-      <div ref={workbenchRef} className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/40 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Cargando editor de diagramas" aria-busy="true" tabIndex={-1}>
-        <div className="rounded bg-lienzo p-6 shadow-xl max-w-sm w-full text-center">
-          <p className="text-sm font-bold text-carbon">Cargando el editor de diagramas…</p>
-        </div>
-      </div>
-    );
-  }
-
-  const {
-    activateCanvasTool,
-    chooseReferenceForTool,
-    handleAddSlider,
-    handleAddElement,
-    handleAddGliderPoint,
-    handleAddElementLabel,
-    handleAddAllLabels,
-    handleRemoveAllLabels,
-    handleDeleteSelected,
-    handleCreateGuidedConstruction,
-    handleSaveAndConfirm,
-    normalizedRefs,
-    constructionReady,
-  } = actions;
-
-  const mdxTargets = buildTargets(model);
+  const objectCount = model
+    ? model.points.length + model.elements.length + model.sliders.length
+    : 0;
 
   return (
-    <ReferencePickProvider>
-    <div ref={workbenchRef} onKeyDown={keyboard.onKeyDown} className="fixed inset-0 z-50 flex flex-col bg-lienzo text-carbon font-sans" role="dialog" aria-modal="true" aria-labelledby="diagram-workbench-title">
-      {/* Header Subcomponent */}
+    <div
+      className="flex h-screen w-screen flex-col bg-lienzo text-carbon overflow-hidden select-none font-serif transition-colors"
+      tabIndex={0}
+      onKeyDown={onKeyDown}
+    >
       <WorkbenchHeader
         model={model}
-        filePath={state.filePath}
-        status={state.status}
-        isDirty={isDirty}
-        isFileMode={isFileMode}
-        saveCapability={saveCapability}
-        selectedCount={effectiveSelectedIds.length}
-        undoPastCount={state.modelHistory.past.length}
-        undoFutureCount={state.modelHistory.future.length}
-        undoLabel={state.modelHistory.past[state.modelHistory.past.length - 1]?.label}
-        redoLabel={state.modelHistory.future[0]?.label}
-        canPaste={clipboard.canPaste}
-        clipboardStatus={clipboard.status}
-        closeButtonRef={closeButtonRef}
-        onSave={handleSaveAndConfirm}
-        onOpenDiagnostics={openDiagnostics}
+        componentName={state.componentName}
+        canUndo={canUndo}
+        canRedo={canRedo}
+        frameMode={frameMode}
+        onSelectFrameMode={setFrameMode}
         onUndo={undo}
         onRedo={redo}
-        onCopy={clipboard.copySelected}
-        onPaste={clipboard.paste}
-        onClose={onClose}
+        onOpenPresets={() => setPresetsOpen(true)}
+        onOpenCode={() => setCodeOpen(true)}
+        onOpenSettings={() => setSettingsOpen(true)}
+        onOpenMdxLinks={() => setMdxLinksOpen(true)}
+        onOpenGuided={() => setGuidedOpen(true)}
+        onResetViewport={handleResetViewport}
+        diagnostics={enrichedDiagnostics}
+        errorCount={errorCount}
+        warningCount={warningCount}
+        onOpenDiagnostics={() => setActiveTab('diagnostics')}
+        onTitleChange={handleTitleChange}
+        sandboxMode={sandboxMode}
+        isDirty={isDirty}
+        syncStatus={state.status}
+        allowCleanApply={Boolean(onConfirm) && mode?.kind !== 'file' && mode?.kind !== 'rewrite'}
+        saveCapability={effectiveSaveCapability}
+        onSave={handleSave}
+        onCloseEditor={handleCloseEditor}
+      />
+
+      <div className="relative z-40">
+        <WorkbenchToolbar
+          model={model}
+          activeTool={activeTool}
+          onSelectTool={handleSelectTool}
+          onAddSliderClick={handleAddSliderClick}
+          onAddStepClick={handleAddStepClick}
+          onOpenGuidedClick={() => setGuidedOpen(true)}
+          onAddGliderPoint={handleAddGliderPoint}
+          gliderSupports={model ? supportElements(model) : []}
+        />
+      </div>
+
+
+
+      <div className="flex flex-1 min-h-0 w-full overflow-hidden">
+        <CanvasStage
+          model={model}
+          selectedIds={effectiveSelectedIds}
+          activeTool={activeTool}
+          pendingRefs={pendingRefs}
+          frameMode={frameMode}
+          stepPreviewActive={activeStepIndex !== null && !showAllObjects}
+          activeStepIndex={showAllObjects ? null : activeStepIndex}
+          stepCount={model?.steps?.length ?? 0}
+          errorHighlightedIds={passiveErrorHighlightIds}
+          showAllObjects={showAllObjects || activeStepIndex === null}
+          onToggleShowAllObjects={() => setShowAllObjects(prev => !prev)}
+          onClearStepPreview={() => {
+            handleSelectStepIndex(null);
+            setShowAllObjects(true);
+          }}
+          onStepPrev={() => {
+            if (!model?.steps?.length) return;
+            setShowAllObjects(false);
+            const idx = activeStepIndex === null ? model.steps.length - 1 : Math.max(0, activeStepIndex - 1);
+            handleSelectStepIndex(idx);
+          }}
+          onStepNext={() => {
+            if (!model?.steps?.length) return;
+            setShowAllObjects(false);
+            const idx = activeStepIndex === null ? 0 : Math.min(model.steps.length - 1, activeStepIndex + 1);
+            handleSelectStepIndex(idx);
+          }}
+          onSelect={handleSelectObjects}
+          onModelEdit={(nextModel, cmd) => handleVisualEdit(nextModel, cmd)}
+          onChooseReferenceForTool={handleChooseReferenceForTool}
+          onCompleteTool={handleCompleteTool}
+          onCancelTool={handleCancelTool}
+          onResetViewport={handleResetViewport}
+          onToggleGrid={() =>
+            model && handleVisualEdit({ ...model, grid: !model.grid }, { label: 'Alternar rejilla' })
+          }
+          onToggleAxis={() =>
+            model && handleVisualEdit({ ...model, axis: !model.axis }, { label: 'Alternar ejes' })
+          }
+        />
+
+        <aside className="w-80 md:w-96 flex flex-col border-l border-carbon/15 bg-lienzo/95 backdrop-blur-md overflow-hidden z-10 transition-colors">
+          <div className="flex items-center border-b border-carbon/10 bg-carbon/5 p-1">
+            <button
+              type="button"
+              onClick={() => setActiveTab('scene')}
+              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                activeTab === 'scene' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
+              }`}
+            >
+              Objetos ({objectCount})
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('properties')}
+              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                activeTab === 'properties' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
+              }`}
+            >
+              Propiedades
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('steps')}
+              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                activeTab === 'steps' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
+              }`}
+            >
+              Pasos ({(model?.steps || []).length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('diagnostics')}
+              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer relative ${
+                activeTab === 'diagnostics' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
+              }`}
+            >
+              Salud
+              {errorCount > 0 && (
+                <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-granada animate-pulse" />
+              )}
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto overflow-x-visible relative z-0">
+            {activeTab === 'scene' && (
+              <WorkbenchSceneTree
+                model={model}
+                selectedIds={effectiveSelectedIds}
+                onSelectObjects={(ids, additive) => handleSelectObjects(ids, additive)}
+                onUpdatePoint={handleUpdatePoint}
+                onUpdateElement={handleUpdateElement}
+                onUpdateSlider={handleUpdateSlider}
+                onUpdateModel={handleUpdateModel}
+                onCopySelection={clipboard.copySelected}
+                onDeleteSelection={() => requestDeleteIds([...effectiveSelectedIds])}
+              />
+            )}
+
+            {activeTab === 'properties' && (
+              <WorkbenchElementInspector
+                model={model}
+                selectedId={primarySelectedId}
+                onUpdatePoint={handleUpdatePoint}
+                onUpdateElement={handleUpdateElement}
+                onUpdateSlider={handleUpdateSlider}
+                onDeleteSelected={handleDeleteSelected}
+                onUpdateModel={handleUpdateModel}
+                onSelectId={newId => selectMany([newId])}
+              />
+            )}
+
+            {activeTab === 'steps' && (
+              <WorkbenchStepsEditor
+                model={model}
+                activeStepIndex={activeStepIndex}
+                selectedIds={effectiveSelectedIds}
+                onSelectStepIndex={handleSelectStepIndex}
+                onAddStep={handleAddStepClick}
+                onUpdateStep={(idx, updates) => {
+                  if (!model) return;
+                  const nextSteps = [...(model.steps || [])];
+                  nextSteps[idx] = { ...nextSteps[idx], ...updates };
+                  handleVisualEdit({ ...model, steps: nextSteps }, { label: `Editar paso ${idx + 1}` });
+                }}
+                onDeleteStep={idx => {
+                  if (!model) return;
+                  const nextSteps = (model.steps || []).filter((_: VisualStep, i: number) => i !== idx);
+                  handleVisualEdit({ ...model, steps: nextSteps }, { label: `Eliminar paso ${idx + 1}` });
+                  if (activeStepIndex === null) return;
+                  if (activeStepIndex === idx) {
+                    handleSelectStepIndex(null);
+                  } else if (activeStepIndex > idx) {
+                    handleSelectStepIndex(activeStepIndex - 1);
+                  }
+                }}
+                onToggleObjectInAllSteps={handleToggleObjectInAllSteps}
+                onUpdateModel={handleUpdateModel}
+              />
+            )}
+
+            {activeTab === 'diagnostics' && (
+              <WorkbenchDiagnosticsPanel
+                model={model}
+                diagnostics={enrichedDiagnostics}
+                onSelectDiagnostic={d => {
+                  const objId = d.location?.objectId;
+                  if (objId) {
+                    selectMany([objId]);
+                    setActiveTab('properties');
+                  }
+                }}
+                onAutoFixBrokenReferences={handleAutoFixBrokenReferences}
+              />
+            )}
+          </div>
+        </aside>
+      </div>
+
+      <PresetsModal
+        isOpen={presetsOpen}
+        onClose={() => setPresetsOpen(false)}
+        onSelectPreset={handleSelectPreset}
+      />
+
+      <CodeModal
+        isOpen={codeOpen}
+        model={model}
+        componentName={state.componentName}
+        sandboxMode={sandboxMode}
+        source={state.currentSource}
+        onSourceChange={handleSourceEdit}
+        onClose={() => setCodeOpen(false)}
+      />
+
+      <DiagramSettingsModal
+        isOpen={settingsOpen}
+        model={model}
+        onClose={() => setSettingsOpen(false)}
+        onUpdateModel={(updates, label) => {
+          if (!model) return;
+          handleVisualEdit({ ...model, ...updates }, { label });
+        }}
+      />
+
+      <MdxLinkModal
+        isOpen={mdxLinksOpen}
+        model={model}
+        componentName={state.componentName}
+        onClose={() => setMdxLinksOpen(false)}
+        onUpdatePoint={handleUpdatePoint}
+        onUpdateElement={handleUpdateElement}
+        onUpdateSlider={handleUpdateSlider}
+        sandboxMode={sandboxMode}
+        filePath={state.filePath}
+        diagramMode={model?.mode}
+        onLinkToMdxPage={(mdxPath, diagramMode) => {
+          void linkToMdxPage(mdxPath, diagramMode);
+        }}
+      />
+
+      <GuidedConstructionsModal
+        isOpen={guidedOpen}
+        model={model}
+        onClose={() => setGuidedOpen(false)}
+        onUpdateModel={handleUpdateModel}
       />
 
       <DiagramConfirmDialog
-        isOpen={Boolean(deleteConfirmation)}
-        title={deleteConfirmation ? `¿Eliminar ${deleteConfirmation.objectId}?` : ''}
-        message={deleteConfirmation ? buildDeleteConfirmationMessage(deleteConfirmation.objectId, deleteConfirmation.dependentIds) : ''}
+        isOpen={Boolean(pendingDeleteIds?.length)}
+        title={pendingDeleteIds?.length === 1 ? 'Eliminar objeto' : 'Eliminar selección'}
+        message={
+          pendingDeleteIds?.length === 1
+            ? `Se eliminará «${pendingDeleteIds[0]}» y sus dependientes. Esta acción se puede deshacer.`
+            : `Se eliminarán ${pendingDeleteIds?.length ?? 0} objetos y sus dependientes. Esta acción se puede deshacer.`
+        }
         confirmLabel="Eliminar"
-        onConfirm={() => {
-          deleteConfirmation?.onConfirm();
-          setDeleteConfirmation(null);
-        }}
-        onCancel={() => setDeleteConfirmation(null)}
+        cancelLabel="Cancelar"
+        onConfirm={confirmDeleteIds}
+        onCancel={() => setPendingDeleteIds(null)}
       />
 
-      <DiagramWorkbenchNotices clipboardStatus={clipboard.status} mode={mode} mdxLinkNotice={mdxLinkNotice} />
-
-      <div className="flex min-h-0 flex-1 flex-col">
-        {/* Workspace Task Navigation Subcomponent */}
-        <WorkbenchWorkspaceNav
+      {state.status === 'diverged' && !divergenceDismissed && model && (
+        <DiagramDivergenceDialog
+          isOpen
           model={model}
-          workspace={workspace}
-          mdxTargetsCount={mdxTargets.length}
-          diagnosticSummary={diagnostics.diagnosticSummary}
-          diagnosticsAcknowledged={diagnostics.diagnosticsAcknowledged}
-          onSelectWorkspace={setWorkspace}
-          onAcknowledgeDiagnostics={diagnostics.acknowledgeDiagnostics}
-        />
-
-          <DiagramSectionOutlet active={workspace === 'build'}><div className="flex min-h-0 flex-1 flex-col">
-
-          <div className="relative grid min-h-0 flex-1 grid-cols-1 overflow-hidden xl:grid-cols-[280px_minmax(0,1fr)_340px] 2xl:grid-cols-[320px_minmax(0,1fr)_360px]">
-          {/* Left panel: tools & quick actions */}
-          <aside className={`${paneDisplay(mobilePane === 'scene', 'flex')} flex-col overflow-hidden border-r border-carbon/15 bg-lienzo md:absolute md:inset-y-0 md:left-0 md:z-40 md:w-80 md:shadow-2xl xl:static xl:z-auto xl:flex xl:w-auto xl:shadow-none`}>
-            <nav className="sticky top-0 z-30 grid shrink-0 grid-cols-3 border-b border-carbon/10 bg-lienzo p-1.5" role="tablist" aria-label="Panel de escena">
-              {([['objects', 'Objetos'], ['organization', 'Organizar'], ['diagram', 'Diagrama']] as const).map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={leftPanel === id} onClick={() => setLeftPanel(id)} className={`min-h-11 rounded px-1 text-[10px] font-bold ${leftPanel === id ? 'bg-carbon text-lienzo' : 'text-carbon/55 hover:bg-carbon/5'}`}>{label}</button>)}
-            </nav>
-            <div className="flex-1 overflow-y-auto p-3 overscroll-contain scrollbar-gutter-stable">
-              {leftPanel === 'objects' && <DiagramObjectList model={model} selectedId={state.selectedId} selectedIds={effectiveSelectedIds} onSelect={selectOnly} onToggleSelection={toggleSelection} onSelectMany={ids => selectMany(ids)} onCopySelection={clipboard.copySelected} onModelEdit={handleVisualEdit} errorObjectIds={diagnostics.errorObjectIds} focusObjectId={diagnostics.listFocusObjectId} />}
-
-              {leftPanel === 'organization' && <DiagramOrganizationPanel model={model} selectedId={state.selectedId} onModelEdit={handleVisualEdit} onSelect={selectOnly} onCopyGroup={clipboard.copyGroup} />}
-
-              {leftPanel === 'diagram' && <div className="divide-y divide-carbon/10">
-                <section className="space-y-2 pb-4">
-                  <h3 className="text-xs font-bold text-carbon">Identidad y publicación</h3>
-                  <label className="block text-[10px] font-bold text-carbon/55">Título<input value={model.title} onChange={event => handleVisualEdit({ ...model, title: event.target.value }, { label: 'Editar título' })} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 font-serif text-xs font-bold" /></label>
-                  <label className="block text-[10px] font-bold text-carbon/55">Nota introductoria<textarea value={model.note} onChange={event => handleVisualEdit({ ...model, note: event.target.value }, { label: 'Editar nota' })} className="mt-1 min-h-20 w-full rounded border border-carbon/15 bg-lienzo p-2 font-serif text-xs leading-relaxed" /></label>
-                  <div className="grid grid-cols-2 gap-2"><label className="text-[10px] font-bold text-carbon/55">Categoría<input value={model.category} onChange={event => handleVisualEdit({ ...model, category: event.target.value }, { label: 'Editar categoría' })} className="mt-1 min-h-10 w-full rounded border border-carbon/15 px-2 text-xs" /></label><label className="text-[10px] font-bold text-carbon/55">Uso<select value={model.mode} onChange={event => handleVisualEdit({ ...model, mode: event.target.value as VisualDiagramModel['mode'] }, { label: 'Editar modo' })} className="mt-1 min-h-10 w-full rounded border border-carbon/15 px-2 text-xs"><option value="diagram">Diagrama</option><option value="simulation">Simulación</option><option value="inline">Inline</option></select></label></div>
-                </section>
-                <div className="py-4"><DiagramHeaderReadingsEditor model={model} onModelEdit={handleVisualEdit} /></div>
-                <section className="space-y-2 py-4">
-                  <h3 className="text-xs font-bold text-carbon">Comprobar estados</h3>
-                  <label className="block text-[10px] font-bold text-carbon/55">Elemento resaltado<select className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={previewHighlightId} onChange={(e) => setPreviewHighlightId(e.target.value)}><option value="">Ninguno</option>{mdxTargets.map(t => <option key={t.qualifiedId ?? t.id} value={t.objectId ?? t.id}>{t.label} ({t.id})</option>)}</select></label>
-                  <label className="block text-[10px] font-bold text-carbon/55">Paso activo<select className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={state.activeStepId} onChange={(e) => setActiveStep(e.target.value)}><option value="">Mostrar todo</option>{model.steps.map(s => <option key={s.id} value={s.id}>{s.label} ({s.id})</option>)}</select></label>
-                </section>
-                <section className="py-4">
-                  <h3 className="mb-2 text-xs font-bold text-carbon">Plano y viewport</h3>
-                  <div className="grid grid-cols-2 gap-2 text-xs">{(['Min X', 'Max Y', 'Max X', 'Min Y'] as const).map((label, idx) => <label key={label} className="text-[10px] font-bold text-carbon/60">{label}<input type="number" step="0.5" className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs font-mono" value={model.viewport.bounds[idx]} onChange={(e) => { const val = Number(e.target.value); if (Number.isFinite(val)) { const nextBox = [...model.viewport.bounds] as [number, number, number, number]; nextBox[idx] = val; handleVisualEdit({ ...model, viewport: { ...model.viewport, bounds: nextBox } }, { label: 'Editar límites del viewport', mergeKey: 'viewport-input' }); } }} /></label>)}</div>
-                  <button type="button" className="mt-2 min-h-10 w-full rounded border border-carbon/15 px-2 text-[10px] font-bold text-carbon/70 hover:bg-carbon/5" onClick={() => handleVisualEdit({ ...model, viewport: { ...model.viewport, home: [...model.viewport.bounds] as [number, number, number, number] } }, { label: 'Guardar vista inicial' })}>Guardar como vista inicial</button>
-                </section>
-                <div className="pt-4"><DiagramMovementAidsPanel model={model} onModelEdit={handleVisualEdit} onSelect={selectOnly} /></div>
-              </div>}
-            </div>
-          </aside>
-
-          {/* Center panel: toolbar dock + canvas + controls dock */}
-          <main className={`${paneDisplay(mobilePane === 'canvas', 'flex')} relative min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-carbon/[0.02] md:flex`}>
-            {/* Top Toolbar Dock */}
-            <CanvasToolbarDock
-              model={model}
-              canvasTool={state.canvasTool}
-              syncStatus={state.status}
-              currentSource={state.currentSource}
-              pageType={previewPageType}
-              onSetCanvasTool={activateCanvasTool}
-              onAddElement={handleAddElement}
-              onModelEdit={handleVisualEdit}
-              onAddSlider={handleAddSlider}
-              onAddGliderPoint={handleAddGliderPoint}
-              onAddAllLabels={handleAddAllLabels}
-              onRemoveAllLabels={handleRemoveAllLabels}
-              onResolveDivergence={resolveDivergence}
-              guidedConstructions={<DiagramGuidedConstructions
-                model={model}
-                kind={constructionKind}
-                refs={normalizedRefs}
-                ready={constructionReady}
-                onKindChange={setConstructionKind}
-                onRefChange={(key, value) => setConstructionRefs(previous => ({ ...previous, [key]: value }))}
-                onCreate={handleCreateGuidedConstruction}
-              />}
-            />
-
-            {/* Middle Canvas Area */}
-            <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden p-2">
-              <DiagramToolGuidance
-                model={model}
-                tool={state.canvasTool}
-                refs={pendingRefs}
-                onRefsChange={setPendingRefs}
-                onCreate={handleAddElement}
-                onCancel={() => activateCanvasTool('select')}
-              />
-
-              <div className="flex-1 overflow-hidden">
-                {canvasDisplay === 'edit' ? (
-                  <DiagramCanvasWithReferencePick
-                    model={model}
-                    pageType={previewPageType}
-                    selectedId={state.selectedId}
-                    selectedIds={effectiveSelectedIds}
-                    canvasTool={state.canvasTool}
-                    pendingRefs={pendingRefs}
-                    previewHighlightId={previewHighlightId}
-                    errorHighlightedIds={diagnostics.passiveErrorHighlightIds}
-                    previewStepId={state.activeStepId}
-                    showAllObjects={showAllObjects}
-                    onSelect={(id, additive) => additive ? toggleSelection(id) : selectOnly(id)}
-                    onModelEdit={handleVisualEdit}
-                    onChooseReferenceForTool={(referenceId) => chooseReferenceForTool(referenceId, state.canvasTool)}
-                    onCompleteTool={() => activateCanvasTool('select')}
-                  />
-                ) : (
-                  <DiagramResponsivePreview model={model} pageType={previewPageType} activeStepId={state.activeStepId} highlightedId={previewHighlightId} />
-                )}
-              </div>
-            </div>
-
-            {/* Bottom Controls Dock */}
-            <CanvasControlsDock
-              model={model}
-              canvasDisplay={canvasDisplay}
-              showAllObjects={showAllObjects}
-              activeStepId={state.activeStepId}
-              onCanvasDisplayChange={setCanvasDisplay}
-              onToggleShowAllObjects={setShowAllObjects}
-              onActiveStepChange={setActiveStep}
-              onModelEdit={handleVisualEdit}
-            />
-          </main>
-
-          {/* Right panel: contextual properties */}
-          <aside className={`${paneDisplay(mobilePane === 'properties', 'flex')} flex-col overflow-hidden border-l border-carbon/15 bg-lienzo md:absolute md:inset-y-0 md:right-0 md:z-40 md:w-96 md:shadow-2xl xl:static xl:z-auto xl:flex xl:w-auto xl:shadow-none`}>
-            <div className="flex-1 overflow-y-auto p-3 overscroll-contain scrollbar-gutter-stable">
-              <DiagramInspector
-                model={model}
-                selectedId={state.selectedId}
-                selectedIds={effectiveSelectedIds}
-                onSelect={selectOnly}
-                onModelEdit={handleVisualEdit}
-                onDeleteSelected={handleDeleteSelected}
-                onAddElementLabel={handleAddElementLabel}
-                onCopySelection={clipboard.copySelected}
-                fieldErrors={diagnostics.selectedFieldErrors}
-                navigation={diagnostics.inspectorNavigation}
-                inspectorSection={diagnostics.inspectorSection}
-                onInspectorSectionChange={diagnostics.handleInspectorSectionChange}
-              />
-            </div>
-          </aside>
-        </div>
-          <nav className="grid shrink-0 grid-cols-3 border-t border-carbon/15 bg-lienzo p-1 xl:hidden" aria-label="Vistas del editor">
-            {([['scene', 'Escena'], ['canvas', 'Lienzo'], ['properties', 'Propiedades']] as const).map(([id, label]) => <button key={id} type="button" aria-current={mobilePane === id ? 'page' : undefined} onClick={() => setMobilePane(id)} className={`min-h-11 rounded px-3 text-sm font-bold ${mobilePane === id ? 'bg-carbon text-lienzo' : 'text-carbon/65'}`}>{label}</button>)}
-          </nav>
-        </div></DiagramSectionOutlet>
-        <DiagramSectionOutlet active={workspace === 'steps'}>
-          <main className="min-h-0 flex-1 overflow-y-auto bg-carbon/[0.02] p-3 sm:p-5" aria-label="Edición de la secuencia">
-            <div className="mx-auto grid max-w-[96rem] items-start gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(24rem,0.8fr)]">
-              <DiagramStepsEditor
-                model={model}
-                activeStepId={state.activeStepId || model.steps[0]?.id || ''}
-                onActiveStepChange={setActiveStep}
-                onModelEdit={handleVisualEdit}
-                onSelectObject={(id) => {
-                  selectOnly(id);
-                  setWorkspace('build');
-                }}
-              />
-              <div className="sticky top-0">
-                <DiagramCanvas model={model} pageType={previewPageType} selectedId={state.selectedId} selectedIds={effectiveSelectedIds} canvasTool="select" pendingRefs={[]} previewHighlightId={previewHighlightId} errorHighlightedIds={diagnostics.passiveErrorHighlightIds} previewStepId={state.activeStepId} onSelect={(id, additive) => additive ? toggleSelection(id) : selectOnly(id)} onModelEdit={handleVisualEdit} onChooseReferenceForTool={() => false} onCompleteTool={() => {}} />
-                <p className="mt-2 rounded border border-carbon/10 bg-lienzo p-2 text-[10px] text-carbon/55">La vista muestra el paso activo. Cambie de paso en la matriz para comprobar exactamente qué aparece.</p>
-              </div>
-            </div>
-          </main>
-        </DiagramSectionOutlet>
-        <DiagramSectionOutlet active={workspace === 'targets'}>
-          <main className="min-h-0 flex-1 overflow-y-auto bg-carbon/[0.02] p-3 sm:p-5" aria-label="Enlaces entre el diagrama y MDX">
-            <div className="mx-auto max-w-6xl">
-              <DiagramTargetSelector
-                model={model}
-                selectedTargetId={selectedTargetId}
-                onSelectTarget={(objectId, targetId) => {
-                  selectOnly(objectId);
-                  setSelectedTargetId(targetId);
-                  setPreviewHighlightId(objectId);
-                }}
-                onModelEdit={handleVisualEdit}
-              />
-            </div>
-          </main>
-        </DiagramSectionOutlet>
-        <DiagramSectionOutlet active={workspace === 'check'}>
-          <main className="min-h-0 flex-1 overflow-y-auto bg-carbon/[0.02] p-3 sm:p-5" aria-label="Comprobaciones del diagrama">
-            <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(16rem,1fr)]">
-              <DiagramValidationPanel
-                diagnostics={diagnostics.enrichedDiagnostics}
-                targets={mdxTargets}
-                selectedTargetId={selectedTargetId}
-                focusedDiagnosticId={diagnostics.focusedDiagnosticId}
-                onSelectTarget={(target) => {
-                  setSelectedTargetId(target.id);
-                  setPreviewHighlightId(target.objectId ?? target.id);
-                }}
-                onNavigate={navigateToDiagnostic}
-              />
-              <DiagramReferencesPanel
-                filePath={state.filePath}
-                diagramMode={model.mode}
-                onLinkToMdxPage={(mdxPath, mode) => { void linkToMdxPage(mdxPath, mode); }}
-              />
-            </div>
-          </main>
-        </DiagramSectionOutlet>
-        <DiagramSectionOutlet active={workspace === 'source'}>
-        <DiagramCodePanel
           source={state.currentSource}
-          sourceTouched={state.status === 'source-authoritative' || state.status === 'diverged'}
-          filePath={state.filePath}
-          componentName={componentName}
-          onSourceChange={handleSourceEdit}
-          onRegenerate={sourceCanRegenerate(state.parseStatus, state.status) ? () => {
-            const gen = generateDiagramSource(model, componentName);
-            if (gen.ok) {
-              handleSourceEdit(gen.source);
-            }
-          } : undefined}
+          onResolve={authority => {
+            resolveDivergence(authority);
+            setDivergenceDismissed(false);
+          }}
+          onClose={() => setDivergenceDismissed(true)}
         />
-        </DiagramSectionOutlet>
-      </div>
+      )}
+
+      {statusMessage && (
+        <div
+          role="status"
+          className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 rounded-xl border border-salvia/40 bg-lienzo px-4 py-2 text-xs font-bold text-salvia shadow-lg"
+          onAnimationEnd={() => setStatusMessage('')}
+        >
+          {statusMessage}
+        </div>
+      )}
     </div>
-    </ReferencePickProvider>
   );
 };
-
-export const DiagramWorkbench = DiagramWorkbenchCore;
-export default DiagramWorkbench;

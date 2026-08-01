@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
 import { DiagramExpressionField } from '../../../../src/features/editor/diagrams/ui/DiagramExpressionField';
 import marksFixture from '../../../fixtures/diagrams/phase3-marks-angles.json';
-import { migrateDiagramSpec, projectDiagramSpecV3ToV2 } from '../../../../src/shared/diagrams/public';
+import { toEditorModel } from '../../../../src/features/editor/diagrams/model';
 
 const model = createTemplateModel('circunferencia', 'Expresiones', 'definicion');
 
@@ -15,7 +15,7 @@ const ExpressionHarness = () => {
 
 const AngleExpressionHarness = () => {
   const [value, setValue] = useState('');
-  return <DiagramExpressionField model={projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec)} label="Cálculo angular" value={value} onChange={setValue} optional />;
+  return <DiagramExpressionField model={toEditorModel(marksFixture)!} label="Cálculo angular" value={value} onChange={setValue} optional />;
 };
 
 describe('DiagramExpressionField', () => {

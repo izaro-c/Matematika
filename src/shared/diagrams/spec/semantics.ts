@@ -1,4 +1,4 @@
-import type { DiagramElement, DiagramElementKind, DiagramPoint, DiagramSceneItem, DiagramSpecV2 } from './types';
+import type { DiagramElement, DiagramElementKind, DiagramPoint, DiagramSceneItem, DiagramSlider } from './types';
 import type { DiagramObject } from './v3';
 
 export type DiagramCapability = 'point' | 'linear-support' | 'support' | 'segment' | 'circle' | 'angle' | 'path' | 'area' | 'measurable' | 'annotatable' | 'control';
@@ -84,7 +84,11 @@ export function legacyItemHasCapability(item: DiagramSceneItem, capability: Diag
   return legacyElementCapabilities(item.kind).has(capability);
 }
 
-export function legacyReferenceCandidates(model: DiagramSpecV2, capability: DiagramCapability): Array<DiagramPoint | DiagramElement | DiagramSpecV2['sliders'][number]> {
+export function legacyReferenceCandidates(model: {
+  points: readonly DiagramPoint[];
+  elements: readonly DiagramElement[];
+  sliders: readonly DiagramSlider[];
+}, capability: DiagramCapability): Array<DiagramPoint | DiagramElement | DiagramSlider> {
   return [...model.points, ...model.elements, ...model.sliders].filter(item => legacyItemHasCapability(item, capability));
 }
 
