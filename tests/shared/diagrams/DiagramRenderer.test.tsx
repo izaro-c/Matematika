@@ -2,7 +2,8 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import v2Fixture from '../../fixtures/diagrams/diagram-spec-v2.json';
-import { migrateDiagramSpec, projectDiagramSpecV3ToV2 } from '../../../src/shared/diagrams/public';
+import { migrateDiagramSpec } from '../../../src/shared/diagrams/public';
+import { toWorkingSceneV2 } from '../../../src/shared/diagrams/spec/v3Compatibility';
 import { MathProvider } from '../../../src/shared/lib/MathStoreContext';
 
 vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
@@ -11,16 +12,28 @@ vi.mock('../../../src/shared/diagrams/core/MathBoard', () => ({
 
 import { DiagramRenderer } from '../../../src/shared/diagrams/runtime/DiagramRenderer';
 import { Pitagoras, PitagorasSpec } from '../../../src/widgets/diagrams/Teoremas/Pitagoras';
-import { DiagramStepsEditor } from '../../../src/features/editor/diagrams/ui/DiagramStepsEditor';
 
 describe('DiagramRenderer shared runtime', () => {
   beforeEach(() => vi.clearAllMocks());
+
+  it('renders a pure V3 spec without the test harness projecting to V2 first', () => {
+    const v3 = migrateDiagramSpec(v2Fixture).spec;
+    expect(v3.version).toBe(3);
+    expect(Object.prototype.propertyIsEnumerable.call(v3, 'points')).toBe(false);
+    expect(() => render(
+      <MathProvider>
+        <DiagramRenderer spec={v3} mode="preview" viewportControls={false} />
+      </MathProvider>,
+    )).not.toThrow();
+    expect(screen.getByTestId('math-board')).toBeTruthy();
+    expect(document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v3"]')).toBeTruthy();
+  });
 
   it('exposes the versioned renderer path and shared viewport controls', () => {
     const onViewportChange = vi.fn();
     render(
       <MathProvider>
-        <DiagramRenderer spec={projectDiagramSpecV3ToV2(migrateDiagramSpec(v2Fixture).spec)} mode="preview" onViewportChange={onViewportChange} />
+        <DiagramRenderer spec={migrateDiagramSpec(v2Fixture).spec} mode="preview" onViewportChange={onViewportChange} />
       </MathProvider>,
     );
     expect(screen.getByTestId('math-board')).toBeTruthy();
@@ -52,9 +65,10 @@ describe('DiagramRenderer shared runtime', () => {
       ['A', 'salvia'],
       ['B', 'pavo'],
     ]);
+    const pitagoras = toWorkingSceneV2(PitagorasSpec);
     const spec = {
-      ...PitagorasSpec,
-      points: PitagorasSpec.points.map(point => {
+      ...pitagoras,
+      points: pitagoras.points.map(point => {
         const color = movableColors.get(point.id);
         return color ? { ...point, color } : point;
       }),
@@ -73,21 +87,8 @@ describe('DiagramRenderer shared runtime', () => {
     ]);
   });
 
-  it('opens a real multi-step editor without requiring an outer MathProvider', () => {
-    expect(() => render(
-      <DiagramStepsEditor
-        model={projectDiagramSpecV3ToV2(migrateDiagramSpec(v2Fixture).spec)}
-        activeStepId="step1"
-        onActiveStepChange={vi.fn()}
-        onModelEdit={vi.fn()}
-        onSelectObject={vi.fn()}
-      />,
-    )).not.toThrow();
-    expect(screen.getByRole('navigation', { name: 'Navegación de pasos del diagrama' })).toBeTruthy();
-  });
-
   it('starts a published multi-step diagram at step 1 and only advances through its scoped navigator', () => {
-    const baseSpec = projectDiagramSpecV3ToV2(migrateDiagramSpec(v2Fixture).spec);
+    const baseSpec = migrateDiagramSpec(v2Fixture).spec;
     const spec = {
       ...baseSpec,
       steps: [

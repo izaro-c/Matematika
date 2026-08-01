@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useNavigationStore } from '@/features/search/NavigationStore';
+import { useNavigationStore } from '@/shared/stores/NavigationStore';
 
 describe('useNavigationStore', () => {
   beforeEach(() => {

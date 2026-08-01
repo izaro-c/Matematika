@@ -1,8 +1,13 @@
-import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION } from '../../../../shared/diagrams/spec';
+import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION, type DiagramSpecV2 } from '../../../../shared/diagrams/spec';
 import { normalizeContentId } from '../../lib/editorContracts';
 import { element, point, slider, step } from './diagramElements';
 import { defaultCategory, defaultMode } from './diagramOptions';
+import { fromEditorV2 } from './editorModel';
 import type { TemplateKind, VisualDiagramModel, VisualSlider, VisualStep } from './types';
+
+function asModel(spec: DiagramSpecV2): VisualDiagramModel {
+  return fromEditorV2(spec);
+}
 
 export function createTemplateModel(kind: TemplateKind, title: string, metadataType: string): VisualDiagramModel {
   const base = {
@@ -36,16 +41,18 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
   };
 
   if (kind === 'lienzo-inicial') {
-    return {
+    return asModel({
+
       ...base,
       points: [point('pA', 'A', 0, 0)],
       elements: [],
       note: 'Añada puntos y construcciones para reconstruir visualmente el diagrama.',
-    };
+    });
   }
 
   if (kind === 'circunferencia') {
-    return {
+    return asModel({
+
       ...base,
       points: [point('pO', 'O', 0, 0, true), point('pA', 'A', 2.4, 0)],
       elements: [
@@ -53,11 +60,12 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
         element('segOA', 'Radio OA', 'segment', ['pO', 'pA'], 'pizarra'),
         element('measRadio', 'Radio', 'text', ['pO'], 'carbon', true, { text: 'r = OA' }),
       ],
-    };
+    });
   }
 
   if (kind === 'eje-cartesiano') {
-    return {
+    return asModel({
+
       ...base,
       axis: true,
       grid: true,
@@ -67,11 +75,12 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
         element('coordX', 'Coordenada x', 'text', ['pP'], 'pizarra', true, { text: 'x(P)' }),
         element('coordY', 'Coordenada y', 'text', ['pP'], 'salvia', true, { text: 'y(P)' }),
       ],
-    };
+    });
   }
 
   if (kind === 'modelo-estatico') {
-    return {
+    return asModel({
+
       ...base,
       mode: 'diagram',
       points: [point('pA', 'A', -2, -1, true), point('pB', 'B', 2, -0.6, true), point('pC', 'C', 0, 2.2, true)],
@@ -81,11 +90,12 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
         element('segCA', 'Recta CA del modelo', 'segment', ['pC', 'pA'], 'pizarra', true, { dashed: true }),
       ],
       note: 'Modelo fijo: los puntos no se arrastran en el producto final.',
-    };
+    });
   }
 
   if (kind === 'cuadrilatero-clasificable') {
-    return {
+    return asModel({
+
       ...base,
       points: [point('pA', 'A', -2.6, -1.5), point('pB', 'B', 2.2, -1.2), point('pC', 'C', 2.6, 1.7), point('pD', 'D', -1.8, 2)],
       elements: [
@@ -96,11 +106,12 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
         element('segDA', 'Lado DA', 'segment', ['pD', 'pA'], 'carbon'),
         element('diagAC', 'Diagonal AC', 'segment', ['pA', 'pC'], 'pavo', true, { dashed: true }),
       ],
-    };
+    });
   }
 
   if (kind === 'lugar-geometrico') {
-    return {
+    return asModel({
+
       ...base,
       points: [
         point('pA', 'A', -2, 0, true),
@@ -116,11 +127,12 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
         element('measEquidistancia', 'Equidistancia', 'text', ['pP'], 'carbon', true, { text: 'PA = PB' }),
       ],
       note: 'Arrastre P sobre la mediatriz para explorar el lugar de puntos equidistantes de A y B.',
-    };
+    });
   }
 
   if (kind === 'demostracion-pasos') {
-    return {
+    return asModel({
+
       ...base,
       points: [point('pA', 'A', -2.5, -1.6), point('pB', 'B', 2.5, -1.6), point('pC', 'C', -0.2, 2.2)],
       elements: [
@@ -136,10 +148,10 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
         step('step3', 'Paso 3', 'Resaltar la conclusión.', ['pA', 'pB', 'pC', 'step1Triangulo', 'segAB', 'step2Altura', 'angleC', 'step3Conclusion']),
       ],
       note: 'Targets step1/step2/step3 preparados para ProofStep e InteractiveElement.',
-    };
+    });
   }
 
-  return {
+  return asModel({
     ...base,
     points: [point('pA', 'A', -2.4, -1.6), point('pB', 'B', 2.4, -1.4), point('pC', 'C', 0.2, 2.2)],
     elements: [
@@ -150,5 +162,5 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
       element('angleC', 'Ángulo C', 'angle', ['pA', 'pC', 'pB'], 'ocre'),
       element('measArea', 'Área', 'text', ['pC'], 'pizarra', true, { text: 'Área variable' }),
     ],
-  };
+  });
 }

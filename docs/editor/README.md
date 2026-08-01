@@ -10,7 +10,7 @@ Referencia operativa del editor MDX y del workbench de diagramas. Los ADR explic
 | Orquestación y estado | `src/features/editor/core/`, `state/` | Apertura, revisión, guardado y estados visibles. |
 | Persistencia | `src/features/editor/persistence/` | Versiones, conflictos, borradores, backups y recuperación. |
 | UI | `src/features/editor/ui/` | Navegación, autoría, diálogos, preview y estados. No accede al filesystem. |
-| Diagramas de autoría | `src/features/editor/diagrams/` | Modelo, parser/generador TSX, historial y workbench. |
+| Diagramas de autoría | `src/features/editor/diagrams/` | Modelo, parser/generador TSX, historial y workbench UI (`ui/DiagramWorkbench.tsx`; sandbox `/editor_v2`). |
 | Spec y runtime común | `src/shared/diagrams/spec/`, `runtime/` | `DiagramSpec v3` (lee v1/v2), semántica y renderer usado por editor, preview y publicación. |
 | Diagramas publicados | `src/widgets/diagrams/` | Componentes consumidos por MDX; usan el núcleo compartido. |
 | Backend local | `vite.config.ts`, `scripts/editor/editorPersistenceBackend.ts` | API de desarrollo y escritura atómica. |

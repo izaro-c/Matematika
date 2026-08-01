@@ -6,7 +6,7 @@ export * from './v3';
 export * from './schema';
 export * from './schemaV3';
 export * from './migrations';
-export * from './v3Compatibility';
+export { migrateDiagramSpecV2ToV3, objectReferences } from './v3Compatibility';
 export * from './semantics';
 export * from './scene';
 export * from './viewport';

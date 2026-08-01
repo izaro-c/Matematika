@@ -1,5 +1,6 @@
-import { migrateDiagramSpecV2ToV3, parseDiagramSpecV2, parseDiagramSpecV3 } from '../../../../shared/diagrams/spec';
+import { migrateDiagramSpecV2ToV3, parseDiagramSpecV3 } from '../../../../shared/diagrams/spec';
 import { z } from 'zod';
+import { editorV2 } from '../model/editorModel';
 import type { VisualDiagramModel } from '../model/types';
 
 export interface DiagramDiagnostic {
@@ -49,15 +50,11 @@ export function generateDiagramSource(model: VisualDiagramModel, componentName: 
       source: 'model',
     });
   }
-
-  const parsed = parseDiagramSpecV2(model);
-  if (!parsed.success) {
-    diagnostics.push(...diagnosticsFromZodIssues(parsed.error.issues, 'invalid-diagram-spec-v2'));
-  }
   if (diagnostics.some(diagnostic => diagnostic.severity === 'error')) return { ok: false, diagnostics };
 
-  const specName = `${componentName}Spec`;
-  const currentSpec = migrateDiagramSpecV2ToV3(parsed.success ? parsed.data : model as VisualDiagramModel);
+  // Preferir objetos V3 del modelo cuando ya están canónicos; reify desde escena
+  // solo aporta el contrato validable sin pasar por resolve de runtime.
+  const currentSpec = migrateDiagramSpecV2ToV3(editorV2(model));
   const currentParsed = parseDiagramSpecV3(currentSpec);
   if (!currentParsed.success) {
     return {
@@ -65,6 +62,7 @@ export function generateDiagramSource(model: VisualDiagramModel, componentName: 
       diagnostics: diagnosticsFromZodIssues(currentParsed.error.issues, 'invalid-diagram-spec-v3'),
     };
   }
+  const specName = `${componentName}Spec`;
   const source = `import { createDiagramSpec, DiagramRenderer } from '@/shared/diagrams/public';
 
 ${SPEC_START}

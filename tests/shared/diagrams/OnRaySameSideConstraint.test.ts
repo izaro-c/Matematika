@@ -9,7 +9,7 @@ import {
   constrainPointCoordinates,
   withMovedPoint,
 } from '../../../src/shared/diagrams/spec/scene';
-import { projectDiagramSpecV3ToV2 } from '../../../src/shared/diagrams/spec/v3Compatibility';
+import { toWorkingSceneV2 } from '../../../src/shared/diagrams/spec/v3Compatibility';
 import type { VisualDiagramModel } from '../../../src/features/editor/diagrams/model/types';
 import { DemoAnguloExternoSpec } from '@/widgets/diagrams/Demos/DemoAnguloExterno';
 import {
@@ -19,8 +19,8 @@ import {
   rayParameter,
 } from '../../helpers/diagramRay';
 
-function demoAnguloExternoV2(): VisualDiagramModel {
-  return projectDiagramSpecV3ToV2(DemoAnguloExternoSpec);
+function demoAnguloExternoV2() {
+  return toWorkingSceneV2(DemoAnguloExternoSpec);
 }
 
 function rayOnSupportWithSameSideModel(): VisualDiagramModel {

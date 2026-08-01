@@ -30,7 +30,7 @@
     "validate-references": "tsx scripts/core/validate-cross-references.ts",
     "lean:build": "echo 'Lean deshabilitado por ahora'",
     "lean:graph": "tsx scripts/core/generate-lean-graph.ts",
-    "validate-lean": "npm run validate-graph && npm run lean:build && npm run lean:graph && npm run validate-no-fake-lean-certificates && tsx scripts/core/validate-lean-diff.ts",
+    "validate-lean": "npm run validate-graph && npm run lean:graph && npm run validate-no-fake-lean-certificates && tsx scripts/core/validate-lean-diff.ts",
     "validate-no-fake-lean-certificates": "tsx scripts/core/validate-no-fake-lean-certificates.ts",
     "bridge:audit": "tsx scripts/core/validate-bridge-phase.ts",
     "validate-no-mathlib": "tsx scripts/core/validate-no-mathlib.ts",
@@ -95,7 +95,6 @@
     "zustand": "^5.0.14"
   },
   "devDependencies": {
-    "@appland/appmap": "^3.201.3",
     "@eslint/js": "^10.0.1",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^24.12.3",

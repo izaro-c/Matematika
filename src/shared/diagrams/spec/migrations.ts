@@ -7,7 +7,7 @@ import {
   type DiagramSpecV2,
 } from './types';
 import type { DiagramSpec } from './v3';
-import { attachDiagramSpecLegacyViews, migrateDiagramSpecV2ToV3 } from './v3Compatibility';
+import { migrateDiagramSpecV2ToV3 } from './v3Compatibility';
 
 export type DiagramSpecMigrationCode =
   | 'invalid-root'
@@ -110,7 +110,7 @@ export function migrateDiagramSpec(value: unknown): DiagramSpecMigrationResult {
   if (version === DIAGRAM_SPEC_VERSION) {
     const parsed = parseDiagramSpecV3(record);
     if (!parsed.success) throw new DiagramSpecMigrationError('invalid-v3', 'DiagramSpec v3 no es válido.', parsed.error.message.split('\n'));
-    return { spec: attachDiagramSpecLegacyViews(parsed.data), migratedFrom: null, warnings: [] };
+    return { spec: parsed.data, migratedFrom: null, warnings: [] };
   }
   if (version === DIAGRAM_SPEC_V2_VERSION) {
     const parsed = parseDiagramSpecV2(record);
@@ -118,13 +118,13 @@ export function migrateDiagramSpec(value: unknown): DiagramSpecMigrationResult {
     const spec = migrateDiagramSpecV2ToV3(parsed.data);
     const checked = parseDiagramSpecV3(spec);
     if (!checked.success) throw new DiagramSpecMigrationError('invalid-v3', 'La migración v2 → v3 produjo una especificación no válida.', checked.error.message.split('\n'));
-    return { spec: attachDiagramSpecLegacyViews(checked.data), migratedFrom: 2, warnings: ['DiagramSpec v2 se migró de forma determinista a v3.'] };
+    return { spec: checked.data, migratedFrom: 2, warnings: ['DiagramSpec v2 se migró de forma determinista a v3.'] };
   }
   if (version === undefined || version === 1) {
     const spec = migrateDiagramSpecV2ToV3(migrateV1ToV2(record));
     const checked = parseDiagramSpecV3(spec);
     if (!checked.success) throw new DiagramSpecMigrationError('invalid-v3', 'La migración v1 → v3 produjo una especificación no válida.', checked.error.message.split('\n'));
-    return { spec: attachDiagramSpecLegacyViews(checked.data), migratedFrom: 1, warnings: ['DiagramSpec v1 se migró de forma determinista a v3.'] };
+    return { spec: checked.data, migratedFrom: 1, warnings: ['DiagramSpec v1 se migró de forma determinista a v3.'] };
   }
   if (typeof version === 'number' && version > DIAGRAM_SPEC_VERSION) {
     throw new DiagramSpecMigrationError('future-version', `DiagramSpec v${version} es más reciente que la versión soportada (v${DIAGRAM_SPEC_VERSION}). Actualice Matematika antes de editarlo.`);

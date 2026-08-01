@@ -17,4 +17,5 @@ export * from './diagramClipboard';
 export * from './graphCommands';
 export * from './pointMovement';
 export * from './publishedDiagramLayout';
+export * from './editorModel';
 export { projectPointToSupport, supportElements } from '../../../../shared/diagrams/spec';

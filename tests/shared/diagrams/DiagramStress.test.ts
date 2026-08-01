@@ -1,12 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import {
-  createSceneConstructionPlan,
+import {createSceneConstructionPlan,
   parseDiagramSpecV3,
-  projectDiagramSpecV3ToV2,
   type DiagramObject,
   type DiagramSpecV3,
-  type PointObject,
-} from '../../../src/shared/diagrams/public';
+  type PointObject} from '../../../src/shared/diagrams/public';
+import { toWorkingSceneV2 } from '../../../src/shared/diagrams/spec/v3Compatibility';
 
 const selection = { selectable: true } as const;
 
@@ -42,7 +40,7 @@ describe('large DiagramSpec v3 scenes', () => {
     const parsed = parseDiagramSpecV3(spec);
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
-    const plan = createSceneConstructionPlan(projectDiagramSpecV3ToV2(parsed.data));
+    const plan = createSceneConstructionPlan(toWorkingSceneV2(parsed.data));
     const elapsed = performance.now() - started;
 
     expect(plan).toHaveLength(250);

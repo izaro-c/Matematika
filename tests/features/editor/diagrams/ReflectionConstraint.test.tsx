@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { resolvePointCoordinates } from '../../../../src/shared/diagrams/spec/scene';
-import { migrateDiagramSpecV2ToV3, projectDiagramSpecV3ToV2 } from '../../../../src/shared/diagrams/spec/v3Compatibility';
+import { migrateDiagramSpecV2ToV3, toWorkingSceneV2 } from '../../../../src/shared/diagrams/spec/v3Compatibility';
 import { parseDiagramSpecV3 } from '../../../../src/shared/diagrams/spec/schemaV3';
 import { setReflectionConstraintForPoint, setReflectionConstraintForSegment } from '../../../../src/features/editor/diagrams/model/reflectionConstraints';
 import { SegmentReflectionConstraintEditor } from '../../../../src/features/editor/diagrams/ui/SegmentReflectionConstraintEditor';
@@ -91,7 +91,7 @@ describe('Reflection Constraint (Simetría central y axial)', () => {
     const relP = v3.relations.find(r => r.id === 'cReflP');
     expect(relP?.type).toBe('reflection');
 
-    const projectedV2 = projectDiagramSpecV3ToV2(v3);
+    const projectedV2 = toWorkingSceneV2(v3);
     const projectedConstraint = projectedV2.constraints?.find(c => c.id === 'cReflP');
     expect(projectedConstraint?.kind).toBe('reflection');
   });

@@ -17,10 +17,10 @@ import type {
   DiagramPoint,
   DiagramPointConstraint,
   DiagramSlider,
-  DiagramSpecV2,
   DiagramStep,
   DiagramConstraint,
   DiagramDependency,
+  DiagramSpecV3,
 } from '../../../../shared/diagrams/spec';
 
 export type ColorToken = DiagramColorToken;
@@ -48,4 +48,16 @@ export type VisualSlider = DiagramSlider;
 export type VisualStep = DiagramStep;
 export type VisualConstraint = DiagramConstraint;
 export type VisualDependency = DiagramDependency;
-export type VisualDiagramModel = DiagramSpecV2;
+
+/**
+ * Modelo del workbench: V3 canónico + escena V2 materializada (mutable).
+ * Persistencia reifica vía generator (`editorV2` → V3); no stringify crudo.
+ */
+export type VisualDiagramModel = DiagramSpecV3 & {
+  points: DiagramPoint[];
+  elements: DiagramElement[];
+  sliders: DiagramSlider[];
+  constraints?: DiagramConstraint[];
+  dependencies?: DiagramDependency[];
+  extensions: Record<string, unknown>;
+};

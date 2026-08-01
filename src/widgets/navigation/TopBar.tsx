@@ -1,7 +1,7 @@
 import { useLocation, Link } from 'wouter';
 import { useNavigationStore } from '@/shared/stores/NavigationStore';
 import { routePath } from '@/shared/lib/routeHelper';
-import { ThemeToggle } from '@/widgets/navigation/ThemeToggle';
+import { ThemeToggle } from '@/shared/ui/ThemeToggle';
 import { Logo } from '@/shared/ui/Logo';
 
 export function TopBar() {

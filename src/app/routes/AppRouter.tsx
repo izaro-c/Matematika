@@ -25,7 +25,7 @@ const NotFoundPage = lazy(() => import("@/pages/NotFoundPage").then(m => ({ defa
 const ConstructionPage = lazy(() => import("@/pages/ConstructionPage").then(m => ({ default: m.ConstructionPage })));
 
 const EditorPage = lazy(() => import("@/features/editor/ui/EditorPage").then(m => ({ default: m.EditorPage })));
-const EditorV2Page = lazy(() => import("@/pages/EditorV2Page").then(m => ({ default: m.EditorV2Page })));
+const DiagramEditorPage = lazy(() => import("@/pages/DiagramEditorPage").then(m => ({ default: m.DiagramEditorPage })));
 const GraphPage = lazy(() => import("@/pages/GraphPage").then(m => ({ default: m.GraphPage })));
 const AxiomGraphPage = lazy(() => import("@/pages/AxiomGraphPage").then(m => ({ default: m.AxiomGraphPage })));
 
@@ -58,13 +58,11 @@ export const AppRouter = () => {
         </Route>
         <Route path="/editor_v2">
           <MathProvider>
-            <EditorV2Page />
+            <DiagramEditorPage />
           </MathProvider>
         </Route>
         <Route path="/editor-v2">
-          <MathProvider>
-            <EditorV2Page />
-          </MathProvider>
+          <Redirect to="/editor_v2" />
         </Route>
           <Route path="/diccionario" component={DictionaryPage} />
           <Route path="/historia" component={HistoryTimeline} />

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'wouter';
-import { useNavigationStore } from '@/features/search/NavigationStore';
+import { useNavigationStore } from '@/shared/stores/NavigationStore';
 import { useGlossaryStore } from '@/features/glossary/GlossaryStore';
 
 function isEditing(): boolean {

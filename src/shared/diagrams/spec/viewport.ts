@@ -1,11 +1,19 @@
 import type { DiagramBounds, DiagramSpecV2 } from './types';
+import type { DiagramSpecV3 } from './v3';
 import {
   boundsContain,
   contentBounds,
   createScenePlan,
   padBounds,
+  prepareSceneSpec,
   type PlannedSceneItem,
 } from './scene';
+
+type ViewportSpec = DiagramSpecV2 | DiagramSpecV3;
+
+function viewportV2(spec: ViewportSpec): DiagramSpecV2 {
+  return spec.version === 3 ? prepareSceneSpec(spec) : spec;
+}
 
 export interface ViewportLimits {
   minX: number;
@@ -39,13 +47,15 @@ export function limitsFromBounds(bounds: DiagramBounds): ViewportLimits {
   return { minX: left, maxX: right, minY: bottom, maxY: top };
 }
 
-export function resolveHomeViewport(spec: DiagramSpecV2): DiagramBounds {
-  return normalizeViewportBounds(spec.viewport.home) ?? normalizeViewportBounds(spec.viewport.bounds) ?? [-5, 5, 5, -5];
+export function resolveHomeViewport(spec: ViewportSpec): DiagramBounds {
+  const v2 = viewportV2(spec);
+  return normalizeViewportBounds(v2.viewport.home) ?? normalizeViewportBounds(v2.viewport.bounds) ?? [-5, 5, 5, -5];
 }
 
 /** Autoridad de la vista configurada al cargar o tras editar límites manualmente. */
-export function resolveInitialCamera(spec: DiagramSpecV2): DiagramBounds {
-  return normalizeViewportBounds(spec.viewport.bounds) ?? resolveHomeViewport(spec);
+export function resolveInitialCamera(spec: ViewportSpec): DiagramBounds {
+  const v2 = viewportV2(spec);
+  return normalizeViewportBounds(v2.viewport.bounds) ?? resolveHomeViewport(v2);
 }
 
 export function unionBounds(boundsList: readonly DiagramBounds[]): DiagramBounds | null {
@@ -69,7 +79,8 @@ export function applyBoundsPadding(bounds: DiagramBounds, padding: number): Diag
 }
 
 /** Aplica valores temporales de sliders definidos en un paso. */
-export function specWithStepSliderValues(spec: DiagramSpecV2, stepId: string): DiagramSpecV2 {
+export function specWithStepSliderValues(input: ViewportSpec, stepId: string): DiagramSpecV2 {
+  const spec = viewportV2(input);
   const step = spec.steps.find(item => item.id === stepId);
   if (!step?.objectStates) return spec;
   const hasSliderOverride = spec.sliders.some(slider => step.objectStates?.[slider.id]?.value !== undefined);
@@ -87,17 +98,18 @@ export function isEffectivelyVisible(entry: PlannedSceneItem): boolean {
   return entry.visible;
 }
 
-export function isEffectivelyVisibleAtStep(spec: DiagramSpecV2, itemId: string, stepId?: string): boolean {
+export function isEffectivelyVisibleAtStep(spec: ViewportSpec, itemId: string, stepId?: string): boolean {
   const plan = createScenePlan(spec, stepId ? { activeStepId: stepId } : {});
   return plan.find(entry => entry.item.id === itemId)?.visible ?? false;
 }
 
-export function isEffectivelyVisibleInAnyStep(spec: DiagramSpecV2, itemId: string): boolean {
-  if (spec.steps.length === 0) return isEffectivelyVisibleAtStep(spec, itemId);
-  return spec.steps.some(step => isEffectivelyVisibleAtStep(spec, itemId, step.id));
+export function isEffectivelyVisibleInAnyStep(spec: ViewportSpec, itemId: string): boolean {
+  const v2 = viewportV2(spec);
+  if (v2.steps.length === 0) return isEffectivelyVisibleAtStep(v2, itemId);
+  return v2.steps.some(step => isEffectivelyVisibleAtStep(v2, itemId, step.id));
 }
 
-export function computeElementBoundsAtStep(spec: DiagramSpecV2, itemId: string): DiagramBounds | null {
+export function computeElementBoundsAtStep(spec: ViewportSpec, itemId: string): DiagramBounds | null {
   return contentBounds(spec, [itemId]);
 }
 
@@ -106,9 +118,11 @@ export function computeElementBoundsAtStep(spec: DiagramSpecV2, itemId: string):
  * un elemento entra si es visible efectivamente en al menos un paso.
  */
 export function computeAutoFitBounds(
-  spec: DiagramSpecV2,
-  padding = spec.viewport.padding,
+  input: ViewportSpec,
+  padding?: number,
 ): DiagramBounds | null {
+  const spec = viewportV2(input);
+  const pad = padding ?? spec.viewport.padding;
   const collected: DiagramBounds[] = [];
 
   if (spec.steps.length === 0) {
@@ -131,12 +145,12 @@ export function computeAutoFitBounds(
   }
 
   const united = unionBounds(collected);
-  return united ? applyBoundsPadding(united, padding) : null;
+  return united ? applyBoundsPadding(united, pad) : null;
 }
 
 /** Elementos visibles en el paso actual que quedan fuera del viewport dado. */
 export function offscreenVisibleItemIds(
-  spec: DiagramSpecV2,
+  spec: ViewportSpec,
   bounds: DiagramBounds,
   stepId?: string,
 ): string[] {
@@ -152,10 +166,11 @@ export function offscreenVisibleItemIds(
 
 /** Encuadre de elementos visibles en el paso activo (acción Recuperar). */
 export function fitVisibleItemsAtStep(
-  spec: DiagramSpecV2,
+  input: ViewportSpec,
   stepId?: string,
-  padding = spec.viewport.padding,
+  padding?: number,
 ): DiagramBounds | null {
+  const spec = viewportV2(input);
   const plan = createScenePlan(spec, stepId ? { activeStepId: stepId } : {});
   const collected = plan
     .filter(entry => isEffectivelyVisible(entry))
@@ -164,5 +179,5 @@ export function fitVisibleItemsAtStep(
       return bounds ? [bounds] : [];
     });
   const united = unionBounds(collected);
-  return united ? applyBoundsPadding(united, padding) : null;
+  return united ? applyBoundsPadding(united, padding ?? spec.viewport.padding) : null;
 }

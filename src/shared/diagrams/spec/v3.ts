@@ -10,9 +10,6 @@ import type {
   DiagramStep,
   DiagramTextRule,
   DiagramViewport,
-  DiagramPoint,
-  DiagramElement,
-  DiagramSlider,
 } from './types';
 import { DIAGRAM_RENDERER_ID, DIAGRAM_SPEC_VERSION } from './types';
 
@@ -257,15 +254,8 @@ export interface DiagramSpecV3 {
   note: string;
 }
 
-/** Vistas no enumerables para consumidores v2 durante la ventana de deprecación. */
-export interface DiagramSpecLegacyViews {
-  readonly points: readonly DiagramPoint[];
-  readonly elements: readonly DiagramElement[];
-  readonly sliders: readonly DiagramSlider[];
-  readonly extensions: Readonly<Record<string, never>>;
-}
-
-export type DiagramSpec = DiagramSpecV3 & DiagramSpecLegacyViews;
+/** Contrato canónico del runtime y de persistencia. */
+export type DiagramSpec = DiagramSpecV3;
 
 export function isPointObject(object: DiagramObject): object is PointObject {
   return object.objectType === 'point';

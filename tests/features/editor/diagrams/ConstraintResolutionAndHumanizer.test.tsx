@@ -10,7 +10,6 @@ import { SegmentLengthConstraintEditor } from '../../../../src/features/editor/d
 import { DiagramConstraintEditor } from '../../../../src/features/editor/diagrams/ui/DiagramConstraintEditor';
 import { parseDiagramSpecV2 } from '../../../../src/shared/diagrams/spec/schema';
 import { enrichDiagramDiagnostics } from '../../../../src/features/editor/diagrams/diagnostics';
-import { DiagramValidationPanel } from '../../../../src/features/editor/diagrams/ui/DiagramValidationPanel';
 import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
 
 const mockDemoModel: VisualDiagramModel = {
@@ -186,15 +185,5 @@ describe('Constraint Resolution & UI Explanations', () => {
 
     const result = parseDiagramSpecV2({ ...modelWithMark, version: 2 });
     expect(result.success).toBe(true);
-  });
-
-  it('splits multi-issue diagnostic strings into separate individual elements in DiagramValidationPanel', () => {
-    const diagnostics = enrichDiagramDiagnostics([
-      { code: 'warn1', severity: 'warning', message: 'elements.0.refs: Error uno. elements.1.refs: Error dos.', source: 'model' },
-    ], mockDemoModel);
-    render(<DiagramValidationPanel diagnostics={diagnostics} targets={[]} selectedTargetId="" onSelectTarget={vi.fn()} onNavigate={vi.fn()} />);
-
-    expect(screen.getByText('2 avisos')).toBeDefined();
-    expect(screen.getAllByText('Ir al origen →').length).toBeGreaterThan(0);
   });
 });

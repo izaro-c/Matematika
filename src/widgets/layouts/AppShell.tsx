@@ -57,7 +57,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       break;
   }
 
-  // Ocultar TopBar, MarginaliaPanel y elementos globales flotantes en todos los editores (/editor, /editor_v2, /editor-v2)
+  // Ocultar TopBar, MarginaliaPanel y elementos globales flotantes en editores (/editor, /editor_v2)
   const isEditor = location.startsWith('/editor');
 
   return (

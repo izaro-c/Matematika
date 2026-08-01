@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { DiagramElementKind } from '../../../../src/shared/diagrams/public';
-import { V2ElementInspector } from '../../../../src/features/editor/v2/ui/V2ElementInspector';
+import { WorkbenchElementInspector } from '../../../../src/features/editor/diagrams/ui/WorkbenchElementInspector';
 import { element, createTemplateModel } from '../../../../src/features/editor/diagrams/model';
 import type { VisualDiagramModel, VisualElement } from '../../../../src/features/editor/diagrams/model/types';
 
@@ -48,7 +48,7 @@ function setupV2InspectorForKind(
   };
 
   render(
-    <V2ElementInspector
+    <WorkbenchElementInspector
       model={model}
       selectedId={targetElement.id}
       onUpdatePoint={vi.fn()}

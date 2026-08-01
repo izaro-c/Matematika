@@ -18,7 +18,6 @@ import type {
   DiagramObjectBase,
   DiagramRelation,
   DiagramSpecV3,
-  DiagramSpec,
   MarkObject,
   PathObject,
   PointObject,
@@ -37,8 +36,8 @@ function commonFromV2(item: DiagramPoint | DiagramElement | DiagramSpecV2['slide
     visible: item.visible,
     ...(item.visibleWhen ? { visibleWhen: item.visibleWhen } : {}),
     locked: item.locked,
-    groupIds: [...item.groupIds],
-    selection: { ...item.selection },
+    groupIds: [...(item.groupIds ?? [])],
+    selection: { ...(item.selection ?? { selectable: true, role: 'primary' as const }) },
     target: item.target,
     ...(item.targetId ? { targetId: item.targetId } : {}),
   };
@@ -905,7 +904,8 @@ function relationToConstraint(relation: DiagramRelation, objects: readonly Diagr
   }
 }
 
-export function projectDiagramSpecV3ToV2(spec: DiagramSpecV3): DiagramSpecV2 {
+/** Copia de trabajo V2 para scene/editor. No es API pública. */
+export function toWorkingSceneV2(spec: DiagramSpecV3): DiagramSpecV2 {
   const points = spec.objects.filter((object): object is PointObject => object.objectType === 'point').map(pointToV2).filter((point): point is DiagramPoint => point !== null);
   const elements = spec.objects.flatMap(object => {
     if (object.objectType === 'control') return [];
@@ -930,20 +930,4 @@ export function projectDiagramSpecV3ToV2(spec: DiagramSpecV3): DiagramSpecV2 {
     viewport: structuredClone(spec.viewport), layers: structuredClone(spec.layers), groups: structuredClone(spec.groups), points, elements, sliders,
     steps: structuredClone(spec.steps), constraints: compatibilityRelations.map(relation => relationToConstraint(relation, spec.objects)), dependencies, note: spec.note, extensions: {},
   };
-}
-
-/**
- * Adjunta vistas de solo lectura no persistidas. JSON.stringify y el schema v3
- * siguen viendo exclusivamente `objects`; sirven para una deprecación gradual.
- */
-export function attachDiagramSpecLegacyViews(spec: DiagramSpecV3): DiagramSpec {
-  let projection: DiagramSpecV2 | undefined;
-  const legacy = () => projection ??= projectDiagramSpecV3ToV2(spec);
-  Object.defineProperties(spec, {
-    points: { enumerable: false, configurable: false, get: () => legacy().points },
-    elements: { enumerable: false, configurable: false, get: () => legacy().elements },
-    sliders: { enumerable: false, configurable: false, get: () => legacy().sliders },
-    extensions: { enumerable: false, configurable: false, get: () => ({}) },
-  });
-  return spec as DiagramSpec;
 }

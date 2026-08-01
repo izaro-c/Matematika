@@ -17,6 +17,7 @@ out/
 # Coverage & reports
 coverage
 eslint-report.json
+tmp/
 
 # Editor directories and files
 .vscode/*

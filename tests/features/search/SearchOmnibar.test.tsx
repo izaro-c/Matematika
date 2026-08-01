@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { useNavigationStore } from '@/features/search/NavigationStore';
+import { useNavigationStore } from '@/shared/stores/NavigationStore';
 import { SearchOmnibar } from '@/widgets/navigation/SearchOmnibar';
 import { mscNames } from '@/entities/content/msc2020';
 import { routePath } from '@/shared/lib/routeHelper';

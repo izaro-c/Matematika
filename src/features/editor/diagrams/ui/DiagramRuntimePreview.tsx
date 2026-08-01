@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { MathProviderBoundary } from '@/shared/lib/MathStoreContext';
-import { ErrorBoundary } from '@/widgets/layouts/ErrorBoundary';
-import { type DiagramSpecV2 } from '@/shared/diagrams/public';
+import { ErrorBoundary } from '@/shared/ui/ErrorBoundary';
 import { StepNavigator } from '@/shared/ui/StepNavigator';
+import { toEditorModel } from '../model/editorModel';
+import type { VisualDiagramModel } from '../model/types';
 import { DiagramResponsivePreview } from './DiagramResponsivePreview';
 
 type DiagramModule = Record<string, unknown>;
@@ -30,15 +31,19 @@ export interface DiagramRuntimePreviewProps {
 interface PreviewState {
   key: string;
   component: DiagramComponent | null;
-  spec: DiagramSpecV2 | null;
+  spec: VisualDiagramModel | null;
   message: string;
 }
 
-function findSpec(module: DiagramModule, componentName: string): DiagramSpecV2 | null {
+function findSpec(module: DiagramModule, componentName: string): VisualDiagramModel | null {
   const named = module[`${componentName}Spec`];
   const candidates = named ? [named] : Object.values(module);
-  const candidate = candidates.find(value => value && typeof value === 'object' && (value as { version?: unknown }).version === 2 && Array.isArray((value as { points?: unknown }).points));
-  return candidate ? candidate as DiagramSpecV2 : null;
+  for (const value of candidates) {
+    if (!value || typeof value !== 'object') continue;
+    const model = toEditorModel(value);
+    if (model) return model;
+  }
+  return null;
 }
 
 function pendingMessage(filePath: string | null, hasLoader: boolean): string {

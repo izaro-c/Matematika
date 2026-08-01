@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXComponents } from '@/widgets/mdx/MDXBlocks';
 import { PageTransition } from "@/widgets/layouts/PageTransition";
-import { ErrorBoundary } from "@/widgets/layouts/ErrorBoundary";
+import { ErrorBoundary } from "@/shared/ui/ErrorBoundary";
 import { AppShell } from "@/widgets/layouts/AppShell";
 import { useKeyboardShortcuts } from "@/app/hooks/useKeyboardShortcuts";
 import { AppRouter } from "@/app/routes/AppRouter";

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
 import { Logo } from '@/shared/ui/Logo';
 import { routePath } from '@/shared/lib/routeHelper';
-import { ThemeToggle } from '@/widgets/navigation/ThemeToggle';
+import { ThemeToggle } from '@/shared/ui/ThemeToggle';
 import type { DirtyState, EditorMode, EditorValidationResult } from '../core/editorTypes';
 import type { EditorWorkspaceLevel } from '../navigation/editorNavigationModel';
 import { EditorModeSwitcher } from './EditorModeSwitcher';

@@ -8,7 +8,8 @@ import marksFixture from '../../fixtures/diagrams/phase3-marks-angles.json';
 import measurementsFixture from '../../fixtures/diagrams/phase3-measurements.json';
 import areasFixture from '../../fixtures/diagrams/phase3-area-grids.json';
 import annotationsFixture from '../../fixtures/diagrams/phase3-annotations-layers.json';
-import { migrateDiagramSpec, parseDiagramSpecV2, projectDiagramSpecV3ToV2 } from '../../../src/shared/diagrams/public';
+import { migrateDiagramSpec, parseDiagramSpecV2 } from '../../../src/shared/diagrams/public';
+import { toWorkingSceneV2 } from '../../../src/shared/diagrams/spec/v3Compatibility';
 import { MathProvider, useMathStore } from '../../../src/shared/lib/MathStoreContext';
 
 const rendererState = vi.hoisted(() => ({
@@ -137,6 +138,9 @@ import { Congruence1Spec } from '../../../src/widgets/diagrams/Axiomas/Congruenc
 import { PaschSpec } from '../../../src/widgets/diagrams/Axiomas/Pasch';
 import { AxiomaArquimedesSpec } from '../../../src/widgets/diagrams/Axiomas/AxiomaArquimedes';
 import { TrianguloSpec } from '../../../src/widgets/diagrams/Definiciones/Triangulo';
+
+const congruenceScene = toWorkingSceneV2(Congruence1Spec);
+const trianguloScene = toWorkingSceneV2(TrianguloSpec);
 import { addLabelToElement, setPointAttractors } from '../../../src/features/editor/diagrams/model';
 
 afterEach(() => {
@@ -171,7 +175,7 @@ function lastCommittedAttrs(geometry: { setAttribute: { mock: { calls: unknown[]
 
 describe('Phase 3 shared renderer', () => {
   it('keeps a point visibly selected after the pointer leaves it', () => {
-    const spec = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const target = spec.points.find(point => !point.fixed && point.selection.selectable)!;
 
     function SelectionHarness() {
@@ -204,7 +208,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('keeps constructed sides selectable but immovable so constraints cannot be bypassed', () => {
-    const spec = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const onSelectionChange = vi.fn();
     render(
       <MathProvider>
@@ -230,7 +234,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('keeps local hover disabled while allowing explicit MDX emphasis', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const target = base.points.find(point => !point.fixed && point.target)!;
     const spec = {
       ...base,
@@ -279,7 +283,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('renders exact intersections and keeps them on finite authored supports', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const line = {
       ...base.elements.find(item => item.id === 'lineBC')!,
       id: 'lineOC',
@@ -310,7 +314,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('hides a restricted intersection when the carrier meets only the extension of a segment', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const line = { ...base.elements.find(item => item.id === 'lineBC')!, id: 'lineOC', label: 'Recta OC', refs: ['pO', 'pC'], target: false };
     const intersection = {
       ...base.elements.find(item => item.id === 'segAB')!,
@@ -385,8 +389,8 @@ describe('Phase 3 shared renderer', () => {
 
   it('blocks direct interaction without making a point immovable for relations', () => {
     const spec = {
-      ...Congruence1Spec,
-      points: Congruence1Spec.points.map(point => point.id === 'pD'
+      ...congruenceScene,
+      points: congruenceScene.points.map(point => point.id === 'pD'
         ? { ...point, selection: { ...point.selection, selectable: false, highlightable: true } }
         : point),
     };
@@ -444,7 +448,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('uses the dedicated mathematical typography for diagram labels and headings', () => {
-    const spec = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
 
     const labelledPoint = rendererState.createdOptions.find(item => item.kind === 'point' && item.options.name);
@@ -465,7 +469,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('uses the current point-creation callback after the editor tool changes', () => {
-    const spec = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const onCanvasPointCreate = vi.fn();
     const view = render(<MathProvider><DiagramRenderer spec={spec} mode="editor" viewportControls={false} /></MathProvider>);
 
@@ -477,7 +481,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('uses the current selection callback while a multi-reference tool is active', () => {
-    const spec = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const initialSelection = vi.fn();
     const toolSelection = vi.fn();
     const view = render(<MathProvider><DiagramRenderer spec={spec} mode="editor" viewportControls={false} onSelectionChange={initialSelection} /></MathProvider>);
@@ -492,7 +496,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('highlights the corresponding MDX target when a published diagram object is hovered or focused', () => {
-    const spec = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /><HighlightProbe /></MathProvider>);
     const targetNode = rendererState.nodes.find(node => node.dataset.diagramTarget);
     expect(targetNode).toBeDefined();
@@ -503,7 +507,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('keeps local hover additive while MDX references dim the rest by default', () => {
-    const spec = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const target = spec.points.find(point => point.target)!;
     const other = spec.points.find(point => point.id !== target.id)!;
     render(
@@ -525,7 +529,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('supports additive highlighting for an MDX target when authored in the editor', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const target = base.points.find(point => point.target)!;
     const other = base.points.find(point => point.id !== target.id)!;
     const spec = {
@@ -548,7 +552,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('keeps a native label interactive and visually synchronized with its point', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const target = base.points.find(point => point.target) ?? base.points[0];
     const spec = {
       ...base,
@@ -600,7 +604,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('exposes movable points to the keyboard and reports their constrained coordinates', () => {
-    const spec = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const onPointMove = vi.fn();
     render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} onPointMove={onPointMove} /></MathProvider>);
     const pointNode = rendererState.nodes.find(node => node.getAttribute('aria-roledescription') === 'punto móvil del diagrama');
@@ -613,7 +617,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('reveals a hidden object while its highlight is previewed in the editor', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const target = base.points[0];
     const spec = { ...base, points: base.points.map(point => point.id === target.id ? { ...point, visible: false } : point) };
     render(<MathProvider><DiagramRenderer spec={spec} mode="editor" highlightedIds={[target.id]} viewportControls={false} /></MathProvider>);
@@ -624,7 +628,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('reveals a hidden runtime object only when its MDX target is highlighted', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const target = base.points.find(point => point.target)!;
     const spec = {
       ...base,
@@ -658,14 +662,14 @@ describe('Phase 3 shared renderer', () => {
   ] as const)('renders %s through MathFactory-backed JSXGraph elements', (_family, fixture, expectedKinds) => {
     render(
       <MathProvider>
-        <DiagramRenderer spec={projectDiagramSpecV3ToV2(migrateDiagramSpec(fixture).spec)} viewportControls={false} />
+        <DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(fixture).spec)} viewportControls={false} />
       </MathProvider>,
     );
     expectedKinds.forEach(kind => expect(rendererState.createdKinds).toContain(kind));
   });
 
   it('renders angles without an authored radius using the canonical default', () => {
-    render(<MathProvider><DiagramRenderer spec={projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec)} viewportControls={false} /></MathProvider>);
+    render(<MathProvider><DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec)} viewportControls={false} /></MathProvider>);
 
     const renderedAngle = rendererState.createdOptions.find(({ kind }) => kind === 'angle');
     const renderedNonReflexAngle = rendererState.createdOptions.find(({ kind }) => kind === 'nonreflexangle');
@@ -674,7 +678,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('uses degrees and radians from both angular types in live visibility conditions', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec);
     const spec = {
       ...base,
       elements: base.elements.map(element => element.id === 'angleAVB'
@@ -716,7 +720,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('renders measure ticks as repeated ruler graduations while keeping congruence marks separate', () => {
-    render(<MathProvider><DiagramRenderer spec={projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec)} viewportControls={false} /></MathProvider>);
+    render(<MathProvider><DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec)} viewportControls={false} /></MathProvider>);
 
     const renderedTicks = rendererState.createdOptions.find(({ kind }) => kind === 'ticks');
     expect(renderedTicks?.args).toHaveLength(1);
@@ -743,7 +747,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('renders conventional parallel arrows separately from congruence ticks', () => {
-    render(<MathProvider><DiagramRenderer spec={projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec)} viewportControls={false} /></MathProvider>);
+    render(<MathProvider><DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec)} viewportControls={false} /></MathProvider>);
 
     const parallelSegments = rendererState.createdOptions.filter(({ kind, options }) => (
       kind === 'segment' && options.strokeColor === 'pavo'
@@ -753,7 +757,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('passes authored geometric attractors to a movable point after constructing their supports', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const spec = {
       ...base,
       points: base.points.map(point => point.id === 'pA'
@@ -779,8 +783,8 @@ describe('Phase 3 shared renderer', () => {
     };
     const pointA = geometryFor('A');
     const pointB = geometryFor('B');
-    const attractorA = geometryFor(TrianguloSpec.points.find(point => point.id === 'A')!.attractorIds![0]);
-    const attractorB = geometryFor(TrianguloSpec.points.find(point => point.id === 'B')!.attractorIds![0]);
+    const attractorA = geometryFor(trianguloScene.points.find(point => point.id === 'A')!.attractorIds![0]);
+    const attractorB = geometryFor(trianguloScene.points.find(point => point.id === 'B')!.attractorIds![0]);
     pointA.slideObject = attractorA;
     pointA.slideObjects = [attractorA];
     pointB.slideObject = attractorB;
@@ -799,7 +803,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('keeps all three perpendicular bisectors rendered with reciprocal vertex attractors', () => {
-    const editable = projectDiagramSpecV3ToV2(TrianguloSpec);
+    const editable = trianguloScene;
     const withA = setPointAttractors(editable, 'A', ['lineMediatrizBC']);
     const withB = setPointAttractors(withA, 'B', ['lineMediatrizAC']);
     const spec = setPointAttractors(withB, 'C', ['lineMediatrizAB']);
@@ -832,7 +836,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('applies the dashed style to polygon borders', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const polygon = base.elements.find(item => item.kind === 'polygon');
     const spec = {
       ...base,
@@ -848,7 +852,7 @@ describe('Phase 3 shared renderer', () => {
   it('keeps information panels in their editorial hover style at rest and on hover', () => {
     render(
       <MathProvider>
-        <DiagramRenderer spec={projectDiagramSpecV3ToV2(migrateDiagramSpec(annotationsFixture).spec)} viewportControls={false} />
+        <DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(annotationsFixture).spec)} viewportControls={false} />
       </MathProvider>,
     );
     const panel = rendererState.createdOptions.find(({ kind, options }) => kind === 'text' && String(options.cssClass).includes('matematika-info-panel'));
@@ -860,7 +864,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('anchors an information panel to normalized viewport coordinates without a geometric reference', () => {
-    const spec = projectDiagramSpecV3ToV2(migrateDiagramSpec(annotationsFixture).spec);
+    const spec = toWorkingSceneV2(migrateDiagramSpec(annotationsFixture).spec);
     const viewportPanelSpec = {
       ...spec,
       elements: spec.elements.map(item => item.id === 'panelA'
@@ -876,7 +880,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('turns viewport panel anchors inward near the lower-right edge', () => {
-    const spec = projectDiagramSpecV3ToV2(migrateDiagramSpec(annotationsFixture).spec);
+    const spec = toWorkingSceneV2(migrateDiagramSpec(annotationsFixture).spec);
     const viewportPanelSpec = {
       ...spec,
       elements: spec.elements.map(item => item.id === 'panelA'
@@ -889,7 +893,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('anchors an authored label close to the referenced element at the chosen parameter', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const source = base.elements.find(item => item.kind === 'segment')!;
     const labelled = addLabelToElement(base, source.id);
     const labelModel = {
@@ -909,7 +913,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('hides authored and native labels together when labels are disabled', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const source = base.elements.find(item => item.kind === 'segment')!;
     const labelled = addLabelToElement(base, source.id);
     render(<MathProvider><DiagramRenderer spec={{ ...labelled.model, showLabels: false }} viewportControls={false} /></MathProvider>);
@@ -922,7 +926,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('persists direct annotation movement as an authored offset in editor mode', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const source = base.elements.find(item => item.kind === 'segment')!;
     const labelled = addLabelToElement(base, source.id);
     const onAnnotationMove = vi.fn();
@@ -940,7 +944,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('hides one point label without hiding the point or the other labels', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const target = base.points.find(point => point.visible)!;
     const spec = {
       ...base,
@@ -958,7 +962,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('applies native label position presets and restores automatic placement', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const target = base.points.find(point => point.id === 'pA')!;
     const positioned = {
       ...base,
@@ -985,7 +989,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('keeps step emphasis in the original color, supports an override and yields exclusively to MDX', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const primary = base.points[0];
     const custom = base.points[1];
     const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
@@ -1016,7 +1020,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('pulses primary step emphasis on line-like elements', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const segment = base.elements.find(element => element.id === 'segAB');
     if (!segment) throw new Error('La fixture debe incluir segAB.');
     const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
@@ -1040,7 +1044,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('applies secondary step emphasis on line-like elements with hover highlight width', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(primitivesFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
     const segment = base.elements.find(element => element.id === 'segAB');
     if (!segment) throw new Error('La fixture debe incluir segAB.');
     const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
@@ -1064,7 +1068,7 @@ describe('Phase 3 shared renderer', () => {
   });
 
   it('pulses primary step emphasis on tick graduations', () => {
-    const base = projectDiagramSpecV3ToV2(migrateDiagramSpec(marksFixture).spec);
+    const base = toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec);
     const ticks = base.elements.find(element => element.id === 'ticksAV');
     if (!ticks) throw new Error('La fixture de marcas debe incluir ticksAV.');
     const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);

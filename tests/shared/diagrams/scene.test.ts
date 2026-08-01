@@ -1,19 +1,19 @@
 import { describe, expect, it } from 'vitest';
 import v2Fixture from '../../fixtures/diagrams/diagram-spec-v2.json';
-import {
+import { prepareSceneSpec,
   createScenePlan,
   createSceneConstructionPlan,
   fitViewport,
   migrateDiagramSpec,
   offscreenItemIds,
-  projectDiagramSpecV3ToV2,
   recoverViewport,
   resolvePointCoordinates,
-  zoomViewport,
-} from '../../../src/shared/diagrams/public';
+  zoomViewport} from '../../../src/shared/diagrams/public';
+import { toWorkingSceneV2 } from '../../../src/shared/diagrams/spec/v3Compatibility';
 import { TrianguloSpec } from '../../../src/widgets/diagrams/Definiciones/Triangulo';
 
-const spec = projectDiagramSpecV3ToV2(migrateDiagramSpec(v2Fixture).spec);
+const spec = prepareSceneSpec(migrateDiagramSpec(v2Fixture).spec);
+const triangulo = toWorkingSceneV2(TrianguloSpec);
 
 describe('shared diagram scene semantics', () => {
   it('combines layer order, steps, visibility, lock and selection deterministically', () => {
@@ -114,11 +114,11 @@ describe('shared diagram scene semantics', () => {
       C: ['A', 'B'],
     };
     for (const pointId of ['A', 'B', 'C']) {
-      const point = TrianguloSpec.points.find(item => item.id === pointId)!;
-      const equilateralTarget = resolvePointCoordinates(TrianguloSpec, point.attractorIds![0])!;
+      const point = triangulo.points.find(item => item.id === pointId)!;
+      const equilateralTarget = resolvePointCoordinates(triangulo, point.attractorIds![0])!;
       const [firstId, secondId] = oppositeVertices[pointId];
-      const first = resolvePointCoordinates(TrianguloSpec, firstId)!;
-      const second = resolvePointCoordinates(TrianguloSpec, secondId)!;
+      const first = resolvePointCoordinates(triangulo, firstId)!;
+      const second = resolvePointCoordinates(triangulo, secondId)!;
       const targetToFirst = Math.hypot(equilateralTarget.x - first.x, equilateralTarget.y - first.y);
       const targetToSecond = Math.hypot(equilateralTarget.x - second.x, equilateralTarget.y - second.y);
       const oppositeSide = Math.hypot(second.x - first.x, second.y - first.y);
