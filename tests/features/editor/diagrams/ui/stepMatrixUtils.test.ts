@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { step } from '../../../../../src/features/editor/diagrams/model';
+import { step } from '../../../../../src/fixed-pages/editor/diagrams/model';
 import {
   matrixCellVisualState,
   nextMatrixCellState,
   resolveMatrixCellState,
-} from '../../../../../src/features/editor/diagrams/ui/stepMatrixUtils';
+} from '../../../../../src/fixed-pages/editor/diagrams/ui/stepMatrixUtils';
 
 describe('stepMatrixUtils', () => {
   const sampleStep = step('step1', 'Paso 1', 'Descripción', ['objA', 'objB']);

@@ -10,7 +10,7 @@ import {
   planBlockMove,
   planBlockReplacement,
   planMetadataUpdate,
-} from '../../../../src/features/editor/document';
+} from '../../../../src/fixed-pages/editor/document';
 
 const validEnvelope = `export const metadata = {
   "id": "fase-seis-prueba",

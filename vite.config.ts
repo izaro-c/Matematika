@@ -27,15 +27,15 @@ import {
  */
 const diagramParserContractFiles = new Set([
   path.resolve(__dirname, 'scripts/editor/parseDiagramSourceAST.ts'),
-  path.resolve(__dirname, 'src/features/editor/diagrams/model.ts'),
-  path.resolve(__dirname, 'src/features/editor/diagrams/model/angleConstraints.ts'),
-  path.resolve(__dirname, 'src/features/editor/diagrams/model/constraintOptions.ts'),
-  path.resolve(__dirname, 'src/features/editor/diagrams/source/generator.ts'),
-  path.resolve(__dirname, 'src/features/editor/diagrams/source/parser.ts'),
-  path.resolve(__dirname, 'src/shared/diagrams/spec/migrations.ts'),
-  path.resolve(__dirname, 'src/shared/diagrams/spec/scene.ts'),
-  path.resolve(__dirname, 'src/shared/diagrams/spec/schema.ts'),
-  path.resolve(__dirname, 'src/shared/diagrams/spec/types.ts'),
+  path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/model.ts'),
+  path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/model/angleConstraints.ts'),
+  path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/model/constraintOptions.ts'),
+  path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/source/generator.ts'),
+  path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/source/parser.ts'),
+  path.resolve(__dirname, 'src/diagrams/spec/migrations.ts'),
+  path.resolve(__dirname, 'src/diagrams/spec/scene.ts'),
+  path.resolve(__dirname, 'src/diagrams/spec/schema.ts'),
+  path.resolve(__dirname, 'src/diagrams/spec/types.ts'),
 ].map(filePath => path.normalize(filePath)));
 
 function editorAPI(): Plugin {
@@ -100,7 +100,8 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
+      '@': path.resolve(__dirname, './src'),
+      '@content': path.resolve(__dirname, './content'),
     }
   },
   base: "/Matematika/"

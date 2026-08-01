@@ -1,15 +1,15 @@
 import ts from 'typescript';
 import type {
   VisualDiagramModel, VisualStep, ElementKind, ColorToken
-} from '../../src/features/editor/diagrams/model/types';
+} from '../../src/fixed-pages/editor/diagrams/model/types';
 import {
   type ParseDiagramSourceResult,
   classifyEmbeddedDiagramSource,
   parseDiagramSourceLocally,
-} from '../../src/features/editor/diagrams/source/parser';
-import { KIND_LABELS } from '../../src/features/editor/diagrams/model';
-import { DiagramSpecMigrationError, migrateDiagramSpec } from '../../src/shared/diagrams/spec/migrations';
-import { materializeEditorModel, workingScene } from '../../src/features/editor/diagrams/model/editorModel';
+} from '../../src/fixed-pages/editor/diagrams/source/parser';
+import { KIND_LABELS } from '../../src/fixed-pages/editor/diagrams/model';
+import { DiagramSpecMigrationError, migrateDiagramSpec } from '../../src/diagrams/spec/migrations';
+import { materializeEditorModel, workingScene } from '../../src/fixed-pages/editor/diagrams/model/editorModel';
 
 function parseCoords(node?: ts.Expression): { x: number; y: number } | null {
   if (!node || !ts.isArrayLiteralExpression(node)) return null;

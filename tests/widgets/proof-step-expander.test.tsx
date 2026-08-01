@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { ProofStep } from '@/widgets/content/ProofStep';
-import { ProofStepExpander } from '@/widgets/content/ProofStepExpander';
-import { MathProvider } from '@/app/providers/MathStoreContext';
+import { ProofStep } from '@/components/content/ProofStep';
+import { ProofStepExpander } from '@/components/content/ProofStepExpander';
+import { MathProvider } from '@/lib/helpers/MathStoreContext';
 
 describe('ProofStepExpander', () => {
   it('is collapsed by default and resolves valid Lean blocks', () => {

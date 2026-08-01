@@ -1,63 +1,45 @@
 # CODEMAP — ¿Dónde edito X?
 
-Mapa vivo del monorepo Matematika. FSD + dominios-producto. Si no está aquí, añade una fila en el mismo PR.
+Mapa vivo del monorepo Matematika. **Primario:** `src/` + `content/`.
 
-## Dominios
+Docs in-code: [DOCSTYLE.md](./DOCSTYLE.md) · generar API: `npm run docs:build` → `docs/api/`  
+Migración: [plan](../superpowers/plans/2026-08-01-src-migration.md) · [spec](../superpowers/specs/2026-08-01-src-architecture-design.md)
 
-| Dominio | Rutas |
+## Alias
+
+| Alias | Raíz |
 |---|---|
-| `app-shell` | `src/app/`, `src/pages/`, `src/widgets/navigation/` |
-| `editor` | `src/features/editor/` |
-| `diagrams` | `src/shared/diagrams/`, UI: `src/features/editor/diagrams/`, `src/widgets/diagrams/` |
-| `content` | `src/database/content/`, `src/features/glossary/`, `src/entities/content/` |
-| `progress` | `src/features/progress/` |
-| `graph` | `src/features/graph/`, `src/entities/graph/`, `src/widgets/graph/` |
-| `exercises` | `src/features/exercises/` |
-| `shared-kit` | `src/shared/design/`, `src/shared/ui/`, `src/shared/stores/`, `src/shared/lib/` |
+| `@/` | `src/` |
+| `@content/` | `content/` |
 
-## Quiero cambiar…
+## Árbol
 
-| X | Ve a |
+| Dominio | Ruta |
 |---|---|
-| Color / tipografía / spacing de producto | `src/shared/design/` + `src/app/theme.css` + `src/app/styles/` |
-| Rol semántico (axioma, teorema, …) | `src/shared/design/semanticTokens.ts` |
-| Paleta del inspector de diagramas | `src/shared/design/diagramPalette.ts` |
-| Spec / escena / viewport de diagrama | `src/shared/diagrams/spec/` (`scene*.ts` partidos por cohesión) |
-| Contrato público diagrams | `src/shared/diagrams/public.ts` |
-| Runtime JSXGraph / board | `src/shared/diagrams/runtime/` |
-| Canvas / inspector del editor | `src/features/editor/diagrams/ui/` |
-| Guardar, diff, unsaved, safety | `src/features/editor/` (`core/`, `ux/`, `ui/diff/`, `ui/safety/`) |
-| Demo publicada en página | `src/widgets/diagrams/` |
-| ConceptLink / diccionario | `src/features/glossary/` + `src/entities/content/` |
-| Página MDX | `src/database/content/` |
-| Plan de estudio / progreso | `src/features/progress/` |
-| Grafo de conocimiento UI | `src/features/graph/` + `src/widgets/graph/` |
-| Stores canónicos (Zustand) | `src/shared/stores/` |
-| Constantes de dominio | `*/constants.ts` del slice (ver READMEs) |
-| Fronteras de import | `.dependency-cruiser.js` |
+| Material MDX / demos / glossary data | `content/mdx/`, `content/diagrams/`, `content/glossary/` |
+| Arranque | `src/app/` |
+| Design tokens | `src/design/` |
+| UI reutilizable | `src/components/` |
+| Hooks / stores / helpers | `src/lib/` |
+| Schemas / ContentStore / lean graph | `src/data/` |
+| Motor de diagramas | `src/diagrams/` |
+| Pantallas fijas | `src/fixed-pages/` |
+| Plantillas MDX / ejercicios / plan / route shells | `src/content-pages/` (`shared/`, `exercise/`, `study-plan/`, `pages/`) |
 
-## Fronteras (depcruise)
+## Fronteras
 
-- `pages` → features/widgets; nunca al revés
-- `widgets` ↛ `features` (excepción: `widgets/mdx/MDXBlocks.tsx`)
-- `widgets/diagrams` ↛ `features/editor`
-- `shared` ↛ capas superiores
-- `features` ↛ otras features (deep-import)
-- Tokens: no `#hex` de producto en features; usar `shared/design`
+- `fixed-pages` ↛ `content-pages` (y al revés); composición en `app/`
+- `design` ↛ diagrams / pages / data
+- `content/` ↛ app / pages / components / lib / design / data (motor `@/diagrams` OK)
+- Ver `.dependency-cruiser.js`
 
-## Anti-patrones
+## DoD al tocar un dominio
 
-- Deep-import a internos de otro slice
-- Duplicar nombres de color Arts & Crafts fuera de `shared/design` / `theme.css`
-- Shims de reexport “para siempre”
-- God-file sin plan de cohesión documentado
+1. Audit (code-graph) + design note en README del dominio  
+2. TSDoc en exports públicos ([DOCSTYLE](./DOCSTYLE.md))  
+3. Tests + `depcruise` + `docs:build`  
 
-## READMEs de dominio
+## READMEs
 
-- [editor](../../src/features/editor/README.md)
-- [diagrams](../../src/shared/diagrams/README.md)
-- [design](../../src/shared/design/README.md)
-- [glossary](../../src/features/glossary/README.md)
-- [progress](../../src/features/progress/README.md)
-- [graph](../../src/features/graph/README.md)
-- [exercises](../../src/features/exercises/README.md)
+- [src](../../src/README.md)
+- [content](../../content/README.md)

@@ -1,13 +1,13 @@
 import path from 'node:path';
 import crypto from 'node:crypto';
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { parseEditorDocument } from '../../src/features/editor/document/parseEditorDocument';
+import { parseEditorDocument } from '../../src/fixed-pages/editor/document/parseEditorDocument';
 import {
   applyContentRequestSchema,
   createContentRequestSchema,
   restoreBackupRequestSchema,
   saveDraftRequestSchema,
-} from '../../src/features/editor/persistence/persistenceContracts';
+} from '../../src/fixed-pages/editor/persistence/persistenceContracts';
 import { BackendError, EditorPersistenceBackend } from './editorPersistenceBackend';
 import { parseDiagramSourceAST } from './parseDiagramSourceAST';
 import { updateMdxImportsExports } from './updateDiagramImportsExports';
@@ -24,19 +24,20 @@ export interface EditorApiConfig {
 }
 
 export function resolveEditorPaths(projectRoot: string, overrides?: Pick<EditorApiConfig, 'srcRoot' | 'storageRoot'>) {
+  const repoRoot = path.resolve(projectRoot);
   const srcRoot = overrides?.srcRoot
     ? path.resolve(overrides.srcRoot)
     : process.env.MATEMATIKA_EDITOR_SRC_ROOT
       ? path.resolve(process.env.MATEMATIKA_EDITOR_SRC_ROOT)
-      : path.resolve(projectRoot, 'src');
+      : repoRoot;
   const storageRoot = overrides?.storageRoot
     ? path.resolve(overrides.storageRoot)
     : process.env.MATEMATIKA_EDITOR_STORAGE_ROOT
       ? path.resolve(process.env.MATEMATIKA_EDITOR_STORAGE_ROOT)
-      : path.resolve(projectRoot, '.matematika/editor');
+      : path.resolve(repoRoot, '.matematika/editor');
   const writeRoots = [
-    path.resolve(srcRoot, 'database/content'),
-    path.resolve(srcRoot, 'widgets/diagrams'),
+    path.resolve(repoRoot, 'content/mdx'),
+    path.resolve(repoRoot, 'content/diagrams'),
   ];
   return { srcRoot, storageRoot, writeRoots };
 }

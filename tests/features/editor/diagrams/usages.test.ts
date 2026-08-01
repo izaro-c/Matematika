@@ -6,8 +6,8 @@ import {
   getAllIndexedDiagrams,
   getDiagramUsages,
   type DiagramUsageRepository,
-} from '../../../../src/features/editor/diagrams/references/usageIndex';
-import { useDiagramUsages } from '../../../../src/features/editor/diagrams/hooks/useDiagramUsages';
+} from '../../../../src/fixed-pages/editor/diagrams/references/usageIndex';
+import { useDiagramUsages } from '../../../../src/fixed-pages/editor/diagrams/hooks/useDiagramUsages';
 
 describe('Diagram Usages Index', () => {
   it('should generate usage index entries from project mdx corpus', () => {
@@ -40,16 +40,16 @@ describe('Diagram Usages Index', () => {
       schemaVersion: 1,
       generatedBy: 'test',
       corpusHash: 'a'.repeat(64),
-      paths: { Demo: 'src/shared/diagrams/Demo.tsx' },
+      paths: { Demo: 'src/diagrams/Demo.tsx' },
       usages: {
         Demo: [
-          { contentId: 'b', contentPath: 'src/database/content/b.mdx', referenceKind: 'Diagram' },
-          { contentId: 'a', contentPath: 'src/database/content/a.mdx', referenceKind: 'Simulation' },
+          { contentId: 'b', contentPath: 'content/mdx/b.mdx', referenceKind: 'Diagram' },
+          { contentId: 'a', contentPath: 'content/mdx/a.mdx', referenceKind: 'Simulation' },
         ],
       },
     });
 
-    expect(repository.getUsages('src/shared/diagrams/Demo.tsx').map(usage => usage.contentId)).toEqual(['a', 'b']);
+    expect(repository.getUsages('src/diagrams/Demo.tsx').map(usage => usage.contentId)).toEqual(['a', 'b']);
     expect(repository.getUsages('unknown-diagram')).toEqual([]);
   });
 
@@ -60,14 +60,14 @@ describe('Diagram Usages Index', () => {
   it('opens diagram usages through the repository without reading MDX content', () => {
     const repository: DiagramUsageRepository = {
       getUsages: vi.fn().mockReturnValue([
-        { contentId: 'demo', contentPath: 'src/database/content/demo.mdx', referenceKind: 'Simulation' },
+        { contentId: 'demo', contentPath: 'content/mdx/demo.mdx', referenceKind: 'Simulation' },
       ]),
     };
     const contentRepository = { read: vi.fn() };
     const { result } = renderHook(() => useDiagramUsages('Demo', [
       {
         name: 'demo.mdx',
-        path: 'src/database/content/demo.mdx',
+        path: 'content/mdx/demo.mdx',
         type: 'file',
         kind: 'mdx-document',
         capability: 'code-preview',

@@ -6,7 +6,7 @@ import {
   parseEditorDocument,
   planBlockUpdate,
   planDiagramBinding,
-} from '@/features/editor/document';
+} from '@/fixed-pages/editor/document';
 import {
   buildAuthoringIntegrityReport,
   buildDocumentOutline,
@@ -14,8 +14,8 @@ import {
   createPageSource,
   extractSemanticReferences,
   PAGE_TYPE_DIRECTORIES,
-} from '@/features/editor/ux/authoringModel';
-import type { Block } from '@/features/editor/core/parser';
+} from '@/fixed-pages/editor/ux/authoringModel';
+import type { Block } from '@/fixed-pages/editor/core/parser';
 import { discoverMdxFiles } from '../../../../scripts/editor/corpusAuditCore';
 
 const definitionSource = `export const metadata = {
@@ -55,7 +55,7 @@ describe('Phase 7 lossless authoring UX', () => {
     const document = parseEditorDocument(definitionSource);
     const mutation = planDiagramBinding(document, {
       componentName: 'RectaInteractiva',
-      importPath: '@/widgets/diagrams/Definiciones/RectaInteractiva',
+      importPath: '@content/diagrams/Definiciones/RectaInteractiva',
       mode: 'simulation',
     });
     const updated = applyMutationPlan(document, mutation);
@@ -63,7 +63,7 @@ describe('Phase 7 lossless authoring UX', () => {
     expect(mutation.kind).toBe('bind-diagram');
     expect(mutation.preview.requiresReview).toBe(true);
     expect(mutation.edits.length).toBeGreaterThanOrEqual(2);
-    expect(updated.source).toContain("import { RectaInteractiva } from '@/widgets/diagrams/Definiciones/RectaInteractiva';");
+    expect(updated.source).toContain("import { RectaInteractiva } from '@content/diagrams/Definiciones/RectaInteractiva';");
     expect(updated.source).toContain('export const Simulation = RectaInteractiva;');
     expect(updated.metadata.value?.hasSimulation).toBe(true);
     expect(updated.source).toContain('<FutureWidget keep={{ nested: true }} />');
@@ -87,7 +87,7 @@ describe('Phase 7 lossless authoring UX', () => {
     const report = buildAuthoringIntegrityReport({
       source: document.source,
       metadata: document.metadata.value ?? {},
-      currentFile: 'database/content/definitions/definicion-prueba.mdx',
+      currentFile: 'content/mdx/definitions/definicion-prueba.mdx',
       diagramTargets: [],
       entries: [],
     });
@@ -107,7 +107,7 @@ describe('Phase 7 lossless authoring UX', () => {
         type: 'axioma',
         axiomSystem: 'sistema-compuesto',
       },
-      currentFile: 'database/content/axioms/axioma-base.mdx',
+      currentFile: 'content/mdx/axioms/axioma-base.mdx',
       diagramTargets: [],
       entries: [
         {
@@ -164,7 +164,7 @@ describe('Phase 7 lossless authoring UX', () => {
   });
 
   it('does not report false dependency cycles across the published MDX corpus', () => {
-    const root = path.resolve('src/database/content');
+    const root = path.resolve('content/mdx');
     const failures = discoverMdxFiles(root).flatMap(filePath => {
       const source = fs.readFileSync(filePath, 'utf8');
       const document = parseEditorDocument(source);
@@ -172,7 +172,7 @@ describe('Phase 7 lossless authoring UX', () => {
       const report = buildAuthoringIntegrityReport({
         source,
         metadata: document.metadata.value ?? {},
-        currentFile: `database/content/${relativePath}`,
+        currentFile: `content/mdx/${relativePath}`,
         diagramTargets: [],
       });
       return report
@@ -194,7 +194,7 @@ describe('Phase 7 lossless authoring UX', () => {
     const source = createPageSource(input);
     const document = parseEditorDocument(source);
 
-    expect(createPagePath(input)).toBe('database/content/demonstrations/demo-editor-compleja.mdx');
+    expect(createPagePath(input)).toBe('content/mdx/demonstrations/demo-editor-compleja.mdx');
     expect(document.metadata.schemaValid).toBe(true);
     expect(document.compatibility).toBe('fully-editable');
     expect(source).toContain('<ProofStep number={1}');
@@ -226,7 +226,7 @@ describe('Phase 7 lossless authoring UX', () => {
   "hasSimulation": true
 };
 
-import { Complejo } from '@/widgets/diagrams/Definitions/Complejo';
+import { Complejo } from '@content/diagrams/Definitions/Complejo';
 export const Simulation = Complejo;
 
 <Capitular letra="U" />na definición visual conserva estructura y conexiones.
@@ -250,7 +250,7 @@ La conclusión se obtiene de las condiciones declaradas, no de la apariencia vis
     expect(document.compatibility).toBe('fully-editable');
     expect(document.metadata.schemaValid).toBe(true);
     expect(document.envelope.importRanges.map(range => source.slice(range.start, range.end))).toEqual([
-      "import { Complejo } from '@/widgets/diagrams/Definitions/Complejo';",
+      "import { Complejo } from '@content/diagrams/Definitions/Complejo';",
     ]);
     expect(document.envelope.exportRanges.map(range => source.slice(range.start, range.end))).toContain(
       'export const Simulation = Complejo;',

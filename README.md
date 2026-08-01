@@ -83,17 +83,17 @@ Matematika aplica un estricto flujo de validación. Las siguientes validaciones 
 - **`npm run editor:architecture`**: Verifica fronteras arquitectónicas y patrones inseguros del editor.
 - **`npm run editor:release-check`**: Gate completo de cierre del editor con tests, cobertura, E2E, grafo y Lean.
 
-> **Política Editorial**: La carga del sistema y de las páginas en sí no falla ni se bloquea completamente si un autor enlaza hacia un artículo que "aún no existe" (ideal para flujo de redacción). El `ContentStore` (`src/entities/content/ContentStore.ts`) registrará warnings o mostrará estados 404 controlados para que la plataforma principal siga siendo navegable mientras se construye nuevo contenido.
+> **Política Editorial**: La carga del sistema y de las páginas en sí no falla ni se bloquea completamente si un autor enlaza hacia un artículo que "aún no existe" (ideal para flujo de redacción). El `ContentStore` (`src/data/content/ContentStore.ts`) registrará warnings o mostrará estados 404 controlados para que la plataforma principal siga siendo navegable mientras se construye nuevo contenido.
 
 ---
 
 ## ✍️ Cómo Añadir Contenido
 
 Matematika utiliza el sistema de archivos como base de datos de contenido estático (MDX).
-Los metadatos se validan en el inicio a través de `ContentStore` (`src/entities/content/ContentStore.ts`).
+Los metadatos se validan en el inicio a través de `ContentStore` (`src/data/content/ContentStore.ts`).
 
 ### 1. Ubicaciones (MDX)
-El contenido real escrito en Markdown reside en `src/database/content/`:
+El contenido real escrito en Markdown reside en `content/mdx/`:
 - `theorems/`: Teoremas principales, lemas y corolarios.
 - `definitions/`: Conceptos, axiomas y definiciones formales.
 - `examples/`: Ejemplos prácticos y numéricos resueltos.
@@ -104,7 +104,7 @@ El contenido real escrito en Markdown reside en `src/database/content/`:
 - `axioms/`, `axiomatic-systems/`, `models/`, `lessons/`.
 
 ### 2. Formato MDX y Zod (Frontmatter)
-Todo archivo `.mdx` debe exportar obligatoriamente una constante `metadata` que cumpla con su esquema correspondiente especificado en `src/entities/content/schemas.ts`. Se exige el formato `kebab-case` para todos los identificadores (`id`).
+Todo archivo `.mdx` debe exportar obligatoriamente una constante `metadata` que cumpla con su esquema correspondiente especificado en `src/data/content/schemas.ts`. Se exige el formato `kebab-case` para todos los identificadores (`id`).
 
 Ejemplo de un `teorema.mdx`:
 ```mdx

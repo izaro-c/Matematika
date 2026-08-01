@@ -19,7 +19,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const CONTENT_DIR = path.resolve(process.argv[2] || 'src/database/content');
+const CONTENT_DIR = path.resolve(process.argv[2] || 'content/mdx');
 let errors = 0;
 let warnings = 0;
 

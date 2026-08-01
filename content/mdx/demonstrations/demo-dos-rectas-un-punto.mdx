@@ -1,0 +1,79 @@
+export const metadata = {
+  "id": "demo-dos-rectas-un-punto",
+  "type": "demostracion",
+  "title": "Demostración: Dos rectas se cortan en a lo sumo un punto",
+  "description": "Prueba por contradicción usando el axioma de unicidad I-1.",
+  "parentTheorem": "teorema-dos-rectas-un-punto",
+  "proofMethod": "metodo-contradiccion",
+  "authors": ["hilbert"],
+  "tags": ["geometria", "incidencia"],
+  "layout": "split",
+  "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
+  "leanCommitSha": "local-hilbert-core",
+  "sources": [
+    {
+      "title": "Grundlagen der Geometrie",
+      "author": "David Hilbert",
+      "locator": "Axioms of Incidence, I.1",
+      "role": "primary"
+    },
+    {
+      "title": "Euclidean and Non-Euclidean Geometries",
+      "author": "Marvin Jay Greenberg",
+      "locator": "Hilbert incidence axioms",
+      "role": "secondary"
+    }
+  ],
+  "stepTacticMap": {
+    "1": ["two-lines-one-point-step1-contradiction"],
+    "2": ["two-lines-one-point-step2-unique-line"],
+    "3": ["two-lines-one-point-step3-identify-lines"],
+    "4": ["two-lines-one-point-step4-contradiction"]
+  }
+};
+
+import { DemoDosRectasUnPunto } from "@content/diagrams/Demos/DemoDosRectasUnPunto";
+
+<DemonstrationSection diagram={<DemoDosRectasUnPunto />}>
+
+<Capitular letra="S" />ean <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> distintas. Entonces, si dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> pertenecen simultáneamente a ambas rectas, necesariamente coinciden:
+
+<Formula>
+  $$ P \in l \cap m \land Q \in l \cap m \implies P = Q $$
+</Formula>
+
+<Separador />
+
+<ProofStep number={1} title="Suposición por contradicción" target="step1" leanBlocks={metadata.stepTacticMap["1"]}>
+Supongamos, por contradicción, que existen dos puntos distintos <InteractiveElement target="puntoP" color="carbon">$P$</InteractiveElement> y <InteractiveElement target="puntoQ" color="terracota">$Q$</InteractiveElement> que pertenecen simultáneamente a <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> y a <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>:
+
+$$ P \in l \cap m, \quad Q \in l \cap m, \quad P \neq Q. $$
+</ProofStep>
+
+<ProofStep number={2} title="Aplicación del Axioma de Unicidad" target="step2" leanBlocks={metadata.stepTacticMap["2"]}>
+Por el <ConceptLink targetId="axioma-incidencia-1" >axioma I-1 de incidencia</ConceptLink>, dados dos puntos distintos <InteractiveElement target="puntoP" color="carbon">$P$</InteractiveElement> y <InteractiveElement target="puntoQ" color="terracota">$Q$</InteractiveElement>, existe **una única** recta que los contiene. Denotemos esta <InteractiveElement target="rectas" color="carbon">recta única como $r$</InteractiveElement>.
+</ProofStep>
+
+<ProofStep number={3} title="Identificación de las rectas" target="step3" leanBlocks={metadata.stepTacticMap["3"]}>
+Tanto <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> como <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> contienen a los puntos <InteractiveElement target="puntoP" color="carbon">$P$</InteractiveElement> y <InteractiveElement target="puntoQ" color="terracota">$Q$</InteractiveElement>. Por la unicidad garantizada por el <ConceptLink targetId="axioma-incidencia-1" >axioma I-1</ConceptLink>, esto significa que ambas deben coincidir con la recta única <InteractiveElement target="rectas" color="carbon">$r$</InteractiveElement>:
+
+$$ l = r \quad \text{y} \quad m = r \implies l = m $$
+</ProofStep>
+
+<ProofStep number={4} title="Contradicción y conclusión" target="step4" leanBlocks={metadata.stepTacticMap["4"]}>
+La igualdad <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $=$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement> contradice la hipótesis inicial de que las rectas eran distintas. Esta contradicción proviene de suponer que existen dos puntos distintos en la intersección <InteractiveElement target="rectaL" color="carbon">$l$</InteractiveElement> $\cap$ <InteractiveElement target="rectaM" color="terracota">$m$</InteractiveElement>. Luego, la intersección contiene a lo sumo un punto.
+</ProofStep>
+
+<Separador />
+
+### Análisis
+
+La <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> es una aplicación directa del principio de unicidad. El axioma I-1 afirma no solo la existencia de una recta por dos puntos, sino su **unicidad** — es esta unicidad la que impide que dos rectas distintas compartan dos puntos.
+
+Nótese que el <ConceptLink targetId="axioma-incidencia-2" isDependency={false}>axioma I-2</ConceptLink> (toda recta tiene al menos dos puntos) garantiza que toda recta tiene efectivamente pares de puntos, pero no interviene directamente en esta prueba. Su rol es asegurar que las rectas son objetos no degenerados.
+
+<Nota>
+  Este resultado es la base para definir rectas secantes (un punto de corte) y rectas <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink> (cero puntos de corte) como categorías disjuntas.
+</Nota>
+
+</DemonstrationSection>

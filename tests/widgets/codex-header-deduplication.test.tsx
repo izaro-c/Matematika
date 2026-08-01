@@ -1,16 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { MathProvider } from '@/shared/lib/MathStoreContext';
-import { DemonstrationHeaderProvider } from '@/shared/lib/DemonstrationHeaderContext';
-import { CodexLayout } from '@/widgets/layouts/CodexLayout';
+import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { DemonstrationHeaderProvider } from '@/lib/helpers/DemonstrationHeaderContext';
+import { CodexLayout } from '@/components/layouts/CodexLayout';
 
 vi.mock('wouter', () => ({
   useLocation: () => ['/demo/demo-area-rectangulo', vi.fn()],
   Link: ({ children, href }: { children: React.ReactNode; href?: string }) => <a href={href}>{children}</a>,
 }));
 
-vi.mock('@/entities/content', () => ({
+vi.mock('@/data/content', () => ({
   db: {
     getDemo: (id: string) => (id === 'demo-area-rectangulo' ? {
       id: 'demo-area-rectangulo',

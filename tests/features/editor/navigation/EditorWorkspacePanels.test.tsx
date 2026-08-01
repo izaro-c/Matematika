@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { EditorShell } from '../../../../src/features/editor/ui/EditorShell';
-import { EditorDiagnosticsPanel } from '../../../../src/features/editor/ui/panels/EditorDiagnosticsPanel';
+import { EditorShell } from '../../../../src/fixed-pages/editor/ui/EditorShell';
+import { EditorDiagnosticsPanel } from '../../../../src/fixed-pages/editor/ui/panels/EditorDiagnosticsPanel';
 
 describe('paneles del espacio de trabajo', () => {
   it('expone separadores ajustables con teclado y paneles colapsables controlados', () => {

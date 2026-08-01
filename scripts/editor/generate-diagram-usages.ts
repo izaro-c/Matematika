@@ -4,10 +4,10 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const ROOT = process.cwd();
-const CONTENT_DIR = path.join(ROOT, 'src/database/content');
-const WIDGETS_DIAGRAMS_DIR = path.join(ROOT, 'src/widgets/diagrams');
-const SHARED_DIAGRAMS_DIR = path.join(ROOT, 'src/shared/diagrams');
-const OUTPUT_PATH = path.join(ROOT, 'src/entities/content/diagramUsageIndex.json');
+const CONTENT_DIR = path.join(ROOT, 'content/mdx');
+const CONTENT_DIAGRAMS_DIR = path.join(ROOT, 'content/diagrams');
+const SHARED_DIAGRAMS_DIR = path.join(ROOT, 'src/diagrams');
+const OUTPUT_PATH = path.join(ROOT, 'src/data/content/diagramUsageIndex.json');
 
 export interface Usage {
   contentId: string;
@@ -88,17 +88,15 @@ export function generateDiagramUsageIndex(): DiagramUsageIndex {
   // Helper to resolve diagram absolute path from import path inside an MDX
   const resolveDiagramPath = (mdxFile: string, importPath: string): string | null => {
     let resolved: string | null = null;
-    if (importPath.startsWith('@/widgets/diagrams/')) {
-      const sub = importPath.substring('@/widgets/diagrams/'.length);
-      resolved = path.join(WIDGETS_DIAGRAMS_DIR, sub + (sub.endsWith('.tsx') ? '' : '.tsx'));
-    } else if (importPath.startsWith('@/shared/diagrams/')) {
-      const sub = importPath.substring('@/shared/diagrams/'.length);
+    if (importPath.startsWith('@content/diagrams/')) {
+      const sub = importPath.substring('@content/diagrams/'.length);
+      resolved = path.join(CONTENT_DIAGRAMS_DIR, sub + (sub.endsWith('.tsx') ? '' : '.tsx'));
+    } else if (importPath.startsWith('@/diagrams/')) {
+      const sub = importPath.substring('@/diagrams/'.length);
       resolved = path.join(SHARED_DIAGRAMS_DIR, sub + (sub.endsWith('.tsx') ? '' : '.tsx'));
     } else if (importPath.startsWith('.') || importPath.startsWith('..')) {
-      // Relative import
       const dir = path.dirname(mdxFile);
       const abs = path.resolve(dir, importPath);
-      // It could match src/widgets/diagrams or src/shared/diagrams
       const ext = abs.endsWith('.tsx') ? '' : '.tsx';
       if (fs.existsSync(abs + ext) || abs.includes('/diagrams/')) {
         resolved = abs + ext;
@@ -114,7 +112,7 @@ export function generateDiagramUsageIndex(): DiagramUsageIndex {
     const relMdxPath = relativePath(mdxFile);
 
     // Find import lines matching diagrams
-    // e.g. import { Pitagoras } from '@/widgets/diagrams/Teoremas/Pitagoras';
+    // e.g. import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras';
     const importRegex = /import\s+(?:(\w+)|\{\s*(\w+)\s*\})\s+from\s+['"]([^'"]+)['"]/g;
     let match;
     const importedComponents = new Map<string, { componentName: string; diagramFile: string }>();

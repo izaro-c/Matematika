@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   findAxiomSelectionConflicts,
   normalizeActiveAxiomIds,
-} from '@/entities/graph/axiomSelection';
+} from '@/data/graph/axiomSelection';
 
 const axioms = [
   { id: 'axioma-base' },

@@ -3,7 +3,7 @@ import { Router } from 'wouter';
 import { memoryLocation } from 'wouter/memory-location';
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('@/entities/content', () => ({
+vi.mock('@/data/content', () => ({
   db: {
     getAllMethods: () => [
       {
@@ -31,7 +31,7 @@ vi.mock('@/entities/content', () => ({
   },
 }));
 
-import { MethodsPage } from '@/pages/MethodsPage';
+import { MethodsPage } from '@/content-pages/pages/MethodsPage';
 
 describe('MethodsPage', () => {
   it('presenta los métodos como una colección no ordenada de enlaces', () => {

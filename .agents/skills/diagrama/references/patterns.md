@@ -5,11 +5,11 @@
 
 ## Arquitectura vigente (Fase 8, prevalece sobre ejemplos históricos)
 
-- Los componentes publicados viven en `src/widgets/diagrams/`; contrato, core y renderer compartidos viven en `src/shared/diagrams/{spec,core,runtime}/`.
+- Los componentes publicados viven en `content/diagrams/`; contrato, core y renderer compartidos viven en `src/diagrams/{spec,core,runtime}/`.
 - Crear todo diagrama nuevo como `DiagramSpec v2` y montarlo con `DiagramRenderer`. Editor, preview y página publicada consumen la misma spec.
 - Tratar `code-preview` únicamente como clasificación conservadora de fuentes heredadas. No es una salida válida al crear un diagrama ni al modificar uno solicitado: migrar ese diagrama a `visual-exact` antes de cambiarlo.
 - Si `DiagramSpec v2` o el workbench no representan alguna parte del diagrama deseado, implementar esa capacidad en el producto antes de crear el diagrama. No sustituirla con TSX manual, SVG opaco, Canvas opaco, HTML opaco ni datos escondidos en `extensions`.
-- `board.create` solo se admite para auxiliares invisibles aún no cubiertos por `MathFactory`; un elemento reutilizable se añade primero a `src/shared/diagrams/core/MathFactory.ts`.
+- `board.create` solo se admite para auxiliares invisibles aún no cubiertos por `MathFactory`; un elemento reutilizable se añade primero a `src/diagrams/core/MathFactory.ts`.
 - Los únicos colores son `lienzo`, `carbon`, `salvia`, `terracota`, `pizarra`, `ocre`, `pavo`, `granada` y `musgo`: `theme.*` en JSXGraph y `var(--theme-*)` en SVG/CSS, sin hex o RGB locales.
 - Todo objeto móvil o control tiene alternativa de teclado, nombre accesible e instrucciones. Los targets responden a foco, Enter o Espacio además de puntero.
 - Se verifica foco visible, modo claro/oscuro, `prefers-reduced-motion`, viewport responsive y coste acotado con escenas complejas.
@@ -115,7 +115,7 @@ El renderer compartido puede encapsular cuatro enfoques de renderizado. Esta dec
           └── No  → SVG
 ```
 
-Si el árbol conduce a un backend que la spec o el workbench todavía no soportan, ampliar el editor antes de usarlo. No crear directamente un componente SVG, Canvas o HTML en `src/widgets/diagrams/`.
+Si el árbol conduce a un backend que la spec o el workbench todavía no soportan, ampliar el editor antes de usarlo. No crear directamente un componente SVG, Canvas o HTML en `content/diagrams/`.
 
 ---
 
@@ -270,8 +270,8 @@ Este patrón es **interno al renderer compartido**. Se usa al implementar una nu
 ### 6.1 Estructura Base de un Diagrama
 
 ```tsx
-import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-import { createPoint, createSegment, createPolygon } from '@/shared/diagrams/core/MathFactory';
+import { MathBoard } from '@/diagrams/core/MathBoard';
+import { createPoint, createSegment, createPolygon } from '@/diagrams/core/MathFactory';
 
 export const MiDiagrama = () => {
   return (
@@ -350,7 +350,7 @@ export const MiDiagrama = () => {
 **Prohibición Estricta:** Si un diagrama necesita un elemento geométrico recurrente (una bisectriz, una mediatriz, una circunferencia inscrita, marcas de congruencia, etc.) que **NO** existe actualmente en `MathFactory.ts`, el desarrollador/agente **NO DEBE** crearlo usando la API cruda `board.create('bisector', ...)` dentro del archivo del diagrama.
 
 En su lugar, debe:
-1. Ir a `src/shared/diagrams/core/MathFactory.ts`.
+1. Ir a `src/diagrams/core/MathFactory.ts`.
 2. Crear la función exportada correspondiente (ej. `createBisector`).
 3. Aplicarle el estilo por defecto de la paleta Arts & Crafts.
 4. Importarla y usarla en el diagrama.
@@ -515,8 +515,8 @@ export const ProbabilityTree: React.FC = () => {
 Los diagramas de modelo muestran una **estructura concreta completa**. Si publican targets, también se conectan con `MathStore`; no existe una excepción que permita un runtime o una paleta paralelos.
 
 ```typescript
-import { DiagramRenderer } from '@/shared/diagrams/runtime/DiagramRenderer';
-import type { DiagramSpecV2 } from '@/shared/diagrams/spec';
+import { DiagramRenderer } from '@/diagrams/runtime/DiagramRenderer';
+import type { DiagramSpecV2 } from '@/diagrams/spec';
 
 export const modeloTresPuntosSpec: DiagramSpecV2 = { /* spec validada */ };
 export const ModeloTresPuntos = () => <DiagramRenderer spec={modeloTresPuntosSpec} />;
@@ -584,13 +584,13 @@ useEffect(() => {
 
 ### Paso 1: Crear el componente del diagrama
 
-Archivo: `src/widgets/diagrams/<Categoria>/<Nombre>.tsx`
+Archivo: `content/diagrams/<Categoria>/<Nombre>.tsx`
 
 ### Paso 2: En el MDX, importar y exportar
 
 **Para páginas de contenido (`ContentLayout`):**
 ```typescript
-import { MyDiagram } from '@/widgets/diagrams/Categoria/MyDiagram';
+import { MyDiagram } from '@content/diagrams/Categoria/MyDiagram';
 export const Simulation = MyDiagram;
 
 export const metadata = {
@@ -601,7 +601,7 @@ export const metadata = {
 
 **Para modelos (renderizado inline):**
 ```typescript
-import { ModelDiagram } from '@/widgets/diagrams/Models/ModelDiagram';
+import { ModelDiagram } from '@content/diagrams/Models/ModelDiagram';
 export const Diagram = ModelDiagram;
 
 export const metadata = {
@@ -844,20 +844,20 @@ SVG usando `var(--theme-*)` se adapta automáticamente al modo oscuro porque las
 ### 19.1 Ubicación FSD
 
 ```
-src/widgets/diagrams/
+content/diagrams/
   <Categoria>/
     <Nombre>.tsx           (componente del diagrama — PascalCase)
 ```
 
-Los diagramas viven en `src/widgets/diagrams/` (arquitectura FSD: capa `widgets/`).
+Los diagramas viven en `content/diagrams/` (arquitectura FSD: capa `widgets/`).
 
 ### 19.2 Archivos relacionados
 
 | Qué | Dónde |
 |---|---|
-| Fachada y utilidades | `src/widgets/diagrams/index.ts` |
-| Componentes JSXGraph base | `src/shared/diagrams/core/{MathBoard.tsx,MathFactory.ts,MathUtils.ts}` |
-| Store para interactividad | `src/shared/lib/MathStoreContext.tsx`; enlaces de paso en `src/shared/ui/StepBinding.tsx` |
+| Fachada y utilidades | `content/diagrams/index.ts` |
+| Componentes JSXGraph base | `src/diagrams/core/{MathBoard.tsx,MathFactory.ts,MathUtils.ts}` |
+| Store para interactividad | `src/lib/helpers/MathStoreContext.tsx`; enlaces de paso en `src/components/ui/StepBinding.tsx` |
 | Paleta de colores | `src/app/theme.css`; leer mediante `theme.*`, `getCSSVar('--theme-*')` o `var(--theme-*)` según el renderer |
 | Contenido MDX asociado | `src/database/content/{theorems,definitions,axioms,demonstrations}/` |
 
@@ -946,7 +946,7 @@ Los diagramas viven en `src/widgets/diagrams/` (arquitectura FSD: capa `widgets/
 
 ## 21. Ángulos Rectos Robustos
 
-El `angle` de JSXGraph con `orthotype: 'square'` puede fallar cuando la orientación de los puntos produce un ángulo CCW de 270° en lugar de 90°. Para diagramas donde los puntos se reordenan libremente (ej. triángulos deformables), **NO usar `angle` con `orthotype`**. En su lugar, utiliza la utilidad centralizada en `src/shared/diagrams/core/MathUtils.ts`:
+El `angle` de JSXGraph con `orthotype: 'square'` puede fallar cuando la orientación de los puntos produce un ángulo CCW de 270° en lugar de 90°. Para diagramas donde los puntos se reordenan libremente (ej. triángulos deformables), **NO usar `angle` con `orthotype`**. En su lugar, utiliza la utilidad centralizada en `src/diagrams/core/MathUtils.ts`:
 `createRobustRightAngle(board, vertex, pBase, pAlt, size, options, theme)`.
 Esta función construye internamente un polígono dinámico cuadrado manual inmune a inversiones de orientación:
 
@@ -1611,10 +1611,10 @@ Reglas:
 
 Usar como referencia los diagramas `visual-exact` reales enumerados por `npm run editor:diagrams:check`, en especial:
 
-- `src/widgets/diagrams/Definiciones/Paralelogramo.tsx`
-- `src/widgets/diagrams/Models/ModeloPoincare.tsx`
-- `src/widgets/diagrams/Teoremas/CongruenciaALA.tsx`
-- `src/widgets/diagrams/Teoremas/Pitagoras.tsx`
+- `content/diagrams/Definiciones/Paralelogramo.tsx`
+- `content/diagrams/Models/ModeloPoincare.tsx`
+- `content/diagrams/Teoremas/CongruenciaALA.tsx`
+- `content/diagrams/Teoremas/Pitagoras.tsx`
 
 No copiar la spec como sustituto de los controles del editor: toda capacidad empleada debe estar expuesta también en el workbench.
 
@@ -1622,11 +1622,11 @@ No copiar la spec como sustituto de los controles del editor: toda capacidad emp
 
 ## 42. Interfaz y Overlays Estandarizados
 
-Queda estrictamente prohibido codificar divs e inline estilos de Tailwind para títulos y paneles flotantes dentro de los componentes de diagramas. Utiliza siempre los componentes unificados en `src/shared/ui/DiagramOverlay.tsx`:
+Queda estrictamente prohibido codificar divs e inline estilos de Tailwind para títulos y paneles flotantes dentro de los componentes de diagramas. Utiliza siempre los componentes unificados en `src/components/ui/DiagramOverlay.tsx`:
 
 1. **DiagramTitle**: Para la etiqueta superior izquierda discreta en mayúsculas pequeñas.
    ```tsx
-   import { DiagramTitle } from '@/shared/ui/DiagramOverlay';
+   import { DiagramTitle } from '@/components/ui/DiagramOverlay';
    // ...
    return (
      <MathBoard ...>
@@ -1637,7 +1637,7 @@ Queda estrictamente prohibido codificar divs e inline estilos de Tailwind para t
 
 2. **DiagramInfoPanel**: Para paneles flotantes con fórmulas y ecuaciones reactivas en tiempo real. Soporta posicionamiento (`position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'`) y adapta automáticamente su contraste al tema oscuro/claro.
    ```tsx
-   import { DiagramInfoPanel } from '@/shared/ui/DiagramOverlay';
+   import { DiagramInfoPanel } from '@/components/ui/DiagramOverlay';
    // ...
    return (
      <MathBoard ...>
@@ -1649,4 +1649,4 @@ Queda estrictamente prohibido codificar divs e inline estilos de Tailwind para t
    ```
 
 3. **Helpers de MathUtils**:
-   Para proyecciones de cuadrados y cuadrículas de conteo unitarias, importa siempre `projectSquareVertices` y `createSquareGrid` de `@/shared/diagrams/core/MathUtils` para evitar duplicación.
+   Para proyecciones de cuadrados y cuadrículas de conteo unitarias, importa siempre `projectSquareVertices` y `createSquareGrid` de `@/diagrams/core/MathUtils` para evitar duplicación.

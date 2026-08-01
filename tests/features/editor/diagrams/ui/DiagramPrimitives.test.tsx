@@ -6,7 +6,7 @@ import {
   DiagramField,
   DiagramPanel,
   DiagramTabBar,
-} from '../../../../../src/features/editor/diagrams/ui/primitives';
+} from '../../../../../src/fixed-pages/editor/diagrams/ui/primitives';
 
 describe('DiagramPanel', () => {
   it('aplica el estilo canónico de panel de restricción pavo/5', () => {

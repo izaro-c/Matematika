@@ -1,8 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { useDiagramState } from '../../../../src/features/editor/diagrams/hooks/useDiagramState';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
-import { PersistenceFailure } from '../../../../src/features/editor/persistence/persistenceErrors';
+import { useDiagramState } from '../../../../src/fixed-pages/editor/diagrams/hooks/useDiagramState';
+import { createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
+import { PersistenceFailure } from '../../../../src/fixed-pages/editor/persistence/persistenceErrors';
 
 const repositoryMocks = vi.hoisted(() => ({
   readDiagram: vi.fn(),
@@ -10,7 +10,7 @@ const repositoryMocks = vi.hoisted(() => ({
   updateMdxImports: vi.fn(),
 }));
 
-vi.mock('../../../../src/features/editor/diagrams/persistence/repository', () => ({
+vi.mock('@/fixed-pages/editor/diagrams/persistence/repository', () => ({
   diagramRepository: {
     readDiagram: repositoryMocks.readDiagram,
     saveDiagram: repositoryMocks.saveDiagram,
@@ -47,7 +47,7 @@ describe('useDiagramState safety policy', () => {
     readDiagram.mockResolvedValueOnce({ source: 'original', model, version: 'v1' });
     const { result } = renderHook(() => useDiagramState());
 
-    await act(async () => result.current.loadDiagram('src/shared/diagrams/Diverged.tsx', 'Diverged'));
+    await act(async () => result.current.loadDiagram('src/diagrams/Diverged.tsx', 'Diverged'));
     act(() => result.current.handleSourceEdit('manual source'));
     expect(result.current.state.status).toBe('source-authoritative');
     act(() => result.current.handleVisualEdit({ ...model, title: 'Visual change' }));
@@ -88,7 +88,7 @@ describe('useDiagramState safety policy', () => {
     const { result } = renderHook(() => useDiagramState());
 
     await act(async () => result.current.loadDiagram(
-      'src/shared/diagrams/ValidacionVisual.tsx',
+      'src/diagrams/ValidacionVisual.tsx',
       'ValidacionVisual',
     ));
 
@@ -123,7 +123,7 @@ describe('useDiagramState safety policy', () => {
     const { result } = renderHook(() => useDiagramState());
 
     await act(async () => result.current.loadDiagramForRewrite(
-      'src/widgets/diagrams/Legacy.tsx',
+      'content/diagrams/Legacy.tsx',
       'Legacy',
       model,
     ));
@@ -138,7 +138,7 @@ describe('useDiagramState safety policy', () => {
       expect(await result.current.saveDiagram()).toBe(true);
     });
     expect(saveDiagram).toHaveBeenCalledWith(
-      'src/widgets/diagrams/Legacy.tsx',
+      'content/diagrams/Legacy.tsx',
       expect.stringContaining('createDiagramSpec'),
       'legacy-v1',
     );
@@ -155,7 +155,7 @@ describe('useDiagramState safety policy', () => {
     }));
     const { result } = renderHook(() => useDiagramState());
 
-    await act(async () => result.current.loadDiagram('src/shared/diagrams/Conflict.tsx', 'Conflict'));
+    await act(async () => result.current.loadDiagram('src/diagrams/Conflict.tsx', 'Conflict'));
     act(() => result.current.handleVisualEdit({ ...model, title: 'Changed' }));
     expect(result.current.state.status).toBe('visual-authoritative');
 
@@ -188,7 +188,7 @@ describe('useDiagramState safety policy', () => {
     }));
     const { result } = renderHook(() => useDiagramState());
 
-    await act(async () => result.current.loadDiagram('src/shared/diagrams/Invalid.tsx', 'Invalid'));
+    await act(async () => result.current.loadDiagram('src/diagrams/Invalid.tsx', 'Invalid'));
     act(() => result.current.handleSourceEdit(brokenSource));
     await act(async () => {
       vi.advanceTimersByTime(600);
@@ -223,7 +223,7 @@ describe('useDiagramState safety policy', () => {
     const { result } = renderHook(() => useDiagramState());
     saveDiagram.mockResolvedValueOnce({ version: 'v2', backupId: 'backup-code' });
 
-    await act(async () => result.current.loadDiagram('src/shared/diagrams/Unsupported.tsx', 'Unsupported'));
+    await act(async () => result.current.loadDiagram('src/diagrams/Unsupported.tsx', 'Unsupported'));
     act(() => result.current.handleSourceEdit(manualSource));
     await act(async () => {
       vi.advanceTimersByTime(600);
@@ -242,7 +242,7 @@ describe('useDiagramState safety policy', () => {
 
     expect(saved).toBe(true);
     expect(saveDiagram).toHaveBeenCalledWith(
-      'src/shared/diagrams/Unsupported.tsx',
+      'src/diagrams/Unsupported.tsx',
       manualSource,
       'v1',
     );
@@ -253,7 +253,7 @@ describe('useDiagramState safety policy', () => {
     readDiagram.mockResolvedValueOnce({ source: 'original', model, version: '' });
     const { result } = renderHook(() => useDiagramState());
 
-    await act(async () => result.current.loadDiagram('src/shared/diagrams/Stale.tsx', 'Stale'));
+    await act(async () => result.current.loadDiagram('src/diagrams/Stale.tsx', 'Stale'));
     act(() => result.current.handleVisualEdit({ ...model, title: 'Changed' }));
     expect(result.current.state.status).toBe('visual-authoritative');
 
@@ -283,15 +283,15 @@ describe('useDiagramState safety policy', () => {
     }));
     const { result } = renderHook(() => useDiagramState());
 
-    await act(async () => result.current.loadDiagram('src/shared/diagrams/A.tsx', 'A'));
+    await act(async () => result.current.loadDiagram('src/diagrams/A.tsx', 'A'));
     act(() => result.current.handleSourceEdit('broken-a'));
-    await act(async () => result.current.loadDiagram('src/shared/diagrams/B.tsx', 'B'));
+    await act(async () => result.current.loadDiagram('src/diagrams/B.tsx', 'B'));
     await act(async () => {
       vi.advanceTimersByTime(600);
       await Promise.resolve();
     });
 
-    expect(result.current.state.filePath).toBe('src/shared/diagrams/B.tsx');
+    expect(result.current.state.filePath).toBe('src/diagrams/B.tsx');
     expect(result.current.state.currentSource).toBe('source-b');
     expect(result.current.state.currentModel?.title).toBe('B');
     expect(result.current.state.status).toBe('synced');
@@ -301,7 +301,7 @@ describe('useDiagramState safety policy', () => {
     readDiagram.mockRejectedValueOnce(new Error('disk unavailable'));
     const { result } = renderHook(() => useDiagramState());
 
-    await act(async () => result.current.loadDiagram('src/shared/diagrams/Missing.tsx', 'Missing'));
+    await act(async () => result.current.loadDiagram('src/diagrams/Missing.tsx', 'Missing'));
 
     expect(result.current.state.status).toBe('invalid-source');
     expect(result.current.state.currentModel).toBeNull();
@@ -322,7 +322,7 @@ describe('useDiagramState safety policy', () => {
       }));
     const { result } = renderHook(() => useDiagramState());
 
-    await act(async () => result.current.loadDiagram('src/shared/diagrams/Parsed.tsx', 'Parsed'));
+    await act(async () => result.current.loadDiagram('src/diagrams/Parsed.tsx', 'Parsed'));
     act(() => result.current.handleSourceEdit('source parsed'));
     await act(async () => {
       vi.advanceTimersByTime(600);
@@ -342,7 +342,7 @@ describe('useDiagramState safety policy', () => {
     saveDiagram.mockResolvedValueOnce({ version: 'v2', backupId: 'backup-1' });
     const { result } = renderHook(() => useDiagramState());
 
-    await act(async () => result.current.loadDiagram('src/shared/diagrams/Save.tsx', 'Save'));
+    await act(async () => result.current.loadDiagram('src/diagrams/Save.tsx', 'Save'));
     act(() => result.current.handleVisualEdit({ ...model, title: 'Changed' }));
     act(() => result.current.resolveDivergence('visual'));
 
@@ -353,7 +353,7 @@ describe('useDiagramState safety policy', () => {
 
     expect(saved).toBe(true);
     expect(saveDiagram).toHaveBeenCalledWith(
-      'src/shared/diagrams/Save.tsx',
+      'src/diagrams/Save.tsx',
       expect.stringContaining('Changed'),
       'v1',
     );
@@ -372,20 +372,20 @@ describe('useDiagramState safety policy', () => {
     updateMdxImports.mockResolvedValueOnce({ success: true, modified: true });
     const { result } = renderHook(() => useDiagramState());
 
-    await act(async () => result.current.loadDiagram('src/shared/diagrams/Source.tsx', 'Source'));
+    await act(async () => result.current.loadDiagram('src/diagrams/Source.tsx', 'Source'));
     act(() => result.current.handleSourceEdit('source authority'));
     act(() => result.current.resolveDivergence('source'));
     await act(async () => {
       await Promise.resolve();
       await Promise.resolve();
     });
-    await act(async () => result.current.linkToMdxPage('database/content/definitions/a.mdx', 'diagram'));
+    await act(async () => result.current.linkToMdxPage('content/mdx/definitions/a.mdx', 'diagram'));
 
     expect(result.current.state.currentModel?.title).toBe('Source parsed');
     expect(updateMdxImports).toHaveBeenCalledWith(
-      'database/content/definitions/a.mdx',
+      'content/mdx/definitions/a.mdx',
       'Source',
-      'src/shared/diagrams/Source.tsx',
+      'src/diagrams/Source.tsx',
       'diagram',
     );
   });

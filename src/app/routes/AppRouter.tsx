@@ -1,34 +1,33 @@
 import { Redirect, Route, Switch } from "wouter";
-import { MathProvider } from "@/shared/lib/MathStoreContext";
+import { MathProvider } from "@/lib/helpers/MathStoreContext";
 import { Suspense, lazy } from 'react';
-import { BiographyLayout } from "@/widgets/layouts/BiographyLayout";
-import { Logo } from "@/shared/ui/Logo";
-import { db } from '@/entities/content';
+import { BiographyLayout } from "@/components/layouts/BiographyLayout";
+import { Logo } from "@/components/ui/Logo";
+import { db } from '@/data/content';
 
-const HomePage = lazy(() => import("@/pages/Home/HomePage").then(m => ({ default: m.HomePage })));
-const DictionaryPage = lazy(() => import("@/pages/DictionaryPage").then(m => ({ default: m.DictionaryPage })));
-const HistoryTimeline = lazy(() => import("@/pages/HistoryTimeline").then(m => ({ default: m.HistoryTimeline })));
-const BranchPage = lazy(() => import("@/pages/BranchPage").then(m => ({ default: m.BranchPage })));
-const TheoremPage = lazy(() => import("@/pages/TheoremPage").then(m => ({ default: m.TheoremPage })));
-const DefinitionPage = lazy(() => import("@/pages/DefinitionPage").then(m => ({ default: m.DefinitionPage })));
-const ExamplePage = lazy(() => import("@/pages/ExamplePage").then(m => ({ default: m.ExamplePage })));
-const ExercisePage = lazy(() => import("@/pages/ExercisePage").then(m => ({ default: m.ExercisePage })));
-const StudyPlanPage = lazy(() => import("@/pages/StudyPlanPage").then(m => ({ default: m.StudyPlanPage })));
-const MethodsPage = lazy(() => import("@/pages/MethodsPage").then(m => ({ default: m.MethodsPage })));
-const MethodPage = lazy(() => import("@/pages/MethodPage").then(m => ({ default: m.MethodPage })));
-const UseCasePage = lazy(() => import("@/pages/UseCasePage").then(m => ({ default: m.UseCasePage })));
-const AxiomPage = lazy(() => import("@/pages/AxiomPage").then(m => ({ default: m.AxiomPage })));
-const ModelPage = lazy(() => import("@/pages/ModelPage").then(m => ({ default: m.ModelPage })));
-const AxiomaticSystemPage = lazy(() => import("@/pages/AxiomaticSystemPage").then(m => ({ default: m.AxiomaticSystemPage })));
-const DemoPage = lazy(() => import("@/pages/DemoPage").then(m => ({ default: m.DemoPage })));
-const NotFoundPage = lazy(() => import("@/pages/NotFoundPage").then(m => ({ default: m.NotFoundPage })));
-const ConstructionPage = lazy(() => import("@/pages/ConstructionPage").then(m => ({ default: m.ConstructionPage })));
+const HomePage = lazy(() => import("@/fixed-pages/home/HomePage").then(m => ({ default: m.HomePage })));
+const DictionaryPage = lazy(() => import("@/fixed-pages/glossary/DictionaryPage").then(m => ({ default: m.DictionaryPage })));
+const HistoryTimeline = lazy(() => import("@/fixed-pages/mathematicians/HistoryTimeline").then(m => ({ default: m.HistoryTimeline })));
+const BranchPage = lazy(() => import("@/content-pages/pages/BranchPage").then(m => ({ default: m.BranchPage })));
+const TheoremPage = lazy(() => import("@/content-pages/pages/TheoremPage").then(m => ({ default: m.TheoremPage })));
+const DefinitionPage = lazy(() => import("@/content-pages/pages/DefinitionPage").then(m => ({ default: m.DefinitionPage })));
+const ExamplePage = lazy(() => import("@/content-pages/pages/ExamplePage").then(m => ({ default: m.ExamplePage })));
+const ExercisePage = lazy(() => import("@/content-pages/pages/ExercisePage").then(m => ({ default: m.ExercisePage })));
+const StudyPlanPage = lazy(() => import("@/content-pages/pages/StudyPlanPage").then(m => ({ default: m.StudyPlanPage })));
+const MethodsPage = lazy(() => import("@/content-pages/pages/MethodsPage").then(m => ({ default: m.MethodsPage })));
+const MethodPage = lazy(() => import("@/content-pages/pages/MethodPage").then(m => ({ default: m.MethodPage })));
+const UseCasePage = lazy(() => import("@/content-pages/pages/UseCasePage").then(m => ({ default: m.UseCasePage })));
+const AxiomPage = lazy(() => import("@/content-pages/pages/AxiomPage").then(m => ({ default: m.AxiomPage })));
+const ModelPage = lazy(() => import("@/content-pages/pages/ModelPage").then(m => ({ default: m.ModelPage })));
+const AxiomaticSystemPage = lazy(() => import("@/content-pages/pages/AxiomaticSystemPage").then(m => ({ default: m.AxiomaticSystemPage })));
+const DemoPage = lazy(() => import("@/content-pages/pages/DemoPage").then(m => ({ default: m.DemoPage })));
+const NotFoundPage = lazy(() => import("@/content-pages/pages/NotFoundPage").then(m => ({ default: m.NotFoundPage })));
+const ConstructionPage = lazy(() => import("@/content-pages/pages/ConstructionPage").then(m => ({ default: m.ConstructionPage })));
 
-const EditorPage = lazy(() => import("@/features/editor/ui/EditorPage").then(m => ({ default: m.EditorPage })));
-const DiagramEditorPage = lazy(() => import("@/pages/DiagramEditorPage").then(m => ({ default: m.DiagramEditorPage })));
-const GraphPage = lazy(() => import("@/pages/GraphPage").then(m => ({ default: m.GraphPage })));
-const AxiomGraphPage = lazy(() => import("@/pages/AxiomGraphPage").then(m => ({ default: m.AxiomGraphPage })));
-
+const EditorPage = lazy(() => import("@/fixed-pages/editor/ui/EditorPage").then(m => ({ default: m.EditorPage })));
+const DiagramEditorPage = lazy(() => import("@/fixed-pages/editor/DiagramEditorPage").then(m => ({ default: m.DiagramEditorPage })));
+const GraphPage = lazy(() => import("@/fixed-pages/graph/GraphPage").then(m => ({ default: m.GraphPage })));
+const AxiomGraphPage = lazy(() => import("@/fixed-pages/graph/AxiomGraphPage").then(m => ({ default: m.AxiomGraphPage })));
 /**
  * Componente principal de enrutamiento de la aplicación.
  * * Lee dinámicamente el contenido indexado en el `ContentStore` y

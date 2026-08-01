@@ -1,5 +1,5 @@
 # `content/mdx/`
 
-MDX entries of the digital garden. Target for today’s `src/database/content/**`.
+Authored MDX for the digital garden: theorems, definitions, demonstrations, exercises, bios, plans, etc.
 
-Empty until migration.
+Subdirectories mirror content type (`theorems/`, `definitions/`, `demonstrations/`, …). Generated indexes live in `src/data/content/`.

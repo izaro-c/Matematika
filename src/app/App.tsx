@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { MDXComponents } from '@/widgets/mdx/MDXBlocks';
-import { PageTransition } from "@/widgets/layouts/PageTransition";
-import { ErrorBoundary } from "@/shared/ui/ErrorBoundary";
-import { AppShell } from "@/widgets/layouts/AppShell";
+import { MDXComponents } from '@/components/mdx/MDXBlocks';
+import { PageTransition } from "@/components/layouts/PageTransition";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+import { AppShell } from "@/components/layouts/AppShell";
 import { useKeyboardShortcuts } from "@/app/hooks/useKeyboardShortcuts";
 import { AppRouter } from "@/app/routes/AppRouter";
 import { Router } from "wouter";

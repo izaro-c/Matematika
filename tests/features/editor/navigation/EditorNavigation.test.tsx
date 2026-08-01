@@ -1,12 +1,12 @@
 // @vitest-environment jsdom
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import type { FileNode } from '../../../../src/features/editor/lib/editorContracts';
-import { EditorNavigation } from '../../../../src/features/editor/ui/EditorNavigation';
+import type { FileNode } from '../../../../src/fixed-pages/editor/lib/editorContracts';
+import { EditorNavigation } from '../../../../src/fixed-pages/editor/ui/EditorNavigation';
 
 const files: FileNode[] = [
-  { path: 'database/content/definitions/punto.mdx', name: 'definicion-punto.mdx', type: 'definitions', kind: 'mdx-document', capability: 'visual-exact', capabilityLabel: 'Edición visual exacta', reason: 'Documento lossless.' },
-  { path: 'database/content/theorems/tales.mdx', name: 'teorema-tales.mdx', type: 'theorems', kind: 'mdx-document', capability: 'invalid', capabilityLabel: 'Recurso inválido', reason: 'Sintaxis inválida.' },
+  { path: 'content/mdx/definitions/punto.mdx', name: 'definicion-punto.mdx', type: 'definitions', kind: 'mdx-document', capability: 'visual-exact', capabilityLabel: 'Edición visual exacta', reason: 'Documento lossless.' },
+  { path: 'content/mdx/theorems/tales.mdx', name: 'teorema-tales.mdx', type: 'theorems', kind: 'mdx-document', capability: 'invalid', capabilityLabel: 'Recurso inválido', reason: 'Sintaxis inválida.' },
   { path: 'widgets/diagrams/Definitions/Punto.tsx', name: 'Punto.tsx', type: 'diagram-definitions', kind: 'diagram', capability: 'code-preview', capabilityLabel: 'Edición de código con vista previa', reason: 'TSX autoritativo.' },
 ];
 

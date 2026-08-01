@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { SemanticLinker } from '@/features/editor/ui/components/SemanticLinker';
+import { SemanticLinker } from '@/fixed-pages/editor/ui/components/SemanticLinker';
 
 const files = [{
-  path: 'database/content/definitions/punto.mdx', name: 'punto.mdx', type: 'content-definitions',
+  path: 'content/mdx/definitions/punto.mdx', name: 'punto.mdx', type: 'content-definitions',
   kind: 'mdx-document' as const, capability: 'visual-exact' as const,
   capabilityLabel: 'Edición visual exacta', reason: 'Compatible',
 }];

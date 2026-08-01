@@ -2,7 +2,7 @@
 
 ## Estado
 
-Superseded en el contrato serializable por **DiagramSpec v3** (`src/shared/diagrams/spec/v3.ts`; migración en `migrations.ts`). Siguen vigentes: renderer compartido, source como autoridad, y roundtrip exacto como umbral de `visual-exact`.
+Superseded en el contrato serializable por **DiagramSpec v3** (`src/diagrams/spec/v3.ts`; migración en `migrations.ts`). Siguen vigentes: renderer compartido, source como autoridad, y roundtrip exacto como umbral de `visual-exact`.
 
 ## Contexto
 
@@ -13,7 +13,7 @@ El workbench dibujaba un SVG simplificado a partir de su modelo mientras el cont
 1. `DiagramSpec v2` es el contrato serializable canónico de una escena representable. Incluye una versión literal, identificador de renderer, viewport persistente, capas, grupos, puntos, elementos, sliders, pasos y metadatos de selección.
 2. Zod valida tanto la forma como las invariantes cruzadas: IDs únicos, capas existentes, miembros de grupo, referencias geométricas, gliders y targets de pasos. Los diagnósticos conservan la ruta del campo que falla.
 3. Toda entrada externa pasa por `migrateDiagramSpec`. La versión 1 y el formato histórico sin versión tienen una migración explícita a v2; una versión futura o sin ruta se rechaza con código y mensaje comprensibles. La migración se realiza en memoria y no reescribe fuentes manuales.
-4. `DiagramRenderer` en `src/shared/diagrams/runtime/` es el único intérprete de la escena para runtime, preview y editor. El modo cambia únicamente capacidades de autoría —selección, movimiento o creación—, no la geometría ni el orden de dibujo.
+4. `DiagramRenderer` en `src/diagrams/runtime/` es el único intérprete de la escena para runtime, preview y editor. El modo cambia únicamente capacidades de autoría —selección, movimiento o creación—, no la geometría ni el orden de dibujo.
 5. `createScenePlan` concentra visibilidad, bloqueo, orden de capa, orden local, grupos, pasos, selección y resaltado. Las funciones de viewport, recuperación y cálculo de contenido viven junto a esa semántica en `shared`.
 6. El TSX generado contiene el spec validado y un adaptador fino a `DiagramRenderer`. No reproduce llamadas a `MathBoard` ni `MathFactory`.
 7. Una fuente solo obtiene autoridad visual cuando el parser puede regenerarla completa y byte a byte. Cualquier extensión manual, overlay o comportamiento no representado conserva autoridad de código y preview; nunca se sobrescribe desde un modelo parcial.
@@ -21,10 +21,10 @@ El workbench dibujaba un SVG simplificado a partir de su modelo mientras el cont
 
 ## Límite FSD
 
-- `src/shared/diagrams/spec/` no depende de React, JSXGraph ni del editor.
-- `src/shared/diagrams/runtime/` depende del spec y del core compartido de diagramas.
-- `src/features/editor/diagrams/` adapta herramientas, inspector, persistencia y estado a esas APIs; no contiene otro renderer.
-- El facade productivo es `@/shared/diagrams/public`. Los módulos ejecutados también desde `vite.config.ts` importan el submódulo puro `spec` por ruta relativa para no arrastrar el runtime React al proyecto Node.
+- `src/diagrams/spec/` no depende de React, JSXGraph ni del editor.
+- `src/diagrams/runtime/` depende del spec y del core compartido de diagramas.
+- `src/fixed-pages/editor/diagrams/` adapta herramientas, inspector, persistencia y estado a esas APIs; no contiene otro renderer.
+- El facade productivo es `@/diagrams/public`. Los módulos ejecutados también desde `vite.config.ts` importan el submódulo puro `spec` por ruta relativa para no arrastrar el runtime React al proyecto Node.
 
 ## Viewport y recuperación
 

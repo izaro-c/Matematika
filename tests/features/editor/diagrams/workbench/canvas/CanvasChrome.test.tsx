@@ -1,8 +1,8 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { createTemplateModel } from '@/features/editor/diagrams/model';
-import { CanvasChrome } from '@/features/editor/diagrams/ui/canvas/CanvasChrome';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model';
+import { CanvasChrome } from '@/fixed-pages/editor/diagrams/ui/canvas/CanvasChrome';
 
 function defaultProps(overrides: Record<string, unknown> = {}) {
   const model = createTemplateModel('lienzo-inicial', 'T', 'sandbox');

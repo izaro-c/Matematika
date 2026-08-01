@@ -2,9 +2,8 @@ import { describe, expect, it } from 'vitest';
 import {
   isPublicationMode,
   publicationContentSize,
-  type CanvasFrameMode,
-} from '@/features/editor/diagrams/ui/canvas/canvasFrameMode';
-import { SCREEN_PRESETS, publishedDiagramArea, publishedLayoutForPageType } from '@/features/editor/diagrams/model/publishedDiagramLayout';
+} from '@/fixed-pages/editor/diagrams/ui/canvas/canvasFrameMode';
+import { SCREEN_PRESETS, publishedDiagramArea, publishedLayoutForPageType } from '@/fixed-pages/editor/diagrams/model/publishedDiagramLayout';
 
 describe('canvasFrameMode', () => {
   it('isPublicationMode is false only for editor', () => {

@@ -33,8 +33,8 @@ Skills hermanas:
    - `leanCommitSha`: SHA o `local-bridge` para trabajo local.
    - `sources`: referencias que fijan el enunciado y el sistema axiomático.
    - `stepTacticMap`: solo en demostraciones, mapeando numero de `ProofStep` a IDs de bloques.
-6. Ejecuta `npm run lean:graph` para regenerar `src/entities/graph/lean_graph.json` y `proof_blocks.json`.
-7. Ejecuta `npm run content:coverage` para actualizar `src/entities/content/contentCoverage.json` con el estado Lean y de diagramas.
+6. Ejecuta `npm run lean:graph` para regenerar `src/data/graph/lean_graph.json` y `proof_blocks.json`.
+7. Ejecuta `npm run content:coverage` para actualizar `src/data/content/contentCoverage.json` con el estado Lean y de diagramas.
 8. Ejecuta `npm run validate-lean` y `npm run bridge:audit`. Si `lake` no esta instalado, instala el toolchain antes de considerar valida la prueba formal.
 
 ## Convenciones

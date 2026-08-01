@@ -1,24 +1,24 @@
 import fs from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
-import { buildTargets } from '../../../../src/features/editor/diagrams/model/selectors';
-import { updateElement, updateSlider, workingScene } from '../../../../src/features/editor/diagrams/model';
+import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
+import { buildTargets } from '../../../../src/fixed-pages/editor/diagrams/model/selectors';
+import { updateElement, updateSlider, workingScene } from '../../../../src/fixed-pages/editor/diagrams/model';
 import {
   evaluateMathExpression,
   expressionVariables,
   withMovedPoint,
   type DiagramSpecV2,
-} from '../../../../src/shared/diagrams/public';
+} from '../../../../src/diagrams/public';
 
 const CASES = [
   {
     componentName: 'AxiomaArquimedes',
-    source: 'src/widgets/diagrams/Axiomas/AxiomaArquimedes.tsx',
+    source: 'content/diagrams/Axiomas/AxiomaArquimedes.tsx',
   },
   {
     componentName: 'AxiomaDedekind',
-    source: 'src/widgets/diagrams/Axiomas/AxiomaDedekind.tsx',
+    source: 'content/diagrams/Axiomas/AxiomaDedekind.tsx',
   },
 ] as const;
 

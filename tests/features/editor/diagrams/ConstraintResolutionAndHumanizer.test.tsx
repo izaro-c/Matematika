@@ -5,12 +5,12 @@ import {
   editableSegmentEndpoints,
   findPointLike,
   setEqualLengthConstraint,
-} from '../../../../src/features/editor/diagrams/model/segmentLengthConstraints';
-import { SegmentLengthConstraintEditor } from '../../../../src/features/editor/diagrams/ui/SegmentLengthConstraintEditor';
-import { DiagramConstraintEditor } from '../../../../src/features/editor/diagrams/ui/DiagramConstraintEditor';
-import { parseDiagramSpecV2 } from '../../../../src/shared/diagrams/spec/schema';
-import { enrichDiagramDiagnostics } from '../../../../src/features/editor/diagrams/diagnostics';
-import type { VisualDiagramModel } from '../../../../src/features/editor/diagrams/model/types';
+} from '../../../../src/fixed-pages/editor/diagrams/model/segmentLengthConstraints';
+import { SegmentLengthConstraintEditor } from '../../../../src/fixed-pages/editor/diagrams/ui/SegmentLengthConstraintEditor';
+import { DiagramConstraintEditor } from '../../../../src/fixed-pages/editor/diagrams/ui/DiagramConstraintEditor';
+import { parseDiagramSpecV2 } from '../../../../src/diagrams/spec/schema';
+import { enrichDiagramDiagnostics } from '../../../../src/fixed-pages/editor/diagrams/diagnostics';
+import type { VisualDiagramModel } from '../../../../src/fixed-pages/editor/diagrams/model/types';
 
 const mockDemoModel: VisualDiagramModel = {
   version: '2.0',

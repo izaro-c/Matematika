@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { navigationTargetForDiagnostic } from '../../../../src/features/editor/ux/diagnosticNavigation';
+import { navigationTargetForDiagnostic } from '../../../../src/fixed-pages/editor/ux/diagnosticNavigation';
 
 describe('editor diagnostic navigation', () => {
   it('navigates diagnostics with ranges to code safely', () => {

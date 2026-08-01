@@ -14,7 +14,7 @@
 - Depcruise: `widgets-diagrams-no-editor`, `design-no-diagrams` (+ FSD previo)
 - ADR-004: widgets/diagrams ↛ editor
 - Escena partida: `sceneTypes` / `sceneCoordinates` / `scenePointMotion` / `sceneBounds` / `scenePlan` (barrel `scene.ts`)
-- Stores canónicos en `src/shared/stores/`
+- Stores canónicos en `src/lib/stores/`
 - READMEs por dominio (editor, diagrams, design, glossary, progress, graph, exercises)
 
 ## Bloqueos / deuda explícita

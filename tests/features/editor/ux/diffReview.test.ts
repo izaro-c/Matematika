@@ -4,7 +4,7 @@ import {
   buildDiffReview,
   isApprovedDiffValid,
   isDiffReviewStale,
-} from '../../../../src/features/editor/ux/diffReview';
+} from '../../../../src/fixed-pages/editor/ux/diffReview';
 
 const base = [
   '---',

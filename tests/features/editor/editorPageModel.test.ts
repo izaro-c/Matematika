@@ -5,12 +5,12 @@ import {
   getDiagramWorkbenchMode,
   getPreviewPath,
   mergeDiagramTargets,
-} from '../../../src/features/editor/ui/editorPageModel';
-import type { Block } from '../../../src/features/editor/core/parser';
-import type { FileNode } from '../../../src/features/editor/lib/editorContracts';
+} from '../../../src/fixed-pages/editor/ui/editorPageModel';
+import type { Block } from '../../../src/fixed-pages/editor/core/parser';
+import type { FileNode } from '../../../src/fixed-pages/editor/lib/editorContracts';
 
 const diagramFile: FileNode = {
-  path: 'widgets/diagrams/Teoremas/Pitagoras.tsx',
+  path: 'content/diagrams/Teoremas/Pitagoras.tsx',
   name: 'Pitagoras.tsx',
   type: 'file',
   kind: 'diagram',
@@ -29,17 +29,17 @@ describe('editor page model', () => {
   it('discovers imported and inline diagram links without duplicating components', () => {
     const blocks: Block[] = [{ id: 'diagram-1', type: 'diagram', content: 'Pitagoras', metadata: { targets: [{ id: 'a', label: 'a' }] } }];
     const links = buildPageDiagramLinks(
-      'src/database/content/theorems/pitagoras.mdx',
-      "import { Pitagoras } from '@/widgets/diagrams/Teoremas/Pitagoras'",
+      'content/mdx/theorems/pitagoras.mdx',
+      "import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras'",
       'export const Simulation = Pitagoras;',
       [diagramFile],
       blocks,
     );
-    expect(links).toEqual([{ componentName: 'Pitagoras', importSource: '@/widgets/diagrams/Teoremas/Pitagoras', path: diagramFile.path, role: 'Simulation', targets: [{ id: 'a', label: 'a' }] }]);
+    expect(links).toEqual([{ componentName: 'Pitagoras', importSource: '@content/diagrams/Teoremas/Pitagoras', path: diagramFile.path, role: 'Simulation', targets: [{ id: 'a', label: 'a' }] }]);
   });
 
   it('builds workbench modes and merges qualified targets', () => {
-    expect(getDiagramWorkbenchMode('widgets/diagrams/Test.tsx')).toEqual({ kind: 'file', path: 'widgets/diagrams/Test.tsx' });
+    expect(getDiagramWorkbenchMode('content/diagrams/Test.tsx')).toEqual({ kind: 'file', path: 'content/diagrams/Test.tsx' });
     expect(getDiagramWorkbenchMode('page.mdx', { id: 'd', type: 'diagram', content: 'Demo', metadata: { source: 'export {}' } })).toMatchObject({ kind: 'inline', componentName: 'Demo' });
     expect(mergeDiagramTargets([{ id: 'A', label: 'local' }], [{ id: 'A', label: 'loaded' }])).toEqual([{ id: 'A', label: 'loaded' }]);
   });

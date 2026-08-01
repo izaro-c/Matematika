@@ -1,10 +1,10 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { MathProvider } from '@/shared/lib/MathStoreContext';
-import { ProofStep } from '@/widgets/content/ProofStep';
-import { ProofStepLink } from '@/widgets/content/ProofStepLink';
-import { CodexLayout } from '@/widgets/layouts/CodexLayout';
+import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { ProofStep } from '@/components/content/ProofStep';
+import { ProofStepLink } from '@/components/content/ProofStepLink';
+import { CodexLayout } from '@/components/layouts/CodexLayout';
 
 const originalScrollIntoView = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollIntoView');
 

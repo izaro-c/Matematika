@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest';
 import {
   buildInspectorNavigationIntent,
   enrichDiagramDiagnostics,
-} from '../../../../../src/features/editor/diagrams/diagnostics';
-import { resolveNavigationObjectId } from '../../../../../src/features/editor/diagrams/diagnostics/locationResolution';
-import { createTemplateModel } from '../../../../../src/features/editor/diagrams/model';
+} from '../../../../../src/fixed-pages/editor/diagrams/diagnostics';
+import { resolveNavigationObjectId } from '../../../../../src/fixed-pages/editor/diagrams/diagnostics/locationResolution';
+import { createTemplateModel } from '../../../../../src/fixed-pages/editor/diagrams/model';
 
 describe('inspector navigation', () => {
   it('builds a navigation intent with section and field key', () => {

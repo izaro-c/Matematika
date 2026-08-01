@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { afterEach, vi } from 'vitest';
-import { parseDiagramSourceLocally, parseDiagramSourceOnServer } from '../../../../src/features/editor/diagrams/source/parser';
+import { parseDiagramSourceLocally, parseDiagramSourceOnServer } from '../../../../src/fixed-pages/editor/diagrams/source/parser';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
-import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
+import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
+import { createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
 
 describe('Diagram TSX Parser (Local & AST)', () => {
   afterEach(() => {
@@ -43,7 +43,7 @@ describe('Diagram TSX Parser (Local & AST)', () => {
 
   it('should handle invalid syntax diagnostics in AST parser', () => {
     const brokenSource = `
-      import { MathBoard } from '@/shared/diagrams/core/MathBoard';
+      import { MathBoard } from '@/diagrams/core/MathBoard';
       export const Broken = () => {
         return (
           <MathBoard
@@ -157,9 +157,9 @@ describe('Diagram TSX Parser (Local & AST)', () => {
 
   it('never grants visual editing because a partial AST contains a point', () => {
     const manual = `
-      import { MathBoard } from '@/shared/diagrams/core/MathBoard';
-      import { createPoint } from '@/shared/diagrams/core/MathFactory';
-      import { DiagramInfoPanel } from '@/shared/ui/DiagramOverlay';
+      import { MathBoard } from '@/diagrams/core/MathBoard';
+      import { createPoint } from '@/diagrams/core/MathFactory';
+      import { DiagramInfoPanel } from '@/components/ui/DiagramOverlay';
       const curveExpression = (x: number) => Math.sin(x);
       const STEPS = [{ id: 'step-1', expression: curveExpression }];
       export const ManualCurve = () => (

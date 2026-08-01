@@ -5,7 +5,7 @@ import {
   editorWriteAccessGranted,
   setEditorAuthToken,
   clearEditorAuthToken,
-} from '@/features/editor/persistence/editorApiBase';
+} from '@/fixed-pages/editor/persistence/editorApiBase';
 
 describe('editorApiBase', () => {
   beforeEach(() => {

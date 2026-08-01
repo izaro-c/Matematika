@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { createScenePlan, resolveStepSceneAppearance } from '../../../../src/shared/diagrams/spec/scene';
-import { createTemplateModel, updateStepObjectState } from '../../../../src/features/editor/diagrams/model';
+import { createScenePlan, resolveStepSceneAppearance } from '../../../../src/diagrams/spec/scene';
+import { createTemplateModel, updateStepObjectState } from '../../../../src/fixed-pages/editor/diagrams/model';
 
 describe('step object appearance', () => {
   it('merges temporal color, label, dashed and style overrides into the scene plan', () => {

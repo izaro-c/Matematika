@@ -5,8 +5,8 @@ import {
   minimumRefsForKind,
   refsForKind,
   refsNeededForTool,
-} from '../../../../src/features/editor/diagrams/model/referenceRules';
-import type { ElementKind } from '../../../../src/features/editor/diagrams/model/types';
+} from '../../../../src/fixed-pages/editor/diagrams/model/referenceRules';
+import type { ElementKind } from '../../../../src/fixed-pages/editor/diagrams/model/types';
 
 describe('ElementReferenceRules', () => {
   describe('refsForKind', () => {

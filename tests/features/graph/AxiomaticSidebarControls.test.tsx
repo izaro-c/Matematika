@@ -1,11 +1,11 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { AxiomaticUniversePicker } from '@/features/graph/ui/components/AxiomaticUniversePicker';
-import { AxiomaticAxiomPicker } from '@/features/graph/ui/components/AxiomaticAxiomPicker';
-import { AxiomaticDisplayOptions } from '@/features/graph/ui/components/AxiomaticDisplayOptions';
-import { AxiomaticSidebar } from '@/features/graph/ui/components/AxiomaticSidebar';
-import { getAxiomGroup } from '@/features/graph/lib/graphUtils';
+import { AxiomaticUniversePicker } from '@/fixed-pages/graph/ui/components/AxiomaticUniversePicker';
+import { AxiomaticAxiomPicker } from '@/fixed-pages/graph/ui/components/AxiomaticAxiomPicker';
+import { AxiomaticDisplayOptions } from '@/fixed-pages/graph/ui/components/AxiomaticDisplayOptions';
+import { AxiomaticSidebar } from '@/fixed-pages/graph/ui/components/AxiomaticSidebar';
+import { getAxiomGroup } from '@/fixed-pages/graph/lib/graphUtils';
 
 afterEach(cleanup);
 

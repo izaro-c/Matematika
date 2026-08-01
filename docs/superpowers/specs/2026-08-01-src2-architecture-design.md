@@ -1,9 +1,9 @@
-# Design: `src2` + `content` architecture
+# Design: `src` + `content` architecture
 
 **Date:** 2026-08-01  
-**Status:** draft — awaiting user review (scaffold READMEs written; no code moved)  
+**Status:** approved — Task 7 cutover complete (`@`→`src`)  
 **Scope:** Folder layout and documentation only. No code migration in this phase.  
-**Coexists with:** current `src/` until a later cutover plan.
+**Primary tree:** `src/` + `content/` (legacy `src/` removed).
 
 ## Goal
 
@@ -15,11 +15,11 @@ Reorganize application code so any contributor can answer “where does X live?�
 |---|---|
 | Shape | Product domains + thin internal folders (`ui` / `model` / `lib` only when needed) |
 | Folder language | English, plain words |
-| Authored material | Repo-root `content/` (not under `src2`) |
-| Diagram demos vs engine | Demos in `content/diagrams/`; engine in `src2/diagrams/` |
+| Authored material | Repo-root `content/` (not under `src`) |
+| Diagram demos vs engine | Demos in `content/diagrams/`; engine in `src/diagrams/` |
 | Page families | `fixed-pages/` (product URLs) vs `content-pages/` (MDX templates) |
 | Extra content-page types | Only when UI truly differs (`exercise`, `study-plan`); rest → `content-pages/shared/` |
-| Target tree | `src2/` scaffold beside `src/` |
+| Target tree | `src/` scaffold beside `src/` |
 
 ## Tree
 
@@ -29,7 +29,7 @@ content/                         # MATERIAL (authors edit this)
   diagrams/                      # published demos tied to MDX
   glossary/                      # dictionary data (not UI)
 
-src2/
+src/
   README.md                      # map: “where is X?”
 
   app/                           # bootstrap: main, routes, providers
@@ -57,20 +57,20 @@ src2/
 | Question | Go to |
 |---|---|
 | Authored MDX / demo / glossary term data? | `content/` |
-| App startup / router? | `src2/app/` |
-| Colors / typography? | `src2/design/` |
-| Button, layout, nav chrome, MDX blocks? | `src2/components/` |
-| Shared hooks / stores / helpers? | `src2/lib/` |
-| Zod schemas, content index API, lean graph JSON? | `src2/data/` |
-| DiagramSpec / JSXGraph runtime / renderer? | `src2/diagrams/` |
-| Fixed URL screen (home, graph, editor, …)? | `src2/fixed-pages/<name>/` |
-| How a content MDX type looks? | `src2/content-pages/shared/` (or `exercise` / `study-plan`) |
+| App startup / router? | `src/app/` |
+| Colors / typography? | `src/design/` |
+| Button, layout, nav chrome, MDX blocks? | `src/components/` |
+| Shared hooks / stores / helpers? | `src/lib/` |
+| Zod schemas, content index API, lean graph JSON? | `src/data/` |
+| DiagramSpec / JSXGraph runtime / renderer? | `src/diagrams/` |
+| Fixed URL screen (home, graph, editor, …)? | `src/fixed-pages/<name>/` |
+| How a content MDX type looks? | `src/content-pages/shared/` (or `exercise` / `study-plan`) |
 | Published Pitágoras demo component? | `content/diagrams/` |
 
 ## Import rules
 
 ```
-content/         →  must not import src2
+content/         →  must not import src
 design/          →  must not import pages, diagrams engine, data domain UI
 components/      →  design, lib
 lib/             →  design (minimal); not pages
@@ -88,39 +88,39 @@ app/             →  may compose all (wiring only)
 
 | Today | New |
 |---|---|
-| `src/database/content/**` | `content/mdx/**` |
-| `src/widgets/diagrams/**` | `content/diagrams/**` |
+| `content/mdx/**` | `content/mdx/**` |
+| `content/diagrams/**` | `content/diagrams/**` |
 | Glossary term data (when extracted) | `content/glossary/` |
-| `src/app/**` | `src2/app/` |
-| `src/shared/design/**`, theme tokens | `src2/design/` |
-| `src/shared/ui/**`, layouts, nav, mdx blocks | `src2/components/` |
-| `src/shared/{hooks,lib,stores}/**` | `src2/lib/` |
-| `src/shared/templates/**` | `src2/components/` or `content-pages/shared/` |
-| `src/shared/diagrams/**` | `src2/diagrams/` |
-| `src/entities/**` | `src2/data/` |
-| `src/features/editor/**` | `src2/fixed-pages/editor/` |
-| `src/features/graph/**`, `src/widgets/graph/**` | `src2/fixed-pages/graph/` |
-| `src/features/glossary/**` (UI) | `src2/fixed-pages/glossary/` |
-| `src/features/progress/**` | `src2/content-pages/study-plan/` |
-| `src/features/exercises/**` | `src2/content-pages/exercise/` |
-| `src/features/metadata/**` | `src2/data/` and/or `fixed-pages/editor/` |
-| `src/widgets/{layouts,navigation,mdx,content}` | `src2/components/` |
-| `src/pages/Home/**` | `src2/fixed-pages/home/` |
-| Generic MDX route screens | `src2/content-pages/shared/` |
+| `src/app/**` | `src/app/` |
+| `src/design/**`, theme tokens | `src/design/` |
+| `src/components/ui/**`, layouts, nav, mdx blocks | `src/components/` |
+| `src/shared/{hooks,lib,stores}/**` | `src/lib/` |
+| `src/content-pages/shared/templates/**` | `src/components/` or `content-pages/shared/` |
+| `src/diagrams/**` | `src/diagrams/` |
+| `src/data/**` | `src/data/` |
+| `src/fixed-pages/editor/**` | `src/fixed-pages/editor/` |
+| `src/fixed-pages/graph/**`, `src/widgets/graph/**` | `src/fixed-pages/graph/` |
+| `src/fixed-pages/glossary/**` (UI) | `src/fixed-pages/glossary/` |
+| `src/content-pages/study-plan/**` | `src/content-pages/study-plan/` |
+| `src/content-pages/exercise/**` | `src/content-pages/exercise/` |
+| `src/content-pages/shared/metadata/**` | `src/data/` and/or `fixed-pages/editor/` |
+| `src/widgets/{layouts,navigation,mdx,content}` | `src/components/` |
+| `src/content-pages/pages/Home/**` | `src/fixed-pages/home/` |
+| Generic MDX route screens | `src/content-pages/shared/` |
 
 ## Out of scope (later plans)
 
 - Moving files / updating imports / Vite aliases / depcruise
 - Deleting or renaming `src/`
 - Updating skills (`project-philosophy`, `page-creator`, `diagrama`) — required at cutover
-- Rewriting `docs/architecture/CODEMAP.md` to point at `src2` (do when migration starts)
+- Rewriting `docs/architecture/CODEMAP.md` to point at `src` (do when migration starts)
 
 ## Success criteria
 
 - A new contributor finds MDX, diagram engine, editor, and graph without reading FSD docs.
-- `content/` never depends on `src2`.
+- `content/` never depends on `src`.
 - Scaffold READMEs match this spec.
-- No application code lives in `src2` until an explicit migration plan runs.
+- No application code lives in `src` until an explicit migration plan runs.
 
 ## Skill impact (at cutover, not now)
 

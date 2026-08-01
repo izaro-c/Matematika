@@ -1,10 +1,10 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { useNavigationStore } from '@/shared/stores/NavigationStore';
-import { SearchOmnibar } from '@/widgets/navigation/SearchOmnibar';
-import { mscNames } from '@/entities/content/msc2020';
-import { routePath } from '@/shared/lib/routeHelper';
+import { useNavigationStore } from '@/lib/stores/NavigationStore';
+import { SearchOmnibar } from '@/components/navigation/SearchOmnibar';
+import { mscNames } from '@/data/content/msc2020';
+import { routePath } from '@/lib/helpers/routeHelper';
 
 const { setLocation } = vi.hoisted(() => ({ setLocation: vi.fn() }));
 

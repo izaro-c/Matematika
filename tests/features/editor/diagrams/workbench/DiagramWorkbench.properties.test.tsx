@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { curveAreaFill } from '@/shared/diagrams/spec/curveGeometry';
-import { defaultConstraintRefs, withConstraintDependencies } from '@/features/editor/diagrams/model/constraintOptions';
-import { updatePoint } from '@/features/editor/diagrams/model/diagramElements';
-import { createTemplateModel } from '@/features/editor/diagrams/model/templateModels';
+import { curveAreaFill } from '@/diagrams/spec/curveGeometry';
+import { defaultConstraintRefs, withConstraintDependencies } from '@/fixed-pages/editor/diagrams/model/constraintOptions';
+import { updatePoint } from '@/fixed-pages/editor/diagrams/model/diagramElements';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/templateModels';
 import {
   congruenceMarkForSegment,
   dimensionLineForSegment,
@@ -12,16 +12,16 @@ import {
   setSegmentParallelMark,
   toggleSegmentDimensionLine,
   toggleSegmentMeasurement,
-} from '@/features/editor/diagrams/model/segmentMarks';
+} from '@/fixed-pages/editor/diagrams/model/segmentMarks';
 import {
   equalLengthConstraintForSegment,
   setEqualLengthConstraint,
-} from '@/features/editor/diagrams/model/segmentLengthConstraints';
+} from '@/fixed-pages/editor/diagrams/model/segmentLengthConstraints';
 import {
   equalAngleConstraintForAngle,
   setEqualAngleConstraint,
-} from '@/features/editor/diagrams/model/angleConstraints';
-import type { DiagramElement, VisualDiagramModel } from '@/features/editor/diagrams/model/types';
+} from '@/fixed-pages/editor/diagrams/model/angleConstraints';
+import type { DiagramElement, VisualDiagramModel } from '@/fixed-pages/editor/diagrams/model/types';
 
 describe('Editor V2 - Property Completeness & Correctness', () => {
   it('correctly identifies interior area fill for functionCurve', () => {
@@ -167,7 +167,7 @@ describe('Editor V2 - Property Completeness & Correctness', () => {
 
   it('gates geometric constraints to segment and angle only', async () => {
     const { showsConstraintsSection, constraintScopeForKind } = await import(
-      '@/features/editor/diagrams/ui/inspector/elementSections'
+      '@/fixed-pages/editor/diagrams/ui/inspector/elementSections'
     );
     expect(showsConstraintsSection('segment')).toBe(true);
     expect(constraintScopeForKind('segment')).toBe('segment');

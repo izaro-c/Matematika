@@ -5,8 +5,8 @@ import { spawnSync } from 'child_process';
 import { extractLeanArtifacts, validateLeanDeclarationNames } from './lean-graph-utils.ts';
 
 const LEAN_ROOT = path.resolve(process.cwd(), 'lean');
-const GRAPH_OUTPUT = path.resolve(process.cwd(), 'src/entities/graph/lean_graph.json');
-const PROOF_BLOCKS_OUTPUT = path.resolve(process.cwd(), 'src/entities/graph/proof_blocks.json');
+const GRAPH_OUTPUT = path.resolve(process.cwd(), 'src/data/graph/lean_graph.json');
+const PROOF_BLOCKS_OUTPUT = path.resolve(process.cwd(), 'src/data/graph/proof_blocks.json');
 const LEAN_QUERY = path.resolve(process.cwd(), 'scripts/lean/lean-query.lean');
 
 interface LeanQueryResult {

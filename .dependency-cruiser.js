@@ -1,100 +1,96 @@
 /** @type {import('dependency-cruiser').IConfiguration} */
 export default {
   forbidden: [
-    /* -- FSD (Feature-Sliced Design) Architecture rules -- */
+    /* -- src + content architecture -- */
 
-    /* shared/ — no debe importar de capas superiores. */
     {
-      name: 'fsd-shared-no-upper-layers',
-      comment: 'shared/ must not import from app, pages, widgets, features, entities',
+      name: 'src-design-no-upper',
+      comment: 'design must not import pages, data, diagrams, or other product domains',
       severity: 'error',
-      from: { path: '^src/shared/' },
-      to: { path: '^src/(app|pages|widgets|features|entities)/' },
+      from: { path: '^src/design/' },
+      to: {
+        path: '^src/(fixed-pages|content-pages|data|diagrams|app)/',
+      },
     },
-    /* Excepción acotada: MDXBlocks compone bloques de features y widgets. */
     {
-      name: 'fsd-mdxblocks-composition-scope',
-      comment: 'MDXBlocks may compose features and widgets, but must not expand to app, pages, or entities',
+      name: 'src-design-no-diagrams',
+      comment: 'design must not import diagrams engine',
       severity: 'error',
-      from: { path: '^src/widgets/mdx/MDXBlocks\\.tsx$' },
-      to: { path: '^src/(app|pages|entities)/' },
+      from: { path: '^src/design/' },
+      to: { path: '^src/diagrams/' },
     },
-
-    /* entities/ — dominio puro, no debe importar UI ni estado */
     {
-      name: 'fsd-entities-no-ui',
-      comment: 'entities/ must not import from pages, widgets, features, app',
+      name: 'src-lib-no-pages',
+      comment: 'lib must not import fixed-pages, content-pages, or app',
       severity: 'error',
-      from: { path: '^src/entities/' },
-      to: { path: '^src/(pages|widgets|features|app)/' },
+      from: { path: '^src/lib/' },
+      to: { path: '^src/(fixed-pages|content-pages|app)/' },
     },
-
-    /* features/ — no debe importar de app/ o pages/ */
     {
-      name: 'fsd-features-no-upper-layers',
-      comment: 'features/ must not import from pages or app',
-      severity: 'error',
-      from: { path: '^src/features/' },
-      to: { path: '^src/(pages|app)/' },
-    },
-
-    /* widgets/ — no debe importar de features/ salvo el registro de composición MDXBlocks */
-    {
-      name: 'fsd-widgets-no-features',
-      comment: 'widgets/ must not import from features/ (should use composition)',
+      name: 'src-components-no-pages',
+      comment: 'components must not import page domains (MDXBlocks may compose exercise blocks)',
       severity: 'error',
       from: {
-        path: '^src/widgets/',
-        pathNot: '^src/widgets/mdx/MDXBlocks\\.tsx$',
+        path: '^src/components/',
+        pathNot: '^src/components/mdx/MDXBlocks\\.tsx$',
       },
-      to: { path: '^src/features/' },
+      to: { path: '^src/(fixed-pages|content-pages|app)/' },
     },
-
-    /* pages/ — puede importar dentro de su propia slice, no desde otras pages */
     {
-      name: 'fsd-pages-no-cross-imports',
-      comment: 'pages/ must not import from another page slice',
+      name: 'src-mdxblocks-content-pages',
+      comment: 'MDXBlocks may compose exercise MDX blocks from content-pages only',
       severity: 'error',
-      from: { path: '^src/pages/([^/]+)(?:/|\\.[^/]+$)' },
+      from: { path: '^src/components/mdx/MDXBlocks\\.tsx$' },
       to: {
-        path: '^src/pages/',
-        pathNot: '^src/pages/$1(?:/|\\.[^/]+$)',
+        path: '^src/content-pages/',
+        pathNot: '^src/content-pages/exercise/',
       },
     },
-
-    /* features/ — puede importar dentro de su slice, no desde otra feature */
     {
-      name: 'fsd-features-cross-imports',
-      comment: 'features/ must not import from another feature slice',
+      name: 'src-data-no-pages',
+      comment: 'data must not import pages or app',
       severity: 'error',
-      from: { path: '^src/features/([^/]+)/' },
-      to: {
-        path: '^src/features/',
-        pathNot: '^src/features/$1(?:/|$)',
-      },
+      from: { path: '^src/data/' },
+      to: { path: '^src/(fixed-pages|content-pages|app)/' },
     },
-
-    /* widgets/diagrams — no puede acoplarse al editor (solo shared/diagrams) */
     {
-      name: 'widgets-diagrams-no-editor',
-      comment: 'widgets/diagrams must not import from features/editor; use shared/diagrams',
+      name: 'src-fixed-content-pages-isolation',
+      comment: 'fixed-pages and content-pages must not import each other',
       severity: 'error',
-      from: { path: '^src/widgets/diagrams/' },
-      to: { path: '^src/features/editor/' },
+      from: { path: '^src/fixed-pages/' },
+      to: { path: '^src/content-pages/' },
     },
-
-    /* shared/design — no debe depender del dominio diagrams (evita ciclo tokens↔spec) */
     {
-      name: 'design-no-diagrams',
-      comment: 'shared/design must not import shared/diagrams',
+      name: 'src-content-pages-no-fixed',
+      comment: 'content-pages must not import fixed-pages',
       severity: 'error',
-      from: { path: '^src/shared/design/' },
-      to: { path: '^src/shared/diagrams/' },
+      from: { path: '^src/content-pages/' },
+      to: { path: '^src/fixed-pages/' },
+    },
+    {
+      name: 'content-diagrams-no-editor',
+      comment: 'content/diagrams must not import editor; use @/diagrams',
+      severity: 'error',
+      from: { path: '^content/diagrams/' },
+      to: { path: '^src/fixed-pages/editor/' },
+    },
+    {
+      name: 'content-diagrams-no-app-pages',
+      comment: 'content/diagrams must not import app or page domains',
+      severity: 'error',
+      from: { path: '^content/diagrams/' },
+      to: { path: '^src/(fixed-pages|content-pages|app)/' },
+    },
+    {
+      name: 'content-no-app-pages',
+      comment: 'authored content/ may use diagrams/lib/components/design/data; not app or page domains',
+      severity: 'error',
+      from: { path: '^content/' },
+      to: { path: '^src/(app|fixed-pages|content-pages)/' },
     },
 
     /* -- General quality rules -- */
 
-    /* Los tests NO deben importarse desde código de producción */
     {
       name: 'not-to-test',
       comment: 'Production code should not depend on test code',
@@ -102,16 +98,12 @@ export default {
       from: { path: '^src/' },
       to: { path: '^tests/' },
     },
-
-    /* No dependencias circulares */
     {
       name: 'no-circular',
       severity: 'error',
       from: {},
       to: { circular: true },
     },
-
-    /* No módulos huérfanos */
     {
       name: 'no-orphans',
       comment: 'Detect modules with no incoming or outgoing dependencies (dead code)',
@@ -119,8 +111,6 @@ export default {
       from: { orphan: true },
       to: {},
     },
-
-    /* No dependencias no resueltas */
     {
       name: 'not-to-unresolvable',
       comment: 'Detect imports that cannot be resolved to files on disk',
@@ -128,8 +118,6 @@ export default {
       from: {},
       to: { couldNotResolve: true },
     },
-
-    /* No importar devDependencies desde código de producción */
     {
       name: 'not-to-dev-dep',
       comment: 'Production code should not depend on devDependencies',
@@ -144,33 +132,21 @@ export default {
       path: ['node_modules', 'dist'],
     },
     exclude: {
-      path: [
-        '^src/boundary/',
-        '^src/controller/',
-        '^src/entity/',
-      ],
+      path: [],
     },
-
-    /* Usar webpack-like resolution para los alias de tsconfig (@/ -> src/) */
     enhancedResolveOptions: {
       exportsFields: ['exports'],
       conditionNames: ['import', 'require', 'node', 'default'],
     },
-
-    /* Resolver imports de TypeScript */
     tsPreCompilationDeps: true,
     tsConfig: {
       fileName: 'tsconfig.app.json',
     },
-
-    /* Reporteros */
     reporterOptions: {
       text: {
         highlightFocused: true,
       },
     },
-
-    /* Extensiones a considerar */
     moduleSystems: ['es6', 'cjs'],
     exoticRequireStrings: ['want', 'tryRequire'],
   },

@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-vi.mock('@/entities/content/loaders', () => ({
+vi.mock('@/data/content/loaders', () => ({
   contentLoaders: {
     mathMetas: {}, mathLoaders: {},
     thmMetas: {}, thmLoaders: {},
@@ -16,7 +16,7 @@ vi.mock('@/entities/content/loaders', () => ({
   },
 }));
 
-import { ContentStore } from '@/entities/content/ContentStore';
+import { ContentStore } from '@/data/content/ContentStore';
 
 function createTestStore() {
   const store = new ContentStore();

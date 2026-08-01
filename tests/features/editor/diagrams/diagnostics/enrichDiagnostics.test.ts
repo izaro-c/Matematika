@@ -4,11 +4,11 @@ import {
   summarizeDiagnostics,
   formatDiagnosticTabDetail,
   fieldErrorsForObject,
-} from '../../../../../src/features/editor/diagrams/diagnostics';
-import { parseDiagnosticPath } from '../../../../../src/features/editor/diagrams/diagnostics/locationParsing';
-import { resolveObjectId } from '../../../../../src/features/editor/diagrams/diagnostics/locationResolution';
-import type { DiagramDiagnostic } from '../../../../../src/features/editor/diagrams/source/generator';
-import { createTemplateModel } from '../../../../../src/features/editor/diagrams/model';
+} from '../../../../../src/fixed-pages/editor/diagrams/diagnostics';
+import { parseDiagnosticPath } from '../../../../../src/fixed-pages/editor/diagrams/diagnostics/locationParsing';
+import { resolveObjectId } from '../../../../../src/fixed-pages/editor/diagrams/diagnostics/locationResolution';
+import type { DiagramDiagnostic } from '../../../../../src/fixed-pages/editor/diagrams/source/generator';
+import { createTemplateModel } from '../../../../../src/fixed-pages/editor/diagrams/model';
 
 describe('enrichDiagramDiagnostics', () => {
   const model = createTemplateModel('triangulo', 'Triángulo', 'definicion');

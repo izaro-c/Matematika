@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { initialDiagramState, diagramReducer } from '../../../../src/features/editor/diagrams/state/reducer';
-import type { DiagramState } from '../../../../src/features/editor/diagrams/state/types';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
-import { getDiagramSaveCapability, isDiagramStateDirty } from '../../../../src/features/editor/diagrams/model/selectors';
+import { initialDiagramState, diagramReducer } from '../../../../src/fixed-pages/editor/diagrams/state/reducer';
+import type { DiagramState } from '../../../../src/fixed-pages/editor/diagrams/state/types';
+import { createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
+import { getDiagramSaveCapability, isDiagramStateDirty } from '../../../../src/fixed-pages/editor/diagrams/model/selectors';
 
 function reorderKeysDeep<T>(value: T): T {
   if (Array.isArray(value)) {
@@ -25,13 +25,13 @@ describe('Diagram Reducer', () => {
     const model = createTemplateModel('circunferencia', 'Test', 'definicion');
     const state = diagramReducer(initialDiagramState, {
       type: 'LOAD_DIAGRAM',
-      filePath: 'src/widgets/diagrams/Test.tsx',
+      filePath: 'content/diagrams/Test.tsx',
       componentName: 'Test',
       source: 'code',
       model,
     });
 
-    expect(state.filePath).toBe('src/widgets/diagrams/Test.tsx');
+    expect(state.filePath).toBe('content/diagrams/Test.tsx');
     expect(state.componentName).toBe('Test');
     expect(state.originalSource).toBe('code');
     expect(state.status).toBe('synced');
@@ -42,7 +42,7 @@ describe('Diagram Reducer', () => {
     const model = createTemplateModel('circunferencia', 'Test', 'definicion');
     const loadedState = diagramReducer(initialDiagramState, {
       type: 'LOAD_DIAGRAM',
-      filePath: 'src/widgets/diagrams/Test.tsx',
+      filePath: 'content/diagrams/Test.tsx',
       componentName: 'Test',
       source: 'code',
       model,
@@ -61,7 +61,7 @@ describe('Diagram Reducer', () => {
   it('undoes and redoes visual commands without changing manual source authority', () => {
     const model = createTemplateModel('circunferencia', 'History', 'definicion');
     const loaded = diagramReducer(initialDiagramState, {
-      type: 'LOAD_DIAGRAM', filePath: 'src/widgets/diagrams/History.tsx', componentName: 'History', source: 'source', model,
+      type: 'LOAD_DIAGRAM', filePath: 'content/diagrams/History.tsx', componentName: 'History', source: 'source', model,
     });
     const edited = diagramReducer(loaded, { type: 'VISUAL_EDIT', model: { ...model, title: 'Edited' }, label: 'Editar título' });
     const undone = diagramReducer(edited, { type: 'UNDO' });
@@ -76,7 +76,7 @@ describe('Diagram Reducer', () => {
     const model = createTemplateModel('circunferencia', 'Test', 'definicion');
     const state: DiagramState = {
       ...initialDiagramState,
-      filePath: 'src/widgets/diagrams/Test.tsx',
+      filePath: 'content/diagrams/Test.tsx',
       componentName: 'Test',
       originalSource: 'code',
       currentSource: 'code_edited',
@@ -98,7 +98,7 @@ describe('Diagram Reducer', () => {
     const model = createTemplateModel('circunferencia', 'Test', 'definicion');
     const divergedState: DiagramState = {
       ...initialDiagramState,
-      filePath: 'src/widgets/diagrams/Test.tsx',
+      filePath: 'content/diagrams/Test.tsx',
       componentName: 'Test',
       originalSource: 'code',
       currentSource: 'code_edited',
@@ -121,7 +121,7 @@ describe('Diagram Reducer', () => {
     const model = createTemplateModel('circunferencia', 'Lifecycle', 'definicion');
     const loadedState = diagramReducer(initialDiagramState, {
       type: 'LOAD_DIAGRAM',
-      filePath: 'src/shared/diagrams/Lifecycle.tsx',
+      filePath: 'src/diagrams/Lifecycle.tsx',
       componentName: 'Lifecycle',
       source: 'source',
       model,
@@ -215,7 +215,7 @@ describe('Diagram Reducer', () => {
     const originalManualSource = 'export const Broken = () => <MathBoard';
     const state = diagramReducer(initialDiagramState, {
       type: 'LOAD_DIAGRAM',
-      filePath: 'src/shared/diagrams/Broken.tsx',
+      filePath: 'src/diagrams/Broken.tsx',
       componentName: 'Broken',
       source: originalManualSource,
       model: null,
@@ -242,7 +242,7 @@ describe('Diagram Reducer', () => {
 
     const state = diagramReducer(initialDiagramState, {
       type: 'LOAD_DIAGRAM',
-      filePath: 'src/shared/diagrams/Bespoke.tsx',
+      filePath: 'src/diagrams/Bespoke.tsx',
       componentName: 'Bespoke',
       source: manualSource,
       model: null,
@@ -265,7 +265,7 @@ describe('Diagram Reducer', () => {
     const previousModel = createTemplateModel('circunferencia', 'Previous', 'definicion');
     const loadedState = diagramReducer(initialDiagramState, {
       type: 'LOAD_DIAGRAM',
-      filePath: 'src/shared/diagrams/Previous.tsx',
+      filePath: 'src/diagrams/Previous.tsx',
       componentName: 'Previous',
       source: 'valid source',
       model: previousModel,
@@ -274,7 +274,7 @@ describe('Diagram Reducer', () => {
     const brokenSource = 'export const Next = () => <MathBoard';
     const nextState = diagramReducer(loadedState, {
       type: 'LOAD_DIAGRAM',
-      filePath: 'src/shared/diagrams/Next.tsx',
+      filePath: 'src/diagrams/Next.tsx',
       componentName: 'Next',
       source: brokenSource,
       model: null,
@@ -297,7 +297,7 @@ describe('Diagram Reducer', () => {
     const originalManualSource = 'export const Manual = () => <svg data-manual="si" />;\n';
     const state: DiagramState = {
       ...initialDiagramState,
-      filePath: 'src/shared/diagrams/Manual.tsx',
+      filePath: 'src/diagrams/Manual.tsx',
       componentName: 'Manual',
       originalSource: originalManualSource,
       currentSource: originalManualSource,
@@ -331,7 +331,7 @@ describe('Diagram Reducer', () => {
     const model = createTemplateModel('circunferencia', 'Unsafe', 'definicion');
     const state: DiagramState = {
       ...initialDiagramState,
-      filePath: 'src/shared/diagrams/Unsafe.tsx',
+      filePath: 'src/diagrams/Unsafe.tsx',
       componentName: 'Unsafe',
       originalSource: 'source',
       currentSource: 'source',
@@ -347,7 +347,7 @@ describe('Diagram Reducer', () => {
     const model = createTemplateModel('circunferencia', 'Unsafe', 'definicion');
     const withValidationError: DiagramState = {
       ...initialDiagramState,
-      filePath: 'src/shared/diagrams/Unsafe.tsx',
+      filePath: 'src/diagrams/Unsafe.tsx',
       componentName: 'Unsafe',
       originalSource: 'source',
       currentSource: 'source',
@@ -377,7 +377,7 @@ describe('Diagram Reducer', () => {
     const model = createTemplateModel('circunferencia', 'Stable', 'definicion');
     const loadedState = diagramReducer(initialDiagramState, {
       type: 'LOAD_DIAGRAM',
-      filePath: 'src/shared/diagrams/Stable.tsx',
+      filePath: 'src/diagrams/Stable.tsx',
       componentName: 'Stable',
       source: 'source',
       model,
@@ -395,7 +395,7 @@ describe('Diagram Reducer', () => {
     const model = createTemplateModel('circunferencia', 'Changed', 'definicion');
     const loadedState = diagramReducer(initialDiagramState, {
       type: 'LOAD_DIAGRAM',
-      filePath: 'src/shared/diagrams/Changed.tsx',
+      filePath: 'src/diagrams/Changed.tsx',
       componentName: 'Changed',
       source: 'source',
       model,
@@ -412,7 +412,7 @@ describe('Diagram Reducer', () => {
     const model = createTemplateModel('lienzo-inicial', 'Rewrite', 'definicion');
     const rewriteState = diagramReducer(initialDiagramState, {
       type: 'LOAD_REWRITE_DIAGRAM',
-      filePath: 'src/widgets/diagrams/Legacy.tsx',
+      filePath: 'content/diagrams/Legacy.tsx',
       componentName: 'Legacy',
       originalSource: 'export const Legacy = () => <svg />;',
       source: 'export const Legacy = () => createDiagramSpec(...);',

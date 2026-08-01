@@ -192,6 +192,7 @@ function importSpecifiers(text: string): string[] {
 
 function resolveImport(source: ScannedFile, specifier: string): string | null {
   if (specifier.startsWith('@/')) return `src/${specifier.slice(2)}`;
+  if (specifier.startsWith('@content/')) return `content/${specifier.slice('@content/'.length)}`;
   if (!specifier.startsWith('.')) return null;
   const absolute = path.resolve(path.dirname(source.fullPath), specifier);
   const relativePath = toRelative(absolute);
@@ -354,7 +355,7 @@ function mdxAnalysis(files: ScannedFile[]): {
   proofStepsWithoutJustification: CountByFile[];
   noInteractiveCue: string[];
 } {
-  const mdxFiles = files.filter(file => file.path.startsWith('src/database/content/') && file.extension === '.mdx');
+  const mdxFiles = files.filter(file => file.path.startsWith('content/mdx/') && file.extension === '.mdx');
   const analyses = mdxFiles.map(analyzeMdxFile);
   const zoneCounts = countValues(analyses.map(analysis => analysis.zone));
   const missingRequiresCounts = countValues(
@@ -499,11 +500,11 @@ function contextArtefacts(): Array<{ path: string; reason: string; ignored: bool
     ['docs/api', 'documentación API generada'],
     ['scripts/plantuml.jar', 'binario de tooling'],
     ['package-lock.json', 'lockfile voluminoso'],
-    ['src/entities/content/contentIndex.json', 'índice generado'],
-    ['src/entities/content/contentCoverage.json', 'cobertura de contenido generada'],
-    ['src/entities/graph/graph_structure.json', 'grafo generado'],
-    ['src/entities/graph/lean_graph.json', 'grafo Lean generado'],
-    ['src/entities/graph/proof_blocks.json', 'bloques de prueba generados'],
+    ['src/data/content/contentIndex.json', 'índice generado'],
+    ['src/data/content/contentCoverage.json', 'cobertura de contenido generada'],
+    ['src/data/graph/graph_structure.json', 'grafo generado'],
+    ['src/data/graph/lean_graph.json', 'grafo Lean generado'],
+    ['src/data/graph/proof_blocks.json', 'bloques de prueba generados'],
   ];
   const gitignore = fs.existsSync(path.join(ROOT, '.gitignore'))
     ? fs.readFileSync(path.join(ROOT, '.gitignore'), 'utf8')
@@ -545,7 +546,7 @@ function buildReport(files: ScannedFile[], packageJson: PackageJson): {
   const lean = leanAnalysis(files);
   const ai = aiAnalysis(files, packageJson);
   const artefacts = contextArtefacts();
-  const coverage = readJson<ContentCoverage>('src/entities/content/contentCoverage.json');
+  const coverage = readJson<ContentCoverage>('src/data/content/contentCoverage.json');
   const missingAi = ai.expected.filter(entry => !entry.present).length;
 
   const summary = {

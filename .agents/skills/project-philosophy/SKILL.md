@@ -71,7 +71,7 @@ Si un concepto puede visualizarse, se visualiza. Si un ejercicio puede ser inter
 - ❌ Una definición de "ángulo" con solo texto, sin simulación
 - ❌ Un ejercicio de tipo test con radio buttons HTML en lugar de `<Hueco>` interactivo
 
-**Cómo detectar:** Verificar que cada página de tipo `teorema`, `definicion`, `ejercicio` tiene `hasSimulation: true` o un diagrama asociado. Los componentes publicados viven en `src/widgets/diagrams/`; su contrato y renderer comunes viven en `src/shared/diagrams/`.
+**Cómo detectar:** Verificar que cada página de tipo `teorema`, `definicion`, `ejercicio` tiene `hasSimulation: true` o un diagrama asociado. Los componentes publicados viven en `content/diagrams/`; su contrato y renderer comunes viven en `src/diagrams/`.
 
 **Delegación:** Para crear el diagrama, carga la skill `diagrama`.
 
@@ -217,7 +217,7 @@ Cuando se carga esta skill, el agente DEBE verificar:
 
 ### 3.2 Consistencia de contenido
 4. ¿Están todos los tipos de `schemas.ts` documentados en `page-creator`?
-5. ¿Cada tipo de contenido tiene un template en `src/shared/templates/`?
+5. ¿Cada tipo de contenido tiene un template en `src/content-pages/shared/templates/`?
 6. ¿El `contentIndex.json` está actualizado? → ejecutar `npm run generate-index`
 
 ### 3.3 Consistencia de estilo
@@ -301,12 +301,12 @@ Cada principio se refleja en la arquitectura de carpetas:
 | `ai/` | Estado, objetivos y operación diaria con IA |
 | `.agents/skills/` | Procedimientos reutilizables cargados bajo demanda |
 | `.opencode/` y `opencode.json` | Adaptador y configuración oficial de OpenCode |
-| `src/entities/content/schemas.ts` | Zod schemas — fuente única de verdad para metadata |
-| `src/entities/graph/graphTypes.ts` | Tipos del grafo |
-| `src/entities/graph/lean_graph.json` | Grafo Lean generado para páginas con `leanId` |
-| `src/entities/graph/proof_blocks.json` | Bloques de táctica Lean para `ProofStepExpander` |
-| `src/entities/content/ContentStore.ts` | API de consulta de contenido |
-| `src/app/theme.css` y `src/shared/design/` | Paleta Arts & Crafts y roles semánticos |
-| `src/shared/templates/` | Plantillas MDX por tipo de contenido |
-| `src/widgets/diagrams/` | Diagramas interactivos |
+| `src/data/content/schemas.ts` | Zod schemas — fuente única de verdad para metadata |
+| `src/data/graph/graphTypes.ts` | Tipos del grafo |
+| `src/data/graph/lean_graph.json` | Grafo Lean generado para páginas con `leanId` |
+| `src/data/graph/proof_blocks.json` | Bloques de táctica Lean para `ProofStepExpander` |
+| `src/data/content/ContentStore.ts` | API de consulta de contenido |
+| `src/app/theme.css` y `src/design/` | Paleta Arts & Crafts y roles semánticos |
+| `src/content-pages/shared/templates/` | Plantillas MDX por tipo de contenido |
+| `content/diagrams/` | Diagramas interactivos |
 | `.dependency-cruiser.js` | Reglas de arquitectura FSD |

@@ -1,0 +1,72 @@
+export const metadata = {
+  "id": "demo-triangulo-isosceles",
+  "type": "demostracion",
+  "title": "Demostración: Pons Asinorum",
+  "description": "Prueba por simetría de Pappus: el triángulo es congruente consigo mismo con los vértices permutados, y LAL fuerza la igualdad de los ángulos de la base.",
+  "tags": ["geometria", "congruencia", "triangulos"],
+  "authors": ["euclides"],
+  "parentTheorem": "teorema-triangulo-isosceles",
+  "proofMethod": "metodo-directo",
+  "layout": "split",
+    "sources": [
+    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 5", "role": "primary" },
+    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  ],
+  "leanId": "Matematika.Geometry.Hilbert.demo_triangulo_isosceles",
+  "stepTacticMap": { "1": [], "2": [], "3": [], "4": [] }
+};
+
+import { DemoTrianguloIsosceles } from "@content/diagrams/Demos/DemoTrianguloIsosceles";
+
+<DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
+
+<Capitular letra="S" />ea $\triangle ABC$ un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>. Se supone que sus lados desde $A$ satisfacen <InteractiveElement target="lados-iguales">$\overline{AB} \cong \overline{AC}$</InteractiveElement>. Entonces:
+
+<Formula>
+  $$ \angle B \cong \angle C $$
+</Formula>
+
+<Separador />
+
+<ProofStep number={1} title="El triángulo isósceles" target={["triangulo-abc", "lado-ab", "lado-ac"]} leanBlocks={metadata.stepTacticMap["1"]}>
+Por hipótesis, <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo" isDependency={false}>$\triangle ABC$</ConceptLink></InteractiveElement> es isósceles con <InteractiveElement target="lado-ab" color="salvia">$\overline{AB} \cong \overline{AC}$</InteractiveElement>. Queremos demostrar que <InteractiveElement target="angulo-b" color="salvia">$\angle B$</InteractiveElement> $\cong$ <InteractiveElement target="angulo-c" color="pizarra">$\angle C$</InteractiveElement>.
+</ProofStep>
+
+<ProofStep number={2} title="El triángulo permutado" target={["triangulo-permutado"]} leanBlocks={metadata.stepTacticMap["2"]}>
+Consideremos el mismo <InteractiveElement target="triangulo-abc" color="carbon">$\triangle ABC$</InteractiveElement> pero leyendo sus <ConceptLink targetId="vertice" isDependency={false}>vértices</ConceptLink> en el orden $A$–$C$–$B$. Es decir, comparamos <InteractiveElement target="triangulo-permutado" color="carbon">$\triangle ABC$</InteractiveElement> con $\triangle ACB$.
+
+En esta correspondencia:
+1. $\overline{AB}$ en $\triangle ABC$ se corresponde con $\overline{AC}$ en $\triangle ACB$. Por hipótesis, $\overline{AB} \cong \overline{AC}$.
+2. $\overline{AC}$ en $\triangle ABC$ se corresponde con $\overline{AB}$ en $\triangle ACB$. Ambos son el mismo segmento considerado en orden inverso; por <ConceptLink targetId="congruencia" isDependency={false}>identidad</ConceptLink>, $\overline{AC} \cong \overline{AB}$.
+3. El ángulo comprendido en $\triangle ABC$ es $\angle A = \angle BAC$. En $\triangle ACB$ es $\angle A = \angle CAB$. Ambos denotan exactamente el mismo <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink>; por <ConceptLink targetId="congruencia" isDependency={false}>identidad</ConceptLink>, $\angle BAC \cong \angle CAB$.
+</ProofStep>
+
+<ProofStep number={3} title="Congruencia LAL" target={["lal"]} leanBlocks={metadata.stepTacticMap["3"]}>
+Se satisfacen las condiciones del <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio LAL</ConceptLink>: dos lados y el ángulo comprendido de <InteractiveElement target="triangulo-abc" color="carbon">$\triangle ABC$</InteractiveElement> son congruentes con los correspondientes de $\triangle ACB$. Por tanto:
+
+<Formula>
+  $$ \triangle ABC \cong \triangle ACB $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} title="Igualdad de los ángulos de la base" target={["angulo-b", "angulo-c"]} leanBlocks={metadata.stepTacticMap["4"]}>
+Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de congruencia</ConceptLink> de triángulos, todos los elementos correspondientes son congruentes. El <InteractiveElement target="angulo-b" color="salvia">$\angle B$</InteractiveElement> en $\triangle ABC$ se corresponde con <InteractiveElement target="angulo-c" color="pizarra">$\angle C$</InteractiveElement> en $\triangle ACB$. Por tanto:
+
+<Formula>
+  $$ \angle B \cong \angle C $$
+</Formula>
+</ProofStep>
+
+<Separador />
+
+### Análisis
+
+La demostración de <ConceptLink targetId="pappus" isDependency={false}>Pappus</ConceptLink> es extraordinariamente simple: reduce el Pons Asinorum a una aplicación directa de <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink> sin construcciones auxiliares. La clave es reconocer que $\triangle ABC$ y $\triangle ACB$ son dos formas de considerar el mismo triángulo, y que la hipótesis $\overline{AB} \cong \overline{AC}$ hace que LAL sea aplicable entre ambas «copias».
+
+Esta demostración no requiere la <ConceptLink targetId="bisectriz" isDependency={false}>bisectriz</ConceptLink>, el <ConceptLink targetId="lema-punto-medio" isDependency={false}>punto medio</ConceptLink> ni prolongaciones de lados. Es la prueba más económica del Pons Asinorum y pertenece a la <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>.
+
+<Nota>
+  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> dio una demostración más larga (I.5) usando prolongaciones y triángulos auxiliares. La prueba de <ConceptLink targetId="pappus" isDependency={false}>Pappus</ConceptLink> (siglo IV d.C.) es muy posterior pero mucho más elegante. Ambas son válidas en <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>.
+</Nota>
+
+</DemonstrationSection>

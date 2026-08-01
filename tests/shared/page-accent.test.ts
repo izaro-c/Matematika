@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   CONTENT_PAGE_ACCENTS,
   getContentPageAccent,
-} from '@/shared/design';
+} from '@/design';
 
 describe('page accents', () => {
   it('assigns an explicit accent to every main editorial page type', () => {

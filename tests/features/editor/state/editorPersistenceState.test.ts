@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { editorPersistenceReducer, initialEditorPersistenceState } from '@/features/editor/state';
+import { editorPersistenceReducer, initialEditorPersistenceState } from '@/fixed-pages/editor/state';
 
-const file = { path: 'database/content/a.mdx' };
-const other = { path: 'database/content/b.mdx' };
+const file = { path: 'content/mdx/a.mdx' };
+const other = { path: 'content/mdx/b.mdx' };
 function loaded() {
   const loading = editorPersistenceReducer(initialEditorPersistenceState, { type: 'FILE_LOAD_STARTED', file });
   return editorPersistenceReducer(loading, { type: 'FILE_LOAD_SUCCEEDED', file, source: 'A', sourceHash: 'h1', version: 'v1' });

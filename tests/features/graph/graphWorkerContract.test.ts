@@ -10,8 +10,8 @@ import {
   parseGraphWorkerResponse,
   type GraphWorkerOutput,
   type GraphWorkerStructure,
-} from '@/features/graph/lib/graphWorkerContract';
-import { processGraphWorkerMessage } from '@/features/graph/graph.worker';
+} from '@/fixed-pages/graph/lib/graphWorkerContract';
+import { processGraphWorkerMessage } from '@/fixed-pages/graph/graph.worker';
 
 const graphData: GraphWorkerStructure = {
   topologicalOrder: ['axioma-uno', 'teorema-uno'],
@@ -163,7 +163,7 @@ describe('graph worker message contract', () => {
   it('keeps the pure contract free from DOM and React dependencies', () => {
     const contractPath = path.resolve(
       import.meta.dirname,
-      '../../../src/features/graph/lib/graphWorkerContract.ts',
+      '../../../src/fixed-pages/graph/lib/graphWorkerContract.ts',
     );
     const source = fs.readFileSync(contractPath, 'utf8');
 

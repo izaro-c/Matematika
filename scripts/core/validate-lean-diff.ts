@@ -9,10 +9,10 @@ import {
   type ProofBlockRegistry,
 } from './lean-graph-utils.ts';
 
-const CONTENT_DIR = path.resolve(process.cwd(), 'src/database/content');
-const LEAN_GRAPH_PATH = path.resolve(process.cwd(), 'src/entities/graph/lean_graph.json');
-const PROOF_BLOCKS_PATH = path.resolve(process.cwd(), 'src/entities/graph/proof_blocks.json');
-const LOGICAL_GRAPH_PATH = path.resolve(process.cwd(), 'src/entities/graph/graph_structure.json');
+const CONTENT_DIR = path.resolve(process.cwd(), 'content/mdx');
+const LEAN_GRAPH_PATH = path.resolve(process.cwd(), 'src/data/graph/lean_graph.json');
+const PROOF_BLOCKS_PATH = path.resolve(process.cwd(), 'src/data/graph/proof_blocks.json');
+const LOGICAL_GRAPH_PATH = path.resolve(process.cwd(), 'src/data/graph/graph_structure.json');
 
 const LEAN_ENABLED = process.env.ENABLE_LEAN === 'true';
 

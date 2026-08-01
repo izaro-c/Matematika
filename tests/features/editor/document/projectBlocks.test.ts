@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseEditorDocument, getVisualCapabilities } from '../../../../src/features/editor/document';
+import { parseEditorDocument, getVisualCapabilities } from '../../../../src/fixed-pages/editor/document';
 
 describe('safe body projection', () => {
   it('projects heading depth separately from its editable text', () => {

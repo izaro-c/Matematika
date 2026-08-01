@@ -2,10 +2,10 @@
 import React from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { VisualEditorPanel } from '@/features/editor/ui/panels/VisualEditorPanel';
-import { MetadataInspector } from '@/features/editor/ui/components/MetadataInspector';
-import { MathProvider, useMathStore } from '@/shared/lib/MathStoreContext';
-import type { Block } from '@/features/editor/core/parser';
+import { VisualEditorPanel } from '@/fixed-pages/editor/ui/panels/VisualEditorPanel';
+import { MetadataInspector } from '@/fixed-pages/editor/ui/components/MetadataInspector';
+import { MathProvider, useMathStore } from '@/lib/helpers/MathStoreContext';
+import type { Block } from '@/fixed-pages/editor/core/parser';
 
 const blocks: Block[] = [
   { id: 'heading', type: 'heading', content: 'Construcción', metadata: { level: 3, editable: true } },
@@ -33,7 +33,7 @@ describe('Phase 7 visual authoring interactions', () => {
     render(
       <MathProvider>
         <VisualEditorPanel
-          currentFile="database/content/definitions/test.mdx"
+          currentFile="content/mdx/definitions/test.mdx"
           metadata={{ id: 'test', type: 'definicion', title: 'Test', description: 'Descripción', subtype: 'nominal' }}
           isReadOnly={false}
           canEditVisualMetadata
@@ -77,7 +77,7 @@ describe('Phase 7 visual authoring interactions', () => {
     render(
       <MathProvider>
         <VisualEditorPanel
-          currentFile="database/content/definitions/test.mdx"
+          currentFile="content/mdx/definitions/test.mdx"
           metadata={{ id: 'test', type: 'definicion', title: 'Test', description: 'Descripción', subtype: 'nominal' }}
           isReadOnly={false} canEditVisualMetadata canMutateVisualStructure blocks={blocks}
           editingBlockId={null} setEditingBlockId={vi.fn()} handleMetadataChange={vi.fn()}
@@ -118,7 +118,7 @@ describe('Phase 7 visual authoring interactions', () => {
     render(
       <MathProvider>
         <VisualEditorPanel
-          currentFile="database/content/axioms/test.mdx"
+          currentFile="content/mdx/axioms/test.mdx"
           metadata={{ id: 'test', type: 'axioma', title: 'Test', description: 'Descripción' }}
           isReadOnly={false} canEditVisualMetadata canMutateVisualStructure blocks={[nestedLinkBlock]}
           editingBlockId={null} setEditingBlockId={vi.fn()} handleMetadataChange={vi.fn()}
@@ -145,7 +145,7 @@ describe('Phase 7 visual authoring interactions', () => {
     render(
       <MathProvider>
         <VisualEditorPanel
-          currentFile="database/content/definitions/test.mdx"
+          currentFile="content/mdx/definitions/test.mdx"
           metadata={{ id: 'test', type: 'definicion', title: 'Test', description: 'Descripción', subtype: 'nominal' }}
           isReadOnly={false} canEditVisualMetadata canMutateVisualStructure
           blocks={[...blocks, { id: 'future', type: 'advancedMdx', content: '<FutureWidget keep={{ nested: true }} />', metadata: { preserved: true } }]}
@@ -168,7 +168,7 @@ describe('Phase 7 visual authoring interactions', () => {
       content: `Planteamiento.\n<Pregunta id="q1" correct="a" texto="¿Cuál es el resultado?" opciones={[{ value: 'a', texto: '$2$' }, { value: 'b', texto: '$3$' }]} />`,
       metadata: { editable: true, id: 'p1', numero: 1, titulo: 'Cálculo' },
     };
-    render(<MathProvider><VisualEditorPanel currentFile="database/content/exercises/test.mdx" metadata={{ id: 'test', type: 'ejercicio', title: 'Test', description: 'Descripción' }} isReadOnly={false} canEditVisualMetadata canMutateVisualStructure blocks={[exercise]} editingBlockId={null} setEditingBlockId={vi.fn()} handleMetadataChange={vi.fn()} addBlock={vi.fn()} moveBlock={vi.fn()} duplicateBlock={vi.fn()} removeBlock={vi.fn()} updateBlock={updateBlock} handleTextareaSelect={vi.fn()} handleEditLink={vi.fn()} setActiveDiagramIndex={vi.fn()} setActiveDiagramBlockId={vi.fn()} setDiagramBuilderOpen={vi.fn()} diagramTargets={[]} /></MathProvider>);
+    render(<MathProvider><VisualEditorPanel currentFile="content/mdx/exercises/test.mdx" metadata={{ id: 'test', type: 'ejercicio', title: 'Test', description: 'Descripción' }} isReadOnly={false} canEditVisualMetadata canMutateVisualStructure blocks={[exercise]} editingBlockId={null} setEditingBlockId={vi.fn()} handleMetadataChange={vi.fn()} addBlock={vi.fn()} moveBlock={vi.fn()} duplicateBlock={vi.fn()} removeBlock={vi.fn()} updateBlock={updateBlock} handleTextareaSelect={vi.fn()} handleEditLink={vi.fn()} setActiveDiagramIndex={vi.fn()} setActiveDiagramBlockId={vi.fn()} setDiagramBuilderOpen={vi.fn()} diagramTargets={[]} /></MathProvider>);
 
     expect(screen.getByText('Pregunta 1')).toBeTruthy();
     expect(screen.getByText('Correcta')).toBeTruthy();

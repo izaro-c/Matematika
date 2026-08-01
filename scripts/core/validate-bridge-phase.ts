@@ -6,8 +6,8 @@ import {
   type LeanGraph,
 } from './lean-graph-utils.ts';
 
-const LEAN_GRAPH_PATH = path.resolve('./src/entities/graph/lean_graph.json');
-const CONTENT_COVERAGE_PATH = path.resolve('./src/entities/content/contentCoverage.json');
+const LEAN_GRAPH_PATH = path.resolve('./src/data/graph/lean_graph.json');
+const CONTENT_COVERAGE_PATH = path.resolve('./src/data/content/contentCoverage.json');
 const BRIDGE_DEBT_PATH = path.resolve('./docs/lean/bridge-debt.json');
 
 type BridgeTargetStatus = Exclude<VerificationStatus, 'none'>;

@@ -1,6 +1,6 @@
 ---
 name: diagrama
-description: Crea o modifica diagramas matemáticos interactivos como DiagramSpec v3 con roundtrip visual-exact en el editor de Matematika. Usar para cualquier trabajo en src/widgets/diagrams/ o src/shared/diagrams/. Si el diagrama deseado requiere una primitiva, propiedad o interacción que el editor aún no ofrece, ampliar primero schema, renderer, workbench, persistencia y pruebas hasta que el diagrama sea 100% editable visualmente; nunca entregar un diagrama nuevo como code-preview.
+description: Crea o modifica diagramas matemáticos interactivos como DiagramSpec v3 con roundtrip visual-exact en el editor de Matematika. Usar para cualquier trabajo en content/diagrams/ o src/diagrams/. Si el diagrama deseado requiere una primitiva, propiedad o interacción que el editor aún no ofrece, ampliar primero schema, renderer, workbench, persistencia y pruebas hasta que el diagrama sea 100% editable visualmente; nunca entregar un diagrama nuevo como code-preview.
 ---
 
 # Diagramas matemáticos editables
@@ -32,10 +32,10 @@ Reservar `code-preview` para fuentes heredadas no intervenidas. Al modificar un 
 
 ## Arquitectura
 
-- Publicar componentes en `src/widgets/diagrams/`.
-- Mantener contrato, core y renderer en `src/shared/diagrams/{spec,core,runtime}/`.
+- Publicar componentes en `content/diagrams/` (alias `@content/diagrams`; legacy shims `@content/diagrams`).
+- Mantener contrato, core y renderer en `src/diagrams/` (`@/diagrams`; shims en `src/diagrams/`).
 - Encapsular JSXGraph, SVG, Canvas o HTML dentro del renderer compartido. Si un backend aún no está modelado, añadir su representación declarativa y sus controles antes de usarlo.
-- Añadir primitivas reutilizables a `src/shared/diagrams/core/MathFactory.ts`; reservar `board.create` para auxiliares invisibles internos y no usar nunca `JXG.JSXGraph.initBoard`.
+- Añadir primitivas reutilizables a `src/diagrams/core/MathFactory.ts`; reservar `board.create` para auxiliares invisibles internos y no usar nunca `JXG.JSXGraph.initBoard`.
 - Consumir únicamente `lienzo`, `carbon`, `salvia`, `terracota`, `pizarra`, `ocre`, `pavo`, `granada` y `musgo` mediante los tokens del tema.
 - Estandarizar tamaños visuales: usar siempre `pointSize: 7`, `highlightPointSize: 10`, `strokeWidth: 2.4` (o 3 para resaltar), y configurar `"preserveColorOnHighlight": true` en el `style` de todos los elementos para evitar el cambio por defecto al iluminarse.
 - Conectar pasos y targets con `MathStore`; mantener IDs públicos estables y bidireccionalidad entre texto y diagrama.
@@ -44,7 +44,7 @@ Reservar `code-preview` para fuentes heredadas no intervenidas. Al modificar un 
 - Resolver referencias mediante capacidades y slots de `spec/semantics.ts`; no duplicar listas manuales en toolbar, inspector, schema o renderer.
 - Aplicar renombrado y borrado mediante los comandos de grafo. No hacer sustituciones textuales de expresiones ni dejar referencias colgantes.
 - Escribir valores reactivos de anotaciones con plantillas `{= expresion | precision: 2 | unit: "cm"}`. Cada texto puede contener tantos cálculos como necesite y cada cálculo conserva su formato local. Reservar `{value}` para compatibilidad v2; no confundir llaves KaTeX con interpolaciones.
-- Respetar las dependencias FSD: `shared` no puede depender de `features`, `widgets`, `pages` ni `app`.
+- Respetar las dependencias: `content/diagrams` no importa editor ni páginas; motor vía `@/diagrams` / `@/lib` / `@/components`.
 
 ## Extender el editor cuando falte funcionalidad
 

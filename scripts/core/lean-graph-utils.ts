@@ -220,14 +220,14 @@ export function extractLeanArtifacts(leanRoot: string, cwd = process.cwd()): { g
 
   let generatedAt = new Date().toISOString();
   try {
-    const outputPath = path.resolve(process.cwd(), 'src/entities/graph/lean_graph.json');
+    const outputPath = path.resolve(process.cwd(), 'src/data/graph/lean_graph.json');
     if (fs.existsSync(outputPath)) {
       const existing = JSON.parse(fs.readFileSync(outputPath, 'utf-8'));
       if (existing && existing.generatedAt) {
         generatedAt = existing.generatedAt;
       }
     }
-  } catch (err) {
+  } catch {
     // Ignore read errors
   }
 

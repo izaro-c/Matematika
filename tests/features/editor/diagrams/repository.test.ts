@@ -1,14 +1,14 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { DiagramRepository } from '../../../../src/features/editor/diagrams/persistence/repository';
-import { createTemplateModel } from '../../../../src/features/editor/diagrams/model';
-import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
+import { DiagramRepository } from '../../../../src/fixed-pages/editor/diagrams/persistence/repository';
+import { createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
+import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
 
 const apiMocks = vi.hoisted(() => ({
   readContent: vi.fn(),
   applyContent: vi.fn(),
 }));
 
-vi.mock('../../../../src/features/editor/persistence/editorApiClient', () => ({
+vi.mock('@/fixed-pages/editor/persistence/editorApiClient', () => ({
   editorApiClient: {
     readContent: apiMocks.readContent,
     applyContent: apiMocks.applyContent,
@@ -19,8 +19,8 @@ const parserMocks = vi.hoisted(() => ({
   parseDiagramSourceOnServer: vi.fn(),
 }));
 
-vi.mock('../../../../src/features/editor/diagrams/source/parser', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../../../src/features/editor/diagrams/source/parser')>();
+vi.mock('@/fixed-pages/editor/diagrams/source/parser', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/fixed-pages/editor/diagrams/source/parser')>();
   return {
     ...actual,
     parseDiagramSourceOnServer: parserMocks.parseDiagramSourceOnServer,
@@ -46,7 +46,7 @@ describe('DiagramRepository', () => {
     if (!generated.ok) return;
     readContent.mockResolvedValueOnce({ source: generated.source, version: 'v1' });
 
-    const result = await new DiagramRepository().readDiagram('src/shared/diagrams/Local.tsx');
+    const result = await new DiagramRepository().readDiagram('src/diagrams/Local.tsx');
 
     expect(result).toMatchObject({ version: 'v1', parseStatus: 'visual-exact', diagnostics: [] });
     expect(result.model?.title).toBe('Repository Local');
@@ -62,7 +62,7 @@ describe('DiagramRepository', () => {
       diagnostics: [{ code: 'partial', severity: 'warning', message: 'Recovered.' }],
     });
 
-    const result = await new DiagramRepository().readDiagram('src/shared/diagrams/Server.tsx');
+    const result = await new DiagramRepository().readDiagram('src/diagrams/Server.tsx');
 
     expect(result.parseStatus).toBe('code-preview');
     expect(result.model).toBeNull();
@@ -76,7 +76,7 @@ describe('DiagramRepository', () => {
       diagnostics: [{ code: 'invalid', severity: 'error', message: 'invalid' }],
     });
 
-    const result = await new DiagramRepository().readDiagram('src/shared/diagrams/Manual.tsx');
+    const result = await new DiagramRepository().readDiagram('src/diagrams/Manual.tsx');
 
     expect(result).toMatchObject({ source: 'manual source', version: 'v3', model: null, parseStatus: 'invalid' });
   });
@@ -84,11 +84,11 @@ describe('DiagramRepository', () => {
   it('saves a diagram through the content API with a source hash and version', async () => {
     applyContent.mockResolvedValueOnce({ version: 'v2', backupId: 'backup-1' });
 
-    const result = await new DiagramRepository().saveDiagram('src/shared/diagrams/Saved.tsx', 'source', 'v1');
+    const result = await new DiagramRepository().saveDiagram('src/diagrams/Saved.tsx', 'source', 'v1');
 
     expect(result).toEqual({ version: 'v2', backupId: 'backup-1' });
     expect(applyContent).toHaveBeenCalledWith(expect.objectContaining({
-      path: 'src/shared/diagrams/Saved.tsx',
+      path: 'src/diagrams/Saved.tsx',
       source: 'source',
       expectedVersion: 'v1',
       localRevision: 0,
@@ -105,27 +105,27 @@ describe('DiagramRepository', () => {
       .mockResolvedValueOnce(new Response('boom', { status: 500 })));
 
     await expect(new DiagramRepository().updateMdxImports(
-      'database/content/definitions/a.mdx',
+      'content/mdx/definitions/a.mdx',
       'A',
-      'src/shared/diagrams/A.tsx',
+      'src/diagrams/A.tsx',
       'diagram',
     )).resolves.toEqual({ success: true, modified: true });
 
     expect(fetch).toHaveBeenCalledWith('/api/content/update-imports-exports', expect.objectContaining({
       method: 'POST',
       body: JSON.stringify({
-        path: 'database/content/definitions/a.mdx',
+        path: 'content/mdx/definitions/a.mdx',
         componentName: 'A',
-        importPath: '@/shared/diagrams/A',
+        importPath: '@/diagrams/A',
         mode: 'diagram',
       }),
       signal: undefined,
     }));
 
     await expect(new DiagramRepository().updateMdxImports(
-      'database/content/definitions/a.mdx',
+      'content/mdx/definitions/a.mdx',
       'A',
-      'src/shared/diagrams/A.tsx',
+      'src/diagrams/A.tsx',
       'inline',
     )).rejects.toThrow('Failed to update imports/exports in MDX: boom');
   });

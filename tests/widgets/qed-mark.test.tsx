@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { MathProvider } from '@/shared/lib/MathStoreContext';
-import { DemonstrationSection } from '@/widgets/content/DemonstrationSection';
-import { ProofStep } from '@/widgets/content/ProofStep';
-import { Demostracion } from '@/widgets/mdx/MDXBlocks';
-import { insertQedAfterLastProofStep } from '@/widgets/content/insertQedAfterLastProofStep';
-import { QedMark } from '@/widgets/content/QedMark';
+import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { DemonstrationSection } from '@/components/content/DemonstrationSection';
+import { ProofStep } from '@/components/content/ProofStep';
+import { Demostracion } from '@/components/mdx/MDXBlocks';
+import { insertQedAfterLastProofStep } from '@/components/content/insertQedAfterLastProofStep';
+import { QedMark } from '@/components/content/QedMark';
 
 describe('QedMark', () => {
   it('renders an accessible end-of-proof marker', () => {

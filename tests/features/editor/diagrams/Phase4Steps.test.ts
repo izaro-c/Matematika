@@ -5,7 +5,7 @@ import {
   evaluateStepOverlayContent,
   initialDiagramPlaybackState,
   parseDiagramSpecV2,
-} from '../../../../src/shared/diagrams/spec';
+} from '../../../../src/diagrams/spec';
 import {
   createTemplateModel,
   duplicateStep,
@@ -14,9 +14,9 @@ import {
   removeStep,
   renameElement,
   updateStepObjectState,
-} from '../../../../src/features/editor/diagrams/model';
-import { generateDiagramSource } from '../../../../src/features/editor/diagrams/source/generator';
-import { classifyEmbeddedDiagramSource } from '../../../../src/features/editor/diagrams/source/parser';
+} from '../../../../src/fixed-pages/editor/diagrams/model';
+import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
+import { classifyEmbeddedDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/parser';
 
 function complexSequence() {
   const base = createTemplateModel('demostracion-pasos', 'Secuencia compleja', 'demostracion');

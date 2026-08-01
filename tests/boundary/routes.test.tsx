@@ -51,7 +51,7 @@ beforeAll(() => {
 });
 
 // Mock content store to avoid MDX import failures in test environment
-vi.mock('@/entities/content', () => ({
+vi.mock('@/data/content', () => ({
   db: {
     getAllMethods: () => [],
     getAllMathematicians: () => [],

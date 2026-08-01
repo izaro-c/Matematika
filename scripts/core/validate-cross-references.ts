@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const CONTENT_DIR = path.resolve('./src/database/content');
-const INDEX_PATH = path.resolve('./src/entities/content/contentIndex.json');
+const CONTENT_DIR = path.resolve('./content/mdx');
 let errors = 0;
 
 interface ContentIndex {

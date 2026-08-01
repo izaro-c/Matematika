@@ -1,7 +1,7 @@
 import Fuse from 'fuse.js';
 import { describe, expect, it } from 'vitest';
-import { db } from '@/entities/content';
-import { mscNames } from '@/entities/content/msc2020';
+import { db } from '@/data/content';
+import { mscNames } from '@/data/content/msc2020';
 import {
   ALL_TYPES,
   TYPE_COLORS,
@@ -10,9 +10,9 @@ import {
   TYPE_RESULT_LABELS,
   SEARCH_FUSE_OPTIONS,
   buildSearchIndex,
-} from '@/entities/content/searchApi';
-import { dictionary } from '@/shared/lib/glossaryDictionary';
-import { routePath } from '@/shared/lib/routeHelper';
+} from '@/data/content/searchApi';
+import { dictionary } from '@/lib/helpers/glossaryDictionary';
+import { routePath } from '@/lib/helpers/routeHelper';
 
 const searchIndex = buildSearchIndex();
 

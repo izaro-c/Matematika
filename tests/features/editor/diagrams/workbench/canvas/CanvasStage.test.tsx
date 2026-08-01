@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { createTemplateModel } from '@/features/editor/diagrams/model';
-import { CanvasStage } from '@/features/editor/diagrams/ui/canvas/CanvasStage';
-import { publicationContentSize } from '@/features/editor/diagrams/ui/canvas/canvasFrameMode';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model';
+import { CanvasStage } from '@/fixed-pages/editor/diagrams/ui/canvas/CanvasStage';
+import { publicationContentSize } from '@/fixed-pages/editor/diagrams/ui/canvas/canvasFrameMode';
 
-vi.mock('@/shared/diagrams/public', async importOriginal => {
-  const actual = await importOriginal<typeof import('@/shared/diagrams/public')>();
+vi.mock('@/diagrams/public', async importOriginal => {
+  const actual = await importOriginal<typeof import('@/diagrams/public')>();
   return {
     ...actual,
     DiagramRenderer: () => <div data-testid="mock-diagram-renderer" />,

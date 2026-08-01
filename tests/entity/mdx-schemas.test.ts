@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'fs';
 import path from 'path';
-import { parseMDX } from '@/shared/lib/mdxParser';
+import { parseMDX } from '@/lib/helpers/mdxParser';
 import {
   MathematicianSchema,
   TheoremSchema,
@@ -15,7 +15,7 @@ import {
   ModelSchema,
   UseCaseSchema,
   StudyPlanSchema,
-} from '@/entities/content/schemas';
+} from '@/data/content/schemas';
 const SCHEMA_MAP: Record<string, import('zod').ZodTypeAny> = {
   axioma: AxiomSchema,
   definicion: DefinitionSchema,
@@ -49,7 +49,7 @@ const CONTENT_DIRS: Record<string, string> = {
 };
 
 describe('MDX metadata validates against Zod schemas', () => {
-  const contentDir = path.resolve(import.meta.dirname, '../../src/database/content');
+  const contentDir = path.resolve(import.meta.dirname, '../../content/mdx');
 
   for (const [dirName, schemaType] of Object.entries(CONTENT_DIRS)) {
     const dirPath = path.join(contentDir, dirName);
