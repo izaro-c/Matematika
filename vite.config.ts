@@ -14,17 +14,29 @@ import rehypeKatex from 'rehype-katex'
 import type { Plugin, ViteDevServer } from 'vite';
 import type { IncomingMessage, ServerResponse } from 'http';
 import { visualizer } from 'rollup-plugin-visualizer';
-import {
-  createEditorApiHandlers,
-  handleEditorApiRequest,
-} from './scripts/editor/editorApiRoutes';
+import { createJiti } from 'jiti';
 
 /**
  * Plugin personalizado de Vite (`editorAPI`) para Matematika.
  * Intercepta peticiones al servidor de desarrollo para proporcionar una API REST
  * ligera (lectura/escritura/listado) que permite al Editor Web modificar
  * archivos locales (.mdx, .tsx) y usar el HMR de Vite para Live Preview.
+ *
+ * Load editor API via jiti (not a static import): Vite 8's config bundler
+ * externalizes any id that does not start with `.`/`#`, so transitive `@/…`
+ * imports from scripts/editor would crash Node as bare packages.
  */
+const jiti = createJiti(import.meta.url, {
+  alias: {
+    '@': path.resolve(__dirname, './src'),
+    '@content': path.resolve(__dirname, './content'),
+  },
+});
+const {
+  createEditorApiHandlers,
+  handleEditorApiRequest,
+} = jiti('./scripts/editor/editorApiRoutes.ts') as typeof import('./scripts/editor/editorApiRoutes');
+
 const diagramParserContractFiles = new Set([
   path.resolve(__dirname, 'scripts/editor/parseDiagramSourceAST.ts'),
   path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/model.ts'),
