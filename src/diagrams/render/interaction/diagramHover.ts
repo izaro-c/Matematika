@@ -1,4 +1,4 @@
-/** Duration aligned with `--diagram-visual-transition` in editorial-content.css. */
+/** Duration aligned with `--diagram-visual-transition` in mdx-prose.css. */
 export const DIAGRAM_HOVER_TRANSITION_MS = 250;
 
 const LINE_TRANSITION_PROPERTIES = [

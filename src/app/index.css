@@ -1,13 +1,19 @@
+/*
+ * Estilos globales de la app. Guía: styles/README.md
+ * Tokens tipados (colores/roles): src/design/ — no poner CSS allí.
+ *
+ * Orden: tema → KaTeX → Tailwind → clases UI → tipografía MDX → layouts de página → papel/tinta
+ */
 @import "./theme.css";
 @import "katex/dist/katex.min.css";
 @import "./styles/katex.css";
 @import "tailwindcss";
-@import "./styles/design-system.css";
+@import "./styles/ac-classes.css";
 @import "./styles/base.css";
 @import "./styles/utilities.css";
-@import "./styles/editorial-content.css";
-@import "./styles/components.css";
+@import "./styles/ac-pill.css";
+@import "./styles/mdx-prose.css";
 @import "./styles/content-layout.css";
 @import "./styles/codex-layout.css";
-@import "./styles/page-context.css";
-@import "./styles/ink-materiality.css";
+@import "./styles/theorem-wide-tree.css";
+@import "./styles/paper-and-ink.css";

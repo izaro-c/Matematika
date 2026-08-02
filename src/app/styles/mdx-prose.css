@@ -1,3 +1,6 @@
+/* ==========================================================================
+   MDX PROSE — tipografía del contenido escrito (.prose, .editorial-reading)
+   ========================================================================== */
 
 /* Listas clásicas para nuestro estilo Arts and Crafts (Global) */
 .prose ul {
@@ -504,4 +507,13 @@ h1, h2, h3, h4, h5, h6 {
   .prose h1 { font-size: 2.25rem; }
   .prose h2 { font-size: 1.5rem; }
   .prose h3 { font-size: 1.25rem; }
+}
+
+/* Justificación tipográfica en lectura editorial */
+@media (min-width: 768px) {
+  .editorial-reading :is(p, li):not(blockquote p) {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+  }
 }

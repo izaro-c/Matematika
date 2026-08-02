@@ -29,7 +29,7 @@ const TYPE_LABELS: Record<string, string> = {
  * 2. Cargar los metadatos y el componente MDX desde el `ContentStore`.
  * 3. Escanear dinámicamente las secciones y encabezados del DOM (MDX y secciones adicionales)
  *    para inyectar un índice interactivo en tiempo de ejecución.
- * 4. Componer la barra lateral y lectura en un tríptico editorial.
+ * 4. Componer índice + lectura + diagrama con ContentLayout.
  */
 export const TheoremPage = () => {
   const { id } = useParams();

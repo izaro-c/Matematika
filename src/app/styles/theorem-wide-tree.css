@@ -1,5 +1,8 @@
+/* ==========================================================================
+   THEOREM WIDE + TREE — teorema ≥1600px con árbol axiomático
+   Clase: .theorem-layout--ultrawide (TheoremPage)
+   ========================================================================== */
 
-/* === TEOREMA ULTRA-ANCHO (Árbol Axiomático) ================================ */
 @media (min-width: 1600px) {
   .theorem-layout--ultrawide {
     display: grid;
@@ -50,19 +53,4 @@
     background: transparent;
     padding: 0;
   }
-}
-
-/* === PATRONES CROMÁTICOS POR TIPO DE PÁGINA ============================== */
-.page-accent-scope .bg-arts-and-crafts {
-  background-image:
-    linear-gradient(var(--page-accent), var(--page-accent)),
-    var(--bg-arts-and-crafts-url);
-  background-blend-mode: color;
-}
-
-.page-accent-scope .parchment-panel {
-  background-color: var(--theme-lienzo);
-  background-image:
-    radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--page-accent) 8%, transparent) 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, color-mix(in srgb, var(--page-accent) 5%, transparent) 0%, transparent 40%);
 }

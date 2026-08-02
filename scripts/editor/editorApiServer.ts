@@ -56,9 +56,9 @@ const server = http.createServer(async (req, res) => {
   if (!handled) sendJson(res, 404, { message: 'Not found' });
 });
 
-server.listen(port, () => {
+server.listen(port, '0.0.0.0', () => {
   const writeProtected = Boolean(handlers.writeToken);
-  console.log(`Matematika editor API listening on http://127.0.0.1:${port}`);
+  console.log(`Matematika editor API listening on http://0.0.0.0:${port}`);
   console.log(`Project root: ${projectRoot}`);
   console.log(`Write protection: ${writeProtected ? 'enabled (Bearer token required)' : 'disabled'}`);
 });
