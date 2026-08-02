@@ -303,12 +303,20 @@ describe('Phase 5 real acceptance migrations', () => {
     let curveArgs: unknown[] = [];
     const board = { create: (kind: string, args: unknown[]) => {
       if (kind === 'curve') curveArgs = args;
-      return { setAttribute() {}, on() {}, rendNode: undefined };
+      return { setAttribute() {}, on() {}, rendNode: undefined, addParents() {} };
     } };
     const fixedPoint = (x: number, y: number) => ({ X: () => x, Y: () => y });
     createPoincareGeodesic(board, [fixedPoint(0, 0), fixedPoint(1, 0), fixedPoint(0.866, 0.5), fixedPoint(-0.866, 0.5)], {}, {} as never);
-    const [xs, ys] = curveArgs as [number[], number[]];
-    const samples = xs.map((x, index) => ({ x, y: ys[index] }));
+    const [xFn, yFn, tMin = 0, tMax = 1] = curveArgs as [
+      (t: number) => number,
+      (t: number) => number,
+      number?,
+      number?,
+    ];
+    const samples = Array.from({ length: 65 }, (_, index) => {
+      const t = tMin + (tMax - tMin) * index / 64;
+      return { x: xFn(t), y: yFn(t) };
+    });
     expect(Math.hypot(samples[0].x, samples[0].y)).toBeCloseTo(1, 6);
     expect(Math.hypot(samples.at(-1)!.x, samples.at(-1)!.y)).toBeCloseTo(1, 4);
     const geodesicCircle = fitCircle(samples);
