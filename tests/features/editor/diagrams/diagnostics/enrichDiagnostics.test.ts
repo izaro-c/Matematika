@@ -4,9 +4,9 @@ import {
   summarizeDiagnostics,
   formatDiagnosticTabDetail,
   fieldErrorsForObject,
-} from '../../../../../src/fixed-pages/editor/diagrams/diagnostics';
-import { parseDiagnosticPath } from '../../../../../src/fixed-pages/editor/diagrams/diagnostics/locationParsing';
-import { resolveObjectId } from '../../../../../src/fixed-pages/editor/diagrams/diagnostics/locationResolution';
+} from '../../../../../src/fixed-pages/editor/diagrams/checks';
+import { parseDiagnosticPath } from '../../../../../src/fixed-pages/editor/diagrams/checks/locationParsing';
+import { resolveObjectId } from '../../../../../src/fixed-pages/editor/diagrams/checks/locationResolution';
 import type { DiagramDiagnostic } from '../../../../../src/fixed-pages/editor/diagrams/source/generator';
 import { createTemplateModel } from '../../../../../src/fixed-pages/editor/diagrams/model';
 

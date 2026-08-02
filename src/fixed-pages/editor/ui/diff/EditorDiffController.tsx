@@ -1,6 +1,6 @@
 import React from 'react';
 import { DiffReviewPanel } from './DiffReviewPanel';
-import { approveDiffReview, buildDiffReview, isDiffReviewStale, type DiffReview } from '../../ux/diffReview';
+import { approveDiffReview, buildDiffReview, isDiffReviewStale, type DiffReview } from '@/fixed-pages/editor/review/diffReview';
 
 export interface BuildDiffReviewOptions {
   currentFile: string | null;

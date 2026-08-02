@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CONTENT_TYPE_CONFIG } from '@/lib/helpers/constants';
+import { CONTENT_TYPE_CONFIG } from '@/lib/theme/constants';
 import { getKnowledgeGraphLegendTypes } from '../../lib/graphUtils';
 import { GraphExplorerLink } from './GraphExplorerLink';
 
@@ -35,7 +35,7 @@ export function GraphLegend({ nodeGroups }: GraphLegendProps) {
       {/* Contenedor de la leyenda (adaptable) */}
       <div
         id="graph-legend-panel"
-        className={`absolute bottom-20 right-6 lg:bottom-8 lg:right-8 z-50 p-4 shadow-2xl transition-all duration-300 elegant-panel
+        className={`absolute bottom-20 right-6 lg:bottom-8 lg:right-8 z-30 p-4 shadow-2xl transition-all duration-300 elegant-panel
           ${isOpen ? 'block' : 'hidden lg:block'}`}
         style={{ minWidth: '220px' }}
       >

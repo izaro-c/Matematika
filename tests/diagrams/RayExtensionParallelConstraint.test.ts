@@ -9,7 +9,7 @@
  * dirección B→C: `paux` se coloca muy lejos de B en esa dirección para que
  * el rayo `pC → paux` se vea como la prolongación de BC.
  *
- * `applyLinearConstraint` (src/diagrams/spec/scene.ts) resolvía la
+ * `applyLinearConstraint` (src/diagrams/geometry/layout/scene.ts) resolvía la
  * posición de `paux` en cada fotograma proyectando su ÚLTIMA posición
  * resuelta sobre la recta ACTUAL que pasa por B con dirección (C - B):
  *
@@ -42,8 +42,8 @@
  * lo hacía antes de la corrección y que ya no lo hace tras ella.
  */
 import { describe, expect, it } from 'vitest';
-import { diagramConstraint, point } from '../../src/fixed-pages/editor/diagrams/model/diagramElements';
-import { resolvePointCoordinates, withMovedPoint } from '@/diagrams/spec/scene';
+import { diagramConstraint, point } from '../../src/fixed-pages/editor/diagrams/model/elements/diagramElements';
+import { resolvePointCoordinates, withMovedPoint } from '@/diagrams/geometry/layout/scene';
 import type { VisualDiagramModel } from '../../src/fixed-pages/editor/diagrams/model/types';
 
 const A = { x: -4.04, y: -2.69 };

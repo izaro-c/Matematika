@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, type ReactNode } from 'react';
-import { useMathStore } from '@/lib/helpers/MathStoreContext';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
 
 function stepVariable(scopeId?: string): string {
   return scopeId ? `step:${scopeId}` : 'step';

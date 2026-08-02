@@ -19,4 +19,4 @@ export {
   type DiagramBoard,
   type DiagramElement,
   type DiagramElementRegistry,
-} from '@/diagrams/core/MathUtils';
+} from '@/diagrams/jsxgraph/MathUtils';

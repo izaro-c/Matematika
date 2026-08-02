@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react';
 import { Link } from 'wouter';
 import { Logo } from "@/components/ui/Logo";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { SITE_TAGLINE } from '@/lib/helpers/constants';
+import { SITE_TAGLINE } from '@/lib/theme/constants';
 import { UI } from '@/design';
 
 interface HeroCardProps {

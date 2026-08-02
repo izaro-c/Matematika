@@ -28,7 +28,7 @@ vi.mock('@/data/content', () => ({
 
 vi.mock('@/lib/stores/GlossaryStore', () => ({ dictionary: {} }));
 
-vi.mock('@/lib/hooks/useThemeColors', () => ({
+vi.mock('@/lib/theme/useThemeColors', () => ({
   useThemeColors: () => ({
     lienzo: '#F8F6F1',
     carbon: '#333333',
@@ -36,7 +36,7 @@ vi.mock('@/lib/hooks/useThemeColors', () => ({
   }),
 }));
 
-import { PageDependencyGraph } from '@/content-pages/shared/metadata/PageDependencyGraph';
+import { PageDependencyGraph } from '@/components/metadata/PageDependencyGraph';
 
 describe('PageDependencyGraph', () => {
   beforeEach(() => {

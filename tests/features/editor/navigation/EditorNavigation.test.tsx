@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import type { FileNode } from '../../../../src/fixed-pages/editor/lib/editorContracts';
-import { EditorNavigation } from '../../../../src/fixed-pages/editor/ui/EditorNavigation';
+import type { FileNode } from '../../../../src/fixed-pages/editor/types/editorContracts';
+import { EditorNavigation } from '../../../../src/fixed-pages/editor/ui/page/EditorNavigation';
 
 const files: FileNode[] = [
   { path: 'content/mdx/definitions/punto.mdx', name: 'definicion-punto.mdx', type: 'definitions', kind: 'mdx-document', capability: 'visual-exact', capabilityLabel: 'Edición visual exacta', reason: 'Documento lossless.' },

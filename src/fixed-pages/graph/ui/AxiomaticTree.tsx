@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useState, useMemo, type CSSProperties } from 'react';
-import { publicAsset } from '@/lib/helpers/routeHelper';
+import { publicAsset } from '@/lib/routes';
 import {
   ReactFlow,
   Controls,
@@ -15,8 +15,8 @@ import '@xyflow/react/dist/style.css';
 import { useGraphStore } from '@/fixed-pages/graph/GraphStore';
 import { MathNode } from '@/fixed-pages/graph/ui/CustomNode';
 import type { MathNodeData } from '@/fixed-pages/graph/ui/CustomNode';
-import { TYPE_STYLES, CONTENT_TYPE_CONFIG } from '@/lib/helpers/constants';
-import { useThemeColors } from '@/lib/hooks/useThemeColors';
+import { TYPE_STYLES, CONTENT_TYPE_CONFIG } from '@/lib/theme/constants';
+import { useThemeColors } from '@/lib/theme/useThemeColors';
 
 
 import { GroupBraceNode } from './components/GroupBraceNode';

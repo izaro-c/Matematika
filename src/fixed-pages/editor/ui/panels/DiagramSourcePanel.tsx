@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FileNode } from '../../lib/editorContracts';
+import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 
 interface DiagramSourcePanelProps {
   currentFile: string | null;

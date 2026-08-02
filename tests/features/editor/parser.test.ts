@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseBodyToBlocks, parseInlineNodes, stringifyBlocksToBody } from '@/fixed-pages/editor/core/parser';
+import { parseBodyToBlocks, parseInlineNodes, stringifyBlocksToBody } from '@/fixed-pages/editor/session/parser';
 
 describe('Editor MDX Parser', () => {
   it('should parse paragraphs and serialize back correctly', () => {

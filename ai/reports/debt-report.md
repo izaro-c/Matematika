@@ -34,7 +34,7 @@ _Ninguno detectado._
 | --- | --- |
 | `content/diagrams/Demos/DemoPitagorasEuclides.tsx` | 25 |
 | `content/diagrams/Demos/DemoPitagorasAreas.tsx` | 17 |
-| `src/fixed-pages/editor/core/parser.ts` | 14 |
+| `src/fixed-pages/editor/session/parser.ts` | 14 |
 | `src/diagrams/runtime/useBoardLifecycle.ts` | 14 |
 | `src/diagrams/core/MathBoard.tsx` | 12 |
 | `scripts/ai/generate-debt-report.ts` | 11 |
@@ -51,7 +51,7 @@ _Ninguno detectado._
 | `src/diagrams/runtime/boardElementHelpers.ts` | 6 |
 | `tests/scripts/generate-test-report.ts` | 6 |
 | `.auxiliary/.opencode/skills/diagrama/examples/JSXGraphCanon.tsx` | 5 |
-| `src/fixed-pages/editor/ui/EditorPage.tsx` | 5 |
+| `src/fixed-pages/editor/ui/page/EditorPage.tsx` | 5 |
 | `src/fixed-pages/editor/document/parseEditorDocument.ts` | 4 |
 | `src/diagrams/runtime/DiagramKatexOverlay.tsx` | 4 |
 | `content/diagrams/Ejercicios/EjemploPitagorasCalculo.tsx` | 4 |
@@ -67,7 +67,7 @@ _Ninguno detectado._
 | `content/diagrams/Definiciones/Plano.tsx` | 2 |
 | `scripts/ai/generate-ai-indexes.ts` | 1 |
 | `src/fixed-pages/editor/document/blockRegistry.ts` | 1 |
-| `src/fixed-pages/editor/persistence/editorApiBase.ts` | 1 |
+| `src/fixed-pages/editor/save/editorApiBase.ts` | 1 |
 | `src/fixed-pages/editor/ui/components/SemanticLinker.tsx` | 1 |
 | `src/fixed-pages/graph/lib/knowledgeGraphBuilder.ts` | 1 |
 | `content/diagrams/Axiomas/Incidence6.tsx` | 1 |
@@ -112,7 +112,7 @@ _Ninguno detectado._
 | `.auxiliary/.opencode/skills/diagrama/SKILL.md` | 1 |
 | `lean/Matematika/Geometry/Basic.lean` | 1 |
 | `lean/Matematika/Geometry/Hilbert/Constructions.lean` | 1 |
-| `src/lib/helpers/constants.ts` | 1 |
+| `src/lib/theme/constants.ts` | 1 |
 
 **Recomendación.** Convertir deuda vigente en objetivos con responsable/criterio de cierre y retirar comentarios obsoletos.
 
@@ -148,9 +148,9 @@ _Ninguno detectado._
 | `scripts/ai/generate-ai-indexes.ts` | 767 | 29174 |
 | `content/diagrams/Teoremas/Tales.tsx` | 753 | 16527 |
 | `src/fixed-pages/editor/diagrams/ui/scene/GroupsAndLayersManager.tsx` | 748 | 34878 |
-| `src/fixed-pages/editor/ui/EditorPage.tsx` | 739 | 27845 |
+| `src/fixed-pages/editor/ui/page/EditorPage.tsx` | 739 | 27845 |
 | `content/diagrams/Demos/DemoAreaRectangulo_Inconmensurable.tsx` | 668 | 14838 |
-| `src/fixed-pages/editor/core/parser.ts` | 664 | 22760 |
+| `src/fixed-pages/editor/session/parser.ts` | 664 | 22760 |
 | `content/diagrams/Demos/DemoAreaAditividad.tsx` | 642 | 13983 |
 | `content/diagrams/Definiciones/Circunferencia.tsx` | 614 | 13892 |
 | `content/diagrams/Teoremas/DesigualdadTriangular.tsx` | 614 | 12608 |
@@ -163,7 +163,7 @@ _Ninguno detectado._
 | `content/diagrams/Axiomas/Congruence2.tsx` | 561 | 11598 |
 | `scripts/editor/parseDiagramSourceAST.ts` | 554 | 21679 |
 | `src/diagrams/spec/scenePointMotion.ts` | 552 | 26840 |
-| `src/fixed-pages/editor/core/useEditorCore.ts` | 550 | 28366 |
+| `src/fixed-pages/editor/session/useEditorCore.ts` | 550 | 28366 |
 | `src/fixed-pages/editor/document/structuralOperations.ts` | 546 | 22387 |
 | `content/diagrams/Definiciones/Perpendicular.tsx` | 546 | 12074 |
 | `src/diagrams/spec/curveGeometry.ts` | 540 | 21088 |
@@ -172,7 +172,7 @@ _Ninguno detectado._
 | `content/diagrams/Axiomas/Pasch.tsx` | 510 | 11293 |
 | `content/diagrams/Axiomas/HyperbolicParallel.tsx` | 502 | 11393 |
 | `src/diagrams/core/MathBoard.tsx` | 489 | 20761 |
-| `src/lib/helpers/glossaryDictionary.ts` | 483 | 18549 |
+| `src/content/glossary/dictionary.ts` | 483 | 18549 |
 | `tests/features/editor/useEditorCore.test.ts` | 481 | 21929 |
 | `src/diagrams/spec/areaRegions.ts` | 481 | 17855 |
 | `content/diagrams/Axiomas/AxiomaDedekind.tsx` | 481 | 10513 |
@@ -186,10 +186,10 @@ _Ninguno detectado._
 | `content/diagrams/Axiomas/Congruence4.tsx` | 441 | 9524 |
 | `src/data/content/ContentStore.ts` | 439 | 17441 |
 | `scripts/core/lean-graph-utils.ts` | 439 | 15008 |
-| `src/fixed-pages/editor/ux/diffReview.ts` | 436 | 15737 |
+| `src/fixed-pages/editor/review/diffReview.ts` | 436 | 15737 |
 | `content/diagrams/Axiomas/Congruence1.tsx` | 432 | 8878 |
 | `src/data/content/msc2020.ts` | 431 | 17110 |
-| `src/fixed-pages/editor/ux/safetyPresentation.ts` | 431 | 16086 |
+| `src/fixed-pages/editor/review/safetyPresentation.ts` | 431 | 16086 |
 | `src/diagrams/spec/schemaV3.ts` | 427 | 30572 |
 | `src/fixed-pages/editor/diagrams/ui/WorkbenchToolbar.tsx` | 426 | 22003 |
 | `tests/features/editor/diagrams/reducer.test.ts` | 426 | 16508 |
@@ -203,13 +203,13 @@ _Ninguno detectado._
 | `src/fixed-pages/editor/ui/components/SemanticLinker.tsx` | 395 | 16838 |
 | `tests/features/editor/diagrams/useDiagramState.test.tsx` | 392 | 15525 |
 | `src/diagrams/spec/areaGeometry.ts` | 392 | 14206 |
-| `src/fixed-pages/editor/diagrams/model/diagramElements.ts` | 386 | 17533 |
+| `src/fixed-pages/editor/diagrams/model/elements/diagramElements.ts` | 386 | 17533 |
 | `content/diagrams/Teoremas/DosRectasUnPunto.tsx` | 385 | 8136 |
 | `src/components/content/MarginaliaPanel.tsx` | 384 | 15075 |
 | `src/fixed-pages/graph/lib/graphWorkerContract.ts` | 379 | 9815 |
 | `src/fixed-pages/editor/diagrams/ui/DiagramConstraintEditor.tsx` | 378 | 15961 |
 | `src/fixed-pages/graph/ui/AxiomaticTree.tsx` | 373 | 16429 |
-| `src/fixed-pages/editor/diagrams/hooks/useWorkbenchActions.ts` | 373 | 12074 |
+| `src/fixed-pages/editor/diagrams/ui/workbench/useWorkbenchActions.ts` | 373 | 12074 |
 | `scripts/ai/review-working-tree.ts` | 360 | 12260 |
 | `src/diagrams/runtime/stepEmphasisAnimation.ts` | 359 | 11928 |
 | `tests/features/editor/diagrams/Phase5AcceptanceMigrations.test.ts` | 358 | 14165 |
@@ -220,9 +220,9 @@ _Ninguno detectado._
 | `src/components/layouts/CodexLayout.tsx` | 351 | 12854 |
 | `src/fixed-pages/editor/diagrams/ui/WorkbenchIcons.tsx` | 348 | 16780 |
 | `content/diagrams/Demos/DemoPitagorasEuclides.tsx` | 345 | 13603 |
-| `src/fixed-pages/editor/diagrams/model/constraintOptions.ts` | 344 | 16344 |
-| `src/fixed-pages/editor/diagrams/hooks/useDiagramState.ts` | 342 | 12610 |
-| `src/fixed-pages/editor/diagrams/model/segmentMarks.ts` | 342 | 11960 |
+| `src/fixed-pages/editor/diagrams/model/constraints/constraintOptions.ts` | 344 | 16344 |
+| `src/fixed-pages/editor/diagrams/ui/workbench/useDiagramState.ts` | 342 | 12610 |
+| `src/fixed-pages/editor/diagrams/model/elements/segmentMarks.ts` | 342 | 11960 |
 | `content/diagrams/Models/ModeloTresPuntos.tsx` | 342 | 7443 |
 | `src/fixed-pages/editor/ui/panels/VisualEditorPanel.tsx` | 339 | 19451 |
 | `scripts/editor/editorApiRoutes.ts` | 336 | 11524 |
@@ -231,13 +231,13 @@ _Ninguno detectado._
 | `tests/features/editor/ux/diffReview.test.ts` | 334 | 12241 |
 | `src/diagrams/spec/sceneCoordinates.ts` | 333 | 14255 |
 | `content/diagrams/Definiciones/Altura.tsx` | 333 | 7145 |
-| `src/content-pages/shared/metadata/ui/PageDependencyGraph.tsx` | 329 | 9876 |
+| `src/components/metadata/PageDependencyGraph.tsx` | 329 | 9876 |
 | `scripts/core/validate-logical-graph.ts` | 328 | 11344 |
 | `src/diagrams/spec/expressions.ts` | 323 | 13895 |
-| `src/fixed-pages/editor/diagrams/model/diagramClipboard.ts` | 322 | 14198 |
+| `src/fixed-pages/editor/diagrams/model/elements/diagramClipboard.ts` | 322 | 14198 |
 | `src/content-pages/study-plan/ui/TaxonomyGraph.tsx` | 322 | 11633 |
 | `src/fixed-pages/editor/diagrams/ui/WorkbenchHeader.tsx` | 321 | 13037 |
-| `src/fixed-pages/editor/core/validation.ts` | 320 | 15106 |
+| `src/fixed-pages/editor/session/validation.ts` | 320 | 15106 |
 | `tests/database/content-store.test.ts` | 320 | 9682 |
 | `src/diagrams/runtime/createBoardElement.ts` | 315 | 14618 |
 | `src/fixed-pages/editor/diagrams/ui/DiagramStepObjectAppearanceEditor.tsx` | 315 | 13504 |
@@ -275,7 +275,7 @@ _Ninguno detectado._
 | `content/diagrams/Axiomas/Congruence3.tsx` | 769 | 1 | 0 | 0 |
 | `content/diagrams/Teoremas/Tales.tsx` | 753 | 1 | 0 | 0 |
 | `src/fixed-pages/editor/diagrams/ui/scene/GroupsAndLayersManager.tsx` | 748 | 5 | 2 | 80 |
-| `src/fixed-pages/editor/ui/EditorPage.tsx` | 739 | 29 | 20 | 60 |
+| `src/fixed-pages/editor/ui/page/EditorPage.tsx` | 739 | 29 | 20 | 60 |
 | `content/diagrams/Demos/DemoAreaRectangulo_Inconmensurable.tsx` | 668 | 1 | 0 | 0 |
 | `content/diagrams/Demos/DemoAreaAditividad.tsx` | 642 | 1 | 0 | 0 |
 | `content/diagrams/Definiciones/Circunferencia.tsx` | 614 | 1 | 0 | 0 |
@@ -321,7 +321,7 @@ _Ninguno detectado._
 | `content/diagrams/Models/ModeloTresPuntos.tsx` | 342 | 1 | 0 | 0 |
 | `src/fixed-pages/editor/ui/panels/VisualEditorPanel.tsx` | 339 | 9 | 5 | 52 |
 | `content/diagrams/Definiciones/Altura.tsx` | 333 | 1 | 0 | 0 |
-| `src/content-pages/shared/metadata/ui/PageDependencyGraph.tsx` | 329 | 6 | 8 | 6 |
+| `src/components/metadata/PageDependencyGraph.tsx` | 329 | 6 | 8 | 6 |
 | `src/content-pages/study-plan/ui/TaxonomyGraph.tsx` | 322 | 7 | 13 | 9 |
 | `src/fixed-pages/editor/diagrams/ui/WorkbenchHeader.tsx` | 321 | 6 | 2 | 63 |
 | `src/fixed-pages/editor/diagrams/ui/DiagramStepObjectAppearanceEditor.tsx` | 315 | 7 | 0 | 31 |
@@ -331,12 +331,12 @@ _Ninguno detectado._
 | `src/components/mdx/MDXBlocks.tsx` | 287 | 28 | 3 | 1 |
 | `content/diagrams/Definiciones/Paralelas.tsx` | 286 | 1 | 0 | 0 |
 | `src/fixed-pages/editor/diagrams/ui/inspector/element/sections/ElementConstraintsSection.tsx` | 285 | 7 | 2 | 28 |
-| `src/content-pages/pages/GraphPage.tsx` | 283 | 12 | 15 | 17 |
+| `src/content-pages/screens/GraphPage.tsx` | 283 | 12 | 15 | 17 |
 | `content/diagrams/Axiomas/Order1.tsx` | 282 | 1 | 0 | 0 |
 | `content/diagrams/Axiomas/Order2.tsx` | 282 | 1 | 0 | 0 |
 | `src/fixed-pages/editor/ui/blocks/DemonstrationBlock.tsx` | 274 | 3 | 0 | 32 |
-| `src/content-pages/pages/Home/components/BranchLibrary.tsx` | 265 | 3 | 1 | 0 |
-| `src/content-pages/pages/TheoremPage.tsx` | 263 | 16 | 3 | 0 |
+| `src/content-pages/screens/Home/components/BranchLibrary.tsx` | 265 | 3 | 1 | 0 |
+| `src/content-pages/screens/TheoremPage.tsx` | 263 | 16 | 3 | 0 |
 | `src/content-pages/exercise/ui/Emparejar.tsx` | 262 | 3 | 8 | 2 |
 | `src/content-pages/study-plan/ui/StudyPlanMinimap.tsx` | 256 | 4 | 1 | 5 |
 | `content/diagrams/Axiomas/Order3.tsx` | 256 | 1 | 0 | 0 |
@@ -404,9 +404,9 @@ _Ninguno detectado._
 
 | Origen | Import | Señal |
 | --- | --- | --- |
-| `src/content-pages/pages/Home/HomePage.tsx` | `@/content-pages/pages/Home/components/BranchLibrary` | pages → pages |
-| `src/content-pages/pages/Home/HomePage.tsx` | `@/content-pages/pages/Home/components/HeroSection` | pages → pages |
-| `src/content-pages/pages/Home/HomePage.tsx` | `@/content-pages/pages/Home/components/HomeFooter` | pages → pages |
+| `src/content-pages/screens/Home/HomePage.tsx` | `@/content-pages/screens/Home/components/BranchLibrary` | pages → pages |
+| `src/content-pages/screens/Home/HomePage.tsx` | `@/content-pages/screens/Home/components/HeroSection` | pages → pages |
+| `src/content-pages/screens/Home/HomePage.tsx` | `@/content-pages/screens/Home/components/HomeFooter` | pages → pages |
 | `src/components/mdx/MDXBlocks.tsx` | `@/content-pages/exercise/ui/Apoyo` | widgets → pages/features |
 | `src/components/mdx/MDXBlocks.tsx` | `@/content-pages/exercise/ui/CanvasInteractivo` | widgets → pages/features |
 | `src/components/mdx/MDXBlocks.tsx` | `@/content-pages/exercise/ui/Clasificador` | widgets → pages/features |

@@ -7,7 +7,7 @@ import {
   createContentRequestSchema,
   restoreBackupRequestSchema,
   saveDraftRequestSchema,
-} from '../../src/fixed-pages/editor/persistence/persistenceContracts';
+} from '../../src/fixed-pages/editor/save/persistenceContracts';
 import { BackendError, EditorPersistenceBackend } from './editorPersistenceBackend';
 import { parseDiagramSourceAST } from './parseDiagramSourceAST';
 import { updateMdxImportsExports } from './updateDiagramImportsExports';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { BlockType } from '../../core/parser';
+import type { BlockType } from '@/fixed-pages/editor/session/parser';
 
 interface BlockActionsProps {
   blockId: string;

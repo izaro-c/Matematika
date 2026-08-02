@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import type { ConstructionKind, ConstructionRefKey, VisualDiagramModel } from '../../model/types';
 import { CONSTRUCTION_OPTIONS } from '../../model';
-import { applyGuidedConstruction, validConstructionRefs } from '../../model/guidedConstructions';
-import { IconClose, IconSparkles } from '../WorkbenchIcons';
+import { applyGuidedConstruction, validConstructionRefs } from '../../model/tools/guidedConstructions';
+import { IconClose, IconSparkles } from '../toolbar/WorkbenchIcons';
 
 interface GuidedConstructionsModalProps {
   isOpen: boolean;

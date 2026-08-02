@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconChevronDown, IconChevronRight } from '../WorkbenchIcons';
+import { IconChevronDown, IconChevronRight } from '../toolbar/WorkbenchIcons';
 
 export const DEFAULT_ACCORDION_STATE: Record<string, boolean> = {
   identity: true,

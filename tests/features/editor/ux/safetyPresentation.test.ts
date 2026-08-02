@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { buildDiagramAuthorityPresentation, buildEditorSafetyPresentation } from '../../../../src/fixed-pages/editor/ux/safetyPresentation';
-import type { EditorValidationResult } from '../../../../src/fixed-pages/editor/core/editorTypes';
-import type { EditorPersistenceStatus } from '../../../../src/fixed-pages/editor/state/editorPersistenceState';
+import { buildDiagramAuthorityPresentation, buildEditorSafetyPresentation } from '../../../../src/fixed-pages/editor/review/safetyPresentation';
+import type { EditorValidationResult } from '../../../../src/fixed-pages/editor/session/editorTypes';
+import type { EditorPersistenceStatus } from '../../../../src/fixed-pages/editor/save/editorPersistenceState';
 
 const valid: EditorValidationResult = {
   issues: [],

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-export { dictionary, texSymbolMap } from '@/lib/helpers/glossaryDictionary';
-export type { GlossaryEntry, GlossaryCategory } from '@/lib/helpers/glossaryDictionary';
+export { dictionary, texSymbolMap } from '@content/glossary/dictionary';
+export type { GlossaryEntry, GlossaryCategory } from '@content/glossary/dictionary';
 
 /**
  * GlossaryState - Estado global de Zustand para el Glosario y Fórmulas

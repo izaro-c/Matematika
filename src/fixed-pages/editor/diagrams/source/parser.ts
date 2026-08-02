@@ -1,5 +1,5 @@
-import { DiagramSpecMigrationError, migrateDiagramSpec } from '@/diagrams/spec';
-import { materializeEditorModel, workingScene } from '../model/editorModel';
+import { DiagramSpecMigrationError, migrateDiagramSpec } from '@/diagrams';
+import { materializeEditorModel, workingScene } from '../model/scene/editorModel';
 import type { VisualDiagramModel } from '../model/types';
 import type { DiagramDiagnostic } from './generator';
 import { generateDiagramSource, SPEC_END, SPEC_START } from './generator';

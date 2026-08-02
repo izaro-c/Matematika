@@ -1,8 +1,8 @@
 import React from 'react';
 import type { ElementPanelProps } from '../../types';
 import { DiagramTextRulesEditor } from '@/fixed-pages/editor/diagrams/ui/DiagramTextRulesEditor';
-import { DiagramInfoPanelContentEditor } from '@/fixed-pages/editor/diagrams/ui/DiagramInfoPanelContentEditor';
-import { elementInspectorCapabilities } from '@/fixed-pages/editor/diagrams/model/elementInspectorCapabilities';
+import { DiagramInfoPanelContentEditor } from '@/fixed-pages/editor/diagrams/ui/panels/DiagramInfoPanelContentEditor';
+import { elementInspectorCapabilities } from '@/fixed-pages/editor/diagrams/model/elements/elementInspectorCapabilities';
 
 /** Contenido: infoPanel usa el editor completo (bloques + variantes); resto texto/reglas. */
 export const ElementContentSection: React.FC<ElementPanelProps> = ({

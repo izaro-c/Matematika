@@ -1,6 +1,6 @@
 import { useLocation, Link } from 'wouter';
 import { useNavigationStore } from '@/lib/stores/NavigationStore';
-import { routePath } from '@/lib/helpers/routeHelper';
+import { routePath } from '@/lib/routes';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { Logo } from '@/components/ui/Logo';
 

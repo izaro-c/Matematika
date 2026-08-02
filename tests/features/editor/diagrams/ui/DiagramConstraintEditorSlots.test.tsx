@@ -2,8 +2,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import React from 'react';
 import { createTemplateModel, element, point } from '../../../../../src/fixed-pages/editor/diagrams/model';
-import { DiagramConstraintEditor } from '../../../../../src/fixed-pages/editor/diagrams/ui/DiagramConstraintEditor';
-import { ReferencePickProvider } from '../../../../../src/fixed-pages/editor/diagrams/ui/relations/ReferencePickContext';
+import { DiagramConstraintEditor } from '../../../../../src/fixed-pages/editor/diagrams/ui/panels/DiagramConstraintEditor';
+import { ReferencePickProvider } from '../../../../../src/fixed-pages/editor/diagrams/ui/constraints/relations/ReferencePickContext';
 
 function modelFixture() {
   const base = createTemplateModel('lienzo-inicial', 'Test', 'test');

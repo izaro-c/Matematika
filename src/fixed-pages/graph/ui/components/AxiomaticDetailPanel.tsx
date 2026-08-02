@@ -1,5 +1,5 @@
 
-import { appPath } from '@/lib/helpers/routeHelper';
+import { appPath } from '@/lib/routes';
 import { getNodeTypeColor, getDependencyDotColor, getNodeUrlPrefix } from '@/fixed-pages/graph/lib/graphUtils';
 
 interface AxiomaticDetailPanelProps {

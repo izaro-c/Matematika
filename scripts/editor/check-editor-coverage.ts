@@ -82,17 +82,17 @@ const criticalFiles: FileTarget[] = [
   },
   {
     name: 'Reducer de diagramas',
-    pathSuffix: 'src/fixed-pages/editor/diagrams/state/reducer.ts',
+    pathSuffix: 'src/fixed-pages/editor/diagrams/history/reducer.ts',
     thresholds: { lines: 95, branches: 89, functions: 90 },
   },
   {
     name: 'Hook/coordinador de diagramas',
-    pathSuffix: 'src/fixed-pages/editor/diagrams/hooks/useDiagramState.ts',
+    pathSuffix: 'src/fixed-pages/editor/diagrams/history/useDiagramState.ts',
     thresholds: { lines: 85, branches: 59, functions: 70 },
   },
   {
     name: 'Repositorio de diagramas',
-    pathSuffix: 'src/fixed-pages/editor/diagrams/persistence/repository.ts',
+    pathSuffix: 'src/fixed-pages/editor/diagrams/save/repository.ts',
     thresholds: { lines: 90, branches: 87, functions: 90 },
   },
   {
@@ -107,12 +107,12 @@ const criticalFiles: FileTarget[] = [
   },
   {
     name: 'Guardas de guardado del editor',
-    pathSuffix: 'src/fixed-pages/editor/core/useEditorCore.ts',
+    pathSuffix: 'src/fixed-pages/editor/session/useEditorCore.ts',
     thresholds: { lines: 73, branches: 62, functions: 75 },
   },
   {
     name: 'Coordinación de guardado',
-    pathSuffix: 'src/fixed-pages/editor/persistence/saveCoordinator.ts',
+    pathSuffix: 'src/fixed-pages/editor/save/saveCoordinator.ts',
     thresholds: { lines: 95, branches: 80, functions: 90 },
   },
 ];

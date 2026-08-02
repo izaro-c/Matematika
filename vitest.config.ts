@@ -22,7 +22,7 @@ export default defineConfig({
     include: ['tests/**/*.test.ts', 'tests/**/*.test.tsx'],
     coverage: {
       provider: 'v8',
-      include: ['src/fixed-pages/editor/**', 'src/data/**', 'src/lib/helpers/**'],
+      include: ['src/fixed-pages/editor/**', 'src/data/**', 'src/lib/**'],
     },
   },
 });

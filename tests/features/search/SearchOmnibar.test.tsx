@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useNavigationStore } from '@/lib/stores/NavigationStore';
 import { SearchOmnibar } from '@/components/navigation/SearchOmnibar';
 import { mscNames } from '@/data/content/msc2020';
-import { routePath } from '@/lib/helpers/routeHelper';
+import { routePath } from '@/lib/routes';
 
 const { setLocation } = vi.hoisted(() => ({ setLocation: vi.fn() }));
 

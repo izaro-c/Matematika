@@ -1,5 +1,5 @@
 import React from 'react';
-import type { EditorValidationIssue, EditorValidationResult } from '../../core/editorTypes';
+import type { EditorValidationIssue, EditorValidationResult } from '@/fixed-pages/editor/session/editorTypes';
 
 interface ValidationPanelProps {
   validation: EditorValidationResult;

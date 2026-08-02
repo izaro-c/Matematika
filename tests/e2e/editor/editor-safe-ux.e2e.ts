@@ -4,7 +4,7 @@ import os from 'node:os';
 import { spawn, type ChildProcess } from 'node:child_process';
 import puppeteer, { type Browser, type ConsoleMessage, type HTTPRequest, type Page } from 'puppeteer';
 import { createTemplateModel } from '../../../src/fixed-pages/editor/diagrams/model';
-import { buildTargets } from '../../../src/fixed-pages/editor/diagrams/model/selectors';
+import { buildTargets } from '../../../src/fixed-pages/editor/diagrams/model/scene/selectors';
 import { generateDiagramSource } from '../../../src/fixed-pages/editor/diagrams/source/generator';
 
 interface E2EResult {

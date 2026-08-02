@@ -1,4 +1,4 @@
-import { CONTENT_TYPE_CONFIG } from '@/lib/helpers/constants';
+import { CONTENT_TYPE_CONFIG } from '@/lib/theme/constants';
 import { CONTENT_TYPE_COLORS } from '@/design/contentTypeColors';
 
 export const NODE_URL_PREFIX: Record<string, string> = {

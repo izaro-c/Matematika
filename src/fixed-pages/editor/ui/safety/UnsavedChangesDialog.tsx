@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import type { SafetyPresentation } from '../../ux/safetyPresentation';
-import { useModalFocus } from '../hooks/useModalFocus';
+import type { SafetyPresentation } from '@/fixed-pages/editor/review/safetyPresentation';
+import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 
 interface UnsavedChangesDialogProps {
   isOpen: boolean;

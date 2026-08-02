@@ -6,7 +6,7 @@ import {
   PersistenceFailure,
   hashSource,
   type EditorSaveSnapshot
-} from '@/fixed-pages/editor/persistence';
+} from '@/fixed-pages/editor/save';
 
 const path = 'content/mdx/a.mdx';
 

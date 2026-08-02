@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { DiagramElementKind } from '../../../../src/diagrams/public';
-import { ELEMENT_INSPECTOR_CAPABILITIES, elementInspectorCapabilities } from '../../../../src/fixed-pages/editor/diagrams/model/elementInspectorCapabilities';
+import { ELEMENT_INSPECTOR_CAPABILITIES, elementInspectorCapabilities } from '../../../../src/fixed-pages/editor/diagrams/model/elements/elementInspectorCapabilities';
 
 const ALL_KINDS: DiagramElementKind[] = [
   'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',

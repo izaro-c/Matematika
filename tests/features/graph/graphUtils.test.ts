@@ -3,7 +3,7 @@ import {
   getKnowledgeGraphGroupPresentation,
   getKnowledgeGraphLegendTypes,
 } from '@/fixed-pages/graph/lib/graphUtils';
-import { CONTENT_TYPE_CONFIG } from '@/lib/helpers/constants';
+import { CONTENT_TYPE_CONFIG } from '@/lib/theme/constants';
 
 describe('knowledge graph presentation', () => {
   it('builds the legend only from node groups that are present', () => {

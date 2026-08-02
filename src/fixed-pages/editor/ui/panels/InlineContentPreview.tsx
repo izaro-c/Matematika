@@ -1,6 +1,6 @@
 import React from 'react';
 import { KatexText } from '@/components/ui/KatexText';
-import { parseInlineNodes } from '../../core/parser';
+import { parseInlineNodes } from '@/fixed-pages/editor/session/parser';
 import { InteractivePreviewToken } from './InteractivePreviewToken';
 
 import type { EditLinkHandler } from './previewTypes';

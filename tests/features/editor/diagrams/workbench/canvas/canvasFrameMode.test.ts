@@ -3,7 +3,7 @@ import {
   isPublicationMode,
   publicationContentSize,
 } from '@/fixed-pages/editor/diagrams/ui/canvas/canvasFrameMode';
-import { SCREEN_PRESETS, publishedDiagramArea, publishedLayoutForPageType } from '@/fixed-pages/editor/diagrams/model/publishedDiagramLayout';
+import { SCREEN_PRESETS, publishedDiagramArea, publishedLayoutForPageType } from '@/fixed-pages/editor/diagrams/model/scene/publishedDiagramLayout';
 
 describe('canvasFrameMode', () => {
   it('isPublicationMode is false only for editor', () => {

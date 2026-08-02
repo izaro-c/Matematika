@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { EditorShell } from '../../../../src/fixed-pages/editor/ui/EditorShell';
+import { EditorShell } from '../../../../src/fixed-pages/editor/ui/page/EditorShell';
 import { EditorDiagnosticsPanel } from '../../../../src/fixed-pages/editor/ui/panels/EditorDiagnosticsPanel';
 
 describe('paneles del espacio de trabajo', () => {

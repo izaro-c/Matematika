@@ -12,7 +12,7 @@ import { DiagramNativeLabelEditor } from '@/fixed-pages/editor/diagrams/ui/Diagr
 import { DiagramPointMovementAidsEditor } from '@/fixed-pages/editor/diagrams/ui/DiagramPointMovementAidsEditor';
 import { supportElements } from '@/fixed-pages/editor/diagrams/model';
 import { parseOptionalNumber } from '../../workbenchSelection';
-import { ConstraintEditor } from '../../ConstraintEditor';
+import { ConstraintEditor } from '../../constraints/ConstraintEditor';
 
 export const PointInspector: React.FC<PointPanelProps & {
   openAccordion: Record<string, boolean>;

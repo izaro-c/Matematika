@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getMetadataFields, type MetadataFieldConfig } from '@/fixed-pages/editor/lib/metadataFields';
+import { getMetadataFields, type MetadataFieldConfig } from '@/fixed-pages/editor/metadata/metadataFields';
 
 interface MetadataInspectorProps {
   metadata: Record<string, unknown>;

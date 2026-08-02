@@ -1,4 +1,4 @@
-import { MathBoard } from '@/diagrams/core/MathBoard';
+import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
 import {
   createAngle,
   createGlider,
@@ -7,7 +7,7 @@ import {
   createPoint,
   createPolygon,
   createSegment,
-} from '@/diagrams/core/MathFactory';
+} from '@/diagrams/jsxgraph/MathFactory';
 
 export const DemoTrianguloIsosceles = () => {
   return (

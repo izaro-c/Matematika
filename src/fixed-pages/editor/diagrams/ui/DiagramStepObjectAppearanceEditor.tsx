@@ -1,9 +1,9 @@
 import React from 'react';
 import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '@/diagrams/public';
-import type { DiagramStepObjectState, DiagramStepVisualStyle } from '@/diagrams/spec';
+import type { DiagramStepObjectState, DiagramStepVisualStyle } from '@/diagrams';
 import type { VisualElement, VisualPoint } from '../model/types';
 import { COLOR_OPTIONS } from '../model';
-import { elementInspectorCapabilities } from '../model/elementInspectorCapabilities';
+import { elementInspectorCapabilities } from '../model/elements/elementInspectorCapabilities';
 import { DiagramField } from './primitives';
 
 type StepSceneItem = VisualPoint | VisualElement;

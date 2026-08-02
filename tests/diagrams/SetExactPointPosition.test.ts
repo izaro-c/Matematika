@@ -17,7 +17,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import JXG from 'jsxgraph';
-import { setExactPointPosition } from '@/diagrams/core/MathUtils';
+import { setExactPointPosition } from '@/diagrams/jsxgraph/MathUtils';
 
 function createContainer(id: string): HTMLDivElement {
   const div = document.createElement('div');

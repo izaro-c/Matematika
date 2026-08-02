@@ -2,7 +2,7 @@ import React from 'react';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { ContentCard } from '@/components/ui/ContentCard';
-import { DOMAIN_ICONS } from '@/lib/helpers/constants';
+import { DOMAIN_ICONS } from '@/lib/theme/constants';
 import type { UseCase } from '@/data/content/types';
 
 interface AplicacionesSectionProps {

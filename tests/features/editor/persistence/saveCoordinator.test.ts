@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { SaveCoordinator, type ContentRepository, type DraftRepository, type EditorDraftSnapshot, type SaveCoordinatorEvent } from '@/fixed-pages/editor/persistence';
+import { SaveCoordinator, type ContentRepository, type DraftRepository, type EditorDraftSnapshot, type SaveCoordinatorEvent } from '@/fixed-pages/editor/save';
 
 const snapshot = (revision: number): EditorDraftSnapshot => ({ file: { path: 'content/mdx/a.mdx' }, source: `s${revision}`,
   sourceHash: `h${revision}`, baseVersion: 'v1', localRevision: revision, editorSessionId: 'session-a' });

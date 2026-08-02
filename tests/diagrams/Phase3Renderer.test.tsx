@@ -9,8 +9,8 @@ import measurementsFixture from '../fixtures/diagrams/phase3-measurements.json';
 import areasFixture from '../fixtures/diagrams/phase3-area-grids.json';
 import annotationsFixture from '../fixtures/diagrams/phase3-annotations-layers.json';
 import { migrateDiagramSpec, parseDiagramSpecV2 } from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/spec/v3Compatibility';
-import { MathProvider, useMathStore } from '@/lib/helpers/MathStoreContext';
+import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
+import { MathProvider, useMathStore } from '@/lib/page-context/MathStoreContext';
 
 const rendererState = vi.hoisted(() => ({
   createdKinds: [] as string[],
@@ -21,7 +21,7 @@ const rendererState = vi.hoisted(() => ({
   boardHandlers: {} as Record<string, Array<(event?: unknown) => void>>,
 }));
 
-vi.mock('@/diagrams/core/MathBoard', () => ({
+vi.mock('@/diagrams/jsxgraph/MathBoard', () => ({
   MathBoard: ({ children, onInit, onUpdate, scopeId = '' }: { children?: React.ReactNode; onInit?: (board: unknown, elements: Record<string, unknown>, theme: Record<string, string>) => void; onUpdate?: (board: unknown, elements: Record<string, unknown>, theme: Record<string, string>, isStep: () => boolean, isHL: (target: string) => boolean) => void; scopeId?: string }) => {
     const elementsRef = React.useRef<Record<string, any>>({});
     const highlight = useMathStore(state => state.variables?.[scopeId ? `highlight:${scopeId}` : 'highlight'] ?? state.variables?.highlight);
@@ -132,7 +132,7 @@ vi.mock('@/diagrams/core/MathBoard', () => ({
   },
 }));
 
-import { DiagramRenderer } from '@/diagrams/runtime/DiagramRenderer';
+import { DiagramRenderer } from '@/diagrams/render/DiagramRenderer';
 import { Incidence2Spec } from '../../content/diagrams/Axiomas/Incidence2';
 import { Congruence1Spec } from '../../content/diagrams/Axiomas/Congruence1';
 import { PaschSpec } from '../../content/diagrams/Axiomas/Pasch';

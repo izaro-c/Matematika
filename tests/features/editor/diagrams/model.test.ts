@@ -18,7 +18,7 @@ import {
   updatePoint,
 } from '../../../../src/fixed-pages/editor/diagrams/model';
 import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '../../../../src/diagrams/public';
-import { buildTargets, targetKind } from '../../../../src/fixed-pages/editor/diagrams/model/selectors';
+import { buildTargets, targetKind } from '../../../../src/fixed-pages/editor/diagrams/model/scene/selectors';
 
 describe('Diagram Model & Selectors', () => {
   it('should construct visual point with correct options', () => {

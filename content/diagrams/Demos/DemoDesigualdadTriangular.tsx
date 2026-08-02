@@ -1,4 +1,4 @@
-import { useMathStore } from '@/lib/helpers/MathStoreContext';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
 
 export const DemoDesigualdadTriangular: React.FC = () => {
   const highlight = useMathStore(state => state.variables['highlight']);

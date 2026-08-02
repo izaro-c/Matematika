@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconTrash } from '../WorkbenchIcons';
+import { IconTrash } from '../toolbar/WorkbenchIcons';
 
 interface InspectorHeaderProps {
   title: string;

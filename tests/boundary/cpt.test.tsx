@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { SearchOmnibar } from '@/components/navigation/SearchOmnibar';
 import { useNavigationStore } from '@/lib/stores/NavigationStore';
-import { appPath, publicAsset } from '@/lib/helpers/routeHelper';
+import { appPath, publicAsset } from '@/lib/routes';
 
 // Mocks para wouter y stores para evitar errores de renderizado
 vi.mock('wouter', () => ({

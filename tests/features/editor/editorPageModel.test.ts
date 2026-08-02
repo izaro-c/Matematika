@@ -5,9 +5,9 @@ import {
   getDiagramWorkbenchMode,
   getPreviewPath,
   mergeDiagramTargets,
-} from '../../../src/fixed-pages/editor/ui/editorPageModel';
-import type { Block } from '../../../src/fixed-pages/editor/core/parser';
-import type { FileNode } from '../../../src/fixed-pages/editor/lib/editorContracts';
+} from '../../../src/fixed-pages/editor/ui/page/editorPageModel';
+import type { Block } from '../../../src/fixed-pages/editor/session/parser';
+import type { FileNode } from '../../../src/fixed-pages/editor/types/editorContracts';
 
 const diagramFile: FileNode = {
   path: 'content/diagrams/Teoremas/Pitagoras.tsx',

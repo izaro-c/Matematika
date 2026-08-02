@@ -1,6 +1,6 @@
 import { Handle, Position } from '@xyflow/react';
 import type { NodeProps } from '@xyflow/react';
-import { CONTENT_TYPE_CONFIG } from '@/lib/helpers/constants';
+import { CONTENT_TYPE_CONFIG } from '@/lib/theme/constants';
 
 /**
  * Definición de los datos que almacena cada nodo del grafo lógico interactivo.

@@ -4,8 +4,8 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { VisualEditorPanel } from '@/fixed-pages/editor/ui/panels/VisualEditorPanel';
 import { MetadataInspector } from '@/fixed-pages/editor/ui/components/MetadataInspector';
-import { MathProvider, useMathStore } from '@/lib/helpers/MathStoreContext';
-import type { Block } from '@/fixed-pages/editor/core/parser';
+import { MathProvider, useMathStore } from '@/lib/page-context/MathStoreContext';
+import type { Block } from '@/fixed-pages/editor/session/parser';
 
 const blocks: Block[] = [
   { id: 'heading', type: 'heading', content: 'Construcción', metadata: { level: 3, editable: true } },

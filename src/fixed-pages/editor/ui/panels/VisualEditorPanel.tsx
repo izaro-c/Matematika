@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Block, BlockType } from '../../core/parser';
-import type { DiagramTargetRegistry } from '../../core/editorTypes';
-import { buildDocumentOutline } from '../../ux/authoringModel';
-import { useModalFocus } from '../hooks/useModalFocus';
+import { Block, BlockType } from '@/fixed-pages/editor/session/parser';
+import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
+import { buildDocumentOutline } from '@/fixed-pages/editor/review/authoringModel';
+import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 import { insertSymbol } from './InlineContentPreview';
 import { GENERAL_BLOCK_PRESETS, LATEX_SYMBOLS, PAGE_PROFILE_PRESETS, type BlockPreset } from './visualEditorPresets';
 import { VisualEditorBlock } from './VisualEditorBlock';
-import { resolvePublicOrExternalAsset } from '@/lib/helpers/routeHelper';
+import { resolvePublicOrExternalAsset } from '@/lib/routes';
 
 interface VisualEditorPanelProps {
   currentFile: string | null;

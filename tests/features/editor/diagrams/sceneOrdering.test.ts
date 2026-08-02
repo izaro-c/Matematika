@@ -13,8 +13,8 @@ import {
   normalizeLayerItemOrders,
   sendSceneItemBackward,
   sendSceneItemToBack,
-} from '../../../../src/fixed-pages/editor/diagrams/model/sceneOrdering';
-import { element, point } from '../../../../src/fixed-pages/editor/diagrams/model/diagramElements';
+} from '../../../../src/fixed-pages/editor/diagrams/model/scene/sceneOrdering';
+import { element, point } from '../../../../src/fixed-pages/editor/diagrams/model/elements/diagramElements';
 
 function sampleModel(): VisualDiagramModel {
   return {

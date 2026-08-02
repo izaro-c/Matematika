@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import {
-  createScenePlan,
   diagramPlaybackReducer,
-  evaluateStepOverlayContent,
   initialDiagramPlaybackState,
   parseDiagramSpecV2,
-} from '../../../../src/diagrams/spec';
+} from '../../../../src/diagrams/model';
+import {
+  createScenePlan,
+  evaluateStepOverlayContent,
+} from '../../../../src/diagrams/geometry';
 import {
   createTemplateModel,
   duplicateStep,

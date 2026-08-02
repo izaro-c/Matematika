@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { publicAsset } from '@/lib/helpers/routeHelper';
+import { publicAsset } from '@/lib/routes';
 import ForceGraph2D from 'react-force-graph-2d';
 import type {
   ForceGraphMethods,
@@ -15,7 +15,7 @@ import { buildKnowledgeGraphData, GraphNode, GraphLink } from '@/fixed-pages/gra
 import { GraphLegend } from '@/fixed-pages/graph/ui/components/GraphLegend';
 import { GraphSearch } from '@/fixed-pages/graph/ui/components/GraphSearch';
 import { getKnowledgeGraphContentType } from '@/fixed-pages/graph/lib/graphUtils';
-import { useThemeColors } from '@/lib/hooks/useThemeColors';
+import { useThemeColors } from '@/lib/theme/useThemeColors';
 
 type KnowledgeGraphNode = NodeObject<GraphNode>;
 type KnowledgeGraphLink = LinkObject<GraphNode, GraphLink>;

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useMathStore } from '@/lib/helpers/MathStoreContext';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { ProofStepExpander } from './ProofStepExpander';
 import { ProofStepNumberBadge } from './ProofStepNumberBadge';
 

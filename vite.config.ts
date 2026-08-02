@@ -40,14 +40,14 @@ const {
 const diagramParserContractFiles = new Set([
   path.resolve(__dirname, 'scripts/editor/parseDiagramSourceAST.ts'),
   path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/model.ts'),
-  path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/model/angleConstraints.ts'),
-  path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/model/constraintOptions.ts'),
+  path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/model/constraints/angleConstraints.ts'),
+  path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/model/constraints/constraintOptions.ts'),
   path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/source/generator.ts'),
   path.resolve(__dirname, 'src/fixed-pages/editor/diagrams/source/parser.ts'),
-  path.resolve(__dirname, 'src/diagrams/spec/migrations.ts'),
-  path.resolve(__dirname, 'src/diagrams/spec/scene.ts'),
-  path.resolve(__dirname, 'src/diagrams/spec/schema.ts'),
-  path.resolve(__dirname, 'src/diagrams/spec/types.ts'),
+  path.resolve(__dirname, 'src/diagrams/model/schema/migrations.ts'),
+  path.resolve(__dirname, 'src/diagrams/geometry/layout/scene.ts'),
+  path.resolve(__dirname, 'src/diagrams/model/schema/schema.ts'),
+  path.resolve(__dirname, 'src/diagrams/model/schema/types.ts'),
 ].map(filePath => path.normalize(filePath)));
 
 function editorAPI(): Plugin {

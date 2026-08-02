@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
-import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/templateModels';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/scene/templateModels';
 import { GroupsAndLayersManager } from '@/fixed-pages/editor/diagrams/ui/scene/GroupsAndLayersManager';
 
 describe('GroupsAndLayersManager layer moves', () => {

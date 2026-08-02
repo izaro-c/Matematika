@@ -1,7 +1,7 @@
 
 import { Suspense } from 'react';
 import { Link } from 'wouter';
-import { resolvePublicOrExternalAsset } from '@/lib/helpers/routeHelper';
+import { resolvePublicOrExternalAsset } from '@/lib/routes';
 import { getContentPageAccent } from '@/design';
 
 import { db } from '@/data/content';

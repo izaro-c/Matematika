@@ -1,5 +1,5 @@
 import React from 'react';
-import type { SafetyPresentation } from '../../ux/safetyPresentation';
+import type { SafetyPresentation } from '@/fixed-pages/editor/review/safetyPresentation';
 
 const LEVEL_STYLES: Record<SafetyPresentation['level'], string> = {
   safe: 'border-salvia/25 bg-salvia/5 text-salvia',

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import type { VisualDiagramModel } from '../../model/types';
-import type { DiagramLayer, DiagramGroup } from '@/diagrams/spec';
+import type { DiagramLayer, DiagramGroup } from '@/diagrams';
 import {
   bringSceneItemForward,
   listLayerSceneItemsFrontFirst,
   moveSceneItemToLayer,
   moveSceneItemVisual,
   sendSceneItemBackward,
-} from '../../model/sceneOrdering';
-import { IconEye, IconEyeOff, IconLock, IconUnlock, IconPlus, IconTrash, IconChevronUp, IconChevronDown } from '../WorkbenchIcons';
+} from '../../model/scene/sceneOrdering';
+import { IconEye, IconEyeOff, IconLock, IconUnlock, IconPlus, IconTrash, IconChevronUp, IconChevronDown } from '../toolbar/WorkbenchIcons';
 
 interface GroupsAndLayersManagerProps {
   model: VisualDiagramModel | null;

@@ -6,7 +6,7 @@ import {
   publishedLayoutForPageType,
   type PublishedDiagramLayout,
   type ScreenPreset,
-} from '../model/publishedDiagramLayout';
+} from '../model/scene/publishedDiagramLayout';
 
 interface DiagramViewportFrameProps {
   title: string;

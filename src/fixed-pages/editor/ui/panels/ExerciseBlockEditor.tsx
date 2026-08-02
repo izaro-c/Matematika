@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import type { Block } from '../../core/parser';
-import { parseAttributes } from '../../core/parser';
+import type { Block } from '@/fixed-pages/editor/session/parser';
+import { parseAttributes } from '@/fixed-pages/editor/session/parser';
 import { renderFormattedText, type EditLinkHandler } from './InlineContentPreview';
 
 interface QuestionTag { start: number; end: number; source: string; id: string; text: string; correct: string; options: Array<{ value: string; text: string; textStart: number; textEnd: number }> }

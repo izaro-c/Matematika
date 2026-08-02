@@ -1,6 +1,6 @@
 import React from 'react';
-import { useMathStore } from '@/lib/helpers/MathStoreContext';
-import { useDiagramTargetRegistry } from '@/lib/helpers/DiagramTargetRegistryContext';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
+import { useDiagramTargetRegistry } from '@/lib/page-context/DiagramTargetRegistryContext';
 
 interface VisualBindProps {
   element: string;

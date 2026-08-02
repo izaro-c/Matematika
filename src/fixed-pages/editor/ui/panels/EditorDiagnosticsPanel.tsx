@@ -1,8 +1,8 @@
 import React from 'react';
-import type { EditorValidationIssue, EditorValidationResult } from '../../core/editorTypes';
-import type { FileNode } from '../../lib/editorContracts';
-import type { EditorPersistenceStatus } from '../../state/editorPersistenceState';
-import type { EditorWorkspaceLevel } from '../../navigation/editorNavigationModel';
+import type { EditorValidationIssue, EditorValidationResult } from '@/fixed-pages/editor/session/editorTypes';
+import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
+import type { EditorPersistenceStatus } from '@/fixed-pages/editor/save/editorPersistenceState';
+import type { EditorWorkspaceLevel } from '@/fixed-pages/editor/session/editorNavigationModel';
 
 interface EditorDiagnosticsPanelProps {
   currentFile: string | null;

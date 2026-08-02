@@ -8,14 +8,14 @@ import {
   toggleSegmentDimensionLine,
   measurementForSegment,
   toggleSegmentMeasurement,
-} from '@/fixed-pages/editor/diagrams/model/segmentMarks';
+} from '@/fixed-pages/editor/diagrams/model/elements/segmentMarks';
 import type { ElementPanelProps } from '../../types';
 import {
   showsDirectMarkCount,
   showsMeasureTicksProps,
   showsSegmentMarks,
 } from '../../elementSections';
-import { elementInspectorCapabilities } from '@/fixed-pages/editor/diagrams/model/elementInspectorCapabilities';
+import { elementInspectorCapabilities } from '@/fixed-pages/editor/diagrams/model/elements/elementInspectorCapabilities';
 
 /** Propiedades: congruence/parallel marks, dimension line, measurement, markCount, markHeight, tickDistance, minorTickCount */
 export const ElementMarksSection: React.FC<ElementPanelProps> = ({

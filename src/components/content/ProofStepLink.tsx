@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useDiagramStepSync } from '@/lib/helpers/DiagramStepSyncContext';
+import { useDiagramStepSync } from '@/lib/page-context/DiagramStepSyncContext';
 import { ProofStepNumberBadge } from './ProofStepNumberBadge';
 
 interface ProofStepLinkProps {

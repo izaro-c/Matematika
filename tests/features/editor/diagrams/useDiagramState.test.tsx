@@ -1,8 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { useDiagramState } from '../../../../src/fixed-pages/editor/diagrams/hooks/useDiagramState';
+import { useDiagramState } from '../../../../src/fixed-pages/editor/diagrams/history/useDiagramState';
 import { createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
-import { PersistenceFailure } from '../../../../src/fixed-pages/editor/persistence/persistenceErrors';
+import { PersistenceFailure } from '../../../../src/fixed-pages/editor/save/persistenceErrors';
 
 const repositoryMocks = vi.hoisted(() => ({
   readDiagram: vi.fn(),
@@ -10,7 +10,7 @@ const repositoryMocks = vi.hoisted(() => ({
   updateMdxImports: vi.fn(),
 }));
 
-vi.mock('@/fixed-pages/editor/diagrams/persistence/repository', () => ({
+vi.mock('@/fixed-pages/editor/diagrams/save/repository', () => ({
   diagramRepository: {
     readDiagram: repositoryMocks.readDiagram,
     saveDiagram: repositoryMocks.saveDiagram,

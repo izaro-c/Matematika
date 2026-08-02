@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { diagramConstraint, element, point } from '../../../../src/fixed-pages/editor/diagrams/model/diagramElements';
-import { migrateDiagramSpecV2ToV3 } from '../../../../src/diagrams/spec';
-import { toWorkingSceneV2 } from '../../../../src/diagrams/spec/v3Compatibility';
-import { constrainPointCoordinates } from '../../../../src/diagrams/spec/scene';
-import { pointInsideAreaElement } from '../../../../src/diagrams/spec/areaRegions';
-import { diagramSpecV3Schema } from '../../../../src/diagrams/spec/schemaV3';
+import { diagramConstraint, element, point } from '../../../../src/fixed-pages/editor/diagrams/model/elements/diagramElements';
+import { migrateDiagramSpecV2ToV3 } from '../../../../src/diagrams/model';
+import { toWorkingSceneV2 } from '../../../../src/diagrams/model/schema/v3Compatibility';
+import { constrainPointCoordinates } from '../../../../src/diagrams/geometry/layout/scene';
+import { pointInsideAreaElement } from '../../../../src/diagrams/geometry/areas/areaRegions';
+import { diagramSpecV3Schema } from '../../../../src/diagrams/model/schema/schemaV3';
 import type { VisualDiagramModel } from '../../../../src/fixed-pages/editor/diagrams/model/types';
 
 function halfPlaneModel(): VisualDiagramModel {

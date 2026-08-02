@@ -6,14 +6,14 @@
  * debe re-resolver pasivamente esos puntos (eso sobrescribía al glider).
  */
 import { describe, expect, it } from 'vitest';
-import { diagramConstraint, element, point } from '../../src/fixed-pages/editor/diagrams/model/diagramElements';
+import { diagramConstraint, element, point } from '../../src/fixed-pages/editor/diagrams/model/elements/diagramElements';
 import {
   constrainPointCoordinates,
   onSupportTargetId,
   resolvePointCoordinates,
   withMovedPoint,
   withResolvedPointConstraints,
-} from '@/diagrams/spec/scene';
+} from '@/diagrams/geometry/layout/scene';
 import type { VisualDiagramModel } from '../../src/fixed-pages/editor/diagrams/model/types';
 
 const C = { x: 0, y: 0 };

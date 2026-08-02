@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
-import { MathProviderBoundary, useMathStore } from '@/lib/helpers/MathStoreContext';
-import { useDiagramStepSync } from '@/lib/helpers/DiagramStepSyncContext';
+import { MathProviderBoundary, useMathStore } from '@/lib/page-context/MathStoreContext';
+import { useDiagramStepSync } from '@/lib/page-context/DiagramStepSyncContext';
 import {
   diagramPlaybackReducer,
   initialDiagramPlaybackState,
   type DiagramStep,
-} from '@/diagrams/spec';
+} from '@/diagrams';
 
 interface StepNavigatorProps {
   steps: readonly DiagramStep[];

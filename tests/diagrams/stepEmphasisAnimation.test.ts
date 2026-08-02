@@ -16,8 +16,8 @@ import {
   STEP_EMPHASIS_STROKE_DELTA,
   STEP_EMPHASIS_TICK_HEIGHT_DELTA,
   type StepEmphasisVisualState,
-} from '@/diagrams/runtime/stepEmphasisAnimation';
-import { DEFAULT_ANGLE_RADIUS } from '@/diagrams/spec';
+} from '@/diagrams/render/stepEmphasisAnimation';
+import { DEFAULT_ANGLE_RADIUS } from '@/diagrams';
 
 const primaryState = (pulseAmount = 0): StepEmphasisVisualState => ({
   hoverActive: false,

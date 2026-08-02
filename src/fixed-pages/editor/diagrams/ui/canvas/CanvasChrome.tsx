@@ -8,7 +8,7 @@ import {
   toolReferencesAreReady,
   KIND_LABELS,
 } from '@/fixed-pages/editor/diagrams/model';
-import { ToolDrawingIcon, IconClose, IconChevronLeft, IconChevronRight } from '../WorkbenchIcons';
+import { ToolDrawingIcon, IconClose, IconChevronLeft, IconChevronRight } from '../toolbar/WorkbenchIcons';
 
 export interface CanvasChromeProps {
   model: VisualDiagramModel;

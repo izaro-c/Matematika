@@ -14,8 +14,8 @@ import {
   createPageSource,
   extractSemanticReferences,
   PAGE_TYPE_DIRECTORIES,
-} from '@/fixed-pages/editor/ux/authoringModel';
-import type { Block } from '@/fixed-pages/editor/core/parser';
+} from '@/fixed-pages/editor/review/authoringModel';
+import type { Block } from '@/fixed-pages/editor/session/parser';
 import { discoverMdxFiles } from '../../../../scripts/editor/corpusAuditCore';
 
 const definitionSource = `export const metadata = {

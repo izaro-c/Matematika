@@ -1,6 +1,6 @@
 import React from 'react';
 import type { VisualDiagramModel } from '../../model/types';
-import type { DiagramMode } from '@/diagrams/spec';
+import type { DiagramMode } from '@/diagrams';
 import { DiagramHeaderReadingsEditor } from '../DiagramHeaderReadingsEditor';
 
 interface DiagramSettingsModalProps {

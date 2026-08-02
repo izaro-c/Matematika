@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { MathProvider } from '@/lib/helpers/MathStoreContext';
-import { DemonstrationHeaderProvider } from '@/lib/helpers/DemonstrationHeaderContext';
+import { MathProvider } from '@/lib/page-context/MathStoreContext';
+import { DemonstrationHeaderProvider } from '@/lib/page-context/DemonstrationHeaderContext';
 import { CodexLayout } from '@/components/layouts/CodexLayout';
 
 vi.mock('wouter', () => ({

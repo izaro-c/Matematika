@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { pageTypeFromContentPath, publishedDiagramArea, publishedLayoutForPageType } from '../../../../src/fixed-pages/editor/diagrams/model/publishedDiagramLayout';
+import { pageTypeFromContentPath, publishedDiagramArea, publishedLayoutForPageType } from '../../../../src/fixed-pages/editor/diagrams/model/scene/publishedDiagramLayout';
 
 describe('published diagram layout dimensions', () => {
   it.each([

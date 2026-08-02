@@ -11,8 +11,8 @@
  */
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import JXG from 'jsxgraph';
-import { createLine, createPoint, createRay, createSegment } from '@/diagrams/core/MathFactory';
-import type { ThemeColors } from '@/diagrams/core/theme';
+import { createLine, createPoint, createRay, createSegment } from '@/diagrams/jsxgraph/MathFactory';
+import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
 
 const WIDTH = 600;
 const HEIGHT = 600;

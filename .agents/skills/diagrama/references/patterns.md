@@ -857,7 +857,7 @@ Los diagramas viven en `content/diagrams/` (arquitectura FSD: capa `widgets/`).
 |---|---|
 | Fachada y utilidades | `content/diagrams/index.ts` |
 | Componentes JSXGraph base | `src/diagrams/core/{MathBoard.tsx,MathFactory.ts,MathUtils.ts}` |
-| Store para interactividad | `src/lib/helpers/MathStoreContext.tsx`; enlaces de paso en `src/components/ui/StepBinding.tsx` |
+| Store para interactividad | `src/lib/page-context/MathStoreContext.tsx`; enlaces de paso en `src/components/ui/StepBinding.tsx` |
 | Paleta de colores | `src/app/theme.css`; leer mediante `theme.*`, `getCSSVar('--theme-*')` o `var(--theme-*)` según el renderer |
 | Contenido MDX asociado | `src/database/content/{theorems,definitions,axioms,demonstrations}/` |
 
