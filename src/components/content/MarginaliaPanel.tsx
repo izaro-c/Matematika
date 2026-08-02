@@ -329,32 +329,42 @@ export const MarginaliaPanel = () => {
     );
   } else {
     panelContent = (
-      <p className="italic text-carbon/50 text-center mt-12">No se han encontrado símbolos reconocidos en esta expresión.</p>
+      <p className="italic text-ink-muted text-center mt-12">No se han encontrado símbolos reconocidos en esta expresión.</p>
     );
   }
+
+  if (!isActive) return null;
 
   return (
     <>
       <div
-        className={`fixed inset-0 bg-carbon/30 backdrop-blur-sm z-40 transition-opacity duration-500
-          ${isActive ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className="fixed inset-0 bg-carbon/30 backdrop-blur-sm z-40 opacity-100 pointer-events-auto"
         onClick={closeTerm}
+        aria-hidden="true"
       />
 
-      <div className={panelClassName} style={{ '--page-accent': panelAccent } as React.CSSProperties}>
+      <div
+        className={panelClassName}
+        style={{ '--page-accent': panelAccent } as React.CSSProperties}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Glosario y marginalia"
+      >
         <div className="h-full flex flex-col relative overflow-hidden">
-          <div className="absolute top-5 right-5 flex gap-3 text-carbon/40 font-sans z-20">
+          <div className="absolute top-4 right-4 flex gap-2 text-ink-muted font-sans z-20">
             <button
+              type="button"
               onClick={toggleDisplayMode}
-              className="page-accent-hover transition-colors text-sm p-2 rounded-sm"
+              className="ac-hit-target page-accent-hover transition-colors text-sm inline-flex items-center justify-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
               title={isSidebar ? 'Cambiar a ventana flotante' : 'Cambiar a panel lateral'}
               aria-label="Cambiar modo de visualización"
             >
               {isSidebar ? '⧉' : '◫'}
             </button>
             <button
+              type="button"
               onClick={closeTerm}
-              className="page-accent-hover transition-colors text-2xl leading-none p-2 rounded-sm"
+              className="ac-hit-target page-accent-hover transition-colors text-2xl leading-none inline-flex items-center justify-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
               aria-label="Cerrar panel"
             >
               ×

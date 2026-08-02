@@ -1,5 +1,6 @@
 import { Link } from 'wouter';
 import { db } from '@/data/content';
+import { mscNames } from '@/data/content/msc2020';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
 
 interface SectionDef {
@@ -113,6 +114,21 @@ const TYPE_LABELS: Record<string, string> = {
   example: 'Ejemplo',
 };
 
+/** Chips = sans de sistema como en GH Pages (prod no usa Source Sans 3). */
+const BRANCH_CHIP =
+  'inline-flex items-center gap-1.5 min-h-6 px-2.5 py-0.5 rounded border text-xs leading-tight font-[ui-sans-serif,system-ui,-apple-system,sans-serif] font-semibold tracking-wide proportional-nums transition-colors hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota';
+
+function chipInk(accent: string) {
+  return {
+    color: `color-mix(in srgb, ${accent} calc(100% - var(--ink-pigment-mix)), var(--ink-text))`,
+    borderColor: `color-mix(in srgb, ${accent} 35%, transparent)`,
+  };
+}
+
+function sortCodes(codes: string[]) {
+  return [...codes].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+}
+
 export const BranchLibrary = () => {
   const { readConcepts, completedExercises } = useProgressStore();
 
@@ -121,13 +137,13 @@ export const BranchLibrary = () => {
   return (
     <main className="max-w-5xl mx-auto px-8 py-16">
       <div className="flex flex-col md:flex-row items-baseline justify-between gap-4 mb-10 border-b border-carbon/15 pb-4">
-        <div className="flex items-baseline gap-4">
-          <h2 className="text-2xl text-carbon">Biblioteca MSC2020</h2>
-          <span className="text-xs text-carbon/40 tracking-wide font-sans tabular-nums">
+        <div className="flex items-baseline gap-4 flex-wrap">
+          <h2 className="text-2xl text-ink">Biblioteca MSC2020</h2>
+          <span className="text-sm text-ink-muted tracking-wide font-sans tabular-nums">
             {SECTIONS.length} secciones · {totalEntries} entradas
           </span>
         </div>
-        <div className="flex items-center gap-4 text-xs font-sans tracking-wide text-carbon/60 bg-carbon/5 px-4 py-2 rounded tabular-nums">
+        <div className="flex items-center gap-4 text-sm font-sans tracking-wide text-ink-muted bg-carbon/5 px-4 py-2.5 rounded tabular-nums">
           <span>Leídos: <strong className="text-salvia font-semibold">{readConcepts.length}</strong></span>
           <span aria-hidden="true">·</span>
           <span>Ejercicios: <strong className="text-salvia font-semibold">{completedExercises.length}</strong></span>
@@ -151,6 +167,7 @@ export const BranchLibrary = () => {
             <article
               key={section.title}
               className="group elegant-panel relative flex flex-col overflow-hidden cursor-pointer"
+              style={{ ['--hover-accent' as string]: section.accent }}
             >
               <div className="h-3 w-full border-b border-carbon/20" style={{ backgroundColor: section.accent }} />
               <div className="absolute top-3 left-0 right-0 h-[1px] bg-carbon/10 pointer-events-none" />
@@ -166,7 +183,7 @@ export const BranchLibrary = () => {
                     </div>
                     <Link
                       href={`/rama/${section.slug}`}
-                      className="block text-2xl text-carbon leading-none transition-colors hover:underline decoration-1 underline-offset-4"
+                      className="block text-2xl text-ink leading-none transition-colors hover:underline decoration-1 underline-offset-4"
                     >
                       {section.title}
                     </Link>
@@ -180,39 +197,30 @@ export const BranchLibrary = () => {
                 </div>
 
                 <p
-                  className="text-sm italic text-carbon/60 leading-relaxed mb-3 pl-3"
-                  style={{ borderLeft: `2px solid color-mix(in srgb, ${section.accent}, transparent 75%)` }}
+                  className="text-sm italic text-ink-muted leading-relaxed mb-3 pl-3"
+                  style={{ borderLeft: `2px solid color-mix(in srgb, ${section.accent} 40%, transparent)` }}
                 >
                   {section.desc}
                 </p>
 
                 <div className="flex flex-wrap gap-1.5 mb-4">
-                  {section.groups.map(group => {
-                    const name = (db.constructor as { mscNames?: Record<string, string> }).mscNames?.[group.id] || group.id;
-                    return (
+                  {section.groups.map(group => (
                       <Link
                         key={group.id}
                         href={`/rama/${group.id}`}
-                        className="text-[10px] font-sans font-bold tracking-wider px-2 py-0.5 rounded border border-dashed transition-colors hover:bg-carbon/5 flex items-center gap-1"
-                        style={{
-                          color: section.accent,
-                          borderColor: `color-mix(in srgb, ${section.accent}, transparent 81%)`,
-                        }}
+                        className={`${BRANCH_CHIP} border-dashed`}
+                        style={chipInk(section.accent)}
                       >
-                        <span className="opacity-60">{group.codes.join('/')}</span>
-                        <span>{name}</span>
+                        <span className="opacity-70">{sortCodes(group.codes).join('/')}</span>
+                        <span>{mscNames[group.id] || group.id}</span>
                       </Link>
-                    );
-                  })}
-                  {section.codes.map(code => (
+                  ))}
+                  {sortCodes(section.codes).map(code => (
                       <Link
                         key={code}
                         href={`/rama/${code}`}
-                        className="ac-label ac-label--sm px-2 py-0.5 rounded border transition-colors hover:bg-carbon/5"
-                        style={{
-                          color: section.accent,
-                          borderColor: `color-mix(in srgb, ${section.accent}, transparent 75%)`,
-                        }}
+                        className={`${BRANCH_CHIP} justify-center`}
+                        style={chipInk(section.accent)}
                       >
                         {code}
                       </Link>
@@ -225,15 +233,18 @@ export const BranchLibrary = () => {
                       <Link
                         key={idx}
                         href={itemHref(entry)}
-                        className="flex items-center justify-between py-1.5 group/row hover:bg-carbon/[0.02] -mx-2 px-2 rounded transition-colors"
+                        className="flex items-center justify-between py-2.5 min-h-11 group/row hover:bg-carbon/[0.02] -mx-2 px-2 rounded transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
                       >
-                        <span className="text-sm text-carbon/80 group-hover/row:text-carbon font-medium flex items-center gap-2">
-                          <span className="text-carbon/30 text-xs">§</span>
+                        <span className="text-sm text-ink-body group-hover/row:text-ink font-medium flex items-center gap-2">
+                          <span className="text-ink-subtle text-xs" aria-hidden="true">§</span>
                           {entry.item.title || entry.item.id}
                         </span>
                         <span
                           className="ac-label ac-label--xs px-1.5 py-0.5 rounded"
-                          style={{ color: section.accent, backgroundColor: `color-mix(in srgb, ${section.accent}, transparent 92%)` }}
+                          style={{
+                            color: `color-mix(in srgb, ${section.accent} calc(100% - var(--ink-pigment-mix)), var(--ink-text))`,
+                            backgroundColor: `color-mix(in srgb, ${section.accent} 12%, transparent)`,
+                          }}
                         >
                           {TYPE_LABELS[entry.type] || entry.type}
                         </span>

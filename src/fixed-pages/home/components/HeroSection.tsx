@@ -67,20 +67,26 @@ export const HeroSection = () => {
     <FadeIn as="header" className="relative w-full overflow-hidden border-b border-carbon/15">
       <div className="relative z-10 max-w-5xl mx-auto px-8 pt-16 sm:pt-24 pb-16 sm:pb-20 flex flex-col items-center text-center">
         <div className="flex items-end justify-center gap-2 sm:gap-3 mb-6 max-w-full">
-          <Logo className="w-16 h-16 sm:w-24 sm:h-24 md:w-[7.5rem] md:h-[7.5rem] opacity-90 mb-1 shrink-0" />
-          <h1 className={`${UI.inkDisplay} text-[3.75rem] sm:text-[4.5rem] md:text-[7rem] text-carbon tracking-tight leading-none ${UI.textBalance}`}>
-            atematika
+          <h1 className={`${UI.inkDisplay} text-[3.75rem] sm:text-[4.5rem] md:text-[7rem] text-ink tracking-tight leading-[1.05] pb-1 ${UI.textBalance}`}>
+            <span className="sr-only">Matematika</span>
+            <span className="flex items-end justify-center gap-2 sm:gap-3" aria-hidden="true">
+              <Logo
+                decorative
+                className="w-16 h-16 sm:w-24 sm:h-24 md:w-[7.5rem] md:h-[7.5rem] mb-1 shrink-0"
+              />
+              <span>atematika</span>
+            </span>
           </h1>
         </div>
 
-        <p className={`text-lg md:text-xl text-carbon/60 italic max-w-xl leading-relaxed mb-10 ${UI.textPretty}`}>
+        <p className={`text-lg md:text-xl text-ink-muted italic max-w-xl leading-relaxed mb-10 ${UI.textPretty}`}>
           {SITE_TAGLINE}
         </p>
 
-        <div className="flex items-center gap-4 w-full max-w-xs opacity-30" aria-hidden="true">
-          <div className="flex-1 h-px bg-carbon" />
-          <span className="text-carbon text-xs">✦</span>
-          <div className="flex-1 h-px bg-carbon" />
+        <div className="flex items-center gap-4 w-full max-w-xs" aria-hidden="true">
+          <div className="flex-1 h-px bg-carbon/20" />
+          <span className="text-ink-subtle text-xs">✦</span>
+          <div className="flex-1 h-px bg-carbon/20" />
         </div>
 
         <div className="mt-12 grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 w-full items-stretch">
@@ -89,7 +95,7 @@ export const HeroSection = () => {
             eyebrow="Plan de estudio"
             title="Camino a Pitágoras"
             cta="Acceder a la ruta →"
-            bgClass="bg-terracota text-lienzo"
+            bgClass="bg-terracota text-on-accent"
             style={{
               '--ac-cta-shadow': CTA_SHADOWS.terracota.rest,
               '--ac-cta-shadow-hover': CTA_SHADOWS.terracota.hover,
@@ -100,7 +106,7 @@ export const HeroSection = () => {
             eyebrow="Demostraciones lógicas"
             title="Métodos de prueba"
             cta="Explorar →"
-            bgClass="bg-musgo text-lienzo"
+            bgClass="bg-musgo text-on-accent"
             style={{
               '--ac-cta-shadow': CTA_SHADOWS.musgo.rest,
               '--ac-cta-shadow-hover': CTA_SHADOWS.musgo.hover,
@@ -111,7 +117,7 @@ export const HeroSection = () => {
             eyebrow="Fundamentos"
             title="Axiomas"
             cta="Ver relaciones →"
-            bgClass="bg-pavo text-lienzo"
+            bgClass="bg-pavo text-on-accent"
             borderClass="border-lienzo/30"
             style={{
               '--ac-cta-shadow': CTA_SHADOWS.pavo.rest,
@@ -123,7 +129,7 @@ export const HeroSection = () => {
             eyebrow="Mapa interactivo"
             title="Grafo visual"
             cta="Ver dependencias →"
-            bgClass="bg-carbon text-lienzo"
+            bgClass="bg-carbon text-on-accent"
             borderClass="border-lienzo/30"
             style={{
               '--ac-cta-shadow': CTA_SHADOWS.carbon.rest,

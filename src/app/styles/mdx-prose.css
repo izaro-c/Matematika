@@ -66,11 +66,20 @@
 }
 
 .animate-fade-in {
-  animation: simple-fade 0.2s ease-in forwards;
+  /* both: arranca en opacity 0 (0%) y queda en 1 (100%) sin inline opacity */
+  animation: simple-fade 0.2s ease-in both;
 }
 
 .page-transition {
-  animation: simple-fade 0.2s ease-in;
+  animation: simple-fade 0.2s ease-in both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .page-transition {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 /* Tablas con estilo clásico de libro de matemáticas */

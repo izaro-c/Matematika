@@ -12,21 +12,17 @@ export const HomeFooter = () => {
     <footer className="border-t border-carbon/10 mt-8">
       <div className="max-w-5xl mx-auto px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex gap-3">
-          <Link href="/diccionario">
-            <a className={`${footerLinkClass} border-carbon/20 text-carbon/60 hover:border-carbon hover:text-carbon`}>
-              Diccionario
-            </a>
+          <Link href="/diccionario" className={`${footerLinkClass} min-h-11 border-carbon/20 text-ink-muted hover:border-carbon hover:text-ink`}>
+            Diccionario
           </Link>
-          <Link href="/historia">
-            <a className={`${footerLinkClass} border-salvia/30 text-salvia hover:bg-salvia hover:text-lienzo`}>
-              Índice biográfico
-            </a>
+          <Link href="/historia" className={`${footerLinkClass} min-h-11 border-salvia/30 text-salvia hover:bg-salvia hover:text-on-accent`}>
+            Índice biográfico
           </Link>
         </div>
 
-        <div className={`flex items-center gap-3 text-carbon/30 text-xs font-sans ${UI.tabularNums}`}>
+        <div className={`flex items-center gap-3 text-ink-muted text-xs font-sans ${UI.tabularNums}`}>
           <div className="w-6 h-px bg-carbon/20" aria-hidden="true" />
-          <Logo className="w-5 h-5 opacity-40" />
+          <Logo decorative className="w-5 h-5 opacity-70" />
           <span>Matematika · 2026</span>
           <div className="w-6 h-px bg-carbon/20" aria-hidden="true" />
         </div>

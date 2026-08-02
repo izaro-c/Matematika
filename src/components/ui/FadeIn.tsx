@@ -8,6 +8,11 @@ interface FadeInProps {
   as?: 'div' | 'section' | 'article' | 'header' | 'main' | 'nav';
 }
 
+/**
+ * Entrada suave. La opacidad inicial vive en keyframes (`animation-fill-mode: both`),
+ * no en inline style — así prefers-reduced-motion / fallos de animación no dejan el
+ * contenido invisible (opacity: 0 permanente).
+ */
 export const FadeIn: React.FC<FadeInProps> = ({
   children,
   delay = 0,
@@ -21,7 +26,6 @@ export const FadeIn: React.FC<FadeInProps> = ({
       style={{
         animationDelay: `${delay}ms`,
         animationDuration: `${duration}ms`,
-        opacity: 0,
       }}
     >
       {children}

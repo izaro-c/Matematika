@@ -123,21 +123,21 @@ const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
       data-step-navigator={scopeId || 'global'}
     >
       <div className="flex items-center justify-center gap-2">
-        <button type="button" onClick={reset} className="flex size-8 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-sm text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo" aria-label="Reiniciar secuencia">↺</button>
-        <button type="button" onClick={previous} disabled={activeIndex === 0} className="flex size-8 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-lg leading-none text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo disabled:opacity-35" aria-label="Paso anterior">‹</button>
+        <button type="button" onClick={reset} className="flex size-11 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-sm text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo" aria-label="Reiniciar secuencia">↺</button>
+        <button type="button" onClick={previous} disabled={activeIndex === 0} className="flex size-11 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-lg leading-none text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo disabled:opacity-35" aria-label="Paso anterior">‹</button>
         <button
           type="button"
           onClick={() => dispatch({ type: playback.playing ? 'pause' : 'play' })}
-          className={`inline-flex h-8 items-center justify-center gap-2 rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-xs font-semibold text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo ${compact ? 'w-8 px-0 sm:w-auto sm:px-3' : 'px-3'}`}
+          className={`inline-flex h-11 items-center justify-center gap-2 rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-xs font-semibold text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo ${compact ? 'w-11 px-0 sm:w-auto sm:px-3' : 'px-3'}`}
           aria-label={playback.playing ? 'Pausar reproducción' : 'Reproducir secuencia'}
           aria-pressed={playback.playing}
         >
           <span aria-hidden className="text-[10px] text-pavo">{playback.playing ? 'Ⅱ' : '▶'}</span>
           <span className={compact ? 'hidden sm:inline' : ''}>{playback.playing ? 'Pausa' : 'Reproducir'}</span>
         </button>
-        <button type="button" onClick={next} disabled={activeIndex === steps.length - 1} className="flex size-8 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-lg leading-none text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo disabled:opacity-35" aria-label="Paso siguiente">›</button>
+        <button type="button" onClick={next} disabled={activeIndex === steps.length - 1} className="flex size-11 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-lg leading-none text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo disabled:opacity-35" aria-label="Paso siguiente">›</button>
         {!editorMode && (
-        <span className={`${compact ? 'sr-only sm:not-sr-only' : ''} min-w-8 font-diagram text-[11px] tabular-nums text-carbon/60`} aria-live="polite">
+        <span className={`${compact ? 'sr-only sm:not-sr-only' : ''} min-w-8 font-diagram text-xs tabular-nums text-ink-muted`} aria-live="polite">
           {activeIndex + 1} / {steps.length}{compact ? '' : ` · ${activeStep?.label ?? ''}`}
         </span>
         )}

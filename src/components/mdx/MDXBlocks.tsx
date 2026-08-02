@@ -109,9 +109,17 @@ export const Formula: React.FC<FormulaProps> = ({ title, children }) => {
         ref={scrollRef}
         onScroll={checkScroll}
         className="py-8 px-6 w-full border border-carbon/20 bg-carbon/[0.02] overflow-x-auto overflow-y-hidden formula-scrollbar"
+        tabIndex={canScrollLeft || canScrollRight ? 0 : undefined}
+        role={canScrollLeft || canScrollRight ? 'region' : undefined}
+        aria-label={canScrollLeft || canScrollRight ? 'Fórmula matemática. Desplaza horizontalmente si es necesario.' : undefined}
       >
+        {(canScrollLeft || canScrollRight) && (
+          <span className="sr-only">
+            Esta fórmula es más ancha que la pantalla. Usa el desplazamiento horizontal para verla completa.
+          </span>
+        )}
         <div className="flex flex-col items-center justify-center min-w-max mx-auto gap-4 text-xl font-serif">
-          {title && <span className="italic block mb-2 text-sm text-carbon/50">{title}</span>}
+          {title && <span className="italic block mb-2 text-sm text-ink-muted">{title}</span>}
           {children}
         </div>
       </div>

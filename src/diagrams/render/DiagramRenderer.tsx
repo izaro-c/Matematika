@@ -257,13 +257,13 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
           >
             {viewportControls && (
               <>
-                <div className="flex h-9 items-stretch justify-self-start divide-x divide-carbon/10 overflow-hidden rounded-full border border-carbon/15 bg-lienzo/90 backdrop-blur-[2px]" role="group" aria-label="Controles del viewport">
-                  <button type="button" className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Acercar" onClick={() => commitCamera(zoomViewport(spec, bounds, 1.25))}>+</button>
-                  <button type="button" className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Alejar" onClick={() => commitCamera(zoomViewport(spec, bounds, 0.8))}>−</button>
-                  <button type="button" className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Ajustar automáticamente al contenido visible en todos los pasos" title="Reencuadrar para mostrar todos los objetos visibles en algún paso" onClick={() => fitAutoViewport()}>Ajustar</button>
+                <div className="flex h-11 items-stretch justify-self-start divide-x divide-carbon/10 overflow-hidden rounded-full border border-carbon/15 bg-lienzo/90 backdrop-blur-[2px]" role="group" aria-label="Controles del viewport">
+                  <button type="button" className="min-w-11 px-2 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Acercar" onClick={() => commitCamera(zoomViewport(spec, bounds, 1.25))}>+</button>
+                  <button type="button" className="min-w-11 px-2 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Alejar" onClick={() => commitCamera(zoomViewport(spec, bounds, 0.8))}>−</button>
+                  <button type="button" className="diagram-viewport-secondary px-3 font-diagram text-xs text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Ajustar automáticamente al contenido visible en todos los pasos" title="Reencuadrar para mostrar todos los objetos visibles en algún paso" onClick={() => fitAutoViewport()}>Ajustar</button>
                   <button
                     type="button"
-                    className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
+                    className="diagram-viewport-secondary px-3 font-diagram text-xs text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
                     disabled={missingItems.length === 0}
                     aria-label="Recuperar objetos fuera del viewport"
                     title={missingItems.length > 0 ? `${missingItems.length} objeto(s) visible(s) fuera de vista` : 'No hay objetos visibles fuera de vista'}
@@ -271,11 +271,11 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   >
                     Recuperar
                   </button>
-                  <button type="button" className="diagram-viewport-secondary px-2.5 font-diagram text-[11px] text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Restablecer vista inicial" title="Volver a la vista inicial guardada" onClick={() => resetToHome()}>Inicio</button>
+                  <button type="button" className="diagram-viewport-secondary px-3 font-diagram text-xs text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Restablecer vista inicial" title="Volver a la vista inicial guardada" onClick={() => resetToHome()}>Inicio</button>
                   {toolbarLayout === 'rails' && (
                     <button
                       type="button"
-                      className="w-9 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
+                      className="min-w-11 px-2 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
                       aria-label="Opciones de encuadre"
                       aria-expanded={viewportMenuOpen}
                       title="Ajustar o recuperar el encuadre"

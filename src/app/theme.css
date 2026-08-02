@@ -2,7 +2,7 @@
    MATEMATIKA DESIGN SYSTEM - THEME CONFIGURATION
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Fondamento:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Fondamento:ital@0;1&family=Source+Sans+3:ital,wght@0,400..700;1,400..700&family=UnifrakturMaguntia&display=swap');
 
 @theme {
   --font-title: var(--font-title-family);
@@ -37,7 +37,8 @@
   --font-body-family: "EB Garamond", var(--font-body-family-fallback);
   --font-diagram-family: "Cormorant Garamond", "EB Garamond", Cambria, "Times New Roman", serif;
   --font-mono-family: ui-monospace, "SF Mono", Menlo, monospace;
-  --font-sans-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans-family: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  --font-brand-initial: "UnifrakturMaguntia", "Fondamento", cursive;
 
   /* ── 2. Escala Tipográfica Canónica y Ritmo ─────────────────────────────── */
   --font-size-h1: 3rem;
@@ -56,6 +57,8 @@
   --ease-interactive: ease-out;
   --ease-panels: cubic-bezier(0.25, 0.8, 0.25, 1);
   --ease-theme: cubic-bezier(0.22, 1, 0.36, 1);
+  --target-min: 44px;
+  --focus-ring: 2px solid var(--theme-terracota);
 
   /* ── 4. Parámetros Visuales y Decorativos ─────────────────────────────── */
   --bg-texture-opacity: 0.65; /* Pergamino sutil pero más visible */
@@ -93,10 +96,12 @@
   --theme-pavo:      #2A4B7C;  /* Modelos — (Azul Lapislázuli) */
   --theme-pizarra:   #63457A;  /* Ejemplos — (Violeta/Amatista) */
 
-  /* Tinta cálida (tras definir paleta) */
-  --ink-text: color-mix(in srgb, var(--theme-carbon) 78%, var(--theme-terracota));
-  --ink-text-body: color-mix(in srgb, var(--theme-carbon) 72%, var(--theme-pizarra));
-  --ink-text-muted: color-mix(in srgb, var(--theme-carbon) 58%, var(--theme-lienzo));
+  /* Tinta semántica opaca (WCAG AA ≥4.5:1 sobre --theme-lienzo) */
+  --ink-text: #3A342F;
+  --ink-text-body: #403B37;
+  --ink-text-muted: #5C564F; /* ~6.3:1 — sustituye carbon/40–60 */
+  --ink-text-subtle: #6B645C; /* ~5.1:1 — captions large / UI */
+  --on-accent: #F3EFE7; /* texto sobre CTAs de color sólido */
   --ink-pigment-mix: 26%;
 
   --theme-graph-bg-url: var(--bg-arts-and-crafts-light-url, url('/images/bg-arts-crafts-1.png'));
@@ -134,11 +139,44 @@
   /* Materialidad de papel — códice nocturno (grano sobre letras) */
   --ink-grain-opacity: 0.36;
   --ink-stroke-opacity: 0.72;
-  --ink-text: color-mix(in srgb, var(--theme-carbon) 90%, var(--theme-ocre));
-  --ink-text-body: color-mix(in srgb, var(--theme-carbon) 86%, var(--theme-lienzo));
-  --ink-text-muted: color-mix(in srgb, var(--theme-carbon) 68%, var(--theme-lienzo));
+  --ink-text: #E8E2D8;
+  --ink-text-body: #DFD9CF;
+  --ink-text-muted: #B8AFA2; /* ~8.4:1 sobre códice */
+  --ink-text-subtle: #A69E92;
+  --on-accent: #161514;
   --ink-pigment-mix: 14%;
 
+}
+
+/* Utilidades de tinta (evitar Tailwind opacity en texto semántico) */
+.text-ink { color: var(--ink-text); }
+.text-ink-body { color: var(--ink-text-body); }
+.text-ink-muted { color: var(--ink-text-muted); }
+.text-ink-subtle { color: var(--ink-text-subtle); }
+.text-on-accent { color: var(--on-accent); }
+
+.ac-hit-target {
+  min-width: var(--target-min);
+  min-height: var(--target-min);
+}
+
+.ac-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--theme-lienzo);
+  color: var(--ink-text);
+  border: 1px solid var(--theme-carbon);
+  box-shadow: var(--theme-shadow-elegant);
+  font-family: var(--font-sans-family);
+  font-weight: 600;
+}
+
+.ac-skip-link:focus {
+  left: 0.75rem;
+  top: 0.75rem;
 }
 
 /* ── 7. Reglas Globales de Imprenta y Selección ─────────────────────────────────── */

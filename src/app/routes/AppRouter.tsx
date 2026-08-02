@@ -41,10 +41,15 @@ export const AppRouter = () => {
 
   return (
     <Suspense fallback={
-      <div className="min-h-viewport flex items-center justify-center bg-lienzo text-carbon font-serif">
-        <div className="animate-pulse flex flex-col items-center">
-          <Logo className="w-16 h-16 opacity-50 mb-4" />
-          <p className="text-pizarra italic text-xl">Consultando el archivo...</p>
+      <div
+        className="min-h-viewport flex items-center justify-center bg-lienzo text-ink font-serif"
+        role="status"
+        aria-live="polite"
+        aria-busy="true"
+      >
+        <div className="flex flex-col items-center gap-4 px-6 max-w-sm text-center">
+          <Logo decorative className="w-14 h-14 text-ink-muted mb-1" />
+          <p className="text-ink-muted italic text-lg leading-relaxed">Consultando el archivo…</p>
         </div>
       </div>
     }>
