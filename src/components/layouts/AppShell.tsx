@@ -66,12 +66,19 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       data-page-type={pageType}
       style={pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties) : undefined}
     >
+      {!isEditor && (
+        <a href="#contenido-principal" className="ac-skip-link">
+          Saltar al contenido
+        </a>
+      )}
       {!isEditor && <SymbolDictionaryManager />}
       {!isEditor && <TopBar />}
       <SearchOmnibar />
       {!isEditor && <MarginaliaPanel />}
 
-      <div className="w-full">{children}</div>
+      <div id="contenido-principal" className="w-full" tabIndex={-1}>
+        {children}
+      </div>
 
       {!isEditor && createPortal(
         <div className={UI.paperGrain} aria-hidden="true" />,

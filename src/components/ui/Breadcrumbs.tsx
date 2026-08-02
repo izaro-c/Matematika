@@ -31,10 +31,10 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
       className={`flex items-center gap-1.5 min-w-0 ${hiddenMobile ? 'hidden md:flex' : ''}`}
     >
       <span className={UI.breadcrumbsSep} aria-hidden="true">/</span>
-      {crumb.href ? (
+      {crumb.href && !isLast ? (
         <Link
           href={crumb.href}
-          className={`${UI.breadcrumbsLink} truncate ${isLast ? 'max-w-[160px] lg:max-w-[240px]' : 'max-w-[120px] lg:max-w-[200px]'}`}
+          className={`${UI.breadcrumbsLink} truncate max-w-[120px] lg:max-w-[200px]`}
           title={crumb.name}
         >
           {crumb.name}
@@ -43,6 +43,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
         <span
           className={`${UI.breadcrumbsCurrent} truncate ${isLast ? '' : 'max-w-[120px] lg:max-w-[200px]'}`}
           title={crumb.name}
+          {...(isLast ? { 'aria-current': 'page' as const } : {})}
         >
           {crumb.name}
         </span>

@@ -79,7 +79,8 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
         onClick={handleClickHighlight}
         style={highlightStyles}
         className={[
-          "page-accent-link font-bold underline decoration-dashed decoration-2 underline-offset-4 transition-all duration-150 rounded-none cursor-pointer",
+          // No page-accent: evita confundir con enlace semántico válido
+          "font-bold text-ink-muted underline decoration-dashed decoration-1 underline-offset-4 transition-colors duration-150 rounded-none cursor-pointer hover:text-ink",
           highlightTarget ? "border-b-2 box-decoration-clone px-[2px] py-[1px]" : ""
         ].join(' ')}
         title={`"${firstInvalid}" — página en construcción`}

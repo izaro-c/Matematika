@@ -57,29 +57,19 @@
 }
 
 .ac-ink-scope .prose a,
-.ac-ink-scope .ac-link {
-  color: color-mix(
-    in srgb,
-    var(--theme-terracota) calc(100% - var(--ink-pigment-mix)),
-    var(--ink-text)
-  );
+.ac-ink-scope .ac-link,
+.ac-ink-scope .page-accent-link {
+  color: var(--page-accent, var(--theme-terracota));
 }
 
 .ac-ink-scope .prose a:hover,
-.ac-ink-scope .ac-link:hover {
-  color: color-mix(
-    in srgb,
-    var(--theme-granada) calc(100% - var(--ink-pigment-mix)),
-    var(--ink-text)
-  );
+.ac-ink-scope .ac-link:hover,
+.ac-ink-scope .page-accent-link:hover {
+  color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 82%, var(--ink-text));
 }
 
 .ac-ink-scope .page-accent-text {
-  color: color-mix(
-    in srgb,
-    var(--page-accent, var(--theme-terracota)) calc(100% - var(--ink-pigment-mix)),
-    var(--ink-text)
-  );
+  color: var(--page-accent, var(--theme-terracota));
 }
 
 .ac-ink-scope .ac-meta,
@@ -97,17 +87,17 @@
   color: var(--ink-text);
 }
 
-.ac-ink-scope .text-carbon\/20 { color: color-mix(in srgb, var(--ink-text) 20%, transparent); }
-.ac-ink-scope .text-carbon\/30 { color: color-mix(in srgb, var(--ink-text) 30%, transparent); }
-.ac-ink-scope .text-carbon\/40 { color: color-mix(in srgb, var(--ink-text) 40%, transparent); }
-.ac-ink-scope .text-carbon\/45 { color: color-mix(in srgb, var(--ink-text) 45%, transparent); }
-.ac-ink-scope .text-carbon\/50 { color: color-mix(in srgb, var(--ink-text) 50%, transparent); }
-.ac-ink-scope .text-carbon\/55 { color: color-mix(in srgb, var(--ink-text) 55%, transparent); }
-.ac-ink-scope .text-carbon\/60 { color: color-mix(in srgb, var(--ink-text-muted) 95%, transparent); }
-.ac-ink-scope .text-carbon\/70 { color: color-mix(in srgb, var(--ink-text-body) 90%, transparent); }
-.ac-ink-scope .text-carbon\/75 { color: color-mix(in srgb, var(--ink-text-body) 85%, transparent); }
-.ac-ink-scope .text-carbon\/80 { color: color-mix(in srgb, var(--ink-text-body) 95%, transparent); }
-.ac-ink-scope .text-carbon\/90 { color: color-mix(in srgb, var(--ink-text) 92%, transparent); }
+.ac-ink-scope .text-carbon\/20 { color: color-mix(in srgb, var(--ink-text-muted) 45%, transparent); }
+.ac-ink-scope .text-carbon\/30 { color: var(--ink-text-subtle); }
+.ac-ink-scope .text-carbon\/40 { color: var(--ink-text-subtle); }
+.ac-ink-scope .text-carbon\/45 { color: var(--ink-text-muted); }
+.ac-ink-scope .text-carbon\/50 { color: var(--ink-text-muted); }
+.ac-ink-scope .text-carbon\/55 { color: var(--ink-text-muted); }
+.ac-ink-scope .text-carbon\/60 { color: var(--ink-text-muted); }
+.ac-ink-scope .text-carbon\/70 { color: var(--ink-text-body); }
+.ac-ink-scope .text-carbon\/75 { color: var(--ink-text-body); }
+.ac-ink-scope .text-carbon\/80 { color: var(--ink-text-body); }
+.ac-ink-scope .text-carbon\/90 { color: var(--ink-text); }
 
 .ac-ink-stroke {
   border-color: color-mix(in srgb, currentColor calc(var(--ink-stroke-opacity) * 100%), transparent);
@@ -119,11 +109,7 @@
 
 .ac-ink-scope .page-accent-text.ac-ink-display,
 .ac-ink-scope .content-header h1 {
-  color: color-mix(
-    in srgb,
-    var(--page-accent, var(--theme-terracota)) calc(100% - var(--ink-pigment-mix)),
-    var(--ink-text)
-  );
+  color: var(--page-accent, var(--theme-terracota));
 }
 
 /* Ornamentos */

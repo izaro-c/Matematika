@@ -33,7 +33,7 @@ export const BranchPage = () => {
         <div className="mb-16 border-b border-carbon/10 pb-8">
           <div className="flex items-baseline gap-4">
             {taxonomy.id && /^\d{2}[A-Z]?$/.test(taxonomy.id) && taxonomy.id !== taxonomy.name && (
-              <span className="text-2xl font-sans font-bold text-carbon/40 tracking-wider">{taxonomy.id}</span>
+              <span className="text-2xl font-[ui-sans-serif,system-ui,-apple-system,sans-serif] font-bold text-carbon/40 tracking-wider">{taxonomy.id}</span>
             )}
             <h1 className="text-5xl font-bold tracking-tight">
               {taxonomy.name || taxonomy.id || branchSlug}
@@ -69,7 +69,7 @@ export const BranchPage = () => {
                     >
                       <span className="flex items-baseline gap-3">
                           {/^\d{2}[A-Z]?$/.test(sub.slug) && (
-                            <span className="text-base font-sans font-bold text-carbon/40">{sub.slug}</span>
+                            <span className="text-base font-[ui-sans-serif,system-ui,-apple-system,sans-serif] font-bold text-carbon/40">{sub.slug}</span>
                           )}
                         <span className="text-xl font-bold">{sub.name}</span>
                       </span>

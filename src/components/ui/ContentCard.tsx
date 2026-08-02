@@ -76,20 +76,20 @@ export const ContentCard: React.FC<ContentCardProps> = ({
           <div className="flex items-center gap-3 mb-1.5">
             {type && <ContentTypeBadge type={type} label={badgeLabel ?? typeLabel} />}
             {domain && (
-              <span className="inline-flex items-center gap-1 ac-eyebrow ac-eyebrow--sm text-carbon/50">
+              <span className="inline-flex items-center gap-1 ac-eyebrow ac-eyebrow--sm text-ink-muted">
                 {domainIcon && <span aria-hidden>{domainIcon}</span>}
                 {domain}
               </span>
             )}
           </div>
-          <h3 className="font-serif font-bold text-lg leading-snug text-carbon line-clamp-2">{title}</h3>
+          <h3 className="font-serif font-bold text-lg leading-snug text-ink line-clamp-2">{title}</h3>
           {description && (
-            <p className="text-sm text-carbon/60 mt-1 font-sans line-clamp-2">{description}</p>
+            <p className="text-sm text-ink-muted mt-1 font-sans line-clamp-2">{description}</p>
           )}
         </div>
         {action && (
           <span
-            className="hidden sm:inline ac-eyebrow font-bold opacity-50 group-hover:opacity-100 shrink-0 transition-opacity"
+            className="hidden sm:inline ac-eyebrow font-bold shrink-0"
             style={{ color: token }}
           >
             {action} →
@@ -118,17 +118,17 @@ export const ContentCard: React.FC<ContentCardProps> = ({
         )}
       </div>
       <h3
-        className="font-serif font-bold text-lg text-carbon transition-colors"
+        className="font-serif font-bold text-lg text-ink transition-colors"
         style={{ ['--hover-color' as string]: token }}
       >
         <span className="group-hover:[color:var(--hover-color)] transition-colors">{title}</span>
       </h3>
       {description && (
-        <p className="text-sm text-carbon/60 mt-2 font-sans">{description}</p>
+        <p className="text-sm text-ink-muted mt-2 font-sans">{description}</p>
       )}
       {action && (
         <span
-          className="ac-eyebrow font-bold opacity-60 group-hover:opacity-100 mt-4 transition-opacity"
+          className="ac-eyebrow font-bold mt-4"
           style={{ color: token }}
         >
           {action} →

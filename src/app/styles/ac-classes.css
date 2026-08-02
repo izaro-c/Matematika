@@ -12,13 +12,13 @@
   letter-spacing: 0.04em;
   line-height: 1.35;
   text-transform: none;
-  color: var(--ac-eyebrow-color, color-mix(in srgb, var(--theme-carbon) 50%, transparent));
+  color: var(--ac-eyebrow-color, var(--ink-text-muted));
 }
 
-.ac-eyebrow--sm { --ac-eyebrow-size: 0.625rem; }
-.ac-eyebrow--xs { --ac-eyebrow-size: 0.5625rem; }
-.ac-eyebrow--muted { --ac-eyebrow-color: color-mix(in srgb, var(--theme-carbon) 40%, transparent); }
-.ac-eyebrow--faint { --ac-eyebrow-color: color-mix(in srgb, var(--theme-carbon) 30%, transparent); }
+.ac-eyebrow--sm { --ac-eyebrow-size: 0.6875rem; }
+.ac-eyebrow--xs { --ac-eyebrow-size: 0.625rem; }
+.ac-eyebrow--muted { --ac-eyebrow-color: var(--ink-text-muted); }
+.ac-eyebrow--faint { --ac-eyebrow-color: var(--ink-text-subtle); }
 .ac-eyebrow--accent { --ac-eyebrow-color: var(--page-accent, var(--theme-terracota)); }
 .ac-label--granada { --ac-label-color: var(--theme-granada); }
 .ac-eyebrow--granada { --ac-eyebrow-color: var(--theme-granada); }
@@ -26,24 +26,24 @@
 /* Etiquetas densas (editor, paneles, formularios) */
 .ac-label {
   font-family: var(--font-sans-family);
-  font-size: var(--ac-label-size, 0.625rem);
+  font-size: var(--ac-label-size, 0.75rem);
   font-weight: 600;
   letter-spacing: 0.04em;
   line-height: 1.35;
   text-transform: none;
-  color: var(--ac-label-color, color-mix(in srgb, var(--theme-carbon) 50%, transparent));
+  color: var(--ac-label-color, var(--ink-text-muted));
 }
 
-.ac-label--2xs { --ac-label-size: 0.5rem; }
-.ac-label--xs { --ac-label-size: 0.5625rem; }
-.ac-label--sm { --ac-label-size: 0.625rem; }
-.ac-label--md { --ac-label-size: 0.75rem; }
+.ac-label--2xs { --ac-label-size: 0.625rem; }
+.ac-label--xs { --ac-label-size: 0.6875rem; }
+.ac-label--sm { --ac-label-size: 0.75rem; }
+.ac-label--md { --ac-label-size: 0.8125rem; }
 
-.ac-label--muted { --ac-label-color: color-mix(in srgb, var(--theme-carbon) 35%, transparent); }
-.ac-label--faint { --ac-label-color: color-mix(in srgb, var(--theme-carbon) 40%, transparent); }
-.ac-label--soft { --ac-label-color: color-mix(in srgb, var(--theme-carbon) 45%, transparent); }
-.ac-label--strong { --ac-label-color: color-mix(in srgb, var(--theme-carbon) 55%, transparent); }
-.ac-label--emphasis { --ac-label-color: color-mix(in srgb, var(--theme-carbon) 60%, transparent); }
+.ac-label--muted { --ac-label-color: var(--ink-text-muted); }
+.ac-label--faint { --ac-label-color: var(--ink-text-subtle); }
+.ac-label--soft { --ac-label-color: var(--ink-text-muted); }
+.ac-label--strong { --ac-label-color: var(--ink-text-body); }
+.ac-label--emphasis { --ac-label-color: var(--ink-text); }
 
 .ac-label--terracota { --ac-label-color: var(--theme-terracota); }
 .ac-label--salvia { --ac-label-color: var(--theme-salvia); }
@@ -53,20 +53,21 @@
 .ac-label--musgo { --ac-label-color: var(--theme-musgo); }
 .ac-label--pizarra { --ac-label-color: var(--theme-pizarra); }
 
-.ac-label--salvia-soft { --ac-label-color: color-mix(in srgb, var(--theme-salvia) 80%, transparent); }
-.ac-label--pavo-soft { --ac-label-color: color-mix(in srgb, var(--theme-pavo) 80%, transparent); }
-.ac-label--ocre-soft { --ac-label-color: color-mix(in srgb, var(--theme-ocre) 70%, transparent); }
-.ac-label--terracota-soft { --ac-label-color: color-mix(in srgb, var(--theme-terracota) 70%, transparent); }
+/* Soft = acento mezclado con carbon (opaco, no alpha) para ≥4.5:1 en lienzo */
+.ac-label--salvia-soft { --ac-label-color: color-mix(in srgb, var(--theme-salvia) 72%, var(--theme-carbon)); }
+.ac-label--pavo-soft { --ac-label-color: color-mix(in srgb, var(--theme-pavo) 72%, var(--theme-carbon)); }
+.ac-label--ocre-soft { --ac-label-color: color-mix(in srgb, var(--theme-ocre) 70%, var(--theme-carbon)); }
+.ac-label--terracota-soft { --ac-label-color: color-mix(in srgb, var(--theme-terracota) 72%, var(--theme-carbon)); }
 
 .ac-fieldset-legend {
   padding-inline: 0.25rem;
   font-family: var(--font-sans-family);
-  font-size: 0.625rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   line-height: 1.35;
   text-transform: none;
-  color: var(--ac-label-color, color-mix(in srgb, var(--theme-carbon) 45%, transparent));
+  color: var(--ac-label-color, var(--ink-text-muted));
 }
 
 .ac-meta {
@@ -74,7 +75,7 @@
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: color-mix(in srgb, var(--theme-carbon) 45%, transparent);
+  color: var(--ink-text-muted);
 }
 
 .ac-code-inline {
@@ -196,14 +197,15 @@
   align-items: center;
   gap: 0.5rem;
   font-family: var(--font-sans-family);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: color-mix(in srgb, var(--theme-carbon) 40%, transparent);
+  color: var(--ink-text-muted);
+  min-height: var(--target-min);
 }
 
 .ac-link-back:hover {
-  color: var(--theme-carbon);
+  color: var(--ink-text);
 }
 
 /* Materialidad de tinta en lectura: pigmento en ac-link, ac-btn-accent y CTA vía paper-and-ink.css */
@@ -216,15 +218,18 @@
   align-items: center;
   gap: 0.25rem 0.375rem;
   font-family: var(--font-sans-family);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: color-mix(in srgb, var(--theme-carbon) 40%, transparent);
+  color: var(--ink-text-muted);
 }
 
 .ac-breadcrumbs__link {
   color: inherit;
   transition: color var(--transition-normal) var(--ease-interactive);
+  min-height: var(--target-min);
+  display: inline-flex;
+  align-items: center;
 }
 
 .ac-breadcrumbs__link:hover {
@@ -233,17 +238,17 @@
 
 .ac-breadcrumbs__sep {
   flex-shrink: 0;
-  color: color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+  color: var(--ink-text-subtle);
   user-select: none;
 }
 
 .ac-breadcrumbs__current {
-  color: color-mix(in srgb, var(--theme-carbon) 80%, transparent);
+  color: var(--ink-text);
   font-weight: 600;
 }
 
 .ac-breadcrumbs__ellipsis {
-  color: color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+  color: var(--ink-text-subtle);
   letter-spacing: 0.1em;
   user-select: none;
 }
@@ -298,10 +303,10 @@
 
 .ac-cta-card__eyebrow {
   font-family: var(--font-sans-family);
-  font-size: 0.6875rem;
-  font-weight: 500;
+  font-size: 0.75rem;
+  font-weight: 600;
   letter-spacing: 0.02em;
-  opacity: 0.8;
+  color: var(--on-accent);
   margin-bottom: 0.5rem;
 }
 
@@ -309,18 +314,24 @@
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.2;
+  color: var(--on-accent);
 }
 
 .ac-cta-card__action {
   margin-top: 0.75rem;
   font-family: var(--font-sans-family);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
   letter-spacing: 0.02em;
-  opacity: 0.7;
+  color: var(--on-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--on-accent) 55%, transparent);
 }
 
 .ac-cta-card:hover .ac-cta-card__action {
-  opacity: 1;
+  text-decoration-color: var(--on-accent);
 }
 
 /* Variante centrada para la fila de accesos del hero (home) */
@@ -331,19 +342,31 @@
   justify-items: center;
   text-align: center;
   height: 100%;
-  padding: 1.375rem 1rem;
+  min-height: 8.5rem;
+  padding: 1.5rem 1.125rem;
   gap: 0.5rem;
+}
+
+/* Fondos CTA ligeramente más oscuros para AA con --on-accent */
+.ac-cta-card.bg-terracota { background-color: color-mix(in srgb, var(--theme-terracota) 88%, #1a1210); }
+.ac-cta-card.bg-musgo { background-color: color-mix(in srgb, var(--theme-musgo) 88%, #0f1a12); }
+.ac-cta-card.bg-pavo { background-color: color-mix(in srgb, var(--theme-pavo) 90%, #0a1220); }
+.dark .ac-cta-card.bg-terracota,
+.dark .ac-cta-card.bg-musgo,
+.dark .ac-cta-card.bg-pavo,
+.dark .ac-cta-card.bg-carbon {
+  /* En códice, el acento ya es luminoso: texto oscuro (--on-accent) */
+  color: var(--on-accent);
 }
 
 .ac-cta-card--hero .ac-cta-card__eyebrow,
 .ac-cta-card--hero .ac-cta-card__title,
 .ac-cta-card--hero .ac-cta-card__action {
-  max-width: 11.5rem;
+  max-width: 12rem;
 }
 
 .ac-cta-card--hero .ac-cta-card__eyebrow {
   font-size: 0.75rem;
-  opacity: 0.82;
   margin-bottom: 0;
 }
 
@@ -351,15 +374,14 @@
   font-family: var(--font-body-family);
   font-size: clamp(1.1875rem, 1.05rem + 0.65vw, 1.375rem);
   font-weight: 600;
-  line-height: 1.12;
+  line-height: 1.15;
   letter-spacing: -0.015em;
   text-wrap: balance;
 }
 
 .ac-cta-card--hero .ac-cta-card__action {
   margin-top: 0.125rem;
-  font-size: 0.75rem;
-  opacity: 0.8;
+  font-size: 0.8125rem;
 }
 
 @media (min-width: 640px) and (max-width: 1023px) {
