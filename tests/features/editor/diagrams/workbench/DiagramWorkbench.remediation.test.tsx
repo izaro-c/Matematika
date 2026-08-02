@@ -1,19 +1,19 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
-import { DiagramWorkbench } from '@/fixed-pages/editor/diagrams/ui/DiagramWorkbench';
-import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/templateModels';
-import { deleteDiagramCascade } from '@/fixed-pages/editor/diagrams/model/graphCommands';
-import { updatePoint } from '@/fixed-pages/editor/diagrams/model/diagramElements';
+import { DiagramWorkbench } from '@/fixed-pages/editor/diagrams/ui/workbench/DiagramWorkbench';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/scene/templateModels';
+import { deleteDiagramCascade } from '@/fixed-pages/editor/diagrams/model/tools/graphCommands';
+import { updatePoint } from '@/fixed-pages/editor/diagrams/model/elements/diagramElements';
 import {
   defaultConstraintRefs,
   uniqueConstraintId,
   withConstraintDependencies,
-} from '@/fixed-pages/editor/diagrams/model/constraintOptions';
-import { removeConstraintFromModel } from '@/fixed-pages/editor/diagrams/model/segmentLengthConstraints';
-import { toolReferencesAreReady } from '@/fixed-pages/editor/diagrams/model/toolReferences';
+} from '@/fixed-pages/editor/diagrams/model/constraints/constraintOptions';
+import { removeConstraintFromModel } from '@/fixed-pages/editor/diagrams/model/constraints/segmentLengthConstraints';
+import { toolReferencesAreReady } from '@/fixed-pages/editor/diagrams/model/tools/toolReferences';
 import type { VisualDiagramModel, VisualPoint } from '@/fixed-pages/editor/diagrams/model/types';
-import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION } from '@/diagrams/spec';
+import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION } from '@/diagrams';
 
 function baseModel(overrides: Partial<VisualDiagramModel> = {}): VisualDiagramModel {
   return {

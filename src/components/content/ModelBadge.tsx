@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { db } from '@/data/content';
-import { appPath } from '@/lib/helpers/routeHelper';
+import { appPath } from '@/lib/routes';
 import modelRegistry from '@/data/content/model_badges_registry.json';
 
 interface ModelBadgeProps {

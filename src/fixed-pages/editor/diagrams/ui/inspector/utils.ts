@@ -1,5 +1,5 @@
 import type { VisualDiagramModel, VisualElement } from '@/fixed-pages/editor/diagrams/model/types';
-import { renameDiagramId } from '@/fixed-pages/editor/diagrams/model/graphCommands';
+import { renameDiagramId } from '@/fixed-pages/editor/diagrams/model/tools/graphCommands';
 import { toolReferenceCandidatesForSlot } from '@/fixed-pages/editor/diagrams/model';
 
 export function availableLayers(model: VisualDiagramModel) {

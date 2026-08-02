@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { validateEditorDocument } from '@/fixed-pages/editor/core/validation';
-import type { Block } from '@/fixed-pages/editor/core/parser';
+import { validateEditorDocument } from '@/fixed-pages/editor/session/validation';
+import type { Block } from '@/fixed-pages/editor/session/parser';
 import {
   diagramElementKinds,
   diagramMinimumRefs,
   diagramPointConstraints,
-} from '@/diagrams/spec/schema';
+} from '@/diagrams/model/schema/schema';
 import { expectDiagramKindsAlignedWithInspector } from '../../helpers/assertions';
 
 const validDefinitionMetadata = {

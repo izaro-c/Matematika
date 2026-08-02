@@ -8,7 +8,7 @@ import type {
 import katex from 'katex';
 import { Link } from 'wouter';
 import { ContentTypeBadge } from '@/components/ui/ContentTypeBadge';
-import { routePath } from '@/lib/helpers/routeHelper';
+import { routePath } from '@/lib/routes';
 import { getContentPageAccent } from '@/design/pageAccents';
 
 

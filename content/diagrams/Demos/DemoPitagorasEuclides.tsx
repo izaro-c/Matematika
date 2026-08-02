@@ -1,4 +1,4 @@
-import { MathBoard } from '@/diagrams/core/MathBoard';
+import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
 import {
   createGlider,
   createLine,
@@ -6,7 +6,7 @@ import {
   createPolygon,
   createRightAngleMarker,
   createSegment,
-} from '@/diagrams/core/MathFactory';
+} from '@/diagrams/jsxgraph/MathFactory';
 
 export const DemoPitagorasEuclides = () => {
   const onInit = (board: any, els: any, theme: any) => {

@@ -1,25 +1,25 @@
 # Estado actual
 
-**Actualizado:** 2026-08-01
+**Actualizado:** 2026-08-02
 
-**Fase:** Reorg estrangulador — Fases 0–3 aplicadas (mapa, tokens, fronteras, scene split, slices de producto).
+**Fase:** Reorg interna findability — `src/diagrams` (`model`/`geometry`/`jsxgraph`/`render`), `lib` sin `helpers`, `content-pages/screens`, editor (`session`/`save`/`review` + workbench subdirs).
 
-**Siguiente:** migraciones `code-preview` → `visual-exact` restantes; placeholders de demos; a11y lector de pantalla.
+**Siguiente:** migraciones `code-preview` → `visual-exact` restantes; placeholders de demos; a11y lector de pantalla; splits de god-files marcados `ponytail:`.
 
 ## Vivo
 
 - CODEMAP: [`docs/architecture/CODEMAP.md`](../docs/architecture/CODEMAP.md)
-- Tokens: `shared/design` (+ `diagramPalette.ts`); CSS en `app/theme.css` / `app/styles`
-- Constantes de dominio: `features/editor/constants.ts`, `shared/diagrams/constants.ts`, progress/graph/exercises
-- Depcruise: `widgets-diagrams-no-editor`, `design-no-diagrams` (+ FSD previo)
-- ADR-004: widgets/diagrams ↛ editor
-- Escena partida: `sceneTypes` / `sceneCoordinates` / `scenePointMotion` / `sceneBounds` / `scenePlan` (barrel `scene.ts`)
-- Stores canónicos en `src/lib/stores/`
-- READMEs por dominio (editor, diagrams, design, glossary, progress, graph, exercises)
+- Spec findability: [`docs/superpowers/specs/2026-08-02-src-internal-reorg-design.md`](../docs/superpowers/specs/2026-08-02-src-internal-reorg-design.md)
+- Tokens: `src/design/`; CSS en `app/styles`
+- Constantes: `fixed-pages/editor/constants.ts`, `diagrams/constants.ts`
+- Depcruise: `content-diagrams-no-editor`, `diagrams-model-geometry-no-render`, `editor-diagrams-model-no-ui`
+- Escena: `diagrams/geometry/layout/` + `coordinates/`
+- Stores: `src/lib/stores/`; contexts: `src/lib/page-context/`
+- READMEs en carpetas clave bajo `src/`
 
 ## Bloqueos / deuda explícita
 
-- Modelo dual workingScene ↔ V3 sigue en shared/model (aceptable)
+- Modelo dual workingScene ↔ V3 sigue (aceptable)
 - Widgets 3D fuera de DiagramSpec 2D
 - Placeholders demos + orphan warnings depcruise
 - Sin pasada humana con lector de pantalla

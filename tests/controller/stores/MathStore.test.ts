@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createMathStore } from '@/lib/helpers/MathStore';
+import { createMathStore } from '@/lib/page-context/MathStore';
 
 describe('MathStore', () => {
   it('initializes with empty variables', () => {

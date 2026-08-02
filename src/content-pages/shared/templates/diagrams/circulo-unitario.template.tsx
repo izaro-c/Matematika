@@ -1,5 +1,5 @@
-import { MathBoard } from '@/diagrams/core/MathBoard';
-import { createPoint } from '@/diagrams/core/MathFactory';
+import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
+import { createPoint } from '@/diagrams/jsxgraph/MathFactory';
 
 export const TemplateComponent = () => {
   return (

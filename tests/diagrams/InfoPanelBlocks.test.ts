@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { parseDiagramSpecV2, resolveInfoPanelBlock } from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/spec/v3Compatibility';
+import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
 import { TrianguloSpec } from '../../content/diagrams/Definiciones/Triangulo';
 
 const triangulo = toWorkingSceneV2(TrianguloSpec);

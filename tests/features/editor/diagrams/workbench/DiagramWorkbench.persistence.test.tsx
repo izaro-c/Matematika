@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { DiagramWorkbench } from '@/fixed-pages/editor/diagrams/ui/DiagramWorkbench';
-import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/templateModels';
+import { DiagramWorkbench } from '@/fixed-pages/editor/diagrams/ui/workbench/DiagramWorkbench';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/scene/templateModels';
 import { generateDiagramSource } from '@/fixed-pages/editor/diagrams/source/generator';
 
 describe('Editor V2 persistence mode', () => {

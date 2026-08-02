@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { DiagramRepository } from '../../../../src/fixed-pages/editor/diagrams/persistence/repository';
+import { DiagramRepository } from '../../../../src/fixed-pages/editor/diagrams/save/repository';
 import { createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
 import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
 
@@ -8,7 +8,7 @@ const apiMocks = vi.hoisted(() => ({
   applyContent: vi.fn(),
 }));
 
-vi.mock('@/fixed-pages/editor/persistence/editorApiClient', () => ({
+vi.mock('@/fixed-pages/editor/save/editorApiClient', () => ({
   editorApiClient: {
     readContent: apiMocks.readContent,
     applyContent: apiMocks.applyContent,

@@ -20,10 +20,10 @@ vi.mock('@/components/ui/KatexText', async (importOriginal) => {
   return { ...original, renderKatexTextToHtml: (text: string) => text };
 });
 
-import { DiagramRenderer } from '@/diagrams/runtime/DiagramRenderer';
+import { DiagramRenderer } from '@/diagrams/render/DiagramRenderer';
 import { AnguloSpec } from '@content/diagrams/Definiciones/Angulo';
 import { ParalelogramoSpec } from '@content/diagrams/Definiciones/Paralelogramo';
-import type { DiagramSpecV2, DiagramSpecV3 } from '@/diagrams/spec';
+import type { DiagramSpecV2, DiagramSpecV3 } from '@/diagrams';
 
 function stubSize(node: HTMLElement) {
   Object.defineProperty(node, 'clientWidth', { value: WIDTH, configurable: true });

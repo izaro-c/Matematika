@@ -1,14 +1,13 @@
 /**
- * Contrato público del dominio diagrams.
+ * Browser-facing public contract (includes React renderer).
  *
- * Preferido por widgets y demos:
+ * Prefer for demos:
  *   import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public'
  *
- * Equivalente: `@/diagrams` (reexporta spec + renderer + constants).
- *
- * No importar `features/editor` desde widgets — solo este contrato + runtime bajo
- * `@/diagrams/runtime/*` cuando haga falta el board lifecycle.
+ * For Node / editor parse paths (no React):
+ *   import { … } from '@/diagrams' or '@/diagrams/model'
  */
-export * from './spec/index';
-export * from './runtime/DiagramRenderer';
+export * from './model';
+export * from './geometry';
+export * from './render/DiagramRenderer';
 export * from './constants';

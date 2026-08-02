@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { MathProvider, useMathStore } from '../../../../src/lib/helpers/MathStoreContext';
-import { useDiagramTargetRegistry } from '../../../../src/lib/helpers/DiagramTargetRegistryContext';
+import { MathProvider, useMathStore } from '../../../../src/lib/page-context/MathStoreContext';
+import { useDiagramTargetRegistry } from '../../../../src/lib/page-context/DiagramTargetRegistryContext';
 import { InteractiveElement } from '../../../../src/components/ui/VisualBind';
 import { StepNavigator } from '../../../../src/components/ui/StepNavigator';
 import { DemonstrationBlock } from '../../../../src/fixed-pages/editor/ui/blocks/DemonstrationBlock';

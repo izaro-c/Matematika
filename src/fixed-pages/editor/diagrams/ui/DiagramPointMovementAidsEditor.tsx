@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { VisualDiagramModel, VisualPoint } from '../model/types';
-import { movementAttractorCreatesCycle, movementAttractors, pointSupportsMovementAids } from '../model/pointMovement';
+import { movementAttractorCreatesCycle, movementAttractors, pointSupportsMovementAids } from '../model/scene/pointMovement';
 import { DiagramPanel } from './primitives';
 import { DiagramFormField, diagramInputClassName } from './primitives/DiagramFormField';
 

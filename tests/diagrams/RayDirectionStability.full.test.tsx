@@ -20,11 +20,11 @@ vi.mock('@/components/ui/KatexText', async (importOriginal) => {
   return { ...original, renderKatexTextToHtml: (text: string) => text };
 });
 
-import { DiagramRenderer } from '@/diagrams/runtime/DiagramRenderer';
+import { DiagramRenderer } from '@/diagrams/render/DiagramRenderer';
 import { SemirrectaSpec } from '@content/diagrams/Definiciones/Semirrecta';
 import { BisectrizSpec } from '@content/diagrams/Definiciones/Bisectriz';
-import type { DiagramSpecV2, DiagramSpecV3 } from '@/diagrams/spec';
-import { diagramConstraint, element, point } from '@/fixed-pages/editor/diagrams/model/diagramElements';
+import type { DiagramSpecV2, DiagramSpecV3 } from '@/diagrams';
+import { diagramConstraint, element, point } from '@/fixed-pages/editor/diagrams/model/elements/diagramElements';
 
 /**
  * Construye un spec sintético con `dependentCount` puntos que dependen todos

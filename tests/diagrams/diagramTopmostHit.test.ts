@@ -3,7 +3,7 @@ import {
   buildVisualOrderById,
   installTopmostOnlyHitTesting,
   pickPreferredHitId,
-} from '@/diagrams/runtime/diagramTopmostHit';
+} from '@/diagrams/render/interaction/diagramTopmostHit';
 
 describe('hit preferido bajo el puntero', () => {
   it('elige el id de mayor visualOrder por defecto', () => {

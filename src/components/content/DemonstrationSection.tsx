@@ -1,5 +1,5 @@
 import React, { useMemo, Suspense } from 'react';
-import { useMathStore } from '@/lib/helpers/MathStoreContext';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { CodexLayout } from '@/components/layouts/CodexLayout';
 import { insertQedAfterLastProofStep } from './insertQedAfterLastProofStep';
 

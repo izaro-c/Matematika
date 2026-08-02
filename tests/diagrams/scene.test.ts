@@ -9,7 +9,7 @@ import { prepareSceneSpec,
   recoverViewport,
   resolvePointCoordinates,
   zoomViewport} from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/spec/v3Compatibility';
+import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
 import { TrianguloSpec } from '../../content/diagrams/Definiciones/Triangulo';
 
 const spec = prepareSceneSpec(migrateDiagramSpec(v2Fixture).spec);

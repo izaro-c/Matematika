@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { curveAreaFill } from '@/diagrams/spec/curveGeometry';
-import { defaultConstraintRefs, withConstraintDependencies } from '@/fixed-pages/editor/diagrams/model/constraintOptions';
-import { updatePoint } from '@/fixed-pages/editor/diagrams/model/diagramElements';
-import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/templateModels';
+import { curveAreaFill } from '@/diagrams/geometry/curves/curveGeometry';
+import { defaultConstraintRefs, withConstraintDependencies } from '@/fixed-pages/editor/diagrams/model/constraints/constraintOptions';
+import { updatePoint } from '@/fixed-pages/editor/diagrams/model/elements/diagramElements';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/scene/templateModels';
 import {
   congruenceMarkForSegment,
   dimensionLineForSegment,
@@ -12,15 +12,15 @@ import {
   setSegmentParallelMark,
   toggleSegmentDimensionLine,
   toggleSegmentMeasurement,
-} from '@/fixed-pages/editor/diagrams/model/segmentMarks';
+} from '@/fixed-pages/editor/diagrams/model/elements/segmentMarks';
 import {
   equalLengthConstraintForSegment,
   setEqualLengthConstraint,
-} from '@/fixed-pages/editor/diagrams/model/segmentLengthConstraints';
+} from '@/fixed-pages/editor/diagrams/model/constraints/segmentLengthConstraints';
 import {
   equalAngleConstraintForAngle,
   setEqualAngleConstraint,
-} from '@/fixed-pages/editor/diagrams/model/angleConstraints';
+} from '@/fixed-pages/editor/diagrams/model/constraints/angleConstraints';
 import type { DiagramElement, VisualDiagramModel } from '@/fixed-pages/editor/diagrams/model/types';
 
 describe('Editor V2 - Property Completeness & Correctness', () => {

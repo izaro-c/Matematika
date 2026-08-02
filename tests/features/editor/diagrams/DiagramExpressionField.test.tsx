@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
-import { DiagramExpressionField } from '../../../../src/fixed-pages/editor/diagrams/ui/DiagramExpressionField';
+import { DiagramExpressionField } from '../../../../src/fixed-pages/editor/diagrams/ui/panels/DiagramExpressionField';
 import marksFixture from '../../../fixtures/diagrams/phase3-marks-angles.json';
 import { toEditorModel } from '../../../../src/fixed-pages/editor/diagrams/model';
 

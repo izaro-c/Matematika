@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { spawn, type ChildProcess } from 'node:child_process';
 import path from 'node:path';
 import puppeteer, { type Page } from 'puppeteer';
-import { publishedDiagramArea, type PublishedDiagramLayout } from '../../../src/fixed-pages/editor/diagrams/model/publishedDiagramLayout';
+import { publishedDiagramArea, type PublishedDiagramLayout } from '../../../src/fixed-pages/editor/diagrams/model/scene/publishedDiagramLayout';
 
 const PORT = Number(process.env.MATEMATIKA_PHASE5_E2E_PORT || 5178);
 const BASE_URL = `http://127.0.0.1:${PORT}/Matematika`;

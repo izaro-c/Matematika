@@ -7,8 +7,8 @@ import {
   removeSegmentReflectionConstraint,
   setReflectionConstraintForPoint,
   setReflectionConstraintForSegment,
-} from '../../../../src/fixed-pages/editor/diagrams/model/reflectionConstraints';
-import { SegmentReflectionConstraintEditor } from '../../../../src/fixed-pages/editor/diagrams/ui/SegmentReflectionConstraintEditor';
+} from '../../../../src/fixed-pages/editor/diagrams/model/constraints/reflectionConstraints';
+import { SegmentReflectionConstraintEditor } from '../../../../src/fixed-pages/editor/diagrams/ui/constraints/SegmentReflectionConstraintEditor';
 import type { VisualDiagramModel } from '../../../../src/fixed-pages/editor/diagrams/model/types';
 
 const baseModel: VisualDiagramModel = {

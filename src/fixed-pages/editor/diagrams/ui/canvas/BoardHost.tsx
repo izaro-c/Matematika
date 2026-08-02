@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DiagramRenderer, withMovedPoint, withViewportBounds } from '@/diagrams/public';
-import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { MathProvider } from '@/lib/page-context/MathStoreContext';
 import type { VisualDiagramModel, CanvasTool } from '@/fixed-pages/editor/diagrams/model/types';
 import {
   applySceneMutation,

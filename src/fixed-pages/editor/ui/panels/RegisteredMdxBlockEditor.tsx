@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Block } from '../../core/parser';
+import type { Block } from '@/fixed-pages/editor/session/parser';
 import { renderFormattedText, type EditLinkHandler } from './InlineContentPreview';
 
 interface Props {

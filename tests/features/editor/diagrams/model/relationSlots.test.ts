@@ -5,7 +5,7 @@ import {
   editableSlotsFor,
   isIdAllowedForSlot,
   relationAvailability,
-} from '../../../../../src/fixed-pages/editor/diagrams/model/relationSlots';
+} from '../../../../../src/fixed-pages/editor/diagrams/model/constraints/relationSlots';
 
 function modelWithPointsAndLine() {
   const base = createTemplateModel('lienzo-inicial', 'Test', 'test');

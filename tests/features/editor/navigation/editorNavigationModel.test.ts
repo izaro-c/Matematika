@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { FileNode } from '../../../../src/fixed-pages/editor/lib/editorContracts';
+import type { FileNode } from '../../../../src/fixed-pages/editor/types/editorContracts';
 import {
   DEFAULT_EDITOR_CATALOG_FILTERS,
   DEFAULT_EDITOR_WORKSPACE_PREFERENCES,
@@ -11,7 +11,7 @@ import {
   resourceStatus,
   toggleFavoritePath,
   writeEditorWorkspacePreferences,
-} from '../../../../src/fixed-pages/editor/navigation/editorNavigationModel';
+} from '../../../../src/fixed-pages/editor/session/editorNavigationModel';
 
 const files: FileNode[] = [
   { path: 'content/mdx/definitions/punto.mdx', name: 'definicion-punto.mdx', type: 'definitions', kind: 'mdx-document', capability: 'visual-exact', capabilityLabel: 'Edición visual exacta', reason: 'Documento lossless.' },

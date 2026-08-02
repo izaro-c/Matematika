@@ -1,6 +1,6 @@
-import { migrateDiagramSpecV2ToV3, parseDiagramSpecV3 } from '@/diagrams/spec';
+import { migrateDiagramSpecV2ToV3, parseDiagramSpecV3 } from '@/diagrams';
 import { z } from 'zod';
-import { workingScene } from '../model/editorModel';
+import { workingScene } from '../model/scene/editorModel';
 import type { VisualDiagramModel } from '../model/types';
 
 export interface DiagramDiagnostic {

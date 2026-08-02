@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { MathProviderBoundary } from '@/lib/helpers/MathStoreContext';
+import { MathProviderBoundary } from '@/lib/page-context/MathStoreContext';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { StepNavigator } from '@/components/ui/StepNavigator';
-import { toEditorModel } from '../model/editorModel';
+import { toEditorModel } from '../model/scene/editorModel';
 import type { VisualDiagramModel } from '../model/types';
 import { DiagramResponsivePreview } from './DiagramResponsivePreview';
 

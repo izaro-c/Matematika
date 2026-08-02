@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import type { DiffReview } from '../../ux/diffReview';
-import { useModalFocus } from '../hooks/useModalFocus';
+import type { DiffReview } from '@/fixed-pages/editor/review/diffReview';
+import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 
 interface DiffReviewPanelProps {
   review: DiffReview | null;

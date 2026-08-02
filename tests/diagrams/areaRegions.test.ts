@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { clipPolygonToAreaElement, resolveAreaDisplayPolygon, resolveAreaDisplayPolygons, viewportPolygon } from '@/diagrams/spec/areaRegions';
-import { pointInHalfPlane, pointInPolygon } from '@/diagrams/spec/areaGeometry';
-import type { DiagramSpecV2 } from '@/diagrams/spec/types';
+import { clipPolygonToAreaElement, resolveAreaDisplayPolygon, resolveAreaDisplayPolygons, viewportPolygon } from '@/diagrams/geometry/areas/areaRegions';
+import { pointInHalfPlane, pointInPolygon } from '@/diagrams/geometry/areas/areaGeometry';
+import type { DiagramSpecV2 } from '@/diagrams/model/schema/types';
 
 function baseSpec(): DiagramSpecV2 {
   return {

@@ -1,9 +1,9 @@
-import { useMathStore } from '@/lib/helpers/MathStoreContext';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { useStepBinding } from '@/components/ui/StepBinding';
-import { MathBoard } from '@/diagrams/core/MathBoard';
+import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
 import {
   createPoint, createLine, createSegment, createGlider, createPolygon
-} from '@/diagrams/core/MathFactory';
+} from '@/diagrams/jsxgraph/MathFactory';
 
 
 

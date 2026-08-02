@@ -1,9 +1,9 @@
 import { useRef, useEffect } from 'react';
-import { getCSSVar } from '@/diagrams/core/MathUtils';
+import { getCSSVar } from '@/diagrams/jsxgraph/MathUtils';
 import { Canvas, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls, Html, Line } from '@react-three/drei';
-import { useMathStore } from '@/lib/helpers/MathStoreContext';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
 
 
 function SceneContent() {

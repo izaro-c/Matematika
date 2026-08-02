@@ -5,8 +5,8 @@ import {
   PAGE_ACCENTS,
   type PageAccentType,
 } from '@/design';
-import { dictionary } from '@/lib/helpers/glossaryDictionary';
-import { routePath } from '@/lib/helpers/routeHelper';
+import { dictionary } from '@content/glossary/dictionary';
+import { routePath } from '@/lib/routes';
 
 export type SearchResultType = PageAccentType;
 

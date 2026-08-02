@@ -24,7 +24,7 @@ vi.mock('jsxgraph', () => ({
   },
 }));
 
-vi.mock('@/lib/helpers/MathStoreContext', () => ({
+vi.mock('@/lib/page-context/MathStoreContext', () => ({
   useMathStore: (selector: (state: { variables: Record<string, unknown> }) => unknown) => selector({ variables: {} }),
 }));
 
@@ -33,7 +33,7 @@ import {
   fitBoundsToAspect,
   fitBoundsToSafeArea,
   MathBoard,
-} from '@/diagrams/core/MathBoard';
+} from '@/diagrams/jsxgraph/MathBoard';
 
 describe('MathBoard controlled viewport', () => {
   it('expands the short viewport axis so wide and tall canvases contain the full mathematical scene', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { VisualDiagramModel, VisualPoint } from '../model/types';
 import { expressionDependencySources } from './inspector/useInspectorHandlers';
-import { DiagramExpressionField } from './DiagramExpressionField';
+import { DiagramExpressionField } from './panels/DiagramExpressionField';
 import { DiagramPanel } from './primitives';
 
 interface DiagramDerivedPositionEditorProps {

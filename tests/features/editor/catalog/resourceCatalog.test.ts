@@ -49,9 +49,9 @@ describe('catálogo seguro del editor', () => {
     `);
     write(srcRoot, 'content/diagrams/Teoremas/Invalido.tsx', 'export const Invalido = () => <svg>');
     write(srcRoot, 'content/diagrams/index.ts', 'export {};');
-    write(srcRoot, 'src/diagrams/core/MathBoard.tsx', 'export const MathBoard = () => null;');
-    write(srcRoot, 'src/diagrams/core/MathFactory.ts', 'export const createPoint = () => null;');
-    write(srcRoot, 'src/diagrams/core/MathUtils.ts', 'export const utility = true;');
+    write(srcRoot, 'src/diagrams/jsxgraph/MathBoard.tsx', 'export const MathBoard = () => null;');
+    write(srcRoot, 'src/diagrams/jsxgraph/MathFactory.ts', 'export const createPoint = () => null;');
+    write(srcRoot, 'src/diagrams/jsxgraph/MathUtils.ts', 'export const utility = true;');
     write(srcRoot, 'src/diagrams/InteractiveGeometryCanvas.tsx', 'export const InteractiveGeometryCanvas = () => null;');
     write(srcRoot, 'src/content-pages/shared/templates/diagrams/base.template.tsx', 'export const Template = () => null;');
 

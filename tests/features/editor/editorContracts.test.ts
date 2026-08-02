@@ -12,17 +12,17 @@ import {
   normalizeContentId,
   normalizeWizardData,
   type WizardData,
-} from '@/fixed-pages/editor/lib/editorContracts';
+} from '@/fixed-pages/editor/types/editorContracts';
 import {
   buildDiagramPath,
   buildContentPath,
   getInternalLinkUrl,
-} from '@/fixed-pages/editor/lib/editorPaths';
+} from '@/fixed-pages/editor/files/editorPaths';
 import {
   applyTemplateReplacements,
   applyTypeSpecificMetadata,
-} from '@/fixed-pages/editor/lib/editorUtils';
-import { generateMissingComponentImports } from '@/fixed-pages/editor/lib/editorImports';
+} from '@/fixed-pages/editor/files/editorUtils';
+import { generateMissingComponentImports } from '@/fixed-pages/editor/files/editorImports';
 import { TheoremSchema } from '@/data/content/schemas';
 
 const wizardData: WizardData = {
@@ -174,16 +174,16 @@ describe('editor metadata and import contracts', () => {
   });
 
   it('keeps pure editor modules free from React, Monaco and fetch', () => {
-    const libDirectory = path.resolve(import.meta.dirname, '../../../src/fixed-pages/editor/lib');
+    const editorRoot = path.resolve(import.meta.dirname, '../../../src/fixed-pages/editor');
     const pureModules = [
-      'editorContracts.ts',
-      'editorImports.ts',
-      'editorPaths.ts',
-      'editorUtils.ts',
+      'types/editorContracts.ts',
+      'files/editorImports.ts',
+      'files/editorPaths.ts',
+      'files/editorUtils.ts',
     ];
 
     for (const moduleName of pureModules) {
-      const source = fs.readFileSync(path.join(libDirectory, moduleName), 'utf8');
+      const source = fs.readFileSync(path.join(editorRoot, moduleName), 'utf8');
       expect(source, moduleName).not.toMatch(/from\s+['"]react|@monaco-editor|\bfetch\s*\(/);
     }
   });

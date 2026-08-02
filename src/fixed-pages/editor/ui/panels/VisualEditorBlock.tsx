@@ -1,8 +1,8 @@
 import React from 'react';
 import { FormulaBlock } from '../blocks/FormulaBlock';
 import { DemonstrationBlock } from '../blocks/DemonstrationBlock';
-import type { DiagramTargetRegistry } from '../../core/editorTypes';
-import type { Block, BlockType } from '../../core/parser';
+import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
+import type { Block, BlockType } from '@/fixed-pages/editor/session/parser';
 import { insertSymbol, parseMarkdownTable, renderFormattedText, type EditLinkHandler } from './InlineContentPreview';
 import { INLINE_EDITABLE_BLOCKS, LATEX_SYMBOLS } from './visualEditorPresets';
 import { BlockActions, BlockInsertMenu } from './VisualBlockControls';

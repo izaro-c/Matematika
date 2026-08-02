@@ -7,7 +7,7 @@ import {
   getDiagramUsages,
   type DiagramUsageRepository,
 } from '../../../../src/fixed-pages/editor/diagrams/references/usageIndex';
-import { useDiagramUsages } from '../../../../src/fixed-pages/editor/diagrams/hooks/useDiagramUsages';
+import { useDiagramUsages } from '../../../../src/fixed-pages/editor/diagrams/ui/workbench/useDiagramUsages';
 
 describe('Diagram Usages Index', () => {
   it('should generate usage index entries from project mdx corpus', () => {

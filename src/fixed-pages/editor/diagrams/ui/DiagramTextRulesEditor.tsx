@@ -1,6 +1,6 @@
 import React from 'react';
 import type { VisualDiagramModel, VisualElement } from '../model/types';
-import { DiagramExpressionField } from './DiagramExpressionField';
+import { DiagramExpressionField } from './panels/DiagramExpressionField';
 import { DiagramTemplateField } from './DiagramTemplateField';
 
 interface DiagramTextRulesEditorProps {

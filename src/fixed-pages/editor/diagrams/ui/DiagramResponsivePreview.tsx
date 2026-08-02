@@ -1,6 +1,6 @@
 import React from 'react';
 import { DiagramRenderer } from '@/diagrams/public';
-import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { MathProvider } from '@/lib/page-context/MathStoreContext';
 import type { VisualDiagramModel } from '../model/types';
 import { DiagramViewportFrame } from './DiagramViewportFrame';
 

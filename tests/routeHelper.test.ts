@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { appPath, publicAsset, routePath } from '../src/lib/helpers/routeHelper';
+import { appPath, publicAsset, routePath } from '../src/lib/routes';
 
 describe('routeHelper', () => {
   it('routePath returns path with leading slash', () => {

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import type { Block } from '../../core/parser';
-import type { DiagramTargetRegistry, EditorValidationIssue, EditorValidationResult } from '../../core/editorTypes';
+import type { Block } from '@/fixed-pages/editor/session/parser';
+import type { DiagramTargetRegistry, EditorValidationIssue, EditorValidationResult } from '@/fixed-pages/editor/session/editorTypes';
 import { MetadataInspector } from '../components/MetadataInspector';
 import { ValidationPanel } from '../components/ValidationPanel';
 import { DiagramRuntimePreview } from '../../diagrams/ui/DiagramRuntimePreview';
-import { useMathStore } from '@/lib/helpers/MathStoreContext';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
 
 interface PageDiagramLink {
   componentName: string;

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import type { VisualDiagramModel } from '../model/types';
-import { useModalFocus } from '../../ui/hooks/useModalFocus';
+import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 import { DiagramButton } from './primitives';
 import { DiagramResponsivePreview } from './DiagramResponsivePreview';
 

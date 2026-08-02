@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { MathProvider } from '@/lib/page-context/MathStoreContext';
 import { DemonstrationSection } from '@/components/content/DemonstrationSection';
 import { ProofStep } from '@/components/content/ProofStep';
 import { Demostracion } from '@/components/mdx/MDXBlocks';

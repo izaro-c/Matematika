@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
-import { buildTargets } from '../../../../src/fixed-pages/editor/diagrams/model/selectors';
+import { buildTargets } from '../../../../src/fixed-pages/editor/diagrams/model/scene/selectors';
 import {
   buildDependencyGraph,
   createScenePlan,
@@ -12,7 +12,7 @@ import {
   withMovedPoint,
   type DiagramSpecV2,
 } from '../../../../src/diagrams/public';
-import { createPoincareGeodesic } from '../../../../src/diagrams/core/MathFactory';
+import { createPoincareGeodesic } from '../../../../src/diagrams/jsxgraph/MathFactory';
 
 const CASES = [
   {

@@ -25,3 +25,15 @@ MDX, published diagram demos, and glossary **data** live in repo-root [`content/
 - `diagrams/` here = engine. Demos = `content/diagrams/`.
 - Prefer `content-pages/shared/` unless the type needs its own UI (`exercise`, `study-plan`).
 
+## Internals (hotspots)
+
+| Looking for… | Go to |
+|---|---|
+| Diagram format / schemas | `diagrams/model/` |
+| Scene geometry math | `diagrams/geometry/` |
+| JSXGraph adapters | `diagrams/jsxgraph/` |
+| Diagram renderer / lifecycle | `diagrams/render/` |
+| Editor session / save / review | `fixed-pages/editor/{session,save,review}/` |
+| Diagram workbench UI | `fixed-pages/editor/diagrams/ui/` |
+| Theme hook / page contexts | `lib/theme/`, `lib/page-context/` |
+| Content route screens | `content-pages/screens/` |

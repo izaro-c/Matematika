@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { materializeSameSideConstraints } from '@/diagrams/spec/scene';
-import { toWorkingSceneV2 } from '@/diagrams/spec/v3Compatibility';
-import type { DiagramSpecV3 } from '@/diagrams/spec/v3';
+import { materializeSameSideConstraints } from '@/diagrams/geometry/layout/scene';
+import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
+import type { DiagramSpecV3 } from '@/diagrams/model/schema/v3';
 
 const minimalSameSideV3: DiagramSpecV3 = {
   version: 3,

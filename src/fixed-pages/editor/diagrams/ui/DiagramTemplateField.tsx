@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { parseMathExpression } from '@/diagrams/public';
 import type { VisualDiagramModel } from '../model/types';
-import { DiagramExpressionField } from './DiagramExpressionField';
+import { DiagramExpressionField } from './panels/DiagramExpressionField';
 
 interface DiagramTemplateFieldProps {
   model: VisualDiagramModel;

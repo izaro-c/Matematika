@@ -1,9 +1,9 @@
-import { MathBoard } from '@/diagrams/core/MathBoard';
+import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
 import {
   createPoint,
   createPolygon,
   createSlider,
-} from '@/diagrams/core/MathFactory';
+} from '@/diagrams/jsxgraph/MathFactory';
 
 export const DemoPitagorasAreas = () => {
   const onInit = (board: any, els: any, theme: any) => {

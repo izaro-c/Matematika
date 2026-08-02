@@ -1,5 +1,5 @@
 import React from 'react';
-import { DIFF_COLORS } from '@/lib/helpers/constants';
+import { DIFF_COLORS } from '@/lib/theme/constants';
 
 interface DifficultyBadgeProps {
   difficulty: string;

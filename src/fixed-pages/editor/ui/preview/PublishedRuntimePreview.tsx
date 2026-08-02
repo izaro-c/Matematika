@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { appPath } from '@/lib/helpers/routeHelper';
-import { useModalFocus } from '../hooks/useModalFocus';
+import { appPath } from '@/lib/routes';
+import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 
 interface PublishedRuntimePreviewProps {
   open: boolean;

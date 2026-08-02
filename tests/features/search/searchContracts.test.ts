@@ -11,8 +11,8 @@ import {
   SEARCH_FUSE_OPTIONS,
   buildSearchIndex,
 } from '@/data/content/searchApi';
-import { dictionary } from '@/lib/helpers/glossaryDictionary';
-import { routePath } from '@/lib/helpers/routeHelper';
+import { dictionary } from '@content/glossary/dictionary';
+import { routePath } from '@/lib/routes';
 
 const searchIndex = buildSearchIndex();
 

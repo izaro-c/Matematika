@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useLocation } from 'wouter';
-import { DiagramWorkbench } from '@/fixed-pages/editor/diagrams/ui/DiagramWorkbench';
-import type { DiagramWorkbenchMode } from '@/fixed-pages/editor/diagrams/hooks/useDiagramWorkbenchLoader';
+import { DiagramWorkbench } from '@/fixed-pages/editor/diagrams/ui/workbench/DiagramWorkbench';
+import type { DiagramWorkbenchMode } from '@/fixed-pages/editor/diagrams/ui/workbench/useDiagramWorkbenchLoader';
 
 /**
  * /editor_v2 — sandbox by default.

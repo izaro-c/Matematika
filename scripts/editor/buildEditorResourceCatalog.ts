@@ -6,7 +6,7 @@ import {
   isEditableCatalogResource,
   type EditorResourceCapability,
   type EditorResourceCatalogEntry,
-} from '../../src/fixed-pages/editor/catalog/resourceCatalogTypes';
+} from '../../src/fixed-pages/editor/templates/resourceCatalogTypes';
 import { parseDiagramSourceAST } from './parseDiagramSourceAST';
 
 function walkFiles(root: string): string[] {
@@ -95,7 +95,7 @@ export function buildEditorResourceCatalog({
   const contentRoot = path.join(srcRoot, 'content', 'mdx');
   const diagramsRoot = path.join(srcRoot, 'content', 'diagrams');
   const internalRoots = [
-    path.join(srcRoot, 'src', 'shared', 'diagrams'),
+    path.join(srcRoot, 'src', 'diagrams'),
     path.join(srcRoot, 'src', 'content-pages', 'shared', 'templates'),
   ];
 

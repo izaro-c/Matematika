@@ -1,27 +1,39 @@
 # Domain: `editor`
 
-**Qué es:** autoría de documentos MDX y diagramas (diff, safety, inspector, workbench).
+**What:** Authoring MDX documents and diagrams (diff, safety, inspector, workbench).
 
-**Qué no es:** runtime JSXGraph publicado (`shared/diagrams`), demos de página (`widgets/diagrams`), tokens de color (`shared/design`).
+**Not:** Published JSXGraph runtime (`src/diagrams/`), demos (`content/diagrams/`), design tokens (`src/design/`).
 
 ## Layout
 
-| Ruta | Rol |
+| Path | Role |
 |---|---|
-| `core/` | ciclo de vida del editor (`useEditorCore`, …) |
-| `diagrams/` | UI + modelo de trabajo del diagrama en el editor |
-| `document/` | documento MDX en edición |
-| `persistence/` | guardar / cargar |
-| `ui/` | páginas y paneles de UI (diff, safety, …) |
-| `ux/` | políticas UX (p. ej. diff review) |
-| `lib/` | contratos y helpers del feature |
-| `constants.ts` | números/límites editables del editor |
+| `session/` | Open/parse/validate document (`useEditorCore`, …) |
+| `document/` | MDX structural operations |
+| `save/` | API, drafts, save coordination |
+| `review/` | Diff review, safety presentation |
+| `files/` | Paths, imports, file-tree helpers |
+| `types/` | Shared editor types/contracts |
+| `metadata/` | Metadata field definitions |
+| `templates/` | Resource catalog / templates |
+| `diagrams/` | Diagram workbench (model + UI) |
+| `ui/page/` | Editor page chrome |
 
-## API pública
+## Diagrams workbench
 
-Preferir imports desde rutas estables del feature (`ui/EditorPage`, `core/…`). No importar desde `widgets/`.
+| Path | Role |
+|---|---|
+| `diagrams/model/` | Elements, constraints, scene, tools |
+| `diagrams/source/` | Generate/parse embedded diagram source |
+| `diagrams/history/` | Undo/redo + diagram state hook |
+| `diagrams/checks/` | Diagnostics |
+| `diagrams/save/` | Local diagram repository while editing |
+| `diagrams/ui/workbench/` | Main workbench shell |
+| `diagrams/ui/canvas/` | Board host / stage |
+| `diagrams/ui/toolbar/` | Tools chrome |
+| `diagrams/ui/inspector/` | Element inspectors |
+| `diagrams/ui/constraints/` | Constraint editors |
 
-## Constantes / estilo
+## Public API
 
-- Constantes de producto: [`constants.ts`](./constants.ts)
-- Colores: `@/shared/design` (no hex locales)
+Prefer stable paths (`ui/page/EditorPage`, `session/…`, `diagrams/ui/workbench/DiagramWorkbench`).

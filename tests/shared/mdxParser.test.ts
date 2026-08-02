@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseMDX, stringifyMDX } from '@/lib/helpers/mdxParser';
+import { parseMDX, stringifyMDX } from '@/lib/mdx/mdxParser';
 
 describe('mdxParser', () => {
   it('parseMDX parses valid MDX with metadata, imports and body', () => {

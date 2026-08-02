@@ -3,14 +3,14 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import v2Fixture from '../fixtures/diagrams/diagram-spec-v2.json';
 import { migrateDiagramSpec } from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/spec/v3Compatibility';
-import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
+import { MathProvider } from '@/lib/page-context/MathStoreContext';
 
-vi.mock('@/diagrams/core/MathBoard', () => ({
+vi.mock('@/diagrams/jsxgraph/MathBoard', () => ({
   MathBoard: ({ children }: { children?: React.ReactNode }) => <div data-testid="math-board">{children}</div>,
 }));
 
-import { DiagramRenderer } from '@/diagrams/runtime/DiagramRenderer';
+import { DiagramRenderer } from '@/diagrams/render/DiagramRenderer';
 import { Pitagoras, PitagorasSpec } from '../../content/diagrams/Teoremas/Pitagoras';
 
 describe('DiagramRenderer shared runtime', () => {

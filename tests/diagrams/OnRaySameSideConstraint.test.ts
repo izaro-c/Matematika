@@ -4,12 +4,12 @@
  * - `sameSide`: solo actúa si el punto saldría del semiplano, y sin sacarlo del rayo.
  */
 import { describe, expect, it } from 'vitest';
-import { diagramConstraint, element, point } from '../../src/fixed-pages/editor/diagrams/model/diagramElements';
+import { diagramConstraint, element, point } from '../../src/fixed-pages/editor/diagrams/model/elements/diagramElements';
 import {
   constrainPointCoordinates,
   withMovedPoint,
-} from '@/diagrams/spec/scene';
-import { toWorkingSceneV2 } from '@/diagrams/spec/v3Compatibility';
+} from '@/diagrams/geometry/layout/scene';
+import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
 import type { VisualDiagramModel } from '../../src/fixed-pages/editor/diagrams/model/types';
 import { DemoAnguloExternoSpec } from '@content/diagrams/Demos/DemoAnguloExterno';
 import {

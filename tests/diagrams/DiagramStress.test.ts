@@ -4,7 +4,7 @@ import {createSceneConstructionPlan,
   type DiagramObject,
   type DiagramSpecV3,
   type PointObject} from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/spec/v3Compatibility';
+import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
 
 const selection = { selectable: true } as const;
 

@@ -1,7 +1,7 @@
-import { MathBoard } from '@/diagrams/core/MathBoard';
+import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
 import {
   createPoint, createLine, createGlider
-} from '@/diagrams/core/MathFactory';
+} from '@/diagrams/jsxgraph/MathFactory';
 
 export const DemoDosRectasUnPunto = () => {
   return (

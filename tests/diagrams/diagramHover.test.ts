@@ -6,7 +6,7 @@ import {
   diagramVisualTransitionKey,
   shouldAnimateDiagramVisuals,
   withDiagramHoverTransition,
-} from '@/diagrams/runtime/diagramHover';
+} from '@/diagrams/render/interaction/diagramHover';
 
 describe('diagramHover', () => {
   afterEach(() => {

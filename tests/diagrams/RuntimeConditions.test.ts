@@ -6,8 +6,8 @@ import {
   parseDiagramSpecV2,
   renameDiagramTemplateIdentifiers,
 } from '@/diagrams/public';
-import { conditionAllows, measurementText, reactiveText } from '@/diagrams/runtime/diagramRuntimeUtils';
-import { compactHeaderReadings } from '@/diagrams/runtime/DiagramKatexOverlay';
+import { conditionAllows, measurementText, reactiveText } from '@/diagrams/render/diagramRuntimeUtils';
+import { compactHeaderReadings } from '@/diagrams/render/DiagramKatexOverlay';
 
 describe('diagram runtime diagnostics and conditions', () => {
   it('applies visibleWhen against live scene variables', () => {

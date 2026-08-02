@@ -1,5 +1,5 @@
 import type { VisualDiagramModel } from '@/fixed-pages/editor/diagrams/model/types';
-import { projectPointToSupport, withMovedPoint } from '@/diagrams/spec/scene';
+import { projectPointToSupport, withMovedPoint } from '@/diagrams/geometry/layout/scene';
 
 export function distanceToSupport(
   spec: VisualDiagramModel,

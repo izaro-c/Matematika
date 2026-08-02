@@ -9,11 +9,11 @@
  * JSXGraph) antes de invocar `withMovedPoint`.
  */
 import { describe, expect, it } from 'vitest';
-import { diagramConstraint, point } from '../../src/fixed-pages/editor/diagrams/model/diagramElements';
-import { materializeSameSideConstraints, withMovedPoint } from '@/diagrams/spec/scene';
-import { toWorkingSceneV2 } from '@/diagrams/spec/v3Compatibility';
+import { diagramConstraint, point } from '../../src/fixed-pages/editor/diagrams/model/elements/diagramElements';
+import { materializeSameSideConstraints, withMovedPoint } from '@/diagrams/geometry/layout/scene';
+import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
 import type { VisualDiagramModel } from '../../src/fixed-pages/editor/diagrams/model/types';
-import type { DiagramSpecV3 } from '@/diagrams/spec/v3';
+import type { DiagramSpecV3 } from '@/diagrams/model/schema/v3';
 
 function sameSideModel(side?: 1 | -1): VisualDiagramModel {
   return {

@@ -1,7 +1,7 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { createHash } from 'node:crypto';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { useEditorCore, VISUAL_SAVE_POLICY } from '@/fixed-pages/editor/core/useEditorCore';
+import { useEditorCore, VISUAL_SAVE_POLICY } from '@/fixed-pages/editor/session/useEditorCore';
 
 const source = `import X from './x';
 

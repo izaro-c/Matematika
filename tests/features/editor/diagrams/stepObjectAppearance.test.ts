@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createScenePlan, resolveStepSceneAppearance } from '../../../../src/diagrams/spec/scene';
+import { createScenePlan, resolveStepSceneAppearance } from '../../../../src/diagrams/geometry/layout/scene';
 import { createTemplateModel, updateStepObjectState } from '../../../../src/fixed-pages/editor/diagrams/model';
 
 describe('step object appearance', () => {

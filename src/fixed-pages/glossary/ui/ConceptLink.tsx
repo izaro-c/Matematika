@@ -3,7 +3,7 @@ import { Link } from 'wouter';
 import { useGlossaryStore, dictionary } from '@/lib/stores/GlossaryStore';
 import { db } from '@/data/content';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
-import { useMathStore } from '@/lib/helpers/MathStoreContext';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
 
 interface ConceptLinkProps {
   targetId: string | string[];

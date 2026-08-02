@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { initialDiagramState, diagramReducer } from '../../../../src/fixed-pages/editor/diagrams/state/reducer';
-import type { DiagramState } from '../../../../src/fixed-pages/editor/diagrams/state/types';
+import { initialDiagramState, diagramReducer } from '../../../../src/fixed-pages/editor/diagrams/history/reducer';
+import type { DiagramState } from '../../../../src/fixed-pages/editor/diagrams/history/types';
 import { createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
-import { getDiagramSaveCapability, isDiagramStateDirty } from '../../../../src/fixed-pages/editor/diagrams/model/selectors';
+import { getDiagramSaveCapability, isDiagramStateDirty } from '../../../../src/fixed-pages/editor/diagrams/model/scene/selectors';
 
 function reorderKeysDeep<T>(value: T): T {
   if (Array.isArray(value)) {

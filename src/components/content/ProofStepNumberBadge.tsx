@@ -1,5 +1,5 @@
 import React from 'react';
-import { publicAsset } from '@/lib/helpers/routeHelper';
+import { publicAsset } from '@/lib/routes';
 
 interface ProofStepNumberBadgeProps {
   number: number;

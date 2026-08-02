@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { Link } from 'wouter';
-import { publicAsset, resolvePublicOrExternalAsset } from '@/lib/helpers/routeHelper';
+import { publicAsset, resolvePublicOrExternalAsset } from '@/lib/routes';
 import { db } from '@/data/content';
 import { InteractiveTimePlot } from '@/components/ui/InteractiveTimePlot';
 

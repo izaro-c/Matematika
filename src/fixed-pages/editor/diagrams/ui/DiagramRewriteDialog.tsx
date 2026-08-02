@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { TEMPLATE_OPTIONS } from '../model';
 import type { TemplateKind } from '../model/types';
-import { useModalFocus } from '../../ui/hooks/useModalFocus';
+import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 
 interface DiagramRewriteDialogProps {
   path: string;

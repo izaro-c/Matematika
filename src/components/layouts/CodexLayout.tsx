@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
-import { useMathStore } from '@/lib/helpers/MathStoreContext';
-import { DiagramStepSyncContext } from '@/lib/helpers/DiagramStepSyncContext';
-import { useDemonstrationHeaderClaim } from '@/lib/helpers/DemonstrationHeaderContext';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
+import { DiagramStepSyncContext } from '@/lib/page-context/DiagramStepSyncContext';
+import { useDemonstrationHeaderClaim } from '@/lib/page-context/DemonstrationHeaderContext';
 import { db } from '@/data/content';
 import { Link, useLocation } from 'wouter';
-import { TYPE_STYLES } from '@/lib/helpers/constants';
+import { TYPE_STYLES } from '@/lib/theme/constants';
 import { getContentPageAccent } from '@/design';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { MobileContentHeaderSeparator, MobileDiagramToolbar } from './MobileDiagramChrome';

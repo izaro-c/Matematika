@@ -43,7 +43,7 @@ describe('Diagram TSX Parser (Local & AST)', () => {
 
   it('should handle invalid syntax diagnostics in AST parser', () => {
     const brokenSource = `
-      import { MathBoard } from '@/diagrams/core/MathBoard';
+      import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
       export const Broken = () => {
         return (
           <MathBoard
@@ -157,8 +157,8 @@ describe('Diagram TSX Parser (Local & AST)', () => {
 
   it('never grants visual editing because a partial AST contains a point', () => {
     const manual = `
-      import { MathBoard } from '@/diagrams/core/MathBoard';
-      import { createPoint } from '@/diagrams/core/MathFactory';
+      import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
+      import { createPoint } from '@/diagrams/jsxgraph/MathFactory';
       import { DiagramInfoPanel } from '@/components/ui/DiagramOverlay';
       const curveExpression = (x: number) => Math.sin(x);
       const STEPS = [{ id: 'step-1', expression: curveExpression }];

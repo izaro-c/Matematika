@@ -1,9 +1,9 @@
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { navigate } from 'wouter/use-browser-location';
-import { routePath, publicAsset } from '@/lib/helpers/routeHelper';
+import { routePath, publicAsset } from '@/lib/routes';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
-import { useThemeColors } from '@/lib/hooks/useThemeColors';
+import { useThemeColors } from '@/lib/theme/useThemeColors';
 import { getAllDescendantCodes } from '@/data/content/msc2020';
 
 

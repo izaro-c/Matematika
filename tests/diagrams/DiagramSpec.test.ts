@@ -7,7 +7,7 @@ import {
   parseDiagramSpecV2,
   type DiagramSpecV2,
 } from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/spec/v3Compatibility';
+import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
 
 describe('DiagramSpec v2 schema and migrations', () => {
   it('validates the representative v2 fixture without normalization loss', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { ThemeColors } from '@/diagrams/core/theme';
+import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
 
 const PALETTE_KEYS = [
   'carbon', 'terracota', 'salvia', 'lienzo', 'pizarra', 'ocre', 'pavo', 'granada', 'musgo',

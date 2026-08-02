@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { editorPersistenceReducer, initialEditorPersistenceState } from '@/fixed-pages/editor/state';
+import { editorPersistenceReducer, initialEditorPersistenceState } from '@/fixed-pages/editor/save';
 
 const file = { path: 'content/mdx/a.mdx' };
 const other = { path: 'content/mdx/b.mdx' };

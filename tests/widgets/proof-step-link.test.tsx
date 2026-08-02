@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { MathProvider } from '@/lib/page-context/MathStoreContext';
 import { ProofStep } from '@/components/content/ProofStep';
 import { ProofStepLink } from '@/components/content/ProofStepLink';
 import { CodexLayout } from '@/components/layouts/CodexLayout';

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import type { VisualDiagramModel, CanvasTool } from '@/fixed-pages/editor/diagrams/model/types';
-import { ReferencePickProvider } from '@/fixed-pages/editor/diagrams/ui/relations';
+import { ReferencePickProvider } from '@/fixed-pages/editor/diagrams/ui/constraints/relations';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { WorkshopSurface } from './WorkshopSurface';
 import { PublicationFrame } from './PublicationFrame';

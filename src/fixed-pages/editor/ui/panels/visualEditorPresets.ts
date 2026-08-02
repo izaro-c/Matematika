@@ -1,4 +1,4 @@
-import type { BlockType } from '../../core/parser';
+import type { BlockType } from '@/fixed-pages/editor/session/parser';
 
 export const LATEX_SYMBOLS = [
   { label: '∀', code: '\\forall ' }, { label: '∃', code: '\\exists ' },

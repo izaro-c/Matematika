@@ -21,7 +21,7 @@ import type {
   DiagramConstraint,
   DiagramDependency,
   DiagramSpecV3,
-} from '@/diagrams/spec';
+} from '@/diagrams';
 
 export type ColorToken = DiagramColorToken;
 export type ElementKind = DiagramElementKind;

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { CONTENT_TYPE_OPTIONS } from '../../lib/metadataFields';
-import type { CreatePageInput } from '../../ux/authoringModel';
-import { useModalFocus } from '../hooks/useModalFocus';
+import { CONTENT_TYPE_OPTIONS } from '@/fixed-pages/editor/metadata/metadataFields';
+import type { CreatePageInput } from '@/fixed-pages/editor/review/authoringModel';
+import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 
 interface CreatePageDialogProps {
   open: boolean;

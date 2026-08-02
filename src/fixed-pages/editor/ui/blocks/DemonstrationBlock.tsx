@@ -1,6 +1,6 @@
 import React from 'react';
-import { ProofStepData } from '../../core/parser';
-import type { DiagramTargetRegistry } from '../../core/editorTypes';
+import { ProofStepData } from '@/fixed-pages/editor/session/parser';
+import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
 
 interface DemonstrationBlockProps {
   steps: ProofStepData[];

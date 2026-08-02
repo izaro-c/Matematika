@@ -31,7 +31,7 @@ vi.mock('@/data/content', () => ({
   },
 }));
 
-import { MethodsPage } from '@/content-pages/pages/MethodsPage';
+import { MethodsPage } from '@/content-pages/screens/MethodsPage';
 
 describe('MethodsPage', () => {
   it('presenta los métodos como una colección no ordenada de enlaces', () => {

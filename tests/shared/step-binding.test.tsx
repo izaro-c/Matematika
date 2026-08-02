@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { MathProvider } from '@/lib/page-context/MathStoreContext';
 import { StepBind, useStepBinding } from '@/components/ui/StepBinding';
 
 function Probe({ scopeId }: { scopeId?: string }) {

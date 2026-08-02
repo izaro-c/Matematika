@@ -6,7 +6,7 @@ import {migrateDiagramSpec,
   type DiagramElementKind,
   type DiagramSpecV3,
   type PointObject} from '@/diagrams/public';
-import { toWorkingSceneV2 } from '@/diagrams/spec/v3Compatibility';
+import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
 
 function migrated(): DiagramSpecV3 {
   return structuredClone(migrateDiagramSpec(fixture).spec);

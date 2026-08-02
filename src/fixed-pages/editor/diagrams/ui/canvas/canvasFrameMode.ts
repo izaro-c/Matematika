@@ -2,7 +2,7 @@ import {
   SCREEN_PRESETS,
   publishedDiagramArea,
   publishedLayoutForPageType,
-} from '@/fixed-pages/editor/diagrams/model/publishedDiagramLayout';
+} from '@/fixed-pages/editor/diagrams/model/scene/publishedDiagramLayout';
 
 export type CanvasFrameMode = 'editor' | 'desktop' | 'tablet' | 'mobile';
 

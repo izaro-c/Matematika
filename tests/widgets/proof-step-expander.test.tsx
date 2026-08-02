@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { ProofStep } from '@/components/content/ProofStep';
 import { ProofStepExpander } from '@/components/content/ProofStepExpander';
-import { MathProvider } from '@/lib/helpers/MathStoreContext';
+import { MathProvider } from '@/lib/page-context/MathStoreContext';
 
 describe('ProofStepExpander', () => {
   it('is collapsed by default and resolves valid Lean blocks', () => {

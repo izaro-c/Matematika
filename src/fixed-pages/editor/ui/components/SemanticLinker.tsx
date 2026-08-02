@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import type { FileNode } from '../../lib/editorContracts';
-import type { DiagramTargetRegistry } from '../../core/editorTypes';
-import { useModalFocus } from '../hooks/useModalFocus';
+import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
+import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
+import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 
 interface SemanticLinkerProps {
   isOpen: boolean;

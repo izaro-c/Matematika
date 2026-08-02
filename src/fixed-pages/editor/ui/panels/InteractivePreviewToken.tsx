@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMathStore } from '@/lib/helpers/MathStoreContext';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import type { EditLinkHandler } from './previewTypes';
 
 interface InteractivePreviewTokenProps {

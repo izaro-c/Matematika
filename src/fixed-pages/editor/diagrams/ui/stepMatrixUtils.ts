@@ -1,4 +1,4 @@
-import type { DiagramStepObjectState } from '@/diagrams/spec';
+import type { DiagramStepObjectState } from '@/diagrams';
 import type { VisualDiagramModel, VisualStep } from '../model/types';
 
 export type MatrixCellVisualState = 'hidden' | 'visible' | 'emphasis-secondary' | 'emphasis-primary';

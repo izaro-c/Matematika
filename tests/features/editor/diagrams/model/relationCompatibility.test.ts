@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getConstraintConflictReason } from '../../../../../src/fixed-pages/editor/diagrams/model/relationCompatibility';
+import { getConstraintConflictReason } from '../../../../../src/fixed-pages/editor/diagrams/model/constraints/relationCompatibility';
 
 describe('relationCompatibility', () => {
   it('blocks midpoint together with distance', () => {

@@ -88,6 +88,20 @@ export default {
       from: { path: '^content/' },
       to: { path: '^src/(app|fixed-pages|content-pages)/' },
     },
+    {
+      name: 'diagrams-model-geometry-no-render',
+      comment: 'diagrams model/geometry must not import jsxgraph or render',
+      severity: 'error',
+      from: { path: '^src/diagrams/(model|geometry)/' },
+      to: { path: '^src/diagrams/(jsxgraph|render)/' },
+    },
+    {
+      name: 'editor-diagrams-model-no-ui',
+      comment: 'editor diagram model must not import workbench UI',
+      severity: 'error',
+      from: { path: '^src/fixed-pages/editor/diagrams/model/' },
+      to: { path: '^src/fixed-pages/editor/diagrams/ui/' },
+    },
 
     /* -- General quality rules -- */
 

@@ -9,7 +9,7 @@ import {
   showsStrokeControls,
 } from '../../elementSections';
 import { DiagramNativeLabelEditor } from '@/fixed-pages/editor/diagrams/ui/DiagramNativeLabelEditor';
-import { elementInspectorCapabilities } from '@/fixed-pages/editor/diagrams/model/elementInspectorCapabilities';
+import { elementInspectorCapabilities } from '@/fixed-pages/editor/diagrams/model/elements/elementInspectorCapabilities';
 
 /** Propiedades: color, strokeWidth, highlightStrokeWidth, fillOpacity, highlightFillOpacity, angleRadius, dashed, preserveColorOnHighlight, highlightable, layerId */
 export const ElementStyleSection: React.FC<ElementPanelProps> = ({

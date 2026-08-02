@@ -1,5 +1,5 @@
-import type { DiagramElementKind } from '@/diagrams/spec';
-import { elementInspectorCapabilities } from '@/fixed-pages/editor/diagrams/model/elementInspectorCapabilities';
+import type { DiagramElementKind } from '@/diagrams';
+import { elementInspectorCapabilities } from '@/fixed-pages/editor/diagrams/model/elements/elementInspectorCapabilities';
 
 const MARK_KINDS = new Set<DiagramElementKind>([
   'congruenceMark', 'parallelMark', 'measureTicks', 'perpendicularMark',

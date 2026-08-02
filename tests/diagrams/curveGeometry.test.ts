@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { element } from '../../src/fixed-pages/editor/diagrams/model/diagramElements';
+import { element } from '../../src/fixed-pages/editor/diagrams/model/elements/diagramElements';
 import {
   curveIsClosed,
   resolveCurveAreaPolygon,
   resolveCurveHalfPlanePolygon,
   sampleCurveElement,
-} from '@/diagrams/spec/curveGeometry';
+} from '@/diagrams/geometry/curves/curveGeometry';
 
 describe('curveGeometry', () => {
   it('muestrea una función sin evaluadores dinámicos', () => {

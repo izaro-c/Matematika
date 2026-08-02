@@ -12,7 +12,7 @@ import {
   pointInPolygon,
   pointOnDiskBoundary,
   pointOnPolygonBoundary,
-} from '@/diagrams/spec/areaGeometry';
+} from '@/diagrams/geometry/areas/areaGeometry';
 
 describe('areaGeometry', () => {
   const lineA = { x: 0, y: 0 };

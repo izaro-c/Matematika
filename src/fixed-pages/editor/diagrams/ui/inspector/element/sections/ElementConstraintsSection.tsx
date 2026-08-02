@@ -4,17 +4,17 @@ import {
   setEqualLengthConstraint,
   removeConstraintFromModel,
   editableSegmentEndpoints,
-} from '@/fixed-pages/editor/diagrams/model/segmentLengthConstraints';
+} from '@/fixed-pages/editor/diagrams/model/constraints/segmentLengthConstraints';
 import {
   equalAngleConstraintForAngle,
   setEqualAngleConstraint,
-} from '@/fixed-pages/editor/diagrams/model/angleConstraints';
+} from '@/fixed-pages/editor/diagrams/model/constraints/angleConstraints';
 import {
   editableReflectionCandidates,
   reflectionConstraintForSegment,
   removeSegmentReflectionConstraint,
   setReflectionConstraintForSegment,
-} from '@/fixed-pages/editor/diagrams/model/reflectionConstraints';
+} from '@/fixed-pages/editor/diagrams/model/constraints/reflectionConstraints';
 import type { VisualDiagramModel, VisualElement } from '@/fixed-pages/editor/diagrams/model/types';
 import type { ElementPanelProps } from '../../types';
 import { constraintScopeForKind } from '../../elementSections';

@@ -5,7 +5,7 @@ import {
   editorWriteAccessGranted,
   getEditorAuthToken,
   setEditorAuthToken,
-} from '../../persistence/editorApiBase';
+} from '@/fixed-pages/editor/save/editorApiBase';
 
 export const EditorApiStatusBanner: React.FC = () => {
   const [tokenInput, setTokenInput] = useState('');

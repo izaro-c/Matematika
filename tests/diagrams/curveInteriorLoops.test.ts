@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { element } from '../../src/fixed-pages/editor/diagrams/model/diagramElements';
+import { element } from '../../src/fixed-pages/editor/diagrams/model/elements/diagramElements';
 import {
   resolveCurveAreaPolygon,
   resolveCurveAreaPolygons,
   resolveCurveInteriorPolygon,
   sampleCurveElement,
   pointInCurveAreaPolygons,
-} from '@/diagrams/spec/curveGeometry';
-import { pointInPolygon, polygonSignedArea } from '@/diagrams/spec/areaGeometry';
-import { subsamplePolygonPoints } from '@/diagrams/core/MathFactory';
+} from '@/diagrams/geometry/curves/curveGeometry';
+import { pointInPolygon, polygonSignedArea } from '@/diagrams/geometry/areas/areaGeometry';
+import { subsamplePolygonPoints } from '@/diagrams/jsxgraph/MathFactory';
 
 const bounds = [-6, 6, 6, -6] as const;
 

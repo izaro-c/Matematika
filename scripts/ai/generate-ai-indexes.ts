@@ -432,7 +432,7 @@ function buildComponentMap(): JsonRecord {
     .filter((metric): metric is FileMetric => metric !== null)
     .sort(compareMetrics);
   const pages = tsxFiles
-    .filter(filePath => relative(filePath).startsWith('src/content-pages/pages/'))
+    .filter(filePath => relative(filePath).startsWith('src/content-pages/screens/'))
     .map(relative)
     .sort();
   const srcLayers = ['app', 'pages', 'widgets', 'features', 'entities', 'shared', 'database']
@@ -470,11 +470,11 @@ function buildDesignTokenMap(): JsonRecord {
       const relPath = relative(filePath);
       return path.extname(filePath) === '.css'
         || /(^|\/)(tailwind|postcss)\.config\.[^/]+$/.test(relPath)
-        || relPath === 'src/lib/helpers/constants.ts';
+        || relPath === 'src/lib/theme/constants.ts';
     })
     .map(relative)
     .sort();
-  const visualConstantsPath = path.join(ROOT, 'src/lib/helpers/constants.ts');
+  const visualConstantsPath = path.join(ROOT, 'src/lib/theme/constants.ts');
   const constantsText = readText(visualConstantsPath, 'design');
   const visualConstants = constantsText === null
     ? []
@@ -501,7 +501,7 @@ function buildDesignTokenMap(): JsonRecord {
 
   const tokenTexts = existingPaths([
     'src/app/index.css',
-    'src/lib/helpers/constants.ts',
+    'src/lib/theme/constants.ts',
   ]).map(filePath => readText(path.join(ROOT, filePath), 'design') ?? '').join('\n');
   const detectedThemeTokens = [...new Set(
     [...tokenTexts.matchAll(/--theme-([a-z0-9-]+)/g)].map(match => match[1]),
@@ -511,7 +511,7 @@ function buildDesignTokenMap(): JsonRecord {
     schemaVersion: 1,
     styleFiles,
     visualConstantFiles: existingPaths([
-      'src/lib/helpers/constants.ts',
+      'src/lib/theme/constants.ts',
       'src/app/index.css',
     ]),
     visualConstants,
