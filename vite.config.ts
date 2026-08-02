@@ -116,5 +116,8 @@ export default defineConfig({
       '@content': path.resolve(__dirname, './content'),
     }
   },
-  base: "/Matematika/"
+  base: "/Matematika/",
+  server: {
+    host: true,
+  },
 })

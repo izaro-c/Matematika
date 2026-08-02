@@ -1,11 +1,10 @@
 /* ==========================================================================
-   MATEMATIKA DESIGN SYSTEM — Clases semánticas reutilizables
-   Fuente única de verdad para tipografía, superficies e interacción.
-   Los pigmentos viven en theme.css; aquí solo composición y roles.
+   AC-CLASSES — UI Arts & Crafts reutilizable (.ac-*)
+   Tipografía, superficies e interacción. Pigmentos: theme.css.
+   No confundir con src/design/ (tokens TypeScript).
    ========================================================================== */
 
 /* ── 1. Tipografía editorial ─────────────────────────────────────────────── */
-
 .ac-eyebrow {
   font-family: var(--font-sans-family);
   font-size: var(--ac-eyebrow-size, 0.75rem);
@@ -207,7 +206,7 @@
   color: var(--theme-carbon);
 }
 
-/* Materialidad de tinta en lectura: pigmento en ac-link, ac-btn-accent y CTA vía ink-materiality.css */
+/* Materialidad de tinta en lectura: pigmento en ac-link, ac-btn-accent y CTA vía paper-and-ink.css */
 
 /* ── 3b. Breadcrumbs ────────────────────────────────────────────────────── */
 

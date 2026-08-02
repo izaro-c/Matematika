@@ -13,16 +13,20 @@ interface ContentLayoutProps {
   secondary?: React.ReactNode;
   /** Describe la región interactiva para tecnologías de asistencia. */
   diagramLabel?: string;
-  /** Elimina el espaciado de página cuando el tríptico vive dentro de otra vista. */
+  /** Sin padding de página: el layout vive dentro de otra vista. */
   embedded?: boolean;
-  /** Tipo semántico que determina el acento editorial de la página. */
+  /** Tipo de página (axioma, definición, …) → color `--page-accent`. */
   pageType?: string;
-  /** Proporción editorial. `balanced` concede al diagrama un área equivalente al texto. */
+  /**
+   * Proporción texto/diagrama (`data-layout-variant`).
+   * `reading` = más texto; `balanced` = columnas iguales.
+   * Ratios en `src/app/styles/content-layout-columns.css`.
+   */
   variant?: 'reading' | 'balanced';
   className?: string;
 }
 
-/** Montaje uniforme de componentes gráficos perezosos dentro del layout editorial. */
+/** Diagrama perezoso dentro del layout de página de contenido. */
 export function ContentDiagram({ component: Diagram }: {
   component?: ComponentType<Record<string, unknown>> | null;
 }) {
@@ -37,11 +41,10 @@ export function ContentDiagram({ component: Diagram }: {
 }
 
 /**
- * Layout editorial para contenido matemático.
+ * Layout de páginas de contenido (texto | diagrama | secundario | índice).
  *
- * La posición de las zonas cambia exclusivamente con CSS. En particular, el
- * diagrama se renderiza una sola vez y conserva su ciclo de vida al cruzar los
- * breakpoints móvil, portátil y escritorio.
+ * Estilos: `src/app/styles/content-layout.css` — glosario en `styles/README.md`.
+ * Las zonas se reposicionan solo con CSS; el diagrama se monta una vez.
  */
 export function ContentLayout({
   metadata,

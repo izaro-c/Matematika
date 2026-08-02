@@ -1,3 +1,7 @@
+/* ==========================================================================
+   UTILITIES — helpers globales (viewport, paneles, tipografía auxiliar)
+   ========================================================================== */
+
 /* Altura de viewport estable en móvil (evita saltos con barra del navegador) */
 .min-h-viewport {
   min-height: 100dvh;

@@ -1,0 +1,82 @@
+# Estilos de app (`src/app/styles`)
+
+CSS de composición visual. Los **tokens tipados** están en `src/design/` (TypeScript), no aquí.
+
+## Glosario rápido
+
+| Concepto | Qué es | Dónde |
+|---|---|---|
+| **Página de contenido** | Axioma, definición, teorema, etc. | `ContentLayout` + `content-layout*.css` |
+| **Columna de texto** | Lectura principal | `.content-reading` |
+| **Columna de diagrama** | Visualización sticky | `.content-diagram` |
+| **Bloque secundario** | Ejemplos / ejercicios debajo | `.content-secondary` |
+| **Índice** | Sidebar / drawer de navegación local | `.content-metadata` |
+| **Color de tipo** | Acento según axioma/definición/… | `--page-accent`, `content-layout-type-color.css` |
+| **Proporción** | Cuánto espacio texto vs diagrama | `variant` + vars en `content-layout-columns.css` |
+| **Códice** | Layout de **demostraciones** | `CodexLayout` + `codex-layout.css` |
+| **Clases `.ac-*`** | UI Arts & Crafts reutilizable | `ac-classes.css`, `ac-pill.css` |
+
+## Pipeline (`../index.css`)
+
+| Archivo | En una frase |
+|---|---|
+| `../theme.css` | Pigmentos `--theme-*` |
+| `katex.css` | Retoques KaTeX |
+| `ac-classes.css` | Tipografía/superficies `.ac-eyebrow`, `.ac-label`, botones… |
+| `base.css` | `html` / `body` |
+| `utilities.css` | Helpers sueltos |
+| `ac-pill.css` | Badges `.ac-pill` |
+| `mdx-prose.css` | Tipografía del MDX (`.prose`, `.editorial-reading`) |
+| `content-layout.css` | Layout de páginas de contenido (entrada) |
+| `codex-layout.css` | Layout de demostraciones |
+| `theorem-wide-tree.css` | Teorema muy ancho + árbol axiomático (≥1600px) |
+| `paper-and-ink.css` | Grano de papel y tinta |
+
+## Layout de páginas de contenido
+
+Entrada: `content-layout.css` →
+
+1. **`content-layout-columns.css`** — rejilla texto | diagrama. **Proporciones = variables al inicio del archivo.**
+2. **`content-layout-index.css`** — índice (drawer móvil, columna en escritorio).
+3. **`content-layout-type-color.css`** — pinta la página con `--page-accent`.
+
+Componente: `src/components/layouts/ContentLayout.tsx`.
+
+### Proporciones (`data-layout-variant`)
+
+| Valor | Significado | Variables |
+|---|---|---|
+| `reading` (default) | Más espacio al texto | `--content-reading-fr`, `--content-diagram-col-min` |
+| `balanced` | Texto y diagrama iguales | `--content-balanced-col-min` |
+
+Ejemplo (definición usa `balanced`):
+
+```css
+/* content-layout-columns.css → .content-layout { … } */
+--content-reading-fr: 1.2fr;       /* fracción columna texto */
+--content-diagram-col-min: 20rem;  /* mínimo columna diagrama */
+--content-balanced-col-min: 30rem; /* mínimo por columna en balanced */
+--content-reading-measure: 85ch;   /* ancho máximo del texto */
+```
+
+### Zonas en el DOM
+
+```
+.content-layout
+├── .content-metadata     ← índice (opcional)
+└── .content-content
+    ├── .content-primary
+    │   ├── .content-reading   ← children (texto)
+    │   └── .content-diagram   ← diagram (opcional)
+    └── .content-secondary     ← secondary (opcional)
+```
+
+## Relación con `src/design`
+
+| Capa | Qué editar |
+|---|---|
+| `theme.css` | Valores de color |
+| `src/design/*.ts` | Nombres tipados y acentos de tipo de página |
+| estos CSS | Layout y composición |
+
+No duplicar hex ni listas de color fuera de theme/design.

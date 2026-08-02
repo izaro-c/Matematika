@@ -20,3 +20,7 @@ import { THEME_COLOR_VARS, SEMANTIC_COLOR_ROLES, DIAGRAM_PALETTE_TOKENS } from '
 ## Anti-patrón
 
 Duplicar listas `carbon/salvia/…` o `#hex` en features. Si hace falta una etiqueta UI, deriva de estos tokens.
+
+## CSS de composición
+
+Layouts y clases visuales: [`src/app/styles/README.md`](../app/styles/README.md) (`ac-classes.css`, `content-layout*.css`, …). No añadir hojas CSS aquí.

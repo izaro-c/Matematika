@@ -8,6 +8,7 @@ Scaffold only. Current app still runs from `src/`.
 |---|---|
 | App startup, routes, providers | `app/` |
 | Colors, typography, design tokens | `design/` |
+| Global CSS (layouts, `.ac-*`, prose) | `app/styles/` — see README there |
 | Reusable UI (not a full screen) | `components/` |
 | Hooks, helpers, generic stores | `lib/` |
 | Schemas, ContentStore, lean graph data types | `data/` |

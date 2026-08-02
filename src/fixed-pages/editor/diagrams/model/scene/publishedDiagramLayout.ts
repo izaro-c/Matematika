@@ -63,7 +63,7 @@ export function pageTypeFromContentPath(contentPath?: string): string {
 }
 
 /**
- * Reproduce las reglas dimensionales de content-layout.css y codex-layout.css.
+ * Reproduce las reglas dimensionales de content-layout-columns.css y codex-layout.css.
  * Devuelve el rectángulo que recibe DiagramRenderer, no el viewport completo.
  */
 export function publishedDiagramArea(

@@ -1,5 +1,8 @@
+/* ==========================================================================
+   CODEX LAYOUT — demostraciones (lectura + diagrama a pantalla completa)
+   Componente: CodexLayout.tsx · clase: .codex-layout
+   ========================================================================== */
 
-/* === CÓDICE DIVIDIDO (CodexLayout) ======================================== */
 .codex-layout {
   --codex-top: 5.5rem;
   width: 100%;

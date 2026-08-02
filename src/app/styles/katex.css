@@ -1,3 +1,7 @@
+/* ==========================================================================
+   KATEX — ajustes locales sobre katex.min.css
+   ========================================================================== */
+
 .katex-display,
 .katex {
   overflow-x: auto;
@@ -5,4 +9,4 @@
   max-width: 100%;
 }
 
-/* Materialidad de tinta en lectura: reglas completas en ink-materiality.css */
+/* Materialidad de tinta en lectura: reglas completas en paper-and-ink.css */
