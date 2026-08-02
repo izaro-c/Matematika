@@ -44,19 +44,16 @@ Componente: `src/components/layouts/ContentLayout.tsx`.
 
 ### Proporciones (`data-layout-variant`)
 
-| Valor | Significado | Variables |
-|---|---|---|
-| `reading` (default) | Más espacio al texto | `--content-reading-fr`, `--content-diagram-col-min` |
-| `balanced` | Texto y diagrama iguales | `--content-balanced-col-min` |
-
-Ejemplo (definición usa `balanced`):
+Escritorio (≥1024px): **diagrama = `--content-diagram-share` (50%)**; texto = resto.
+Dentro de la columna de texto: tope `--content-reading-measure` + margen `--content-reading-inset`.
+Móvil/tablet: diagrama apilado a ancho completo.
 
 ```css
 /* content-layout-columns.css → .content-layout { … } */
---content-reading-fr: 1.2fr;       /* fracción columna texto */
---content-diagram-col-min: 20rem;  /* mínimo columna diagrama */
---content-balanced-col-min: 30rem; /* mínimo por columna en balanced */
---content-reading-measure: 85ch;   /* ancho máximo del texto */
+--content-diagram-share: 50%;
+--content-reading-measure: 85ch;
+--content-reading-measure-solo: 140ch;
+--content-reading-inset: clamp(1.5rem, 4vw, 3.5rem);
 ```
 
 ### Zonas en el DOM

@@ -3,12 +3,12 @@ import { pageTypeFromContentPath, publishedDiagramArea, publishedLayoutForPageTy
 
 describe('published diagram layout dimensions', () => {
   it.each([
-    ['theorem', 1440, 900, 522, 900],
-    ['theorem', 1024, 768, 488, 768],
+    ['theorem', 1440, 900, 568, 900],
+    ['theorem', 1024, 768, 512, 768],
     ['balanced', 1440, 900, 720, 900],
     ['balanced', 1024, 768, 512, 768],
-    ['standard', 1440, 900, 787, 900],
-    ['standard', 1024, 768, 465, 768],
+    ['standard', 1440, 900, 720, 900],
+    ['standard', 1024, 768, 512, 768],
     ['demonstration', 1440, 900, 768, 772],
     ['demonstration', 1024, 768, 512, 640],
   ] as const)('matches the published %s layout at %s × %s', (layout, width, height, expectedWidth, expectedHeight) => {
@@ -22,6 +22,7 @@ describe('published diagram layout dimensions', () => {
   it('infers the actual page layout while keeping it user-selectable in the frame', () => {
     expect(publishedLayoutForPageType('teorema')).toBe('theorem');
     expect(publishedLayoutForPageType('definicion')).toBe('balanced');
+    expect(publishedLayoutForPageType('axioma')).toBe('balanced');
     expect(publishedLayoutForPageType('metodo')).toBe('balanced');
     expect(publishedLayoutForPageType('demostracion')).toBe('demonstration');
     expect(publishedLayoutForPageType('modelo')).toBe('standard');

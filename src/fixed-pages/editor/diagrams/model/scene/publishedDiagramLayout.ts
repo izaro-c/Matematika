@@ -32,7 +32,6 @@ const ROOT_FONT_SIZE = 16;
 const EDITORIAL_CH_WIDTH = 7.68;
 const DESKTOP_BREAKPOINT = 1024;
 const METADATA_BREAKPOINT = 1280;
-const WIDE_BREAKPOINT = 1440;
 
 function clamp(minimum: number, value: number, maximum: number): number {
   return Math.min(maximum, Math.max(minimum, value));
@@ -41,7 +40,7 @@ function clamp(minimum: number, value: number, maximum: number): number {
 /** Contexto editorial que ContentLayout/CodexLayout aplica a cada tipo de página. */
 export function publishedLayoutForPageType(pageType?: string): PublishedDiagramLayout {
   if (pageType === 'teorema') return 'theorem';
-  if (pageType === 'definicion' || pageType === 'metodo') return 'balanced';
+  if (pageType === 'definicion' || pageType === 'axioma' || pageType === 'metodo') return 'balanced';
   if (pageType === 'demostracion') return 'demonstration';
   return 'standard';
 }
@@ -65,6 +64,8 @@ export function pageTypeFromContentPath(contentPath?: string): string {
 /**
  * Reproduce las reglas dimensionales de content-layout-columns.css y codex-layout.css.
  * Devuelve el rectángulo que recibe DiagramRenderer, no el viewport completo.
+ *
+ * Escritorio: diagrama = --content-diagram-share (50%). Móvil/tablet: apilado a ancho completo.
  */
 export function publishedDiagramArea(
   screen: ScreenDimensions,
@@ -95,21 +96,12 @@ export function publishedDiagramArea(
     };
   }
 
-  if (layout === 'balanced') {
-    return { layout, width: Math.round(screenWidth / 2), height: Math.round(screenHeight) };
-  }
-
   const hasTheoremMetadata = layout === 'theorem' && screenWidth >= METADATA_BREAKPOINT;
   const contentWidth = screenWidth - (hasTheoremMetadata ? 19 * ROOT_FONT_SIZE : 0);
-  if (screenWidth >= WIDE_BREAKPOINT) {
-    const readingMeasure = (layout === 'theorem' ? 80 : 85) * EDITORIAL_CH_WIDTH;
-    return { layout, width: Math.round(contentWidth - readingMeasure), height: Math.round(screenHeight) };
-  }
-
-  const readingRatio = layout === 'theorem' ? 1.1 : 1.2;
+  // --content-diagram-share: 50%
   return {
     layout,
-    width: Math.round(contentWidth / (readingRatio + 1)),
+    width: Math.round(contentWidth * 0.5),
     height: Math.round(screenHeight),
   };
 }

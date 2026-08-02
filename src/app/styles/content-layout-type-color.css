@@ -163,6 +163,20 @@
   background-color: var(--page-accent, var(--theme-terracota));
 }
 
+/* Enlace pendiente: mismo --page-accent, mezclado hacia tinta opaca (≥4.5:1), no hacia lienzo */
+.page-accent-link--pending {
+  color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 62%, var(--ink-text-muted));
+  border-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 55%, var(--ink-text-muted));
+  text-decoration-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 55%, var(--ink-text-muted));
+  font-weight: 500;
+}
+
+.page-accent-link--pending:hover {
+  color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 78%, var(--ink-text));
+  border-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 70%, var(--ink-text-muted));
+  text-decoration-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 70%, var(--ink-text-muted));
+}
+
 .page-accent-scope .content-metadata {
   background-color: color-mix(in srgb, var(--theme-lienzo) 95%, var(--page-accent) 5%);
 }

@@ -36,7 +36,7 @@
 .ac-ink-scope .prose h3 {
   color: color-mix(
     in srgb,
-    var(--theme-terracota) calc(100% - var(--ink-pigment-mix)),
+    var(--page-accent) calc(100% - var(--ink-pigment-mix)),
     var(--ink-text)
   );
 }
@@ -56,16 +56,26 @@
   color: color-mix(in srgb, var(--ink-text-body) 88%, var(--theme-terracota));
 }
 
-.ac-ink-scope .prose a,
+.ac-ink-scope .prose a:not(.page-accent-link--pending),
 .ac-ink-scope .ac-link,
-.ac-ink-scope .page-accent-link {
+.ac-ink-scope .page-accent-link:not(.page-accent-link--pending) {
   color: var(--page-accent, var(--theme-terracota));
 }
 
-.ac-ink-scope .prose a:hover,
+.ac-ink-scope .prose a:not(.page-accent-link--pending):hover,
 .ac-ink-scope .ac-link:hover,
-.ac-ink-scope .page-accent-link:hover {
+.ac-ink-scope .page-accent-link:not(.page-accent-link--pending):hover {
   color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 82%, var(--ink-text));
+}
+
+.ac-ink-scope .prose a.page-accent-link--pending,
+.ac-ink-scope .page-accent-link--pending {
+  color: color-mix(in srgb, var(--page-accent) 62%, var(--ink-text-muted));
+}
+
+.ac-ink-scope .prose a.page-accent-link--pending:hover,
+.ac-ink-scope .page-accent-link--pending:hover {
+  color: color-mix(in srgb, var(--page-accent) 78%, var(--ink-text));
 }
 
 .ac-ink-scope .page-accent-text {

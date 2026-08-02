@@ -6,19 +6,16 @@
    ========================================================================== */
 
 .content-layout {
-  /* Proporciones — editar aquí para cambiar texto vs diagrama. */
+  /* Proporciones — editar aquí.
+     Escritorio (≥1024px): diagrama = --content-diagram-share; texto = resto.
+     Texto dentro de su columna: tope --content-reading-measure + inset. */
   --content-top: 5.5rem;                 /* offset bajo la cabecera (móvil) */
   --content-shell-max: 112rem;           /* ancho máximo de la página */
-  --content-reading-measure: 85ch;       /* ancho máximo de la columna de texto */
-  --content-reading-fr: 1.2fr;           /* fracción texto (variant=reading) */
-  --content-diagram-fr: 1fr;             /* fracción diagrama (variant=reading) */
-  --content-diagram-col-min: 20rem;      /* mínimo columna diagrama */
-  --content-balanced-col-min: 30rem;     /* mínimo por columna (variant=balanced) */
-  --content-theorem-reading-fr: 1.1fr;   /* teorema: fracción texto */
-  --content-theorem-diagram-min: 21rem;  /* teorema: mínimo diagrama */
-  --content-wide-diagram-min: 24rem;     /* ≥1440px: mínimo diagrama */
-  --content-theorem-wide-reading: 80ch;  /* teorema ancho: medida texto */
-  --content-theorem-wide-diagram-min: 26rem;
+  --content-diagram-share: 50%;          /* % de pantalla del diagrama (escritorio) */
+  --content-reading-measure: 125ch;       /* tope tipográfico del texto (con diagrama) */
+  --content-reading-measure-solo: 140ch; /* sin diagrama: tope más ancho */
+  --content-reading-inset: clamp(0.5rem, 5vw, 6rem); /* margen lateral del texto */
+  --content-theorem-reading-measure: 80ch; /* teorema: tope tipográfico */
   --content-diagram-height: clamp(18rem, 46svh, 28rem);        /* altura diagrama (base) */
   --content-diagram-mobile-height: clamp(14rem, 36svh, 20rem); /* altura diagrama (móvil) */
   --content-diagram-sticky-min: 24rem;   /* min-height sticky escritorio */
@@ -27,6 +24,10 @@
   width: 100%;
   min-height: 100dvh;
   padding-top: var(--content-top);
+}
+
+.content-layout[data-has-diagram="false"] {
+  --content-reading-measure: var(--content-reading-measure-solo);
 }
 
 @media (min-width: 1024px) {
@@ -151,6 +152,12 @@
   width: min(100%, var(--content-reading-measure));
   min-width: 0;
   margin-inline: auto;
+  padding-inline: var(--content-reading-inset);
+  box-sizing: border-box;
+}
+
+.theorem-content-layout .content-reading {
+  width: min(100%, var(--content-theorem-reading-measure));
 }
 
 .content-diagram {
@@ -342,26 +349,12 @@
     display: none;
   }
 
-  .content-primary {
-    grid-template-areas: "reading diagram";
-    grid-template-columns: minmax(0, var(--content-reading-fr)) minmax(var(--content-diagram-col-min), var(--content-diagram-fr));
-    gap: 0;
-    padding-inline: 0;
-  }
-
+  /* Diagrama = % fijo; texto = el resto (con tope tipográfico dentro). */
   .content-layout[data-has-diagram="true"] .content-primary {
     grid-template-areas: "reading diagram";
-    grid-template-columns: minmax(0, var(--content-reading-fr)) minmax(var(--content-diagram-col-min), var(--content-diagram-fr));
+    grid-template-columns: minmax(0, 1fr) var(--content-diagram-share);
     gap: 0;
     padding-inline: 0;
-  }
-
-  .content-layout[data-has-diagram="true"][data-layout-variant="balanced"] .content-primary {
-    grid-template-columns: minmax(var(--content-balanced-col-min), 1fr) minmax(var(--content-balanced-col-min), 1fr);
-  }
-
-  .theorem-content-layout[data-has-diagram="true"] .content-primary {
-    grid-template-columns: minmax(0, var(--content-theorem-reading-fr)) minmax(var(--content-theorem-diagram-min), 1fr);
   }
 
   .content-layout[data-has-diagram="false"] .content-primary {
@@ -372,9 +365,12 @@
 
   .content-reading {
     padding-top: 6rem;
-    padding-inline: clamp(1rem, 2.5vw, 2.5rem);
-    width: 100%;
-    max-width: var(--content-reading-measure);
+    padding-inline: var(--content-reading-inset);
+    width: min(100%, var(--content-reading-measure));
+  }
+
+  .theorem-content-layout .content-reading {
+    width: min(100%, var(--content-theorem-reading-measure));
   }
 
   .content-diagram {
@@ -409,17 +405,6 @@
   .content-diagram-surface {
     overflow: hidden;
     background: transparent;
-  }
-}
-
-@media (min-width: 1440px) {
-  .content-primary,
-  .content-layout[data-has-diagram="true"] .content-primary {
-    grid-template-columns: minmax(0, var(--content-reading-measure)) minmax(var(--content-wide-diagram-min), 1fr);
-  }
-
-  .theorem-content-layout[data-has-diagram="true"] .content-primary {
-    grid-template-columns: minmax(0, var(--content-theorem-wide-reading)) minmax(var(--content-theorem-wide-diagram-min), 1fr);
   }
 }
 

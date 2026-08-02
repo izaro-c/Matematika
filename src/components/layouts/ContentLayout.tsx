@@ -18,9 +18,8 @@ interface ContentLayoutProps {
   /** Tipo de página (axioma, definición, …) → color `--page-accent`. */
   pageType?: string;
   /**
-   * Proporción texto/diagrama (`data-layout-variant`).
-   * `reading` = más texto; `balanced` = columnas iguales.
-   * Ratios en `src/app/styles/content-layout-columns.css`.
+   * Variante editorial (`data-layout-variant`). En escritorio el diagrama
+   * ocupa `--content-diagram-share` (ver `content-layout-columns.css`).
    */
   variant?: 'reading' | 'balanced';
   className?: string;
