@@ -26,6 +26,15 @@ describe('diagramHover', () => {
     });
   });
 
+  it('keeps geometry radius snaps on lines/circles but animates point size', () => {
+    const lineProps = withDiagramHoverTransition({}).transitionProperties as string[];
+    const pointProps = withDiagramHoverTransition({}, 'point').transitionProperties as string[];
+    expect(lineProps).not.toContain('r');
+    expect(lineProps).not.toContain('rx');
+    expect(lineProps).not.toContain('ry');
+    expect(pointProps).toEqual(expect.arrayContaining(['r', 'rx', 'ry', 'width', 'height']));
+  });
+
   it('tracks hover ids and requests updates only on changes', () => {
     const hover = createDiagramHoverController();
     const requestUpdate = vi.fn();

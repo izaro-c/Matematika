@@ -8,13 +8,13 @@ const LINE_TRANSITION_PROPERTIES = [
   'stroke-opacity',
   'stroke-width',
   'opacity',
-  'rx',
-  'ry',
-  'r',
 ] as const;
 
 const POINT_TRANSITION_PROPERTIES = [
   ...LINE_TRANSITION_PROPERTIES,
+  'rx',
+  'ry',
+  'r',
   'width',
   'height',
 ] as const;

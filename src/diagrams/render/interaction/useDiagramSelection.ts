@@ -84,6 +84,7 @@ export function attachSelection(
   if (!element) return;
   const node = element.rendNode as HTMLElement | undefined;
   node?.setAttribute('data-diagram-object-id', item.id);
+  node?.setAttribute('data-diagram-kind', 'kind' in item ? item.kind : 'point');
   node?.setAttribute('data-diagram-highlightable', String(item.selection.highlightable !== false));
   node?.setAttribute('aria-label', item.selection.ariaLabel ?? item.label);
   if (item.style?.preserveColorOnHighlight) node?.setAttribute('data-diagram-preserve-color', 'true');

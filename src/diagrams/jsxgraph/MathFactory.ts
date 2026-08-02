@@ -362,6 +362,28 @@ function normalizedArcDelta(start: number, end: number): number {
   return delta;
 }
 
+function createLiveParametricCurve(
+  board: JXG.Board,
+  coordinates: (t: number) => { x: number; y: number },
+  parents: readonly PointLike[],
+  options: GeometryOptions,
+  theme: ThemeColors,
+): JXG.Curve {
+  const curve = board.create('curve', [
+    (t: number) => coordinates(t).x,
+    (t: number) => coordinates(t).y,
+    0,
+    1,
+  ], {
+    strokeColor: theme.pavo,
+    strokeWidth: 2,
+    numberPointsHigh: 65,
+    ...options,
+  } as never) as JXG.Curve;
+  curve.addParents?.(parents as never);
+  return curve;
+}
+
 export function createPoincareArc(
   board: JXG.Board,
   points: [PointLike, PointLike, PointLike, PointLike],
@@ -369,16 +391,14 @@ export function createPoincareArc(
   theme: ThemeColors,
 ): JXG.Curve {
   const [center, boundary, a, b] = points;
-  const coordinates = (t: number) => {
+  return createLiveParametricCurve(board, (t) => {
     const circle = poincareCircle(center, boundary, a, b);
     if (circle.diameter) return { x: a.X() + (b.X() - a.X()) * t, y: a.Y() + (b.Y() - a.Y()) * t };
     const start = Math.atan2(a.Y() - circle.cy, a.X() - circle.cx);
     const end = Math.atan2(b.Y() - circle.cy, b.X() - circle.cx);
     const angle = start + normalizedArcDelta(start, end) * t;
     return { x: circle.cx + circle.geodesicRadius * Math.cos(angle), y: circle.cy + circle.geodesicRadius * Math.sin(angle) };
-  };
-  const sampled = Array.from({ length: 65 }, (_, index) => coordinates(index / 64));
-  return createSampledCurve(board, sampled, options, theme);
+  }, points, options, theme);
 }
 
 export function createPoincareGeodesic(
@@ -388,7 +408,7 @@ export function createPoincareGeodesic(
   theme: ThemeColors,
 ): JXG.Curve {
   const [center, boundary, a, b] = points;
-  const coordinates = (t: number) => {
+  return createLiveParametricCurve(board, (t) => {
     const circle = poincareCircle(center, boundary, a, b);
     if (circle.diameter) {
       const dx = b.X() - a.X();
@@ -417,9 +437,7 @@ export function createPoincareGeodesic(
     if (Math.hypot(middleX - circle.ox, middleY - circle.oy) > circle.radius) delta += delta > 0 ? -Math.PI * 2 : Math.PI * 2;
     const angle = start + delta * t;
     return { x: circle.cx + circle.geodesicRadius * Math.cos(angle), y: circle.cy + circle.geodesicRadius * Math.sin(angle) };
-  };
-  const sampled = Array.from({ length: 65 }, (_, index) => coordinates(index / 64));
-  return createSampledCurve(board, sampled, options, theme);
+  }, points, options, theme);
 }
 
 export type CurveAreaComposite = CompositeElement & {

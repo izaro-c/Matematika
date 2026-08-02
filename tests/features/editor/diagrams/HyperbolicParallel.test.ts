@@ -21,7 +21,7 @@ function sampleGeodesic(model: DiagramSpecV2, elementId: 'lineM' | 'lineN') {
   const board = {
     create: (kind: string, args: unknown[]) => {
       if (kind === 'curve') curveArgs = args;
-      return { setAttribute() {}, on() {}, rendNode: undefined };
+      return { setAttribute() {}, on() {}, rendNode: undefined, addParents() {} };
     },
   };
   const point = (id: string) => ({ X: () => coordinates[id].x, Y: () => coordinates[id].y });
@@ -31,8 +31,16 @@ function sampleGeodesic(model: DiagramSpecV2, elementId: 'lineM' | 'lineN') {
     {},
     {} as never,
   );
-  const [xs, ys] = curveArgs as [number[], number[]];
-  return xs.map((x, index) => ({ x, y: ys[index] }));
+  const [xFn, yFn, tMin = 0, tMax = 1] = curveArgs as [
+    (t: number) => number,
+    (t: number) => number,
+    number?,
+    number?,
+  ];
+  return Array.from({ length: 65 }, (_, index) => {
+    const t = tMin + (tMax - tMin) * index / 64;
+    return { x: xFn(t), y: yFn(t) };
+  });
 }
 
 describe('HyperbolicParallel', () => {

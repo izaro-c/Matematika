@@ -189,6 +189,18 @@
     height var(--diagram-visual-transition) var(--ease-interactive);
 }
 
+/* Circle radius is geometry, not hover polish — snap instantly. */
+[data-diagram-renderer] [data-diagram-kind="circle"] {
+  transition:
+    color var(--diagram-visual-transition) var(--ease-interactive),
+    fill var(--diagram-visual-transition) var(--ease-interactive),
+    stroke var(--diagram-visual-transition) var(--ease-interactive),
+    stroke-width var(--diagram-visual-transition) var(--ease-interactive),
+    stroke-opacity var(--diagram-visual-transition) var(--ease-interactive),
+    fill-opacity var(--diagram-visual-transition) var(--ease-interactive),
+    opacity var(--diagram-visual-transition) var(--ease-interactive);
+}
+
 /* Conserva el estilo editorial existente; solo limita la caja al espacio
  * realmente libre entre la cabecera y los controles. */
 .matematika-info-panel {
