@@ -71,7 +71,11 @@ export function AxiomPage() {
   );
 
   return (
-    <ContentLayout pageType="axioma" diagram={axiom.Simulation ? <ContentDiagram component={axiom.Simulation} /> : undefined}>
+    <ContentLayout
+      pageType="axioma"
+      variant="balanced"
+      diagram={axiom.Simulation ? <ContentDiagram component={axiom.Simulation} /> : undefined}
+    >
       {content}
     </ContentLayout>
   );

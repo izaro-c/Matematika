@@ -199,5 +199,6 @@ h1, h2 {
 
 .prose p {
   text-wrap: pretty;
-  max-width: 65ch;
+  /* Ancho lo marca la columna (.content-reading / --content-reading-measure), no un tope fijo. */
+  max-width: 100%;
 }

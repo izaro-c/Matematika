@@ -32,7 +32,7 @@ export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
     return (
       <Link
         href={`/construccion/${targetId}`}
-        className="page-accent-link font-bold border-b border-dashed transition-all duration-150 px-[2px] rounded-none cursor-pointer"
+        className="page-accent-link--pending border-b border-dashed transition-all duration-150 px-[2px] rounded-none cursor-pointer"
         title={`"${targetId}" — página en construcción`}
       >
         {children}
