@@ -39,48 +39,58 @@ export const ValidationPanel: React.FC<ValidationPanelProps> = ({ validation, on
         </p>
       ) : (
         <div className="mt-3 max-h-64 space-y-2 overflow-y-auto pr-1">
-          {validation.issues.map(item => {
-            const Card = onSelectIssue ? 'button' : 'div';
-            const extraProps = onSelectIssue ? {
-              type: 'button' as const,
-              onClick: () => onSelectIssue(item),
-              className: `w-full text-left rounded border p-2 hover:border-carbon/30 focus:outline-none focus:ring-1 focus:ring-salvia transition-all cursor-pointer block ${
-                item.severity === 'error'
-                  ? 'border-granada/20 bg-granada/5 hover:bg-granada/10'
-                  : 'border-ocre/20 bg-ocre/5 hover:bg-ocre/10'
-              }`
-            } : {
-              className: `rounded border p-2 ${
-                item.severity === 'error'
-                  ? 'border-granada/20 bg-granada/5'
-                  : 'border-ocre/20 bg-ocre/5'
-              }`
-            };
-
-            return (
-              <Card
-                key={item.id}
-                {...extraProps}
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="ac-label ac-label--xs ac-label--soft">
-                    {AREA_LABELS[item.area] || item.area}
-                  </span>
-                  <span
-                    className={`ac-label ac-label--xs ${
-                      item.severity === 'error' ? 'text-granada' : 'text-ocre'
-                    }`}
-                  >
-                    {item.severity === 'error' ? 'Error' : 'Aviso'}
-                  </span>
+          {[...validation.issues]
+            .sort((a, b) => {
+              const priority = { error: 0, warning: 1, info: 2 };
+              return (priority[a.severity] ?? 3) - (priority[b.severity] ?? 3);
+            })
+            .map(item => {
+              const isError = item.severity === 'error';
+              const isWarning = item.severity === 'warning';
+              return (
+                <div
+                  key={item.id}
+                  className={`p-3 rounded-xl border transition-all ${
+                    isError
+                      ? 'border-granada/30 bg-granada/5 hover:border-granada/50'
+                      : isWarning
+                        ? 'border-ocre/30 bg-ocre/5 hover:border-ocre/50'
+                        : 'border-salvia/30 bg-salvia/5 hover:border-salvia/50'
+                  }`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center space-x-2">
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full shrink-0 ${
+                          isError ? 'bg-granada animate-pulse' : isWarning ? 'bg-ocre' : 'bg-salvia'
+                        }`}
+                      />
+                      <span className="font-bold text-xs uppercase tracking-wider text-carbon">
+                        {AREA_LABELS[item.area] || item.area} • {isError ? 'Error' : isWarning ? 'Aviso' : 'Info'}
+                      </span>
+                    </div>
+                    {onSelectIssue && (
+                      <button
+                        type="button"
+                        onClick={() => onSelectIssue(item)}
+                        className="text-[10px] font-bold text-salvia hover:underline cursor-pointer flex items-center space-x-0.5"
+                      >
+                        <span>Ir al elemento</span>
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+                  <p className="mt-1.5 font-sans text-xs text-carbon leading-relaxed">{item.message}</p>
+                  {(item.blockId || item.sourceRange) && (
+                    <span className="inline-block mt-1.5 font-mono text-[9px] text-salvia bg-carbon/5 px-1.5 py-0.5 rounded border border-carbon/10">
+                      {item.blockId ? `Bloque: ${item.blockId}` : `Línea: ${item.sourceRange?.start ?? 'origen'}`}
+                    </span>
+                  )}
                 </div>
-                <p className="mt-1 text-xs leading-snug text-carbon/75">{item.message}</p>
-                {onSelectIssue && (item.blockId || item.sourceRange) && (
-                  <span className="mt-1 block text-[8px] font-mono text-carbon/40 italic">Haga clic para navegar al origen</span>
-                )}
-              </Card>
-            );
-          })}
+              );
+            })}
         </div>
       )}
     </section>

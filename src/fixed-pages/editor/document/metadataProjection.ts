@@ -26,7 +26,7 @@ type EstreeNode = {
   [key: string]: unknown;
 };
 
-const CONTENT_ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const CONTENT_ID_RE = /^[a-zA-Z0-9_-]+$/;
 const REFERENCE_FIELDS = new Set([
   'authors', 'lemmas', 'corollaries', 'demos', 'requires', 'examples', 'exercises',
   'parentTheorem', 'axiomas', 'models', 'relatedTheorem', 'satisfies', 'proofMethod',
@@ -173,7 +173,15 @@ export function validateProjectedMetadata(
   const type = typeof value.type === 'string' ? value.type : '';
 
   if (!id) diagnostics.push(diagnostic('METADATA_ID_REQUIRED', 'El metadata debe declarar un ID explícito.', objectRange));
-  else if (!CONTENT_ID_RE.test(id)) diagnostics.push(diagnostic('METADATA_ID_KEBAB', 'El ID del contenido debe usar kebab-case estricto.', objectRange));
+  else if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)) {
+    diagnostics.push({
+      code: 'METADATA_ID_KEBAB',
+      severity: 'warning',
+      message: 'Recomendación: El ID del contenido debería usar kebab-case estricto.',
+      sourceRange: objectRange,
+      panel: 'metadata',
+    });
+  }
 
   if (!type) {
     diagnostics.push(diagnostic('METADATA_TYPE_REQUIRED', 'El metadata debe declarar el tipo de contenido.', objectRange));
@@ -186,15 +194,12 @@ export function validateProjectedMetadata(
     return { valid: false, diagnostics };
   }
 
-  const LEAN_FIELDS = new Set(['leanId', 'leanCommitSha', 'leanVerified', 'verificationStatus', 'foundation', 'sources', 'stepTacticMap']);
-
   const parsed = schema.safeParse(value);
   if (!parsed.success) {
     for (const issue of parsed.error.issues) {
-      const isLean = issue.path.some(p => LEAN_FIELDS.has(String(p)));
       diagnostics.push({
         code: `METADATA_SCHEMA_${issue.path.join('_').toUpperCase() || 'ROOT'}`,
-        severity: isLean ? 'warning' : 'error',
+        severity: 'warning',
         message: `${issue.path.join('.') || 'metadata'}: ${issue.message}`,
         sourceRange: objectRange,
         panel: 'metadata',
@@ -210,15 +215,16 @@ export function validateProjectedMetadata(
         diagnostics.push({
           code: `METADATA_REFERENCE_${key.toUpperCase()}`,
           severity: 'warning',
-          message: `${key} contiene una referencia que aún no usa un ID resuelto o kebab-case.`,
+          message: `${key} contiene una referencia que aún no usa un ID resuelto.`,
           sourceRange: objectRange,
           panel: 'metadata',
         });
       }
     }
   }
-  const hasErrors = diagnostics.some(d => d.severity === 'error' || d.severity === 'critical');
-  return { valid: !hasErrors, schemaName: type, diagnostics };
+
+  const hasBlockingErrors = diagnostics.some(d => d.severity === 'error');
+  return { valid: !hasBlockingErrors, schemaName: type, diagnostics };
 }
 
 export function projectMetadata(esmNodes: EstreeNode[]): {
