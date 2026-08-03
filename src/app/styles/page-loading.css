@@ -1,0 +1,109 @@
+/* ==========================================================================
+   PAGE LOADING — espera de ruta / MDX (Arts & Crafts)
+   ========================================================================== */
+
+.page-loading {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background-color: var(--theme-lienzo);
+  color: var(--theme-carbon);
+}
+
+.page-loading--embedded {
+  min-height: 18rem;
+  padding: 2rem 0.5rem;
+  background: transparent;
+}
+
+.page-loading--embedded .page-loading__stage {
+  border: none;
+  outline: none;
+  padding: 1rem;
+  background: transparent;
+}
+
+.page-loading__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 22rem;
+  padding: clamp(2rem, 4vw, 2.75rem) clamp(1.75rem, 4vw, 2.5rem);
+  background-color: var(--theme-lienzo);
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 28%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--theme-carbon) 12%, transparent);
+  outline-offset: -5px;
+}
+
+.page-loading__mark {
+  margin-bottom: 1.25rem;
+  animation: page-loading-breathe 2.4s ease-in-out infinite;
+}
+
+.page-loading__logo {
+  width: 4.25rem;
+  height: 4.25rem;
+  color: var(--theme-carbon);
+}
+
+.page-loading__eyebrow {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-title);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--theme-carbon) 55%, transparent);
+}
+
+.page-loading__message {
+  margin: 0;
+  font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--theme-carbon) 72%, transparent);
+}
+
+.page-loading__rules {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1.75rem;
+}
+
+.page-loading__rule {
+  display: block;
+  height: 1px;
+  background: color-mix(in srgb, var(--theme-terracota) 55%, var(--theme-carbon));
+}
+
+.page-loading__rule--long {
+  width: 5.5rem;
+}
+
+.page-loading__rule--short {
+  width: 2.75rem;
+}
+
+@keyframes page-loading-breathe {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loading__mark {
+    animation: none;
+    opacity: 1;
+  }
+}

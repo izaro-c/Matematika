@@ -31,6 +31,8 @@ CSS de composición visual. Los **tokens tipados** están en `src/design/` (Type
 | `codex-layout.css` | Layout de demostraciones |
 | `theorem-wide-tree.css` | Teorema muy ancho + árbol axiomático (≥1600px) |
 | `paper-and-ink.css` | Grano de papel y tinta |
+| `page-loading.css` | Pantalla de espera de ruta / MDX |
+| `skeletons.css` | Skeletons de diagrama y grafo |
 
 ## Layout de páginas de contenido
 

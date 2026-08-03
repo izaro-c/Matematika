@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { useRoute } from 'wouter';
 import { db } from '@/data/content';
 import { ContentDiagram, ContentLayout } from '@/components/layouts/ContentLayout';
@@ -45,9 +44,7 @@ export function AxiomaticSystemPage() {
         />
 
         <ContentBody>
-          <Suspense fallback={<div className="animate-pulse h-64 bg-carbon/5 rounded" />}>
-            <system.Component />
-          </Suspense>
+          <system.Component />
         </ContentBody>
       </FadeIn>
     </div>

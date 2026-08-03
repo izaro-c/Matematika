@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { useRoute } from 'wouter';
 import { db } from '@/data/content';
 import { ContentDiagram, ContentLayout } from '@/components/layouts/ContentLayout';
@@ -49,9 +48,7 @@ export function ModelPage() {
         />
 
         <ContentBody>
-          <Suspense fallback={<div className="animate-pulse text-pizarra italic py-8">Cargando contenido...</div>}>
-            <model.Component />
-          </Suspense>
+          <model.Component />
         </ContentBody>
 
 

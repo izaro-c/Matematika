@@ -70,13 +70,8 @@
   animation: simple-fade 0.2s ease-in both;
 }
 
-.page-transition {
-  animation: simple-fade 0.2s ease-in both;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .animate-fade-in,
-  .page-transition {
+  .animate-fade-in {
     animation: none;
     opacity: 1;
   }

@@ -1,6 +1,7 @@
-import React, { useMemo, Suspense } from 'react';
+import React, { useMemo } from 'react';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { CodexLayout } from '@/components/layouts/CodexLayout';
+import { DiagramSlot } from '@/components/ui/skeletons';
 import { insertQedAfterLastProofStep } from './insertQedAfterLastProofStep';
 
 /**
@@ -21,28 +22,20 @@ interface DiagramFrame {
 }
 
 const DiagramTransition: React.FC<{ activeKey: React.Key; frames: DiagramFrame[] }> = ({ activeKey, frames }) => {
-  const activeIndex = Math.max(0, frames.findIndex(frame => frame.key === activeKey));
+  const active = frames.find((frame) => frame.key === activeKey) ?? frames[0];
+  if (!active) return null;
+  // Un solo tablero montado: montar todos los frames en paralelo multiplica el coste JSXGraph.
   return (
     <div className="diagram-transition-stack" data-diagram-transition-key={String(activeKey)}>
-      {frames.map((frame, index) => {
-        const isCurrent = index === activeIndex;
-        return (
-          <div
-            key={frame.key}
-            className={`diagram-transition-frame ${isCurrent ? 'is-current' : 'is-inactive'}`}
-            data-diagram-transition-state={isCurrent ? 'current' : 'inactive'}
-            aria-hidden={isCurrent ? undefined : true}
-            style={{
-              opacity: isCurrent ? 1 : 0.35,
-              transform: `translateY(${(index - activeIndex) * 100}%)`,
-            }}
-          >
-            <Suspense fallback={<div className="animate-pulse text-carbon/40 font-serif">Cargando visualización...</div>}>
-              {frame.node}
-            </Suspense>
-          </div>
-        );
-      })}
+      <div
+        key={active.key}
+        className="diagram-transition-frame is-current"
+        data-diagram-transition-state="current"
+      >
+        <DiagramSlot>
+          {active.node}
+        </DiagramSlot>
+      </div>
     </div>
   );
 };

@@ -1,12 +1,13 @@
 import { create } from 'zustand';
+import { Difficulty } from '../content';
 
 export interface PageMetadata {
   id?: string;
   title?: string;
   type?: string;
   domain?: string;
-  author?: string;
-  difficulty?: 'principiante' | 'intermedio' | 'avanzado' | 'experto';
+  author?: string[];
+  difficulty?: Difficulty;
   tags?: string[];
   tableOfContents?: { id: string; title: string; level: number }[];
   date?: string;

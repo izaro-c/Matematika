@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { useRoute, Link } from 'wouter';
 import { db } from '@/data/content';
 import { FadeIn } from '@/components/ui/FadeIn';
+import { PageLoadingScreen } from '@/components/ui/PageLoadingScreen';
 import { DemonstrationHeaderProvider } from '@/lib/page-context/DemonstrationHeaderContext';
 
 /**
@@ -29,11 +30,7 @@ export const DemoPage: React.FC = () => {
   return (
     <FadeIn>
       <div className="ac-page relative w-full">
-        <Suspense fallback={
-          <div className="py-20 text-center text-carbon/50 italic animate-pulse">
-            Desenrollando pergamino...
-          </div>
-        }>
+        <Suspense fallback={<PageLoadingScreen message="Desenrollando el pergamino…" />}>
           <DemonstrationHeaderProvider key={demoId}>
             <demo.Component />
           </DemonstrationHeaderProvider>

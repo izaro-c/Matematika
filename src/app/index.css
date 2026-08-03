@@ -17,3 +17,5 @@
 @import "./styles/codex-layout.css";
 @import "./styles/theorem-wide-tree.css";
 @import "./styles/paper-and-ink.css";
+@import "./styles/page-loading.css";
+@import "./styles/skeletons.css";

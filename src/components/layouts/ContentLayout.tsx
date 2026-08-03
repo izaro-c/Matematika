@@ -1,5 +1,6 @@
-import { Suspense, useEffect, useId, useState, type ComponentType } from 'react';
+import { useEffect, useId, useState, type ComponentType } from 'react';
 import { getContentPageAccent } from '@/design';
+import { DiagramSlot } from '@/components/ui/skeletons';
 import { MobileContentHeaderSeparator, MobileDiagramToolbar } from './MobileDiagramChrome';
 
 interface ContentLayoutProps {
@@ -32,9 +33,9 @@ export function ContentDiagram({ component: Diagram }: {
   if (!Diagram) return null;
   return (
     <div className="simulation-panel">
-      <Suspense fallback={<div className="diagram-loading">Preparando visualización…</div>}>
+      <DiagramSlot>
         <Diagram />
-      </Suspense>
+      </DiagramSlot>
     </div>
   );
 }

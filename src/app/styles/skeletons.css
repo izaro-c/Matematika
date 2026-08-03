@@ -1,0 +1,122 @@
+/* ==========================================================================
+   SKELETONS — cáscara unificada (papel + tinta); figura según el elemento
+   ========================================================================== */
+
+.sk {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 0;
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background-color: var(--theme-lienzo);
+}
+
+.sk--diagram {
+  height: 100%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--page-accent, var(--theme-pizarra));
+  border-radius: 20px;
+}
+
+.sk--graph {
+  border: 1px solid color-mix(in srgb, var(--theme-carbon) 8%, transparent);
+}
+
+.sk__ghost {
+  display: grid;
+  place-items: center;
+  margin-bottom: 1.75rem;
+  pointer-events: none;
+  color: color-mix(in srgb, var(--page-accent, var(--theme-pizarra)) 30%, transparent);
+}
+
+.sk__figure {
+  width: min(42%, 11rem);
+  height: auto;
+  display: block;
+}
+
+.sk__figure--graph {
+  width: min(58%, 11.5rem);
+}
+
+.sk__label {
+  position: absolute;
+  bottom: 2.1rem;
+  margin: 0;
+  max-width: 16rem;
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-diagram, ui-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  text-align: center;
+  color: color-mix(in srgb, var(--theme-carbon) 58%, transparent);
+  animation: sk-pulse 2s ease-in-out infinite;
+}
+
+.sk--graph .sk__label {
+  bottom: 1.35rem;
+  font-size: 0.8125rem;
+}
+
+.sk__ink {
+  position: absolute;
+  inset-inline: 1.25rem;
+  bottom: 0.95rem;
+  height: 2px;
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--page-accent, var(--theme-pizarra)) 22%, transparent);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sk--graph .sk__ink {
+  inset-inline: 1rem;
+  bottom: 0.65rem;
+}
+
+.sk__ink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: color-mix(in srgb, var(--page-accent, var(--theme-pizarra)) 70%, transparent);
+  animation: sk-ink 1.6s ease-in-out infinite;
+}
+
+@keyframes sk-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes sk-ink {
+  0% {
+    transform: translateX(-20%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk__label {
+    animation: none;
+    opacity: 0.8;
+  }
+
+  .sk__ink::after {
+    animation: none;
+    width: 100%;
+    opacity: 0.45;
+  }
+}

@@ -9,26 +9,13 @@ interface FadeInProps {
 }
 
 /**
- * Entrada suave. La opacidad inicial vive en keyframes (`animation-fill-mode: both`),
- * no en inline style — así prefers-reduced-motion / fallos de animación no dejan el
- * contenido invisible (opacity: 0 permanente).
+ * Contenedor de layout. Sin animación de entrada: el contenido aparece
+ * ya en su sitio cuando cae la pantalla de carga.
  */
 export const FadeIn: React.FC<FadeInProps> = ({
   children,
-  delay = 0,
-  duration = 400,
   className = '',
   as: Tag = 'div',
 }) => {
-  return (
-    <Tag
-      className={`animate-fade-in ${className}`}
-      style={{
-        animationDelay: `${delay}ms`,
-        animationDuration: `${duration}ms`,
-      }}
-    >
-      {children}
-    </Tag>
-  );
+  return <Tag className={className || undefined}>{children}</Tag>;
 };

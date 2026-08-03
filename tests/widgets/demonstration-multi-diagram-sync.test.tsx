@@ -20,7 +20,7 @@ afterEach(() => {
 });
 
 describe('DemonstrationSection with multiple diagrams', () => {
-  it('keeps one sticky layout and changes the diagram with the active proof step', () => {
+  it('keeps one sticky layout and mounts only the active proof-step diagram', () => {
     render(
       <MathProvider>
         <DemonstrationSection diagrams={{
@@ -37,10 +37,9 @@ describe('DemonstrationSection with multiple diagrams', () => {
 
     expect(document.querySelectorAll('.codex-layout')).toHaveLength(1);
     expect(document.querySelectorAll('.codex-diagram')).toHaveLength(1);
-    const commensurableDiagram = screen.getByTestId('commensurable-diagram');
-    const incommensurableDiagram = screen.getByTestId('incommensurable-diagram');
-    expect(commensurableDiagram.closest('[data-diagram-transition-state]')?.getAttribute('data-diagram-transition-state')).toBe('current');
-    expect(incommensurableDiagram.closest('[data-diagram-transition-state]')?.getAttribute('data-diagram-transition-state')).toBe('inactive');
+    expect(screen.getByTestId('commensurable-diagram')).toBeTruthy();
+    expect(screen.queryByTestId('incommensurable-diagram')).toBeNull();
+    expect(document.querySelector('.diagram-transition-frame.is-current')).toBeTruthy();
 
     const proofSteps = document.querySelectorAll<HTMLElement>('.proof-step');
     Object.defineProperty(window, 'innerHeight', { configurable: true, value: 800 });
@@ -62,16 +61,14 @@ describe('DemonstrationSection with multiple diagrams', () => {
     fireEvent.scroll(window);
 
     expect(proofSteps[1].classList.contains('is-active')).toBe(true);
-    expect(commensurableDiagram.closest('[data-diagram-transition-state]')?.getAttribute('data-diagram-transition-state')).toBe('inactive');
-    expect(incommensurableDiagram.closest('[data-diagram-transition-state]')?.getAttribute('data-diagram-transition-state')).toBe('current');
-    expect(document.querySelector('.diagram-transition-frame.is-current')).toBeTruthy();
-    const diagramAtStep2 = incommensurableDiagram;
+    expect(screen.queryByTestId('commensurable-diagram')).toBeNull();
+    expect(screen.getByTestId('incommensurable-diagram')).toBeTruthy();
 
     Object.defineProperty(window, 'scrollY', { configurable: true, value: 1200 });
     fireEvent.scroll(window);
 
     expect(proofSteps[2].classList.contains('is-active')).toBe(true);
-    expect(screen.getByTestId('incommensurable-diagram')).toBe(diagramAtStep2);
+    expect(screen.getByTestId('incommensurable-diagram')).toBeTruthy();
 
     Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 });
     Object.defineProperty(proofSteps[0], 'getBoundingClientRect', {
@@ -85,7 +82,7 @@ describe('DemonstrationSection with multiple diagrams', () => {
     fireEvent.scroll(window);
 
     expect(proofSteps[0].classList.contains('is-active')).toBe(true);
-    expect(commensurableDiagram.closest('[data-diagram-transition-state]')?.getAttribute('data-diagram-transition-state')).toBe('current');
-    expect(incommensurableDiagram.closest('[data-diagram-transition-state]')?.getAttribute('data-diagram-transition-state')).toBe('inactive');
+    expect(screen.getByTestId('commensurable-diagram')).toBeTruthy();
+    expect(screen.queryByTestId('incommensurable-diagram')).toBeNull();
   });
 });
