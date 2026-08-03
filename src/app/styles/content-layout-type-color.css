@@ -84,6 +84,11 @@
   background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 5%, transparent);
 }
 
+.page-accent-read-button {
+  border-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 35%, transparent);
+  background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 5%, transparent);
+}
+
 .page-accent-focus:focus {
   border-color: var(--page-accent, var(--theme-terracota));
   background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 5%, transparent);
