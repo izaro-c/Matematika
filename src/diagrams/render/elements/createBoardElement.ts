@@ -47,7 +47,7 @@ import {
   referencedLabelAnchor,
   viewportPanelAnchors,
   viewportPositionCoordinates,
-} from '@/diagrams/render/interaction/useDiagramViewport';
+} from '@/diagrams/render/interaction/diagramViewportAnchors';
 import {
   createCurveAreaElement,
   createLiveAreaPointResolver,

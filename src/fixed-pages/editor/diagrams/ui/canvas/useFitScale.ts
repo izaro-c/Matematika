@@ -1,8 +1,11 @@
 import { useEffect, useState, type RefObject } from 'react';
 
 /**
- * Computes a uniform down-scale factor so `targetRef`'s natural (untransformed)
- * box fits inside `containerRef`'s available box. Never scales up (max 1).
+ * Uniform fit of `targetRef`'s natural (untransformed) box into `containerRef`.
+ *
+ * Recomputes on either box changing size, so shrinking the stage scales down and
+ * enlarging it scales back up toward 1. Never upscales past 1 (publication frames
+ * are already at their intended device size).
  */
 export function useFitScale(
   containerRef: RefObject<HTMLElement | null>,
