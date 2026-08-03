@@ -524,14 +524,13 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   }, [handleVisualEdit, model]);
 
   const handleCloseEditor = useCallback(() => {
-    if (isDirty && !window.confirm('Hay cambios sin guardar. ¿Cerrar el editor de todos modos?')) return;
     if (onClose) {
       onClose();
       return;
     }
     if (window.history.length > 1) window.history.back();
     else window.location.href = '/';
-  }, [isDirty, onClose]);
+  }, [onClose]);
 
   const handleSaveAndConfirm = useCallback(() => {
     if (!model || !mode || !onConfirm) {

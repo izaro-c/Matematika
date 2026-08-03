@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import type { VisualDiagramModel } from '../../model/types';
 import type { EnrichedDiagramDiagnostic } from '../../checks';
 import type { DiagramSaveCapability } from '../../model/scene/selectors';
 import type { CanvasFrameMode } from '../canvas/canvasFrameMode';
 import { IconSun, IconMoon, IconClose } from '../toolbar/WorkbenchIcons';
+import { Logo } from '@/components/ui/Logo';
+import { Link } from 'wouter';
+import { routePath } from '@/lib/routes';
+import { DiagramConfirmDialog } from '../DiagramConfirmDialog';
 
 interface WorkbenchHeaderProps {
   model: VisualDiagramModel | null;
@@ -62,11 +66,10 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
   saveCapability,
   onSave,
 }) => {
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark'));
-  }, []);
+  const [isDark, setIsDark] = useState(() =>
+    typeof document !== 'undefined' ? document.documentElement.classList.contains('dark') : false
+  );
+  const [pendingNavigationAction, setPendingNavigationAction] = useState<(() => void) | null>(null);
 
   const toggleTheme = () => {
     const nextDark = !isDark;
@@ -78,13 +81,30 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
     setIsDark(nextDark);
   };
 
-  const handleClose = () => {
+  const executeClose = () => {
     if (onCloseEditor) {
       onCloseEditor();
     } else if (window.history.length > 1) {
       window.history.back();
     } else {
-      window.location.href = '/';
+      window.location.href = routePath('/');
+    }
+  };
+
+  const handleClose = () => {
+    if (isDirty) {
+      setPendingNavigationAction(() => executeClose);
+    } else {
+      executeClose();
+    }
+  };
+
+  const handleGoHome = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isDirty) {
+      e.preventDefault();
+      setPendingNavigationAction(() => () => {
+        window.location.href = routePath('/');
+      });
     }
   };
 
@@ -105,9 +125,15 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
     <header className="flex h-14 w-full items-center justify-between border-b border-carbon/15 bg-lienzo/95 px-4 backdrop-blur-md z-30 transition-colors">
       {/* Sección Izquierda: Identidad y Título */}
       <div className="flex items-center space-x-3 min-w-0">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-salvia/20 text-salvia font-serif font-bold text-base shadow-2xs shrink-0">
-          M²
-        </div>
+        <Link
+          href={routePath('/')}
+          onClick={handleGoHome}
+          className="flex h-8 w-8 items-center justify-center cursor-pointer rounded-lg hover:bg-carbon/5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-salvia"
+          title="Ir a página de inicio"
+          aria-label="Ir a página de inicio"
+        >
+          <Logo decorative className="h-8 w-8" />
+        </Link>
         <div className="flex flex-col min-w-0">
           <div className="flex items-center space-x-2">
             <input
@@ -301,7 +327,7 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
           type="button"
           onClick={toggleTheme}
           className="flex h-8 w-8 items-center justify-center rounded-lg border border-carbon/15 bg-carbon/5 text-carbon hover:bg-carbon/15 transition-all shadow-2xs cursor-pointer"
-          title={isDark ? 'Cambiar a modo Día (Papiro)' : 'Cambiar a modo Noche (Códice)'}
+          title={isDark ? 'Cambiar a modo día' : 'Cambiar a modo noche'}
         >
           {isDark ? <IconSun /> : <IconMoon />}
         </button>
@@ -316,6 +342,21 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
           <IconClose />
         </button>
       </div>
+
+      <DiagramConfirmDialog
+        isOpen={pendingNavigationAction !== null}
+        title="Cambios sin guardar"
+        message="Hay cambios sin guardar en el diagrama. ¿Deseas salir del editor de todos modos?"
+        variant="warning"
+        confirmLabel="Salir sin guardar"
+        cancelLabel="Permanecer"
+        onConfirm={() => {
+          const action = pendingNavigationAction;
+          setPendingNavigationAction(null);
+          action?.();
+        }}
+        onCancel={() => setPendingNavigationAction(null)}
+      />
     </header>
   );
 };
