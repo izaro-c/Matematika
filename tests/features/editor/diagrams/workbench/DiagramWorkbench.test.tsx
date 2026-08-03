@@ -16,17 +16,18 @@ describe('DiagramWorkbench Component', () => {
   it('permite cambiar entre las pestañas del inspector (Objetos, Propiedades, Pasos, Salud)', () => {
     render(<DiagramWorkbench />);
 
-    const propTab = screen.getByRole('button', { name: /^Propiedades$/i });
+    const propTab = screen.getByRole('tab', { name: /^Propiedades$/i });
     fireEvent.click(propTab);
-    expect(propTab.className).toContain('font-bold');
+    expect(propTab.getAttribute('aria-selected')).toBe('true');
 
-    const stepsTab = screen.getByRole('button', { name: /^Pasos \(/i });
+    const stepsTab = screen.getByRole('tab', { name: /^Pasos \(/i });
     fireEvent.click(stepsTab);
-    expect(stepsTab.className).toContain('font-bold');
+    expect(stepsTab.getAttribute('aria-selected')).toBe('true');
 
-    const diagTabs = screen.getAllByRole('button', { name: /Salud/i });
+    const diagTabs = screen.getAllByRole('tab', { name: /Salud/i });
     expect(diagTabs.length).toBeGreaterThan(0);
     fireEvent.click(diagTabs[diagTabs.length - 1]);
+    expect(diagTabs[diagTabs.length - 1].getAttribute('aria-selected')).toBe('true');
   });
 
   it('crea e inspecciona un panel informativo (infoPanel) con editor de bloques', () => {

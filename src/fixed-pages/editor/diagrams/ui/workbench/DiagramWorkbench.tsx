@@ -50,6 +50,7 @@ import { WorkbenchSceneTree } from './WorkbenchSceneTree';
 import { WorkbenchElementInspector } from './WorkbenchElementInspector';
 import { WorkbenchStepsEditor } from '../toolbar/WorkbenchStepsEditor';
 import { WorkbenchDiagnosticsPanel } from './WorkbenchDiagnosticsPanel';
+import { WorkbenchAsideTabs } from '@/fixed-pages/editor/ui/workbench/WorkbenchAsideTabs';
 import { PresetsModal } from '../modals/PresetsModal';
 import { CodeModal } from '../modals/CodeModal';
 import { DiagramSettingsModal } from '../modals/DiagramSettingsModal';
@@ -703,49 +704,23 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
         />
 
         <aside className="w-80 md:w-96 flex flex-col border-l border-carbon/15 bg-lienzo/95 backdrop-blur-md overflow-hidden z-10 transition-colors">
-          <div className="flex items-center border-b border-carbon/10 bg-carbon/5 p-1">
-            <button
-              type="button"
-              onClick={() => setActiveTab('scene')}
-              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                activeTab === 'scene' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
-              }`}
-            >
-              Objetos ({objectCount})
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('properties')}
-              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                activeTab === 'properties' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
-              }`}
-            >
-              Propiedades
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('steps')}
-              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                activeTab === 'steps' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
-              }`}
-            >
-              Pasos ({(model?.steps || []).length})
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('diagnostics')}
-              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer relative ${
-                activeTab === 'diagnostics' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
-              }`}
-            >
-              Salud
-              {errorCount > 0 && (
-                <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-granada animate-pulse" />
-              )}
-            </button>
-          </div>
-
-          <div className="flex-1 overflow-y-auto overflow-x-visible relative z-0">
+          <WorkbenchAsideTabs
+            aria-label="Secciones del inspector de diagrama"
+            tabs={[
+              { id: 'scene', label: `Objetos (${objectCount})` },
+              { id: 'properties', label: 'Propiedades' },
+              { id: 'steps', label: `Pasos (${(model?.steps || []).length})` },
+              {
+                id: 'diagnostics',
+                label: 'Salud',
+                endAdornment: errorCount > 0 ? (
+                  <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-granada animate-pulse" />
+                ) : undefined,
+              },
+            ]}
+            activeTab={activeTab}
+            onTabChange={id => setActiveTab(id as typeof activeTab)}
+          >
             {activeTab === 'scene' && (
               <WorkbenchSceneTree
                 model={model}
@@ -816,7 +791,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
                 onAutoFixBrokenReferences={handleAutoFixBrokenReferences}
               />
             )}
-          </div>
+          </WorkbenchAsideTabs>
         </aside>
       </div>
 
