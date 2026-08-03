@@ -54,6 +54,7 @@ import {
   commitElementVisuals,
   createDiagramHoverController,
   diagramVisualTransitionKey,
+  preservesOwnColorOnHighlight,
   shouldAnimateDiagramVisuals,
   withDiagramHoverTransition,
   type DiagramHoverController,
@@ -61,6 +62,7 @@ import {
 import {
   buildVisualOrderById,
   installTopmostOnlyHitTesting,
+  resolveCanvasSelectionHitId,
 } from '@/diagrams/render/interaction/diagramTopmostHit';
 import {
   updateAreaIntersectionFills,
@@ -92,15 +94,33 @@ function supportParentsByPointId(spec: DiagramSpecV2): Map<string, readonly stri
   return parents;
 }
 
+function pointLikeIdsFromSpec(spec: DiagramSpecV2): Set<string> {
+  return new Set([
+    ...spec.points.map(point => point.id),
+    ...spec.elements
+      .filter(item => ['intersection', 'midpoint', 'perpendicularFoot'].includes(item.kind))
+      .map(item => item.id),
+  ]);
+}
+
 function installDiagramHitTesting(
   spec: DiagramSpecV2,
   elements: Record<string, any>,
   plan: ReturnType<typeof createScenePlan>,
+  getHoveredId?: () => string | null | undefined,
 ): void {
+  const selectableIds = new Set(
+    [...spec.points, ...spec.elements, ...spec.sliders]
+      .filter(item => item.selection.selectable)
+      .map(item => item.id),
+  );
   installTopmostOnlyHitTesting(
     elements,
     buildVisualOrderById(plan),
     supportParentsByPointId(spec),
+    selectableIds,
+    pointLikeIdsFromSpec(spec),
+    getHoveredId,
   );
 }
 
@@ -366,6 +386,10 @@ export function useBoardLifecycle({
   } | null>(null);
   const applyPulseFromCacheRef = useRef<() => void>(() => {});
   const lastStackLayoutRef = useRef('');
+  const specRef = useRef(spec);
+  useLayoutEffect(() => {
+    specRef.current = spec;
+  }, [spec]);
   const highlightedIdsRef = useRef(highlightedIds);
   useLayoutEffect(() => {
     highlightedIdsRef.current = highlightedIds;
@@ -387,7 +411,8 @@ export function useBoardLifecycle({
       board.on('down', (event: unknown) => {
         const objects = board.getAllObjectsUnderMouse?.(event);
         if (!diagramPointerSelectionWasHandled(event) && Array.isArray(objects)) {
-          const selectableIds = new Set([...spec.points, ...spec.elements, ...spec.sliders]
+          const liveSpec = specRef.current;
+          const selectableIds = new Set([...liveSpec.points, ...liveSpec.elements, ...liveSpec.sliders]
             .filter(item => item.selection.selectable)
             .map(item => item.id));
           const pointerEvent = event as { target?: EventTarget | null; shiftKey?: boolean };
@@ -400,16 +425,17 @@ export function useBoardLifecycle({
               || rendered?.label === hit
               || rendered?.borders?.includes(hit)
             ));
-            return match && selectableIds.has(match[0]) ? [match[0]] : [];
+            return match ? [match[0]] : [];
           });
-          const pointLikeIds = new Set([
-            ...spec.points.map(point => point.id),
-            ...spec.elements.filter(item => ['intersection', 'midpoint', 'perpendicularFoot'].includes(item.kind)).map(item => item.id),
-          ]);
-          const pointHitId = hitIds.find(id => pointLikeIds.has(id));
-          const selectedHitId = pointHitId
-            ?? (targetId && selectableIds.has(targetId) ? targetId : undefined)
-            ?? hitIds[hitIds.length - 1];
+          const selectedHitId = resolveCanvasSelectionHitId({
+            hitIds,
+            selectableIds,
+            visualOrderById: buildVisualOrderById(createScenePlan(liveSpec)),
+            supportParentsByPointId: supportParentsByPointId(liveSpec),
+            pointLikeIds: pointLikeIdsFromSpec(liveSpec),
+            hoveredId: hoverController.getHoveredId(),
+            targetId,
+          });
           if (selectedHitId) {
             interactionCallbacksRef.current.onSelectionChange?.(selectedHitId, { additive: pointerEvent.shiftKey === true });
             return;
@@ -426,7 +452,7 @@ export function useBoardLifecycle({
       const sceneItem = entry.item;
       const directInteractionLocked = entry.locked || !sceneItem.selection.selectable;
       const highlightable = sceneItem.selection.highlightable !== false;
-      const hoverColor = !highlightable || sceneItem.style?.preserveColorOnHighlight ? theme[sceneItem.color] : theme.ocre;
+      const hoverColor = !highlightable || preservesOwnColorOnHighlight(sceneItem.style) ? theme[sceneItem.color] : theme.ocre;
       const pointLabelOptions = {
         visible: spec.showLabels !== false && (!('showLabel' in sceneItem) || sceneItem.showLabel !== false),
         ...('constraint' in sceneItem && sceneItem.style?.labelSize !== undefined ? { fontSize: sceneItem.style.labelSize } : {}),
@@ -697,7 +723,7 @@ export function useBoardLifecycle({
     });
 
     // Hit preferido: cima del apilado, o glider dependiente si solapa con un extremo.
-    installDiagramHitTesting(spec, elements, createScenePlan(spec));
+    installDiagramHitTesting(spec, elements, createScenePlan(spec), () => hoverControllerRef.current.getHoveredId());
   };
 
   const applyEntrySceneVisuals = (
@@ -741,11 +767,13 @@ export function useBoardLifecycle({
       : errorHighlight
         ? sceneTheme.granada
         : sceneTheme.ocre;
-    const color = (externalActive || hoverOnly) && !sceneStyle?.preserveColorOnHighlight
-      ? highlightColor
-      : (stepPrimary || stepSecondary) && entry.stepEmphasisColor
-        ? sceneTheme[entry.stepEmphasisColor]
-        : sceneTheme[entry.color];
+    const color = externalActive
+      ? (sceneStyle?.preserveColorOnHighlight === true ? sceneTheme[entry.color] : highlightColor)
+      : hoverOnly && !preservesOwnColorOnHighlight(sceneStyle)
+        ? highlightColor
+        : (stepPrimary || stepSecondary) && entry.stepEmphasisColor
+          ? sceneTheme[entry.stepEmphasisColor]
+          : sceneTheme[entry.color];
     const sceneVisible = mode === 'editor' && externalActive
       ? true
       : entry.visible || (externalActive && sceneStyle?.highlightVisible === true);
@@ -765,7 +793,17 @@ export function useBoardLifecycle({
       visible,
       fixed: 'kind' in item ? true : entry.locked || !item.selection.selectable,
     };
-    const hoverColor = item.selection.highlightable === false || sceneStyle?.preserveColorOnHighlight ? sceneTheme[entry.color] : sceneTheme.ocre;
+    const hoverColor = item.selection.highlightable === false || preservesOwnColorOnHighlight(sceneStyle) ? sceneTheme[entry.color] : sceneTheme.ocre;
+    const selectable = item.selection.selectable !== false;
+    const rendNode = element.rendNode as HTMLElement | undefined;
+    rendNode?.setAttribute('data-diagram-selectable', String(selectable));
+    if (rendNode) {
+      rendNode.style.cursor = selectable && mode === 'editor' ? 'pointer' : '';
+    }
+    element.borders?.forEach((border: { rendNode?: HTMLElement }) => {
+      border.rendNode?.setAttribute('data-diagram-selectable', String(selectable));
+      if (border.rendNode) border.rendNode.style.cursor = selectable && mode === 'editor' ? 'pointer' : '';
+    });
     const defaultShowLabel = 'constraint' in item || ('kind' in item && ['intersection', 'midpoint', 'perpendicularFoot', 'angle', 'nonReflexAngle'].includes(item.kind));
     const nativeLabelVisible = visible && spec.showLabels !== false
       && (entry.stepShowLabel !== undefined
@@ -1108,7 +1146,7 @@ export function useBoardLifecycle({
       shouldDimOthers,
     };
     const primaryPulseAmount = stepEmphasisAnimationRef.current.getPulseAmount();
-    const stackLayoutKey = plan.map(entry => `${entry.item.id}:${entry.item.layerId}:${entry.visualOrder}`).join('|');
+    const stackLayoutKey = plan.map(entry => `${entry.item.id}:${entry.item.layerId}:${entry.visualOrder}:${entry.item.selection.selectable ? 1 : 0}`).join('|');
     if (stackLayoutKey !== lastStackLayoutRef.current) {
       lastStackLayoutRef.current = stackLayoutKey;
       const stackCount = plan.length;
@@ -1116,7 +1154,7 @@ export function useBoardLifecycle({
         const layerNum = stackCount <= 1 ? 10 : Math.round(index * 20 / (stackCount - 1));
         applyRenderedStackLayer(elements[entry.item.id], layerNum);
       });
-      installDiagramHitTesting(spec, elements, plan);
+      installDiagramHitTesting(spec, elements, plan, () => hoverControllerRef.current.getHoveredId());
     }
     plan.forEach(entry => {
       const item = entry.item;

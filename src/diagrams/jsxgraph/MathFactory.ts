@@ -189,12 +189,16 @@ export function createPolygon(
   options: GeometryOptions = {},
   theme: ThemeColors,
 ): JXGPolygon {
+  const borderHighlight = options.highlight === false ? { highlight: false as const } : {};
   return board.create('polygon', vertices, {
     fillColor: theme.salvia,
     fillOpacity: 0.12,
-    borders: { strokeColor: theme.salvia, strokeWidth: 1.5 },
+    borders: { strokeColor: theme.salvia, strokeWidth: 1.5, ...borderHighlight },
     vertices: { visible: false },
     ...options,
+    ...(options.borders
+      ? { borders: { strokeColor: theme.salvia, strokeWidth: 1.5, ...borderHighlight, ...options.borders } }
+      : {}),
   } as never) as unknown as JXGPolygon;
 }
 

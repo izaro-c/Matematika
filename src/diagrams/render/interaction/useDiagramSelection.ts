@@ -86,16 +86,23 @@ export function attachSelection(
   node?.setAttribute('data-diagram-object-id', item.id);
   node?.setAttribute('data-diagram-kind', 'kind' in item ? item.kind : 'point');
   node?.setAttribute('data-diagram-highlightable', String(item.selection.highlightable !== false));
+  node?.setAttribute('data-diagram-selectable', String(item.selection.selectable !== false));
   node?.setAttribute('aria-label', item.selection.ariaLabel ?? item.label);
-  if (item.style?.preserveColorOnHighlight) node?.setAttribute('data-diagram-preserve-color', 'true');
+  if (item.style?.preserveColorOnHighlight !== false) node?.setAttribute('data-diagram-preserve-color', 'true');
   if (item.selection.role) node?.setAttribute('data-selection-role', item.selection.role);
   attachTargetInteraction(node, item, onTargetHighlight);
-  if (!item.selection.selectable) return;
+  if (!item.selection.selectable) {
+    if (node) {
+      node.style.cursor = '';
+    }
+    return;
+  }
   attachKeyboardAdjustment(node, item, onKeyboardAdjust);
   if (mode !== 'editor') return;
   node?.setAttribute('tabindex', '0');
   node?.addEventListener('keydown', (event) => {
     if (event.key !== 'Enter' && event.key !== ' ') return;
+    if (node.getAttribute('data-diagram-selectable') === 'false') return;
     event.preventDefault();
     onSelectionChange?.(item.id, { additive: event.shiftKey });
   });
@@ -103,7 +110,12 @@ export function attachSelection(
   const directlyManipulable = 'constraint' in item
     || 'min' in item
     || ('kind' in item && ['text', 'label', 'formula', 'infoPanel', 'measurement'].includes(item.kind));
+  const isStillSelectable = () => {
+    const host = element.rendNode as HTMLElement | undefined;
+    return host?.getAttribute('data-diagram-selectable') !== 'false';
+  };
   const selectFromPointer = (event: Event) => {
+    if (!isStillSelectable()) return;
     handledPointerSelections.add(event);
     lastPointerSelectionAt = Date.now();
     selectObject(event);
@@ -122,10 +134,12 @@ export function attachSelection(
     .filter((candidate): candidate is HTMLElement => Boolean(candidate));
   borderNodes.forEach(borderNode => {
     borderNode.setAttribute('data-diagram-part-of', item.id);
+    borderNode.setAttribute('data-diagram-selectable', String(item.selection.selectable !== false));
     borderNode.style.pointerEvents = 'all';
     borderNode.style.cursor = 'pointer';
   });
   element.on?.('down', event => {
+    if (!isStillSelectable()) return;
     if (event && diagramPointerSelectionWasHandled(event)) return;
     selectObject(event);
   });

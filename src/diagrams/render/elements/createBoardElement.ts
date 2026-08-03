@@ -34,7 +34,10 @@ import {
 import { renderKatexTextToHtml } from '@/components/ui/KatexText';
 import {DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS, type DiagramElement, type DiagramSpecV2} from '@/diagrams/model'
 import {resolveAreaDisplayPolygons, curveActsAsArea, sampleCurveElement} from '@/diagrams/geometry';
-import { withDiagramHoverTransition } from '@/diagrams/render/interaction/diagramHover';
+import {
+  preservesOwnColorOnHighlight,
+  withDiagramHoverTransition,
+} from '@/diagrams/render/interaction/diagramHover';
 import {
   annotationTextHtml,
   liveVariables,
@@ -66,7 +69,7 @@ export function createElement(
 ) {
   const refs = refsFor(item, elements);
   const highlightable = item.selection.highlightable !== false;
-  const hoverColor = !highlightable || item.style?.preserveColorOnHighlight ? theme[item.color] : theme.ocre;
+  const hoverColor = !highlightable || preservesOwnColorOnHighlight(item.style) ? theme[item.color] : theme.ocre;
   const defaultShowLabel = 'constraint' in item || ('kind' in item && ['intersection', 'midpoint', 'perpendicularFoot', 'angle', 'nonReflexAngle'].includes(item.kind));
   const labelVisible = spec.showLabels !== false && (item.showLabel !== undefined ? item.showLabel : defaultShowLabel);
   const labelOptions = {
@@ -95,7 +98,15 @@ export function createElement(
     fillColor: theme[item.color], highlightFillColor: hoverColor, fillOpacity: item.style?.fillOpacity ?? 0.1,
     highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.24,
     fixed: true,
-    borders: { strokeColor: theme[item.color], strokeWidth: item.style?.strokeWidth ?? 1.5, strokeOpacity: item.style?.strokeOpacity ?? 1, dash: item.dashed ? 2 : 0, fixed: true }, layer,
+    borders: {
+      strokeColor: theme[item.color],
+      highlightStrokeColor: hoverColor,
+      strokeWidth: item.style?.strokeWidth ?? 1.5,
+      strokeOpacity: item.style?.strokeOpacity ?? 1,
+      dash: item.dashed ? 2 : 0,
+      fixed: true,
+    },
+    layer,
   }), theme) : null;
   if (item.kind === 'circle') return refs.length >= 2 ? createCircle(board, [refs[0], refs[1]], {
     ...lineOptions, fillColor: theme[item.color], fillOpacity: item.style?.fillOpacity ?? 0,
