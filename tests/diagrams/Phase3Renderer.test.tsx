@@ -454,15 +454,15 @@ describe('Phase 3 shared renderer', () => {
     const labelledPoint = rendererState.createdOptions.find(item => item.kind === 'point' && item.options.name);
     expect(labelledPoint?.options).toMatchObject({
       highlightSize: 6,
-      highlightFillColor: 'ocre',
-      highlightStrokeColor: 'ocre',
+      highlightFillColor: 'carbon',
+      highlightStrokeColor: 'carbon',
       label: {
         fontSize: 19,
         cssClass: expect.stringContaining('matematika-point-label'),
         highlightCssClass: expect.stringContaining('matematika-point-label--highlight'),
         cssDefaultStyle: 'font-family: var(--font-diagram-family);',
         highlightCssDefaultStyle: 'font-family: var(--font-diagram-family);',
-        highlightStrokeColor: 'ocre',
+        highlightStrokeColor: 'carbon',
       },
     });
     expect(screen.getByText(spec.title).className).toContain('font-diagram');

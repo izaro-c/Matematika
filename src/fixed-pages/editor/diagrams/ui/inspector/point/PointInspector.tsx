@@ -13,6 +13,8 @@ import { DiagramPointMovementAidsEditor } from '@/fixed-pages/editor/diagrams/ui
 import { supportElements } from '@/fixed-pages/editor/diagrams/model';
 import { parseOptionalNumber } from '../../workbenchSelection';
 import { ConstraintEditor } from '../../constraints/ConstraintEditor';
+import { ElementVisibilitySection } from '../element/sections/ElementVisibilitySection';
+import type { VisualElement } from '@/fixed-pages/editor/diagrams/model/types';
 
 export const PointInspector: React.FC<PointPanelProps & {
   openAccordion: Record<string, boolean>;
@@ -271,6 +273,23 @@ export const PointInspector: React.FC<PointPanelProps & {
             </label>
           </div>
 
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id={`highlightable-pt-${point.id}`}
+              checked={point.selection?.highlightable !== false}
+              onChange={e =>
+                onUpdatePoint(point.id, {
+                  selection: { ...(point.selection || { selectable: true }), highlightable: e.target.checked },
+                })
+              }
+              className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+            />
+            <label htmlFor={`highlightable-pt-${point.id}`} className="text-xs text-carbon/80 cursor-pointer">
+              Permitir resaltado visual con el puntero
+            </label>
+          </div>
+
           <div>
             <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">Capa del Tablero</label>
             <select
@@ -286,6 +305,19 @@ export const PointInspector: React.FC<PointPanelProps & {
             </select>
           </div>
         </div>
+      </AccordionSection>
+
+      <AccordionSection sec="visibility_selection" title="Visibilidad Condicionada & Selección" isOpen={openAccordion.visibility_selection} onToggle={onToggleAccordion}>
+        <ElementVisibilitySection
+          model={model}
+          element={point as unknown as VisualElement}
+          onUpdatePoint={onUpdatePoint}
+          onUpdateElement={(id, updates) => onUpdatePoint(id, updates)}
+          onUpdateSlider={() => undefined}
+          onDeleteSelected={onDeleteSelected}
+          onUpdateModel={onUpdateModel}
+          onSelectId={onSelectId}
+        />
       </AccordionSection>
 
       <AccordionSection sec="constraints" title="Restricciones Geométricas" isOpen={openAccordion.constraints} onToggle={onToggleAccordion}>

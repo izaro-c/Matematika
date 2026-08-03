@@ -99,8 +99,8 @@ export const AlturaSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 3.06,
-        "y": -1.5
+        "x": 3.73,
+        "y": -1.53
       },
       "mobility": {
         "type": "free"
@@ -132,8 +132,8 @@ export const AlturaSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -0.65,
-        "y": 0.07
+        "x": -0.12,
+        "y": 3.42
       },
       "mobility": {
         "type": "free"
@@ -157,6 +157,7 @@ export const AlturaSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": false,
+        "highlightable": false,
         "ariaLabel": "Polígono",
         "role": "secondary"
       },
@@ -271,8 +272,8 @@ export const AlturaSpec = createDiagramSpec(
       },
       "appearance": {
         "dashed": true,
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
+        "strokeWidth": 5,
+        "highlightStrokeWidth": 8,
         "preserveColorOnHighlight": true
       }
     },
@@ -325,7 +326,31 @@ export const AlturaSpec = createDiagramSpec(
       ]
     }
   ],
-  "steps": [],
+  "steps": [
+    {
+      "id": "step1",
+      "label": "Paso 1",
+      "description": "Descripción del nuevo paso de la demostración.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "polygonABC",
+        "footCAB",
+        "extAlturaCAB",
+        "segAlturaCAB",
+        "rightAngleAlturaCAB"
+      ],
+      "objectStates": {
+        "segAlturaCAB": {
+          "emphasis": "primary"
+        },
+        "polygonABC": {
+          "emphasis": "none"
+        }
+      }
+    }
+  ],
   "note": "Arrastra A, B y C"
 }
 );

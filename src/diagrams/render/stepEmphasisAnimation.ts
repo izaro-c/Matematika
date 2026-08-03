@@ -5,7 +5,7 @@ export const STEP_EMPHASIS_PULSE_FRAME_MS = 32;
 export const STEP_EMPHASIS_PULSE_PERIOD_MS = 2000;
 
 /** Peak additive stroke width for animated primary emphasis. */
-export const STEP_EMPHASIS_STROKE_DELTA = 2;
+export const STEP_EMPHASIS_STROKE_DELTA = 3;
 
 /** Peak additive fill opacity for animated primary emphasis. */
 export const STEP_EMPHASIS_FILL_DELTA = 0.2;

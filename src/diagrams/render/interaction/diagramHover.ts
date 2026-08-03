@@ -32,16 +32,42 @@ export const diagramPointHoverTransition = {
 /** Disable JSXGraph native highlight(); Matematika owns visual state. */
 export const diagramNativeHighlightDisabled = { highlight: false } as const;
 
+/** Default del editor: conservar color propio salvo opt-out explícito. */
+export function preservesOwnColorOnHighlight(
+  style?: { preserveColorOnHighlight?: boolean } | null,
+): boolean {
+  return style?.preserveColorOnHighlight !== false;
+}
+
+/** El azul claro nativo vive en `borders` si no heredan `highlight: false`. */
+export function withNativeHighlightDisabledBorders<T extends Record<string, unknown>>(
+  options: T,
+): T & { highlight: false; borders?: Record<string, unknown> } {
+  const borders = options.borders;
+  const nextBorders = borders && typeof borders === 'object'
+    ? { ...(borders as Record<string, unknown>), highlight: false }
+    : borders;
+  return {
+    ...options,
+    highlight: false,
+    ...(nextBorders !== undefined ? { borders: nextBorders } : {}),
+  };
+}
+
 export function withDiagramHoverTransition<T extends Record<string, unknown>>(
   options: T,
   kind: 'line' | 'point' = 'line',
 ): T {
   const transition = kind === 'point' ? diagramPointHoverTransition : diagramLineHoverTransition;
-  return { ...diagramNativeHighlightDisabled, ...transition, ...options };
+  const withTransition = { ...diagramNativeHighlightDisabled, ...transition, ...options };
+  return kind === 'line' && options.borders
+    ? withNativeHighlightDisabledBorders(withTransition)
+    : withTransition;
 }
 
 export interface DiagramHoverController {
   isHovered: (id: string) => boolean;
+  getHoveredId: () => string | null;
   setHovered: (id: string, hovered: boolean, requestUpdate: () => void) => void;
   clearAll: (requestUpdate: () => void) => void;
 }
@@ -51,10 +77,12 @@ export function createDiagramHoverController(): DiagramHoverController {
 
   return {
     isHovered: (id: string) => hoveredIds.has(id),
+    getHoveredId: () => hoveredIds.values().next().value ?? null,
     setHovered: (id: string, hovered: boolean, requestUpdate: () => void) => {
       const wasHovered = hoveredIds.has(id);
       if (hovered) {
         if (wasHovered) return;
+        hoveredIds.clear();
         hoveredIds.add(id);
       } else {
         if (!wasHovered) return;

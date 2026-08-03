@@ -39,7 +39,7 @@ export const ElementVisibilitySection: React.FC<ElementPanelProps> = ({
         className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
       />
       <label htmlFor={`selectable-elem-${element.id}`} className="text-xs text-carbon/80 cursor-pointer">
-        Seleccionable en el lienzo
+        Seleccionable sobre el lienzo
       </label>
     </div>
   </div>
