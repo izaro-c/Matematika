@@ -67,8 +67,8 @@ function validateMetadata(metadata: Record<string, unknown>): EditorValidationIs
 
   if (!id) {
     issues.push(issue('metadata-id-required', 'error', 'metadata', 'El campo "id" es obligatorio.'));
-  } else if (!CONTENT_ID_RE.test(id)) {
-    issues.push(issue('metadata-id-kebab', 'error', 'metadata', 'El ID debe estar en kebab-case estricto.'));
+  } else if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)) {
+    issues.push(issue('metadata-id-kebab', 'warning', 'metadata', 'Recomendación: El ID debería usar kebab-case estricto.'));
   }
 
   if (!type) {

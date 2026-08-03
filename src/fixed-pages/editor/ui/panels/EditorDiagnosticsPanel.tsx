@@ -73,13 +73,66 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
       <div className="border-b border-carbon/10 p-3 md:border-b-0 md:border-r">
         <h3 className="mb-2 ac-label ac-label--xs ac-label--soft">Validación</h3>
         {!currentFile && <p className="text-xs italic text-carbon/50">No hay un recurso abierto.</p>}
-        {currentFile && validation.issues.length === 0 && <p className="rounded border border-salvia/20 bg-salvia/5 px-3 py-2 text-xs text-carbon/65">No se han detectado errores bloqueantes en esta vista.</p>}
-        <div className="space-y-1">
-          {validation.issues.map(issue => (
-            <button key={issue.id} type="button" onClick={() => onSelectIssue(issue)} className="block w-full rounded border border-granada/20 bg-granada/5 px-3 py-2 text-left text-xs text-carbon/70 hover:border-granada/40">
-              <span className="font-bold text-granada">{issue.area}: </span>{issue.message}
-            </button>
-          ))}
+        {currentFile && validation.issues.length === 0 && (
+          <div className="p-4 text-center text-salvia border border-salvia/20 bg-salvia/5 rounded-xl">
+            <svg className="w-6 h-6 mx-auto mb-1 text-salvia" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <p className="font-bold text-xs">¡El documento está 100% sano!</p>
+            <p className="text-[10px] text-carbon/60 mt-0.5">No se han detectado errores sintácticos ni problemas de estructura.</p>
+          </div>
+        )}
+        <div className="space-y-2">
+          {[...validation.issues]
+            .sort((a, b) => {
+              const priority = { error: 0, warning: 1, info: 2 };
+              return (priority[a.severity] ?? 3) - (priority[b.severity] ?? 3);
+            })
+            .map(issue => {
+              const isError = issue.severity === 'error';
+              const isWarning = issue.severity === 'warning';
+              return (
+                <div
+                  key={issue.id}
+                  className={`p-3 rounded-xl border transition-all ${
+                    isError
+                      ? 'border-granada/30 bg-granada/5 hover:border-granada/50'
+                      : isWarning
+                        ? 'border-ocre/30 bg-ocre/5 hover:border-ocre/50'
+                        : 'border-salvia/30 bg-salvia/5 hover:border-salvia/50'
+                  }`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center space-x-2">
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full shrink-0 ${
+                          isError ? 'bg-granada animate-pulse' : isWarning ? 'bg-ocre' : 'bg-salvia'
+                        }`}
+                      />
+                      <span className="font-bold text-xs uppercase tracking-wider text-carbon">
+                        {issue.area} • {isError ? 'Error' : isWarning ? 'Aviso' : 'Info'}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => onSelectIssue(issue)}
+                      className="text-[10px] font-bold text-salvia hover:underline cursor-pointer flex items-center space-x-0.5"
+                    >
+                      <span>Ir al elemento</span>
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </button>
+                  </div>
+                  <p className="mt-1.5 font-sans text-xs text-carbon leading-relaxed">{issue.message}</p>
+                  {(issue.blockId || issue.sourceRange) && (
+                    <span className="inline-block mt-1.5 font-mono text-[9px] text-salvia bg-carbon/5 px-1.5 py-0.5 rounded border border-carbon/10">
+                      {issue.blockId ? `Bloque: ${issue.blockId}` : `Línea: ${issue.sourceRange?.start ?? 'origen'}`}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
         </div>
       </div>
       <div className="p-3">

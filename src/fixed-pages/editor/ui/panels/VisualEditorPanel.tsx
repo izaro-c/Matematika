@@ -272,7 +272,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   };
 
   return (
-    <div className="relative flex min-w-0 flex-1 flex-col overflow-hidden">
+    <div className="relative flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
       <button type="button" onClick={() => setOutlineOpen(value => !value)} aria-expanded={outlineOpen} className="absolute left-3 top-3 z-30 rounded border border-carbon/15 bg-lienzo/95 px-2.5 py-1.5 text-[10px] font-bold text-carbon/60 shadow-sm backdrop-blur">
         Índice {outline.length > 0 ? `(${outline.length})` : ''}
       </button>

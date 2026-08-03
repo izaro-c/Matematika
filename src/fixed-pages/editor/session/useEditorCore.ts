@@ -186,7 +186,7 @@ export const useEditorCore = () => {
       currentFile,
       diagramTargets: blocks.flatMap(block => Array.isArray(block.metadata?.targets) ? block.metadata.targets : []) as DiagramTargetRegistry,
     });
-    const byId = new Map([...documentIssues, ...structured.issues, ...integrity].map(issue => [issue.id, issue]));
+    const byId = new Map([...documentIssues, ...structured.issues, ...integrity].map(issue => [`${issue.id}-${issue.area}-${issue.blockId ?? ''}-${issue.message.slice(0, 20)}`, issue]));
     const issues = [...byId.values()];
     const errorCount = issues.filter(issue => issue.severity === 'error').length;
     const warningCount = issues.filter(issue => issue.severity === 'warning').length;

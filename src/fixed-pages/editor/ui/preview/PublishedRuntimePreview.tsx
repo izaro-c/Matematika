@@ -1,37 +1,143 @@
-import React, { useRef, useState } from 'react';
-import { appPath } from '@/lib/routes';
+import React, { useRef } from 'react';
 import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
+import type { Block } from '@/fixed-pages/editor/session/parser';
+import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
+import { ContentLayout } from '@/components/layouts/ContentLayout';
+import { ContentHeader } from '@/components/content/ContentHeader';
+import { ContentBody } from '@/components/ui/ContentBody';
+import { FadeIn } from '@/components/ui/FadeIn';
+import { VisualEditorBlock } from '../panels/VisualEditorBlock';
 
 interface PublishedRuntimePreviewProps {
   open: boolean;
-  path: string | null;
-  hasPendingChanges: boolean;
-  revision: number;
+  path?: string | null;
+  hasPendingChanges?: boolean;
+  revision?: number;
   onClose: () => void;
+  blocks?: Block[];
+  metadata?: Record<string, unknown>;
+  diagramTargets?: DiagramTargetRegistry;
+  currentFile?: string | null;
 }
 
-export const PublishedRuntimePreview: React.FC<PublishedRuntimePreviewProps> = ({ open, path, hasPendingChanges, revision, onClose }) => {
+export const PublishedRuntimePreview: React.FC<PublishedRuntimePreviewProps> = ({
+  open,
+  path,
+  hasPendingChanges = false,
+  onClose,
+  blocks = [],
+  metadata = {},
+  diagramTargets = [],
+  currentFile,
+}) => {
   const closeRef = useRef<HTMLButtonElement>(null);
-  const [loadedFrameKey, setLoadedFrameKey] = useState<string | null>(null);
   const dialogRef = useModalFocus<HTMLDivElement>(open, onClose, closeRef);
-  const frameKey = path ? `${path}:${revision}` : null;
-  const loading = Boolean(frameKey && loadedFrameKey !== frameKey);
+
   if (!open) return null;
+
+  const noop = () => {};
+  const pageType = String(metadata.type || 'concepto').toLowerCase();
+  const title = String(metadata.title || metadata.name || 'Sin Título');
+  const description = String(metadata.description || '');
+  const statement = String(metadata.statement || '');
+
   return (
-    <div ref={dialogRef} className="fixed inset-0 z-50 flex flex-col bg-lienzo" role="dialog" aria-modal="true" aria-labelledby="published-preview-title">
-      <header className="flex min-h-14 items-center gap-3 border-b border-carbon/15 px-3 sm:px-5">
-        <div className="min-w-0 flex-1">
-          <h2 id="published-preview-title" className="font-serif text-sm font-bold text-carbon">Runtime publicado compartido</h2>
-          <p className="truncate text-[10px] text-carbon/50">{path ?? 'Ruta no disponible'}</p>
+    <div
+      ref={dialogRef}
+      className="fixed inset-0 z-50 flex flex-col bg-lienzo overflow-hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="published-preview-title"
+    >
+      {/* Dynamic Header Toolbar */}
+      <header className="flex h-12 shrink-0 items-center justify-between border-b border-carbon/15 px-4 bg-lienzo/95 backdrop-blur z-20">
+        <div className="flex items-center space-x-2">
+          <span className="h-2 w-2 rounded-full bg-salvia animate-pulse" />
+          <h2 id="published-preview-title" className="font-serif text-xs font-bold text-carbon">
+            Previsualización Publicada
+          </h2>
+          <span className="text-[10px] font-mono text-carbon/40 hidden sm:inline">
+            ({currentFile?.split('/').pop() ?? path ?? 'borrador.mdx'})
+          </span>
+          {hasPendingChanges && (
+            <span className="rounded bg-salvia/10 px-2 py-0.5 text-[9px] font-bold text-salvia border border-salvia/20">
+              ● Cambios locales en tiempo real
+            </span>
+          )}
         </div>
-        {hasPendingChanges && <span className="rounded border border-ocre/25 bg-ocre/5 px-2 py-1 text-[10px] font-bold text-ocre" role="status">Muestra el último guardado · hay cambios pendientes</span>}
-        <button ref={closeRef} type="button" onClick={onClose} className="rounded border border-carbon/15 px-3 py-1.5 text-xs font-bold text-carbon/65 hover:bg-carbon/5">Volver al editor</button>
+        <button
+          ref={closeRef}
+          type="button"
+          onClick={onClose}
+          className="rounded-md border border-carbon/15 bg-lienzo px-3 py-1 text-xs font-bold text-carbon/75 hover:bg-carbon/5 transition-colors cursor-pointer"
+        >
+          ✕ Volver al editor
+        </button>
       </header>
-      {path ? <div className="relative flex min-h-0 flex-1 flex-col">
-        {loading && <div className="absolute inset-x-0 top-0 z-10 bg-ocre/10 px-3 py-2 text-center text-xs font-bold text-ocre" role="status">Cargando runtime publicado…</div>}
-        <iframe key={frameKey} src={appPath(path)} title="Página renderizada con el runtime publicado" onLoad={() => setLoadedFrameKey(frameKey)} className="min-h-0 flex-1 border-0 bg-lienzo" />
+
+      {/* Main Reader View Container */}
+      <div className="flex-1 h-full min-h-0 overflow-y-auto">
+        <ContentLayout
+          pageType={pageType}
+          variant="balanced"
+          embedded={true}
+        >
+          <div className="bg-transparent text-carbon font-serif pb-16">
+            <FadeIn className="w-full pt-4">
+              <ContentHeader
+                type={pageType}
+                title={title}
+                description={description}
+                authors={Array.isArray(metadata.authors) ? (metadata.authors as string[]) : []}
+                tags={Array.isArray(metadata.tags) ? (metadata.tags as string[]) : []}
+                nodeId={String(metadata.id || '')}
+              />
+
+              {statement && (
+                <div className="my-6 p-5 border-l-4 border-ocre bg-ocre/5 rounded-r shadow-xs">
+                  <span className="ac-label ac-label--xs ac-label--ocre-soft mb-2 block select-none">
+                    Enunciado Formal
+                  </span>
+                  <p className="font-serif text-base leading-relaxed text-carbon">{statement}</p>
+                </div>
+              )}
+
+              <section className="mt-8 mb-8">
+                <ContentBody variant="default">
+                  <div className="space-y-6">
+                    {blocks.map((block, index) => (
+                      <VisualEditorBlock
+                        key={block.id}
+                        block={block}
+                        blocks={blocks}
+                        index={index}
+                        isReadOnly={true}
+                        canMutateVisualStructure={false}
+                        editingBlockId={null}
+                        setEditingBlockId={noop}
+                        addBlock={noop}
+                        moveBlock={noop}
+                        duplicateBlock={noop}
+                        removeBlock={noop}
+                        updateBlock={noop}
+                        handleTextareaSelect={noop}
+                        handleEditLink={noop}
+                        renderInlineToolbar={() => null}
+                        setActiveDiagramIndex={noop}
+                        setActiveDiagramBlockId={noop}
+                        setDiagramBuilderOpen={noop}
+                        diagramTargets={diagramTargets}
+                      />
+                    ))}
+                  </div>
+                </ContentBody>
+              </section>
+            </FadeIn>
+          </div>
+        </ContentLayout>
       </div>
-        : <div className="flex flex-1 items-center justify-center p-8 text-center font-serif text-carbon/55">Este tipo de página no tiene una ruta publicada.</div>}
     </div>
   );
 };
+
+export default PublishedRuntimePreview;
