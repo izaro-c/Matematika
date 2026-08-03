@@ -10,6 +10,7 @@
 @import "tailwindcss";
 @import "./styles/ac-classes.css";
 @import "./styles/base.css";
+@import "./styles/scrollbars.css";
 @import "./styles/utilities.css";
 @import "./styles/ac-pill.css";
 @import "./styles/mdx-prose.css";

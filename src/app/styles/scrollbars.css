@@ -1,0 +1,32 @@
+/* ==========================================================================
+   SCROLLBARS — Sistema unificado de barras de desplazamiento Arts & Crafts.
+   Aislamiento por motor de renderizado (Gecko vs WebKit/Blink).
+   ========================================================================== */
+
+
+/* Estándar CSS Scrollbars W3C (Firefox, Chrome, Edge, Safari) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 70%, transparent) transparent;
+}
+
+*:hover {
+  scrollbar-color: var(--page-accent, var(--theme-terracota)) transparent;
+}
+
+
+/* Helpers para ocultar scrollbar cuando se requiera */
+.scrollbar-none,
+.scrollbar-none:hover {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.scrollbar-none::-webkit-scrollbar,
+.scrollbar-none:hover::-webkit-scrollbar {
+  display: none !important;
+}
+
+
+
+

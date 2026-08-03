@@ -123,22 +123,6 @@ export const Formula: React.FC<FormulaProps> = ({ title, children }) => {
           {children}
         </div>
       </div>
-      
-      <style>{`
-        .formula-scrollbar::-webkit-scrollbar {
-          height: 6px;
-        }
-        .formula-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .formula-scrollbar::-webkit-scrollbar-thumb {
-          background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 20%, transparent);
-          border-radius: 10px;
-        }
-        .formula-scrollbar:hover::-webkit-scrollbar-thumb {
-          background-color: color-mix(in srgb, var(--page-accent, var(--theme-terracota)) 60%, transparent);
-        }
-      `}</style>
     </div>
   );
 };

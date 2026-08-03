@@ -24,6 +24,7 @@ CSS de composición visual. Los **tokens tipados** están en `src/design/` (Type
 | `katex.css` | Retoques KaTeX |
 | `ac-classes.css` | Tipografía/superficies `.ac-eyebrow`, `.ac-label`, botones… |
 | `base.css` | `html` / `body` |
+| `scrollbars.css` | Barras de desplazamiento adaptadas a `--page-accent` |
 | `utilities.css` | Helpers sueltos |
 | `ac-pill.css` | Badges `.ac-pill` |
 | `mdx-prose.css` | Tipografía del MDX (`.prose`, `.editorial-reading`) |
