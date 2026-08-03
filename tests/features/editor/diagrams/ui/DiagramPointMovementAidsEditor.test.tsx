@@ -128,4 +128,23 @@ describe('DiagramPointMovementAidsEditor style', () => {
     expect(snap.className).toMatch(/text-salvia|focus:ring-salvia|border-carbon\/30/);
     expect(snap.className).not.toMatch(/accent-pavo|accent-ocre/);
   });
+
+  it('marca atractores en ciclo como deshabilitados visualmente', () => {
+    const p = point({ snapToGrid: true });
+    render(
+      <DiagramPointMovementAidsEditor
+        model={model(p)}
+        point={p}
+        onPointChange={vi.fn()}
+        onAttractorsChange={vi.fn()}
+      />,
+    );
+
+    const checkbox = screen.getByLabelText('Usar AB como atractor') as HTMLInputElement;
+    expect(checkbox.disabled).toBe(true);
+    const row = checkbox.closest('label');
+    expect(row?.className).toMatch(/opacity-40/);
+    expect(row?.className).toMatch(/cursor-not-allowed/);
+    expect(screen.getByText(/produciría un ciclo/)).toBeTruthy();
+  });
 });
