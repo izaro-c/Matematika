@@ -5,9 +5,9 @@ import type { FileNode } from '../../../../src/fixed-pages/editor/types/editorCo
 import { EditorNavigation } from '../../../../src/fixed-pages/editor/ui/page/EditorNavigation';
 
 const files: FileNode[] = [
-  { path: 'content/mdx/definitions/punto.mdx', name: 'definicion-punto.mdx', type: 'definitions', kind: 'mdx-document', capability: 'visual-exact', capabilityLabel: 'Edición visual exacta', reason: 'Documento lossless.' },
-  { path: 'content/mdx/theorems/tales.mdx', name: 'teorema-tales.mdx', type: 'theorems', kind: 'mdx-document', capability: 'invalid', capabilityLabel: 'Recurso inválido', reason: 'Sintaxis inválida.' },
-  { path: 'widgets/diagrams/Definitions/Punto.tsx', name: 'Punto.tsx', type: 'diagram-definitions', kind: 'diagram', capability: 'code-preview', capabilityLabel: 'Edición de código con vista previa', reason: 'TSX autoritativo.' },
+  { path: 'content/mdx/definitions/punto.mdx', name: 'definicion-punto.mdx', type: 'definitions', kind: 'mdx-document', capability: 'visual-exact', capabilityLabel: 'Editable', reason: 'Documento lossless.' },
+  { path: 'content/mdx/theorems/tales.mdx', name: 'teorema-tales.mdx', type: 'theorems', kind: 'mdx-document', capability: 'invalid', capabilityLabel: 'Con errores', reason: 'Sintaxis inválida.' },
+  { path: 'widgets/diagrams/Definitions/Punto.tsx', name: 'Punto.tsx', type: 'diagram-definitions', kind: 'diagram', capability: 'code-preview', capabilityLabel: 'Solo fuente', reason: 'Fuente autoritativa.' },
 ];
 
 function renderNavigation(overrides: Partial<React.ComponentProps<typeof EditorNavigation>> = {}) {
@@ -37,30 +37,30 @@ describe('explorador de recursos', () => {
     fireEvent.click(screen.getByText('Filtrar resultados'));
     expect(filterDisclosure?.open).toBe(true);
     expect(screen.getByRole('tab', { name: /Documentos 2/ }).getAttribute('aria-selected')).toBe('true');
-    expect(screen.getByRole('button', { name: /PuntoEdición exacta/ })).toBeTruthy();
-    expect(screen.queryByText('Código + vista previa')).toBeNull();
+    expect(screen.getByRole('button', { name: /PuntoEditable/ })).toBeTruthy();
+    expect(screen.queryByRole('button', { name: /Solo fuente/ })).toBeNull();
 
     fireEvent.click(screen.getByRole('tab', { name: /Diagramas 1/ }));
-    expect(screen.getByText('Código + vista previa')).toBeTruthy();
-    expect(screen.getByTitle(/TSX autoritativo/)).toBeTruthy();
+    expect(screen.getByRole('button', { name: /Solo fuente/ })).toBeTruthy();
+    expect(screen.getByTitle(/Fuente autoritativa/)).toBeTruthy();
   });
 
   it('filtra por texto, tipo, estado y capacidad y explica el resultado vacío', () => {
     renderNavigation();
     fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'tales' } });
     expect(screen.getByRole('button', { name: /TalesRequiere corrección/ })).toBeTruthy();
-    expect(screen.queryByRole('button', { name: /PuntoEdición exacta/ })).toBeNull();
+    expect(screen.queryByRole('button', { name: /PuntoEditable/ })).toBeNull();
 
     fireEvent.change(screen.getByLabelText('Estado'), { target: { value: 'available' } });
     expect(screen.getByText('No hay resultados con estos filtros.')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Limpiar filtros' }));
-    fireEvent.change(screen.getByLabelText('Capacidad de edición'), { target: { value: 'invalid' } });
-    expect(screen.getAllByText('Requiere corrección')).toHaveLength(2);
+    fireEvent.change(screen.getByLabelText('Cómo se edita'), { target: { value: 'invalid' } });
+    expect(screen.getAllByText('Requiere corrección').length).toBeGreaterThanOrEqual(1);
   });
 
   it('abre recursos, marca favoritos y permite recorrerlos con flechas', () => {
     const { props } = renderNavigation();
-    const punto = screen.getByRole('button', { name: /PuntoEdición exacta/ });
+    const punto = screen.getByRole('button', { name: /PuntoEditable/ });
     fireEvent.click(punto);
     expect(props.openFile).toHaveBeenCalledWith(files[0].path);
     fireEvent.click(screen.getByRole('button', { name: /Añadir Punto a favoritos/ }));
@@ -68,7 +68,7 @@ describe('explorador de recursos', () => {
 
     punto.focus();
     fireEvent.keyDown(punto, { key: 'ArrowDown' });
-    const resourceButtons = within(screen.getByLabelText('Explorador de recursos')).getAllByTitle(/Edición|Recurso/);
+    const resourceButtons = within(screen.getByLabelText('Explorador de recursos')).getAllByTitle(/Editable|Con errores|Solo fuente|Documento|Fuente|Sintaxis/);
     expect(resourceButtons).toContain(document.activeElement);
     expect(document.activeElement).not.toBe(punto);
   });

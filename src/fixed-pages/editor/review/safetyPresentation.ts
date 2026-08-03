@@ -51,7 +51,7 @@ const ACTIONS = {
   },
   reviewDiff: {
     id: 'review-diff',
-    label: 'Revisar diff',
+    label: 'Revisar cambios',
     description: 'Muestra los cambios antes de tocar el archivo real.',
   },
   saveDraft: {
@@ -79,8 +79,8 @@ function compatibilityPresentation(
     case 'fully-editable':
       return {
         level: 'safe',
-        title: 'Edición visual exacta',
-        description: 'Todos los rangos representados admiten edición localizada y verificada sin reconstruir el documento.',
+        title: 'Edición visual',
+        description: 'Puedes editar el contenido con cambios localizados y seguros.',
         reasons: [],
         allowedActions: [ACTIONS.editVisual, ACTIONS.editCode, ACTIONS.reviewDiff],
         blockedActions: [],
@@ -89,8 +89,8 @@ function compatibilityPresentation(
     case 'partially-editable':
       return {
         level: 'attention',
-        title: 'Edición visual exacta por rangos',
-        description: 'Solo se editan los rangos demostrablemente exactos; las zonas no representadas se preservan literalmente.',
+        title: 'Edición parcial',
+        description: 'Algunas zonas solo se pueden cambiar en Fuente; el resto se edita con seguridad.',
         reasons: reasons.map((reason, index) => ({
           id: `compatibility-${index}`,
           level: 'attention',
@@ -317,7 +317,7 @@ export function buildEditorSafetyPresentation(input: EditorSafetyInput): SafetyP
   if (input.isDiagramFile) {
     return {
       level: input.persistenceStatus.kind === 'save-error' || input.persistenceStatus.kind === 'conflict' ? 'error' : 'safe',
-      title: 'Diagrama TSX abierto',
+      title: 'Diagrama abierto',
       description: 'La autoridad modelo/fuente se muestra dentro del workbench de diagramas.',
       reasons: [],
       allowedActions: [ACTIONS.editCode],
@@ -393,7 +393,7 @@ export function buildDiagramAuthorityPresentation(status: DiagramSyncStatus, isD
     case 'invalid-source':
       return {
         level: 'error',
-        title: 'Fuente TSX inválida',
+        title: 'Fuente inválida',
         description: 'El TSX no puede convertirse en modelo. No se reutiliza el modelo anterior como representación actual.',
         reasons: [{
           id: 'diagram-invalid-source',

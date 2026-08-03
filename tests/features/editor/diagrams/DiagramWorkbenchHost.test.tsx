@@ -23,11 +23,11 @@ describe('DiagramWorkbenchHost', () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it('renders workbench fullscreen when open', () => {
+  it('renders workbench in shell region when open', () => {
     render(<DiagramWorkbenchHost isOpen {...baseProps} />);
-    const dialog = screen.getByRole('dialog', { name: 'Editor de diagramas' });
-    expect(dialog.className).toContain('fixed');
-    expect(dialog.className).toContain('inset-0');
+    const region = screen.getByRole('region', { name: 'Editor de diagramas' });
+    expect(region.className).toContain('h-full');
+    expect(region.className).not.toContain('fixed');
     expect(screen.getByTestId('diagram-workbench')).toBeTruthy();
   });
 });

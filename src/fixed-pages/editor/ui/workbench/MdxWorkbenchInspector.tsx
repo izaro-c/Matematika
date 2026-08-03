@@ -77,7 +77,7 @@ export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (prop
                 : 'text-carbon/60 hover:text-carbon'
             }`}
           >
-            Diagnósticos
+            Avisos
             {(errorCount > 0 || warningCount > 0) && (
               <span className={`ml-1.5 rounded-full px-1.5 py-0.2 text-[9px] text-lienzo ${
                 errorCount > 0 ? 'bg-crimson' : 'bg-ocre'
@@ -92,7 +92,7 @@ export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (prop
           type="button"
           onClick={props.onClose}
           className="flex h-7 w-7 items-center justify-center rounded-md text-carbon/60 hover:bg-carbon/10 hover:text-carbon transition-colors"
-          title="Ocultar Inspector"
+          title="Ocultar detalles"
         >
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -131,7 +131,7 @@ export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (prop
             <div className="rounded-lg border border-carbon/15 bg-carbon/5 p-3">
               <h4 className="font-serif font-bold text-sm text-carbon mb-1">Enlazado Semántico</h4>
               <p className="text-carbon/70 text-[11px] leading-relaxed">
-                Inserta marcas de concepto (<code className="font-mono bg-lienzo px-1 py-0.5 rounded border border-carbon/10 text-salvia font-bold">&lt;ConceptLink /&gt;</code>) o referencias (<code className="font-mono bg-lienzo px-1 py-0.5 rounded border border-carbon/10 text-pavo font-bold">&lt;RefLink /&gt;</code>) directamente en el cuerpo MDX.
+                Inserta enlaces a conceptos o referencias directamente en el texto de la página.
               </p>
             </div>
 

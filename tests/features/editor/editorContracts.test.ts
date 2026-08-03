@@ -61,7 +61,7 @@ describe('editor identity and path contracts', () => {
       type: 'theorems',
       kind: 'mdx-document',
       capability: 'visual-exact',
-      capabilityLabel: 'Edición visual exacta',
+      capabilityLabel: 'Editable',
       reason: 'fixture',
     })).toBe('/teorema/angulo-recto');
   });

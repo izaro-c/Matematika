@@ -15,7 +15,7 @@ const BLOCK_LABELS: Partial<Record<BlockType, string>> = {
   paragraph: 'Párrafo', heading: 'Sección', list: 'Lista', table: 'Tabla', formula: 'Fórmula',
   definition_box: 'Definición', note: 'Advertencia o nota', citation: 'Cita',
   demonstration: 'Paso de demostración', exercise: 'Ejercicio', diagram: 'Diagrama',
-  advancedMdx: 'MDX preservado', separator: 'Separador',
+  advancedMdx: 'Fragmento preservado', separator: 'Separador',
 };
 
 export function buildDocumentOutline(blocks: Block[]): OutlineItem[] {
@@ -101,7 +101,11 @@ function dependsTransitively(start: string, target: string, graph: Map<string, s
 }
 
 function normalizedContentPath(path: string): string {
-  return path.replace(/^src\//, '').replace(/^database\/content\//, '');
+  // Editor paths are content/mdx/...; the published index uses the relative corpus path.
+  return path
+    .replace(/^src\//, '')
+    .replace(/^database\/content\//, '')
+    .replace(/^content\/mdx\//, '');
 }
 
 export interface AuthoringIntegrityInput {

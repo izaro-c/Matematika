@@ -86,7 +86,7 @@ export const SafetySummary: React.FC<SafetySummaryProps> = ({
             </div>
             <div className="flex shrink-0 flex-wrap items-start gap-2">
               <button type="button" onClick={onSaveDraft} disabled={!canSaveDraft} className="rounded border border-carbon/20 bg-lienzo px-3 py-1.5 font-bold text-carbon hover:bg-carbon/5 disabled:cursor-not-allowed disabled:opacity-45" title={canSaveDraft ? 'Guardar borrador sin modificar el archivo real' : 'No hay cambios locales para guardar como borrador'}>Guardar borrador</button>
-              <button type="button" onClick={onReviewDiff} disabled={!canReviewDiff} className="rounded bg-carbon px-3 py-1.5 font-bold text-lienzo hover:bg-carbon/85 disabled:cursor-not-allowed disabled:opacity-45" title={canReviewDiff ? 'Revisar cambios antes de aplicar' : 'No hay diff pendiente o la validación bloquea la revisión'}>Revisar diff</button>
+              <button type="button" onClick={onReviewDiff} disabled={!canReviewDiff} className="rounded bg-carbon px-3 py-1.5 font-bold text-lienzo hover:bg-carbon/85 disabled:cursor-not-allowed disabled:opacity-45" title={canReviewDiff ? 'Revisar cambios antes de aplicar' : 'No hay cambios pendientes o la validación bloquea la revisión'}>Revisar cambios</button>
             </div>
           </div>
         </details>

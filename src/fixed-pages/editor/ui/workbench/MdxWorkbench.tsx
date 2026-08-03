@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'wouter';
 import { useEditorCore } from '@/fixed-pages/editor/session/useEditorCore';
 import { SemanticLinker } from '../components/SemanticLinker';
@@ -85,6 +85,9 @@ export const MdxWorkbench: React.FC = () => {
   const currentResource = files.find(file => file.path === currentFile);
 
   const [, setLocation] = useLocation();
+  const [diagramDirty, setDiagramDirty] = useState(false);
+  const cleanupDiagramSessionRef = useRef<() => void>(() => {});
+  const afterDiscardFileRef = useRef<(path: string) => void>(() => {});
 
   // 1. Unsaved changes guard & navigation flow
   const {
@@ -93,9 +96,11 @@ export const MdxWorkbench: React.FC = () => {
     continuePendingNavigation,
     cancelPendingNavigation,
   } = useUnsavedChangesGuard({
-    hasLocalChanges,
+    hasLocalChanges: hasLocalChanges || diagramDirty,
     openFile,
     setLocation,
+    onBeforeDiscardNavigate: () => cleanupDiagramSessionRef.current(),
+    onAfterDiscardFileNavigate: path => afterDiscardFileRef.current(path),
   });
 
   const {
@@ -108,16 +113,21 @@ export const MdxWorkbench: React.FC = () => {
     isDiagnosticsOpen,
     openFileSafely,
     toggleFavorite,
+    diagramSurfaceOpen,
+    diagramReturnContext,
+    openDiagramSurface,
+    closeDiagramSurface,
   } = useEditorNavigationFlow({
     files,
     currentFile,
     openFile,
     loadFileList,
     hasLocalChanges,
+    diagramDirty,
     setPendingFileNavigation,
   });
 
-  // State for view mode: 'visual' | 'code' | 'preview' | 'split'
+  // State for view mode: 'visual' | 'code' | 'preview'
   const [viewMode, setViewMode] = useState<MdxViewMode>('visual');
 
   // Modals state
@@ -125,12 +135,26 @@ export const MdxWorkbench: React.FC = () => {
   const [diffReview, setDiffReview] = useState<DiffReview | null>(null);
   const [createPageOpen, setCreatePageOpen] = useState(false);
 
-  // Diagram Workbench Drawer state
-  const [diagramDrawerOpen, setDiagramDrawerOpen] = useState(false);
-  const [diagramWorkbenchOverride] = useState<DiagramWorkbenchMode | null>(null);
+  const [diagramWorkbenchOverride, setDiagramWorkbenchOverride] = useState<DiagramWorkbenchMode | null>(null);
   const [rewriteDiagramPath, setRewriteDiagramPath] = useState<string | null>(null);
   const [activeDiagramBlockId, setActiveDiagramBlockId] = useState<string | null>(null);
   const [activeDiagramIndex, setActiveDiagramIndex] = useState<number | null>(null);
+
+  const clearDiagramSession = () => {
+    setDiagramWorkbenchOverride(null);
+    setRewriteDiagramPath(null);
+    setActiveDiagramBlockId(null);
+    setActiveDiagramIndex(null);
+    setDiagramDirty(false);
+    closeDiagramSurface();
+  };
+
+  useEffect(() => {
+    cleanupDiagramSessionRef.current = clearDiagramSession;
+    afterDiscardFileRef.current = (path: string) => {
+      if (path.endsWith('.tsx')) openDiagramSurface(null);
+    };
+  });
 
   // Semantic Linker state
   const [linkerState, setLinkerState] = useState<{
@@ -150,7 +174,52 @@ export const MdxWorkbench: React.FC = () => {
     selectionEnd: 0,
   });
 
-  useDiagramUsages(isDiagramFile ? currentFile : null, files);
+  const {
+    linkedPages: diagramLinkedPages,
+    error: diagramUsageError,
+  } = useDiagramUsages(isDiagramFile ? currentFile : null, files);
+
+  // Archivo .tsx → superficie diagrama (p. ej. tras descartar cambios y navegar)
+  useEffect(() => {
+    if (isDiagramFile && currentFile) {
+      openDiagramSurface(null);
+    }
+  }, [currentFile, isDiagramFile, openDiagramSurface]);
+
+  const openDiagramEditor = (options?: {
+    blockId?: string | null;
+    blockIndex?: number | null;
+    modeOverride?: DiagramWorkbenchMode | null;
+    asRewrite?: boolean;
+  }) => {
+    if (options?.blockId !== undefined) setActiveDiagramBlockId(options.blockId);
+    if (options?.blockIndex !== undefined) setActiveDiagramIndex(options.blockIndex);
+    if (options?.modeOverride !== undefined) setDiagramWorkbenchOverride(options.modeOverride);
+    if (options?.asRewrite && currentFile?.endsWith('.tsx')) {
+      setRewriteDiagramPath(currentFile);
+    }
+    const returnContext =
+      currentFile?.endsWith('.mdx')
+        ? { pagePath: currentFile, blockId: options?.blockId ?? activeDiagramBlockId, viewMode }
+        : null;
+    openDiagramSurface(returnContext);
+  };
+
+  const handleCloseDiagramSurface = () => {
+    const restoreView = diagramReturnContext?.viewMode;
+    setDiagramWorkbenchOverride(null);
+    setRewriteDiagramPath(null);
+    setActiveDiagramBlockId(null);
+    setActiveDiagramIndex(null);
+    setDiagramDirty(false);
+    closeDiagramSurface();
+    if (restoreView) setViewMode(restoreView);
+  };
+
+  const setDiagramBuilderOpen = (open: boolean) => {
+    if (open) openDiagramEditor();
+    else handleCloseDiagramSurface();
+  };
 
   const handleMetadataChange = (key: string, value: any) => {
     setMetadata(prev => ({ ...prev, [key]: value }));
@@ -206,14 +275,11 @@ export const MdxWorkbench: React.FC = () => {
         if (pendingFileNavigation) {
           event.preventDefault();
           cancelPendingNavigation();
+          return;
         }
         if (diffReview && !saving) {
           event.preventDefault();
           setDiffReview(null);
-        }
-        if (diagramDrawerOpen) {
-          event.preventDefault();
-          setDiagramDrawerOpen(false);
         }
       }
 
@@ -235,7 +301,7 @@ export const MdxWorkbench: React.FC = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [pendingFileNavigation, cancelPendingNavigation, diffReview, saving, canReviewDiff, currentFile, saveCurrentFile, diagramDrawerOpen]);
+  }, [pendingFileNavigation, cancelPendingNavigation, diffReview, saving, canReviewDiff, currentFile, saveCurrentFile]);
 
   const [focusRange, setFocusRange] = useState<{ start: number; end: number } | undefined>(undefined);
 
@@ -297,7 +363,7 @@ export const MdxWorkbench: React.FC = () => {
   };
 
   const currentTitle = (metadata.title as string) || '';
-  const currentContentType = (metadata.contentType as string) || (currentResource?.capability ?? 'MDX');
+  const currentContentType = (metadata.contentType as string) || (isDiagramFile ? 'Diagrama' : 'Página');
 
   return (
     <div className="flex h-screen w-screen flex-col overflow-hidden bg-lienzo font-sans text-carbon antialiased select-none">
@@ -305,6 +371,7 @@ export const MdxWorkbench: React.FC = () => {
       <EditorApiStatusBanner />
 
       {/* Header Unificado */}
+      {!diagramSurfaceOpen && (
       <MdxWorkbenchHeader
         currentFile={currentFile}
         fileTitle={currentTitle}
@@ -323,8 +390,8 @@ export const MdxWorkbench: React.FC = () => {
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         isInspectorOpen={isInspectorOpen}
         onToggleInspector={() => setIsInspectorOpen(!isInspectorOpen)}
-        diagramDrawerOpen={diagramDrawerOpen}
-        onToggleDiagramDrawer={() => setDiagramDrawerOpen(!diagramDrawerOpen)}
+        diagramDrawerOpen={false}
+        onToggleDiagramDrawer={() => openDiagramEditor()}
         hasDiagrams={pageDiagramLinks.length > 0}
         errorCount={validation.errorCount}
         warningCount={validation.warningCount}
@@ -336,8 +403,57 @@ export const MdxWorkbench: React.FC = () => {
         canSaveDraft={canSaveDraft}
         canReviewDiff={canReviewDiff}
         isReadOnly={isReadOnly}
+        workspaceLevel={workspace.level}
+        onToggleWorkspaceLevel={() =>
+          setWorkspace(prev => ({
+            ...prev,
+            level: prev.level === 'advanced' ? 'basic' : 'advanced',
+          }))
+        }
       />
+      )}
 
+      {/* Superficie diagrama: swap del shell (sidebar opcional + workbench) */}
+      {diagramSurfaceOpen && activeDiagramWorkbenchMode ? (
+        <div className="flex min-h-0 flex-1 overflow-hidden">
+          {isSidebarOpen && (
+            <div
+              className="hidden h-full shrink-0 border-r border-carbon/15 md:block"
+              style={{ width: workspace.navigationWidth }}
+            >
+              <EditorNavigation
+                files={files}
+                isLoading={filesLoading}
+                error={filesError}
+                currentFile={currentFile}
+                openFile={openFileSafely}
+                retry={loadFileList}
+                close={() => setIsSidebarOpen(false)}
+                level={workspace.level}
+                favoritePaths={workspace.favoritePaths}
+                recentPaths={workspace.recentPaths}
+                toggleFavorite={toggleFavorite}
+                width={workspace.navigationWidth}
+              />
+            </div>
+          )}
+          <div className="min-h-0 min-w-0 flex-1">
+            <DiagramWorkbenchHost
+              isOpen
+              mode={activeDiagramWorkbenchMode}
+              metadataType={currentContentType}
+              onClose={handleCloseDiagramSurface}
+              onDirtyChange={setDiagramDirty}
+              onConfirm={async (spec: EditorDiagramReference) => {
+                await bindDiagram(spec);
+                handleCloseDiagramSurface();
+                return true;
+              }}
+            />
+          </div>
+        </div>
+      ) : (
+      <>
       {/* Shell Principal de 3 Columnas */}
       <EditorShell
         toolbar={null}
@@ -385,7 +501,7 @@ export const MdxWorkbench: React.FC = () => {
             diagramTargetsError={diagramTargetsError}
             setActiveDiagramIndex={setActiveDiagramIndex}
             setActiveDiagramBlockId={setActiveDiagramBlockId}
-            setDiagramBuilderOpen={setDiagramDrawerOpen}
+            setDiagramBuilderOpen={setDiagramBuilderOpen}
             insertInteractiveTargetParagraph={insertInteractiveTargetParagraph}
             onSelectIssue={handleSelectIssue}
             onClose={() => setIsInspectorOpen(false)}
@@ -403,12 +519,15 @@ export const MdxWorkbench: React.FC = () => {
             <div className="flex-1 overflow-hidden p-2">
               <DiagramSourcePanel
                 currentFile={currentFile}
-                diagramLinkedPages={[]}
+                diagramLinkedPages={diagramLinkedPages}
+                diagramUsageError={diagramUsageError}
                 openFile={openFileSafely}
                 setActiveDiagramBlockId={setActiveDiagramBlockId}
                 setActiveDiagramIndex={setActiveDiagramIndex}
-                setDiagramBuilderOpen={setDiagramDrawerOpen}
-                onRewriteVisually={() => setDiagramDrawerOpen(true)}
+                setDiagramBuilderOpen={setDiagramBuilderOpen}
+                onRewriteVisually={() => {
+                  setRewriteDiagramPath(currentFile);
+                }}
                 capability={currentResource?.capability}
               />
             </div>
@@ -426,7 +545,8 @@ export const MdxWorkbench: React.FC = () => {
             <div className="flex-1 h-full min-h-0 overflow-hidden">
               <PublishedRuntimePreview
                 open={true}
-                path={previewPath ?? currentFile}
+                embedded
+                path={previewPath}
                 hasPendingChanges={hasLocalChanges}
                 revision={localRevision}
                 onClose={() => setViewMode('visual')}
@@ -468,13 +588,15 @@ export const MdxWorkbench: React.FC = () => {
                 }}
                 setActiveDiagramIndex={setActiveDiagramIndex}
                 setActiveDiagramBlockId={setActiveDiagramBlockId}
-                setDiagramBuilderOpen={setDiagramDrawerOpen}
+                setDiagramBuilderOpen={setDiagramBuilderOpen}
                 diagramTargets={combinedDiagramTargets}
               />
             </div>
           )}
         </div>
       </EditorShell>
+      </>
+      )}
 
       {/* Semantic Linker Popover / Modal */}
       {linkerState.isOpen && (
@@ -508,32 +630,13 @@ export const MdxWorkbench: React.FC = () => {
         />
       )}
 
-      {/* Embedded Diagram Workbench Host Drawer */}
-      {activeDiagramWorkbenchMode && (
-        <DiagramWorkbenchHost
-          isOpen={diagramDrawerOpen}
-          mode={activeDiagramWorkbenchMode}
-          metadataType={currentContentType}
-          onClose={() => {
-            setDiagramDrawerOpen(false);
-            setRewriteDiagramPath(null);
-          }}
-          onConfirm={async (spec: EditorDiagramReference) => {
-            await bindDiagram(spec);
-            setDiagramDrawerOpen(false);
-            setRewriteDiagramPath(null);
-            return true;
-          }}
-        />
-      )}
-
       {/* Diagram Rewrite Dialog */}
-      {rewriteDiagramPath && !diagramDrawerOpen && (
+      {rewriteDiagramPath && !diagramSurfaceOpen && (
         <DiagramRewriteDialog
           path={rewriteDiagramPath}
           initialTitle="Diagrama"
           onClose={() => setRewriteDiagramPath(null)}
-          onStart={() => setDiagramDrawerOpen(true)}
+          onStart={() => openDiagramEditor({ asRewrite: true })}
         />
       )}
 

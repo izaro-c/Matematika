@@ -68,7 +68,7 @@ function validateMetadata(metadata: Record<string, unknown>): EditorValidationIs
   if (!id) {
     issues.push(issue('metadata-id-required', 'error', 'metadata', 'El campo "id" es obligatorio.'));
   } else if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)) {
-    issues.push(issue('metadata-id-kebab', 'warning', 'metadata', 'Recomendación: El ID debería usar kebab-case estricto.'));
+    issues.push(issue('metadata-id-kebab', 'warning', 'metadata', 'Recomendación: el ID debería usar minúsculas y guiones (ej. teorema-pitagoras).'));
   }
 
   if (!type) {
@@ -113,7 +113,7 @@ function validateProofStep(step: ProofStepData, blockId: string): EditorValidati
   const issues: EditorValidationIssue[] = [];
   const bodyContainsJustification = /\b(?:por (?:hipótesis|axioma|teorema|definición|el paso|regla (?:de )?lógica|construcción)|hipótesis)\b/i.test(step.body ?? '');
   if (!step.justificacion?.trim() && !bodyContainsJustification) {
-    issues.push(issue(`proof-${step.number}-justification`, 'warning', 'proof', `El paso ${step.number} necesita justificación Greenberg.`, blockId));
+    issues.push(issue(`proof-${step.number}-justification`, 'warning', 'proof', `El paso ${step.number} necesita una justificación (regla o teorema usado).`, blockId));
   }
   if (!step.body?.includes('<InteractiveElement') && !step.body?.includes('highlightTarget=')) {
     issues.push(issue(`proof-${step.number}-interactive`, 'warning', 'proof', `El paso ${step.number} no referencia ningún elemento del diagrama.`, blockId));
@@ -122,10 +122,10 @@ function validateProofStep(step: ProofStepData, blockId: string): EditorValidati
     issues.push(issue(`proof-${step.number}-visual-argument`, 'error', 'proof', `El paso ${step.number} contiene una justificación visual o informal prohibida.`, blockId));
   }
   if (step.dependencyId && !CONTENT_ID_RE.test(step.dependencyId)) {
-    issues.push(issue(`proof-${step.number}-dependency-id`, 'error', 'proof', `La dependencia del paso ${step.number} debe ser kebab-case.`, blockId));
+    issues.push(issue(`proof-${step.number}-dependency-id`, 'error', 'proof', `La dependencia del paso ${step.number} debe ser un ID con minúsculas y guiones.`, blockId));
   }
   if (typeof step.diagramStep === 'string' && step.diagramStep !== 'initial' && !CONTENT_ID_RE.test(step.diagramStep) && !/^\d+$/.test(step.diagramStep)) {
-    issues.push(issue(`proof-${step.number}-diagram-step`, 'warning', 'proof', `El paso de diagrama "${step.diagramStep}" en el paso ${step.number} debe ser 'initial', un número o un ID kebab-case.`, blockId));
+    issues.push(issue(`proof-${step.number}-diagram-step`, 'warning', 'proof', `El paso de diagrama "${step.diagramStep}" en el paso ${step.number} debe ser 'initial', un número o un ID con minúsculas y guiones.`, blockId));
   }
   return issues;
 }

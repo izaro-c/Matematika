@@ -396,7 +396,10 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
               {block.type === 'advancedMdx' && (
                 block.metadata?.editable ? <RegisteredMdxBlockEditor block={block} isReadOnly={isReadOnly} updateBlock={updateBlock} handleTextareaSelect={handleTextareaSelect} handleEditLink={handleEditLink} renderInlineToolbar={renderInlineToolbar} /> :
                 <div className="space-y-2"><div className="rounded border border-pavo/20 bg-pavo/5 p-4"><>
-                      <p className="mb-3 text-xs italic text-carbon/55 select-none">Bloque desconocido preservado byte a byte. Se modifica exclusivamente en la vista de código.</p>
+                      <p className="mb-3 text-xs italic text-carbon/55 select-none">
+                        Este fragmento se conserva tal cual (listas, tablas o código especial).
+                        Para editarlo, cambia a la vista <strong>Fuente</strong>.
+                      </p>
                       <pre className="max-h-48 overflow-auto whitespace-pre-wrap rounded border border-carbon/10 bg-lienzo p-3 font-mono text-[10px] leading-relaxed text-carbon/65">{block.content}</pre>
                     </></div></div>
               )}

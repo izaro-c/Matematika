@@ -315,7 +315,7 @@ export function buildDiffReview(input: BuildDiffReviewInput): DiffReview {
       baseSourceHash,
       candidateSourceHash,
       status: 'blocked',
-      title: 'Diff bloqueado por validación',
+      title: 'Revisión bloqueada por validación',
       summary: 'El candidato no puede analizarse de forma segura como MDX.',
       changes: [{
         id: 'blocking-parse',
@@ -388,7 +388,7 @@ export function buildDiffReview(input: BuildDiffReviewInput): DiffReview {
     baseSourceHash,
     candidateSourceHash,
     status: blockingChangeCount > 0 ? 'blocked' : 'reviewable',
-    title: blockingChangeCount > 0 ? 'Diff con cambios bloqueantes' : 'Diff listo para aplicar',
+    title: blockingChangeCount > 0 ? 'Cambios bloqueantes' : 'Listo para aplicar',
     summary: `${changes.length} cambio(s) detectado(s); ${blockingChangeCount} bloqueante(s).`,
     changes,
     hunks,

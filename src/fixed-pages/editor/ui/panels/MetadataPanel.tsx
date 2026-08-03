@@ -130,7 +130,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                   onClick={() => link.path && openFile(link.path)}
                   className="rounded border border-carbon/20 px-2 py-1 text-[10px] font-bold text-carbon/60 hover:bg-carbon/5 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
                 >
-                  Abrir TSX
+                  Abrir diagrama
                 </button>
                 {canMutateVisualStructure && <button
                   type="button"
@@ -145,7 +145,12 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                   Reemplazar
                 </button>}
               </div>
-              {link.path && <div className="mt-3"><DiagramRuntimePreview filePath={link.path} componentName={link.componentName} /></div>}
+              <div className="mt-3">
+                <DiagramRuntimePreview
+                  filePath={link.path ?? link.importSource ?? null}
+                  componentName={link.componentName}
+                />
+              </div>
             </div>
           ))}
         </div>
@@ -213,7 +218,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
   return (
     <div className="h-full w-full bg-lienzo flex flex-col overflow-hidden">
       <div className="border-b border-carbon/15 bg-carbon/5 p-3 select-none">
-        <h3 className="ac-label ac-label--sm">Inspector de la página</h3>
+        <h3 className="ac-label ac-label--sm">Detalles de la página</h3>
         <div className="mt-2 grid grid-cols-3 gap-1" role="tablist" aria-label="Secciones del inspector">
           {([
             ['page', 'Página', Object.keys(metadata).length],
