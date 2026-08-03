@@ -40,6 +40,7 @@
 .page-loading__mark {
   margin-bottom: 1.25rem;
   animation: page-loading-breathe 2.4s ease-in-out infinite;
+  will-change: opacity;
 }
 
 .page-loading__logo {
@@ -92,12 +93,10 @@
 @keyframes page-loading-breathe {
   0%,
   100% {
-    opacity: 0.72;
-    transform: scale(1);
+    opacity: 0.65;
   }
   50% {
     opacity: 1;
-    transform: scale(1.03);
   }
 }
 
