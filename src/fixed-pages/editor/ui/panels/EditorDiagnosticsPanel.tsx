@@ -13,6 +13,8 @@ interface EditorDiagnosticsPanelProps {
   level: EditorWorkspaceLevel;
   onSelectIssue: (issue: EditorValidationIssue) => void;
   close: () => void;
+  /** When true, omit the standalone header/close (parent tab chrome owns it). */
+  embedded?: boolean;
 }
 
 function statusDescription(status: EditorPersistenceStatus): string {
@@ -55,21 +57,31 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
   level,
   onSelectIssue,
   close,
+  embedded = false,
 }) => {
   const validationStatus = validationPresentation(validation);
   const persistenceClass = persistenceIndicator(persistenceStatus);
   return (
   <section className="flex h-full flex-col bg-lienzo" aria-label="Avisos y actividad">
-    <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-2">
-      <div className="flex items-center gap-3">
-        <h2 className="font-serif text-xs font-bold text-carbon">Avisos y actividad</h2>
+    {!embedded && (
+      <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-2">
+        <div className="flex items-center gap-3">
+          <h2 className="font-serif text-xs font-bold text-carbon">Avisos y actividad</h2>
+          <span className={`rounded px-2 py-0.5 text-[9px] font-bold ${validationStatus.className}`}>
+            {validationStatus.label}
+          </span>
+        </div>
+        <button type="button" onClick={close} className="rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon/55">Cerrar</button>
+      </header>
+    )}
+    {embedded && (
+      <div className="px-3 pt-3">
         <span className={`rounded px-2 py-0.5 text-[9px] font-bold ${validationStatus.className}`}>
           {validationStatus.label}
         </span>
       </div>
-      <button type="button" onClick={close} className="rounded border border-carbon/15 px-2 py-1 text-[10px] font-bold text-carbon/55">Cerrar</button>
-    </header>
-    <div className="grid flex-1 min-h-0 gap-0 overflow-y-auto md:grid-cols-2">
+    )}
+    <div className={`grid flex-1 min-h-0 gap-0 overflow-y-auto ${embedded ? '' : 'md:grid-cols-2'}`}>
       <div className="border-b border-carbon/10 p-3 md:border-b-0 md:border-r">
         <h3 className="mb-2 ac-label ac-label--xs ac-label--soft">Avisos</h3>
         {!currentFile && <p className="text-xs italic text-carbon/50">No hay un recurso abierto.</p>}
@@ -125,6 +137,7 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
                     <button
                       type="button"
                       onClick={() => onSelectIssue(issue)}
+                      aria-label={issue.message}
                       className="text-[10px] font-bold text-salvia hover:underline cursor-pointer flex items-center space-x-0.5"
                     >
                       <span>Ir al elemento</span>
