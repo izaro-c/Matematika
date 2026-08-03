@@ -35,12 +35,14 @@ interface MdxWorkbenchHeaderProps {
   canSaveDraft?: boolean;
   canReviewDiff?: boolean;
   isReadOnly?: boolean;
+  workspaceLevel?: 'basic' | 'advanced';
+  onToggleWorkspaceLevel?: () => void;
 }
 
 export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
   currentFile,
   fileTitle,
-  contentType = 'MDX',
+  contentType = 'Página',
   hasLocalChanges,
   saving,
   persistenceStatus,
@@ -64,6 +66,8 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
   canSaveDraft = false,
   canReviewDiff = false,
   isReadOnly = false,
+  workspaceLevel = 'basic',
+  onToggleWorkspaceLevel,
 }) => {
   const [isDark, setIsDark] = useState(isDarkMode);
 
@@ -149,19 +153,21 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
                 : 'text-carbon/70 hover:text-carbon'
             }`}
           >
-            Visual
+            Edición
           </button>
-          <button
-            type="button"
-            onClick={() => onSetViewMode('code')}
-            className={`rounded-md px-2.5 py-1 transition-colors ${
-              viewMode === 'code'
-                ? 'bg-lienzo font-semibold text-carbon shadow-xs'
-                : 'text-carbon/70 hover:text-carbon'
-            }`}
-          >
-            Código MDX
-          </button>
+          {(workspaceLevel === 'advanced' || viewMode === 'code') && (
+            <button
+              type="button"
+              onClick={() => onSetViewMode('code')}
+              className={`rounded-md px-2.5 py-1 transition-colors ${
+                viewMode === 'code'
+                  ? 'bg-lienzo font-semibold text-carbon shadow-xs'
+                  : 'text-carbon/70 hover:text-carbon'
+              }`}
+            >
+              Fuente
+            </button>
+          )}
           <button
             type="button"
             onClick={() => onSetViewMode('preview')}
@@ -171,11 +177,11 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
                 : 'text-carbon/70 hover:text-carbon'
             }`}
           >
-            Previsualización
+            Publicada
           </button>
         </div>
 
-        {/* Embedded Diagram Toggle */}
+        {/* Abrir editor de diagramas */}
         <button
           type="button"
           onClick={onToggleDiagramDrawer}
@@ -186,7 +192,7 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
                 ? 'border-pavo/30 bg-pavo/5 text-pavo hover:bg-pavo/10'
                 : 'border-carbon/15 bg-lienzo text-carbon/60 hover:text-carbon'
           }`}
-          title="Abrir Editor de Diagramas Integrado (Diagram Workbench)"
+          title="Abrir editor de diagramas"
         >
           <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
@@ -195,16 +201,27 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
         </button>
       </div>
 
-      {/* 3. Sección Derecha: Acciones, Inspector Toggle y Cierre */}
+      {/* 3. Sección Derecha: Acciones, Detalles y Cierre */}
       <div className="flex items-center space-x-1.5">
         {onCreatePage && (
           <button
             type="button"
             onClick={onCreatePage}
             className="hidden xl:flex items-center space-x-1 rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs font-medium text-carbon hover:bg-carbon/5 transition-colors"
-            title="Crear Nueva Página MDX"
+            title="Crear nueva página"
           >
             <span>+ Nueva</span>
+          </button>
+        )}
+
+        {onToggleWorkspaceLevel && (
+          <button
+            type="button"
+            onClick={onToggleWorkspaceLevel}
+            className="hidden lg:inline-flex rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5 transition-colors"
+            title={workspaceLevel === 'advanced' ? 'Volver a vista básica' : 'Mostrar herramientas avanzadas'}
+          >
+            {workspaceLevel === 'advanced' ? 'Avanzado' : 'Básico'}
           </button>
         )}
 
@@ -213,9 +230,9 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
             type="button"
             onClick={onReviewDiff}
             className="rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs font-medium text-carbon hover:bg-carbon/5 transition-colors"
-            title="Revisar Cambios (Diff)"
+            title="Revisar cambios antes de guardar"
           >
-            Diff
+            Revisar cambios
           </button>
         )}
 
@@ -224,7 +241,7 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
             type="button"
             onClick={onSaveDraft}
             className="hidden sm:inline-flex rounded-lg border border-carbon/20 bg-carbon/5 px-2.5 py-1 text-xs font-medium text-carbon hover:bg-carbon/10 transition-colors"
-            title="Guardar Borrador"
+            title="Guardar borrador"
           >
             Borrador
           </button>
@@ -241,12 +258,11 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
                 ? 'bg-pavo text-lienzo hover:bg-pavo/90 cursor-pointer shadow-xs'
                 : 'bg-musgo text-lienzo cursor-default opacity-90'
           }`}
-          title={saving ? 'Guardando...' : hasLocalChanges ? 'Guardar Cambios' : 'Al día'}
+          title={saving ? 'Guardando...' : hasLocalChanges ? 'Guardar cambios' : 'Al día'}
         >
           {saving ? 'Guardando…' : hasLocalChanges ? 'Guardar' : 'Guardado'}
         </button>
 
-        {/* Inspector & Diagnostics Toggle Button */}
         <button
           type="button"
           onClick={onToggleInspector}
@@ -255,12 +271,12 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
               ? 'border-salvia/40 bg-salvia/10 text-salvia'
               : 'border-carbon/15 bg-lienzo hover:bg-carbon/5 text-carbon/70'
           }`}
-          title={isInspectorOpen ? 'Ocultar Panel de Inspección' : 'Mostrar Panel de Inspección'}
+          title={isInspectorOpen ? 'Ocultar detalles' : 'Mostrar detalles'}
         >
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
           </svg>
-          <span className="hidden sm:inline">Inspector</span>
+          <span className="hidden sm:inline">Detalles</span>
           {errorCount > 0 && (
             <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-crimson px-1 text-[9px] font-bold text-lienzo" title={`${errorCount} errores bloqueantes`}>
               {errorCount}

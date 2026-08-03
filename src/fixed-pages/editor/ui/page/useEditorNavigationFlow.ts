@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigationStore } from '@/lib/stores/NavigationStore';
 import {
   readEditorWorkspacePreferences,
@@ -7,6 +7,13 @@ import {
   writeEditorWorkspacePreferences,
   type EditorWorkspacePreferences,
 } from '@/fixed-pages/editor/session/editorNavigationModel';
+import type { MdxViewMode } from '@/fixed-pages/editor/ui/workbench/MdxWorkbenchHeader';
+
+export interface DiagramReturnContext {
+  pagePath: string;
+  blockId?: string | null;
+  viewMode: MdxViewMode;
+}
 
 export interface UseEditorNavigationFlowOptions {
   files: Array<{ path: string }>;
@@ -14,6 +21,8 @@ export interface UseEditorNavigationFlowOptions {
   openFile: (path: string, options?: { discardLocalChanges?: boolean }) => void;
   loadFileList: () => void;
   hasLocalChanges: boolean;
+  /** Cambios sin guardar en el workbench de diagrama (superficie abierta). */
+  diagramDirty?: boolean;
   setPendingFileNavigation: (path: string | null) => void;
 }
 
@@ -23,6 +32,7 @@ export function useEditorNavigationFlow({
   openFile,
   loadFileList,
   hasLocalChanges,
+  diagramDirty = false,
   setPendingFileNavigation,
 }: UseEditorNavigationFlowOptions) {
   const [workspace, setWorkspace] = useState<EditorWorkspacePreferences>(() =>
@@ -34,8 +44,20 @@ export function useEditorNavigationFlow({
   const [isDark, setIsDark] = useState(() =>
     document.documentElement.classList.contains('dark'),
   );
+  const [diagramSurfaceOpen, setDiagramSurfaceOpen] = useState(false);
+  const [diagramReturnContext, setDiagramReturnContext] = useState<DiagramReturnContext | null>(null);
 
   const { toggleSearch } = useNavigationStore();
+
+  const openDiagramSurface = useCallback((returnContext: DiagramReturnContext | null = null) => {
+    setDiagramReturnContext(returnContext);
+    setDiagramSurfaceOpen(true);
+  }, []);
+
+  const closeDiagramSurface = useCallback(() => {
+    setDiagramSurfaceOpen(false);
+    setDiagramReturnContext(null);
+  }, []);
 
   // Sincronizar el modo oscuro mediante MutationObserver
   useEffect(() => {
@@ -46,7 +68,44 @@ export function useEditorNavigationFlow({
     return () => observer.disconnect();
   }, []);
 
-  // Escuchar evento personalizado de búsqueda para abrir archivos de forma reactiva e inmediata
+  useEffect(() => {
+    loadFileList();
+  }, [loadFileList]);
+
+  useEffect(() => {
+    writeEditorWorkspacePreferences(workspace, window.localStorage);
+  }, [workspace]);
+
+  const openFileSafely = useCallback((path: string) => {
+    const leavingCurrent = Boolean(currentFile && currentFile !== path);
+    const diagramBlocksNav = diagramSurfaceOpen && diagramDirty;
+    if (leavingCurrent && (hasLocalChanges || diagramBlocksNav)) {
+      setPendingFileNavigation(path);
+      return;
+    }
+    setWorkspace(previous => ({
+      ...previous,
+      recentPaths: recordRecentPath(previous.recentPaths, path),
+    }));
+    openFile(path);
+    if (path.endsWith('.tsx')) {
+      openDiagramSurface(null);
+    } else {
+      closeDiagramSurface();
+    }
+    if (window.innerWidth < 1024) setIsSidebarOpen(false);
+  }, [
+    closeDiagramSurface,
+    currentFile,
+    diagramDirty,
+    diagramSurfaceOpen,
+    hasLocalChanges,
+    openDiagramSurface,
+    openFile,
+    setPendingFileNavigation,
+  ]);
+
+  // Búsqueda de conceptos: misma ruta segura que el sidebar (cierra superficie / pide confirmación)
   useEffect(() => {
     const handleOpenConcept = (e: Event) => {
       const customEvent = e as CustomEvent<{ href: string }>;
@@ -58,34 +117,13 @@ export function useEditorNavigationFlow({
           return fileSlug === slug;
         });
         if (matchedFile) {
-          openFile(matchedFile.path);
+          openFileSafely(matchedFile.path);
         }
       }
     };
     window.addEventListener('editor-open-concept', handleOpenConcept);
     return () => window.removeEventListener('editor-open-concept', handleOpenConcept);
-  }, [files, openFile]);
-
-  useEffect(() => {
-    loadFileList();
-  }, [loadFileList]);
-
-  useEffect(() => {
-    writeEditorWorkspacePreferences(workspace, window.localStorage);
-  }, [workspace]);
-
-  const openFileSafely = (path: string) => {
-    if (currentFile && currentFile !== path && hasLocalChanges) {
-      setPendingFileNavigation(path);
-      return;
-    }
-    setWorkspace(previous => ({
-      ...previous,
-      recentPaths: recordRecentPath(previous.recentPaths, path),
-    }));
-    openFile(path);
-    if (window.innerWidth < 1024) setIsSidebarOpen(false);
-  };
+  }, [files, openFileSafely]);
 
   const toggleFavorite = (path: string) => {
     setWorkspace(previous => ({
@@ -107,5 +145,9 @@ export function useEditorNavigationFlow({
     toggleSearch,
     openFileSafely,
     toggleFavorite,
+    diagramSurfaceOpen,
+    diagramReturnContext,
+    openDiagramSurface,
+    closeDiagramSurface,
   };
 }

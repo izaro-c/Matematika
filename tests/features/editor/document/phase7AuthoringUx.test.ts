@@ -94,6 +94,50 @@ describe('Phase 7 lossless authoring UX', () => {
     expect(report.some(issue => issue.id.startsWith('broken-ConceptLink-no-existe'))).toBe(true);
   });
 
+  it('does not treat the current document index entry as a duplicate public id', () => {
+    const report = buildAuthoringIntegrityReport({
+      source: '<p>ok</p>',
+      metadata: { id: 'axioma-base', type: 'axioma' },
+      currentFile: 'content/mdx/axioms/axioma-base.mdx',
+      diagramTargets: [],
+      entries: [
+        {
+          id: 'axioma-base',
+          filePath: 'axioms/axioma-base.mdx',
+          contentType: 'axioma',
+          metadata: { id: 'axioma-base', type: 'axioma' },
+        },
+        {
+          id: 'otro-axioma',
+          filePath: 'axioms/otro-axioma.mdx',
+          contentType: 'axioma',
+          metadata: { id: 'otro-axioma', type: 'axioma' },
+        },
+      ],
+    });
+    expect(report.some(issue => issue.id === 'duplicate-content-id-axioma-base')).toBe(false);
+  });
+
+  it('reports a real duplicate when another indexed file owns the same public id', () => {
+    const report = buildAuthoringIntegrityReport({
+      source: '<p>ok</p>',
+      metadata: { id: 'axioma-base', type: 'axioma' },
+      currentFile: 'content/mdx/axioms/axioma-base.mdx',
+      diagramTargets: [],
+      entries: [
+        {
+          id: 'axioma-base',
+          filePath: 'axioms/axioma-duplicado.mdx',
+          contentType: 'axioma',
+          metadata: { id: 'axioma-base', type: 'axioma' },
+        },
+      ],
+    });
+    expect(report).toEqual(expect.arrayContaining([
+      expect.objectContaining({ id: 'duplicate-content-id-axioma-base' }),
+    ]));
+  });
+
   it('only treats explicitly marked semantic links as logical dependencies', () => {
     const report = buildAuthoringIntegrityReport({
       source: [
@@ -176,7 +220,11 @@ describe('Phase 7 lossless authoring UX', () => {
         diagramTargets: [],
       });
       return report
-        .filter(issue => issue.id.startsWith('self-dependency-') || issue.id.startsWith('cyclic-dependency-'))
+        .filter(issue => (
+          issue.id.startsWith('self-dependency-')
+          || issue.id.startsWith('cyclic-dependency-')
+          || issue.id.startsWith('duplicate-content-id-')
+        ))
         .map(issue => `${relativePath}: ${issue.message}`);
     });
 

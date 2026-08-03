@@ -352,13 +352,13 @@ async function main() {
       await openEditor(page);
       console.log(`[${new Date().toISOString()}] FLOW 1: Editor opened, clicking Compatible...`);
       await clickByText(page, 'Compatible');
-      await expectText(page, 'Edición visual exacta');
+      await expectText(page, 'Editable');
       const current = await readContent('content/mdx/definitions/compatible.mdx');
       const next = current.source.replace('Texto inicial.', 'Texto editado desde E2E.');
       await setMonacoValue(page, next);
       await expectText(page, 'Cambios locales');
-      await clickByText(page, 'Revisar diff');
-      await expectText(page, 'Diff listo para aplicar');
+      await clickByText(page, 'Revisar cambios');
+      await expectText(page, 'Listo para aplicar');
       await clickByText(page, 'Aplicar archivo');
       await expectText(page, 'Archivo guardado');
       const saved = await readContent('content/mdx/definitions/compatible.mdx');
@@ -372,14 +372,14 @@ async function main() {
       await openEditor(page);
       console.log(`[${new Date().toISOString()}] FLOW 2: Editor opened, clicking Parcial...`);
       await clickByText(page, 'Parcial');
-      await expectText(page, 'Edición visual exacta por rangos');
+      await expectText(page, 'Edición parcial');
       console.log(`[${new Date().toISOString()}] FLOW 2: Document loaded. Reading content...`);
       const before = await readContent('content/mdx/definitions/parcial.mdx');
       console.log(`[${new Date().toISOString()}] FLOW 2: Setting Monaco value...`);
       await setMonacoValue(page, before.source.replace('Texto seguro.', 'Texto seguro editado.'));
-      await waitForEnabledButton(page, 'Revisar diff');
-      console.log(`[${new Date().toISOString()}] FLOW 2: Clicking Revisar diff...`);
-      await clickByExactText(page, 'Revisar diff');
+      await waitForEnabledButton(page, 'Revisar cambios');
+      console.log(`[${new Date().toISOString()}] FLOW 2: Clicking Revisar cambios...`);
+      await clickByExactText(page, 'Revisar cambios');
       await expectText(page, 'Diff con cambios bloqueantes');
       const applyDisabled = await page.evaluate(() => {
         const btn = [...document.querySelectorAll('button')].find(b => b.textContent?.includes('Aplicar archivo'));
@@ -398,8 +398,8 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 3: Editor opened, clicking No Soportado...`);
       await clickByText(page, 'No Soportado');
       await expectText(page, 'Recurso MDX inválido');
-      console.log(`[${new Date().toISOString()}] FLOW 3: Clicking Edición visual exacta...`);
-      await clickByText(page, 'Edición visual exacta');
+      console.log(`[${new Date().toISOString()}] FLOW 3: Clicking Editable...`);
+      await clickByText(page, 'Editable');
       await expectText(page, 'Recurso MDX inválido');
       console.log(`[${new Date().toISOString()}] FLOW 3: Reading content...`);
       const saved = await readContent('content/mdx/definitions/no-soportado.mdx');
@@ -432,9 +432,9 @@ async function main() {
       try {
         await page.setRequestInterception(true);
         page.on('request', intercept);
-        await waitForEnabledButton(page, 'Revisar diff');
-        console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Revisar diff...`);
-        await clickByExactText(page, 'Revisar diff');
+        await waitForEnabledButton(page, 'Revisar cambios');
+        console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Revisar cambios...`);
+        await clickByExactText(page, 'Revisar cambios');
         await waitForEnabledButton(page, 'Aplicar archivo');
         console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Aplicar archivo (should fail)...`);
         await clickByExactText(page, 'Aplicar archivo');
@@ -445,8 +445,8 @@ async function main() {
         await page.setRequestInterception(false).catch(() => undefined);
       }
 
-      console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Revisar diff again...`);
-      await clickByExactText(page, 'Revisar diff');
+      console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Revisar cambios again...`);
+      await clickByExactText(page, 'Revisar cambios');
       await waitForEnabledButton(page, 'Aplicar archivo');
       console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Aplicar archivo again...`);
       await clickByExactText(page, 'Aplicar archivo');
@@ -466,8 +466,8 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 5: Applying external change behind the scenes...`);
       const external = await applyContent('content/mdx/definitions/compatible.mdx', `${opened.source}\n\nCambio externo.`, opened.version, 99);
       if (!external.response.ok) throw new Error('Could not create external change');
-      console.log(`[${new Date().toISOString()}] FLOW 5: Clicking Revisar diff...`);
-      await clickByText(page, 'Revisar diff');
+      console.log(`[${new Date().toISOString()}] FLOW 5: Clicking Revisar cambios...`);
+      await clickByText(page, 'Revisar cambios');
       console.log(`[${new Date().toISOString()}] FLOW 5: Clicking Aplicar archivo (should detect conflict)...`);
       await clickByText(page, 'Aplicar archivo');
       await expectText(page, 'Conflicto con una versión externa');
@@ -501,7 +501,7 @@ async function main() {
       const current = await readContent('content/mdx/definitions/parcial.mdx');
       console.log(`[${new Date().toISOString()}] FLOW 7: Setting Monaco value...`);
       await setMonacoValue(page, `${current.source}\n\nPendiente.`);
-      await waitForEnabledButton(page, 'Revisar diff');
+      await waitForEnabledButton(page, 'Revisar cambios');
       console.log(`[${new Date().toISOString()}] FLOW 7: Clicking Compatible (navigation trigger)...`);
       await clickByText(page, 'Compatible');
       await expectText(page, 'Hay cambios locales');
@@ -519,7 +519,7 @@ async function main() {
       await clickByText(page, 'Diagramas');
       console.log(`[${new Date().toISOString()}] FLOW 8: Clicking Seguro...`);
       await clickByText(page, 'Seguro');
-      await expectText(page, 'Diagrama TSX abierto');
+      await expectText(page, 'Diagrama abierto');
       console.log(`[${new Date().toISOString()}] FLOW 8: Clicking Abrir código y vista previa...`);
       await clickByText(page, 'Abrir código y vista previa');
       await expectText(page, 'sync:source-authoritative');
@@ -543,9 +543,9 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 10: Starting`);
       await openEditor(page);
       await clickByText(page, 'Parcial');
-      await expectText(page, 'Edición visual exacta por rangos');
+      await expectText(page, 'Edición parcial');
       // Cambiar a la proyección visual exacta
-      await clickByText(page, 'Edición visual exacta');
+      await clickByText(page, 'Editable');
       // En modo visual en MDX, el botón guardar debe estar desactivado/bloqueado
       const isDisabled = await page.evaluate(() => {
         const btn = [...document.querySelectorAll('button')].find(b => b.textContent?.includes('Guardar'));
@@ -555,13 +555,13 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 10: Completed`);
     });
 
-    await runTest(results, '11 Hunk inesperado bloqueante', evidenceDir, async () => {
+    await runTest(results, '11 Cambio inesperado bloqueante', evidenceDir, async () => {
       console.log(`[${new Date().toISOString()}] FLOW 11: Starting`);
       await openEditor(page);
       await clickByText(page, 'Parcial');
-      await expectText(page, 'Edición visual exacta por rangos');
+      await expectText(page, 'Edición parcial');
       const before = await readContent('content/mdx/definitions/parcial.mdx');
-      await clickByExactText(page, 'Edición visual exacta');
+      await clickByExactText(page, 'Editable');
       const openedParagraph = await page.evaluate(() => {
         const target = [...document.querySelectorAll('div.cursor-text')]
           .find(element => element.textContent?.trim() === 'Texto seguro.');
@@ -587,9 +587,9 @@ async function main() {
         .replace('Texto seguro.', 'Texto seguro editado visualmente.');
       await setMonacoValue(page, unexpectedSource);
       await page.waitForFunction(() => !document.body.textContent?.includes('Cambio localizado aplicado.'));
-      await waitForEnabledButton(page, 'Revisar diff');
-      await clickByExactText(page, 'Revisar diff');
-      await expectText(page, 'Hunk inesperado (bloqueante)');
+      await waitForEnabledButton(page, 'Revisar cambios');
+      await clickByExactText(page, 'Revisar cambios');
+      await expectText(page, 'Cambio inesperado (bloqueante)');
       // Verificar que el botón de aplicar archivo esté deshabilitado
       const applyDisabled = await page.evaluate(() => {
         const btn = [...document.querySelectorAll('button')].find(b => b.textContent?.includes('Aplicar archivo'));
@@ -604,7 +604,7 @@ async function main() {
       await openEditor(page);
       await clickByText(page, 'Diagramas');
       await clickByText(page, 'Seguro');
-      await expectText(page, 'Diagrama TSX abierto');
+      await expectText(page, 'Diagrama abierto');
       // Cambiar la fuente persistida para forzar parse-failed / invalid-source en modo file.
       await writeFixture(tempRoot, 'widgets/diagrams/Definitions/Seguro.tsx', 'export function Seguro() { return (');
       console.log(`[${new Date().toISOString()}] FLOW 12: Opening visual workbench...`);
@@ -621,7 +621,7 @@ async function main() {
       await openEditor(page);
       await clickByText(page, 'Diagramas');
       await clickByText(page, 'Seguro');
-      await expectText(page, 'Diagrama TSX abierto');
+      await expectText(page, 'Diagrama abierto');
       await clickByText(page, 'Abrir código y vista previa');
       await expectText(page, 'sync:source-authoritative');
       const textarea = await page.$('textarea');
@@ -638,7 +638,7 @@ async function main() {
       await openEditor(page);
       await clickByText(page, 'Diagramas');
       await clickByText(page, 'Seguro');
-      await expectText(page, 'Diagrama TSX abierto');
+      await expectText(page, 'Diagrama abierto');
       // Hacer un cambio local en el diagrama
       await setMonacoValue(page, 'export function Seguro() { return "cambio-local"; }');
       await expectText(page, 'Cambios locales');
@@ -717,7 +717,7 @@ async function main() {
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
       await openEditor(page);
       await clickByText(page, 'Enlace Anidado');
-      await expectText(page, 'Edición visual exacta');
+      await expectText(page, 'Editable');
 
       const linkSelector = '[role="button"][aria-label*="Documento compatible. Concepto: compatible"]';
       await page.waitForSelector(linkSelector);
@@ -729,7 +729,7 @@ async function main() {
 
       await expectText(page, 'Cambios locales');
       await clickByText(page, 'Revisar y guardar');
-      await expectText(page, 'Diff listo para aplicar');
+      await expectText(page, 'Listo para aplicar');
       await clickByText(page, 'Aplicar archivo');
       await expectText(page, 'El archivo real fue aplicado.');
 
@@ -755,7 +755,7 @@ async function main() {
       await description.type('Una definición compleja creada y reabierta sin pérdida.');
       await clickByText(page, 'Crear y abrir');
       await expectText(page, 'definicion-e2e-compleja.mdx');
-      await expectText(page, 'Edición visual exacta');
+      await expectText(page, 'Editable');
 
       const targetId = COMPLEX_DIAGRAM_TARGET.id;
       const complexSource = [
@@ -795,7 +795,7 @@ async function main() {
       await setMonacoValue(page, complexSource);
       await expectText(page, 'Cambios locales');
       await clickByText(page, 'Revisar y guardar');
-      await expectText(page, 'Diff listo para aplicar');
+      await expectText(page, 'Listo para aplicar');
       await clickByText(page, 'Aplicar archivo');
       await expectText(page, 'Archivo guardado');
 
@@ -809,7 +809,7 @@ async function main() {
       await page.waitForFunction(() => document.body.textContent?.includes('No hay cambios locales pendientes.')
         && !document.body.textContent?.includes('Cargando archivo'));
       await clickByText(page, 'E2e Compleja');
-      await expectText(page, 'Edición visual exacta');
+      await expectText(page, 'Editable');
       await expectText(page, COMPLEX_DIAGRAM_TARGET.label);
       const reopened = await readContent('content/mdx/definitions/definicion-e2e-compleja.mdx');
       if (reopened.source !== complexSource) throw new Error('Reopening changed the complex MDX source');
@@ -881,7 +881,7 @@ async function main() {
       await openEditor(page);
       await clickByText(page, 'Diagramas');
       await clickByText(page, 'Complejo');
-      await expectText(page, 'Edición visual exacta');
+      await expectText(page, 'Editable');
       await clickByExactText(page, 'Abrir edición visual exacta');
       await expectText(page, 'Diseñar');
       await expectText(page, 'Propiedades');

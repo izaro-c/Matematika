@@ -79,7 +79,7 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
             disabled={!canReviewDiff}
             className="rounded bg-carbon px-3 py-2 text-xs font-bold text-lienzo hover:bg-carbon/85 disabled:cursor-not-allowed disabled:opacity-45"
           >
-            Revisar diff
+            Revisar cambios
           </button>
           <button
             type="button"

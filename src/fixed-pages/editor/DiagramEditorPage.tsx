@@ -20,7 +20,11 @@ export const DiagramEditorPage: React.FC = () => {
     return undefined;
   }, [location]);
 
-  return <DiagramWorkbench mode={mode} />;
+  return (
+    <div className="h-screen w-screen overflow-hidden">
+      <DiagramWorkbench mode={mode} />
+    </div>
+  );
 };
 
 export default DiagramEditorPage;

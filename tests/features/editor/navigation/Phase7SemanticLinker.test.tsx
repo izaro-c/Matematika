@@ -6,7 +6,7 @@ import { SemanticLinker } from '@/fixed-pages/editor/ui/components/SemanticLinke
 const files = [{
   path: 'content/mdx/definitions/punto.mdx', name: 'punto.mdx', type: 'content-definitions',
   kind: 'mdx-document' as const, capability: 'visual-exact' as const,
-  capabilityLabel: 'Edición visual exacta', reason: 'Compatible',
+  capabilityLabel: 'Editable', reason: 'Compatible',
 }];
 
 describe('Phase 7 semantic link selector', () => {

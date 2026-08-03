@@ -177,7 +177,7 @@ export function validateProjectedMetadata(
     diagnostics.push({
       code: 'METADATA_ID_KEBAB',
       severity: 'warning',
-      message: 'Recomendación: El ID del contenido debería usar kebab-case estricto.',
+      message: 'Recomendación: el ID del contenido debería usar minúsculas y guiones (ej. teorema-pitagoras).',
       sourceRange: objectRange,
       panel: 'metadata',
     });

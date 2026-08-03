@@ -44,8 +44,8 @@ function categoryLabel(type: string): string {
 }
 
 function capabilityPresentation(file: FileNode): { label: string; className: string } {
-  if (file.capability === 'visual-exact') return { label: 'Edición exacta', className: 'border-musgo/25 bg-musgo/10 text-musgo' };
-  if (file.capability === 'code-preview') return { label: 'Código + vista previa', className: 'border-pavo/25 bg-pavo/10 text-pavo' };
+  if (file.capability === 'visual-exact') return { label: 'Editable', className: 'border-musgo/25 bg-musgo/10 text-musgo' };
+  if (file.capability === 'code-preview') return { label: 'Solo fuente', className: 'border-pavo/25 bg-pavo/10 text-pavo' };
   return { label: 'Requiere corrección', className: 'border-granada/25 bg-granada/10 text-granada' };
 }
 
@@ -221,12 +221,12 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
               </label>
             </div>
             <label className="block ac-label ac-label--xs">
-              Capacidad de edición
+              Cómo se edita
               <select value={filters.capability} onChange={event => updateFilter('capability', event.target.value as EditorCatalogFilters['capability'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
                 <option value="all">Todas</option>
-                <option value="visual-exact">Edición visual exacta</option>
-                <option value="code-preview">Código con vista previa</option>
-                <option value="invalid">Requiere corrección</option>
+                <option value="visual-exact">Editable</option>
+                <option value="code-preview">Solo fuente</option>
+                <option value="invalid">Con errores</option>
               </select>
             </label>
             {advancedFilterCount > 0 && <button type="button" onClick={() => setFilters(previous => ({ ...DEFAULT_EDITOR_CATALOG_FILTERS, query: previous.query }))} className="w-full rounded border border-carbon/15 px-2 py-1.5 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5">Restablecer filtros avanzados</button>}

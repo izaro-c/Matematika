@@ -57,11 +57,11 @@ export const DiffReviewPanel: React.FC<DiffReviewPanelProps> = ({
             <div>
               <h2 id="editor-diff-title" className="font-serif text-lg font-bold text-carbon">{review.title}</h2>
               <p id="editor-diff-description" className="mt-1 text-xs leading-snug text-carbon/60">
-                {isStale ? 'Este diff quedó obsoleto porque cambió la revisión activa.' : review.summary}
+                {isStale ? 'Esta revisión quedó obsoleta porque hubo nuevas ediciones.' : review.summary}
               </p>
               {isStale && (
                 <div className="mt-2 rounded border border-granada/30 bg-granada/5 p-2 text-xs font-semibold text-granada select-none">
-                  ⚠️ Este diff ha quedado obsoleto debido a nuevas ediciones. Requiere una nueva revisión.
+                  ⚠️ Hay ediciones nuevas. Vuelve a revisar los cambios.
                 </div>
               )}
             </div>
@@ -108,10 +108,10 @@ export const DiffReviewPanel: React.FC<DiffReviewPanelProps> = ({
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-[9px] text-carbon/50">
-                        {change.blockId ? `bloque:${change.blockId}` : change.operationId ? `operación:${change.operationId}` : 'Cambio global / código'}
+                        {change.blockId ? `Bloque ${change.blockId}` : change.operationId ? `Operación ${change.operationId}` : 'Cambio global'}
                       </span>
                       <span className={`ac-editor-badge rounded border px-2 py-0.5 ${CLASS_STYLE[change.classification]}`}>
-                        {['outside-edited-range', 'unknown', 'blocking'].includes(change.classification) ? 'Hunk inesperado (bloqueante)' : CLASS_LABEL[change.classification]}
+                        {['outside-edited-range', 'unknown', 'blocking'].includes(change.classification) ? 'Cambio inesperado (bloqueante)' : CLASS_LABEL[change.classification]}
                       </span>
                     </div>
                   </div>

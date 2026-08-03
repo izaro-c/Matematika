@@ -8,11 +8,40 @@ import { DiagramResponsivePreview } from './DiagramResponsivePreview';
 
 type DiagramModule = Record<string, unknown>;
 type DiagramComponent = React.ComponentType;
+type DiagramLoader = () => Promise<unknown>;
 
-const diagramModules = import.meta.glob('/content/diagrams/**/*.tsx');
+const diagramModules = import.meta.glob('/content/diagrams/**/*.tsx') as Record<string, DiagramLoader>;
 
-function moduleKey(filePath: string): string {
-  return filePath.startsWith('src/') ? `/${filePath}` : `/src/${filePath}`;
+/** Normalize editor/import paths to the Vite glob key shape `/content/diagrams/...tsx`. */
+export function normalizeDiagramModulePath(filePath: string): string {
+  let normalized = filePath.trim()
+    .replace(/^\/?(?:Matematika\/)?/, '')
+    .replace(/^@content\//, 'content/')
+    .replace(/^@\//, '')
+    .replace(/^src\//, '');
+  if (!normalized.endsWith('.tsx')) normalized = `${normalized}.tsx`;
+  const contentIndex = normalized.indexOf('content/diagrams/');
+  if (contentIndex >= 0) normalized = normalized.slice(contentIndex);
+  return normalized;
+}
+
+export function resolveDiagramLoader(
+  modules: Record<string, DiagramLoader>,
+  filePath: string | null,
+  componentName: string,
+): DiagramLoader | undefined {
+  if (filePath) {
+    const normalized = normalizeDiagramModulePath(filePath);
+    const exact = modules[`/${normalized}`] ?? modules[normalized];
+    if (exact) return exact;
+    const suffix = Object.entries(modules).find(([key]) => (
+      key.endsWith(`/${normalized}`) || key.endsWith(normalized)
+    ));
+    if (suffix) return suffix[1];
+  }
+  if (!componentName) return undefined;
+  const byName = Object.entries(modules).find(([key]) => key.endsWith(`/${componentName}.tsx`));
+  return byName?.[1];
 }
 
 function findComponent(module: DiagramModule, componentName: string): DiagramComponent | null {
@@ -46,15 +75,17 @@ function findSpec(module: DiagramModule, componentName: string): VisualDiagramMo
   return null;
 }
 
-function pendingMessage(filePath: string | null, hasLoader: boolean): string {
-  if (!filePath) return 'La vista previa real está disponible para diagramas guardados del catálogo.';
+function pendingMessage(filePath: string | null, componentName: string, hasLoader: boolean): string {
   if (hasLoader) return 'Cargando vista previa…';
+  if (!filePath && !componentName) {
+    return 'La vista previa real está disponible para diagramas guardados del catálogo.';
+  }
   return 'Este recurso no pertenece al catálogo de diagramas finales.';
 }
 
 export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({ filePath, componentName }) => {
   const previewKey = `${filePath ?? ''}:${componentName}`;
-  const loader = filePath ? diagramModules[moduleKey(filePath)] : undefined;
+  const loader = resolveDiagramLoader(diagramModules, filePath, componentName);
   const [activeStepId, setActiveStepId] = useState('');
   const [loadedPreview, setLoadedPreview] = useState<PreviewState>({
     key: '',
@@ -64,7 +95,7 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({ fi
   });
 
   useEffect(() => {
-    if (!filePath || !loader) return undefined;
+    if (!loader) return undefined;
     let active = true;
     loader()
       .then(loaded => {
@@ -93,7 +124,7 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({ fi
         }
       });
     return () => { active = false; };
-  }, [componentName, filePath, loader, previewKey]);
+  }, [componentName, loader, previewKey]);
 
   const currentPreview = loadedPreview.key === previewKey
     ? loadedPreview
@@ -101,7 +132,7 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({ fi
         key: previewKey,
         component: null,
         spec: null,
-        message: pendingMessage(filePath, Boolean(loader)),
+        message: pendingMessage(filePath, componentName, Boolean(loader)),
       };
 
   if (!currentPreview.component && !currentPreview.spec) {

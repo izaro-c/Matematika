@@ -17,10 +17,10 @@ export interface EditorResourceCatalogEntry {
 }
 
 export const RESOURCE_CAPABILITY_LABELS: Record<EditorResourceCapability, string> = {
-  'visual-exact': 'Edición visual exacta',
-  'code-preview': 'Edición de código con vista previa',
+  'visual-exact': 'Editable',
+  'code-preview': 'Solo fuente',
   internal: 'Recurso interno',
-  invalid: 'Recurso inválido',
+  invalid: 'Con errores',
 };
 
 export function isEditableCatalogResource(entry: EditorResourceCatalogEntry): boolean {

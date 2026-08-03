@@ -59,10 +59,10 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
   const validationStatus = validationPresentation(validation);
   const persistenceClass = persistenceIndicator(persistenceStatus);
   return (
-  <section className="flex h-full flex-col bg-lienzo" aria-label="Diagnósticos y actividad">
+  <section className="flex h-full flex-col bg-lienzo" aria-label="Avisos y actividad">
     <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-2">
       <div className="flex items-center gap-3">
-        <h2 className="font-serif text-xs font-bold text-carbon">Diagnósticos y actividad</h2>
+        <h2 className="font-serif text-xs font-bold text-carbon">Avisos y actividad</h2>
         <span className={`rounded px-2 py-0.5 text-[9px] font-bold ${validationStatus.className}`}>
           {validationStatus.label}
         </span>
@@ -71,15 +71,15 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
     </header>
     <div className="grid flex-1 min-h-0 gap-0 overflow-y-auto md:grid-cols-2">
       <div className="border-b border-carbon/10 p-3 md:border-b-0 md:border-r">
-        <h3 className="mb-2 ac-label ac-label--xs ac-label--soft">Validación</h3>
+        <h3 className="mb-2 ac-label ac-label--xs ac-label--soft">Avisos</h3>
         {!currentFile && <p className="text-xs italic text-carbon/50">No hay un recurso abierto.</p>}
         {currentFile && validation.issues.length === 0 && (
           <div className="p-4 text-center text-salvia border border-salvia/20 bg-salvia/5 rounded-xl">
             <svg className="w-6 h-6 mx-auto mb-1 text-salvia" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            <p className="font-bold text-xs">¡El documento está 100% sano!</p>
-            <p className="text-[10px] text-carbon/60 mt-0.5">No se han detectado errores sintácticos ni problemas de estructura.</p>
+            <p className="font-bold text-xs">Todo en orden</p>
+            <p className="text-[10px] text-carbon/60 mt-0.5">No hay errores que impidan guardar.</p>
           </div>
         )}
         <div className="space-y-2">
@@ -110,7 +110,16 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
                         }`}
                       />
                       <span className="font-bold text-xs uppercase tracking-wider text-carbon">
-                        {issue.area} • {isError ? 'Error' : isWarning ? 'Aviso' : 'Info'}
+                        {({
+                          metadata: 'Metadatos',
+                          body: 'Contenido',
+                          block: 'Bloque',
+                          diagram: 'Diagrama',
+                          proof: 'Demostración',
+                          source: 'Fuente',
+                        } as Record<string, string>)[issue.area] ?? issue.area}
+                        {' • '}
+                        {isError ? 'Error' : isWarning ? 'Aviso' : 'Info'}
                       </span>
                     </div>
                     <button

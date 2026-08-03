@@ -4,12 +4,18 @@ export interface UseUnsavedChangesGuardOptions {
   hasLocalChanges: boolean;
   openFile: (path: string, options?: { discardLocalChanges?: boolean }) => void;
   setLocation: (url: string) => void;
+  /** Limpia superficie diagrama / targeting antes de descartar y navegar. */
+  onBeforeDiscardNavigate?: () => void;
+  /** Tras openFile por path de corpus (no URL de app). */
+  onAfterDiscardFileNavigate?: (path: string) => void;
 }
 
 export function useUnsavedChangesGuard({
   hasLocalChanges,
   openFile,
   setLocation,
+  onBeforeDiscardNavigate,
+  onAfterDiscardFileNavigate,
 }: UseUnsavedChangesGuardOptions) {
   const [pendingFileNavigation, setPendingFileNavigation] = useState<string | null>(null);
 
@@ -32,7 +38,6 @@ export function useUnsavedChangesGuard({
       if (anchor) {
         const href = anchor.getAttribute('href');
         if (href) {
-          // Si es una ruta interna o relativa:
           if (href.startsWith('/') || href.startsWith('#') || href.includes(window.location.host)) {
             event.preventDefault();
             event.stopPropagation();
@@ -48,13 +53,14 @@ export function useUnsavedChangesGuard({
   const continuePendingNavigation = () => {
     const target = pendingFileNavigation;
     setPendingFileNavigation(null);
-    if (target) {
-      if (target.startsWith('/') && !target.includes('database/content/')) {
-        setLocation(target);
-      } else {
-        openFile(target, { discardLocalChanges: true });
-      }
+    if (!target) return;
+    onBeforeDiscardNavigate?.();
+    if (target.startsWith('/') && !target.includes('database/content/')) {
+      setLocation(target);
+      return;
     }
+    openFile(target, { discardLocalChanges: true });
+    onAfterDiscardFileNavigate?.(target);
   };
 
   const cancelPendingNavigation = () => {

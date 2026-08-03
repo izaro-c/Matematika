@@ -87,6 +87,7 @@ interface DiagramWorkbenchProps {
   metadataType?: string;
   onClose?: () => void;
   onConfirm?: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
+  onDirtyChange?: (dirty: boolean) => void;
 }
 
 export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
@@ -94,6 +95,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   metadataType = 'demostración',
   onClose,
   onConfirm,
+  onDirtyChange,
 }) => {
   const {
     state,
@@ -114,6 +116,11 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
     linkToMdxPage,
   } = useDiagramState();
   const sandboxMode = !mode;
+
+  useEffect(() => {
+    onDirtyChange?.(isDirty);
+    return () => onDirtyChange?.(false);
+  }, [isDirty, onDirtyChange]);
 
   const model = state.currentModel;
   const canUndo = state.modelHistory?.past ? state.modelHistory.past.length > 0 : false;
@@ -604,7 +611,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
   return (
     <div
-      className="flex h-screen w-screen flex-col bg-lienzo text-carbon overflow-hidden select-none font-serif transition-colors"
+      className="flex h-full w-full min-h-0 flex-col bg-lienzo text-carbon overflow-hidden select-none font-serif transition-colors"
       tabIndex={0}
       onKeyDown={onKeyDown}
     >

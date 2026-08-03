@@ -77,7 +77,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
                   activeTab === 'tsx' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
                 }`}
               >
-                TSX Canónico
+                Fuente del diagrama
               </button>
               <button
                 type="button"
@@ -86,7 +86,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
                   activeTab === 'json' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
                 }`}
               >
-                JSON Spec
+                Especificación
               </button>
             </div>
           </div>
@@ -104,7 +104,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
             <pre>{contentToCopy}</pre>
           ) : (
             <textarea
-              aria-label="Aplicar desde TSX"
+              aria-label="Aplicar desde la fuente"
               value={sourceDraft}
               onChange={event => setSourceDraft(event.target.value)}
               spellCheck={false}
@@ -118,9 +118,9 @@ export const CodeModal: React.FC<CodeModalProps> = ({
           <span className="text-xs text-pizarra/70 italic">
             {generated.ok
               ? sandboxMode
-                ? 'Exportación de lectura: el sandbox no aplica parse-roundtrip ni guarda al corpus.'
-                : 'Editar y aplicar TSX analiza la fuente en el servidor antes de permitir guardar.'
-              : 'La generación falló; revisa los diagnósticos en el comentario del TSX.'}
+                ? 'Exportación de lectura: el sandbox no guarda en el corpus.'
+                : 'Al aplicar, se analiza la fuente antes de permitir guardar.'
+              : 'La generación falló; revisa los avisos en el comentario de la fuente.'}
           </span>
           <div className="flex items-center space-x-2">
             <button
@@ -136,7 +136,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
               onClick={handleCopy}
               className="px-4 py-1.5 text-xs font-bold text-lienzo bg-salvia hover:bg-salvia/90 rounded-lg shadow-sm transition-all cursor-pointer"
             >
-              {copied ? '¡Copiado!' : 'Copiar Código'}
+              {copied ? '¡Copiado!' : 'Copiar'}
             </button>
             {!sandboxMode && (
               <button
@@ -145,7 +145,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
                 disabled={!canApplySource}
                 className="px-4 py-1.5 text-xs font-bold text-lienzo bg-pavo hover:bg-pavo/90 rounded-lg shadow-sm transition-all cursor-pointer disabled:opacity-40"
               >
-                Aplicar desde TSX
+                Aplicar fuente
               </button>
             )}
           </div>

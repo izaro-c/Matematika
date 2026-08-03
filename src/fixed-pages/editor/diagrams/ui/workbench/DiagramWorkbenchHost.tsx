@@ -9,17 +9,18 @@ export type DiagramWorkbenchHostProps = {
   metadataType: string;
   onClose: () => void;
   onConfirm: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
+  onDirtyChange?: (dirty: boolean) => void;
 };
 
+/** Contenedor de superficie diagrama dentro del shell (no modal). */
 export const DiagramWorkbenchHost: React.FC<DiagramWorkbenchHostProps> = (props) => {
-  const { isOpen, mode, metadataType, onClose, onConfirm } = props;
+  const { isOpen, mode, metadataType, onClose, onConfirm, onDirtyChange } = props;
   if (!isOpen) return null;
 
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col bg-lienzo"
-      role="dialog"
-      aria-modal="true"
+      className="flex h-full w-full min-h-0 flex-col bg-lienzo"
+      role="region"
       aria-label="Editor de diagramas"
     >
       <DiagramWorkbench
@@ -27,6 +28,7 @@ export const DiagramWorkbenchHost: React.FC<DiagramWorkbenchHostProps> = (props)
         metadataType={metadataType}
         onClose={onClose}
         onConfirm={onConfirm}
+        onDirtyChange={onDirtyChange}
       />
     </div>
   );

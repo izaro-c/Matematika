@@ -70,7 +70,7 @@ export const EditorShell: React.FC<EditorShellProps> = ({
                 className={`${resizeHandle} w-1`}
               />
               <aside
-                aria-label="Inspector contextual"
+                aria-label="Panel de detalles"
                 className={`${UI.editorPanel} fixed inset-y-0 right-0 z-40 max-w-[92vw] overflow-hidden border-l shadow-xl lg:relative lg:z-auto lg:max-w-none lg:shadow-none`}
                 style={{ width: inspectorWidth }}
               >
