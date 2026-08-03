@@ -115,7 +115,7 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({ fi
   if (spec) {
     previewContent = <div className="space-y-2 p-2">
       <DiagramResponsivePreview model={spec} activeStepId={effectiveStepId} />
-      {spec.steps.length > 0 && <StepNavigator steps={spec.steps} scopeId={`preview-${spec.componentId}`} activeStepId={effectiveStepId} onStepChange={setActiveStepId} compact />}
+      {spec.steps.length > 1 && <StepNavigator steps={spec.steps} scopeId={`preview-${spec.componentId}`} activeStepId={effectiveStepId} onStepChange={setActiveStepId} compact />}
       <p className="px-1 text-[10px] text-carbon/50">{spec.points.length + spec.elements.length + spec.sliders.length} objetos · {spec.steps.length} pasos · {spec.points.filter(item => item.target).length + spec.elements.filter(item => item.target).length + spec.groups.filter(item => item.target).length} vínculos MDX</p>
     </div>;
   } else if (Component) {

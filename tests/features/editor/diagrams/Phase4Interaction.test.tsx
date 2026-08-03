@@ -70,6 +70,16 @@ describe('Phase 4 accessible interaction', () => {
     expect(screen.getByLabelText('paso activo').textContent).toBe('step1');
   });
 
+  it('does not render StepNavigator controls when diagram has only a single step', () => {
+    const singleStep = [{ id: 'step1', label: 'Unico paso' }];
+    render(
+      <MathProvider>
+        <StepNavigator steps={singleStep} />
+      </MathProvider>,
+    );
+    expect(screen.queryByRole('navigation', { name: 'Navegación de pasos del diagrama' })).toBeNull();
+  });
+
   it('shows Lean traces as read-only information beside, not instead of, justification', () => {
     render(
       <DemonstrationBlock

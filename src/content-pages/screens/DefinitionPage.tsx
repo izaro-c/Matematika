@@ -50,15 +50,7 @@ export const DefinitionPage = () => {
   const useCases = db.getUseCasesByConcept(definition.id);
   const Simulation = definition.Simulation;
 
-  const breadcrumbs: { name: string; href?: string }[] = [];
-  if (definition.tags && definition.tags.length > 0) {
-    const mainBranch = definition.tags[0];
-    const taxonomy = db.getBranchTaxonomy(mainBranch);
-    breadcrumbs.push(
-      ...taxonomy.breadcrumbs.map(b => ({ name: b.name, href: `/rama/${b.slug}` })),
-      { name: taxonomy.name || taxonomy.id, href: `/rama/${taxonomy.slug}` }
-    );
-  }
+  const breadcrumbs = db.getBreadcrumbs(definition.tags);
 
   const renderMainContent = () => (
     <div className="bg-transparent text-carbon font-serif pb-16">
