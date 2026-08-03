@@ -128,15 +128,7 @@ export const TheoremPage = () => {
     );
   }
 
-  const breadcrumbs: { name: string; href?: string }[] = [];
-  if (theorem.tags && theorem.tags.length > 0) {
-    const mainBranchName = theorem.tags[0];
-    const branchTaxonomy = db.getBranchTaxonomy(mainBranchName);
-    breadcrumbs.push(
-      ...branchTaxonomy.breadcrumbs.map(b => ({ name: b.name, href: `/rama/${b.slug}` })),
-      { name: branchTaxonomy.name || branchTaxonomy.id, href: `/rama/${branchTaxonomy.slug}` }
-    );
-  }
+  const breadcrumbs = db.getBreadcrumbs(theorem.tags);
 
   const renderMainContent = () => (
     <div className="bg-transparent text-carbon font-serif pb-16">

@@ -110,7 +110,7 @@ const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
     return () => window.clearTimeout(timer);
   }, [activeIndex, activeStep, playback.playing, publishStep, steps]);
 
-  if (steps.length === 0) return null;
+  if (steps.length <= 1) return null;
 
   const previous = () => selectStep(steps[Math.max(0, activeIndex - 1)].id);
   const next = () => selectStep(steps[Math.min(steps.length - 1, activeIndex + 1)].id);

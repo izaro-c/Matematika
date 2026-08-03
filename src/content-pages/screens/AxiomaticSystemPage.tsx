@@ -30,6 +30,8 @@ export function AxiomaticSystemPage() {
   const axioms = (system.axiomas || []).map(axId => db.getAxiom(axId)).filter(Boolean);
   const models = db.getModelsForSystem(system.id);
 
+  const breadcrumbs = db.getBreadcrumbs((system as any).tags || (axioms[0] && axioms[0].tags), { name: 'Axiomas', href: '/axiomas' });
+
   const renderMainContent = () => (
     <div className="bg-transparent text-carbon font-serif pb-16">
       <FadeIn className="w-full px-6 md:px-12 pt-4">
@@ -38,7 +40,7 @@ export function AxiomaticSystemPage() {
           typeLabel="Sistema Axiomático"
           title={system.title}
           description={system.description}
-          breadcrumbs={[{ name: 'Axiomas', href: '/axiomas' }]}
+          breadcrumbs={breadcrumbs}
           authors={system.authors || []}
           nodeId={system.id}
         />

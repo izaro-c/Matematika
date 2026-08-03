@@ -427,6 +427,21 @@ export class ContentStore {
   }
 
   /**
+   * Resuelve el array de migas de pan (breadcrumbs) para un conjunto de etiquetas,
+   * cayendo de forma transparente a una miga por defecto si no existen tags.
+   */
+  getBreadcrumbs(tags?: string[], fallback?: { name: string; href?: string }): { name: string; href?: string }[] {
+    if (tags && tags.length > 0) {
+      const taxonomy = this.getBranchTaxonomy(tags[0]);
+      return [
+        ...taxonomy.breadcrumbs.map(b => ({ name: b.name, href: `/rama/${b.slug}` })),
+        { name: taxonomy.name || taxonomy.id, href: `/rama/${taxonomy.slug}` },
+      ];
+    }
+    return fallback ? [fallback] : [];
+  }
+
+  /**
    * Obtiene un array plano con todos los nodos de contenido asociados a una rama MSC.
    * Útil para listados genéricos sin jerarquía.
    * 

@@ -40,9 +40,7 @@ export function AxiomPage() {
     );
   }
 
-  const breadcrumbs = axiom.tags?.length
-    ? [{ name: 'Axiomas', href: '/axiomas' }]
-    : [];
+  const breadcrumbs = db.getBreadcrumbs(axiom.tags, { name: 'Axiomas', href: '/axiomas' });
 
   const content = (
     <div className="min-h-viewport bg-transparent text-carbon font-serif pb-32">

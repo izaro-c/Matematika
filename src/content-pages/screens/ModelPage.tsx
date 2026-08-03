@@ -31,6 +31,8 @@ export function ModelPage() {
   const system = model.satisfies ? db.getAxiomaticSystem(model.satisfies) : undefined;
   const verifiedAxioms = (model.axioms_verified || []).map(axId => db.getAxiom(axId)).filter(Boolean);
 
+  const breadcrumbs = db.getBreadcrumbs(model.tags || (verifiedAxioms[0] && verifiedAxioms[0].tags), { name: 'Axiomas', href: '/axiomas' });
+
   const renderContent = () => (
     <div className="min-h-viewport bg-transparent text-carbon font-serif pb-32">
       <FadeIn className="w-full px-6 md:px-12 pt-4 pb-16">
@@ -38,7 +40,7 @@ export function ModelPage() {
           type="modelo"
           title={model.title}
           description={model.description}
-          breadcrumbs={[{ name: 'Axiomas', href: '/axiomas' }]}
+          breadcrumbs={breadcrumbs}
           tags={model.tags || []}
           nodeId={model.id}
           backLink={system ? {

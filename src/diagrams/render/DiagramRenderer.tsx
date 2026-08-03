@@ -146,7 +146,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   const headerRef = useRef<HTMLElement>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
 
-  const showStepControls = (stepControls ?? mode === 'runtime') && spec.steps.length > 0;
+  const showStepControls = (stepControls ?? mode === 'runtime') && spec.steps.length > 1;
   const showToolbar = viewportControls || showStepControls;
 
   const {
