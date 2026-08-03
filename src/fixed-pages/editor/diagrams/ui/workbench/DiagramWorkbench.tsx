@@ -51,6 +51,9 @@ import { WorkbenchElementInspector } from './WorkbenchElementInspector';
 import { WorkbenchStepsEditor } from '../toolbar/WorkbenchStepsEditor';
 import { WorkbenchDiagnosticsPanel } from './WorkbenchDiagnosticsPanel';
 import { WorkbenchAsideTabs } from '@/fixed-pages/editor/ui/workbench/WorkbenchAsideTabs';
+import { EDITOR_PANEL_LIMITS } from '@/fixed-pages/editor/session/editorNavigationModel';
+import { usePanelResize } from '@/fixed-pages/editor/ui/page/usePanelResize';
+import { UI } from '@/design';
 import { PresetsModal } from '../modals/PresetsModal';
 import { CodeModal } from '../modals/CodeModal';
 import { DiagramSettingsModal } from '../modals/DiagramSettingsModal';
@@ -89,6 +92,13 @@ interface DiagramWorkbenchProps {
   onClose?: () => void;
   onConfirm?: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
   onDirtyChange?: (dirty: boolean) => void;
+  isSidebarOpen?: boolean;
+  onToggleSidebar?: () => void;
+  leftPanel?: React.ReactNode;
+  leftPanelWidth?: number;
+  onLeftPanelWidthChange?: (width: number) => void;
+  inspectorWidth?: number;
+  onInspectorWidthChange?: (width: number) => void;
 }
 
 export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
@@ -97,6 +107,13 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   onClose,
   onConfirm,
   onDirtyChange,
+  isSidebarOpen,
+  onToggleSidebar,
+  leftPanel,
+  leftPanelWidth = 304,
+  onLeftPanelWidthChange,
+  inspectorWidth: inspectorWidthProp,
+  onInspectorWidthChange,
 }) => {
   const {
     state,
@@ -147,6 +164,27 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   const [selectedIds, setSelectedIds] = useState<readonly string[]>([]);
   const [pendingRefs, setPendingRefs] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<InspectorTab>('scene');
+  const [isInspectorOpen, setIsInspectorOpen] = useState(true);
+  const [localInspectorWidth, setLocalInspectorWidth] = useState(336);
+  const inspectorWidth = inspectorWidthProp ?? localInspectorWidth;
+  const setInspectorWidth = onInspectorWidthChange ?? setLocalInspectorWidth;
+  const [localNavWidth, setLocalNavWidth] = useState(leftPanelWidth);
+  const navigationWidth = onLeftPanelWidthChange ? leftPanelWidth : localNavWidth;
+  const setNavigationWidth = onLeftPanelWidthChange ?? setLocalNavWidth;
+  const navigationOpen = Boolean(leftPanel && onToggleSidebar && isSidebarOpen);
+  const navigationResize = usePanelResize({
+    direction: 'horizontal',
+    value: navigationWidth,
+    ...EDITOR_PANEL_LIMITS.navigation,
+    onChange: setNavigationWidth,
+  });
+  const inspectorResize = usePanelResize({
+    direction: 'horizontal',
+    value: inspectorWidth,
+    inverted: true,
+    ...EDITOR_PANEL_LIMITS.inspector,
+    onChange: setInspectorWidth,
+  });
   const [activeStepIndex, setActiveStepIndex] = useState<number | null>(null);
   const [frameMode, setFrameMode] = useState<CanvasFrameMode>('editor');
   const [showAllObjects, setShowAllObjects] = useState(false);
@@ -631,10 +669,12 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
         onOpenMdxLinks={() => setMdxLinksOpen(true)}
         onOpenGuided={() => setGuidedOpen(true)}
         onResetViewport={handleResetViewport}
-        diagnostics={enrichedDiagnostics}
         errorCount={errorCount}
         warningCount={warningCount}
-        onOpenDiagnostics={() => setActiveTab('diagnostics')}
+        onOpenAvisos={() => {
+          setIsInspectorOpen(true);
+          setActiveTab('diagnostics');
+        }}
         onTitleChange={handleTitleChange}
         sandboxMode={sandboxMode}
         isDirty={isDirty}
@@ -643,6 +683,10 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
         saveCapability={effectiveSaveCapability}
         onSave={handleSave}
         onCloseEditor={handleCloseEditor}
+        isSidebarOpen={isSidebarOpen}
+        onToggleSidebar={onToggleSidebar}
+        isInspectorOpen={isInspectorOpen}
+        onToggleInspector={() => setIsInspectorOpen(open => !open)}
       />
 
       <div className="relative z-40">
@@ -658,9 +702,17 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
         />
       </div>
 
+      <div className="flex min-h-0 w-full flex-1 overflow-hidden">
+        {navigationOpen && leftPanel}
+        {navigationOpen && (
+          <div
+            {...navigationResize}
+            aria-label="Redimensionar explorador"
+            className="ac-editor-resize-handle hidden w-1 shrink-0 lg:block"
+          />
+        )}
 
-
-      <div className="flex flex-1 min-h-0 w-full overflow-hidden">
+        <main className="relative flex min-h-0 min-w-0 flex-1 overflow-hidden" aria-label="Lienzo del diagrama">
         <CanvasStage
           model={model}
           selectedIds={effectiveSelectedIds}
@@ -702,8 +754,20 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
             model && handleVisualEdit({ ...model, axis: !model.axis }, { label: 'Alternar ejes' })
           }
         />
+        </main>
 
-        <aside className="w-80 md:w-96 flex flex-col border-l border-carbon/15 bg-lienzo/95 backdrop-blur-md overflow-hidden z-10 transition-colors">
+        {isInspectorOpen && (
+          <>
+            <div
+              {...inspectorResize}
+              aria-label="Redimensionar inspector"
+              className="ac-editor-resize-handle hidden w-1 shrink-0 lg:block"
+            />
+            <aside
+              aria-label="Panel de detalles"
+              className={`${UI.editorPanel} fixed inset-y-0 right-0 z-40 flex max-w-[92vw] flex-col overflow-hidden border-l shadow-xl lg:relative lg:z-auto lg:max-w-none lg:shadow-none`}
+              style={{ width: inspectorWidth }}
+            >
           <WorkbenchAsideTabs
             aria-label="Secciones del inspector de diagrama"
             tabs={[
@@ -712,7 +776,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
               { id: 'steps', label: `Pasos (${(model?.steps || []).length})` },
               {
                 id: 'diagnostics',
-                label: 'Salud',
+                label: 'Avisos',
                 endAdornment: errorCount > 0 ? (
                   <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-granada animate-pulse" />
                 ) : undefined,
@@ -792,7 +856,9 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
               />
             )}
           </WorkbenchAsideTabs>
-        </aside>
+            </aside>
+          </>
+        )}
       </div>
 
       <PresetsModal

@@ -13,7 +13,7 @@ describe('DiagramWorkbench Component', () => {
     expect(screen.getByRole('button', { name: 'Editor' })).toBeDefined();
   });
 
-  it('permite cambiar entre las pestañas del inspector (Objetos, Propiedades, Pasos, Salud)', () => {
+  it('permite cambiar entre las pestañas del inspector (Objetos, Propiedades, Pasos, Avisos)', () => {
     render(<DiagramWorkbench />);
 
     const propTab = screen.getByRole('tab', { name: /^Propiedades$/i });
@@ -24,10 +24,41 @@ describe('DiagramWorkbench Component', () => {
     fireEvent.click(stepsTab);
     expect(stepsTab.getAttribute('aria-selected')).toBe('true');
 
-    const diagTabs = screen.getAllByRole('tab', { name: /Salud/i });
+    const diagTabs = screen.getAllByRole('tab', { name: /Avisos/i });
     expect(diagTabs.length).toBeGreaterThan(0);
     fireEvent.click(diagTabs[diagTabs.length - 1]);
     expect(diagTabs[diagTabs.length - 1].getAttribute('aria-selected')).toBe('true');
+  });
+
+  it('permite colapsar el panel de detalles desde la cabecera', () => {
+    render(<DiagramWorkbench />);
+    const toggle = screen.getByRole('button', { name: /Ocultar detalles|Mostrar detalles/i });
+    expect(screen.getByRole('tab', { name: /^Propiedades$/i })).toBeDefined();
+    fireEvent.click(toggle);
+    expect(screen.queryByRole('tab', { name: /^Propiedades$/i })).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: /Mostrar detalles/i }));
+    expect(screen.getByRole('tab', { name: /^Propiedades$/i })).toBeDefined();
+  });
+
+  it('Avisos abre el panel de detalles en la pestaña Avisos', () => {
+    render(<DiagramWorkbench />);
+    fireEvent.click(screen.getByRole('button', { name: 'Ocultar detalles' }));
+    expect(screen.queryByRole('tab', { name: /^Propiedades$/i })).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Avisos' }));
+    expect(screen.getByRole('tab', { name: /^Avisos$/i }).getAttribute('aria-selected')).toBe('true');
+  });
+
+  it('muestra el explorador izquierdo cuando se pasa leftPanel', () => {
+    render(
+      <DiagramWorkbench
+        isSidebarOpen
+        onToggleSidebar={() => {}}
+        leftPanel={<div>Explorador de prueba</div>}
+      />,
+    );
+    expect(screen.getByText('Explorador de prueba')).toBeDefined();
+    expect(screen.getByRole('separator', { name: 'Redimensionar explorador' })).toBeDefined();
+    expect(screen.getByRole('separator', { name: 'Redimensionar inspector' })).toBeDefined();
   });
 
   it('crea e inspecciona un panel informativo (infoPanel) con editor de bloques', () => {
