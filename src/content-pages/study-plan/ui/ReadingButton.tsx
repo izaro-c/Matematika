@@ -20,7 +20,7 @@ export const ReadingButton: React.FC<ReadingButtonProps> = ({ id }) => {
   const alreadyRead = isRead(id);
 
   return (
-    <div className="w-full flex justify-center my-16">
+    <div className="w-full flex justify-center mt-8 mb-12">
       <button
         onClick={() => toggleRead(id)}
         aria-pressed={alreadyRead}

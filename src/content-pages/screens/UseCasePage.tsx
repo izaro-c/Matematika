@@ -89,7 +89,7 @@ export const UseCasePage: React.FC = () => {
   const renderContent = () => (
     <div className="min-h-viewport bg-transparent text-carbon font-serif">
       <FadeIn>
-        <div className="w-full px-6 md:px-10 pt-4 pb-16">
+        <div className="w-full pt-4 pb-16">
           <ContentHeader
             type="caso-de-uso"
             typeLabel="Caso de Uso Real"
@@ -112,6 +112,8 @@ export const UseCasePage: React.FC = () => {
           <ContentBody>
             <usecase.Component />
           </ContentBody>
+
+          <ReadingButton id={slug} />
         </div>
 
         {related.length > 0 && (
@@ -136,10 +138,6 @@ export const UseCasePage: React.FC = () => {
             </div>
           </div>
         )}
-
-        <div className="w-full px-6 md:px-10 pb-16">
-          <ReadingButton id={slug} />
-        </div>
       </FadeIn>
     </div>
   );

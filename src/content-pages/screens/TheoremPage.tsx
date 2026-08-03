@@ -161,9 +161,19 @@ export const TheoremPage = () => {
         <ContentBody>
           <theorem.Component />
         </ContentBody>
+
+        <ReadingButton id={slug} />
       </FadeIn>
     </div>
   );
+
+  const hasSecondaryContent =
+    demos.length > 0 ||
+    examples.length > 0 ||
+    exercises.length > 0 ||
+    useCases.length > 0 ||
+    lemmas.length > 0 ||
+    corollaries.length > 0;
 
   const renderSecondaryContent = () => (
     <FadeIn>
@@ -235,10 +245,6 @@ export const TheoremPage = () => {
           </div>
         </section>
       )}
-
-      <div className="mt-24">
-        <ReadingButton id={slug} />
-      </div>
     </FadeIn>
   );
 
@@ -246,6 +252,7 @@ export const TheoremPage = () => {
     <ContentLayout
       className="theorem-content-layout"
       pageType={theorem.type || 'teorema'}
+      variant="balanced"
       metadata={<MetadataSidebar />}
       diagram={Simulation ? (
         <DiagramSlot>
@@ -253,7 +260,7 @@ export const TheoremPage = () => {
         </DiagramSlot>
       ) : undefined}
       diagramLabel={`Visualización de ${theorem.title}`}
-      secondary={renderSecondaryContent()}
+      secondary={hasSecondaryContent ? renderSecondaryContent() : undefined}
     >
       {renderMainContent()}
     </ContentLayout>
