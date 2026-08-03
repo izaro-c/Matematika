@@ -1,27 +1,20 @@
 import { useEffect, useState } from 'react';
+import { isDarkMode, setTheme } from '@/lib/theme/theme';
 
 /**
  * Alterna Papiro / Códice Nocturno (clase `dark` en <html>).
  */
 export const ThemeToggle = () => {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(isDarkMode);
 
   useEffect(() => {
-    if (document.documentElement.classList.contains('dark')) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsDark(true);
-    }
+    setIsDark(isDarkMode());
   }, []);
 
   const toggleTheme = () => {
-    const root = document.documentElement;
-    if (isDark) {
-      root.classList.remove('dark');
-      setIsDark(false);
-    } else {
-      root.classList.add('dark');
-      setIsDark(true);
-    }
+    const nextDark = !isDark;
+    setTheme(nextDark);
+    setIsDark(nextDark);
   };
 
   return (
