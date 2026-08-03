@@ -1,5 +1,5 @@
 import { useParams } from 'wouter';
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import { db } from '@/data/content';
 import { ContentDiagram, ContentLayout } from '@/components/layouts/ContentLayout';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
@@ -110,9 +110,7 @@ export const UseCasePage: React.FC = () => {
           />
 
           <ContentBody>
-            <Suspense fallback={<div className="animate-pulse h-64 bg-carbon/5 rounded" />}>
-              <usecase.Component />
-            </Suspense>
+            <usecase.Component />
           </ContentBody>
         </div>
 

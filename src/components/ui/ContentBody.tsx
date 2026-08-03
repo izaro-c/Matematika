@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 interface ContentBodyProps {
   children: React.ReactNode;
@@ -6,6 +6,10 @@ interface ContentBodyProps {
   className?: string;
 }
 
+/**
+ * Cuerpo MDX. Sin Suspense propio: el lazy del contenido burbujea al de ruta
+ * (PageLoadingScreen). El diagrama tiene su propio Suspense + DiagramSkeleton.
+ */
 export const ContentBody: React.FC<ContentBodyProps> = ({
   children,
   variant = 'default',
@@ -20,9 +24,7 @@ export const ContentBody: React.FC<ContentBodyProps> = ({
 
   return (
     <div className={`${base} ${variants[variant]} ${className}`}>
-      <Suspense fallback={<div className="animate-pulse h-64 bg-carbon/5 rounded" />}>
-        {children}
-      </Suspense>
+      {children}
     </div>
   );
 };

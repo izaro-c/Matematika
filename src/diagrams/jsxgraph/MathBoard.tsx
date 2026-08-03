@@ -11,6 +11,7 @@ import {
 } from '@/diagrams/jsxgraph/mathBoardViewport';
 import { safeBoardUpdate } from '@/diagrams/jsxgraph/MathUtils';
 import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
+import { useDiagramPaintReport } from '@/components/ui/skeletons';
 
 export type { DiagramBounds, MathBoardSafeArea };
 export {
@@ -98,6 +99,8 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   safeArea,
   viewportSafeArea,
 }) => {
+  const reportPaint = useDiagramPaintReport();
+  const reportPaintRef = useRef(reportPaint);
   const containerRef = useRef<HTMLDivElement>(null);
   const boardRef = useRef<HTMLDivElement>(null);
   const boardObj = useRef<any>(null);
@@ -193,6 +196,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   };
 
   useEffect(() => {
+    reportPaintRef.current = reportPaint;
     onInitRef.current = onInit;
     onUpdateRef.current = onUpdate;
     onBoundingBoxChangeRef.current = onBoundingBoxChange;
@@ -204,7 +208,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       boardObj.current.__matematikaViewportSafeArea = viewportSafeAreaRef.current;
     }
     if (boardObj.current) safeBoardUpdate(boardObj.current);
-  }, [boundingbox, onBoundingBoxChange, onInit, onUpdate, safeArea, viewportSafeArea]);
+  }, [reportPaint, boundingbox, onBoundingBoxChange, onInit, onUpdate, safeArea, viewportSafeArea]);
 
   useEffect(() => {
     highlightRef.current = highlight;
@@ -267,6 +271,11 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     const theme = getTheme();
     boardRef.current.style.backgroundColor = theme.lienzo;
     onInitRef.current(board, elementsRef.current, theme);
+    // DiagramSlot espera este aviso; sin él los demos legacy (MathBoard) se quedan
+    // en skeleton hasta el timeout de seguridad (~12s).
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => reportPaintRef.current?.());
+    });
 
     const runUpdate = () => {
       const currentTheme = getTheme();

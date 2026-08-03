@@ -2,7 +2,7 @@ import type { StudyPlanMeta, AxiomaticSystemMeta } from './schemas';
 import type { ComponentType, LazyExoticComponent } from 'react';
 
 export type MDXComponent = LazyExoticComponent<ComponentType<Record<string, unknown>>> | ComponentType<Record<string, unknown>>;
-export type Difficulty = 'básico' | 'intermedio' | 'avanzado';
+export type Difficulty =  'básico' | 'intermedio' | 'avanzado' | 'experto';
 export type VerificationStatus = 'none' | 'human-proof' | 'lean-checked' | 'lean-audited';
 export type Foundation = 'matematika-axioms' | 'bridge' | 'pending';
 

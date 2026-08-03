@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
 import { DiagramTitle } from '@/components/ui/DiagramOverlay';
 import { StepNavigator } from '@/components/ui/StepNavigator';
@@ -19,6 +19,7 @@ import {
   movableCueLabels,
 } from '@/diagrams/render/DiagramKatexOverlay';
 import { liveVariables, useBoardLifecycle } from '@/diagrams/render/lifecycle/useBoardLifecycle';
+import { useDiagramPaintReport } from '@/components/ui/skeletons';
 
 export interface DiagramRendererProps {
   spec: DiagramSpecV2 | DiagramSpecV3;
@@ -35,6 +36,8 @@ export interface DiagramRendererProps {
   onAnnotationMove?: (id: string, placement: DiagramAnnotationPlacement) => void;
   onCanvasPointCreate?: (x: number, y: number) => void;
   onViewportChange?: (bounds: DiagramBounds, options?: { persist?: boolean; persistHome?: boolean }) => void;
+  /** Aviso cuando el tablero ha construido la escena (para quitar skeleton). */
+  onReady?: () => void;
   stepControls?: boolean;
 }
 
@@ -53,8 +56,11 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   onAnnotationMove,
   onCanvasPointCreate,
   onViewportChange,
+  onReady,
   stepControls,
 }) => {
+  const reportPaint = useDiagramPaintReport();
+  const readyNotifiedRef = useRef(false);
   const spec = useMemo(() => prepareSceneSpec(inputSpec), [inputSpec]);
 
   const {
@@ -188,6 +194,24 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     liveVariablesSignatureRef,
   });
 
+  const notifyReady = () => {
+    if (readyNotifiedRef.current) return;
+    readyNotifiedRef.current = true;
+    onReady?.();
+    reportPaint?.();
+  };
+
+  useEffect(() => {
+    readyNotifiedRef.current = false;
+  }, [spec.componentId, geometryRevision]);
+
+  const handleBoardInitAndReady = (board: Parameters<typeof handleBoardInit>[0], elements: Parameters<typeof handleBoardInit>[1], theme: Parameters<typeof handleBoardInit>[2]) => {
+    handleBoardInit(board, elements, theme);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(notifyReady);
+    });
+  };
+
   return (
     <div
       ref={rendererRef}
@@ -221,7 +245,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         onBoundingBoxChange={(next) => {
           if (next.some((value, index) => Math.abs(value - bounds[index]) > 1e-7)) commitCamera(next);
         }}
-        onInit={handleBoardInit}
+        onInit={handleBoardInitAndReady}
         onUpdate={handleBoardUpdate}
       >
         <header ref={headerRef} className="pointer-events-none absolute inset-x-0 top-0 z-20 px-5 pt-5 sm:px-8 sm:pt-6" data-diagram-header>

@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'wouter';
 import { db } from '@/data/content';
 import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
@@ -7,6 +7,7 @@ import { ContentBody } from '@/components/ui/ContentBody';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { ContentLayout } from '@/components/layouts/ContentLayout';
+import { DiagramSlot } from '@/components/ui/skeletons';
 
 /** Página canónica para procedimientos matemáticos reutilizables. */
 export const MethodPage = () => {
@@ -42,9 +43,9 @@ export const MethodPage = () => {
       pageType="metodo"
       variant="balanced"
       diagram={Diagram ? (
-        <Suspense fallback={<div className="diagram-loading">Preparando visualización…</div>}>
+        <DiagramSlot>
           <Diagram />
-        </Suspense>
+        </DiagramSlot>
       ) : undefined}
       diagramLabel={`Visualización de ${method.title}`}
     >

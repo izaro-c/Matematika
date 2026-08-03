@@ -1,8 +1,8 @@
-
 import { Suspense } from 'react';
 import { Link } from 'wouter';
 import { resolvePublicOrExternalAsset } from '@/lib/routes';
 import { getContentPageAccent } from '@/design';
+import { PageLoadingScreen } from '@/components/ui/PageLoadingScreen';
 
 import { db } from '@/data/content';
 
@@ -157,7 +157,7 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
       {/* PANEL DERECHO: LECTURA CON SCROLL */}
       <div className="lg:w-[60%] p-6 sm:p-8 lg:p-12 xl:p-20 lg:overflow-y-auto scroll-smooth relative bg-transparent text-carbon">
         <div className="prose prose-pizarra prose-lg max-w-none mx-auto biography-mdx editorial-reading text-carbon font-serif">
-          <Suspense fallback={<div className="animate-pulse py-20 text-center text-carbon/40 italic">Desenrollando pergamino...</div>}>
+          <Suspense fallback={<PageLoadingScreen embedded message="Desenrollando el pergamino…" />}>
             <Component />
           </Suspense>
         </div>

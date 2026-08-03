@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import type { Demo, Theorem } from '@/data/content/types';
 import { useParams } from "wouter";
 import { db } from "@/data/content";
@@ -8,6 +8,7 @@ import { MetadataSidebar } from '@/components/metadata/MetadataSidebar';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { ContentCard } from '@/components/ui/ContentCard';
 import { ContentHeader } from '@/components/content/ContentHeader';
+import { DiagramSlot } from '@/components/ui/skeletons';
 import { ContentBody } from '@/components/ui/ContentBody';
 import { MaterialPracticoSection } from '@/components/content/MaterialPracticoSection';
 import { AplicacionesSection } from '@/components/content/AplicacionesSection';
@@ -49,77 +50,74 @@ export const TheoremPage = () => {
   const displayType = theorem ? (TYPE_LABELS[theorem.type || 'teorema'] || 'Teorema') : 'Teorema';
   const Simulation = theorem?.Simulation;
 
-  useEffect(() => {
-    if (theorem) {
-      // Defer DOM scan to allow MDX content to render fully in the browser
-      const timer = setTimeout(() => {
-        const tocList: { id: string; title: string; level: number }[] = [];
-        const seenIds = new Set<string>();
-
-        // Query all headings inside the reading area and the secondary sections
-        const elements = Array.from(
-          document.querySelectorAll(
-            '.content-reading h2, .content-reading h3, .content-reading h4, .content-secondary section'
-          )
-        );
-
-        elements.forEach((el, index) => {
-          let targetId = el.id;
-          let title = el.textContent || '';
-          let level: number;
-
-          if (el.tagName === 'SECTION') {
-            targetId = el.id;
-            const h2 = el.querySelector('h2');
-            if (h2) {
-              title = h2.textContent || '';
-            } else {
-              return; // Skip if no title
-            }
-            level = 1;
-          } else {
-            // Heading tag (h2, h3, h4) inside MDX
-            const tagLevel = parseInt(el.tagName.substring(1), 10);
-            level = tagLevel - 1; // map h2 -> 1, h3 -> 2, h4 -> 3
-
-            if (!targetId) {
-              // Generate slugified ID
-              targetId = title
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '') // remove accents
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/(^-|-$)/g, '');
-              if (!targetId) targetId = `seccion-${index}`;
-              el.id = targetId;
-            }
-          }
-
-          if (targetId && title && !seenIds.has(targetId)) {
-            seenIds.add(targetId);
-            tocList.push({ id: targetId, title, level });
-          }
-        });
-
-        // Set metadata store
-        setMetadata({
-          id: theorem.id,
-          title: theorem.title,
-          type: displayType,
-          tags: theorem.tags || [],
-          description: theorem.description,
-          tableOfContents: tocList,
-          lemmas: lemmas.map(l => ({ id: l.id, title: l.title })),
-          corollaries: corollaries.map(c => ({ id: c.id, title: c.title })),
-          demos: demos.map(d => ({ id: d.id, title: d.title })),
-        });
-      }, 300);
-
-      return () => {
-        clearTimeout(timer);
-        setMetadata(null);
-      };
+  useLayoutEffect(() => {
+    if (!theorem) {
+      setMetadata(null);
+      return;
     }
+
+    const tocList: { id: string; title: string; level: number }[] = [];
+    const seenIds = new Set<string>();
+
+    const elements = Array.from(
+      document.querySelectorAll(
+        '.content-reading h2, .content-reading h3, .content-reading h4, .content-secondary section'
+      )
+    );
+
+    elements.forEach((el, index) => {
+      let targetId = el.id;
+      let title = el.textContent || '';
+      let level: number;
+
+      if (el.tagName === 'SECTION') {
+        targetId = el.id;
+        const h2 = el.querySelector('h2');
+        if (h2) {
+          title = h2.textContent || '';
+        } else {
+          return;
+        }
+        level = 1;
+      } else {
+        const tagLevel = parseInt(el.tagName.substring(1), 10);
+        level = tagLevel - 1;
+
+        if (!targetId) {
+          targetId = title
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, '');
+          if (!targetId) targetId = `seccion-${index}`;
+          el.id = targetId;
+        }
+      }
+
+      if (targetId && title && !seenIds.has(targetId)) {
+        seenIds.add(targetId);
+        tocList.push({ id: targetId, title, level });
+      }
+    });
+
+    setMetadata({
+      id: theorem.id,
+      title: theorem.title,
+      type: displayType,
+      domain: undefined,
+      author: theorem.authors,
+      difficulty: theorem.difficulty,
+      tags: theorem.tags || [],
+      description: theorem.description,
+      tableOfContents: tocList,
+      lemmas: lemmas.map(l => ({ id: l.id, title: l.title })),
+      corollaries: corollaries.map(c => ({ id: c.id, title: c.title })),
+      demos: demos.map(d => ({ id: d.id, title: d.title })),
+      date: undefined,
+    });
+
+    return () => setMetadata(null);
   }, [theorem, setMetadata, displayType, lemmas, corollaries, demos, id]);
 
   if (!theorem) {
@@ -250,9 +248,9 @@ export const TheoremPage = () => {
       pageType={theorem.type || 'teorema'}
       metadata={<MetadataSidebar />}
       diagram={Simulation ? (
-        <Suspense fallback={<div className="diagram-loading">Preparando visualización…</div>}>
+        <DiagramSlot>
           <Simulation />
-        </Suspense>
+        </DiagramSlot>
       ) : undefined}
       diagramLabel={`Visualización de ${theorem.title}`}
       secondary={renderSecondaryContent()}

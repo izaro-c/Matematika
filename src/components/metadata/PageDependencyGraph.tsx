@@ -4,6 +4,7 @@ import { useLocation } from 'wouter';
 import { db } from '@/data/content';
 import { dictionary } from '@/lib/stores/GlossaryStore';
 import { useThemeColors } from '@/lib/theme/useThemeColors';
+import { GraphSkeleton } from '@/components/ui/skeletons';
 
 
 
@@ -86,6 +87,8 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
   const linkColor = `${theme.carbon}8C`;
   const [dimensions, setDimensions] = useState({ width: 0, height: 200 });
   const [domIds, setDomIds] = useState<string[]>([]);
+  const [scanDone, setScanDone] = useState(false);
+  const [settled, setSettled] = useState(false);
 
 
   // Measure container — same pattern as TaxonomyGraph
@@ -108,9 +111,12 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Staggered DOM scans to capture lazy-loaded MDX ConceptLinks
-  // MDX components load asynchronously, so a single timeout is unreliable.
+  // Un solo scan tras montar: el MDX ya está en el DOM (Suspense de ruta).
   useEffect(() => {
+    setScanDone(false);
+    setSettled(false);
+    setDomIds([]);
+
     const rawBase = import.meta.env.BASE_URL || '/';
     const basePrefix = rawBase === '/' ? '' : rawBase.replace(/\/$/, '');
     const routePrefixes: Record<string, true> = {
@@ -129,7 +135,6 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
         }
       };
 
-      // 1. data-target-id attributes (ConceptLink / RefLink — valid entities)
       document
         .querySelectorAll(
           '.content-reading [data-target-id], .content-secondary [data-target-id]'
@@ -139,7 +144,6 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
           attr.split(',').forEach(addId);
         });
 
-      // 2. href-based <a> links to known routes (RefLink, construction links, etc.)
       document
         .querySelectorAll('.content-reading a[href], .content-secondary a[href]')
         .forEach((el) => {
@@ -151,27 +155,12 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
           }
         });
 
-      // Merge with existing domIds — only update state if new IDs were found
-      setDomIds(prev => {
-        const merged = [...prev];
-        const existingSet = new Set(prev);
-        found.forEach(id => {
-          if (!existingSet.has(id)) merged.push(id);
-        });
-        return merged.length > prev.length ? merged : prev;
-      });
+      setDomIds(found);
+      setScanDone(true);
     };
 
-    // Three scans: fast, medium, slow — covers most MDX lazy-load scenarios
-    const t1 = setTimeout(runScan, 600);
-    const t2 = setTimeout(runScan, 1500);
-    const t3 = setTimeout(runScan, 3500);
-
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-    };
+    const id = requestAnimationFrame(() => runScan());
+    return () => cancelAnimationFrame(id);
   }, [currentId]);
 
   const graphData = useMemo(() => {
@@ -290,39 +279,53 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
   }, [theme]);
 
 
+  useEffect(() => {
+    setSettled(false);
+  }, [currentId]);
+
   const handleNodeClick = useCallback((node: GraphNode) => {
     if (node.id === currentId) return;
     setLocation(node.url);
   }, [currentId, setLocation]);
 
+  const showGraph = dimensions.width > 0 && scanDone;
+
   return (
     <div
       ref={containerRef}
-      className="w-full overflow-hidden"
+      className="relative w-full overflow-hidden"
       style={{
         height: 200,
         background: theme.lienzo,
         border: `1px solid ${theme.carbon}14`,
       }}
     >
-      {dimensions.width > 0 && (
-        <ForceGraph2D
-          width={dimensions.width}
-          height={200}
-          graphData={graphData}
-          nodeLabel={() => ''}
-          nodeCanvasObject={drawNode}
-          onNodeClick={handleNodeClick}
-          linkColor={() => linkColor}
-          linkWidth={1.25}
-          linkDirectionalArrowColor={() => linkColor}
-          linkDirectionalArrowLength={5}
-          linkDirectionalArrowRelPos={0.82}
-          enableNodeDrag
-          enableZoomInteraction={false}
-          enablePanInteraction={false}
-          cooldownTicks={100}
-        />
+      {showGraph && (
+        <div className={settled ? undefined : 'invisible'} aria-hidden={settled ? undefined : true}>
+          <ForceGraph2D
+            width={dimensions.width}
+            height={200}
+            graphData={graphData}
+            nodeLabel={() => ''}
+            nodeCanvasObject={drawNode}
+            onNodeClick={handleNodeClick}
+            onEngineStop={() => setSettled(true)}
+            linkColor={() => linkColor}
+            linkWidth={1.25}
+            linkDirectionalArrowColor={() => linkColor}
+            linkDirectionalArrowLength={5}
+            linkDirectionalArrowRelPos={0.82}
+            enableNodeDrag
+            enableZoomInteraction={false}
+            enablePanInteraction={false}
+            cooldownTicks={80}
+          />
+        </div>
+      )}
+      {(!showGraph || !settled) && (
+        <div className="absolute inset-0 z-10">
+          <GraphSkeleton height={200} />
+        </div>
       )}
     </div>
   );

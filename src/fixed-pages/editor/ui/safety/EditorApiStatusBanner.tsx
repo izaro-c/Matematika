@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   editorApiUnavailableInProduction,
   editorRequiresAuthForWrites,
@@ -8,14 +8,8 @@ import {
 } from '@/fixed-pages/editor/save/editorApiBase';
 
 export const EditorApiStatusBanner: React.FC = () => {
-  const [tokenInput, setTokenInput] = useState('');
-  const [writeGranted, setWriteGranted] = useState(editorWriteAccessGranted());
-
-  useEffect(() => {
-    const stored = getEditorAuthToken();
-    if (stored) setTokenInput(stored);
-    setWriteGranted(editorWriteAccessGranted());
-  }, []);
+  const [tokenInput, setTokenInput] = useState(() => getEditorAuthToken() ?? '');
+  const [writeGranted, setWriteGranted] = useState(() => editorWriteAccessGranted());
 
   if (editorApiUnavailableInProduction()) {
     return (

@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "wouter";
 import { db } from "@/data/content";
 import { ContentLayout } from "@/components/layouts/ContentLayout";
@@ -7,6 +7,7 @@ import { useMetadataStore } from '@/data/metadata/MetadataStore';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { ContentBody } from '@/components/ui/ContentBody';
+import { DiagramSlot } from '@/components/ui/skeletons';
 import { MaterialPracticoSection } from '@/components/content/MaterialPracticoSection';
 import { AplicacionesSection } from '@/components/content/AplicacionesSection';
 
@@ -97,9 +98,9 @@ export const DefinitionPage = () => {
       pageType="definicion"
       variant="balanced"
       diagram={Simulation ? (
-        <Suspense fallback={<div className="diagram-loading">Preparando visualización…</div>}>
+        <DiagramSlot>
           <Simulation />
-        </Suspense>
+        </DiagramSlot>
       ) : undefined}
       diagramLabel={`Visualización de ${definition.title}`}
       secondary={renderSecondaryContent()}
