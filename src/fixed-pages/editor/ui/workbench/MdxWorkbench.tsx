@@ -26,7 +26,7 @@ import { UnsavedChangesDialog } from '../safety/UnsavedChangesDialog';
 import { buildEditorSafetyPresentation } from '@/fixed-pages/editor/review/safetyPresentation';
 
 import { MdxWorkbenchHeader, type MdxViewMode } from './MdxWorkbenchHeader';
-import { MdxWorkbenchInspector } from './MdxWorkbenchInspector';
+import { MdxWorkbenchInspector, type InspectorTab } from './MdxWorkbenchInspector';
 
 import {
   buildPageConnectionSummary,
@@ -129,6 +129,7 @@ export const MdxWorkbench: React.FC = () => {
 
   // State for view mode: 'visual' | 'code' | 'preview'
   const [viewMode, setViewMode] = useState<MdxViewMode>('visual');
+  const [inspectorTab, setInspectorTab] = useState<InspectorTab>('page');
 
   // Modals state
   const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
@@ -379,7 +380,6 @@ export const MdxWorkbench: React.FC = () => {
         hasLocalChanges={hasLocalChanges}
         saving={saving}
         persistenceStatus={persistenceStatus.kind}
-        editorMode={editorMode}
         viewMode={viewMode}
         onSetViewMode={(mode) => {
           setViewMode(mode);
@@ -390,6 +390,10 @@ export const MdxWorkbench: React.FC = () => {
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         isInspectorOpen={isInspectorOpen}
         onToggleInspector={() => setIsInspectorOpen(!isInspectorOpen)}
+        onOpenAvisos={() => {
+          setIsInspectorOpen(true);
+          setInspectorTab('avisos');
+        }}
         diagramDrawerOpen={false}
         onToggleDiagramDrawer={() => openDiagramEditor()}
         hasDiagrams={pageDiagramLinks.length > 0}
@@ -413,14 +417,22 @@ export const MdxWorkbench: React.FC = () => {
       />
       )}
 
-      {/* Superficie diagrama: swap del shell (sidebar opcional + workbench) */}
+      {/* Superficie diagrama: header a ancho completo; paneles debajo */}
       {diagramSurfaceOpen && activeDiagramWorkbenchMode ? (
-        <div className="flex min-h-0 flex-1 overflow-hidden">
-          {isSidebarOpen && (
-            <div
-              className="hidden h-full shrink-0 border-r border-carbon/15 md:block"
-              style={{ width: workspace.navigationWidth }}
-            >
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+          <DiagramWorkbenchHost
+            isOpen
+            mode={activeDiagramWorkbenchMode}
+            metadataType={currentContentType}
+            onClose={handleCloseDiagramSurface}
+            onDirtyChange={setDiagramDirty}
+            isSidebarOpen={isSidebarOpen}
+            onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+            leftPanelWidth={workspace.navigationWidth}
+            onLeftPanelWidthChange={(width) => setWorkspace(prev => ({ ...prev, navigationWidth: width }))}
+            inspectorWidth={workspace.inspectorWidth}
+            onInspectorWidthChange={(width) => setWorkspace(prev => ({ ...prev, inspectorWidth: width }))}
+            leftPanel={
               <EditorNavigation
                 files={files}
                 isLoading={filesLoading}
@@ -435,22 +447,13 @@ export const MdxWorkbench: React.FC = () => {
                 toggleFavorite={toggleFavorite}
                 width={workspace.navigationWidth}
               />
-            </div>
-          )}
-          <div className="min-h-0 min-w-0 flex-1">
-            <DiagramWorkbenchHost
-              isOpen
-              mode={activeDiagramWorkbenchMode}
-              metadataType={currentContentType}
-              onClose={handleCloseDiagramSurface}
-              onDirtyChange={setDiagramDirty}
-              onConfirm={async (spec: EditorDiagramReference) => {
-                await bindDiagram(spec);
-                handleCloseDiagramSurface();
-                return true;
-              }}
-            />
-          </div>
+            }
+            onConfirm={async (spec: EditorDiagramReference) => {
+              await bindDiagram(spec);
+              handleCloseDiagramSurface();
+              return true;
+            }}
+          />
         </div>
       ) : (
       <>
@@ -505,6 +508,8 @@ export const MdxWorkbench: React.FC = () => {
             insertInteractiveTargetParagraph={insertInteractiveTargetParagraph}
             onSelectIssue={handleSelectIssue}
             onClose={() => setIsInspectorOpen(false)}
+            activeTab={inspectorTab}
+            onActiveTabChange={setInspectorTab}
           />
         }
         diagnosticsOpen={isDiagnosticsOpen}

@@ -35,10 +35,15 @@ interface MdxWorkbenchInspectorProps {
   insertInteractiveTargetParagraph: (target: { id: string; label?: string; color?: string }) => void;
   onSelectIssue?: (issue: EditorValidationIssue) => void;
   onClose: () => void;
+  activeTab?: InspectorTab;
+  onActiveTabChange?: (tab: InspectorTab) => void;
 }
 
 export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (props) => {
-  const [activeTab, setActiveTab] = useState<InspectorTab>('page');
+  const [uncontrolledTab, setUncontrolledTab] = useState<InspectorTab>('page');
+  const controlled = props.activeTab !== undefined && props.onActiveTabChange !== undefined;
+  const activeTab = controlled ? props.activeTab! : uncontrolledTab;
+  const setActiveTab = controlled ? props.onActiveTabChange! : setUncontrolledTab;
   const errorCount = props.validation.errorCount;
 
   return (

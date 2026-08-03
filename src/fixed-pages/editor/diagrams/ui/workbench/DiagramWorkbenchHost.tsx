@@ -10,11 +10,32 @@ export type DiagramWorkbenchHostProps = {
   onClose: () => void;
   onConfirm: (spec: EditorDiagramReference) => boolean | void | Promise<boolean | void>;
   onDirtyChange?: (dirty: boolean) => void;
+  isSidebarOpen?: boolean;
+  onToggleSidebar?: () => void;
+  leftPanel?: React.ReactNode;
+  leftPanelWidth?: number;
+  onLeftPanelWidthChange?: (width: number) => void;
+  inspectorWidth?: number;
+  onInspectorWidthChange?: (width: number) => void;
 };
 
 /** Contenedor de superficie diagrama dentro del shell (no modal). */
 export const DiagramWorkbenchHost: React.FC<DiagramWorkbenchHostProps> = (props) => {
-  const { isOpen, mode, metadataType, onClose, onConfirm, onDirtyChange } = props;
+  const {
+    isOpen,
+    mode,
+    metadataType,
+    onClose,
+    onConfirm,
+    onDirtyChange,
+    isSidebarOpen,
+    onToggleSidebar,
+    leftPanel,
+    leftPanelWidth,
+    onLeftPanelWidthChange,
+    inspectorWidth,
+    onInspectorWidthChange,
+  } = props;
   if (!isOpen) return null;
 
   return (
@@ -29,6 +50,13 @@ export const DiagramWorkbenchHost: React.FC<DiagramWorkbenchHostProps> = (props)
         onClose={onClose}
         onConfirm={onConfirm}
         onDirtyChange={onDirtyChange}
+        isSidebarOpen={isSidebarOpen}
+        onToggleSidebar={onToggleSidebar}
+        leftPanel={leftPanel}
+        leftPanelWidth={leftPanelWidth}
+        onLeftPanelWidthChange={onLeftPanelWidthChange}
+        inspectorWidth={inspectorWidth}
+        onInspectorWidthChange={onInspectorWidthChange}
       />
     </div>
   );

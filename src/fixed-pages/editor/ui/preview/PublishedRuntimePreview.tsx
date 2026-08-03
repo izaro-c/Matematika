@@ -8,6 +8,7 @@ import { ContentBody } from '@/components/ui/ContentBody';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { appPath } from '@/lib/routes';
 import { VisualEditorBlock } from '../panels/VisualEditorBlock';
+import { HeaderContainer, HeaderBadge, HeaderActionButton } from '../workbench/EditorHeaderPrimitives';
 
 interface PublishedRuntimePreviewProps {
   open: boolean;
@@ -49,35 +50,35 @@ export const PublishedRuntimePreview: React.FC<PublishedRuntimePreviewProps> = (
   const useLiveRoute = Boolean(publishedHref) && !hasPendingChanges;
 
   const chrome = (
-    <header className="flex h-12 shrink-0 items-center justify-between border-b border-carbon/15 px-4 bg-lienzo/95 backdrop-blur z-20">
+    <HeaderContainer className="z-20">
       <div className="flex items-center space-x-2 min-w-0">
         <span className="h-2 w-2 rounded-full bg-salvia animate-pulse shrink-0" />
-        <h2 id="published-preview-title" className="font-serif text-xs font-bold text-carbon">
-          Publicada
+        <h2 id="published-preview-title" className="font-serif text-sm font-bold text-carbon">
+          Vista Publicada
         </h2>
-        <span className="text-[10px] font-mono text-carbon/40 hidden sm:inline truncate">
-          ({currentFile?.split('/').pop() ?? path ?? 'borrador'})
-        </span>
+        <HeaderBadge variant="subtle" className="hidden sm:inline">
+          {currentFile?.split('/').pop() ?? path ?? 'borrador'}
+        </HeaderBadge>
         {hasPendingChanges && (
-          <span className="rounded bg-ocre/10 px-2 py-0.5 text-[9px] font-bold text-ocre border border-ocre/20 shrink-0">
-            Cambios locales (aún no en la página publicada)
-          </span>
+          <HeaderBadge variant="ocre">
+            Cambios locales pendientes
+          </HeaderBadge>
         )}
         {useLiveRoute && (
-          <span className="rounded bg-musgo/10 px-2 py-0.5 text-[9px] font-bold text-musgo border border-musgo/20 shrink-0">
+          <HeaderBadge variant="musgo">
             Runtime publicado
-          </span>
+          </HeaderBadge>
         )}
       </div>
       <button
         ref={closeRef}
         type="button"
         onClick={onClose}
-        className="rounded-md border border-carbon/15 bg-lienzo px-3 py-1 text-xs font-bold text-carbon/75 hover:bg-carbon/5 transition-colors cursor-pointer shrink-0"
+        className="rounded-lg border border-carbon/15 bg-lienzo px-3 py-1 text-xs font-bold text-carbon/75 hover:bg-carbon/5 transition-colors cursor-pointer shrink-0"
       >
         ✕ Volver a edición
       </button>
-    </header>
+    </HeaderContainer>
   );
 
   const body = useLiveRoute ? (
