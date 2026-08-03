@@ -62,7 +62,7 @@ export const DefinitionPage = () => {
 
   const renderMainContent = () => (
     <div className="bg-transparent text-carbon font-serif pb-16">
-      <FadeIn className="w-full px-6 md:px-12 pt-4">
+      <FadeIn className="w-full pt-4">
         <ContentHeader
           type="definicion"
           title={definition.title}
@@ -78,18 +78,18 @@ export const DefinitionPage = () => {
             <definition.Component />
           </ContentBody>
         </section>
+
+        <ReadingButton id={slug} />
       </FadeIn>
     </div>
   );
+
+  const hasSecondaryContent = examples.length > 0 || exercises.length > 0 || useCases.length > 0;
 
   const renderSecondaryContent = () => (
     <FadeIn>
       <MaterialPracticoSection examples={examples} exercises={exercises} />
       <AplicacionesSection useCases={useCases} />
-
-      <div className="flex justify-center mt-24">
-        <ReadingButton id={slug} />
-      </div>
     </FadeIn>
   );
 
@@ -103,7 +103,7 @@ export const DefinitionPage = () => {
         </DiagramSlot>
       ) : undefined}
       diagramLabel={`Visualización de ${definition.title}`}
-      secondary={renderSecondaryContent()}
+      secondary={hasSecondaryContent ? renderSecondaryContent() : undefined}
     >
       {renderMainContent()}
     </ContentLayout>

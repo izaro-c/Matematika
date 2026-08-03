@@ -57,15 +57,13 @@ export function AxiomPage() {
           nodeId={axiom.id}
         />
 
-        <section className="mt-8 mb-24">
+        <section className="mt-8 mb-8">
           <ContentBody>
             <axiom.Component />
           </ContentBody>
         </section>
 
-        <div className="mt-24">
-          <ReadingButton id={id || ''} />
-        </div>
+        <ReadingButton id={id || ''} />
       </FadeIn>
     </div>
   );

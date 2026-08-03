@@ -36,8 +36,8 @@ export const ExamplePage: React.FC = () => {
 
   return (
     <ContentLayout pageType="ejemplo" diagram={example.Simulation ? <ContentDiagram component={example.Simulation} /> : undefined}>
-      <div className="min-h-viewport bg-transparent text-carbon font-serif pb-32">
-        <FadeIn className="w-full px-6 md:px-10 pt-4 pb-16">
+      <div className="bg-transparent text-carbon font-serif pb-16">
+        <FadeIn className="w-full pt-4">
           <ContentHeader
             type="ejemplo"
             typeLabel="Ejemplo Resuelto"
@@ -54,6 +54,8 @@ export const ExamplePage: React.FC = () => {
           <ContentBody>
             <example.Component />
           </ContentBody>
+
+          <ReadingButton id={slug} />
 
           {relatedExercises.length > 0 && (
             <section className="mt-16">
@@ -76,8 +78,6 @@ export const ExamplePage: React.FC = () => {
               </div>
             </section>
           )}
-
-          <ReadingButton id={slug} />
         </FadeIn>
       </div>
     </ContentLayout>

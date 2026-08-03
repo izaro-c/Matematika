@@ -14,7 +14,7 @@
   --content-diagram-share: 50%;          /* % de pantalla del diagrama (escritorio) */
   --content-reading-measure: 125ch;       /* tope tipográfico del texto (con diagrama) */
   --content-reading-measure-solo: 140ch; /* sin diagrama: tope más ancho */
-  --content-reading-inset: clamp(0.5rem, 5vw, 6rem); /* margen lateral del texto */
+  --content-reading-inset: clamp(2.5rem, 7vw, 10rem); /* margen lateral amplio y proporcional */
   --content-theorem-reading-measure: 80ch; /* teorema: tope tipográfico */
   --content-diagram-height: clamp(18rem, 46svh, 28rem);        /* altura diagrama (base) */
   --content-diagram-mobile-height: clamp(14rem, 36svh, 20rem); /* altura diagrama (móvil) */
@@ -86,7 +86,7 @@
   gap: 2rem;
   width: 100%;
   min-width: 0;
-  padding-inline: clamp(1rem, 3vw, 3rem);
+  padding-inline: 0;
   align-items: start;
 }
 
@@ -156,9 +156,7 @@
   box-sizing: border-box;
 }
 
-.theorem-content-layout .content-reading {
-  width: min(100%, var(--content-theorem-reading-measure));
-}
+
 
 .content-diagram {
   grid-area: diagram;
@@ -380,9 +378,7 @@
     width: min(100%, var(--content-reading-measure));
   }
 
-  .theorem-content-layout .content-reading {
-    width: min(100%, var(--content-theorem-reading-measure));
-  }
+
 
   .content-diagram {
     position: relative;

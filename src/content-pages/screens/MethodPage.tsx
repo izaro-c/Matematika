@@ -64,9 +64,7 @@ export const MethodPage = () => {
           <method.Component />
         </ContentBody>
 
-        <div className="mt-20 flex justify-center">
-          <ReadingButton id={method.id} />
-        </div>
+        <ReadingButton id={method.id} />
       </FadeIn>
     </ContentLayout>
   );
