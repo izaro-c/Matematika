@@ -20,16 +20,7 @@
 }
 
 .page-accent-scope {
-  scrollbar-color: var(--page-accent) transparent;
   accent-color: var(--page-accent);
-}
-
-.page-accent-scope ::-webkit-scrollbar-thumb {
-  background-color: var(--page-accent);
-}
-
-.page-accent-scope ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--page-accent);
 }
 
 .page-accent-scope :is(

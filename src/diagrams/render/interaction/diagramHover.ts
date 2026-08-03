@@ -46,11 +46,11 @@ export function withNativeHighlightDisabledBorders<T extends Record<string, unkn
   const borders = options.borders;
   const nextBorders = borders && typeof borders === 'object'
     ? { ...(borders as Record<string, unknown>), highlight: false }
-    : borders;
+    : undefined;
   return {
     ...options,
     highlight: false,
-    ...(nextBorders !== undefined ? { borders: nextBorders } : {}),
+    ...(nextBorders ? { borders: nextBorders } : {}),
   };
 }
 
