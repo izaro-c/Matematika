@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { isDarkMode, setTheme } from '@/lib/theme/theme';
 import type { VisualDiagramModel } from '../../model/types';
 import type { EnrichedDiagramDiagnostic } from '../../checks';
 import type { DiagramSaveCapability } from '../../model/scene/selectors';
@@ -66,18 +67,12 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
   saveCapability,
   onSave,
 }) => {
-  const [isDark, setIsDark] = useState(() =>
-    typeof document !== 'undefined' ? document.documentElement.classList.contains('dark') : false
-  );
+  const [isDark, setIsDark] = useState(isDarkMode);
   const [pendingNavigationAction, setPendingNavigationAction] = useState<(() => void) | null>(null);
 
   const toggleTheme = () => {
     const nextDark = !isDark;
-    if (nextDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    setTheme(nextDark);
     setIsDark(nextDark);
   };
 
