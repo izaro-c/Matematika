@@ -143,8 +143,10 @@ describe('DiagramPointMovementAidsEditor style', () => {
     const checkbox = screen.getByLabelText('Usar AB como atractor') as HTMLInputElement;
     expect(checkbox.disabled).toBe(true);
     const row = checkbox.closest('label');
-    expect(row?.className).toMatch(/opacity-40/);
+    expect(row?.className).toMatch(/pointer-events-none/);
     expect(row?.className).toMatch(/cursor-not-allowed/);
-    expect(screen.getByText(/produciría un ciclo/)).toBeTruthy();
+    expect(row?.className).toMatch(/bg-carbon\/5/);
+    expect(screen.getByText(/no disponible \(ciclo\)/)).toBeTruthy();
+    expect(row?.querySelector('.line-through')).toBeTruthy();
   });
 });

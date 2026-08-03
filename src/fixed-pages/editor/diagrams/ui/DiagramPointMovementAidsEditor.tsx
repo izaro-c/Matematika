@@ -119,10 +119,10 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
               <label
                 key={element.id}
                 className={[
-                  'flex items-center gap-1.5 text-[10px]',
+                  'flex items-center gap-1.5 rounded px-1.5 py-0.5 text-[10px]',
                   createsCycle
-                    ? 'opacity-40 cursor-not-allowed select-none text-carbon/40'
-                    : 'text-carbon cursor-pointer',
+                    ? 'pointer-events-none cursor-not-allowed select-none bg-carbon/5 text-carbon/30'
+                    : 'text-carbon cursor-pointer hover:bg-carbon/[0.03]',
                 ].join(' ')}
               >
                 <input
@@ -130,7 +130,13 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
                   aria-label={`Usar ${element.label} como atractor`}
                   checked={checked}
                   disabled={createsCycle}
-                  className={`h-3 w-3 ${inspectorCheckboxClass} disabled:cursor-not-allowed`}
+                  tabIndex={createsCycle ? -1 : undefined}
+                  className={[
+                    'h-3 w-3',
+                    createsCycle
+                      ? 'rounded border-carbon/15 accent-carbon/30 opacity-40 cursor-not-allowed'
+                      : inspectorCheckboxClass,
+                  ].join(' ')}
                   onChange={event =>
                     onAttractorsChange(
                       event.target.checked
@@ -139,11 +145,15 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
                     )
                   }
                 />
-                <span>
-                  {element.label}{' '}
-                  <span className="font-mono text-carbon/45">({element.id})</span>
+                <span className={createsCycle ? 'font-normal' : undefined}>
+                  <span className={createsCycle ? 'decoration-carbon/20' : undefined}>
+                    {element.label}{' '}
+                    <span className={createsCycle ? 'font-mono text-carbon/25' : 'font-mono text-carbon/45'}>
+                      ({element.id})
+                    </span>
+                  </span>
                   {createsCycle ? (
-                    <span className="text-carbon/35"> · produciría un ciclo</span>
+                    <span className="text-carbon/25"> · no disponible (ciclo)</span>
                   ) : null}
                 </span>
               </label>

@@ -43,6 +43,20 @@ export const AlturaSpec = createDiagramSpec(
       "order": 1,
       "visible": true,
       "locked": false
+    },
+    {
+      "id": "background",
+      "label": "Fondo",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Anotaciones & Texto",
+      "order": 20,
+      "visible": true,
+      "locked": false
     }
   ],
   "groups": [],
@@ -52,7 +66,7 @@ export const AlturaSpec = createDiagramSpec(
       "label": "A",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 0,
+      "order": 6,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -66,8 +80,8 @@ export const AlturaSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -3.6,
-        "y": -2.44
+        "x": -3.63,
+        "y": -2.31
       },
       "mobility": {
         "type": "free"
@@ -78,14 +92,17 @@ export const AlturaSpec = createDiagramSpec(
         "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
-      "interaction": {}
+      "interaction": {
+        "snapToGrid": false,
+        "attractorIds": []
+      }
     },
     {
       "id": "pB",
       "label": "B",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 6000,
+      "order": 5,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -118,7 +135,7 @@ export const AlturaSpec = createDiagramSpec(
       "label": "C",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 2000,
+      "order": 7,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -151,7 +168,7 @@ export const AlturaSpec = createDiagramSpec(
       "label": "Polígono",
       "color": "musgo",
       "layerId": "geometry",
-      "order": 3000,
+      "order": 2,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -184,7 +201,7 @@ export const AlturaSpec = createDiagramSpec(
       "label": "$H_c$",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 4000,
+      "order": 3,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -218,7 +235,7 @@ export const AlturaSpec = createDiagramSpec(
       "label": "Extensión de base AB",
       "color": "pizarra",
       "layerId": "geometry",
-      "order": 1000,
+      "order": 0,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -251,7 +268,7 @@ export const AlturaSpec = createDiagramSpec(
       "label": "Altura desde C a AB",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 5000,
+      "order": 4,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -282,7 +299,7 @@ export const AlturaSpec = createDiagramSpec(
       "label": "Ángulo recto de la altura",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 1000,
+      "order": 1,
       "visible": true,
       "locked": false,
       "groupIds": [],
