@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { createPortal } from 'react-dom';
 import type { SafetyPresentation } from '@/fixed-pages/editor/review/safetyPresentation';
 import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 
@@ -28,19 +29,19 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
   const cancelRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useModalFocus<HTMLElement>(isOpen, onCancel, cancelRef);
 
-  if (!isOpen) return null;
+  if (!isOpen || typeof document === 'undefined') return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/30 p-4" role="presentation">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-carbon/40 backdrop-blur-xs p-4" role="presentation">
       <section
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="unsaved-dialog-title"
         aria-describedby="unsaved-dialog-description"
-        className="w-full max-w-xl rounded border border-carbon/20 bg-lienzo shadow-xl"
+        className="w-full max-w-xl rounded-xl border border-carbon/20 bg-lienzo shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-150"
       >
-        <header className="border-b border-carbon/15 bg-ocre/5 p-4">
+        <header className="border-b border-carbon/15 bg-ocre/10 p-4">
           <h2 id="unsaved-dialog-title" className="font-serif text-lg font-bold text-carbon">Hay cambios locales</h2>
           <p id="unsaved-dialog-description" className="mt-1 text-sm leading-snug text-carbon/70">
             La acción hacia {targetLabel} descartaría cambios que todavía no están aplicados al archivo real.
@@ -89,7 +90,8 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
           </button>
         </footer>
       </section>
-    </div>
+    </div>,
+    document.body
   );
 };
 
