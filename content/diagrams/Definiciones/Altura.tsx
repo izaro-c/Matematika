@@ -132,8 +132,8 @@ export const AlturaSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -1.1,
-        "y": 3.64
+        "x": -0.65,
+        "y": 0.07
       },
       "mobility": {
         "type": "free"
@@ -156,7 +156,7 @@ export const AlturaSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [],
       "selection": {
-        "selectable": true,
+        "selectable": false,
         "ariaLabel": "Polígono",
         "role": "secondary"
       },
@@ -172,6 +172,7 @@ export const AlturaSpec = createDiagramSpec(
         ]
       },
       "appearance": {
+        "dashed": false,
         "strokeWidth": 3,
         "highlightStrokeWidth": 5,
         "preserveColorOnHighlight": true

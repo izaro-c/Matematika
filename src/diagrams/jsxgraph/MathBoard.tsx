@@ -2,8 +2,23 @@ import React, { useEffect, useId, useRef } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { matchesScopedDiagramTarget } from '@/lib/page-context/DiagramTargetRegistryContext';
+import { syncBoardToContainerSize, readLayoutBoxSize } from '@/diagrams/jsxgraph/mathBoardContainerSize';
+import {
+  contentBoundsFromSafeArea,
+  fitBoundsToSafeArea,
+  type DiagramBounds,
+  type MathBoardSafeArea,
+} from '@/diagrams/jsxgraph/mathBoardViewport';
 import { safeBoardUpdate } from '@/diagrams/jsxgraph/MathUtils';
 import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
+
+export type { DiagramBounds, MathBoardSafeArea };
+export {
+  contentBoundsFromSafeArea,
+  fitBoundsToAspect,
+  fitBoundsToSafeArea,
+} from '@/diagrams/jsxgraph/mathBoardViewport';
+export { syncBoardToContainerSize, readLayoutBoxSize } from '@/diagrams/jsxgraph/mathBoardContainerSize';
 
 function getCSSVar(name: keyof ThemeColors): string {
   if (typeof document === 'undefined') return '';
@@ -24,85 +39,6 @@ function getTheme(): ThemeColors {
     granada: getCSSVar('granada'),
     musgo: getCSSVar('musgo'),
   };
-}
-
-export function fitBoundsToAspect(
-  bounds: [number, number, number, number],
-  width: number,
-  height: number,
-): [number, number, number, number] {
-  if (width <= 0 || height <= 0) return [...bounds];
-  const [left, top, right, bottom] = bounds;
-  const spanX = Math.abs(right - left);
-  const spanY = Math.abs(top - bottom);
-  if (spanX <= 0 || spanY <= 0) return [...bounds];
-  const centerX = (left + right) / 2;
-  const centerY = (top + bottom) / 2;
-  const containerAspect = width / height;
-  const boundsAspect = spanX / spanY;
-  if (containerAspect > boundsAspect) {
-    const fittedSpanX = spanY * containerAspect;
-    return [centerX - fittedSpanX / 2, top, centerX + fittedSpanX / 2, bottom];
-  }
-  const fittedSpanY = spanX / containerAspect;
-  return [left, centerY + fittedSpanY / 2, right, centerY - fittedSpanY / 2];
-}
-
-export interface MathBoardSafeArea {
-  top?: number;
-  right?: number;
-  bottom?: number;
-  left?: number;
-}
-
-function resolvedSafeArea(safeArea: MathBoardSafeArea | undefined, width: number, height: number) {
-  const left = Math.max(0, Math.min(safeArea?.left ?? 0, Math.max(0, width - 1)));
-  const right = Math.max(0, Math.min(safeArea?.right ?? 0, Math.max(0, width - left - 1)));
-  const top = Math.max(0, Math.min(safeArea?.top ?? 0, Math.max(0, height - 1)));
-  const bottom = Math.max(0, Math.min(safeArea?.bottom ?? 0, Math.max(0, height - top - 1)));
-  return { top, right, bottom, left };
-}
-
-export function fitBoundsToSafeArea(
-  bounds: [number, number, number, number],
-  width: number,
-  height: number,
-  safeArea?: MathBoardSafeArea,
-): [number, number, number, number] {
-  if (width <= 0 || height <= 0) return [...bounds];
-  const [left, top, right, bottom] = bounds;
-  const spanX = Math.abs(right - left);
-  const spanY = Math.abs(top - bottom);
-  if (spanX <= 0 || spanY <= 0) return [...bounds];
-  const insets = resolvedSafeArea(safeArea, width, height);
-  const safeWidth = width - insets.left - insets.right;
-  const safeHeight = height - insets.top - insets.bottom;
-  const scale = Math.min(safeWidth / spanX, safeHeight / spanY);
-  if (!Number.isFinite(scale) || scale <= 0) return fitBoundsToAspect(bounds, width, height);
-  const xStart = insets.left + (safeWidth - spanX * scale) / 2;
-  const yStart = insets.top + (safeHeight - spanY * scale) / 2;
-  const displayLeft = left - xStart / scale;
-  const displayTop = top + yStart / scale;
-  return [displayLeft, displayTop, displayLeft + width / scale, displayTop - height / scale];
-}
-
-export function contentBoundsFromSafeArea(
-  displayBounds: [number, number, number, number],
-  width: number,
-  height: number,
-  safeArea?: MathBoardSafeArea,
-): [number, number, number, number] {
-  if (width <= 0 || height <= 0) return [...displayBounds];
-  const [left, top, right, bottom] = displayBounds;
-  const insets = resolvedSafeArea(safeArea, width, height);
-  const unitX = (right - left) / width;
-  const unitY = (top - bottom) / height;
-  return [
-    left + insets.left * unitX,
-    top - insets.top * unitY,
-    right - insets.right * unitX,
-    bottom + insets.bottom * unitY,
-  ];
 }
 
 export interface MathBoardProps {
@@ -220,10 +156,10 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   };
 
   const fittedDisplayBounds = (
-    contentBounds: [number, number, number, number],
+    contentBounds: DiagramBounds,
     width: number,
     height: number,
-  ): [number, number, number, number] => (
+  ): DiagramBounds => (
     keepaspectratio
       ? fitBoundsToSafeArea(contentBounds, width, height, safeAreaRef.current)
       : contentBounds
@@ -316,6 +252,13 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     boardObj.current = board;
     (board as any).__matematikaSafeArea = safeAreaRef.current;
     (board as any).__matematikaViewportSafeArea = viewportSafeAreaRef.current;
+    // Drop any inline size JSXGraph may have written during init so CSS layout owns the box.
+    syncBoardToContainerSize(
+      board,
+      boardRef.current.clientWidth,
+      boardRef.current.clientHeight,
+      boardRef.current,
+    );
     (board as any).__matematikaContainerSize = { width: boardRef.current.clientWidth, height: boardRef.current.clientHeight };
     const actualInitialBounds = board.getBoundingBox?.();
     if (Array.isArray(actualInitialBounds) && actualInitialBounds.length === 4) {
@@ -398,24 +341,61 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     };
     board.on('boundingbox', reportBoundingBox);
 
-    const resizeObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(() => {
-      if (boardObj.current !== board || !containerRef.current || board.inUpdate) return;
-      const width = containerRef.current.clientWidth;
-      const height = containerRef.current.clientHeight;
-      if (width <= 2 || height <= 2) return;
-      suppressBoundingBoxReportRef.current = true;
-      board.resizeContainer(width, height);
-      const fittedBounds = fittedDisplayBounds(boundingboxRef.current, width, height);
+    // Layout shell owns the CSS box (see content-layout-columns). Sync the
+    // canvas *buffer* to that box — never the other way around.
+    let lastApplied = { width: 0, height: 0 };
+    const applyContainerSize = (width: number, height: number) => {
+      const w = Math.round(width);
+      const h = Math.round(height);
+      if (Math.abs(w - lastApplied.width) < 1 && Math.abs(h - lastApplied.height) < 1) return;
+      // Height-only shrinks are browser-chrome / vh flicker (width stable while
+      // height oscillates). Real window resizes change width too.
+      if (lastApplied.width > 0 && Math.abs(w - lastApplied.width) < 1 && h < lastApplied.height - 1) {
+        return;
+      }
+      if (!syncBoardToContainerSize(board, w, h, boardRef.current)) return;
+      const fittedBounds = fittedDisplayBounds(boundingboxRef.current, w, h);
       board.setBoundingBox(fittedBounds, keepaspectratio);
-      (board as any).__matematikaContainerSize = { width, height };
+      (board as any).__matematikaContainerSize = { width: w, height: h };
+      lastApplied = { width: w, height: h };
       safeBoardUpdate(board);
       const resizedBounds = board.getBoundingBox?.();
       if (Array.isArray(resizedBounds) && resizedBounds.length === 4) {
-        programmaticBoundingBoxRef.current = [...resizedBounds] as [number, number, number, number];
+        programmaticBoundingBoxRef.current = [...resizedBounds] as DiagramBounds;
       }
+    };
+
+    let resizeFrame = 0;
+    const scheduleSyncFromShell = () => {
+      if (boardObj.current !== board) return;
+      if (typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function') {
+        if (resizeFrame) window.cancelAnimationFrame(resizeFrame);
+        resizeFrame = window.requestAnimationFrame(() => {
+          resizeFrame = 0;
+          if (boardObj.current !== board || board.inUpdate) return;
+          // Re-measure shell in rAF — never trust a stale RO entry.
+          const { width, height } = readLayoutBoxSize(undefined, containerRef.current);
+          suppressBoundingBoxReportRef.current = true;
+          applyContainerSize(width, height);
+          suppressBoundingBoxReportRef.current = false;
+        });
+        return;
+      }
+      if (board.inUpdate) return;
+      const { width, height } = readLayoutBoxSize(undefined, containerRef.current);
+      suppressBoundingBoxReportRef.current = true;
+      applyContainerSize(width, height);
       suppressBoundingBoxReportRef.current = false;
-    });
+    };
+
+    // Observe only the MathBoard shell. Do NOT listen to window/visualViewport
+    // resize: those fire on browser-chrome / svh flicker and shrink the diagram
+    // without a user resize. Real layout changes reach us via this observer.
+    const resizeObserver = typeof ResizeObserver === 'undefined'
+      ? null
+      : new ResizeObserver(() => { scheduleSyncFromShell(); });
     if (resizeObserver && containerRef.current) resizeObserver.observe(containerRef.current);
+    scheduleSyncFromShell();
 
     const themeObserver = new MutationObserver(() => {
       if (boardObj.current !== board) return;
@@ -431,6 +411,9 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     return () => {
       themeObserver.disconnect();
       resizeObserver?.disconnect();
+      if (typeof window !== 'undefined') {
+        if (resizeFrame) window.cancelAnimationFrame(resizeFrame);
+      }
       if (wheelNavigationTimerRef.current !== null && typeof window !== 'undefined') {
         window.clearTimeout(wheelNavigationTimerRef.current);
       }
@@ -443,8 +426,11 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   useEffect(() => {
     const board = boardObj.current;
     if (!board) return;
-    const width = boardRef.current?.clientWidth ?? 0;
-    const height = boardRef.current?.clientHeight ?? 0;
+    const width = containerRef.current?.clientWidth ?? boardRef.current?.clientWidth ?? 0;
+    const height = containerRef.current?.clientHeight ?? boardRef.current?.clientHeight ?? 0;
+    // Do NOT resizeContainer here: sync+setBoundingBox fed boundingbox events
+    // back into React (~100+/s) and made the diagram thrash/shrink alone.
+    // Canvas size is owned by the ResizeObserver above.
     const fittedBounds = fittedDisplayBounds(boundingbox, width, height);
     const current = board.getBoundingBox?.() as number[] | undefined;
     const changed = !current || fittedBounds.some((value, index) => Math.abs(value - current[index]) > 1e-8);
@@ -460,7 +446,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     }
     board.__matematikaSafeArea = safeArea ?? {};
     board.__matematikaViewportSafeArea = viewportSafeArea ?? safeArea ?? {};
-    board.__matematikaContainerSize = { width, height };
+    if (width > 2 && height > 2) board.__matematikaContainerSize = { width, height };
   }, [boundingbox, keepaspectratio, safeArea, viewportSafeArea]);
 
   useEffect(() => {

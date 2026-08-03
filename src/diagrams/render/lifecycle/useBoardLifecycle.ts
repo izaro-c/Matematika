@@ -34,7 +34,7 @@ import {
   sliderMaximum,
   tickDistance,
 } from '@/diagrams/render/diagramRuntimeUtils';
-import { referencedLabelAnchor } from '@/diagrams/render/interaction/useDiagramViewport';
+import { referencedLabelAnchor } from '@/diagrams/render/interaction/diagramViewportAnchors';
 import {
   buildLineEmphasisAttributes,
   buildMarkEmphasisAttributes,
