@@ -20,12 +20,12 @@ import type { ElementPanelProps } from '../../types';
 import { constraintScopeForKind } from '../../elementSections';
 
 const fieldClass =
-  'relative z-30 w-full bg-carbon/5 border border-carbon/20 rounded px-1.5 py-0.5 text-xs font-mono font-bold text-carbon';
-const cardClass = 'space-y-1.5 bg-lienzo p-2.5 rounded-lg border border-carbon/15';
+  'w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1.5 text-xs font-mono font-bold text-carbon focus:border-salvia focus:outline-none';
+const cardClass = 'space-y-2 rounded-lg border border-carbon/10 bg-lienzo/60 p-3 shadow-2xs';
 const applyBtn =
-  'w-full py-1 bg-salvia text-lienzo rounded font-bold text-[10px] hover:bg-salvia/90 transition-all cursor-pointer disabled:opacity-40';
+  'w-full py-1.5 bg-salvia text-lienzo rounded-lg font-bold text-[10px] hover:bg-salvia/90 transition-all cursor-pointer disabled:opacity-40';
 const removeBtn =
-  'w-full py-1 bg-granada/10 hover:bg-granada/20 text-granada rounded font-bold text-[10px] transition-all cursor-pointer';
+  'w-full py-1.5 bg-granada/10 hover:bg-granada/20 text-granada rounded-lg font-bold text-[10px] transition-all cursor-pointer';
 
 const SegmentReflectionCard: React.FC<{
   model: VisualDiagramModel;
@@ -42,16 +42,16 @@ const SegmentReflectionCard: React.FC<{
 
   return (
     <div className={cardClass}>
-      <span className="font-bold text-salvia block uppercase text-[10px]">Reflejo Simétrico</span>
-      <p className="text-[10px] text-carbon/55 leading-relaxed">
+      <span className="font-bold text-salvia block uppercase tracking-wider text-[10px]">Reflejo Simétrico</span>
+      <p className="text-[11px] text-carbon/60 leading-relaxed">
         El segmento queda como reflejo respecto a un centro o eje.
       </p>
       {reflectionCandidates.length === 0 ? (
-        <p className="text-[10px] text-ocre bg-ocre/10 rounded p-2">No hay centros ni ejes disponibles.</p>
+        <p className="text-[11px] text-ocre bg-ocre/10 rounded-lg p-2 border border-ocre/20">No hay centros ni ejes disponibles.</p>
       ) : (
         <>
           <div>
-            <label className="block text-[10px] text-carbon/70 font-medium">Centro o eje</label>
+            <label className="block text-[11px] text-carbon/75 font-bold mb-1">Centro o eje</label>
             <select
               value={centerId || reflectionCandidates[0]?.id || ''}
               onChange={e => setCenterId(e.target.value)}
@@ -64,7 +64,7 @@ const SegmentReflectionCard: React.FC<{
           </div>
           {otherSegments.length > 0 && (
             <div>
-              <label className="block text-[10px] text-carbon/70 font-medium">Segmento origen (opcional)</label>
+              <label className="block text-[11px] text-carbon/75 font-bold mb-1">Segmento origen (opcional)</label>
               <select value={sourceId} onChange={e => setSourceId(e.target.value)} className={fieldClass}>
                 <option value="">Posición actual</option>
                 {otherSegments.map(s => (
@@ -120,15 +120,15 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
     const sourceSegId = lengthConstraint ? lengthConstraint.refs[2] : (otherSegments[0]?.id || '');
 
     return (
-      <div className="p-2.5 space-y-3 bg-carbon/5 rounded-xl border border-carbon/10 shadow-2xs">
+      <div className="space-y-3">
         <div className={cardClass}>
-          <span className="font-bold text-salvia block uppercase text-[10px]">Igualar Longitud de Segmento</span>
-          <p className="text-[10px] text-carbon/55 leading-relaxed">
+          <span className="font-bold text-salvia block uppercase tracking-wider text-[10px]">Igualar Longitud de Segmento</span>
+          <p className="text-[11px] text-carbon/60 leading-relaxed">
             Un extremo se ajusta para copiar la longitud de otro segmento.
           </p>
-          <div className="grid grid-cols-2 gap-1.5">
+          <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block text-[10px] text-carbon/70 font-medium">Extremo Móvil</label>
+              <label className="block text-[11px] text-carbon/75 font-bold mb-1">Extremo Móvil</label>
               <select
                 value={movingPtId}
                 onChange={e => {
@@ -147,7 +147,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
               </select>
             </div>
             <div>
-              <label className="block text-[10px] text-carbon/70 font-medium">Segmento a igualar</label>
+              <label className="block text-[11px] text-carbon/75 font-bold mb-1">Segmento a igualar</label>
               <select
                 value={sourceSegId}
                 onChange={e => {
@@ -207,15 +207,15 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
   const sourceAngleId = constraint ? constraint.refs[3] : (otherAngles[0]?.id || '');
 
   return (
-    <div className="p-2.5 space-y-3 bg-carbon/5 rounded-xl border border-carbon/10 shadow-2xs">
+    <div className="space-y-3">
       <div className={cardClass}>
-        <span className="font-bold text-salvia block uppercase text-[10px]">Igualar Amplitud de Ángulo</span>
-        <p className="text-[10px] text-carbon/55 leading-relaxed">
+        <span className="font-bold text-salvia block uppercase tracking-wider text-[10px]">Igualar Amplitud de Ángulo</span>
+        <p className="text-[11px] text-carbon/60 leading-relaxed">
           La amplitud de este ángulo se igualará a la del ángulo de referencia.
         </p>
-        <div className="grid grid-cols-2 gap-1.5">
+        <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="block text-[10px] text-carbon/70 font-medium">Extremo / Vértice Móvil</label>
+            <label className="block text-[11px] text-carbon/75 font-bold mb-1">Extremo / Vértice Móvil</label>
             <select
               value={movingPtId}
               onChange={e => {
@@ -234,7 +234,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
             </select>
           </div>
           <div>
-            <label className="block text-[10px] text-carbon/70 font-medium">Ángulo a igualar</label>
+            <label className="block text-[11px] text-carbon/75 font-bold mb-1">Ángulo a igualar</label>
             <select
               value={sourceAngleId}
               onChange={e => {

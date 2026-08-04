@@ -47,6 +47,7 @@ import { WorkbenchToolbar } from '../toolbar/WorkbenchToolbar';
 import { CanvasStage } from '../canvas/CanvasStage';
 import type { CanvasFrameMode } from '../canvas/canvasFrameMode';
 import { WorkbenchSceneTree } from './WorkbenchSceneTree';
+import { GroupsAndLayersManager } from '../scene/GroupsAndLayersManager';
 import { WorkbenchElementInspector } from './WorkbenchElementInspector';
 import { WorkbenchStepsEditor } from '../toolbar/WorkbenchStepsEditor';
 import { WorkbenchDiagnosticsPanel } from './WorkbenchDiagnosticsPanel';
@@ -69,7 +70,7 @@ import {
   toggleAdditiveSelection,
 } from '../workbenchSelection';
 
-type InspectorTab = 'scene' | 'properties' | 'steps' | 'diagnostics';
+type InspectorTab = 'scene' | 'layers' | 'properties' | 'steps' | 'diagnostics';
 
 const ANNOTATION_KINDS = new Set(['infoPanel', 'text', 'label', 'formula']);
 
@@ -197,6 +198,8 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   const [pendingDeleteIds, setPendingDeleteIds] = useState<string[] | null>(null);
   const [statusMessage, setStatusMessage] = useState('');
   const [divergenceDismissed, setDivergenceDismissed] = useState(false);
+  const [pickingGroupId, setPickingGroupId] = useState<string | null>(null);
+  const [pickingStepIndex, setPickingStepIndex] = useState<number | null>(null);
 
   useEffect(() => {
     if (!statusMessage) return;
@@ -326,6 +329,43 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
   const handleSelectObjects = useCallback(
     (ids: string[], additive = false) => {
+      if (ids.length > 0 && model) {
+        const targetId = ids[0];
+        if (pickingGroupId) {
+          const group = (model.groups || []).find(g => g.id === pickingGroupId);
+          if (group) {
+            const isMember = (group.memberIds || []).includes(targetId);
+            const nextMemberIds = isMember
+              ? (group.memberIds || []).filter(id => id !== targetId)
+              : [...(group.memberIds || []), targetId];
+            const nextGroups = (model.groups || []).map(g =>
+              g.id === pickingGroupId ? { ...g, memberIds: nextMemberIds } : g
+            );
+            const updateGroupIds = <T extends { id: string; groupIds?: string[] }>(items: T[]): T[] => items.map(item => {
+              if (item.id !== targetId) return item;
+              const gIds = item.groupIds || [];
+              return {
+                ...item,
+                groupIds: isMember ? gIds.filter(id => id !== pickingGroupId) : [...new Set([...gIds, pickingGroupId])],
+              };
+            });
+            handleVisualEdit({
+              ...model,
+              groups: nextGroups,
+              points: updateGroupIds(model.points),
+              elements: updateGroupIds(model.elements),
+              sliders: updateGroupIds(model.sliders),
+            }, { label: `Modificar miembros de grupo ${pickingGroupId} desde lienzo` });
+          }
+        } else if (pickingStepIndex !== null && model.steps?.[pickingStepIndex]) {
+          const step = model.steps[pickingStepIndex];
+          const isVisible = (step.visibleTargets || []).includes(targetId);
+          const updatedStep = syncStepObjectVisibility(step, targetId, !isVisible);
+          const nextSteps = model.steps.map((st, i) => (i === pickingStepIndex ? updatedStep : st));
+          handleVisualEdit({ ...model, steps: nextSteps }, { label: `Alternar visibilidad de ${targetId} en paso desde lienzo` });
+        }
+      }
+
       if (additive && ids.length === 1) {
         const next = toggleAdditiveSelection(effectiveSelectedIds, ids[0]);
         selectMany(next);
@@ -333,7 +373,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
       }
       selectMany(ids);
     },
-    [effectiveSelectedIds, selectMany],
+    [effectiveSelectedIds, handleVisualEdit, model, pickingGroupId, pickingStepIndex, selectMany],
   );
 
   const handleChooseReferenceForTool = useCallback(
@@ -772,6 +812,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
             aria-label="Secciones del inspector de diagrama"
             tabs={[
               { id: 'scene', label: `Objetos (${objectCount})` },
+              { id: 'layers', label: 'Capas y Grupos' },
               { id: 'properties', label: 'Propiedades' },
               { id: 'steps', label: `Pasos (${(model?.steps || []).length})` },
               {
@@ -799,6 +840,20 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
               />
             )}
 
+            {activeTab === 'layers' && (
+              <GroupsAndLayersManager
+                model={model}
+                selectedIds={effectiveSelectedIds}
+                pickingGroupId={pickingGroupId}
+                onUpdateModel={handleUpdateModel}
+                onSelectObjects={(ids, additive) => handleSelectObjects(ids, additive)}
+                onTogglePickingGroupId={id => {
+                  setPickingStepIndex(null);
+                  setPickingGroupId(id);
+                }}
+              />
+            )}
+
             {activeTab === 'properties' && (
               <WorkbenchElementInspector
                 model={model}
@@ -817,6 +872,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
                 model={model}
                 activeStepIndex={activeStepIndex}
                 selectedIds={effectiveSelectedIds}
+                pickingStepIndex={pickingStepIndex}
                 onSelectStepIndex={handleSelectStepIndex}
                 onAddStep={handleAddStepClick}
                 onUpdateStep={(idx, updates) => {
@@ -838,6 +894,11 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
                 }}
                 onToggleObjectInAllSteps={handleToggleObjectInAllSteps}
                 onUpdateModel={handleUpdateModel}
+                onSelectObjects={(ids, additive) => handleSelectObjects(ids, additive)}
+                onTogglePickingStepIndex={idx => {
+                  setPickingGroupId(null);
+                  setPickingStepIndex(idx);
+                }}
               />
             )}
 

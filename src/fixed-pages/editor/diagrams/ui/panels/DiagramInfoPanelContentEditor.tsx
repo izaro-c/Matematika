@@ -321,7 +321,6 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
               </select>
             </DiagramField>
             <div className="flex items-center self-end rounded border border-pavo/15 bg-lienzo p-2 text-[9px] leading-relaxed text-carbon/60 shadow-sm">
-              <span className="mr-2 text-pavo">ℹ️</span>
               <div>
                 <strong>Recomendación:</strong> use <em>Cuadrícula</em> si tiene bloques cortos. Use <em>Lista</em> si hay textos descriptivos.
               </div>

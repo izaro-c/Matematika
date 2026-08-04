@@ -66,7 +66,7 @@ describe('InspectorExpandableBlock', () => {
     expect(container.querySelector('details')).toBeNull();
     expect(container.innerHTML).not.toMatch(/border-pavo|bg-pavo/);
     const toggle = screen.getByRole('button', { name: /Plano/i });
-    expect(toggle.className).toMatch(/border-t/);
+    expect(toggle.className).toMatch(/font-serif/);
     expect(toggle.className).not.toMatch(/rounded-lg|bg-carbon\/5/);
   });
 });

@@ -19,6 +19,7 @@ interface MdxWorkbenchInspectorProps {
   handleMetadataChange: (key: string, value: unknown) => void;
   handleRemoveMetadataField: (key: string) => void;
   handleAddCustomMetadataField: (key: string) => void;
+  removeBlock?: (id: string) => void;
   validation: EditorValidationResult;
   persistenceStatus: EditorPersistenceStatus;
   persistenceLabel: string;
@@ -104,21 +105,25 @@ export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (prop
           setActiveDiagramBlockId={props.setActiveDiagramBlockId}
           setDiagramBuilderOpen={props.setDiagramBuilderOpen}
           insertInteractiveTargetParagraph={props.insertInteractiveTargetParagraph}
+          removeBlock={props.removeBlock}
+          handleMetadataChange={props.handleMetadataChange}
         />
       )}
 
       {activeTab === 'avisos' && (
-        <EditorDiagnosticsPanel
-          currentFile={props.currentFile}
-          resource={props.resource}
-          validation={props.validation}
-          persistenceStatus={props.persistenceStatus}
-          persistenceLabel={props.persistenceLabel}
-          level="basic"
-          embedded
-          onSelectIssue={props.onSelectIssue || (() => {})}
-          close={() => setActiveTab('page')}
-        />
+        <div className="flex-1 space-y-3 overflow-y-auto bg-lienzo p-4">
+          <EditorDiagnosticsPanel
+            currentFile={props.currentFile}
+            resource={props.resource}
+            validation={props.validation}
+            persistenceStatus={props.persistenceStatus}
+            persistenceLabel={props.persistenceLabel}
+            level="basic"
+            embedded
+            onSelectIssue={props.onSelectIssue || (() => {})}
+            close={() => setActiveTab('page')}
+          />
+        </div>
       )}
     </WorkbenchAsideTabs>
   );

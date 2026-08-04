@@ -252,7 +252,14 @@ export function syncNativeElementLabel(
     labelNode?.classList.remove('matematika-point-label--highlight');
   }
   if (state.fontSize !== undefined) {
-    (label.rendNode as HTMLElement | undefined)?.style.setProperty('font-size', `${state.fontSize}px`);
+    const node = label.rendNode as HTMLElement | undefined;
+    if (node) {
+      if (node.classList.contains('matematika-info-panel')) {
+        node.style.removeProperty('font-size');
+      } else {
+        node.style.setProperty('font-size', `clamp(${Math.round(state.fontSize * 0.72)}px, ${Math.round(state.fontSize * 0.72)}px + 0.35vw, ${state.fontSize}px)`);
+      }
+    }
   }
 
   label.setAttribute({
@@ -1028,9 +1035,15 @@ export function useBoardLifecycle({
       commitElementVisuals(
         element,
         { ...base, visible: annotationVisible, color },
-        { opacity: sceneOpacity, fontSize },
+        { opacity: sceneOpacity, ...(item.kind === 'infoPanel' ? {} : { fontSize }) },
         shouldAnimate,
       );
+      const rendNode = element?.rendNode as HTMLElement | undefined;
+      if (item.kind === 'infoPanel' && rendNode) {
+        rendNode.style.removeProperty('font-size');
+      } else if (fontSize !== undefined && rendNode) {
+        rendNode.style.fontSize = `clamp(${Math.round(fontSize * 0.72)}px, ${Math.round(fontSize * 0.72)}px + 0.35vw, ${fontSize}px)`;
+      }
       if (item.kind !== 'label') {
         const textContent = annotationTextHtml(item, sceneElements, spec);
         if (element.__matematikaLastText !== textContent) {

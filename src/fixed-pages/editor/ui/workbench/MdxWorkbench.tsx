@@ -5,17 +5,23 @@ import { SemanticLinker } from '../components/SemanticLinker';
 import { DiagramWorkbenchHost } from '../../diagrams/ui/workbench/DiagramWorkbenchHost';
 import type { DiagramWorkbenchMode } from '@/fixed-pages/editor/diagrams/ui/workbench/useDiagramWorkbenchLoader';
 import { DiagramRewriteDialog } from '../../diagrams/ui/DiagramRewriteDialog';
+import type { Block } from '@/fixed-pages/editor/session/parser';
 import type { EditorDiagramReference, EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
 import { useDiagramUsages } from '@/fixed-pages/editor/diagrams/ui/workbench/useDiagramUsages';
 import { usePageDiagramTargets } from '@/fixed-pages/editor/diagrams/ui/workbench/usePageDiagramTargets';
 import { PublishedRuntimePreview } from '../preview/PublishedRuntimePreview';
 import { CreatePageDialog } from '../create/CreatePageDialog';
+import { CreateDiagramDialog } from '../create/CreateDiagramDialog';
+import { AddDiagramDialog } from '../create/AddDiagramDialog';
+import { defaultMode } from '@/fixed-pages/editor/diagrams/model/tools/diagramOptions';
+import { toDiagramImportPath } from '@/fixed-pages/editor/review/authoringModel';
 import { DiffReviewPanel } from '../diff/DiffReviewPanel';
 import { reviewDiffForDocument } from '../diff/EditorDiffController';
 import type { DiffReview } from '@/fixed-pages/editor/review/diffReview';
 
 import { useEditorNavigationFlow } from '@/fixed-pages/editor/ui/page/useEditorNavigationFlow';
 import { useUnsavedChangesGuard } from '@/fixed-pages/editor/ui/page/useUnsavedChangesGuard';
+import { MathProviderBoundary } from '@/lib/page-context/MathStoreContext';
 import { EditorShell } from '../page/EditorShell';
 import { EditorNavigation } from '../page/EditorNavigation';
 import { VisualEditorPanel } from '../panels/VisualEditorPanel';
@@ -71,6 +77,7 @@ export const MdxWorkbench: React.FC = () => {
     setMetadata,
     bindDiagram,
     createPage,
+    createDiagram,
     compatibility,
     compatibilityReasons,
     canMutateVisualStructure,
@@ -135,6 +142,8 @@ export const MdxWorkbench: React.FC = () => {
   const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
   const [diffReview, setDiffReview] = useState<DiffReview | null>(null);
   const [createPageOpen, setCreatePageOpen] = useState(false);
+  const [createDiagramOpen, setCreateDiagramOpen] = useState(false);
+  const [addDiagramOpen, setAddDiagramOpen] = useState(false);
 
   const [diagramWorkbenchOverride, setDiagramWorkbenchOverride] = useState<DiagramWorkbenchMode | null>(null);
   const [rewriteDiagramPath, setRewriteDiagramPath] = useState<string | null>(null);
@@ -218,8 +227,16 @@ export const MdxWorkbench: React.FC = () => {
   };
 
   const setDiagramBuilderOpen = (open: boolean) => {
-    if (open) openDiagramEditor();
-    else handleCloseDiagramSurface();
+    if (open) {
+      if (currentFile?.endsWith('.mdx')) {
+        setAddDiagramOpen(true);
+      } else {
+        openDiagramEditor();
+      }
+    } else {
+      setAddDiagramOpen(false);
+      handleCloseDiagramSurface();
+    }
   };
 
   const handleMetadataChange = (key: string, value: any) => {
@@ -304,24 +321,75 @@ export const MdxWorkbench: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [pendingFileNavigation, cancelPendingNavigation, diffReview, saving, canReviewDiff, currentFile, saveCurrentFile]);
 
-  const [focusRange, setFocusRange] = useState<{ start: number; end: number } | undefined>(undefined);
+  const [focusRange] = useState<{ start: number; end: number } | undefined>(undefined);
+  const [highlightedBlockId, setHighlightedBlockId] = useState<string | null>(null);
 
   const handleSelectIssue = (issue: EditorValidationIssue) => {
+    setViewMode('visual');
+
     if (issue.area === 'metadata') {
       setIsInspectorOpen(true);
-    }
-    if (issue.blockId) {
-      setViewMode('visual');
-      setEditingBlockId(issue.blockId);
+      setInspectorTab('page');
       setTimeout(() => {
-        const element = document.querySelector(`[data-block-id="${issue.blockId}"]`);
+        const topEl = document.querySelector('[data-panel="visual-editor"]') || document.querySelector('.max-w-2xl');
+        topEl?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+      return;
+    }
+
+    let targetBlockId = issue.blockId;
+
+    if (!targetBlockId && issue.sourceRange && blocks.length > 0) {
+      let currentOffset = 0;
+      for (const block of blocks) {
+        if (!block.content) continue;
+        const pos = rawBody.indexOf(block.content, currentOffset);
+        if (pos !== -1) {
+          const blockEnd = pos + block.content.length;
+          if (issue.sourceRange.start >= pos && issue.sourceRange.start <= blockEnd) {
+            targetBlockId = block.id;
+            break;
+          }
+          currentOffset = pos;
+        }
+      }
+      if (!targetBlockId) {
+        let closestBlock: Block | null = null;
+        let minDistance = Infinity;
+        currentOffset = 0;
+        for (const block of blocks) {
+          if (!block.content) continue;
+          const pos = rawBody.indexOf(block.content, currentOffset);
+          if (pos !== -1) {
+            const dist = Math.abs(pos - issue.sourceRange.start);
+            if (dist < minDistance) {
+              minDistance = dist;
+              closestBlock = block;
+            }
+            currentOffset = pos;
+          }
+        }
+        targetBlockId = closestBlock?.id ?? blocks[0]?.id;
+      }
+    }
+
+    if (!targetBlockId && blocks.length > 0) {
+      targetBlockId = blocks[0].id;
+    }
+
+    if (targetBlockId) {
+      setEditingBlockId(targetBlockId);
+      setHighlightedBlockId(targetBlockId);
+      setTimeout(() => {
+        const element = document.getElementById(`block-${targetBlockId}`) || document.querySelector(`[data-block-id="${targetBlockId}"]`);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          (element as HTMLElement).focus?.();
         }
       }, 50);
-    } else if (issue.sourceRange) {
-      setViewMode('code');
-      setFocusRange(issue.sourceRange);
+      setTimeout(() => {
+        setHighlightedBlockId(null);
+      }, 3500);
     }
   };
 
@@ -364,7 +432,9 @@ export const MdxWorkbench: React.FC = () => {
   };
 
   const currentTitle = (metadata.title as string) || '';
-  const currentContentType = (metadata.contentType as string) || (isDiagramFile ? 'Diagrama' : 'Página');
+  const pageType = typeof metadata.type === 'string' ? metadata.type : '';
+  const currentContentType = pageType || (metadata.contentType as string) || (isDiagramFile ? 'Diagrama' : 'Página');
+  const publishedDiagramMode = defaultMode(pageType);
 
   return (
     <div className="flex h-screen w-screen flex-col overflow-hidden bg-lienzo font-sans text-carbon antialiased select-none">
@@ -446,6 +516,8 @@ export const MdxWorkbench: React.FC = () => {
                 recentPaths={workspace.recentPaths}
                 toggleFavorite={toggleFavorite}
                 width={workspace.navigationWidth}
+                onCreatePage={() => setCreatePageOpen(true)}
+                onCreateDiagram={() => setCreateDiagramOpen(true)}
               />
             }
             onConfirm={async (spec: EditorDiagramReference) => {
@@ -477,6 +549,8 @@ export const MdxWorkbench: React.FC = () => {
             recentPaths={workspace.recentPaths}
             toggleFavorite={toggleFavorite}
             width={workspace.navigationWidth}
+            onCreatePage={() => setCreatePageOpen(true)}
+            onCreateDiagram={() => setCreateDiagramOpen(true)}
           />
         }
         inspectorOpen={isInspectorOpen}
@@ -492,6 +566,7 @@ export const MdxWorkbench: React.FC = () => {
             handleMetadataChange={handleMetadataChange}
             handleRemoveMetadataField={handleRemoveMetadataField}
             handleAddCustomMetadataField={() => {}}
+            removeBlock={removeBlock}
             validation={validation}
             persistenceStatus={persistenceStatus}
             persistenceLabel={persistenceLabel}
@@ -520,84 +595,88 @@ export const MdxWorkbench: React.FC = () => {
       >
         {/* Central Workspace Area */}
         <div className="flex h-full w-full flex-1 overflow-hidden">
-          {isDiagramFile ? (
-            <div className="flex-1 overflow-hidden p-2">
-              <DiagramSourcePanel
-                currentFile={currentFile}
-                diagramLinkedPages={diagramLinkedPages}
-                diagramUsageError={diagramUsageError}
-                openFile={openFileSafely}
-                setActiveDiagramBlockId={setActiveDiagramBlockId}
-                setActiveDiagramIndex={setActiveDiagramIndex}
-                setDiagramBuilderOpen={setDiagramBuilderOpen}
-                onRewriteVisually={() => {
-                  setRewriteDiagramPath(currentFile);
-                }}
-                capability={currentResource?.capability}
-              />
-            </div>
-          ) : viewMode === 'code' ? (
-            <div className="flex-1 overflow-hidden">
-              <CodeEditorPanel
-                rawBody={rawBody}
-                updateRawBody={updateRawBody}
-                isDiagramFile={false}
-                isDark={false}
-                focusRange={focusRange}
-              />
-            </div>
-          ) : viewMode === 'preview' ? (
-            <div className="flex-1 h-full min-h-0 overflow-hidden">
-              <PublishedRuntimePreview
-                open={true}
-                embedded
-                path={previewPath}
-                hasPendingChanges={hasLocalChanges}
-                revision={localRevision}
-                onClose={() => setViewMode('visual')}
-                blocks={blocks}
-                metadata={metadata}
-                diagramTargets={combinedDiagramTargets}
-                currentFile={currentFile}
-              />
-            </div>
-          ) : (
-            <div className="flex-1 h-full min-h-0 overflow-hidden">
-              <VisualEditorPanel
-                currentFile={currentFile}
-                metadata={metadata}
-                isReadOnly={isReadOnly}
-                canEditVisualMetadata={canEditVisualMetadata}
-                canMutateVisualStructure={canMutateVisualStructure}
-                blocks={blocks}
-                editingBlockId={editingBlockId}
-                setEditingBlockId={setEditingBlockId}
-                handleMetadataChange={handleMetadataChange}
-                addBlock={addBlock}
-                moveBlock={moveBlock}
-                duplicateBlock={duplicateBlock}
-                removeBlock={removeBlock}
-                updateBlock={updateBlock}
-                handleTextareaSelect={() => {}}
-                handleEditLink={(blockId, rawMarkup, text, attrs, tag) => {
-                  setLinkerState({
-                    isOpen: true,
-                    blockId,
-                    selectedText: text,
-                    editingMarkup: rawMarkup,
-                    editingTag: tag,
-                    initialAttrs: attrs,
-                    selectionStart: 0,
-                    selectionEnd: text.length,
-                  });
-                }}
-                setActiveDiagramIndex={setActiveDiagramIndex}
-                setActiveDiagramBlockId={setActiveDiagramBlockId}
-                setDiagramBuilderOpen={setDiagramBuilderOpen}
-                diagramTargets={combinedDiagramTargets}
-              />
-            </div>
-          )}
+          <MathProviderBoundary>
+            {isDiagramFile ? (
+              <div className="flex-1 overflow-hidden p-2">
+                <DiagramSourcePanel
+                  currentFile={currentFile}
+                  diagramLinkedPages={diagramLinkedPages}
+                  diagramUsageError={diagramUsageError}
+                  openFile={openFileSafely}
+                  setActiveDiagramBlockId={setActiveDiagramBlockId}
+                  setActiveDiagramIndex={setActiveDiagramIndex}
+                  setDiagramBuilderOpen={setDiagramBuilderOpen}
+                  onRewriteVisually={() => {
+                    setRewriteDiagramPath(currentFile);
+                  }}
+                  capability={currentResource?.capability}
+                />
+              </div>
+            ) : viewMode === 'code' ? (
+              <div className="flex-1 overflow-hidden">
+                <CodeEditorPanel
+                  rawBody={rawBody}
+                  updateRawBody={updateRawBody}
+                  isDiagramFile={false}
+                  isDark={false}
+                  focusRange={focusRange}
+                />
+              </div>
+            ) : viewMode === 'preview' ? (
+              <div className="flex-1 h-full min-h-0 overflow-hidden">
+                <PublishedRuntimePreview
+                  open={true}
+                  embedded
+                  path={previewPath}
+                  hasPendingChanges={hasLocalChanges}
+                  revision={localRevision}
+                  onClose={() => setViewMode('visual')}
+                  blocks={blocks}
+                  metadata={metadata}
+                  diagramTargets={combinedDiagramTargets}
+                  currentFile={currentFile}
+                />
+              </div>
+            ) : (
+              <div className="flex-1 h-full min-h-0 overflow-hidden">
+                <VisualEditorPanel
+                  currentFile={currentFile}
+                  metadata={metadata}
+                  isReadOnly={isReadOnly}
+                  canEditVisualMetadata={canEditVisualMetadata}
+                  canMutateVisualStructure={canMutateVisualStructure}
+                  blocks={blocks}
+                  editingBlockId={editingBlockId}
+                  setEditingBlockId={setEditingBlockId}
+                  highlightedBlockId={highlightedBlockId}
+                  issues={validation.issues}
+                  handleMetadataChange={handleMetadataChange}
+                  addBlock={addBlock}
+                  moveBlock={moveBlock}
+                  duplicateBlock={duplicateBlock}
+                  removeBlock={removeBlock}
+                  updateBlock={updateBlock}
+                  handleTextareaSelect={() => {}}
+                  handleEditLink={(blockId, rawMarkup, text, attrs, tag) => {
+                    setLinkerState({
+                      isOpen: true,
+                      blockId,
+                      selectedText: text,
+                      editingMarkup: rawMarkup,
+                      editingTag: tag,
+                      initialAttrs: attrs,
+                      selectionStart: 0,
+                      selectionEnd: text.length,
+                    });
+                  }}
+                  setActiveDiagramIndex={setActiveDiagramIndex}
+                  setActiveDiagramBlockId={setActiveDiagramBlockId}
+                  setDiagramBuilderOpen={setDiagramBuilderOpen}
+                  diagramTargets={combinedDiagramTargets}
+                />
+              </div>
+            )}
+          </MathProviderBoundary>
         </div>
       </EditorShell>
       </>
@@ -663,14 +742,67 @@ export const MdxWorkbench: React.FC = () => {
       <CreatePageDialog
         open={createPageOpen}
         onClose={() => setCreatePageOpen(false)}
+        onCreate={async (params) => createPage(params)}
+      />
+
+      {/* Create Diagram Modal */}
+      <CreateDiagramDialog
+        open={createDiagramOpen}
+        onClose={() => setCreateDiagramOpen(false)}
         onCreate={async (params) => {
-          const newPath = await createPage(params);
-          if (typeof newPath === 'string' && newPath) {
-            setCreatePageOpen(false);
-            openFileSafely(newPath);
+          const result = await createDiagram(params);
+          if (result) {
+            setCreateDiagramOpen(false);
+            openFileSafely(result.path);
             return true;
           }
           return false;
+        }}
+      />
+
+      {/* Add Diagram to Document Modal */}
+      <AddDiagramDialog
+        open={addDiagramOpen}
+        onClose={() => {
+          setAddDiagramOpen(false);
+          setActiveDiagramBlockId(null);
+          setActiveDiagramIndex(null);
+        }}
+        files={files}
+        onSelectExisting={async (diagramFile) => {
+          const componentName = diagramFile.name.replace(/\.tsx$/, '');
+          if (pageDiagramLinks.length === 0) {
+            if ('hasSimulation' in metadata || metadata.type !== 'modelo') handleMetadataChange('hasSimulation', true);
+            if ('hasDiagram' in metadata || metadata.type === 'modelo') handleMetadataChange('hasDiagram', true);
+          }
+          bindDiagram({
+            componentName,
+            importPath: toDiagramImportPath(diagramFile.path),
+            path: diagramFile.path,
+            category: typeof diagramFile.type === 'string' ? diagramFile.type : '',
+            mode: publishedDiagramMode,
+          });
+          setActiveDiagramBlockId(null);
+          setActiveDiagramIndex(null);
+          setAddDiagramOpen(false);
+        }}
+        onCreateNew={async (params) => {
+          const result = await createDiagram(params);
+          if (!result) return false;
+          if (pageDiagramLinks.length === 0) {
+            if ('hasSimulation' in metadata || metadata.type !== 'modelo') handleMetadataChange('hasSimulation', true);
+            if ('hasDiagram' in metadata || metadata.type === 'modelo') handleMetadataChange('hasDiagram', true);
+          }
+          bindDiagram({
+            componentName: result.componentName,
+            importPath: toDiagramImportPath(result.path),
+            path: result.path,
+            category: params.category,
+            mode: publishedDiagramMode,
+          });
+          setAddDiagramOpen(false);
+          openDiagramEditor({ modeOverride: { kind: 'file', path: result.path } });
+          return true;
         }}
       />
 

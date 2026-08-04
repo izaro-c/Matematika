@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormulaBlock } from '../blocks/FormulaBlock';
 import { DemonstrationBlock } from '../blocks/DemonstrationBlock';
-import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
+import type { DiagramTargetRegistry, EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
 import type { Block, BlockType } from '@/fixed-pages/editor/session/parser';
 import { insertSymbol, parseMarkdownTable, renderFormattedText, type EditLinkHandler } from './InlineContentPreview';
 import { INLINE_EDITABLE_BLOCKS, LATEX_SYMBOLS } from './visualEditorPresets';
@@ -18,6 +18,8 @@ interface VisualEditorBlockProps {
   canMutateVisualStructure: boolean;
   editingBlockId: string | null;
   setEditingBlockId: (id: string | null) => void;
+  highlightedBlockId?: string | null;
+  issues?: EditorValidationIssue[];
   addBlock: (index: number, type: BlockType, content?: string, metadata?: Record<string, unknown>) => void;
   moveBlock: (from: number, to: number) => void;
   duplicateBlock: (id: string) => void;
@@ -34,7 +36,7 @@ interface VisualEditorBlockProps {
 
 export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
   block, blocks, index, isReadOnly, canMutateVisualStructure, editingBlockId,
-  setEditingBlockId, addBlock, moveBlock, duplicateBlock, removeBlock, updateBlock,
+  setEditingBlockId, highlightedBlockId, issues = [], addBlock, moveBlock, duplicateBlock, removeBlock, updateBlock,
   handleTextareaSelect, handleEditLink, renderInlineToolbar, setActiveDiagramIndex,
   setActiveDiagramBlockId, setDiagramBuilderOpen, diagramTargets,
 }) => {
@@ -45,10 +47,25 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
   const hasDropCap = block.type === 'paragraph' && Boolean(dropCapLetter);
   const isSourceOnly = block.metadata?.preserved === true || block.metadata?.opaque === true;
 
+  const blockIssues = issues.filter(i => i.blockId === block.id);
+  const isHighlighted = highlightedBlockId === block.id;
+  const hasError = blockIssues.some(i => i.severity === 'error');
+  const hasWarning = blockIssues.some(i => i.severity === 'warning');
+
+  let borderClasses = 'border-transparent bg-transparent hover:border-carbon/15 hover:bg-carbon/5 focus:border-salvia/40';
+  if (isHighlighted) {
+    borderClasses = 'border-2 border-granada ring-4 ring-granada/25 bg-granada/10 animate-pulse shadow-xl';
+  } else if (hasError) {
+    borderClasses = 'border border-granada/40 bg-granada/5 hover:border-granada/60';
+  } else if (hasWarning) {
+    borderClasses = 'border border-ocre/30 bg-ocre/5 hover:border-ocre/50';
+  }
+
   return (
             <div
               key={block.id}
               id={`block-${block.id}`}
+              data-block-id={block.id}
               tabIndex={0}
               aria-label={`Bloque ${index + 1}: ${block.type}. Alt y flechas para reordenar.`}
               onKeyDown={(event) => {
@@ -61,8 +78,28 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                 if (event.key === 'ArrowUp' && index > 0) { event.preventDefault(); moveBlock(index, index - 1); }
                 if (event.key === 'ArrowDown' && index < blocks.length - 1) { event.preventDefault(); moveBlock(index, index + 1); }
               }}
-              className="relative group/block rounded border border-transparent bg-transparent p-3 transition-all hover:border-carbon/15 hover:bg-carbon/5 focus:border-salvia/40 focus:outline-none"
+              className={`relative group/block rounded p-3 transition-all focus:outline-none ${borderClasses}`}
             >
+              {blockIssues.length > 0 && (
+                <div className="mb-2 space-y-1">
+                  {blockIssues.map(issue => (
+                    <div
+                      key={issue.id}
+                      className={`flex items-center gap-1.5 rounded px-2.5 py-1 text-[11px] font-sans font-medium ${
+                        issue.severity === 'error'
+                          ? 'bg-granada/15 text-granada border border-granada/30'
+                          : 'bg-ocre/15 text-ocre border border-ocre/30'
+                      }`}
+                    >
+                      <span className="font-bold uppercase text-[9px] tracking-wider">
+                        {issue.severity === 'error' ? 'Error' : 'Aviso'}:
+                      </span>
+                      <span>{issue.message}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {!isReadOnly && canMutateVisualStructure && !isSourceOnly && (
                 <BlockActions blockId={block.id} index={index} blockCount={blocks.length} moveBlock={moveBlock} duplicateBlock={duplicateBlock} removeBlock={removeBlock} />
               )}
@@ -410,36 +447,40 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                     <label className="block ac-label ac-label--2xs ac-label--faint font-sans">
                       Diagrama canónico ({block.content})
                     </label>
-                    {canMutateVisualStructure && <button
-                      type="button"
-                      onClick={() => {
-                        setActiveDiagramBlockId(block.id);
-                        setActiveDiagramIndex(null);
-                        setDiagramBuilderOpen(true);
-                      }}
-                      className="text-[9px] bg-salvia/10 text-salvia hover:bg-salvia/20 px-2 py-0.5 rounded font-serif font-bold transition-all cursor-pointer"
-                    >
-                      Reemplazar
-                    </button>}
+                    {canMutateVisualStructure && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setActiveDiagramBlockId(block.id);
+                          setActiveDiagramIndex(null);
+                          setDiagramBuilderOpen(true);
+                        }}
+                        className="text-[9px] bg-salvia/10 text-salvia hover:bg-salvia/20 px-2 py-0.5 rounded font-serif font-bold transition-all cursor-pointer"
+                      >
+                        Reemplazar
+                      </button>
+                    )}
                   </div>
-                  <div className="rounded border border-carbon/15 bg-carbon/5 p-4">
+                  <div className="rounded-lg border border-carbon/15 bg-carbon/5 p-4 space-y-3">
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="font-serif text-sm font-bold text-carbon">{block.content}</p>
-                        <p className="mt-1 font-mono text-[10px] text-carbon/50">{block.metadata?.path || 'Diagrama heredado sin archivo asociado'}</p>
+                        <p className="mt-0.5 font-mono text-[10px] text-carbon/50">{block.metadata?.path || 'Diagrama heredado sin archivo asociado'}</p>
                       </div>
-                      <span className="rounded bg-salvia/10 px-2 py-1 text-[10px] font-bold text-salvia select-none">Catálogo de diagramas finales</span>
+                      <span className="rounded bg-salvia/10 px-2.5 py-1 text-[10px] font-bold text-salvia select-none shrink-0">
+                        Catálogo de diagramas finales
+                      </span>
                     </div>
                     {Array.isArray(block.metadata?.targets) && block.metadata.targets.length > 0 && (
-                      <div className="mt-3 flex flex-wrap gap-1">
+                      <div className="flex flex-wrap gap-1">
                         {block.metadata.targets.map((target: { id: string; label: string }) => (
-                          <span key={target.id} className="rounded border border-carbon/10 bg-lienzo px-2 py-0.5 font-mono text-[10px] text-carbon/65" title={target.label}>
+                          <span key={target.id} className="rounded border border-carbon/15 bg-lienzo px-2 py-0.5 font-mono text-[10px] text-carbon/70 shadow-2xs" title={target.label}>
                             {target.id}
                           </span>
                         ))}
                       </div>
                     )}
-                    <div className="mt-4">
+                    <div className="w-full">
                       <DiagramRuntimePreview filePath={typeof block.metadata?.path === 'string' ? block.metadata.path : null} componentName={block.content} />
                     </div>
                   </div>

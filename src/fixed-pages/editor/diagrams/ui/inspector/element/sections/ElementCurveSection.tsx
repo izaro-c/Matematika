@@ -7,136 +7,138 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
   element,
   onUpdateElement,
 }) => (
-  <div className="p-2.5 space-y-2 bg-carbon/5 rounded-xl border border-carbon/10 shadow-2xs">
+  <div className="space-y-3">
     {element.kind === 'functionCurve' && (
       <div>
-        <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">
-          Expresión $f(x)$
-          <input
-            type="text"
-            aria-label="Expresión $f(x)$"
-            value={element.properties?.expression || ''}
-            onChange={e =>
-              onUpdateElement(element.id, {
-                properties: { ...(element.properties || {}), expression: e.target.value },
-              })
-            }
-            placeholder="ej. sin(x) o x^2 - 2*x + 1"
-            className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs font-mono font-bold text-carbon"
-          />
+        <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+          Expresión <code className="font-mono text-[10px] text-salvia">f(x)</code>
         </label>
+        <input
+          type="text"
+          aria-label="Expresión $f(x)$"
+          value={element.properties?.expression || ''}
+          onChange={e =>
+            onUpdateElement(element.id, {
+              properties: { ...(element.properties || {}), expression: e.target.value },
+            })
+          }
+          placeholder="ej. sin(x) o x^2 - 2*x + 1"
+          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 placeholder-carbon/30"
+        />
       </div>
     )}
 
     {element.kind === 'parametricCurve' && (
-      <>
+      <div className="grid grid-cols-2 gap-2.5">
         <div>
-          <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">
-            Expresión $x(t)$
-            <input
-              type="text"
-              aria-label="Expresión $x(t)$"
-              value={element.properties?.xExpression || ''}
-              onChange={e =>
-                onUpdateElement(element.id, {
-                  properties: { ...(element.properties || {}), xExpression: e.target.value },
-                })
-              }
-              placeholder="ej. cos(t)"
-              className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs font-mono font-bold text-carbon"
-            />
+          <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+            Expresión <code className="font-mono text-[10px] text-salvia">x(t)</code>
           </label>
+          <input
+            type="text"
+            aria-label="Expresión $x(t)$"
+            value={element.properties?.xExpression || ''}
+            onChange={e =>
+              onUpdateElement(element.id, {
+                properties: { ...(element.properties || {}), xExpression: e.target.value },
+              })
+            }
+            placeholder="ej. cos(t)"
+            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 placeholder-carbon/30"
+          />
         </div>
         <div>
-          <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">
-            Expresión $y(t)$
-            <input
-              type="text"
-              aria-label="Expresión $y(t)$"
-              value={element.properties?.yExpression || ''}
-              onChange={e =>
-                onUpdateElement(element.id, {
-                  properties: { ...(element.properties || {}), yExpression: e.target.value },
-                })
-              }
-              placeholder="ej. sin(t)"
-              className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs font-mono font-bold text-carbon"
-            />
+          <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+            Expresión <code className="font-mono text-[10px] text-salvia">y(t)</code>
           </label>
+          <input
+            type="text"
+            aria-label="Expresión $y(t)$"
+            value={element.properties?.yExpression || ''}
+            onChange={e =>
+              onUpdateElement(element.id, {
+                properties: { ...(element.properties || {}), yExpression: e.target.value },
+              })
+            }
+            placeholder="ej. sin(t)"
+            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 placeholder-carbon/30"
+          />
         </div>
-      </>
+      </div>
     )}
 
-    <div className="grid grid-cols-2 gap-2 pt-1">
+    <div className="grid grid-cols-2 gap-2.5 pt-1">
       <div>
-        <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">
+        <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
           Mínimo Dominio
-          <input
-            type="number"
-            step="0.5"
-            aria-label="Mínimo Dominio"
-            value={element.properties?.domain?.[0] ?? -5}
-            onChange={e => {
-              const minVal = parseFloat(e.target.value) || -5;
-              const maxVal = element.properties?.domain?.[1] ?? 5;
-              onUpdateElement(element.id, {
-                properties: { ...(element.properties || {}), domain: [minVal, maxVal] },
-              });
-            }}
-            className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon"
-          />
         </label>
+        <input
+          type="number"
+          step="0.5"
+          aria-label="Mínimo Dominio"
+          value={element.properties?.domain?.[0] ?? -5}
+          onChange={e => {
+            const minVal = parseFloat(e.target.value) || -5;
+            const maxVal = element.properties?.domain?.[1] ?? 5;
+            onUpdateElement(element.id, {
+              properties: { ...(element.properties || {}), domain: [minVal, maxVal] },
+            });
+          }}
+          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+        />
       </div>
       <div>
-        <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">
+        <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
           Máximo Dominio
-          <input
-            type="number"
-            step="0.5"
-            aria-label="Máximo Dominio"
-            value={element.properties?.domain?.[1] ?? 5}
-            onChange={e => {
-              const minVal = element.properties?.domain?.[0] ?? -5;
-              const maxVal = parseFloat(e.target.value) || 5;
-              onUpdateElement(element.id, {
-                properties: { ...(element.properties || {}), domain: [minVal, maxVal] },
-              });
-            }}
-            className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon"
-          />
         </label>
+        <input
+          type="number"
+          step="0.5"
+          aria-label="Máximo Dominio"
+          value={element.properties?.domain?.[1] ?? 5}
+          onChange={e => {
+            const minVal = element.properties?.domain?.[0] ?? -5;
+            const maxVal = parseFloat(e.target.value) || 5;
+            onUpdateElement(element.id, {
+              properties: { ...(element.properties || {}), domain: [minVal, maxVal] },
+            });
+          }}
+          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+        />
       </div>
     </div>
 
-    <div className="pt-2 border-t border-carbon/10 space-y-2">
-      <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">Relleno de Área bajo la Curva</label>
-      <select
-        value={element.properties?.areaFill || 'none'}
-        onChange={e =>
-          onUpdateElement(element.id, {
-            properties: {
-              ...(element.properties || {}),
-              areaFill: e.target.value as 'none' | 'interior' | 'half-plane',
-            },
-          })
-        }
-        className="w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon font-bold"
-      >
-        <option value="none">Sin relleno de área</option>
-        <option value="interior">Relleno hasta el eje X (Interior)</option>
-        <option value="half-plane">Relleno de semiplano respecto a punto</option>
-      </select>
+    <div className="pt-2.5 border-t border-carbon/10 space-y-2.5">
+      <div>
+        <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">Relleno de Área bajo la Curva</label>
+        <select
+          value={element.properties?.areaFill || 'none'}
+          onChange={e =>
+            onUpdateElement(element.id, {
+              properties: {
+                ...(element.properties || {}),
+                areaFill: e.target.value as 'none' | 'interior' | 'half-plane',
+              },
+            })
+          }
+          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 cursor-pointer"
+        >
+          <option value="none">Sin relleno de área</option>
+          <option value="interior">Relleno hasta el eje X (Interior)</option>
+          <option value="half-plane">Relleno de semiplano respecto a punto</option>
+        </select>
+      </div>
 
       {element.properties?.areaFill === 'half-plane' && (
-        <div className="p-2 bg-lienzo rounded border border-carbon/10 space-y-1">
-          <label className="block text-[10px] font-bold text-salvia">Punto de Referencia del Semiplano (refs[0])</label>
+        <div className="p-2.5 rounded-lg border border-salvia/20 bg-salvia/5 space-y-1">
+          <label className="block text-[10px] font-bold text-salvia uppercase tracking-wider mb-1">Punto de Referencia del Semiplano</label>
           <select
             value={element.refs[0] || ''}
             onChange={e => {
               const nextRefs = [e.target.value, ...element.refs.slice(1)];
               onUpdateElement(element.id, { refs: nextRefs });
             }}
-            className="w-full bg-carbon/5 border border-carbon/20 rounded px-1.5 py-0.5 text-xs text-carbon font-mono font-bold"
+            className="w-full rounded-md border border-salvia/20 bg-lienzo px-2.5 py-1 text-xs font-mono font-bold text-carbon focus:border-salvia focus:outline-none"
           >
             <option value="">-- Seleccionar punto --</option>
             {model.points.map(p => (

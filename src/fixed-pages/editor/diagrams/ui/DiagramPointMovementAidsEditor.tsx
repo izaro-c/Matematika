@@ -146,7 +146,7 @@ export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEd
                   }
                 />
                 <span className={createsCycle ? 'font-normal' : undefined}>
-                  <span className={createsCycle ? 'decoration-carbon/20' : undefined}>
+                  <span className={createsCycle ? 'line-through decoration-carbon/20' : undefined}>
                     {element.label}{' '}
                     <span className={createsCycle ? 'font-mono text-carbon/25' : 'font-mono text-carbon/45'}>
                       ({element.id})

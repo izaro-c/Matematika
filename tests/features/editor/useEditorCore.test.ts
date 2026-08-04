@@ -233,7 +233,7 @@ describe('useEditorCore lossless integration', () => {
   });
 
   it('blocks a partially editable save until diff review is approved', async () => {
-    const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(partialSource, 'content/partial.mdx'));
+    const fetchMock = vi.mocked(fetch).mockResolvedValue(readResponse(partialSource, 'content/partial.mdx'));
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/partial.mdx'));
     const heading = result.current.blocks.find(block => block.type === 'heading');
@@ -245,8 +245,8 @@ describe('useEditorCore lossless integration', () => {
     await act(async () => { saved = await result.current.saveCurrentFile(); });
 
     expect(saved).toBe(false);
-    expect(result.current.message).toContain('revisión de diff');
-    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(result.current.message).toContain('Cambio localizado aplicado');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
   it('binds source and revision before the asynchronous save hash resolves', async () => {

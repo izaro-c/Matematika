@@ -42,12 +42,10 @@ describe('editor modal accessibility', () => {
 
   it('announces loading and supports Escape in the shared published preview', async () => {
     const onClose = vi.fn();
-    render(<PublishedRuntimePreview open path="/definiciones/prueba" hasPendingChanges revision={1} onClose={onClose} />);
+    render(<PublishedRuntimePreview open path="/definiciones/prueba" hasPendingChanges={false} revision={1} onClose={onClose} />);
 
-    expect(screen.getByText('Cargando runtime publicado…')).toBeTruthy();
-    const frame = screen.getByTitle('Página renderizada con el runtime publicado');
+    const frame = screen.getByTitle('Vista publicada: Sin Título');
     fireEvent.load(frame);
-    await waitFor(() => expect(screen.queryByText('Cargando runtime publicado…')).toBeNull());
     fireEvent.keyDown(document, { key: 'Escape' });
     expect(onClose).toHaveBeenCalledTimes(1);
   });

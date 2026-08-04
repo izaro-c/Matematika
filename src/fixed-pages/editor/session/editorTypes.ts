@@ -34,11 +34,11 @@ export type DiagramTargetRegistry = DiagramTarget[];
 
 export interface EditorDiagramReference {
   componentName: string;
-  category: string;
-  path: string;
+  category?: string;
+  path?: string;
   importPath: string;
-  source: string;
-  targets: DiagramTargetRegistry;
+  source?: string;
+  targets?: DiagramTargetRegistry;
   mode: 'simulation' | 'diagram' | 'inline';
   visualModel?: Record<string, unknown>;
 }

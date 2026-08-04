@@ -250,3 +250,42 @@ export function createPageSource(input: CreatePageInput): string {
     : `<Capitular letra="${initial}" />${rest}\n\n<Separador />\n\n### Desarrollo\n\nSe desarrolla el contenido mediante definiciones, enlaces semánticos y justificaciones explícitas.`;
   return `export const metadata = ${metadata};\n\n${body}\n`;
 }
+
+import type { TemplateKind } from '@/fixed-pages/editor/diagrams/model/types';
+
+export interface CreateDiagramInput {
+  id: string;
+  title: string;
+  category: string;
+  templateType: TemplateKind;
+}
+
+export function idToComponentName(id: string): string {
+  const words = id
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9]+/g, ' ')
+    .trim()
+    .split(/\s+/);
+  const pascal = words
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join('');
+  return pascal || 'DiagramaInteractivo';
+}
+
+export function createDiagramPath(input: CreateDiagramInput): string {
+  const componentName = idToComponentName(input.id);
+  const category = input.category.trim() || 'Teoremas';
+  return `content/diagrams/${category}/${componentName}.tsx`;
+}
+
+/** Filesystem/alias diagram paths → bundler import (`@content/diagrams/Category/Component`). */
+export function toDiagramImportPath(path: string): string {
+  const normalized = path.replace(/\\/g, '/').replace(/\.tsx$/, '');
+  if (normalized.startsWith('@content/diagrams/')) return normalized;
+  if (normalized.startsWith('@/content/diagrams/')) return `@${normalized.slice(2)}`;
+  const contentIdx = normalized.indexOf('content/diagrams/');
+  if (contentIdx >= 0) return `@${normalized.slice(contentIdx)}`;
+  return normalized;
+}
+

@@ -204,13 +204,14 @@
   max-width: min(30rem, calc(100% - var(--diagram-safe-left, 1rem) - var(--diagram-panel-right, var(--diagram-safe-right, 1rem)) - 1rem));
   overflow-wrap: anywhere;
   white-space: normal !important;
+  font-size: clamp(0.7rem, 0.7rem + 0.35vw, 0.9rem);
 }
 
 .matematika-info-panel__title {
   display: block;
   margin-bottom: 0.35rem;
   color: var(--theme-carbon);
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 0.8rem + 0.4vw, 1.05rem);
 }
 
 .matematika-info-panel__intro {
@@ -248,7 +249,7 @@
   display: block;
   margin-bottom: 0.1rem;
   color: var(--theme-carbon);
-  font-size: 0.72rem;
+  font-size: clamp(0.68rem, 0.68rem + 0.3vw, 0.82rem);
 }
 
 @media (max-width: 36rem) {

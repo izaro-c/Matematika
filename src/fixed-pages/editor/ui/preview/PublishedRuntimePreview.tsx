@@ -8,7 +8,7 @@ import { ContentBody } from '@/components/ui/ContentBody';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { appPath } from '@/lib/routes';
 import { VisualEditorBlock } from '../panels/VisualEditorBlock';
-import { HeaderContainer, HeaderBadge, HeaderActionButton } from '../workbench/EditorHeaderPrimitives';
+import { HeaderContainer, HeaderBadge } from '../workbench/EditorHeaderPrimitives';
 
 interface PublishedRuntimePreviewProps {
   open: boolean;

@@ -303,7 +303,7 @@ export function createElement(
     color: theme[item.color],
     fixed: !editableAnnotation,
     layer,
-    ...(item.style?.labelSize !== undefined ? { fontSize: item.style.labelSize } : {}),
+    ...(item.style?.labelSize !== undefined && item.kind !== 'infoPanel' ? { fontSize: item.style.labelSize } : {}),
     ...(viewportPanelAnchor ?? {}),
     cssClass: item.kind === 'formula'
       ? 'font-diagram text-sm italic'
