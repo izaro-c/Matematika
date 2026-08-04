@@ -1,6 +1,7 @@
 /** ponytail: large module; split into named files under this folder when a change needs isolation. */
 import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
 import { applyDiagramAuthoredFontSize } from '@/diagrams/diagramTextScale';
+import { settleHtmlTextLayer } from '@/diagrams/jsxgraph/htmlTextLayer';
 import JXG from 'jsxgraph';
 import type { GeometryOptions, JXGCoord, JXGPolygon, JXGSlider, PointLike, PointSupport } from '@/diagrams/jsxgraph/MathUtils';
 import { setExactPointPosition } from '@/diagrams/jsxgraph/MathUtils';
@@ -88,6 +89,9 @@ function pointLabel(theme: ThemeColors, label: Record<string, unknown> = {}) {
   const highlightCssClass = `${cssClass} matematika-point-label--highlight`;
   return {
     fontSize: 19,
+    // HTML labels: never let JSXGraph turn `_` into <sub> (breaks class names / KaTeX).
+    parse: false,
+    display: 'html',
     cssClass,
     highlightCssClass,
     cssDefaultStyle: diagramFontStyle,
@@ -99,6 +103,16 @@ function pointLabel(theme: ThemeColors, label: Record<string, unknown> = {}) {
     transitionProperties: ['color', 'opacity', 'fill', 'fill-opacity', 'stroke', 'stroke-opacity'],
     ...label,
   };
+}
+
+function finishLabeledPoint(point: JXG.Point, labelOpts: Record<string, unknown>): JXG.Point {
+  // layer in options may have parked the HTML label inside an SVG <g> (0×0).
+  settleHtmlTextLayer(point.label);
+  applyDiagramAuthoredFontSize(
+    point.label?.rendNode as HTMLElement | undefined,
+    typeof labelOpts.fontSize === 'number' ? labelOpts.fontSize : 19,
+  );
+  return point;
 }
 
 export function createPoint(
@@ -120,11 +134,7 @@ export function createPoint(
     ...attributes,
     label: labelOpts,
   } as never) as JXG.Point;
-  applyDiagramAuthoredFontSize(
-    point.label?.rendNode as HTMLElement | undefined,
-    typeof labelOpts.fontSize === 'number' ? labelOpts.fontSize : 19,
-  );
-  return point;
+  return finishLabeledPoint(point, labelOpts);
 }
 
 export function createIntersection(
@@ -135,7 +145,8 @@ export function createIntersection(
   theme: ThemeColors,
 ): JXG.Point {
   const { label, ...attributes } = options;
-  return board.create('intersection', [supports[0], supports[1], index], {
+  const labelOpts = pointLabel(theme, label);
+  return finishLabeledPoint(board.create('intersection', [supports[0], supports[1], index], {
     size: 4,
     highlightSize: 6,
     fillColor: theme.terracota,
@@ -145,8 +156,8 @@ export function createIntersection(
     showInfobox: false,
     fixed: true,
     ...attributes,
-    label: pointLabel(theme, label),
-  } as never) as JXG.Point;
+    label: labelOpts,
+  } as never) as JXG.Point, labelOpts);
 }
 
 export function createSegment(
@@ -653,7 +664,8 @@ export function createMidpoint(
   theme: ThemeColors,
 ): JXG.Point {
   const { label, ...attributes } = options;
-  return board.create('midpoint', points, {
+  const labelOpts = pointLabel(theme, label);
+  return finishLabeledPoint(board.create('midpoint', points, {
     size: 4,
     highlightSize: 6,
     fillColor: theme.terracota,
@@ -662,8 +674,8 @@ export function createMidpoint(
     highlightStrokeColor: theme.ocre,
     showInfobox: false,
     ...attributes,
-    label: pointLabel(theme, label),
-  } as never) as JXG.Point;
+    label: labelOpts,
+  } as never) as JXG.Point, labelOpts);
 }
 
 export function createGlider(
@@ -673,7 +685,8 @@ export function createGlider(
   theme: ThemeColors,
 ): JXG.Point {
   const { label, ...attributes } = options;
-  return board.create('glider', coordsAndSupport, {
+  const labelOpts = pointLabel(theme, label);
+  return finishLabeledPoint(board.create('glider', coordsAndSupport, {
     size: 4,
     highlightSize: 6,
     fillColor: theme.ocre,
@@ -682,8 +695,8 @@ export function createGlider(
     highlightStrokeColor: theme.ocre,
     showInfobox: false,
     ...attributes,
-    label: pointLabel(theme, label),
-  } as never) as JXG.Point;
+    label: labelOpts,
+  } as never) as JXG.Point, labelOpts);
 }
 
 export function createPerpendicularLine(
@@ -734,7 +747,8 @@ export function createPerpendicularFoot(
   };
 
   const { label, ...attributes } = options;
-  return board.create('point', [
+  const labelOpts = pointLabel(theme, label);
+  return finishLabeledPoint(board.create('point', [
     () => projected().x,
     () => projected().y,
   ], {
@@ -746,8 +760,8 @@ export function createPerpendicularFoot(
     highlightStrokeColor: theme.ocre,
     showInfobox: false,
     ...attributes,
-    label: pointLabel(theme, label),
-  } as never) as JXG.Point;
+    label: labelOpts,
+  } as never) as JXG.Point, labelOpts);
 }
 
 export function createBaseExtensionToFoot(
@@ -907,13 +921,16 @@ export function createText(
 ): JXG.Text {
   const text = board.create('text', coords, {
     fixed: true,
-    display: 'html',
     color: theme.carbon,
     cssClass: 'font-diagram text-sm',
     cssDefaultStyle: diagramFontStyle,
     highlightCssDefaultStyle: diagramFontStyle,
     ...options,
+    // Force after options: callers pass HTML/KaTeX; JSXGraph `_`→<sub> must stay off.
+    display: 'html',
+    parse: false,
   } as never) as JXG.Text;
+  settleHtmlTextLayer(text);
   applyDiagramAuthoredFontSize(
     text.rendNode as HTMLElement | undefined,
     typeof options.fontSize === 'number' ? options.fontSize : undefined,

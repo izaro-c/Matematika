@@ -93,9 +93,58 @@ describe('MathBoard controlled viewport', () => {
     render(<MathBoard onInit={vi.fn()} onBoundingBoxChange={onBoundingBoxChange} pan zoom />);
     expect(mocks.handlers.boundingbox).toBeTypeOf('function');
     expect(onBoundingBoxChange).not.toHaveBeenCalled();
+    // Programmatic layout syncs must not commit; only user gestures do.
+    mocks.board.getBoundingBox.mockReturnValueOnce([-3, 2, 3, -2]);
+    act(() => mocks.handlers.boundingbox());
+    expect(onBoundingBoxChange).not.toHaveBeenCalled();
+    act(() => mocks.handlers.down?.());
     mocks.board.getBoundingBox.mockReturnValueOnce([-3, 2, 3, -2]);
     act(() => mocks.handlers.boundingbox());
     expect(onBoundingBoxChange).toHaveBeenCalledWith([-3, 2, 3, -2]);
+  });
+
+  it('does not commit camera bounds when ResizeObserver only re-fits the shell', () => {
+    const onBoundingBoxChange = vi.fn();
+    const observers: Array<(entries: Array<{ contentRect: { width: number; height: number } }>) => void> = [];
+    const OriginalResizeObserver = globalThis.ResizeObserver;
+    const OriginalRAF = globalThis.requestAnimationFrame;
+    const OriginalCAF = globalThis.cancelAnimationFrame;
+    class FakeResizeObserver {
+      constructor(private readonly callback: (entries: Array<{ contentRect: { width: number; height: number } }>) => void) {
+        observers.push(callback);
+      }
+      observe() {}
+      disconnect() {}
+      unobserve() {}
+    }
+    globalThis.ResizeObserver = FakeResizeObserver as unknown as typeof ResizeObserver;
+    globalThis.requestAnimationFrame = ((cb: FrameRequestCallback) => { cb(0); return 1; }) as typeof requestAnimationFrame;
+    globalThis.cancelAnimationFrame = (() => {}) as typeof cancelAnimationFrame;
+    try {
+      const { container } = render(
+        <MathBoard boundingbox={[-5, 5, 5, -4.5]} onInit={vi.fn()} onBoundingBoxChange={onBoundingBoxChange} />,
+      );
+      const shell = container.firstElementChild as HTMLElement;
+      let shellSize = { w: 800, h: 600 };
+      Object.defineProperty(shell, 'clientWidth', { configurable: true, get: () => shellSize.w });
+      Object.defineProperty(shell, 'clientHeight', { configurable: true, get: () => shellSize.h });
+      mocks.board.setBoundingBox.mockClear();
+      onBoundingBoxChange.mockClear();
+
+      shellSize = { w: 400, h: 250 };
+      act(() => { observers.at(-1)?.([{ contentRect: { width: 400, height: 250 } }]); });
+      shellSize = { w: 800, h: 600 };
+      act(() => { observers.at(-1)?.([{ contentRect: { width: 800, height: 600 } }]); });
+
+      expect(onBoundingBoxChange).not.toHaveBeenCalled();
+      // Last fit uses keepaspectratio=false (already fitted).
+      const lastKeep = mocks.board.setBoundingBox.mock.calls.at(-1)?.[1];
+      expect(lastKeep).toBe(false);
+    } finally {
+      globalThis.ResizeObserver = OriginalResizeObserver;
+      globalThis.requestAnimationFrame = OriginalRAF;
+      globalThis.cancelAnimationFrame = OriginalCAF;
+    }
   });
 
   it('syncs ResizeObserver sizes without locking CSS pixels so the board can grow again', () => {

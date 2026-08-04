@@ -300,7 +300,8 @@ export function createElement(
     ? [reactiveTextCoordinates[0](), reactiveTextCoordinates[1](), dynamicText]
     : reactiveTextCoordinates;
   return textCoordinates ? createText(board, textCoordinates, withDiagramHoverTransition({
-    color: theme[item.color],
+    // Info panels use DiagramInfoPanel chrome (carbon body); accent lives in block tokens.
+    color: item.kind === 'infoPanel' ? theme.carbon : theme[item.color],
     fixed: !editableAnnotation,
     layer,
     ...(item.style?.labelSize !== undefined ? { fontSize: item.style.labelSize } : {}),
@@ -312,7 +313,7 @@ export function createElement(
         : 'font-diagram text-sm',
     ...(item.kind === 'infoPanel' ? {
       highlightCssClass: `JXGtext matematika-info-panel${viewportPanelAnchor?.anchorX === 'left' ? ' matematika-info-panel--side-column' : ''}`,
-      highlightStrokeColor: theme[item.color],
+      highlightStrokeColor: theme.carbon,
       highlightStrokeOpacity: 1,
     } : {}),
   }), theme) : null;
