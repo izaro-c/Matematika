@@ -11,6 +11,7 @@ import {
   createPoint,
   createSlider,
 } from '@/diagrams/jsxgraph/MathFactory';
+import { applyBoardStackLayer } from '@/diagrams/jsxgraph/htmlTextLayer';
 import { renderKatexTextToHtml } from '@/components/ui/KatexText';
 import {DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS, evaluateMathExpression, type DiagramBounds, type DiagramSpecV2} from '@/diagrams/model'
 import {createSceneConstructionPlan, createScenePlan, itemLayerNumber, withMovedPoint, curveActsAsArea, onSupportTargetId, sampleCurveElement} from '@/diagrams/geometry';
@@ -127,29 +128,29 @@ function installDiagramHitTesting(
 
 
 function applyRenderedStackLayer(element: any, layer: number) {
-  if (!element?.setAttribute) return;
+  if (!element) return;
   if (element.__matematikaCurveArea) {
-    element.__matematikaCurveArea.fills.forEach((fill: { setAttribute?: (attrs: { layer: number }) => void }) => {
+    element.__matematikaCurveArea.fills.forEach((fill: unknown) => {
       applyRenderedStackLayer(fill, layer);
     });
     applyRenderedStackLayer(element.__matematikaCurveArea.curve, layer + 1);
     return;
   }
-  element.setAttribute({ layer });
-  element.label?.setAttribute?.({ layer: layer + 1 });
+  applyBoardStackLayer(element, layer);
+  if (element.label) applyBoardStackLayer(element.label, layer + 1);
   if (Array.isArray(element.borders)) {
-    element.borders.forEach((border: { setAttribute?: (attrs: { layer: number }) => void }) => border?.setAttribute?.({ layer }));
+    element.borders.forEach((border: unknown) => applyBoardStackLayer(border as Parameters<typeof applyBoardStackLayer>[0], layer));
   }
   ['point1', 'point2', 'center', 'arc', 'sector', 'ticks'].forEach(key => {
     const child = element[key];
-    if (child?.setAttribute) child.setAttribute({ layer });
-    if (Array.isArray(child)) child.forEach((item: { setAttribute?: (attrs: { layer: number }) => void }) => item?.setAttribute?.({ layer }));
+    if (child && !Array.isArray(child)) applyBoardStackLayer(child, layer);
+    if (Array.isArray(child)) child.forEach((item: unknown) => applyBoardStackLayer(item as Parameters<typeof applyBoardStackLayer>[0], layer));
   });
   if (Array.isArray(element.vertices)) {
-    element.vertices.forEach((vertex: { setAttribute?: (attrs: { layer: number }) => void }) => vertex?.setAttribute?.({ layer }));
+    element.vertices.forEach((vertex: unknown) => applyBoardStackLayer(vertex as Parameters<typeof applyBoardStackLayer>[0], layer));
   }
   if (Array.isArray(element.elements)) {
-    element.elements.forEach((child: { setAttribute?: (attrs: { layer: number }) => void }) => applyRenderedStackLayer(child, layer));
+    element.elements.forEach((child: unknown) => applyRenderedStackLayer(child, layer));
   }
 }
 

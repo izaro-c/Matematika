@@ -121,6 +121,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   const generatedId = useId().replace(/:/g, '');
   const instructionsId = `math-board-instructions-${generatedId}`;
   const suppressBoundingBoxReportRef = useRef(false);
+  const layoutSyncRef = useRef(0);
   const programmaticBoundingBoxRef = useRef<[number, number, number, number] | null>(null);
   // userNavigatingRef está activo mientras el usuario sostiene un gesto de
   // arrastre/pan (entre 'down' y 'up') para que assertControlledViewport no
@@ -132,6 +133,9 @@ export const MathBoard: React.FC<MathBoardProps> = ({
   const userNavigatingRef = useRef(false);
   const activeGestureRef = useRef(false);
   const wheelNavigationTimerRef = useRef<number | null>(null);
+
+  const beginLayoutSync = () => { layoutSyncRef.current += 1; };
+  const endLayoutSync = () => { layoutSyncRef.current = Math.max(0, layoutSyncRef.current - 1); };
 
   const beginUserGesture = () => {
     activeGestureRef.current = true;
@@ -169,6 +173,27 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       : contentBounds
   );
 
+  /**
+   * Push already-fitted display bounds to JSXGraph without:
+   * - a second keepaspectratio letterbox (ratchets the mathematical camera)
+   * - committing the display box back through onBoundingBoxChange
+   */
+  const applyFittedDisplayBounds = (board: any, fittedBounds: DiagramBounds) => {
+    beginLayoutSync();
+    suppressBoundingBoxReportRef.current = true;
+    try {
+      programmaticBoundingBoxRef.current = [...fittedBounds] as DiagramBounds;
+      board.setBoundingBox(fittedBounds, false);
+      const nextBounds = board.getBoundingBox?.();
+      if (Array.isArray(nextBounds) && nextBounds.length === 4) {
+        programmaticBoundingBoxRef.current = [...nextBounds] as DiagramBounds;
+      }
+    } finally {
+      suppressBoundingBoxReportRef.current = false;
+      endLayoutSync();
+    }
+  };
+
   const assertControlledViewport = (board: any, width: number, height: number) => {
     if (userNavigatingRef.current) return;
     // board.setBoundingBox() sólo recalcula la transformación interna
@@ -186,14 +211,8 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     const current = board.getBoundingBox?.() as number[] | undefined;
     const changed = !current || fittedBounds.some((value, index) => Math.abs(value - current[index]) > 1e-8);
     if (!changed) return;
-    suppressBoundingBoxReportRef.current = true;
-    board.setBoundingBox(fittedBounds, keepaspectratio);
+    applyFittedDisplayBounds(board, fittedBounds);
     safeBoardUpdate(board);
-    const nextBounds = board.getBoundingBox?.();
-    if (Array.isArray(nextBounds) && nextBounds.length === 4) {
-      programmaticBoundingBoxRef.current = [...nextBounds] as [number, number, number, number];
-    }
-    suppressBoundingBoxReportRef.current = false;
   };
 
   useEffect(() => {
@@ -335,8 +354,10 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     board.on('mousewheel', markWheelNavigation);
 
     const reportBoundingBox = () => {
-      if (suppressBoundingBoxReportRef.current) return;
-      markWheelNavigation();
+      // Resize / safe-area re-fits must not write the display box back into the
+      // React camera: contentBoundsFromSafeArea is lossy and ratchets zoom-out.
+      if (suppressBoundingBoxReportRef.current || layoutSyncRef.current > 0) return;
+      if (!userNavigatingRef.current && !activeGestureRef.current) return;
       const current = board.getBoundingBox?.();
       if (Array.isArray(current) && current.length === 4) {
         const programmatic = programmaticBoundingBoxRef.current;
@@ -363,15 +384,16 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       if (lastApplied.width > 0 && Math.abs(w - lastApplied.width) < 1 && h < lastApplied.height - 1) {
         return;
       }
-      if (!syncBoardToContainerSize(board, w, h, boardRef.current)) return;
-      const fittedBounds = fittedDisplayBounds(boundingboxRef.current, w, h);
-      board.setBoundingBox(fittedBounds, keepaspectratio);
-      (board as any).__matematikaContainerSize = { width: w, height: h };
-      lastApplied = { width: w, height: h };
-      safeBoardUpdate(board);
-      const resizedBounds = board.getBoundingBox?.();
-      if (Array.isArray(resizedBounds) && resizedBounds.length === 4) {
-        programmaticBoundingBoxRef.current = [...resizedBounds] as DiagramBounds;
+      beginLayoutSync();
+      try {
+        if (!syncBoardToContainerSize(board, w, h, boardRef.current)) return;
+        const fittedBounds = fittedDisplayBounds(boundingboxRef.current, w, h);
+        applyFittedDisplayBounds(board, fittedBounds);
+        (board as any).__matematikaContainerSize = { width: w, height: h };
+        lastApplied = { width: w, height: h };
+        safeBoardUpdate(board);
+      } finally {
+        endLayoutSync();
       }
     };
 
@@ -385,17 +407,13 @@ export const MathBoard: React.FC<MathBoardProps> = ({
           if (boardObj.current !== board || board.inUpdate) return;
           // Re-measure shell in rAF — never trust a stale RO entry.
           const { width, height } = readLayoutBoxSize(undefined, containerRef.current);
-          suppressBoundingBoxReportRef.current = true;
           applyContainerSize(width, height);
-          suppressBoundingBoxReportRef.current = false;
         });
         return;
       }
       if (board.inUpdate) return;
       const { width, height } = readLayoutBoxSize(undefined, containerRef.current);
-      suppressBoundingBoxReportRef.current = true;
       applyContainerSize(width, height);
-      suppressBoundingBoxReportRef.current = false;
     };
 
     // Observe only the MathBoard shell. Do NOT listen to window/visualViewport
@@ -445,14 +463,8 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     const current = board.getBoundingBox?.() as number[] | undefined;
     const changed = !current || fittedBounds.some((value, index) => Math.abs(value - current[index]) > 1e-8);
     if (changed) {
-      suppressBoundingBoxReportRef.current = true;
-      board.setBoundingBox(fittedBounds, keepaspectratio);
+      applyFittedDisplayBounds(board, fittedBounds);
       safeBoardUpdate(board);
-      const nextBounds = board.getBoundingBox?.();
-      if (Array.isArray(nextBounds) && nextBounds.length === 4) {
-        programmaticBoundingBoxRef.current = [...nextBounds] as [number, number, number, number];
-      }
-      suppressBoundingBoxReportRef.current = false;
     }
     board.__matematikaSafeArea = safeArea ?? {};
     board.__matematikaViewportSafeArea = viewportSafeArea ?? safeArea ?? {};
