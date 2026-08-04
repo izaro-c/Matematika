@@ -69,6 +69,7 @@ import {
   updateCurveAreaFills,
 } from '@/diagrams/render/elements/boardElementHelpers';
 import { createElement } from '@/diagrams/render/elements/createBoardElement';
+import { applyDiagramAuthoredFontSize } from '@/diagrams/diagramTextScale';
 
 export {
   conditionAllows,
@@ -251,16 +252,6 @@ export function syncNativeElementLabel(
   } else {
     labelNode?.classList.remove('matematika-point-label--highlight');
   }
-  if (state.fontSize !== undefined) {
-    const node = label.rendNode as HTMLElement | undefined;
-    if (node) {
-      if (node.classList.contains('matematika-info-panel')) {
-        node.style.removeProperty('font-size');
-      } else {
-        node.style.setProperty('font-size', `clamp(${Math.round(state.fontSize * 0.72)}px, ${Math.round(state.fontSize * 0.72)}px + 0.35vw, ${state.fontSize}px)`);
-      }
-    }
-  }
 
   label.setAttribute({
     visible: state.visible && state.text.trim().length > 0,
@@ -274,6 +265,10 @@ export function syncNativeElementLabel(
     ...(compassPosition ? { position: compassPosition } : {}),
     ...(state.offset !== undefined ? { offset: state.offset } : {}),
   });
+
+  // After JSXGraph may write a raw px fontSize, publish authored size for CSS scale
+  // (or clear the variable when labelSize is reset to default).
+  applyDiagramAuthoredFontSize(labelNode, state.fontSize);
 
   // JSXGraph reads native-label placement from the owning geometry as well as
   // from the generated Text node. Updating both is required for point labels,
@@ -1035,15 +1030,9 @@ export function useBoardLifecycle({
       commitElementVisuals(
         element,
         { ...base, visible: annotationVisible, color },
-        { opacity: sceneOpacity, ...(item.kind === 'infoPanel' ? {} : { fontSize }) },
+        { opacity: sceneOpacity, ...(fontSize !== undefined ? { fontSize } : {}) },
         shouldAnimate,
       );
-      const rendNode = element?.rendNode as HTMLElement | undefined;
-      if (item.kind === 'infoPanel' && rendNode) {
-        rendNode.style.removeProperty('font-size');
-      } else if (fontSize !== undefined && rendNode) {
-        rendNode.style.fontSize = `clamp(${Math.round(fontSize * 0.72)}px, ${Math.round(fontSize * 0.72)}px + 0.35vw, ${fontSize}px)`;
-      }
       if (item.kind !== 'label') {
         const textContent = annotationTextHtml(item, sceneElements, spec);
         if (element.__matematikaLastText !== textContent) {

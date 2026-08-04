@@ -13,20 +13,20 @@ export const PitagorasSpec = createDiagramSpec(
   "grid": false,
   "viewport": {
     "bounds": [
-      -8,
-      8,
-      8,
-      -8
+      -4.2,
+      7.2,
+      7.2,
+      -3.2
     ],
     "home": [
-      -8,
-      8,
-      8,
-      -8
+      -4.2,
+      7.2,
+      7.2,
+      -3.2
     ],
     "minZoom": 0.65,
     "maxZoom": 4,
-    "padding": 0.18
+    "padding": 0.06
   },
   "layers": [
     {

@@ -9,8 +9,8 @@ describe('published diagram layout dimensions', () => {
     ['balanced', 1024, 768, 512, 768],
     ['standard', 1440, 900, 720, 900],
     ['standard', 1024, 768, 512, 768],
-    ['demonstration', 1440, 900, 768, 772],
-    ['demonstration', 1024, 768, 512, 640],
+    ['demonstration', 1440, 900, 768, 844],
+    ['demonstration', 1024, 768, 512, 712],
   ] as const)('matches the published %s layout at %s × %s', (layout, width, height, expectedWidth, expectedHeight) => {
     expect(publishedDiagramArea({ width, height }, layout)).toMatchObject({ width: expectedWidth, height: expectedHeight });
   });

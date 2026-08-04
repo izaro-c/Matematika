@@ -1,3 +1,5 @@
+import { applyDiagramAuthoredFontSize, diagramVisualTextNodes } from '@/diagrams/diagramTextScale';
+
 /** Duration aligned with `--diagram-visual-transition` in mdx-prose.css. */
 export const DIAGRAM_HOVER_TRANSITION_MS = 250;
 
@@ -148,6 +150,10 @@ type DiagramVisualElement = {
   setAttribute?: (attrs: Record<string, unknown>) => void;
   fullUpdate?: () => unknown;
   borders?: DiagramVisualElement[];
+  elType?: string;
+  rendNode?: Element | null;
+  label?: DiagramVisualElement | null;
+  elements?: Array<DiagramVisualElement | undefined | null>;
   __matematikaDisplayed?: boolean;
   __matematikaVisualSignature?: string;
 };
@@ -253,6 +259,13 @@ export function commitElementVisuals(
   const signature = buildVisualSignature(staticAttrs, animated, borderAnimated, wantsVisible);
   if (!shouldAnimate && element.__matematikaVisualSignature === signature) return;
 
+  const applyAuthoredFontScale = () => {
+    const size = typeof directAttrs.fontSize === 'number' ? directAttrs.fontSize : undefined;
+    for (const node of diagramVisualTextNodes(element)) {
+      applyDiagramAuthoredFontSize(node, size);
+    }
+  };
+
   if (wantsVisible) clearScheduledHide(element);
 
   if (!wantsVisible && wasDisplayed) {
@@ -267,11 +280,13 @@ export function commitElementVisuals(
         strokeOpacity: 0,
         strokeColor: borderAnimated?.strokeColor,
       });
+      applyAuthoredFontScale();
       scheduleHide(element);
       element.__matematikaVisualSignature = signature;
       return;
     }
     element.setAttribute?.({ ...directAttrs, ...animateHash, visible: false });
+    applyAuthoredFontScale();
     element.__matematikaDisplayed = false;
     element.__matematikaVisualSignature = signature;
     return;
@@ -288,16 +303,19 @@ export function commitElementVisuals(
       strokeOpacity: 0,
       strokeColor: borderAnimated?.strokeColor,
     });
+    applyAuthoredFontScale();
     element.__matematikaDisplayed = true;
     element.__matematikaVisualSignature = signature;
     if (typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function') {
       window.requestAnimationFrame(() => {
         element.setAttribute?.({ ...directAttrs, ...animateHash });
         applyBorderVisuals(element, borderAnimated);
+        applyAuthoredFontScale();
       });
     } else {
       element.setAttribute?.({ ...directAttrs, ...animateHash });
       applyBorderVisuals(element, borderAnimated);
+      applyAuthoredFontScale();
     }
     return;
   }
@@ -305,6 +323,7 @@ export function commitElementVisuals(
   const merged = { ...directAttrs, ...animateHash };
   element.setAttribute?.(merged);
   applyBorderVisuals(element, borderAnimated);
+  applyAuthoredFontScale();
   if (needsGeometryUpdate(staticAttrs, animated)) element.fullUpdate?.();
   if (wantsVisible) element.__matematikaDisplayed = true;
   element.__matematikaVisualSignature = signature;

@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef } from 'react';
+import React, { useEffect, useId, useLayoutEffect, useRef } from 'react';
 import JXG from 'jsxgraph';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { matchesScopedDiagramTarget } from '@/lib/page-context/DiagramTargetRegistryContext';
@@ -12,6 +12,7 @@ import {
 import { safeBoardUpdate } from '@/diagrams/jsxgraph/MathUtils';
 import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
 import { useDiagramPaintReport } from '@/components/ui/skeletons';
+import { syncDiagramTextScale } from '@/diagrams/diagramTextScale';
 
 export type { DiagramBounds, MathBoardSafeArea };
 export {
@@ -462,8 +463,17 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     if (boardObj.current) safeBoardUpdate(boardObj.current);
   }, [stackRevision, highlight, step]);
 
+  useLayoutEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+    syncDiagramTextScale(element);
+    const observer = new ResizeObserver(() => syncDiagramTextScale(element));
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div ref={containerRef} className={`${className} h-full`}>
+    <div ref={containerRef} className={`${className} h-full`} data-math-board>
       <p id={instructionsId} className="sr-only">{keyboardInstructions}</p>
       <div ref={boardRef} className="jxgbox absolute inset-0 h-full w-full touch-none"
         role="region"

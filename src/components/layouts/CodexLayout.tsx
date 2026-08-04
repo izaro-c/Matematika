@@ -218,14 +218,40 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
     };
   }, [hasDiagram, isDiagramExpanded, proofSteps, syncProofStepState]);
 
-  const renderedJustifications = () => {
-    if (!activeJustifications || activeJustifications.length === 0) {
+  const [justificationSets, setJustificationSets] = useState<string[][]>([[]]);
+
+  // Extraer las combinaciones únicas de justificaciones de la demostración actual
+  useEffect(() => {
+    const steps = proofSteps();
+    const sets: string[][] = [[]];
+    const seen = new Set<string>(['[]']);
+
+    steps.forEach((step) => {
+      const raw = step.dataset.justifications;
+      if (raw && !seen.has(raw)) {
+        seen.add(raw);
+        try {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            sets.push(parsed);
+          }
+        } catch {
+          // ignore
+        }
+      }
+    });
+
+    setJustificationSets(sets);
+  }, [proofSteps, children]);
+
+  const renderJustificationItems = (justificationIds?: string[]) => {
+    if (!justificationIds || justificationIds.length === 0) {
       return <p className="m-0 text-xs italic text-carbon/50 font-serif">Por hipótesis o inferencia lógica elemental.</p>;
     }
 
     return (
       <div className="flex flex-wrap gap-2 mt-1">
-        {activeJustifications.map((id) => {
+        {justificationIds.map((id) => {
           const theorem = db.getTheorem(id);
           const definition = db.getDefinition(id);
           const concept = theorem || definition;
@@ -259,6 +285,11 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
       </div>
     );
   };
+
+  const activeKey = JSON.stringify(activeJustifications || []);
+  const allSets = justificationSets.some((s) => JSON.stringify(s) === activeKey)
+    ? justificationSets
+    : [...justificationSets, activeJustifications || []];
 
   const renderHeader = (isMobile: boolean) => {
     if (!shouldRenderHeader || !isDemoPage || !demo) return null;
@@ -329,10 +360,23 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
                 onToggle={() => setIsDiagramExpanded((isExpanded) => !isExpanded)}
               />
 
-              {/* Panel de Justificaciones Activas */}
+              {/* Panel de Justificaciones Activas con altura máxima preservada por CSS Grid */}
               <div className="codex-justifications">
                 <h4>Justificaciones del Paso</h4>
-                {renderedJustifications()}
+                <div className="codex-justifications-grid">
+                  {allSets.map((set, idx) => {
+                    const isActive = JSON.stringify(set) === activeKey;
+                    return (
+                      <div
+                        key={idx}
+                        className={`codex-justifications-item ${isActive ? 'is-active' : ''}`}
+                        aria-hidden={!isActive}
+                      >
+                        {renderJustificationItems(set)}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </aside>

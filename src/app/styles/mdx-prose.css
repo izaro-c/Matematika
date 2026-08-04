@@ -123,12 +123,19 @@
   background-color: color-mix(in srgb, var(--theme-carbon) 2%, transparent);
 }
 
-/* Etiquetas de JSXGraph — tipografía editorial */
+/* Tipografía de diagrama: --diagram-text-scale vía ResizeObserver (altura).
+ * ≥400px → 100% (portátil/escritorio); solo tableros cortos (móvil/tablet) reducen. */
+[data-diagram-renderer],
+[data-math-board] {
+  --diagram-text-scale: 1;
+}
+
+/* Etiquetas de JSXGraph — tipografía editorial (default 17px desktop) */
 .JXGtext {
   font-family: var(--font-diagram-family) !important;
   font-style: normal !important;
   font-weight: 600 !important;
-  font-size: 17px;
+  font-size: calc(var(--diagram-authored-font-size, 17px) * var(--diagram-text-scale, 1)) !important;
   letter-spacing: 0.005em;
   paint-order: stroke;
   stroke: var(--theme-lienzo);
@@ -136,17 +143,70 @@
   stroke-linejoin: round;
 }
 
-/* Etiquetas de puntos — variables y vinculadas al color interactivo del objeto. */
+/* Etiquetas de puntos — default 19px desktop */
 .JXGtext.JXgpointLabel {
   color: inherit;
   fill: currentColor !important;
   font-style: italic !important;
-  font-size: 19px;
+  font-size: calc(var(--diagram-authored-font-size, 19px) * var(--diagram-text-scale, 1)) !important;
   font-weight: 700 !important;
 }
 
 [data-diagram-renderer] {
   --diagram-visual-transition: 0.25s;
+}
+
+[data-diagram-title],
+[data-diagram-info-panel],
+[data-diagram-header] .diagram-header-note,
+[data-diagram-header] .diagram-header-readings {
+  font-size: calc(var(--diagram-authored-font-size) * var(--diagram-text-scale, 1)) !important;
+}
+
+[data-diagram-title] {
+  --diagram-authored-font-size: 18px;
+}
+
+[data-diagram-title][data-layout="inline"] {
+  --diagram-authored-font-size: 24px;
+}
+
+[data-diagram-info-panel] {
+  --diagram-authored-font-size: 14px;
+}
+
+[data-diagram-header] .diagram-header-note {
+  --diagram-authored-font-size: 14px;
+}
+
+[data-diagram-header] .diagram-header-readings {
+  --diagram-authored-font-size: 16px;
+}
+
+/* Wide+short boards: title / note / readings share the left strip with
+ * viewport panels and controls (width tracks the diagram via --diagram-side-chrome). */
+[data-diagram-header-layout="side"] [data-diagram-header] {
+  width: var(--diagram-side-chrome, 36%);
+  max-width: none;
+  box-sizing: border-box;
+  padding-left: var(--diagram-side-pad, 1rem);
+  padding-right: var(--diagram-side-pad, 1rem);
+}
+
+[data-diagram-header-layout="side"] [data-diagram-header] [data-diagram-title],
+[data-diagram-header-layout="side"] [data-diagram-header] .diagram-header-note,
+[data-diagram-header-layout="side"] [data-diagram-header] .diagram-header-readings {
+  max-width: none;
+}
+
+[data-diagram-header-layout="side"] [data-diagram-toolbar][data-diagram-toolbar-layout="rails"] {
+  /* Same left edge as title / panels — controls live in the text column. */
+  padding-left: var(--diagram-side-pad, 1rem);
+}
+
+[data-diagram-header-layout="side"] .matematika-info-panel--side-column {
+  width: calc(var(--diagram-side-chrome, 36%) - 2 * var(--diagram-side-pad, 1rem)) !important;
+  max-width: calc(var(--diagram-side-chrome, 36%) - 2 * var(--diagram-side-pad, 1rem)) !important;
 }
 
 .matematika-point-label {
@@ -204,14 +264,15 @@
   max-width: min(30rem, calc(100% - var(--diagram-safe-left, 1rem) - var(--diagram-panel-right, var(--diagram-safe-right, 1rem)) - 1rem));
   overflow-wrap: anywhere;
   white-space: normal !important;
-  font-size: clamp(0.7rem, 0.7rem + 0.35vw, 0.9rem);
+  --diagram-authored-font-size: 14px;
+  font-size: calc(var(--diagram-authored-font-size, 14px) * var(--diagram-text-scale, 1)) !important;
 }
 
 .matematika-info-panel__title {
   display: block;
   margin-bottom: 0.35rem;
   color: var(--theme-carbon);
-  font-size: clamp(0.8rem, 0.8rem + 0.4vw, 1.05rem);
+  font-size: 1.15em;
 }
 
 .matematika-info-panel__intro {
@@ -249,7 +310,7 @@
   display: block;
   margin-bottom: 0.1rem;
   color: var(--theme-carbon);
-  font-size: clamp(0.68rem, 0.68rem + 0.3vw, 0.82rem);
+  font-size: 0.92em;
 }
 
 @media (max-width: 36rem) {
@@ -295,6 +356,14 @@
 
 [data-diagram-layout="rails"] [data-diagram-info-panel][data-layout="overlay"][data-position="bottom-right"] {
   right: 3.75rem;
+}
+
+/* Side header wins over the rails left nudge for title-column panels. */
+[data-diagram-header-layout="side"][data-diagram-layout] [data-diagram-info-panel][data-layout="overlay"][data-position="top-left"],
+[data-diagram-header-layout="side"][data-diagram-layout] [data-diagram-info-panel][data-layout="overlay"][data-position="bottom-left"] {
+  left: var(--diagram-side-pad, 1rem);
+  width: calc(var(--diagram-side-chrome, 36%) - 2 * var(--diagram-side-pad, 1rem));
+  max-width: calc(var(--diagram-side-chrome, 36%) - 2 * var(--diagram-side-pad, 1rem));
 }
 
 /* La barra responde al ancho real del lienzo, no al de la ventana. */

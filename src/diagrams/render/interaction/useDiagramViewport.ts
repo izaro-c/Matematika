@@ -22,12 +22,14 @@ import {
   DIAGRAM_CHROME,
   initialDiagramSafeAreas,
   sameInsets,
+  type DiagramHeaderLayout,
   type DiagramInsets,
   type DiagramToolbarLayout,
 } from '@/diagrams/render/interaction/diagramSafeArea';
 
 export type {
   DiagramChromeMetrics,
+  DiagramHeaderLayout,
   DiagramInsets,
   DiagramSafeAreaOptions,
   DiagramSafeAreas,
@@ -37,7 +39,9 @@ export {
   computeDiagramSafeAreas,
   DIAGRAM_CHROME,
   initialDiagramSafeAreas,
+  preferSideHeader,
   sameInsets,
+  sideChromeWidthPx,
 } from '@/diagrams/render/interaction/diagramSafeArea';
 export {
   renderedCoordinates,
@@ -54,6 +58,7 @@ export interface UseDiagramViewportOptions {
   viewportControls?: boolean;
   showStepControls?: boolean;
   showToolbar?: boolean;
+  hasHeader?: boolean;
   onViewportChange?: (bounds: DiagramBounds, options?: ViewportChangeOptions) => void;
   rendererRef: RefObject<HTMLDivElement | null>;
   headerRef: RefObject<HTMLElement | null>;
@@ -91,6 +96,7 @@ export function useDiagramViewport({
   viewportControls = true,
   showStepControls = false,
   showToolbar = true,
+  hasHeader = true,
   onViewportChange,
   rendererRef,
   headerRef,
@@ -139,6 +145,9 @@ export function useDiagramViewport({
   const [safeArea, setSafeArea] = useState<DiagramInsets>(initialAreas.safeArea);
   const [viewportSafeArea, setViewportSafeArea] = useState<DiagramInsets>(initialAreas.viewportSafeArea);
   const [toolbarLayout, setToolbarLayout] = useState<DiagramToolbarLayout>('bar');
+  const [headerLayout, setHeaderLayout] = useState<DiagramHeaderLayout>(initialAreas.headerLayout);
+  const [sideChromeWidth, setSideChromeWidth] = useState(initialAreas.sideChromeWidth);
+  const [sidePad, setSidePad] = useState(initialAreas.sidePad);
   const [viewportMenuOpen, setViewportMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -159,9 +168,12 @@ export function useDiagramViewport({
             ?? (showToolbar ? DIAGRAM_CHROME.toolbarFallbackHeight : 0),
           isSmUp: readSmUp(),
         },
-        { showToolbar, showStepControls, viewportControls, hasTopViewportPanel },
+        { showToolbar, showStepControls, viewportControls, hasTopViewportPanel, hasHeader },
       );
       setToolbarLayout(current => current === next.toolbarLayout ? current : next.toolbarLayout);
+      setHeaderLayout(current => current === next.headerLayout ? current : next.headerLayout);
+      setSideChromeWidth(current => current === next.sideChromeWidth ? current : next.sideChromeWidth);
+      setSidePad(current => current === next.sidePad ? current : next.sidePad);
       setViewportSafeArea(current => sameInsets(current, next.viewportSafeArea) ? current : next.viewportSafeArea);
       setSafeArea(current => sameInsets(current, next.safeArea) ? current : next.safeArea);
     };
@@ -195,7 +207,7 @@ export function useDiagramViewport({
       resizeObserver?.disconnect();
       mutationObserver?.disconnect();
     };
-  }, [effectiveStepId, hasTopViewportPanel, headerRef, rendererRef, showStepControls, showToolbar, spec.componentId, toolbarRef, viewportControls]);
+  }, [effectiveStepId, hasHeader, hasTopViewportPanel, headerRef, rendererRef, showStepControls, showToolbar, spec.componentId, toolbarRef, viewportControls]);
 
   return {
     bounds: cameraBounds,
@@ -208,6 +220,9 @@ export function useDiagramViewport({
     safeArea,
     viewportSafeArea,
     toolbarLayout,
+    headerLayout,
+    sideChromeWidth,
+    sidePad,
     viewportMenuOpen,
     setViewportMenuOpen,
   };

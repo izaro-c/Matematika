@@ -89,10 +89,13 @@ export function publishedDiagramArea(
     const columnGap = clamp(2 * ROOT_FONT_SIZE, screenWidth * 0.04, 4 * ROOT_FONT_SIZE);
     const availableWidth = screenWidth - leftPadding - columnGap;
     const readingWidth = Math.min(65 * EDITORIAL_CH_WIDTH, Math.max(0, availableWidth - 32 * ROOT_FONT_SIZE));
+    // Codex: columna sticky 100svh; justificaciones son auto (máx ~8rem). Preview ≈ columna
+    // menos un hueco típico de justificaciones cortas, no un bloque fijo de 8rem vacío.
+    const justificationsReserve = 3.5 * ROOT_FONT_SIZE;
     return {
       layout,
       width: Math.round(availableWidth - readingWidth),
-      height: Math.round(screenHeight - 8 * ROOT_FONT_SIZE),
+      height: Math.round(screenHeight - justificationsReserve),
     };
   }
 
