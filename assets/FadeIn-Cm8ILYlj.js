@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DUAcabCT.js";import{t}from"./react-DbyrFoBd.js";t();var n=e(),r=({children:e,className:t=``,as:r=`div`})=>(0,n.jsx)(r,{className:t||void 0,children:e});export{r as t};
