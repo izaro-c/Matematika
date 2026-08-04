@@ -1,5 +1,6 @@
 /** ponytail: large module; split into named files under this folder when a change needs isolation. */
 import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
+import { applyDiagramAuthoredFontSize } from '@/diagrams/diagramTextScale';
 import JXG from 'jsxgraph';
 import type { GeometryOptions, JXGCoord, JXGPolygon, JXGSlider, PointLike, PointSupport } from '@/diagrams/jsxgraph/MathUtils';
 import { setExactPointPosition } from '@/diagrams/jsxgraph/MathUtils';
@@ -107,7 +108,8 @@ export function createPoint(
   theme: ThemeColors,
 ): JXG.Point {
   const { label, ...attributes } = options;
-  return board.create('point', coords, {
+  const labelOpts = pointLabel(theme, label);
+  const point = board.create('point', coords, {
     size: 4,
     highlightSize: 6,
     fillColor: theme.carbon,
@@ -116,8 +118,13 @@ export function createPoint(
     highlightStrokeColor: theme.ocre,
     showInfobox: false,
     ...attributes,
-    label: pointLabel(theme, label),
+    label: labelOpts,
   } as never) as JXG.Point;
+  applyDiagramAuthoredFontSize(
+    point.label?.rendNode as HTMLElement | undefined,
+    typeof labelOpts.fontSize === 'number' ? labelOpts.fontSize : 19,
+  );
+  return point;
 }
 
 export function createIntersection(
@@ -898,7 +905,7 @@ export function createText(
   options: TextOptions = {},
   theme: ThemeColors,
 ): JXG.Text {
-  return board.create('text', coords, {
+  const text = board.create('text', coords, {
     fixed: true,
     display: 'html',
     color: theme.carbon,
@@ -907,6 +914,11 @@ export function createText(
     highlightCssDefaultStyle: diagramFontStyle,
     ...options,
   } as never) as JXG.Text;
+  applyDiagramAuthoredFontSize(
+    text.rendNode as HTMLElement | undefined,
+    typeof options.fontSize === 'number' ? options.fontSize : undefined,
+  );
+  return text;
 }
 
 export function createSlider(

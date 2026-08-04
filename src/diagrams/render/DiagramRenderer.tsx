@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
 import { DiagramTitle } from '@/components/ui/DiagramOverlay';
 import { StepNavigator } from '@/components/ui/StepNavigator';
@@ -20,6 +20,7 @@ import {
 } from '@/diagrams/render/DiagramKatexOverlay';
 import { liveVariables, useBoardLifecycle } from '@/diagrams/render/lifecycle/useBoardLifecycle';
 import { useDiagramPaintReport } from '@/components/ui/skeletons';
+import { syncDiagramTextScale } from '@/diagrams/diagramTextScale';
 
 export interface DiagramRendererProps {
   spec: DiagramSpecV2 | DiagramSpecV3;
@@ -165,6 +166,9 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     safeArea,
     viewportSafeArea,
     toolbarLayout,
+    headerLayout,
+    sideChromeWidth,
+    sidePad,
     viewportMenuOpen,
     setViewportMenuOpen,
   } = useDiagramViewport({
@@ -175,6 +179,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     viewportControls,
     showStepControls,
     showToolbar,
+    hasHeader: !hideHeader,
     onViewportChange,
     rendererRef,
     headerRef,
@@ -211,6 +216,15 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     readyNotifiedRef.current = false;
   }, [spec.componentId, geometryRevision]);
 
+  useLayoutEffect(() => {
+    const element = rendererRef.current;
+    if (!element) return;
+    syncDiagramTextScale(element);
+    const observer = new ResizeObserver(() => syncDiagramTextScale(element));
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
   const handleBoardInitAndReady = (board: Parameters<typeof handleBoardInit>[0], elements: Parameters<typeof handleBoardInit>[1], theme: Parameters<typeof handleBoardInit>[2]) => {
     handleBoardInit(board, elements, theme);
     requestAnimationFrame(() => {
@@ -231,11 +245,14 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
       data-diagram-active-step={effectiveStepId}
       data-diagram-viewport-bounds={bounds.join(',')}
       data-diagram-layout={toolbarLayout}
+      data-diagram-header-layout={headerLayout}
       style={{
         '--diagram-safe-top': `${viewportSafeArea.top}px`,
         '--diagram-safe-right': `${viewportSafeArea.right}px`,
         '--diagram-safe-bottom': `${viewportSafeArea.bottom}px`,
         '--diagram-safe-left': `${viewportSafeArea.left}px`,
+        '--diagram-side-chrome': `${sideChromeWidth}px`,
+        '--diagram-side-pad': `${sidePad}px`,
         '--diagram-panel-right': `${toolbarLayout === 'rails' && showStepControls ? 52 : viewportSafeArea.right}px`,
       } as React.CSSProperties}
     >
@@ -263,28 +280,51 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         {!hideHeader && (
           <header
             ref={headerRef}
-            className={`pointer-events-none absolute inset-x-0 top-0 z-20 ${
-              isCompactMode ? 'px-3 pt-2.5 space-y-0.5 max-w-[calc(100%-3rem)]' : 'px-3.5 pt-3.5 sm:px-6 sm:pt-5'
+            className={`pointer-events-none absolute z-20 ${
+              headerLayout === 'side'
+                ? 'top-0 left-0 flex flex-col gap-1 pt-3 sm:pt-4'
+                : isCompactMode
+                  ? 'inset-x-0 top-0 px-3 pt-2.5 space-y-0.5 max-w-[calc(100%-3rem)]'
+                  : 'inset-x-0 top-0 px-3.5 pt-3.5 sm:px-6 sm:pt-5'
             }`}
             data-diagram-header
           >
             {spec.note && (
-              <p className={`font-diagram italic text-carbon/65 ${
-                isCompactMode ? 'hidden sm:block text-[11px] leading-tight max-w-[20rem] mb-0.5' : 'mb-2 max-w-[44rem] text-xs sm:text-sm leading-snug'
-              }`}>
+              <p
+                className={`font-diagram italic text-carbon/65 diagram-header-note ${
+                  headerLayout === 'side'
+                    ? 'mb-0 leading-snug'
+                    : isCompactMode
+                      ? 'hidden sm:block leading-tight max-w-[20rem] mb-0.5'
+                      : 'mb-2 max-w-[44rem] leading-snug'
+                }`}
+                style={{ '--diagram-authored-font-size': isCompactMode ? '11px' : '14px' } as React.CSSProperties}
+              >
                 <ExplorationCue labels={movableCueLabels(spec)}>{spec.note}</ExplorationCue>
               </p>
             )}
             <DiagramTitle
               layout="inline"
-              className={isCompactMode ? 'text-sm sm:text-base font-bold text-carbon/95 truncate block max-w-[22rem]' : undefined}
+              fontSize={isCompactMode ? 14 : 24}
+              className={
+                headerLayout === 'side'
+                  ? 'font-bold text-carbon/95 block'
+                  : isCompactMode
+                    ? 'font-bold text-carbon/95 truncate block max-w-[22rem]'
+                    : undefined
+              }
             >
               {spec.title}
             </DiagramTitle>
             {compactReadings.length > 0 && (
-              <output className={`flex flex-wrap items-baseline gap-x-2 font-diagram italic text-carbon/80 ${
-                isCompactMode ? 'mt-0.5 text-[11px]' : 'mt-1 gap-y-0.5 text-xs sm:text-sm lg:text-base'
-              }`} aria-live="polite" aria-label="Lecturas dinámicas del diagrama">
+              <output
+                className={`flex flex-wrap items-baseline gap-x-2 font-diagram italic text-carbon/80 diagram-header-readings ${
+                  headerLayout === 'side' ? 'mt-1 gap-y-1' : isCompactMode ? 'mt-0.5' : 'mt-1 gap-y-0.5'
+                }`}
+                style={{ '--diagram-authored-font-size': isCompactMode ? '11px' : '16px' } as React.CSSProperties}
+                aria-live="polite"
+                aria-label="Lecturas dinámicas del diagrama"
+              >
                 {compactReadings.map(({ id, itemIds, text, visibility }, index) => {
                   const visible = visibility === 'all'
                     ? itemIds.every(itemId => visibleHeaderItemIds.has(itemId))

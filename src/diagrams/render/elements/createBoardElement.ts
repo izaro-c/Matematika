@@ -303,15 +303,15 @@ export function createElement(
     color: theme[item.color],
     fixed: !editableAnnotation,
     layer,
-    ...(item.style?.labelSize !== undefined && item.kind !== 'infoPanel' ? { fontSize: item.style.labelSize } : {}),
+    ...(item.style?.labelSize !== undefined ? { fontSize: item.style.labelSize } : {}),
     ...(viewportPanelAnchor ?? {}),
     cssClass: item.kind === 'formula'
       ? 'font-diagram text-sm italic'
       : item.kind === 'infoPanel'
-        ? 'JXGtext matematika-info-panel'
+        ? `JXGtext matematika-info-panel${viewportPanelAnchor?.anchorX === 'left' ? ' matematika-info-panel--side-column' : ''}`
         : 'font-diagram text-sm',
     ...(item.kind === 'infoPanel' ? {
-      highlightCssClass: 'JXGtext matematika-info-panel',
+      highlightCssClass: `JXGtext matematika-info-panel${viewportPanelAnchor?.anchorX === 'left' ? ' matematika-info-panel--side-column' : ''}`,
       highlightStrokeColor: theme[item.color],
       highlightStrokeOpacity: 1,
     } : {}),
