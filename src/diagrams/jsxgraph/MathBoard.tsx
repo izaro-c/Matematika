@@ -460,7 +460,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
 
   useEffect(() => {
     if (boardObj.current) safeBoardUpdate(boardObj.current);
-  }, [stackRevision]);
+  }, [stackRevision, highlight, step]);
 
   return (
     <div ref={containerRef} className={`${className} h-full`}>

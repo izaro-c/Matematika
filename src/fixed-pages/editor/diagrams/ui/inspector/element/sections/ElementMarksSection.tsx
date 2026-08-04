@@ -27,14 +27,14 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
   const cap = elementInspectorCapabilities(element.kind);
 
   return (
-    <div className="p-2.5 space-y-3 bg-carbon/5 rounded-xl border border-carbon/10 shadow-2xs">
+    <div className="space-y-3">
       {showsSegmentMarks(element.kind) && (
         <>
           <div>
-            <label className="block text-[11px] font-bold text-carbon/70 mb-1">
+            <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">
               Marcas de Congruencia ({congruenceMarkForSegment(model, element.id)?.properties?.markCount ?? 0})
             </label>
-            <div className="grid grid-cols-5 gap-1">
+            <div className="grid grid-cols-5 gap-1.5">
               {[0, 1, 2, 3, 4].map(cnt => {
                 const currentCount = congruenceMarkForSegment(model, element.id)?.properties?.markCount ?? 0;
                 return (
@@ -47,10 +47,10 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                         onUpdateModel(next, `Cambiar marcas de congruencia de ${element.id} a ${cnt}`);
                       }
                     }}
-                    className={`py-1 text-xs font-bold rounded border cursor-pointer ${
+                    className={`py-1 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
                       currentCount === cnt
-                        ? 'bg-salvia text-lienzo border-salvia'
-                        : 'bg-lienzo text-carbon border-carbon/20 hover:bg-carbon/5'
+                        ? 'bg-salvia text-lienzo border-salvia shadow-2xs'
+                        : 'bg-lienzo text-carbon border-carbon/15 hover:bg-carbon/5'
                     }`}
                   >
                     {cnt === 0 ? 'Ninguna' : `${cnt} ${cnt === 1 ? '|' : cnt === 2 ? '||' : cnt === 3 ? '|||' : '||||'}`}
@@ -61,10 +61,10 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
           </div>
 
           <div>
-            <label className="block text-[11px] font-bold text-carbon/70 mb-1">
+            <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">
               Marcas de Paralelismo ({parallelMarkForSegment(model, element.id)?.properties?.markCount ?? 0})
             </label>
-            <div className="grid grid-cols-4 gap-1">
+            <div className="grid grid-cols-4 gap-1.5">
               {[0, 1, 2, 3].map(cnt => {
                 const currentCount = parallelMarkForSegment(model, element.id)?.properties?.markCount ?? 0;
                 return (
@@ -77,10 +77,10 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                         onUpdateModel(next, `Cambiar marcas de paralelismo de ${element.id} a ${cnt}`);
                       }
                     }}
-                    className={`py-1 text-xs font-bold rounded border cursor-pointer ${
+                    className={`py-1 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
                       currentCount === cnt
-                        ? 'bg-pavo text-lienzo border-pavo'
-                        : 'bg-lienzo text-carbon border-carbon/20 hover:bg-carbon/5'
+                        ? 'bg-pavo text-lienzo border-pavo shadow-2xs'
+                        : 'bg-lienzo text-carbon border-carbon/15 hover:bg-carbon/5'
                     }`}
                   >
                     {cnt === 0 ? 'Ninguna' : `${cnt} ${cnt === 1 ? '▶' : cnt === 2 ? '▶▶' : '▶▶▶'}`}
@@ -90,8 +90,8 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 pt-1 border-t border-carbon/10">
-            <label className="flex items-center space-x-1.5 cursor-pointer text-xs font-bold text-carbon">
+          <div className="grid grid-cols-2 gap-2 pt-2 border-t border-carbon/10">
+            <label className="flex items-center space-x-2 cursor-pointer text-xs font-bold text-carbon select-none">
               <input
                 type="checkbox"
                 checked={Boolean(dimensionLineForSegment(model, element.id))}
@@ -101,12 +101,12 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     onUpdateModel(next, `${e.target.checked ? 'Añadir' : 'Eliminar'} cota en ${element.id}`);
                   }
                 }}
-                className="rounded text-salvia border-carbon/30 focus:ring-salvia"
+                className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
               />
               <span>Línea de Cota</span>
             </label>
 
-            <label className="flex items-center space-x-1.5 cursor-pointer text-xs font-bold text-carbon">
+            <label className="flex items-center space-x-2 cursor-pointer text-xs font-bold text-carbon select-none">
               <input
                 type="checkbox"
                 checked={Boolean(measurementForSegment(model, element.id))}
@@ -116,7 +116,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     onUpdateModel(next, `${e.target.checked ? 'Añadir' : 'Eliminar'} medida en ${element.id}`);
                   }
                 }}
-                className="rounded text-salvia border-carbon/30 focus:ring-salvia"
+                className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
               />
               <span>Etiqueta de Medida</span>
             </label>
@@ -126,85 +126,85 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
 
       {showsDirectMarkCount(element.kind) && (
         <div>
-          <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">
+          <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
             Número de Marcas
-            <input
-              type="number"
-              min="1"
-              max="12"
-              aria-label="Número de Marcas"
-              value={element.properties?.markCount ?? 1}
-              onChange={e =>
-                onUpdateElement(element.id, {
-                  properties: { ...(element.properties || {}), markCount: parseInt(e.target.value, 10) || 1 },
-                })
-              }
-              className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon font-bold"
-            />
           </label>
+          <input
+            type="number"
+            min="1"
+            max="12"
+            aria-label="Número de Marcas"
+            value={element.properties?.markCount ?? 1}
+            onChange={e =>
+              onUpdateElement(element.id, {
+                properties: { ...(element.properties || {}), markCount: parseInt(e.target.value, 10) || 1 },
+              })
+            }
+            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+          />
         </div>
       )}
 
       {cap.markHeight && (
         <div>
-          <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">
+          <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
             Tamaño / Longitud Marca (px)
-            <input
-              type="number"
-              step="0.05"
-              min="0.05"
-              max="100"
-              aria-label="Tamaño / Longitud Marca"
-              value={element.style?.markHeight ?? 0.32}
-              onChange={e => {
-                const val = parseFloat(e.target.value) || 0.32;
-                onUpdateElement(element.id, {
-                  style: { ...(element.style || {}), markHeight: val },
-                });
-              }}
-              className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon font-bold"
-            />
           </label>
+          <input
+            type="number"
+            step="0.05"
+            min="0.05"
+            max="100"
+            aria-label="Tamaño / Longitud Marca"
+            value={element.style?.markHeight ?? 0.32}
+            onChange={e => {
+              const val = parseFloat(e.target.value) || 0.32;
+              onUpdateElement(element.id, {
+                style: { ...(element.style || {}), markHeight: val },
+              });
+            }}
+            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+          />
         </div>
       )}
 
       {showsMeasureTicksProps(element.kind) && (
-        <div className="space-y-2 pt-1 border-t border-carbon/10">
-          <div className="grid grid-cols-2 gap-2">
+        <div className="space-y-2.5 pt-2 border-t border-carbon/10">
+          <div className="grid grid-cols-2 gap-2.5">
             <div>
-              <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
                 Separación entre Marcas
-                <input
-                  type="number"
-                  step="0.1"
-                  min="0.1"
-                  max="100"
-                  value={element.properties?.tickDistance ?? 2}
-                  onChange={e =>
-                    onUpdateElement(element.id, {
-                      properties: { ...(element.properties || {}), tickDistance: parseFloat(e.target.value) || 2 },
-                    })
-                  }
-                  className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon"
-                />
               </label>
+              <input
+                type="number"
+                step="0.1"
+                min="0.1"
+                max="100"
+                value={element.properties?.tickDistance ?? 2}
+                onChange={e =>
+                  onUpdateElement(element.id, {
+                    properties: { ...(element.properties || {}), tickDistance: parseFloat(e.target.value) || 2 },
+                  })
+                }
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+              />
             </div>
             <div>
-              <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
                 Subdivisiones Menores
-                <input
-                  type="number"
-                  min="0"
-                  max="10"
-                  value={element.properties?.minorTickCount ?? 4}
-                  onChange={e =>
-                    onUpdateElement(element.id, {
-                      properties: { ...(element.properties || {}), minorTickCount: parseInt(e.target.value, 10) || 0 },
-                    })
-                  }
-                  className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon"
-                />
               </label>
+              <input
+                type="number"
+                min="0"
+                max="10"
+                value={element.properties?.minorTickCount ?? 4}
+                onChange={e =>
+                  onUpdateElement(element.id, {
+                    properties: { ...(element.properties || {}), minorTickCount: parseInt(e.target.value, 10) || 0 },
+                  })
+                }
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+              />
             </div>
           </div>
         </div>

@@ -17,8 +17,8 @@ describe('DiagramPanel', () => {
     );
 
     const panel = container.firstElementChild;
-    expect(panel?.className).toMatch(/border-pavo\/25/);
-    expect(panel?.className).toMatch(/bg-pavo\/5/);
+    expect(panel?.className).toMatch(/border-carbon\/10/);
+    expect(panel?.className).toMatch(/bg-lienzo\/40/);
     expect(screen.getByText('Igualar longitudes')).toBeTruthy();
     expect(screen.getByText('Opcional')).toBeTruthy();
     expect(screen.getByText('Contenido')).toBeTruthy();

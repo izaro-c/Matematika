@@ -30,6 +30,9 @@ export interface DiagramRendererProps {
   activeStepId?: string;
   viewportControls?: boolean;
   className?: string;
+  hideHeader?: boolean;
+  borderWidth?: number | string;
+  borderRadius?: number | string;
   onSelectionChange?: (id: string, intent?: DiagramSelectionIntent) => void;
   onPointMove?: (id: string, x: number, y: number) => void;
   onSliderChange?: (id: string, value: number) => void;
@@ -50,6 +53,9 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   activeStepId,
   viewportControls = true,
   className,
+  hideHeader = false,
+  borderWidth,
+  borderRadius,
   onSelectionChange,
   onPointMove,
   onSliderChange,
@@ -212,10 +218,14 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     });
   };
 
+  const hasCustomRadius = borderRadius !== undefined;
+  const roundedClass = hasCustomRadius ? '' : 'rounded-[20px]';
+  const isCompactMode = Boolean(className?.includes('!min-h-0'));
+
   return (
     <div
       ref={rendererRef}
-      className={`relative min-h-[360px] h-full w-full overflow-hidden rounded-[20px] ${className ?? ''}`}
+      className={`relative min-h-[360px] h-full w-full overflow-hidden ${roundedClass} ${className ?? ''}`}
       data-diagram-renderer={DIAGRAM_RENDERER_ID}
       data-diagram-mode={mode}
       data-diagram-active-step={effectiveStepId}
@@ -236,41 +246,60 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         grid={spec.grid}
         pan
         zoom
+        borderWidth={borderWidth}
+        borderRadius={borderRadius}
         revision={geometryRevision}
         stackRevision={stackRevision}
         safeArea={safeArea}
         viewportSafeArea={viewportSafeArea}
         ariaLabel={`${spec.title}. Diagrama matemático interactivo.`}
-        className="relative min-h-[360px] h-full w-full overflow-hidden rounded-[20px] font-diagram"
+        className={`relative h-full w-full overflow-hidden ${roundedClass} font-diagram ${className?.includes('!min-h-0') ? '!min-h-0' : 'min-h-[360px]'}`}
         onBoundingBoxChange={(next) => {
           if (next.some((value, index) => Math.abs(value - bounds[index]) > 1e-7)) commitCamera(next);
         }}
         onInit={handleBoardInitAndReady}
         onUpdate={handleBoardUpdate}
       >
-        <header ref={headerRef} className="pointer-events-none absolute inset-x-0 top-0 z-20 px-5 pt-5 sm:px-8 sm:pt-6" data-diagram-header>
-          {spec.note && (
-            <p className="mb-3 max-w-[44rem] font-diagram text-sm italic leading-snug text-carbon/65">
-              <ExplorationCue labels={movableCueLabels(spec)}>{spec.note}</ExplorationCue>
-            </p>
-          )}
-          <DiagramTitle layout="inline">{spec.title}</DiagramTitle>
-          {compactReadings.length > 0 && (
-            <output className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 font-diagram text-base italic text-carbon/80" aria-live="polite" aria-label="Lecturas dinámicas del diagrama">
-              {compactReadings.map(({ id, itemIds, text, visibility }, index) => {
-                const visible = visibility === 'all'
-                  ? itemIds.every(itemId => visibleHeaderItemIds.has(itemId))
-                  : itemIds.some(itemId => visibleHeaderItemIds.has(itemId));
-                return (
-                  <React.Fragment key={id}>
-                    {index > 0 && <span className={`text-ocre/55 ${visible ? '' : 'invisible'}`} aria-hidden>·</span>}
-                    <span className={visible ? '' : 'invisible'} aria-hidden={visible ? undefined : true}>{text}</span>
-                  </React.Fragment>
-                );
-              })}
-            </output>
-          )}
-        </header>
+        {!hideHeader && (
+          <header
+            ref={headerRef}
+            className={`pointer-events-none absolute inset-x-0 top-0 z-20 ${
+              isCompactMode ? 'px-3 pt-2.5 space-y-0.5 max-w-[calc(100%-3rem)]' : 'px-3.5 pt-3.5 sm:px-6 sm:pt-5'
+            }`}
+            data-diagram-header
+          >
+            {spec.note && (
+              <p className={`font-diagram italic text-carbon/65 ${
+                isCompactMode ? 'hidden sm:block text-[11px] leading-tight max-w-[20rem] mb-0.5' : 'mb-2 max-w-[44rem] text-xs sm:text-sm leading-snug'
+              }`}>
+                <ExplorationCue labels={movableCueLabels(spec)}>{spec.note}</ExplorationCue>
+              </p>
+            )}
+            <DiagramTitle
+              layout="inline"
+              className={isCompactMode ? 'text-sm sm:text-base font-bold text-carbon/95 truncate block max-w-[22rem]' : undefined}
+            >
+              {spec.title}
+            </DiagramTitle>
+            {compactReadings.length > 0 && (
+              <output className={`flex flex-wrap items-baseline gap-x-2 font-diagram italic text-carbon/80 ${
+                isCompactMode ? 'mt-0.5 text-[11px]' : 'mt-1 gap-y-0.5 text-xs sm:text-sm lg:text-base'
+              }`} aria-live="polite" aria-label="Lecturas dinámicas del diagrama">
+                {compactReadings.map(({ id, itemIds, text, visibility }, index) => {
+                  const visible = visibility === 'all'
+                    ? itemIds.every(itemId => visibleHeaderItemIds.has(itemId))
+                    : itemIds.some(itemId => visibleHeaderItemIds.has(itemId));
+                  return (
+                    <React.Fragment key={id}>
+                      {index > 0 && <span className={`text-ocre/55 ${visible ? '' : 'invisible'}`} aria-hidden>·</span>}
+                      <span className={visible ? '' : 'invisible'} aria-hidden={visible ? undefined : true}>{text}</span>
+                    </React.Fragment>
+                  );
+                })}
+              </output>
+            )}
+          </header>
+        )}
         <DiagramKatexOverlay spec={spec} activeStepId={effectiveStepId} variables={liveSceneVariables} />
         {showToolbar && (
           <div

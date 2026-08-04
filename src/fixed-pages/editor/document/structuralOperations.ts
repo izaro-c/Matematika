@@ -1,5 +1,6 @@
 import { applySourceEdits } from './applySourceEdits';
 import { registeredBlockAttributes, serializeRegisteredBlock } from './blockRegistry';
+import { toDiagramImportPath } from '@/fixed-pages/editor/review/authoringModel';
 import type {
   DocumentMutationPlan,
   EditableBlock,
@@ -487,7 +488,8 @@ function statementSource(document: EditorDocument, range: SourceRange): string {
 /** Binds a saved diagram without invoking the legacy import/export writer. */
 export function planDiagramBinding(document: EditorDocument, input: BindDiagramInput): DocumentMutationPlan {
   const exportName = input.mode === 'diagram' ? 'Diagram' : 'Simulation';
-  const importLine = `import { ${input.componentName} } from '${input.importPath}';`;
+  const importPath = toDiagramImportPath(input.importPath);
+  const importLine = `import { ${input.componentName} } from '${importPath}';`;
   const exportLine = `export const ${exportName} = ${input.componentName};`;
   const edits: SourceEdit[] = [];
   const id = operationId(document, 'bind-diagram', input.componentName);
@@ -495,7 +497,7 @@ export function planDiagramBinding(document: EditorDocument, input: BindDiagramI
 
   const hasImport = document.envelope.importRanges.some(range => {
     const source = statementSource(document, range);
-    return source.includes(input.componentName) && source.includes(input.importPath);
+    return source.includes(input.componentName) && source.includes(importPath);
   });
   const existingExport = document.envelope.exportRanges.find(range => (
     /^\s*export\s+const\s+(?:Simulation|Diagram)\s*=/.test(statementSource(document, range))

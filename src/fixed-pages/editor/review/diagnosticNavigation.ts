@@ -9,7 +9,7 @@ export interface EditorNavigationTarget {
 
 export function navigationTargetForDiagnostic(diagnostic: EditorDiagnostic): EditorNavigationTarget {
   return {
-    panel: diagnostic.panel ?? (diagnostic.blockId ? 'visual' : 'code'),
+    panel: diagnostic.panel ?? 'visual',
     sourceRange: diagnostic.sourceRange ?? diagnostic.location?.range,
     blockId: diagnostic.blockId,
     keepDiagnosticsVisible: true,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { DiagramRenderer } from '@/diagrams/public';
-import { MathProvider } from '@/lib/page-context/MathStoreContext';
+import { MathProviderBoundary } from '@/lib/page-context/MathStoreContext';
 import type { VisualDiagramModel } from '../model/types';
 import { DiagramViewportFrame } from './DiagramViewportFrame';
 
@@ -13,9 +13,9 @@ interface DiagramResponsivePreviewProps {
 
 export const DiagramResponsivePreview: React.FC<DiagramResponsivePreviewProps> = ({ model, pageType, activeStepId, highlightedId }) => (
   <DiagramViewportFrame title="Previsualización real" subtitle="Renderer de publicación · dimensiones CSS reales" pageType={pageType} testId="diagram-responsive-preview">
-    <MathProvider>
+    <MathProviderBoundary>
       <DiagramRenderer spec={model} mode="runtime" activeStepId={activeStepId} highlightedIds={highlightedId ? [highlightedId] : []} />
-    </MathProvider>
+    </MathProviderBoundary>
   </DiagramViewportFrame>
 );
 

@@ -156,7 +156,7 @@ describe('Phase 7 visual authoring interactions', () => {
         />
       </MathProvider>,
     );
-    expect(screen.getByText(/Bloque desconocido preservado byte a byte/)).toBeTruthy();
+    expect(screen.getByText(/Este fragmento se conserva tal cual/)).toBeTruthy();
     expect(screen.queryByDisplayValue('<FutureWidget keep={{ nested: true }} />')).toBeNull();
   });
 

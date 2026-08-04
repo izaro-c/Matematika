@@ -1,9 +1,66 @@
 import React, { useState } from 'react';
+import katex from 'katex';
 import type { VisualDiagramModel, VisualPoint, VisualElement, VisualSlider } from '../../model/types';
 import { PALETTE_TOKENS } from '../inspector/paletteTokens';
-import { GroupsAndLayersManager } from '../scene/GroupsAndLayersManager';
 import { IconEye, IconEyeOff, IconLock, IconUnlock, IconChevronDown, IconChevronRight } from '../toolbar/WorkbenchIcons';
 import { ObjectListBatchToolbar } from '../scene/ObjectListBatchToolbar';
+
+export interface DiagramObjectLabelProps {
+  label?: string;
+  id: string;
+  className?: string;
+  suffix?: string;
+}
+
+export const DiagramObjectLabel: React.FC<DiagramObjectLabelProps> = ({
+  label,
+  id,
+  className = '',
+  suffix = '',
+}) => {
+  if (!label || label.trim() === '') {
+    return <span className={`truncate ${className}`.trim()}>{id}{suffix ? ` ${suffix}` : ''}</span>;
+  }
+
+  const trimmed = label.trim();
+  const hasDollar = trimmed.includes('$');
+  let cleaned = trimmed;
+
+  // Remove outer $$ or $ delimiters if present
+  if (cleaned.startsWith('$$') && cleaned.endsWith('$$') && cleaned.length >= 4) {
+    cleaned = cleaned.slice(2, -2).trim();
+  } else if (cleaned.startsWith('$') && cleaned.endsWith('$') && cleaned.length >= 2) {
+    cleaned = cleaned.slice(1, -1).trim();
+  }
+
+  // Clean any residual $$ inside
+  cleaned = cleaned.replace(/\$\$/g, '');
+
+  if (hasDollar || /\\[a-zA-Z]+|[{}^_]/.test(cleaned)) {
+    let html: string | null = null;
+    try {
+      html = katex.renderToString(cleaned, { displayMode: false, throwOnError: false });
+    } catch {
+      // Fallback to text
+    }
+    if (html !== null) {
+      return (
+        <span className={`inline-flex items-center gap-1 min-w-0 ${className}`.trim()}>
+          <span dangerouslySetInnerHTML={{ __html: html }} />
+          <span className="text-carbon/40 font-normal shrink-0">({id})</span>
+          {suffix && <span className="text-carbon/60 font-mono text-[10px] shrink-0">{suffix}</span>}
+        </span>
+      );
+    }
+  }
+
+  return (
+    <span className={`truncate ${className}`.trim()}>
+      {cleaned} <span className="text-carbon/40 font-normal shrink-0">({id})</span>
+      {suffix && <span className="text-carbon/60 font-mono text-[10px] ml-1">{suffix}</span>}
+    </span>
+  );
+};
 
 interface WorkbenchSceneTreeProps {
   model: VisualDiagramModel | null;
@@ -25,10 +82,9 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
   onUpdateElement,
   onUpdateSlider,
   onUpdateModel,
-  onCopySelection,
-  onDeleteSelection,
+  onCopySelection: _onCopySelection,
+  onDeleteSelection: _onDeleteSelection,
 }) => {
-  const [viewMode, setViewMode] = useState<'tree' | 'groups_layers'>('tree');
   const [openCategory, setOpenCategory] = useState<Record<string, boolean>>({
     points: true,
     derived: true,
@@ -85,34 +141,37 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
     ].some(listed => listed.id === e.id)
   );
   const sliders = model.sliders || [];
+  const totalObjects = points.length + (model.elements || []).length + sliders.length;
 
   const renderSectionHeader = (key: string, title: string, count: number) => (
     <button
       type="button"
+      aria-expanded={openCategory[key]}
       onClick={() => toggleCategory(key)}
-      className="flex w-full items-center justify-between py-1.5 px-2 bg-carbon/5 hover:bg-carbon/10 rounded-lg text-xs font-bold text-carbon transition-all cursor-pointer mt-2"
+      className="flex w-full items-center justify-between font-serif text-xs font-bold uppercase tracking-wider text-carbon/70 py-1 cursor-pointer select-none"
     >
-      <span className="flex items-center space-x-1.5">
-        <span className="text-carbon/50">
-          {openCategory[key] ? <IconChevronDown className="w-3 h-3" /> : <IconChevronRight className="w-3 h-3" />}
-        </span>
+      <span className="flex items-center space-x-2">
         <span>{title}</span>
+        <span className="text-[9px] font-mono text-carbon/60 bg-carbon/10 px-1.5 py-0.5 rounded border border-carbon/10">
+          {count}
+        </span>
       </span>
-      <span className="text-[10px] font-mono text-carbon/60 bg-carbon/10 px-1.5 py-0.2 rounded border border-carbon/10">
-        {count}
+      <span className="text-carbon/40 hover:text-carbon transition-colors">
+        {openCategory[key] ? <IconChevronDown className="w-3.5 h-3.5" /> : <IconChevronRight className="w-3.5 h-3.5" />}
       </span>
     </button>
   );
 
   const renderElementRow = (
     id: string,
-    label: string,
+    rawLabel?: string,
     colorTokenId?: string,
     typeLabel?: string,
     visible: boolean = true,
     locked: boolean = false,
     onToggleVis?: () => void,
-    onToggleLock?: () => void
+    onToggleLock?: () => void,
+    suffix?: string
   ) => {
     const isSelected = selectedIds.includes(id);
     const token = PALETTE_TOKENS.find(t => t.id === colorTokenId) || PALETTE_TOKENS[0];
@@ -121,285 +180,206 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
       <div
         key={id}
         onClick={event => onSelectObjects([id], event.ctrlKey || event.metaKey || event.shiftKey)}
-        className={`flex items-center justify-between p-1.5 rounded-lg border transition-all cursor-pointer ${
+        className={`flex items-center justify-between p-2 rounded-xl border transition-all cursor-pointer ${
           isSelected
-            ? 'border-salvia bg-salvia/15 font-bold'
-            : 'border-carbon/10 hover:bg-carbon/5 bg-carbon/5'
+            ? 'border-salvia bg-salvia/10 text-carbon font-bold shadow-2xs'
+            : 'border-carbon/10 hover:border-carbon/25 hover:bg-carbon/5 bg-lienzo'
         }`}
       >
         <div className="flex items-center space-x-2 min-w-0">
           <span className={`h-3 w-3 rounded-full border border-carbon/20 shrink-0 ${token.bgClass}`} />
-          <span className="truncate text-carbon">{label || id}</span>
+          <DiagramObjectLabel label={rawLabel} id={id} suffix={suffix} className="text-carbon text-xs font-sans" />
         </div>
         <div className="flex items-center space-x-1.5 shrink-0">
           {typeLabel && <span className="text-[9px] font-mono text-carbon/40">{typeLabel}</span>}
-          <span className="text-[10px] font-mono text-carbon/60 font-bold bg-carbon/10 px-1.5 rounded">
-            {id}
-          </span>
-          <div className="flex items-center space-x-0.5 border-l border-carbon/15 pl-1 ml-0.5">
-            {onToggleVis ? (
-              <button
-                type="button"
-                onClick={e => {
-                  e.stopPropagation();
-                  onToggleVis();
-                }}
-                className={`p-1 rounded cursor-pointer transition-colors w-6 h-6 flex items-center justify-center ${
-                  visible ? 'text-salvia hover:bg-salvia/10' : 'text-carbon/30 hover:bg-carbon/10'
-                }`}
-                title={visible ? 'Ocultar elemento' : 'Mostrar elemento'}
-              >
-                {visible ? <IconEye className="w-3.5 h-3.5" /> : <IconEyeOff className="w-3.5 h-3.5" />}
-              </button>
-            ) : (
-              <div className="w-6 h-6" />
-            )}
-
-            {onToggleLock ? (
-              <button
-                type="button"
-                onClick={e => {
-                  e.stopPropagation();
-                  onToggleLock();
-                }}
-                className={`p-1 rounded cursor-pointer transition-colors w-6 h-6 flex items-center justify-center ${
-                  locked ? 'text-terracota hover:bg-terracota/10' : 'text-carbon/30 hover:bg-carbon/10'
-                }`}
-                title={locked ? 'Desbloquear elemento' : 'Bloquear elemento'}
-              >
-                {locked ? <IconLock className="w-3.5 h-3.5" /> : <IconUnlock className="w-3.5 h-3.5" />}
-              </button>
-            ) : (
-              <div className="w-6 h-6" />
-            )}
-          </div>
+          {onToggleVis && (
+            <button
+              type="button"
+              onClick={e => {
+                e.stopPropagation();
+                onToggleVis();
+              }}
+              className={`p-1 rounded text-carbon/50 hover:text-carbon hover:bg-carbon/10 cursor-pointer ${
+                !visible ? 'opacity-40' : ''
+              }`}
+              title={visible ? 'Ocultar' : 'Mostrar'}
+            >
+              {visible ? <IconEye /> : <IconEyeOff />}
+            </button>
+          )}
+          {onToggleLock && (
+            <button
+              type="button"
+              onClick={e => {
+                e.stopPropagation();
+                onToggleLock();
+              }}
+              className={`p-1 rounded text-carbon/50 hover:text-carbon hover:bg-carbon/10 cursor-pointer ${
+                locked ? 'text-salvia opacity-100 font-bold' : 'opacity-40'
+              }`}
+              title={locked ? 'Desbloquear' : 'Bloquear (fijar)'}
+            >
+              {locked ? <IconLock /> : <IconUnlock />}
+            </button>
+          )}
         </div>
       </div>
     );
   };
 
+  const renderCategoryBlock = (key: string, title: string, count: number, children: React.ReactNode) => {
+    if (count === 0) return null;
+    const isOpen = openCategory[key];
+    return (
+      <div className="rounded-2xl border border-carbon/15 bg-lienzo p-3.5 shadow-2xs mb-3 transition-all hover:border-carbon/25">
+        {renderSectionHeader(key, title, count)}
+        {isOpen && (
+          <div className="space-y-1.5 pt-2.5 border-t border-carbon/10 mt-2">
+            {children}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
-    <div className="p-3 space-y-2 text-xs font-serif text-carbon">
-      <div className="flex border-b border-carbon/10 bg-carbon/5 p-1 rounded-lg">
-        <button
-          type="button"
-          onClick={() => setViewMode('tree')}
-          className={`flex-1 py-1 text-xs font-bold rounded transition-all cursor-pointer ${
-            viewMode === 'tree' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
-          }`}
-        >
-          Árbol de Objetos
-        </button>
-        <button
-          type="button"
-          onClick={() => setViewMode('groups_layers')}
-          className={`flex-1 py-1 text-xs font-bold rounded transition-all cursor-pointer ${
-            viewMode === 'groups_layers' ? 'bg-lienzo text-carbon shadow-2xs' : 'text-carbon/60 hover:text-carbon'
-          }`}
-        >
-          Grupos & Capas
-        </button>
+    <div className="p-4 space-y-3 text-xs font-serif text-carbon bg-lienzo h-full overflow-y-auto">
+      <div className="flex items-center justify-between border-b border-carbon/15 pb-3">
+        <div>
+          <h3 className="font-serif text-base font-bold text-carbon">Objetos de la Escena</h3>
+          <p className="text-xs italic text-carbon/50">Elementos e iteraciones en el lienzo</p>
+        </div>
+        <span className="ac-label ac-label--sm ac-label--salvia select-none uppercase tracking-wider">
+          {totalObjects} {totalObjects === 1 ? 'Objeto' : 'Objetos'}
+        </span>
       </div>
 
-      {selectedIds.length > 1 && onUpdateModel && (
-        <div className="space-y-1">
+      <div className="space-y-1">
+        {onUpdateModel && (
           <ObjectListBatchToolbar
             model={model}
             selectedIds={selectedIds}
-            onModelEdit={nextModel => onUpdateModel(nextModel, 'Editar selección múltiple')}
+            onModelEdit={nextModel => onUpdateModel(nextModel, 'Edición masiva de objetos')}
             onClearSelection={() => onSelectObjects([])}
           />
-          <div className="flex justify-end gap-2 text-[10px]">
-            {onCopySelection && <button type="button" onClick={onCopySelection} className="text-salvia underline">Copiar selección</button>}
-            {onDeleteSelection && <button type="button" onClick={onDeleteSelection} className="text-granada underline">Eliminar selección</button>}
-          </div>
-        </div>
-      )}
+        )}
 
-      {viewMode === 'groups_layers' && onUpdateModel ? (
-        <GroupsAndLayersManager model={model} onUpdateModel={onUpdateModel} />
-      ) : (
-        <div className="space-y-1">
-          {/* Puntos */}
-          {renderSectionHeader('points', 'Puntos', points.length)}
-          {openCategory['points'] && (
-            <div className="pl-2 space-y-1">
-              {points.map(p =>
-                renderElementRow(
-                  p.id,
-                  `${p.label || p.id} (${p.x.toFixed(1)}, ${p.y.toFixed(1)})`,
-                  p.color,
-                  'Punto',
-                  p.visible !== false,
-                  p.fixed || p.constraint === 'fixed',
-                  () => onUpdatePoint(p.id, { visible: p.visible === false }),
-                  () => {
-                    const locked = p.fixed || p.constraint === 'fixed';
-                    onUpdatePoint(p.id, locked
-                      ? { fixed: false, constraint: 'free' }
-                      : { fixed: true, constraint: 'fixed' });
-                  }
-                )
-              )}
-            </div>
-          )}
+        {renderCategoryBlock(
+          'points',
+          'Puntos Libres & Fijos',
+          points.length,
+          points.map(p =>
+            renderElementRow(
+              p.id,
+              p.label,
+              p.color,
+              p.fixed ? 'Fijo' : 'Libre',
+              p.showLabel !== false,
+              p.fixed || false,
+              () => onUpdatePoint(p.id, { showLabel: p.showLabel === false }),
+              () => onUpdatePoint(p.id, { fixed: !p.fixed, constraint: p.fixed ? 'free' : 'fixed' })
+            )
+          )
+        )}
 
-          {/* Puntos derivados (elementos midpoint/intersection) */}
-          {renderSectionHeader('derived', 'Puntos derivados', derivedPoints.length)}
-          {openCategory['derived'] && (
-            <div className="pl-2 space-y-1">
-              {derivedPoints.map(e =>
-                renderElementRow(
-                  e.id,
-                  e.label || e.id,
-                  e.color,
-                  e.kind,
-                  e.visible !== false,
-                  e.locked,
-                  onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined,
-                  onUpdateElement ? () => onUpdateElement(e.id, { locked: !e.locked }) : undefined
-                )
-              )}
-            </div>
-          )}
+        {renderCategoryBlock(
+          'derived',
+          'Puntos Derivados',
+          derivedPoints.length,
+          derivedPoints.map(e =>
+            renderElementRow(
+              e.id,
+              e.label,
+              e.color,
+              e.kind,
+              e.showLabel !== false,
+              false,
+              onUpdateElement ? () => onUpdateElement(e.id, { showLabel: e.showLabel === false }) : undefined
+            )
+          )
+        )}
 
-          {/* Líneas y Polígonos */}
-          {renderSectionHeader('lines', 'Líneas y Segmentos', lines.length)}
-          {openCategory['lines'] && (
-            <div className="pl-2 space-y-1">
-              {lines.map(e =>
-                renderElementRow(
-                  e.id,
-                  e.label || e.id,
-                  e.color,
-                  e.kind,
-                  e.visible !== false,
-                  e.locked,
-                  onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined,
-                  onUpdateElement ? () => onUpdateElement(e.id, { locked: !e.locked }) : undefined
-                )
-              )}
-            </div>
-          )}
+        {renderCategoryBlock(
+          'lines',
+          'Segmentos & Rectas',
+          lines.length,
+          lines.map(e =>
+            renderElementRow(
+              e.id,
+              e.label,
+              e.color,
+              e.kind,
+              true,
+              false,
+              onUpdateElement ? () => onUpdateElement(e.id, { color: e.color === 'carbon' ? 'salvia' : 'carbon' }) : undefined
+            )
+          )
+        )}
 
-          {/* Círculos y Arcos */}
-          {renderSectionHeader('circles', 'Círculos y Arcos', circles.length)}
-          {openCategory['circles'] && (
-            <div className="pl-2 space-y-1">
-              {circles.map(e =>
-                renderElementRow(
-                  e.id,
-                  e.label || e.id,
-                  e.color,
-                  e.kind,
-                  e.visible !== false,
-                  e.locked,
-                  onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined,
-                  onUpdateElement ? () => onUpdateElement(e.id, { locked: !e.locked }) : undefined
-                )
-              )}
-            </div>
-          )}
+        {renderCategoryBlock(
+          'circles',
+          'Círculos & Arcos',
+          circles.length,
+          circles.map(e =>
+            renderElementRow(e.id, e.label, e.color, e.kind)
+          )
+        )}
 
-          {/* Ángulos y Marcas */}
-          {renderSectionHeader('angles', 'Ángulos y Marcas', anglesAndMarks.length)}
-          {openCategory['angles'] && (
-            <div className="pl-2 space-y-1">
-              {anglesAndMarks.map(e =>
-                renderElementRow(
-                  e.id,
-                  e.label || e.id,
-                  e.color,
-                  e.kind,
-                  e.visible !== false,
-                  e.locked,
-                  onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined,
-                  onUpdateElement ? () => onUpdateElement(e.id, { locked: !e.locked }) : undefined
-                )
-              )}
-            </div>
-          )}
+        {renderCategoryBlock(
+          'angles',
+          'Ángulos & Marcas',
+          anglesAndMarks.length,
+          anglesAndMarks.map(e =>
+            renderElementRow(e.id, e.label, e.color, e.kind)
+          )
+        )}
 
-          {/* Curvas y Áreas */}
-          {renderSectionHeader('curves', 'Curvas y Áreas', curvesAndAreas.length)}
-          {openCategory['curves'] && (
-            <div className="pl-2 space-y-1">
-              {curvesAndAreas.map(e =>
-                renderElementRow(
-                  e.id,
-                  e.label || e.id,
-                  e.color,
-                  e.kind,
-                  e.visible !== false,
-                  e.locked,
-                  onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined,
-                  onUpdateElement ? () => onUpdateElement(e.id, { locked: !e.locked }) : undefined
-                )
-              )}
-            </div>
-          )}
+        {renderCategoryBlock(
+          'curves',
+          'Curvas & Polígonos',
+          curvesAndAreas.length,
+          curvesAndAreas.map(e =>
+            renderElementRow(e.id, e.label, e.color, e.kind)
+          )
+        )}
 
-          {/* Anotaciones y Texto */}
-          {renderSectionHeader('annotations', 'Anotaciones y Texto', annotations.length)}
-          {openCategory['annotations'] && (
-            <div className="pl-2 space-y-1">
-              {annotations.map(e =>
-                renderElementRow(
-                  e.id,
-                  e.label || e.id,
-                  e.color,
-                  e.kind,
-                  e.visible !== false,
-                  e.locked,
-                  onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined,
-                  onUpdateElement ? () => onUpdateElement(e.id, { locked: !e.locked }) : undefined
-                )
-              )}
-            </div>
-          )}
+        {renderCategoryBlock(
+          'annotations',
+          'Anotaciones & Fórmulas',
+          annotations.length,
+          annotations.map(e =>
+            renderElementRow(e.id, e.label, e.color, e.kind)
+          )
+        )}
 
-          {uncategorized.length > 0 && (
-            <>
-              {renderSectionHeader('other', 'Otros elementos', uncategorized.length)}
-              {openCategory['other'] && (
-                <div className="pl-2 space-y-1">
-                  {uncategorized.map(e =>
-                    renderElementRow(
-                      e.id,
-                      e.label || e.id,
-                      e.color,
-                      e.kind,
-                      e.visible !== false,
-                      e.locked,
-                      onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined,
-                      onUpdateElement ? () => onUpdateElement(e.id, { locked: !e.locked }) : undefined
-                    )
-                  )}
-                </div>
-              )}
-            </>
-          )}
+        {renderCategoryBlock(
+          'sliders',
+          'Deslizadores',
+          sliders.length,
+          sliders.map(s =>
+            renderElementRow(
+              s.id,
+              s.label,
+              s.color,
+              'Slider',
+              true,
+              false,
+              onUpdateSlider ? () => onUpdateSlider(s.id, { value: (s.value || 0) + 1 }) : undefined,
+              undefined,
+              `= ${s.value}`
+            )
+          )
+        )}
 
-          {/* Deslizadores */}
-          {renderSectionHeader('sliders', 'Deslizadores Numéricos', sliders.length)}
-          {openCategory['sliders'] && (
-            <div className="pl-2 space-y-1">
-              {sliders.map(s =>
-                renderElementRow(
-                  s.id,
-                  `${s.label || s.id} = ${s.value}`,
-                  s.color,
-                  'Slider',
-                  s.visible !== false,
-                  s.locked,
-                  onUpdateSlider ? () => onUpdateSlider(s.id, { visible: s.visible === false }) : undefined,
-                  onUpdateSlider ? () => onUpdateSlider(s.id, { locked: !s.locked }) : undefined
-                )
-              )}
-            </div>
-          )}
-        </div>
-      )}
+        {renderCategoryBlock(
+          'other',
+          'Otros Elementos',
+          uncategorized.length,
+          uncategorized.map(e =>
+            renderElementRow(e.id, e.label, e.color, e.kind)
+          )
+        )}
+      </div>
     </div>
   );
 };

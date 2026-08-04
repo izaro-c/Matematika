@@ -1,5 +1,5 @@
 import React from 'react';
-import type { VisualPoint } from '@/fixed-pages/editor/diagrams/model/types';
+import type { VisualPoint, VisualElement } from '@/fixed-pages/editor/diagrams/model/types';
 import { KatexText } from '@/components/ui/KatexText';
 import { AccordionSection } from '../accordion';
 import { InspectorHeader } from '../WorkbenchInspectorHeader';
@@ -14,7 +14,6 @@ import { supportElements } from '@/fixed-pages/editor/diagrams/model';
 import { parseOptionalNumber } from '../../workbenchSelection';
 import { ConstraintEditor } from '../../constraints/ConstraintEditor';
 import { ElementVisibilitySection } from '../element/sections/ElementVisibilitySection';
-import type { VisualElement } from '@/fixed-pages/editor/diagrams/model/types';
 
 export const PointInspector: React.FC<PointPanelProps & {
   openAccordion: Record<string, boolean>;
@@ -35,7 +34,7 @@ export const PointInspector: React.FC<PointPanelProps & {
   const gliderSupports = supportElements(model);
 
   return (
-    <div className="p-3 space-y-2 text-xs font-serif text-carbon">
+    <div className="p-3 space-y-3 text-xs font-serif text-carbon">
       <InspectorHeader
         title={`Punto: ${point.id}`}
         colorClass={colorToken.bgClass}
@@ -43,38 +42,38 @@ export const PointInspector: React.FC<PointPanelProps & {
       />
 
       <AccordionSection sec="identity" title="Identidad & Etiqueta KaTeX" isOpen={openAccordion.identity} onToggle={onToggleAccordion}>
-        <div className="p-2.5 space-y-2 bg-carbon/5 rounded-xl border border-carbon/10 shadow-2xs">
+        <div className="space-y-3">
           <div>
-            <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">
+            <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
               Identificador Técnico (ID)
-              <input
-                type="text"
-                defaultValue={point.id}
-                key={`id-input-${point.id}`}
-                onBlur={e => handleRenameId(model, point.id, e.target.value, onUpdateModel, onSelectId)}
-                onKeyDown={e => {
-                  if (e.key === 'Enter') handleRenameId(model, point.id, e.currentTarget.value, onUpdateModel, onSelectId);
-                }}
-                className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs font-mono font-bold text-carbon"
-                title="Presiona Enter o cambia el foco para confirmar renombrado"
-              />
             </label>
+            <input
+              type="text"
+              defaultValue={point.id}
+              key={`id-input-${point.id}`}
+              onBlur={e => handleRenameId(model, point.id, e.target.value, onUpdateModel, onSelectId)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') handleRenameId(model, point.id, e.currentTarget.value, onUpdateModel, onSelectId);
+              }}
+              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+              title="Presiona Enter o cambia el foco para confirmar renombrado"
+            />
           </div>
 
           <div>
-            <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">
+            <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
               Etiqueta Visual (KaTeX)
-              <input
-                type="text"
-                value={point.label || ''}
-                onChange={e => onUpdatePoint(point.id, { label: e.target.value })}
-                placeholder="ej. $A$ o $P_1$"
-                className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon"
-              />
             </label>
+            <input
+              type="text"
+              value={point.label || ''}
+              onChange={e => onUpdatePoint(point.id, { label: e.target.value })}
+              placeholder="ej. $A$ o $P_1$"
+              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 placeholder-carbon/30"
+            />
             {point.label && (
-              <div className="mt-1.5 p-1.5 bg-carbon/5 rounded border border-carbon/10 flex items-center space-x-2">
-                <span className="text-[10px] text-carbon/50 uppercase font-bold">Vista previa:</span>
+              <div className="mt-2 flex items-center space-x-2 rounded-lg border border-carbon/10 bg-lienzo/80 p-2 shadow-2xs">
+                <span className="text-[10px] uppercase font-bold text-carbon/50">Vista previa:</span>
                 <KatexText text={point.label} className="text-xs font-bold text-salvia" />
               </div>
             )}
@@ -95,37 +94,39 @@ export const PointInspector: React.FC<PointPanelProps & {
       </AccordionSection>
 
       <AccordionSection sec="geometry" title="Geometría, Soporte & Coordenadas" isOpen={openAccordion.geometry} onToggle={onToggleAccordion}>
-        <div className="p-2.5 space-y-2 bg-carbon/5 rounded-xl border border-carbon/10 shadow-2xs">
-          <div className="grid grid-cols-2 gap-2">
+        <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-2.5">
             <div>
-              <label className="block text-[11px] font-medium text-carbon/70 mb-0.5">
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
                 Coordenada X
-                <input
-                  type="number"
-                  step="0.1"
-                  value={point.x ?? 0}
-                  onChange={e => onUpdatePoint(point.id, { x: parseOptionalNumber(e.target.value, point.x ?? 0) })}
-                  className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon"
-                />
               </label>
+              <input
+                type="number"
+                step="0.1"
+                value={point.x ?? 0}
+                onChange={e => onUpdatePoint(point.id, { x: parseOptionalNumber(e.target.value, point.x ?? 0) })}
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+              />
             </div>
             <div>
-              <label className="block text-[11px] font-medium text-carbon/70 mb-0.5">
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
                 Coordenada Y
-                <input
-                  type="number"
-                  step="0.1"
-                  value={point.y ?? 0}
-                  onChange={e => onUpdatePoint(point.id, { y: parseOptionalNumber(e.target.value, point.y ?? 0) })}
-                  className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon"
-                />
               </label>
+              <input
+                type="number"
+                step="0.1"
+                value={point.y ?? 0}
+                onChange={e => onUpdatePoint(point.id, { y: parseOptionalNumber(e.target.value, point.y ?? 0) })}
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+              />
             </div>
           </div>
 
-          <div className="pt-2 border-t border-carbon/10 space-y-2">
-            <label className="block text-[11px] font-bold text-carbon/70">
-              Tipo de Punto & Soporte
+          <div className="pt-2.5 border-t border-carbon/10 space-y-2.5">
+            <div>
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+                Tipo de Punto & Soporte
+              </label>
               <select
                 value={point.constraint || (isFixed ? 'fixed' : 'free')}
                 onChange={e => {
@@ -137,7 +138,7 @@ export const PointInspector: React.FC<PointPanelProps & {
                       : {}),
                   });
                 }}
-                className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon font-bold"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 cursor-pointer"
               >
                 <option value="free">Punto Libre (Arrastrable en el plano)</option>
                 <option value="fixed">Punto Fijo (Bloqueado)</option>
@@ -147,25 +148,25 @@ export const PointInspector: React.FC<PointPanelProps & {
                 <option value="derived">Derivado (expresiones)</option>
                 <option value="constrained">Con restricciones geométricas</option>
               </select>
-            </label>
+            </div>
 
             {point.constraint === 'glider' && (
-              <div className="space-y-1.5 bg-lienzo p-2 rounded-lg border border-carbon/10 text-[10px]">
-                <label className="block font-bold text-salvia uppercase">
+              <div className="space-y-1.5 rounded-lg border border-salvia/20 bg-salvia/5 p-2.5">
+                <label className="block text-[10px] font-bold text-salvia uppercase tracking-wider mb-1">
                   Objeto soporte (gliderTarget)
-                  <select
-                    value={point.gliderTarget || ''}
-                    onChange={e => onUpdatePoint(point.id, { gliderTarget: e.target.value || undefined })}
-                    className="mt-0.5 w-full bg-carbon/5 border border-carbon/20 rounded px-1.5 py-0.5 text-xs text-carbon font-mono font-bold"
-                  >
-                    <option value="">-- Seleccionar soporte --</option>
-                    {gliderSupports.map(e => (
-                      <option key={e.id} value={e.id}>
-                        {e.label || e.id} ({e.id}) - {e.kind}
-                      </option>
-                    ))}
-                  </select>
                 </label>
+                <select
+                  value={point.gliderTarget || ''}
+                  onChange={e => onUpdatePoint(point.id, { gliderTarget: e.target.value || undefined })}
+                  className="w-full rounded-lg border border-salvia/20 bg-lienzo px-2.5 py-1 text-xs font-mono font-bold text-carbon focus:border-salvia focus:outline-none"
+                >
+                  <option value="">-- Seleccionar soporte --</option>
+                  {gliderSupports.map(e => (
+                    <option key={e.id} value={e.id}>
+                      {e.label || e.id} ({e.id}) - {e.kind}
+                    </option>
+                  ))}
+                </select>
               </div>
             )}
           </div>
@@ -178,7 +179,7 @@ export const PointInspector: React.FC<PointPanelProps & {
               onChange={e => onUpdatePoint(point.id, { fixed: e.target.checked, constraint: e.target.checked ? 'fixed' : 'free' })}
               className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
             />
-            <label htmlFor={`fixed-${point.id}`} className="text-xs font-bold text-carbon/80 cursor-pointer">
+            <label htmlFor={`fixed-${point.id}`} className="text-xs font-bold text-carbon/80 cursor-pointer select-none">
               Fijar posición (Bloquear arrastre)
             </label>
           </div>
@@ -200,18 +201,18 @@ export const PointInspector: React.FC<PointPanelProps & {
         </div>
       </AccordionSection>
 
-      <AccordionSection sec="style" title="Estilo, Tamaño & Apariencia (Normal y Hover)" isOpen={openAccordion.style} onToggle={onToggleAccordion}>
-        <div className="p-2.5 space-y-2 bg-carbon/5 rounded-xl border border-carbon/10 shadow-2xs">
+      <AccordionSection sec="style" title="Estilo, Tamaño & Apariencia" isOpen={openAccordion.style} onToggle={onToggleAccordion}>
+        <div className="space-y-3">
           <div>
-            <label className="block text-[11px] font-bold text-carbon/70 mb-1">Color del Punto</label>
-            <div className="flex flex-wrap gap-1.5">
+            <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1.5">Color del Punto</label>
+            <div className="flex flex-wrap gap-2">
               {PALETTE_TOKENS.map(c => (
                 <button
                   key={c.id}
                   type="button"
                   onClick={() => onUpdatePoint(point.id, { color: c.id })}
                   className={`h-6 w-6 rounded-full border-2 transition-all cursor-pointer ${c.bgClass} ${
-                    point.color === c.id ? 'border-carbon scale-110 shadow-xs' : 'border-transparent opacity-80'
+                    point.color === c.id ? 'border-carbon scale-110 shadow-xs ring-2 ring-carbon/20' : 'border-transparent opacity-80 hover:opacity-100'
                   }`}
                   title={c.name}
                 />
@@ -219,83 +220,85 @@ export const PointInspector: React.FC<PointPanelProps & {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 pt-1">
+          <div className="grid grid-cols-2 gap-2.5 pt-1">
             <div>
-              <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
                 Tamaño Base (px)
-                <input
-                  type="number"
-                  min="3"
-                  max="20"
-                  value={point.style?.pointSize ?? 7}
-                  onChange={e =>
-                    onUpdatePoint(point.id, {
-                      style: { ...(point.style || {}), pointSize: parseInt(e.target.value, 10) || 7 },
-                    })
-                  }
-                  className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon"
-                />
               </label>
+              <input
+                type="number"
+                min="3"
+                max="20"
+                value={point.style?.pointSize ?? 7}
+                onChange={e =>
+                  onUpdatePoint(point.id, {
+                    style: { ...(point.style || {}), pointSize: parseInt(e.target.value, 10) || 7 },
+                  })
+                }
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+              />
             </div>
             <div>
-              <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
                 Tamaño Hover (px)
-                <input
-                  type="number"
-                  min="4"
-                  max="24"
-                  value={point.style?.highlightPointSize ?? 10}
-                  onChange={e =>
-                    onUpdatePoint(point.id, {
-                      style: { ...(point.style || {}), highlightPointSize: parseInt(e.target.value, 10) || 10 },
-                    })
-                  }
-                  className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon"
-                />
               </label>
+              <input
+                type="number"
+                min="4"
+                max="24"
+                value={point.style?.highlightPointSize ?? 10}
+                onChange={e =>
+                  onUpdatePoint(point.id, {
+                    style: { ...(point.style || {}), highlightPointSize: parseInt(e.target.value, 10) || 10 },
+                  })
+                }
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+              />
             </div>
           </div>
 
-          <div className="flex items-center space-x-2 pt-1">
-            <input
-              type="checkbox"
-              id={`preserveColor-pt-${point.id}`}
-              checked={point.style?.preserveColorOnHighlight !== false}
-              onChange={e =>
-                onUpdatePoint(point.id, {
-                  style: { ...(point.style || {}), preserveColorOnHighlight: e.target.checked },
-                })
-              }
-              className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
-            />
-            <label htmlFor={`preserveColor-pt-${point.id}`} className="text-xs text-carbon/80 cursor-pointer">
-              Conservar color propio en hover
-            </label>
-          </div>
+          <div className="space-y-2 pt-1">
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id={`preserveColor-pt-${point.id}`}
+                checked={point.style?.preserveColorOnHighlight !== false}
+                onChange={e =>
+                  onUpdatePoint(point.id, {
+                    style: { ...(point.style || {}), preserveColorOnHighlight: e.target.checked },
+                  })
+                }
+                className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+              />
+              <label htmlFor={`preserveColor-pt-${point.id}`} className="text-xs text-carbon/80 cursor-pointer select-none">
+                Conservar color propio en hover
+              </label>
+            </div>
 
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id={`highlightable-pt-${point.id}`}
-              checked={point.selection?.highlightable !== false}
-              onChange={e =>
-                onUpdatePoint(point.id, {
-                  selection: { ...(point.selection || { selectable: true }), highlightable: e.target.checked },
-                })
-              }
-              className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
-            />
-            <label htmlFor={`highlightable-pt-${point.id}`} className="text-xs text-carbon/80 cursor-pointer">
-              Permitir resaltado visual con el puntero
-            </label>
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id={`highlightable-pt-${point.id}`}
+                checked={point.selection?.highlightable !== false}
+                onChange={e =>
+                  onUpdatePoint(point.id, {
+                    selection: { ...(point.selection || { selectable: true }), highlightable: e.target.checked },
+                  })
+                }
+                className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+              />
+              <label htmlFor={`highlightable-pt-${point.id}`} className="text-xs text-carbon/80 cursor-pointer select-none">
+                Permitir resaltado visual con el puntero
+              </label>
+            </div>
           </div>
 
           <div>
-            <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">Capa del Tablero</label>
+            <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">Capa del Tablero</label>
             <select
               value={point.layerId || 'geometry'}
               onChange={e => onUpdatePoint(point.id, { layerId: e.target.value })}
-              className="w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon"
+              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 cursor-pointer"
             >
               {layers.map(l => (
                 <option key={l.id} value={l.id}>
@@ -322,13 +325,11 @@ export const PointInspector: React.FC<PointPanelProps & {
 
       <AccordionSection sec="constraints" title="Restricciones Geométricas" isOpen={openAccordion.constraints} onToggle={onToggleAccordion}>
         {onUpdateModel ? (
-          <div className="p-2.5 space-y-3 bg-carbon/5 rounded-xl border border-carbon/10 shadow-2xs">
-            <ConstraintEditor
-              model={model}
-              selectedId={point.id}
-              onUpdateModel={onUpdateModel}
-            />
-          </div>
+          <ConstraintEditor
+            model={model}
+            selectedId={point.id}
+            onUpdateModel={onUpdateModel}
+          />
         ) : null}
       </AccordionSection>
     </div>

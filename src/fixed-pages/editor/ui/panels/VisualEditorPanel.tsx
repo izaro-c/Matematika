@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Block, BlockType } from '@/fixed-pages/editor/session/parser';
-import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
+import type { DiagramTargetRegistry, EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
 import { buildDocumentOutline } from '@/fixed-pages/editor/review/authoringModel';
 import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 import { insertSymbol } from './InlineContentPreview';
@@ -17,6 +17,8 @@ interface VisualEditorPanelProps {
   blocks: Block[];
   editingBlockId: string | null;
   setEditingBlockId: (id: string | null) => void;
+  highlightedBlockId?: string | null;
+  issues?: EditorValidationIssue[];
   handleMetadataChange: (key: string, value: unknown) => void;
   addBlock: (index: number, type: BlockType, content?: string, metadata?: Record<string, unknown>) => void;
   moveBlock: (from: number, to: number) => void;
@@ -40,6 +42,8 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   blocks,
   editingBlockId,
   setEditingBlockId,
+  highlightedBlockId,
+  issues = [],
   handleMetadataChange,
   addBlock,
   moveBlock,
@@ -253,6 +257,8 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
             canMutateVisualStructure={canMutateVisualStructure}
             editingBlockId={editingBlockId}
             setEditingBlockId={setEditingBlockId}
+            highlightedBlockId={highlightedBlockId}
+            issues={issues}
             addBlock={addBlock}
             moveBlock={moveBlock}
             duplicateBlock={duplicateBlock}
@@ -272,7 +278,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   };
 
   return (
-    <div className="relative flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+    <div data-panel="visual-editor" className="relative flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
       <button type="button" onClick={() => setOutlineOpen(value => !value)} aria-expanded={outlineOpen} className="absolute left-3 top-3 z-30 rounded border border-carbon/15 bg-lienzo/95 px-2.5 py-1.5 text-[10px] font-bold text-carbon/60 shadow-sm backdrop-blur">
         Índice {outline.length > 0 ? `(${outline.length})` : ''}
       </button>

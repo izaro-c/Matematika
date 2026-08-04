@@ -12,7 +12,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
 }) => {
   if (element.kind === 'infoPanel') {
     return (
-      <div className="p-2.5 space-y-2 bg-carbon/5 rounded-xl border border-carbon/10 shadow-2xs">
+      <div className="space-y-3">
         <DiagramInfoPanelContentEditor
           model={model}
           panel={element}
@@ -29,24 +29,24 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
   }
 
   return (
-    <div className="p-2.5 space-y-2 bg-carbon/5 rounded-xl border border-carbon/10 shadow-2xs">
+    <div className="space-y-3">
       <div>
-        <label className="block text-[11px] font-bold text-carbon/70 mb-0.5">
+        <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
           Título / Texto
-          <input
-            type="text"
-            aria-label="Título o texto"
-            value={element.properties?.title || element.text || element.label || ''}
-            onChange={e =>
-              onUpdateElement(element.id, {
-                text: e.target.value,
-                properties: { ...(element.properties || {}), title: e.target.value },
-              })
-            }
-            className="mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon font-bold"
-            placeholder="Título o texto..."
-          />
         </label>
+        <input
+          type="text"
+          aria-label="Título o texto"
+          value={element.properties?.title || element.text || element.label || ''}
+          onChange={e =>
+            onUpdateElement(element.id, {
+              text: e.target.value,
+              properties: { ...(element.properties || {}), title: e.target.value },
+            })
+          }
+          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-bold text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 placeholder-carbon/30"
+          placeholder="Título o texto..."
+        />
       </div>
 
       {elementInspectorCapabilities(element.kind).conditionalText && (

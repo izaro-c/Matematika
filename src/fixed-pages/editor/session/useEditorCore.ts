@@ -19,7 +19,12 @@ import {
 } from '@/fixed-pages/editor/save';
 import type { ApprovedDiff, ExpectedDiffRange } from '@/fixed-pages/editor/review/diffReview';
 import { validateEditorDocument } from './validation';
-import { buildAuthoringIntegrityReport, createPagePath, createPageSource, type CreatePageInput } from '@/fixed-pages/editor/review/authoringModel';
+import {
+  buildAuthoringIntegrityReport, createPagePath, createPageSource, type CreatePageInput,
+  type CreateDiagramInput, idToComponentName, createDiagramPath,
+} from '@/fixed-pages/editor/review/authoringModel';
+import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/scene/templateModels';
+import { generateDiagramSource } from '@/fixed-pages/editor/diagrams/source/generator';
 import type { DiagramTargetRegistry, EditorDiagramReference } from './editorTypes';
 
 export type VisualSavePolicy = 'disabled' | 'manual-reviewed' | 'enabled';
@@ -412,6 +417,35 @@ export const useEditorCore = () => {
     }
   }, [loadFileList, openFile]);
 
+  const createDiagram = useCallback(async (input: CreateDiagramInput): Promise<{ path: string; componentName: string } | null> => {
+    if (editorApiUnavailableInProduction() || !editorWriteAccessGranted()) {
+      setMessage('No se puede crear el diagrama: se requiere API configurada y token de edición.');
+      return null;
+    }
+    try {
+      const componentName = idToComponentName(input.id);
+      const category = input.category.trim() || 'Teoremas';
+      const path = createDiagramPath(input);
+      const templateModel = createTemplateModel(input.templateType, input.title, category);
+      const generated = generateDiagramSource(templateModel, componentName);
+      if (!generated.ok) {
+        throw new Error('No se pudo generar la plantilla inicial del diagrama.');
+      }
+      const source = generated.source;
+      const sourceHash = await hashSource(source);
+      await editorApiClient.createContent({ path, source, sourceHash, localRevision: 0, create: true });
+      await loadFileList();
+      setMessage('Diagrama creado en el catálogo autoritativo.');
+      return { path, componentName };
+    } catch (error) {
+      const detail = error && typeof error === 'object' && 'detail' in error
+        ? (error as { detail: PersistenceError }).detail
+        : null;
+      setMessage(detail ? persistenceMessage(detail) : `No se pudo crear el diagrama: ${error instanceof Error ? error.message : String(error)}`);
+      return null;
+    }
+  }, [loadFileList]);
+
   const getExpectedDiffRanges = useCallback((): ExpectedDiffRange[] => {
     return visualOperationsRef.current.map(operation => ({
       start: operation.range.start,
@@ -490,7 +524,7 @@ export const useEditorCore = () => {
         return false;
       }
       const broadVisualChange = visualOperationsRef.current.some(operation => operation.requiresReview);
-      if ((candidateDoc.compatibility === 'partially-editable' || broadVisualChange) && !hasValidPartialApproval(approval, captured)) {
+      if (broadVisualChange && !hasValidPartialApproval(approval, captured)) {
         dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Diff approval required' });
         setMessage('No se puede aplicar: esta edición estructural requiere una revisión de diff vigente.');
         return false;
@@ -542,7 +576,7 @@ export const useEditorCore = () => {
     persistenceLabel: persistenceStatusLabel(persistence.status),
     loadFileList, openFile, toggleEditorMode, setEditorMode, updateRawBody, updateBlock, saveCurrentFile, saveDraftCurrentFile,
     compatibility, compatibilityReasons, capabilities,
-    removeBlock, addBlock, moveBlock, duplicateBlock, bindDiagram, createPage, setMetadata, setImports, setExports, setBlocks,
+    removeBlock, addBlock, moveBlock, duplicateBlock, bindDiagram, createPage, createDiagram, setMetadata, setImports, setExports, setBlocks,
     canMutateVisualStructure: capabilities.canEditSafeBlocks,
     canEditVisualMetadata: doc?.metadata.status === 'readable' && doc.metadata.schemaValid,
     getExpectedDiffRanges,

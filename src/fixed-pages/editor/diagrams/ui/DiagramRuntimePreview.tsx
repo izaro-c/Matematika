@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MathProviderBoundary } from '@/lib/page-context/MathStoreContext';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { StepNavigator } from '@/components/ui/StepNavigator';
+import { DiagramRenderer } from '@/diagrams/public';
 import { toEditorModel } from '../model/scene/editorModel';
 import type { VisualDiagramModel } from '../model/types';
 import { DiagramResponsivePreview } from './DiagramResponsivePreview';
@@ -55,6 +56,9 @@ function findComponent(module: DiagramModule, componentName: string): DiagramCom
 export interface DiagramRuntimePreviewProps {
   filePath: string | null;
   componentName: string;
+  responsiveFrame?: boolean;
+  viewportControls?: boolean;
+  height?: string;
 }
 
 interface PreviewState {
@@ -83,7 +87,13 @@ function pendingMessage(filePath: string | null, componentName: string, hasLoade
   return 'Este recurso no pertenece al catálogo de diagramas finales.';
 }
 
-export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({ filePath, componentName }) => {
+export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
+  filePath,
+  componentName,
+  responsiveFrame = false,
+  viewportControls = false,
+  height = '280px',
+}) => {
   const previewKey = `${filePath ?? ''}:${componentName}`;
   const loader = resolveDiagramLoader(diagramModules, filePath, componentName);
   const [activeStepId, setActiveStepId] = useState('');
@@ -144,16 +154,46 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({ fi
   const effectiveStepId = spec?.steps.some(item => item.id === activeStepId) ? activeStepId : spec?.steps[0]?.id;
   let previewContent: React.ReactNode = null;
   if (spec) {
-    previewContent = <div className="space-y-2 p-2">
-      <DiagramResponsivePreview model={spec} activeStepId={effectiveStepId} />
-      {spec.steps.length > 1 && <StepNavigator steps={spec.steps} scopeId={`preview-${spec.componentId}`} activeStepId={effectiveStepId} onStepChange={setActiveStepId} compact />}
-      <p className="px-1 text-[10px] text-carbon/50">{spec.points.length + spec.elements.length + spec.sliders.length} objetos · {spec.steps.length} pasos · {spec.points.filter(item => item.target).length + spec.elements.filter(item => item.target).length + spec.groups.filter(item => item.target).length} vínculos MDX</p>
-    </div>;
+    previewContent = (
+      <div className="space-y-1.5">
+        {responsiveFrame ? (
+          <DiagramResponsivePreview model={spec} activeStepId={effectiveStepId} />
+        ) : (
+          <div
+            className="relative w-full overflow-hidden select-none"
+            style={{ height }}
+            data-diagram-embedded-surface="true"
+          >
+            <DiagramRenderer
+              spec={spec}
+              mode="runtime"
+              activeStepId={effectiveStepId}
+              className="!min-h-0 h-full w-full"
+              viewportControls={viewportControls}
+            />
+          </div>
+        )}
+        {spec.steps.length > 1 && (
+          <StepNavigator steps={spec.steps} scopeId={`preview-${spec.componentId}`} activeStepId={effectiveStepId} onStepChange={setActiveStepId} compact />
+        )}
+        <p className="px-1 font-mono text-[9px] text-carbon/50 select-none">
+          {spec.points.length + spec.elements.length + spec.sliders.length} objetos · {spec.steps.length} pasos · {spec.points.filter(item => item.target).length + spec.elements.filter(item => item.target).length + spec.groups.filter(item => item.target).length} vínculos MDX
+        </p>
+      </div>
+    );
   } else if (Component) {
-    previewContent = <Component />;
+    previewContent = (
+      <div
+        className="relative w-full overflow-hidden rounded-xl border border-carbon/15 bg-lienzo p-2"
+        style={{ minHeight: height }}
+      >
+        <Component />
+      </div>
+    );
   }
+
   return (
-    <div className="min-h-[360px] overflow-hidden rounded border border-carbon/10 bg-lienzo" data-testid="diagram-runtime-preview">
+    <div className="w-full" data-testid="diagram-runtime-preview">
       <ErrorBoundary
         key={`${filePath}:${componentName}`}
         fallback={<p className="p-4 text-xs text-granada" role="alert">El diagrama guardado produjo un error al renderizarse.</p>}

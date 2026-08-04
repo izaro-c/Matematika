@@ -160,7 +160,7 @@ describe('Editor V2 remediation regressions', () => {
 
     const linesMenu = screen.getByRole('button', { name: /Líneas & Geometría/i });
     fireEvent.click(linesMenu);
-    const polygonBtn = screen.getByRole('button', { name: /Polígono/i });
+    const polygonBtn = screen.getAllByText('Polígono')[0].closest('button')!;
     fireEvent.click(polygonBtn);
 
     // After selecting polygon tool, guidance panel appears; Crear is disabled until 3 refs.

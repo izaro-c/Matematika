@@ -77,45 +77,53 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const containerRef = useModalFocus<HTMLDivElement>(isOpen, onClose, closeButtonRef);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    setSearchQuery('');
-    if (editingMarkup && initialAttrs) {
-      // Modo edición: inicializar estado con los atributos del enlace existente
-      if (editingTag === 'ConceptLink') {
-        if (initialAttrs.highlightTarget) {
-          setLinkType('combined');
-          setSelectedConcept(selectedConceptFrom(initialAttrs.targetId));
-          setGraphElementId(initialAttrs.highlightTarget || '');
-          setSelectedColor(initialAttrs.highlightColor || 'salvia');
-          setIsDependency(initialAttrs.isDependency === true || initialAttrs.isDependency === 'true');
-        } else {
-          setLinkType('concept');
+  const [prevOpenState, setPrevOpenState] = useState({ isOpen, initialAttrs, editingTag, editingMarkup });
+  if (
+    isOpen !== prevOpenState.isOpen ||
+    initialAttrs !== prevOpenState.initialAttrs ||
+    editingTag !== prevOpenState.editingTag ||
+    editingMarkup !== prevOpenState.editingMarkup
+  ) {
+    setPrevOpenState({ isOpen, initialAttrs, editingTag, editingMarkup });
+    if (isOpen) {
+      setSearchQuery('');
+      if (editingMarkup && initialAttrs) {
+        // Modo edición: inicializar estado con los atributos del enlace existente
+        if (editingTag === 'ConceptLink') {
+          if (initialAttrs.highlightTarget) {
+            setLinkType('combined');
+            setSelectedConcept(selectedConceptFrom(initialAttrs.targetId));
+            setGraphElementId(initialAttrs.highlightTarget || '');
+            setSelectedColor(initialAttrs.highlightColor || 'salvia');
+            setIsDependency(initialAttrs.isDependency === true || initialAttrs.isDependency === 'true');
+          } else {
+            setLinkType('concept');
+            setSelectedConcept(selectedConceptFrom(initialAttrs.targetId));
+            setGraphElementId('');
+            setSelectedColor('salvia');
+            setIsDependency(initialAttrs.isDependency === true || initialAttrs.isDependency === 'true');
+          }
+        } else if (editingTag === 'RefLink') {
+          setLinkType('reference');
           setSelectedConcept(selectedConceptFrom(initialAttrs.targetId));
           setGraphElementId('');
-          setSelectedColor('salvia');
-          setIsDependency(initialAttrs.isDependency === true || initialAttrs.isDependency === 'true');
+        } else if (editingTag === 'InteractiveElement') {
+          setLinkType('graphic');
+          setGraphElementId(initialAttrs.target || '');
+          setSelectedColor(initialAttrs.color || 'salvia');
+          setSelectedConcept(null);
         }
-      } else if (editingTag === 'RefLink') {
-        setLinkType('reference');
-        setSelectedConcept(selectedConceptFrom(initialAttrs.targetId));
-        setGraphElementId('');
-      } else if (editingTag === 'InteractiveElement') {
-        setLinkType('graphic');
-        setGraphElementId(initialAttrs.target || '');
-        setSelectedColor(initialAttrs.color || 'salvia');
+      } else {
+        // Modo creación nuevo
         setSelectedConcept(null);
+        setGraphElementId('');
+        setSelectedColor('salvia');
+        setSearchQuery(selectedText.trim());
+        setLinkType(editingTag === 'InteractiveElement' ? 'graphic' : 'concept');
+        setIsDependency(false);
       }
-    } else {
-      // Modo creación nuevo
-      setSelectedConcept(null);
-      setGraphElementId('');
-      setSelectedColor('salvia');
-      setSearchQuery(selectedText.trim());
-      setLinkType(diagramTargets.length > 0 ? 'combined' : 'concept');
-      setIsDependency(false);
     }
-  }, [isOpen, files, initialAttrs, editingTag, editingMarkup, selectedText, diagramTargets.length]);
+  }
 
   const suggestions = useMemo(() => {
     if (!searchQuery.trim()) {

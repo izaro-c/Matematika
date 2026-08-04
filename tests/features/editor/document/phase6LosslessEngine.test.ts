@@ -116,7 +116,7 @@ Texto con <ConceptLink targetId="segmento">segmento</ConceptLink>.`;
   it('protects immutable IDs, invalid schemas, dynamic metadata and parse failures', () => {
     const valid = parseEditorDocument(`${validEnvelope}\n\nTexto.`);
     expect(() => planMetadataUpdate(valid, { ...valid.metadata.value, id: 'otro-id' })).toThrow('immutable');
-    expect(() => planMetadataUpdate(valid, { ...valid.metadata.value, description: undefined })).toThrow('schema');
+    expect(() => planMetadataUpdate(valid, { ...valid.metadata.value, description: undefined })).toThrow('JSON-serializable');
 
     const idBearingSource = `${validEnvelope}\n\n<PasoEjercicio id="paso-publico">Planteamiento.</PasoEjercicio>`;
     const idBearing = parseEditorDocument(idBearingSource);

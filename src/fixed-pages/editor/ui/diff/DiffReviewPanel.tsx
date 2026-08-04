@@ -61,7 +61,7 @@ export const DiffReviewPanel: React.FC<DiffReviewPanelProps> = ({
               </p>
               {isStale && (
                 <div className="mt-2 rounded border border-granada/30 bg-granada/5 p-2 text-xs font-semibold text-granada select-none">
-                  ⚠️ Hay ediciones nuevas. Vuelve a revisar los cambios.
+                  Hay ediciones nuevas. Vuelve a revisar los cambios.
                 </div>
               )}
             </div>

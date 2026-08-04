@@ -69,6 +69,18 @@ describe('Phase 7 lossless authoring UX', () => {
     expect(updated.source).toContain('<FutureWidget keep={{ nested: true }} />');
   });
 
+  it('normalizes filesystem diagram paths when binding', () => {
+    const document = parseEditorDocument(definitionSource);
+    const mutation = planDiagramBinding(document, {
+      componentName: 'RectaInteractiva',
+      importPath: 'content/diagrams/Definiciones/RectaInteractiva.tsx',
+      mode: 'simulation',
+    });
+    const updated = applyMutationPlan(document, mutation);
+    expect(updated.source).toContain("import { RectaInteractiva } from '@content/diagrams/Definiciones/RectaInteractiva';");
+    expect(updated.source).not.toContain("from 'content/diagrams/");
+  });
+
   it('projects outline, semantic references and actionable integrity diagnostics', () => {
     const document = parseEditorDocument(definitionSource.replace('targetId="punto"', 'targetId="no-existe"'));
     const blocks: Block[] = document.bodyBlocks.map(block => ({

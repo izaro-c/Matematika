@@ -50,3 +50,45 @@ describe('GroupsAndLayersManager layer moves', () => {
     expect(after).not.toEqual(before);
   });
 });
+
+describe('GroupsAndLayersManager group chips and canvas picking', () => {
+  it('renders group member compact chips and toggles canvas picking mode', () => {
+    const baseModel = createTemplateModel('triangulo-deformable', 'Grupos');
+    const model = {
+      ...baseModel,
+      groups: [
+        {
+          id: 'grp_1',
+          label: 'Grupo Triángulo',
+          memberIds: ['A', 'B'],
+          visible: true,
+          locked: false,
+          selection: { selectable: true, role: 'primary' as const },
+        },
+      ],
+    };
+    const onUpdateModel = vi.fn();
+    const onTogglePickingGroupId = vi.fn();
+
+    render(
+      <GroupsAndLayersManager
+        model={model}
+        onUpdateModel={onUpdateModel}
+        onTogglePickingGroupId={onTogglePickingGroupId}
+      />
+    );
+
+    // Cambiar a la pestaña de Grupos
+    fireEvent.click(screen.getByRole('button', { name: /Grupos/i }));
+
+    // Abrir grupo
+    fireEvent.click(screen.getByText('Grupo Triángulo'));
+
+    // Verificar botón 'Seleccionar en lienzo'
+    const pickBtn = screen.getByRole('button', { name: /Seleccionar en lienzo/i });
+    expect(pickBtn).toBeDefined();
+
+    fireEvent.click(pickBtn);
+    expect(onTogglePickingGroupId).toHaveBeenCalledWith('grp_1');
+  });
+});

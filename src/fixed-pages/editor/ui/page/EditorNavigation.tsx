@@ -22,6 +22,8 @@ interface EditorNavigationProps {
   recentPaths: string[];
   toggleFavorite: (path: string) => void;
   width: number;
+  onCreatePage?: () => void;
+  onCreateDiagram?: () => void;
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -103,6 +105,8 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
   recentPaths,
   toggleFavorite,
   width,
+  onCreatePage,
+  onCreateDiagram,
 }) => {
   const [section, setSection] = useState<EditorResourceSection>('documents');
   const [filters, setFilters] = useState<EditorCatalogFilters>(DEFAULT_EDITOR_CATALOG_FILTERS);
@@ -185,17 +189,39 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
       </div>
 
       <div className="space-y-2 border-b border-carbon/15 p-3">
-        <label className="block">
-          <span className="sr-only">Buscar recursos por nombre</span>
-          <input
-            ref={searchRef}
-            type="search"
-            value={filters.query}
-            onChange={event => updateFilter('query', event.target.value)}
-            placeholder={`Buscar ${section === 'documents' ? 'documentos' : 'diagramas'}…`}
-            className="w-full rounded border border-carbon/20 bg-lienzo px-3 py-2 text-xs text-carbon outline-none placeholder:text-carbon/35 focus:border-salvia"
-          />
-        </label>
+        <div className="flex items-center justify-between gap-2">
+          <label className="block flex-1">
+            <span className="sr-only">Buscar recursos por nombre</span>
+            <input
+              ref={searchRef}
+              type="search"
+              value={filters.query}
+              onChange={event => updateFilter('query', event.target.value)}
+              placeholder={`Buscar ${section === 'documents' ? 'documentos' : 'diagramas'}…`}
+              className="w-full rounded border border-carbon/20 bg-lienzo px-3 py-2 text-xs text-carbon outline-none placeholder:text-carbon/35 focus:border-salvia"
+            />
+          </label>
+          {section === 'documents' && onCreatePage && (
+            <button
+              type="button"
+              onClick={onCreatePage}
+              className="rounded bg-salvia/10 px-2 py-2 text-[10px] font-bold text-salvia hover:bg-salvia/20 whitespace-nowrap cursor-pointer"
+              title="Crear nueva página estructurada"
+            >
+              ＋ Página
+            </button>
+          )}
+          {section === 'diagrams' && onCreateDiagram && (
+            <button
+              type="button"
+              onClick={onCreateDiagram}
+              className="rounded bg-salvia/10 px-2 py-2 text-[10px] font-bold text-salvia hover:bg-salvia/20 whitespace-nowrap cursor-pointer"
+              title="Crear nuevo diagrama"
+            >
+              ＋ Diagrama
+            </button>
+          )}
+        </div>
         <details className="group rounded border border-carbon/10 bg-carbon/[0.02]" open={advancedFilterCount > 0 || undefined}>
           <summary className="flex cursor-pointer list-none items-center justify-between rounded px-3 py-2 text-[10px] font-bold text-carbon/60 hover:bg-carbon/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-salvia [&::-webkit-details-marker]:hidden">
             <span>Filtrar resultados</span>
