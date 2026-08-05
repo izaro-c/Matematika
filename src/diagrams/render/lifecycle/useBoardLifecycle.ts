@@ -14,6 +14,11 @@ import {
 import { applyBoardStackLayer } from '@/diagrams/jsxgraph/htmlTextLayer';
 import { renderKatexTextToHtml } from '@/components/ui/KatexText';
 import {DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS, evaluateMathExpression, type DiagramBounds, type DiagramSpecV2} from '@/diagrams/model'
+import {
+  getDiagramScale,
+  resolveAdaptivePointSize,
+  resolveAdaptiveHighlightPointSize,
+} from '@/diagrams/render/elements/diagramAdaptiveScale';
 import {createSceneConstructionPlan, createScenePlan, itemLayerNumber, withMovedPoint, curveActsAsArea, onSupportTargetId, sampleCurveElement} from '@/diagrams/geometry';
 import {
   attachLabelSelection,
@@ -464,6 +469,8 @@ export function useBoardLifecycle({
         highlightStrokeColor: hoverColor,
       };
       if ('constraint' in sceneItem) {
+        const authoredPointSize = sceneItem.style?.pointSize ?? 4;
+        const authoredHighlightPointSize = sceneItem.style?.highlightPointSize ?? 6;
         const gliderTarget = onSupportTargetId(spec, sceneItem);
         const attractors = sceneItem.attractorIds?.map(id => elements[id]).filter(Boolean) ?? [];
         const attractionOptions = !directInteractionLocked
@@ -484,8 +491,8 @@ export function useBoardLifecycle({
           ], withDiagramHoverTransition({
             name: renderKatexTextToHtml(sceneItem.label),
             fixed: true,
-            ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
-            ...(sceneItem.style?.highlightPointSize !== undefined ? { highlightSize: sceneItem.style.highlightPointSize } : {}),
+            size: authoredPointSize,
+            highlightSize: authoredHighlightPointSize,
             fillColor: theme[sceneItem.color],
             strokeColor: theme[sceneItem.color],
             highlightFillColor: hoverColor,
@@ -497,8 +504,8 @@ export function useBoardLifecycle({
           ? createGlider(board, [sceneItem.x, sceneItem.y, elements[gliderTarget]], withDiagramHoverTransition({
             name: renderKatexTextToHtml(sceneItem.label),
             fixed: directInteractionLocked,
-            ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
-            ...(sceneItem.style?.highlightPointSize !== undefined ? { highlightSize: sceneItem.style.highlightPointSize } : {}),
+            size: authoredPointSize,
+            highlightSize: authoredHighlightPointSize,
             fillColor: theme[sceneItem.color],
             strokeColor: theme[sceneItem.color],
             highlightFillColor: hoverColor,
@@ -509,8 +516,8 @@ export function useBoardLifecycle({
           : createPoint(board, [sceneItem.x, sceneItem.y], withDiagramHoverTransition({
             name: renderKatexTextToHtml(sceneItem.label),
             fixed: directInteractionLocked,
-            ...(sceneItem.style?.pointSize !== undefined ? { size: sceneItem.style.pointSize } : {}),
-            ...(sceneItem.style?.highlightPointSize !== undefined ? { highlightSize: sceneItem.style.highlightPointSize } : {}),
+            size: authoredPointSize,
+            highlightSize: authoredHighlightPointSize,
             fillColor: theme[sceneItem.color],
             strokeColor: theme[sceneItem.color],
             highlightFillColor: hoverColor,

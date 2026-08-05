@@ -33,6 +33,10 @@ import {
 } from '@/diagrams/jsxgraph/MathFactory';
 import { renderKatexTextToHtml } from '@/components/ui/KatexText';
 import {DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS, type DiagramElement, type DiagramSpecV2} from '@/diagrams/model'
+import {
+  getDiagramScale,
+  resolveAdaptivePointSize,
+} from '@/diagrams/render/elements/diagramAdaptiveScale';
 import {resolveAreaDisplayPolygons, curveActsAsArea, sampleCurveElement} from '@/diagrams/geometry';
 import {
   preservesOwnColorOnHighlight,
@@ -143,9 +147,11 @@ export function createElement(
   }
   if (item.kind === 'poincareGeodesic') return refs.length >= 4 ? createPoincareGeodesic(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
   if (item.kind === 'poincareArc') return refs.length >= 4 ? createPoincareArc(board, [refs[0], refs[1], refs[2], refs[3]], lineOptions, theme) : null;
+  const diagramScale = getDiagramScale(board);
+  const adaptivePointSize = resolveAdaptivePointSize(item.style?.pointSize ?? 4, diagramScale);
   if (item.kind === 'intersection') return refs.length >= 2 ? createIntersection(board, [refs[0], refs[1]], 0, withDiagramHoverTransition({
     name: renderKatexTextToHtml(item.label),
-    size: item.style?.pointSize ?? 4,
+    size: adaptivePointSize,
     fillColor: theme[item.color],
     strokeColor: theme[item.color],
     highlightFillColor: hoverColor,
@@ -156,14 +162,14 @@ export function createElement(
   }, 'point'), theme) : null;
   if (item.kind === 'midpoint') return refs.length >= 2 ? createMidpoint(board, [refs[0], refs[1]], withDiagramHoverTransition({
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
-    size: item.style?.pointSize ?? 4,
+    size: adaptivePointSize,
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
     label: { highlightStrokeColor: hoverColor },
     fixed: true, layer,
   }, 'point'), theme) : null;
   if (item.kind === 'perpendicularFoot') return refs.length >= 3 ? createPerpendicularFoot(board, [refs[0], refs[1], refs[2]], withDiagramHoverTransition({
     name: renderKatexTextToHtml(item.label), fillColor: theme[item.color], strokeColor: theme[item.color],
-    size: item.style?.pointSize ?? 4,
+    size: adaptivePointSize,
     highlightFillColor: hoverColor, highlightStrokeColor: hoverColor,
     label: { highlightStrokeColor: hoverColor },
     fixed: true, layer,
