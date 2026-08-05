@@ -109,8 +109,48 @@ export function isEffectivelyVisibleInAnyStep(spec: ViewportSpec, itemId: string
   return v2.steps.some(step => isEffectivelyVisibleAtStep(v2, itemId, step.id));
 }
 
-export function computeElementBoundsAtStep(spec: ViewportSpec, itemId: string): DiagramBounds | null {
-  return contentBounds(spec, [itemId]);
+export function computeElementBoundsAtStep(spec: ViewportSpec, itemId: string, stepId?: string): DiagramBounds | null {
+  const v2 = viewportV2(spec);
+  if (!stepId) return contentBounds(v2, [itemId]);
+
+  const plan = createScenePlan(v2, { activeStepId: stepId });
+  const targetEntry = plan.find(entry => entry.item.id === itemId);
+  if (!targetEntry || !targetEntry.visible) return null;
+
+  const visiblePointIds = new Set(
+    plan.filter(entry => entry.visible && 'x' in entry.item).map(entry => entry.item.id)
+  );
+
+  if ('x' in targetEntry.item && 'constraint' in targetEntry.item) {
+    const coords = targetEntry.item;
+    return [coords.x, coords.y, coords.x, coords.y];
+  }
+
+  if ('kind' in targetEntry.item) {
+    const element = targetEntry.item;
+    const refs = element.refs
+      .filter(ref => visiblePointIds.has(ref))
+      .map(ref => {
+        const pointItem = plan.find(p => p.item.id === ref)?.item;
+        return pointItem && 'x' in pointItem ? { x: pointItem.x, y: pointItem.y } : null;
+      })
+      .filter((point): point is { x: number; y: number } => Boolean(point));
+
+    if ((element.kind === 'functionCurve' || element.kind === 'parametricCurve') && element.properties?.domain) {
+      return contentBounds(v2, [itemId]);
+    }
+    if (element.kind === 'circle' && refs.length >= 2) {
+      const [center, edge] = refs;
+      const radius = Math.hypot(edge.x - center.x, edge.y - center.y);
+      return [center.x - radius, center.y + radius, center.x + radius, center.y - radius];
+    }
+    const xs = refs.map(p => p.x);
+    const ys = refs.map(p => p.y);
+    if (xs.length === 0) return null;
+    return [Math.min(...xs), Math.max(...ys), Math.max(...xs), Math.min(...ys)];
+  }
+
+  return contentBounds(v2, [itemId]);
 }
 
 /**
@@ -138,7 +178,7 @@ export function computeAutoFitBounds(
       const plan = createScenePlan(stepSpec, { activeStepId: step.id });
       for (const entry of plan) {
         if (!isEffectivelyVisible(entry)) continue;
-        const bounds = computeElementBoundsAtStep(stepSpec, entry.item.id);
+        const bounds = computeElementBoundsAtStep(stepSpec, entry.item.id, step.id);
         if (bounds) collected.push(bounds);
       }
     }

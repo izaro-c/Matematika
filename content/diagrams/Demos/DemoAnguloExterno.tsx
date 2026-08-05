@@ -14,10 +14,10 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
   "showLabels": true,
   "viewport": {
     "bounds": [
-      -4.1528,
-      4.882035121914315,
-      3.8728,
-      -3.6320048444019744
+      -5,
+      5,
+      5,
+      -5
     ],
     "home": [
       -5,
@@ -43,6 +43,20 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "order": 1,
       "visible": true,
       "locked": false
+    },
+    {
+      "id": "background",
+      "label": "Fondo",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Anotaciones & Texto",
+      "order": 20,
+      "visible": true,
+      "locked": false
     }
   ],
   "groups": [],
@@ -52,7 +66,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "A",
       "color": "granada",
       "layerId": "geometry",
-      "order": 37,
+      "order": 39,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -85,7 +99,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "B",
       "color": "granada",
       "layerId": "geometry",
-      "order": 36,
+      "order": 38,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -99,8 +113,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 2.68,
-        "y": -2.11
+        "x": 1.97,
+        "y": -2.09
       },
       "mobility": {
         "type": "free"
@@ -118,7 +132,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "C",
       "color": "granada",
       "layerId": "geometry",
-      "order": 35,
+      "order": 37,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -132,8 +146,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 1.32,
-        "y": 1.68
+        "x": 0.69,
+        "y": 1.47
       },
       "mobility": {
         "type": "free"
@@ -151,7 +165,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "D",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 34,
+      "order": 36,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -165,8 +179,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 1.4620467301008886,
-        "y": 3.5652149600740386
+        "x": 0.7653242856019871,
+        "y": 3.048733265634481
       },
       "mobility": {
         "type": "on-support",
@@ -185,7 +199,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "F",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 32,
+      "order": 34,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -199,8 +213,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -4.8100000000000005,
-        "y": 1.7
+        "x": -4.73,
+        "y": 1.47
       },
       "mobility": {
         "type": "constrained",
@@ -221,7 +235,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "H",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 39,
+      "order": 41,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -235,8 +249,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 7.45,
-        "y": 1.66
+        "x": 6.11,
+        "y": 1.47
       },
       "mobility": {
         "type": "constrained",
@@ -256,8 +270,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "id": "paux",
       "label": "aux",
       "color": "terracota",
-      "layerId": "geometry",
-      "order": 43,
+      "layerId": "background",
+      "order": 1,
       "visible": false,
       "locked": false,
       "groupIds": [],
@@ -287,11 +301,79 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "interaction": {}
     },
     {
+      "id": "paux2",
+      "label": "Aux2",
+      "color": "terracota",
+      "layerId": "background",
+      "order": 0,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto E",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "paux2",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.4319105631062765,
+        "y": 30
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "rayAC"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "pK",
+      "label": "K",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 45,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto E",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pK",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.98262300008125,
+        "y": 3.4742718629349545
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "rayCaux2"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
       "id": "polygonABC",
       "label": "Triángulo ABC",
       "color": "granada",
       "layerId": "geometry",
-      "order": 7,
+      "order": 6,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -320,7 +402,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento AB",
       "color": "granada",
       "layerId": "geometry",
-      "order": 8,
+      "order": 7,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -350,7 +432,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento BC",
       "color": "granada",
       "layerId": "geometry",
-      "order": 9,
+      "order": 8,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -380,7 +462,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento AC",
       "color": "granada",
       "layerId": "geometry",
-      "order": 10,
+      "order": 9,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -410,7 +492,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Semirrecta BC",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 11,
+      "order": 10,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -441,7 +523,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo ABC",
       "color": "musgo",
       "layerId": "geometry",
-      "order": 13,
+      "order": 12,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -471,7 +553,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo BAC",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 27,
+      "order": 29,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -501,7 +583,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo BCA",
       "color": "musgo",
       "layerId": "geometry",
-      "order": 14,
+      "order": 13,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -531,7 +613,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo BCD",
       "color": "granada",
       "layerId": "geometry",
-      "order": 15,
+      "order": 14,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -561,7 +643,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "E",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 33,
+      "order": 35,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -592,7 +674,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento EB",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 16,
+      "order": 15,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -622,7 +704,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Semirrecta BE",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 6,
+      "order": 5,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -653,7 +735,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento EF",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 17,
+      "order": 16,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -683,7 +765,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento CF",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 18,
+      "order": 17,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -713,7 +795,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Polígono ABE",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 19,
+      "order": 18,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -742,7 +824,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Polígono CEF",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 20,
+      "order": 19,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -771,7 +853,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo AEB",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 21,
+      "order": 20,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -801,7 +883,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo CEF",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 22,
+      "order": 21,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -831,7 +913,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo ECF",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 29,
+      "order": 31,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -861,7 +943,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Semirrecta CF",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 23,
+      "order": 22,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -892,7 +974,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Ángulo ACD",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 12,
+      "order": 11,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -922,7 +1004,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Segmento AE",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 24,
+      "order": 23,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -982,7 +1064,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Marca de congruencia AE",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 26,
+      "order": 28,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1014,7 +1096,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Marca de congruencia EC",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 28,
+      "order": 30,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1046,7 +1128,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Marca de congruencia de Segmento EB",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 30,
+      "order": 32,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1078,7 +1160,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Marca de congruencia de Segmento EF",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 31,
+      "order": 33,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1141,7 +1223,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "G",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 38,
+      "order": 40,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1168,11 +1250,11 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       }
     },
     {
-      "id": "segAG",
-      "label": "Segmento",
-      "color": "carbon",
+      "id": "segAH",
+      "label": "Segmento AH",
+      "color": "ocre",
       "layerId": "geometry",
-      "order": 40,
+      "order": 26,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1182,7 +1264,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "role": "secondary"
       },
       "target": true,
-      "targetId": "segAG",
+      "targetId": "segAH",
       "objectType": "path",
       "geometry": {
         "type": "segment",
@@ -1202,7 +1284,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Marca de congruencia",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 41,
+      "order": 42,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1233,7 +1315,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "label": "Marca de congruencia",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 42,
+      "order": 43,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1412,6 +1494,129 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
+    },
+    {
+      "id": "rayAC",
+      "label": "Semirrecta AC",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 27,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayAC",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pA",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayCaux2",
+      "label": "Semirrecta CK",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 24,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayCaux2",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pC",
+          "paux2"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "congruenceMarkCmidG",
+      "label": "Marca de congruencia",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 46,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkCmidG",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pC",
+          "midG"
+        ]
+      },
+      "count": 2,
+      "height": 0.6,
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "congruenceMarkmidGB",
+      "label": "Marca de congruencia",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 47,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkmidGB",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "midG",
+          "pB"
+        ]
+      },
+      "count": 2,
+      "height": 0.6,
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     }
   ],
   "relations": [
@@ -1455,9 +1660,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "pA",
         "pB",
         "pC",
-        "pD",
-        "paux",
-        "rayCaux"
+        "pD"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -1637,7 +1840,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "emphasis": "none",
           "interactive": true
         },
-        "segAG": {
+        "segAH": {
           "visible": false,
           "emphasis": "none",
           "interactive": true
@@ -1676,6 +1879,30 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": false,
           "emphasis": "none",
           "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
         }
       }
     },
@@ -1698,9 +1925,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "congruenceMarkAmidAC",
         "congruenceMarkmidACC",
         "midAC",
-        "segBmidAC_2",
-        "paux",
-        "rayCaux"
+        "segBmidAC_2"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -1864,7 +2089,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "emphasis": "none",
           "interactive": true
         },
-        "segAG": {
+        "segAH": {
           "visible": false,
           "emphasis": "none",
           "interactive": true
@@ -1903,6 +2128,30 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": false,
           "emphasis": "none",
           "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
         }
       }
     },
@@ -1926,9 +2175,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "rayBmidAC",
         "midAC",
         "congruenceMarkAmidAC",
-        "congruenceMarkmidACC",
-        "paux",
-        "rayCaux"
+        "congruenceMarkmidACC"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -2092,7 +2339,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "emphasis": "none",
           "interactive": true
         },
-        "segAG": {
+        "segAH": {
           "visible": false,
           "emphasis": "none",
           "interactive": true
@@ -2131,6 +2378,30 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": false,
           "emphasis": "none",
           "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
         }
       }
     },
@@ -2159,9 +2430,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "congruenceMarkmidACC",
         "congruenceMarkBmidAC",
         "congruenceMarkmidACF",
-        "segBmidAC_2",
-        "paux",
-        "rayCaux"
+        "segBmidAC_2"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -2335,7 +2604,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "emphasis": "none",
           "interactive": true
         },
-        "segAG": {
+        "segAH": {
           "visible": false,
           "emphasis": "none",
           "interactive": true
@@ -2374,6 +2643,30 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": false,
           "emphasis": "none",
           "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
         }
       }
     },
@@ -2407,9 +2700,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "polygonCFmidAC",
         "nonReflexAngleAmidACB",
         "nonReflexAngleCmidACF",
-        "segBmidAC_2",
-        "paux",
-        "rayCaux"
+        "segBmidAC_2"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -2583,7 +2874,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "emphasis": "none",
           "interactive": true
         },
-        "segAG": {
+        "segAH": {
           "visible": false,
           "emphasis": "none",
           "interactive": true
@@ -2622,6 +2913,30 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": false,
           "emphasis": "none",
           "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
         }
       }
     },
@@ -2651,9 +2966,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "polygonCFmidAC",
         "segBmidAC_2",
         "nonReflexAngleBAC",
-        "nonReflexAnglemidACCF",
-        "paux",
-        "rayCaux"
+        "nonReflexAnglemidACCF"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -2827,7 +3140,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "emphasis": "none",
           "interactive": true
         },
-        "segAG": {
+        "segAH": {
           "visible": false,
           "emphasis": "none",
           "interactive": true
@@ -2866,6 +3179,30 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": false,
           "emphasis": "none",
           "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
         }
       }
     },
@@ -2890,9 +3227,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "pF",
         "midAC",
         "segBmidAC",
-        "segmidACF",
-        "paux",
-        "rayCaux"
+        "segmidACF"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -3066,7 +3401,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "emphasis": "none",
           "interactive": true
         },
-        "segAG": {
+        "segAH": {
           "visible": false,
           "emphasis": "none",
           "interactive": true
@@ -3105,6 +3440,30 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": false,
           "emphasis": "none",
           "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
         }
       }
     },
@@ -3126,11 +3485,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "nonReflexAngleBAC",
         "rayCF_2",
         "pF",
-        "rayCA",
         "nonReflexAngleACD",
         "midAC",
-        "paux",
-        "rayCaux"
+        "rayCA"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -3304,7 +3661,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "emphasis": "none",
           "interactive": true
         },
-        "segAG": {
+        "segAH": {
           "visible": false,
           "emphasis": "none",
           "interactive": true
@@ -3343,6 +3700,206 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": true,
           "emphasis": "none",
           "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "step9",
+      "label": "Paso 9",
+      "description": "Descripción del nuevo paso de la demostración.",
+      "visibleTargets": [
+        "midG",
+        "segBC",
+        "pB",
+        "pC",
+        "congruenceMarkmidBCG",
+        "congruenceMarkAmidBC",
+        "segAH",
+        "pH",
+        "pA",
+        "polygonABC",
+        "segAC",
+        "segAB",
+        "rayCaux2",
+        "congruenceMarkmidGB",
+        "congruenceMarkCmidG",
+        "pK"
+      ],
+      "objectStates": {
+        "pF": {
+          "visible": false
+        },
+        "segAH": {
+          "visible": true
+        },
+        "segmidACF": {
+          "visible": false
+        },
+        "pA": {
+          "visible": true
+        },
+        "pB": {
+          "visible": true
+        },
+        "pC": {
+          "visible": true
+        },
+        "pD": {
+          "visible": false
+        },
+        "pH": {
+          "visible": true
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABC": {
+          "visible": true
+        },
+        "segBC": {
+          "visible": true
+        },
+        "segAC": {
+          "visible": true
+        },
+        "rayBC": {
+          "visible": false
+        },
+        "segAB": {
+          "visible": true
+        },
+        "nonReflexAngleABC": {
+          "visible": false
+        },
+        "nonReflexAngleBCD": {
+          "visible": false
+        },
+        "midAC": {
+          "visible": false
+        },
+        "nonReflexAngleBCA": {
+          "visible": false
+        },
+        "nonReflexAngleBAC": {
+          "visible": false
+        },
+        "segBmidAC": {
+          "visible": false
+        },
+        "rayBmidAC": {
+          "visible": false
+        },
+        "segCF": {
+          "visible": false
+        },
+        "polygonABmidAC": {
+          "visible": false
+        },
+        "polygonCFmidAC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false
+        },
+        "congruenceMarkAmidAC": {
+          "visible": false
+        },
+        "nonReflexAngleACD": {
+          "visible": false
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": false
+        },
+        "segAmidAC": {
+          "visible": false
+        },
+        "segmidACC": {
+          "visible": false
+        },
+        "rayCF": {
+          "visible": false
+        },
+        "congruenceMarkmidACC": {
+          "visible": false
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false
+        },
+        "congruenceMarkmidACF": {
+          "visible": false
+        },
+        "rayCF_2": {
+          "visible": false
+        },
+        "midG": {
+          "visible": true,
+          "emphasis": "primary"
+        },
+        "congruenceMarkmidBCG": {
+          "visible": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": true
+        },
+        "halfACD": {
+          "visible": false
+        },
+        "halfBCA": {
+          "visible": false
+        },
+        "rayCA": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "segBmidAC_2": {
+          "visible": false
+        },
+        "rayCaux2": {
+          "visible": true
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": true
+        },
+        "congruenceMarkCmidG": {
+          "visible": true
+        },
+        "pK": {
+          "visible": true
+        },
+        "paux2": {
+          "visible": false
         }
       }
     }

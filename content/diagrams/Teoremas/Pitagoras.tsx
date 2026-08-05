@@ -268,6 +268,7 @@ export const PitagorasSpec = createDiagramSpec(
       },
       "appearance": {
         "size": 7,
+        "labelVisible": true,
         "highlightSize": 10,
         "preserveColorOnHighlight": true
       },
@@ -296,8 +297,7 @@ export const PitagorasSpec = createDiagramSpec(
         "y": 0
       },
       "mobility": {
-        "type": "on-support",
-        "support": "rayoX"
+        "type": "free"
       },
       "appearance": {
         "size": 7,

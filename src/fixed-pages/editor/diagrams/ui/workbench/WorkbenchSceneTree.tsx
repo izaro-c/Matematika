@@ -274,9 +274,9 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               p.label,
               p.color,
               p.fixed ? 'Fijo' : 'Libre',
-              p.showLabel !== false,
+              p.visible !== false,
               p.fixed || false,
-              () => onUpdatePoint(p.id, { showLabel: p.showLabel === false }),
+              () => onUpdatePoint(p.id, { visible: p.visible === false }),
               () => onUpdatePoint(p.id, { fixed: !p.fixed, constraint: p.fixed ? 'free' : 'fixed' })
             )
           )
@@ -292,9 +292,9 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               e.label,
               e.color,
               e.kind,
-              e.showLabel !== false,
+              e.visible !== false,
               false,
-              onUpdateElement ? () => onUpdateElement(e.id, { showLabel: e.showLabel === false }) : undefined
+              onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
             )
           )
         )}
@@ -309,9 +309,9 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               e.label,
               e.color,
               e.kind,
-              true,
+              e.visible !== false,
               false,
-              onUpdateElement ? () => onUpdateElement(e.id, { color: e.color === 'carbon' ? 'salvia' : 'carbon' }) : undefined
+              onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
             )
           )
         )}
@@ -321,7 +321,15 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
           'Círculos & Arcos',
           circles.length,
           circles.map(e =>
-            renderElementRow(e.id, e.label, e.color, e.kind)
+            renderElementRow(
+              e.id,
+              e.label,
+              e.color,
+              e.kind,
+              e.visible !== false,
+              false,
+              onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
+            )
           )
         )}
 
@@ -330,7 +338,15 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
           'Ángulos & Marcas',
           anglesAndMarks.length,
           anglesAndMarks.map(e =>
-            renderElementRow(e.id, e.label, e.color, e.kind)
+            renderElementRow(
+              e.id,
+              e.label,
+              e.color,
+              e.kind,
+              e.visible !== false,
+              false,
+              onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
+            )
           )
         )}
 
@@ -339,7 +355,15 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
           'Curvas & Polígonos',
           curvesAndAreas.length,
           curvesAndAreas.map(e =>
-            renderElementRow(e.id, e.label, e.color, e.kind)
+            renderElementRow(
+              e.id,
+              e.label,
+              e.color,
+              e.kind,
+              e.visible !== false,
+              false,
+              onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
+            )
           )
         )}
 
@@ -348,7 +372,15 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
           'Anotaciones & Fórmulas',
           annotations.length,
           annotations.map(e =>
-            renderElementRow(e.id, e.label, e.color, e.kind)
+            renderElementRow(
+              e.id,
+              e.label,
+              e.color,
+              e.kind,
+              e.visible !== false,
+              false,
+              onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
+            )
           )
         )}
 
@@ -362,9 +394,9 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
               s.label,
               s.color,
               'Slider',
-              true,
+              s.visible !== false,
               false,
-              onUpdateSlider ? () => onUpdateSlider(s.id, { value: (s.value || 0) + 1 }) : undefined,
+              onUpdateSlider ? () => onUpdateSlider(s.id, { visible: s.visible === false }) : undefined,
               undefined,
               `= ${s.value}`
             )
@@ -376,7 +408,15 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
           'Otros Elementos',
           uncategorized.length,
           uncategorized.map(e =>
-            renderElementRow(e.id, e.label, e.color, e.kind)
+            renderElementRow(
+              e.id,
+              e.label,
+              e.color,
+              e.kind,
+              e.visible !== false,
+              false,
+              onUpdateElement ? () => onUpdateElement(e.id, { visible: e.visible === false }) : undefined
+            )
           )
         )}
       </div>

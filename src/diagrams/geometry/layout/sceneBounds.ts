@@ -27,10 +27,19 @@ function curveCoordinates(spec: DiagramSceneBag, element: DiagramElement): Array
 
 function elementCoordinates(spec: DiagramSceneBag, element: DiagramElement): Array<{ x: number; y: number }> {
   if (element.kind === 'intersection') {
+    const point = spec.points.find(p => p.id === element.id);
+    if (point && point.visible === false) return [];
     const intersection = resolvePointCoordinates(spec, element.id);
     return intersection ? [intersection] : [];
   }
-  const refs = element.refs.map(ref => resolvePointCoordinates(spec, ref)).filter((point): point is { x: number; y: number } => Boolean(point));
+  const refs = element.refs
+    .filter(ref => {
+      const point = spec.points.find(p => p.id === ref);
+      return !point || point.visible !== false;
+    })
+    .map(ref => resolvePointCoordinates(spec, ref))
+    .filter((point): point is { x: number; y: number } => Boolean(point));
+
   if ((element.kind === 'functionCurve' || element.kind === 'parametricCurve') && element.properties?.domain) {
     return curveCoordinates(spec, element);
   }
@@ -48,13 +57,19 @@ export function contentBounds(input: DiagramSpecV2 | DiagramSpecV3, itemIds?: re
   const filter = itemIds ? new Set(itemIds) : null;
   const coordinates: Array<{ x: number; y: number }> = [];
   spec.points.forEach(point => {
-    if (!filter || filter.has(point.id)) coordinates.push({ x: point.x, y: point.y });
+    if ((!filter || filter.has(point.id)) && point.visible !== false) {
+      coordinates.push({ x: point.x, y: point.y });
+    }
   });
   spec.elements.forEach(element => {
-    if (!filter || filter.has(element.id)) coordinates.push(...elementCoordinates(spec, element));
+    if ((!filter || filter.has(element.id)) && element.visible !== false) {
+      coordinates.push(...elementCoordinates(spec, element));
+    }
   });
   spec.sliders.forEach(slider => {
-    if (!filter || filter.has(slider.id)) coordinates.push({ x: slider.x, y: slider.y }, { x: slider.x + 2.6, y: slider.y });
+    if ((!filter || filter.has(slider.id)) && slider.visible !== false) {
+      coordinates.push({ x: slider.x, y: slider.y }, { x: slider.x + 2.6, y: slider.y });
+    }
   });
   return boundsFromCoordinates(coordinates);
 }
