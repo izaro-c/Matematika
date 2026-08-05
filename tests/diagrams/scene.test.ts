@@ -148,4 +148,20 @@ describe('shared diagram scene semantics', () => {
     expect(geometryItems.every((entry, index, items) => index === 0 || entry.visualOrder >= items[index - 1].visualOrder)).toBe(true);
     expect(geometryItems.at(-1)?.visualOrder).toBeLessThan((geometryLayerOrder + 1) * 10_000);
   });
+
+  it('excludes invisible reference points from bounds calculations', () => {
+    const specWithInvisibleAux = {
+      ...spec,
+      points: [
+        { id: 'pA', x: 0, y: 0, visible: true, layerId: 'geometry', order: 0, groupIds: [] },
+        { id: 'pAux', x: 50, y: 100, visible: false, layerId: 'background', order: 1, groupIds: [] },
+      ],
+      elements: [
+        { id: 'rayA', kind: 'ray', refs: ['pA', 'pAux'], visible: true, layerId: 'geometry', order: 0, groupIds: [] },
+      ],
+    };
+    const bounds = fitViewport(specWithInvisibleAux as any);
+    expect(bounds[1]).toBeLessThan(50);
+    expect(bounds[2]).toBeLessThan(50);
+  });
 });
