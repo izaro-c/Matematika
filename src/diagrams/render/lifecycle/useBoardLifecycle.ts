@@ -14,11 +14,6 @@ import {
 import { applyBoardStackLayer } from '@/diagrams/jsxgraph/htmlTextLayer';
 import { renderKatexTextToHtml } from '@/components/ui/KatexText';
 import {DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS, evaluateMathExpression, type DiagramBounds, type DiagramSpecV2} from '@/diagrams/model'
-import {
-  getDiagramScale,
-  resolveAdaptivePointSize,
-  resolveAdaptiveHighlightPointSize,
-} from '@/diagrams/render/elements/diagramAdaptiveScale';
 import {createSceneConstructionPlan, createScenePlan, itemLayerNumber, withMovedPoint, curveActsAsArea, onSupportTargetId, sampleCurveElement} from '@/diagrams/geometry';
 import {
   attachLabelSelection,
