@@ -18,8 +18,8 @@ export interface ElementInspectorCapabilities {
 
 const line = {
   content: 'none', stroke: true, fill: false, dashed: true, pointSize: false,
-  angleRadius: false, markHeight: false, fontSize: false, attachedLabel: true,
-  textOffset: false,
+  angleRadius: false, markHeight: false, fontSize: true, attachedLabel: true,
+  textOffset: true,
   conditionalText: false,
 } as const satisfies ElementInspectorCapabilities;
 

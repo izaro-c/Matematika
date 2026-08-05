@@ -33,8 +33,8 @@ describe('element inspector capability matrix', () => {
     expect(caps.stroke).toBe(!NON_STROKE_KINDS.has(kind));
     expect(caps.dashed).toBe(DASHED_KINDS.has(kind));
     expect(caps.pointSize).toBe(POINT_KINDS.has(kind));
-    expect(caps.fontSize).toBe(ANNOTATION_KINDS.has(kind) || POINT_KINDS.has(kind));
-    expect(caps.textOffset).toBe(TEXT_OFFSET_KINDS.has(kind));
+    expect(caps.fontSize).toBe(true);
+    expect(caps.textOffset).toBe(true);
   });
 
   it('declares textOffset for labels', () => {

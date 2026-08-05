@@ -353,8 +353,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 0.98262300008125,
-        "y": 3.4742718629349545
+        "x": 0.8943791965590192,
+        "y": 3.59659689060865
       },
       "mobility": {
         "type": "on-support",
@@ -666,6 +666,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "type": "fixed"
       },
       "appearance": {
+        "labelVisible": true,
         "preserveColorOnHighlight": true
       }
     },
@@ -1246,6 +1247,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "type": "fixed"
       },
       "appearance": {
+        "labelVisible": true,
         "preserveColorOnHighlight": true
       }
     },
@@ -1275,6 +1277,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       },
       "appearance": {
         "strokeWidth": 2.4,
+        "labelVisible": false,
+        "labelPosition": 0.71,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }

@@ -154,10 +154,11 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
       {(capabilities.fontSize || capabilities.textOffset) && (
         <DiagramNativeLabelEditor
           label={element.label}
-          visible={element.showLabel ?? true}
+          visible={element.showLabel === true}
           size={element.style?.labelSize ?? 16}
           offset={element.style?.labelOffset}
           position={element.style?.labelPosition}
+          alongPath={['segment', 'line', 'ray', 'arc', 'functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc'].includes(element.kind)}
           onVisibleChange={showLabel => onUpdateElement(element.id, { showLabel })}
           onStyleChange={style => onUpdateElement(element.id, { style: { ...element.style, ...style } })}
         />
