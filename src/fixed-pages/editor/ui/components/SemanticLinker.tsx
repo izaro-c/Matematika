@@ -77,7 +77,12 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const containerRef = useModalFocus<HTMLDivElement>(isOpen, onClose, closeButtonRef);
 
-  const [prevOpenState, setPrevOpenState] = useState({ isOpen, initialAttrs, editingTag, editingMarkup });
+  const [prevOpenState, setPrevOpenState] = useState({
+    isOpen: false,
+    initialAttrs: undefined as Record<string, any> | undefined,
+    editingTag: undefined as string | undefined,
+    editingMarkup: undefined as string | undefined,
+  });
   if (
     isOpen !== prevOpenState.isOpen ||
     initialAttrs !== prevOpenState.initialAttrs ||

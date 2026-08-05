@@ -819,10 +819,3 @@ export function parseDiagramSpecV2(value: unknown): { success: true; data: Diagr
   if (result.success) return { success: true, data: result.data as DiagramSpecV2 };
   return { success: false, error: new DiagramSpecValidationError(result.error.issues) };
 }
-
-/** @deprecated Use createDiagramSpec desde el API v3. */
-export function createDiagramSpecV2(value: unknown): DiagramSpecV2 {
-  const parsed = parseDiagramSpecV2(value);
-  if (!parsed.success) throw parsed.error;
-  return parsed.data;
-}

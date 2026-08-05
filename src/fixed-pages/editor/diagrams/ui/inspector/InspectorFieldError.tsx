@@ -5,13 +5,6 @@ interface InspectorFieldErrorProps {
   focused?: boolean;
 }
 
-// @deprecated Use DiagramFormField instead for new components.
-export function inspectorFieldClass(hasError: boolean, focused: boolean): string {
-  if (!hasError) return '';
-  return focused
-    ? 'border-granada bg-granada/10 ring-1 ring-granada/30'
-    : 'border-granada/35 bg-granada/5';
-}
 
 export const InspectorFieldError: React.FC<InspectorFieldErrorProps> = ({ message, focused = false }) => {
   if (!message) return null;

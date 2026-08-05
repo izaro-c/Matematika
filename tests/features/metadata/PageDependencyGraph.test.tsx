@@ -44,7 +44,7 @@ describe('PageDependencyGraph', () => {
     vi.spyOn(HTMLElement.prototype, 'offsetWidth', 'get').mockReturnValue(300);
   });
 
-  it('dibuja arista y flecha con el mismo contraste y separa la punta del nodo destino', () => {
+  it('dibuja arista y flecha con el mismo contraste y separa la punta del nodo destino', async () => {
     render(
       <PageDependencyGraph
         currentId="teorema-central"
@@ -54,7 +54,7 @@ describe('PageDependencyGraph', () => {
       />,
     );
 
-    expect(screen.getByTestId('force-graph')).toBeTruthy();
+    expect(await screen.findByTestId('force-graph')).toBeTruthy();
     const edgeColor = (graphProps.current.linkColor as () => string)();
     const arrowColor = (graphProps.current.linkDirectionalArrowColor as () => string)();
 
