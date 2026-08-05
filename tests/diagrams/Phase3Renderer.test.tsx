@@ -57,6 +57,7 @@ vi.mock('@/diagrams/jsxgraph/MathBoard', () => ({
           let value = 1;
           const handlers: Record<string, Array<(event?: unknown) => void>> = {};
           const geometry: any = {
+            elType: kind,
             X: () => x,
             Y: () => y,
             Value: () => value,
@@ -983,9 +984,32 @@ describe('Phase 3 shared renderer', () => {
         : point),
     };
     view.rerender(<MathProvider><DiagramRenderer spec={automatic} viewportControls={false} /></MathProvider>);
-    expect(point.setAttribute.mock.calls.some(call => (
-      (call[0] as { label?: { position?: string } })?.label?.position === 'urt'
-    ))).toBe(true);
+    expect(point.setAttribute.mock.calls.some(call => {
+      const label = (call[0] as { label?: { position?: string; autoPosition?: boolean } })?.label;
+      return label?.autoPosition === false && label?.position === 'urt';
+    })).toBe(true);
+  });
+
+  it('updates native line label positioning along path and applies offsets dynamically', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const lineTarget = base.elements.find(el => el.kind === 'segment' || el.kind === 'line')!;
+
+    const positionedLine = {
+      ...base,
+      elements: base.elements.map(el => el.id === lineTarget.id
+        ? { ...el, label: 's_1', showLabel: true, style: { ...el.style, labelPosition: 0.75, labelOffset: [5, -10] } }
+        : el),
+    };
+
+    render(<MathProvider><DiagramRenderer spec={positionedLine} viewportControls={false} /></MathProvider>);
+
+    const lineIndex = rendererState.createdOptions.findIndex(({ options }) => options.name === 's_1');
+    expect(lineIndex).toBeGreaterThan(-1);
+    expect(rendererState.createdOptions[lineIndex].options.label).toMatchObject({
+      visible: true,
+      position: 0.75,
+      offset: [5, -10],
+    });
   });
 
   it('keeps step emphasis in the original color, supports an override and yields exclusively to MDX', () => {

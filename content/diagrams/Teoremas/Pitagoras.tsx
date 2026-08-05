@@ -297,7 +297,8 @@ export const PitagorasSpec = createDiagramSpec(
         "y": 0
       },
       "mobility": {
-        "type": "free"
+        "type": "axis-x",
+        "coordinate": 0
       },
       "appearance": {
         "size": 7,

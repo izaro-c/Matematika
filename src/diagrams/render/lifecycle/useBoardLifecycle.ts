@@ -69,7 +69,7 @@ import {
   updateAreaIntersectionFills,
   updateCurveAreaFills,
 } from '@/diagrams/render/elements/boardElementHelpers';
-import { createElement } from '@/diagrams/render/elements/createBoardElement';
+import { createElement, nativeLabelPlacementOptions } from '@/diagrams/render/elements/createBoardElement';
 import { applyDiagramAuthoredFontSize } from '@/diagrams/diagramTextScale';
 
 export {
@@ -222,84 +222,89 @@ export function syncNativeElementLabel(
 ) {
   const label = nativeElementLabel(element);
   if (!label) return;
-  const previousCompassPosition = typeof element.__matematikaLabelPosition === 'string'
-    ? element.__matematikaLabelPosition
-    : undefined;
-  const compassPosition = typeof state.labelPosition === 'string'
-    ? state.labelPosition
-    : state.labelPosition === undefined && previousCompassPosition
-      ? 'urt'
-      : undefined;
-  const labelSignature = JSON.stringify({
-    visible: state.visible && state.text.trim().length > 0,
+
+  const visible = state.visible && state.text.trim().length > 0;
+  const isLineParametric = typeof state.labelPosition === 'number'
+    && (element.elType === 'line' || element.elType === 'segment' || element.elType === 'arrow');
+
+  const visualSignature = JSON.stringify({
+    visible,
     color: state.color,
     highlightColor: state.highlightColor,
     opacity: state.opacity,
     text: state.text,
     fontSize: state.fontSize,
-    labelPosition: state.labelPosition,
-    offset: state.offset,
-    compassPosition,
     highlighted: Boolean(state.highlighted),
   });
-  if (element.__matematikaLabelSignature === labelSignature) return;
-  element.__matematikaLabelSignature = labelSignature;
-
-  label.setText?.(renderKatexTextToHtml(state.text));
-  const labelNode = label.rendNode as HTMLElement | undefined;
-  labelNode?.style.setProperty('--diagram-label-highlight-color', state.highlightColor);
-  if (state.highlighted) {
-    labelNode?.classList.add('matematika-point-label--highlight');
-  } else {
-    labelNode?.classList.remove('matematika-point-label--highlight');
-  }
-
-  label.setAttribute({
-    visible: state.visible && state.text.trim().length > 0,
-    color: state.color,
-    strokeColor: state.color,
-    highlightStrokeColor: state.highlightColor,
-    opacity: state.opacity,
-    strokeOpacity: state.opacity,
-    highlightStrokeOpacity: state.opacity,
-    ...(state.fontSize !== undefined ? { fontSize: state.fontSize } : {}),
-    ...(compassPosition ? { position: compassPosition } : {}),
-    ...(state.offset !== undefined ? { offset: state.offset } : {}),
+  const layoutSignature = JSON.stringify({
+    labelPosition: state.labelPosition,
+    offset: state.offset,
+    isLineParametric,
   });
 
-  // After JSXGraph may write a raw px fontSize, publish authored size for CSS scale
-  // (or clear the variable when labelSize is reset to default).
-  applyDiagramAuthoredFontSize(labelNode, state.fontSize);
+  const visualChanged = element.__matematikaLabelVisualSignature !== visualSignature;
+  const layoutChanged = element.__matematikaLabelLayoutSignature !== layoutSignature;
+  if (!visualChanged && !layoutChanged) return;
+  element.__matematikaLabelVisualSignature = visualSignature;
+  element.__matematikaLabelLayoutSignature = layoutSignature;
 
-  // JSXGraph reads native-label placement from the owning geometry as well as
-  // from the generated Text node. Updating both is required for point labels,
-  // and remembering the last explicit value lets “Automática” restore the
-  // library default after a preset has already been selected.
-  if (compassPosition) {
-    element.setAttribute?.({
-      label: {
-        position: compassPosition,
-        ...(state.offset !== undefined ? { offset: state.offset } : {}),
-      },
+  if (visualChanged) {
+    label.setText?.(renderKatexTextToHtml(state.text));
+    const labelNode = label.rendNode as HTMLElement | undefined;
+    labelNode?.style.setProperty('--diagram-label-highlight-color', state.highlightColor);
+    if (state.highlighted) {
+      labelNode?.classList.add('matematika-point-label--highlight');
+    } else {
+      labelNode?.classList.remove('matematika-point-label--highlight');
+    }
+    label.setAttribute?.({
+      visible,
+      color: state.color,
+      strokeColor: state.color,
+      highlightStrokeColor: state.highlightColor,
+      opacity: state.opacity,
+      strokeOpacity: state.opacity,
+      highlightStrokeOpacity: state.opacity,
+      ...(state.fontSize !== undefined ? { fontSize: state.fontSize } : {}),
     });
+    applyDiagramAuthoredFontSize(labelNode, state.fontSize);
   }
+
+  if (layoutChanged) {
+    if (!element.__matematikaOriginalGetLabelAnchor && typeof element.getLabelAnchor === 'function') {
+      element.__matematikaOriginalGetLabelAnchor = element.getLabelAnchor;
+    }
+
+    if (isLineParametric) {
+      const t = state.labelPosition as number;
+      const finalOffset = state.offset ?? [0, 0];
+      label.setAttribute?.({
+        autoPosition: false,
+        anchorX: 'center',
+        anchorY: 'middle',
+        offset: finalOffset,
+      });
+      if (label.visProp) {
+        label.visProp.autoPosition = false;
+        label.visProp.anchorx = 'center';
+        label.visProp.anchory = 'middle';
+        label.visProp.offset = [...finalOffset];
+        if (label.visProp.islabel === undefined) label.visProp.islabel = true;
+      }
+      element.getLabelAnchor = () => calculateLineLabelAnchor(element, t);
+      delete label.X;
+      delete label.Y;
+    } else {
+      if (element.__matematikaOriginalGetLabelAnchor) {
+        element.getLabelAnchor = element.__matematikaOriginalGetLabelAnchor;
+      }
+      const placement = nativeLabelPlacementOptions(state.labelPosition, state.offset);
+      label.setAttribute?.(placement);
+      element.setAttribute?.({ label: placement });
+    }
+  }
+
   element.__matematikaLabelPosition = typeof state.labelPosition === 'string' ? state.labelPosition : undefined;
-
-  if (state.labelPosition !== undefined && typeof state.labelPosition === 'number' && (element.elType === 'line' || element.elType === 'segment' || element.elType === 'arrow')) {
-    const t = state.labelPosition;
-
-    label.setAttribute({
-      anchorX: 'center',
-      anchorY: 'middle',
-      offset: state.offset ?? [0, 0],
-    });
-
-    element.getLabelAnchor = () => calculateLineLabelAnchor(element, t);
-
-    label.visProp.islabel = true;
-    delete label.X;
-    delete label.Y;
-  }
 
   label.needsUpdate = true;
   if (label.update) label.update();
@@ -459,8 +464,9 @@ export function useBoardLifecycle({
       const pointLabelOptions = {
         visible: spec.showLabels !== false && (!('showLabel' in sceneItem) || sceneItem.showLabel !== false),
         ...('constraint' in sceneItem && sceneItem.style?.labelSize !== undefined ? { fontSize: sceneItem.style.labelSize } : {}),
-        ...('constraint' in sceneItem && typeof sceneItem.style?.labelPosition === 'string' ? { position: sceneItem.style.labelPosition } : {}),
-        ...(sceneItem.style?.labelOffset ? { offset: sceneItem.style.labelOffset } : {}),
+        ...('constraint' in sceneItem
+          ? nativeLabelPlacementOptions(sceneItem.style?.labelPosition, sceneItem.style?.labelOffset)
+          : {}),
         highlightStrokeColor: hoverColor,
       };
       if ('constraint' in sceneItem) {
@@ -809,7 +815,7 @@ export function useBoardLifecycle({
       border.rendNode?.setAttribute('data-diagram-selectable', String(selectable));
       if (border.rendNode) border.rendNode.style.cursor = selectable && mode === 'editor' ? 'pointer' : '';
     });
-    const defaultShowLabel = 'constraint' in item || ('kind' in item && ['intersection', 'midpoint', 'perpendicularFoot', 'angle', 'nonReflexAngle'].includes(item.kind));
+    const defaultShowLabel = 'constraint' in item || ('kind' in item && ['intersection', 'midpoint', 'perpendicularFoot'].includes(item.kind));
     const nativeLabelVisible = visible && spec.showLabels !== false
       && (entry.stepShowLabel !== undefined
         ? entry.stepShowLabel

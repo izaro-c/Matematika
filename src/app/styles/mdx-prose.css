@@ -141,6 +141,12 @@
   stroke: var(--theme-lienzo);
   stroke-width: 3px;
   stroke-linejoin: round;
+  fill: currentColor !important;
+}
+
+.JXGtext .katex,
+.JXGtext .katex * {
+  color: inherit !important;
 }
 
 /* Etiquetas de puntos — default 19px desktop */

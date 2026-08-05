@@ -61,6 +61,59 @@ import {
   resolveBoardViewportBounds,
 } from '@/diagrams/render/elements/boardElementHelpers';
 
+/** Isometric offsets for explicit inspector compass presets only. */
+export const LABEL_GAP = 14;
+const LABEL_GAP_DIAG = LABEL_GAP / Math.SQRT2;
+
+export const COMPASS_LAYOUT: Record<string, {
+  anchorX: 'left' | 'middle' | 'right';
+  anchorY: 'top' | 'middle' | 'bottom';
+  offset: [number, number];
+}> = {
+  rt:   { anchorX: 'left',   anchorY: 'middle', offset: [LABEL_GAP, 0] },
+  urt:  { anchorX: 'left',   anchorY: 'bottom', offset: [LABEL_GAP_DIAG, LABEL_GAP_DIAG] },
+  top:  { anchorX: 'middle', anchorY: 'bottom', offset: [0, LABEL_GAP] },
+  ulft: { anchorX: 'right',  anchorY: 'bottom', offset: [-LABEL_GAP_DIAG, LABEL_GAP_DIAG] },
+  lft:  { anchorX: 'right',  anchorY: 'middle', offset: [-LABEL_GAP, 0] },
+  llft: { anchorX: 'right',  anchorY: 'top',    offset: [-LABEL_GAP_DIAG, -LABEL_GAP_DIAG] },
+  bot:  { anchorX: 'middle', anchorY: 'top',    offset: [0, -LABEL_GAP] },
+  lrt:  { anchorX: 'left',   anchorY: 'top',    offset: [LABEL_GAP_DIAG, -LABEL_GAP_DIAG] },
+};
+
+export const COMPASS_OFFSET: Record<string, [number, number]> = Object.fromEntries(
+  Object.entries(COMPASS_LAYOUT).map(([k, v]) => [k, v.offset]),
+);
+
+/** Explicit compass preset, or JSXGraph default (urt) for Automática — no custom auto-pick. */
+export function nativeLabelPlacementOptions(
+  labelPosition?: string | number,
+  labelOffset?: [number, number],
+): Record<string, unknown> {
+  if (typeof labelPosition === 'string' && labelPosition) {
+    const layout = COMPASS_LAYOUT[labelPosition] ?? COMPASS_LAYOUT.urt;
+    return {
+      autoPosition: false,
+      position: labelPosition,
+      anchorX: layout.anchorX,
+      anchorY: layout.anchorY,
+      offset: labelOffset ?? layout.offset,
+    };
+  }
+  if (typeof labelPosition === 'number') {
+    return {
+      autoPosition: false,
+      position: labelPosition,
+      ...(labelOffset !== undefined ? { offset: labelOffset } : {}),
+    };
+  }
+  // Automática: JSXGraph default — stable urt, no continuous autoPosition, no custom scorer.
+  return {
+    autoPosition: false,
+    position: 'urt',
+    ...(labelOffset !== undefined ? { offset: labelOffset } : {}),
+  };
+}
+
 export function createElement(
   board: any,
   elements: Record<string, any>,
@@ -74,13 +127,14 @@ export function createElement(
   const refs = refsFor(item, elements);
   const highlightable = item.selection.highlightable !== false;
   const hoverColor = !highlightable || preservesOwnColorOnHighlight(item.style) ? theme[item.color] : theme.ocre;
-  const defaultShowLabel = 'constraint' in item || ('kind' in item && ['intersection', 'midpoint', 'perpendicularFoot', 'angle', 'nonReflexAngle'].includes(item.kind));
+  const defaultShowLabel = 'constraint' in item || ('kind' in item && ['intersection', 'midpoint', 'perpendicularFoot'].includes(item.kind));
   const labelVisible = spec.showLabels !== false && (item.showLabel !== undefined ? item.showLabel : defaultShowLabel);
   const labelOptions = {
     visible: labelVisible,
+    strokeColor: theme[item.color],
+    color: theme[item.color],
     ...(item.style?.labelSize !== undefined ? { fontSize: item.style.labelSize } : {}),
-    ...(typeof item.style?.labelPosition === 'string' ? { position: item.style.labelPosition } : {}),
-    ...(item.style?.labelOffset !== undefined ? { offset: item.style.labelOffset } : {}),
+    ...nativeLabelPlacementOptions(item.style?.labelPosition, item.style?.labelOffset),
   };
   const lineOptions = withDiagramHoverTransition({
     strokeColor: theme[item.color],

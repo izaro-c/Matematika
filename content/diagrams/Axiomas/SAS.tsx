@@ -472,6 +472,11 @@ export const SASSpec = createDiagramSpec(
       "marker": "arc",
       "appearance": {
         "radius": 1,
+        "labelVisible": true,
+        "labelOffset": [
+          -5,
+          -10
+        ],
         "preserveColorOnHighlight": true
       }
     },
@@ -602,6 +607,11 @@ export const SASSpec = createDiagramSpec(
       "marker": "arc",
       "appearance": {
         "radius": 1,
+        "labelVisible": true,
+        "labelOffset": [
+          -5,
+          -11
+        ],
         "preserveColorOnHighlight": true
       }
     },
