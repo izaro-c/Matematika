@@ -54,8 +54,8 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
             </label>
             <input
               type="number"
-              step="0.5"
-              min="1"
+              step="0.1"
+              min="0"
               max="10"
               aria-label="Grosor Trazo (px)"
               value={element.style?.strokeWidth ?? 2.4}
@@ -73,7 +73,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
             </label>
             <input
               type="number"
-              step="0.5"
+              step="0.1"
               min="0"
               max="30"
               aria-label="Grosor Trazo en Hover (px)"
@@ -119,10 +119,10 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               step="0.05"
               min="0"
               max="1"
-              value={element.style?.highlightFillOpacity ?? 0.34}
+              value={element.style?.highlightFillOpacity ?? 0.35}
               onChange={e =>
                 onUpdateElement(element.id, {
-                  style: { ...(element.style || {}), highlightFillOpacity: parseFloat(e.target.value) || 0.34 },
+                  style: { ...(element.style || {}), highlightFillOpacity: parseFloat(e.target.value) || 0.35 },
                 })
               }
               className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
@@ -138,12 +138,13 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
           </label>
           <input
             type="number"
-            min="10"
+            step="0.1"
+            min="0"
             max="80"
-            value={element.style?.angleRadius ?? 28}
+            value={element.style?.angleRadius ?? 1}
             onChange={e =>
               onUpdateElement(element.id, {
-                style: { ...(element.style || {}), angleRadius: parseInt(e.target.value, 10) || 28 },
+                style: { ...(element.style || {}), angleRadius: parseFloat(e.target.value) || 1 },
               })
             }
             className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
