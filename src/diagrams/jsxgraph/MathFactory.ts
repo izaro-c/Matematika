@@ -7,6 +7,12 @@ import type { GeometryOptions, JXGCoord, JXGPolygon, JXGSlider, PointLike, Point
 import { setExactPointPosition } from '@/diagrams/jsxgraph/MathUtils';
 import {DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS} from '@/diagrams/model';
 import {
+  getDiagramScale,
+  resolveAdaptivePointSize,
+  resolveAdaptiveHighlightPointSize,
+  resolveAdaptiveAngleRadius,
+} from '@/diagrams/render/elements/diagramAdaptiveScale';
+import {
   halfPlaneViewportPolygon,
   type Coordinates,
 } from '@/diagrams/geometry/areas/areaGeometry';
@@ -25,12 +31,12 @@ export interface PointOptions extends GeometryOptions {
 }
 
 export interface AngleOptions extends GeometryOptions {
-  radius?: number;
+  radius?: number | (() => number);
   type?: string;
 }
 
 export interface RightAngleMarkerOptions extends GeometryOptions {
-  size?: number;
+  size?: number | (() => number);
 }
 
 export interface CongruenceMarkOptions extends GeometryOptions {
@@ -121,11 +127,11 @@ export function createPoint(
   options: PointOptions = {},
   theme: ThemeColors,
 ): JXG.Point {
-  const { label, ...attributes } = options;
+  const { label, size = 4, highlightSize = 6, ...attributes } = options;
   const labelOpts = pointLabel(theme, label);
   const point = board.create('point', coords, {
-    size: 4,
-    highlightSize: 6,
+    size,
+    highlightSize,
     fillColor: theme.carbon,
     strokeColor: theme.carbon,
     highlightFillColor: theme.ocre,
@@ -134,6 +140,14 @@ export function createPoint(
     ...attributes,
     label: labelOpts,
   } as never) as JXG.Point;
+
+  if ((point as any).visProp) {
+    const s = typeof size === 'function' ? (size as unknown as () => number)() : size;
+    const hs = typeof highlightSize === 'function' ? (highlightSize as unknown as () => number)() : highlightSize;
+    (point as any).visProp.size = () => resolveAdaptivePointSize(s, getDiagramScale(board));
+    (point as any).visProp.highlightsize = () => resolveAdaptiveHighlightPointSize(hs, getDiagramScale(board));
+  }
+
   return finishLabeledPoint(point, labelOpts);
 }
 
@@ -843,7 +857,8 @@ export function createAngle(
   theme: ThemeColors,
 ): JXG.Angle {
   const { radius = DEFAULT_ANGLE_RADIUS, ...attrs } = options;
-  return board.create('angle', points, {
+  const getRadius = resolveAdaptiveAngleRadius(board, points[1], radius);
+  const angle = board.create('angle', points, {
     type: 'sector',
     radius,
     fillColor: theme.ocre,
@@ -853,6 +868,12 @@ export function createAngle(
     label: { visible: false },
     ...attrs,
   } as never) as JXG.Angle;
+
+  if (typeof (angle as any).visProp === 'object' && (angle as any).visProp) {
+    (angle as any).visProp.radius = getRadius;
+  }
+
+  return angle;
 }
 
 export function createNonReflexAngle(
@@ -862,7 +883,8 @@ export function createNonReflexAngle(
   theme: ThemeColors,
 ): JXG.Angle {
   const { radius = DEFAULT_ANGLE_RADIUS, ...attrs } = options;
-  return board.create('nonreflexangle', points, {
+  const getRadius = resolveAdaptiveAngleRadius(board, points[1], radius);
+  const angle = board.create('nonreflexangle', points, {
     type: 'sector',
     radius,
     fillColor: theme.ocre,
@@ -872,6 +894,12 @@ export function createNonReflexAngle(
     label: { visible: false },
     ...attrs,
   } as never) as JXG.Angle;
+
+  if (typeof (angle as any).visProp === 'object' && (angle as any).visProp) {
+    (angle as any).visProp.radius = getRadius;
+  }
+
+  return angle;
 }
 
 export function createRightAngleMarker(
@@ -882,6 +910,7 @@ export function createRightAngleMarker(
 ): JXGPolygon {
   const [legA, vertex, legB] = points;
   const { size = DEFAULT_RIGHT_ANGLE_RADIUS, ...attrs } = options;
+  const getSize = resolveAdaptiveAngleRadius(board, vertex, size);
   const unit = (from: PointLike, to: PointLike) => {
     const dx = to.X() - from.X();
     const dy = to.Y() - from.Y();
@@ -890,16 +919,16 @@ export function createRightAngleMarker(
   };
   const p0 = board.create('point', [() => vertex.X(), () => vertex.Y()], { visible: false } as never);
   const p1 = board.create('point', [
-    () => vertex.X() + unit(vertex, legA).x * size,
-    () => vertex.Y() + unit(vertex, legA).y * size,
+    () => vertex.X() + unit(vertex, legA).x * getSize(),
+    () => vertex.Y() + unit(vertex, legA).y * getSize(),
   ], { visible: false } as never);
   const p2 = board.create('point', [
-    () => vertex.X() + (unit(vertex, legA).x + unit(vertex, legB).x) * size,
-    () => vertex.Y() + (unit(vertex, legA).y + unit(vertex, legB).y) * size,
+    () => vertex.X() + (unit(vertex, legA).x + unit(vertex, legB).x) * getSize(),
+    () => vertex.Y() + (unit(vertex, legA).y + unit(vertex, legB).y) * getSize(),
   ], { visible: false } as never);
   const p3 = board.create('point', [
-    () => vertex.X() + unit(vertex, legB).x * size,
-    () => vertex.Y() + unit(vertex, legB).y * size,
+    () => vertex.X() + unit(vertex, legB).x * getSize(),
+    () => vertex.Y() + unit(vertex, legB).y * getSize(),
   ], { visible: false } as never);
 
   return board.create('polygon', [p0, p1, p2, p3], {
