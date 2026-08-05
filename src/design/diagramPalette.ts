@@ -23,6 +23,3 @@ export const DIAGRAM_PALETTE_TOKENS: {
   { id: 'terracota', name: 'Rojo', bgClass: 'bg-terracota', textClass: 'text-terracota', borderClass: 'border-terracota' },
   { id: 'granada', name: 'Rosa', bgClass: 'bg-granada', textClass: 'text-granada', borderClass: 'border-granada' },
 ];
-
-/** @deprecated Use DIAGRAM_PALETTE_TOKENS */
-export const PALETTE_TOKENS = DIAGRAM_PALETTE_TOKENS;

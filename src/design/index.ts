@@ -22,6 +22,5 @@ export {
 } from './pageAccents';
 export {
   DIAGRAM_PALETTE_TOKENS,
-  PALETTE_TOKENS,
   type DiagramPaletteColorId,
 } from './diagramPalette';

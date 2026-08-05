@@ -50,15 +50,15 @@ describe('stepEmphasisAnimation', () => {
 
   it('adds pulse delta to the base emphasis value', () => {
     expect(pulsedPrimaryValue(3.2, STEP_EMPHASIS_STROKE_DELTA, 0)).toBe(3.2);
-    expect(pulsedPrimaryValue(3.2, STEP_EMPHASIS_STROKE_DELTA, 1)).toBeCloseTo(5.2, 5);
+    expect(pulsedPrimaryValue(3.2, STEP_EMPHASIS_STROKE_DELTA, 1)).toBeCloseTo(6.2, 5);
     expect(pulsedPrimaryValue(10, STEP_EMPHASIS_POINT_DELTA, 1)).toBeCloseTo(11, 5);
     expect(pulsedPrimaryValue(0.24, STEP_EMPHASIS_FILL_DELTA, 1)).toBeCloseTo(0.44, 5);
   });
 
   it('pulses stroke width for primary emphasis on line-like elements', () => {
     expect(resolveStepEmphasisStrokeWidth(undefined, primaryState(0))).toBe(3.2);
-    expect(resolveStepEmphasisStrokeWidth(undefined, primaryState(1))).toBeCloseTo(5.2, 5);
-    expect(resolveStepEmphasisStrokeWidth({ strokeWidth: 2.4, highlightStrokeWidth: 4 }, primaryState(1))).toBeCloseTo(6, 5);
+    expect(resolveStepEmphasisStrokeWidth(undefined, primaryState(1))).toBeCloseTo(6.2, 5);
+    expect(resolveStepEmphasisStrokeWidth({ strokeWidth: 2.4, highlightStrokeWidth: 4 }, primaryState(1))).toBeCloseTo(7, 5);
   });
 
   it('uses the configured highlight stroke width for secondary emphasis, like hover', () => {

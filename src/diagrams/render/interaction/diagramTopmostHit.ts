@@ -48,14 +48,6 @@ export function pickPreferredHitId(
   ));
 }
 
-/** @deprecated Prefer `pickPreferredHitId`. */
-export function pickTopmostHitId(
-  hitIds: readonly string[],
-  visualOrderById: ReadonlyMap<string, number>,
-): string | undefined {
-  return pickPreferredHitId(hitIds, visualOrderById);
-}
-
 export function resolveCanvasSelectionHitId(options: {
   hitIds: readonly string[];
   selectableIds: ReadonlySet<string>;
@@ -133,22 +125,29 @@ export function installTopmostOnlyHitTesting(
     const element = elements[id];
     if (!element?.__matematikaOriginalHasPoint) return;
 
+    let isTestingHit = false;
     const isPreferredAt = (x: number, y: number) => {
-      const allHits = originalHitsAt(elements, ids, x, y);
-      const competing = selectableIds && selectableIds.size > 0
-        ? (() => {
-          const selectableHits = allHits.filter(hitId => selectableIds.has(hitId));
-          return selectableHits.length > 0 ? selectableHits : allHits;
-        })()
-        : allHits;
-      const hoveredId = getHoveredId?.();
-      if (hoveredId && competing.includes(hoveredId)) return hoveredId === id;
-      return pickPreferredHitId(
-        competing,
-        visualOrderById,
-        supportParentsByPointId,
-        pointLikeIds,
-      ) === id;
+      if (isTestingHit) return true;
+      isTestingHit = true;
+      try {
+        const allHits = originalHitsAt(elements, ids, x, y);
+        const competing = selectableIds && selectableIds.size > 0
+          ? (() => {
+            const selectableHits = allHits.filter(hitId => selectableIds.has(hitId));
+            return selectableHits.length > 0 ? selectableHits : allHits;
+          })()
+          : allHits;
+        const hoveredId = getHoveredId?.();
+        if (hoveredId && competing.includes(hoveredId)) return hoveredId === id;
+        return pickPreferredHitId(
+          competing,
+          visualOrderById,
+          supportParentsByPointId,
+          pointLikeIds,
+        ) === id;
+      } finally {
+        isTestingHit = false;
+      }
     };
 
     element.hasPoint = (x: number, y: number) => {
