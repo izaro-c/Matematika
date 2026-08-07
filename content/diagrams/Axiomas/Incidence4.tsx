@@ -65,8 +65,8 @@ export const Incidence4Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -0.73,
-        "y": 4.05
+        "x": -0.75,
+        "y": 3.25
       },
       "mobility": {
         "type": "free"
@@ -97,8 +97,8 @@ export const Incidence4Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 2.27,
-        "y": 0.04
+        "x": 3.35,
+        "y": -0.9
       },
       "mobility": {
         "type": "free"
@@ -129,8 +129,8 @@ export const Incidence4Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -4.13,
-        "y": -1.4
+        "x": -2.92,
+        "y": -3.29
       },
       "mobility": {
         "type": "free"

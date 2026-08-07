@@ -74,10 +74,10 @@ export const DIAGRAM_CHROME = {
   headerInsetSm: 32,
   headerInsetXs: 20,
   toolbarGapWithToolbar: 8,
-  toolbarGapWithoutToolbar: 20,
+  toolbarGapWithoutToolbar: 14,
   toolbarFallbackHeight: 56,
   /** Initial React state before the first measure. */
-  initialHeaderTop: 150,
+  initialHeaderTop: 100,
   initialToolbarBottom: 68,
 } as const;
 
@@ -99,12 +99,16 @@ export function sideChromeWidthPx(rootWidth: number): number {
   return Math.min(proportional, maxForBoard);
 }
 
-export function initialDiagramSafeAreas(showToolbar: boolean): Pick<DiagramSafeAreas, 'safeArea' | 'viewportSafeArea' | 'headerLayout' | 'sideChromeWidth' | 'sidePad'> {
+export function initialDiagramSafeAreas(
+  showToolbar: boolean,
+  hasHeader = true,
+): Pick<DiagramSafeAreas, 'safeArea' | 'viewportSafeArea' | 'headerLayout' | 'sideChromeWidth' | 'sidePad'> {
+  const inset = DIAGRAM_CHROME.headerInsetXs;
   const area: DiagramInsets = {
-    top: DIAGRAM_CHROME.initialHeaderTop,
-    right: DIAGRAM_CHROME.headerInsetXs,
-    bottom: showToolbar ? DIAGRAM_CHROME.initialToolbarBottom : DIAGRAM_CHROME.headerInsetXs,
-    left: DIAGRAM_CHROME.headerInsetXs,
+    top: hasHeader ? DIAGRAM_CHROME.initialHeaderTop : inset,
+    right: inset,
+    bottom: showToolbar ? DIAGRAM_CHROME.initialToolbarBottom : inset,
+    left: inset,
   };
   return { safeArea: area, viewportSafeArea: area, headerLayout: 'top', sideChromeWidth: 0, sidePad: 0 };
 }
@@ -129,16 +133,24 @@ export function computeDiagramSafeAreas(
   const sidePad = useSideHeader
     ? (metrics.isSmUp ? DIAGRAM_CHROME.sidePadSm : DIAGRAM_CHROME.sidePadXs)
     : 0;
-  const viewportHeaderBottom = Math.ceil(metrics.visibleHeaderContentBottom) + DIAGRAM_CHROME.headerGap;
-  const toolbarBottom = Math.ceil(metrics.toolbarHeight)
-    + (showToolbar ? DIAGRAM_CHROME.toolbarGapWithToolbar : DIAGRAM_CHROME.toolbarGapWithoutToolbar);
+  const headerInset = metrics.isSmUp ? DIAGRAM_CHROME.headerInsetSm : DIAGRAM_CHROME.headerInsetXs;
+  const edge = DIAGRAM_CHROME.railsEdgeInset;
+
+  const viewportHeaderBottom = hasHeader
+    ? (metrics.visibleHeaderContentBottom > 0
+        ? Math.ceil(metrics.visibleHeaderContentBottom) + DIAGRAM_CHROME.headerGap
+        : headerInset)
+    : (useSideHeader ? sidePad : (metrics.isSmUp ? DIAGRAM_CHROME.headerInsetSm : DIAGRAM_CHROME.headerInsetXs));
+
+  const toolbarBottom = showToolbar
+    ? Math.ceil(metrics.toolbarHeight) + DIAGRAM_CHROME.toolbarGapWithToolbar
+    : headerInset;
+
   const useRails = Boolean(
     showToolbar
     && (metrics.rootWidth < DIAGRAM_CHROME.railsMinWidth || metrics.rootHeight < DIAGRAM_CHROME.railsMinHeight),
   );
-  const headerInset = metrics.isSmUp ? DIAGRAM_CHROME.headerInsetSm : DIAGRAM_CHROME.headerInsetXs;
-  const panelExtra = hasTopViewportPanel ? DIAGRAM_CHROME.topViewportPanelExtra : 0;
-  const edge = DIAGRAM_CHROME.railsEdgeInset;
+  const panelExtra = (hasHeader && hasTopViewportPanel) ? DIAGRAM_CHROME.topViewportPanelExtra : 0;
   const sideLeft = sideChromeWidth + DIAGRAM_CHROME.headerGap;
 
   if (useSideHeader) {

@@ -9,6 +9,7 @@ export type EditorResourceKind = 'mdx-document' | 'diagram' | 'internal';
 export interface EditorResourceCatalogEntry {
   path: string;
   name: string;
+  title?: string;
   type: string;
   kind: EditorResourceKind;
   capability: EditorResourceCapability;

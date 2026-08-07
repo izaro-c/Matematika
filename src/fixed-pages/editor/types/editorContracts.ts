@@ -55,6 +55,7 @@ export interface WizardData {
 export interface FileNode {
   path: string;
   name: string;
+  title?: string;
   type: string;
   kind: 'mdx-document' | 'diagram';
   capability: 'visual-exact' | 'code-preview' | 'invalid';

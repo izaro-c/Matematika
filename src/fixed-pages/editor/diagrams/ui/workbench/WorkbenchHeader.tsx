@@ -99,7 +99,8 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
       isInspectorOpen={isInspectorOpen}
       onToggleInspector={onToggleInspector}
       confirmCloseWhenDirty
-      closeConfirmMessage="Hay cambios sin guardar en el diagrama. ¿Deseas salir del editor de todos modos?"
+      closeTitle="Cerrar diagrama"
+      closeConfirmMessage="Hay cambios sin guardar en el diagrama. ¿Deseas cerrar el diagrama de todos modos?"
       onCloseEditor={onCloseEditor}
       avisos={{
         errorCount: saveCapability.errorCount,

@@ -100,12 +100,89 @@ export function resourceStatus(file: FileNode): EditorCatalogStatus {
   return 'available';
 }
 
+const KNOWN_TITLES: Record<string, string> = {
+  // Teoremas, lemas y corolarios MDX
+  'teorema-pitagoras': 'Teorema de Pitágoras',
+  'teorema-tales': 'Teorema de Tales',
+  'teorema-angulo-externo': 'Teorema del Ángulo Externo',
+  'teorema-angulos-alternos-internos': 'Teorema de los Ángulos Alternos Internos',
+  'teorema-angulos-opuestos-verticales': 'Teorema de los Ángulos Opuestos por el Vértice',
+  'teorema-area-aditividad': 'Teorema de Aditividad del Área',
+  'teorema-area-invariancia': 'Teorema de Invariancia del Área',
+  'teorema-area-rectangulo': 'Teorema del Área del Rectángulo',
+  'teorema-area-triangulo': 'Teorema del Área del Triángulo',
+  'teorema-congruencia-aal': 'Teorema de Congruencia AAL',
+  'teorema-congruencia-ala': 'Teorema de Congruencia ALA',
+  'teorema-congruencia-lll': 'Teorema de Congruencia LLL',
+  'teorema-desigualdad-triangular': 'Teorema de la Desigualdad Triangular',
+  'teorema-dos-rectas-un-punto': 'Teorema de la Intersección de Rectas',
+  'teorema-existencia-bisectriz': 'Teorema de Existencia de la Bisectriz',
+  'teorema-existencia-perpendicular': 'Teorema de Existencia de Perpendicular',
+  'teorema-invariancia-triangulacion': 'Teorema de Invariancia por Triangulación',
+  'teorema-punto-medio-perpendicular': 'Teorema de la Perpendicular en el Punto Medio',
+  'teorema-reciproco-triangulo-isosceles': 'Teorema Recíproco del Triángulo Isósceles',
+  'teorema-suma-angulos-triangulo': 'Teorema de la Suma de Ángulos del Triángulo',
+  'teorema-triangulacion-poligono': 'Teorema de Triangulación del Polígono',
+  'teorema-triangulo-isosceles': 'Teorema del Triángulo Isósceles',
+  'lema-punto-medio': 'Lema del Punto Medio',
+  'corolario-rectas-coincidentes': 'Corolario de Rectas Coincidentes',
+
+  // Diagramas TSX
+  'AngulosOpuestos': 'Ángulos Opuestos por el Vértice',
+  'CongruenciaALA': 'Congruencia ALA',
+  'CongruenciaLLL': 'Congruencia LLL',
+  'DesigualdadTriangular': 'Desigualdad Triangular',
+  'DosRectasUnPunto': 'Intersección de dos rectas en un punto',
+  'LemaPuntoMedio': 'Lema del Punto Medio',
+  'Pitagoras': 'Teorema de Pitágoras',
+  'PuntoMedioPerpendicular': 'Perpendicular por el Punto Medio',
+  'SumaAngulos': 'Suma de los Ángulos de un Triángulo',
+  'Tales': 'Teorema de Tales',
+  'TrianguloIsosceles': 'Teorema del Triángulo Isósceles',
+};
+
+const ACCENTED_WORDS: Record<string, string> = {
+  angulo: 'ángulo',
+  angulos: 'ángulos',
+  area: 'área',
+  areas: 'áreas',
+  definicion: 'definición',
+  definiciones: 'definiciones',
+  demostracion: 'demostración',
+  demostraciones: 'demostraciones',
+  metodo: 'método',
+  metodos: 'métodos',
+  isosceles: 'isósceles',
+  poligono: 'polígono',
+  poligonos: 'polígonos',
+  triangulo: 'triángulo',
+  triangulos: 'triángulos',
+  reciproco: 'recíproco',
+  triangulacion: 'triangulación',
+};
+
 export function resourceDisplayName(file: FileNode): string {
-  const clean = file.name
-    .replace(/\.(mdx|tsx)$/, '')
-    .replace(/^(teorema|lema|corolario|definicion|axioma|ejercicio|ejemplo|modelo)-/, '')
-    .replace(/-/g, ' ');
-  return clean.replace(/\b\p{L}/gu, letter => letter.toUpperCase());
+  if (file.title && file.title.trim()) return file.title;
+  const baseName = file.name.replace(/\.(mdx|tsx)$/, '');
+  if (KNOWN_TITLES[baseName]) return KNOWN_TITLES[baseName];
+
+  const words = baseName
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .split('-')
+    .map(w => w.trim())
+    .filter(Boolean);
+
+  const formatted = words.map((word, index) => {
+    const lower = word.toLowerCase();
+    const accented = ACCENTED_WORDS[lower] ?? lower;
+    if (index > 0 && ['de', 'del', 'la', 'los', 'las', 'en', 'con', 'y', 'un', 'una', 'por', 'el'].includes(lower)) {
+      return lower;
+    }
+    return accented.charAt(0).toUpperCase() + accented.slice(1);
+  });
+
+  const result = formatted.join(' ');
+  return result.charAt(0).toUpperCase() + result.slice(1);
 }
 
 export function filterCatalogResources(

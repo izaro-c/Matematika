@@ -40,6 +40,7 @@ export interface EditorWorkbenchHeaderProps {
   avisos: EditorHeaderAvisosState;
   save: HeaderSaveState;
   onCloseEditor?: () => void;
+  closeTitle?: string;
   /** When true, closing while dirty asks for confirmation. */
   confirmCloseWhenDirty?: boolean;
   closeConfirmMessage?: string;
@@ -87,8 +88,9 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
   avisos,
   save,
   onCloseEditor,
+  closeTitle = 'Cerrar documento',
   confirmCloseWhenDirty = false,
-  closeConfirmMessage = 'Hay cambios sin guardar. ¿Deseas salir de todos modos?',
+  closeConfirmMessage = 'Hay cambios sin guardar. ¿Deseas cerrar de todos modos?',
 }) => {
   const [isDark, setIsDark] = useState(isDarkMode);
   const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
@@ -206,7 +208,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
         <HeaderIconButton onClick={toggleTheme} title={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}>
           {isDark ? <IconSun className="h-4 w-4" /> : <IconMoon className="h-4 w-4" />}
         </HeaderIconButton>
-        <HeaderIconButton onClick={handleClose} variant="danger" title="Cerrar editor" aria-label="Cerrar editor">
+        <HeaderIconButton onClick={handleClose} variant="danger" title={closeTitle} aria-label={closeTitle}>
           <IconClose className="h-4 w-4" />
         </HeaderIconButton>
       </div>

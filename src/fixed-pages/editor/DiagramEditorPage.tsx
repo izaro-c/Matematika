@@ -9,7 +9,7 @@ import type { DiagramWorkbenchMode } from '@/fixed-pages/editor/diagrams/ui/work
  * Optional: ?new=ComponentName → new diagram mode.
  */
 export const DiagramEditorPage: React.FC = () => {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const mode = useMemo<DiagramWorkbenchMode | undefined>(() => {
     const query = location.includes('?') ? location.slice(location.indexOf('?') + 1) : window.location.search.replace(/^\?/, '');
     const params = new URLSearchParams(query);
@@ -22,7 +22,7 @@ export const DiagramEditorPage: React.FC = () => {
 
   return (
     <div className="h-screen w-screen overflow-hidden">
-      <DiagramWorkbench mode={mode} />
+      <DiagramWorkbench mode={mode} onClose={() => setLocation('/editor?tab=diagrams')} />
     </div>
   );
 };
