@@ -22,17 +22,18 @@ export type InlineNode =
   | { type: 'inlineLatex'; value: string }
   | { type: 'conceptLink'; value: string; attrs: Record<string, any>; raw: string }
   | { type: 'refLink'; value: string; attrs: Record<string, any>; raw: string }
-  | { type: 'interactiveElement'; value: string; attrs: Record<string, any>; raw: string };
+  | { type: 'interactiveElement'; value: string; attrs: Record<string, any>; raw: string }
+  | { type: 'proofStepLink'; step: number; raw: string };
 
 export interface ProofStepData {
   number: number;
   title: string;
-  justificacion: string;
   target?: string | string[];
+  /** initial | omitido=auto | id/número = manual */
   diagramStep?: string | number;
+  /** Clave en DemonstrationSection diagrams={{...}} cuando hay varios diagramas */
+  diagramKey?: string;
   body?: string;
-  justificationType?: 'hipotesis' | 'axioma' | 'teorema' | 'definicion' | 'paso-previo' | 'regla-logica' | 'construccion';
-  dependencyId?: string;
   /** IDs Lean resueltos cuando la fuente contiene un array literal. Solo lectura en el editor. */
   leanBlocks?: string[];
   /** Expresión fuente (p. ej. metadata.stepTacticMap["1"]). Se conserva sin editar. */
@@ -162,6 +163,77 @@ export function parseAttributes(attributesStr: string): Record<string, any> {
   return attributes;
 }
 
+export function findJsxTagMatches(
+  tagName: string,
+  body: string,
+): Array<{
+  index: number;
+  length: number;
+  tag: string;
+  attributesStr: string;
+  innerContent: string;
+  rawText: string;
+}> {
+  const results: Array<{
+    index: number;
+    length: number;
+    tag: string;
+    attributesStr: string;
+    innerContent: string;
+    rawText: string;
+  }> = [];
+
+  const startRegex = new RegExp(`<(${tagName})\\b`, 'g');
+  let startMatch;
+  while ((startMatch = startRegex.exec(body)) !== null) {
+    const matchIndex = startMatch.index;
+    const tag = startMatch[1];
+    let cursor = matchIndex + startMatch[0].length;
+    let braceDepth = 0;
+    let inQuote: string | null = null;
+    let openTagEnd = -1;
+
+    while (cursor < body.length) {
+      const char = body[cursor];
+      if (inQuote) {
+        if (char === inQuote) inQuote = null;
+      } else if (char === '"' || char === "'") {
+        inQuote = char;
+      } else if (char === '{') {
+        braceDepth++;
+      } else if (char === '}') {
+        if (braceDepth > 0) braceDepth--;
+      } else if (char === '>' && braceDepth === 0) {
+        openTagEnd = cursor;
+        break;
+      }
+      cursor++;
+    }
+
+    if (openTagEnd === -1) continue;
+
+    const attributesStr = body.substring(matchIndex + startMatch[0].length, openTagEnd).trim();
+    const closingTag = `</${tag}>`;
+    const closingIndex = body.indexOf(closingTag, openTagEnd + 1);
+    if (closingIndex === -1) continue;
+
+    const innerContent = body.substring(openTagEnd + 1, closingIndex);
+    const fullEndIndex = closingIndex + closingTag.length;
+    const rawText = body.substring(matchIndex, fullEndIndex);
+
+    results.push({
+      index: matchIndex,
+      length: rawText.length,
+      tag,
+      attributesStr,
+      innerContent,
+      rawText,
+    });
+  }
+
+  return results;
+}
+
 function nextInlineMatch(regex: RegExp, text: string, start: number): RegExpExecArray | null {
   regex.lastIndex = start;
   return regex.exec(text);
@@ -190,6 +262,7 @@ function combinedConceptLink(
 export function parseInlineNodes(text: string): InlineNode[] {
   const nodes: InlineNode[] = [];
   const componentRegex = /<(ConceptLink|InteractiveElement|RefLink)\b([^>]*)>([\s\S]*?)<\/\1>/g;
+  const proofStepLinkRegex = /<ProofStepLink\b([^>]*)\/>/g;
   const latexRegex = /\$([^$\n]+)\$/g;
   const boldRegex = /(\*\*|__)([^*_\n]+)\1/g;
   const italicRegex = /([*_])([^*_\n]+)\1/g;
@@ -198,11 +271,12 @@ export function parseInlineNodes(text: string): InlineNode[] {
   while (cursor < text.length) {
     const candidates = [
       { kind: 'component' as const, match: nextInlineMatch(componentRegex, text, cursor) },
+      { kind: 'proofStepLink' as const, match: nextInlineMatch(proofStepLinkRegex, text, cursor) },
       { kind: 'latex' as const, match: nextInlineMatch(latexRegex, text, cursor) },
       { kind: 'bold' as const, match: nextInlineMatch(boldRegex, text, cursor) },
       { kind: 'italic' as const, match: nextInlineMatch(italicRegex, text, cursor) },
     ]
-      .filter((item): item is { kind: 'component' | 'latex' | 'bold' | 'italic'; match: RegExpExecArray } => Boolean(item.match))
+      .filter((item): item is { kind: 'component' | 'proofStepLink' | 'latex' | 'bold' | 'italic'; match: RegExpExecArray } => Boolean(item.match))
       .sort((a, b) => a.match.index - b.match.index);
 
     const next = candidates[0];
@@ -222,6 +296,10 @@ export function parseInlineNodes(text: string): InlineNode[] {
       if (tag === 'InteractiveElement') {
         nodes.push(combinedConceptLink(value, attrs, raw) ?? { type: 'interactiveElement', value, attrs, raw });
       }
+    } else if (next.kind === 'proofStepLink') {
+      const attrs = parseAttributes(next.match[1] || '');
+      const step = Number(attrs.step ?? 1);
+      nodes.push({ type: 'proofStepLink', step: isNaN(step) ? 1 : step, raw: next.match[0] });
     } else if (next.kind === 'latex') {
       nodes.push({ type: 'inlineLatex', value: next.match[1] });
     } else if (next.kind === 'bold') {
@@ -278,7 +356,6 @@ export function parseBodyToBlocks(body: string): Block[] {
 
   // Expresiones regulares para bloques JSX específicos
   const formulaRegex = /<Formula>([\s\S]*?)<\/Formula>/g;
-  const demoRegex = /<Demostracion>([\s\S]*?)<\/Demostracion>/g;
   const citationRegex = /<Cita\b([^>]*?)>([\s\S]*?)<\/Cita>/g;
   const defBoxRegex = /<Definicion\b([^>]*?)>([\s\S]*?)<\/Definicion>/g;
   const noteRegex = /<Nota>([\s\S]*?)<\/Nota>/g;
@@ -287,8 +364,8 @@ export function parseBodyToBlocks(body: string): Block[] {
   const advancedComponentRegex = /<(Apoyo|ErrorComun|Resolucion|Solucion|Pregunta|Hueco|Paso|Corolario|Emparejar|Clasificador|Ordenacion|MatrizInteractiva)\b([^>]*?)(?:\/>|>([\s\S]*?)<\/\1>)/g;
   
   // Buscar diagramas autocerrados (ej. <TrianguloDeformable id="..." /> o cualquier componente que empiece por mayúscula)
-  // Excluimos etiquetas estructurales conocidas como Formula, Demostracion, Cita, Definicion, Separador, Capitular, ProofStep, Nota.
-  const diagramRegex = /<(?!Formula\b|Demostracion\b|Cita\b|Definicion\b|Separador\b|Capitular\b|ProofStep\b|Nota\b)([A-Z]\w+)\b([^>]*?)\/>/g;
+  // Excluimos etiquetas estructurales conocidas como Formula, Demostracion, DemonstrationSection, Cita, Definicion, Separador, Capitular, ProofStep, ProofStepLink, Nota.
+  const diagramRegex = /<(?!Formula\b|Demostracion\b|DemonstrationSection\b|Cita\b|Definicion\b|Separador\b|Capitular\b|ProofStep\b|ProofStepLink\b|Nota\b)([A-Z]\w+)\b([^>]*?)\/>/g;
 
   // Colección de todos los matches encontrados con su índice para ordenarlos
   interface MatchItem {
@@ -315,24 +392,27 @@ export function parseBodyToBlocks(body: string): Block[] {
     });
   }
 
-  // Buscar Demostraciones
-  demoRegex.lastIndex = 0;
-  while ((match = demoRegex.exec(body)) !== null) {
+  // Buscar Demostraciones (<Demostracion> o <DemonstrationSection>)
+  const demoMatches = [
+    ...findJsxTagMatches('Demostracion', body),
+    ...findJsxTagMatches('DemonstrationSection', body),
+  ];
+  for (const demoMatch of demoMatches) {
+    const { tag, attributesStr: sectionAttributes, innerContent, index, length, rawText } = demoMatch;
+
     // Parsear los ProofSteps internos
     const stepRegex = /<ProofStep\b([^>]*?)(?:\/>|>([\s\S]*?)<\/ProofStep>)/g;
     const steps: ProofStepData[] = [];
     let stepMatch;
-    while ((stepMatch = stepRegex.exec(match[1])) !== null) {
+    while ((stepMatch = stepRegex.exec(innerContent)) !== null) {
       const attrs = parseAttributes(stepMatch[1]);
       steps.push({
         number: Number(attrs.number) || (steps.length + 1),
         title: attrs.title || '',
-        justificacion: attrs.justificacion || '',
         target: attrs.target || '',
         diagramStep: attrs.diagramStep !== undefined ? attrs.diagramStep : undefined,
+        diagramKey: typeof attrs.diagramKey === 'string' ? attrs.diagramKey : undefined,
         body: (stepMatch[2] || '').trim(),
-        justificationType: attrs.justificationType || undefined,
-        dependencyId: attrs.dependencyId || '',
         leanBlocks: Array.isArray(attrs.leanBlocks) ? attrs.leanBlocks : undefined,
         leanBlocksExpression: typeof attrs.leanBlocks === 'string' ? attrs.leanBlocks : undefined,
       });
@@ -340,12 +420,12 @@ export function parseBodyToBlocks(body: string): Block[] {
 
     matches.push({
       type: 'demonstration',
-      index: match.index,
-      length: match[0].length,
-      content: match[1].trim(),
-      rawText: match[0],
-      attributesStr: '',
-      ...({ metadata: { steps } } as any)
+      index,
+      length,
+      content: innerContent.trim(),
+      rawText,
+      attributesStr: sectionAttributes,
+      ...({ metadata: { tag, attributesStr: sectionAttributes, steps } } as any)
     });
   }
 
@@ -625,16 +705,17 @@ export function stringifyBlocksToBody(blocks: Block[]): string {
         parts.push(b.content.trim());
       }
     } else if (b.type === 'demonstration') {
+      const tag = b.metadata?.tag || 'DemonstrationSection';
+      const rawAttrs = b.metadata?.attributesStr?.trim();
+      const attrSuffix = rawAttrs ? ` ${rawAttrs}` : '';
       const steps = b.metadata?.steps || [];
       const stepParts = steps.map((s: ProofStepData) => {
         const attrs = [
           `number={${s.number}}`,
           serializeProofTarget(s.target),
           s.diagramStep !== undefined ? (typeof s.diagramStep === 'number' ? `diagramStep={${s.diagramStep}}` : `diagramStep="${s.diagramStep}"`) : '',
+          s.diagramKey ? `diagramKey="${s.diagramKey}"` : '',
           s.title ? `title="${s.title}"` : '',
-          s.justificacion ? `justificacion="${s.justificacion}"` : '',
-          s.justificationType ? `justificationType="${s.justificationType}"` : '',
-          s.dependencyId ? `dependencyId="${s.dependencyId}"` : '',
           s.leanBlocks ? `leanBlocks={${JSON.stringify(s.leanBlocks)}}` : '',
           s.leanBlocksExpression ? `leanBlocks={${s.leanBlocksExpression}}` : '',
         ].filter(Boolean).join(' ');
@@ -642,7 +723,7 @@ export function stringifyBlocksToBody(blocks: Block[]): string {
         if (!body) return `  <ProofStep ${attrs} />`;
         return `  <ProofStep ${attrs}>\n    ${body.replace(/\n/g, '\n    ')}\n  </ProofStep>`;
       });
-      parts.push(`<Demostracion>\n${stepParts.join('\n')}\n</Demostracion>`);
+      parts.push(`<${tag}${attrSuffix}>\n${stepParts.join('\n')}\n</${tag}>`);
     } else if (b.type === 'diagram') {
       const componentName = b.content;
       const attrs = b.metadata || {};

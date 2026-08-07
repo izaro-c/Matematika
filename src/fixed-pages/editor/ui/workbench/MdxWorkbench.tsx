@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'wouter';
 import { useEditorCore } from '@/fixed-pages/editor/session/useEditorCore';
 import { SemanticLinker } from '../components/SemanticLinker';
@@ -15,13 +15,13 @@ import { CreateDiagramDialog } from '../create/CreateDiagramDialog';
 import { AddDiagramDialog } from '../create/AddDiagramDialog';
 import { defaultMode } from '@/fixed-pages/editor/diagrams/model/tools/diagramOptions';
 import { toDiagramImportPath } from '@/fixed-pages/editor/review/authoringModel';
-import { DiffReviewPanel } from '../diff/DiffReviewPanel';
-import { reviewDiffForDocument } from '../diff/EditorDiffController';
-import type { DiffReview } from '@/fixed-pages/editor/review/diffReview';
 
 import { useEditorNavigationFlow } from '@/fixed-pages/editor/ui/page/useEditorNavigationFlow';
 import { useUnsavedChangesGuard } from '@/fixed-pages/editor/ui/page/useUnsavedChangesGuard';
 import { MathProviderBoundary } from '@/lib/page-context/MathStoreContext';
+import { DiagramStepSyncContext, type DiagramStepSyncContextValue } from '@/lib/page-context/DiagramStepSyncContext';
+import type { ProofStepData } from '@/fixed-pages/editor/session/parser';
+import { editableHtmlToMdx, insertHtmlAtSelection, mdxToEditableHtml } from '@/fixed-pages/editor/ui/prose/inlineProseOps';
 import { EditorShell } from '../page/EditorShell';
 import { EditorNavigation } from '../page/EditorNavigation';
 import { VisualEditorPanel } from '../panels/VisualEditorPanel';
@@ -29,7 +29,17 @@ import { CodeEditorPanel } from '../panels/CodeEditorPanel';
 import { DiagramSourcePanel } from '../panels/DiagramSourcePanel';
 import { EditorApiStatusBanner } from '../safety/EditorApiStatusBanner';
 import { UnsavedChangesDialog } from '../safety/UnsavedChangesDialog';
+import { SaveErrorModal } from '../safety/SaveErrorModal';
 import { buildEditorSafetyPresentation } from '@/fixed-pages/editor/review/safetyPresentation';
+import {
+  buildMdxSaveCapability,
+  warningSaveConfirmCopy,
+} from '@/fixed-pages/editor/save/saveCapability';
+import {
+  editorApiUnavailableInProduction,
+  editorWriteAccessGranted,
+} from '@/fixed-pages/editor/save/editorApiBase';
+import { DiagramConfirmDialog } from '../../diagrams/ui/DiagramConfirmDialog';
 
 import { MdxWorkbenchHeader, type MdxViewMode } from './MdxWorkbenchHeader';
 import { MdxWorkbenchInspector, type InspectorTab } from './MdxWorkbenchInspector';
@@ -56,11 +66,10 @@ export const MdxWorkbench: React.FC = () => {
     exports: exportsSource,
     blocks,
     rawBody,
-    baseSource,
     localRevision,
+    confirmedRevision,
     baseVersion,
     saving,
-    dirtyState,
     validation,
     persistenceStatus,
     loadFileList,
@@ -83,11 +92,10 @@ export const MdxWorkbench: React.FC = () => {
     canMutateVisualStructure,
     canEditVisualMetadata,
     persistenceLabel,
-    getExpectedDiffRanges,
   } = useEditorCore();
 
   const isReadOnly = compatibility === 'read-only';
-  const hasLocalChanges = dirtyState !== 'clean' || rawBody !== baseSource;
+  const hasLocalChanges = localRevision > confirmedRevision;
   const isDiagramFile = currentFile?.endsWith('.tsx') ?? false;
   const currentResource = files.find(file => file.path === currentFile);
 
@@ -137,18 +145,114 @@ export const MdxWorkbench: React.FC = () => {
   // State for view mode: 'visual' | 'code' | 'preview'
   const [viewMode, setViewMode] = useState<MdxViewMode>('visual');
   const [inspectorTab, setInspectorTab] = useState<InspectorTab>('page');
+  const [formatBarNode, setFormatBarNode] = useState<React.ReactNode>(null);
 
   // Modals state
   const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
-  const [diffReview, setDiffReview] = useState<DiffReview | null>(null);
   const [createPageOpen, setCreatePageOpen] = useState(false);
   const [createDiagramOpen, setCreateDiagramOpen] = useState(false);
   const [addDiagramOpen, setAddDiagramOpen] = useState(false);
+  const [saveErrorModalOpen, setSaveErrorModalOpen] = useState(false);
+  const [saveErrorMessage, setSaveErrorMessage] = useState<string | null>(null);
+  const [warningSaveOpen, setWarningSaveOpen] = useState(false);
+
+  const writeAvailable = !editorApiUnavailableInProduction() && editorWriteAccessGranted();
+  const saveCapability = useMemo(
+    () =>
+      buildMdxSaveCapability({
+        isDirty: hasLocalChanges,
+        saving,
+        errorCount: validation.errorCount,
+        warningCount: validation.warningCount,
+        hasFile: Boolean(currentFile),
+        hasVersion: Boolean(baseVersion),
+        writeAvailable,
+        isReadOnly,
+      }),
+    [
+      baseVersion,
+      currentFile,
+      hasLocalChanges,
+      isReadOnly,
+      saving,
+      validation.errorCount,
+      validation.warningCount,
+      writeAvailable,
+    ],
+  );
+
+  const performSaveDocument = useCallback(async () => {
+    if (!hasLocalChanges) return false;
+    if (validation.errorCount > 0) {
+      setSaveErrorMessage(
+        `No se puede guardar: existen ${validation.errorCount} error(es) de validación que impiden la persistencia de cambios.`,
+      );
+      setSaveErrorModalOpen(true);
+      return false;
+    }
+    const result = await saveCurrentFile();
+    if (!result.ok) {
+      setSaveErrorMessage(
+        result.reason
+        || 'No se pudo guardar el archivo. Revisa los permisos, el token de edición o el panel de avisos.',
+      );
+      setSaveErrorModalOpen(true);
+      return false;
+    }
+    return true;
+  }, [hasLocalChanges, saveCurrentFile, validation.errorCount]);
+
+  const handleSaveDocument = useCallback(() => {
+    if (!saveCapability.allowed) return;
+    if (saveCapability.warningCount > 0) {
+      setWarningSaveOpen(true);
+      return;
+    }
+    void performSaveDocument();
+  }, [performSaveDocument, saveCapability.allowed, saveCapability.warningCount]);
+
+  const confirmWarningSave = useCallback(() => {
+    setWarningSaveOpen(false);
+    void performSaveDocument();
+  }, [performSaveDocument]);
 
   const [diagramWorkbenchOverride, setDiagramWorkbenchOverride] = useState<DiagramWorkbenchMode | null>(null);
   const [rewriteDiagramPath, setRewriteDiagramPath] = useState<string | null>(null);
   const [activeDiagramBlockId, setActiveDiagramBlockId] = useState<string | null>(null);
   const [activeDiagramIndex, setActiveDiagramIndex] = useState<number | null>(null);
+  const [editorDiagramStepId, setEditorDiagramStepId] = useState<string | null>('initial');
+  const [editorDiagramStepIndex, setEditorDiagramStepIndex] = useState<number | null>(null);
+
+  const selectDiagramStep = React.useCallback((stepInput: number | string) => {
+    if (typeof stepInput === 'number') {
+      setEditorDiagramStepIndex(stepInput);
+      setEditorDiagramStepId(null);
+      return;
+    }
+    setEditorDiagramStepId(stepInput);
+    setEditorDiagramStepIndex(null);
+  }, []);
+
+  const diagramStepSyncValue = useMemo<DiagramStepSyncContextValue>(() => ({
+    activeStepIndex: editorDiagramStepIndex,
+    activeStepId: editorDiagramStepId,
+    selectDiagramStep,
+  }), [editorDiagramStepId, editorDiagramStepIndex, selectDiagramStep]);
+
+  const syncDemoStepToDiagram = React.useCallback((step: ProofStepData, index: number) => {
+    if (step.diagramStep === 'initial') {
+      setEditorDiagramStepId('initial');
+      setEditorDiagramStepIndex(null);
+      return;
+    }
+    if (step.diagramStep !== undefined && step.diagramStep !== '') {
+      setEditorDiagramStepId(String(step.diagramStep));
+      setEditorDiagramStepIndex(typeof step.diagramStep === 'number' ? step.diagramStep : null);
+      return;
+    }
+    setEditorDiagramStepId(null);
+    setEditorDiagramStepIndex(index);
+  }, []);
 
   const clearDiagramSession = () => {
     setDiagramWorkbenchOverride(null);
@@ -167,6 +271,7 @@ export const MdxWorkbench: React.FC = () => {
   });
 
   // Semantic Linker state
+  const linkerRangeRef = useRef<Range | null>(null);
   const [linkerState, setLinkerState] = useState<{
     isOpen: boolean;
     blockId: string;
@@ -175,7 +280,7 @@ export const MdxWorkbench: React.FC = () => {
     selectionEnd: number;
     editingMarkup?: string;
     editingTag?: string;
-    initialAttrs?: Record<string, any>;
+    initialAttrs?: Record<string, unknown>;
   }>({
     isOpen: false,
     blockId: '',
@@ -239,7 +344,7 @@ export const MdxWorkbench: React.FC = () => {
     }
   };
 
-  const handleMetadataChange = (key: string, value: any) => {
+  const handleMetadataChange = (key: string, value: unknown) => {
     setMetadata(prev => ({ ...prev, [key]: value }));
   };
 
@@ -252,7 +357,7 @@ export const MdxWorkbench: React.FC = () => {
   };
 
   const canSaveDraft = Boolean(currentFile && hasLocalChanges && baseVersion);
-  const canReviewDiff = Boolean(currentFile?.endsWith('.mdx') && rawBody !== baseSource);
+  const canSave = saveCapability.allowed;
 
   const safetyPresentation = useMemo(
     () =>
@@ -268,58 +373,27 @@ export const MdxWorkbench: React.FC = () => {
     [compatibility, compatibilityReasons, currentFile, editorMode, isDiagramFile, persistenceStatus, validation],
   );
 
-  const reviewCurrentDiff = () => {
-    reviewDiffForDocument(
-      {
-        currentFile,
-        baseSource,
-        rawBody,
-        localRevision,
-        baseVersion,
-        compatibility,
-        editorMode,
-        coordinatedView: false,
-        getExpectedDiffRanges,
-        saveCurrentFile,
-      },
-      setDiffReview,
-    );
-  };
-
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        if (pendingFileNavigation) {
-          event.preventDefault();
-          cancelPendingNavigation();
-          return;
-        }
-        if (diffReview && !saving) {
-          event.preventDefault();
-          setDiffReview(null);
-        }
+      if (event.key === 'Escape' && pendingFileNavigation) {
+        event.preventDefault();
+        cancelPendingNavigation();
+        return;
       }
 
       const isModifier = event.ctrlKey || event.metaKey;
-      if (isModifier) {
-        if (event.key.toLowerCase() === 's') {
-          event.preventDefault();
-          if (currentFile) {
-            void saveCurrentFile();
-          }
-        } else if (event.key.toLowerCase() === 'd') {
-          event.preventDefault();
-          if (canReviewDiff) {
-            reviewCurrentDiff();
-          }
+      if (isModifier && event.key.toLowerCase() === 's') {
+        event.preventDefault();
+        if (currentFile) {
+          void handleSaveDocument();
         }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [pendingFileNavigation, cancelPendingNavigation, diffReview, saving, canReviewDiff, currentFile, saveCurrentFile]);
+  }, [pendingFileNavigation, cancelPendingNavigation, currentFile, handleSaveDocument]);
 
   const [focusRange] = useState<{ start: number; end: number } | undefined>(undefined);
   const [highlightedBlockId, setHighlightedBlockId] = useState<string | null>(null);
@@ -447,9 +521,7 @@ export const MdxWorkbench: React.FC = () => {
         currentFile={currentFile}
         fileTitle={currentTitle}
         contentType={currentContentType}
-        hasLocalChanges={hasLocalChanges}
         saving={saving}
-        persistenceStatus={persistenceStatus.kind}
         viewMode={viewMode}
         onSetViewMode={(mode) => {
           setViewMode(mode);
@@ -464,18 +536,11 @@ export const MdxWorkbench: React.FC = () => {
           setIsInspectorOpen(true);
           setInspectorTab('avisos');
         }}
-        diagramDrawerOpen={false}
-        onToggleDiagramDrawer={() => openDiagramEditor()}
-        hasDiagrams={pageDiagramLinks.length > 0}
-        errorCount={validation.errorCount}
-        warningCount={validation.warningCount}
         onTitleChange={(newTitle) => handleMetadataChange('title', newTitle)}
-        onSave={() => void saveCurrentFile()}
+        onSave={handleSaveDocument}
         onSaveDraft={() => void saveDraftCurrentFile()}
-        onReviewDiff={reviewCurrentDiff}
         onCreatePage={() => setCreatePageOpen(true)}
         canSaveDraft={canSaveDraft}
-        canReviewDiff={canReviewDiff}
         isReadOnly={isReadOnly}
         workspaceLevel={workspace.level}
         onToggleWorkspaceLevel={() =>
@@ -484,8 +549,11 @@ export const MdxWorkbench: React.FC = () => {
             level: prev.level === 'advanced' ? 'basic' : 'advanced',
           }))
         }
+        saveCapability={saveCapability}
       />
       )}
+
+      {/* removed post-save warning banner — confirmation is pre-save */}
 
       {/* Superficie diagrama: header a ancho completo; paneles debajo */}
       {diagramSurfaceOpen && activeDiagramWorkbenchMode ? (
@@ -529,9 +597,12 @@ export const MdxWorkbench: React.FC = () => {
         </div>
       ) : (
       <>
+      <MathProviderBoundary>
+      <DiagramStepSyncContext.Provider value={diagramStepSyncValue}>
       {/* Shell Principal de 3 Columnas */}
       <EditorShell
         toolbar={null}
+        subToolbar={viewMode === 'visual' && !isDiagramFile ? formatBarNode : null}
         navigationOpen={isSidebarOpen}
         navigationWidth={workspace.navigationWidth}
         setNavigationWidth={(width) => setWorkspace(prev => ({ ...prev, navigationWidth: width }))}
@@ -595,7 +666,6 @@ export const MdxWorkbench: React.FC = () => {
       >
         {/* Central Workspace Area */}
         <div className="flex h-full w-full flex-1 overflow-hidden">
-          <MathProviderBoundary>
             {isDiagramFile ? (
               <div className="flex-1 overflow-hidden p-2">
                 <DiagramSourcePanel
@@ -658,27 +728,37 @@ export const MdxWorkbench: React.FC = () => {
                   updateBlock={updateBlock}
                   handleTextareaSelect={() => {}}
                   handleEditLink={(blockId, rawMarkup, text, attrs, tag) => {
+                    const targetBlock = blocks.find(b => b.id === blockId);
+                    const selectedText = text || window.getSelection()?.toString() || '';
+                    const sel = window.getSelection();
+                    linkerRangeRef.current = sel?.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
+                    const fromContent = targetBlock && selectedText
+                      ? targetBlock.content.indexOf(selectedText)
+                      : -1;
                     setLinkerState({
                       isOpen: true,
                       blockId,
-                      selectedText: text,
-                      editingMarkup: rawMarkup,
+                      selectedText,
+                      editingMarkup: rawMarkup || undefined,
                       editingTag: tag,
                       initialAttrs: attrs,
-                      selectionStart: 0,
-                      selectionEnd: text.length,
+                      selectionStart: fromContent >= 0 ? fromContent : 0,
+                      selectionEnd: fromContent >= 0 ? fromContent + selectedText.length : 0,
                     });
                   }}
                   setActiveDiagramIndex={setActiveDiagramIndex}
                   setActiveDiagramBlockId={setActiveDiagramBlockId}
                   setDiagramBuilderOpen={setDiagramBuilderOpen}
                   diagramTargets={combinedDiagramTargets}
+                  onSyncDiagramStep={syncDemoStepToDiagram}
+                  onFormatBarChange={setFormatBarNode}
                 />
               </div>
             )}
-          </MathProviderBoundary>
         </div>
       </EditorShell>
+      </DiagramStepSyncContext.Provider>
+      </MathProviderBoundary>
       </>
       )}
 
@@ -690,20 +770,115 @@ export const MdxWorkbench: React.FC = () => {
           files={files}
           selectedText={linkerState.selectedText}
           onLinkCreated={(markup) => {
-            if (linkerState.editingMarkup && linkerState.blockId) {
-              const targetBlock = blocks.find(b => b.id === linkerState.blockId);
-              if (targetBlock) {
-                const newContent = targetBlock.content.replace(linkerState.editingMarkup, markup);
-                updateBlock(linkerState.blockId, newContent);
-              }
-            } else if (linkerState.blockId) {
-              const targetBlock = blocks.find(b => b.id === linkerState.blockId);
-              if (targetBlock) {
-                const before = targetBlock.content.substring(0, linkerState.selectionStart);
-                const after = targetBlock.content.substring(linkerState.selectionEnd);
-                updateBlock(linkerState.blockId, `${before}${markup}${after}`);
+            if (!linkerState.blockId) {
+              setLinkerState(prev => ({ ...prev, isOpen: false }));
+              return;
+            }
+
+            // Restore the selection captured before the linker stole focus.
+            if (linkerRangeRef.current) {
+              try {
+                const sel = window.getSelection();
+                sel?.removeAllRanges();
+                sel?.addRange(linkerRangeRef.current);
+              } catch {
+                linkerRangeRef.current = null;
               }
             }
+            // Only attempt selection insertion for brand new links.
+            // When editing or removing an existing link (editingMarkup is defined), insertHtmlAtSelection must be skipped.
+            if (!linkerState.editingMarkup && insertHtmlAtSelection(mdxToEditableHtml(markup))) {
+              linkerRangeRef.current = null;
+              const active = document.activeElement as HTMLElement | null;
+              const surface = active?.closest?.('[data-prose-surface="true"]') as HTMLElement | null
+                ?? document.getElementById(`${linkerState.blockId}-body`)
+                ?? document.getElementById(`${linkerState.blockId}-title`)
+                ?? document.getElementById(`prose-${linkerState.blockId}`);
+              if (surface) {
+                const mdx = editableHtmlToMdx(surface);
+                const targetBlock = blocks.find(b => b.id === linkerState.blockId);
+                if (targetBlock?.type === 'demonstration') {
+                  const baseStep = {
+                    ...(Array.isArray(targetBlock.metadata?.steps) ? targetBlock.metadata.steps[0] as object : {}),
+                    number: targetBlock.metadata?.number ?? 1,
+                    title: targetBlock.metadata?.title ?? '',
+                    target: targetBlock.metadata?.target,
+                    body: targetBlock.content,
+                  };
+                  if (surface.id.endsWith('-title')) {
+                    updateBlock(linkerState.blockId, targetBlock.content, {
+                      ...targetBlock.metadata,
+                      title: mdx,
+                      steps: [{ ...baseStep, title: mdx }],
+                    });
+                  } else {
+                    updateBlock(linkerState.blockId, mdx, {
+                      ...targetBlock.metadata,
+                      steps: [{ ...baseStep, body: mdx }],
+                    });
+                  }
+                } else if (targetBlock) {
+                  updateBlock(linkerState.blockId, mdx, targetBlock.metadata);
+                }
+              }
+              setLinkerState(prev => ({ ...prev, isOpen: false }));
+              return;
+            }
+            linkerRangeRef.current = null;
+
+            const targetBlock = blocks.find(b => b.id === linkerState.blockId);
+            if (!targetBlock) {
+              setLinkerState(prev => ({ ...prev, isOpen: false }));
+              return;
+            }
+
+            if (targetBlock.type === 'demonstration' && linkerState.editingMarkup && targetBlock.metadata?.title?.includes(linkerState.editingMarkup)) {
+              const nextTitle = targetBlock.metadata.title.replace(linkerState.editingMarkup, markup);
+              const baseStep = {
+                ...(Array.isArray(targetBlock.metadata?.steps) ? targetBlock.metadata.steps[0] as object : {}),
+                number: targetBlock.metadata?.number ?? 1,
+                title: nextTitle,
+                target: targetBlock.metadata?.target,
+                body: targetBlock.content,
+              };
+              updateBlock(linkerState.blockId, targetBlock.content, {
+                ...targetBlock.metadata,
+                title: nextTitle,
+                steps: [{ ...baseStep, title: nextTitle }],
+              });
+              setLinkerState(prev => ({ ...prev, isOpen: false }));
+              return;
+            }
+
+            let nextContent: string;
+            if (linkerState.editingMarkup && targetBlock.content.includes(linkerState.editingMarkup)) {
+              nextContent = targetBlock.content.replace(linkerState.editingMarkup, markup);
+            } else if (
+              typeof linkerState.selectionStart === 'number'
+              && typeof linkerState.selectionEnd === 'number'
+              && linkerState.selectionEnd > linkerState.selectionStart
+            ) {
+              nextContent = `${targetBlock.content.slice(0, linkerState.selectionStart)}${markup}${targetBlock.content.slice(linkerState.selectionEnd)}`;
+            } else if (linkerState.selectedText && targetBlock.content.includes(linkerState.selectedText)) {
+              nextContent = targetBlock.content.replace(linkerState.selectedText, markup);
+            } else {
+              const gap = targetBlock.content.trim() ? ' ' : '';
+              nextContent = `${targetBlock.content}${gap}${markup}`;
+            }
+
+            updateBlock(linkerState.blockId, nextContent, targetBlock.type === 'demonstration'
+              ? {
+                  ...targetBlock.metadata,
+                  steps: [{
+                    ...(Array.isArray(targetBlock.metadata?.steps) ? targetBlock.metadata.steps[0] : {}),
+                    number: targetBlock.metadata?.number ?? 1,
+                    title: targetBlock.metadata?.title ?? '',
+                    target: targetBlock.metadata?.target,
+                    body: nextContent,
+                  }],
+                }
+              : targetBlock.metadata);
+
             setLinkerState(prev => ({ ...prev, isOpen: false }));
           }}
           position={{ top: 120, left: 240 }}
@@ -721,20 +896,6 @@ export const MdxWorkbench: React.FC = () => {
           initialTitle="Diagrama"
           onClose={() => setRewriteDiagramPath(null)}
           onStart={() => openDiagramEditor({ asRewrite: true })}
-        />
-      )}
-
-      {/* Diff Review Modal */}
-      {diffReview && (
-        <DiffReviewPanel
-          review={diffReview}
-          isStale={false}
-          isApplying={saving}
-          onClose={() => setDiffReview(null)}
-          onApply={async () => {
-            await saveCurrentFile();
-            setDiffReview(null);
-          }}
         />
       )}
 
@@ -813,13 +974,36 @@ export const MdxWorkbench: React.FC = () => {
           targetLabel={typeof pendingFileNavigation === 'string' ? pendingFileNavigation : 'Página'}
           presentation={safetyPresentation}
           onCancel={() => cancelPendingNavigation()}
-          onReviewDiff={reviewCurrentDiff}
+          onSave={() => void handleSaveDocument()}
           onSaveDraft={() => void saveDraftCurrentFile()}
           onDiscardAndContinue={() => continuePendingNavigation()}
-          canReviewDiff={canReviewDiff}
+          canSave={canSave}
           canSaveDraft={canSaveDraft}
         />
       )}
+
+      {/* Save Error & Validation Feedback Modal */}
+      <DiagramConfirmDialog
+        isOpen={warningSaveOpen}
+        title={warningSaveConfirmCopy(saveCapability.warningCount).title}
+        message={warningSaveConfirmCopy(saveCapability.warningCount).message}
+        confirmLabel="Guardar de todos modos"
+        cancelLabel="Cancelar"
+        variant="warning"
+        onConfirm={confirmWarningSave}
+        onCancel={() => setWarningSaveOpen(false)}
+      />
+      <SaveErrorModal
+        isOpen={saveErrorModalOpen}
+        onClose={() => setSaveErrorModalOpen(false)}
+        issues={validation.issues.filter(issue => issue.severity === 'error')}
+        saveMessage={saveErrorMessage}
+        onJumpToIssue={handleSelectIssue}
+        onOpenAvisos={() => {
+          setIsInspectorOpen(true);
+          setInspectorTab('avisos');
+        }}
+      />
     </div>
   );
 };

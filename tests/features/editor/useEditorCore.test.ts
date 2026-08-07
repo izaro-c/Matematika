@@ -130,28 +130,35 @@ describe('useEditorCore lossless integration', () => {
     act(() => result.current.updateBlock(paragraph!.id, nextContent));
     await waitFor(() => expect(result.current.rawBody).toContain('targetId="recta"'));
 
-    let saved = false;
+    let saved!: Awaited<ReturnType<typeof result.current.saveCurrentFile>>;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
 
-    expect(saved).toBe(true);
+    expect(saved.ok).toBe(true);
     const payload = JSON.parse(String((fetchMock.mock.calls[1][1] as RequestInit).body));
     expect(payload.source).toContain('<ConceptLink targetId="recta" isDependency={false} highlightTarget="lineBC" highlightColor="pavo">recta</ConceptLink>');
     expect(payload.source).not.toContain('<InteractiveElement target="pP"');
   });
 
-  it('applies destructive structural operations locally but requires diff review to save', async () => {
-    const fetchMock = vi.mocked(fetch).mockResolvedValueOnce(readResponse(source));
+  it('persists destructive structural operations without diff approval', async () => {
+    const fetchMock = vi.mocked(fetch)
+      .mockResolvedValueOnce(readResponse(source))
+      .mockImplementationOnce(async (_url, init) => {
+        const request = JSON.parse(String(init?.body));
+        return response({ path: request.path, sourceHash: request.sourceHash, previousVersion: request.expectedVersion,
+          version: `sha256:${request.sourceHash}`, confirmedRevision: request.localRevision, backupId: 'backup-delete' });
+      });
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/test.mdx'));
     const before = result.current.rawBody;
     act(() => result.current.removeBlock(result.current.blocks[0].id));
     expect(result.current.rawBody).not.toBe(before);
     expect(result.current.rawBody).not.toContain('## Título');
-    let saved = true;
+    let saved!: Awaited<ReturnType<typeof result.current.saveCurrentFile>>;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
-    expect(saved).toBe(false);
-    expect(result.current.message).toContain('revisión de diff');
-    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(saved.ok).toBe(true);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const payload = JSON.parse(String((fetchMock.mock.calls[1][1] as RequestInit).body));
+    expect(payload.source).not.toContain('## Título');
   });
 
   it('manual code save sends the exact current source and checks HTTP status', async () => {
@@ -167,9 +174,9 @@ describe('useEditorCore lossless integration', () => {
     const changed = source.replace('Un cuerpo', 'El cuerpo');
     act(() => result.current.updateRawBody(changed));
     await waitFor(() => expect(result.current.rawBody).toBe(changed));
-    let saved = false;
+    let saved!: Awaited<ReturnType<typeof result.current.saveCurrentFile>>;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
-    expect(saved).toBe(true);
+    expect(saved.ok).toBe(true);
     const payload = JSON.parse(String((fetchMock.mock.calls[1][1] as RequestInit).body));
     expect(payload.source).toBe(changed);
     expect(payload.expectedVersion).toMatch(/^sha256:/);
@@ -178,7 +185,9 @@ describe('useEditorCore lossless integration', () => {
     act(() => result.current.updateRawBody(`${changed}\n`));
     await waitFor(() => expect(result.current.rawBody).toBe(`${changed}\n`));
     await act(async () => { saved = await result.current.saveCurrentFile(); });
-    expect(saved).toBe(false);
+    expect(saved.ok).toBe(false);
+    if (!saved.ok) expect(saved.reason.length).toBeGreaterThan(0);
+    expect(result.current.message).not.toContain('Cambio localizado aplicado');
     expect(result.current.dirtyState).toBe('dirty');
   });
 
@@ -190,11 +199,12 @@ describe('useEditorCore lossless integration', () => {
     act(() => result.current.updateRawBody('Texto { un syntax error here } y cierre.'));
     await waitFor(() => expect(result.current.rawBody).toContain('syntax error'));
 
-    let saved = true;
+    let saved!: Awaited<ReturnType<typeof result.current.saveCurrentFile>>;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
 
-    expect(saved).toBe(false);
-    expect(result.current.message).toMatch(/no se puede analizar|no soportados/i);
+    expect(saved.ok).toBe(false);
+    if (!saved.ok) expect(saved.reason).toMatch(/no se puede (analizar|guardar)|no soportados|errores? de validación/i);
+    expect(result.current.message).toMatch(/no se puede (analizar|guardar)|no soportados|errores? de validación/i);
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
@@ -232,21 +242,95 @@ describe('useEditorCore lossless integration', () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
-  it('blocks a partially editable save until diff review is approved', async () => {
-    const fetchMock = vi.mocked(fetch).mockResolvedValue(readResponse(partialSource, 'content/partial.mdx'));
+  it('saves partially editable documents without reusing the local-edit toast as the failure reason', async () => {
+    const fetchMock = vi.mocked(fetch)
+      .mockResolvedValueOnce(readResponse(partialSource, 'content/partial.mdx'))
+      .mockImplementationOnce(async (_url, init) => {
+        const request = JSON.parse(String(init?.body));
+        return response({
+          path: request.path,
+          sourceHash: request.sourceHash,
+          previousVersion: request.expectedVersion,
+          version: `sha256:${request.sourceHash}`,
+          confirmedRevision: request.localRevision,
+          backupId: 'backup-partial',
+        });
+      });
     const { result } = renderHook(() => useEditorCore());
     await act(() => result.current.openFile('content/partial.mdx'));
     const heading = result.current.blocks.find(block => block.type === 'heading');
     expect(heading).toBeDefined();
     act(() => result.current.updateBlock(heading!.id, 'Título actualizado'));
     await waitFor(() => expect(result.current.rawBody).toContain('## Título actualizado'));
+    expect(result.current.message).toContain('Cambio localizado aplicado');
 
-    let saved = true;
+    let saved!: Awaited<ReturnType<typeof result.current.saveCurrentFile>>;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
 
-    expect(saved).toBe(false);
-    expect(result.current.message).toContain('Cambio localizado aplicado');
+    expect(saved.ok).toBe(true);
     expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it('reports a real persistence reason when apply fails after a local edit toast', async () => {
+    const fetchMock = vi.mocked(fetch)
+      .mockResolvedValueOnce(readResponse(source))
+      .mockResolvedValueOnce(response({ message: 'server error' }, 500));
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/test.mdx'));
+    act(() => result.current.updateBlock(result.current.blocks[0].id, 'Nuevo título'));
+    await waitFor(() => expect(result.current.message).toContain('Cambio localizado aplicado'));
+
+    let saved!: Awaited<ReturnType<typeof result.current.saveCurrentFile>>;
+    await act(async () => { saved = await result.current.saveCurrentFile(); });
+
+    expect(saved.ok).toBe(false);
+    if (!saved.ok) {
+      expect(saved.reason).not.toContain('Cambio localizado aplicado');
+      expect(saved.reason.length).toBeGreaterThan(0);
+    }
+    expect(result.current.message).not.toContain('Cambio localizado aplicado');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it('keeps apply success when a newer local edit arrives during the request', async () => {
+    const applyGate = deferred<Response>();
+    let sentRequest: Record<string, unknown> | undefined;
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(readResponse(source))
+      .mockImplementationOnce(async (_url, init) => {
+        sentRequest = JSON.parse(String(init?.body));
+        return applyGate.promise;
+      });
+    const { result } = renderHook(() => useEditorCore());
+    await act(() => result.current.openFile('content/test.mdx'));
+    const revision1 = source.replace('Un cuerpo', 'Revisión uno');
+    act(() => result.current.updateRawBody(revision1));
+    await waitFor(() => expect(result.current.rawBody).toBe(revision1));
+
+    let saving!: Promise<Awaited<ReturnType<typeof result.current.saveCurrentFile>>>;
+    act(() => { saving = result.current.saveCurrentFile(); });
+    await waitFor(() => expect(sentRequest).toBeDefined());
+    const revision2 = revision1.replace('Revisión uno', 'Revisión dos');
+    act(() => result.current.updateRawBody(revision2));
+    await waitFor(() => expect(result.current.rawBody).toBe(revision2));
+
+    await act(async () => {
+      applyGate.resolve(response({
+        path: 'content/test.mdx',
+        sourceHash: sentRequest!.sourceHash,
+        previousVersion: sentRequest!.expectedVersion,
+        version: `sha256:${sentRequest!.sourceHash}`,
+        confirmedRevision: sentRequest!.localRevision,
+        backupId: 'backup-during-edit',
+      }));
+      await saving;
+    });
+
+    const saved = await saving;
+    expect(saved.ok).toBe(true);
+    expect(sentRequest).toMatchObject({ source: revision1, localRevision: 1 });
+    expect(result.current.dirtyState).toBe('dirty');
+    expect(result.current.persistenceStatus.kind).toBe('ready-dirty');
   });
 
   it('binds source and revision before the asynchronous save hash resolves', async () => {
@@ -279,13 +363,16 @@ describe('useEditorCore lossless integration', () => {
     act(() => result.current.updateRawBody(revision1));
     await waitFor(() => expect(result.current.rawBody).toBe(revision1));
 
-    let saving!: Promise<boolean>;
+    let saving!: Promise<Awaited<ReturnType<typeof result.current.saveCurrentFile>>>;
     act(() => { saving = result.current.saveCurrentFile(); });
     const revision2 = revision1.replace('Revisión uno', 'Revisión dos');
     act(() => result.current.updateRawBody(revision2));
     await act(async () => { saveHash.resolve(digest(2)); await Promise.resolve(); });
-    await act(async () => { await saving; });
+    let saved!: Awaited<ReturnType<typeof result.current.saveCurrentFile>>;
+    await act(async () => { saved = await saving; });
 
+    expect(saved.ok).toBe(false);
+    if (!saved.ok) expect(saved.reason).toMatch(/cambió|reintent/i);
     if (sentRequest) expect(sentRequest).toMatchObject({ source: revision1, localRevision: 1 });
     expect(result.current.dirtyState).toBe('dirty');
     expect(result.current.persistenceStatus.kind).not.toBe('saved');
@@ -324,9 +411,10 @@ describe('useEditorCore lossless integration', () => {
     await waitFor(() => expect(result.current.rawBody).toBe(`${source}\n`));
     fetchMock.mockResolvedValueOnce(response({ kind: 'content-conflict', path: 'content/test.mdx', expectedVersion: 'v1',
       actualVersion: 'v2', localRevision: 1 }, 409));
-    let saved = true;
+    let saved!: Awaited<ReturnType<typeof result.current.saveCurrentFile>>;
     await act(async () => { saved = await result.current.saveCurrentFile(); });
-    expect(saved).toBe(false);
+    expect(saved.ok).toBe(false);
+    if (!saved.ok) expect(saved.reason).toMatch(/conflicto/i);
     expect(result.current.persistenceStatus.kind).toBe('conflict');
     expect(result.current.persistenceLabel).toBe('Conflicto');
   });
@@ -439,7 +527,7 @@ describe('useEditorCore lossless integration', () => {
     const updated = source.replace('Un cuerpo', 'Cuerpo modificado');
     act(() => result.current.updateRawBody(updated));
 
-    let savePromise!: Promise<boolean>;
+    let savePromise!: Promise<Awaited<ReturnType<typeof result.current.saveCurrentFile>>>;
     act(() => { savePromise = result.current.saveCurrentFile(); });
 
     const resolvedHash = createHash('sha256').update(updated, 'utf8').digest();
@@ -448,10 +536,10 @@ describe('useEditorCore lossless integration', () => {
       await Promise.resolve();
     });
 
-    let saved = false;
+    let saved!: Awaited<ReturnType<typeof result.current.saveCurrentFile>>;
     await act(async () => { saved = await savePromise; });
 
-    expect(saved).toBe(true);
+    expect(saved.ok).toBe(true);
     expect(sentRequest).toMatchObject({
       source: updated,
       localRevision: 1

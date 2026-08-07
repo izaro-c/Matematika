@@ -3,12 +3,10 @@ import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 import type { Block } from '@/fixed-pages/editor/session/parser';
 import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
 import { ContentLayout } from '@/components/layouts/ContentLayout';
-import { ContentHeader } from '@/components/content/ContentHeader';
 import { ContentBody } from '@/components/ui/ContentBody';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { appPath } from '@/lib/routes';
 import { VisualEditorBlock } from '../panels/VisualEditorBlock';
-import { HeaderContainer, HeaderBadge } from '../workbench/EditorHeaderPrimitives';
 
 interface PublishedRuntimePreviewProps {
   open: boolean;
@@ -32,7 +30,6 @@ export const PublishedRuntimePreview: React.FC<PublishedRuntimePreviewProps> = (
   blocks = [],
   metadata = {},
   diagramTargets = [],
-  currentFile,
   embedded = false,
 }) => {
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -43,43 +40,11 @@ export const PublishedRuntimePreview: React.FC<PublishedRuntimePreviewProps> = (
   const noop = () => {};
   const pageType = String(metadata.type || 'concepto').toLowerCase();
   const title = String(metadata.title || metadata.name || 'Sin Título');
-  const description = String(metadata.description || '');
   const statement = String(metadata.statement || '');
   const publishedHref = path ? appPath(path.startsWith('/') ? path : `/${path}`) : null;
   // Vista publicada real cuando hay ruta y no hay cambios locales pendientes.
   const useLiveRoute = Boolean(publishedHref) && !hasPendingChanges;
 
-  const chrome = (
-    <HeaderContainer className="z-20">
-      <div className="flex items-center space-x-2 min-w-0">
-        <span className="h-2 w-2 rounded-full bg-salvia animate-pulse shrink-0" />
-        <h2 id="published-preview-title" className="font-serif text-sm font-bold text-carbon">
-          Vista Publicada
-        </h2>
-        <HeaderBadge variant="subtle" className="hidden sm:inline">
-          {currentFile?.split('/').pop() ?? path ?? 'borrador'}
-        </HeaderBadge>
-        {hasPendingChanges && (
-          <HeaderBadge variant="ocre">
-            Cambios locales pendientes
-          </HeaderBadge>
-        )}
-        {useLiveRoute && (
-          <HeaderBadge variant="musgo">
-            Runtime publicado
-          </HeaderBadge>
-        )}
-      </div>
-      <button
-        ref={closeRef}
-        type="button"
-        onClick={onClose}
-        className="rounded-lg border border-carbon/15 bg-lienzo px-3 py-1 text-xs font-bold text-carbon/75 hover:bg-carbon/5 transition-colors cursor-pointer shrink-0"
-      >
-        ✕ Volver a edición
-      </button>
-    </HeaderContainer>
-  );
 
   const body = useLiveRoute ? (
     <iframe
@@ -92,15 +57,6 @@ export const PublishedRuntimePreview: React.FC<PublishedRuntimePreviewProps> = (
       <ContentLayout pageType={pageType} variant="balanced" embedded={true}>
         <div className="bg-transparent text-carbon font-serif pb-16">
           <FadeIn className="w-full pt-4">
-            <ContentHeader
-              type={pageType}
-              title={title}
-              description={description}
-              authors={Array.isArray(metadata.authors) ? (metadata.authors as string[]) : []}
-              tags={Array.isArray(metadata.tags) ? (metadata.tags as string[]) : []}
-              nodeId={String(metadata.id || '')}
-            />
-
             {statement && (
               <div className="my-6 p-5 border-l-4 border-ocre bg-ocre/5 rounded-r shadow-xs">
                 <span className="ac-label ac-label--xs ac-label--ocre-soft mb-2 block select-none">
@@ -149,7 +105,6 @@ export const PublishedRuntimePreview: React.FC<PublishedRuntimePreviewProps> = (
   if (embedded) {
     return (
       <div className="flex h-full w-full flex-col overflow-hidden bg-lienzo" aria-labelledby="published-preview-title">
-        {chrome}
         <div className="min-h-0 flex-1">{body}</div>
       </div>
     );
@@ -163,7 +118,6 @@ export const PublishedRuntimePreview: React.FC<PublishedRuntimePreviewProps> = (
       aria-modal="true"
       aria-labelledby="published-preview-title"
     >
-      {chrome}
       <div className="min-h-0 flex-1">{body}</div>
     </div>
   );

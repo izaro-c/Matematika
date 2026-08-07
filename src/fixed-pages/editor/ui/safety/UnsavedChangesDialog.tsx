@@ -8,10 +8,10 @@ interface UnsavedChangesDialogProps {
   targetLabel: string;
   presentation: SafetyPresentation;
   onCancel: () => void;
-  onReviewDiff: () => void;
+  onSave: () => void;
   onSaveDraft: () => void;
   onDiscardAndContinue: () => void;
-  canReviewDiff: boolean;
+  canSave: boolean;
   canSaveDraft: boolean;
 }
 
@@ -20,10 +20,10 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
   targetLabel,
   presentation,
   onCancel,
-  onReviewDiff,
+  onSave,
   onSaveDraft,
   onDiscardAndContinue,
-  canReviewDiff,
+  canSave,
   canSaveDraft,
 }) => {
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -75,11 +75,11 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
           </button>
           <button
             type="button"
-            onClick={onReviewDiff}
-            disabled={!canReviewDiff}
+            onClick={onSave}
+            disabled={!canSave}
             className="rounded bg-carbon px-3 py-2 text-xs font-bold text-lienzo hover:bg-carbon/85 disabled:cursor-not-allowed disabled:opacity-45"
           >
-            Revisar cambios
+            Guardar
           </button>
           <button
             type="button"

@@ -5,7 +5,7 @@ import { MathProvider, useMathStore } from '../../../../src/lib/page-context/Mat
 import { useDiagramTargetRegistry } from '../../../../src/lib/page-context/DiagramTargetRegistryContext';
 import { InteractiveElement } from '../../../../src/components/ui/VisualBind';
 import { StepNavigator } from '../../../../src/components/ui/StepNavigator';
-import { DemonstrationBlock } from '../../../../src/fixed-pages/editor/ui/blocks/DemonstrationBlock';
+import { DemonstrationCanvas } from '../../../../src/fixed-pages/editor/ui/blocks/DemonstrationCanvas';
 import { createTemplateModel } from '../../../../src/fixed-pages/editor/diagrams/model';
 import { DemonstrationSection } from '../../../../src/components/content/DemonstrationSection';
 import { ProofStep } from '../../../../src/components/content/ProofStep';
@@ -80,25 +80,36 @@ describe('Phase 4 accessible interaction', () => {
     expect(screen.queryByRole('navigation', { name: 'Navegación de pasos del diagrama' })).toBeNull();
   });
 
-  it('shows Lean traces as read-only information beside, not instead of, justification', () => {
+  it('renders WYSIWYG proof steps without code toggle or legacy justification fields', () => {
     render(
-      <DemonstrationBlock
-        steps={[{
-          number: 1,
-          title: 'Paso formalizado',
-          target: 'segAB',
-          body: '<InteractiveElement target="segAB">AB</InteractiveElement>',
-          justificacion: 'Por definición de segmento',
-          justificationType: 'definicion',
-          leanBlocksExpression: 'metadata.stepTacticMap["1"]',
-        }]}
-        diagramTargets={[]}
-        onChange={vi.fn()}
-      />,
+      <MathProvider>
+        <DemonstrationCanvas
+          blocks={[{
+            id: 'step-1',
+            type: 'demonstration',
+            content: 'Por <ConceptLink targetId="segmento" isDependency={true}>definición de segmento</ConceptLink>.',
+            metadata: {
+              steps: [{
+                number: 1,
+                title: 'Paso formalizado',
+                target: 'segAB',
+                body: 'Por <ConceptLink targetId="segmento" isDependency={true}>definición de segmento</ConceptLink>.',
+              }],
+            },
+          }]}
+          activeBlockId="step-1"
+          diagramTargets={[]}
+          onActivate={vi.fn()}
+          onUpdateStep={vi.fn()}
+          onInsertAfter={vi.fn()}
+          onFocusSurface={vi.fn()}
+        />
+      </MathProvider>,
     );
-    expect(screen.getByLabelText('Traza Lean del paso 1').textContent).toContain('solo lectura');
-    expect((screen.getByDisplayValue('Por definición de segmento') as HTMLInputElement).value).toBe('Por definición de segmento');
-    expect(screen.queryByDisplayValue('metadata.stepTacticMap["1"]')).toBeNull();
+    expect(screen.getAllByRole('textbox').length).toBeGreaterThan(0);
+    expect(screen.getByText(/definición de segmento/)).toBeTruthy();
+    expect(screen.queryByText('Código')).toBeNull();
+    expect(screen.getByRole('button', { name: 'Añadir paso' })).toBeTruthy();
   });
 
   it('keeps proof-step scrollytelling without showing StepNavigator on demonstration pages', () => {

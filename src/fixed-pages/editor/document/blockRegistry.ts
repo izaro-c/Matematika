@@ -22,7 +22,7 @@ export interface RegisteredBlockProjection {
   data: Record<string, unknown>;
 }
 
-export const TRANSPARENT_JSX_CONTAINERS = new Set(['DemonstrationSection']);
+export const TRANSPARENT_JSX_CONTAINERS = new Set(['DemonstrationSection', 'Demostracion']);
 
 /** JSX flow components with an explicit lossless mutation contract. */
 export const SUPPORTED_JSX_BLOCKS = {
@@ -177,8 +177,10 @@ export function projectRegisteredBlock(source: string, node: MdxAstNode): Regist
         if (capitularRange) {
           const attributes = readJsxAttributes(source, firstChild);
           editRange = { start: capitularRange.end, end: location.end };
-          data.text = source.slice(editRange.start, editRange.end);
-          data.capitular = typeof attributes.letra === 'string' ? attributes.letra : '';
+          const letter = typeof attributes.letra === 'string' ? attributes.letra.slice(0, 1) : '';
+          data.capitular = letter;
+          // Editor shows the full word (letter + rest) so typing feels like a normal paragraph.
+          data.text = `${letter}${source.slice(editRange.start, editRange.end)}`;
         }
       }
     }
@@ -210,11 +212,14 @@ export function projectRegisteredBlock(source: string, node: MdxAstNode): Regist
     data.steps = [{
       number: attributes.number ?? 1,
       title: attributes.title ?? '',
-      justificacion: attributes.justificacion ?? '',
       target: attributes.target ?? '',
+      diagramStep: attributes.diagramStep,
+      diagramKey: attributes.diagramKey,
       body: source.slice(editRange.start, editRange.end),
       leanBlocks: Array.isArray(attributes.leanBlocks) ? attributes.leanBlocks : undefined,
-      leanBlocksExpression: typeof attributes.leanBlocks === 'string' ? attributes.leanBlocks : undefined,
+      leanBlocksExpression: typeof attributes.leanBlocksExpression === 'string'
+        ? attributes.leanBlocksExpression
+        : (typeof attributes.leanBlocks === 'string' ? attributes.leanBlocks : undefined),
     }];
   }
   return { blockType, editRange, data };
@@ -267,10 +272,13 @@ export function serializeRegisteredBlock(
   const content = data.content ?? '';
   const metadata = data.metadata ?? {};
   if (blockType === 'paragraph') {
-    const prefix = typeof metadata.capitular === 'string' && metadata.capitular
-      ? `<Capitular letra=${JSON.stringify(metadata.capitular.slice(0, 1).toUpperCase())} />`
+    const letter = typeof metadata.capitular === 'string' && metadata.capitular
+      ? metadata.capitular.slice(0, 1).toUpperCase()
       : '';
-    return `${prefix}${content || 'Nuevo párrafo.'}`;
+    if (!letter) return content || 'Nuevo párrafo.';
+    // Content in the visual editor includes the drop-cap letter; source stores it only in <Capitular>.
+    const rest = content.charAt(0).toUpperCase() === letter ? content.slice(1) : content;
+    return `<Capitular letra=${JSON.stringify(letter)} />${rest || 'Nuevo párrafo.'}`;
   }
   if (blockType === 'heading') return `${'#'.repeat(Number(metadata.level) || 3)} ${content || 'Nueva sección'}`;
   if (blockType === 'list') return (content || 'Primer elemento').split('\n').map((line, index) => (

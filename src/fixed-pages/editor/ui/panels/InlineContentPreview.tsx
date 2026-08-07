@@ -30,6 +30,7 @@ export function renderFormattedText(text: string, blockId: string, onEditLink?: 
     if (node.type === 'bold') return <strong key={key} className="font-bold text-carbon">{node.value}</strong>;
     if (node.type === 'italic') return <em key={key} className="italic text-carbon/85">{node.value}</em>;
     if (node.type === 'inlineLatex') return <KatexText key={key} text={`$${node.value}$`} className="rounded bg-ocre/5 px-1 py-0.5 text-carbon" />;
+    if (node.type === 'proofStepLink') return <span key={key} className="inline-flex items-center gap-1 rounded bg-pavo/15 px-1.5 py-0.5 font-mono text-xs font-bold text-pavo border border-pavo/30">Paso {node.step}</span>;
 
     if (node.type === 'conceptLink' || node.type === 'refLink') {
       const tag = node.type === 'conceptLink' ? 'ConceptLink' : 'RefLink';

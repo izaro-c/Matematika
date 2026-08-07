@@ -1,14 +1,16 @@
 import React from 'react';
 import { FormulaBlock } from '../blocks/FormulaBlock';
-import { DemonstrationBlock } from '../blocks/DemonstrationBlock';
 import type { DiagramTargetRegistry, EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
 import type { Block, BlockType } from '@/fixed-pages/editor/session/parser';
 import { insertSymbol, parseMarkdownTable, renderFormattedText, type EditLinkHandler } from './InlineContentPreview';
+import { PublishedEditSurface } from './PublishedEditSurface';
 import { INLINE_EDITABLE_BLOCKS, LATEX_SYMBOLS } from './visualEditorPresets';
 import { BlockActions, BlockInsertMenu } from './VisualBlockControls';
 import { RegisteredMdxBlockEditor } from './RegisteredMdxBlockEditor';
 import { ExerciseBlockEditor } from './ExerciseBlockEditor';
 import { DiagramRuntimePreview } from '../../diagrams/ui/DiagramRuntimePreview';
+import { RichProseSurface } from '../prose/RichProseSurface';
+import { autoCapitularLetter } from '../prose/demoGrouping';
 
 interface VisualEditorBlockProps {
   block: Block;
@@ -38,7 +40,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
   block, blocks, index, isReadOnly, canMutateVisualStructure, editingBlockId,
   setEditingBlockId, highlightedBlockId, issues = [], addBlock, moveBlock, duplicateBlock, removeBlock, updateBlock,
   handleTextareaSelect, handleEditLink, renderInlineToolbar, setActiveDiagramIndex,
-  setActiveDiagramBlockId, setDiagramBuilderOpen, diagramTargets,
+  setActiveDiagramBlockId, setDiagramBuilderOpen, diagramTargets: _diagramTargets,
 }) => {
   const precedingCapitular = blocks[index - 1]?.metadata?.component === 'Capitular' ? blocks[index - 1] : null;
   const dropCapLetter = block.metadata?.capitular
@@ -106,53 +108,25 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
 
               {block.type === 'paragraph' && (
                 <div className="space-y-1">
-                  <div className="flex justify-between items-center opacity-0 group-hover/block:opacity-100 transition-opacity select-none">
-                    <label className="block ac-label ac-label--2xs ac-label--faint font-sans">Párrafo</label>
-                    <span className="flex items-center gap-2 text-[8px] text-carbon/30 italic font-sans">
-                      {hasDropCap && <label className="not-italic font-bold text-salvia">Capitular <input aria-label="Letra capitular" maxLength={1} value={dropCapLetter} onChange={event => updateBlock(block.id, block.content, { ...block.metadata, capitular: event.target.value.toUpperCase() })} className="ml-1 h-5 w-6 rounded border border-salvia/20 bg-lienzo text-center font-serif text-xs font-bold text-salvia" /></label>}
-                      {editingBlockId === block.id ? 'Subraye texto para vincular concepto' : 'Haga clic para editar'}
-                    </span>
-                  </div>
-                  {editingBlockId === block.id ? (
-                    <div className="space-y-2">
-                      {renderInlineToolbar(block)}
-                      <textarea
-                        autoFocus
-                        value={block.content}
-                        onChange={(e) => updateBlock(block.id, e.target.value)}
-                        onSelect={(e) => handleTextareaSelect(e, block.id)}
-                        onBlur={() => setEditingBlockId(null)}
-                        className="w-full bg-transparent resize-none focus:outline-none text-base leading-relaxed text-carbon font-serif min-h-[40px] focus:ring-0 p-0"
-                        placeholder="Escriba prosa explicativa o notas aquí..."
-                        style={{ height: 'auto' }}
-                        onInput={(e) => {
-                          const target = e.target as HTMLTextAreaElement;
-                          target.style.height = 'auto';
-                          target.style.height = `${target.scrollHeight}px`;
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <div
-                      onClick={() => !isReadOnly && setEditingBlockId(block.id)}
-                      className="w-full text-base leading-relaxed text-carbon font-serif cursor-text py-1 select-text"
-                    >
-                      {hasDropCap ? (
-                        <>
-                          <span className="float-left text-5xl font-serif font-bold text-salvia mr-2 leading-none mt-1 select-none">
-                            {dropCapLetter}
-                          </span>
-                          {renderFormattedText(block.content, block.id, handleEditLink) || (
-                            <span className="text-carbon/25 italic">Escriba prosa explicativa o notas aquí...</span>
-                          )}
-                        </>
-                      ) : (
-                        renderFormattedText(block.content, block.id, handleEditLink) || (
-                          <span className="text-carbon/25 italic">Escriba prosa explicativa o notas aquí...</span>
-                        )
-                      )}
-                    </div>
-                  )}
+                  <PublishedEditSurface active={editingBlockId === block.id} hasError={hasError}>
+                    <RichProseSurface
+                      surfaceId={`prose-${block.id}`}
+                      value={block.content}
+                      disabled={isReadOnly}
+                      placeholder="Escriba prosa explicativa…"
+                      onFocusSurface={() => setEditingBlockId(block.id)}
+                      onEditChip={(raw, text, attrs, tag, event) => handleEditLink(block.id, raw, text, attrs, tag, event)}
+                      onChange={(content) => {
+                        const isFirstParagraph = blocks.findIndex(b => b.type === 'paragraph') === index;
+                        const letter = isFirstParagraph ? autoCapitularLetter(content) : undefined;
+                        updateBlock(block.id, content, {
+                          ...block.metadata,
+                          capitular: letter,
+                        });
+                      }}
+                      className={`text-base ${hasDropCap ? 'first-letter:float-left first-letter:mr-2 first-letter:mt-1 first-letter:font-serif first-letter:text-5xl first-letter:font-bold first-letter:text-salvia' : ''}`}
+                    />
+                  </PublishedEditSurface>
                 </div>
               )}
 
@@ -415,15 +389,6 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                     onChange={(newContent) => updateBlock(block.id, newContent)}
                   />
                 </div>
-              )}
-
-              {block.type === 'demonstration' && (
-                <DemonstrationBlock
-                  steps={block.metadata?.steps || []}
-                  diagramTargets={diagramTargets}
-                  onChange={(updatedSteps) => updateBlock(block.id, '', { steps: updatedSteps })}
-                  singleStepMode
-                />
               )}
 
               {block.type === 'exercise' && (

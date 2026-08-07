@@ -49,11 +49,6 @@ const ACTIONS = {
     label: 'Editar bloques seguros',
     description: 'Solo se modifican rangos localizados que el motor puede verificar.',
   },
-  reviewDiff: {
-    id: 'review-diff',
-    label: 'Revisar cambios',
-    description: 'Muestra los cambios antes de tocar el archivo real.',
-  },
   saveDraft: {
     id: 'save-draft',
     label: 'Guardar borrador',
@@ -61,7 +56,7 @@ const ACTIONS = {
   },
   applyFile: {
     id: 'apply-file',
-    label: 'Aplicar al archivo',
+    label: 'Guardar',
     description: 'Escribe el archivo real mediante persistencia transaccional y backup.',
   },
   resolveConflict: {
@@ -82,7 +77,7 @@ function compatibilityPresentation(
         title: 'Edición visual',
         description: 'Puedes editar el contenido con cambios localizados y seguros.',
         reasons: [],
-        allowedActions: [ACTIONS.editVisual, ACTIONS.editCode, ACTIONS.reviewDiff],
+        allowedActions: [ACTIONS.editVisual, ACTIONS.editCode],
         blockedActions: [],
         recommendedAction: ACTIONS.editVisual,
       };
@@ -97,9 +92,9 @@ function compatibilityPresentation(
           title: 'Bloque opaco preservado',
           description: reason,
         })),
-        allowedActions: [ACTIONS.editVisual, ACTIONS.editCode, ACTIONS.reviewDiff],
+        allowedActions: [ACTIONS.editVisual, ACTIONS.editCode],
         blockedActions: [],
-        recommendedAction: ACTIONS.reviewDiff,
+        recommendedAction: ACTIONS.editVisual,
       };
     case 'read-only':
       return {
@@ -124,13 +119,13 @@ function compatibilityPresentation(
         reasons: reasons.length > 0
           ? reasons.map((reason, index) => ({
             id: `unsupported-${index}`,
-            level: 'error',
+            level: 'error' as const,
             title: 'Sintaxis MDX inválida',
             description: reason,
           }))
           : [{
             id: 'unsupported-parser',
-            level: 'error',
+            level: 'error' as const,
             title: 'Parseo MDX fallido',
             description: 'El documento no puede proyectarse de forma segura.',
           }],
@@ -177,16 +172,16 @@ function savePresentation(status: EditorPersistenceStatus, validation: EditorVal
         title: validationBlocked ? 'Cambios locales bloqueados por validación' : 'Cambios locales',
         description: validationBlocked
           ? 'El archivo real no se aplicará hasta resolver los errores críticos.'
-          : 'Los cambios existen solo en el editor hasta guardar borrador o revisar el diff y aplicar.',
+          : 'Los cambios existen solo en el editor hasta guardar borrador o guardar el archivo.',
         reasons: validation.issues.map(issue => ({
           id: issue.id,
           level: issue.severity === 'error' ? 'error' : 'attention',
           title: issue.severity === 'error' ? 'Error de validación' : 'Aviso de validación',
           description: issue.message,
         })),
-        allowedActions: validationBlocked ? [ACTIONS.saveDraft, ACTIONS.reviewDiff] : [ACTIONS.saveDraft, ACTIONS.reviewDiff, ACTIONS.applyFile],
+        allowedActions: validationBlocked ? [ACTIONS.saveDraft] : [ACTIONS.saveDraft, ACTIONS.applyFile],
         blockedActions: validationBlocked ? [ACTIONS.applyFile] : [],
-        recommendedAction: ACTIONS.reviewDiff,
+        recommendedAction: validationBlocked ? ACTIONS.saveDraft : ACTIONS.applyFile,
       };
     case 'validating':
       return {
@@ -208,9 +203,9 @@ function savePresentation(status: EditorPersistenceStatus, validation: EditorVal
           title: 'La operación no es segura',
           description: status.reason,
         }],
-        allowedActions: [ACTIONS.editCode, ACTIONS.reviewDiff],
+        allowedActions: [ACTIONS.editCode],
         blockedActions: [ACTIONS.applyFile],
-        recommendedAction: ACTIONS.reviewDiff,
+        recommendedAction: ACTIONS.editCode,
       };
     case 'saving-draft':
       return {
@@ -227,14 +222,14 @@ function savePresentation(status: EditorPersistenceStatus, validation: EditorVal
         title: 'Borrador guardado',
         description: 'Existe un borrador, pero el archivo real aún no está aplicado.',
         reasons: [],
-        allowedActions: [ACTIONS.reviewDiff, ACTIONS.applyFile],
+        allowedActions: [ACTIONS.applyFile],
         blockedActions: [],
-        recommendedAction: ACTIONS.reviewDiff,
+        recommendedAction: ACTIONS.applyFile,
       };
     case 'saving-file':
       return {
         level: 'attention',
-        title: 'Aplicando al archivo',
+        title: 'Guardando archivo',
         description: 'La persistencia está escribiendo el archivo real con backup previo.',
         reasons: [],
         allowedActions: [],
@@ -260,9 +255,9 @@ function savePresentation(status: EditorPersistenceStatus, validation: EditorVal
           title: 'Persistencia rechazada',
           description: 'message' in status.error && status.error.message ? status.error.message : status.error.kind,
         }],
-        allowedActions: [ACTIONS.saveDraft, ACTIONS.reviewDiff],
-        blockedActions: [ACTIONS.applyFile],
-        recommendedAction: ACTIONS.reviewDiff,
+        allowedActions: [ACTIONS.saveDraft, ACTIONS.applyFile],
+        blockedActions: [],
+        recommendedAction: ACTIONS.applyFile,
       };
     case 'conflict':
       return {
@@ -275,7 +270,7 @@ function savePresentation(status: EditorPersistenceStatus, validation: EditorVal
           title: 'Revisión externa detectada',
           description: `Esperada ${status.expectedVersion}; actual ${status.actualVersion}.`,
         }],
-        allowedActions: [ACTIONS.saveDraft, ACTIONS.resolveConflict, ACTIONS.reviewDiff],
+        allowedActions: [ACTIONS.saveDraft, ACTIONS.resolveConflict],
         blockedActions: [ACTIONS.applyFile],
         recommendedAction: ACTIONS.resolveConflict,
       };
@@ -285,7 +280,7 @@ function savePresentation(status: EditorPersistenceStatus, validation: EditorVal
         title: 'Operación cancelada',
         description: 'La acción anterior fue cancelada y el estado local se conserva.',
         reasons: [],
-        allowedActions: [ACTIONS.reviewDiff],
+        allowedActions: [ACTIONS.applyFile],
         blockedActions: [],
       };
     case 'unsupported':
@@ -352,16 +347,17 @@ export function buildDiagramAuthorityPresentation(status: DiagramSyncStatus, isD
         reasons: [],
         allowedActions: [ACTIONS.editVisual, ACTIONS.editCode],
         blockedActions: [],
+        recommendedAction: isDirty ? ACTIONS.applyFile : undefined,
       };
     case 'visual-authoritative':
       return {
         level: 'attention',
         title: 'Modelo visual autoritativo',
-        description: 'El modelo visual contiene los cambios recientes. Revise la fuente generada antes de guardar.',
+        description: 'El modelo visual contiene los cambios recientes. Guarde para persistir la fuente generada.',
         reasons: [],
-        allowedActions: [ACTIONS.reviewDiff],
+        allowedActions: [ACTIONS.applyFile],
         blockedActions: [],
-        recommendedAction: ACTIONS.reviewDiff,
+        recommendedAction: ACTIONS.applyFile,
       };
     case 'source-authoritative':
       return {
@@ -371,24 +367,23 @@ export function buildDiagramAuthorityPresentation(status: DiagramSyncStatus, isD
           ? 'El TSX completo contiene cambios locales. La vista visual no puede regenerarlo sin perder código.'
           : 'El TSX completo es la única representación autoritativa; se ejecuta una vista previa del componente guardado.',
         reasons: [],
-        allowedActions: [ACTIONS.reviewDiff],
+        allowedActions: isDirty ? [ACTIONS.applyFile, ACTIONS.editCode] : [ACTIONS.editCode],
         blockedActions: [],
-        recommendedAction: ACTIONS.reviewDiff,
+        recommendedAction: isDirty ? ACTIONS.applyFile : ACTIONS.editCode,
       };
     case 'diverged':
       return {
         level: 'blocked',
         title: 'Modelo y fuente divergentes',
-        description: 'Ambas representaciones cambiaron. El guardado está bloqueado hasta elegir una autoridad y revisar el diff.',
+        description: 'Ambas representaciones cambiaron. El guardado está bloqueado hasta elegir una autoridad.',
         reasons: [{
           id: 'diagram-diverged',
           level: 'blocked',
           title: 'Autoridad ambigua',
           description: 'Guardar ahora podría descartar cambios de una representación.',
         }],
-        allowedActions: [ACTIONS.reviewDiff],
+        allowedActions: [ACTIONS.editCode, ACTIONS.editVisual],
         blockedActions: [ACTIONS.applyFile],
-        recommendedAction: ACTIONS.reviewDiff,
       };
     case 'invalid-source':
       return {
@@ -401,7 +396,7 @@ export function buildDiagramAuthorityPresentation(status: DiagramSyncStatus, isD
           title: 'Parseo de fuente fallido',
           description: 'Corrija el código o conserve el modelo visual tras revisar los cambios.',
         }],
-        allowedActions: [ACTIONS.editCode, ACTIONS.reviewDiff],
+        allowedActions: [ACTIONS.editCode],
         blockedActions: [ACTIONS.applyFile],
       };
     case 'saving':
@@ -424,8 +419,9 @@ export function buildDiagramAuthorityPresentation(status: DiagramSyncStatus, isD
           title: 'Versión externa detectada',
           description: 'La versión local no se sobrescribirá automáticamente.',
         }],
-        allowedActions: [ACTIONS.resolveConflict, ACTIONS.reviewDiff],
+        allowedActions: [ACTIONS.resolveConflict],
         blockedActions: [ACTIONS.applyFile],
+        recommendedAction: ACTIONS.resolveConflict,
       };
   }
 }

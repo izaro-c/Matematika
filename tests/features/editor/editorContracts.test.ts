@@ -89,22 +89,23 @@ describe('editor MDX generation contracts', () => {
     expect(link).not.toContain('](');
   });
 
-  it('always gives the ProofStep snippet an explicit justification', () => {
+  it('gives the ProofStep snippet body-based justification', () => {
     const snippet = getBlockSnippet('medieval-step');
 
     expect(snippet).toContain('<ProofStep');
-    expect(snippet).toContain('justificacion="Especificar justificación lógica"');
+    expect(snippet).toContain('ConceptLink');
+    expect(snippet).not.toContain('justificacion=');
   });
 
-  it('adds a justification to ProofSteps supplied by legacy editor templates', () => {
-    const body = '<ProofStep number={1} title="Paso inicial" />\nTexto';
+  it('strips legacy justification attrs from ProofSteps', () => {
+    const body = '<ProofStep number={1} title="Paso inicial" justificacion="Por hipótesis" justificationType="hipotesis" />\nTexto';
 
     expect(ensureProofStepJustifications(body)).toBe(
-      '<ProofStep number={1} title="Paso inicial" justificacion="Especificar justificación lógica" />\nTexto',
+      '<ProofStep number={1} title="Paso inicial" />\nTexto',
     );
     expect(ensureProofStepJustifications(
-      '<ProofStep number={1} title="Paso" justificacion="Por hipótesis" />',
-    )).toContain('justificacion="Por hipótesis"');
+      '<ProofStep number={1} title="Paso" />',
+    )).toBe('<ProofStep number={1} title="Paso" />');
   });
 
   it('only offers palette colors and guards generated interactive references', () => {

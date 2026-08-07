@@ -44,10 +44,11 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
     ? gliderSupportId
     : (gliderSupports[0]?.id ?? '');
 
-  const toolCategories: ToolCategory[] = useMemo(() => [
+  const toolCategories: (ToolCategory & { shortLabel?: string })[] = useMemo(() => [
     {
       id: 'points',
       label: 'Puntos & Deslizadores',
+      shortLabel: 'Puntos',
       tools: [
         { id: 'point', toolId: 'point', name: 'Punto Libre', description: 'Haz clic en el lienzo para colocarlo' },
         { id: 'midpoint', toolId: 'midpoint', name: 'Punto Medio', description: 'Selecciona 2 puntos' },
@@ -60,6 +61,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
     {
       id: 'lines',
       label: 'Líneas & Geometría',
+      shortLabel: 'Líneas',
       tools: [
         { id: 'guided', name: 'Construcción guiada', description: 'Mediatriz, bisectriz o circuncírculo paso a paso', action: onOpenGuidedClick },
         { id: 'segment', toolId: 'segment', name: 'Segmento', description: 'Selecciona 2 puntos' },
@@ -77,6 +79,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
     {
       id: 'angles',
       label: 'Ángulos & Marcas',
+      shortLabel: 'Ángulos',
       tools: [
         { id: 'angle', toolId: 'angle', name: 'Ángulo Orientado', description: 'Tres puntos: lado 1, vértice, lado 2' },
         { id: 'nonReflexAngle', toolId: 'nonReflexAngle', name: 'Ángulo No Cóncavo (≤180°)', description: 'Tres puntos' },
@@ -92,6 +95,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
     {
       id: 'regions',
       label: 'Áreas & Regiones',
+      shortLabel: 'Áreas',
       tools: [
         { id: 'halfPlane', toolId: 'halfPlane', name: 'Semiplano', description: 'Recta borde y punto del semiplano' },
         { id: 'areaDecomposition', toolId: 'areaDecomposition', name: 'Descomposición de Área', description: 'Región sombreada por vértices' },
@@ -102,6 +106,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
     {
       id: 'curves',
       label: 'Curvas & Modelos',
+      shortLabel: 'Curvas',
       tools: [
         { id: 'functionCurve', toolId: 'functionCurve', name: 'Gráfica de Función f(x)', description: 'Función matemática continua' },
         { id: 'parametricCurve', toolId: 'parametricCurve', name: 'Curva Paramétrica x(t), y(t)', description: 'Ecuaciones paramétricas' },
@@ -112,6 +117,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
     {
       id: 'text',
       label: 'Anotaciones & Explicación',
+      shortLabel: 'Anotaciones',
       tools: [
         { id: 'text', toolId: 'text', name: 'Etiqueta / Texto KaTeX', description: 'Punto ancla y contenido LaTeX' },
         { id: 'label', toolId: 'label', name: 'Etiqueta Matemática', description: 'Símbolo matemático' },
@@ -144,6 +150,21 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
     if (isSearching) setOpenMenu(null);
   }, [isSearching]);
 
+  useEffect(() => {
+    const close = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target?.closest('nav[data-workbench-toolbar]')) {
+        setOpenMenu(null);
+        // We only clear query if there's no text or if they completely click away to cancel search
+        if (!target?.closest('[role="listbox"]')) {
+           setToolQuery('');
+        }
+      }
+    };
+    window.addEventListener('mousedown', close);
+    return () => window.removeEventListener('mousedown', close);
+  }, []);
+
   const isToolDisabled = (toolId?: CanvasTool) => {
     if (!toolId || !model || toolId === 'select' || toolId === 'point') return false;
     const required = refsNeededForTool(toolId);
@@ -165,15 +186,15 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
   };
 
   return (
-    <nav className="relative z-50 flex flex-wrap items-center gap-1.5 p-1.5 bg-lienzo/95 border-b border-carbon/10 shadow-2xs backdrop-blur-md font-serif select-none transition-colors text-carbon motion-safe:transition-all">
+    <nav data-workbench-toolbar className="relative z-50 flex w-full min-w-0 shrink-0 flex-wrap items-center gap-1.5 border-b border-carbon/10 bg-lienzo/95 p-1.5 font-serif text-carbon shadow-2xs backdrop-blur-md select-none transition-colors motion-safe:transition-all">
       <button
         type="button"
         aria-label="Mover / Seleccionar"
         aria-pressed={activeTool === 'select'}
         onClick={() => onSelectTool('select')}
-        className={`flex min-h-11 items-center space-x-1.5 h-8 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia ${
+        className={`flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia ${
           activeTool === 'select'
-            ? 'bg-salvia text-lienzo shadow-xs'
+            ? 'bg-salvia text-lienzo shadow-xs font-bold'
             : 'bg-carbon/5 border border-carbon/15 text-carbon/80 hover:bg-carbon/10'
         }`}
       >
@@ -186,9 +207,9 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
         aria-label="Punto libre"
         aria-pressed={activeTool === 'point'}
         onClick={() => onSelectTool('point')}
-        className={`flex min-h-11 items-center space-x-1.5 h-8 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia ${
+        className={`flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia ${
           activeTool === 'point'
-            ? 'bg-salvia text-lienzo shadow-xs'
+            ? 'bg-salvia text-lienzo shadow-xs font-bold'
             : 'bg-carbon/5 border border-carbon/15 text-carbon/80 hover:bg-carbon/10'
         }`}
       >
@@ -201,7 +222,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
           type="button"
           onClick={onOpenGuidedClick}
           aria-label="Construcciones guiadas"
-          className="flex min-h-11 items-center space-x-1.5 h-8 px-2.5 rounded-lg text-xs font-bold text-salvia bg-salvia/10 hover:bg-salvia/20 border border-salvia/30 transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-salvia"
+          className="flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold text-salvia bg-salvia/10 hover:bg-salvia/20 border border-salvia/30 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia"
           title="Abrir asistente de construcciones guiadas"
         >
           <IconSparkles className="w-3.5 h-3.5" />
@@ -209,17 +230,17 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
         </button>
       )}
 
-      <div className="h-5 w-px bg-carbon/15 mx-1" />
+      <div className="mx-1 h-5 w-px bg-carbon/15 shrink-0" />
 
       <div className="relative">
-        <label className="flex min-h-11 items-center">
+        <label className="flex h-8 items-center">
           <span className="sr-only">Buscar herramienta</span>
           <input
             type="search"
             value={toolQuery}
             onChange={e => setToolQuery(e.target.value)}
             placeholder="Buscar…"
-            className="h-8 w-28 sm:w-44 rounded-lg border border-carbon/15 bg-carbon/5 px-2 text-xs text-carbon focus-visible:ring-2 focus-visible:ring-salvia"
+            className="h-8 w-28 sm:w-44 rounded-lg border border-carbon/15 bg-carbon/5 px-2.5 text-xs text-carbon placeholder-carbon/40 focus:bg-lienzo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia transition-colors font-sans"
           />
         </label>
 
@@ -307,19 +328,20 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
           >
             <button
               type="button"
+              aria-label={category.label}
               aria-expanded={isOpen}
               aria-haspopup="menu"
               disabled={isSearching}
               onClick={() => setOpenMenu(isOpen ? null : category.id)}
-              className={`flex min-h-11 items-center space-x-1.5 h-8 px-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer border focus-visible:ring-2 focus-visible:ring-salvia ${
+              className={`flex h-8 items-center space-x-1.5 px-2.5 rounded-lg text-xs font-bold transition-all cursor-pointer border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia ${
                 hasActiveTool
-                  ? 'bg-salvia/15 border-salvia text-salvia font-bold'
+                  ? 'bg-salvia text-lienzo shadow-xs font-bold'
                   : isOpen
                   ? 'bg-carbon/10 border-carbon/20 text-carbon font-bold'
                   : 'bg-carbon/5 border-carbon/15 text-carbon/80 hover:bg-carbon/10'
               }`}
             >
-              <span>{category.label}</span>
+              <span>{category.shortLabel || category.label}</span>
               {isSearching && matchCount > 0 && (
                 <span className="text-[9px] font-mono bg-salvia/20 text-salvia px-1 rounded">{matchCount}</span>
               )}
@@ -414,7 +436,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
         );
       })}
 
-      <div className="ml-auto flex items-center space-x-2 bg-carbon/5 px-2.5 py-1 rounded-lg border border-carbon/15 text-xs">
+      <div className="ml-auto hidden sm:flex items-center space-x-2 bg-carbon/5 px-2.5 py-1 rounded-lg border border-carbon/15 text-xs">
         <span className="text-[11px] text-carbon/50">Activa:</span>
         <div className="flex items-center space-x-1">
           <ToolDrawingIcon tool={activeTool} className="w-3.5 h-3.5 text-salvia" />

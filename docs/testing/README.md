@@ -36,7 +36,6 @@
 
 - `useBoardLifecycle`: cubierto indirectamente vía tests de escena y `.full`; sin test unitario del hook (requeriría refactor de export).
 - `pages/`: smoke mínimo (`MethodsPage`); ampliar en follow-up.
-- `diffReview` integración: tests de funciones puras activos; UI desconectada hasta reconectar `EditorDiffController`.
 
 ## CPT (Category Partition Tests)
 

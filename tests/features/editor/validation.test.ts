@@ -63,7 +63,7 @@ describe('editor validation', () => {
     ]));
   });
 
-  it('warns about proof steps without diagram interaction and blocks missing justification', () => {
+  it('warns about incomplete proof steps without blocking save', () => {
     const blocks: Block[] = [
       {
         id: 'proof',
@@ -75,7 +75,6 @@ describe('editor validation', () => {
               number: 1,
               title: 'Paso',
               body: 'Claramente se obtiene la conclusión.',
-              justificacion: '',
             },
           ],
         },
@@ -96,7 +95,9 @@ describe('editor validation', () => {
       blocks,
     });
 
-    expect(result.canSave).toBe(false);
+    expect(result.canSave).toBe(true);
+    expect(result.errorCount).toBe(0);
+    expect(result.warningCount).toBeGreaterThan(0);
     expect(result.issues.map(issue => issue.id)).toEqual(expect.arrayContaining([
       'proof-1-justification',
       'proof-1-interactive',
@@ -393,7 +394,6 @@ describe('editor validation', () => {
             {
               number: 1,
               body: 'Paso con <InteractiveElement target="targetPendiente">elemento</InteractiveElement>',
-              justificacion: 'por hipótesis',
               diagramStep: 'initial',
             },
           ],

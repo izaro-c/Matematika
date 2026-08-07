@@ -10,9 +10,11 @@ interface ProofStepProps {
   target?: string | string[];
   /** Especifica explícitamente el paso de diagrama a activar (ej. 'initial', 1, 'paso-congruencia'). */
   diagramStep?: string | number;
+  /** Clave en DemonstrationSection diagrams={{...}} cuando hay varios diagramas. */
+  diagramKey?: string;
   /** IDs de bloques de táctica Lean asociados a este paso. Se muestran colapsados por defecto. */
   leanBlocks?: string[];
-  /** IDs de justificaciones (axiomas, teoremas) de este paso. Si no se provee, se extraen automáticamente de los ConceptLinks. */
+  /** IDs de justificaciones (axiomas, teoremas, definiciones…) Si no se provee, se extraen de ConceptLink/RefLink del cuerpo. */
   justifications?: string[];
   children?: React.ReactNode;
 }
@@ -52,6 +54,7 @@ export const ProofStep: React.FC<ProofStepProps> = ({
   title,
   target,
   diagramStep,
+  diagramKey,
   leanBlocks = [],
   justifications,
   children,
@@ -74,6 +77,7 @@ export const ProofStep: React.FC<ProofStepProps> = ({
       className={`mt-10 mb-6 w-full proof-step ${isActive ? 'is-active' : ''}`}
       data-target={typeof finalTarget === 'string' ? finalTarget : JSON.stringify(finalTarget)}
       data-diagram-step={diagramStep !== undefined ? String(diagramStep) : ''}
+      data-diagram-key={diagramKey ?? ''}
       data-justifications={JSON.stringify(activeJustifications)}
       data-proof-step-number={number}
       id={`proof-step-${number}`}

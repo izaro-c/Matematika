@@ -10,6 +10,7 @@ import {
 import { KIND_LABELS } from '../../src/fixed-pages/editor/diagrams/model';
 import { DiagramSpecMigrationError, migrateDiagramSpec } from '../../src/diagrams/model/schema/migrations';
 import { materializeEditorModel, workingScene } from '../../src/fixed-pages/editor/diagrams/model/scene/editorModel';
+import { contentSecurityDiagnostics } from '../../src/fixed-pages/editor/security/contentGuard';
 
 function parseCoords(node?: ts.Expression): { x: number; y: number } | null {
   if (!node || !ts.isArrayLiteralExpression(node)) return null;
@@ -75,6 +76,10 @@ function extractElId(node: ts.Expression): string | null {
 }
 
 export function parseDiagramSourceAST(source: string, metadataType = ''): ParseDiagramSourceResult {
+  const security = contentSecurityDiagnostics('diagram', source);
+  if (security.length > 0) {
+    return { status: 'invalid', diagnostics: security };
+  }
   const embeddedClassification = classifyEmbeddedDiagramSource(source, metadataType);
   if (embeddedClassification) return embeddedClassification;
   const diagnostics: ParseDiagramSourceResult['diagnostics'] = [];

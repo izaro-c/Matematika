@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { EditorValidationIssue, EditorValidationResult } from '@/fixed-pages/editor/session/editorTypes';
+import type { DiagramTargetRegistry, EditorValidationIssue, EditorValidationResult } from '@/fixed-pages/editor/session/editorTypes';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import type { EditorPersistenceStatus } from '@/fixed-pages/editor/save/editorPersistenceState';
 import type { Block } from '@/fixed-pages/editor/session/parser';
@@ -7,6 +7,8 @@ import { MetadataPanel } from '../panels/MetadataPanel';
 import { EditorDiagnosticsPanel } from '../panels/EditorDiagnosticsPanel';
 import { MetadataInspector } from '../components/MetadataInspector';
 import { WorkbenchAsideTabs } from './WorkbenchAsideTabs';
+
+import type { MetadataPanelProps, PageDiagramLink } from '../panels/MetadataPanel';
 
 export type InspectorTab = 'page' | 'diagrams' | 'avisos';
 
@@ -25,9 +27,9 @@ interface MdxWorkbenchInspectorProps {
   persistenceLabel: string;
   blocks: Block[];
   openFile: (path: string) => void;
-  pageDiagramLinks: any[];
-  pageConnectionSummary: any;
-  diagramTargets: any;
+  pageDiagramLinks: PageDiagramLink[];
+  pageConnectionSummary: MetadataPanelProps['pageConnectionSummary'];
+  diagramTargets: DiagramTargetRegistry;
   diagramTargetsLoading: boolean;
   diagramTargetsError: string | null;
   setActiveDiagramIndex: (index: number | null) => void;

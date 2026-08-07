@@ -46,4 +46,17 @@ describe('Phase 7 semantic link selector', () => {
       '<ConceptLink targetId={["sistema-euclidiano","geometria"]} isDependency={false}>geometría euclídea</ConceptLink>',
     );
   });
+
+  it('removes an existing link when Quitar Vínculo button is clicked', () => {
+    const onLinkCreated = vi.fn();
+    render(<SemanticLinker isOpen onClose={vi.fn()} files={files} selectedText="geometría euclídea"
+      onLinkCreated={onLinkCreated} position={{ top: 0, left: 0 }}
+      editingTag="ConceptLink"
+      editingMarkup={'<ConceptLink targetId="geometria">geometría euclídea</ConceptLink>'}
+      initialAttrs={{ targetId: 'geometria' }} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Quitar Vínculo' }));
+
+    expect(onLinkCreated).toHaveBeenCalledWith('geometría euclídea');
+  });
 });

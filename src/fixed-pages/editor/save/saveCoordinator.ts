@@ -1,6 +1,6 @@
 import type { ContentRepository } from './contentRepository';
 import type { DraftRepository } from './draftRepository';
-import { asPersistenceError } from './persistenceErrors';
+import { asPersistenceError, type PersistenceError } from './persistenceErrors';
 import type { EditorDraftSnapshot, EditorFileIdentity, EditorSaveSnapshot } from './persistenceContracts';
 import { SAVE_COORDINATOR_DEBOUNCE_MS } from '../constants';
 
@@ -11,6 +11,10 @@ export type SaveCoordinatorEvent =
   | { type: 'apply-started'; snapshot: EditorSaveSnapshot }
   | { type: 'apply-succeeded'; snapshot: EditorSaveSnapshot; version: string; backupId: string }
   | { type: 'apply-failed'; snapshot: EditorSaveSnapshot; error: ReturnType<typeof asPersistenceError> };
+
+export type ApplyNowResult =
+  | { ok: true }
+  | { ok: false; error?: PersistenceError };
 
 export interface TimerApi {
   set(callback: () => void, delay: number): unknown;
@@ -62,8 +66,8 @@ export class SaveCoordinator {
     }
   }
 
-  async applyNow(snapshot: EditorSaveSnapshot): Promise<boolean> {
-    if (this.disposed) return false;
+  async applyNow(snapshot: EditorSaveSnapshot): Promise<ApplyNowResult> {
+    if (this.disposed) return { ok: false };
     this.applyController?.abort();
     const controller = new AbortController();
     this.applyController = controller;
@@ -73,13 +77,17 @@ export class SaveCoordinator {
       const response = await this.content.apply(snapshot, controller.signal);
       if (this.isCurrent(generation, controller, this.applyController)) {
         this.emit({ type: 'apply-succeeded', snapshot, version: response.version, backupId: response.backupId });
-        return true;
+        return { ok: true };
       }
+      return { ok: false };
     } catch (error) {
       const detail = asPersistenceError(error);
-      if (this.isCurrent(generation, controller, this.applyController) && detail.kind !== 'aborted') this.emit({ type: 'apply-failed', snapshot, error: detail });
+      if (this.isCurrent(generation, controller, this.applyController) && detail.kind !== 'aborted') {
+        this.emit({ type: 'apply-failed', snapshot, error: detail });
+        return { ok: false, error: detail };
+      }
+      return { ok: false, error: detail.kind === 'aborted' ? undefined : detail };
     }
-    return false;
   }
 
   cancelForFile(file: EditorFileIdentity): void {

@@ -140,7 +140,7 @@ describe('Editor MDX Parser', () => {
   });
 
   it('should parse demonstrations and proof steps', () => {
-    const rawBody = `<Demostracion>\n  <ProofStep number={1} title="Paso 1" justificacion="Porque sí" />\n  <ProofStep number={2} title="Paso 2" justificacion="Definición" />\n</Demostracion>`;
+    const rawBody = `<Demostracion>\n  <ProofStep number={1} title="Paso 1" />\n  <ProofStep number={2} title="Paso 2">\n    Por <ConceptLink targetId="definicion" isDependency={true}>definición</ConceptLink>.\n  </ProofStep>\n</Demostracion>`;
     const blocks = parseBodyToBlocks(rawBody);
 
     expect(blocks).toHaveLength(1);
@@ -149,18 +149,16 @@ describe('Editor MDX Parser', () => {
     expect(blocks[0].metadata?.steps[0]).toEqual({
       number: 1,
       title: 'Paso 1',
-      justificacion: 'Porque sí',
       target: '',
       body: '',
-      justificationType: undefined,
-      dependencyId: ''
     });
+    expect(blocks[0].metadata?.steps[1].body).toContain('ConceptLink');
 
     const rebuiltBody = stringifyBlocksToBody(blocks);
     expect(rebuiltBody).toBe(rawBody);
   });
 
-  it('should preserve ProofStep bodies and semantic proof attributes', () => {
+  it('should preserve ProofStep bodies and ignore legacy justification attrs', () => {
     const rawBody = `<Demostracion>\n  <ProofStep number={1} target="segAB" title="Paso con diagrama" justificacion="Definición de segmento" justificationType="definicion" dependencyId="segmento">\n    El elemento <InteractiveElement target="segAB" color="salvia">AB</InteractiveElement> queda determinado por sus extremos.\n  </ProofStep>\n</Demostracion>`;
     const blocks = parseBodyToBlocks(rawBody);
 
@@ -169,12 +167,14 @@ describe('Editor MDX Parser', () => {
       number: 1,
       target: 'segAB',
       title: 'Paso con diagrama',
-      justificacion: 'Definición de segmento',
-      justificationType: 'definicion',
-      dependencyId: 'segmento',
     });
+    expect(blocks[0].metadata?.steps[0].justificacion).toBeUndefined();
     expect(blocks[0].metadata?.steps[0].body).toContain('<InteractiveElement');
-    expect(stringifyBlocksToBody(blocks)).toBe(rawBody);
+    const rebuilt = stringifyBlocksToBody(blocks);
+    expect(rebuilt).toContain('target="segAB"');
+    expect(rebuilt).not.toContain('justificacion=');
+    expect(rebuilt).not.toContain('justificationType=');
+    expect(rebuilt).not.toContain('dependencyId=');
   });
 
   it('should parse diagrams, citations and definition boxes', () => {
@@ -216,7 +216,7 @@ describe('Editor MDX Parser', () => {
   });
 
   it('should handle mixed structures preserving order', () => {
-    const rawBody = `<Capitular letra="T" />exto de intro.\n\n<Formula>\n  $$ 1 + 1 = 2 $$\n</Formula>\n\nTexto entre formula y demo.\n\n<Demostracion>\n  <ProofStep number={1} title="Axioma" justificacion="Lógica" />\n</Demostracion>\n\nTexto final.`;
+    const rawBody = `<Capitular letra="T" />exto de intro.\n\n<Formula>\n  $$ 1 + 1 = 2 $$\n</Formula>\n\nTexto entre formula y demo.\n\n<Demostracion>\n  <ProofStep number={1} title="Axioma">\n    Por regla lógica, se aplica el axioma.\n  </ProofStep>\n</Demostracion>\n\nTexto final.`;
     const blocks = parseBodyToBlocks(rawBody);
 
     expect(blocks).toHaveLength(5);
@@ -225,6 +225,25 @@ describe('Editor MDX Parser', () => {
     expect(blocks[2].type).toBe('paragraph');
     expect(blocks[3].type).toBe('demonstration');
     expect(blocks[4].type).toBe('paragraph');
+
+    const rebuiltBody = stringifyBlocksToBody(blocks);
+    expect(rebuiltBody).toBe(rawBody);
+  });
+
+  it('should parse DemonstrationSection tag and preserve diagram attributes and proof steps', () => {
+    const rawBody = `<DemonstrationSection diagram={<DemoTrianguloIsosceles />}>\n  <ProofStep number={1} target={["triangulo-abc"]} title="Paso 1">\n    El triángulo <InteractiveElement target="triangulo-abc">ABC</InteractiveElement> es isósceles.\n  </ProofStep>\n</DemonstrationSection>`;
+    const blocks = parseBodyToBlocks(rawBody);
+
+    expect(blocks).toHaveLength(1);
+    expect(blocks[0].type).toBe('demonstration');
+    expect(blocks[0].metadata?.tag).toBe('DemonstrationSection');
+    expect(blocks[0].metadata?.attributesStr).toBe('diagram={<DemoTrianguloIsosceles />}');
+    expect(blocks[0].metadata?.steps).toHaveLength(1);
+    expect(blocks[0].metadata?.steps[0]).toMatchObject({
+      number: 1,
+      title: 'Paso 1',
+      target: ['triangulo-abc'],
+    });
 
     const rebuiltBody = stringifyBlocksToBody(blocks);
     expect(rebuiltBody).toBe(rawBody);

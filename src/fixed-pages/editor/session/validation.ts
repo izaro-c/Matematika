@@ -22,6 +22,7 @@ import {
   diagramPointLikeElementKinds,
   parseDiagramSpecV2,
 } from '@/diagrams';
+import { auditEditorSource } from '@/fixed-pages/editor/security/contentGuard';
 
 const CONTENT_ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HEX_RE = /#[0-9a-fA-F]{3,8}\b/;
@@ -109,23 +110,36 @@ function validateMetadata(metadata: Record<string, unknown>): EditorValidationIs
   return issues;
 }
 
+function bodyHasLogicalJustification(body: string): boolean {
+  if (/<(?:ConceptLink|RefLink)\b/i.test(body)) return true;
+  return /\b(?:por (?:hipótesis|axioma|teorema|definición|el paso|regla (?:de )?lógica|construcción)|hipótesis)\b/i.test(body);
+}
+
 function validateProofStep(step: ProofStepData, blockId: string): EditorValidationIssue[] {
   const issues: EditorValidationIssue[] = [];
-  const bodyContainsJustification = /\b(?:por (?:hipótesis|axioma|teorema|definición|el paso|regla (?:de )?lógica|construcción)|hipótesis)\b/i.test(step.body ?? '');
-  if (!step.justificacion?.trim() && !bodyContainsJustification) {
-    issues.push(issue(`proof-${step.number}-justification`, 'warning', 'proof', `El paso ${step.number} necesita una justificación (regla o teorema usado).`, blockId));
+  if (!bodyHasLogicalJustification(step.body ?? '')) {
+    issues.push(issue(
+      `proof-${step.number}-justification`,
+      'warning',
+      'proof',
+      `El paso ${step.number} aún no justifica su afirmación (enlace a axioma, teorema, definición, paso previo o regla en el texto).`,
+      blockId,
+    ));
   }
-  if (!step.body?.includes('<InteractiveElement') && !step.body?.includes('highlightTarget=')) {
-    issues.push(issue(`proof-${step.number}-interactive`, 'warning', 'proof', `El paso ${step.number} no referencia ningún elemento del diagrama.`, blockId));
+  if (!step.body?.includes('<InteractiveElement') && !step.body?.includes('highlightTarget=') && !(Array.isArray(step.target) ? step.target.length : step.target)) {
+    issues.push(issue(
+      `proof-${step.number}-interactive`,
+      'warning',
+      'proof',
+      `El paso ${step.number} no resalta ningún elemento del diagrama. Elige elementos o enlázalos en el texto.`,
+      blockId,
+    ));
   }
   if (step.body && VISUAL_ARGUMENT_RE.test(step.body)) {
-    issues.push(issue(`proof-${step.number}-visual-argument`, 'error', 'proof', `El paso ${step.number} contiene una justificación visual o informal prohibida.`, blockId));
-  }
-  if (step.dependencyId && !CONTENT_ID_RE.test(step.dependencyId)) {
-    issues.push(issue(`proof-${step.number}-dependency-id`, 'error', 'proof', `La dependencia del paso ${step.number} debe ser un ID con minúsculas y guiones.`, blockId));
+    issues.push(issue(`proof-${step.number}-visual-argument`, 'warning', 'proof', `El paso ${step.number} contiene una justificación visual o informal; conviene sustituirla por una justificación lógica.`, blockId));
   }
   if (typeof step.diagramStep === 'string' && step.diagramStep !== 'initial' && !CONTENT_ID_RE.test(step.diagramStep) && !/^\d+$/.test(step.diagramStep)) {
-    issues.push(issue(`proof-${step.number}-diagram-step`, 'warning', 'proof', `El paso de diagrama "${step.diagramStep}" en el paso ${step.number} debe ser 'initial', un número o un ID con minúsculas y guiones.`, blockId));
+    issues.push(issue(`proof-${step.number}-diagram-step`, 'warning', 'proof', `El momento de diagrama del paso ${step.number} debe ser «figura inicial», automático o un identificador concreto.`, blockId));
   }
   return issues;
 }
@@ -277,9 +291,27 @@ function validateBlocks(blocks: Block[]): EditorValidationIssue[] {
       issues.push(issue(`block-${block.id}-advanced-mdx`, 'info', 'block', 'Este bloque se conserva como MDX avanzado; revisa en código si requiere edición específica.', block.id));
     }
     if (block.type === 'demonstration') {
-      const steps = (block.metadata?.steps || []) as ProofStepData[];
+      let steps = (block.metadata?.steps || []) as ProofStepData[];
       if (steps.length === 0) {
-        issues.push(issue(`proof-${block.id}-empty`, 'error', 'proof', 'La demostración no contiene pasos.', block.id));
+        const hasStepSurface = Boolean(
+          block.content?.trim()
+          || block.metadata?.title
+          || block.metadata?.number
+          || block.metadata?.target
+          || block.metadata?.diagramStep,
+        );
+        if (hasStepSurface) {
+          steps = [{
+            number: Number(block.metadata?.number ?? 1),
+            title: typeof block.metadata?.title === 'string' ? block.metadata.title : '',
+            target: block.metadata?.target as ProofStepData['target'],
+            diagramStep: block.metadata?.diagramStep as ProofStepData['diagramStep'],
+            diagramKey: typeof block.metadata?.diagramKey === 'string' ? block.metadata.diagramKey : undefined,
+            body: block.content,
+          }];
+        } else {
+          issues.push(issue(`proof-${block.id}-empty`, 'warning', 'proof', 'Este bloque de demostración aún no tiene un paso con contenido.', block.id));
+        }
       }
       steps.forEach(step => issues.push(...validateProofStep(step, block.id)));
     }
@@ -306,6 +338,9 @@ export function validateEditorDocument(input: {
   }
   if (source.includes('\\sen')) {
     issues.push(issue('source-sen', 'warning', 'source', 'El documento contiene \\sen; usa \\sin.'));
+  }
+  for (const finding of auditEditorSource('mdx', source)) {
+    issues.push(issue(finding.code, 'error', 'source', finding.message));
   }
 
   const errorCount = issues.filter(i => i.severity === 'error').length;

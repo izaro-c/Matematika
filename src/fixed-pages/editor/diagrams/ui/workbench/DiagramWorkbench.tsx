@@ -63,6 +63,11 @@ import { GuidedConstructionsModal } from '../modals/GuidedConstructionsModal';
 import { DiagramConfirmDialog } from '../DiagramConfirmDialog';
 import { DiagramDivergenceDialog } from '../DiagramDivergenceDialog';
 import {
+  buildEditorSaveCapabilityFromDiagram,
+  warningSaveConfirmCopy,
+  type EditorSaveBlockReason,
+} from '@/fixed-pages/editor/save/saveCapability';
+import {
   effectiveSelection,
   primaryIdForSelection,
   repairBrokenReferences,
@@ -654,15 +659,46 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
     state.status,
   ]);
 
-  const handleSave = onConfirm ? handleSaveAndConfirm : () => { void saveDiagram(); };
+  const runSave = useCallback(() => {
+    if (onConfirm) handleSaveAndConfirm();
+    else void saveDiagram();
+  }, [handleSaveAndConfirm, onConfirm, saveDiagram]);
+
+  const [warningSaveOpen, setWarningSaveOpen] = useState(false);
 
   const confirmBlocked = workbenchIsBlocked(
     state.status,
     state.diagnostics.some(diagnostic => diagnostic.severity === 'error'),
   );
-  const effectiveSaveCapability = onConfirm
+  const diagramGate = onConfirm
     ? { ...saveCapability, allowed: Boolean(model) && !confirmBlocked }
     : saveCapability;
+  const allowCleanApply = Boolean(onConfirm) && mode?.kind !== 'file' && mode?.kind !== 'rewrite';
+  const editorSaveCapability = buildEditorSaveCapabilityFromDiagram({
+    allowed: diagramGate.allowed,
+    reason: diagramGate.reason as EditorSaveBlockReason | undefined,
+    summary: diagramGate.summary,
+    errorCount,
+    warningCount,
+    isDirty,
+    saving: state.status === 'saving',
+    sandboxMode,
+    allowCleanApply,
+  });
+
+  const handleSave = useCallback(() => {
+    if (!editorSaveCapability.allowed) return;
+    if (editorSaveCapability.warningCount > 0) {
+      setWarningSaveOpen(true);
+      return;
+    }
+    runSave();
+  }, [editorSaveCapability.allowed, editorSaveCapability.warningCount, runSave]);
+
+  const confirmWarningSave = useCallback(() => {
+    setWarningSaveOpen(false);
+    runSave();
+  }, [runSave]);
 
   const clipboard = useDiagramClipboard({
     model,
@@ -696,6 +732,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
     >
       <WorkbenchHeader
         model={model}
+        metadataType={metadataType}
         componentName={state.componentName}
         canUndo={canUndo}
         canRedo={canRedo}
@@ -709,18 +746,14 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
         onOpenMdxLinks={() => setMdxLinksOpen(true)}
         onOpenGuided={() => setGuidedOpen(true)}
         onResetViewport={handleResetViewport}
-        errorCount={errorCount}
-        warningCount={warningCount}
         onOpenAvisos={() => {
           setIsInspectorOpen(true);
           setActiveTab('diagnostics');
         }}
         onTitleChange={handleTitleChange}
         sandboxMode={sandboxMode}
-        isDirty={isDirty}
         syncStatus={state.status}
-        allowCleanApply={Boolean(onConfirm) && mode?.kind !== 'file' && mode?.kind !== 'rewrite'}
-        saveCapability={effectiveSaveCapability}
+        saveCapability={editorSaveCapability}
         onSave={handleSave}
         onCloseEditor={handleCloseEditor}
         isSidebarOpen={isSidebarOpen}
@@ -969,6 +1002,17 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
         model={model}
         onClose={() => setGuidedOpen(false)}
         onUpdateModel={handleUpdateModel}
+      />
+
+      <DiagramConfirmDialog
+        isOpen={warningSaveOpen}
+        title={warningSaveConfirmCopy(editorSaveCapability.warningCount).title}
+        message={warningSaveConfirmCopy(editorSaveCapability.warningCount, 'diagrama').message}
+        confirmLabel="Guardar de todos modos"
+        cancelLabel="Cancelar"
+        variant="warning"
+        onConfirm={confirmWarningSave}
+        onCancel={() => setWarningSaveOpen(false)}
       />
 
       <DiagramConfirmDialog

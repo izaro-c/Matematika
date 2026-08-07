@@ -4,10 +4,10 @@ import type { DirtyState, EditorMode, EditorValidationResult } from './editorTyp
 import type { Block, BlockType } from './parser';
 import {
   openEditorDocument, enterVisualMode,
-  parseEditorDocument, getVisualCapabilities, computeFingerprint,
+  parseEditorDocument, getVisualCapabilities,
   applyMutationPlan, planBlockUpdate, planBlockInsertion, planBlockDeletion,
   planBlockDuplication, planBlockMove, planMetadataUpdate, planDiagramBinding,
-  type DocumentMutationPlan, type EditorDocument, type ProjectedBlock, type SourceRange
+  type DocumentMutationPlan, type EditorDocument, type ProjectedBlock
 } from '../document';
 import {
   ContentRepository, DraftRepository, SaveCoordinator, editorApiClient, hashSource,
@@ -17,7 +17,6 @@ import { editorApiUnavailableInProduction, editorWriteAccessGranted } from '@/fi
 import {
   editorPersistenceReducer, initialEditorPersistenceState, persistenceStatusLabel
 } from '@/fixed-pages/editor/save';
-import type { ApprovedDiff, ExpectedDiffRange } from '@/fixed-pages/editor/review/diffReview';
 import { validateEditorDocument } from './validation';
 import {
   buildAuthoringIntegrityReport, createPagePath, createPageSource, type CreatePageInput,
@@ -27,11 +26,20 @@ import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/scene/t
 import { generateDiagramSource } from '@/fixed-pages/editor/diagrams/source/generator';
 import type { DiagramTargetRegistry, EditorDiagramReference } from './editorTypes';
 
-export type VisualSavePolicy = 'disabled' | 'manual-reviewed' | 'enabled';
+export type VisualSavePolicy = 'disabled' | 'enabled';
 export const VISUAL_SAVE_POLICY: VisualSavePolicy = 'enabled';
+
+export type SaveAttemptResult =
+  | { ok: true }
+  | { ok: false; reason: string };
 
 interface OpenFileOptions {
   discardLocalChanges?: boolean;
+}
+
+function flushPendingProse(): void {
+  const active = typeof document !== 'undefined' ? document.activeElement : null;
+  if (active instanceof HTMLElement && active.isContentEditable) active.blur();
 }
 
 const contentRepository = new ContentRepository(editorApiClient);
@@ -79,14 +87,6 @@ function persistenceMessage(error: PersistenceError): string {
 
 const blockedMessage = 'Acción bloqueada: no hay documento abierto.';
 
-interface TrackedVisualOperation {
-  operationId: string;
-  blockId: string;
-  range: SourceRange;
-  reason: string;
-  requiresReview: boolean;
-}
-
 class LiveSaveIdentity {
   private path: string | null = null;
   private source = '';
@@ -116,13 +116,14 @@ export const useEditorCore = () => {
   const [exports, setExportsView] = useState('');
   const [blocks, setBlocksView] = useState<Block[]>([]);
   const [doc, setDoc] = useState<EditorDocument | null>(null);
+  const docRef = useRef<EditorDocument | null>(null);
   const [message, setMessage] = useState('');
   const [baseSource, setBaseSource] = useState('');
   const [persistence, dispatch] = useReducer(editorPersistenceReducer, initialEditorPersistenceState);
   const persistenceRef = useRef(persistence);
   const sourceRef = useRef('');
   const revisionRef = useRef(0);
-  const visualOperationsRef = useRef<TrackedVisualOperation[]>([]);
+  const validationRef = useRef<EditorValidationResult>({ issues: [], canSave: true, errorCount: 0, warningCount: 0 });
   const loadControllerRef = useRef<AbortController | undefined>(undefined);
   const saveIdentity = useMemo(() => new LiveSaveIdentity(), []);
   const editorSessionId = useMemo(() => crypto.randomUUID(), []);
@@ -134,6 +135,8 @@ export const useEditorCore = () => {
   }, []);
 
   useEffect(() => { persistenceRef.current = persistence; }, [persistence]);
+  // eslint-disable-next-line react-hooks/refs
+  docRef.current = doc;
 
   const onCoordinatorEvent = useCallback((event: SaveCoordinatorEvent) => {
       const { file, localRevision } = event.snapshot;
@@ -146,21 +149,35 @@ export const useEditorCore = () => {
         dispatch({ type: isCurrentSnapshot ? 'FILE_SAVE_SUCCEEDED' : 'STALE_FILE_SAVE_SUCCEEDED',
           file, localRevision, version: event.version, backupId: event.backupId });
       } else if (event.error.kind === 'content-conflict') {
+        setMessage(persistenceMessage(event.error));
         if (!saveIdentity.matches(event.snapshot)) return;
         dispatch({ type: 'CONFLICT_DETECTED', file, localRevision,
           expectedVersion: event.error.expectedVersion, actualVersion: event.error.actualVersion });
       } else {
+        setMessage(persistenceMessage(event.error));
         if (!saveIdentity.matches(event.snapshot)) return;
         dispatch({ type: event.type === 'draft-failed' ? 'DRAFT_SAVE_FAILED' : 'FILE_SAVE_FAILED', file, localRevision, error: event.error });
       }
   }, [saveIdentity]);
 
+  // StrictMode replays effect cleanups; dispose() permanently kills a memoized coordinator
+  // and every applyNow returns obsolete. cancelAll aborts in-flight work without that flag.
+  const onCoordinatorEventRef = useRef(onCoordinatorEvent);
+  useEffect(() => {
+    onCoordinatorEventRef.current = onCoordinatorEvent;
+  }, [onCoordinatorEvent]);
+
   const coordinator = useMemo(
-    () => new SaveCoordinator(contentRepository, draftRepository, onCoordinatorEvent),
-    [onCoordinatorEvent],
+    () => new SaveCoordinator(
+      contentRepository,
+      draftRepository,
+      // eslint-disable-next-line react-hooks/refs
+      event => onCoordinatorEventRef.current(event),
+    ),
+    [],
   );
 
-  useEffect(() => () => coordinator.dispose(), [coordinator]);
+  useEffect(() => () => coordinator.cancelAll(), [coordinator]);
   useEffect(() => () => { loadControllerRef.current?.abort(); }, []);
 
   const currentFile = persistence.file?.path ?? null;
@@ -197,6 +214,8 @@ export const useEditorCore = () => {
     const warningCount = issues.filter(issue => issue.severity === 'warning').length;
     return { issues, canSave: errorCount === 0, errorCount, warningCount };
   }, [blocks, currentFile, doc, exports, imports, isDiagramSource, metadata, rawBody]);
+  // eslint-disable-next-line react-hooks/refs
+  validationRef.current = validation;
 
   const loadFileList = useCallback(async () => {
     setFilesLoading(true);
@@ -235,7 +254,6 @@ export const useEditorCore = () => {
       const response = await contentRepository.read(file, controller.signal);
       if (controller.signal.aborted) return;
       sourceRef.current = response.source;
-      visualOperationsRef.current = [];
       setBaseSource(response.source);
       revisionRef.current = 0;
       saveIdentity.set(file.path, response.source, 0);
@@ -257,11 +275,10 @@ export const useEditorCore = () => {
     }
   }, [coordinator, saveIdentity, syncProjection]);
 
-  const commitSourceChange = useCallback((source: string, nextDoc?: EditorDocument, visualOperations?: TrackedVisualOperation[]) => {
+  const commitSourceChange = useCallback((source: string, nextDoc?: EditorDocument) => {
     const file = persistenceRef.current.file;
     if (!file) return;
     sourceRef.current = source;
-    visualOperationsRef.current = visualOperations ? [...visualOperationsRef.current, ...visualOperations] : [];
     setMessage('');
     revisionRef.current += 1;
     const revision = revisionRef.current;
@@ -297,89 +314,90 @@ export const useEditorCore = () => {
   }, [commitSourceChange, currentFile]);
 
   const commitMutation = useCallback((mutation: DocumentMutationPlan, successMessage: string) => {
-    if (!doc) { setMessage(blockedMessage); return; }
+    const current = docRef.current;
+    if (!current) { setMessage(blockedMessage); return; }
     try {
-      const nextDoc = applyMutationPlan(doc, mutation);
-      commitSourceChange(nextDoc.source, nextDoc, mutation.edits.map(edit => ({
-        operationId: edit.operationId,
-        blockId: edit.blockId,
-        range: edit.range.start === edit.range.end
-          ? { start: Math.max(0, edit.range.start - 2), end: Math.min(doc.source.length, edit.range.end + 2) }
-          : edit.range,
-        reason: edit.reason ?? mutation.preview.summary,
-        requiresReview: mutation.preview.requiresReview,
-      })));
-      setMessage(mutation.preview.requiresReview
-        ? `${successMessage} Revise el diff antes de guardar.`
-        : successMessage);
+      const nextDoc = applyMutationPlan(current, mutation);
+      // ponytail: focus/blur roundtrips must not bump revision when source is identical
+      if (nextDoc.source === current.source) return;
+      docRef.current = nextDoc;
+      commitSourceChange(nextDoc.source, nextDoc);
+      setMessage(successMessage);
     } catch (error) {
       setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`);
     }
-  }, [commitSourceChange, doc]);
+  }, [commitSourceChange]);
 
   const updateBlock = useCallback((id: string, content: string, blockMetadata?: Record<string, unknown>) => {
-    if (!doc || !capabilities.canEditSafeBlocks) { setMessage(blockedMessage); return; }
+    const current = docRef.current;
+    if (!current || !capabilities.canEditSafeBlocks) { setMessage(blockedMessage); return; }
     try {
-      commitMutation(planBlockUpdate(doc, id, { content, metadata: blockMetadata }), 'Cambio localizado aplicado.');
+      commitMutation(planBlockUpdate(current, id, { content, metadata: blockMetadata }), 'Cambio localizado aplicado.');
     } catch (error) {
       setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`);
     }
-  }, [capabilities.canEditSafeBlocks, commitMutation, doc]);
+  }, [capabilities.canEditSafeBlocks, commitMutation]);
 
   const blockUnsafeAction = useCallback((_id?: string) => setMessage(blockedMessage), []);
   const setMetadata = useCallback((nextAction: SetStateAction<Record<string, unknown>>) => {
-    if (!doc || doc.metadata.status !== 'readable') { setMessage('Los metadatos no son legibles de forma estática. Edítelos en código.'); return; }
+    const current = docRef.current;
+    if (!current || current.metadata.status !== 'readable') { setMessage('Los metadatos no son legibles de forma estática. Edítelos en código.'); return; }
     const next = typeof nextAction === 'function' ? nextAction(metadata) : nextAction;
     try {
-      commitMutation(planMetadataUpdate(doc, next), 'Metadatos actualizados mediante parches de propiedades.');
+      commitMutation(planMetadataUpdate(current, next), 'Metadatos actualizados mediante parches de propiedades.');
     } catch (error) {
       setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`);
     }
-  }, [commitMutation, doc, metadata]);
+  }, [commitMutation, metadata]);
   const setImports = useCallback((_next: SetStateAction<string>) => blockUnsafeAction(), [blockUnsafeAction]);
   const setExports = useCallback((_next: SetStateAction<string>) => blockUnsafeAction(), [blockUnsafeAction]);
   const setBlocks = useCallback((_next: SetStateAction<Block[]>) => blockUnsafeAction(), [blockUnsafeAction]);
 
   const removeBlock = useCallback((id: string) => {
-    if (!doc) { blockUnsafeAction(id); return; }
-    try { commitMutation(planBlockDeletion(doc, id), 'Bloque eliminado localmente.'); }
+    const current = docRef.current;
+    if (!current) { blockUnsafeAction(id); return; }
+    try { commitMutation(planBlockDeletion(current, id), 'Bloque eliminado localmente.'); }
     catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
-  }, [blockUnsafeAction, commitMutation, doc]);
+  }, [blockUnsafeAction, commitMutation]);
 
   const addBlock = useCallback((index: number, type: BlockType, content?: string, blockMetadata?: Record<string, unknown>) => {
-    if (!doc) { blockUnsafeAction(); return; }
-    try { commitMutation(planBlockInsertion(doc, { index, blockType: type, content, metadata: blockMetadata }), 'Bloque insertado localmente.'); }
+    const current = docRef.current;
+    if (!current) { blockUnsafeAction(); return; }
+    try { commitMutation(planBlockInsertion(current, { index, blockType: type, content, metadata: blockMetadata }), 'Bloque insertado localmente.'); }
     catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
-  }, [blockUnsafeAction, commitMutation, doc]);
+  }, [blockUnsafeAction, commitMutation]);
 
   const moveBlock = useCallback((from: number, to: number) => {
-    if (!doc) { blockUnsafeAction(); return; }
-    const moving = doc.bodyBlocks[from];
+    const current = docRef.current;
+    if (!current) { blockUnsafeAction(); return; }
+    const moving = current.bodyBlocks[from];
     if (!moving) { setMessage('No existe el bloque que se intenta mover.'); return; }
-    const sameParent = doc.bodyBlocks.filter(block => block.parentId === moving.parentId);
-    const target = doc.bodyBlocks[to];
+    const sameParent = current.bodyBlocks.filter(block => block.parentId === moving.parentId);
+    const target = current.bodyBlocks[to];
     const localTarget = target?.parentId === moving.parentId
       ? sameParent.findIndex(block => block.id === target.id)
       : Math.max(0, sameParent.length - 1);
-    try { commitMutation(planBlockMove(doc, moving.id, localTarget), 'Bloque reordenado localmente.'); }
+    try { commitMutation(planBlockMove(current, moving.id, localTarget), 'Bloque reordenado localmente.'); }
     catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
-  }, [blockUnsafeAction, commitMutation, doc]);
+  }, [blockUnsafeAction, commitMutation]);
 
   const duplicateBlock = useCallback((id: string) => {
-    if (!doc) { blockUnsafeAction(id); return; }
-    try { commitMutation(planBlockDuplication(doc, id), 'Bloque duplicado localmente.'); }
+    const current = docRef.current;
+    if (!current) { blockUnsafeAction(id); return; }
+    try { commitMutation(planBlockDuplication(current, id), 'Bloque duplicado localmente.'); }
     catch (error) { setMessage(`Cambio rechazado: ${error instanceof Error ? error.message : String(error)}`); }
-  }, [blockUnsafeAction, commitMutation, doc]);
+  }, [blockUnsafeAction, commitMutation]);
 
   const bindDiagram = useCallback((spec: EditorDiagramReference) => {
-    if (!doc || spec.mode === 'inline') {
+    const current = docRef.current;
+    if (!current || spec.mode === 'inline') {
       setMessage(spec.mode === 'inline'
         ? 'Los diagramas inline requieren edición explícita del contenedor en modo código.'
         : blockedMessage);
       return;
     }
     try {
-      commitMutation(planDiagramBinding(doc, {
+      commitMutation(planDiagramBinding(current, {
         componentName: spec.componentName,
         importPath: spec.importPath,
         mode: spec.mode,
@@ -387,7 +405,7 @@ export const useEditorCore = () => {
     } catch (error) {
       setMessage(`Vinculación rechazada: ${error instanceof Error ? error.message : String(error)}`);
     }
-  }, [commitMutation, doc]);
+  }, [commitMutation]);
 
   const createPage = useCallback(async (input: CreatePageInput): Promise<boolean> => {
     if (editorApiUnavailableInProduction() || !editorWriteAccessGranted()) {
@@ -446,63 +464,41 @@ export const useEditorCore = () => {
     }
   }, [loadFileList]);
 
-  const getExpectedDiffRanges = useCallback((): ExpectedDiffRange[] => {
-    return visualOperationsRef.current.map(operation => ({
-      start: operation.range.start,
-      end: operation.range.end,
-      reason: operation.reason,
-      operationId: operation.operationId,
-      blockId: operation.blockId,
-    }));
-  }, []);
+  const saveCurrentFile = useCallback(async (): Promise<SaveAttemptResult> => {
+    const fail = (reason: string): SaveAttemptResult => {
+      setMessage(reason);
+      return { ok: false, reason };
+    };
 
-  const hasValidPartialApproval = useCallback((
-    approval: ApprovedDiff | undefined,
-    captured: { file: { path: string }; source: string; localRevision: number; baseVersion: string },
-  ): boolean => {
-    if (!approval) return false;
-    const operationIds = getExpectedDiffRanges().map(range => range.operationId).sort();
-    return approval.documentId === captured.file.path
-      && approval.baseVersion === captured.baseVersion
-      && approval.baseSourceHash === computeFingerprint(baseSource)
-      && approval.candidateSourceHash === computeFingerprint(captured.source)
-      && approval.revision === captured.localRevision
-      && approval.operationIds.join('\0') === operationIds.join('\0')
-      && approval.expectedRanges.length === visualOperationsRef.current.length
-      && approval.expectedRanges.every(range => (
-        operationIds.includes(range.operationId)
-        && visualOperationsRef.current.some(operation => (
-          operation.operationId === range.operationId
-          && operation.blockId === range.blockId
-          && operation.range.start === range.start
-          && operation.range.end === range.end
-        ))
-      ));
-  }, [baseSource, getExpectedDiffRanges]);
+    flushPendingProse();
 
-  const saveCurrentFile = useCallback(async (approval?: ApprovedDiff): Promise<boolean> => {
     const state = persistenceRef.current;
-    if (!state.file || !state.version) return false;
+    if (!state.file || !state.version) return fail('No hay un archivo abierto con versión confirmada.');
     if (editorApiUnavailableInProduction()) {
-      setMessage('No se puede guardar: la API del editor no está configurada en este despliegue.');
-      return false;
+      return fail('No se puede guardar: la API del editor no está configurada en este despliegue.');
     }
     if (!editorWriteAccessGranted()) {
-      setMessage('No se puede guardar: introduce el token de edición para persistir cambios.');
-      return false;
+      return fail('No se puede guardar: introduce el token de edición para persistir cambios.');
+    }
+    if (revisionRef.current <= state.confirmedRevision && state.localRevision <= state.confirmedRevision) {
+      return fail('No hay cambios locales que guardar.');
+    }
+    if (!validationRef.current.canSave) {
+      return fail(
+        validationRef.current.errorCount === 1
+          ? 'No se puede guardar: hay 1 error de validación.'
+          : `No se puede guardar: hay ${validationRef.current.errorCount} errores de validación.`,
+      );
     }
     if (editorMode === 'visual' && !isDiagramSource) {
       if ((VISUAL_SAVE_POLICY as VisualSavePolicy) === 'disabled') {
-        setMessage('El guardado visual está desactivado por contención de seguridad.');
-        return false;
+        return fail('El guardado visual está desactivado por contención de seguridad.');
       }
       if (compatibility === 'read-only') {
-        setMessage('El guardado visual está desactivado para documentos de solo lectura.');
-        return false;
+        return fail('El guardado visual está desactivado para documentos de solo lectura.');
       }
       if (compatibility === 'unsupported') {
-        setMessage('El guardado visual está desactivado para documentos no soportados.');
-        return false;
+        return fail('El guardado visual está desactivado para documentos no soportados.');
       }
     }
     const captured = {
@@ -513,37 +509,27 @@ export const useEditorCore = () => {
     };
     if (captured.file.path.endsWith('.mdx') && parseEditorDocument(captured.source).compatibility === 'unsupported') {
       dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Invalid MDX source' });
-      setMessage('No se puede aplicar: el source MDX actual no se puede analizar.');
-      return false;
+      return fail('No se puede aplicar: el source MDX actual no se puede analizar.');
     }
     if (captured.file.path.endsWith('.mdx')) {
       const candidateDoc = parseEditorDocument(captured.source);
       if (candidateDoc.metadata.status !== 'readable' || !candidateDoc.metadata.schemaValid) {
         dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Invalid MDX metadata' });
-        setMessage('No se puede aplicar: los metadatos no cumplen el schema de contenido autoritativo.');
-        return false;
-      }
-      const broadVisualChange = visualOperationsRef.current.some(operation => operation.requiresReview);
-      if (broadVisualChange && !hasValidPartialApproval(approval, captured)) {
-        dispatch({ type: 'VALIDATION_FAILED', file: captured.file, localRevision: captured.localRevision, reason: 'Diff approval required' });
-        setMessage('No se puede aplicar: esta edición estructural requiere una revisión de diff vigente.');
-        return false;
+        return fail('No se puede aplicar: los metadatos no cumplen el schema de contenido autoritativo.');
       }
     }
     const sourceHash = await hashSource(captured.source);
     if (persistenceRef.current.file?.path !== captured.file.path
       || revisionRef.current !== captured.localRevision
-      || sourceRef.current !== captured.source) return false;
-    const snapshot: EditorSaveSnapshot = { ...captured, sourceHash };
-    const confirmed = await coordinator.applyNow(snapshot);
-    if (confirmed && saveIdentity.matches(snapshot)) {
-      visualOperationsRef.current = [];
+      || sourceRef.current !== captured.source) {
+      return fail('El documento cambió mientras se preparaba el guardado. Reintenta.');
     }
-    return confirmed
-      && revisionRef.current === snapshot.localRevision
-      && sourceRef.current === snapshot.source
-      && persistenceRef.current.file?.path === snapshot.file.path;
-  }, [coordinator, editorMode, isDiagramSource, compatibility, hasValidPartialApproval, saveIdentity]);
+    const snapshot: EditorSaveSnapshot = { ...captured, sourceHash };
+    const applied = await coordinator.applyNow(snapshot);
+    if (applied.ok) return { ok: true };
+    if (applied.error) return fail(persistenceMessage(applied.error));
+    return fail('El guardado se canceló o quedó obsoleto. Reintenta.');
+  }, [coordinator, editorMode, isDiagramSource, compatibility]);
 
   const saveDraftCurrentFile = useCallback(async (): Promise<boolean> => {
     const state = persistenceRef.current;
@@ -571,7 +557,8 @@ export const useEditorCore = () => {
 
   return {
     files, filesLoading, filesError, loading, currentFile, editorMode, metadata, imports, exports, blocks, rawBody,
-    baseSource, localRevision: persistence.localRevision, baseVersion: persistence.version,
+    baseSource, localRevision: persistence.localRevision, confirmedRevision: persistence.confirmedRevision,
+    baseVersion: persistence.version,
     saving, dirtyState, validation, message, persistenceStatus: persistence.status,
     persistenceLabel: persistenceStatusLabel(persistence.status),
     loadFileList, openFile, toggleEditorMode, setEditorMode, updateRawBody, updateBlock, saveCurrentFile, saveDraftCurrentFile,
@@ -579,6 +566,5 @@ export const useEditorCore = () => {
     removeBlock, addBlock, moveBlock, duplicateBlock, bindDiagram, createPage, createDiagram, setMetadata, setImports, setExports, setBlocks,
     canMutateVisualStructure: capabilities.canEditSafeBlocks,
     canEditVisualMetadata: doc?.metadata.status === 'readable' && doc.metadata.schemaValid,
-    getExpectedDiffRanges,
   };
 };

@@ -49,12 +49,18 @@ const DiagramTransition: React.FC<{ activeKey: React.Key; frames: DiagramFrame[]
  */
 export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diagram, diagrams, children }) => {
   const step = useMathStore(state => state.variables?.['step']);
+  const diagramKey = useMathStore(state => state.variables?.['diagramKey']);
 
   const { activeDiagram, activeKey } = useMemo(() => {
     if (!diagrams) return { activeDiagram: diagram, activeKey: 'default' };
 
     const keys = Object.keys(diagrams);
     if (keys.length === 0) return { activeDiagram: null, activeKey: 'default' };
+
+    const diagramKeyStr = typeof diagramKey === 'string' ? diagramKey.trim() : '';
+    if (diagramKeyStr && diagrams[diagramKeyStr]) {
+      return { activeDiagram: diagrams[diagramKeyStr], activeKey: diagramKeyStr };
+    }
 
     const stepStr = typeof step === 'string' ? step.trim() : '';
 
@@ -81,7 +87,7 @@ export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diag
 
     // 3. Fallback al primer diagrama
     return { activeDiagram: diagrams[keys[0]], activeKey: keys[0] };
-  }, [diagram, diagrams, step]);
+  }, [diagram, diagrams, step, diagramKey]);
 
   const hasDiagram = diagram !== undefined || (diagrams !== undefined && Object.keys(diagrams).length > 0);
   const transitionKey = React.isValidElement(activeDiagram) && activeDiagram.key !== null
