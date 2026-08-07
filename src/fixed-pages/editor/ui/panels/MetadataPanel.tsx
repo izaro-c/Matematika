@@ -5,7 +5,7 @@ import { DiagramRuntimePreview } from '../../diagrams/ui/DiagramRuntimePreview';
 import { AccordionSection, useInspectorAccordion } from '../../diagrams/ui/inspector/accordion';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 
-interface PageDiagramLink {
+export interface PageDiagramLink {
   componentName: string;
   importSource?: string;
   path?: string;
@@ -13,7 +13,7 @@ interface PageDiagramLink {
   targets?: DiagramTargetRegistry;
 }
 
-interface MetadataPanelProps {
+export interface MetadataPanelProps {
   metadata: Record<string, unknown>;
   canMutateVisualStructure: boolean;
   blocks: Block[];
@@ -207,6 +207,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                         componentName={link.componentName}
                         height="280px"
                         viewportControls={false}
+                        isolateMathStore={false}
                       />
                     </div>
                   )}

@@ -8,6 +8,7 @@ import {
   restoreBackupRequestSchema,
   saveDraftRequestSchema,
 } from '../../src/fixed-pages/editor/save/persistenceContracts';
+import { auditEditorSource } from '../../src/fixed-pages/editor/security/contentGuard';
 import { BackendError, EditorPersistenceBackend } from './editorPersistenceBackend';
 import { parseDiagramSourceAST } from './parseDiagramSourceAST';
 import { updateMdxImportsExports } from './updateDiagramImportsExports';
@@ -50,6 +51,13 @@ export function createEditorPersistenceBackend(config: EditorApiConfig): EditorP
     allowedRoots: writeRoots,
     readRoots: writeRoots,
     validateSource(filePath, source) {
+      const kind = filePath.endsWith('.mdx') ? 'mdx' : filePath.endsWith('.tsx') ? 'diagram' : null;
+      if (kind) {
+        const security = auditEditorSource(kind, source);
+        if (security.length > 0) {
+          throw new BackendError(400, { message: 'Unsafe editor source', diagnostics: security });
+        }
+      }
       if (filePath.endsWith('.mdx')) {
         const document = parseEditorDocument(source);
         if (document.compatibility === 'unsupported') {

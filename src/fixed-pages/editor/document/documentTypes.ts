@@ -132,7 +132,6 @@ export interface MutationPreview {
   originalSnippet: string;
   candidateSnippet: string;
   affectedRange: SourceRange;
-  requiresReview: boolean;
 }
 
 export interface DocumentMutationPlan {

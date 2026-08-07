@@ -6,6 +6,8 @@ import {
   HeaderActionButton,
 } from './EditorHeaderPrimitives';
 import { EditorWorkbenchHeader } from './EditorWorkbenchHeader';
+import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
+import { saveChromeFromCapability } from '@/fixed-pages/editor/save/saveCapability';
 
 export type MdxViewMode = 'code' | 'visual' | 'preview';
 
@@ -13,9 +15,7 @@ interface MdxWorkbenchHeaderProps {
   currentFile: string | null;
   fileTitle: string;
   contentType?: string;
-  hasLocalChanges: boolean;
   saving: boolean;
-  persistenceStatus?: string;
   viewMode: MdxViewMode;
   onSetViewMode: (mode: MdxViewMode) => void;
   isSidebarOpen: boolean;
@@ -23,31 +23,23 @@ interface MdxWorkbenchHeaderProps {
   isInspectorOpen: boolean;
   onToggleInspector: () => void;
   onOpenAvisos: () => void;
-  diagramDrawerOpen: boolean;
-  onToggleDiagramDrawer: () => void;
-  hasDiagrams: boolean;
-  errorCount: number;
-  warningCount: number;
   onTitleChange: (newTitle: string) => void;
   onSave: () => void;
   onSaveDraft?: () => void;
-  onReviewDiff?: () => void;
   onCreatePage?: () => void;
   onCloseEditor?: () => void;
   canSaveDraft?: boolean;
-  canReviewDiff?: boolean;
   isReadOnly?: boolean;
   workspaceLevel?: 'basic' | 'advanced';
   onToggleWorkspaceLevel?: () => void;
+  saveCapability: EditorSaveCapability;
 }
 
 export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
   currentFile,
   fileTitle,
-  contentType = 'Página',
-  hasLocalChanges,
+  contentType,
   saving,
-  persistenceStatus,
   viewMode,
   onSetViewMode,
   isSidebarOpen,
@@ -55,24 +47,21 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
   isInspectorOpen,
   onToggleInspector,
   onOpenAvisos,
-  onToggleDiagramDrawer,
-  hasDiagrams,
-  errorCount,
-  warningCount,
   onTitleChange,
   onSave,
   onSaveDraft,
-  onReviewDiff,
   onCreatePage,
   onCloseEditor,
   canSaveDraft = false,
-  canReviewDiff = false,
   isReadOnly = false,
   workspaceLevel = 'basic',
   onToggleWorkspaceLevel,
+  saveCapability,
 }) => {
   const displayTitle = fileTitle || currentFile?.split('/').pop()?.replace(/\.mdx$/, '') || 'Documento Sin Título';
-  const saveUpToDate = !hasLocalChanges && persistenceStatus === 'saved';
+  const saveChrome = saving
+    ? { label: 'Guardando…', variant: 'saving' as const, title: 'Guardando cambios…', disabled: true }
+    : saveChromeFromCapability(saveCapability);
 
   return (
     <EditorWorkbenchHeader
@@ -88,7 +77,7 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
           </HeaderBadge>
         ) : null
       }
-      isDirty={hasLocalChanges}
+      isDirty={saveCapability.isDirty}
       isSidebarOpen={isSidebarOpen}
       onToggleSidebar={onToggleSidebar}
       isInspectorOpen={isInspectorOpen}
@@ -97,16 +86,13 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
       closeConfirmMessage="Hay cambios sin guardar en la página. ¿Deseas salir del editor de todos modos?"
       onCloseEditor={onCloseEditor}
       avisos={{
-        errorCount,
-        warningCount,
+        errorCount: saveCapability.errorCount,
+        warningCount: saveCapability.warningCount,
         onOpen: onOpenAvisos,
         healthyLabel: 'Avisos',
       }}
       save={{
-        label: saving ? 'Guardando…' : hasLocalChanges ? 'Guardar' : 'Guardado',
-        variant: saving ? 'saving' : hasLocalChanges ? 'pavo' : 'saved',
-        title: saving ? 'Guardando...' : hasLocalChanges ? 'Guardar cambios' : 'Al día',
-        disabled: saving || isReadOnly || saveUpToDate,
+        ...saveChrome,
         onSave,
       }}
       center={
@@ -124,21 +110,6 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
               Publicada
             </HeaderPillButton>
           </HeaderPillContainer>
-          <button
-            type="button"
-            onClick={onToggleDiagramDrawer}
-            className={`flex items-center space-x-1 rounded-lg border px-2.5 py-1 text-xs font-semibold transition-all cursor-pointer ${
-              hasDiagrams
-                ? 'border-pavo/30 bg-pavo/5 text-pavo hover:bg-pavo/10'
-                : 'border-carbon/15 bg-lienzo text-carbon/60 hover:text-carbon'
-            }`}
-            title="Abrir editor de diagramas"
-          >
-            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-            </svg>
-            <span className="hidden md:inline">Diagramas</span>
-          </button>
         </>
       }
       actions={
@@ -158,13 +129,8 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
               {workspaceLevel === 'advanced' ? 'Avanzado' : 'Básico'}
             </button>
           )}
-          {canReviewDiff && onReviewDiff && (
-            <HeaderActionButton onClick={onReviewDiff} variant="secondary" title="Revisar cambios antes de guardar">
-              Revisar cambios
-            </HeaderActionButton>
-          )}
           {canSaveDraft && onSaveDraft && (
-            <HeaderActionButton onClick={onSaveDraft} variant="secondary" className="hidden sm:inline-flex" title="Guardar borrador">
+            <HeaderActionButton onClick={onSaveDraft} variant="secondary" className="hidden md:inline-flex" title="Guardar borrador">
               Borrador
             </HeaderActionButton>
           )}

@@ -21,7 +21,9 @@ describe('WorkbenchAsideTabs', () => {
           activeTab={active}
           onTabChange={setActive}
         >
-          <p>{active === 'page' ? 'contenido-pagina' : active === 'diagrams' ? 'contenido-diagramas' : 'contenido-avisos'}</p>
+          {active === 'page' && <p>contenido-pagina</p>}
+          {active === 'diagrams' && <p>contenido-diagramas</p>}
+          {active === 'avisos' && <p>contenido-avisos</p>}
         </WorkbenchAsideTabs>
       );
     };

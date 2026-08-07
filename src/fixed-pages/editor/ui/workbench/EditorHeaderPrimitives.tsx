@@ -19,7 +19,7 @@ export const HeaderTitleInput: React.FC<React.InputHTMLAttributes<HTMLInputEleme
 }) => (
   <input
     type="text"
-    className={`w-[140px] sm:w-[220px] shrink-0 font-serif font-bold text-sm text-carbon bg-transparent hover:bg-carbon/5 focus:bg-lienzo focus:outline-hidden focus:ring-1 focus:ring-salvia rounded px-1.5 py-0.5 transition-colors truncate ${className}`}
+    className={`w-28 sm:w-44 md:w-52 max-w-[220px] min-w-[70px] font-serif font-bold text-sm text-carbon bg-transparent hover:bg-carbon/5 focus:bg-lienzo focus:outline-hidden focus:ring-1 focus:ring-salvia rounded px-1.5 py-0.5 transition-colors truncate ${className}`}
     {...props}
   />
 );
@@ -107,6 +107,14 @@ export const HeaderIconButton: React.FC<{
       {children}
     </button>
   );
+};
+
+export type HeaderSaveState = {
+  label: string;
+  variant: 'pavo' | 'saved' | 'saving' | 'secondary';
+  title: string;
+  disabled: boolean;
+  onSave?: () => void;
 };
 
 export const HeaderActionButton: React.FC<{

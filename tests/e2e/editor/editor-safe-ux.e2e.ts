@@ -271,7 +271,10 @@ async function openEditor(page: Page) {
     try {
       await page.goto(`${BASE_URL}/Matematika/editor`, { waitUntil: 'domcontentloaded', timeout: 15_000 });
       await expectText(page, 'Documentos');
-      await page.waitForSelector('[aria-label="Estado de seguridad del editor"]', { timeout: 15_000 });
+      await page.waitForFunction(
+        () => [...document.querySelectorAll('button')].some(el => ['Guardar', 'Guardado', 'Guardando…'].includes(el.textContent?.trim() ?? '')),
+        { timeout: 15_000 },
+      );
       await page.waitForFunction(() => !document.body.textContent?.includes('Comprobando el catálogo seguro…'));
       return;
     } catch (error) {
@@ -357,9 +360,8 @@ async function main() {
       const next = current.source.replace('Texto inicial.', 'Texto editado desde E2E.');
       await setMonacoValue(page, next);
       await expectText(page, 'Cambios locales');
-      await clickByText(page, 'Revisar cambios');
-      await expectText(page, 'Listo para aplicar');
-      await clickByText(page, 'Aplicar archivo');
+      await waitForEnabledButton(page, 'Guardar');
+      await clickByExactText(page, 'Guardar');
       await expectText(page, 'Archivo guardado');
       const saved = await readContent('content/mdx/definitions/compatible.mdx');
       if (!saved.source.includes('Texto editado desde E2E.')) throw new Error('Edited source was not persisted');
@@ -377,18 +379,13 @@ async function main() {
       const before = await readContent('content/mdx/definitions/parcial.mdx');
       console.log(`[${new Date().toISOString()}] FLOW 2: Setting Monaco value...`);
       await setMonacoValue(page, before.source.replace('Texto seguro.', 'Texto seguro editado.'));
-      await waitForEnabledButton(page, 'Revisar cambios');
-      console.log(`[${new Date().toISOString()}] FLOW 2: Clicking Revisar cambios...`);
-      await clickByExactText(page, 'Revisar cambios');
-      await expectText(page, 'Diff con cambios bloqueantes');
-      const applyDisabled = await page.evaluate(() => {
-        const btn = [...document.querySelectorAll('button')].find(b => b.textContent?.includes('Aplicar archivo'));
-        return btn ? btn.disabled : true;
-      });
-      if (!applyDisabled) throw new Error('Partial document code edit was not blocked without operation ranges');
-      console.log(`[${new Date().toISOString()}] FLOW 2: Checking blocked persistence...`);
+      await waitForEnabledButton(page, 'Guardar');
+      console.log(`[${new Date().toISOString()}] FLOW 2: Clicking Guardar...`);
+      await clickByExactText(page, 'Guardar');
+      await expectText(page, 'Archivo guardado');
+      console.log(`[${new Date().toISOString()}] FLOW 2: Checking persistence...`);
       const saved = await readContent('content/mdx/definitions/parcial.mdx');
-      if (saved.source !== before.source) throw new Error('Blocked partial source edit was persisted');
+      if (!saved.source.includes('Texto seguro editado.')) throw new Error('Partial document edit was not persisted');
       console.log(`[${new Date().toISOString()}] FLOW 2: Completed`);
     });
 
@@ -432,12 +429,9 @@ async function main() {
       try {
         await page.setRequestInterception(true);
         page.on('request', intercept);
-        await waitForEnabledButton(page, 'Revisar cambios');
-        console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Revisar cambios...`);
-        await clickByExactText(page, 'Revisar cambios');
-        await waitForEnabledButton(page, 'Aplicar archivo');
-        console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Aplicar archivo (should fail)...`);
-        await clickByExactText(page, 'Aplicar archivo');
+        await waitForEnabledButton(page, 'Guardar');
+        console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Guardar (should fail)...`);
+        await clickByExactText(page, 'Guardar');
         await expectText(page, 'Error al guardar');
       } finally {
         console.log(`[${new Date().toISOString()}] FLOW 4: Removing request interception...`);
@@ -445,11 +439,9 @@ async function main() {
         await page.setRequestInterception(false).catch(() => undefined);
       }
 
-      console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Revisar cambios again...`);
-      await clickByExactText(page, 'Revisar cambios');
-      await waitForEnabledButton(page, 'Aplicar archivo');
-      console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Aplicar archivo again...`);
-      await clickByExactText(page, 'Aplicar archivo');
+      console.log(`[${new Date().toISOString()}] FLOW 4: Clicking Guardar again...`);
+      await waitForEnabledButton(page, 'Guardar');
+      await clickByExactText(page, 'Guardar');
       await expectText(page, 'Archivo guardado');
       console.log(`[${new Date().toISOString()}] FLOW 4: Completed`);
     });
@@ -466,10 +458,9 @@ async function main() {
       console.log(`[${new Date().toISOString()}] FLOW 5: Applying external change behind the scenes...`);
       const external = await applyContent('content/mdx/definitions/compatible.mdx', `${opened.source}\n\nCambio externo.`, opened.version, 99);
       if (!external.response.ok) throw new Error('Could not create external change');
-      console.log(`[${new Date().toISOString()}] FLOW 5: Clicking Revisar cambios...`);
-      await clickByText(page, 'Revisar cambios');
-      console.log(`[${new Date().toISOString()}] FLOW 5: Clicking Aplicar archivo (should detect conflict)...`);
-      await clickByText(page, 'Aplicar archivo');
+      console.log(`[${new Date().toISOString()}] FLOW 5: Clicking Guardar (should detect conflict)...`);
+      await waitForEnabledButton(page, 'Guardar');
+      await clickByExactText(page, 'Guardar');
       await expectText(page, 'Conflicto con una versión externa');
       console.log(`[${new Date().toISOString()}] FLOW 5: Completed`);
     });
@@ -501,7 +492,7 @@ async function main() {
       const current = await readContent('content/mdx/definitions/parcial.mdx');
       console.log(`[${new Date().toISOString()}] FLOW 7: Setting Monaco value...`);
       await setMonacoValue(page, `${current.source}\n\nPendiente.`);
-      await waitForEnabledButton(page, 'Revisar cambios');
+      await waitForEnabledButton(page, 'Guardar');
       console.log(`[${new Date().toISOString()}] FLOW 7: Clicking Compatible (navigation trigger)...`);
       await clickByText(page, 'Compatible');
       await expectText(page, 'Hay cambios locales');
@@ -535,32 +526,32 @@ async function main() {
       await page.keyboard.press('Tab');
       await page.keyboard.press('Tab');
       await page.keyboard.press('Enter');
-      await page.waitForSelector('[aria-label="Estado de seguridad del editor"]', { timeout: 10_000 });
+      await page.waitForFunction(
+        () => [...document.querySelectorAll('button')].some(el => ['Guardar', 'Guardado'].includes(el.textContent?.trim() ?? '')),
+        { timeout: 10_000 },
+      );
       console.log(`[${new Date().toISOString()}] FLOW 9: Completed`);
     });
 
-    await runTest(results, '10 Documento parcial guardar sin diff', evidenceDir, async () => {
+    await runTest(results, '10 Documento parcial sin cambios mantiene Guardar deshabilitado', evidenceDir, async () => {
       console.log(`[${new Date().toISOString()}] FLOW 10: Starting`);
       await openEditor(page);
       await clickByText(page, 'Parcial');
       await expectText(page, 'Edición parcial');
-      // Cambiar a la proyección visual exacta
       await clickByText(page, 'Editable');
-      // En modo visual en MDX, el botón guardar debe estar desactivado/bloqueado
       const isDisabled = await page.evaluate(() => {
-        const btn = [...document.querySelectorAll('button')].find(b => b.textContent?.includes('Guardar'));
+        const btn = [...document.querySelectorAll('button')].find(b => b.textContent?.trim() === 'Guardado' || b.textContent?.trim() === 'Guardar');
         return btn ? btn.disabled : true;
       });
-      if (!isDisabled) throw new Error('Guardar button was not disabled in visual mode on partial doc');
+      if (!isDisabled) throw new Error('Guardar button was enabled without local changes');
       console.log(`[${new Date().toISOString()}] FLOW 10: Completed`);
     });
 
-    await runTest(results, '11 Cambio inesperado bloqueante', evidenceDir, async () => {
+    await runTest(results, '11 Edición visual localizada y guardado directo', evidenceDir, async () => {
       console.log(`[${new Date().toISOString()}] FLOW 11: Starting`);
       await openEditor(page);
       await clickByText(page, 'Parcial');
       await expectText(page, 'Edición parcial');
-      const before = await readContent('content/mdx/definitions/parcial.mdx');
       await clickByExactText(page, 'Editable');
       const openedParagraph = await page.evaluate(() => {
         const target = [...document.querySelectorAll('div.cursor-text')]
@@ -581,21 +572,11 @@ async function main() {
       });
       if (!changedParagraph) throw new Error('The safe visual paragraph could not be changed');
       await expectText(page, 'Cambio localizado aplicado');
-      await clickByText(page, 'Visual + código');
-      const unexpectedSource = before.source
-        .replace('## Documento parcial', '## Encabezado inesperado')
-        .replace('Texto seguro.', 'Texto seguro editado visualmente.');
-      await setMonacoValue(page, unexpectedSource);
-      await page.waitForFunction(() => !document.body.textContent?.includes('Cambio localizado aplicado.'));
-      await waitForEnabledButton(page, 'Revisar cambios');
-      await clickByExactText(page, 'Revisar cambios');
-      await expectText(page, 'Cambio inesperado (bloqueante)');
-      // Verificar que el botón de aplicar archivo esté deshabilitado
-      const applyDisabled = await page.evaluate(() => {
-        const btn = [...document.querySelectorAll('button')].find(b => b.textContent?.includes('Aplicar archivo'));
-        return btn ? btn.disabled : true;
-      });
-      if (!applyDisabled) throw new Error('Apply button was not disabled with unexpected hunks');
+      await waitForEnabledButton(page, 'Guardar');
+      await clickByExactText(page, 'Guardar');
+      await expectText(page, 'Archivo guardado');
+      const saved = await readContent('content/mdx/definitions/parcial.mdx');
+      if (!saved.source.includes('Texto seguro editado visualmente.')) throw new Error('Visual edit was not persisted');
       console.log(`[${new Date().toISOString()}] FLOW 11: Completed`);
     });
 
@@ -728,10 +709,9 @@ async function main() {
       await clickByExactText(page, 'Guardar Cambios');
 
       await expectText(page, 'Cambios locales');
-      await clickByText(page, 'Revisar y guardar');
-      await expectText(page, 'Listo para aplicar');
-      await clickByText(page, 'Aplicar archivo');
-      await expectText(page, 'El archivo real fue aplicado.');
+      await waitForEnabledButton(page, 'Guardar');
+      await clickByExactText(page, 'Guardar');
+      await expectText(page, 'Archivo guardado');
 
       const saved = await readContent('content/mdx/definitions/enlace-anidado.mdx');
       const expected = '<ConceptLink targetId="compatible" isDependency={false}>Documento compatible</ConceptLink>.';
@@ -794,9 +774,9 @@ async function main() {
       await clickByText(page, 'Visual + código');
       await setMonacoValue(page, complexSource);
       await expectText(page, 'Cambios locales');
-      await clickByText(page, 'Revisar y guardar');
-      await expectText(page, 'Listo para aplicar');
-      await clickByText(page, 'Aplicar archivo');
+      await waitForEnabledButton(page, 'Guardar');
+      await clickByExactText(page, 'Guardar');
+      await expectText(page, 'Archivo guardado');
       await expectText(page, 'Archivo guardado');
 
       const saved = await readContent('content/mdx/definitions/definicion-e2e-compleja.mdx');
@@ -820,7 +800,7 @@ async function main() {
 
       await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
       await expectText(page, 'Nueva');
-      await expectText(page, 'Revisar y guardar');
+      await expectText(page, 'Guardar');
       await expectText(page, 'Una vista');
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
       if (overflow) throw new Error('The Phase 7 mobile authoring UI introduced horizontal page overflow');

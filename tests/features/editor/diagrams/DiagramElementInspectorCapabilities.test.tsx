@@ -13,8 +13,6 @@ const ALL_KINDS: DiagramElementKind[] = [
 
 const FILL_KINDS = new Set<DiagramElementKind>(['polygon', 'circle', 'angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark', 'areaDecomposition', 'halfPlane', 'areaIntersection']);
 const POINT_KINDS = new Set<DiagramElementKind>(['intersection', 'midpoint', 'perpendicularFoot']);
-const ANNOTATION_KINDS = new Set<DiagramElementKind>(['dimensionLine', 'measurement', 'text', 'label', 'formula', 'infoPanel']);
-const TEXT_OFFSET_KINDS = new Set<DiagramElementKind>(['measurement', 'text', 'label', 'formula', 'infoPanel']);
 const NON_STROKE_KINDS = new Set<DiagramElementKind>([...POINT_KINDS, 'measurement', 'text', 'label', 'formula', 'infoPanel']);
 const DASHED_KINDS = new Set<DiagramElementKind>([
   'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',

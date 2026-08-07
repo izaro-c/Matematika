@@ -85,24 +85,46 @@ Texto con <ConceptLink targetId="segmento">segmento</ConceptLink>.`;
     expect(next.source).toContain('</DemonstrationSection>');
   });
 
+  it('projects ProofSteps inside Demostracion as individual editable steps', () => {
+    const source = `${validEnvelope}\n\n<Demostracion>
+
+<ProofStep number={1} title="Uno">
+  Primero.
+</ProofStep>
+
+<ProofStep number={2} title="Dos">
+  Segundo.
+</ProofStep>
+
+</Demostracion>`;
+    const document = parseEditorDocument(source);
+    const steps = document.bodyBlocks.filter(block => block.kind === 'editable' && block.blockType === 'demonstration');
+    expect(steps).toHaveLength(2);
+    expect(document.containers.some(container => container.name === 'Demostracion')).toBe(true);
+    const first = steps[0];
+    if (first.kind !== 'editable') throw new Error('expected editable');
+    const next = applyMutationPlan(document, planBlockReplacement(document, first.id, '\n  Primero localizado.\n'));
+    expect(next.source).toContain('<Demostracion>');
+    expect(next.source).toContain('</Demostracion>');
+    expect(next.source).toContain('Primero localizado.');
+  });
+
   it('plans insertion, duplication, deletion and reordering as bounded mutations', () => {
     const source = `${validEnvelope}\n\n### Uno\n\nPrimero.\n\n### Dos\n\nSegundo.`;
     const opened = parseEditorDocument(source);
     const insertion = planBlockInsertion(opened, { index: 1, blockType: 'note', content: 'Nota nueva.' });
     const inserted = applyMutationPlan(opened, insertion);
     expect(inserted.source).toContain('<Nota>\nNota nueva.\n</Nota>');
-    expect(insertion.preview.requiresReview).toBe(false);
 
     const paragraph = inserted.bodyBlocks.find(block => block.kind === 'editable' && block.blockType === 'paragraph');
     if (!paragraph) throw new Error('Missing paragraph');
     const duplication = planBlockDuplication(inserted, paragraph.id);
-    expect(duplication.preview.requiresReview).toBe(true);
     const duplicated = applyMutationPlan(inserted, duplication);
     expect(duplicated.source.match(/Primero\./g)).toHaveLength(2);
 
     const headings = duplicated.bodyBlocks.filter(block => block.kind === 'editable' && block.blockType === 'heading');
     const move = planBlockMove(duplicated, headings[1].id, 0);
-    expect(move.preview.summary).toContain('Revise el diff');
+    expect(move.preview.summary).toContain('reordenarán');
     const moved = applyMutationPlan(duplicated, move);
     expect(moved.source.indexOf('### Dos')).toBeLessThan(moved.source.indexOf('### Uno'));
 

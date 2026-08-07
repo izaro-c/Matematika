@@ -26,7 +26,12 @@ export const GENERAL_BLOCK_PRESETS: BlockPreset[] = [
   { label: 'Advertencia / nota', type: 'note', content: 'Se declara con precisión una advertencia, un caso límite o una aclaración.' },
   { label: 'Cita', type: 'citation', content: 'Texto de la cita.', metadata: { author: '' } },
   { label: 'Separador', type: 'separator', content: '' },
-  { label: 'Demostración', type: 'demonstration', content: '', metadata: { steps: [] } },
+  {
+    label: 'Paso de demostración',
+    type: 'demonstration',
+    content: 'Por hipótesis, se afirma el paso.',
+    metadata: { number: 1, title: 'Paso 1' },
+  },
 ];
 
 export const PAGE_PROFILE_PRESETS: Record<string, BlockPreset[]> = {
@@ -41,7 +46,13 @@ export const PAGE_PROFILE_PRESETS: Record<string, BlockPreset[]> = {
     { label: 'Demostración asociada', type: 'paragraph', content: 'La demostración formal se enlaza como página independiente mediante un identificador de demostración en metadatos.', group: 'profile' },
   ],
   demostracion: [
-    { label: 'Paso lógico', type: 'demonstration', content: '', metadata: { steps: [{ number: 1, title: 'Paso lógico', justificacion: 'Por hipótesis o por resultado previo especificado.', target: '', body: 'Se escribe la afirmación del paso con sus enlaces semánticos e interactivos.' }] }, group: 'profile' },
+    {
+      label: 'Paso lógico',
+      type: 'demonstration',
+      content: 'Por <ConceptLink targetId="concepto" isDependency={true}>resultado previo</ConceptLink>, se escribe la afirmación del paso.',
+      metadata: { number: 1, title: 'Paso lógico' },
+      group: 'profile',
+    },
   ],
   ejemplo: [
     { label: 'Datos del ejemplo', type: 'definition_box', content: 'Se fijan los datos y las hipótesis del caso concreto.', metadata: { title: 'Datos' }, group: 'profile' },

@@ -1,6 +1,5 @@
 import React from 'react';
 import type { VisualDiagramModel } from '../../model/types';
-import type { DiagramSaveCapability } from '../../model/scene/selectors';
 import type { CanvasFrameMode } from '../canvas/canvasFrameMode';
 import {
   HeaderBadge,
@@ -9,10 +8,13 @@ import {
   HeaderActionButton,
 } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
 import { EditorWorkbenchHeader } from '@/fixed-pages/editor/ui/workbench/EditorWorkbenchHeader';
+import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
+import { saveChromeFromCapability } from '@/fixed-pages/editor/save/saveCapability';
 
 interface WorkbenchHeaderProps {
   model: VisualDiagramModel | null;
   componentName: string;
+  metadataType?: string;
   canUndo: boolean;
   canRedo: boolean;
   frameMode: CanvasFrameMode;
@@ -25,16 +27,12 @@ interface WorkbenchHeaderProps {
   onOpenMdxLinks: () => void;
   onOpenGuided?: () => void;
   onResetViewport: () => void;
-  errorCount: number;
-  warningCount: number;
   onOpenAvisos: () => void;
   onTitleChange: (newTitle: string) => void;
   onCloseEditor?: () => void;
   sandboxMode?: boolean;
-  isDirty?: boolean;
   syncStatus?: string;
-  allowCleanApply?: boolean;
-  saveCapability?: DiagramSaveCapability;
+  saveCapability: EditorSaveCapability;
   onSave?: () => void;
   isSidebarOpen?: boolean;
   onToggleSidebar?: () => void;
@@ -45,6 +43,7 @@ interface WorkbenchHeaderProps {
 export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
   model,
   componentName,
+  metadataType,
   canUndo,
   canRedo,
   frameMode,
@@ -56,15 +55,11 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
   onOpenSettings,
   onOpenMdxLinks,
   onResetViewport,
-  errorCount,
-  warningCount,
   onOpenAvisos,
   onTitleChange,
   onCloseEditor,
   sandboxMode = false,
-  isDirty = false,
   syncStatus,
-  allowCleanApply = false,
   saveCapability,
   onSave,
   isSidebarOpen,
@@ -74,16 +69,9 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
 }) => {
   const title = model?.title || 'Diagrama Sin Título';
   const saving = syncStatus === 'saving';
-  const saveBlocked = saveCapability ? !saveCapability.allowed : false;
-  const saveUpToDate = !isDirty && !saving && !allowCleanApply;
-  const saveDisabled = saveBlocked || saving || saveUpToDate || !onSave || sandboxMode;
   const saveChrome = saving
-    ? { label: 'Guardando…', variant: 'saving' as const, title: 'Guardando cambios…' }
-    : saveBlocked
-      ? { label: 'Guardar', variant: 'secondary' as const, title: saveCapability?.summary ?? 'Guardado no disponible' }
-      : saveUpToDate
-        ? { label: 'Guardado', variant: 'saved' as const, title: 'Diagrama al día' }
-        : { label: 'Guardar', variant: 'pavo' as const, title: 'Guardar cambios' };
+    ? { label: 'Guardando…', variant: 'saving' as const, title: 'Guardando cambios…', disabled: true }
+    : saveChromeFromCapability(saveCapability, { entityLabel: 'Diagrama' });
 
   return (
     <EditorWorkbenchHeader
@@ -99,9 +87,13 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
           >
             Sandbox
           </HeaderBadge>
-        ) : null
+        ) : (
+          <HeaderBadge variant="salvia" className="hidden lg:inline">
+            {metadataType || 'Diagrama'}
+          </HeaderBadge>
+        )
       }
-      isDirty={isDirty}
+      isDirty={saveCapability.isDirty}
       isSidebarOpen={isSidebarOpen}
       onToggleSidebar={onToggleSidebar}
       isInspectorOpen={isInspectorOpen}
@@ -110,14 +102,14 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
       closeConfirmMessage="Hay cambios sin guardar en el diagrama. ¿Deseas salir del editor de todos modos?"
       onCloseEditor={onCloseEditor}
       avisos={{
-        errorCount,
-        warningCount,
+        errorCount: saveCapability.errorCount,
+        warningCount: saveCapability.warningCount,
         onOpen: onOpenAvisos,
         healthyLabel: 'Avisos',
       }}
       save={{
         ...saveChrome,
-        disabled: saveDisabled,
+        disabled: saveChrome.disabled || !onSave,
         onSave: onSave ?? (() => {}),
       }}
       center={
@@ -158,7 +150,7 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
               <span className="hidden md:inline">Centrar</span>
             </button>
           </HeaderPillContainer>
-          <HeaderPillContainer className="hidden sm:flex">
+          <HeaderPillContainer className="hidden lg:flex">
             <HeaderPillButton active={frameMode === 'editor'} onClick={() => onSelectFrameMode('editor')}>
               Editor
             </HeaderPillButton>
@@ -176,10 +168,10 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
       }
       actions={
         <>
-          <HeaderActionButton onClick={onOpenPresets} variant="secondary" className="hidden md:inline-flex">
+          <HeaderActionButton onClick={onOpenPresets} variant="secondary" className="hidden lg:inline-flex">
             Plantillas
           </HeaderActionButton>
-          <HeaderActionButton onClick={onOpenSettings} variant="secondary">
+          <HeaderActionButton onClick={onOpenSettings} variant="secondary" className="hidden sm:inline-flex">
             Config
           </HeaderActionButton>
           <HeaderActionButton onClick={onOpenMdxLinks} variant="secondary" className="hidden xl:inline-flex text-salvia">

@@ -7,7 +7,7 @@ export interface DiagramDiagnostic {
   code: string;
   severity: 'error' | 'warning' | 'info';
   message: string;
-  source?: 'model' | 'source' | 'synchronization' | 'reference';
+  source?: 'model' | 'source' | 'synchronization' | 'reference' | 'security';
   elementId?: string;
   path?: readonly (string | number)[];
 }

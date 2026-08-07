@@ -65,6 +65,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
       setActiveDiagramStepIndex(null);
       setActiveDiagramStepId('initial');
       setVariable('step', 'initial');
+      setVariable('diagramKey', null);
       setVariable('activeJustifications', []);
       return;
     }
@@ -72,12 +73,15 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
     const targetValue = step.dataset.target;
     const justificationsValue = step.dataset.justifications;
     const diagramStepValue = step.dataset.diagramStep;
+    const diagramKeyValue = step.dataset.diagramKey;
 
     if (diagramStepValue) {
       setActiveDiagramStepId(diagramStepValue);
     } else {
       setActiveDiagramStepId(null);
     }
+
+    setVariable('diagramKey', diagramKeyValue || null);
 
     if (targetValue) {
       try {

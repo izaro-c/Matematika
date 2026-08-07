@@ -10,15 +10,8 @@ import {
   HeaderBadge,
   HeaderIconButton,
   HeaderActionButton,
+  HeaderSaveState,
 } from './EditorHeaderPrimitives';
-
-export type EditorHeaderSaveState = {
-  label: string;
-  variant: 'pavo' | 'saved' | 'saving' | 'secondary';
-  title: string;
-  disabled: boolean;
-  onSave?: () => void;
-};
 
 export type EditorHeaderAvisosState = {
   errorCount: number;
@@ -45,7 +38,7 @@ export interface EditorWorkbenchHeaderProps {
   center: React.ReactNode;
   actions?: React.ReactNode;
   avisos: EditorHeaderAvisosState;
-  save: EditorHeaderSaveState;
+  save: HeaderSaveState;
   onCloseEditor?: () => void;
   /** When true, closing while dirty asks for confirmation. */
   confirmCloseWhenDirty?: boolean;
@@ -59,7 +52,7 @@ function AvisosButton({ errorCount, warningCount, onOpen, healthyLabel = 'Avisos
     <button
       type="button"
       onClick={onOpen}
-      className={`flex min-w-[4.75rem] items-center justify-center space-x-1.5 rounded-lg border px-2.5 py-1 text-xs font-semibold tabular-nums transition-all cursor-pointer ${
+      className={`flex items-center justify-center space-x-1 rounded-lg border px-2.5 py-1 text-xs font-semibold tabular-nums transition-all cursor-pointer ${
         hasErrors
           ? 'border-granada/30 bg-granada/10 text-granada animate-pulse'
           : hasWarnings
@@ -181,7 +174,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
             placeholder={titlePlaceholder}
           />
           {fileBadge && (
-            <HeaderBadge variant="subtle" className="hidden max-w-[130px] sm:inline w-[130px]">
+            <HeaderBadge variant="subtle" className="hidden max-w-[130px] xl:inline">
               {fileBadge}
             </HeaderBadge>
           )}
@@ -206,7 +199,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
           title={save.title}
           aria-label={save.label}
           aria-busy={save.variant === 'saving' || undefined}
-          className="min-w-[5.5rem]"
+          className="px-2.5 sm:px-3"
         >
           {save.label}
         </HeaderActionButton>

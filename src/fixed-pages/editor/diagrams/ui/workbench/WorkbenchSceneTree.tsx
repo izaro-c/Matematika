@@ -39,7 +39,7 @@ export const DiagramObjectLabel: React.FC<DiagramObjectLabelProps> = ({
   if (hasDollar || /\\[a-zA-Z]+|[{}^_]/.test(cleaned)) {
     let html: string | null = null;
     try {
-      html = katex.renderToString(cleaned, { displayMode: false, throwOnError: false });
+      html = katex.renderToString(cleaned, { displayMode: false, throwOnError: false, trust: false });
     } catch {
       // Fallback to text
     }

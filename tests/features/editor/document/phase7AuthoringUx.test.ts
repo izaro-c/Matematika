@@ -44,14 +44,13 @@ describe('Phase 7 lossless authoring UX', () => {
     });
     const updated = applyMutationPlan(document, mutation);
 
-    expect(mutation.preview.requiresReview).toBe(true);
     expect(updated.source).toContain('<Definicion title="Definición rigurosa">');
     expect(updated.source).toContain('<RefLink targetId="recta">referencia</RefLink>');
     expect(updated.source).toContain('<FutureWidget keep={{ nested: true }} />');
     expect(updated.source.split('<FutureWidget')[0]).not.toContain('Original');
   });
 
-  it('binds diagram import, published export and metadata in one reviewed multi-region mutation', () => {
+  it('binds diagram import, published export and metadata in one multi-region mutation', () => {
     const document = parseEditorDocument(definitionSource);
     const mutation = planDiagramBinding(document, {
       componentName: 'RectaInteractiva',
@@ -61,7 +60,6 @@ describe('Phase 7 lossless authoring UX', () => {
     const updated = applyMutationPlan(document, mutation);
 
     expect(mutation.kind).toBe('bind-diagram');
-    expect(mutation.preview.requiresReview).toBe(true);
     expect(mutation.edits.length).toBeGreaterThanOrEqual(2);
     expect(updated.source).toContain("import { RectaInteractiva } from '@content/diagrams/Definiciones/RectaInteractiva';");
     expect(updated.source).toContain('export const Simulation = RectaInteractiva;');
@@ -325,8 +323,8 @@ La conclusión se obtiene de las condiciones declaradas, no de la apariencia vis
   "stepTacticMap": { "1": [] }
 };
 
-<ProofStep number={1} title="Paso 1" justificacion="Por hipótesis" leanBlocks={metadata.stepTacticMap["1"]}>
-  Cuerpo del paso
+<ProofStep number={1} title="Paso 1" leanBlocks={metadata.stepTacticMap["1"]}>
+  Por hipótesis, cuerpo del paso
 </ProofStep>
 `;
     const document = parseEditorDocument(source);
@@ -335,23 +333,23 @@ La conclusión se obtiene de las condiciones declaradas, no de la apariencia vis
     expect(block!.data.steps[0].leanBlocks).toBeUndefined();
     expect(block!.data.steps[0].leanBlocksExpression).toBe('metadata.stepTacticMap["1"]');
 
-    // Simular que el editor visual actualiza el bloque
     const updatedSteps = [
       {
         ...block!.data.steps[0],
-        justificacion: 'Nueva justificación',
+        title: 'Paso 1 actualizado',
       }
     ];
 
     const mutation = planBlockUpdate(document, block!.id, {
-      content: '  Cuerpo del paso',
+      content: '  Por hipótesis, cuerpo del paso',
       metadata: { steps: updatedSteps },
     });
     const updated = applyMutationPlan(document, mutation);
 
     expect(updated.source).toContain('leanBlocks={metadata.stepTacticMap["1"]}');
     expect(updated.source).not.toContain('leanBlocks="metadata.stepTacticMap["1"]"');
-    expect(updated.source).toContain('justificacion="Nueva justificación"');
+    expect(updated.source).toContain('title="Paso 1 actualizado"');
+    expect(updated.source).not.toContain('justificacion=');
   });
 
   it('updates a self-closing capitular without nesting the previous tag', () => {
@@ -362,10 +360,10 @@ La conclusión se obtiene de las condiciones declaradas, no de la apariencia vis
     const document = parseEditorDocument(source);
     const block = document.bodyBlocks.find(item => item.kind === 'editable' && item.blockType === 'paragraph' && item.data.capitular === 'U');
     expect(block).toBeDefined();
-    expect(block!.data.text).toBe('na introducción rigurosa.');
+    expect(block!.data.text).toBe('Una introducción rigurosa.');
 
     const updated = applyMutationPlan(document, planBlockUpdate(document, block!.id, {
-      content: 'na introducción rigurosa.',
+      content: 'Ena introducción rigurosa.',
       metadata: { capitular: 'E' },
     }));
 

@@ -66,7 +66,7 @@ const BLOCK_SNIPPETS: Readonly<Record<string, string>> = {
   'caja-formula': `\n<Formula>\n  $$ x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} $$\n</Formula>\n`,
   'caja-nota': `\n<Nota>\n  Añade aquí una aclaración histórica o curiosidad.\n</Nota>\n`,
   'caja-demostracion': `\n<Demostracion>\n  Escribe aquí los pasos de la demostración lógica.\n</Demostracion>\n`,
-  'medieval-step': `\n<ProofStep number={1} title="Título del Paso" justificacion="Especificar justificación lógica" />\n`,
+  'medieval-step': `\n<ProofStep number={1} title="Título del Paso">\n  Por <ConceptLink targetId="axioma" isDependency={true}>axioma o resultado previo</ConceptLink>, se afirma el paso.\n</ProofStep>\n`,
   'caja-definicion': `\n<Definicion title="Nueva Definición">\n  Explica el concepto formalmente aquí.\n</Definicion>\n`,
   'caja-corolario': `\n<Corolario>\n  Consecuencia directa del teorema anterior.\n</Corolario>\n`,
   cita: `\n<Cita author="Pitágoras">\n  Todo es número.\n</Cita>\n`,
@@ -133,17 +133,19 @@ export function getLatexSnippet(type: string): string | undefined {
   return LATEX_SNIPPETS[type];
 }
 
-export function ensureProofStepJustifications(body: string): string {
-  return body.replace(/<ProofStep\b[^>]*>/g, tag => {
-    if (tag.includes('justificacion=')) {
-      return tag;
-    }
+/** Elimina attrs legacy de justificación en etiquetas ProofStep. */
+export function stripProofStepLegacyJustificationAttrs(body: string): string {
+  return body.replace(/<ProofStep\b[^>]*>/g, tag =>
+    tag
+      .replace(/\s+justificacion=(?:"[^"]*"|{[^}]*})/g, '')
+      .replace(/\s+justificationType=(?:"[^"]*"|{[^}]*})/g, '')
+      .replace(/\s+dependencyId=(?:"[^"]*"|{[^}]*})/g, ''),
+  );
+}
 
-    const tagStart = tag.slice(0, -1).trimEnd();
-    const selfClosing = tagStart.endsWith('/');
-    const attributes = selfClosing ? tagStart.slice(0, -1).trimEnd() : tagStart;
-    return `${attributes} justificacion="Especificar justificación lógica"${selfClosing ? ' />' : '>'}`;
-  });
+/** @deprecated Use stripProofStepLegacyJustificationAttrs. Kept as alias during migration. */
+export function ensureProofStepJustifications(body: string): string {
+  return stripProofStepLegacyJustificationAttrs(body);
 }
 
 function normalizeCsvIds(value: string): string {

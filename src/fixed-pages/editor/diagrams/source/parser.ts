@@ -3,6 +3,7 @@ import { materializeEditorModel, workingScene } from '../model/scene/editorModel
 import type { VisualDiagramModel } from '../model/types';
 import type { DiagramDiagnostic } from './generator';
 import { generateDiagramSource, SPEC_END, SPEC_START } from './generator';
+import { contentSecurityDiagnostics } from '@/fixed-pages/editor/security/contentGuard';
 
 export type ParseDiagramSourceResult =
   | { status: 'visual-exact'; model: VisualDiagramModel; diagnostics: DiagramDiagnostic[] }
@@ -62,6 +63,10 @@ export function parseDiagramSourceLocally(source?: string, _metadataType = ''): 
 }
 
 export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''): ParseDiagramSourceResult | null {
+  const security = contentSecurityDiagnostics('diagram', source);
+  if (security.length > 0) {
+    return { status: 'invalid', diagnostics: security };
+  }
   const json = extractV2Json(source) ?? extractLegacyJson(source);
   if (!json) return null;
 

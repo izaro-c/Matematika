@@ -35,7 +35,6 @@ const INSERT_OPTIONS: InsertOption[] = [
   { type: 'note', label: 'Nota', className: 'text-ocre hover:bg-ocre/10' },
   { type: 'citation', label: 'Cita', className: 'text-salvia hover:bg-salvia/10' },
   { type: 'definition_box', label: 'Def Inline', className: 'text-terracota hover:bg-terracota/10' },
-  { type: 'demonstration', label: 'Demo', className: 'text-terracota hover:bg-terracota/10' },
 ];
 
 interface BlockInsertMenuProps {

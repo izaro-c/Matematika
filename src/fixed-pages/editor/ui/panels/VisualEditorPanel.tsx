@@ -1,12 +1,33 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Block, BlockType } from '@/fixed-pages/editor/session/parser';
 import type { DiagramTargetRegistry, EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
-import { buildDocumentOutline } from '@/fixed-pages/editor/review/authoringModel';
 import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
-import { insertSymbol } from './InlineContentPreview';
 import { GENERAL_BLOCK_PRESETS, LATEX_SYMBOLS, PAGE_PROFILE_PRESETS, type BlockPreset } from './visualEditorPresets';
 import { VisualEditorBlock } from './VisualEditorBlock';
+import { MdxFormatBar } from '../toolbar/MdxFormatBar';
+import { DemonstrationCanvas, applyStepUpdate } from '../blocks/DemonstrationCanvas';
+import { autoCapitularLetter, demoStepIndexInGroup, demosNeedingRenumber, groupVisualBlocks, stepFromDemoBlock } from '../prose/demoGrouping';
+import type { ProofStepData } from '@/fixed-pages/editor/session/parser';
 import { resolvePublicOrExternalAsset } from '@/lib/routes';
+import {
+  editableHtmlToMdx,
+  getSelectedPlainText,
+  insertHtmlAtSelection,
+  mdxToEditableHtml,
+} from '../prose/inlineProseOps';
+import { SelectionLinkBubble } from '../prose/SelectionLinkBubble';
+import { buildInteractiveReference } from '@/fixed-pages/editor/types/editorContracts';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
+
+function insertSymbol(textareaId: string, code: string) {
+  const el = document.getElementById(textareaId) as HTMLTextAreaElement | null;
+  if (!el) return;
+  const start = el.selectionStart ?? el.value.length;
+  const end = el.selectionEnd ?? start;
+  el.setRangeText(code, start, end, 'end');
+  el.dispatchEvent(new Event('input', { bubbles: true }));
+  el.focus();
+}
 
 interface VisualEditorPanelProps {
   currentFile: string | null;
@@ -31,6 +52,8 @@ interface VisualEditorPanelProps {
   setActiveDiagramBlockId: (id: string | null) => void;
   setDiagramBuilderOpen: (open: boolean) => void;
   diagramTargets: DiagramTargetRegistry;
+  onSyncDiagramStep?: (step: ProofStepData, index: number) => void;
+  onFormatBarChange?: (formatBar: React.ReactNode) => void;
 }
 
 export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
@@ -56,17 +79,36 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   setActiveDiagramBlockId,
   setDiagramBuilderOpen,
   diagramTargets,
+  onSyncDiagramStep,
+  onFormatBarChange,
 }) => {
+  const setVariable = useMathStore(state => state.setVariable);
   const [commandOpen, setCommandOpen] = useState(false);
   const [commandQuery, setCommandQuery] = useState('');
-  const [outlineOpen, setOutlineOpen] = useState(false);
+  const [activeDemoBlockId, setActiveDemoBlockId] = useState<string | null>(null);
+  const [focusedSurfaceId, setFocusedSurfaceId] = useState<string | null>(null);
+  const [formatHint, setFormatHint] = useState<string | null>(null);
+  const pendingRenumber = useRef(false);
   const commandSearchRef = useRef<HTMLInputElement>(null);
   const closeCommand = () => setCommandOpen(false);
   const commandDialogRef = useModalFocus<HTMLDivElement>(commandOpen, closeCommand, commandSearchRef);
   const showStatement = ['teorema', 'lema', 'corolario', 'definicion', 'axioma'].includes(String(metadata.type));
   const isMathematician = metadata.type === 'matematico';
-  const outline = useMemo(() => buildDocumentOutline(blocks), [blocks]);
+  const visualGroups = useMemo(() => groupVisualBlocks(blocks), [blocks]);
+  const firstParagraphId = useMemo(() => blocks.find(block => block.type === 'paragraph')?.id ?? null, [blocks]);
+  const demoBlocks = useMemo(() => blocks.filter(b => b.type === 'demonstration'), [blocks]);
+  const activeDemoBlock = activeDemoBlockId
+    ? blocks.find(b => b.id === activeDemoBlockId)
+    : null;
+  const requestRenumber = () => {
+    pendingRenumber.current = true;
+  };
 
+  useEffect(() => {
+    if (!pendingRenumber.current || isReadOnly) return;
+    pendingRenumber.current = false;
+    demosNeedingRenumber(blocks).forEach(item => applyStepUpdate(updateBlock, item.blockId, item.step));
+  }, [blocks, isReadOnly, updateBlock]);
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key === '/') {
@@ -79,59 +121,248 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
-  const applyInlineTransform = (
-    block: Block,
-    wrap: (selected: string) => string,
-    fallback = 'texto'
-  ) => {
-    const active = document.activeElement as HTMLTextAreaElement | HTMLInputElement | null;
-    if (!active || typeof active.selectionStart !== 'number' || typeof active.selectionEnd !== 'number') return;
-    const start = active.selectionStart;
-    const end = active.selectionEnd;
-    const selected = active.value.substring(start, end) || fallback;
-    const next = `${block.content.substring(0, start)}${wrap(selected)}${block.content.substring(end)}`;
-    updateBlock(block.id, next, block.metadata);
-    requestAnimationFrame(() => {
-      active.focus();
-      const cursor = start + wrap(selected).length;
-      active.setSelectionRange(cursor, cursor);
-    });
+  useEffect(() => {
+    if (!formatHint) return;
+    const timer = window.setTimeout(() => setFormatHint(null), 3200);
+    return () => window.clearTimeout(timer);
+  }, [formatHint]);
+
+  const updateParagraphWithCapitular = (id: string, content: string, metadata?: Record<string, unknown>) => {
+    if (id === firstParagraphId) {
+      const letter = autoCapitularLetter(content);
+      updateBlock(id, content, { ...metadata, capitular: letter });
+      return;
+    }
+    updateBlock(id, content, metadata);
   };
 
-  const openLinkerFromActiveSelection = (block: Block) => {
-    const active = document.activeElement as HTMLTextAreaElement | HTMLInputElement | null;
-    if (!active || typeof active.selectionStart !== 'number' || typeof active.selectionEnd !== 'number') return;
-    const start = active.selectionStart;
-    const end = active.selectionEnd;
-    const text = active.value.substring(start, end).trim();
-    if (!text) return;
-    const rect = active.getBoundingClientRect();
-    const mockEvent = {
-      stopPropagation: () => {},
-      currentTarget: active,
-      clientX: rect.left,
-      clientY: rect.top
-    } as unknown as React.MouseEvent;
-
-    handleEditLink(block.id, '', text, {}, 'InteractiveElement', mockEvent);
+  const persistFocusedProse = () => {
+    const active = document.activeElement as HTMLElement | null;
+    if (!active?.isContentEditable || !active.id) return;
+    const mdx = editableHtmlToMdx(active);
+    if (active.id.endsWith('-title')) {
+      const blockId = active.id.replace(/-title$/, '');
+      const block = blocks.find(b => b.id === blockId);
+      if (!block || block.type !== 'demonstration') return;
+      const step = { ...stepFromDemoBlock(block), title: mdx };
+      applyStepUpdate(updateBlock, blockId, step);
+      return;
+    }
+    if (active.id.endsWith('-body')) {
+      const blockId = active.id.replace(/-body$/, '');
+      const block = blocks.find(b => b.id === blockId);
+      if (!block || block.type !== 'demonstration') return;
+      const step = { ...stepFromDemoBlock(block), body: mdx };
+      applyStepUpdate(updateBlock, blockId, step);
+      return;
+    }
+    if (active.id.startsWith('prose-')) {
+      const blockId = active.id.slice('prose-'.length);
+      const block = blocks.find(b => b.id === blockId);
+      if (!block) return;
+      if (block.type === 'paragraph') updateParagraphWithCapitular(blockId, mdx, block.metadata);
+      else updateBlock(blockId, mdx, block.metadata);
+    }
   };
 
-  const renderInlineToolbar = (block: Block) => (
-    <div className="flex flex-wrap items-center gap-1 rounded border border-carbon/10 bg-lienzo px-2 py-1 shadow-sm">
-      <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => applyInlineTransform(block, value => `**${value}**`, 'énfasis')} className="h-6 min-w-6 rounded px-1.5 text-[10px] font-bold text-carbon hover:bg-carbon/5 cursor-pointer" title="Negrita" aria-label="Aplicar negrita">B</button>
-      <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => applyInlineTransform(block, value => `*${value}*`, 'énfasis')} className="h-6 min-w-6 rounded px-1.5 text-[10px] italic text-carbon hover:bg-carbon/5 cursor-pointer" title="Cursiva" aria-label="Aplicar cursiva">I</button>
-      <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => applyInlineTransform(block, value => `$${value}$`, 'x')} className="h-6 rounded px-1.5 font-mono text-[10px] text-ocre hover:bg-ocre/10 cursor-pointer" title="LaTeX inline" aria-label="Aplicar LaTeX en línea">$x$</button>
-      <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => openLinkerFromActiveSelection(block)} className="h-6 rounded px-1.5 text-[10px] font-bold text-salvia hover:bg-salvia/10 cursor-pointer" title="Conectar a concepto o diagrama">Vínculo</button>
-    </div>
-  );
+  const renderInlineToolbar = (_block: Block) => null;
 
   const insertPresetAt = (index: number, preset: BlockPreset) => {
     addBlock(index, preset.type, preset.content, preset.metadata);
+    if (preset.type === 'demonstration') requestRenumber();
     setCommandOpen(false);
     setCommandQuery('');
   };
-  const insertPresetAtEnd = (preset: BlockPreset) => insertPresetAt(blocks.length, preset);
-  const profilePresets = PAGE_PROFILE_PRESETS[String(metadata.type || '')] || [];
+  const insertPresetNearSelection = (preset: BlockPreset) => {
+    const anchorId = activeDemoBlock?.id ?? editingBlockId;
+    const index = anchorId ? blocks.findIndex(b => b.id === anchorId) : -1;
+    insertPresetAt(index >= 0 ? index + 1 : blocks.length, preset);
+  };
+  const allPresets = useMemo(
+    () => [...(PAGE_PROFILE_PRESETS[String(metadata.type || '')] || []), ...GENERAL_BLOCK_PRESETS]
+      .filter((preset, index, all) => all.findIndex(item => item.label === preset.label && item.type === preset.type) === index),
+    [metadata.type],
+  );
+
+  const openLinkerForSelection = () => {
+    const selected = getSelectedPlainText().trim();
+    if (!selected) {
+      setFormatHint('Selecciona el texto que quieres enlazar.');
+      return;
+    }
+    const blockId = activeDemoBlock?.id ?? editingBlockId ?? blocks[0]?.id;
+    if (!blockId) return;
+    handleEditLink(blockId, '', selected, {}, 'ConceptLink', {} as React.MouseEvent);
+  };
+
+  const highlightSelection = () => {
+    const selected = getSelectedPlainText().trim() || 'elemento';
+    if (insertHtmlAtSelection(mdxToEditableHtml(buildInteractiveReference('elemento', 'salvia', selected)))) {
+      persistFocusedProse();
+      return;
+    }
+    setFormatHint('Haz clic en el texto y selecciona el rótulo a resaltar.');
+  };
+
+  const activateDemoStep = (blockId: string, step: ProofStepData, index: number) => {
+    setActiveDemoBlockId(blockId);
+    setEditingBlockId(blockId);
+    onSyncDiagramStep?.(step, index);
+    const targets = Array.isArray(step.target)
+      ? step.target
+      : (typeof step.target === 'string' && step.target.trim() ? [step.target] : []);
+    if (targets[0]) setVariable('highlight', targets[0]);
+    const proofTarget = targets[0] || `step-${step.number}`;
+    setVariable('step', proofTarget);
+  };
+
+  const handleUpdateStep = (blockId: string, step: ProofStepData) => {
+    applyStepUpdate(updateBlock, blockId, step);
+    const index = demoStepIndexInGroup(blocks, blockId);
+    if (index >= 0 && activeDemoBlockId === blockId) {
+      onSyncDiagramStep?.(step, index);
+      const targets = Array.isArray(step.target)
+        ? step.target
+        : (typeof step.target === 'string' && step.target.trim() ? [step.target] : []);
+      if (targets[0]) setVariable('highlight', targets[0]);
+    }
+  };
+
+  const handleInsertStepAfter = (blockId: string) => {
+    const index = blocks.findIndex(b => b.id === blockId);
+    const insertAt = index < 0 ? blocks.length : index + 1;
+    const nextNumber = demoBlocks.findIndex(b => b.id === blockId) + 2;
+    addBlock(insertAt, 'demonstration', 'Por hipótesis, se afirma el paso.', {
+      number: nextNumber > 0 ? nextNumber : demoBlocks.length + 1,
+      title: `Paso ${nextNumber > 0 ? nextNumber : demoBlocks.length + 1}`,
+    });
+    requestRenumber();
+  };
+
+  const handleInsertStepFromToolbar = () => {
+    if (activeDemoBlock) {
+      handleInsertStepAfter(activeDemoBlock.id);
+      return;
+    }
+    const lastDemo = demoBlocks[demoBlocks.length - 1];
+    if (lastDemo) {
+      handleInsertStepAfter(lastDemo.id);
+      return;
+    }
+    addBlock(blocks.length, 'demonstration', 'Por hipótesis, se fija el punto de partida.', {
+      number: 1,
+      title: 'Paso 1',
+    });
+    requestRenumber();
+  };
+
+  const handleMoveStepByBlockId = (blockId: string, direction: -1 | 1) => {
+    const demoIndex = demoBlocks.findIndex(block => block.id === blockId);
+    if (demoIndex < 0) return;
+    const swap = demoBlocks[demoIndex + direction];
+    if (!swap) {
+      setFormatHint(direction < 0 ? 'Este paso ya es el primero.' : 'Este paso ya es el último.');
+      return;
+    }
+    const from = blocks.findIndex(block => block.id === blockId);
+    const to = blocks.findIndex(block => block.id === swap.id);
+    if (from < 0 || to < 0) return;
+    try {
+      moveBlock(from, to);
+      requestRenumber();
+    } catch {
+      setFormatHint('No se pudo reposicionar el paso.');
+    }
+  };
+
+  const handleDuplicateStepByBlockId = (blockId: string) => {
+    duplicateBlock(blockId);
+    requestRenumber();
+  };
+
+  const handleDeleteStepByBlockId = (blockId: string) => {
+    removeBlock(blockId);
+    requestRenumber();
+  };
+
+  const handleMoveActiveStep = (direction: -1 | 1) => {
+    if (!activeDemoBlock) return;
+    handleMoveStepByBlockId(activeDemoBlock.id, direction);
+  };
+
+  // Handlers change every render; keep them out of the publish effect deps.
+  const formatBarApiRef = useRef({
+    openLinkerForSelection,
+    handleInsertStepFromToolbar,
+    handleMoveActiveStep,
+    insertPresetNearSelection,
+    persistFocusedProse,
+    duplicateBlock,
+    removeBlock,
+    requestRenumber,
+    activeDemoBlockId,
+  });
+  useEffect(() => {
+    formatBarApiRef.current = {
+      openLinkerForSelection,
+      handleInsertStepFromToolbar,
+      handleMoveActiveStep,
+      insertPresetNearSelection,
+      persistFocusedProse,
+      duplicateBlock,
+      removeBlock,
+      requestRenumber,
+      activeDemoBlockId,
+    };
+  }, [openLinkerForSelection, handleInsertStepFromToolbar, handleMoveActiveStep, insertPresetNearSelection, persistFocusedProse, duplicateBlock, removeBlock, requestRenumber, activeDemoBlockId]);
+
+  useEffect(() => {
+    if (!onFormatBarChange) return;
+    if (isReadOnly) {
+      onFormatBarChange(null);
+      return;
+    }
+    const api = () => formatBarApiRef.current;
+    onFormatBarChange(
+      <MdxFormatBar
+        isReadOnly={isReadOnly}
+        canMutateStructure={canMutateVisualStructure}
+        hasActiveProse={Boolean(focusedSurfaceId) || Boolean(editingBlockId)}
+        hasActiveDemoStep={Boolean(activeDemoBlockId)}
+        blockPresets={allPresets}
+        onOpenLinker={() => api().openLinkerForSelection()}
+        onInsertStep={() => api().handleInsertStepFromToolbar()}
+        onMoveStep={dir => api().handleMoveActiveStep(dir)}
+        onDuplicateStep={() => {
+          const id = api().activeDemoBlockId;
+          if (!id) return;
+          api().duplicateBlock(id);
+          api().requestRenumber();
+        }}
+        onDeleteStep={() => {
+          const id = api().activeDemoBlockId;
+          if (id && window.confirm('¿Eliminar este paso?')) {
+            api().removeBlock(id);
+            setActiveDemoBlockId(null);
+            api().requestRenumber();
+          }
+        }}
+        onInsertPreset={preset => api().insertPresetNearSelection(preset)}
+        onNotify={setFormatHint}
+        onProseMutated={() => api().persistFocusedProse()}
+      />
+    );
+  }, [
+    onFormatBarChange,
+    isReadOnly,
+    canMutateVisualStructure,
+    focusedSurfaceId,
+    editingBlockId,
+    activeDemoBlockId,
+    allPresets,
+  ]);
+
+  useEffect(() => () => onFormatBarChange?.(null), [onFormatBarChange]);
 
   const renderHeader = () => {
     if (!currentFile) return null;
@@ -247,79 +478,83 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
       <div className="space-y-6 max-w-2xl mx-auto py-8 font-serif">
         {renderHeader()}
 
-        {blocks.map((block, index) => (
-          <VisualEditorBlock
-            key={block.id}
-            block={block}
-            blocks={blocks}
-            index={index}
-            isReadOnly={isReadOnly}
-            canMutateVisualStructure={canMutateVisualStructure}
-            editingBlockId={editingBlockId}
-            setEditingBlockId={setEditingBlockId}
-            highlightedBlockId={highlightedBlockId}
-            issues={issues}
-            addBlock={addBlock}
-            moveBlock={moveBlock}
-            duplicateBlock={duplicateBlock}
-            removeBlock={removeBlock}
-            updateBlock={updateBlock}
-            handleTextareaSelect={handleTextareaSelect}
-            handleEditLink={handleEditLink}
-            renderInlineToolbar={renderInlineToolbar}
-            setActiveDiagramIndex={setActiveDiagramIndex}
-            setActiveDiagramBlockId={setActiveDiagramBlockId}
-            setDiagramBuilderOpen={setDiagramBuilderOpen}
-            diagramTargets={diagramTargets}
-          />
-        ))}
+        {visualGroups.map((group, groupIndex) => {
+          if (group.kind === 'demonstration') {
+            return (
+              <DemonstrationCanvas
+                key={`demo-group-${group.blocks[0]?.id ?? groupIndex}`}
+                blocks={group.blocks}
+                activeBlockId={activeDemoBlockId}
+                isReadOnly={isReadOnly}
+                diagramTargets={diagramTargets}
+                onActivate={activateDemoStep}
+                onUpdateStep={handleUpdateStep}
+                onInsertAfter={handleInsertStepAfter}
+                onMoveStep={handleMoveStepByBlockId}
+                onDuplicateStep={handleDuplicateStepByBlockId}
+                onDeleteStep={handleDeleteStepByBlockId}
+                onFocusSurface={setFocusedSurfaceId}
+                onEditChip={(blockId, raw, text, attrs, tag, event) => handleEditLink(blockId, raw, text, attrs, tag, event)}
+              />
+            );
+          }
+
+          const block = group.block;
+          const index = blocks.findIndex(item => item.id === block.id);
+          return (
+            <VisualEditorBlock
+              key={block.id}
+              block={block}
+              blocks={blocks}
+              index={index}
+              isReadOnly={isReadOnly}
+              canMutateVisualStructure={canMutateVisualStructure}
+              editingBlockId={editingBlockId}
+              setEditingBlockId={setEditingBlockId}
+              highlightedBlockId={highlightedBlockId}
+              issues={issues}
+              addBlock={addBlock}
+              moveBlock={moveBlock}
+              duplicateBlock={duplicateBlock}
+              removeBlock={removeBlock}
+              updateBlock={block.type === 'paragraph' ? updateParagraphWithCapitular : updateBlock}
+              handleTextareaSelect={handleTextareaSelect}
+              handleEditLink={handleEditLink}
+              renderInlineToolbar={renderInlineToolbar}
+              setActiveDiagramIndex={setActiveDiagramIndex}
+              setActiveDiagramBlockId={setActiveDiagramBlockId}
+              setDiagramBuilderOpen={setDiagramBuilderOpen}
+              diagramTargets={diagramTargets}
+            />
+          );
+        })}
       </div>
     );
   };
 
   return (
     <div data-panel="visual-editor" className="relative flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
-      <button type="button" onClick={() => setOutlineOpen(value => !value)} aria-expanded={outlineOpen} className="absolute left-3 top-3 z-30 rounded border border-carbon/15 bg-lienzo/95 px-2.5 py-1.5 text-[10px] font-bold text-carbon/60 shadow-sm backdrop-blur">
-        Índice {outline.length > 0 ? `(${outline.length})` : ''}
-      </button>
-      {outlineOpen && <aside className="absolute bottom-3 left-3 top-12 z-30 w-52 overflow-y-auto rounded border border-carbon/15 bg-lienzo/95 p-3 shadow-xl backdrop-blur" aria-label="Outline del documento">
-        <div className="mb-2 flex items-center justify-between">
-          <h2 className="ac-label ac-label--sm">Outline</h2>
-          <button type="button" onClick={() => setOutlineOpen(false)} className="rounded px-1.5 py-0.5 text-[9px] font-bold text-carbon/55" aria-label="Cerrar índice">Cerrar</button>
+      {formatHint && (
+        <div className="border-b border-ocre/20 bg-ocre/10 px-3 py-1.5 text-[11px] text-carbon" role="status">
+          {formatHint}
         </div>
-        <nav className="space-y-1" aria-label="Outline del documento">
-          {outline.map(item => <button key={item.id} type="button" onClick={() => { document.getElementById(`block-${item.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); setOutlineOpen(false); }}
-            className="block w-full truncate rounded px-2 py-1.5 text-left text-[10px] text-carbon/65 hover:bg-salvia/10 hover:text-salvia" style={{ paddingLeft: `${Math.max(8, (item.level - 2) * 8)}px` }}>{item.label}</button>)}
-        </nav>
-      </aside>}
+      )}
+
+      <SelectionLinkBubble
+        disabled={isReadOnly}
+        onLinkSelection={openLinkerForSelection}
+        onHighlightSelection={highlightSelection}
+        onProseMutated={persistFocusedProse}
+      />
+
       <div className="flex-1 overflow-y-auto p-4 sm:p-8">
-      <div className="mx-auto mb-4 max-w-3xl space-y-2 pt-8">
+      <div className="mx-auto mb-4 max-w-3xl space-y-2 pt-2">
         {isReadOnly && (
           <div className="rounded border border-pavo/30 bg-pavo/5 p-3 text-xs text-carbon shadow-sm">
             <span className="font-bold text-pavo">Edición de código con vista previa:</span> El cuerpo no contiene ningún bloque visual que pueda editarse mediante un parche localizado exacto.
           </div>
         )}
       </div>
-
-      {!isReadOnly && canMutateVisualStructure && (
-        <div className="sticky top-0 z-20 mx-auto mb-4 max-w-3xl rounded border border-carbon/15 bg-lienzo/95 p-2 shadow-sm backdrop-blur select-none">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <button type="button" onClick={() => setCommandOpen(true)} className="rounded bg-salvia px-3 py-1.5 text-xs font-bold text-lienzo hover:bg-salvia/85">＋ Insertar bloque</button>
-            <button type="button" onClick={() => addBlock(blocks.length, 'paragraph')} className="rounded border border-carbon/15 px-3 py-1.5 text-xs font-bold text-carbon/65 hover:bg-carbon/5">Párrafo</button>
-            <button
-              type="button"
-              onClick={() => {
-                setActiveDiagramIndex(blocks.length);
-                setActiveDiagramBlockId(null);
-                setDiagramBuilderOpen(true);
-              }}
-              className="rounded bg-pavo/10 px-2 py-1 text-[10px] font-bold text-pavo hover:bg-pavo/20 cursor-pointer"
-            >
-              Diagrama
-            </button>
-          </div>
-        </div>
-      )}
 
       {renderBlocksList()}
       </div>
@@ -331,9 +566,9 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
             <button type="button" onClick={() => setCommandOpen(false)} className="rounded px-2 py-1 text-xs text-carbon/55">Esc</button>
           </div>
           <div className="mt-3 grid max-h-80 gap-2 overflow-y-auto sm:grid-cols-2">
-            {[...profilePresets, ...GENERAL_BLOCK_PRESETS].filter((preset, index, all) => all.findIndex(item => item.label === preset.label && item.type === preset.type) === index)
+            {[...allPresets]
               .filter(preset => `${preset.label} ${preset.type}`.toLowerCase().includes(commandQuery.toLowerCase()))
-              .map(preset => <button key={`${preset.label}-${preset.type}`} type="button" onClick={() => insertPresetAtEnd(preset)} className="rounded border border-carbon/10 bg-carbon/5 p-3 text-left hover:border-salvia/30 hover:bg-salvia/5">
+              .map(preset => <button key={`${preset.label}-${preset.type}`} type="button" onClick={() => insertPresetNearSelection(preset)} className="rounded border border-carbon/10 bg-carbon/5 p-3 text-left hover:border-salvia/30 hover:bg-salvia/5">
                 <span className="block font-serif text-xs font-bold text-carbon">{preset.label}</span><span className="mt-1 block text-[9px] text-carbon/45">{preset.type}</span>
               </button>)}
           </div>

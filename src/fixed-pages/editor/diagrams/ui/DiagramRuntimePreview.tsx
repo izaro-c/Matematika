@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { MathProviderBoundary } from '@/lib/page-context/MathStoreContext';
+import { useDiagramStepSync } from '@/lib/page-context/DiagramStepSyncContext';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { StepNavigator } from '@/components/ui/StepNavigator';
 import { DiagramRenderer } from '@/diagrams/public';
@@ -59,6 +60,8 @@ export interface DiagramRuntimePreviewProps {
   responsiveFrame?: boolean;
   viewportControls?: boolean;
   height?: string;
+  /** When false, reuse the parent MathStore (editor canvas ↔ inspector sync). */
+  isolateMathStore?: boolean;
 }
 
 interface PreviewState {
@@ -93,9 +96,11 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
   responsiveFrame = false,
   viewportControls = false,
   height = '280px',
+  isolateMathStore = true,
 }) => {
   const previewKey = `${filePath ?? ''}:${componentName}`;
   const loader = resolveDiagramLoader(diagramModules, filePath, componentName);
+  const stepSync = useDiagramStepSync();
   const [activeStepId, setActiveStepId] = useState('');
   const [loadedPreview, setLoadedPreview] = useState<PreviewState>({
     key: '',
@@ -145,13 +150,35 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
         message: pendingMessage(filePath, componentName, Boolean(loader)),
       };
 
+  const spec = currentPreview.spec;
+  const syncedStepId = useMemo(() => {
+    if (!spec || !stepSync) return undefined;
+    if (stepSync.activeStepId) {
+      if (stepSync.activeStepId === 'initial') return spec.steps[0]?.id;
+      const match = spec.steps.find(item => item.id === stepSync.activeStepId || item.id === `step${stepSync.activeStepId}`);
+      if (match) return match.id;
+      if (/^\d+$/.test(stepSync.activeStepId)) {
+        const byNumber = spec.steps[Number(stepSync.activeStepId)];
+        if (byNumber) return byNumber.id;
+      }
+    }
+    if (stepSync.activeStepIndex != null) {
+      const hasInitialStep = spec.steps[0]?.id === 'initial' || spec.steps[0]?.id === 'enunciado' || spec.steps[0]?.id === 'hipotesis';
+      const mappedIndex = hasInitialStep ? stepSync.activeStepIndex + 1 : stepSync.activeStepIndex;
+      return spec.steps[mappedIndex]?.id ?? spec.steps[spec.steps.length - 1]?.id;
+    }
+    return undefined;
+  }, [spec, stepSync]);
+
   if (!currentPreview.component && !currentPreview.spec) {
     return <p className="p-4 text-xs text-carbon/60" role="status">{currentPreview.message}</p>;
   }
 
   const Component = currentPreview.component;
-  const spec = currentPreview.spec;
-  const effectiveStepId = spec?.steps.some(item => item.id === activeStepId) ? activeStepId : spec?.steps[0]?.id;
+  const localStepId = spec?.steps.some(item => item.id === activeStepId) ? activeStepId : undefined;
+  // Prefer reading sync from the proof canvas; fall back to local navigator.
+  const effectiveStepId = syncedStepId ?? localStepId ?? spec?.steps[0]?.id;
+  const controlledBySync = Boolean(stepSync);
   let previewContent: React.ReactNode = null;
   if (spec) {
     previewContent = (
@@ -167,14 +194,20 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
             <DiagramRenderer
               spec={spec}
               mode="runtime"
-              activeStepId={effectiveStepId}
+              activeStepId={controlledBySync ? undefined : effectiveStepId}
               className="!min-h-0 h-full w-full"
               viewportControls={viewportControls}
             />
           </div>
         )}
         {spec.steps.length > 1 && (
-          <StepNavigator steps={spec.steps} scopeId={`preview-${spec.componentId}`} activeStepId={effectiveStepId} onStepChange={setActiveStepId} compact />
+          <StepNavigator
+            steps={spec.steps}
+            scopeId={`preview-${spec.componentId}`}
+            activeStepId={effectiveStepId}
+            onStepChange={setActiveStepId}
+            compact
+          />
         )}
         <p className="px-1 font-mono text-[9px] text-carbon/50 select-none">
           {spec.points.length + spec.elements.length + spec.sliders.length} objetos · {spec.steps.length} pasos · {spec.points.filter(item => item.target).length + spec.elements.filter(item => item.target).length + spec.groups.filter(item => item.target).length} vínculos MDX
@@ -192,15 +225,17 @@ export const DiagramRuntimePreview: React.FC<DiagramRuntimePreviewProps> = ({
     );
   }
 
+  const bounded = isolateMathStore
+    ? <MathProviderBoundary>{previewContent}</MathProviderBoundary>
+    : previewContent;
+
   return (
     <div className="w-full" data-testid="diagram-runtime-preview">
       <ErrorBoundary
         key={`${filePath}:${componentName}`}
         fallback={<p className="p-4 text-xs text-granada" role="alert">El diagrama guardado produjo un error al renderizarse.</p>}
       >
-        <MathProviderBoundary>
-          {previewContent}
-        </MathProviderBoundary>
+        {bounded}
       </ErrorBoundary>
     </div>
   );

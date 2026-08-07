@@ -7,10 +7,10 @@ export const metadata = {
 };
 
 <Demostracion>
-  <ProofStep number={1} title="Hipótesis inicial" justificacion="Dado por enunciado" justificationType="hipotesis">
-    Asumimos que $A$ y $B$ son verdaderos.
+  <ProofStep number={1} title="Hipótesis inicial">
+    Por hipótesis, asumimos que $A$ y $B$ son verdaderos.
   </ProofStep>
-  <ProofStep number={2} title="Conclusión intermedia" justificacion="Por modus ponens" justificationType="regla-logica" dependencyId="step-1">
-    Entonces $C$ es verdadero.
+  <ProofStep number={2} title="Conclusión intermedia">
+    Por <ConceptLink targetId="modus-ponens" isDependency={true}>modus ponens</ConceptLink>, entonces $C$ es verdadero.
   </ProofStep>
 </Demostracion>

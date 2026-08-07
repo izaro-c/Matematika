@@ -14,11 +14,11 @@ export const metadata = {
 <Separador />
 
 <Demostracion>
-  <ProofStep number={1} title="Paso inicial" justificacion="Especificar justificación lógica" justificationType="hipotesis">
-    Descripción del primer paso con ConceptLink e InteractiveElement cuando haya diagrama.
+  <ProofStep number={1} title="Paso inicial">
+    Por hipótesis, se fija el punto de partida. Enlaza axiomas, teoremas, definiciones o pasos previos con ConceptLink.
   </ProofStep>
 
-  <ProofStep number={2} title="Desarrollo lógico" justificacion="Especificar justificación lógica" justificationType="paso-previo">
-    Siguientes implicaciones formales.
+  <ProofStep number={2} title="Desarrollo lógico">
+    Por el <ConceptLink targetId="resultado-previo" isDependency={true}>resultado previo</ConceptLink>, se desarrollan las implicaciones formales.
   </ProofStep>
 </Demostracion>

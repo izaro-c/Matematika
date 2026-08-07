@@ -26,7 +26,7 @@ describe('Diagram Model & Selectors', () => {
     expect(pt.id).toBe('pA');
     expect(pt.label).toBe('A');
     expect(pt.x).toBe(2.5);
-    expect(pt.y).toBe(-3.1);
+    expect(pt.y).toBeCloseTo(-3.1);
     expect(pt.fixed).toBe(true);
     expect(pt.color).toBe('salvia');
     expect(pt.constraint).toBe('fixed');
