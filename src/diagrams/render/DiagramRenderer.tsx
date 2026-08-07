@@ -235,11 +235,12 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   const hasCustomRadius = borderRadius !== undefined;
   const roundedClass = hasCustomRadius ? '' : 'rounded-[20px]';
   const isCompactMode = Boolean(className?.includes('!min-h-0'));
+  const minHeightClass = isCompactMode ? '!min-h-0 min-h-0' : 'min-h-[360px]';
 
   return (
     <div
       ref={rendererRef}
-      className={`relative min-h-[360px] h-full w-full overflow-hidden ${roundedClass} ${className ?? ''}`}
+      className={`relative ${minHeightClass} h-full w-full overflow-hidden ${roundedClass} ${className ?? ''}`}
       data-diagram-renderer={DIAGRAM_RENDERER_ID}
       data-diagram-mode={mode}
       data-diagram-active-step={effectiveStepId}

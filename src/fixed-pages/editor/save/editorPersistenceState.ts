@@ -49,7 +49,8 @@ export type PersistenceAction =
   | { type: 'FILE_SAVE_FAILED'; file: EditorFileIdentity; localRevision: LocalRevision; error: PersistenceError }
   | { type: 'CONFLICT_DETECTED'; file: EditorFileIdentity; localRevision: LocalRevision; expectedVersion: string; actualVersion: string }
   | { type: 'REQUEST_ABORTED'; file: EditorFileIdentity; localRevision: LocalRevision }
-  | { type: 'FILE_SWITCHED'; file: EditorFileIdentity };
+  | { type: 'FILE_SWITCHED'; file: EditorFileIdentity }
+  | { type: 'FILE_CLOSED' };
 
 function matches(state: EditorPersistenceState, file: EditorFileIdentity, revision?: number): boolean {
   return state.file?.path === file.path && (revision === undefined || state.localRevision === revision);
@@ -57,6 +58,7 @@ function matches(state: EditorPersistenceState, file: EditorFileIdentity, revisi
 
 export function editorPersistenceReducer(state: EditorPersistenceState, action: PersistenceAction): EditorPersistenceState {
   switch (action.type) {
+    case 'FILE_CLOSED': return initialEditorPersistenceState;
     case 'FILE_LOAD_STARTED': return { ...initialEditorPersistenceState, file: action.file, status: { kind: 'loading', file: action.file } };
     case 'FILE_LOAD_SUCCEEDED':
       if (!matches(state, action.file)) return state;

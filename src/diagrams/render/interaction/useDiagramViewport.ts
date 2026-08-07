@@ -68,8 +68,10 @@ export interface UseDiagramViewportOptions {
 function measureVisibleHeaderContentBottom(
   root: DOMRect | undefined,
   header: HTMLElement | null,
+  hasHeader = true,
 ): number {
-  const children = [...(header?.children ?? [])];
+  if (!hasHeader || !header) return 0;
+  const children = [...(header.children ?? [])];
   const visible = children.filter(child => (
     child.tagName !== 'OUTPUT' || Boolean(child.querySelector('span:not(.invisible)'))
   ));
@@ -79,7 +81,7 @@ function measureVisibleHeaderContentBottom(
       0,
     );
   }
-  return header?.getBoundingClientRect().height ?? DIAGRAM_CHROME.headerFallbackHeight;
+  return header.getBoundingClientRect().height;
 }
 
 function readSmUp(): boolean {
@@ -141,7 +143,7 @@ export function useDiagramViewport({
 
   const missingItems = offscreenVisibleItemIds(spec, cameraBounds, effectiveStepId);
 
-  const initialAreas = initialDiagramSafeAreas(showToolbar);
+  const initialAreas = initialDiagramSafeAreas(showToolbar, hasHeader);
   const [safeArea, setSafeArea] = useState<DiagramInsets>(initialAreas.safeArea);
   const [viewportSafeArea, setViewportSafeArea] = useState<DiagramInsets>(initialAreas.viewportSafeArea);
   const [toolbarLayout, setToolbarLayout] = useState<DiagramToolbarLayout>('bar');
@@ -162,8 +164,8 @@ export function useDiagramViewport({
         {
           rootWidth: rootBounds?.width ?? 0,
           rootHeight: rootBounds?.height ?? 0,
-          visibleHeaderContentBottom: measureVisibleHeaderContentBottom(rootBounds, header),
-          headerHeight: header?.getBoundingClientRect().height ?? DIAGRAM_CHROME.headerFallbackHeight,
+          visibleHeaderContentBottom: measureVisibleHeaderContentBottom(rootBounds, header, hasHeader),
+          headerHeight: hasHeader ? (header?.getBoundingClientRect().height ?? DIAGRAM_CHROME.headerFallbackHeight) : 0,
           toolbarHeight: toolbar?.getBoundingClientRect().height
             ?? (showToolbar ? DIAGRAM_CHROME.toolbarFallbackHeight : 0),
           isSmUp: readSmUp(),

@@ -13,6 +13,7 @@ import { editorApiPath, editorAuthHeaders } from './editorApiBase';
 const fileListSchema = z.array(z.object({
   path: z.string(),
   name: z.string(),
+  title: z.string().optional(),
   type: z.string(),
   kind: z.enum(['mdx-document', 'diagram']),
   capability: z.enum(['visual-exact', 'code-preview', 'invalid']),

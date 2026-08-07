@@ -21,6 +21,24 @@ function normalizedRelative(srcRoot: string, absolutePath: string): string {
   return path.relative(srcRoot, absolutePath).split(path.sep).join('/');
 }
 
+function extractMdxTitle(source: string): string | undefined {
+  const document = parseEditorDocument(source);
+  if (document.metadata.value && typeof document.metadata.value === 'object' && 'title' in document.metadata.value) {
+    const val = (document.metadata.value as { title?: unknown }).title;
+    if (typeof val === 'string' && val.trim()) return val;
+  }
+  const match = source.match(/["']title["']\s*:\s*["']([^"']+)["']/);
+  return match?.[1];
+}
+
+function extractDiagramTitle(source: string): string | undefined {
+  const match = source.match(/["']title["']\s*:\s*["']([^"']+)["']/);
+  if (match?.[1]) return match[1];
+  const parsed = parseDiagramSourceAST(source);
+  const model = parsed.status === 'visual-exact' ? parsed.model : parsed.previewModel;
+  return model?.title;
+}
+
 function entry(
   srcRoot: string,
   absolutePath: string,
@@ -28,10 +46,12 @@ function entry(
   kind: EditorResourceCatalogEntry['kind'],
   capability: EditorResourceCapability,
   reason: string,
+  title?: string,
 ): EditorResourceCatalogEntry {
   return {
     path: normalizedRelative(srcRoot, absolutePath),
     name: path.basename(absolutePath),
+    title,
     type,
     kind,
     capability,
@@ -103,8 +123,9 @@ export function buildEditorResourceCatalog({
     if (path.extname(absolutePath) !== '.mdx') continue;
     const source = fs.readFileSync(absolutePath, 'utf8');
     const classified = mdxCapability(source);
+    const title = extractMdxTitle(source);
     const relativeDirectory = path.relative(contentRoot, path.dirname(absolutePath)).split(path.sep)[0] || 'content';
-    catalog.push(entry(srcRoot, absolutePath, relativeDirectory, 'mdx-document', classified.capability, classified.reason));
+    catalog.push(entry(srcRoot, absolutePath, relativeDirectory, 'mdx-document', classified.capability, classified.reason, title));
   }
 
   for (const absolutePath of walkFiles(diagramsRoot)) {
@@ -117,8 +138,9 @@ export function buildEditorResourceCatalog({
     }
     const source = fs.readFileSync(absolutePath, 'utf8');
     const classified = diagramCapability(source);
+    const title = extractDiagramTitle(source);
     const category = path.relative(diagramsRoot, path.dirname(absolutePath)).split(path.sep)[0] || 'general';
-    catalog.push(entry(srcRoot, absolutePath, `diagram-${category.toLowerCase()}`, 'diagram', classified.capability, classified.reason));
+    catalog.push(entry(srcRoot, absolutePath, `diagram-${category.toLowerCase()}`, 'diagram', classified.capability, classified.reason, title));
   }
 
   if (includeInternal) {

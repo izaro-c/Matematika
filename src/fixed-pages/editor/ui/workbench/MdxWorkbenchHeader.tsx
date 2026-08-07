@@ -83,7 +83,8 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
       isInspectorOpen={isInspectorOpen}
       onToggleInspector={onToggleInspector}
       confirmCloseWhenDirty
-      closeConfirmMessage="Hay cambios sin guardar en la página. ¿Deseas salir del editor de todos modos?"
+      closeTitle="Cerrar documento"
+      closeConfirmMessage="Hay cambios sin guardar en el documento. ¿Deseas cerrar el documento de todos modos?"
       onCloseEditor={onCloseEditor}
       avisos={{
         errorCount: saveCapability.errorCount,

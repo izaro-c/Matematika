@@ -15,6 +15,7 @@ import { CreateDiagramDialog } from '../create/CreateDiagramDialog';
 import { AddDiagramDialog } from '../create/AddDiagramDialog';
 import { defaultMode } from '@/fixed-pages/editor/diagrams/model/tools/diagramOptions';
 import { toDiagramImportPath } from '@/fixed-pages/editor/review/authoringModel';
+import { EditorLandingView } from '../landing/EditorLandingView';
 
 import { useEditorNavigationFlow } from '@/fixed-pages/editor/ui/page/useEditorNavigationFlow';
 import { useUnsavedChangesGuard } from '@/fixed-pages/editor/ui/page/useUnsavedChangesGuard';
@@ -74,6 +75,7 @@ export const MdxWorkbench: React.FC = () => {
     persistenceStatus,
     loadFileList,
     openFile,
+    closeFile,
     setEditorMode,
     updateRawBody,
     updateBlock,
@@ -142,7 +144,15 @@ export const MdxWorkbench: React.FC = () => {
     setPendingFileNavigation,
   });
 
-  // State for view mode: 'visual' | 'code' | 'preview'
+  // State for landing section ('documents' | 'diagrams') and view mode ('visual' | 'code' | 'preview')
+  const [landingSection, setLandingSection] = useState<'documents' | 'diagrams'>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get('tab') || params.get('section');
+      if (tab === 'diagrams' || tab === 'diagram') return 'diagrams';
+    }
+    return 'documents';
+  });
   const [viewMode, setViewMode] = useState<MdxViewMode>('visual');
   const [inspectorTab, setInspectorTab] = useState<InspectorTab>('page');
   const [formatBarNode, setFormatBarNode] = useState<React.ReactNode>(null);
@@ -322,13 +332,23 @@ export const MdxWorkbench: React.FC = () => {
 
   const handleCloseDiagramSurface = () => {
     const restoreView = diagramReturnContext?.viewMode;
+    const wasDiagramFile = isDiagramFile || (currentFile?.endsWith('.tsx') ?? false);
     setDiagramWorkbenchOverride(null);
     setRewriteDiagramPath(null);
     setActiveDiagramBlockId(null);
     setActiveDiagramIndex(null);
     setDiagramDirty(false);
     closeDiagramSurface();
-    if (restoreView) setViewMode(restoreView);
+    if (restoreView) {
+      setViewMode(restoreView);
+    } else {
+      if (wasDiagramFile) {
+        setLandingSection('diagrams');
+      } else {
+        setLandingSection('documents');
+      }
+      closeFile();
+    }
   };
 
   const setDiagramBuilderOpen = (open: boolean) => {
@@ -516,7 +536,7 @@ export const MdxWorkbench: React.FC = () => {
       <EditorApiStatusBanner />
 
       {/* Header Unificado */}
-      {!diagramSurfaceOpen && (
+      {!diagramSurfaceOpen && currentFile && (
       <MdxWorkbenchHeader
         currentFile={currentFile}
         fileTitle={currentTitle}
@@ -540,6 +560,15 @@ export const MdxWorkbench: React.FC = () => {
         onSave={handleSaveDocument}
         onSaveDraft={() => void saveDraftCurrentFile()}
         onCreatePage={() => setCreatePageOpen(true)}
+        onCloseEditor={() => {
+          if (isDiagramFile) {
+            setLandingSection('diagrams');
+          } else {
+            setLandingSection('documents');
+          }
+          closeFile();
+          clearDiagramSession();
+        }}
         canSaveDraft={canSaveDraft}
         isReadOnly={isReadOnly}
         workspaceLevel={workspace.level}
@@ -552,8 +581,6 @@ export const MdxWorkbench: React.FC = () => {
         saveCapability={saveCapability}
       />
       )}
-
-      {/* removed post-save warning banner — confirmation is pre-save */}
 
       {/* Superficie diagrama: header a ancho completo; paneles debajo */}
       {diagramSurfaceOpen && activeDiagramWorkbenchMode ? (
@@ -590,11 +617,28 @@ export const MdxWorkbench: React.FC = () => {
             }
             onConfirm={async (spec: EditorDiagramReference) => {
               await bindDiagram(spec);
-              handleCloseDiagramSurface();
               return true;
             }}
           />
         </div>
+      ) : !currentFile ? (
+        <EditorLandingView
+          files={files}
+          initialSection={landingSection}
+          favoritePaths={workspace.favoritePaths}
+          recentPaths={workspace.recentPaths}
+          onOpenFile={(path) => {
+            if (path.endsWith('.tsx')) {
+              setLandingSection('diagrams');
+            } else {
+              setLandingSection('documents');
+            }
+            openFileSafely(path);
+          }}
+          onToggleFavorite={toggleFavorite}
+          onCreateDocument={() => setCreatePageOpen(true)}
+          onCreateDiagram={() => setCreateDiagramOpen(true)}
+        />
       ) : (
       <>
       <MathProviderBoundary>

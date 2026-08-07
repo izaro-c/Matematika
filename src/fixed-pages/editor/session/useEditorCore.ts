@@ -275,6 +275,17 @@ export const useEditorCore = () => {
     }
   }, [coordinator, saveIdentity, syncProjection]);
 
+  const closeFile = useCallback(() => {
+    loadControllerRef.current?.abort();
+    coordinator?.cancelAll();
+    saveIdentity.clear();
+    setDoc(null);
+    setBlocksView([]);
+    setImportsView('');
+    setExportsView('');
+    dispatch({ type: 'FILE_CLOSED' });
+  }, [coordinator, saveIdentity]);
+
   const commitSourceChange = useCallback((source: string, nextDoc?: EditorDocument) => {
     const file = persistenceRef.current.file;
     if (!file) return;
@@ -561,7 +572,7 @@ export const useEditorCore = () => {
     baseVersion: persistence.version,
     saving, dirtyState, validation, message, persistenceStatus: persistence.status,
     persistenceLabel: persistenceStatusLabel(persistence.status),
-    loadFileList, openFile, toggleEditorMode, setEditorMode, updateRawBody, updateBlock, saveCurrentFile, saveDraftCurrentFile,
+    loadFileList, openFile, closeFile, toggleEditorMode, setEditorMode, updateRawBody, updateBlock, saveCurrentFile, saveDraftCurrentFile,
     compatibility, compatibilityReasons, capabilities,
     removeBlock, addBlock, moveBlock, duplicateBlock, bindDiagram, createPage, createDiagram, setMetadata, setImports, setExports, setBlocks,
     canMutateVisualStructure: capabilities.canEditSafeBlocks,

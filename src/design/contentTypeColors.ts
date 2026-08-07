@@ -60,28 +60,61 @@ export const CONTENT_TYPE_COLORS = Object.fromEntries(
 ) as Record<ContentTypeKey, { cssVar: string }>;
 
 export function getTypeCssVar(group: string): string {
-  const normalized = ENGLISH_TO_SPANISH[group] ?? group;
+  const cleanGroup = group.startsWith('diagram-') ? group.slice('diagram-'.length) : group;
+  const normalized = ENGLISH_TO_SPANISH[cleanGroup] ?? ENGLISH_TO_SPANISH[group] ?? cleanGroup;
   return (
     CONTENT_TYPE_COLORS[normalized as ContentTypeKey]?.cssVar ??
-    'var(--theme-carbon)'
+    DIAGRAM_CATEGORY_COLORS[cleanGroup] ??
+    'var(--theme-salvia)'
   );
 }
 
-// ── Tabla de aliases inglés → español ────────────────────────────────────────
+// Colores para categorías de diagramas no editoriales
+const DIAGRAM_CATEGORY_COLORS: Record<string, string> = {
+  geometria: 'var(--theme-salvia)',
+  geometry: 'var(--theme-salvia)',
+  algebra: 'var(--theme-terracota)',
+  calculo: 'var(--theme-musgo)',
+  calculus: 'var(--theme-musgo)',
+  logica: 'var(--theme-pavo)',
+  logic: 'var(--theme-pavo)',
+  general: 'var(--theme-pavo)',
+  modelos: 'var(--theme-pavo)',
+  triangulos: 'var(--theme-terracota)',
+};
+
+// ── Tabla de aliases inglés/plurales → español ──────────────────────────────────
 
 const ENGLISH_TO_SPANISH: Record<string, string> = {
-  theorem:      'teorema',
-  lemma:        'lema',
-  corollary:    'corolario',
-  proof:        'demostracion',
-  demo:         'demostracion',
-  axiom:        'axioma',
-  definition:   'definicion',
-  concept:      'concepto',
-  model:        'modelo',
-  method:       'metodo',
-  example:      'ejemplo',
-  exercise:     'ejercicio',
-  mathematician:'matematico',
-  glossary:     'glosario',
+  theorem:        'teorema',
+  theorems:       'teorema',
+  lemma:          'lema',
+  lemmas:         'lema',
+  corollary:      'corolario',
+  corollaries:    'corolario',
+  proof:          'demostracion',
+  proofs:         'demostracion',
+  demo:           'demostracion',
+  demonstrations: 'demostracion',
+  axiom:          'axioma',
+  axioms:         'axioma',
+  definition:     'definicion',
+  definitions:    'definicion',
+  concept:        'concepto',
+  concepts:       'concepto',
+  model:          'modelo',
+  models:         'modelo',
+  method:         'metodo',
+  methods:        'metodo',
+  example:        'ejemplo',
+  examples:       'ejemplo',
+  exercise:       'ejercicio',
+  exercises:      'ejercicio',
+  mathematician:  'matematico',
+  mathematicians: 'matematico',
+  glossary:       'glosario',
+  usecases:       'caso-de-uso',
+  'use-cases':    'caso-de-uso',
+  'axiomatic-systems': 'sistema-axiomatico',
 };
+
