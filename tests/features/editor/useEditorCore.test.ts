@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useEditorCore, VISUAL_SAVE_POLICY } from '@/fixed-pages/editor/session/useEditorCore';
 
-const source = `import X from './x';
+const source = `import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras';
 
 export const metadata = {
   "id": "segmento-prueba",
@@ -17,7 +17,7 @@ export const metadata = {
 
 Un cuerpo que debe conservarse.
 
-export const value = { nested: true };`;
+export const Simulation = Pitagoras;`;
 
 const partialSource = `export const metadata = {
   "id": "parcial-prueba",
@@ -106,8 +106,8 @@ describe('useEditorCore lossless integration', () => {
     act(() => result.current.toggleEditorMode());
     expect(result.current.editorMode).toBe('code');
     expect(result.current.rawBody).toBe(source.replace('## Título', '## Nuevo título'));
-    expect(result.current.rawBody).toContain(`import X from './x';`);
-    expect(result.current.rawBody).toContain('export const value = { nested: true };');
+    expect(result.current.rawBody).toContain(`import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras';`);
+    expect(result.current.rawBody).toContain('export const Simulation = Pitagoras;');
   });
 
   it('persists a localized nested semantic-link edit in the saved source', async () => {
