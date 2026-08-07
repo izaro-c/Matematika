@@ -114,3 +114,33 @@ export function viewportPanelAnchors(position: [number, number]): {
     anchorY: y < 0.34 ? 'top' : y > 0.66 ? 'bottom' : 'middle',
   };
 }
+
+/**
+ * Map user coordinates `[x, y]` back to normalized viewport position `[0..1, 0..1]`,
+ * respecting MathBoard's viewport safe-area chrome.
+ */
+export function coordinatesToViewportPosition(
+  board: any,
+  coordinates: [number, number],
+  fallbackBounds: DiagramBounds,
+): [number, number] {
+  const [left, top, right, bottom] = board.getBoundingBox?.() ?? fallbackBounds;
+  const width = board.__matematikaContainerSize?.width ?? board.canvasWidth ?? 1;
+  const height = board.__matematikaContainerSize?.height ?? board.canvasHeight ?? 1;
+  const safeArea = board.__matematikaViewportSafeArea ?? board.__matematikaSafeArea ?? {};
+  const safeLeft = Math.max(0, safeArea.left ?? 0);
+  const safeRight = Math.max(0, safeArea.right ?? 0);
+  const safeTop = Math.max(0, safeArea.top ?? 0);
+  const safeBottom = Math.max(0, safeArea.bottom ?? 0);
+  const safeWidth = Math.max(1, width - safeLeft - safeRight);
+  const safeHeight = Math.max(1, height - safeTop - safeBottom);
+  const [x, y] = coordinates;
+  const pixelX = width * (x - left) / (right - left);
+  const pixelY = height * (top - y) / (top - bottom);
+  const clamp = (val: number) => Math.max(0, Math.min(1, val));
+  return [
+    clamp((pixelX - safeLeft) / safeWidth),
+    clamp((pixelY - safeTop) / safeHeight),
+  ];
+}
+

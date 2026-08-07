@@ -71,8 +71,8 @@ export const DIAGRAM_CHROME = {
   topViewportPanelExtra: 42,
   railsControlInset: 52,
   railsEdgeInset: 16,
-  headerInsetSm: 32,
-  headerInsetXs: 20,
+  headerInsetSm: 24,
+  headerInsetXs: 14,
   toolbarGapWithToolbar: 8,
   toolbarGapWithoutToolbar: 14,
   toolbarFallbackHeight: 56,
@@ -128,23 +128,27 @@ export function computeDiagramSafeAreas(
 ): DiagramSafeAreas {
   const { showToolbar, showStepControls, viewportControls, hasTopViewportPanel } = options;
   const hasHeader = options.hasHeader !== false;
+  const isSmallSurface = metrics.rootHeight > 0 && metrics.rootHeight < 320;
   const useSideHeader = hasHeader && preferSideHeader(metrics.rootWidth, metrics.rootHeight);
   const sideChromeWidth = useSideHeader ? sideChromeWidthPx(metrics.rootWidth) : 0;
   const sidePad = useSideHeader
     ? (metrics.isSmUp ? DIAGRAM_CHROME.sidePadSm : DIAGRAM_CHROME.sidePadXs)
     : 0;
-  const headerInset = metrics.isSmUp ? DIAGRAM_CHROME.headerInsetSm : DIAGRAM_CHROME.headerInsetXs;
-  const edge = DIAGRAM_CHROME.railsEdgeInset;
+
+  const headerInset = hasHeader
+    ? (metrics.isSmUp ? DIAGRAM_CHROME.headerInsetSm : DIAGRAM_CHROME.headerInsetXs)
+    : (isSmallSurface ? 10 : 16);
+
+  const minHeaderBottom = metrics.isSmUp ? 48 : 40;
+  const measuredHeaderBottom = Math.max(metrics.visibleHeaderContentBottom, minHeaderBottom);
 
   const viewportHeaderBottom = hasHeader
-    ? (metrics.visibleHeaderContentBottom > 0
-        ? Math.ceil(metrics.visibleHeaderContentBottom) + DIAGRAM_CHROME.headerGap
-        : headerInset)
-    : (useSideHeader ? sidePad : (metrics.isSmUp ? DIAGRAM_CHROME.headerInsetSm : DIAGRAM_CHROME.headerInsetXs));
+    ? Math.ceil(measuredHeaderBottom) + DIAGRAM_CHROME.headerGap
+    : (useSideHeader ? sidePad : (isSmallSurface ? 8 : 12));
 
   const toolbarBottom = showToolbar
     ? Math.ceil(metrics.toolbarHeight) + DIAGRAM_CHROME.toolbarGapWithToolbar
-    : headerInset;
+    : (isSmallSurface ? 8 : headerInset);
 
   const useRails = Boolean(
     showToolbar
@@ -152,14 +156,13 @@ export function computeDiagramSafeAreas(
   );
   const panelExtra = (hasHeader && hasTopViewportPanel) ? DIAGRAM_CHROME.topViewportPanelExtra : 0;
   const sideLeft = sideChromeWidth + DIAGRAM_CHROME.headerGap;
+  const edge = DIAGRAM_CHROME.railsEdgeInset;
 
   if (useSideHeader) {
     const right = useRails
       ? (showStepControls ? DIAGRAM_CHROME.railsControlInset : edge)
       : headerInset;
     const bottom = useRails ? edge : toolbarBottom;
-    // Overlays + viewport buttons share the title column (same left pad).
-    // Geometry clears only that column — no extra left rail inset.
     const viewportSafeArea: DiagramInsets = {
       top: viewportHeaderBottom,
       right,

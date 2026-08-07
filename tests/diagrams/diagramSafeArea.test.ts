@@ -33,8 +33,8 @@ describe('computeDiagramSafeAreas', () => {
     expect(result.toolbarLayout).toBe('bar');
     expect(result.headerLayout).toBe('top');
     expect(result.sideChromeWidth).toBe(0);
-    expect(result.viewportSafeArea).toEqual({ top: 130, right: 32, bottom: 64, left: 32 });
-    expect(result.safeArea).toEqual({ top: 130, right: 32, bottom: 64, left: 32 });
+    expect(result.viewportSafeArea).toEqual({ top: 130, right: 24, bottom: 64, left: 24 });
+    expect(result.safeArea).toEqual({ top: 130, right: 24, bottom: 64, left: 24 });
   });
 
   it('switches to rails when the canvas is narrow or short', () => {

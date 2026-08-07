@@ -55,14 +55,23 @@ export const DiagramInfoPanel: React.FC<DiagramInfoPanelProps> = ({
   fontSize = 14,
   children
 }) => {
-  const positionClasses = {
-    'top-left': 'top-14 left-4',
-    'top-right': 'top-14 right-4',
-    'bottom-left': 'bottom-4 left-4',
-    'bottom-right': 'bottom-4 right-4',
-  };
+  const positionStyle: React.CSSProperties = layout === 'overlay' ? {
+    top: (position === 'top-left' || position === 'top-right')
+      ? 'calc(var(--diagram-safe-top, 3.5rem) + 0.5rem)'
+      : undefined,
+    bottom: (position === 'bottom-left' || position === 'bottom-right')
+      ? 'calc(var(--diagram-safe-bottom, 1rem) + 0.5rem)'
+      : undefined,
+    left: (position === 'top-left' || position === 'bottom-left')
+      ? 'calc(var(--diagram-safe-left, 1rem) + 0.5rem)'
+      : undefined,
+    right: (position === 'top-right' || position === 'bottom-right')
+      ? 'calc(var(--diagram-safe-right, 1rem) + 0.5rem)'
+      : undefined,
+  } : {};
+
   const layoutClasses = layout === 'overlay'
-    ? `absolute ${positionClasses[position]} z-10 bg-lienzo/90 backdrop-blur-[2px]`
+    ? 'absolute z-10 bg-lienzo/90 backdrop-blur-[2px]'
     : 'relative w-full bg-transparent';
 
   const blockLayoutClasses = blockLayout === 'columns'
@@ -76,7 +85,7 @@ export const DiagramInfoPanel: React.FC<DiagramInfoPanelProps> = ({
       data-layout={layout}
       data-block-layout={blockLayout}
       data-position={position}
-      style={{ '--diagram-authored-font-size': `${fontSize}px` } as React.CSSProperties}
+      style={{ '--diagram-authored-font-size': `${fontSize}px`, ...positionStyle } as React.CSSProperties}
     >
       {title && (
         <div className="mb-1 font-diagram font-semibold leading-tight text-carbon" style={{ fontSize: '1.15em' }}>

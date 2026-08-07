@@ -48,6 +48,7 @@ export {
   referencedLabelAnchor,
   viewportPanelAnchors,
   viewportPositionCoordinates,
+  coordinatesToViewportPosition,
 } from '@/diagrams/render/interaction/diagramViewportAnchors';
 
 export interface UseDiagramViewportOptions {

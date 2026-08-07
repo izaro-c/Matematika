@@ -34,8 +34,27 @@ import {
   fitBoundsToSafeArea,
   MathBoard,
 } from '@/diagrams/jsxgraph/MathBoard';
+import {
+  coordinatesToViewportPosition,
+  viewportPositionCoordinates,
+} from '@/diagrams/render/interaction/diagramViewportAnchors';
 
 describe('MathBoard controlled viewport', () => {
+  it('maps normalized viewportPosition to user coordinates and back losslessly with safe area', () => {
+    const fakeBoard = {
+      getBoundingBox: () => [-10, 10, 10, -10],
+      canvasWidth: 800,
+      canvasHeight: 600,
+      __matematikaContainerSize: { width: 800, height: 600 },
+      __matematikaViewportSafeArea: { top: 50, right: 30, bottom: 40, left: 20 },
+    };
+    const initialPos: [number, number] = [0.25, 0.75];
+    const coords = viewportPositionCoordinates(fakeBoard, initialPos, [-10, 10, 10, -10]);
+    const roundtripPos = coordinatesToViewportPosition(fakeBoard, coords, [-10, 10, 10, -10]);
+    expect(roundtripPos[0]).toBeCloseTo(initialPos[0], 5);
+    expect(roundtripPos[1]).toBeCloseTo(initialPos[1], 5);
+  });
+
   it('expands the short viewport axis so wide and tall canvases contain the full mathematical scene', () => {
     expect(fitBoundsToAspect([-4, 8.5, 9, -8.5], 699, 484)).toEqual([
       -9.775826446280991,
