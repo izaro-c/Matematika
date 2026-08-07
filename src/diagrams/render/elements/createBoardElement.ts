@@ -356,7 +356,7 @@ export function createElement(
         dynamicText,
       ]
       : null;
-  const textCoordinates: [number | (() => number), number | (() => number), () => string] | null = reactiveTextCoordinates && editableAnnotation
+  const textCoordinates: [number | (() => number), number | (() => number), () => string] | null = reactiveTextCoordinates && editableAnnotation && !viewportPosition
     ? [reactiveTextCoordinates[0](), reactiveTextCoordinates[1](), dynamicText]
     : reactiveTextCoordinates;
   return textCoordinates ? createText(board, textCoordinates, withDiagramHoverTransition({

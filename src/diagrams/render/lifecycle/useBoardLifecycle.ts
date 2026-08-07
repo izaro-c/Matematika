@@ -35,7 +35,7 @@ import {
   sliderMaximum,
   tickDistance,
 } from '@/diagrams/render/diagramRuntimeUtils';
-import { referencedLabelAnchor } from '@/diagrams/render/interaction/diagramViewportAnchors';
+import { coordinatesToViewportPosition, referencedLabelAnchor } from '@/diagrams/render/interaction/diagramViewportAnchors';
 import {
   buildLineEmphasisAttributes,
   buildMarkEmphasisAttributes,
@@ -602,11 +602,8 @@ export function useBoardLifecycle({
             const y = rendered?.Y?.();
             if (!Number.isFinite(x) || !Number.isFinite(y)) return;
             if (sceneItem.kind === 'infoPanel' && sceneItem.properties?.anchorMode === 'viewport') {
-              const width = bounds[2] - bounds[0];
-              const height = bounds[1] - bounds[3];
-              const clamp = (value: number) => Math.max(0, Math.min(1, value));
               interactionCallbacksRef.current.onAnnotationMove?.(sceneItem.id, {
-                viewportPosition: [clamp((x - bounds[0]) / width), clamp((bounds[1] - y) / height)],
+                viewportPosition: coordinatesToViewportPosition(board, [x, y], bounds),
               });
               return;
             }

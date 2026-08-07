@@ -462,13 +462,13 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     const fittedBounds = fittedDisplayBounds(boundingbox, width, height);
     const current = board.getBoundingBox?.() as number[] | undefined;
     const changed = !current || fittedBounds.some((value, index) => Math.abs(value - current[index]) > 1e-8);
-    if (changed) {
-      applyFittedDisplayBounds(board, fittedBounds);
-      safeBoardUpdate(board);
-    }
     board.__matematikaSafeArea = safeArea ?? {};
     board.__matematikaViewportSafeArea = viewportSafeArea ?? safeArea ?? {};
     if (width > 2 && height > 2) board.__matematikaContainerSize = { width, height };
+    if (changed) {
+      applyFittedDisplayBounds(board, fittedBounds);
+    }
+    safeBoardUpdate(board);
   }, [boundingbox, keepaspectratio, safeArea, viewportSafeArea]);
 
   useEffect(() => {
