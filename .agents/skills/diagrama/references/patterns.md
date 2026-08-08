@@ -1013,7 +1013,7 @@ const extEnd = board.create('point', [
   () => { /* análogo para Y */ }
 ], { visible: false });
 
-const baseExtension = board.create('segment', [extEnd, H], {
+const segmentExtension = board.create('segment', [extEnd, H], {
   dash: 2, strokeWidth: 1.5, strokeColor: C_BASE, visible: false
 });
 
@@ -1026,7 +1026,7 @@ const updateExtension = () => {
     const t = ((H.X()-A.X())*dx + (H.Y()-A.Y())*dy) / len2;
     outside = t < -0.001 || t > 1.001;
   }
-  baseExtension.setAttribute({ visible: outside });
+  segmentExtension.setAttribute({ visible: outside });
 };
 board.on('update', updateExtension);
 ```

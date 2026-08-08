@@ -148,7 +148,7 @@ function pathFromV2(element: DiagramElement): PathObject {
   let geometry: PathObject['geometry'];
   switch (element.kind) {
     case 'segment': geometry = { type: 'segment', points: [element.refs[0], element.refs[1]] }; break;
-    case 'baseExtension': geometry = { type: 'segment', points: [element.refs[0], element.refs[1]], construction: { type: 'base-extension', foot: element.refs[2] } }; break;
+    case 'segmentExtension': geometry = { type: 'segment', points: [element.refs[0], element.refs[1]], construction: { type: 'segment-extension', foot: element.refs[2] } }; break;
     case 'line': geometry = { type: 'line', construction: { type: 'through-points', points: [element.refs[0], element.refs[1]] } }; break;
     case 'perpendicular': geometry = { type: 'line', construction: { type: 'perpendicular', linePoints: [element.refs[0], element.refs[1]], through: element.refs[2] } }; break;
     case 'parallel': geometry = { type: 'line', construction: { type: 'parallel', linePoints: [element.refs[0], element.refs[1]], through: element.refs[2] } }; break;
@@ -368,7 +368,7 @@ function areaFromV2(element: DiagramElement): AreaObject {
 }
 
 const areaKinds = new Set<DiagramElementKind>(['halfPlane', 'areaIntersection']);
-const pathKinds = new Set<DiagramElementKind>(['segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'dimensionLine']);
+const pathKinds = new Set<DiagramElementKind>(['segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc', 'segmentExtension', 'perpendicular', 'parallel', 'angleBisector', 'dimensionLine']);
 const angleKinds = new Set<DiagramElementKind>(['angle', 'nonReflexAngle', 'rightAngle', 'perpendicularMark']);
 const markKinds = new Set<DiagramElementKind>(['congruenceMark', 'parallelMark', 'measureTicks']);
 const annotationKinds = new Set<DiagramElementKind>(['text', 'label', 'formula', 'infoPanel', 'measurement']);
@@ -658,7 +658,7 @@ function pointToV2(object: PointObject): DiagramPoint | null {
 
 function pathKindToV2(object: PathObject): DiagramElementKind {
   const geometry = object.geometry;
-  if (geometry.type === 'segment') return geometry.construction ? 'baseExtension' : 'segment';
+  if (geometry.type === 'segment') return geometry.construction ? 'segmentExtension' : 'segment';
   if (geometry.type !== 'line') {
     const kinds: Record<Exclude<typeof geometry.type, 'segment' | 'line'>, DiagramElementKind> = {
       ray: 'ray', polygon: 'polygon', circle: 'circle', arc: 'arc', function: 'functionCurve',

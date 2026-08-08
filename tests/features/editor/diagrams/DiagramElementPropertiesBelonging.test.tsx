@@ -10,7 +10,7 @@ afterEach(cleanup);
 const ALL_KINDS: DiagramElementKind[] = [
   'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',
   'poincareGeodesic', 'poincareArc', 'intersection', 'midpoint', 'perpendicularFoot',
-  'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
+  'segmentExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
   'rightAngle', 'congruenceMark', 'parallelMark', 'measureTicks', 'perpendicularMark',
   'dimensionLine', 'measurement', 'grid', 'areaDecomposition', 'halfPlane', 'areaIntersection',
   'text', 'label', 'formula', 'infoPanel',

@@ -16,7 +16,7 @@ export function availableLayers(model: VisualDiagramModel) {
 const POINT_ONLY_KINDS = new Set([
   'segment', 'line', 'ray', 'circle', 'arc', 'polygon', 'perpendicular', 'parallel',
   'angle', 'nonReflexAngle', 'rightAngle', 'angleBisector', 'midpoint', 'perpendicularFoot',
-  'baseExtension', 'congruenceMark', 'parallelMark', 'measureTicks', 'dimensionLine',
+  'segmentExtension', 'congruenceMark', 'parallelMark', 'measureTicks', 'dimensionLine',
 ]);
 
 export function elementReferenceCandidates(

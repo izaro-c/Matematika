@@ -778,7 +778,7 @@ export function createPerpendicularFoot(
   } as never) as JXG.Point, labelOpts);
 }
 
-export function createBaseExtensionToFoot(
+export function createSegmentExtensionToFoot(
   board: JXG.Board,
   points: [PointLike, PointLike, PointLike],
   options: GeometryOptions = {},

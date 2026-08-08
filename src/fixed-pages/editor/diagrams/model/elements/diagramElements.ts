@@ -201,7 +201,7 @@ export function generatedElementId(kind: ElementKind, refs: string[], existing: 
   const prefixes: Partial<Record<ElementKind, string>> = {
     segment: 'seg', line: 'line', ray: 'ray', circle: 'circle', arc: 'arc', intersection: 'int', midpoint: 'mid',
     halfPlane: 'half', areaIntersection: 'areaInt',
-    perpendicularFoot: 'foot', baseExtension: 'ext', perpendicular: 'perp', parallel: 'par',
+    perpendicularFoot: 'foot', segmentExtension: 'ext', perpendicular: 'perp', parallel: 'par',
     angleBisector: 'bis', angle: 'angle', nonReflexAngle: 'nonReflexAngle', rightAngle: 'rightAngle', parallelMark: 'parallelMark', measureTicks: 'ticks',
   };
   const base = `${prefixes[kind] ?? kind}${suffix || existing.length + 1}`;
@@ -214,7 +214,7 @@ export function elementColorForKind(kind: ElementKind): ColorToken {
   if (kind === 'measureTicks') return 'carbon';
   if (kind === 'perpendicularFoot' || kind === 'angle' || kind === 'nonReflexAngle' || kind === 'rightAngle' || kind === 'perpendicularMark' || kind === 'congruenceMark') return 'ocre';
   if (kind === 'parallelMark') return 'pavo';
-  if (kind === 'baseExtension' || kind === 'measurement' || kind === 'dimensionLine' || kind === 'formula' || kind === 'infoPanel') return 'pizarra';
+  if (kind === 'segmentExtension' || kind === 'measurement' || kind === 'dimensionLine' || kind === 'formula' || kind === 'infoPanel') return 'pizarra';
   if (kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'line' || kind === 'ray' || kind === 'functionCurve' || kind === 'parametricCurve' || kind === 'poincareGeodesic' || kind === 'poincareArc') return 'pavo';
   return 'carbon';
 }

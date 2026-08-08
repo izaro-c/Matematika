@@ -306,8 +306,8 @@ export function parseDiagramSourceAST(source: string, metadataType = ''): ParseD
       } else if (helper === 'createPerpendicularFoot') {
         kind = 'perpendicularFoot';
         refs = extractRefIdsForModel(args[1], localToEls);
-      } else if (helper === 'createBaseExtensionToFoot') {
-        kind = 'baseExtension';
+      } else if (helper === 'createSegmentExtensionToFoot') {
+        kind = 'segmentExtension';
         refs = extractRefIdsForModel(args[1], localToEls);
       } else if (helper === 'createPerpendicularLine') {
         kind = 'perpendicular';

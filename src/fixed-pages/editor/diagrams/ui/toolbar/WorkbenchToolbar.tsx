@@ -70,7 +70,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
         { id: 'circle', toolId: 'circle', name: 'Circunferencia', description: 'Centro y punto de borde' },
         { id: 'arc', toolId: 'arc', name: 'Arco', description: 'Centro, inicio y fin' },
         { id: 'polygon', toolId: 'polygon', name: 'Polígono', description: '≥3 vértices; finaliza con Crear polígono' },
-        { id: 'baseExtension', toolId: 'baseExtension', name: 'Extensión de base', description: '2 extremos de la base + punto exterior' },
+        { id: 'segmentExtension', toolId: 'segmentExtension', name: 'Extensión de segmento', description: '2 extremos del segmento + punto exterior' },
         { id: 'perpendicular', toolId: 'perpendicular', name: 'Recta perpendicular', description: 'Punto y dirección' },
         { id: 'parallel', toolId: 'parallel', name: 'Recta paralela', description: 'Punto y dirección' },
         { id: 'angleBisector', toolId: 'angleBisector', name: 'Bisectriz', description: 'Tres puntos del ángulo' },

@@ -36,7 +36,7 @@ export function toolReferencePurpose(tool: CanvasTool, index: number): string {
     intersection: ['Primera recta, segmento o semirrecta que se cruza.', 'Segundo soporte; el cruce de ambos define el punto.'],
     midpoint: ['Primer extremo del segmento implícito.', 'Segundo extremo; el nuevo punto queda equidistante de ambos.'],
     perpendicularFoot: ['Primer punto de la recta base.', 'Segundo punto que fija la recta base.', 'Punto que se proyectará perpendicularmente sobre la base.'],
-    baseExtension: ['Primer extremo de la base.', 'Segundo extremo de la base.', 'Punto exterior hasta el que se muestra la prolongación.'],
+    segmentExtension: ['Primer extremo de la base.', 'Segundo extremo de la base.', 'Punto exterior hasta el que se muestra la prolongación.'],
     perpendicular: ['Primer punto de la recta de referencia.', 'Segundo punto que fija su dirección.', 'Punto por el que pasará la perpendicular.'],
     parallel: ['Primer punto de la recta de referencia.', 'Segundo punto que fija su dirección.', 'Punto por el que pasará la paralela.'],
     angleBisector: ['Punto del primer lado del ángulo.', 'Vértice y origen de la bisectriz.', 'Punto del segundo lado del ángulo.'],

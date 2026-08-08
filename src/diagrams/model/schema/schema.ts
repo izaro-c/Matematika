@@ -25,7 +25,7 @@ export const diagramColorTokenSchema = z.enum([
 export const diagramElementKindSchema = z.enum([
   'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',
   'poincareGeodesic', 'poincareArc', 'intersection', 'midpoint', 'perpendicularFoot',
-  'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
+  'segmentExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
   'rightAngle', 'congruenceMark', 'parallelMark', 'measureTicks', 'perpendicularMark', 'dimensionLine', 'measurement',
   'grid', 'areaDecomposition', 'halfPlane', 'areaIntersection', 'text', 'label', 'formula', 'infoPanel',
 ]);
@@ -309,7 +309,7 @@ const headerSchema = z.object({
 export const diagramMinimumRefs: Record<string, number> = {
   segment: 2, line: 2, ray: 2, polygon: 3, circle: 2, arc: 3,
   functionCurve: 0, parametricCurve: 0, poincareGeodesic: 4, poincareArc: 4, intersection: 2, midpoint: 2,
-  perpendicularFoot: 3, baseExtension: 3, perpendicular: 3, parallel: 3,
+  perpendicularFoot: 3, segmentExtension: 3, perpendicular: 3, parallel: 3,
   angleBisector: 3, angle: 3, nonReflexAngle: 3, rightAngle: 3, congruenceMark: 2, parallelMark: 2, measureTicks: 1,
   perpendicularMark: 3, dimensionLine: 2, measurement: 1, grid: 4,
   areaDecomposition: 3, halfPlane: 3, areaIntersection: 2, text: 1, label: 1, formula: 1, infoPanel: 1,

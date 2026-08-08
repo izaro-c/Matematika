@@ -5,7 +5,7 @@ import { ELEMENT_INSPECTOR_CAPABILITIES, elementInspectorCapabilities } from '..
 const ALL_KINDS: DiagramElementKind[] = [
   'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',
   'poincareGeodesic', 'poincareArc', 'intersection', 'midpoint', 'perpendicularFoot',
-  'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
+  'segmentExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
   'rightAngle', 'congruenceMark', 'parallelMark', 'measureTicks', 'perpendicularMark',
   'dimensionLine', 'measurement', 'grid', 'areaDecomposition', 'halfPlane', 'areaIntersection', 'text', 'label', 'formula',
   'infoPanel',
@@ -16,7 +16,7 @@ const POINT_KINDS = new Set<DiagramElementKind>(['intersection', 'midpoint', 'pe
 const NON_STROKE_KINDS = new Set<DiagramElementKind>([...POINT_KINDS, 'measurement', 'text', 'label', 'formula', 'infoPanel']);
 const DASHED_KINDS = new Set<DiagramElementKind>([
   'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve',
-  'poincareGeodesic', 'poincareArc', 'baseExtension', 'perpendicular', 'parallel',
+  'poincareGeodesic', 'poincareArc', 'segmentExtension', 'perpendicular', 'parallel',
   'angleBisector', 'dimensionLine', 'grid', 'areaDecomposition',
 ]);
 

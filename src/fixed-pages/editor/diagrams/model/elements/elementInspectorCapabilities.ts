@@ -59,7 +59,7 @@ export const ELEMENT_INSPECTOR_CAPABILITIES = {
   intersection: { ...line, stroke: false, dashed: false, pointSize: true, fontSize: true, attachedLabel: true },
   midpoint: { ...line, stroke: false, dashed: false, pointSize: true, fontSize: true, attachedLabel: true },
   perpendicularFoot: { ...line, stroke: false, dashed: false, pointSize: true, fontSize: true, attachedLabel: true },
-  baseExtension: line,
+  segmentExtension: line,
   perpendicular: line,
   parallel: line,
   angleBisector: line,

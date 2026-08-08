@@ -181,7 +181,7 @@ const TOOL_DRAWINGS: Record<string, ToolDrawingRenderer> = {
       <circle cx="3" cy="19" r="2" fill="currentColor" />
     </svg>
   ),
-  baseExtension: className => (
+  segmentExtension: className => (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
       <line x1="3" y1="16" x2="13" y2="16" strokeWidth="2.2" />
       <line x1="13" y1="16" x2="22" y2="16" strokeDasharray="2 2" />

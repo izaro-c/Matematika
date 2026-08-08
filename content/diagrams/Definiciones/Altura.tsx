@@ -64,12 +64,9 @@ export const AlturaSpec = createDiagramSpec(
       "id": "prolongaciones",
       "label": "Prolongaciones",
       "memberIds": [
-        "segAintsegAlturaABCsegAlturaCAB",
-        "segCintsegAlturaABCsegAlturaCAB",
-        "segBintsegAlturaABCsegAlturaCAB",
-        "segAlturaBAC",
-        "segAlturaABC",
-        "segAlturaCAB"
+        "extfootABCAintsegAlturaABCsegAlturaCAB",
+        "extBfootBACintsegAlturaABCsegAlturaCAB",
+        "extCfootCABintsegAlturaABCsegAlturaCAB"
       ],
       "visible": true,
       "locked": false,
@@ -79,6 +76,23 @@ export const AlturaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "prolongaciones"
+    },
+    {
+      "id": "alturas",
+      "label": "alturas",
+      "memberIds": [
+        "segAlturaABC",
+        "segAlturaBAC",
+        "segAlturaCAB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "alturas"
     }
   ],
   "objects": [
@@ -170,8 +184,8 @@ export const AlturaSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -1.33,
-        "y": 3.56
+        "x": -2.22,
+        "y": 4.36
       },
       "mobility": {
         "type": "free"
@@ -275,7 +289,7 @@ export const AlturaSpec = createDiagramSpec(
           "pB"
         ],
         "construction": {
-          "type": "base-extension",
+          "type": "segment-extension",
           "foot": "footCAB"
         }
       },
@@ -293,7 +307,7 @@ export const AlturaSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [
-        "prolongaciones"
+        "alturas"
       ],
       "selection": {
         "selectable": true,
@@ -406,7 +420,7 @@ export const AlturaSpec = createDiagramSpec(
           "pC"
         ],
         "construction": {
-          "type": "base-extension",
+          "type": "segment-extension",
           "foot": "footABC"
         }
       },
@@ -424,7 +438,7 @@ export const AlturaSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [
-        "prolongaciones"
+        "alturas"
       ],
       "selection": {
         "selectable": true,
@@ -535,7 +549,7 @@ export const AlturaSpec = createDiagramSpec(
           "pC"
         ],
         "construction": {
-          "type": "base-extension",
+          "type": "segment-extension",
           "foot": "footBAC"
         }
       },
@@ -553,7 +567,7 @@ export const AlturaSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [
-        "prolongaciones"
+        "alturas"
       ],
       "selection": {
         "selectable": true,
@@ -705,8 +719,8 @@ export const AlturaSpec = createDiagramSpec(
       }
     },
     {
-      "id": "segBintsegAlturaABCsegAlturaCAB",
-      "label": "Prolongación C",
+      "id": "extfootABCAintsegAlturaABCsegAlturaCAB",
+      "label": "Extensión de segmento",
       "color": "ocre",
       "layerId": "background",
       "order": 1004,
@@ -717,29 +731,31 @@ export const AlturaSpec = createDiagramSpec(
       ],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Segmento",
+        "ariaLabel": "Extensión de segmento",
         "role": "secondary"
       },
       "target": true,
-      "targetId": "segBintsegAlturaABCsegAlturaCAB",
+      "targetId": "extfootABCAintsegAlturaABCsegAlturaCAB",
       "objectType": "path",
       "geometry": {
         "type": "segment",
         "points": [
-          "pB",
-          "intsegAlturaABCsegAlturaCAB"
-        ]
+          "footABC",
+          "pA"
+        ],
+        "construction": {
+          "type": "segment-extension",
+          "foot": "intsegAlturaABCsegAlturaCAB"
+        }
       },
       "appearance": {
         "dashed": true,
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
     },
     {
-      "id": "segCintsegAlturaABCsegAlturaCAB",
-      "label": "Prolongación C",
+      "id": "extBfootBACintsegAlturaABCsegAlturaCAB",
+      "label": "Extensión de segmento",
       "color": "ocre",
       "layerId": "background",
       "order": 1005,
@@ -750,29 +766,31 @@ export const AlturaSpec = createDiagramSpec(
       ],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Segmento",
+        "ariaLabel": "Extensión de segmento",
         "role": "secondary"
       },
       "target": true,
-      "targetId": "segCintsegAlturaABCsegAlturaCAB",
+      "targetId": "extBfootBACintsegAlturaABCsegAlturaCAB",
       "objectType": "path",
       "geometry": {
         "type": "segment",
         "points": [
-          "pC",
-          "intsegAlturaABCsegAlturaCAB"
-        ]
+          "pB",
+          "footBAC"
+        ],
+        "construction": {
+          "type": "segment-extension",
+          "foot": "intsegAlturaABCsegAlturaCAB"
+        }
       },
       "appearance": {
         "dashed": true,
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
     },
     {
-      "id": "segAintsegAlturaABCsegAlturaCAB",
-      "label": "Prolongación A",
+      "id": "extCfootCABintsegAlturaABCsegAlturaCAB",
+      "label": "Extensión de segmento",
       "color": "ocre",
       "layerId": "background",
       "order": 1006,
@@ -783,23 +801,25 @@ export const AlturaSpec = createDiagramSpec(
       ],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Segmento",
+        "ariaLabel": "Extensión de segmento",
         "role": "secondary"
       },
       "target": true,
-      "targetId": "segAintsegAlturaABCsegAlturaCAB",
+      "targetId": "extCfootCABintsegAlturaABCsegAlturaCAB",
       "objectType": "path",
       "geometry": {
         "type": "segment",
         "points": [
-          "pA",
-          "intsegAlturaABCsegAlturaCAB"
-        ]
+          "pC",
+          "footCAB"
+        ],
+        "construction": {
+          "type": "segment-extension",
+          "foot": "intsegAlturaABCsegAlturaCAB"
+        }
       },
       "appearance": {
         "dashed": true,
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
     }
@@ -867,7 +887,10 @@ export const AlturaSpec = createDiagramSpec(
         "footCAB",
         "extAlturaCAB",
         "segAlturaCAB",
-        "rightAngleAlturaCAB"
+        "rightAngleAlturaCAB",
+        "extfootABCAintsegAlturaABCsegAlturaCAB",
+        "extBfootBACintsegAlturaABCsegAlturaCAB",
+        "extCfootCABintsegAlturaABCsegAlturaCAB"
       ],
       "objectStates": {
         "segAlturaCAB": {
@@ -908,15 +931,6 @@ export const AlturaSpec = createDiagramSpec(
         },
         "linefootBACB": {
           "visible": false
-        },
-        "segBintsegAlturaABCsegAlturaCAB": {
-          "visible": false
-        },
-        "segAintsegAlturaABCsegAlturaCAB": {
-          "visible": false
-        },
-        "segCintsegAlturaABCsegAlturaCAB": {
-          "visible": false
         }
       }
     },
@@ -942,9 +956,9 @@ export const AlturaSpec = createDiagramSpec(
         "segAlturaBAC",
         "rightAngleAlturaBAC",
         "intsegAlturaABCsegAlturaCAB",
-        "segBintsegAlturaABCsegAlturaCAB",
-        "segCintsegAlturaABCsegAlturaCAB",
-        "segAintsegAlturaABCsegAlturaCAB"
+        "extfootABCAintsegAlturaABCsegAlturaCAB",
+        "extBfootBACintsegAlturaABCsegAlturaCAB",
+        "extCfootCABintsegAlturaABCsegAlturaCAB"
       ],
       "objectStates": {
         "segAlturaCAB": {
@@ -959,15 +973,6 @@ export const AlturaSpec = createDiagramSpec(
         },
         "lineAfootABC": {
           "visible": false
-        },
-        "segAintsegAlturaABCsegAlturaCAB": {
-          "visible": true
-        },
-        "segCintsegAlturaABCsegAlturaCAB": {
-          "visible": true
-        },
-        "segBintsegAlturaABCsegAlturaCAB": {
-          "visible": true
         }
       }
     }
