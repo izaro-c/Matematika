@@ -7,8 +7,11 @@ import {
   parseEditorDocument, getVisualCapabilities,
   applyMutationPlan, planBlockUpdate, planBlockInsertion, planBlockDeletion,
   planBlockDuplication, planBlockMove, planMetadataUpdate, planDiagramBinding,
-  type DocumentMutationPlan, type EditorDocument, type ProjectedBlock
+  planAssignDiagramStep,
+  type DocumentMutationPlan, type EditorDocument, type ProjectedBlock, type BlockContainer
 } from '../document';
+
+
 import {
   ContentRepository, DraftRepository, SaveCoordinator, editorApiClient, hashSource,
   type EditorSaveSnapshot, type PersistenceError, type SaveCoordinatorEvent
@@ -51,7 +54,7 @@ function blockText(block: ProjectedBlock): string {
   return block.originalSource;
 }
 
-function mapProjectedBlocks(projected: ProjectedBlock[]): Block[] {
+function mapProjectedBlocks(projected: ProjectedBlock[], containers: BlockContainer[]): Block[] {
   return projected.map(block => ({
     id: block.id,
     type: block.kind === 'editable' ? block.blockType as BlockType : 'advancedMdx',
@@ -67,7 +70,15 @@ function mapProjectedBlocks(projected: ProjectedBlock[]): Block[] {
           ...(block.data && typeof block.data === 'object' && 'capitular' in block.data
             ? { capitular: (block.data as { capitular?: string }).capitular } : {}),
           ...(block.blockType === 'heading' && block.data && typeof block.data === 'object'
-            ? { level: (block.data as { depth?: number }).depth } : {}) }
+            ? { level: (block.data as { depth?: number }).depth } : {}),
+          // Propagate diagramStep from StepSection parent container
+          ...(() => {
+            const parent = containers.find(c => c.id === block.parentId);
+            if (parent?.name === 'StepSection' && parent.attributes?.step) {
+              return { diagramStep: parent.attributes.step };
+            }
+            return {};
+          })() }
       : { location: block.location, opaque: block.kind === 'opaque', preserved: block.kind === 'preserved', reason: block.reason, nodeType: block.nodeType }
   }));
 }
@@ -231,7 +242,7 @@ export const useEditorCore = () => {
   const syncProjection = useCallback((nextDoc: EditorDocument) => {
     setDoc(nextDoc);
     setMetadataView(nextDoc.metadata.value ?? {});
-    setBlocksView(mapProjectedBlocks(nextDoc.bodyBlocks));
+    setBlocksView(mapProjectedBlocks(nextDoc.bodyBlocks, nextDoc.containers));
     setImportsView(sliceRanges(nextDoc.source, nextDoc.envelope.importRanges));
     setExportsView(sliceRanges(nextDoc.source, nextDoc.envelope.exportRanges));
   }, []);
@@ -418,6 +429,17 @@ export const useEditorCore = () => {
     }
   }, [commitMutation]);
 
+  const assignDiagramStep = useCallback((blockIds: string[], stepId: string | null) => {
+    const current = docRef.current;
+    if (!current) { setMessage(blockedMessage); return; }
+    try {
+      commitMutation(planAssignDiagramStep(current, blockIds, stepId), stepId ? `Paso ${stepId} asignado a bloque(s).` : 'Paso desasignado.');
+    } catch (error) {
+      setMessage(`Asignación rechazada: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }, [commitMutation]);
+
+
   const createPage = useCallback(async (input: CreatePageInput): Promise<boolean> => {
     if (editorApiUnavailableInProduction() || !editorWriteAccessGranted()) {
       setMessage('No se puede crear la página: se requiere API configurada y token de edición.');
@@ -574,8 +596,9 @@ export const useEditorCore = () => {
     persistenceLabel: persistenceStatusLabel(persistence.status),
     loadFileList, openFile, closeFile, toggleEditorMode, setEditorMode, updateRawBody, updateBlock, saveCurrentFile, saveDraftCurrentFile,
     compatibility, compatibilityReasons, capabilities,
-    removeBlock, addBlock, moveBlock, duplicateBlock, bindDiagram, createPage, createDiagram, setMetadata, setImports, setExports, setBlocks,
+    removeBlock, addBlock, moveBlock, duplicateBlock, bindDiagram, assignDiagramStep, createPage, createDiagram, setMetadata, setImports, setExports, setBlocks,
     canMutateVisualStructure: capabilities.canEditSafeBlocks,
     canEditVisualMetadata: doc?.metadata.status === 'readable' && doc.metadata.schemaValid,
   };
 };
+

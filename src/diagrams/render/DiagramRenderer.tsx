@@ -3,6 +3,7 @@ import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
 import { DiagramTitle } from '@/components/ui/DiagramOverlay';
 import { StepNavigator } from '@/components/ui/StepNavigator';
 import { MathProviderBoundary, useMathStore } from '@/lib/page-context/MathStoreContext';
+import { matchesScopedDiagramTarget } from '@/lib/page-context/DiagramTargetRegistryContext';
 import { useDiagramStepSync } from '@/lib/page-context/DiagramStepSyncContext';
 import {DIAGRAM_RENDERER_ID, type DiagramBounds, type DiagramElement, type DiagramSpecV3, type DiagramSpecV2} from '@/diagrams/model'
 import {createScenePlan, prepareSceneSpec, sceneGeometryRevision, sceneStackRevision, zoomViewport} from '@/diagrams/geometry';
@@ -85,6 +86,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   });
 
   const scopedStoreStep = useMathStore(state => state.variables?.[`step:${spec.componentId}`]);
+  const storeHighlight = useMathStore(state => state.variables?.[`highlight:${spec.componentId}`] ?? state.variables?.['highlight']);
   const stepSync = useDiagramStepSync();
 
   const synchronizedStepId = useMemo(() => {
@@ -104,7 +106,14 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     return undefined;
   }, [stepSync, spec.steps]);
 
-  const effectiveStepId = activeStepId
+  const hoveredStepId = useMemo(() => {
+    if (!storeHighlight) return undefined;
+    const match = spec.steps.find(s => matchesScopedDiagramTarget(storeHighlight, s.id, spec.componentId));
+    return match?.id;
+  }, [storeHighlight, spec.steps, spec.componentId]);
+
+  const effectiveStepId = hoveredStepId
+    ?? activeStepId
     ?? synchronizedStepId
     ?? ((typeof scopedStoreStep === 'string' ? scopedStoreStep.replace(`${spec.componentId}:`, '') : '') || spec.steps[0]?.id);
 

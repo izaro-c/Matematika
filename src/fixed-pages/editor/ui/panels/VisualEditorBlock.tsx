@@ -102,6 +102,16 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                 </div>
               )}
 
+              {/* Badges de metadata / paso de diagrama */}
+              {Boolean(block.metadata?.diagramStep) && (
+                <div className="mb-1.5 flex items-center gap-1.5 font-mono text-[10px]">
+                  <span className="inline-flex items-center gap-1 rounded border border-terracota/30 bg-terracota/10 px-2 py-0.5 font-bold text-terracota">
+                    ✦ Paso de diagrama: {String(block.metadata?.diagramStep)}
+                  </span>
+                </div>
+              )}
+
+
               {!isReadOnly && canMutateVisualStructure && !isSourceOnly && (
                 <BlockActions blockId={block.id} index={index} blockCount={blocks.length} moveBlock={moveBlock} duplicateBlock={duplicateBlock} removeBlock={removeBlock} />
               )}

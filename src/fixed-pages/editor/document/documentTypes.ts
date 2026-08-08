@@ -58,7 +58,10 @@ export interface BlockContainer {
   kind: 'root' | 'jsx-container';
   name?: string;
   contentRange: SourceRange;
+  /** Parsed JSX attributes for jsx-container nodes (e.g. step="step2" on StepSection). */
+  attributes?: Record<string, string>;
 }
+
 
 export interface OpaqueBlock {
   kind: 'opaque';
@@ -124,7 +127,9 @@ export type StructuralOperationKind =
   | 'duplicate-block'
   | 'move-block'
   | 'update-metadata'
-  | 'bind-diagram';
+  | 'bind-diagram'
+  | 'assign-step';
+
 
 export interface MutationPreview {
   title: string;

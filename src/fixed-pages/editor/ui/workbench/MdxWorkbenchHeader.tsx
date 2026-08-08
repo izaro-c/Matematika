@@ -50,7 +50,7 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
   onTitleChange,
   onSave,
   onSaveDraft,
-  onCreatePage,
+  onCreatePage: _onCreatePage,
   onCloseEditor,
   canSaveDraft = false,
   isReadOnly = false,
@@ -115,11 +115,6 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
       }
       actions={
         <>
-          {onCreatePage && (
-            <HeaderActionButton onClick={onCreatePage} variant="secondary" className="hidden xl:inline-flex" title="Crear nueva página">
-              + Nueva
-            </HeaderActionButton>
-          )}
           {onToggleWorkspaceLevel && (
             <button
               type="button"

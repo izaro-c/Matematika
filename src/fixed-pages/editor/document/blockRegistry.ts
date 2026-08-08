@@ -22,7 +22,7 @@ export interface RegisteredBlockProjection {
   data: Record<string, unknown>;
 }
 
-export const TRANSPARENT_JSX_CONTAINERS = new Set(['DemonstrationSection', 'Demostracion']);
+export const TRANSPARENT_JSX_CONTAINERS = new Set(['DemonstrationSection', 'Demostracion', 'StepSection']);
 
 /** JSX flow components with an explicit lossless mutation contract. */
 export const SUPPORTED_JSX_BLOCKS = {
@@ -118,7 +118,7 @@ function expressionFromProgram(program: MdxAstNode | undefined): MdxAstNode | nu
   return body[0].expression as MdxAstNode | null;
 }
 
-function readJsxAttributes(source: string, node: MdxAstNode): Record<string, unknown> {
+export function readJsxAttributes(source: string, node: MdxAstNode): Record<string, unknown> {
   const result: Record<string, unknown> = {};
   for (const attribute of node.attributes ?? []) {
     if (attribute.type !== 'mdxJsxAttribute' || typeof attribute.name !== 'string') continue;

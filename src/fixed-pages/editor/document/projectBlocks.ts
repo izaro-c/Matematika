@@ -10,8 +10,10 @@ import {
   TRANSPARENT_JSX_CONTAINERS,
   jsxContentRange,
   projectRegisteredBlock,
+  readJsxAttributes,
   type MdxAstNode,
 } from './blockRegistry';
+
 
 function mapLocation(position: MdxAstNode['position']): SourceLocation {
   return {
@@ -68,7 +70,9 @@ export function projectBlocks(source: string, bodyNodes: MdxAstNode[]): BlockPro
         return;
       }
       const containerId = `container-${containers.length}`;
-      containers.push({ id: containerId, kind: 'jsx-container', name: node.name, contentRange });
+      const rawAttrs = readJsxAttributes(source, node);
+      const attributes = Object.fromEntries(Object.entries(rawAttrs).map(([k, v]) => [k, String(v)]));
+      containers.push({ id: containerId, kind: 'jsx-container', name: node.name, contentRange, attributes });
       for (const child of node.children ?? []) projectNode(child, containerId);
       return;
     }

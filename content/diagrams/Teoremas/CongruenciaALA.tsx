@@ -361,8 +361,8 @@ export const CongruenciaALASpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 1.5,
-        "y": -7
+        "x": 2.5001235390297176,
+        "y": -7.299787512868886
       },
       "mobility": {
         "type": "constrained",
@@ -821,7 +821,7 @@ export const CongruenciaALASpec = createDiagramSpec(
     },
     {
       "id": "cotaAB1",
-      "label": "cota AB",
+      "label": "|AB|",
       "color": "salvia",
       "layerId": "cotas",
       "order": -3000,
@@ -853,7 +853,7 @@ export const CongruenciaALASpec = createDiagramSpec(
     },
     {
       "id": "cotaAB2",
-      "label": "cota A′B′",
+      "label": "|A′B′|",
       "color": "pavo",
       "layerId": "cotas",
       "order": -4000,
@@ -1176,7 +1176,8 @@ export const CongruenciaALASpec = createDiagramSpec(
         "C1",
         "A1"
       ],
-      "boundary": "B1"
+      "boundary": "B1",
+      "side": 1
     },
     {
       "id": "equalLengthsegAB2",

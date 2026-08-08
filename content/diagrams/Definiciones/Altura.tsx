@@ -59,7 +59,28 @@ export const AlturaSpec = createDiagramSpec(
       "locked": false
     }
   ],
-  "groups": [],
+  "groups": [
+    {
+      "id": "prolongaciones",
+      "label": "Prolongaciones",
+      "memberIds": [
+        "segAintsegAlturaABCsegAlturaCAB",
+        "segCintsegAlturaABCsegAlturaCAB",
+        "segBintsegAlturaABCsegAlturaCAB",
+        "segAlturaBAC",
+        "segAlturaABC",
+        "segAlturaCAB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "prolongaciones"
+    }
+  ],
   "objects": [
     {
       "id": "pA",
@@ -149,8 +170,8 @@ export const AlturaSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -0.12,
-        "y": 3.42
+        "x": -1.33,
+        "y": 3.56
       },
       "mobility": {
         "type": "free"
@@ -271,7 +292,9 @@ export const AlturaSpec = createDiagramSpec(
       "order": 4,
       "visible": true,
       "locked": false,
-      "groupIds": [],
+      "groupIds": [
+        "prolongaciones"
+      ],
       "selection": {
         "selectable": true,
         "ariaLabel": "Altura desde C a AB",
@@ -289,8 +312,9 @@ export const AlturaSpec = createDiagramSpec(
       },
       "appearance": {
         "dashed": true,
-        "strokeWidth": 5,
-        "highlightStrokeWidth": 8,
+        "strokeWidth": 2.4,
+        "labelVisible": false,
+        "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
     },
@@ -323,6 +347,461 @@ export const AlturaSpec = createDiagramSpec(
         "radius": 0.45,
         "preserveColorOnHighlight": true
       }
+    },
+    {
+      "id": "footABC",
+      "label": "$H_{a}$",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Pie de altura ABC",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "footABC",
+      "objectType": "point",
+      "definition": {
+        "type": "projection",
+        "point": "pA",
+        "support": {
+          "points": [
+            "pB",
+            "pC"
+          ]
+        }
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "extAlturaABC",
+      "label": "Extensión de base BC",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Extensión de base BC",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "extAlturaABC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "pC"
+        ],
+        "construction": {
+          "type": "base-extension",
+          "foot": "footABC"
+        }
+      },
+      "appearance": {
+        "dashed": true,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segAlturaABC",
+      "label": "Altura desde A a BC",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "prolongaciones"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Altura desde A a BC",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAlturaABC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "footABC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rightAngleAlturaABC",
+      "label": "Ángulo recto de la altura",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo recto de la altura",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rightAngleAlturaABC",
+      "objectType": "angle",
+      "points": [
+        "pB",
+        "footABC",
+        "pA"
+      ],
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "rightAngleAlturaABC-perpendicular",
+      "appearance": {
+        "radius": 0.45,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "footBAC",
+      "label": "$H_{b}$",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Pie de altura BAC",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "footBAC",
+      "objectType": "point",
+      "definition": {
+        "type": "projection",
+        "point": "pB",
+        "support": {
+          "points": [
+            "pA",
+            "pC"
+          ]
+        }
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "extAlturaBAC",
+      "label": "Extensión de base AC",
+      "color": "pizarra",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Extensión de base AC",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "extAlturaBAC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pC"
+        ],
+        "construction": {
+          "type": "base-extension",
+          "foot": "footBAC"
+        }
+      },
+      "appearance": {
+        "dashed": true,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segAlturaBAC",
+      "label": "Altura desde B a AC",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "prolongaciones"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Altura desde B a AC",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAlturaBAC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "footBAC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rightAngleAlturaBAC",
+      "label": "Ángulo recto de la altura",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo recto de la altura",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rightAngleAlturaBAC",
+      "objectType": "angle",
+      "points": [
+        "pA",
+        "footBAC",
+        "pB"
+      ],
+      "sweep": "non-reflex",
+      "marker": "square",
+      "perpendicularRelationId": "rightAngleAlturaBAC-perpendicular",
+      "appearance": {
+        "radius": 0.45,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "intsegAlturaABCsegAlturaCAB",
+      "label": "$O$",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1001,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Intersección",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "intsegAlturaABCsegAlturaCAB",
+      "objectType": "point",
+      "definition": {
+        "type": "intersection",
+        "supports": [
+          "lineAfootABC",
+          "linefootBACB"
+        ],
+        "restrictToSupports": true
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "lineAfootABC",
+      "label": "Recta",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 1002,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "lineAfootABC",
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pA",
+            "footABC"
+          ]
+        }
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "linefootBACB",
+      "label": "Recta",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 1003,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "linefootBACB",
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "footBAC",
+            "pB"
+          ]
+        }
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segBintsegAlturaABCsegAlturaCAB",
+      "label": "Prolongación C",
+      "color": "ocre",
+      "layerId": "background",
+      "order": 1004,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "prolongaciones"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segBintsegAlturaABCsegAlturaCAB",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "intsegAlturaABCsegAlturaCAB"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segCintsegAlturaABCsegAlturaCAB",
+      "label": "Prolongación C",
+      "color": "ocre",
+      "layerId": "background",
+      "order": 1005,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "prolongaciones"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segCintsegAlturaABCsegAlturaCAB",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pC",
+          "intsegAlturaABCsegAlturaCAB"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segAintsegAlturaABCsegAlturaCAB",
+      "label": "Prolongación A",
+      "color": "ocre",
+      "layerId": "background",
+      "order": 1006,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "prolongaciones"
+      ],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAintsegAlturaABCsegAlturaCAB",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "intsegAlturaABCsegAlturaCAB"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
   "relations": [
@@ -339,6 +818,38 @@ export const AlturaSpec = createDiagramSpec(
         [
           "footCAB",
           "pC"
+        ]
+      ]
+    },
+    {
+      "id": "rightAngleAlturaABC-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto de la altura",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "footABC",
+          "pB"
+        ],
+        [
+          "footABC",
+          "pA"
+        ]
+      ]
+    },
+    {
+      "id": "rightAngleAlturaBAC-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto de la altura",
+      "enabled": true,
+      "type": "perpendicular",
+      "supports": [
+        [
+          "footBAC",
+          "pA"
+        ],
+        [
+          "footBAC",
+          "pB"
         ]
       ]
     }
@@ -364,6 +875,99 @@ export const AlturaSpec = createDiagramSpec(
         },
         "polygonABC": {
           "emphasis": "none"
+        },
+        "intsegAlturaABCsegAlturaCAB": {
+          "visible": false
+        },
+        "rightAngleAlturaBAC": {
+          "visible": false
+        },
+        "segAlturaBAC": {
+          "visible": false
+        },
+        "extAlturaBAC": {
+          "visible": false
+        },
+        "footBAC": {
+          "visible": false
+        },
+        "rightAngleAlturaABC": {
+          "visible": false
+        },
+        "segAlturaABC": {
+          "visible": false
+        },
+        "extAlturaABC": {
+          "visible": false
+        },
+        "footABC": {
+          "visible": false
+        },
+        "lineAfootABC": {
+          "visible": false
+        },
+        "linefootBACB": {
+          "visible": false
+        },
+        "segBintsegAlturaABCsegAlturaCAB": {
+          "visible": false
+        },
+        "segAintsegAlturaABCsegAlturaCAB": {
+          "visible": false
+        },
+        "segCintsegAlturaABCsegAlturaCAB": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "step2",
+      "label": "Ortocentro",
+      "description": "Descripción del nuevo paso de la demostración.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "polygonABC",
+        "footCAB",
+        "extAlturaCAB",
+        "segAlturaCAB",
+        "rightAngleAlturaCAB",
+        "footABC",
+        "extAlturaABC",
+        "segAlturaABC",
+        "rightAngleAlturaABC",
+        "footBAC",
+        "extAlturaBAC",
+        "segAlturaBAC",
+        "rightAngleAlturaBAC",
+        "intsegAlturaABCsegAlturaCAB",
+        "segBintsegAlturaABCsegAlturaCAB",
+        "segCintsegAlturaABCsegAlturaCAB",
+        "segAintsegAlturaABCsegAlturaCAB"
+      ],
+      "objectStates": {
+        "segAlturaCAB": {
+          "showLabel": false,
+          "dashed": false
+        },
+        "intsegAlturaABCsegAlturaCAB": {
+          "emphasis": "primary"
+        },
+        "linefootBACB": {
+          "visible": false
+        },
+        "lineAfootABC": {
+          "visible": false
+        },
+        "segAintsegAlturaABCsegAlturaCAB": {
+          "visible": true
+        },
+        "segCintsegAlturaABCsegAlturaCAB": {
+          "visible": true
+        },
+        "segBintsegAlturaABCsegAlturaCAB": {
+          "visible": true
         }
       }
     }

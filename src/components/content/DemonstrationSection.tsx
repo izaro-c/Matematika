@@ -50,12 +50,19 @@ const DiagramTransition: React.FC<{ activeKey: React.Key; frames: DiagramFrame[]
 export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diagram, diagrams, children }) => {
   const step = useMathStore(state => state.variables?.['step']);
   const diagramKey = useMathStore(state => state.variables?.['diagramKey']);
+  const highlight = useMathStore(state => state.variables?.['highlight']);
 
   const { activeDiagram, activeKey } = useMemo(() => {
     if (!diagrams) return { activeDiagram: diagram, activeKey: 'default' };
 
     const keys = Object.keys(diagrams);
     if (keys.length === 0) return { activeDiagram: null, activeKey: 'default' };
+
+    const highlightStr = typeof highlight === 'string' ? highlight.trim() : '';
+    const resolvedHighlight = highlightStr.includes(':') ? highlightStr.split(':').pop()! : highlightStr;
+    if (resolvedHighlight && diagrams[resolvedHighlight]) {
+      return { activeDiagram: diagrams[resolvedHighlight], activeKey: resolvedHighlight };
+    }
 
     const diagramKeyStr = typeof diagramKey === 'string' ? diagramKey.trim() : '';
     if (diagramKeyStr && diagrams[diagramKeyStr]) {
@@ -87,7 +94,7 @@ export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diag
 
     // 3. Fallback al primer diagrama
     return { activeDiagram: diagrams[keys[0]], activeKey: keys[0] };
-  }, [diagram, diagrams, step, diagramKey]);
+  }, [diagram, diagrams, step, diagramKey, highlight]);
 
   const hasDiagram = diagram !== undefined || (diagrams !== undefined && Object.keys(diagrams).length > 0);
   const transitionKey = React.isValidElement(activeDiagram) && activeDiagram.key !== null

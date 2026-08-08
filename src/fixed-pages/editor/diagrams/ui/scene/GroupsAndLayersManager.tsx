@@ -228,6 +228,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
       visible: true,
       locked: false,
       selection: { selectable: true, role: 'primary' },
+      target: true,
+      targetId: id,
     };
     onUpdateModel({ ...model, groups: [...groups, newGroup] }, `Añadir grupo ${newGroupLabel}`);
     setNewGroupLabel('');
@@ -296,6 +298,27 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
       ...model,
       groups: groups.map(group => group.id === groupId ? { ...group, locked: !group.locked } : group),
     }, `Alternar bloqueo de grupo ${groupId}`);
+  };
+
+  const handleToggleGroupTarget = (groupId: string, targetEnabled: boolean) => {
+    onUpdateModel({
+      ...model,
+      groups: groups.map(group => group.id === groupId ? { ...group, target: targetEnabled, targetId: targetEnabled ? (group.targetId || group.id) : undefined } : group),
+    }, `Alternar target de grupo ${groupId}`);
+  };
+
+  const handleUpdateGroupTargetId = (groupId: string, candidateTargetId: string) => {
+    onUpdateModel({
+      ...model,
+      groups: groups.map(group => group.id === groupId ? { ...group, targetId: candidateTargetId.trim() || group.id } : group),
+    }, `Actualizar targetId de grupo ${groupId}`);
+  };
+
+  const handleUpdateGroupColor = (groupId: string, color: string | undefined) => {
+    onUpdateModel({
+      ...model,
+      groups: groups.map(group => group.id === groupId ? { ...group, color: color as any } : group),
+    }, `Actualizar color de grupo ${groupId}`);
   };
 
   const handleToggleGroupMember = (groupId: string, itemId: string) => {
@@ -759,6 +782,11 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           {grp.id}
                         </span>
                         <span className="font-serif font-bold text-xs truncate text-carbon">{grp.label}</span>
+                        {grp.target !== false && (
+                          <span className="font-mono text-[9px] bg-salvia/10 text-salvia font-bold px-1.5 py-0.2 rounded border border-salvia/20 shrink-0" title={`Target público: ${grp.targetId || grp.id}`}>
+                            target
+                          </span>
+                        )}
                         <span className="text-[10px] text-carbon/50 font-mono bg-carbon/10 px-1.5 py-0.2 rounded border border-carbon/10 shrink-0">
                           {memberCount} miembros
                         </span>
@@ -825,6 +853,50 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                               className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-bold text-carbon focus:border-salvia outline-none"
                             />
                           </div>
+                        </div>
+
+                        {/* Enlazable desde MDX (Target) */}
+                        <div className="bg-carbon/5 p-2.5 rounded-xl border border-carbon/10 space-y-2">
+                          <label className="flex items-center justify-between text-xs font-bold text-carbon cursor-pointer select-none">
+                            <span>Enlazable desde MDX (Target público)</span>
+                            <input
+                              type="checkbox"
+                              checked={grp.target !== false}
+                              onChange={e => handleToggleGroupTarget(grp.id, e.target.checked)}
+                              className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+                            />
+                          </label>
+                          {grp.target !== false && (
+                            <div className="grid grid-cols-2 gap-2 pt-1 border-t border-carbon/10">
+                              <div>
+                                <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">Target ID</label>
+                                <input
+                                  type="text"
+                                  value={grp.targetId ?? grp.id}
+                                  onChange={e => handleUpdateGroupTargetId(grp.id, e.target.value)}
+                                  placeholder={grp.id}
+                                  className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-mono font-bold text-carbon focus:border-salvia outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-bold uppercase tracking-wider text-carbon/60 mb-1">Color Resaltado</label>
+                                <select
+                                  value={grp.color || ''}
+                                  onChange={e => handleUpdateGroupColor(grp.id, e.target.value || undefined)}
+                                  className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-bold text-carbon focus:border-salvia outline-none cursor-pointer"
+                                >
+                                  <option value="">(Auto por miembros)</option>
+                                  <option value="salvia">salvia</option>
+                                  <option value="terracota">terracota</option>
+                                  <option value="ocre">ocre</option>
+                                  <option value="pavo">pavo</option>
+                                  <option value="pizarra">pizarra</option>
+                                  <option value="granada">granada</option>
+                                  <option value="musgo">musgo</option>
+                                </select>
+                              </div>
+                            </div>
+                          )}
                         </div>
 
                         <div className="space-y-2">

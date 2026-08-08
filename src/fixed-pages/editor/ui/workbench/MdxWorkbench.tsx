@@ -87,6 +87,7 @@ export const MdxWorkbench: React.FC = () => {
     saveDraftCurrentFile,
     setMetadata,
     bindDiagram,
+    assignDiagramStep,
     createPage,
     createDiagram,
     compatibility,
@@ -794,6 +795,7 @@ export const MdxWorkbench: React.FC = () => {
                   setActiveDiagramBlockId={setActiveDiagramBlockId}
                   setDiagramBuilderOpen={setDiagramBuilderOpen}
                   diagramTargets={combinedDiagramTargets}
+                  onAssignDiagramStep={assignDiagramStep}
                   onSyncDiagramStep={syncDemoStepToDiagram}
                   onFormatBarChange={setFormatBarNode}
                 />
