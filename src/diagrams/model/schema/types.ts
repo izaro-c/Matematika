@@ -30,7 +30,7 @@ export type DiagramElementKind =
   | 'intersection'
   | 'midpoint'
   | 'perpendicularFoot'
-  | 'baseExtension'
+  | 'segmentExtension'
   | 'perpendicular'
   | 'parallel'
   | 'angleBisector'

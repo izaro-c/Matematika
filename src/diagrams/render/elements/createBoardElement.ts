@@ -6,7 +6,7 @@ import {
   createAreaDecomposition,
   createAreaIntersectionComposite,
   createAreaIntersectionFills,
-  createBaseExtensionToFoot,
+  createSegmentExtensionToFoot,
   createCircle,
   createCongruenceMark,
   createDimensionLine,
@@ -228,7 +228,7 @@ export function createElement(
     label: { highlightStrokeColor: hoverColor },
     fixed: true, layer,
   }, 'point'), theme) : null;
-  if (item.kind === 'baseExtension') return refs.length >= 3 ? createBaseExtensionToFoot(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
+  if (item.kind === 'segmentExtension') return refs.length >= 3 ? createSegmentExtensionToFoot(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'perpendicular') return refs.length >= 3 ? createPerpendicularLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'parallel') return refs.length >= 3 ? createParallelLine(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;
   if (item.kind === 'angleBisector') return refs.length >= 3 ? createAngleBisectorRay(board, [refs[0], refs[1], refs[2]], lineOptions, theme) : null;

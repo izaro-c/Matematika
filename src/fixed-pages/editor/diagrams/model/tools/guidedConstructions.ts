@@ -58,7 +58,7 @@ export function applyGuidedConstruction(model: VisualDiagramModel, kind: Constru
     const pair = `${pointNameFromRef(a)}${pointNameFromRef(b)}`;
     const vertex = pointNameFromRef(c);
     const footId = addOrReuse(`foot${vertex}${pair}`, `Pie de altura ${vertex}${pair}`, 'perpendicularFoot', [a, b, c], 'ocre');
-    addOrReuse(`extAltura${vertex}${pair}`, `Extensión de base ${pair}`, 'baseExtension', [a, b, footId], 'pizarra', false, { dashed: true });
+    addOrReuse(`extAltura${vertex}${pair}`, `Extensión de segmento ${pair}`, 'segmentExtension', [a, b, footId], 'pizarra', false, { dashed: true });
     addOrReuse(`lineAltura${vertex}${pair}`, `Recta de altura desde ${vertex}`, 'perpendicular', [a, b, c], 'pavo', false, { dashed: true });
     addOrReuse(`segAltura${vertex}${pair}`, `Altura desde ${vertex} a ${pair}`, 'segment', [c, footId], 'terracota', true);
     addOrReuse(`rightAngleAltura${vertex}${pair}`, 'Ángulo recto de la altura', 'rightAngle', [a, footId, c], 'ocre');

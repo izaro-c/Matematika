@@ -30,7 +30,7 @@ import {
   conditionAllows,
   intersectionBelongsToSupports,
   liveVariables,
-  outsideBaseExtension,
+  outsideSegmentExtension,
   refsFor,
   sliderMaximum,
   tickDistance,
@@ -76,7 +76,7 @@ export {
   conditionAllows,
   intersectionBelongsToSupports,
   liveVariables,
-  outsideBaseExtension,
+  outsideSegmentExtension,
   refsFor,
   sliderMaximum,
   tickDistance,
@@ -791,8 +791,8 @@ export function useBoardLifecycle({
       ? true
       : conditionAllows(item, sceneElements, spec);
     const visible = sceneVisible && conditionVisible
-      && (('kind' in item && item.kind === 'baseExtension')
-        ? outsideBaseExtension(sceneElements[item.refs[0]], sceneElements[item.refs[1]], sceneElements[item.refs[2]])
+      && (('kind' in item && item.kind === 'segmentExtension')
+        ? outsideSegmentExtension(sceneElements[item.refs[0]], sceneElements[item.refs[1]], sceneElements[item.refs[2]])
         : true)
       && (('kind' in item && item.kind === 'intersection')
         ? intersectionBelongsToSupports(item, element, sceneElements, spec)

@@ -29,7 +29,7 @@ const legacySlots: Record<DiagramElementKind, readonly DiagramReferenceSlot[]> =
   intersection: [{ key: 'support-1', label: 'Primer soporte', capability: 'linear-support' }, { key: 'support-2', label: 'Segundo soporte', capability: 'linear-support' }],
   midpoint: [pointSlot('first', 'Primer extremo'), pointSlot('second', 'Segundo extremo')],
   perpendicularFoot: [pointSlot('line-1', 'Primer punto de la base'), pointSlot('line-2', 'Segundo punto de la base'), pointSlot('point', 'Punto proyectado')],
-  baseExtension: [pointSlot('start', 'Primer extremo'), pointSlot('end', 'Segundo extremo'), pointSlot('foot', 'Extremo de la prolongación')],
+  segmentExtension: [pointSlot('start', 'Primer extremo'), pointSlot('end', 'Segundo extremo'), pointSlot('foot', 'Extremo de la prolongación')],
   perpendicular: [pointSlot('line-1', 'Primer punto de la recta'), pointSlot('line-2', 'Segundo punto de la recta'), pointSlot('through', 'Punto de paso')],
   parallel: [pointSlot('line-1', 'Primer punto de la recta'), pointSlot('line-2', 'Segundo punto de la recta'), pointSlot('through', 'Punto de paso')],
   angleBisector: [pointSlot('side-1', 'Punto del primer lado'), pointSlot('vertex', 'Vértice'), pointSlot('side-2', 'Punto del segundo lado')],

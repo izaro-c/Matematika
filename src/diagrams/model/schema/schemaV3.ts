@@ -64,7 +64,7 @@ const linearConstruction = z.discriminatedUnion('type', [
   z.object({ type: z.literal('angle-bisector'), points: pointTriple }).strict(),
 ]);
 const pathGeometry = z.discriminatedUnion('type', [
-  z.object({ type: z.literal('segment'), points: pair, construction: z.object({ type: z.literal('base-extension'), foot: id }).strict().optional() }).strict(),
+  z.object({ type: z.literal('segment'), points: pair, construction: z.object({ type: z.literal('segment-extension'), foot: id }).strict().optional() }).strict(),
   z.object({ type: z.literal('line'), construction: linearConstruction }).strict(),
   z.object({ type: z.literal('ray'), points: pair }).strict(),
   z.object({ type: z.literal('polygon'), points: z.tuple([id, id, id]).rest(id) }).strict(),

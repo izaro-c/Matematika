@@ -81,7 +81,7 @@ export type LinearConstruction =
   | { type: 'angle-bisector'; points: [string, string, string] };
 
 export type PathGeometry =
-  | { type: 'segment'; points: [string, string]; construction?: { type: 'base-extension'; foot: string } }
+  | { type: 'segment'; points: [string, string]; construction?: { type: 'segment-extension'; foot: string } }
   | { type: 'line'; construction: LinearConstruction }
   | { type: 'ray'; points: [string, string] }
   | { type: 'polygon'; points: [string, string, string, ...string[]] }

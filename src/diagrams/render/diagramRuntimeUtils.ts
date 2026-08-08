@@ -4,7 +4,7 @@ import {evaluateMathExpression, interpolateDiagramTemplate, resolveInfoPanelBloc
 import {angleMeasureRadians} from '@/diagrams/geometry';
 import { hasCoordinates, type JxgElementAdapter, type JxgElementMap } from '@/diagrams/render/jsxgraphAdapter';
 
-export function outsideBaseExtension(baseA: JxgElementAdapter | undefined, baseB: JxgElementAdapter | undefined, foot: JxgElementAdapter | undefined): boolean {
+export function outsideSegmentExtension(baseA: JxgElementAdapter | undefined, baseB: JxgElementAdapter | undefined, foot: JxgElementAdapter | undefined): boolean {
   if (!hasCoordinates(baseA) || !hasCoordinates(baseB) || !hasCoordinates(foot)) return false;
   const dx = baseB.X() - baseA.X();
   const dy = baseB.Y() - baseA.Y();

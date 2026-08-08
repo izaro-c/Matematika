@@ -229,7 +229,7 @@ describe('editor validation', () => {
                 { id: 'lineMediatrizAB', kind: 'perpendicular', refs: ['pA', 'pB', 'midAB'] },
                 { id: 'segMedianaCAB', kind: 'segment', refs: ['pC', 'midAB'] },
                 { id: 'footCAB', kind: 'perpendicularFoot', refs: ['pA', 'pB', 'pC'] },
-                { id: 'extAlturaCAB', kind: 'baseExtension', refs: ['pA', 'pB', 'footCAB'] },
+                { id: 'extAlturaCAB', kind: 'segmentExtension', refs: ['pA', 'pB', 'footCAB'] },
                 { id: 'lineAlturaCAB', kind: 'perpendicular', refs: ['pA', 'pB', 'pC'] },
                 { id: 'segAlturaCAB', kind: 'segment', refs: ['pC', 'footCAB'] },
                 { id: 'rightAngleAlturaCAB', kind: 'rightAngle', refs: ['pA', 'footCAB', 'pC'] },

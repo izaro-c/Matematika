@@ -72,7 +72,7 @@ describe('DiagramSpec v3 semantic contract', () => {
   it('defines typed slots for every legacy variant during the compatibility window', () => {
     const kinds: DiagramElementKind[] = [
       'segment', 'line', 'ray', 'polygon', 'circle', 'arc', 'functionCurve', 'parametricCurve', 'poincareGeodesic', 'poincareArc',
-      'intersection', 'midpoint', 'perpendicularFoot', 'baseExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
+      'intersection', 'midpoint', 'perpendicularFoot', 'segmentExtension', 'perpendicular', 'parallel', 'angleBisector', 'angle', 'nonReflexAngle',
       'rightAngle', 'congruenceMark', 'parallelMark', 'measureTicks', 'perpendicularMark', 'dimensionLine', 'measurement', 'grid',
       'areaDecomposition', 'halfPlane', 'areaIntersection', 'text', 'label', 'formula', 'infoPanel',
     ];

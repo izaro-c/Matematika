@@ -105,7 +105,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
 
   const points = model.points || [];
   const lines = (model.elements || []).filter(e =>
-    ['segment', 'line', 'ray', 'perpendicular', 'parallel', 'baseExtension', 'angleBisector'].includes(e.kind)
+    ['segment', 'line', 'ray', 'perpendicular', 'parallel', 'segmentExtension', 'angleBisector'].includes(e.kind)
   );
   const circles = (model.elements || []).filter(e => ['circle', 'arc'].includes(e.kind));
   const anglesAndMarks = (model.elements || []).filter(e =>

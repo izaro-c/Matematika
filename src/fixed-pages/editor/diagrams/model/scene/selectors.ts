@@ -27,7 +27,7 @@ export function isDiagramStateDirty(state: DiagramState): boolean {
 }
 
 export function targetKind(kind: ElementKind): DiagramTarget['kind'] {
-  if (kind === 'segment' || kind === 'baseExtension' || kind === 'dimensionLine') return 'segment';
+  if (kind === 'segment' || kind === 'segmentExtension' || kind === 'dimensionLine') return 'segment';
   if (kind === 'line' || kind === 'ray' || kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'functionCurve' || kind === 'parametricCurve' || kind === 'poincareGeodesic' || kind === 'poincareArc') return 'line';
   if (kind === 'polygon' || kind === 'areaDecomposition' || kind === 'grid' || kind === 'halfPlane' || kind === 'areaIntersection') return 'polygon';
   if (kind === 'intersection' || kind === 'midpoint' || kind === 'perpendicularFoot') return 'point';
