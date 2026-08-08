@@ -35,7 +35,7 @@ function extractDiagramTitle(source: string): string | undefined {
   const match = source.match(/["']title["']\s*:\s*["']([^"']+)["']/);
   if (match?.[1]) return match[1];
   const parsed = parseDiagramSourceAST(source);
-  const model = parsed.status === 'visual-exact' ? parsed.model : parsed.previewModel;
+  const model = parsed.status === 'visual-exact' ? parsed.model : (parsed.status === 'code-preview' ? parsed.previewModel : undefined);
   return model?.title;
 }
 

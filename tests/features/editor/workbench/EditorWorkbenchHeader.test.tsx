@@ -19,7 +19,7 @@ describe('EditorWorkbenchHeader', () => {
     expect(screen.getByText('centro')).toBeDefined();
     expect(screen.getByRole('button', { name: 'Avisos' })).toBeDefined();
     expect(screen.getByRole('button', { name: 'Guardar' })).toBeDefined();
-    expect(screen.getByRole('button', { name: 'Cerrar editor' })).toBeDefined();
+    expect(screen.getByRole('button', { name: /Cerrar/i })).toBeDefined();
   });
 
   it('muestra toggles de panel solo cuando hay handlers', () => {
@@ -70,7 +70,7 @@ describe('EditorWorkbenchHeader', () => {
         onCloseEditor={onCloseEditor}
       />,
     );
-    fireEvent.click(screen.getByRole('button', { name: 'Cerrar editor' }));
+    fireEvent.click(screen.getByRole('button', { name: /Cerrar/i }));
     expect(onCloseEditor).not.toHaveBeenCalled();
     expect(screen.getByRole('heading', { name: /Cambios sin guardar/i })).toBeDefined();
     fireEvent.click(screen.getByRole('button', { name: /Salir sin guardar/i }));

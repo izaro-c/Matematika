@@ -27,7 +27,7 @@ describe('modelo de navegación del editor', () => {
     expect(filterCatalogResources(files, 'diagrams', { query: 'punto', type: 'diagram-definitions', status: 'attention', capability: 'code-preview' })).toEqual([files[2]]);
     expect(resourceStatus(files[0])).toBe('available');
     expect(resourceStatus(files[2])).toBe('attention');
-    expect(resourceDisplayName(files[0])).toBe('Punto');
+    expect(resourceDisplayName(files[0])).toBe('Definición Punto');
   });
 
   it('mantiene recientes sin duplicados y favoritos reversibles', () => {

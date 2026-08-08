@@ -24,7 +24,7 @@ import { DemoAnguloExterno } from "@content/diagrams/Demos/DemoAnguloExterno";
 
 <DemonstrationSection diagram={<DemoAnguloExterno />}>
 
-<Capitular letra="S" />ea $\triangle ABC$ un triángulo. Por la <ConceptLink targetId="axioma-orden-3" isDependency={true}>prolongación de segmentos</ConceptLink>, prolongamos $BC$ más allá de $C$ hasta un punto $D$, de modo que $B * C * D$. Debemos demostrar que el ángulo exterior $\angle ACD$ es mayor que los dos ángulos interiores no adyacentes:
+<Capitular letra="S" />ea <InteractiveElement target="polygonABC" color="granada">$△ABC$</InteractiveElement>un triángulo. Por la <ConceptLink targetId="axioma-orden-3" isDependency={true}>prolongación de segmentos</ConceptLink>, prolongamos <InteractiveElement target="segBC" color="granada">$BC$</InteractiveElement> más allá de $C$ hasta un punto $D$, de modo que $B * C * D$. Debemos demostrar que el ángulo exterior $\angle ACD$ es mayor que los dos ángulos interiores no adyacentes:
 
 <Formula>
   $$ \angle A < \angle ACD \qquad \text{y} \qquad \angle B < \angle ACD $$
@@ -33,13 +33,16 @@ import { DemoAnguloExterno } from "@content/diagrams/Demos/DemoAnguloExterno";
 <Separador />
 
 <ProofStep number={1} title="Tomamos el punto medio de AC" leanBlocks={metadata.stepTacticMap["1"]}>
-Por el <ConceptLink targetId="lema-punto-medio" isDependency={true}>teorema de existencia del punto medio</ConceptLink>, elegimos un punto $E$ en el segmento $AC$. Quedan fijadas las dos relaciones que usaremos después:
+
+
+Por el <ConceptLink targetId="lema-punto-medio" isDependency={true}>teorema de existencia del punto medio</ConceptLink>, elegimos un punto <InteractiveElement target="midAC" color="salvia">$E$</InteractiveElement> en el segmento $AC$. Quedan fijadas las dos relaciones que usaremos después:
 
 <Formula>
   $$ A * E * C \qquad \text{y} \qquad \overline{AE} \cong \overline{EC}$$
 </Formula>
 
 Así, $BE$ es la mediana trazada desde el vértice $B$ al lado $AC$.
+
 </ProofStep>
 
 <ProofStep number={2} title="Prolongamos la mediana BE" leanBlocks={metadata.stepTacticMap["2"]}>

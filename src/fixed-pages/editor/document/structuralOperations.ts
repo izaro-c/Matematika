@@ -535,3 +535,80 @@ export function planDiagramBinding(document: EditorDocument, input: BindDiagramI
     edits,
   ));
 }
+
+export function planAssignDiagramStep(
+  document: EditorDocument,
+  blockIds: string[],
+  stepId: string | null,
+): DocumentMutationPlan {
+  if (blockIds.length === 0) throw new Error('No block IDs provided to assign diagram step');
+
+  const blocks = blockIds.map(id => editableBlock(document, id));
+  // Sort blocks by start position to ensure contiguous processing
+  blocks.sort((a, b) => a.location.range.start - b.location.range.start);
+
+  const firstBlock = blocks[0];
+  const lastBlock = blocks[blocks.length - 1];
+
+  // Check if blocks share a common parent StepSection container
+  const parentContainer = document.containers.find(c => c.id === firstBlock.parentId && c.name === 'StepSection');
+  const eol = lineEnding(document.source);
+  const id = operationId(document, 'assign-step', firstBlock.id);
+
+  let edits: SourceEdit[] = [];
+
+  if (parentContainer) {
+    const parentNodeRange = {
+      start: document.source.lastIndexOf('<StepSection', parentContainer.contentRange.start),
+      end: document.source.indexOf('</StepSection>', parentContainer.contentRange.end) + '</StepSection>'.length,
+    };
+    const expectedSource = document.source.slice(parentNodeRange.start, parentNodeRange.end);
+    const innerContent = document.source.slice(parentContainer.contentRange.start, parentContainer.contentRange.end).trim();
+
+    if (!stepId) {
+      // Unwrap: Replace <StepSection step="...">content</StepSection> with content
+      edits = [{
+        operationId: id,
+        blockId: firstBlock.id,
+        range: parentNodeRange,
+        expectedSource,
+        replacement: innerContent,
+        reason: 'Eliminar contenedor StepSection',
+      }];
+    } else {
+      // Update step attribute on existing StepSection
+      const updatedSource = `<StepSection step="${stepId}">${eol}${innerContent}${eol}</StepSection>`;
+      edits = [{
+        operationId: id,
+        blockId: firstBlock.id,
+        range: parentNodeRange,
+        expectedSource,
+        replacement: updatedSource,
+        reason: `Actualizar paso en StepSection a ${stepId}`,
+      }];
+    }
+  } else if (stepId) {
+    // Wrap: Surround selected range of blocks with <StepSection step="stepId">
+    const rangeToWrap = {
+      start: firstBlock.location.range.start,
+      end: lastBlock.location.range.end,
+    };
+    const selectedSource = document.source.slice(rangeToWrap.start, rangeToWrap.end);
+    const replacement = `<StepSection step="${stepId}">${eol}${selectedSource}${eol}</StepSection>`;
+    edits = [{
+      operationId: id,
+      blockId: firstBlock.id,
+      range: rangeToWrap,
+      expectedSource: selectedSource,
+      replacement,
+      reason: `Envolver bloques en StepSection step="${stepId}"`,
+    }];
+  }
+
+  return plan(document, 'assign-step', id, edits, preview(
+    'Asignación de paso de diagrama',
+    stepId ? `Asignando paso "${stepId}" a los bloques seleccionados` : 'Eliminando asignación de paso de diagrama',
+    edits,
+  ));
+}
+

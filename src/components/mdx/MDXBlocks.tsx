@@ -23,6 +23,7 @@ import { StepBind, StepSection } from '@/components/ui/StepBinding';
 import { ConceptLink } from "@/fixed-pages/glossary/ui/ConceptLink";
 import { RefLink } from "@/fixed-pages/glossary/ui/RefLink";
 import { GlossaryLink } from '@/components/ui/GlossaryLink';
+import StepNavigator from '@/components/ui/StepNavigator';
 import { UI } from '@/design';
 import { VisualBind, InteractiveElement } from '@/components/ui/VisualBind';
 import { Link } from 'wouter';
@@ -262,6 +263,7 @@ export const MDXComponents = {
   VisualBind,
   EquationRow,
   InteractiveElement,
+  StepNavigator,
   a: (props: React.ComponentProps<'a'>) => {
     if (props.href?.startsWith('/')) {
       return (

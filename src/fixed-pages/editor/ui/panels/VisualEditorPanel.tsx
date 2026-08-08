@@ -52,9 +52,11 @@ interface VisualEditorPanelProps {
   setActiveDiagramBlockId: (id: string | null) => void;
   setDiagramBuilderOpen: (open: boolean) => void;
   diagramTargets: DiagramTargetRegistry;
+  onAssignDiagramStep?: (blockIds: string[], stepId: string | null) => void;
   onSyncDiagramStep?: (step: ProofStepData, index: number) => void;
   onFormatBarChange?: (formatBar: React.ReactNode) => void;
 }
+
 
 export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   currentFile,
@@ -79,9 +81,14 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   setActiveDiagramBlockId,
   setDiagramBuilderOpen,
   diagramTargets,
+  onAssignDiagramStep,
   onSyncDiagramStep,
   onFormatBarChange,
 }) => {
+  const [selectedBlockIds, setSelectedBlockIds] = useState<string[]>([]);
+  const [assignStepOpen, setAssignStepOpen] = useState(false);
+  const stepTargets = useMemo(() => diagramTargets.filter(t => t.kind === 'step'), [diagramTargets]);
+
   const setVariable = useMathStore(state => state.setVariable);
   const [commandOpen, setCommandOpen] = useState(false);
   const [commandQuery, setCommandQuery] = useState('');
@@ -478,6 +485,50 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
       <div className="space-y-6 max-w-2xl mx-auto py-8 font-serif">
         {renderHeader()}
 
+        {/* Toolbar de asignación de paso multi-bloque */}
+        {stepTargets.length > 0 && !isReadOnly && (
+          <div className="flex items-center justify-between rounded border border-terracota/25 bg-terracota/5 p-2.5 font-sans text-xs text-carbon">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-terracota">✦ Pasos de diagrama</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setAssignStepOpen(!assignStepOpen);
+                  if (assignStepOpen) setSelectedBlockIds([]);
+                }}
+                className={`rounded border px-2 py-0.5 font-bold transition-colors cursor-pointer ${
+                  assignStepOpen ? 'border-terracota bg-terracota text-lienzo' : 'border-carbon/20 bg-lienzo text-carbon/70 hover:border-terracota/40'
+                }`}
+              >
+                {assignStepOpen ? 'Cancelar selección' : 'Asignar paso a varios bloques'}
+              </button>
+            </div>
+
+            {assignStepOpen && selectedBlockIds.length > 0 && (
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[11px] text-carbon/60">{selectedBlockIds.length} seleccionado(s)</span>
+                <select
+                  defaultValue=""
+                  onChange={(e) => {
+                    const stepId = e.target.value || null;
+                    onAssignDiagramStep?.(selectedBlockIds, stepId);
+                    setSelectedBlockIds([]);
+                    setAssignStepOpen(false);
+                  }}
+                  className="rounded border border-terracota/30 bg-lienzo px-2 py-1 font-mono text-[11px] text-carbon outline-none"
+                >
+                  <option value="">Seleccionar paso…</option>
+                  {stepTargets.map(t => (
+                    <option key={t.id} value={t.id}>✦ {t.label || t.id}</option>
+                  ))}
+                  <option value="">(Quitar asignación)</option>
+                </select>
+              </div>
+            )}
+          </div>
+        )}
+
+
         {visualGroups.map((group, groupIndex) => {
           if (group.kind === 'demonstration') {
             return (
@@ -501,32 +552,48 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
 
           const block = group.block;
           const index = blocks.findIndex(item => item.id === block.id);
+          const isSelected = selectedBlockIds.includes(block.id);
           return (
-            <VisualEditorBlock
-              key={block.id}
-              block={block}
-              blocks={blocks}
-              index={index}
-              isReadOnly={isReadOnly}
-              canMutateVisualStructure={canMutateVisualStructure}
-              editingBlockId={editingBlockId}
-              setEditingBlockId={setEditingBlockId}
-              highlightedBlockId={highlightedBlockId}
-              issues={issues}
-              addBlock={addBlock}
-              moveBlock={moveBlock}
-              duplicateBlock={duplicateBlock}
-              removeBlock={removeBlock}
-              updateBlock={block.type === 'paragraph' ? updateParagraphWithCapitular : updateBlock}
-              handleTextareaSelect={handleTextareaSelect}
-              handleEditLink={handleEditLink}
-              renderInlineToolbar={renderInlineToolbar}
-              setActiveDiagramIndex={setActiveDiagramIndex}
-              setActiveDiagramBlockId={setActiveDiagramBlockId}
-              setDiagramBuilderOpen={setDiagramBuilderOpen}
-              diagramTargets={diagramTargets}
-            />
+            <div key={block.id} className="relative">
+              {assignStepOpen && (
+                <div className="absolute -left-7 top-4 z-10">
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={(e) => {
+                      if (e.target.checked) setSelectedBlockIds([...selectedBlockIds, block.id]);
+                      else setSelectedBlockIds(selectedBlockIds.filter(id => id !== block.id));
+                    }}
+                    className="h-4 w-4 rounded border-terracota text-terracota focus:ring-terracota cursor-pointer"
+                  />
+                </div>
+              )}
+              <VisualEditorBlock
+                block={block}
+                blocks={blocks}
+                index={index}
+                isReadOnly={isReadOnly}
+                canMutateVisualStructure={canMutateVisualStructure}
+                editingBlockId={editingBlockId}
+                setEditingBlockId={setEditingBlockId}
+                highlightedBlockId={highlightedBlockId}
+                issues={issues}
+                addBlock={addBlock}
+                moveBlock={moveBlock}
+                duplicateBlock={duplicateBlock}
+                removeBlock={removeBlock}
+                updateBlock={block.type === 'paragraph' ? updateParagraphWithCapitular : updateBlock}
+                handleTextareaSelect={handleTextareaSelect}
+                handleEditLink={handleEditLink}
+                renderInlineToolbar={renderInlineToolbar}
+                setActiveDiagramIndex={setActiveDiagramIndex}
+                setActiveDiagramBlockId={setActiveDiagramBlockId}
+                setDiagramBuilderOpen={setDiagramBuilderOpen}
+                diagramTargets={diagramTargets}
+              />
+            </div>
           );
+
         })}
       </div>
     );

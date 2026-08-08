@@ -322,20 +322,27 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
           <div className="space-y-1">
             <label className="block ac-label ac-label--xs">Elemento del diagrama</label>
             {diagramTargets.length > 0 && (
-              <div className="mt-1 max-h-32 space-y-1 overflow-y-auto rounded border border-carbon/10 bg-lienzo p-1">
+              <div className="mt-1 max-h-36 space-y-1 overflow-y-auto rounded border border-carbon/10 bg-lienzo p-1">
                 {diagramTargets.map(target => (
                   <button
                     key={target.id}
                     type="button"
                     onClick={() => {
                       setGraphElementId(target.id);
-                      setSelectedColor(target.color);
+                      setSelectedColor(target.kind === 'step' ? 'terracota' : target.color);
                     }}
-                    className={`block w-full rounded border px-2 py-1 text-left hover:border-salvia/30 hover:bg-salvia/5 ${graphElementId === target.id ? 'border-salvia/40 bg-salvia/10' : 'border-carbon/10 bg-carbon/5'}`}
+                    className={`block w-full rounded border px-2 py-1 text-left transition-colors hover:border-salvia/30 hover:bg-salvia/5 ${graphElementId === target.id ? 'border-salvia/40 bg-salvia/10' : 'border-carbon/10 bg-carbon/5'}`}
                     title={target.label}
                   >
-                    <span className="block truncate text-[10px] font-bold text-carbon">{target.label}</span>
-                    <span className="block truncate font-mono text-[9px] text-carbon/45">{target.id} · {target.kind}</span>
+                    <div className="flex items-center justify-between">
+                      <span className="truncate text-[10px] font-bold text-carbon">{target.label}</span>
+                      {target.kind === 'step' ? (
+                        <span className="text-[9px] font-mono font-bold text-terracota bg-terracota/15 px-1 py-0.5 rounded border border-terracota/30">✦ Paso</span>
+                      ) : (
+                        <span className="text-[9px] font-mono text-carbon/40">{target.kind}</span>
+                      )}
+                    </div>
+                    <span className="block truncate font-mono text-[9px] text-carbon/45">{target.id}</span>
                   </button>
                 ))}
               </div>

@@ -60,10 +60,10 @@ describe('explorador de recursos', () => {
 
   it('abre recursos, marca favoritos y permite recorrerlos con flechas', () => {
     const { props } = renderNavigation();
-    const punto = screen.getByRole('button', { name: /PuntoEditable/ });
+    const punto = screen.getByRole('button', { name: /Definición PuntoEditable/ });
     fireEvent.click(punto);
     expect(props.openFile).toHaveBeenCalledWith(files[0].path);
-    fireEvent.click(screen.getByRole('button', { name: /Añadir Punto a favoritos/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Añadir Definición Punto a favoritos/ }));
     expect(props.toggleFavorite).toHaveBeenCalledWith(files[0].path);
 
     punto.focus();
