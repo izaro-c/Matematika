@@ -35,14 +35,18 @@ export const KIND_LABELS: Record<ElementKind, string> = {
   text: 'Etiqueta', label: 'Etiqueta matemática', formula: 'Fórmula', infoPanel: 'Panel informativo',
 };
 
-export function defaultCategory(metadataType: string): string {
-  if (metadataType === 'definicion') return 'Definiciones';
-  if (metadataType === 'axioma') return 'Axiomas';
+import { getContentTypeLabel } from '@/lib/theme/constants';
+
+export function defaultCategory(metadataType?: string | null): string {
+  if (!metadataType) return 'Teoremas';
   if (metadataType === 'modelo') return 'Models';
   if (metadataType === 'demostracion') return 'Demos';
-  if (metadataType === 'ejercicio') return 'Ejercicios';
-  return 'Teoremas';
+  if (metadataType === 'metodo') return 'Metodos';
+  if (metadataType === 'caso-de-uso') return 'CasosUso';
+  return getContentTypeLabel(metadataType, 'plural');
 }
+
+
 
 export function defaultMode(metadataType: string): VisualDiagramModel['mode'] {
   return metadataType === 'modelo' ? 'diagram' : 'simulation';

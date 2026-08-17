@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
-import { resourceDisplayName } from '@/fixed-pages/editor/session/editorNavigationModel';
+import { getCategoryDisplayName, resourceDisplayName } from '@/fixed-pages/editor/session/editorNavigationModel';
 
 export type LandingSection = 'documents' | 'diagrams';
 export type SortOption = 'name' | 'type' | 'recent';
@@ -33,20 +33,60 @@ export function useEditorLanding({
     });
   }, [files, section]);
 
-  // Lista de tipos/categorías únicas disponibles en esta sección
+  // Archivos base filtrados por los modificadores activos (favoritos y búsqueda)
+  const baseFilteredFiles = useMemo(() => {
+    let result = sectionFiles;
+
+    // Filtro solo favoritos
+    if (onlyFavorites) {
+      result = result.filter(file => favoritePaths.includes(file.path));
+    }
+
+    // Filtro por búsqueda
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      result = result.filter(file => {
+        const name = resourceDisplayName(file).toLowerCase();
+        const path = file.path.toLowerCase();
+        const type = file.type.toLowerCase();
+        const catSingular = getCategoryDisplayName(file.type, 'singular').toLowerCase();
+        const catPlural = getCategoryDisplayName(file.type, 'plural').toLowerCase();
+        return (
+          name.includes(query) ||
+          path.includes(query) ||
+          type.includes(query) ||
+          catSingular.includes(query) ||
+          catPlural.includes(query)
+        );
+      });
+    }
+
+    return result;
+  }, [sectionFiles, onlyFavorites, favoritePaths, searchQuery]);
+
+  // Lista de tipos/categorías únicas disponibles en esta sección según los filtros activos
   const availableTypes = useMemo(() => {
     const counts = new Map<string, number>();
-    for (const file of sectionFiles) {
+    for (const file of baseFilteredFiles) {
       const type = file.type || 'general';
       counts.set(type, (counts.get(type) || 0) + 1);
     }
-    const typesList = Array.from(counts.entries()).map(([id, count]) => ({
-      id,
-      label: id.replace(/-/g, ' ').replace(/^\p{L}/u, v => v.toUpperCase()),
-      count,
-    }));
-    return [{ id: 'all', label: 'Todos', count: sectionFiles.length }, ...typesList];
-  }, [sectionFiles]);
+    const typesList = Array.from(counts.entries())
+      .filter(([_, count]) => count > 0)
+      .map(([id, count]) => ({
+        id,
+        label: getCategoryDisplayName(id, 'plural'),
+        count,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label, 'es'));
+
+    return [{ id: 'all', label: 'Todos', count: baseFilteredFiles.length }, ...typesList];
+  }, [baseFilteredFiles]);
+
+  // Si la categoría seleccionada ya no existe entre las disponibles, usar 'all'
+  const effectiveSelectedType = selectedType !== 'all' && availableTypes.some(t => t.id === selectedType)
+    ? selectedType
+    : 'all';
 
   // Archivos recientemente accedidos
   const recentFiles = useMemo(() => {
@@ -56,38 +96,22 @@ export function useEditorLanding({
       .filter((f): f is FileNode => Boolean(f));
   }, [recentPaths, sectionFiles]);
 
-  // Filtrar y ordenar archivos
+  // Filtrar por categoría y ordenar archivos finales
   const filteredFiles = useMemo(() => {
-    let result = sectionFiles;
-
-    // Filtro por búsqueda
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase().trim();
-      result = result.filter(file => {
-        const name = resourceDisplayName(file).toLowerCase();
-        const path = file.path.toLowerCase();
-        const type = file.type.toLowerCase();
-        return name.includes(query) || path.includes(query) || type.includes(query);
-      });
-    }
+    let result = baseFilteredFiles;
 
     // Filtro por tipo/categoría
-    if (selectedType !== 'all') {
-      result = result.filter(file => file.type === selectedType);
-    }
-
-    // Filtro solo favoritos
-    if (onlyFavorites) {
-      result = result.filter(file => favoritePaths.includes(file.path));
+    if (effectiveSelectedType !== 'all') {
+      result = result.filter(file => file.type === effectiveSelectedType);
     }
 
     // Ordenación
     return [...result].sort((a, b) => {
       if (sortBy === 'name') {
-        return resourceDisplayName(a).localeCompare(resourceDisplayName(b));
+        return resourceDisplayName(a).localeCompare(resourceDisplayName(b), 'es');
       }
       if (sortBy === 'type') {
-        return a.type.localeCompare(b.type);
+        return a.type.localeCompare(b.type, 'es');
       }
       if (sortBy === 'recent') {
         const indexA = recentPaths.indexOf(a.path);
@@ -98,12 +122,12 @@ export function useEditorLanding({
       }
       return 0;
     });
-  }, [sectionFiles, searchQuery, selectedType, onlyFavorites, sortBy, favoritePaths, recentPaths]);
+  }, [baseFilteredFiles, effectiveSelectedType, sortBy, recentPaths]);
 
   return {
     searchQuery,
     setSearchQuery,
-    selectedType,
+    selectedType: effectiveSelectedType,
     setSelectedType,
     onlyFavorites,
     setOnlyFavorites,

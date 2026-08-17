@@ -161,6 +161,20 @@ const ACCENTED_WORDS: Record<string, string> = {
   triangulacion: 'triangulación',
 };
 
+import {
+  getContentTypeLabel,
+  CONTENT_TYPE_LABELS_SINGULAR,
+  CONTENT_TYPE_LABELS_PLURAL,
+} from '@/lib/theme/constants';
+
+export const CATEGORY_LABELS_SINGULAR = CONTENT_TYPE_LABELS_SINGULAR;
+export const CATEGORY_LABELS_PLURAL = CONTENT_TYPE_LABELS_PLURAL;
+
+export function getCategoryDisplayName(type: string, form: 'singular' | 'plural' = 'singular'): string {
+  return getContentTypeLabel(type, form);
+}
+
+
 export function resourceDisplayName(file: FileNode): string {
   if (file.title && file.title.trim()) return file.title;
   const baseName = file.name.replace(/\.(mdx|tsx)$/, '');

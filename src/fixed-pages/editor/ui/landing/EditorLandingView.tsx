@@ -11,6 +11,7 @@ import { useEditorLanding, type LandingSection } from './useEditorLanding';
 
 interface EditorLandingViewProps {
   files: FileNode[];
+  isLoading?: boolean;
   initialSection?: LandingSection;
   favoritePaths?: string[];
   recentPaths?: string[];
@@ -22,6 +23,7 @@ interface EditorLandingViewProps {
 
 export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
   files,
+  isLoading = false,
   initialSection = 'documents',
   favoritePaths = [],
   recentPaths = [],
@@ -75,12 +77,6 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
           >
             <Logo decorative className="h-8 w-8" />
           </Link>
-          <div className="flex items-center space-x-2 border-l border-carbon/15 pl-3">
-            <span className="font-serif text-sm font-bold text-carbon">Taller de Edición</span>
-            <span className="rounded bg-salvia/15 border border-salvia/30 px-1.5 py-0.5 text-[10px] font-bold text-salvia uppercase">
-              Matematika
-            </span>
-          </div>
         </div>
 
         {/* Section Switcher in Header */}
@@ -97,7 +93,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                 : 'text-carbon/65 hover:text-carbon hover:bg-carbon/5'
             }`}
           >
-            Documentos MDX
+            Documentos
           </button>
           <button
             type="button"
@@ -111,7 +107,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                 : 'text-carbon/65 hover:text-carbon hover:bg-carbon/5'
             }`}
           >
-            Diagramas TSX
+            Diagramas
           </button>
         </div>
 
@@ -135,17 +131,14 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
           <div className="absolute top-0 right-0 -mt-8 -mr-8 h-48 w-48 rounded-full bg-salvia/10 blur-2xl" />
           <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="max-w-2xl">
-              <span className="inline-block rounded-md border border-salvia/30 bg-salvia/10 px-2.5 py-1 text-xs font-bold text-salvia tracking-wide">
-                {activeSection === 'documents' ? 'Módulo Editorial MDX' : 'Módulo Interactivo TSX'}
-              </span>
               <h1 className="mt-3 font-serif text-2xl sm:text-3xl font-bold tracking-tight text-carbon">
                 {activeSection === 'documents'
-                  ? 'Página de Inicio — Documentos Matemáticos'
-                  : 'Página de Inicio — Diagramas y Modelos Visuales'}
+                  ? 'Editor — Documentos matemáticos'
+                  : 'Editor — Diagramas y modelos visuales'}
               </h1>
               <p className="mt-2 text-sm text-carbon/70 leading-relaxed font-sans">
                 {activeSection === 'documents'
-                  ? 'Crea, explora y edita las páginas estructuradas de teoremas, lemas, definiciones y demostraciones del corpus.'
+                  ? 'Crea, explora y edita las páginas estructuradas de teoremas, lemas, definiciones y demostraciones.'
                   : 'Construye y ajusta diagramas geométricos interactivos y modelos matemáticos de alta precisión visual.'}
               </p>
             </div>
@@ -160,7 +153,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
                   </svg>
-                  Crear Nuevo Documento
+                  Nuevo documento
                 </button>
               ) : (
                 <button
@@ -171,7 +164,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
                   </svg>
-                  Crear Nuevo Diagrama
+                  Nuevo diagrama
                 </button>
               )}
             </div>
@@ -263,13 +256,58 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
           <h2 className="font-serif text-sm font-bold text-carbon">
             {activeSection === 'documents' ? 'Documentos Disponibles' : 'Diagramas Disponibles'}
           </h2>
-          <span className="text-xs text-carbon/55 font-mono">
-            {filteredCount} de {totalCount} elementos
-          </span>
+          {isLoading ? (
+            <div className="flex items-center gap-2" role="status" aria-live="polite">
+              <span className="h-2 w-2 rounded-full bg-salvia animate-pulse" />
+              <span className="font-serif text-xs italic text-carbon/60">Cargando contenido…</span>
+            </div>
+          ) : (
+            <span className="text-xs text-carbon/55 font-mono">
+              {filteredCount} de {totalCount} elementos
+            </span>
+          )}
         </div>
 
-        {/* Cards Grid */}
-        {filteredFiles.length > 0 ? (
+        {/* Cards Grid / Skeletons / Empty States */}
+        {isLoading ? (
+          <div
+            className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            role="status"
+            aria-busy="true"
+            aria-label="Cargando elementos"
+          >
+            {Array.from({ length: 8 }).map((_, idx) => (
+              <div
+                key={`skeleton-card-${idx}`}
+                className="relative flex flex-col justify-between rounded-xl border border-carbon/15 bg-carbon/5 p-4 shadow-2xs overflow-hidden animate-pulse"
+              >
+                <div className="pt-1 space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="h-5 w-24 rounded-full bg-carbon/10" />
+                    <div className="flex items-center space-x-1.5">
+                      <div className="h-4 w-12 rounded bg-carbon/10" />
+                      <div className="h-6 w-6 rounded-full bg-carbon/10" />
+                    </div>
+                  </div>
+                  <div className="space-y-1.5 pt-1">
+                    <div className="h-4 w-4/5 rounded bg-carbon/15" />
+                    <div className="h-3.5 w-1/2 rounded bg-carbon/10" />
+                  </div>
+                  <div className="h-2.5 w-2/5 rounded bg-carbon/10" />
+                  {activeSection === 'diagrams' && (
+                    <div className="h-36 w-full rounded-lg border border-carbon/10 bg-lienzo/50 flex items-center justify-center">
+                      <div className="h-8 w-8 rounded-full border-2 border-dashed border-carbon/20" />
+                    </div>
+                  )}
+                </div>
+                <div className="mt-4 flex items-center justify-between border-t border-carbon/10 pt-2.5">
+                  <div className="h-3 w-20 rounded bg-carbon/10" />
+                  <div className="h-3 w-10 rounded bg-carbon/10" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : filteredFiles.length > 0 ? (
           <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredFiles.map(file => (
               <EditorLandingCard
@@ -281,14 +319,26 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               />
             ))}
           </div>
+        ) : totalCount === 0 ? (
+          <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-carbon/20 bg-carbon/5 p-12 text-center">
+            <svg className="h-10 w-10 text-carbon/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <p className="mt-3 font-serif text-base font-bold text-carbon">
+              Aún no hay {activeSection === 'documents' ? 'documentos' : 'diagramas'}
+            </p>
+            <p className="mt-1 text-xs text-carbon/60 max-w-sm">
+              Crea tu primer {activeSection === 'documents' ? 'documento' : 'diagrama'} usando el botón de la parte superior.
+            </p>
+          </div>
         ) : (
           <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-carbon/20 bg-carbon/5 p-12 text-center">
             <svg className="h-10 w-10 text-carbon/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <p className="mt-3 font-serif text-base font-bold text-carbon">No se encontraron elementos</p>
+            <p className="mt-3 font-serif text-base font-bold text-carbon">No se encontraron resultados</p>
             <p className="mt-1 text-xs text-carbon/60 max-w-sm">
-              No hay {activeSection === 'documents' ? 'documentos' : 'diagramas'} que coincidan con los filtros aplicados.
+              No hay {activeSection === 'documents' ? 'documentos' : 'diagramas'} que coincidan con la búsqueda o filtros aplicados.
             </p>
             <button
               type="button"
@@ -299,7 +349,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               }}
               className="mt-4 rounded-lg border border-carbon/20 bg-lienzo px-4 py-2 text-xs font-bold text-carbon hover:bg-carbon/5 transition-all cursor-pointer"
             >
-              Restablecer filtros
+              Limpiar búsqueda y filtros
             </button>
           </div>
         )}

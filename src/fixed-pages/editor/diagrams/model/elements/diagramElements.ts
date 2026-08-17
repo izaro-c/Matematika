@@ -213,7 +213,7 @@ export function generateUniqueDiagramId(
 }
 
 export function cleanTargetId(value: string, fallback: string): string {
-  return sanitizeDiagramId(value, fallback);
+  return value.trim().replace(/[^A-Za-z0-9_-]/g, '') || fallback;
 }
 
 export function nextPointId(points: VisualPoint[]): string {

@@ -1,19 +1,10 @@
-import type { ThemeColorName } from '@/design';
+import { THEME_COLOR_VARS, type ThemeColorName } from '@/design';
 
-/** Misma lista que THEME_COLOR_VARS — editar pigmentos en theme.css + primitives.ts. */
-export const ARTS_AND_CRAFTS_COLORS = [
-  'lienzo',
-  'carbon',
-  'salvia',
-  'terracota',
-  'pizarra',
-  'ocre',
-  'pavo',
-  'granada',
-  'musgo',
-] as const satisfies ReadonlyArray<ThemeColorName>;
+/** Lista derivada de THEME_COLOR_VARS en primitives.ts. */
+export const ARTS_AND_CRAFTS_COLORS = Object.keys(THEME_COLOR_VARS) as readonly ThemeColorName[];
 
-export type ArtsAndCraftsColor = (typeof ARTS_AND_CRAFTS_COLORS)[number];
+export type ArtsAndCraftsColor = ThemeColorName;
+
 
 export const EDITOR_THEME_COLOR_OPTIONS = [
   { value: 'terracota', label: 'Terracota (Teoremas, Default)' },

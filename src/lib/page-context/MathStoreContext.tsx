@@ -27,6 +27,14 @@ export const MathProviderBoundary = ({ children }: { children: ReactNode }) => {
   return store ? children : <MathProvider>{children}</MathProvider>;
 };
 
+const fallbackMathStore = createMathStore();
+
+export function useOptionalMathStore<T>(selector: (state: MathState) => T): T | undefined {
+  const store = useContext(MathContext);
+  const value = useStore(store ?? fallbackMathStore, selector);
+  return store ? value : undefined;
+}
+
 export function useMathStore<T>(selector: (state: MathState) => T): T {
   const store = useContext(MathContext);
   if (!store) {

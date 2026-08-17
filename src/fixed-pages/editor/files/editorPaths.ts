@@ -22,16 +22,16 @@ export function getTemplateName(wizardType: string): string {
   return wizardType.slice(0, -1);
 }
 
+import { getContentTypeRoutePrefix } from '@/lib/theme/constants';
+
 export function getInternalLinkUrl(fileNode: FileNode): string {
   const id = getContentId(fileNode);
-  switch (fileNode.type) {
-    case 'theorems': return `/teorema/${id}`;
-    case 'methods': return `/metodo/${id}`;
-    case 'demonstrations': return `/demo/${id}`;
-    case 'mathematicians': return `/bio/${id.toLowerCase()}`;
-    default: return '';
-  }
+  const prefix = getContentTypeRoutePrefix(fileNode.type);
+  if (!prefix) return '';
+  const finalId = prefix === 'bio' ? id.toLowerCase() : id;
+  return `/${prefix}/${finalId}`;
 }
+
 
 export function getContentId(fileNode: FileNode): string {
   return normalizeContentId(fileNode.name.replace(/\.(mdx|tsx)$/i, ''));
