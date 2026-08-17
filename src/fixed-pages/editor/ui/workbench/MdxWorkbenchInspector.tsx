@@ -7,6 +7,7 @@ import { MetadataPanel } from '../panels/MetadataPanel';
 import { EditorDiagnosticsPanel } from '../panels/EditorDiagnosticsPanel';
 import { MetadataInspector } from '../components/MetadataInspector';
 import { WorkbenchAsideTabs } from './WorkbenchAsideTabs';
+import { useI18n } from '@/i18n';
 
 import type { MetadataPanelProps, PageDiagramLink } from '../panels/MetadataPanel';
 
@@ -49,16 +50,18 @@ export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (prop
   const setActiveTab = controlled ? props.onActiveTabChange! : setUncontrolledTab;
   const errorCount = props.validation.errorCount;
 
+  const { t } = useI18n();
+
   return (
     <WorkbenchAsideTabs
       className="bg-lienzo select-none"
-      aria-label="Secciones del inspector de página"
+      aria-label={t('editor', 'inspectorAriaLabel')}
       tabs={[
-        { id: 'page', label: 'Página' },
-        { id: 'diagrams', label: 'Diagramas' },
+        { id: 'page', label: t('editor', 'pageTab') },
+        { id: 'diagrams', label: t('editor', 'diagramsTab') },
         {
           id: 'avisos',
-          label: 'Avisos',
+          label: t('editor', 'warningsTab'),
           endAdornment: errorCount > 0 ? (
             <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-granada animate-pulse" />
           ) : props.validation.warningCount > 0 ? (
@@ -73,8 +76,8 @@ export const MdxWorkbenchInspector: React.FC<MdxWorkbenchInspectorProps> = (prop
           type="button"
           onClick={props.onClose}
           className="ml-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-carbon/60 hover:bg-carbon/10 hover:text-carbon transition-colors cursor-pointer"
-          title="Ocultar detalles"
-          aria-label="Ocultar detalles"
+          title={t('editor', 'hideDetails')}
+          aria-label={t('editor', 'hideDetails')}
         >
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

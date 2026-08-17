@@ -377,6 +377,14 @@ export interface DiagramViewport {
   padding: number;
 }
 
+export interface DiagramTranslation {
+  title?: string;
+  note?: string;
+  steps?: Record<string, string | { label?: string; description?: string }>;
+  labels?: Record<string, string>;
+  annotations?: Record<string, string>;
+}
+
 export interface DiagramSpecV2 {
   version: typeof DIAGRAM_SPEC_V2_VERSION;
   renderer: typeof DIAGRAM_RENDERER_V2_ID;
@@ -401,6 +409,7 @@ export interface DiagramSpecV2 {
   dependencies?: DiagramDependency[];
   note: string;
   extensions: Record<string, unknown>;
+  translations?: Record<string, DiagramTranslation>;
 }
 
 export type DiagramSceneItem = DiagramPoint | DiagramElement | DiagramSlider;

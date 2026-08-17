@@ -4,6 +4,7 @@ import { TaxonomyGraph } from '@/content-pages/study-plan/ui/TaxonomyGraph';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { ContentCard } from '@/components/ui/ContentCard';
+import { useI18n } from '@/i18n';
 
 /**
  * Página principal de una Rama (ej. "Álgebra Lineal").
@@ -12,9 +13,10 @@ import { ContentCard } from '@/components/ui/ContentCard';
  */
 export const BranchPage = () => {
   const { id } = useParams();
+  const { getLocalizedPath, lang, t } = useI18n();
   const branchSlug = id || '';
 
-  const taxonomy = db.getBranchTaxonomy(branchSlug);
+  const taxonomy = db.getBranchTaxonomy(branchSlug, lang);
 
   return (
     <div className="ac-page pt-24 pb-32">
@@ -24,7 +26,7 @@ export const BranchPage = () => {
         <div className="mb-12">
           <Breadcrumbs 
             crumbs={[
-              ...taxonomy.breadcrumbs.map(crumb => ({ name: crumb.name, href: `/rama/${crumb.slug}` })),
+              ...taxonomy.breadcrumbs.map(crumb => ({ name: crumb.name, href: getLocalizedPath(`/rama/${crumb.slug}`) })),
               { name: taxonomy.name || taxonomy.id || branchSlug }
             ]} 
           />
@@ -43,9 +45,9 @@ export const BranchPage = () => {
 
         {taxonomy.subBranches.length === 0 && taxonomy.directItems.length === 0 ? (
           <EmptyState
-            message="No hay registros catalogados en esta rama actualmente."
-            actionLabel="Volver a la biblioteca"
-            actionHref="/"
+            message={t('notFound', 'description')}
+            actionLabel={t('topbar', 'backToLibrary')}
+            actionHref={getLocalizedPath('/')}
           />
         ) : (
           <div className="flex flex-col gap-16">
@@ -58,22 +60,24 @@ export const BranchPage = () => {
             {/* Sub-ramas (Carpetas) */}
             {taxonomy.subBranches.length > 0 && (
               <div>
-                <h2 className="ac-eyebrow ac-eyebrow--md text-carbon/50 mb-6">Sub-ramas</h2>
+                <h2 className="ac-eyebrow ac-eyebrow--md text-carbon/50 mb-6">{t('content', 'subBranches')}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {taxonomy.subBranches.map(sub => (
                     <Link
                       key={sub.slug}
-                      href={`/rama/${sub.slug}`}
+                      href={getLocalizedPath(`/rama/${sub.slug}`)}
                       className="group flex items-center justify-between p-6 elegant-panel"
                       style={{ ['--hover-accent' as string]: 'var(--theme-pizarra)' }}
                     >
                       <span className="flex items-baseline gap-3">
-                          {/^\d{2}[A-Z]?$/.test(sub.slug) && (
-                            <span className="text-base font-[ui-sans-serif,system-ui,-apple-system,sans-serif] font-bold text-carbon/40">{sub.slug}</span>
-                          )}
+                        {/^\d{2}[A-Z]?$/.test(sub.slug) && (
+                          <span className="text-base font-[ui-sans-serif,system-ui,-apple-system,sans-serif] font-bold text-carbon/40">{sub.slug}</span>
+                        )}
                         <span className="text-xl font-bold">{sub.name}</span>
                       </span>
-                      <span className="text-xs font-sans tracking-widest opacity-50 group-hover:opacity-100 text-pizarra">Explorar →</span>
+                      <span className="text-xs font-sans tracking-widest opacity-50 group-hover:opacity-100 text-pizarra">
+                        {t('content', 'explore')} →
+                      </span>
                     </Link>
                   ))}
                 </div>
@@ -83,7 +87,7 @@ export const BranchPage = () => {
             {/* Conceptos Directos (Archivos) */}
             {taxonomy.directItems.length > 0 && (
               <div>
-                <h2 className="ac-eyebrow ac-eyebrow--md text-carbon/50 mb-6">Conceptos Fundamentales</h2>
+                <h2 className="ac-eyebrow ac-eyebrow--md text-carbon/50 mb-6">{t('content', 'fundamentalConcepts')}</h2>
                 <div className="flex flex-col gap-4">
                   {taxonomy.directItems.map((entry, idx) => {
                     let link = '/';
@@ -108,9 +112,9 @@ export const BranchPage = () => {
                     return (
                       <ContentCard
                         key={idx}
-                        href={link}
+                        href={getLocalizedPath(link)}
                         title={(entry.item as unknown as Record<string, unknown>).title as string || entry.item.id}
-                        description={(entry.item as unknown as Record<string, unknown>).description as string || 'Documento formal.'}
+                        description={(entry.item as unknown as Record<string, unknown>).description as string || ''}
                         type={mappedType}
                         layout="row"
                       />

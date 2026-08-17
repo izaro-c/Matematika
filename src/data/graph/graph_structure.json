@@ -731,8 +731,8 @@
       "id": "triangulo",
       "type": "definicion",
       "subtype": "nominal",
-      "title": "Triángulo",
-      "description": "Figura geométrica formada por tres segmentos (lados) que unen tres puntos no colineales (vértices).",
+      "title": "Triangelua",
+      "description": "Hiru puntu ez-kolineal (erpinak) lotzen dituzten hiru segmentuk (aldeak) osatutako figura geometrikoa.",
       "proofs": [],
       "directDependencies": [
         "punto",
@@ -950,8 +950,8 @@
     "ejercicio-pitagoras-cateto": {
       "id": "ejercicio-pitagoras-cateto",
       "type": "ejercicio",
-      "title": "Cálculo de un cateto en un triángulo rectángulo",
-      "description": "Aplicación del teorema de Pitágoras para determinar la longitud de un cateto desconocido a partir de la hipotenusa y el otro cateto.",
+      "title": "Kateto baten kalkulua triangelu angeluzuzenean",
+      "description": "Pitagorasen teoremaren aplikazioa kateto ezezagun baten luzera zehazteko, hipotenusa eta beste katetoa jakinda.",
       "proofs": [],
       "directDependencies": []
     },
@@ -1616,8 +1616,8 @@
     "teorema-pitagoras": {
       "id": "teorema-pitagoras",
       "type": "teorema",
-      "title": "Teorema de Pitágoras",
-      "description": "En un triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos.",
+      "title": "Pitagorasen Teorema",
+      "description": "Triangelu angeluzuzen batean, hipotenusaren karratua katetoen karratuen baturaren berdina da.",
       "proofs": [
         {
           "id": "demo-pitagoras-areas",

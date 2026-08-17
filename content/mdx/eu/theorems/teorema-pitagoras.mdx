@@ -1,0 +1,52 @@
+export const metadata = {
+  "id": "teorema-pitagoras",
+  "type": "teorema",
+  "lang": "eu",
+  "branch": "51M",
+  "title": "Pitagorasen Teorema",
+  "description": "Triangelu angeluzuzen batean, hipotenusaren karratua katetoen karratuen baturaren berdina da.",
+  "statement": "Izan bedi △ABC triangelu angeluzuzena, C erpinean angelu zuzena duena. a = |BC|, b = |CA| eta c = |AB| (hipotenusa) badira, orduan a² + b² = c².",
+  "tags": ["geometria", "triangeluak", "azalerak", "51M"],
+  "authors": ["euclides", "pitagoras"],
+  "difficulty": "básico",
+  "demos": ["demo-pitagoras-euclides", "demo-pitagoras-areas"],
+  "examples": ["ejemplo-pitagoras-calculo"],
+  "exercises": ["ejercicio-pitagoras-cateto"],
+  "hasSimulation": true,
+  "leanId": "Matematika.Geometry.Hilbert.teorema_pitagoras",
+  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
+};
+
+import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras';
+
+export const Simulation = Pitagoras;
+
+<Capitular letra="P" />itagorasen teorema planoko <ConceptLink targetId={["sistema-euclidiano", "geometria-euclidiana"]}>geometria euklidearreko</ConceptLink> <ConceptLink targetId="relacion-metrica" isDependency={false}>erlazio metriko</ConceptLink> unibertsalena da. <ConceptLink targetId="angulo" isDependency={false}>Angelu</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>zuzena</ConceptLink> duen <InteractiveElement target="triangulo"><ConceptLink targetId="triangulo" isDependency={false}>triangelu</ConceptLink></InteractiveElement> baten <ConceptLink targetId="lado" isDependency={false}>aldeen</ConceptLink> arteko lotura sendoa ezartzen du.
+
+<Separador />
+
+### Enuntziatu Formala
+
+Izan bedi $\triangle ABC$ <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triangelu angeluzuzena</ConceptLink>, $C$ erpinean <ConceptLink targetId="angulo" isDependency={false}>angelu</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>zuzena</ConceptLink> duena. Izan bitez $a = |BC|$ eta $b = |CA|$ <ConceptLink targetId="cateto" isDependency={false}>katetoak</ConceptLink>, eta $c = |AB|$ <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink> (<ConceptLink targetId="angulo" isDependency={false}>angelu</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>zuzenaren</ConceptLink> aurkako <ConceptLink targetId="lado" isDependency={false}>aldea</ConceptLink>). Orduan:
+
+<Formula>
+  $$ a^2 + b^2 = c^2 $$
+</Formula>
+
+<ConceptLink targetId="area" isDependency={false}>Azaleren</ConceptLink> bidezko baliokidea: <InteractiveElement target="cuadrado-c" color="ocre">hipotenusaren</InteractiveElement> gainean eraikitako <ConceptLink targetId="cuadrado" isDependency={false}>karratuaren</ConceptLink> <ConceptLink targetId="area" isDependency={false}>azalera</ConceptLink>, <InteractiveElement target="cuadrado-a" color="salvia">$a$ katetoaren</InteractiveElement> eta <InteractiveElement target="cuadrado-b" color="terracota">$b$ katetoaren</InteractiveElement> gainean eraikitako <ConceptLink targetId="cuadrado" isDependency={false}>karratuen</ConceptLink> <ConceptLink targetId="area" isDependency={false}>azaleren</ConceptLink> baturaren berdina da.
+
+<Separador />
+
+### Eztabaida
+
+<ConceptLink targetId="teorema" isDependency={false}>Teoremak</ConceptLink> <ConceptLink targetId="longitud" isDependency={false}>luzerak</ConceptLink> ez ezik, **<ConceptLink targetId="area" isDependency={false}>azalerak</ConceptLink>** ere erlazionatzen ditu. Jatorrian, <ConceptLink targetId="euclides" isDependency={false}>Euklidesek</ConceptLink> frogatu zuen <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusaren</ConceptLink> gaineko <ConceptLink targetId="cuadrado" isDependency={false}>karratuak</ConceptLink> <ConceptLink targetId="cateto" isDependency={false}>katetoen</ConceptLink> gaineko <ConceptLink targetId="cuadrado" isDependency={false}>karratuen</ConceptLink> <ConceptLink targetId="area" isDependency={false}>azalera</ConceptLink> berberak dituela, <ConceptLink targetId="triangulo" isDependency={false}>triangeluen</ConceptLink> ebakiduraren bidez.
+
+Emaitza hau <ConceptLink targetId={["sistema-euclidiano", "geometria-euclidiana"]}>geometria euklidearrean</ConceptLink> bakarrik betetzen da: <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> mende dago. <ConceptLink targetId={["sistema-hiperbolico", "geometria-hiperbolica"]}>Geometria hiperbolikoan</ConceptLink>, erlazio hau <ConceptLink targetId="desigualdad" isDependency={false}>desberdintza</ConceptLink> zorrotz batek ordezkatzen du ($a^2 + b^2 < c^2$).
+
+<Separador />
+
+### Oharrak
+
+- <ConceptLink targetId="teorema" isDependency={false}>Teoremak</ConceptLink> hainbat <ConceptLink targetId="demostracion" isDependency={false}>frogapen</ConceptLink> onartzen ditu: algebraikoa, geometrikoa, <ConceptLink targetId="metodo-contradiccion" isDependency={false}>absurdo bidezkoa</ConceptLink>, edota <ConceptLink targetId="triangulo" isDependency={false}>triangeluen</ConceptLink> <ConceptLink targetId="semejanza" isDependency={false}>antzekotasunaren</ConceptLink> bidezkoa.
+- <ConceptLink targetId="reciproca" isDependency={false}>Alderantzizkoa</ConceptLink> ere egiazkoa da: <ConceptLink targetId="triangulo" isDependency={false}>triangelu</ConceptLink> batean $a^2 + b^2 = c^2$ betetzen bada, $c$-ren aurkako <ConceptLink targetId="angulo" isDependency={false}>angelua</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>zuzena</ConceptLink> da.
+- Tradizionalki <ConceptLink targetId="pitagoras" isDependency={false}>Pitagorasi</ConceptLink> (K.a. VI. mendea) egozten zaio, nahiz eta babiloniarrek eta egiptoarrek kasu partzialak mila urte lehenago ezagutzen zituzten.

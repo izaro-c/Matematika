@@ -7,6 +7,8 @@ import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { ContentBody } from '@/components/ui/ContentBody';
 import { DifficultyBadge } from '@/components/ui/DifficultyBadge';
+import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { useI18n } from '@/i18n';
 
 /**
  * Barra de progreso interactiva que se fija en el top del ExercisePage.
@@ -14,6 +16,7 @@ import { DifficultyBadge } from '@/components/ui/DifficultyBadge';
  */
 const ProgressBar: React.FC = () => {
   const { score, reset } = useExercise();
+  const { t } = useI18n();
   const { correct, total } = score;
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
 
@@ -33,14 +36,16 @@ const ProgressBar: React.FC = () => {
         </div>
         <span className="text-xs font-sans text-carbon/50 shrink-0">
           <strong className={pct === 100 ? 'text-musgo' : 'text-carbon'}>{correct}</strong>
-          <span className="text-carbon/30"> / {total} correctas</span>
+          <span className="text-carbon/30">
+            {` / ${t('exercise', 'correctCount', { count: total })}`}
+          </span>
         </span>
         {score.answered > 0 && (
           <button
             onClick={reset}
             className="page-accent-text ac-eyebrow ac-eyebrow--sm opacity-60 hover:opacity-100 transition-opacity underline underline-offset-2 shrink-0"
           >
-            Reiniciar
+            {t('exercise', 'reset')}
           </button>
         )}
       </div>
@@ -49,7 +54,11 @@ const ProgressBar: React.FC = () => {
 };
 
 const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
-  const exercise = db.getExercise(id);
+  const { lang, getLocalizedPath, t } = useI18n();
+  const exercise = db.getExercise(id, lang);
+  const isFallback = id ? db.isFallback(id, lang) : false;
+  const availableLangs = id ? db.getAvailableLanguages(id) : ['es'];
+
   const { score } = useExercise();
   const { markExerciseComplete } = useProgressStore();
 
@@ -62,15 +71,15 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
   if (!exercise) {
     return (
       <div className="ac-page flex items-center justify-center">
-        <h1 className="text-2xl italic text-carbon/50">Ejercicio no encontrado.</h1>
+        <h1 className="text-2xl italic text-carbon/50">{t('notFound', 'description')}</h1>
       </div>
     );
   }
 
-  const relatedTheorem = exercise.relatedTheorem ? db.getTheorem(exercise.relatedTheorem) : null;
+  const relatedTheorem = exercise.relatedTheorem ? db.getTheorem(exercise.relatedTheorem, lang) : null;
 
   const breadcrumbs = relatedTheorem
-    ? [{ name: relatedTheorem.title, href: `/teorema/${relatedTheorem.id}` }]
+    ? [{ name: relatedTheorem.title, href: getLocalizedPath(`/teorema/${relatedTheorem.id}`) }]
     : [];
 
   return (
@@ -78,6 +87,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
       <div className="min-h-viewport bg-transparent text-carbon font-serif pb-32">
         <ProgressBar />
         <div className="w-full px-6 md:px-10 pt-4 pb-16">
+          {isFallback && <UntranslatedFallbackBanner availableLangs={availableLangs} />}
           <ContentHeader
             type="ejercicio"
             title={exercise.title}
@@ -85,7 +95,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
             breadcrumbs={breadcrumbs}
             badgesSlot={exercise.difficulty ? <DifficultyBadge difficulty={exercise.difficulty} /> : undefined}
             backLink={relatedTheorem ? {
-              href: `/teorema/${relatedTheorem.id}`,
+              href: getLocalizedPath(`/teorema/${relatedTheorem.id}`),
               label: `← ${relatedTheorem.title}`,
             } : undefined}
           />
@@ -98,13 +108,13 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
             <div className="mt-16 p-6 border border-musgo/30 bg-musgo/5 text-center">
               <div className="text-3xl mb-2 text-musgo">✦</div>
               <p className="font-serif font-bold text-musgo text-lg">
-                Ejercicio completado — {score.correct}/{score.total} correctas
+                {t('exercise', 'completedBanner', { correct: score.correct, total: score.total })}
               </p>
               {relatedTheorem && (
-                <Link href={`/teorema/${relatedTheorem.id}`}>
-                  <a className="ac-link-back ac-interactive mt-4 text-xs hover:text-carbon underline underline-offset-2 transition-colors">
-                    Volver al Teorema →
-                  </a>
+                <Link href={getLocalizedPath(`/teorema/${relatedTheorem.id}`)}>
+                  <span className="ac-link-back ac-interactive mt-4 text-xs hover:text-carbon underline underline-offset-2 transition-colors cursor-pointer inline-block">
+                    {t('exercise', 'backToTheorem')}
+                  </span>
                 </Link>
               )}
             </div>

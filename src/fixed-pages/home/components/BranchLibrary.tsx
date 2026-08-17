@@ -2,6 +2,7 @@ import { Link } from 'wouter';
 import { db } from '@/data/content';
 import { mscNames } from '@/data/content/msc2020';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
+import { useI18n } from '@/i18n';
 
 interface SectionDef {
   title: string;
@@ -14,104 +15,16 @@ interface SectionDef {
   icon: string;
 }
 
-const SECTIONS: SectionDef[] = [
-  {
-    title: 'Fundamentos y Lógica',
-    slug: 'fundamentos-y-logica',
-    roman: 'I',
-    codes: ['03', '08'],
-    groups: [],
-    accent: 'var(--theme-musgo)',
-    desc: 'Formalización de los sistemas deductivos, teoría de la demostración y fundamentos de la matemática.',
-    icon: '⊢',
-  },
-  {
-    title: 'Álgebra y Teoría de Números',
-    slug: 'algebra-y-teoria-de-numeros',
-    roman: 'II',
-    codes: ['11', '15', '14', '12', '13', '18', '20'],
-    groups: [
-      { id: 'geometria-algebraica', codes: ['14'] },
-      { id: 'algebra-abstracta', codes: ['12', '13'] },
-      { id: 'teoria-de-grupos-y-categorias', codes: ['18', '20'] },
-    ],
-    accent: 'var(--theme-carbon)',
-    desc: 'Abstracción de las operaciones y estructuras algebraicas sobre conjuntos y espacios.',
-    icon: '⊕',
-  },
-  {
-    title: 'Análisis Matemático',
-    slug: 'analisis-matematico',
-    roman: 'III',
-    codes: ['26', '30', '34', '46'],
-    groups: [
-      { id: 'analisis-real-y-funciones', codes: ['26'] },
-      { id: 'analisis-complejo', codes: ['30'] },
-      { id: 'ecuaciones-diferenciales', codes: ['34'] },
-      { id: 'analisis-funcional-y-armonico', codes: ['46'] },
-    ],
-    accent: 'var(--theme-pizarra)',
-    desc: 'Estudio del cambio continuo, los límites, las funciones y las convergencias infinitas.',
-    icon: '∫',
-  },
-  {
-    title: 'Geometría y Topología',
-    slug: 'geometria-y-topologia',
-    roman: 'IV',
-    codes: ['51', '53', '54', '55'],
-    groups: [
-      { id: 'geometria-clasica-y-diferencial', codes: ['51', '53'] },
-      { id: 'topologia-general-y-algebraica', codes: ['54', '55'] },
-    ],
-    accent: 'var(--theme-terracota)',
-    desc: 'Estudio formal de las propiedades métricas, diferenciales y topológicas del espacio.',
-    icon: '△',
-  },
-  {
-    title: 'Matemática Discreta y Computacional',
-    slug: 'matematica-discreta-y-computacional',
-    roman: 'V',
-    codes: ['05', '68'],
-    groups: [],
-    accent: 'var(--theme-pavo)',
-    desc: 'Estructuras discretas, combinatoria, teoría de grafos y fundamentos algorítmicos.',
-    icon: '◇',
-  },
-  {
-    title: 'Probabilidad, Estadística y Aplicaciones',
-    slug: 'probabilidad-estadistica-y-aplicaciones',
-    roman: 'VI',
-    codes: ['60', '62', '65', '49', '90', '91', '70', '74', '76', '78', '80', '81', '82', '83', '85', '86', '92'],
-    groups: [
-      { id: 'optimizacion-y-teoria-de-juegos', codes: ['49', '90', '91'] },
-      { id: 'fisica-matematica-y-biologia', codes: ['70', '74', '76', '78', '80', '81', '82', '83', '85', '86', '92'] },
-    ],
-    accent: 'var(--theme-ocre)',
-    desc: 'Tratamiento axiomático de los fenómenos aleatorios, inferencia y modelado de procesos.',
-    icon: '∑',
-  },
-];
-
-function itemHref(entry: { type: string; item: { slug?: string; id?: string } }): string {
-  if (entry.type === 'method') return `/metodo/${entry.item.slug}`;
-  if (entry.type === 'theorem') return `/teorema/${entry.item.id}`;
-  if (entry.type === 'definition') return `/definicion/${entry.item.id}`;
-  if (entry.type === 'axiom') return `/axioma/${entry.item.id}`;
-  if (entry.type === 'model') return `/modelo/${entry.item.id}`;
-  if (entry.type === 'exercise') return `/ejercicio/${entry.item.slug}`;
-  if (entry.type === 'example') return `/ejemplo/${entry.item.slug}`;
-  if (entry.type === 'useCase') return `/caso/${entry.item.slug}`;
+const itemHref = (entry: { type: string; item: { id: string; slug?: string } }) => {
+  if (entry.type === 'theorem') return `/teorema/${entry.item.slug || entry.item.id}`;
+  if (entry.type === 'definition') return `/definicion/${entry.item.slug || entry.item.id}`;
+  if (entry.type === 'method') return `/metodo/${entry.item.slug || entry.item.id}`;
+  if (entry.type === 'axiom') return `/axioma/${entry.item.slug || entry.item.id}`;
+  if (entry.type === 'model') return `/modelo/${entry.item.slug || entry.item.id}`;
+  if (entry.type === 'exercise') return `/ejercicio/${entry.item.slug || entry.item.id}`;
+  if (entry.type === 'example') return `/ejemplo/${entry.item.slug || entry.item.id}`;
+  if (entry.type === 'useCase') return `/caso/${entry.item.slug || entry.item.id}`;
   return '/';
-}
-
-const TYPE_LABELS: Record<string, string> = {
-  method: 'Método',
-  theorem: 'Teorema',
-  definition: 'Definición',
-  axiom: 'Axioma',
-  model: 'Modelo',
-  exercise: 'Ejercicio',
-  example: 'Ejemplo',
 };
 
 /** Chips = sans de sistema como en GH Pages (prod no usa Source Sans 3). */
@@ -131,28 +44,94 @@ function sortCodes(codes: string[]) {
 
 export const BranchLibrary = () => {
   const { readConcepts, completedExercises } = useProgressStore();
+  const { t, getLocalizedPath, lang } = useI18n();
 
-  const totalEntries = db.getAllDefinitions().length + db.theorems.size;
+  const sections: SectionDef[] = [
+    {
+      title: t('library', 'sectionI'),
+      slug: 'fundamentos-y-logica',
+      roman: 'I',
+      codes: ['03', '08'],
+      groups: [],
+      accent: 'var(--theme-musgo)',
+      desc: t('library', 'sectionIDesc'),
+      icon: '⊢',
+    },
+    {
+      title: t('library', 'sectionII'),
+      slug: 'algebra-y-teoria-de-numeros',
+      roman: 'II',
+      codes: ['11', '15', '14', '12', '13', '18', '20'],
+      groups: [
+        { id: 'geometria-algebraica', codes: ['14'] },
+        { id: 'algebra-abstracta', codes: ['12', '13'] },
+        { id: 'teoria-de-grupos-y-categorias', codes: ['18', '20'] },
+      ],
+      accent: 'var(--theme-carbon)',
+      desc: t('library', 'sectionIIDesc'),
+      icon: '⊕',
+    },
+    {
+      title: t('library', 'sectionIII'),
+      slug: 'analisis-matematico',
+      roman: 'III',
+      codes: ['26', '30', '34', '46'],
+      groups: [
+        { id: 'analisis-real-y-funciones', codes: ['26'] },
+        { id: 'analisis-complejo', codes: ['30'] },
+        { id: 'ecuaciones-diferenciales', codes: ['34'] },
+        { id: 'analisis-funcional-y-armonico', codes: ['46'] },
+      ],
+      accent: 'var(--theme-pizarra)',
+      desc: t('library', 'sectionIIIDesc'),
+      icon: '∫',
+    },
+    {
+      title: t('library', 'sectionIV'),
+      slug: 'geometria-y-topologia',
+      roman: 'IV',
+      codes: ['51', '53', '54', '55'],
+      groups: [
+        { id: 'geometria-clasica-y-diferencial', codes: ['51', '53'] },
+        { id: 'topologia-general-y-algebraica', codes: ['54', '55'] },
+      ],
+      accent: 'var(--theme-terracota)',
+      desc: t('library', 'sectionIVDesc'),
+      icon: '△',
+    },
+  ];
+
+  const typeLabels: Record<string, string> = {
+    method: t('content', 'methods'),
+    theorem: t('content', 'theorems'),
+    definition: t('content', 'definitions'),
+    axiom: t('content', 'axioms'),
+    model: t('content', 'models'),
+    exercise: t('content', 'exercises'),
+    example: t('content', 'examples'),
+  };
+
+  const totalEntries = db.getAllDefinitions(lang).length + db.theorems.size;
 
   return (
     <main className="max-w-5xl mx-auto px-8 py-16">
       <div className="flex flex-col md:flex-row items-baseline justify-between gap-4 mb-10 border-b border-carbon/15 pb-4">
         <div className="flex items-baseline gap-4 flex-wrap">
-          <h2 className="text-2xl text-ink">Biblioteca MSC2020</h2>
+          <h2 className="text-2xl text-ink">{t('library', 'title')}</h2>
           <span className="text-sm text-ink-muted tracking-wide font-sans tabular-nums">
-            {SECTIONS.length} secciones · {totalEntries} entradas
+            {t('library', 'sectionsCount', { count: sections.length })} · {t('library', 'entriesCount', { count: totalEntries })}
           </span>
         </div>
         <div className="flex items-center gap-4 text-sm font-sans tracking-wide text-ink-muted bg-carbon/5 px-4 py-2.5 rounded tabular-nums">
-          <span>Leídos: <strong className="text-salvia font-semibold">{readConcepts.length}</strong></span>
+          <span>{t('library', 'read')}: <strong className="text-salvia font-semibold">{readConcepts.length}</strong></span>
           <span aria-hidden="true">·</span>
-          <span>Ejercicios: <strong className="text-salvia font-semibold">{completedExercises.length}</strong></span>
+          <span>{t('library', 'exercises')}: <strong className="text-salvia font-semibold">{completedExercises.length}</strong></span>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-        {SECTIONS.map((section) => {
-          const allItems = section.codes.flatMap(code => db.getItemsByBranch(code));
+        {sections.map((section) => {
+          const allItems = section.codes.flatMap(code => db.getItemsByBranch(code, lang));
           const seen = new Map<string, { type: string; item: { id: string; title?: string } }>();
           for (const entry of allItems) {
             if (!seen.has(entry.item.id)) {
@@ -165,7 +144,7 @@ export const BranchLibrary = () => {
 
           return (
             <article
-              key={section.title}
+              key={section.slug}
               className="group elegant-panel relative flex flex-col overflow-hidden cursor-pointer"
               style={{ ['--hover-accent' as string]: section.accent }}
             >
@@ -179,10 +158,10 @@ export const BranchLibrary = () => {
                       className="ac-label ac-label--sm mb-1"
                       style={{ color: section.accent }}
                     >
-                      Sección {section.roman}
+                      {t('library', 'section')} {section.roman}
                     </div>
                     <Link
-                      href={`/rama/${section.slug}`}
+                      href={getLocalizedPath(`/rama/${section.slug}`)}
                       className="block text-2xl text-ink leading-none transition-colors hover:underline decoration-1 underline-offset-4"
                     >
                       {section.title}
@@ -207,7 +186,7 @@ export const BranchLibrary = () => {
                   {section.groups.map(group => (
                       <Link
                         key={group.id}
-                        href={`/rama/${group.id}`}
+                        href={getLocalizedPath(`/rama/${group.id}`)}
                         className={`${BRANCH_CHIP} border-dashed`}
                         style={chipInk(section.accent)}
                       >
@@ -218,7 +197,7 @@ export const BranchLibrary = () => {
                   {sortCodes(section.codes).map(code => (
                       <Link
                         key={code}
-                        href={`/rama/${code}`}
+                        href={getLocalizedPath(`/rama/${code}`)}
                         className={`${BRANCH_CHIP} justify-center`}
                         style={chipInk(section.accent)}
                       >
@@ -232,7 +211,7 @@ export const BranchLibrary = () => {
                     displayItems.map((entry, idx) => (
                       <Link
                         key={idx}
-                        href={itemHref(entry)}
+                        href={getLocalizedPath(itemHref(entry))}
                         className="flex items-center justify-between py-2.5 min-h-11 group/row hover:bg-carbon/[0.02] -mx-2 px-2 rounded transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
                       >
                         <span className="text-sm text-ink-body group-hover/row:text-ink font-medium flex items-center gap-2">
@@ -246,23 +225,23 @@ export const BranchLibrary = () => {
                             backgroundColor: `color-mix(in srgb, ${section.accent} 12%, transparent)`,
                           }}
                         >
-                          {TYPE_LABELS[entry.type] || entry.type}
+                          {typeLabels[entry.type] || entry.type}
                         </span>
                       </Link>
                     ))
                   ) : (
                     <div className="py-3 text-center">
-                      <span className="ac-eyebrow ac-eyebrow--sm ac-eyebrow--faint">En Preparación</span>
+                      <span className="ac-eyebrow ac-eyebrow--sm ac-eyebrow--faint">{t('library', 'inProgress')}</span>
                     </div>
                   )}
 
                   {hasMore && (
                     <Link
-                      href={`/rama/${section.slug}`}
+                      href={getLocalizedPath(`/rama/${section.slug}`)}
                       className="mt-2 py-1.5 text-center ac-eyebrow transition-colors hover:underline"
                       style={{ color: section.accent }}
                     >
-                      Ver {uniqueItems.length - 5} entradas más →
+                      {t('library', 'seeMore', { count: uniqueItems.length - 5 })}
                     </Link>
                   )}
                 </div>

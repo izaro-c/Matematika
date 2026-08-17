@@ -4,6 +4,7 @@ import { useGlossaryStore, dictionary } from '@/lib/stores/GlossaryStore';
 import { db } from '@/data/content';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
+import { useI18n } from '@/i18n';
 
 interface ConceptLinkProps {
   targetId: string | string[];
@@ -39,6 +40,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
   highlightTarget,
   highlightColor
 }) => {
+  const { getLocalizedPath } = useI18n();
   const { openTerm } = useGlossaryStore();
   const setVariable = useMathStore((state) => state.setVariable);
 
@@ -72,7 +74,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
 
     return (
       <Link
-        href={`/construccion/${firstInvalid}`}
+        href={getLocalizedPath(`/construccion/${firstInvalid}`)}
         data-target-id={dataAttr}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

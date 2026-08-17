@@ -8,15 +8,19 @@
 @import "katex/dist/katex.min.css";
 @import "./styles/katex.css";
 @import "tailwindcss";
-@import "./styles/ac-classes.css";
-@import "./styles/base.css";
-@import "./styles/scrollbars.css";
-@import "./styles/utilities.css";
-@import "./styles/ac-pill.css";
-@import "./styles/mdx-prose.css";
-@import "./styles/content-layout.css";
-@import "./styles/codex-layout.css";
-@import "./styles/theorem-wide-tree.css";
-@import "./styles/paper-and-ink.css";
-@import "./styles/page-loading.css";
-@import "./styles/skeletons.css";
+
+/* Base */
+@import "./styles/base.css" layer(base);
+/* Componentes UI (sobrescribibles por utilidades de Tailwind) */
+@import "./styles/ac-classes.css" layer(components);
+@import "./styles/ac-pill.css" layer(components);
+@import "./styles/mdx-prose.css" layer(components);
+@import "./styles/content-layout.css" layer(components);
+@import "./styles/codex-layout.css" layer(components);
+@import "./styles/theorem-wide-tree.css" layer(components);
+@import "./styles/paper-and-ink.css" layer(components);
+@import "./styles/page-loading.css" layer(components);
+@import "./styles/skeletons.css" layer(components);
+/* Utilidades adicionales */
+@import "./styles/scrollbars.css" layer(utilities);
+@import "./styles/utilities.css" layer(components);

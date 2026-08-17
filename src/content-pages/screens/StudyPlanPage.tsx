@@ -7,6 +7,8 @@ import { Capitular, BlockTitle, OrnamentalDivider } from '@/components/mdx/MDXBl
 import { StudyPlanContext } from '@/content-pages/study-plan/context/StudyPlanContext';
 import { GlossaryLink } from '@/components/ui/GlossaryLink';
 import { publicAsset } from '@/lib/routes';
+import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { useI18n } from '@/i18n';
 
 // Componentes interactivos permitidos en los planes
 import { StudyTask } from '@/content-pages/study-plan/ui/StudyTask';
@@ -36,8 +38,11 @@ const mdxComponents = {
  */
 export const StudyPlanPage = () => {
   const { id } = useParams();
+  const { lang, getLocalizedPath, t } = useI18n();
   const slug = id || '';
-  const plan = db.getStudyPlan(slug);
+  const plan = db.getStudyPlan(slug, lang);
+  const isFallback = slug ? db.isFallback(slug, lang) : false;
+  const availableLangs = slug ? db.getAvailableLanguages(slug) : ['es'];
   const { isRead } = useProgressStore();
 
   const [mounted, setMounted] = useState(false);
@@ -79,74 +84,63 @@ export const StudyPlanPage = () => {
       }
     }
 
-    if (targetBlockIdx === -1) return false;
+    // Si el nodo no está en ningún bloque conocido, no bloquearlo
+    if (targetBlockIdx <= 0) return false;
 
-    // 3. Bloqueado si la fase/bloque anterior tiene elementos incompletos
-    if (targetBlockIdx > 0) {
-      const prevBlock = blocks[targetBlockIdx - 1];
-      for (const prevNode of prevBlock) {
-        if (!isRead(prevNode)) {
-          return true;
-        }
-      }
-    }
+    // 3. El bloque actual está bloqueado si el bloque ANTERIOR no está completado al 100%
+    const prevBlock = blocks[targetBlockIdx - 1];
+    const prevBlockCompleted = prevBlock.every((reqId) => {
+      if (reqId.startsWith('checkpoint-')) return true;
+      return isRead(reqId);
+    });
 
-    // 4. Si es un checkpoint, está bloqueado hasta asimilar todos los conceptos de su fase actual
-    if (nodeId.startsWith('checkpoint-')) {
-      const currentBlock = blocks[targetBlockIdx];
-      for (const node of currentBlock) {
-        if (node !== nodeId && !isRead(node)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
+    return !prevBlockCompleted;
   }, [plan, isRead]);
 
   useEffect(() => {
-    if (!plan || !containerRef.current) return;
+    if (!containerRef.current || !plan) return;
 
-    const updateHeight = () => {
-      let firstIncompleteId: string | null = null;
+    const computeProgressLine = () => {
       const nodes = plan.requiredNodes || [];
-      for (const nodeId of nodes) {
-        if (!isRead(nodeId)) {
-          firstIncompleteId = nodeId;
+      const completedNodes = nodes.filter((nodeId) => isRead(nodeId));
+
+      if (completedNodes.length === 0) {
+        setFillHeight(0);
+        return;
+      }
+
+      // Encontrar el último nodo completado que tenga su elemento en el DOM
+      let targetEl: HTMLElement | null = null;
+      for (let i = completedNodes.length - 1; i >= 0; i--) {
+        const id = completedNodes[i];
+        const el = taskRefs.current[id];
+        if (el) {
+          targetEl = el;
           break;
         }
       }
 
-      if (!firstIncompleteId) {
-        // All complete
-        setFillHeight(containerRef.current!.scrollHeight);
-      } else {
-        const el = taskRefs.current[firstIncompleteId];
-        if (el) {
-          // Calculate relative to the container
-          const containerTop = containerRef.current!.getBoundingClientRect().top;
-          const elTop = el.getBoundingClientRect().top;
-          const offset = elTop - containerTop;
-          // Add half the element's height so the line points exactly to the middle of the box
-          setFillHeight(offset + el.offsetHeight / 2);
-        } else {
-          setFillHeight(0);
-        }
+      if (targetEl && containerRef.current) {
+        const containerRect = containerRef.current.getBoundingClientRect();
+        const targetRect = targetEl.getBoundingClientRect();
+        const relativeTop = targetRect.top - containerRect.top;
+        const middleY = relativeTop + (targetRect.height / 2);
+        setFillHeight(Math.max(0, middleY));
       }
     };
 
-    const timeout = setTimeout(updateHeight, 300);
-    window.addEventListener('resize', updateHeight);
+    const timer = setTimeout(computeProgressLine, 100);
+    window.addEventListener('resize', computeProgressLine);
 
     let resizeObserver: ResizeObserver | null = null;
-    if (containerRef.current) {
-      resizeObserver = new ResizeObserver(updateHeight);
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(computeProgressLine);
       resizeObserver.observe(containerRef.current);
     }
 
     return () => {
-      clearTimeout(timeout);
-      window.removeEventListener('resize', updateHeight);
+      clearTimeout(timer);
+      window.removeEventListener('resize', computeProgressLine);
       if (resizeObserver) resizeObserver.disconnect();
     };
   }, [plan, isRead]);
@@ -154,7 +148,7 @@ export const StudyPlanPage = () => {
   if (!plan) {
     return (
       <div className="ac-page flex items-center justify-center">
-        <h1 className="text-2xl italic opacity-50">El índice no existe.</h1>
+        <h1 className="text-2xl italic opacity-50">{t('notFound', 'description')}</h1>
       </div>
     );
   }
@@ -180,11 +174,19 @@ export const StudyPlanPage = () => {
         <div className="relative z-20 max-w-4xl mx-auto px-6 md:px-0">
           
           <div className="mb-12 flex flex-col items-start">
-            <Link href="/">
-              <a className="ac-link-back ac-interactive text-[9px] text-carbon/40 mb-8 inline-block hover:text-carbon">
-                ← Retornar al Archivo
-              </a>
+            <Link href={getLocalizedPath('/')}>
+              <span className="ac-link-back ac-interactive text-[9px] text-carbon/40 mb-8 inline-block hover:text-carbon cursor-pointer">
+                {t('studyPlan', 'backToArchive')}
+              </span>
             </Link>
+
+            {isFallback && (
+              <UntranslatedFallbackBanner
+                availableLangs={availableLangs}
+                className="mb-8 w-full"
+              />
+            )}
+
             <p className="page-accent-text ac-eyebrow ac-eyebrow--accent mb-4">
               {plan.subtitle}
             </p>
@@ -195,7 +197,7 @@ export const StudyPlanPage = () => {
               {plan.description}
             </p>
             <div className="ac-eyebrow text-xs italic text-carbon/50 mt-6">
-              Progreso: {completedCount} de {totalItems} asimilados
+              {t('studyPlan', 'progress', { count: completedCount, total: totalItems })}
             </div>
             <div className="w-16 h-px bg-carbon/20 mt-12 mb-8" />
 

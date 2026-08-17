@@ -1,14 +1,14 @@
 [
-  { "path": "content/mdx/axioms/axioma-incidencia-1.mdx", "feature": "imports-and-simulation-export" },
-  { "path": "content/mdx/axiomatic-systems/sistema-euclidiano.mdx", "feature": "metadata-arrays" },
-  { "path": "content/mdx/definitions/segmento.mdx", "feature": "inline-jsx-and-math" },
-  { "path": "content/mdx/theorems/teorema-pitagoras.mdx", "feature": "semantic-links-and-gfm" },
-  { "path": "content/mdx/demonstrations/demo-existencia-bisectriz.mdx", "feature": "nested-proof-steps-and-lean-expressions" },
-  { "path": "content/mdx/examples/ejemplo-pitagoras-calculo.mdx", "feature": "interactive-example" },
-  { "path": "content/mdx/exercises/ejercicio-pitagoras-cateto.mdx", "feature": "exercise-components" },
-  { "path": "content/mdx/methods/metodo-induccion.mdx", "feature": "method-steps" },
-  { "path": "content/mdx/mathematicians/euclides.mdx", "feature": "biographical-metadata" },
-  { "path": "content/mdx/models/modelo-poincare.mdx", "feature": "diagram-export" },
-  { "path": "content/mdx/plans/plan-de-estudio-camino-teorema-pitagoras.mdx", "feature": "study-plan-components" },
-  { "path": "content/mdx/usecases/caso-gps-trilateracion.mdx", "feature": "use-case-simulation" }
+  { "path": "content/mdx/es/axioms/axioma-incidencia-1.mdx", "feature": "imports-and-simulation-export" },
+  { "path": "content/mdx/es/axiomatic-systems/sistema-euclidiano.mdx", "feature": "metadata-arrays" },
+  { "path": "content/mdx/es/definitions/segmento.mdx", "feature": "inline-jsx-and-math" },
+  { "path": "content/mdx/es/theorems/teorema-pitagoras.mdx", "feature": "semantic-links-and-gfm" },
+  { "path": "content/mdx/es/demonstrations/demo-existencia-bisectriz.mdx", "feature": "nested-proof-steps-and-lean-expressions" },
+  { "path": "content/mdx/es/examples/ejemplo-pitagoras-calculo.mdx", "feature": "interactive-example" },
+  { "path": "content/mdx/es/exercises/ejercicio-pitagoras-cateto.mdx", "feature": "exercise-components" },
+  { "path": "content/mdx/es/methods/metodo-induccion.mdx", "feature": "method-steps" },
+  { "path": "content/mdx/es/mathematicians/euclides.mdx", "feature": "biographical-metadata" },
+  { "path": "content/mdx/es/models/modelo-poincare.mdx", "feature": "diagram-export" },
+  { "path": "content/mdx/es/plans/plan-de-estudio-camino-teorema-pitagoras.mdx", "feature": "study-plan-components" },
+  { "path": "content/mdx/es/usecases/caso-gps-trilateracion.mdx", "feature": "use-case-simulation" }
 ]

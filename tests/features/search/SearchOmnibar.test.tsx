@@ -5,6 +5,7 @@ import { useNavigationStore } from '@/lib/stores/NavigationStore';
 import { SearchOmnibar } from '@/components/navigation/SearchOmnibar';
 import { mscNames } from '@/data/content/msc2020';
 import { routePath } from '@/lib/routes';
+import { localizePath } from '@/i18n';
 
 const { setLocation } = vi.hoisted(() => ({ setLocation: vi.fn() }));
 
@@ -83,7 +84,7 @@ describe('SearchOmnibar', () => {
     expect(firstCode).toBeDefined();
     expect(firstResult.textContent).not.toContain('Sin página propia');
     fireEvent.click(firstResult);
-    expect(setLocation).toHaveBeenCalledWith(routePath(`/rama/${firstCode}`));
+    expect(setLocation).toHaveBeenCalledWith(localizePath(routePath(`/rama/${firstCode}`)));
   });
 
   it('opens the selected MSC2020 result with Enter', () => {
@@ -95,6 +96,6 @@ describe('SearchOmnibar', () => {
 
     const firstCode = Object.keys(mscNames)[0];
     expect(firstCode).toBeDefined();
-    expect(setLocation).toHaveBeenCalledWith(routePath(`/rama/${firstCode}`));
+    expect(setLocation).toHaveBeenCalledWith(localizePath(routePath(`/rama/${firstCode}`)));
   });
 });

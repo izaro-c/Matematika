@@ -858,7 +858,23 @@ export const PitagorasSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastre A y B sobre las semirrectas: las áreas y la igualdad se actualizan sin perder el ángulo recto."
+  "note": "Arrastre A y B sobre las semirrectas: las áreas y la igualdad se actualizan sin perder el ángulo recto.",
+  "translations": {
+    "eu": {
+      "title": "Pitagorasen Teorema",
+      "note": "Arrastatu A eta B semirrecten gainean: azalerak eta berdintza eguneratzen dira angelu zuzena galdu gabe.",
+      "labels": {
+        "triangulo": "ABC hirukia",
+        "segBC": "a katetoa",
+        "segCA": "b katetoa",
+        "segAB": "c hipotenusa",
+        "anguloRecto": "angelu zuzena C-n",
+        "cuadradoA": "karratua a-ren gainean",
+        "cuadradoB": "karratua b-ren gainean",
+        "cuadradoC": "karratua c-ren gainean"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

@@ -81,7 +81,7 @@ describe('catálogo seguro del editor', () => {
     const documents = editable.filter(item => item.kind === 'mdx-document');
     const diagrams = editable.filter(item => item.kind === 'diagram');
 
-    expect(documents).toHaveLength(120);
+    expect(documents).toHaveLength(123);
     expect(documents.every(item => item.path.startsWith('content/mdx/') && item.path.endsWith('.mdx'))).toBe(true);
     expect(diagrams).toHaveLength(84);
     expect(diagrams.every(item => item.path.startsWith('content/diagrams/') && item.path.endsWith('.tsx'))).toBe(true);

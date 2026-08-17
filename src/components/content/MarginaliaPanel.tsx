@@ -10,6 +10,7 @@ import { Link } from 'wouter';
 import { ContentTypeBadge } from '@/components/ui/ContentTypeBadge';
 import { routePath } from '@/lib/routes';
 import { getContentPageAccent } from '@/design/pageAccents';
+import { useI18n } from '@/i18n';
 
 
 interface TermData {
@@ -205,6 +206,7 @@ function renderTextWithMath(text: string): React.ReactNode {
 
 export const MarginaliaPanel = () => {
   const { activeTerms, activeFormulaTerms, closeTerm, displayMode, toggleDisplayMode } = useGlossaryStore();
+  const { getLocalizedPath } = useI18n();
 
   const activeTermDataList = buildActiveTermDataList(activeTerms);
   const formulaData = buildFormulaData(activeFormulaTerms);
@@ -270,7 +272,7 @@ export const MarginaliaPanel = () => {
               )}
               {term.isDefinition && term.href && (
                 <div className="mt-10 text-center">
-                  <Link href={term.href}>
+                  <Link href={getLocalizedPath(term.href)}>
                     <a
                       onClick={closeTerm}
                       className="page-accent-hover inline-block px-8 py-3 border border-carbon/20 transition-all ac-eyebrow font-bold"

@@ -3,6 +3,7 @@ import { AppRouter } from "@/app/routes/AppRouter";
 import { AppShell } from "@/components/layouts/AppShell";
 import { MDXComponents } from '@/components/mdx/MDXBlocks';
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+import { I18nProvider } from "@/i18n";
 import { MDXProvider } from '@mdx-js/react';
 import { useEffect } from 'react';
 import { Router } from "wouter";
@@ -11,7 +12,7 @@ import { Router } from "wouter";
  * App
  *
  * Componente raíz de la aplicación.
- * Provee el contexto MDX (`MDXProvider`) y envuelve la navegación (`AppRouter`).
+ * Provee el contexto i18n (`I18nProvider`), MDX (`MDXProvider`) y envuelve la navegación (`AppRouter`).
  */
 function App() {
   useKeyboardShortcuts();
@@ -36,13 +37,15 @@ function App() {
 
   return (
     <Router base={wouterBase}>
-      <MDXProvider components={MDXComponents}>
-        <AppShell>
-          <ErrorBoundary>
-            <AppRouter />
-          </ErrorBoundary>
-        </AppShell>
-      </MDXProvider>
+      <I18nProvider>
+        <MDXProvider components={MDXComponents}>
+          <AppShell>
+            <ErrorBoundary>
+              <AppRouter />
+            </ErrorBoundary>
+          </AppShell>
+        </MDXProvider>
+      </I18nProvider>
     </Router>
   );
 }

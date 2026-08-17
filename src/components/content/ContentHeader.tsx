@@ -6,6 +6,7 @@ import { ContentTypeBadge } from '@/components/ui/ContentTypeBadge';
 import { ModelBadgeList } from '@/components/content/ModelBadge';
 import { db } from '@/data/content';
 import { UI } from '@/design';
+import { useI18n } from '@/i18n';
 
 /**
  * Propiedades de cabecera estandarizada para contenido matemático.
@@ -50,6 +51,8 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
   backLink,
   children,
 }) => {
+  const { getLocalizedPath } = useI18n();
+
   const renderedAuthors = useMemo(() => {
     if (!authors || authors.length === 0) return null;
 
@@ -60,7 +63,7 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
         return (
           <Link
             key={authId}
-            href={`/bio/${authId}`}
+            href={getLocalizedPath(`/bio/${authId}`)}
             className="content-header__link border-b border-dashed border-carbon/20 transition-colors"
           >
             {mathematician.name}
@@ -85,7 +88,7 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
       <div className="w-full flex flex-col items-start gap-2 mb-6">
         {backLink && (
           <Link
-            href={backLink.href}
+            href={getLocalizedPath(backLink.href)}
             className="content-header__link text-carbon/60 font-serif italic text-sm transition-colors border-b border-transparent"
             style={{ textDecoration: 'none' }}
           >

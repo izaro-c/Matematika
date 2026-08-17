@@ -50,6 +50,6 @@ describe('MethodsPage', () => {
     expect(screen.queryByText('Otro método')).toBeNull();
 
     const directMethod = screen.getByRole('link', { name: /Método directo/ });
-    expect(directMethod.getAttribute('href')).toBe('/metodo/metodo-directo');
+    expect(directMethod.getAttribute('href')).toBe('/es/metodo/metodo-directo');
   });
 });

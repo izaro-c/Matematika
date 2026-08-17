@@ -1,11 +1,11 @@
 import type { IFuseOptions } from 'fuse.js';
 import { db } from '@/data/content';
-import { mscNames } from '@/data/content/msc2020';
+import { mscNames, getMscName } from '@/data/content/msc2020';
 import {
   PAGE_ACCENTS,
   type PageAccentType,
 } from '@/design';
-import { dictionary } from '@content/glossary/dictionary';
+import { getGlossaryDictionary } from '@content/glossary/dictionary';
 import { routePath } from '@/lib/routes';
 
 export type SearchResultType = PageAccentType;
@@ -24,47 +24,68 @@ export const ALL_TYPES: SearchResultType[] = [
 ];
 
 export const TYPE_ICONS: Record<SearchResultType, string> = {
-  teorema: 'T',
+  teorema: '✦',
   método: '↦',
-  definición: 'D',
-  ejemplo: 'E',
-  ejercicio: 'P',
-  demo: '∴',
-  glosario: 'Σ',
-  matemático: '✦',
-  caso_uso: '◈',
-  axioma: 'A',
-  msc2020: '⊞',
-  modelo: 'M',
+  definición: '◆',
+  axioma: '◈',
+  modelo: '☙',
+  ejemplo: '▸',
+  ejercicio: '✎',
+  demo: '❧',
+  matemático: '❦',
+  caso_uso: '◎',
+  glosario: '📖',
+  msc2020: '🏷️',
 };
-
-import { getContentTypeLabel } from '@/lib/theme/constants';
-
-export const TYPE_LABELS: Record<SearchResultType, string> = Object.fromEntries(
-  ALL_TYPES.map(type => [type, getContentTypeLabel(type.replace('_', '-'), 'plural')]),
-) as Record<SearchResultType, string>;
-
-export const TYPE_RESULT_LABELS: Record<SearchResultType, string> = Object.fromEntries(
-  ALL_TYPES.map(type => [type, getContentTypeLabel(type.replace('_', '-'), 'singular')]),
-) as Record<SearchResultType, string>;
 
 export const TYPE_COLORS: Record<SearchResultType, string> = PAGE_ACCENTS;
 
+export const TYPE_LABELS: Record<SearchResultType, string> = {
+  teorema: 'Teoremas',
+  método: 'Métodos',
+  definición: 'Definiciones',
+  axioma: 'Axiomas',
+  modelo: 'Modelos',
+  ejemplo: 'Ejemplos',
+  ejercicio: 'Ejercicios',
+  demo: 'Demostraciones',
+  matemático: 'Biografías',
+  caso_uso: 'Casos de uso',
+  glosario: 'Glosario',
+  msc2020: 'Ramas MSC2020',
+};
+
+export const TYPE_RESULT_LABELS: Record<SearchResultType, string> = {
+  teorema: 'Teorema',
+  método: 'Método',
+  definición: 'Definición',
+  axioma: 'Axioma',
+  modelo: 'Modelo',
+  ejemplo: 'Ejemplo',
+  ejercicio: 'Ejercicio',
+  demo: 'Demostración',
+  matemático: 'Matemático',
+  caso_uso: 'Caso de uso',
+  glosario: 'Término',
+  msc2020: 'Rama MSC2020',
+};
+
 export const SEARCH_FUSE_OPTIONS: IFuseOptions<SearchResult> = {
   keys: [
-    { name: 'title', weight: 2 },
-    { name: 'subtitle', weight: 1 },
+    { name: 'title', weight: 0.7 },
+    { name: 'subtitle', weight: 0.3 },
   ],
-  threshold: 0.35,
+  threshold: 0.4,
+  ignoreLocation: true,
   ignoreDiacritics: true,
   includeMatches: true,
   minMatchCharLength: 2,
 };
 
-export function buildSearchIndex(): SearchResult[] {
+export function buildSearchIndex(lang?: string): SearchResult[] {
   const index: SearchResult[] = [];
 
-  for (const thm of db.theorems.values()) {
+  for (const thm of db.getAllTheorems(lang)) {
     index.push({
       id: `thm-${thm.id}`,
       type: 'teorema',
@@ -74,7 +95,7 @@ export function buildSearchIndex(): SearchResult[] {
     });
   }
 
-  for (const method of db.methods.values()) {
+  for (const method of db.getAllMethods(lang)) {
     index.push({
       id: `method-${method.id}`,
       type: 'método',
@@ -84,7 +105,7 @@ export function buildSearchIndex(): SearchResult[] {
     });
   }
 
-  for (const def of db.definitions.values()) {
+  for (const def of db.getAllDefinitions(lang)) {
     index.push({
       id: `def-${def.id}`,
       type: 'definición',
@@ -94,7 +115,7 @@ export function buildSearchIndex(): SearchResult[] {
     });
   }
 
-  for (const ex of db.examples.values()) {
+  for (const ex of db.getAllExamples(lang)) {
     index.push({
       id: `ex-${ex.id}`,
       type: 'ejemplo',
@@ -104,7 +125,7 @@ export function buildSearchIndex(): SearchResult[] {
     });
   }
 
-  for (const ez of db.exercises.values()) {
+  for (const ez of db.getAllExercises(lang)) {
     index.push({
       id: `ez-${ez.id}`,
       type: 'ejercicio',
@@ -114,7 +135,7 @@ export function buildSearchIndex(): SearchResult[] {
     });
   }
 
-  for (const demo of db.demos.values()) {
+  for (const demo of db.getAllDemos(lang)) {
     index.push({
       id: `demo-${demo.id}`,
       type: 'demo',
@@ -124,7 +145,7 @@ export function buildSearchIndex(): SearchResult[] {
     });
   }
 
-  for (const bio of db.mathematicians.values()) {
+  for (const bio of db.getAllMathematicians(lang)) {
     index.push({
       id: `bio-${bio.id}`,
       type: 'matemático',
@@ -134,7 +155,7 @@ export function buildSearchIndex(): SearchResult[] {
     });
   }
 
-  for (const uc of db.usecases.values()) {
+  for (const uc of db.getAllUseCases(lang)) {
     index.push({
       id: `uc-${uc.id}`,
       type: 'caso_uso',
@@ -144,7 +165,7 @@ export function buildSearchIndex(): SearchResult[] {
     });
   }
 
-  for (const axm of db.axioms.values()) {
+  for (const axm of db.getAllAxioms(lang)) {
     index.push({
       id: `axm-${axm.id}`,
       type: 'axioma',
@@ -154,7 +175,7 @@ export function buildSearchIndex(): SearchResult[] {
     });
   }
 
-  for (const model of db.models.values()) {
+  for (const model of db.getAllModels(lang)) {
     index.push({
       id: `model-${model.id}`,
       type: 'modelo',
@@ -164,7 +185,8 @@ export function buildSearchIndex(): SearchResult[] {
     });
   }
 
-  for (const [key, term] of Object.entries(dictionary)) {
+  const glossaryDict = getGlossaryDictionary(lang);
+  for (const [key, term] of Object.entries(glossaryDict)) {
     index.push({
       id: `glossary-${key}`,
       type: 'glosario',
@@ -174,17 +196,28 @@ export function buildSearchIndex(): SearchResult[] {
     });
   }
 
-  for (const [code, name] of Object.entries(mscNames)) {
+  for (const [code, defaultName] of Object.entries(mscNames)) {
+    const localizedName = lang ? getMscName(code, lang) : defaultName;
     index.push({
       id: `msc-${code}`,
       type: 'msc2020',
-      title: `${code} — ${name}`,
-      subtitle: `Clasificación MSC2020`,
+      title: `${code} — ${localizedName}`,
+      subtitle: 'Clasificación MSC2020',
       href: routePath(`/rama/${code}`),
     });
   }
 
   return index;
+}
+
+const searchIndexes: Record<string, SearchResult[]> = {};
+
+export function getSearchIndex(lang?: string): SearchResult[] {
+  const key = lang || 'es';
+  if (!searchIndexes[key]) {
+    searchIndexes[key] = buildSearchIndex(lang);
+  }
+  return searchIndexes[key];
 }
 
 export const SEARCH_INDEX = buildSearchIndex();

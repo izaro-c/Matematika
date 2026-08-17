@@ -2,8 +2,8 @@ import type { CSSProperties } from 'react';
 import { Link } from 'wouter';
 import { Logo } from "@/components/ui/Logo";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { SITE_TAGLINE } from '@/lib/theme/constants';
 import { UI } from '@/design';
+import { useI18n } from '@/i18n';
 
 interface HeroCardProps {
   href: string;
@@ -24,9 +24,10 @@ function HeroCard({
   borderClass = 'border-carbon/30',
   style,
 }: HeroCardProps) {
+  const { getLocalizedPath } = useI18n();
   return (
     <Link
-      href={href}
+      href={getLocalizedPath(href)}
       className={`${UI.ctaCardHero} ${bgClass} ${borderClass}`}
       style={style}
     >
@@ -63,6 +64,8 @@ const CTA_SHADOWS: Record<string, { rest: string; hover: string }> = {
  * y los accesos rápidos a las cuatro áreas principales.
  */
 export const HeroSection = () => {
+  const { t } = useI18n();
+
   return (
     <FadeIn as="header" className="relative w-full overflow-hidden border-b border-carbon/15">
       <div className="relative z-10 max-w-5xl mx-auto px-8 pt-16 sm:pt-24 pb-16 sm:pb-20 flex flex-col items-center text-center">
@@ -80,7 +83,7 @@ export const HeroSection = () => {
         </div>
 
         <p className={`text-lg md:text-xl text-ink-muted italic max-w-xl leading-relaxed mb-10 ${UI.textPretty}`}>
-          {SITE_TAGLINE}
+          {t('hero', 'tagline')}
         </p>
 
         <div className="flex items-center gap-4 w-full max-w-xs" aria-hidden="true">
@@ -92,9 +95,9 @@ export const HeroSection = () => {
         <div className="mt-12 grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 w-full items-stretch">
           <HeroCard
             href="/plan/camino-teorema-pitagoras"
-            eyebrow="Plan de estudio"
-            title="Camino a Pitágoras"
-            cta="Acceder a la ruta →"
+            eyebrow={t('hero', 'studyPlanEyebrow')}
+            title={t('hero', 'studyPlanTitle')}
+            cta={t('hero', 'studyPlanCta')}
             bgClass="bg-terracota text-on-accent"
             style={{
               '--ac-cta-shadow': CTA_SHADOWS.terracota.rest,
@@ -103,9 +106,9 @@ export const HeroSection = () => {
           />
           <HeroCard
             href="/metodos"
-            eyebrow="Demostraciones lógicas"
-            title="Métodos de prueba"
-            cta="Explorar →"
+            eyebrow={t('hero', 'proofMethodsEyebrow')}
+            title={t('hero', 'proofMethodsTitle')}
+            cta={t('hero', 'proofMethodsCta')}
             bgClass="bg-musgo text-on-accent"
             style={{
               '--ac-cta-shadow': CTA_SHADOWS.musgo.rest,
@@ -114,9 +117,9 @@ export const HeroSection = () => {
           />
           <HeroCard
             href="/axiomas"
-            eyebrow="Fundamentos"
-            title="Axiomas"
-            cta="Ver relaciones →"
+            eyebrow={t('hero', 'axiomsEyebrow')}
+            title={t('hero', 'axiomsTitle')}
+            cta={t('hero', 'axiomsCta')}
             bgClass="bg-pavo text-on-accent"
             borderClass="border-lienzo/30"
             style={{
@@ -126,9 +129,9 @@ export const HeroSection = () => {
           />
           <HeroCard
             href="/grafo"
-            eyebrow="Mapa interactivo"
-            title="Grafo visual"
-            cta="Ver dependencias →"
+            eyebrow={t('hero', 'graphEyebrow')}
+            title={t('hero', 'graphTitle')}
+            cta={t('hero', 'graphCta')}
             bgClass="bg-carbon text-on-accent"
             borderClass="border-lienzo/30"
             style={{

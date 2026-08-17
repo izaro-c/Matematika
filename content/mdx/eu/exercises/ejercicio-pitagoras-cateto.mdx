@@ -1,0 +1,104 @@
+export const metadata = {
+  "id": "ejercicio-pitagoras-cateto",
+  "type": "ejercicio",
+  "lang": "eu",
+  "branch": "51M",
+  "title": "Kateto baten kalkulua triangelu angeluzuzenean",
+  "description": "Pitagorasen teoremaren aplikazioa kateto ezezagun baten luzera zehazteko, hipotenusa eta beste katetoa jakinda.",
+  "relatedTheorem": "teorema-pitagoras",
+  "hasSimulation": true,
+  "difficulty": "básico",
+  "hint": "Pitagorasen teoremak hiru aldeen karratuak erlazionatzen ditu: a² + b² = c². Kateto bat bakantzeko, kendu kateto ezagunaren karratua hipotenusaren karratuari: a² = c² - b²."
+};
+
+import { EjercicioPitagorasCateto } from '@content/diagrams/Ejercicios/EjercicioPitagorasCateto';
+
+export const Simulation = EjercicioPitagorasCateto;
+
+<Capitular letra="I" />zan bedi $\triangle ABC$ <ConceptLink targetId="triangulo-rectangulo" isDependency={false} highlightTarget="poly" highlightColor="pizarra">triangelu angeluzuzena</ConceptLink>, <InteractiveElement target="C" color="carbon">$C$ erpinean</InteractiveElement> <ConceptLink targetId="angulo-recto" isDependency={false} highlightTarget="rightAng" highlightColor="pavo">angelu zuzena</ConceptLink> duena. Jakina da <ConceptLink targetId="hipotenusa" isDependency={false} highlightTarget="segAB" highlightColor="ocre">hipotenusak</ConceptLink> $c = |AB| = 10$ unitate neurtzen dituela eta <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segBC" highlightColor="terracota">kateto horizontalak</ConceptLink> $b = |BC| = 8$ unitate. <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segCA" highlightColor="salvia">Kateto bertikalaren</ConceptLink> ($a = |CA|$) luzera zehatza kalkulatzea eskatzen da.
+
+<Separador />
+
+<PasoEjercicio
+  id="p1"
+  numero={1}
+  titulo="Ekuazioaren Planteamendua"
+  questionIds={["p1_q1"]}
+>
+  Identifikatu Pitagorasen teorema planteatzeko formulazio algebraiko egokia datu ezagunen arabera:
+
+  <Pregunta
+    id="p1_q1"
+    correct="opt_correcta"
+    texto="Hurrengo erlazioetatik zeinek deskribatzen du zuzen azaleren proportzioa triangelu honetarako?"
+    opciones={[
+      { value: 'opt_correcta', texto: "$a^2 + 8^2 = 10^2$" },
+      { value: 'opt_suma_catetos', texto: "$a^2 = 10^2 + 8^2$", feedback: "Kalkulua hipotenusa bilatuko bazenu bezala planteatu duzu azalerak batuz. Gogoratu hipotenusa dagoeneko ezaguna dela ($c=10$). Kateto bat bilatzeko: $a^2 = c^2 - b^2$." },
+      { value: 'opt_hipotenusa_err', texto: "$10^2 + a^2 = 8^2$", feedback: "Hipotenusa ($10^2$) eta katetoa ($a^2$) batu dituzu. Gogoratu hipotenusa karratua ($10^2$) bakarrik geratu behar dela kideetako batean: $a^2 + b^2 = c^2$." }
+    ]}
+  />
+
+  <ErrorComun questionId="p1_q1" titulo="Alde ezagunen karratuak batzea kentzearen ordez">
+    Kateto bat bakantzerakoan ohiko akats bat formula zuzena nahastea eta azalera ezagunak batzea da: $a^2 = c^2 + b^2$. Horrek $a^2 = 10^2 + 8^2 = 164 \implies a \approx 12.8$ emango luke. Luzera hori geometrikoki ezinezkoa da, hipotenusa beti baita alderik luzeena.
+  </ErrorComun>
+
+  <Apoyo titulo="Triangelu angeluzuzen baten atalak errepasatu nahi dituzu?">
+    Kontsultatu <RefLink targetId="triangulo-rectangulo">triangelu angeluzuzenaren</RefLink> kontzeptua edo errepasatu <RefLink targetId="cateto">katetoen</RefLink> eta <RefLink targetId="hipotenusa">hipotenusaren</RefLink> arteko aldea.
+  </Apoyo>
+
+  <Resolucion>
+    Triangelu honetan betetzen den oinarrizko ekuazioa $a^2 + b^2 = c^2$ da. Datu ezagunak ordezkatuz:
+    $$ a^2 + 8^2 = 10^2 $$
+  </Resolucion>
+</PasoEjercicio>
+
+<PasoEjercicio
+  id="p2"
+  numero={2}
+  titulo="Gainerako Azaleraren Kalkulua"
+  questionIds={["p2_q1"]}
+  dependeDeQuestions={["p1_q1"]}
+>
+  Bakandu $a^2$ eta kalkulatu kateto bertikalaren gaineko karratuaren azalera:
+
+  <Pregunta
+    id="p2_q1"
+    correct="opt_correcta"
+    texto="Zenbat da $a^2$-ren balioa?"
+    opciones={[
+      { value: 'opt_correcta', texto: "$a^2 = 36$" },
+      { value: 'opt_err_1', texto: "$a^2 = 64$" },
+      { value: 'opt_err_2', texto: "$a^2 = 100$" }
+    ]}
+  />
+
+  <Resolucion>
+    $$ a^2 = 10^2 - 8^2 = 100 - 64 = 36 $$
+  </Resolucion>
+</PasoEjercicio>
+
+<PasoEjercicio
+  id="p3"
+  numero={3}
+  titulo="Luzeraren Zehaztapena"
+  questionIds={["p3_q1"]}
+  dependeDeQuestions={["p2_q1"]}
+>
+  Kalkulatu $a$ katetoaren azken luzera erro karratua eginez:
+
+  <Pregunta
+    id="p3_q1"
+    correct="opt_correcta"
+    texto="Zenbat da $a = |CA|$ katetoaren luzera?"
+    opciones={[
+      { value: 'opt_correcta', texto: "$a = 6$" },
+      { value: 'opt_err_1', texto: "$a = 8$" },
+      { value: 'opt_err_2', texto: "$a = 12$" }
+    ]}
+  />
+
+  <Resolucion>
+    $$ a = \sqrt{36} = 6 $$
+    Beraz, kateto bertikalaren luzera zehatza $6$ unitatekoa da.
+  </Resolucion>
+</PasoEjercicio>

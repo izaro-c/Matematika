@@ -3,17 +3,17 @@ import Fuse, { type FuseResult, type FuseResultMatch } from 'fuse.js';
 import { useLocation } from 'wouter';
 import {
   ALL_TYPES,
+  getSearchIndex,
   SEARCH_FUSE_OPTIONS,
-  SEARCH_INDEX,
   TYPE_COLORS,
   TYPE_ICONS,
-  TYPE_LABELS,
   TYPE_RESULT_LABELS,
   type SearchResult,
   type SearchResultType,
 } from '@/data/content/searchApi';
 import { useGlossaryStore } from '@/lib/stores/GlossaryStore';
 import { useNavigationStore } from '@/lib/stores/NavigationStore';
+import { useI18n } from '@/i18n';
 
 type TypeFilter = SearchResultType | 'all';
 
@@ -50,6 +50,7 @@ function highlightText(text: string, matches: readonly FuseResultMatch[]): React
 export const SearchOmnibar = () => {
   const { isSearchOpen, closeSearch } = useNavigationStore();
   const { openTerm } = useGlossaryStore();
+  const { lang, t, getLocalizedPath } = useI18n();
   const [location, setLocation] = useLocation();
   const [query, setQuery] = useState('');
   const [selectedType, setSelectedType] = useState<TypeFilter>('all');
@@ -61,16 +62,35 @@ export const SearchOmnibar = () => {
   const typeTriggerRef = useRef<HTMLButtonElement>(null);
   const isEditor = location === '/editor';
 
+  const typeLabels: Record<SearchResultType | 'all', string> = {
+    all: t('search', 'allContent'),
+    teorema: t('content', 'theorems'),
+    definición: t('content', 'definitions'),
+    demo: t('content', 'demonstrations'),
+    axioma: t('content', 'axioms'),
+    modelo: t('content', 'models'),
+    método: t('content', 'methods'),
+    ejercicio: t('content', 'exercises'),
+    ejemplo: t('content', 'examples'),
+    matemático: t('search', 'biographies'),
+    caso_uso: t('search', 'useCases'),
+    glosario: t('search', 'glossary'),
+    msc2020: t('search', 'mscClassification'),
+  };
+
   const availableTypes = useMemo(
     () => ALL_TYPES.filter(type => !isEditor || (type !== 'glosario' && type !== 'msc2020')),
     [isEditor],
   );
 
   const availableIndex = useMemo(
-    () => isEditor
-      ? SEARCH_INDEX.filter(item => item.type !== 'glosario' && item.type !== 'msc2020')
-      : SEARCH_INDEX,
-    [isEditor],
+    () => {
+      const index = getSearchIndex(lang);
+      return isEditor
+        ? index.filter(item => item.type !== 'glosario' && item.type !== 'msc2020')
+        : index;
+    },
+    [isEditor, lang],
   );
 
   const filteredIndex = useMemo(
@@ -156,7 +176,7 @@ export const SearchOmnibar = () => {
     } else if (isEditor) {
       window.dispatchEvent(new CustomEvent('editor-open-concept', { detail: { href: item.href } }));
     } else {
-      setLocation(item.href);
+      setLocation(getLocalizedPath(item.href));
     }
   };
 
@@ -237,7 +257,7 @@ export const SearchOmnibar = () => {
             aria-controls="search-results"
             aria-activedescendant={hasResults ? `search-result-${selectedIndex}` : undefined}
             className="min-w-0 flex-1 bg-transparent font-serif text-xl text-carbon outline-none placeholder:text-carbon/35"
-            placeholder={isEditor ? 'Buscar una página para editar…' : 'Buscar en Matematika…'}
+            placeholder={isEditor ? 'Buscar una página para editar…' : t('search', 'placeholder')}
             value={query}
             onChange={event => {
               setQuery(event.target.value);
@@ -252,16 +272,16 @@ export const SearchOmnibar = () => {
                 setSelectedIndex(0);
               }}
               className="ml-2 min-h-11 px-2 text-sm text-carbon/50 transition-colors hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
-              aria-label="Borrar búsqueda"
+              aria-label={t('search', 'clear')}
             >
-              Borrar
+              {t('search', 'clear')}
             </button>
           )}
           <button
             type="button"
             onClick={resetAndClose}
             className="ml-2 flex min-h-11 min-w-11 items-center justify-center rounded-[2px] border border-carbon/20 font-serif text-xs font-bold tracking-wider text-carbon/55 outline outline-1 outline-offset-[-4px] outline-carbon/10 transition-colors hover:border-terracota/60 hover:text-terracota focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
-            aria-label="Cerrar buscador"
+            aria-label={t('search', 'pressEscToClose')}
           >
             ESC
           </button>
@@ -269,7 +289,7 @@ export const SearchOmnibar = () => {
 
         <div className="flex flex-wrap items-center gap-2 border-b border-carbon/15 bg-carbon/[0.025] px-4 py-3 sm:px-5">
           <label htmlFor="search-type" className="ac-label ac-label--sm">
-            Catálogo
+            {t('search', 'catalog')}
           </label>
           <div ref={typeMenuRef} className="relative">
             <button
@@ -299,7 +319,7 @@ export const SearchOmnibar = () => {
                 {selectedType === 'all' ? '✦' : TYPE_ICONS[selectedType]}
               </span>
               <span className="flex-1 text-left">
-                {selectedType === 'all' ? 'Todo el contenido' : TYPE_LABELS[selectedType]}
+                {typeLabels[selectedType]}
               </span>
               <span className={`text-xs text-carbon/45 transition-transform ${isTypeMenuOpen ? 'rotate-180' : ''}`} aria-hidden="true">
                 ▾
@@ -325,7 +345,7 @@ export const SearchOmnibar = () => {
                   }`}
                 >
                   <span className="w-5 text-center text-terracota" aria-hidden="true">✦</span>
-                  <span className="flex-1 font-semibold">Todo el contenido</span>
+                  <span className="flex-1 font-semibold">{t('search', 'allContent')}</span>
                   {selectedType === 'all' && <span className="text-terracota" aria-hidden="true">✓</span>}
                 </button>
 
@@ -347,7 +367,7 @@ export const SearchOmnibar = () => {
                     <span className="w-5 text-center" style={{ color: TYPE_COLORS[type] }} aria-hidden="true">
                       {TYPE_ICONS[type]}
                     </span>
-                    <span className="flex-1 font-semibold">{TYPE_LABELS[type]}</span>
+                    <span className="flex-1 font-semibold">{typeLabels[type]}</span>
                     {selectedType === type && <span style={{ color: TYPE_COLORS[type] }} aria-hidden="true">✓</span>}
                   </button>
                 ))}
@@ -411,7 +431,7 @@ export const SearchOmnibar = () => {
                     </span>
 
                     <span className="mt-1 hidden shrink-0 ac-label ac-label--sm ac-label--faint sm:block">
-                      {isNavigable ? TYPE_RESULT_LABELS[item.type] : 'Sin página propia'}
+                      {isNavigable ? (typeLabels[item.type] || TYPE_RESULT_LABELS[item.type]) : t('search', 'noOwnPage')}
                     </span>
                   </button>
                 );
@@ -422,10 +442,7 @@ export const SearchOmnibar = () => {
           {!hasResults && (hasSearch || selectedType !== 'all') && (
             <div className="flex min-h-60 flex-col items-center justify-center px-6 py-12 text-center">
               <span className="mb-3 font-serif text-3xl text-carbon/20" aria-hidden="true">◎</span>
-              <p className="font-title text-lg text-carbon/65">No se encontraron resultados</p>
-              <p className="mt-1 max-w-sm text-sm leading-relaxed text-carbon/45">
-                Prueba con menos palabras o selecciona «Todo el contenido» para ampliar la búsqueda.
-              </p>
+              <p className="font-title text-lg text-carbon/65">{t('search', 'noResults')}</p>
             </div>
           )}
 
@@ -433,11 +450,11 @@ export const SearchOmnibar = () => {
             <div className="px-5 py-8 sm:px-8 sm:py-10">
               <div className="mb-2 flex items-center gap-3 ac-label ac-label--sm ac-label--terracota-soft">
                 <span className="h-px w-8 bg-terracota/45" aria-hidden="true" />
-                Índice general
+                {t('timeline', 'eyebrow')}
               </div>
-              <p className="font-title text-2xl text-carbon">Explora la red matemática</p>
+              <p className="font-title text-2xl text-carbon">{t('search', 'exploreNetwork')}</p>
               <p className="mt-2 max-w-lg font-serif text-base leading-relaxed text-carbon/55">
-                Busca por título o por idea, o comienza por un tipo de contenido.
+                {t('search', 'exploreDesc')}
               </p>
               <div className="mt-6 flex flex-wrap gap-2" aria-label="Explorar por tipo">
                 {QUICK_FILTERS.filter(type => availableTypes.includes(type)).map(type => (
@@ -449,7 +466,7 @@ export const SearchOmnibar = () => {
                     style={{ '--hover-accent': TYPE_COLORS[type] } as React.CSSProperties}
                   >
                     <span style={{ color: TYPE_COLORS[type] }} aria-hidden="true">{TYPE_ICONS[type]}</span>
-                    {TYPE_LABELS[type]}
+                    {typeLabels[type]}
                   </button>
                 ))}
               </div>
@@ -458,8 +475,8 @@ export const SearchOmnibar = () => {
         </div>
 
         <div className="hidden border-t border-carbon/15 px-5 py-2.5 text-xs text-carbon/40 sm:flex sm:items-center sm:justify-between">
-          <span><kbd className="font-sans font-bold">↑↓</kbd> recorrer <span className="mx-2">·</span> <kbd className="font-sans font-bold">↵</kbd> abrir</span>
-          <span className="font-serif italic">Matematika · índice de contenidos</span>
+          <span>{t('search', 'navigateTip')}</span>
+          <span className="font-serif italic">{t('search', 'footerLabel')}</span>
         </div>
       </section>
     </div>

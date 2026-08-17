@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-export { dictionary, texSymbolMap } from '@content/glossary/dictionary';
+export { dictionary, texSymbolMap, getGlossaryDictionary } from '@content/glossary/dictionary';
 export type { GlossaryEntry, GlossaryCategory } from '@content/glossary/dictionary';
 
 /**

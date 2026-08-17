@@ -11,6 +11,8 @@ import { ContentCard } from '@/components/ui/ContentCard';
 import { DifficultyBadge } from '@/components/ui/DifficultyBadge';
 import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { DOMAIN_ICONS, DOMAIN_COLORS } from '@/lib/theme/constants';
+import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { useI18n } from '@/i18n';
 
 /**
  * Componente interno para mostrar un chip visual con la disciplina (dominio) donde se aplica el caso de uso.
@@ -43,8 +45,11 @@ function DomainBadge({ domain }: { domain?: string }) {
  */
 export const UseCasePage: React.FC = () => {
   const { id } = useParams();
+  const { lang, getLocalizedPath, t } = useI18n();
   const slug = id || '';
-  const usecase = db.getUseCase(slug);
+  const usecase = db.getUseCase(slug, lang);
+  const isFallback = slug ? db.isFallback(slug, lang) : false;
+  const availableLangs = slug ? db.getAvailableLanguages(slug) : ['es'];
   const { markUseCaseVisited } = useProgressStore();
 
   useEffect(() => {
@@ -58,31 +63,33 @@ export const UseCasePage: React.FC = () => {
       <div className="ac-page flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4 opacity-20">◎</div>
-          <h1 className="text-2xl italic text-carbon/50">Caso de uso no encontrado.</h1>
+          <h1 className="text-2xl italic text-carbon/50">{t('notFound', 'description')}</h1>
         </div>
       </div>
     );
   }
 
   const concept = usecase.concept
-    ? (db.getTheorem(usecase.concept) ||
-       db.getDefinition(usecase.concept) ||
-       db.getMethod(usecase.concept))
+    ? (db.getTheorem(usecase.concept, lang) ||
+       db.getDefinition(usecase.concept, lang) ||
+       db.getMethod(usecase.concept, lang))
     : null;
 
   const related = usecase.concept
-    ? db.getUseCasesByConcept(usecase.concept).filter(u => u.id !== usecase.id)
+    ? db.getUseCasesByConcept(usecase.concept, lang).filter(u => u.id !== usecase.id)
     : [];
 
   const c = concept as { title?: string; slug: string; type?: string } | null;
   const breadcrumbs = c
     ? [{
         name: c.title || c.slug,
-        href: c.type === 'metodo'
-          ? `/metodo/${c.slug}`
-          : c.type === 'definicion'
-            ? `/definicion/${c.slug}`
-            : `/teorema/${c.slug}`,
+        href: getLocalizedPath(
+          c.type === 'metodo'
+            ? `/metodo/${c.slug}`
+            : c.type === 'definicion'
+              ? `/definicion/${c.slug}`
+              : `/teorema/${c.slug}`
+        ),
       }]
     : [];
 
@@ -92,7 +99,6 @@ export const UseCasePage: React.FC = () => {
         <div className="w-full pt-4 pb-16">
           <ContentHeader
             type="caso-de-uso"
-            typeLabel="Caso de Uso Real"
             title={usecase.title}
             description={usecase.description}
             breadcrumbs={breadcrumbs}
@@ -104,10 +110,17 @@ export const UseCasePage: React.FC = () => {
               </>
             }
             backLink={c ? {
-              href: `/teorema/${c.slug || usecase.concept}`,
+              href: getLocalizedPath(`/teorema/${c.slug || usecase.concept}`),
               label: `← ${c.title || c.slug}`,
             } : undefined}
           />
+
+          {isFallback && (
+            <UntranslatedFallbackBanner
+              availableLangs={availableLangs}
+              className="mb-8"
+            />
+          )}
 
           <ContentBody>
             <usecase.Component />
@@ -120,19 +133,19 @@ export const UseCasePage: React.FC = () => {
           <div className="w-full px-6 md:px-10 pb-16">
             <SubtleSeparator />
             <h3 className="ac-label ac-label--md ac-label--faint mb-6">
-              Más aplicaciones de este concepto
+              {t('content', 'moreApplications')}
             </h3>
             <div className="grid gap-4 sm:grid-cols-2">
               {related.map(rel => (
                 <ContentCard
                   key={rel.id}
-                  href={`/caso/${rel.slug}`}
+                  href={getLocalizedPath(`/caso/${rel.slug}`)}
                   title={rel.title}
                   description={rel.description}
                   type="caso-de-uso"
                   domain={rel.domain}
                   domainIcon={rel.domain ? DOMAIN_ICONS[rel.domain.toLowerCase()] : undefined}
-                  actionLabel="Explorar"
+                  actionLabel={t('content', 'explore')}
                 />
               ))}
             </div>

@@ -1,4 +1,4 @@
-import { useRoute } from 'wouter';
+import { useParams } from 'wouter';
 import { db } from '@/data/content';
 import { ContentDiagram, ContentLayout } from '@/components/layouts/ContentLayout';
 import { FadeIn } from '@/components/ui/FadeIn';
@@ -6,6 +6,8 @@ import { ContentHeader } from '@/components/content/ContentHeader';
 import { ContentBody } from '@/components/ui/ContentBody';
 import { ContentCard } from '@/components/ui/ContentCard';
 import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
+import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { useI18n } from '@/i18n';
 
 /**
  * Página para visualizar un Sistema Axiomático.
@@ -14,36 +16,49 @@ import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
  * y permite listar los Modelos concretos que lo satisfacen.
  */
 export function AxiomaticSystemPage() {
-  const [, params] = useRoute('/sistema/:id');
-  const id = params?.id;
-  const system = id ? db.getAxiomaticSystem(id) : undefined;
+  const { id } = useParams();
+  const { lang, getLocalizedPath, t } = useI18n();
+  const slug = id || '';
+  const system = slug ? db.getAxiomaticSystem(slug, lang) : undefined;
+  const isFallback = slug ? db.isFallback(slug, lang) : false;
+  const availableLangs = slug ? db.getAvailableLanguages(slug) : ['es'];
 
   if (!system) {
     return (
       <div className="min-h-viewport flex flex-col items-center justify-center bg-lienzo text-carbon">
-        <h1 className="font-serif text-3xl mb-4">Sistema axiomático no encontrado</h1>
-        <p className="text-pizarra mb-6">El sistema <code className="bg-carbon/5 px-2 py-0.5 rounded">{id}</code> no existe en la base de datos.</p>
+        <h1 className="font-serif text-3xl mb-4">{t('notFound', 'title')}</h1>
+        <p className="text-pizarra mb-6">{t('notFound', 'description')}</p>
       </div>
     );
   }
 
-  const axioms = (system.axiomas || []).map(axId => db.getAxiom(axId)).filter(Boolean);
-  const models = db.getModelsForSystem(system.id);
+  const axioms = (system.axiomas || []).map(axId => db.getAxiom(axId, lang)).filter(Boolean);
+  const models = db.getModelsForSystem(system.id, lang);
 
-  const breadcrumbs = db.getBreadcrumbs((system as any).tags || (axioms[0] && axioms[0].tags), { name: 'Axiomas', href: '/axiomas' });
+  const breadcrumbs = db.getBreadcrumbs(
+    system.branch || system.tags || (axioms[0] && (axioms[0].branch || axioms[0].tags)),
+    { name: t('navigation', 'axioms'), href: getLocalizedPath('/axiomas') },
+    lang,
+  );
 
   const renderMainContent = () => (
     <div className="bg-transparent text-carbon font-serif pb-16">
       <FadeIn className="w-full px-6 md:px-12 pt-4">
         <ContentHeader
           type="sistema-axiomatico"
-          typeLabel="Sistema Axiomático"
           title={system.title}
           description={system.description}
           breadcrumbs={breadcrumbs}
           authors={system.authors || []}
           nodeId={system.id}
         />
+
+        {isFallback && (
+          <UntranslatedFallbackBanner
+            availableLangs={availableLangs}
+            className="mb-8"
+          />
+        )}
 
         <ContentBody>
           <system.Component />
@@ -59,13 +74,13 @@ export function AxiomaticSystemPage() {
           <section className="mt-16">
             <SubtleSeparator />
             <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4">
-              Axiomas del sistema ({axioms.length})
+              {`${t('content', 'systemAxioms')} (${axioms.length})`}
             </h2>
             <div className="flex flex-col gap-3 max-w-4xl">
               {axioms.map(ax => ax && (
                 <ContentCard
                   key={ax.id}
-                  href={`/axioma/${ax.id}`}
+                  href={getLocalizedPath(`/axioma/${ax.id}`)}
                   title={ax.title}
                   description={ax.description}
                   type="axioma"
@@ -80,13 +95,13 @@ export function AxiomaticSystemPage() {
           <section className="mt-16">
             <SubtleSeparator />
             <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4">
-              Modelos que satisfacen este sistema ({models.length})
+              {`${t('content', 'modelsSatisfyingSystem')} (${models.length})`}
             </h2>
             <div className="flex flex-col gap-3 max-w-4xl">
               {models.map(m => (
                 <ContentCard
                   key={m.id}
-                  href={`/modelo/${m.id}`}
+                  href={getLocalizedPath(`/modelo/${m.id}`)}
                   title={m.title}
                   description={m.description}
                   type="modelo"

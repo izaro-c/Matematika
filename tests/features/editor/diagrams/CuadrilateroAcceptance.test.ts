@@ -12,7 +12,7 @@ import {
 } from '../../../../src/diagrams/public';
 
 const sourcePath = 'content/diagrams/Definiciones/Cuadrilatero.tsx';
-const pagePath = 'content/mdx/definitions/cuadrilatero.mdx';
+const pagePath = 'content/mdx/es/definitions/cuadrilatero.mdx';
 
 function readModel(): DiagramSpecV2 {
   const parsed = parseDiagramSourceAST(fs.readFileSync(sourcePath, 'utf8'));

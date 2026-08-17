@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'wouter';
 import { UI } from '@/design';
+import { useI18n } from '@/i18n';
 
 export interface Crumb {
   name: string;
@@ -18,10 +19,14 @@ interface BreadcrumbsProps {
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   crumbs,
   className = '',
-  homeLabel = 'Biblioteca',
+  homeLabel,
   homeHref = '/',
   showHome = true,
 }) => {
+  const { t, getLocalizedPath } = useI18n();
+  const defaultHomeLabel = homeLabel ?? t('topbar', 'backToLibrary');
+  const localizedHomeHref = getLocalizedPath(homeHref);
+
   const overflow = crumbs.length + (showHome ? 1 : 0) > 3;
   const collapseAt = crumbs.length - 2;
 
@@ -33,7 +38,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
       <span className={UI.breadcrumbsSep} aria-hidden="true">/</span>
       {crumb.href && !isLast ? (
         <Link
-          href={crumb.href}
+          href={getLocalizedPath(crumb.href)}
           className={`${UI.breadcrumbsLink} truncate max-w-[120px] lg:max-w-[200px]`}
           title={crumb.name}
         >
@@ -54,8 +59,8 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   return (
     <nav aria-label="Breadcrumb" className={`${UI.breadcrumbs} ${className}`}>
       {showHome && (
-        <Link href={homeHref} className={`${UI.breadcrumbsLink} shrink-0`}>
-          {homeLabel}
+        <Link href={localizedHomeHref} className={`${UI.breadcrumbsLink} shrink-0`}>
+          {defaultHomeLabel}
         </Link>
       )}
 
