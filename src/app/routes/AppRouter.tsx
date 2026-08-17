@@ -1,9 +1,10 @@
-import { Redirect, Route, Switch } from "wouter";
+import { Redirect, Route, Switch, useParams } from "wouter";
 import { MathProvider } from "@/lib/page-context/MathStoreContext";
 import { Suspense, lazy } from 'react';
 import { BiographyLayout } from "@/components/layouts/BiographyLayout";
 import { PageLoadingScreen } from "@/components/ui/PageLoadingScreen";
 import { db } from '@/data/content';
+import { useI18n, isSupportedLanguage, getLanguage, SEGMENT_TO_CANONICAL_TYPE } from '@/i18n';
 
 const HomePage = lazy(() => import("@/fixed-pages/home/HomePage").then(m => ({ default: m.HomePage })));
 const DictionaryPage = lazy(() => import("@/fixed-pages/glossary/DictionaryPage").then(m => ({ default: m.DictionaryPage })));
@@ -28,21 +29,158 @@ const EditorPage = lazy(() => import("@/fixed-pages/editor/ui/page/EditorPage").
 const DiagramEditorPage = lazy(() => import("@/fixed-pages/editor/DiagramEditorPage").then(m => ({ default: m.DiagramEditorPage })));
 const GraphPage = lazy(() => import("@/fixed-pages/graph/GraphPage").then(m => ({ default: m.GraphPage })));
 const AxiomGraphPage = lazy(() => import("@/fixed-pages/graph/AxiomGraphPage").then(m => ({ default: m.AxiomGraphPage })));
+
 /**
- * Componente principal de enrutamiento de la aplicación.
- * * Lee dinámicamente el contenido indexado en el `ContentStore` y
- * genera las rutas necesarias para contenido y biografías. Además,
- * define las rutas estáticas para páginas especiales (Grafo, Diccionario, etc.).
- * * @returns {JSX.Element} Un componente de wouter con todas las rutas.
+ * Dispatcher genérico para rutas de 3 segmentos: `/:lang/:segment/:id`
+ * Normaliza automáticamente el segmento de ruta al idioma activo si no coincide.
  */
+const LocalizedContentRouteDispatcher: React.FC = () => {
+  const { lang, segment, id } = useParams<{ lang?: string; segment?: string; id?: string }>();
+  const { lang: userLang } = useI18n();
+  const activeLang = isSupportedLanguage(lang) ? (lang as string) : userLang;
+  const rawSegment = (segment || '').toLowerCase();
+  const canonicalType = SEGMENT_TO_CANONICAL_TYPE[rawSegment];
+
+  if (!canonicalType || !id) {
+    return <NotFoundPage />;
+  }
+
+  const langConfig = getLanguage(activeLang);
+  const targetSegment = langConfig.routeSegments[canonicalType] || canonicalType;
+
+  // Auto-traducir o normalizar segmento de ruta si difiere (ej: /eu/ejercicio/... -> /eu/ariketa/...)
+  if (rawSegment !== targetSegment.toLowerCase()) {
+    return <Redirect to={`/${activeLang}/${targetSegment}/${id}`} replace />;
+  }
+
+  switch (canonicalType) {
+    case 'teorema':
+      return <MathProvider><TheoremPage /></MathProvider>;
+    case 'definicion':
+      return <MathProvider><DefinitionPage /></MathProvider>;
+    case 'ejercicio':
+      return <MathProvider><ExercisePage /></MathProvider>;
+    case 'ejemplo':
+      return <MathProvider><ExamplePage /></MathProvider>;
+    case 'axioma':
+      return <MathProvider><AxiomPage /></MathProvider>;
+    case 'modelo':
+      return <MathProvider><ModelPage /></MathProvider>;
+    case 'sistema':
+      return <MathProvider><AxiomaticSystemPage /></MathProvider>;
+    case 'metodo':
+      return <MathProvider><MethodPage /></MathProvider>;
+    case 'demo':
+      return <MathProvider><DemoPage /></MathProvider>;
+    case 'caso':
+      return <MathProvider><UseCasePage /></MathProvider>;
+    case 'plan':
+      return <StudyPlanPage />;
+    case 'rama':
+      return <BranchPage />;
+    case 'bio': {
+      const mat = db.getMathematicianById(id, activeLang);
+      if (!mat) return <NotFoundPage />;
+      return (
+        <MathProvider>
+          <BiographyLayout Component={mat.Component} metadata={mat} />
+        </MathProvider>
+      );
+    }
+    default:
+      return <NotFoundPage />;
+  }
+};
+
+/**
+ * Dispatcher para rutas de 2 segmentos: `/:first/:second`
+ * Soporta:
+ * 1. Páginas estáticas localizadas: `/:lang/:page` (ej: `/es/diccionario`, `/eu/hiztegia`, `/eu/grafoa`)
+ * 2. Rutas heredadas de contenido sin prefijo: `/:segment/:id` (ej: `/teorema/teorema-pitagoras`, `/definicion/triangulo`)
+ */
+const TwoSegmentRouteDispatcher: React.FC = () => {
+  const { first, second } = useParams<{ first?: string; second?: string }>();
+  const { lang: userLang } = useI18n();
+
+  const rawFirst = (first || '').toLowerCase();
+  const rawSecond = (second || '').toLowerCase();
+
+  // Caso 1: El primer segmento es un idioma válido (ej: /es/diccionario, /eu/hiztegia, /es/construccion/...)
+  if (isSupportedLanguage(rawFirst)) {
+    const activeLang = rawFirst;
+    const canonicalType = SEGMENT_TO_CANONICAL_TYPE[rawSecond];
+
+    if (!canonicalType) {
+      return <NotFoundPage />;
+    }
+
+    const langConfig = getLanguage(activeLang);
+    const targetSegment = (langConfig.routeSegments[canonicalType] || canonicalType).toLowerCase();
+
+    if (rawSecond !== targetSegment) {
+      return <Redirect to={`/${activeLang}/${targetSegment}`} replace />;
+    }
+
+    switch (canonicalType) {
+      case 'diccionario':
+        return <DictionaryPage />;
+      case 'historia':
+        return <HistoryTimeline />;
+      case 'grafo':
+        return <GraphPage />;
+      case 'axiomas':
+        return <AxiomGraphPage />;
+      case 'metodo':
+        return <MethodsPage />;
+      default:
+        return <NotFoundPage />;
+    }
+  }
+
+  // Caso 2: El primer segmento NO es un idioma -> es una ruta de contenido heredada sin prefijo (ej: /teorema/:id, /definicion/:id)
+  const canonicalContent = SEGMENT_TO_CANONICAL_TYPE[rawFirst];
+  if (canonicalContent && second) {
+    const targetLangConfig = getLanguage(userLang);
+    const localizedSegment = targetLangConfig.routeSegments[canonicalContent] || canonicalContent;
+    return <Redirect to={`/${userLang}/${localizedSegment}/${second}`} replace />;
+  }
+
+  return <NotFoundPage />;
+};
+
+/**
+ * Dispatcher para rutas de 1 segmento: `/:segment`
+ * Soporta:
+ * 1. Home con prefijo de idioma: `/es`, `/eu`
+ * 2. Páginas estáticas heredadas sin prefijo: `/diccionario`, `/historia`, `/grafo`, `/axiomas`, `/metodos`
+ */
+const SingleSegmentRouteDispatcher: React.FC = () => {
+  const { segment } = useParams<{ segment?: string }>();
+  const { lang: userLang } = useI18n();
+  const raw = (segment || '').toLowerCase();
+
+  if (isSupportedLanguage(raw)) {
+    return <HomePage />;
+  }
+
+  const canonical = SEGMENT_TO_CANONICAL_TYPE[raw];
+  if (canonical) {
+    const targetLangConfig = getLanguage(userLang);
+    const localizedSegment = targetLangConfig.routeSegments[canonical] || canonical;
+    return <Redirect to={`/${userLang}/${localizedSegment}`} replace />;
+  }
+
+  return <NotFoundPage />;
+};
+
 export const AppRouter = () => {
+  const { lang } = useI18n();
   const methods = db.getAllMethods();
-  const biographies = db.getAllMathematicians();
 
   return (
     <Suspense fallback={<PageLoadingScreen />}>
       <Switch>
-        <Route path="/" component={HomePage} />
+        {/* EDITORES (Rutas directas de desarrollo sin prefijo obligatorio) */}
         <Route path="/editor">
           <MathProvider>
             <EditorPage />
@@ -56,97 +194,34 @@ export const AppRouter = () => {
         <Route path="/editor-v2">
           <Redirect to="/editor_v2" />
         </Route>
-          <Route path="/diccionario" component={DictionaryPage} />
-          <Route path="/historia" component={HistoryTimeline} />
-          <Route path="/metodos" component={MethodsPage} />
-          <Route path="/grafo" component={GraphPage} />
-          <Route path="/axiomas" component={AxiomGraphPage} />
-          <Route path="/construccion/:id" component={ConstructionPage} />
 
-          {/* RUTAS DE AXIOMAS Y MODELOS */}
-          <Route path="/axioma/:id">
-            <MathProvider>
-              <AxiomPage />
-            </MathProvider>
+        {/* HOME PRINCIPAL */}
+        <Route path="/" component={HomePage} />
+
+        {/* CONSTRUCCIÓN */}
+        <Route path="/:lang/construccion/:id" component={ConstructionPage} />
+        <Route path="/construccion/:id">
+          {(params) => <Redirect to={`/${lang}/construccion/${params.id}`} replace />}
+        </Route>
+
+        {/* ALIAS HISTÓRICOS DE LECCIÓN */}
+        {methods.map(({ id }) => (
+          <Route key={`legacy-method-${id}`} path={`/leccion-${id}`}>
+            <Redirect to={`/${lang}/metodo/${id}`} replace />
           </Route>
-          <Route path="/modelo/:id">
-            <MathProvider>
-              <ModelPage />
-            </MathProvider>
-          </Route>
-          <Route path="/sistema/:id">
-            <MathProvider>
-              <AxiomaticSystemPage />
-            </MathProvider>
-          </Route>
+        ))}
 
-          {/* MÉTODOS Y ALIAS DE LAS ANTIGUAS URL DE LECCIÓN */}
-          <Route path="/metodo/:id">
-            <MathProvider>
-              <MethodPage />
-            </MathProvider>
-          </Route>
-          {methods.map(({ id }) => (
-            <Route key={`legacy-method-${id}`} path={`/leccion-${id}`}>
-              <Redirect to={`/metodo/${id}`} replace />
-            </Route>
-          ))}
+        {/* RUTAS DE 3 SEGMENTOS: /:lang/:segment/:id */}
+        <Route path="/:lang/:segment/:id" component={LocalizedContentRouteDispatcher} />
 
-          {/* RUTAS DE TEOREMAS */}
-          <Route path="/teorema/:id">
-            <MathProvider>
-              <TheoremPage />
-            </MathProvider>
-          </Route>
+        {/* RUTAS DE 2 SEGMENTOS: /:lang/:page O /:legacySegment/:id */}
+        <Route path="/:first/:second" component={TwoSegmentRouteDispatcher} />
 
-          {/* RUTAS DE DEFINICIONES */}
-          <Route path="/definicion/:id">
-            <MathProvider>
-              <DefinitionPage />
-            </MathProvider>
-          </Route>
+        {/* RUTAS DE 1 SEGMENTO: /:lang O /:legacyStaticPage */}
+        <Route path="/:segment" component={SingleSegmentRouteDispatcher} />
 
-          {/* RUTAS DE EJEMPLOS Y EJERCICIOS */}
-          <Route path="/ejemplo/:id">
-            <MathProvider>
-              <ExamplePage />
-            </MathProvider>
-          </Route>
-
-          <Route path="/ejercicio/:id">
-            <MathProvider>
-              <ExercisePage />
-            </MathProvider>
-          </Route>
-
-          {/* RUTAS DE DEMOSTRACIONES ESTÁTICAS */}
-          <Route path="/demo/:id">
-            <MathProvider>
-              <DemoPage />
-            </MathProvider>
-          </Route>
-
-          {/* RUTAS DE BIOGRAFÍAS HISTÓRICAS */}
-          {biographies.map((mat) => (
-            <Route key={`bio-${mat.slug}`} path={`/bio/${mat.slug}`}>
-              <MathProvider>
-                <BiographyLayout Component={mat.Component} metadata={mat} />
-              </MathProvider>
-            </Route>
-          ))}
-
-          {/* RUTAS DE RAMAS Y PLANES DE ESTUDIO */}
-          <Route path="/rama/:id" component={BranchPage} />
-          <Route path="/plan/:id" component={StudyPlanPage} />
-
-          {/* RUTAS DE CASOS DE USO REAL */}
-          <Route path="/caso/:id">
-            <MathProvider>
-              <UseCasePage />
-            </MathProvider>
-          </Route>
-
-          <Route path="/:rest*" component={NotFoundPage} />
+        {/* 404 CATCH-ALL */}
+        <Route path="/:rest*" component={NotFoundPage} />
       </Switch>
     </Suspense>
   );

@@ -16,6 +16,10 @@ export interface MathematicalSource {
 export interface BaseContent {
   id: string;
   slug: string;
+  lang?: string;
+  branch?: string;
+  branches?: string[];
+  tags?: string[];
   links?: string[];
   seeAlso?: string[];
   leanId?: string;
@@ -37,14 +41,15 @@ export interface Mathematician extends BaseContent {
   Component: MDXComponent;
 }
 
-export interface StudyPlan extends StudyPlanMeta {
+export interface StudyPlan extends BaseContent {
+  title: string;
+  subtitle?: string;
+  description: string;
+  requiredNodes?: string[];
   Component: MDXComponent;
-  slug: string;
 }
 
-export interface Theorem {
-  id: string;
-  slug: string;
+export interface Theorem extends BaseContent {
   title: string;
   description: string;
   statement?: string;
@@ -56,173 +61,114 @@ export interface Theorem {
   demostraciones?: string[];
   lemmas?: string[];
   requires?: string[];
-  links?: string[];
   examples?: string[];
   exercises?: string[];
   parentTheorem?: string;
-  tags?: string[];
   difficulty?: Difficulty;
   Component: MDXComponent;
   Simulation?: MDXComponent;
-  seeAlso?: string[];
-  leanId?: string;
-  leanCommitSha?: string;
-  leanVerified?: boolean;
-  verificationStatus?: VerificationStatus;
-  foundation?: Foundation;
-  sources?: MathematicalSource[];
 }
 
-export interface Method {
-  id: string;
-  slug: string;
+export interface Method extends BaseContent {
   type: 'metodo';
   subtype: 'demostracion' | 'construccion' | 'calculo' | 'algoritmo';
   title: string;
   description: string;
-  tags?: string[];
   authors?: string[];
-  links?: string[];
   requires?: string[];
   difficulty?: Difficulty;
   Component: MDXComponent;
   Simulation?: MDXComponent;
-  seeAlso?: string[];
 }
 
-export interface Demo {
-  id: string;
-  slug: string;
+export interface Demo extends BaseContent {
   type?: 'demostracion';
   title: string;
   description: string;
   parentTheorem?: string;
   lemmas?: string[];
-  links?: string[];
   proofMethod?: string;
   authors?: string[];
-  tags?: string[];
   layout?: 'split' | 'text';
   dependencias?: string[];
-  leanId?: string;
-  leanCommitSha?: string;
-  leanVerified?: boolean;
-  verificationStatus?: VerificationStatus;
-  foundation?: Foundation;
-  sources?: MathematicalSource[];
   stepTacticMap?: Record<string, string[]>;
   Component: MDXComponent;
-  seeAlso?: string[];
 }
 
-export interface Definition {
-  id: string;
-  slug: string;
+export interface Definition extends BaseContent {
   title: string;
   description: string;
   statement?: string;
-  tags?: string[];
   authors?: string[];
-  links?: string[];
   color?: string;
   Component: MDXComponent;
   Simulation?: MDXComponent;
-  seeAlso?: string[];
-  leanId?: string;
-  leanCommitSha?: string;
-  leanVerified?: boolean;
-  verificationStatus?: VerificationStatus;
-  foundation?: Foundation;
-  sources?: MathematicalSource[];
 }
 
-export interface Example {
-  id: string;
-  slug: string;
+export interface Example extends BaseContent {
   title: string;
   description?: string;
   relatedTheorem?: string;
   requires?: string[];
-  tags?: string[];
   difficulty?: Difficulty;
   Component: MDXComponent;
   Simulation?: MDXComponent;
-  seeAlso?: string[];
 }
 
-export interface Exercise {
-  id: string;
-  slug: string;
+export interface Exercise extends BaseContent {
   title: string;
   description?: string;
   relatedTheorem?: string;
   requires?: string[];
-  tags?: string[];
   difficulty?: Difficulty;
   hint?: string;
   Component: MDXComponent;
   Simulation?: MDXComponent;
-  seeAlso?: string[];
 }
 
-export interface UseCase {
-  id: string;
-  slug: string;
+export interface UseCase extends BaseContent {
   title: string;
   description?: string;
   concept?: string;
   domain?: string;
-  tags?: string[];
   difficulty?: Difficulty;
   Component: MDXComponent;
   Simulation?: MDXComponent;
-  seeAlso?: string[];
 }
 
-export interface Axiom {
-  id: string;
-  slug: string;
+export interface Axiom extends BaseContent {
   type?: 'axioma';
   title: string;
   description: string;
   statement?: string;
-  tags?: string[];
   authors?: string[];
   axiomSystem?: string;
   axiomFamily?: string;
   alternativeGroup?: string;
-  links?: string[];
-  Component: MDXComponent;
-  Simulation?: MDXComponent;
-  seeAlso?: string[];
-  leanId?: string;
-  leanCommitSha?: string;
-  leanVerified?: boolean;
-  verificationStatus?: VerificationStatus;
-  foundation?: Foundation;
-  sources?: MathematicalSource[];
-}
-
-export interface AxiomaticSystem extends AxiomaticSystemMeta {
-  id: string;
-  slug: string;
   Component: MDXComponent;
   Simulation?: MDXComponent;
 }
 
-export interface Model {
-  id: string;
-  slug: string;
+export interface AxiomaticSystem extends BaseContent {
+  title: string;
+  description: string;
+  axiomas: string[];
+  models?: string[];
+  authors?: string[];
+  hasSimulation?: boolean;
+  Component: MDXComponent;
+  Simulation?: MDXComponent;
+}
+
+export interface Model extends BaseContent {
   type?: 'modelo';
   title: string;
   description?: string;
-  satisfies: string;
+  satisfies: string | string[];
   axioms_verified?: string[];
   hasDiagram?: boolean;
-  tags?: string[];
-  links?: string[];
-  seeAlso?: string[];
   Component: MDXComponent;
   Diagram?: MDXComponent;
   Simulation?: MDXComponent;
 }
+

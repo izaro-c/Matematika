@@ -4,6 +4,7 @@ import type { BaseContent } from '@/data/content/types';
  * Mapeo de tags existentes en los archivos MDX a códigos MSC2020.
  */
 export const tagToMSC: Record<string, string> = {
+  // Español
   "geometría": "51",
   "geometria": "51",
   "geometría de incidencia": "51A",
@@ -54,6 +55,23 @@ export const tagToMSC: Record<string, string> = {
   "probabilidad": "60",
   "estadística": "62",
   "estadistica": "62",
+  // Euskera
+  "triangeluak": "51M",
+  "azalerak": "51M",
+  "intzidentzia": "51A",
+  "intzidentzia-geometria": "51A",
+  "kongruentzia": "51M",
+  "jarraitutasuna": "51M",
+  "ordena": "51",
+  "paraleloak": "51M",
+  "oinarrizkoa": "51",
+  "oinarriak": "03",
+  "logika": "03",
+  "aljebra": "15",
+  "analisia": "26",
+  "kalkulua": "26",
+  "probabilitatea": "60",
+  "estatistika": "62",
 };
 
 export const mscNames: Record<string, string> = {
@@ -231,6 +249,202 @@ export const mscNames: Record<string, string> = {
   "probabilidad-estadistica-y-aplicaciones": "Probabilidad, Estadística y Aplicaciones",
 };
 
+export const mscNamesEu: Record<string, string> = {
+  "00": "Gai orokorrak eta globalak; bildumak",
+  "00A": "Orokorrak, aisialdia, dibulgazioa eta matematikaren filosofia",
+  "00B": "Biltzarretako aktak eta artikulu-bildumak",
+  "01": "Historia eta biografiak",
+  "01A": "Matematikaren historia eta matematikarien biografiak",
+  "97": "Matematika-hezkuntza",
+  "97B": "Hezkuntza-politika eta hezkuntza-sistemak",
+  "97C": "Matematika-hezkuntzaren psikologia",
+  "97G": "Geometria (hezkuntza)",
+  "97H": "Aljebra (hezkuntza)",
+  "97I": "Analisia (hezkuntza)",
+  "03": "Logika matematikoa eta oinarriak",
+  "03A": "Filosofia- eta oinarri-alderdiak",
+  "03B": "Logika orokorra (proposiziozkoa, lehen mailakoa, modala)",
+  "03C": "Ereduen teoria",
+  "03D": "Konputagarritasunaren teoria eta errekurtsioa",
+  "03E": "Multzo-teoria (kardinalak, ordinalak, hautapenaren axioma)",
+  "03F": "Frogen teoria eta matematika konstruktiboa",
+  "03G": "Logika aljebraikoa (Booleren aljebrak)",
+  "08": "Sistema aljebraiko orokorrak",
+  "08A": "Egitura aljebraikoak eta homomorfismoak",
+  "08B": "Aljebren barietateak",
+  "08C": "Aljebra-klaseak",
+  "11": "Zenbaki-teoria",
+  "11A": "Zenbaki-teoria elementala",
+  "11D": "Ekuazio diofantikoak",
+  "11F": "Forma modularrak eta automorfoak",
+  "11R": "Zenbaki-teoria aljebraikoa",
+  "11Y": "Zenbaki-teoria konputazionala",
+  "12": "Gorputzen teoria eta polinomioak",
+  "12F": "Gorputz-hedapenak eta Galoisen teoria",
+  "12H": "Aljebra diferentziala",
+  "13": "Aljebra trukakorra",
+  "13B": "Eraztun-hedapenak",
+  "13F": "Eraztun aritmetikoak eta faktorizazio bakarrekoak",
+  "14": "Geometria aljebraikoa",
+  "14H": "Kurba aljebraikoak",
+  "14J": "Gainazalak eta dimentsio handiagoko barietateak",
+  "14K": "Abelen barietateak",
+  "15": "Aljebra lineala eta multilineala; matrizeen teoria",
+  "15A": "Bektore-espazioak eta oinarrizko transformazio linealak",
+  "15B": "Matrize bereziak (ortogonalak, simetrikoak, boolearrak)",
+  "geometria-algebraica": "Geometria Aljebraikoa",
+  "algebra-abstracta": "Aljebra Abstraktua (Eraztunak eta Gorputzak)",
+  "teoria-de-grupos-y-categorias": "Taldeen Teoria eta Kategoriak",
+  "18": "Kategorien teoria; aljebra homologikoa",
+  "18A": "Kategorien teoria orokorra",
+  "18B": "Kategoria bereziak (toposak)",
+  "18G": "Aljebra homologikoa",
+  "20": "Taldeen teoria eta orokortzeak",
+  "20D": "Talde finitu abstraktuak",
+  "20F": "Talde bereziak eta egitura-propietateak",
+  "20G": "Talde linealak eta aljebraikoak",
+  "20M": "Erditaldeak",
+  "26": "Aldagai errealeko funtzioak",
+  "26A": "Aldagai bakarreko funtzioak (kalkulu diferentziala eta integrala)",
+  "26B": "Hainbat aldagaitako funtzioak",
+  "28": "Neurria eta integrazioa",
+  "28A": "Neurri klasikoak eta Lebesguen integrala",
+  "30": "Aldagai konplexuko funtzioak",
+  "30C": "Funtzio analitikoen teoria geometrikoa",
+  "30D": "Funtzio osoak eta meromorfoak",
+  "34": "Ekuazio diferentzial arruntak",
+  "34A": "Teoria orokorra, existentzia eta bakartasuna",
+  "34C": "Sistema dinamikoak eta soluzio kualitatiboak",
+  "34D": "Egonkortasun-teoria",
+  "35": "Deribatu partzialetako ekuazio diferentzialak",
+  "35A": "Teoria orokorra",
+  "35J": "Ekuazio eliptikoak",
+  "35K": "Ekuazio parabolikoak",
+  "35L": "Ekuazio hiperbolikoak",
+  "46": "Analisi funtzionala",
+  "46B": "Banach eta Hilbert espazio normatuak",
+  "46C": "Biderketa barruko espazioak",
+  "46L": "Eragileen aljebrak (C*-aljebrak, von Neumannen aljebrak)",
+  "analisis-real-y-funciones": "Analisi Erreala eta Funtzioak",
+  "analisis-complejo": "Analisi Konplexua",
+  "ecuaciones-diferenciales": "Ekuazio Diferentzialak",
+  "analisis-funcional-y-armonico": "Analisi Funtzionala eta Harmonikoa",
+  "geometria-clasica-y-diferencial": "Geometria Klasikoa eta Diferentziala",
+  "topologia-general-y-algebraica": "Topologia Orokorra eta Aljebraikoa",
+  "51": "Geometria",
+  "51A": "Intzidentzia-geometria lineala",
+  "51M": "Geometria euklidearra eta ez-euklidearra",
+  "51P": "Geometria analitikoa",
+  "53": "Geometria diferentziala",
+  "53A": "Kurba eta gainazalen geometria diferentzial klasikoa",
+  "53C": "Barietate diferentziagarriak eta Riemannen geometria",
+  "53D": "Geometria sinplektikoa eta kontaktuzkoa",
+  "54": "Topologia orokorra",
+  "54D": "Banaketa- eta konpaktutasun-propietateak",
+  "54E": "Espazio metrikoak eta uniformeak",
+  "54F": "Espazio bereziak (kontinuoak)",
+  "55": "Topologia aljebraikoa",
+  "55M": "Homologia eta kohomologia klasikoa",
+  "55N": "Homologia orokortuaren teoriak",
+  "55Q": "Homotopia-taldeak",
+  "05": "Konbinatoria",
+  "05A": "Konbinatoria zenbakizkoa",
+  "05B": "Diseinuak eta konfigurazioak",
+  "05C": "Grafo-teoria",
+  "68": "Informatika",
+  "68Q": "Konputazioaren teoria eta algoritmoak",
+  "68R": "Matematika diskretua informatikan",
+  "68T": "Adimen artifiziala",
+  "68W": "Algoritmoen analisia eta diseinua",
+  "optimizacion-y-teoria-de-juegos": "Optimizazioa eta Joko-Teoria",
+  "fisica-matematica-y-biologia": "Fisika Matematikoa eta Biologia",
+  "49": "Aldakuntzen kalkulua eta kontrol optimoa",
+  "49J": "Existentzia-teoria eta baldintza beharrezkoak",
+  "49K": "Baldintza nahikoak eta muturrak",
+  "49L": "Hamilton-Jacobi teoria",
+  "60": "Probabilitate-teoria eta prozesu estokastikoak",
+  "60B": "Probabilitate-neurriak espazio abstraktuetan",
+  "60C": "Probabilitate konbinatorioa",
+  "60E": "Banaketen teoria",
+  "60F": "Muga-teoremak",
+  "60G": "Prozesu estokastikoak",
+  "60H": "Analisi estokastikoa eta ekuazio diferentzial estokastikoak",
+  "60J": "Markov prozesuak",
+  "62": "Estatistika",
+  "62C": "Erabakien teoria",
+  "62D": "Laginketa-teoria",
+  "62F": "Inferentzia parametrikoa",
+  "62G": "Inferentzia ez-parametrikoa",
+  "62H": "Analisi multivariantea",
+  "62J": "Erregresio lineala eta bariantza-analisia",
+  "62M": "Inferentzia prozesu estokastikoetatik",
+  "62P": "Aplikazio estatistikoak",
+  "65": "Zenbakizko analisia",
+  "65D": "Zenbakizko hurbilketa eta interpolazioa",
+  "65F": "Aljebra lineal zenbakizkoa",
+  "65H": "Ekuazio ez-linealen ebazpen zenbakizkoa",
+  "65L": "Ekuazio diferentzial arrunten ebazpen zenbakizkoa",
+  "65M": "Deribatu partzialetako ekuazioen ebazpen zenbakizkoa",
+  "70": "Partikulen eta sistemen mekanika",
+  "70E": "Gorputz solidoen dinamika",
+  "70F": "Sistema mugatuen dinamika",
+  "70H": "Mekanika hamiltoniarra eta lagrangiarra",
+  "74": "Solido deformagarrien mekanika",
+  "74B": "Elastikotasun klasikoa",
+  "74F": "Efektu akoplatuak",
+  "76": "Fluidoen mekanika",
+  "76B": "Fluido konprimaezin ez-likatsuak",
+  "76D": "Fluido likatsuak eta mugako geruzak",
+  "78": "Optika eta elektromagnetismoa",
+  "78A": "Elektromagnetismo orokorra",
+  "80": "Termodinamika klasikoa eta bero-transferentzia",
+  "80A": "Termodinamika klasikoa",
+  "81": "Teoria kuantikoa",
+  "81P": "Mekanika kuantikoaren oinarriak",
+  "81Q": "Metodo kuantiko orokorrak",
+  "81T": "Eremu-teoria kuantikoa",
+  "82": "Mekanika estatistikoa eta materiaren egitura",
+  "82B": "Oreka mekanika estatistikoa",
+  "82C": "Orekatik kanpoko mekanika estatistikoa",
+  "83": "Erlatibitatearen teoria eta grabitazioa",
+  "83C": "Erlatibitate orokorra",
+  "83E": "Dimentsio gehigarrien teoriak eta bateratzeak",
+  "85": "Astronomia eta astrofisika",
+  "85A": "Astrofisika teorikoa",
+  "86": "Geofisika",
+  "86A": "Geofisika teorikoa",
+  "90": "Eragiketa-ikerketa eta programazio matematikoa",
+  "90B": "Logistika, ekoizpena eta inbentarioak",
+  "90C": "Programazio matematikoa (lineala, ez-lineala, osoa)",
+  "91": "Joko-teoria, ekonomia eta gizarte-zientziak",
+  "91A": "Joko-teoria",
+  "91B": "Ekonomia matematikoa",
+  "92": "Biologia eta beste zientzia naturalak",
+  "92B": "Biologia matematikoa",
+  "92C": "Biologia fisiologikoa eta zelularra",
+  "92D": "Genetika eta populazio-dinamika",
+  "metadatos-y-divulgacion": "Metadatuak eta Dibulgazioa",
+  "fundamentos-y-logica": "Oinarriak eta Logika",
+  "algebra-y-teoria-de-numeros": "Aljebra eta Zenbaki Teoria",
+  "analisis-matematico": "Analisi Matematikoa",
+  "geometria-y-topologia": "Geometria eta Topologia",
+  "matematica-discreta-y-computacional": "Matematika Diskretua eta Konputazionala",
+  "probabilidad-estadistica-y-aplicaciones": "Probabilitatea, Estatistika eta Aplikazioak",
+};
+
+const mscNamesByLang: Record<string, Record<string, string>> = {
+  eu: mscNamesEu,
+  es: mscNames,
+};
+
+export function getMscName(code: string, lang: string = 'es'): string {
+  const table = mscNamesByLang[lang];
+  if (table && table[code]) {
+    return table[code];
+  }
+  return mscNames[code] || code;
+}
+
 export const mscHierarchy: Record<string, string[]> = {
   "00": ["00A", "00B"],
   "01": ["01A"],
@@ -304,14 +518,18 @@ export const mscParent: Record<string, string> = (() => {
 export const codeInheritance: Record<string, string[]> = mscHierarchy;
 
 export function resolveBranchCode(input: string): string {
+  if (!input) return '';
   const trimmed = input.trim();
-  if (mscNames[trimmed]) return trimmed;
+  if (mscNames[trimmed] || mscNamesEu[trimmed]) return trimmed;
   const upper = trimmed.toUpperCase();
-  if (mscNames[upper]) return upper;
-  const mapped = tagToMSC[trimmed.toLowerCase()] || tagToMSC[trimmed];
+  if (mscNames[upper] || mscNamesEu[upper]) return upper;
+  const lower = trimmed.toLowerCase();
+  if (mscNames[lower] || mscNamesEu[lower]) return lower;
+  const mapped = tagToMSC[lower] || tagToMSC[trimmed];
   if (mapped) return mapped;
-  const slugMapped = tagToMSC[trimmed.replace(/-/g, ' ')];
+  const slugMapped = tagToMSC[lower.replace(/-/g, ' ')];
   if (slugMapped) return slugMapped;
+  if (/^\d{2}[A-Z]?$/i.test(trimmed)) return upper;
   return trimmed;
 }
 
@@ -329,6 +547,40 @@ export function getAllDescendantCodes(code: string): string[] {
   return descendants;
 }
 
+export function getItemBranchCodes(item: BaseContent & Record<string, unknown>): string[] {
+  const codes = new Set<string>();
+
+  // 1. Direct 'branch' property (highest priority)
+  if (typeof item.branch === 'string' && item.branch.trim()) {
+    const resolved = resolveBranchCode(item.branch);
+    if (resolved) codes.add(resolved);
+  }
+
+  // 2. Multiple 'branches' property
+  if (Array.isArray(item.branches)) {
+    for (const b of item.branches) {
+      if (typeof b === 'string' && b.trim()) {
+        const resolved = resolveBranchCode(b);
+        if (resolved) codes.add(resolved);
+      }
+    }
+  }
+
+  // 3. Fallback to tags
+  if (Array.isArray(item.tags)) {
+    for (const t of item.tags) {
+      if (typeof t === 'string' && t.trim()) {
+        const resolved = resolveBranchCode(t);
+        if (resolved && (mscNames[resolved] || mscNamesEu[resolved] || codeInheritance[resolved] || mscParent[resolved])) {
+          codes.add(resolved);
+        }
+      }
+    }
+  }
+
+  return Array.from(codes);
+}
+
 export interface BranchTaxonomy {
   id: string;
   slug: string;
@@ -338,7 +590,7 @@ export interface BranchTaxonomy {
   breadcrumbs: { name: string; slug: string }[];
 }
 
-function buildBreadcrumbs(branchCode: string): BranchTaxonomy['breadcrumbs'] {
+function buildBreadcrumbs(branchCode: string, lang?: string): BranchTaxonomy['breadcrumbs'] {
   const breadcrumbs: BranchTaxonomy['breadcrumbs'] = [];
   const chain: string[] = [];
   const seen = new Set<string>();
@@ -349,32 +601,30 @@ function buildBreadcrumbs(branchCode: string): BranchTaxonomy['breadcrumbs'] {
     cur = mscParent[cur];
   }
   for (let i = 0; i < chain.length - 1; i++) {
-    breadcrumbs.push({ name: mscNames[chain[i]] || chain[i], slug: chain[i] });
+    breadcrumbs.push({ name: getMscName(chain[i], lang), slug: chain[i] });
   }
   return breadcrumbs;
 }
 
 function classifyItem(
-  item: BaseContent & { tags?: string[] },
+  item: BaseContent & Record<string, unknown>,
   branchCode: string,
   childCodes: string[],
   allDescendantCodes: string[],
 ): { type: string; item: BaseContent & { tags?: string[] }; subBranchSlug?: string } | null {
-  if (!item.tags || item.tags.length === 0) return null;
-  const tagCodes = item.tags.map(t => tagToMSC[t]).filter((c): c is string => !!c);
-  if (tagCodes.length === 0) return null;
+  const itemCodes = getItemBranchCodes(item);
+  if (itemCodes.length === 0) return null;
 
-  const directMatch = tagCodes.includes(branchCode);
-  const inheritedChildCode = directMatch ? undefined
-    : allDescendantCodes.find(c => tagCodes.includes(c));
+  const directMatch = itemCodes.includes(branchCode);
+  const matchedDescendant = directMatch ? undefined : allDescendantCodes.find(c => itemCodes.includes(c));
 
-  if (!directMatch && !inheritedChildCode) return null;
+  if (!directMatch && !matchedDescendant) return null;
 
   let subBranchSlug: string | undefined;
   if (directMatch) {
-    subBranchSlug = childCodes.find(c => tagCodes.includes(c));
-  } else if (inheritedChildCode) {
-    subBranchSlug = inheritedChildCode;
+    subBranchSlug = childCodes.find(c => itemCodes.includes(c) || getAllDescendantCodes(c).some(d => itemCodes.includes(d)));
+  } else if (matchedDescendant) {
+    subBranchSlug = childCodes.find(c => c === matchedDescendant || getAllDescendantCodes(c).includes(matchedDescendant));
   }
 
   return { type: 'classified', item, subBranchSlug };
@@ -383,21 +633,22 @@ function classifyItem(
 export function buildBranchTaxonomy(
   branchId: string,
   items: { type: string; item: BaseContent & { tags?: string[] } }[],
+  lang?: string,
 ): BranchTaxonomy {
   const branchCode = resolveBranchCode(branchId);
-  const branchName = mscNames[branchCode] || branchId;
+  const branchName = getMscName(branchCode, lang);
   const childCodes = getChildCodes(branchCode);
   const allDescendantCodes = getAllDescendantCodes(branchCode);
 
   const directItems: BranchTaxonomy['directItems'] = [];
   for (const { type, item } of items) {
-    const classified = classifyItem(item, branchCode, childCodes, allDescendantCodes);
+    const classified = classifyItem(item as BaseContent & Record<string, unknown>, branchCode, childCodes, allDescendantCodes);
     if (classified) directItems.push({ type, item: classified.item, subBranchSlug: classified.subBranchSlug });
   }
 
-  const breadcrumbs = buildBreadcrumbs(branchCode);
+  const breadcrumbs = buildBreadcrumbs(branchCode, lang);
   const subBranches = childCodes
-    .map(code => ({ name: mscNames[code] || code, slug: code }))
+    .map(code => ({ name: getMscName(code, lang), slug: code }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return {
@@ -419,13 +670,11 @@ export function getItemsByBranch(
   const results: { type: string; item: BaseContent & { tags?: string[] } }[] = [];
 
   for (const { type, item } of items) {
-    if (!item.tags) continue;
-    const tagCodes = item.tags
-      .map(t => tagToMSC[t])
-      .filter((c): c is string => !!c);
-    if (tagCodes.includes(branchCode) || allDescendantCodes.some(c => tagCodes.includes(c))) {
+    const itemCodes = getItemBranchCodes(item as BaseContent & Record<string, unknown>);
+    if (itemCodes.includes(branchCode) || allDescendantCodes.some(c => itemCodes.includes(c))) {
       results.push({ type, item });
     }
   }
   return results;
 }
+

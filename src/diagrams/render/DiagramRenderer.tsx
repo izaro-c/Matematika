@@ -5,8 +5,9 @@ import { StepNavigator } from '@/components/ui/StepNavigator';
 import { MathProviderBoundary, useMathStore } from '@/lib/page-context/MathStoreContext';
 import { matchesScopedDiagramTarget } from '@/lib/page-context/DiagramTargetRegistryContext';
 import { useDiagramStepSync } from '@/lib/page-context/DiagramStepSyncContext';
-import {DIAGRAM_RENDERER_ID, type DiagramBounds, type DiagramElement, type DiagramSpecV3, type DiagramSpecV2} from '@/diagrams/model'
+import {DIAGRAM_RENDERER_ID, type DiagramBounds, type DiagramElement, type DiagramSpecV3, type DiagramSpecV2, localizeDiagramSpec} from '@/diagrams/model'
 import {createScenePlan, prepareSceneSpec, sceneGeometryRevision, sceneStackRevision, zoomViewport} from '@/diagrams/geometry';
+import { useI18n } from '@/i18n';
 
 import { useDiagramSelection } from '@/diagrams/render/interaction/useDiagramSelection';
 import type { DiagramAnnotationPlacement, DiagramSelectionIntent } from '@/diagrams/render/interaction/useDiagramSelection';
@@ -69,7 +70,9 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
 }) => {
   const reportPaint = useDiagramPaintReport();
   const readyNotifiedRef = useRef(false);
-  const spec = useMemo(() => prepareSceneSpec(inputSpec), [inputSpec]);
+  const { lang } = useI18n();
+  const localizedInputSpec = useMemo(() => localizeDiagramSpec(inputSpec, lang), [inputSpec, lang]);
+  const spec = useMemo(() => prepareSceneSpec(localizedInputSpec), [localizedInputSpec]);
 
   const {
     interactionCallbacksRef,

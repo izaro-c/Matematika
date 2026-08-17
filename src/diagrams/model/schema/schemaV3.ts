@@ -399,6 +399,13 @@ export const diagramSpecV3Schema = z.object({
   header: header.optional(),
   viewport: z.object({ bounds: z.tuple([number, number, number, number]), home: z.tuple([number, number, number, number]), minZoom: number.positive(), maxZoom: number.positive(), padding: number.min(0).max(0.5) }).strict(),
   layers: z.array(layer).min(1), groups: z.array(group), objects: z.array(diagramObject).min(1), relations: z.array(relation), steps: z.array(step), note: z.string(),
+  translations: z.record(z.string(), z.object({
+    title: z.string().optional(),
+    note: z.string().optional(),
+    steps: z.record(z.string(), z.union([z.string(), z.object({ label: z.string().optional(), description: z.string().optional() })])).optional(),
+    labels: z.record(z.string(), z.string()).optional(),
+    annotations: z.record(z.string(), z.string()).optional(),
+  })).optional(),
 }).strict().superRefine((spec, context) => {
   const current = spec as DiagramSpecV3;
   validateUniqueIds(current, context);

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRoute } from 'wouter';
+import { useParams } from 'wouter';
 import { db } from '@/data/content';
 import { ContentDiagram, ContentLayout } from '@/components/layouts/ContentLayout';
 import { FadeIn } from '@/components/ui/FadeIn';
@@ -7,6 +7,8 @@ import { ContentHeader } from '@/components/content/ContentHeader';
 import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
 import { ContentBody } from '@/components/ui/ContentBody';
 import { useMetadataStore } from '@/data/metadata/MetadataStore';
+import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { useI18n } from '@/i18n';
 
 /**
  * Página principal para visualizar un Axioma en detalle.
@@ -15,9 +17,12 @@ import { useMetadataStore } from '@/data/metadata/MetadataStore';
  * y renderizar el contenido estático junto a su simulación gráfica si estuviera disponible.
  */
 export function AxiomPage() {
-  const [, params] = useRoute('/axioma/:id');
-  const id = params?.id;
-  const axiom = id ? db.getAxiom(id) : undefined;
+  const { id } = useParams();
+  const { lang, getLocalizedPath, t } = useI18n();
+  const slug = id || '';
+  const axiom = slug ? db.getAxiom(slug, lang) : undefined;
+  const isFallback = slug ? db.isFallback(slug, lang) : false;
+  const availableLangs = slug ? db.getAvailableLanguages(slug) : ['es'];
   const setMetadata = useMetadataStore((state) => state.setMetadata);
 
   useEffect(() => {
@@ -34,13 +39,13 @@ export function AxiomPage() {
   if (!axiom) {
     return (
       <div className="min-h-viewport flex flex-col items-center justify-center bg-lienzo text-carbon">
-        <h1 className="font-serif text-3xl mb-4">Axioma no encontrado</h1>
-        <p className="text-pizarra mb-6">El axioma <code className="bg-carbon/5 px-2 py-0.5 rounded">{id}</code> no existe en la base de datos.</p>
+        <h1 className="font-serif text-3xl mb-4">{t('notFound', 'title')}</h1>
+        <p className="text-pizarra mb-6">{t('notFound', 'description')}</p>
       </div>
     );
   }
 
-  const breadcrumbs = db.getBreadcrumbs(axiom.tags, { name: 'Axiomas', href: '/axiomas' });
+  const breadcrumbs = db.getBreadcrumbs(axiom.branch || axiom.tags, { name: t('navigation', 'axioms'), href: getLocalizedPath('/axiomas') }, lang);
 
   const content = (
     <div className="min-h-viewport bg-transparent text-carbon font-serif pb-32">
@@ -55,13 +60,20 @@ export function AxiomPage() {
           nodeId={axiom.id}
         />
 
+        {isFallback && (
+          <UntranslatedFallbackBanner
+            availableLangs={availableLangs}
+            className="mb-8"
+          />
+        )}
+
         <section className="mt-8 mb-8">
           <ContentBody>
             <axiom.Component />
           </ContentBody>
         </section>
 
-        <ReadingButton id={id || ''} />
+        <ReadingButton id={axiom.id} />
       </FadeIn>
     </div>
   );
@@ -69,8 +81,11 @@ export function AxiomPage() {
   return (
     <ContentLayout
       pageType="axioma"
-      variant="balanced"
-      diagram={axiom.Simulation ? <ContentDiagram component={axiom.Simulation} /> : undefined}
+      diagram={
+        axiom.Simulation ? (
+          <ContentDiagram component={axiom.Simulation} />
+        ) : undefined
+      }
     >
       {content}
     </ContentLayout>

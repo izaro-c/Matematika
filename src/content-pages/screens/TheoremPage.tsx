@@ -15,6 +15,8 @@ import { AplicacionesSection } from '@/components/content/AplicacionesSection';
 import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { useMetadataStore } from '@/data/metadata/MetadataStore';
+import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { useI18n } from '@/i18n';
 
 const TYPE_LABELS: Record<string, string> = {
   teorema: 'Teorema',
@@ -35,16 +37,19 @@ const TYPE_LABELS: Record<string, string> = {
 export const TheoremPage = () => {
   const { id } = useParams();
   const slug = id || '';
+  const { lang, t } = useI18n();
   const setMetadata = useMetadataStore((state) => state.setMetadata);
 
-  const theorem = id ? db.getTheorem(id) : undefined;
+  const theorem = id ? db.getTheorem(id, lang) : undefined;
+  const isFallback = id ? db.isFallback(id, lang) : false;
+  const availableLangs = id ? db.getAvailableLanguages(id) : ['es'];
 
-  const corollaries = theorem?.corollaries?.map(cId => db.getTheorem(cId)).filter(Boolean) as Theorem[] || [];
-  const lemmas = theorem?.lemmas?.map(lId => db.getTheorem(lId)).filter(Boolean) as Theorem[] || [];
-  const demos = theorem?.demos?.map(dId => db.demos.get(dId) || Array.from(db.demos.values()).find(d => d.slug === dId)).filter(Boolean) as Demo[] || [];
-  const parentTheorem = theorem?.parentTheorem ? db.getTheorem(theorem.parentTheorem) : null;
-  const examples = theorem ? db.getExamplesByTheorem(theorem.id) : [];
-  const exercises = theorem ? db.getExercisesByTheorem(theorem.id) : [];
+  const corollaries = theorem?.corollaries?.map(cId => db.getTheorem(cId, lang)).filter(Boolean) as Theorem[] || [];
+  const lemmas = theorem?.lemmas?.map(lId => db.getTheorem(lId, lang)).filter(Boolean) as Theorem[] || [];
+  const demos = theorem?.demos?.map(dId => db.getDemo(dId, lang) || db.demos.get(dId) || Array.from(db.demos.values()).find(d => d.slug === dId)).filter(Boolean) as Demo[] || [];
+  const parentTheorem = theorem?.parentTheorem ? db.getTheorem(theorem.parentTheorem, lang) : null;
+  const examples = theorem ? db.getExamplesByTheorem(theorem.id, lang) : [];
+  const exercises = theorem ? db.getExercisesByTheorem(theorem.id, lang) : [];
   const useCases = theorem ? db.getUseCasesByConcept(theorem.id) : [];
 
   const displayType = theorem ? (TYPE_LABELS[theorem.type || 'teorema'] || 'Teorema') : 'Teorema';
@@ -128,11 +133,12 @@ export const TheoremPage = () => {
     );
   }
 
-  const breadcrumbs = db.getBreadcrumbs(theorem.tags);
+  const breadcrumbs = db.getBreadcrumbs(theorem.branch || theorem.tags, undefined, lang);
 
   const renderMainContent = () => (
     <div className="bg-transparent text-carbon font-serif pb-16">
       <FadeIn className="w-full pt-4">
+        {isFallback && <UntranslatedFallbackBanner availableLangs={availableLangs} />}
         <div id="enunciado">
           <ContentHeader
             type={theorem.type || 'teorema'}
@@ -171,7 +177,7 @@ export const TheoremPage = () => {
     <FadeIn>
       {demos.length > 0 && (
         <section id="demostraciones" className="mb-20">
-          <SectionTitle>Demostraciones Disponibles</SectionTitle>
+          <SectionTitle>{t('content', 'availableDemos')}</SectionTitle>
           <div className="grid gap-4 lg:grid-cols-2">
             {demos.map(demo => (
               <ContentCard
@@ -181,7 +187,7 @@ export const TheoremPage = () => {
                 description={demo.description}
                 type="demostracion"
                 layout="row"
-                actionLabel="Explorar Demostración"
+                actionLabel={t('content', 'explore')}
               />
             ))}
           </div>
@@ -203,7 +209,7 @@ export const TheoremPage = () => {
       {lemmas.length > 0 && (
         <section id="lemas" className="my-16">
           <SubtleSeparator />
-          <SectionTitle>Lemas Previos</SectionTitle>
+          <SectionTitle>{t('content', 'previousLemmas')}</SectionTitle>
           <div className="grid gap-4 lg:grid-cols-2">
             {lemmas.map(lem => (
               <ContentCard
@@ -222,7 +228,7 @@ export const TheoremPage = () => {
       {corollaries.length > 0 && (
         <section id="corolarios" className="my-16">
           <SubtleSeparator />
-          <SectionTitle>Corolarios Derivados</SectionTitle>
+          <SectionTitle>{t('content', 'derivedCorollaries')}</SectionTitle>
           <div className="grid gap-4 lg:grid-cols-2">
             {corollaries.map(cor => (
               <ContentCard

@@ -32,6 +32,8 @@ export function buildDocumentOutline(blocks: Block[]): OutlineItem[] {
 
 interface IndexedEntry {
   id: string;
+  slug?: string;
+  lang?: string;
   filePath: string;
   contentType: string;
   metadata: Record<string, unknown>;
@@ -146,7 +148,11 @@ export function buildAuthoringIntegrityReport(input: AuthoringIntegrityInput): E
 
   if (currentId) {
     const currentPath = normalizedContentPath(input.currentFile ?? '');
-    const duplicates = entries.filter(entry => entry.id === currentId && normalizedContentPath(entry.filePath) !== currentPath);
+    const currentLang = typeof input.metadata.lang === 'string' ? input.metadata.lang : 'es';
+    const duplicates = entries.filter(entry => {
+      const entryLang = entry.lang || (entry.metadata?.lang as string) || 'es';
+      return entry.id === currentId && entryLang === currentLang && normalizedContentPath(entry.filePath) !== currentPath;
+    });
     if (duplicates.length > 0) issues.push({
       id: `duplicate-content-id-${currentId}`, severity: 'error', area: 'metadata',
       message: `El ID público ${currentId} ya pertenece a ${duplicates.map(item => item.filePath).join(', ')}.`,

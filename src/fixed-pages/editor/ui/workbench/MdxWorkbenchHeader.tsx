@@ -8,6 +8,7 @@ import {
 import { EditorWorkbenchHeader } from './EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
 import { saveChromeFromCapability } from '@/fixed-pages/editor/save/saveCapability';
+import { useI18n } from '@/i18n';
 
 export type MdxViewMode = 'code' | 'visual' | 'preview';
 
@@ -58,15 +59,22 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
   onToggleWorkspaceLevel,
   saveCapability,
 }) => {
-  const displayTitle = fileTitle || currentFile?.split('/').pop()?.replace(/\.mdx$/, '') || 'Documento Sin Título';
+  const { t } = useI18n();
+  const untitledFallback = t('editor', 'untitledDocument');
+  const displayTitle = fileTitle || currentFile?.split('/').pop()?.replace(/\.mdx$/, '') || untitledFallback;
   const saveChrome = saving
-    ? { label: 'Guardando…', variant: 'saving' as const, title: 'Guardando cambios…', disabled: true }
+    ? {
+        label: t('editor', 'saving'),
+        variant: 'saving' as const,
+        title: t('editor', 'saving'),
+        disabled: true,
+      }
     : saveChromeFromCapability(saveCapability);
 
   return (
     <EditorWorkbenchHeader
       title={displayTitle}
-      titlePlaceholder="Título de la Página"
+      titlePlaceholder={t('editor', 'pageTitlePlaceholder')}
       onTitleChange={onTitleChange}
       titleDisabled={isReadOnly}
       fileBadge={currentFile?.split('/').pop() ?? 'nuevo.mdx'}
@@ -83,14 +91,14 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
       isInspectorOpen={isInspectorOpen}
       onToggleInspector={onToggleInspector}
       confirmCloseWhenDirty
-      closeTitle="Cerrar documento"
-      closeConfirmMessage="Hay cambios sin guardar en el documento. ¿Deseas cerrar el documento de todos modos?"
+      closeTitle={t('editor', 'closeDocument')}
+      closeConfirmMessage={t('editor', 'unsavedCloseConfirm')}
       onCloseEditor={onCloseEditor}
       avisos={{
         errorCount: saveCapability.errorCount,
         warningCount: saveCapability.warningCount,
         onOpen: onOpenAvisos,
-        healthyLabel: 'Avisos',
+        healthyLabel: t('editor', 'diagnostics'),
       }}
       save={{
         ...saveChrome,
@@ -100,15 +108,15 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
         <>
           <HeaderPillContainer>
             <HeaderPillButton active={viewMode === 'visual'} onClick={() => onSetViewMode('visual')}>
-              Edición
+              {t('editor', 'editTab')}
             </HeaderPillButton>
             {(workspaceLevel === 'advanced' || viewMode === 'code') && (
               <HeaderPillButton active={viewMode === 'code'} onClick={() => onSetViewMode('code')}>
-                Fuente
+                {t('editor', 'sourceTab')}
               </HeaderPillButton>
             )}
             <HeaderPillButton active={viewMode === 'preview'} onClick={() => onSetViewMode('preview')}>
-              Publicada
+              {t('editor', 'publishedTab')}
             </HeaderPillButton>
           </HeaderPillContainer>
         </>
@@ -120,14 +128,14 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
               type="button"
               onClick={onToggleWorkspaceLevel}
               className="hidden lg:inline-flex rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5 transition-colors cursor-pointer"
-              title={workspaceLevel === 'advanced' ? 'Volver a vista básica' : 'Mostrar herramientas avanzadas'}
+              title={workspaceLevel === 'advanced' ? t('editor', 'switchToBasic') : t('editor', 'switchToAdvanced')}
             >
-              {workspaceLevel === 'advanced' ? 'Avanzado' : 'Básico'}
+              {workspaceLevel === 'advanced' ? t('editor', 'advanced') : t('editor', 'basic')}
             </button>
           )}
           {canSaveDraft && onSaveDraft && (
-            <HeaderActionButton onClick={onSaveDraft} variant="secondary" className="hidden md:inline-flex" title="Guardar borrador">
-              Borrador
+            <HeaderActionButton onClick={onSaveDraft} variant="secondary" className="hidden md:inline-flex" title={t('editor', 'saveDraft')}>
+              {t('editor', 'draft')}
             </HeaderActionButton>
           )}
         </>

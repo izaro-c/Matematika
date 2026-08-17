@@ -17,7 +17,7 @@ function readFieldValue(field: MetadataFieldConfig, value: unknown) {
   return '';
 }
 
-const IDENTITY_KEYS = new Set(['id', 'type', 'title', 'name', 'description', 'subtitle', 'birthYear', 'deathYear', 'image']);
+const IDENTITY_KEYS = new Set(['id', 'type', 'lang', 'branch', 'title', 'name', 'description', 'subtitle', 'birthYear', 'deathYear', 'image']);
 const RELATION_KEYS = new Set(['statement', 'parentTheorem', 'requires', 'lemmas', 'demos', 'dependencias', 'relatedTheorem', 'concept', 'requiredNodes', 'satisfies', 'axioms_verified', 'axiomSystem', 'axiomFamily', 'alternativeGroup']);
 
 export const MetadataInspector: React.FC<MetadataInspectorProps> = ({

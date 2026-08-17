@@ -5,16 +5,8 @@
  * Consumed via `@content/glossary/dictionary` or `@/lib` / GlossaryStore.
  */
 
-/** Glossary taxonomy buckets shown in the UI. */
-export type GlossaryCategory = 'Conceptos Fundamentales' | 'Lógica' | 'Álgebra' | 'Análisis' | 'Geometría' | 'Teoría de Conjuntos' | 'Modelos';
-
-/** One glossary term: title, definition, optional equation, category. */
-export interface GlossaryEntry {
-  title: string;
-  definition: string;
-  equation?: string;
-  category: GlossaryCategory;
-}
+export * from './types';
+import type { GlossaryCategory, GlossaryEntry } from './types';
 
 /**
  * Diccionario centralizado de términos del glosario
@@ -487,3 +479,25 @@ export const texSymbolMap: Record<string, string> = {
   '\\blacksquare': 'qed',
   '\\text{Q.E.D.}': 'qed'
 };
+
+import { dictionaryEu } from './dictionary_eu';
+
+export function getGlossaryDictionary(lang?: string): Record<string, GlossaryEntry> {
+  if (lang === 'eu') {
+    const localized: Record<string, GlossaryEntry> = {};
+    for (const [key, entry] of Object.entries(dictionary)) {
+      const tr = dictionaryEu[key];
+      if (tr) {
+        localized[key] = {
+          ...entry,
+          ...tr,
+          category: (tr.category as GlossaryCategory) || entry.category,
+        };
+      } else {
+        localized[key] = entry;
+      }
+    }
+    return localized;
+  }
+  return dictionary;
+}

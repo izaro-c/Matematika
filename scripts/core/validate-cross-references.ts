@@ -58,12 +58,9 @@ function error(msg: string) {
 
 // Build mathematician slug lookup for fuzzy author matching
 const mathematicianSlugs = new Set<string>();
-const mathematicianDir = path.join(CONTENT_DIR, 'mathematicians');
-if (fs.existsSync(mathematicianDir)) {
-  for (const entry of fs.readdirSync(mathematicianDir)) {
-    if (entry.endsWith('.mdx')) {
-      mathematicianSlugs.add(path.basename(entry, '.mdx').toLowerCase());
-    }
+for (const file of getMdxFiles(CONTENT_DIR)) {
+  if (file.includes('/mathematicians/')) {
+    mathematicianSlugs.add(path.basename(file, '.mdx').toLowerCase());
   }
 }
 

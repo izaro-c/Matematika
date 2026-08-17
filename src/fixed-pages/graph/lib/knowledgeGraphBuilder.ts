@@ -1,5 +1,6 @@
 import { db } from '@/data/content';
-import { mscHierarchy, mscNames, tagToMSC } from '@/data/content/msc2020';
+import { mscHierarchy, mscNames, getItemBranchCodes, getAllDescendantCodes } from '@/data/content/msc2020';
+import type { BaseContent } from '@/data/content/types';
 
 export interface GraphNode {
   id: string;
@@ -42,22 +43,13 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
     });
   });
 
-  // Resolver el MSC code de un item a partir de sus tags
-  const resolveItemBranch = (tags?: string[]): string | null => {
-    if (!tags || tags.length === 0) return null;
-    for (const tag of tags) {
-      const mscCode = tagToMSC[tag] || tagToMSC[tag.toLowerCase()] || tagToMSC[tag.replace(/-/g, ' ')];
-      if (mscCode) {
-        for (const root of ROOT_BRANCHES) {
-          const allDescendants = (code: string): string[] => {
-            const children = mscHierarchy[code] || [];
-            let desc = [...children];
-            for (const c of children) desc = desc.concat(allDescendants(c));
-            return desc;
-          };
-          if (mscCode === root) return `rama-${root}`;
-          if (allDescendants(root).includes(mscCode)) return `subrama-${mscCode}`;
-        }
+  // Resolver el nodo rama de un item a partir de sus propiedades de rama o tags
+  const resolveItemBranch = (item: BaseContent): string | null => {
+    const itemCodes = getItemBranchCodes(item);
+    for (const mscCode of itemCodes) {
+      for (const root of ROOT_BRANCHES) {
+        if (mscCode === root) return `rama-${root}`;
+        if (getAllDescendantCodes(root).includes(mscCode)) return `subrama-${mscCode}`;
       }
     }
     return null;
@@ -71,7 +63,7 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
   // Axiomas
   db.axioms.forEach((ax, slug) => {
     nodes.push({ id: slug, name: ax.title, group: 'axioma', val: 10 });
-    const branchNode = resolveItemBranch(ax.tags);
+    const branchNode = resolveItemBranch(ax);
     if (branchNode) links.push({ source: slug, target: branchNode });
     addLinks(slug, ax.links);
     addLinks(slug, ax.seeAlso);
@@ -80,7 +72,7 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
   // Definiciones
   db.definitions.forEach((def, slug) => {
     nodes.push({ id: slug, name: def.title, group: 'definition', val: 8 });
-    const branchNode = resolveItemBranch(def.tags);
+    const branchNode = resolveItemBranch(def);
     if (branchNode) links.push({ source: slug, target: branchNode });
     addLinks(slug, def.links);
     addLinks(slug, def.seeAlso);
@@ -89,7 +81,7 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
   // Teoremas
   db.theorems.forEach((thm, slug) => {
     nodes.push({ id: slug, name: thm.title, group: thm.type || 'theorem', val: 10 });
-    const branchNode = resolveItemBranch(thm.tags);
+    const branchNode = resolveItemBranch(thm);
     if (branchNode) links.push({ source: slug, target: branchNode });
     addLinks(slug, thm.requires);
     addLinks(slug, thm.links);
@@ -103,7 +95,7 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
   // Sistemas axiomáticos
   db.axiomaticSystems.forEach((sys, slug) => {
     nodes.push({ id: slug, name: sys.title, group: 'modelo', val: 10 });
-    const branchNode = 'geometria';
+    const branchNode = resolveItemBranch(sys);
     if (branchNode) links.push({ source: slug, target: branchNode });
     addLinks(slug, sys.axiomas);
     addLinks(slug, sys.models);

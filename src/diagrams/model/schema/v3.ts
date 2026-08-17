@@ -10,6 +10,7 @@ import type {
   DiagramStep,
   DiagramTextRule,
   DiagramViewport,
+  DiagramTranslation,
 } from '@/diagrams/model/schema/types';
 import { DIAGRAM_RENDERER_ID, DIAGRAM_SPEC_VERSION } from '@/diagrams/model/schema/types';
 
@@ -236,6 +237,8 @@ export type DiagramRelation =
   | { id: string; label: string; type: 'reflection'; refs: string[]; centerOrAxis?: string; drivenPoint?: string; enabled: boolean }
   | { id: string; label: string; type: 'expression'; refs: string[]; expression: string; value?: number; enabled: boolean };
 
+export type { DiagramTranslation } from './types';
+
 export interface DiagramSpecV3 {
   version: typeof DIAGRAM_SPEC_VERSION;
   renderer: typeof DIAGRAM_RENDERER_ID;
@@ -254,6 +257,7 @@ export interface DiagramSpecV3 {
   relations: DiagramRelation[];
   steps: DiagramStep[];
   note: string;
+  translations?: Record<string, DiagramTranslation>;
 }
 
 /** Contrato canónico del runtime y de persistencia. */

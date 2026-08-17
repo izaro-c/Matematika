@@ -476,6 +476,7 @@ export function migrateDiagramSpecV2ToV3(spec: DiagramSpecV2): DiagramSpecV3 {
     relations,
     steps: structuredClone(spec.steps).map(({ extensions: _extensions, ...step }) => step),
     note: spec.note,
+    ...(spec.translations ? { translations: structuredClone(spec.translations) } : {}),
   };
 }
 
@@ -955,5 +956,6 @@ export function toWorkingSceneV2(spec: DiagramSpecV3): DiagramSpecV2 {
     ...(spec.header ? { header: structuredClone(spec.header) } : {}),
     viewport: structuredClone(spec.viewport), layers: structuredClone(spec.layers), groups: structuredClone(spec.groups), points, elements, sliders,
     steps: structuredClone(spec.steps), constraints: compatibilityRelations.map(relation => relationToConstraint(relation, spec.objects)), dependencies, note: spec.note, extensions: {},
+    ...(spec.translations ? { translations: structuredClone(spec.translations) } : {}),
   };
 }

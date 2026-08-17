@@ -18,25 +18,25 @@ const CASES = [
   {
     component: 'Pitagoras',
     source: 'content/diagrams/Teoremas/Pitagoras.tsx',
-    page: 'content/mdx/theorems/teorema-pitagoras.mdx',
+    page: 'content/mdx/es/theorems/teorema-pitagoras.mdx',
     exportKind: 'Simulation',
   },
   {
     component: 'ModeloPoincare',
     source: 'content/diagrams/Models/ModeloPoincare.tsx',
-    page: 'content/mdx/models/modelo-poincare.mdx',
+    page: 'content/mdx/es/models/modelo-poincare.mdx',
     exportKind: 'Diagram',
   },
   {
     component: 'CongruenciaALA',
     source: 'content/diagrams/Teoremas/CongruenciaALA.tsx',
-    page: 'content/mdx/theorems/teorema-congruencia-ala.mdx',
+    page: 'content/mdx/es/theorems/teorema-congruencia-ala.mdx',
     exportKind: 'Simulation',
   },
   {
     component: 'Paralelogramo',
     source: 'content/diagrams/Definiciones/Paralelogramo.tsx',
-    page: 'content/mdx/definitions/paralelogramo.mdx',
+    page: 'content/mdx/es/definitions/paralelogramo.mdx',
     exportKind: 'Simulation',
   },
 ] as const;
@@ -263,7 +263,7 @@ describe('Phase 5 real acceptance migrations', () => {
 
   it('keeps Circunferencia visually quiet and reveals every extra construction through a valid MDX target', () => {
     const source = 'content/diagrams/Definiciones/Circunferencia.tsx';
-    const page = 'content/mdx/definitions/circunferencia.mdx';
+    const page = 'content/mdx/es/definitions/circunferencia.mdx';
     const model = readModel(source);
     const mdx = fs.readFileSync(page, 'utf8');
     const publicTargets = new Set(buildTargets(model).map(target => target.id));

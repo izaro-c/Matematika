@@ -8,11 +8,16 @@ import { FadeIn } from '@/components/ui/FadeIn';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { ContentLayout } from '@/components/layouts/ContentLayout';
 import { DiagramSlot } from '@/components/ui/skeletons';
+import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { useI18n } from '@/i18n';
 
 /** Página canónica para procedimientos matemáticos reutilizables. */
 export const MethodPage = () => {
   const { id = '' } = useParams();
-  const method = db.getMethod(id);
+  const { lang, t } = useI18n();
+  const method = db.getMethod(id, lang);
+  const isFallback = id ? db.isFallback(id, lang) : false;
+  const availableLangs = id ? db.getAvailableLanguages(id) : ['es'];
   const setMetadata = useMetadataStore((state) => state.setMetadata);
 
   useEffect(() => {
@@ -31,12 +36,13 @@ export const MethodPage = () => {
   if (!method) {
     return (
       <main className="ac-page flex items-center justify-center">
-        <h1 className="text-2xl">El método especificado no existe o no ha sido catalogado.</h1>
+        <h1 className="text-2xl">{t('notFound', 'description')}</h1>
       </main>
     );
   }
 
   const Diagram = method.Simulation;
+  const breadcrumbs = db.getBreadcrumbs(method.branch || method.tags, undefined, lang);
 
   return (
     <ContentLayout
@@ -47,22 +53,31 @@ export const MethodPage = () => {
           <Diagram />
         </DiagramSlot>
       ) : undefined}
-      diagramLabel={`Visualización de ${method.title}`}
+      diagramLabel={method.title}
     >
       <FadeIn className="w-full pb-16 pt-4 text-carbon">
         <ContentHeader
           type="metodo"
-          typeLabel="Método"
           title={method.title}
           description={method.description}
           authors={method.authors ?? []}
           tags={method.tags ?? []}
           nodeId={method.id}
+          breadcrumbs={breadcrumbs}
         />
 
-        <ContentBody>
-          <method.Component />
-        </ContentBody>
+        {isFallback && (
+          <UntranslatedFallbackBanner
+            availableLangs={availableLangs}
+            className="mb-8"
+          />
+        )}
+
+        <section className="mb-12">
+          <ContentBody>
+            <method.Component />
+          </ContentBody>
+        </section>
 
         <ReadingButton id={method.id} />
       </FadeIn>

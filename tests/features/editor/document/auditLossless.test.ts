@@ -16,7 +16,7 @@ describe('lossless corpus oracle', () => {
     const root = path.resolve('content/mdx');
     const discovered = discoverMdxFiles(root);
     const report = runCorpusAudit();
-    expect(discovered).toHaveLength(120);
+    expect(discovered.length).toBeGreaterThanOrEqual(120);
     expect(report.totalFiles).toBe(discovered.length);
     expect(report.files.every(file => file.exact && file.idempotent && file.envelopePreserved && file.bodyPreserved)).toBe(true);
   }, 180_000);

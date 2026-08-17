@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'wouter';
 import { ContentTypeBadge } from '@/components/ui/ContentTypeBadge';
 import { getContentPageAccent } from '@/design';
+import { useI18n } from '@/i18n';
 
 /**
  * Paleta de colores temáticos para acentuar tarjetas.
@@ -47,8 +48,6 @@ const ACCENT_TOKEN: Record<CardAccent, string> = {
   carbon: 'var(--theme-carbon)',
 };
 
-
-
 export const ContentCard: React.FC<ContentCardProps> = ({
   href,
   title,
@@ -62,13 +61,15 @@ export const ContentCard: React.FC<ContentCardProps> = ({
   domain,
   domainIcon,
 }) => {
+  const { getLocalizedPath } = useI18n();
   const token = accent ? ACCENT_TOKEN[accent] : getContentPageAccent(type);
   const action = actionLabel ?? (type ? `Ver ${type}` : undefined);
+  const localizedHref = getLocalizedPath(href);
 
   if (layout === 'row') {
     return (
       <Link
-        href={href}
+        href={localizedHref}
         className="group flex w-full min-w-0 justify-between items-center gap-4 p-5 elegant-panel"
         style={{ ['--hover-accent' as string]: token }}
       >
@@ -101,7 +102,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
 
   return (
     <Link
-      href={href}
+      href={localizedHref}
       className="group flex flex-col p-6 elegant-panel"
       style={{ ['--hover-accent' as string]: token }}
     >
@@ -117,18 +118,17 @@ export const ContentCard: React.FC<ContentCardProps> = ({
           </span>
         )}
       </div>
-      <h3
-        className="font-serif font-bold text-lg text-ink transition-colors"
-        style={{ ['--hover-color' as string]: token }}
-      >
-        <span className="group-hover:[color:var(--hover-color)] transition-colors">{title}</span>
-      </h3>
+
+      <h3 className="font-serif font-bold text-xl leading-snug text-ink mb-2">{title}</h3>
       {description && (
-        <p className="text-sm text-ink-muted mt-2 font-sans">{description}</p>
+        <p className="text-sm text-ink-muted font-sans line-clamp-3 mb-6 flex-1 leading-relaxed">
+          {description}
+        </p>
       )}
+
       {action && (
         <span
-          className="ac-eyebrow font-bold mt-4"
+          className="ac-eyebrow font-bold inline-flex items-center gap-1 mt-auto"
           style={{ color: token }}
         >
           {action} →

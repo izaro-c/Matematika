@@ -4,6 +4,7 @@ import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { db } from '@/data/content';
 import { StudyPlanContext } from '@/content-pages/study-plan/context/StudyPlanContext';
 import { ContentThumbnail } from './ContentThumbnail';
+import { useI18n } from '@/i18n';
 
 /**
  * Define las propiedades de una tarea de estudio dentro del plan.
@@ -17,12 +18,6 @@ interface StudyTaskProps {
   title: string;
 }
 
-/**
- * Componente tipo "tarjeta" que se utiliza en la página del Plan de Estudio.
- * Funciona como un enlace hacia el contenido específico, mostrando un rombo 
- * que se rellena con color cuando la tarea se marca como leída.
- * Soporta registro en `StudyPlanContext` para permitir scroll interactivo.
- */
 const TYPE_PATH_PREFIX: Record<string, string> = {
   teorema: '/teorema/', ejercicio: '/ejercicio/', ejemplo: '/ejemplo/',
   caso: '/caso/', definicion: '/definicion/', axioma: '/axioma/',
@@ -33,17 +28,18 @@ function lookupExists(id: string): boolean {
   return !!(
     db.getTheorem(id) ||
     db.getDefinition(id) ||
-    db.axioms.get(id) ||
+    db.getAxiom(id) ||
     db.getUseCase(id) ||
     db.getExample(id) ||
     db.getExercise(id) ||
     db.getMethod(id) ||
-    db.models.get(id) ||
-    db.demos.get(id)
+    db.getModel(id) ||
+    db.getDemo(id)
   );
 }
 
 export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
+  const { lang, getLocalizedPath } = useI18n();
   const { isRead } = useProgressStore();
   const completed = isRead(id);
   const context = React.useContext(StudyPlanContext);
@@ -52,17 +48,29 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
   
   const exists = lookupExists(id);
 
-  // Resolver el tipo real a partir de la DB para ser resiliente a imprecisiones de metadatos en MDX
+  // Buscar título localizado en el idioma actual si existe
+  const localizedDoc = db.getTheorem(id, lang)
+    || db.getDefinition(id, lang)
+    || db.getAxiom(id, lang)
+    || db.getUseCase(id, lang)
+    || db.getExample(id, lang)
+    || db.getExercise(id, lang)
+    || db.getMethod(id, lang);
+
+  const displayTitle = localizedDoc?.title || title;
+
+  // Resolver el tipo real a partir de la DB
   let resolvedType: string = type;
   if (db.getTheorem(id))          resolvedType = 'teorema';
-  else if (db.axioms.get(id))     resolvedType = 'axioma';
+  else if (db.getAxiom(id))       resolvedType = 'axioma';
   else if (db.getDefinition(id))  resolvedType = 'definicion';
   else if (db.getUseCase(id))     resolvedType = 'caso';
   else if (db.getExample(id))     resolvedType = 'ejemplo';
   else if (db.getExercise(id))    resolvedType = 'ejercicio';
   else if (db.getMethod(id))      resolvedType = 'metodo';
 
-  const href = TYPE_PATH_PREFIX[resolvedType] ? `${TYPE_PATH_PREFIX[resolvedType]}${id}` : `/${id}`;
+  const rawHref = TYPE_PATH_PREFIX[resolvedType] ? `${TYPE_PATH_PREFIX[resolvedType]}${id}` : `/${id}`;
+  const href = getLocalizedPath(rawHref);
 
   const isTheory = ['teorema', 'definicion', 'metodo', 'axioma'].includes(resolvedType);
   const isPractice = ['ejercicio', 'ejemplo', 'caso'].includes(resolvedType);
@@ -70,13 +78,13 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
 
   let actionLabel: string;
   if (isLocked) {
-    actionLabel = 'Bloqueado';
+    actionLabel = t('studyPlan', 'locked');
   } else if (completed) {
-    actionLabel = 'Asimilado';
+    actionLabel = t('studyPlan', 'assimilated');
   } else if (isPractice) {
-    actionLabel = 'Practicar →';
+    actionLabel = t('studyPlan', 'practice');
   } else {
-    actionLabel = 'Estudiar →';
+    actionLabel = t('studyPlan', 'study');
   }
 
   if (!exists) {
@@ -91,8 +99,8 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
         </div>
         <div>
           <div className="ac-label ac-label--xs ac-label--soft mb-1">{type}</div>
-          <h3 className="text-xl font-serif text-carbon">{title}</h3>
-          <div className="text-xs italic text-carbon/50 mt-1">Próximamente</div>
+          <h3 className="text-xl font-serif text-carbon">{displayTitle}</h3>
+          <div className="text-xs italic text-carbon/50 mt-1">{t('studyPlan', 'comingSoon')}</div>
         </div>
       </div>
     );
@@ -111,12 +119,14 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
         </div>
         <div className="flex-1">
           <div className="ac-label ac-label--xs ac-label--faint mb-1">
-            {type} (Bloqueado)
+            {type} ({t('studyPlan', 'locked')})
           </div>
           <h3 className="text-xl font-serif text-carbon/50 font-bold">
-            {title}
+            {displayTitle}
           </h3>
-          <div className="text-xs italic text-carbon/40 mt-1">Asimila los conceptos previos para desbloquear</div>
+          <div className="text-xs italic text-carbon/40 mt-1">
+            {t('studyPlan', 'unlockHint')}
+          </div>
         </div>
         <div className="ac-eyebrow ac-eyebrow--sm font-bold text-carbon/30">
           {actionLabel}
@@ -128,9 +138,9 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
   return (
     <div ref={(el) => registerTaskRef?.(id, el)} data-node-id={id}>
       <Link href={href}>
-        <a 
-          className={`group elegant-panel flex flex-col md:flex-row md:items-center gap-4 p-5 my-6 ${completed ? 'bg-salvia/5 border-salvia/30' : ''}`}
-          style={{ '--hover-accent': completed ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}
+        <span 
+          className={`group elegant-panel flex flex-col md:flex-row md:items-center gap-4 p-5 my-6 cursor-pointer ${completed ? 'bg-salvia/5 border-salvia/30' : ''}`}
+          style={{ ['--hover-accent' as string]: completed ? 'var(--theme-salvia)' : 'var(--page-accent)' }}
         >
           <div className={`w-5 h-5 border flex items-center justify-center shrink-0 transition-all duration-300 ${
             completed 
@@ -147,7 +157,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
               {type}
             </div>
             <h3 className={`text-xl font-serif font-bold transition-colors ${completed ? 'text-salvia' : 'page-accent-group-hover text-carbon'}`}>
-              {title}
+              {displayTitle}
             </h3>
           </div>
 
@@ -159,7 +169,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
           <div className={`ac-eyebrow ac-eyebrow--sm font-bold transition-colors ${completed ? 'text-salvia' : 'page-accent-group-hover text-carbon/40'}`}>
             {actionLabel}
           </div>
-        </a>
+        </span>
       </Link>
     </div>
   );

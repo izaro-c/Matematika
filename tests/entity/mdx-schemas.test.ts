@@ -16,6 +16,7 @@ import {
   UseCaseSchema,
   StudyPlanSchema,
 } from '@/data/content/schemas';
+
 const SCHEMA_MAP: Record<string, import('zod').ZodTypeAny> = {
   axioma: AxiomSchema,
   definicion: DefinitionSchema,
@@ -50,31 +51,38 @@ const CONTENT_DIRS: Record<string, string> = {
 
 describe('MDX metadata validates against Zod schemas', () => {
   const contentDir = path.resolve(import.meta.dirname, '../../content/mdx');
+  const langDirs = fs.existsSync(contentDir)
+    ? fs.readdirSync(contentDir, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name)
+    : [];
 
-  for (const [dirName, schemaType] of Object.entries(CONTENT_DIRS)) {
-    const dirPath = path.join(contentDir, dirName);
-    if (!fs.existsSync(dirPath)) continue;
+  for (const lang of langDirs) {
+    describe(`Language [${lang}]`, () => {
+      for (const [dirName, schemaType] of Object.entries(CONTENT_DIRS)) {
+        const dirPath = path.join(contentDir, lang, dirName);
+        if (!fs.existsSync(dirPath)) continue;
 
-    const files = fs.readdirSync(dirPath).filter(f => f.endsWith('.mdx'));
-    if (files.length === 0) continue;
-    const schema = SCHEMA_MAP[schemaType];
+        const files = fs.readdirSync(dirPath).filter(f => f.endsWith('.mdx'));
+        if (files.length === 0) continue;
+        const schema = SCHEMA_MAP[schemaType];
 
-    describe(`${dirName} (${schemaType})`, () => {
-      for (const file of files) {
-        it(`${file} metadata is valid`, () => {
-          const content = fs.readFileSync(path.join(dirPath, file), 'utf-8');
-          const parsed = parseMDX(content);
+        describe(`${dirName} (${schemaType})`, () => {
+          for (const file of files) {
+            it(`${file} metadata is valid`, () => {
+              const content = fs.readFileSync(path.join(dirPath, file), 'utf-8');
+              const parsed = parseMDX(content);
 
-          expect(parsed.metadata).toBeDefined();
-          expect(Object.keys(parsed.metadata).length).toBeGreaterThan(0);
+              expect(parsed.metadata).toBeDefined();
+              expect(Object.keys(parsed.metadata).length).toBeGreaterThan(0);
 
-          const result = schema.passthrough().safeParse(parsed.metadata);
-          if (!result.success) {
-            throw new Error(
-              `${file} failed schema validation: ${JSON.stringify(result.error.issues, null, 2)}`
-            );
+              const result = schema.passthrough().safeParse(parsed.metadata);
+              if (!result.success) {
+                throw new Error(
+                  `${lang}/${dirName}/${file} failed schema validation: ${JSON.stringify(result.error.issues, null, 2)}`
+                );
+              }
+              expect(result.success).toBe(true);
+            });
           }
-          expect(result.success).toBe(true);
         });
       }
     });

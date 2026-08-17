@@ -33,6 +33,7 @@ function sceneFieldsToV2(model: VisualDiagramModel | (DiagramSpecV3 & Partial<Di
     dependencies: model.dependencies,
     note: model.note,
     extensions: { ...(model.extensions ?? {}) },
+    ...(model.translations ? { translations: structuredClone(model.translations) } : {}),
   };
 }
 

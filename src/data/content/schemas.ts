@@ -20,7 +20,19 @@ const MathematicalSourceSchema = z.object({
   role: z.enum(['primary', 'secondary', 'formalization']).optional(),
 });
 
+const BaseContentSchemaFields = {
+  /** Idioma del contenido ('es', 'eu', etc.). Por defecto 'es'. */
+  lang: z.string().optional(),
+  /** Rama matemática MSC2020 asignada directamente (ej. '51M', '51', '03'). */
+  branch: z.string().optional(),
+  /** Ramas matemáticas MSC2020 múltiples o secundarias. */
+  branches: z.array(z.string()).optional(),
+  /** Etiquetas temáticas para búsqueda y clasificación secundaria. */
+  tags: z.array(z.string()).optional(),
+};
+
 const LeanMetadataSchema = {
+  ...BaseContentSchemaFields,
   /** Identificador de la declaración formal en el core de Lean de Matematika. */
   leanId: z.string().optional(),
   /** SHA del entorno Lean usado para verificar esta página, o 'local-bridge'. */
@@ -49,6 +61,7 @@ export const MathematicianSchema = z.object({
   country: z.string().optional(),
   description: z.string(),
   image: z.string().optional(),
+  ...BaseContentSchemaFields,
 });
 
 /**
@@ -64,8 +77,6 @@ export const TheoremSchema = z.object({
   description: z.string(),
   statement: z.string().optional(),
   color: z.string().optional(),
-  branch: z.string().optional(),
-  branches: z.array(z.string()).optional(),
   authors: z.array(z.string()).optional(),
   lemmas: z.array(z.string()).optional(),
   corollaries: z.array(z.string()).optional(),
@@ -92,13 +103,13 @@ export const MethodSchema = z.object({
   subtype: z.enum(['demostracion', 'construccion', 'calculo', 'algoritmo']),
   title: z.string(),
   description: z.string(),
-  tags: z.array(z.string()).optional(),
   authors: z.array(z.string()).optional(),
   links: z.array(z.string()).optional(),
   seeAlso: z.array(z.string()).optional(),
   requires: z.array(z.string()).optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
   hasSimulation: z.boolean().optional(),
+  ...BaseContentSchemaFields,
 });
 
 /**
@@ -157,6 +168,7 @@ export const ExampleSchema = z.object({
   relatedTheorem: z.string().optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
   hasSimulation: z.boolean().optional(),
+  ...BaseContentSchemaFields,
 });
 
 /**
@@ -175,6 +187,7 @@ export const ExerciseSchema = z.object({
   /** Pista visible antes de revelar la solución */
   hint: z.string().optional(),
   hasSimulation: z.boolean().optional(),
+  ...BaseContentSchemaFields,
 });
 
 // Tipos Inferidos
@@ -226,6 +239,7 @@ export const AxiomaticSystemSchema = z.object({
   /** IDs de matemáticos asociados a este sistema */
   authors: z.array(z.string()).optional(),
   hasSimulation: z.boolean().optional(),
+  ...BaseContentSchemaFields,
 });
 
 /**
@@ -246,6 +260,7 @@ export const ModelSchema = z.object({
   /** Indica si este modelo tiene un diagrama interactivo asociado */
   hasDiagram: z.boolean().optional(),
   hasSimulation: z.boolean().optional(),
+  ...BaseContentSchemaFields,
 });
 
 /**
@@ -265,11 +280,10 @@ export const UseCaseSchema = z.object({
   /** Ámbito real: 'ingeniería', 'medicina', 'economía', 'naturaleza', 'arte', etc. */
   domain: z.string().optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
+  ...BaseContentSchemaFields,
 });
 
 export type UseCaseMeta = z.infer<typeof UseCaseSchema>;
-
-
 
 /**
  * StudyPlanSchema - Esquema para Planes de Estudio
@@ -283,6 +297,7 @@ export const StudyPlanSchema = z.object({
   subtitle: z.string().optional(),
   description: z.string(),
   requiredNodes: z.array(z.string()).optional(),
+  ...BaseContentSchemaFields,
 });
 
 export type StudyPlanMeta = z.infer<typeof StudyPlanSchema>;

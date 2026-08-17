@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'wouter';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import { isDarkMode, setTheme } from '@/lib/theme/theme';
-import { routePath } from '@/lib/routes';
 import { Logo } from '@/components/ui/Logo';
 import { IconSun, IconMoon } from '@/fixed-pages/editor/diagrams/ui/toolbar/WorkbenchIcons';
 import { HeaderContainer } from '../workbench/EditorHeaderPrimitives';
 import { EditorLandingCard } from './EditorLandingCard';
 import { useEditorLanding, type LandingSection } from './useEditorLanding';
+import { useI18n } from '@/i18n';
 
 interface EditorLandingViewProps {
   files: FileNode[];
@@ -34,6 +34,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
 }) => {
   const [activeSection, setActiveSection] = useState<LandingSection>(initialSection);
   const [isDark, setIsDark] = useState(isDarkMode);
+  const { getLocalizedPath, t } = useI18n();
 
   useEffect(() => {
     setActiveSection(initialSection);
@@ -71,9 +72,9 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
       <HeaderContainer>
         <div className="flex items-center space-x-3">
           <Link
-            href={routePath('/')}
+            href={getLocalizedPath('/')}
             className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-salvia cursor-pointer"
-            title="Volver a la portada principal"
+            title={t('editor', 'backToMain')}
           >
             <Logo decorative className="h-8 w-8" />
           </Link>
@@ -93,7 +94,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                 : 'text-carbon/65 hover:text-carbon hover:bg-carbon/5'
             }`}
           >
-            Documentos
+            {t('editor', 'documents')}
           </button>
           <button
             type="button"
@@ -107,7 +108,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                 : 'text-carbon/65 hover:text-carbon hover:bg-carbon/5'
             }`}
           >
-            Diagramas
+            {t('editor', 'diagrams')}
           </button>
         </div>
 
@@ -117,7 +118,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             type="button"
             onClick={toggleTheme}
             className="flex h-8 w-8 items-center justify-center rounded-lg border border-carbon/15 bg-lienzo text-carbon/70 hover:bg-carbon/5 transition-all cursor-pointer"
-            title={isDark ? 'Modo claro' : 'Modo oscuro'}
+            title={t('topbar', 'toggleTheme')}
           >
             {isDark ? <IconSun className="h-4 w-4" /> : <IconMoon className="h-4 w-4" />}
           </button>
@@ -132,92 +133,63 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
           <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="max-w-2xl">
               <h1 className="mt-3 font-serif text-2xl sm:text-3xl font-bold tracking-tight text-carbon">
-                {activeSection === 'documents'
-                  ? 'Editor — Documentos matemáticos'
-                  : 'Editor — Diagramas y modelos visuales'}
+                {activeSection === 'documents' ? t('editor', 'docHeroTitle') : t('editor', 'diagramHeroTitle')}
               </h1>
-              <p className="mt-2 text-sm text-carbon/70 leading-relaxed font-sans">
-                {activeSection === 'documents'
-                  ? 'Crea, explora y edita las páginas estructuradas de teoremas, lemas, definiciones y demostraciones.'
-                  : 'Construye y ajusta diagramas geométricos interactivos y modelos matemáticos de alta precisión visual.'}
+              <p className="mt-2 font-serif text-sm italic text-carbon/70 leading-relaxed">
+                {activeSection === 'documents' ? t('editor', 'docHeroDesc') : t('editor', 'diagramHeroDesc')}
               </p>
             </div>
-
-            <div className="flex shrink-0 items-center gap-3">
-              {activeSection === 'documents' ? (
-                <button
-                  type="button"
-                  onClick={onCreateDocument}
-                  className="inline-flex items-center gap-2 rounded-xl bg-salvia px-5 py-3 text-xs font-bold text-lienzo shadow-md hover:bg-salvia/90 transition-all cursor-pointer"
-                >
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-                  </svg>
-                  Nuevo documento
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={onCreateDiagram}
-                  className="inline-flex items-center gap-2 rounded-xl bg-pavo px-5 py-3 text-xs font-bold text-lienzo shadow-md hover:bg-pavo/90 transition-all cursor-pointer"
-                >
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-                  </svg>
-                  Nuevo diagrama
-                </button>
-              )}
-            </div>
+            <button
+              type="button"
+              onClick={activeSection === 'documents' ? onCreateDocument : onCreateDiagram}
+              className="flex items-center justify-center space-x-2 rounded-xl bg-salvia px-5 py-3 text-sm font-bold text-lienzo shadow-xs hover:bg-salvia/90 transition-all shrink-0 cursor-pointer"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              <span>{activeSection === 'documents' ? t('editor', 'newDocument') : t('editor', 'newDiagram')}</span>
+            </button>
           </div>
         </div>
 
-        {/* Filter and Search Bar */}
-        <div className="mt-8 flex flex-col gap-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Toolbar & Filters */}
+        <div className="mt-8 space-y-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Search Input */}
             <div className="relative flex-1 max-w-md">
-              <svg
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-carbon/40"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg className="absolute left-3 top-2.5 h-4 w-4 text-carbon/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                placeholder={
-                  activeSection === 'documents'
-                    ? 'Buscar documento por nombre, tipo o ruta...'
-                    : 'Buscar diagrama por componente o categoría...'
-                }
-                className="w-full rounded-xl border border-carbon/15 bg-lienzo py-2.5 pl-10 pr-4 text-xs font-sans text-carbon placeholder:text-carbon/40 focus:border-salvia focus:outline-none focus:ring-1 focus:ring-salvia transition-all"
+                placeholder={activeSection === 'documents' ? t('editor', 'searchDocPlaceholder') : t('editor', 'searchDiagramPlaceholder')}
+                className="w-full rounded-xl border border-carbon/15 bg-lienzo py-2 pl-9 pr-4 text-xs text-carbon placeholder:text-carbon/40 focus:border-salvia focus:outline-none shadow-2xs font-serif"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-carbon/40 hover:text-carbon"
+                  className="absolute right-2.5 top-2.5 text-xs text-carbon/40 hover:text-carbon"
                 >
                   ✕
                 </button>
               )}
             </div>
 
-            {/* Sort & Favorites Toggle */}
-            <div className="flex items-center space-x-2 self-end sm:self-auto">
+            {/* View Toggles & Sorting */}
+            <div className="flex items-center space-x-2">
               <button
                 type="button"
-                onClick={() => setOnlyFavorites(prev => !prev)}
-                className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+                onClick={() => setOnlyFavorites(!onlyFavorites)}
+                className={`flex items-center space-x-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
                   onlyFavorites
-                    ? 'border-ocre/40 bg-ocre/10 text-ocre'
-                    : 'border-carbon/15 bg-lienzo text-carbon/70 hover:bg-carbon/5'
+                    ? 'border-ocre bg-ocre/10 text-ocre font-bold shadow-2xs'
+                    : 'border-carbon/15 bg-lienzo text-carbon/70 hover:border-carbon/30'
                 }`}
               >
-                ★ Favoritos ({favoritePaths.length})
+                ★ {t('editor', 'favoritesOnly')} ({favoritePaths.length})
               </button>
 
               <select
@@ -225,9 +197,9 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                 onChange={e => setSortBy(e.target.value as typeof sortBy)}
                 className="rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-semibold text-carbon/80 focus:border-salvia focus:outline-none cursor-pointer"
               >
-                <option value="name">Ordenar por nombre</option>
-                <option value="type">Ordenar por tipo</option>
-                <option value="recent">Recientes primero</option>
+                <option value="name">{t('editor', 'sortByName')}</option>
+                <option value="type">{t('editor', 'sortByType')}</option>
+                <option value="recent">{t('editor', 'sortByRecent')}</option>
               </select>
             </div>
           </div>
@@ -254,16 +226,20 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
         {/* Results Info */}
         <div className="mt-6 flex items-center justify-between border-b border-carbon/10 pb-3">
           <h2 className="font-serif text-sm font-bold text-carbon">
-            {activeSection === 'documents' ? 'Documentos Disponibles' : 'Diagramas Disponibles'}
+            {activeSection === 'documents'
+              ? t('editor', 'availableDocuments')
+              : t('editor', 'availableDiagrams')}
           </h2>
           {isLoading ? (
             <div className="flex items-center gap-2" role="status" aria-live="polite">
               <span className="h-2 w-2 rounded-full bg-salvia animate-pulse" />
-              <span className="font-serif text-xs italic text-carbon/60">Cargando contenido…</span>
+              <span className="font-serif text-xs italic text-carbon/60">
+                {t('editor', 'loadingContent')}
+              </span>
             </div>
           ) : (
             <span className="text-xs text-carbon/55 font-mono">
-              {filteredCount} de {totalCount} elementos
+              {t('editor', 'itemCount', { filtered: filteredCount, total: totalCount })}
             </span>
           )}
         </div>
@@ -277,34 +253,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             aria-label="Cargando elementos"
           >
             {Array.from({ length: 8 }).map((_, idx) => (
-              <div
-                key={`skeleton-card-${idx}`}
-                className="relative flex flex-col justify-between rounded-xl border border-carbon/15 bg-carbon/5 p-4 shadow-2xs overflow-hidden animate-pulse"
-              >
-                <div className="pt-1 space-y-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="h-5 w-24 rounded-full bg-carbon/10" />
-                    <div className="flex items-center space-x-1.5">
-                      <div className="h-4 w-12 rounded bg-carbon/10" />
-                      <div className="h-6 w-6 rounded-full bg-carbon/10" />
-                    </div>
-                  </div>
-                  <div className="space-y-1.5 pt-1">
-                    <div className="h-4 w-4/5 rounded bg-carbon/15" />
-                    <div className="h-3.5 w-1/2 rounded bg-carbon/10" />
-                  </div>
-                  <div className="h-2.5 w-2/5 rounded bg-carbon/10" />
-                  {activeSection === 'diagrams' && (
-                    <div className="h-36 w-full rounded-lg border border-carbon/10 bg-lienzo/50 flex items-center justify-center">
-                      <div className="h-8 w-8 rounded-full border-2 border-dashed border-carbon/20" />
-                    </div>
-                  )}
-                </div>
-                <div className="mt-4 flex items-center justify-between border-t border-carbon/10 pt-2.5">
-                  <div className="h-3 w-20 rounded bg-carbon/10" />
-                  <div className="h-3 w-10 rounded bg-carbon/10" />
-                </div>
-              </div>
+              <div key={`skeleton-card-${idx}`} className="relative flex flex-col justify-between rounded-xl border border-carbon/15 bg-carbon/5 p-4 shadow-2xs overflow-hidden animate-pulse" />
             ))}
           </div>
         ) : filteredFiles.length > 0 ? (
@@ -325,10 +274,10 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
             <p className="mt-3 font-serif text-base font-bold text-carbon">
-              Aún no hay {activeSection === 'documents' ? 'documentos' : 'diagramas'}
+              {t('editor', 'noItemsYet', { type: activeSection === 'documents' ? t('editor', 'documents').toLowerCase() : t('editor', 'diagrams').toLowerCase() })}
             </p>
             <p className="mt-1 text-xs text-carbon/60 max-w-sm">
-              Crea tu primer {activeSection === 'documents' ? 'documento' : 'diagrama'} usando el botón de la parte superior.
+              {t('editor', 'createFirstPrompt', { type: activeSection === 'documents' ? t('editor', 'newDocument').toLowerCase() : t('editor', 'newDiagram').toLowerCase() })}
             </p>
           </div>
         ) : (
@@ -336,9 +285,11 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             <svg className="h-10 w-10 text-carbon/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <p className="mt-3 font-serif text-base font-bold text-carbon">No se encontraron resultados</p>
+            <p className="mt-3 font-serif text-base font-bold text-carbon">
+              {t('glossary', 'noResults').replace('"{search}"', '').trim() || 'No results'}
+            </p>
             <p className="mt-1 text-xs text-carbon/60 max-w-sm">
-              No hay {activeSection === 'documents' ? 'documentos' : 'diagramas'} que coincidan con la búsqueda o filtros aplicados.
+              {t('editor', 'noMatchingItems', { type: activeSection === 'documents' ? t('editor', 'documents').toLowerCase() : t('editor', 'diagrams').toLowerCase() })}
             </p>
             <button
               type="button"
@@ -349,7 +300,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               }}
               className="mt-4 rounded-lg border border-carbon/20 bg-lienzo px-4 py-2 text-xs font-bold text-carbon hover:bg-carbon/5 transition-all cursor-pointer"
             >
-              Limpiar búsqueda y filtros
+              {t('editor', 'clearFilters')}
             </button>
           </div>
         )}

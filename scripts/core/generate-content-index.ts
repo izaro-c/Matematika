@@ -6,11 +6,13 @@ const CONTENT_DIR = path.resolve('./content/mdx');
 const OUTPUT_PATH = path.resolve('./src/data/content/contentIndex.json');
 const LEAN_GRAPH_PATH = path.resolve('./src/data/graph/lean_graph.json');
 
-interface ContentEntry {
+export interface ContentEntry {
   id: string;
   slug: string;
+  lang: string;
   filePath: string;
   contentType: string;
+  availableLangs?: string[];
   metadata: Record<string, unknown>;
 }
 
@@ -72,6 +74,7 @@ const contentTypes: Record<string, string> = {
   plans: 'plan-de-estudio',
   axioms: 'axioma',
   models: 'modelo',
+  'axiomatic-systems': 'sistema-axiomatico',
 };
 
 interface GenerateContentIndexOptions {
@@ -85,38 +88,75 @@ export function generateContentIndex(options: GenerateContentIndexOptions = {}):
   const outputPath = options.outputPath ?? OUTPUT_PATH;
   const leanGraphPath = options.leanGraphPath ?? LEAN_GRAPH_PATH;
   const allFiles = getMdxFiles(contentDir);
-  const index: Record<string, ContentEntry> = {};
   const leanNodeStatus = getLeanNodeStatus(leanGraphPath);
 
+  const availableLangsById: Record<string, string[]> = {};
+  const rawEntries: ContentEntry[] = [];
+  const index: Record<string, ContentEntry> = {};
+
+  // First pass: collect entries and identify available languages per ID
   for (const file of allFiles) {
     const content = fs.readFileSync(file, 'utf-8');
     const meta = parseMetadata(content, file);
     if (!meta) continue;
 
     const relPath = path.relative(contentDir, file);
-    const dirName = path.dirname(relPath).split(path.sep)[0];
-    const contentType = contentTypes[dirName] || meta.type as string || 'unknown';
+    const pathParts = relPath.split(path.sep);
+
+    let lang = 'es';
+    let dirName = pathParts[0];
+
+    if (pathParts.length > 2 && /^[a-z]{2}(-[A-Z]{2})?$/.test(pathParts[0])) {
+      lang = pathParts[0];
+      dirName = pathParts[1];
+    } else if (meta.lang && typeof meta.lang === 'string') {
+      lang = meta.lang;
+    }
+
+    meta.lang = lang;
+
+    const contentType = contentTypes[dirName] || (meta.type as string) || 'unknown';
     const slug = path.basename(file, '.mdx').toLowerCase();
     const id = (meta.id as string) || slug;
+
     if (typeof meta.leanId === 'string') {
       const status = leanNodeStatus.get(meta.leanId);
       meta.leanVerified = status !== undefined;
       meta.verificationStatus = status ?? 'human-proof';
     }
 
-    const entry: ContentEntry = {
+    if (!availableLangsById[id]) {
+      availableLangsById[id] = [];
+    }
+    if (!availableLangsById[id].includes(lang)) {
+      availableLangsById[id].push(lang);
+    }
+
+    rawEntries.push({
       id,
       slug,
+      lang,
       filePath: relPath,
       contentType,
       metadata: meta,
-    };
+    });
+  }
 
-    index[id] = entry;
+  // Second pass: assign availableLangs and index by id, slug, and lang
+  for (const entry of rawEntries) {
+    entry.availableLangs = availableLangsById[entry.id] || [entry.lang];
+    entry.metadata.availableLangs = entry.availableLangs;
 
-    // Also index by slug if different from id
-    if (slug !== id && !index[slug]) {
-      index[slug] = entry;
+    // Index by lang-qualified keys
+    index[`${entry.lang}:${entry.id}`] = entry;
+    index[`${entry.lang}:${entry.slug}`] = entry;
+
+    // Default lookup by id and slug (prefer 'es' or first occurrence)
+    if (!index[entry.id] || entry.lang === 'es') {
+      index[entry.id] = entry;
+    }
+    if (entry.slug !== entry.id && (!index[entry.slug] || entry.lang === 'es')) {
+      index[entry.slug] = entry;
     }
   }
 
