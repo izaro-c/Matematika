@@ -51,6 +51,7 @@ import {
   tickDistance,
 } from '@/diagrams/render/diagramRuntimeUtils';
 import {
+  renderedCoordinates,
   referencedLabelAnchor,
   viewportPanelAnchors,
   viewportPositionCoordinates,
@@ -274,14 +275,22 @@ export function createElement(
     { ...lineOptions, majorHeight: item.style?.markHeight ?? 10, minorTicks: item.properties?.minorTickCount ?? 4 },
     theme,
   ) : null;
-  if (item.kind === 'dimensionLine') return refs.length >= 2 ? createDimensionLine(
-    board,
-    [refs[0], refs[1]],
-    () => liftedIntoHeader ? '' : reactiveText(item, elements, spec) ?? measurementText(item, elements, spec),
-    item.properties?.offset ?? 0.35,
-    { ...lineOptions, fontSize: item.style?.labelSize },
-    theme,
-  ) : null;
+  if (item.kind === 'dimensionLine') {
+    const isLabelVisible = item.showLabel !== false;
+    return refs.length >= 2 ? createDimensionLine(
+      board,
+      [refs[0], refs[1]],
+      () => (liftedIntoHeader || !isLabelVisible) ? '' : reactiveText(item, elements, spec) ?? measurementText(item, elements, spec),
+      item.properties?.offset ?? 0.35,
+      {
+        ...lineOptions,
+        fontSize: item.style?.labelSize,
+        textOffset: item.style?.textOffset ?? item.style?.labelOffset,
+        labelVisible: isLabelVisible && !liftedIntoHeader,
+      },
+      theme,
+    ) : null;
+  }
   if (item.kind === 'grid') return refs.length >= 4 ? createGridOverlay(
     board,
     [refs[0], refs[1], refs[2], refs[3]],
@@ -343,6 +352,19 @@ export function createElement(
     ? item.properties.viewportPosition
     : undefined;
   const viewportPanelAnchor = viewportPosition ? viewportPanelAnchors(viewportPosition) : undefined;
+  const resolveAnchorCoords = (): [number, number] => {
+    if (item.refs.length >= 2) {
+      const p1 = elements[item.refs[0]];
+      const p2 = elements[item.refs[1]];
+      const c1 = renderedCoordinates(p1);
+      const c2 = renderedCoordinates(p2);
+      if (c1 && c2) {
+        const t = item.properties?.anchorParameter ?? 0.5;
+        return [c1[0] + (c2[0] - c1[0]) * t, c1[1] + (c2[1] - c1[1]) * t];
+      }
+    }
+    return referencedLabelAnchor(item.refs[0], item.properties?.anchorParameter ?? 0.5, elements, spec);
+  };
   const reactiveTextCoordinates: [() => number, () => number, () => string] | null = viewportPosition
     ? [
       () => viewportPositionCoordinates(board, viewportPosition, spec.viewport.bounds)[0],
@@ -351,8 +373,8 @@ export function createElement(
     ]
     : anchor
       ? [
-        () => referencedLabelAnchor(item.refs[0], item.properties?.anchorParameter ?? 0.5, elements, spec)[0] + textOffset[0],
-        () => referencedLabelAnchor(item.refs[0], item.properties?.anchorParameter ?? 0.5, elements, spec)[1] + textOffset[1],
+        () => resolveAnchorCoords()[0] + textOffset[0],
+        () => resolveAnchorCoords()[1] + textOffset[1],
         dynamicText,
       ]
       : null;

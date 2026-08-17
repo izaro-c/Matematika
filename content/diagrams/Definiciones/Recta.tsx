@@ -5,7 +5,7 @@ export const RectaSpec = createDiagramSpec(
 {
   "version": 3,
   "renderer": "matematika-diagram-renderer-v3",
-  "title": "Recta determinada por dos puntos",
+  "title": "Recta",
   "componentId": "recta",
   "category": "Definiciones",
   "mode": "simulation",
@@ -150,43 +150,11 @@ export const RectaSpec = createDiagramSpec(
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
-    },
-    {
-      "id": "lineInfo",
-      "label": "Incidencia",
-      "color": "musgo",
-      "layerId": "annotations",
-      "order": 730,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Incidencia",
-        "role": "annotation"
-      },
-      "target": false,
-      "objectType": "annotation",
-      "variant": "panel",
-      "content": {
-        "text": "Dos puntos distintos determinan una única recta.",
-        "title": "Incidencia"
-      },
-      "anchor": {
-        "type": "viewport",
-        "position": [
-          0.98,
-          0.03
-        ]
-      },
-      "appearance": {
-        "preserveColorOnHighlight": true
-      }
     }
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve A o B. La recta se prolonga indefinidamente en ambos sentidos y siempre pasa por los dos puntos."
+  "note": "Mueve A o B"
 }
 );
 /* @matematika-diagram-spec:end */

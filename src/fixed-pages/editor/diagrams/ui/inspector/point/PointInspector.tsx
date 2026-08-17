@@ -227,12 +227,12 @@ export const PointInspector: React.FC<PointPanelProps & {
               </label>
               <input
                 type="number"
-                min="3"
+                min="0"
                 max="20"
                 value={point.style?.pointSize ?? 7}
                 onChange={e =>
                   onUpdatePoint(point.id, {
-                    style: { ...(point.style || {}), pointSize: parseInt(e.target.value, 10) || 7 },
+                    style: { ...(point.style || {}), pointSize: parseOptionalNumber(e.target.value, 7) },
                   })
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
@@ -244,12 +244,12 @@ export const PointInspector: React.FC<PointPanelProps & {
               </label>
               <input
                 type="number"
-                min="4"
+                min="0"
                 max="24"
                 value={point.style?.highlightPointSize ?? 10}
                 onChange={e =>
                   onUpdatePoint(point.id, {
-                    style: { ...(point.style || {}), highlightPointSize: parseInt(e.target.value, 10) || 10 },
+                    style: { ...(point.style || {}), highlightPointSize: parseOptionalNumber(e.target.value, 10) },
                   })
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"

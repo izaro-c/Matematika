@@ -15,7 +15,7 @@ export function showsCurveSection(kind: DiagramElementKind): boolean {
 }
 
 const PANEL_OR_TEXT_KINDS = new Set<DiagramElementKind>([
-  'infoPanel', 'text', 'label', 'formula', 'measurement',
+  'infoPanel', 'text', 'label', 'formula', 'measurement', 'dimensionLine',
 ]);
 
 export function showsContentSection(kind: DiagramElementKind): boolean {
@@ -49,6 +49,14 @@ export function showsDirectMarkCount(kind: DiagramElementKind): boolean {
 
 export function showsMeasureTicksProps(kind: DiagramElementKind): boolean {
   return kind === 'measureTicks';
+}
+
+export function showsDimensionProps(kind: DiagramElementKind): boolean {
+  return kind === 'dimensionLine';
+}
+
+export function showsMeasurementProps(kind: DiagramElementKind): boolean {
+  return kind === 'measurement';
 }
 
 /** Scope de relaciones geométricas del elemento (null = no mostrar sección). */

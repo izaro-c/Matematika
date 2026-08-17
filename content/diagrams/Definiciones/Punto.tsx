@@ -5,7 +5,7 @@ export const PuntoSpec = createDiagramSpec(
 {
   "version": 3,
   "renderer": "matematika-diagram-renderer-v3",
-  "title": "Punto: una posición sin dimensión",
+  "title": "Punto",
   "componentId": "punto",
   "category": "Definiciones",
   "mode": "simulation",
@@ -81,43 +81,11 @@ export const PuntoSpec = createDiagramSpec(
         "snapToGrid": true,
         "snapSize": 0.25
       }
-    },
-    {
-      "id": "pointInfo",
-      "label": "Concepto primitivo",
-      "color": "musgo",
-      "layerId": "annotations",
-      "order": 690,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Concepto primitivo",
-        "role": "annotation"
-      },
-      "target": false,
-      "objectType": "annotation",
-      "variant": "panel",
-      "content": {
-        "text": "P determina una posición; la marca visible no representa tamaño matemático.",
-        "title": "Concepto primitivo"
-      },
-      "anchor": {
-        "type": "viewport",
-        "position": [
-          0.98,
-          0.03
-        ]
-      },
-      "appearance": {
-        "preserveColorOnHighlight": true
-      }
     }
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve P por el plano. La marca cambia de posición, pero un punto matemático sigue sin longitud, área ni volumen."
+  "note": "Mueve P por el plano"
 }
 );
 /* @matematika-diagram-spec:end */

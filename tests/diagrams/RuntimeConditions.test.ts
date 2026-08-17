@@ -83,7 +83,7 @@ describe('diagram runtime diagnostics and conditions', () => {
     expect(reactiveText(item, { pA: { X: () => 2, Y: () => 0 } }, parsed.data)).toBe('Doble: 4.0 cm');
   });
 
-  it('renders configured equalities deterministically instead of guessing from adjacent text', () => {
+  it('renders configured equalities conditionally only when values are equal, separating them otherwise', () => {
     const parsed = parseDiagramSpecV2(fixture);
     expect(parsed.success).toBe(true);
     if (!parsed.success) return;
@@ -98,11 +98,33 @@ describe('diagram runtime diagnostics and conditions', () => {
         readings: [{ id: 'equal-sides', sourceIds: [left.id, right.id], presentation: 'equality' as const }],
       },
     };
-    const readings = compactHeaderReadings([
+
+    // Cuando los valores difieren, se desglosan por separado
+    const readingsDiff = compactHeaderReadings([
       { item: left, text: 'AB = 4.00 cm' },
       { item: right, text: 'CD = 3.99 cm' },
     ], spec);
-    expect(readings).toEqual([{
+    expect(readingsDiff).toEqual([
+      {
+        id: 'equal-sides-measureAB-0',
+        itemIds: ['measureAB'],
+        text: 'AB = 4.00 cm',
+        visibility: 'any',
+      },
+      {
+        id: 'equal-sides-measureCD-1',
+        itemIds: ['measureCD'],
+        text: 'CD = 3.99 cm',
+        visibility: 'any',
+      },
+    ]);
+
+    // Cuando los valores coinciden, se combinan en igualdad
+    const readingsEqual = compactHeaderReadings([
+      { item: left, text: 'AB = 4.00 cm' },
+      { item: right, text: 'CD = 4.00 cm' },
+    ], spec);
+    expect(readingsEqual).toEqual([{
       id: 'equal-sides',
       itemIds: ['measureAB', 'measureCD'],
       text: 'AB = CD = 4.00 cm',

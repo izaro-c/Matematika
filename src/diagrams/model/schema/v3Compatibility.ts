@@ -134,6 +134,7 @@ function pathAppearance(element: DiagramElement): PathObject['appearance'] {
     ...(styleValue(element.style, 'strokeOpacity') !== undefined ? { strokeOpacity: styleValue(element.style, 'strokeOpacity') } : {}),
     ...(styleValue(element.style, 'fillOpacity') !== undefined ? { fillOpacity: styleValue(element.style, 'fillOpacity') } : {}),
     ...(styleValue(element.style, 'labelOffset') ? { labelOffset: styleValue(element.style, 'labelOffset') } : {}),
+    ...(styleValue(element.style, 'textOffset') ? { textOffset: styleValue(element.style, 'textOffset') } : {}),
     ...(styleValue(element.style, 'labelPosition') !== undefined ? { labelPosition: styleValue(element.style, 'labelPosition') } : {}),
     ...(styleValue(element.style, 'labelSize') !== undefined ? { labelSize: styleValue(element.style, 'labelSize') } : {}),
     ...(styleValue(element.style, 'highlightStrokeWidth') !== undefined ? { highlightStrokeWidth: styleValue(element.style, 'highlightStrokeWidth') } : {}),
@@ -178,7 +179,14 @@ function pathFromV2(element: DiagramElement): PathObject {
     }; break;
     case 'poincareGeodesic': geometry = { type: 'poincare-geodesic', refs: element.refs as [string, string, string, string] }; break;
     case 'poincareArc': geometry = { type: 'poincare-arc', refs: element.refs as [string, string, string, string] }; break;
-    default: geometry = { type: 'dimension', points: [element.refs[0], element.refs[1]], ...(props?.offset !== undefined ? { offset: props.offset } : {}) };
+    default: geometry = {
+      type: 'dimension',
+      points: [element.refs[0], element.refs[1]],
+      ...(props?.offset !== undefined ? { offset: props.offset } : {}),
+      ...(props?.unit !== undefined ? { unit: props.unit } : {}),
+      ...(props?.precision !== undefined ? { precision: props.precision } : {}),
+      ...(element.text ? { text: element.text } : {}),
+    };
   }
   return {
     ...commonFromV2(element),
@@ -305,6 +313,7 @@ function annotationFromV2(element: DiagramElement): AnnotationObject {
       ...(styleValue(element.style, 'labelSize') !== undefined ? { fontSize: styleValue(element.style, 'labelSize') } : {}),
       ...(styleValue(element.style, 'strokeOpacity') !== undefined ? { opacity: styleValue(element.style, 'strokeOpacity') } : {}),
       ...(styleValue(element.style, 'preserveColorOnHighlight') !== undefined ? { preserveColorOnHighlight: styleValue(element.style, 'preserveColorOnHighlight') } : {}),
+      ...(element.showLabel !== undefined ? { labelVisible: element.showLabel } : {}),
     },
   };
 }
@@ -609,6 +618,7 @@ function legacyStyle(object: DiagramObject): DiagramVisualStyle | undefined {
     result.highlightStrokeWidth = object.appearance.highlightStrokeWidth;
     result.highlightFillOpacity = object.appearance.highlightFillOpacity;
     result.highlightVisible = object.appearance.highlightVisible;
+    if (object.appearance.textOffset) result.textOffset = object.appearance.textOffset;
   }
   if (object.objectType === 'angle') {
     result.fillOpacity = object.appearance.fillOpacity;
@@ -626,7 +636,9 @@ function legacyStyle(object: DiagramObject): DiagramVisualStyle | undefined {
     result.highlightFillOpacity = object.appearance.highlightFillOpacity;
   }
   if (object.objectType === 'mark') result.markHeight = object.height;
-  if (object.objectType === 'annotation' && object.anchor.type === 'object') result.textOffset = object.anchor.offset;
+  if (object.objectType === 'annotation' && object.anchor.type === 'object' && object.anchor.offset) {
+    result.textOffset = object.anchor.offset;
+  }
   return finishLegacyStyle(result);
 }
 
@@ -685,7 +697,11 @@ function pathPropertiesToV2(object: PathObject): DiagramElementProperties | unde
     xExpression: geometry.x, yExpression: geometry.y, parameter: geometry.parameter, domain: geometry.domain, samples: geometry.samples,
     ...(geometry.areaFill ? { areaFill: geometry.areaFill } : {}),
   });
-  if (geometry.type === 'dimension' && geometry.offset !== undefined) properties.offset = geometry.offset;
+  if (geometry.type === 'dimension') {
+    if (geometry.offset !== undefined) properties.offset = geometry.offset;
+    if (geometry.unit !== undefined) properties.unit = geometry.unit;
+    if (geometry.precision !== undefined) properties.precision = geometry.precision;
+  }
   if (object.visibleWhen) properties.visibleWhen = object.visibleWhen;
   return Object.keys(properties).length > 0 ? properties : undefined;
 }
@@ -698,6 +714,7 @@ function pathToElement(object: PathObject): DiagramElement {
     ...base, kind: pathKindToV2(object), refs: pathReferences(object),
     ...(object.appearance?.dashed !== undefined ? { dashed: object.appearance.dashed } : {}),
     ...(object.appearance?.labelVisible !== undefined ? { showLabel: object.appearance.labelVisible } : {}),
+    ...(object.geometry.type === 'dimension' && object.geometry.text ? { text: object.geometry.text } : {}),
     ...(properties ? { properties } : {}), ...(style ? { style } : {}),
   };
 }
@@ -735,7 +752,7 @@ function areaToElement(object: AreaObject): DiagramElement {
 
 function regionToElement(object: RegionObject): DiagramElement {
   const style = legacyStyle(object);
-  const kind = object.geometry.type === 'grid-region' ? 'grid' : 'areaDecomposition';
+  const kind: DiagramElementKind = object.geometry.type === 'grid-region' ? 'grid' : 'areaDecomposition';
   return {
     ...commonToV2(object), kind, refs: [...object.geometry.points],
     properties: { rows: object.geometry.rows, columns: object.geometry.columns, ...(object.visibleWhen ? { visibleWhen: object.visibleWhen } : {}) },
@@ -781,7 +798,15 @@ function annotationToElement(object: AnnotationObject): DiagramElement {
   let refs: string[] = [];
   if (object.measurement?.refs) refs = [...object.measurement.refs];
   else if (object.anchor.type === 'object') refs = [object.anchor.object];
-  return { ...base, kind: annotationKindToV2(object), refs, text: object.content.text, properties, ...(style ? { style } : {}) };
+  return {
+    ...base,
+    kind: annotationKindToV2(object),
+    refs,
+    text: object.content.text,
+    ...(object.appearance?.labelVisible !== undefined ? { showLabel: object.appearance.labelVisible } : {}),
+    ...(Object.keys(properties).length > 0 ? { properties } : {}),
+    ...(style ? { style } : {}),
+  };
 }
 
 function objectToElement(object: Exclude<DiagramObject, PointObject | ControlObject>): DiagramElement {
