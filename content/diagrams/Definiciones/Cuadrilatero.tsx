@@ -63,6 +63,20 @@ export const CuadrilateroSpec = createDiagramSpec(
       "order": 4,
       "visible": true,
       "locked": false
+    },
+    {
+      "id": "background",
+      "label": "Fondo",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "controls",
+      "label": "Controles & Deslizadores",
+      "order": 30,
+      "visible": true,
+      "locked": false
     }
   ],
   "groups": [
@@ -263,7 +277,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "A",
       "color": "carbon",
       "layerId": "geometry",
-      "order": 1250,
+      "order": 5,
       "visible": true,
       "locked": true,
       "groupIds": [
@@ -303,7 +317,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "B",
       "color": "carbon",
       "layerId": "geometry",
-      "order": 2250,
+      "order": 6,
       "visible": true,
       "locked": true,
       "groupIds": [
@@ -343,7 +357,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "C",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 3250,
+      "order": 7,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -360,8 +374,8 @@ export const CuadrilateroSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 2.75,
-        "y": 1.35
+        "x": 2,
+        "y": 1.25
       },
       "mobility": {
         "type": "constrained",
@@ -397,7 +411,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "D",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 4250,
+      "order": 8,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -414,8 +428,8 @@ export const CuadrilateroSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -1.6,
-        "y": 2.45
+        "x": -3,
+        "y": 1.25
       },
       "mobility": {
         "type": "constrained",
@@ -454,7 +468,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Guía perpendicular en B",
       "color": "pizarra",
       "layerId": "guides",
-      "order": 10,
+      "order": 0,
       "visible": false,
       "locked": true,
       "groupIds": [],
@@ -489,7 +503,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Guía circular BC igual a AB",
       "color": "pizarra",
       "layerId": "guides",
-      "order": 20,
+      "order": 1,
       "visible": false,
       "locked": true,
       "groupIds": [],
@@ -518,7 +532,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Guía CD paralela a AB",
       "color": "pizarra",
       "layerId": "guides",
-      "order": 30,
+      "order": 2,
       "visible": false,
       "locked": true,
       "groupIds": [],
@@ -553,7 +567,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Guía DA paralela a BC",
       "color": "pizarra",
       "layerId": "guides",
-      "order": 40,
+      "order": 3,
       "visible": false,
       "locked": true,
       "groupIds": [],
@@ -588,7 +602,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Guía perpendicular en A",
       "color": "pizarra",
       "layerId": "guides",
-      "order": 50,
+      "order": 4,
       "visible": false,
       "locked": true,
       "groupIds": [],
@@ -623,7 +637,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Guía circular DA igual a AB",
       "color": "pizarra",
       "layerId": "guides",
-      "order": 60,
+      "order": 5,
       "visible": false,
       "locked": true,
       "groupIds": [],
@@ -652,7 +666,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Guía circular CD igual a CB",
       "color": "pizarra",
       "layerId": "guides",
-      "order": 70,
+      "order": 6,
       "visible": false,
       "locked": true,
       "groupIds": [],
@@ -681,7 +695,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Cuadrilátero ABCD",
       "color": "salvia",
       "layerId": "geometry",
-      "order": 200,
+      "order": 0,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -717,7 +731,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Lado AB",
       "color": "carbon",
       "layerId": "geometry",
-      "order": 220,
+      "order": 1,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -749,7 +763,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Lado BC",
       "color": "carbon",
       "layerId": "geometry",
-      "order": 230,
+      "order": 2,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -781,7 +795,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Lado CD",
       "color": "carbon",
       "layerId": "geometry",
-      "order": 240,
+      "order": 4,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -813,7 +827,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Lado DA",
       "color": "carbon",
       "layerId": "geometry",
-      "order": 250,
+      "order": 3,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -845,7 +859,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Una flecha en AB",
       "color": "terracota",
       "layerId": "properties",
-      "order": 300,
+      "order": 0,
       "visible": true,
       "visibleWhen": "and(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
@@ -880,7 +894,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Una flecha en CD",
       "color": "terracota",
       "layerId": "properties",
-      "order": 310,
+      "order": 1,
       "visible": true,
       "visibleWhen": "and(lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
@@ -915,7 +929,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Dos flechas en BC",
       "color": "pavo",
       "layerId": "properties",
-      "order": 320,
+      "order": 2,
       "visible": true,
       "visibleWhen": "and(lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
@@ -950,7 +964,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Dos flechas en DA",
       "color": "pavo",
       "layerId": "properties",
-      "order": 330,
+      "order": 3,
       "visible": true,
       "visibleWhen": "and(lt(abs((C.x-B.x)*(A.y-D.y)-(C.y-B.y)*(A.x-D.x))/(BC.length*DA.length),0.035),not(and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
@@ -985,7 +999,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Igualdad total en AB",
       "color": "ocre",
       "layerId": "properties",
-      "order": 400,
+      "order": 4,
       "visible": true,
       "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))",
       "locked": false,
@@ -1020,7 +1034,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Igualdad total en BC",
       "color": "ocre",
       "layerId": "properties",
-      "order": 410,
+      "order": 5,
       "visible": true,
       "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))",
       "locked": false,
@@ -1055,7 +1069,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Igualdad total en CD",
       "color": "ocre",
       "layerId": "properties",
-      "order": 420,
+      "order": 6,
       "visible": true,
       "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))",
       "locked": false,
@@ -1090,7 +1104,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Igualdad total en DA",
       "color": "ocre",
       "layerId": "properties",
-      "order": 430,
+      "order": 7,
       "visible": true,
       "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))",
       "locked": false,
@@ -1125,7 +1139,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Primer par del cometa en AB",
       "color": "ocre",
       "layerId": "properties",
-      "order": 450,
+      "order": 8,
       "visible": true,
       "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
@@ -1160,7 +1174,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Primer par del cometa en DA",
       "color": "ocre",
       "layerId": "properties",
-      "order": 460,
+      "order": 9,
       "visible": true,
       "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
@@ -1195,7 +1209,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Segundo par del cometa en BC",
       "color": "ocre",
       "layerId": "properties",
-      "order": 470,
+      "order": 10,
       "visible": true,
       "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
@@ -1230,7 +1244,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Segundo par del cometa en CD",
       "color": "ocre",
       "layerId": "properties",
-      "order": 480,
+      "order": 11,
       "visible": true,
       "visibleWhen": "and(lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04),lt(abs(BC.length-CD.length)/max(BC.length,CD.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
@@ -1265,7 +1279,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Primer par del cometa en AB",
       "color": "ocre",
       "layerId": "properties",
-      "order": 500,
+      "order": 12,
       "visible": true,
       "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
@@ -1300,7 +1314,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Primer par del cometa en BC",
       "color": "ocre",
       "layerId": "properties",
-      "order": 510,
+      "order": 13,
       "visible": true,
       "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
@@ -1335,7 +1349,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Segundo par del cometa en CD",
       "color": "ocre",
       "layerId": "properties",
-      "order": 520,
+      "order": 14,
       "visible": true,
       "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
@@ -1370,7 +1384,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Segundo par del cometa en DA",
       "color": "ocre",
       "layerId": "properties",
-      "order": 530,
+      "order": 15,
       "visible": true,
       "visibleWhen": "and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(CD.length-DA.length)/max(CD.length,DA.length),0.04),not(and(lt(abs(AB.length-BC.length)/max(AB.length,BC.length),0.04),lt(abs(AB.length-CD.length)/max(AB.length,CD.length),0.04),lt(abs(AB.length-DA.length)/max(AB.length,DA.length),0.04))))",
       "locked": false,
@@ -1405,7 +1419,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Ángulo recto en A",
       "color": "ocre",
       "layerId": "properties",
-      "order": 560,
+      "order": 16,
       "visible": true,
       "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))",
       "locked": false,
@@ -1442,7 +1456,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Ángulo recto en B",
       "color": "ocre",
       "layerId": "properties",
-      "order": 570,
+      "order": 17,
       "visible": true,
       "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))",
       "locked": false,
@@ -1479,7 +1493,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Ángulo recto en C",
       "color": "ocre",
       "layerId": "properties",
-      "order": 580,
+      "order": 18,
       "visible": true,
       "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))",
       "locked": false,
@@ -1516,7 +1530,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Ángulo recto en D",
       "color": "ocre",
       "layerId": "properties",
-      "order": 590,
+      "order": 19,
       "visible": true,
       "visibleWhen": "and(lt(abs((B.x-A.x)*(D.x-A.x)+(B.y-A.y)*(D.y-A.y))/(AB.length*DA.length),0.035),lt(abs((A.x-B.x)*(C.x-B.x)+(A.y-B.y)*(C.y-B.y))/(AB.length*BC.length),0.035),lt(abs((B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x))/(AB.length*CD.length),0.035))",
       "locked": false,
@@ -1553,7 +1567,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Ángulo interior A",
       "color": "ocre",
       "layerId": "details",
-      "order": 620,
+      "order": 0,
       "visible": false,
       "locked": false,
       "groupIds": [
@@ -1589,7 +1603,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Ángulo interior B",
       "color": "ocre",
       "layerId": "details",
-      "order": 630,
+      "order": 1,
       "visible": false,
       "locked": false,
       "groupIds": [
@@ -1625,7 +1639,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Ángulo interior C",
       "color": "ocre",
       "layerId": "details",
-      "order": 640,
+      "order": 2,
       "visible": false,
       "locked": false,
       "groupIds": [
@@ -1661,7 +1675,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Ángulo interior D",
       "color": "ocre",
       "layerId": "details",
-      "order": 650,
+      "order": 3,
       "visible": false,
       "locked": false,
       "groupIds": [
@@ -1697,7 +1711,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Diagonal AC",
       "color": "pizarra",
       "layerId": "details",
-      "order": 680,
+      "order": 4,
       "visible": false,
       "locked": false,
       "groupIds": [
@@ -1732,7 +1746,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Diagonal BD",
       "color": "pizarra",
       "layerId": "details",
-      "order": 690,
+      "order": 5,
       "visible": false,
       "locked": false,
       "groupIds": [
@@ -1767,7 +1781,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       "label": "Clasificación",
       "color": "musgo",
       "layerId": "annotations",
-      "order": 800,
+      "order": 0,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -1837,7 +1851,8 @@ export const CuadrilateroSpec = createDiagramSpec(
         "C",
         "A"
       ],
-      "boundary": "B"
+      "boundary": "B",
+      "side": 1
     },
     {
       "id": "CNoCruzaBD",
@@ -1848,7 +1863,8 @@ export const CuadrilateroSpec = createDiagramSpec(
         "C",
         "B"
       ],
-      "boundary": "D"
+      "boundary": "D",
+      "side": -1
     },
     {
       "id": "DEncimaAB",
@@ -1859,7 +1875,8 @@ export const CuadrilateroSpec = createDiagramSpec(
         "D",
         "A"
       ],
-      "boundary": "B"
+      "boundary": "B",
+      "side": 1
     },
     {
       "id": "DNoCruzaAC",
@@ -1870,7 +1887,8 @@ export const CuadrilateroSpec = createDiagramSpec(
         "D",
         "A"
       ],
-      "boundary": "C"
+      "boundary": "C",
+      "side": 1
     },
     {
       "id": "rectoA-perpendicular",

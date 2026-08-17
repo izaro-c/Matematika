@@ -11,6 +11,7 @@ import { prepareSceneSpec,
   zoomViewport} from '@/diagrams/public';
 import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
 import { TrianguloSpec } from '../../content/diagrams/Definiciones/Triangulo';
+import { CuadrilateroSpec } from '../../content/diagrams/Definiciones/Cuadrilatero';
 
 const spec = prepareSceneSpec(migrateDiagramSpec(v2Fixture).spec);
 const triangulo = toWorkingSceneV2(TrianguloSpec);
@@ -163,5 +164,24 @@ describe('shared diagram scene semantics', () => {
     const bounds = fitViewport(specWithInvisibleAux as any);
     expect(bounds[1]).toBeLessThan(50);
     expect(bounds[2]).toBeLessThan(50);
+  });
+
+  it('constructs points before dependent segments and polygon in Cuadrilatero with mutual constraints', () => {
+    const constructionIds = createSceneConstructionPlan(CuadrilateroSpec).map(entry => entry.item.id);
+    const indexC = constructionIds.indexOf('C');
+    const indexD = constructionIds.indexOf('D');
+    const indexBC = constructionIds.indexOf('BC');
+    const indexCD = constructionIds.indexOf('CD');
+    const indexDA = constructionIds.indexOf('DA');
+    const indexPoligono = constructionIds.indexOf('poligono');
+
+    expect(indexC).toBeGreaterThanOrEqual(0);
+    expect(indexD).toBeGreaterThanOrEqual(0);
+    expect(indexBC).toBeGreaterThan(indexC);
+    expect(indexCD).toBeGreaterThan(indexC);
+    expect(indexCD).toBeGreaterThan(indexD);
+    expect(indexDA).toBeGreaterThan(indexD);
+    expect(indexPoligono).toBeGreaterThan(indexC);
+    expect(indexPoligono).toBeGreaterThan(indexD);
   });
 });
