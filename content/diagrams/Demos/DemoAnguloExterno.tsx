@@ -179,8 +179,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 0.7653242856019871,
-        "y": 3.048733265634481
+        "x": 0.8643701292823758,
+        "y": 2.9205239869339215
       },
       "mobility": {
         "type": "on-support",
@@ -1386,6 +1386,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
+        "highlightable": false,
         "ariaLabel": "Semiplano",
         "role": "secondary"
       },
@@ -1401,8 +1402,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "side": "pD"
       },
       "appearance": {
+        "strokeWidth": 0,
         "strokeOpacity": 1,
-        "fillOpacity": 0.1,
+        "fillOpacity": 0,
         "highlightFillOpacity": 0.2,
         "preserveColorOnHighlight": true
       }
@@ -1418,6 +1420,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
+        "highlightable": false,
         "ariaLabel": "Semiplano",
         "role": "secondary"
       },
@@ -1433,7 +1436,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "side": "pA"
       },
       "appearance": {
-        "fillOpacity": 0.1,
+        "strokeWidth": 0,
+        "fillOpacity": 0,
         "highlightFillOpacity": 0.2,
         "preserveColorOnHighlight": true
       }
@@ -1857,6 +1861,34 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
+    },
+    {
+      "id": "areaInthalfACDhalfBCA",
+      "label": "Intersección de áreas",
+      "color": "salvia",
+      "layerId": "geometry",
+      "order": 55,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Intersección de áreas",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "areaInthalfACDhalfBCA",
+      "objectType": "area",
+      "geometry": {
+        "type": "intersection",
+        "areas": [
+          "halfACD",
+          "halfBCA"
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     }
   ],
   "relations": [
@@ -2167,6 +2199,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         },
         "rayCB": {
           "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
         }
       }
     },
@@ -2439,6 +2474,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": false
         },
         "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
           "visible": false
         }
       }
@@ -2713,6 +2751,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": false
         },
         "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
           "visible": false
         }
       }
@@ -3002,6 +3043,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": false
         },
         "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
           "visible": false
         }
       }
@@ -3297,6 +3341,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         },
         "rayCB": {
           "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
         }
       }
     },
@@ -3587,6 +3634,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         },
         "rayCB": {
           "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
         }
       }
     },
@@ -3611,7 +3661,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         "pF",
         "midAC",
         "segBmidAC",
-        "segmidACF"
+        "segmidACF",
+        "areaInthalfACDhalfBCA"
       ],
       "durationMs": 1800,
       "objectStates": {
@@ -3817,8 +3868,13 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         },
         "halfBCA": {
           "visible": true,
-          "emphasis": "secondary",
-          "interactive": true
+          "emphasis": "none",
+          "style": {
+            "strokeWidth": 0.7,
+            "strokeOpacity": 0,
+            "fillOpacity": 0
+          },
+          "interactive": false
         },
         "rayCA": {
           "visible": false,
@@ -3872,6 +3928,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         },
         "rayCB": {
           "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": true
         }
       }
     },
@@ -4156,6 +4215,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         },
         "rayCB": {
           "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
         }
       }
     },
@@ -4355,6 +4417,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": false
         },
         "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
           "visible": false
         }
       }
@@ -4572,6 +4637,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         },
         "rayCB": {
           "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
         }
       }
     },
@@ -4779,6 +4847,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
         },
         "rayCB": {
           "visible": true
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
         }
       }
     },
@@ -5067,6 +5138,9 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
           "visible": true
         },
         "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
           "visible": false
         }
       }

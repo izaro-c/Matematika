@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ElementPanelProps } from '../../types';
+import { parseOptionalNumber } from '../../../workbenchSelection';
 
 /** Propiedades: expression, xExpression, yExpression, domain, areaFill, refs[0] para semiplano */
 export const ElementCurveSection: React.FC<ElementPanelProps> = ({
@@ -78,7 +79,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
           aria-label="Mínimo Dominio"
           value={element.properties?.domain?.[0] ?? -5}
           onChange={e => {
-            const minVal = parseFloat(e.target.value) || -5;
+            const minVal = parseOptionalNumber(e.target.value, -5);
             const maxVal = element.properties?.domain?.[1] ?? 5;
             onUpdateElement(element.id, {
               properties: { ...(element.properties || {}), domain: [minVal, maxVal] },
@@ -98,7 +99,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
           value={element.properties?.domain?.[1] ?? 5}
           onChange={e => {
             const minVal = element.properties?.domain?.[0] ?? -5;
-            const maxVal = parseFloat(e.target.value) || 5;
+            const maxVal = parseOptionalNumber(e.target.value, 5);
             onUpdateElement(element.id, {
               properties: { ...(element.properties || {}), domain: [minVal, maxVal] },
             });

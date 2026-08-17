@@ -135,7 +135,12 @@ export const DiagramHeaderReadingsEditor: React.FC<DiagramHeaderReadingsEditorPr
 
                   <div className="mt-2">
                     {reading.presentation === 'equality' ? (
-                      <EqualityTermsEditor reading={reading} candidates={candidates} onChange={sourceIds => updateReading(reading.id, { sourceIds })} />
+                      <div className="space-y-1.5">
+                        <EqualityTermsEditor reading={reading} candidates={candidates} onChange={sourceIds => updateReading(reading.id, { sourceIds })} />
+                        <p className="mt-1 text-[9px] text-salvia/90 leading-tight">
+                          La igualdad solo se mostrará combinada cuando los valores sean iguales. Si difieren, las etiquetas se mostrarán por separado.
+                        </p>
+                      </div>
                     ) : (
                       <label className="block text-[10px] font-bold text-carbon/55">Valor
                         <select aria-label={`Origen de lectura ${index + 1}`} className="mt-1 min-h-10 w-full rounded border border-carbon/15 bg-lienzo px-2 text-xs" value={reading.sourceIds[0] ?? ''} onChange={event => updateReading(reading.id, { sourceIds: [event.target.value] })}>

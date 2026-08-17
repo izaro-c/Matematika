@@ -1411,7 +1411,7 @@ export const TrianguloSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Mueve A, B o C. El vértice arrastrado se ajusta temporalmente a posiciones equiláteras, isósceles y rectángulas, y vuelve a quedar libre al soltarlo."
+  "note": "Mueve A, B o C"
 }
 );
 /* @matematika-diagram-spec:end */

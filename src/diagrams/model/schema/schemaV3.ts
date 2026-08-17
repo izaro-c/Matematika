@@ -33,6 +33,7 @@ const pointAppearance = z.object({
 const pathAppearance = z.object({
   dashed: z.boolean().optional(), strokeWidth: number.min(0).max(20).optional(), strokeOpacity: number.min(0).max(1).optional(),
   fillOpacity: number.min(0).max(1).optional(), labelVisible: z.boolean().optional(), labelOffset: z.tuple([number, number]).optional(),
+  textOffset: z.tuple([number, number]).optional(),
   labelPosition: z.union([number, z.string()]).optional(), labelSize: number.min(6).max(72).optional(),
   highlightStrokeWidth: number.min(0).max(30).optional(), highlightFillOpacity: number.min(0).max(1).optional(),
   highlightVisible: z.boolean().optional(), preserveColorOnHighlight: z.boolean().optional(),
@@ -74,7 +75,7 @@ const pathGeometry = z.discriminatedUnion('type', [
   z.object({ type: z.literal('parametric'), x: expression, y: expression, parameter: id, domain: z.tuple([number, number]), samples: z.number().int().min(8).max(2048), areaFill: z.enum(['none', 'interior', 'half-plane']).optional(), areaSide: id.optional() }).strict(),
   z.object({ type: z.literal('poincare-geodesic'), refs: z.tuple([id, id, id, id]) }).strict(),
   z.object({ type: z.literal('poincare-arc'), refs: z.tuple([id, id, id, id]) }).strict(),
-  z.object({ type: z.literal('dimension'), points: pair, offset: number.optional() }).strict(),
+  z.object({ type: z.literal('dimension'), points: pair, offset: number.optional(), text: z.string().optional(), unit: z.string().max(32).optional(), precision: z.number().int().min(0).max(12).optional() }).strict(),
 ]);
 const pathObject = z.object({ ...objectBase, objectType: z.literal('path'), geometry: pathGeometry, appearance: pathAppearance.optional() }).strict();
 const angleObject = z.object({
@@ -140,7 +141,7 @@ const annotationObject = z.object({
     z.object({ type: z.literal('viewport'), position: z.tuple([number.min(0).max(1), number.min(0).max(1)]) }).strict(),
   ]),
   measurement: z.object({ refs: z.union([z.tuple([id]), pair]), mode: z.enum(['distance', 'value']) }).strict().optional(),
-  appearance: z.object({ fontSize: number.min(6).max(72).optional(), opacity: number.min(0).max(1).optional(), preserveColorOnHighlight: z.boolean().optional() }).strict().optional(),
+  appearance: z.object({ fontSize: number.min(6).max(72).optional(), opacity: number.min(0).max(1).optional(), labelVisible: z.boolean().optional(), preserveColorOnHighlight: z.boolean().optional() }).strict().optional(),
 }).strict();
 const controlObject = z.object({
   ...objectBase, objectType: z.literal('control'), variant: z.literal('slider'), position: z.tuple([number, number]),

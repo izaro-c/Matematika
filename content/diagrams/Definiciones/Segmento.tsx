@@ -5,12 +5,24 @@ export const SegmentoSpec = createDiagramSpec(
 {
   "version": 3,
   "renderer": "matematika-diagram-renderer-v3",
-  "title": "Segmento y recta soporte",
+  "title": "Segmento",
   "componentId": "segmento",
   "category": "Definiciones",
   "mode": "simulation",
   "axis": false,
   "grid": false,
+  "header": {
+    "readingsMode": "custom",
+    "readings": [
+      {
+        "id": "header-reading-1",
+        "sourceIds": [
+          "length"
+        ],
+        "presentation": "label-value"
+      }
+    ]
+  },
   "viewport": {
     "bounds": [
       -5,
@@ -51,7 +63,7 @@ export const SegmentoSpec = createDiagramSpec(
       "label": "A",
       "color": "musgo",
       "layerId": "geometry",
-      "order": 740,
+      "order": 4,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -65,8 +77,8 @@ export const SegmentoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -2.8,
-        "y": 0
+        "x": -2.5,
+        "y": -1
       },
       "mobility": {
         "type": "free"
@@ -78,7 +90,7 @@ export const SegmentoSpec = createDiagramSpec(
         "preserveColorOnHighlight": true
       },
       "interaction": {
-        "snapToGrid": true,
+        "snapToGrid": false,
         "snapSize": 0.25
       }
     },
@@ -87,7 +99,7 @@ export const SegmentoSpec = createDiagramSpec(
       "label": "B",
       "color": "musgo",
       "layerId": "geometry",
-      "order": 750,
+      "order": 3,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -101,8 +113,8 @@ export const SegmentoSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 2.8,
-        "y": 0.8
+        "x": 2.03,
+        "y": 1.12
       },
       "mobility": {
         "type": "free"
@@ -114,7 +126,7 @@ export const SegmentoSpec = createDiagramSpec(
         "preserveColorOnHighlight": true
       },
       "interaction": {
-        "snapToGrid": true,
+        "snapToGrid": false,
         "snapSize": 0.25
       }
     },
@@ -123,7 +135,7 @@ export const SegmentoSpec = createDiagramSpec(
       "label": "Recta soporte l",
       "color": "carbon",
       "layerId": "geometry",
-      "order": 760,
+      "order": 0,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -158,7 +170,7 @@ export const SegmentoSpec = createDiagramSpec(
       "label": "Segmento AB",
       "color": "musgo",
       "layerId": "geometry",
-      "order": 770,
+      "order": 1,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -178,17 +190,17 @@ export const SegmentoSpec = createDiagramSpec(
         ]
       },
       "appearance": {
-        "strokeWidth": 3,
+        "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
     },
     {
       "id": "length",
-      "label": "Longitud AB",
+      "label": "Longitud de AB",
       "color": "pizarra",
       "layerId": "geometry",
-      "order": 780,
+      "order": 2,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -205,18 +217,20 @@ export const SegmentoSpec = createDiagramSpec(
           "A",
           "B"
         ],
-        "offset": 0.45
+        "offset": 0,
+        "unit": "u"
       },
       "appearance": {
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
+        "strokeWidth": 0,
+        "labelVisible": false,
+        "highlightStrokeWidth": 0,
         "preserveColorOnHighlight": true
       }
     }
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve A o B. La recta soporte es ilimitada; el segmento comprende únicamente los extremos y los puntos entre ellos."
+  "note": "Mueve A o B"
 }
 );
 /* @matematika-diagram-spec:end */

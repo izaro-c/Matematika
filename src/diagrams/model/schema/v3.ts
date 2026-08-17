@@ -91,7 +91,7 @@ export type PathGeometry =
   | { type: 'parametric'; x: string; y: string; parameter: string; domain: [number, number]; samples: number; areaFill?: 'none' | 'interior' | 'half-plane'; areaSide?: string }
   | { type: 'poincare-geodesic'; refs: [string, string, string, string] }
   | { type: 'poincare-arc'; refs: [string, string, string, string] }
-  | { type: 'dimension'; points: [string, string]; offset?: number };
+  | { type: 'dimension'; points: [string, string]; offset?: number; text?: string; unit?: string; precision?: number };
 
 export interface PathAppearance {
   dashed?: boolean;
@@ -100,6 +100,7 @@ export interface PathAppearance {
   fillOpacity?: number;
   labelVisible?: boolean;
   labelOffset?: [number, number];
+  textOffset?: [number, number];
   labelPosition?: number | string;
   labelSize?: number;
   highlightStrokeWidth?: number;
@@ -205,6 +206,7 @@ export interface AnnotationObject extends DiagramObjectBase {
   appearance?: {
     fontSize?: number;
     opacity?: number;
+    labelVisible?: boolean;
     preserveColorOnHighlight?: boolean;
   };
 }

@@ -49,6 +49,8 @@ export interface ParallelMarkOptions extends GeometryOptions {
 
 export interface DimensionLineOptions extends GeometryOptions {
   fontSize?: number;
+  textOffset?: [number, number];
+  labelVisible?: boolean;
 }
 
 export interface TextOptions extends GeometryOptions {
@@ -610,7 +612,9 @@ export function createDimensionLine(
   theme: ThemeColors,
 ): CompositeElement {
   const [a, b] = points;
-  const { fontSize, ...lineOptions } = options;
+  const { fontSize, textOffset = [0, 0], labelVisible = true, ...lineOptions } = options;
+  const strokeColor = typeof lineOptions.strokeColor === 'string' ? lineOptions.strokeColor : theme.pizarra;
+  const strokeWidth = lineOptions.strokeWidth ?? 1.5;
   const shifted = (point: PointLike, axis: 'x' | 'y') => () => {
     const dx = b.X() - a.X();
     const dy = b.Y() - a.Y();
@@ -619,14 +623,19 @@ export function createDimensionLine(
   };
   const a2 = board.create('point', [shifted(a, 'x'), shifted(a, 'y')], { visible: false } as never) as JXG.Point;
   const b2 = board.create('point', [shifted(b, 'x'), shifted(b, 'y')], { visible: false } as never) as JXG.Point;
-  const line = createSegment(board, [a2, b2], { strokeColor: theme.pizarra, strokeWidth: 1.5, ...lineOptions }, theme);
+  const line = createSegment(board, [a2, b2], { strokeColor, strokeWidth, ...lineOptions }, theme);
   const highlightOptOut = lineOptions.highlight === false ? { highlight: false } : {};
-  const ticks = createCongruenceMark(board, [a2, b2], 1, { strokeColor: theme.pizarra, strokeWidth: 1.5, ...highlightOptOut }, theme);
+  const ticks = createCongruenceMark(board, [a2, b2], 1, { strokeColor, strokeWidth, ...highlightOptOut }, theme);
   const text = createText(board, [
-    () => (a2.X() + b2.X()) / 2,
-    () => (a2.Y() + b2.Y()) / 2 + 0.18,
-    label,
-  ], { color: theme.pizarra, ...(fontSize !== undefined ? { fontSize } : {}), ...highlightOptOut }, theme);
+    () => (a2.X() + b2.X()) / 2 + textOffset[0],
+    () => (a2.Y() + b2.Y()) / 2 + 0.18 + textOffset[1],
+    () => labelVisible ? label() : '',
+  ], {
+    color: strokeColor,
+    visible: labelVisible,
+    ...(fontSize !== undefined ? { fontSize } : {}),
+    ...highlightOptOut,
+  }, theme);
   return createComposite([line, ticks, text]);
 }
 

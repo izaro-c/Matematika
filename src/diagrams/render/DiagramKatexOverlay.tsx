@@ -59,6 +59,11 @@ export function headerReadingText(item: DiagramElement, variables: Record<string
       const bx = variables[`${b}.x`];
       const by = variables[`${b}.y`];
       if ([ax, ay, bx, by].every(Number.isFinite)) value = Math.hypot(bx - ax, by - ay);
+    } else if (item.refs.length === 1) {
+      const refId = item.refs[0];
+      if (Number.isFinite(variables[`${refId}.length`])) {
+        value = variables[`${refId}.length`];
+      }
     }
   } catch {
     return null;
@@ -66,7 +71,8 @@ export function headerReadingText(item: DiagramElement, variables: Record<string
   if (value === undefined || !Number.isFinite(value)) return null;
   const precision = item.properties?.precision ?? 2;
   const unit = item.properties?.unit ? ` ${item.properties.unit}` : '';
-  const template = item.text || `${item.label}: {value}`;
+  const displayLabel = item.label || item.properties?.title || item.id;
+  const template = item.text || `${displayLabel}: {value}`;
   const rendered = interpolateDiagramTemplate(template, variables, {
     expression: item.properties?.expression,
     precision,
@@ -146,22 +152,55 @@ function customHeaderReadings(
   spec: DiagramSpecV2,
 ): HeaderReadingPresentation[] {
   const entryById = new Map(entries.map(entry => [entry.item.id, entry]));
-  return (spec.header?.readings ?? []).flatMap(reading => {
-    const sources = reading.sourceIds.map(id => entryById.get(id)).filter((entry): entry is { item: DiagramElement; text: string } => Boolean(entry));
-    if (sources.length !== reading.sourceIds.length || sources.length === 0) return [];
-    const value = readingValue(sources[0].text);
-    let text = `${sources[0].item.label}: ${value}`;
-    if (reading.presentation === 'value') text = value;
-    if (reading.presentation === 'equality') {
-      const names = sources.map(entry => entry.item.label).join(' = ');
-      text = `${names} = ${value}`;
+  return (spec.header?.readings ?? []).flatMap((reading): HeaderReadingPresentation[] => {
+    const sources = reading.sourceIds
+      .map(id => entryById.get(id))
+      .filter((entry): entry is { item: DiagramElement; text: string } => Boolean(entry));
+    if (sources.length === 0) return [];
+
+    if (reading.presentation === 'value') {
+      return sources.map((source, index) => ({
+        id: sources.length === 1 ? reading.id : `${reading.id}-${source.item.id}-${index}`,
+        itemIds: [source.item.id],
+        text: readingValue(source.text),
+        visibility: 'any' as const,
+      }));
     }
-    return [{
-      id: reading.id,
-      itemIds: [...reading.sourceIds],
-      text,
-      visibility: reading.presentation === 'equality' ? 'all' as const : 'any' as const,
-    }];
+
+    if (reading.presentation === 'equality') {
+      const values = sources.map(source => readingValue(source.text));
+      const allEqual = sources.length >= 2 && values.every(val => val === values[0]);
+      if (allEqual) {
+        const names = sources.map(entry => entry.item.label || entry.item.id).join(' = ');
+        return [{
+          id: reading.id,
+          itemIds: sources.map(source => source.item.id),
+          text: `${names} = ${values[0]}`,
+          visibility: 'all' as const,
+        }];
+      }
+      // Cuando los valores no son iguales (o solo hay 1 fuente), mostrar las lecturas separadas
+      return sources.map((source, index) => ({
+        id: `${reading.id}-${source.item.id}-${index}`,
+        itemIds: [source.item.id],
+        text: source.text,
+        visibility: 'any' as const,
+      }));
+    }
+
+    // Presentación 'label-value'
+    return sources.map((source, index) => {
+      const value = readingValue(source.text);
+      const text = source.text.includes(':') || source.text.includes('=')
+        ? source.text
+        : `${source.item.label || source.item.id}: ${value}`;
+      return {
+        id: sources.length === 1 ? reading.id : `${reading.id}-${source.item.id}-${index}`,
+        itemIds: [source.item.id],
+        text,
+        visibility: 'any' as const,
+      };
+    });
   });
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { PALETTE_TOKENS } from '../../paletteTokens';
 import type { ElementPanelProps } from '../../types';
 import { availableLayers } from '../../utils';
+import { parseOptionalNumber } from '../../../workbenchSelection';
 import {
   showsAngleRadius,
   showsDashed,
@@ -61,7 +62,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               value={element.style?.strokeWidth ?? 2.4}
               onChange={e =>
                 onUpdateElement(element.id, {
-                  style: { ...(element.style || {}), strokeWidth: parseFloat(e.target.value) || 2.4 },
+                  style: { ...(element.style || {}), strokeWidth: parseOptionalNumber(e.target.value, 2.4) },
                 })
               }
               className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 font-bold"
@@ -80,7 +81,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               value={element.style?.highlightStrokeWidth ?? 3}
               onChange={e =>
                 onUpdateElement(element.id, {
-                  style: { ...(element.style || {}), highlightStrokeWidth: parseFloat(e.target.value) || 3 },
+                  style: { ...(element.style || {}), highlightStrokeWidth: parseOptionalNumber(e.target.value, 3) },
                 })
               }
               className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 font-bold"
@@ -104,7 +105,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               value={element.style?.fillOpacity ?? 0.2}
               onChange={e =>
                 onUpdateElement(element.id, {
-                  style: { ...(element.style || {}), fillOpacity: parseFloat(e.target.value) || 0 },
+                  style: { ...(element.style || {}), fillOpacity: parseOptionalNumber(e.target.value, 0) },
                 })
               }
               className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
@@ -122,7 +123,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               value={element.style?.highlightFillOpacity ?? 0.35}
               onChange={e =>
                 onUpdateElement(element.id, {
-                  style: { ...(element.style || {}), highlightFillOpacity: parseFloat(e.target.value) || 0.35 },
+                  style: { ...(element.style || {}), highlightFillOpacity: parseOptionalNumber(e.target.value, 0.35) },
                 })
               }
               className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
@@ -144,7 +145,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
             value={element.style?.angleRadius ?? 1}
             onChange={e =>
               onUpdateElement(element.id, {
-                style: { ...(element.style || {}), angleRadius: parseFloat(e.target.value) || 1 },
+                style: { ...(element.style || {}), angleRadius: parseOptionalNumber(e.target.value, 1) },
               })
             }
             className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
