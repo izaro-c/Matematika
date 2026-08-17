@@ -73,38 +73,26 @@ export function StepSection({
 
 interface StepBindProps {
   step: string;
+  scopeId?: string;
   children: ReactNode;
   className?: string;
 }
 
-/**
- * StepBind
- *
- * Enlace inline interactivo que destaca elementos en el diagrama activo
- * sin alterar el paso activo de la sección actual.
- */
-export function StepBind({ step, children, className = '' }: StepBindProps) {
-  const setVariable = useMathStore((state) => state.setVariable);
-  const highlight = useMathStore((state) => state.variables?.['highlight']);
-  const isActive = highlight === step;
-
-  const setHighlight = useCallback(
-    (val: string | null) => {
-      setVariable('highlight', val);
-    },
-    [setVariable]
-  );
+/** Control inline, accesible por teclado, para activar un paso visual. */
+export function StepBind({ step, scopeId, children, className = '' }: StepBindProps) {
+  const { activeStep, setActiveStep } = useStepBinding(scopeId);
+  const isActive = activeStep === step;
 
   return (
     <button
       type="button"
       aria-pressed={isActive}
       data-step-bind={step}
-      onPointerEnter={() => setHighlight(step)}
-      onPointerLeave={() => setHighlight(null)}
-      onFocus={() => setHighlight(step)}
-      onBlur={() => setHighlight(null)}
-      onClick={() => setHighlight(isActive ? null : step)}
+      onPointerEnter={() => setActiveStep(step)}
+      onPointerLeave={() => isActive && setActiveStep(null)}
+      onFocus={() => setActiveStep(step)}
+      onBlur={() => isActive && setActiveStep(null)}
+      onClick={() => setActiveStep(isActive ? null : step)}
       className={`page-accent-link inline border-0 border-b-2 border-dashed bg-transparent p-0 font-inherit font-bold ${className}`}
     >
       {children}

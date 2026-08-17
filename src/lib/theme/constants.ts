@@ -57,7 +57,7 @@ export interface ContentTypeConfig {
   hierarchyLevel: number;
 }
 
-import { CONTENT_TYPE_COLORS } from '@/design/contentTypeColors';
+import { CONTENT_TYPE_COLORS, CONTENT_TYPE_ALIASES } from '@/design/contentTypeColors';
 
 // Shorthand helpers
 const c = (type: keyof typeof CONTENT_TYPE_COLORS) => CONTENT_TYPE_COLORS[type];
@@ -71,6 +71,16 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
     graphGroup: 'axioma',
     graphColor: c('axioma').cssVar,
     nodeStyle: { bg: c('axioma').cssVar, border: c('axioma').cssVar, text: 'var(--theme-lienzo)', badge: 'AXIOMA', ringColor: c('axioma').cssVar },
+    hierarchyLevel: 0,
+  },
+  'sistema-axiomatico': {
+    id: 'sistema-axiomatico',
+    labelSingular: 'Sistema axiomático',
+    labelPlural: 'Sistemas axiomáticos',
+    routePrefix: 'sistema',
+    graphGroup: 'sistema-axiomatico',
+    graphColor: c('sistema-axiomatico').cssVar,
+    nodeStyle: { bg: c('sistema-axiomatico').cssVar, border: c('sistema-axiomatico').cssVar, text: 'var(--theme-lienzo)', badge: 'SISTEMA', ringColor: c('sistema-axiomatico').cssVar },
     hierarchyLevel: 0,
   },
   concepto: {
@@ -155,8 +165,8 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
   },
   'caso-de-uso': {
     id: 'caso-de-uso',
-    labelSingular: 'Caso de Uso',
-    labelPlural: 'Casos de Uso',
+    labelSingular: 'Caso de uso',
+    labelPlural: 'Casos de uso',
     routePrefix: 'caso',
     graphGroup: 'usecase',
     graphColor: c('caso-de-uso').cssVar,
@@ -195,12 +205,32 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
   },
   'plan-de-estudio': {
     id: 'plan-de-estudio',
-    labelSingular: 'Plan de Estudio',
-    labelPlural: 'Planes de Estudio',
+    labelSingular: 'Plan de estudio',
+    labelPlural: 'Planes de estudio',
     routePrefix: 'plan',
     graphGroup: 'plan-de-estudio',
     graphColor: c('plan-de-estudio').cssVar,
     nodeStyle: { bg: c('plan-de-estudio').cssVar, border: c('plan-de-estudio').cssVar, text: 'var(--theme-lienzo)', badge: 'PLAN', ringColor: c('plan-de-estudio').cssVar },
+    hierarchyLevel: 10,
+  },
+  glosario: {
+    id: 'glosario',
+    labelSingular: 'Glosario',
+    labelPlural: 'Glosario',
+    routePrefix: 'glosario',
+    graphGroup: 'concept',
+    graphColor: c('glosario').cssVar,
+    nodeStyle: { bg: c('glosario').cssVar, border: c('glosario').cssVar, text: 'var(--theme-lienzo)', badge: 'GLOSARIO', ringColor: c('glosario').cssVar },
+    hierarchyLevel: 10,
+  },
+  msc2020: {
+    id: 'msc2020',
+    labelSingular: 'Clasificación MSC2020',
+    labelPlural: 'Clasificación MSC2020',
+    routePrefix: 'msc2020',
+    graphGroup: 'concept',
+    graphColor: c('msc2020').cssVar,
+    nodeStyle: { bg: c('msc2020').cssVar, border: c('msc2020').cssVar, text: 'var(--theme-lienzo)', badge: 'MSC2020', ringColor: c('msc2020').cssVar },
     hierarchyLevel: 10,
   },
 };
@@ -213,19 +243,64 @@ export const GRAPH_NODE_COLORS: Record<string, string> = {
   ),
 };
 
-
-
 export const TYPE_STYLES: Record<string, ContentTypeStyle> = Object.fromEntries(
   Object.entries(CONTENT_TYPE_CONFIG).map(([id, cfg]) => [id, cfg.nodeStyle]),
 );
 
 export const SITE_TAGLINE = 'Enciclopedia de estructuras formales — teoremas, definiciones y demostraciones';
 
-export const typeLabels: Record<string, string> = {
+// ── Tablas derivadas y funciones utilitarias canónicas ───────────────────────
+
+const NON_CONTENT_CATEGORY_LABELS: Record<string, { singular: string; plural: string }> = {
+  geometria: { singular: 'Geometría', plural: 'Geometría' },
+  geometry: { singular: 'Geometría', plural: 'Geometría' },
+  algebra: { singular: 'Álgebra', plural: 'Álgebra' },
+  calculo: { singular: 'Cálculo', plural: 'Cálculo' },
+  calculus: { singular: 'Cálculo', plural: 'Cálculo' },
+  logica: { singular: 'Lógica', plural: 'Lógica' },
+  logic: { singular: 'Lógica', plural: 'Lógica' },
+  general: { singular: 'General', plural: 'General' },
+  triangulos: { singular: 'Triángulo', plural: 'Triángulos' },
+};
+
+export const CONTENT_TYPE_LABELS_SINGULAR: Record<string, string> = {
   ...Object.fromEntries(
     Object.entries(CONTENT_TYPE_CONFIG).map(([id, cfg]) => [id, cfg.labelSingular]),
   ),
-  theorem: 'Teorema',
-  lemma: 'Lema',
-  corollary: 'Corolario',
+  ...Object.fromEntries(
+    Object.entries(NON_CONTENT_CATEGORY_LABELS).map(([id, cfg]) => [id, cfg.singular]),
+  ),
 };
+
+export const CONTENT_TYPE_LABELS_PLURAL: Record<string, string> = {
+  ...Object.fromEntries(
+    Object.entries(CONTENT_TYPE_CONFIG).map(([id, cfg]) => [id, cfg.labelPlural]),
+  ),
+  ...Object.fromEntries(
+    Object.entries(NON_CONTENT_CATEGORY_LABELS).map(([id, cfg]) => [id, cfg.plural]),
+  ),
+};
+
+export function getContentTypeLabel(rawKey?: string | null, form: 'singular' | 'plural' = 'singular'): string {
+  if (typeof rawKey !== 'string' || !rawKey.trim()) return form === 'plural' ? 'Teoremas' : 'Teorema';
+  const cleanKey = rawKey.startsWith('diagram-') ? rawKey.slice('diagram-'.length) : rawKey;
+  const normalized = cleanKey.toLowerCase().trim();
+  const canonical = CONTENT_TYPE_ALIASES[normalized] ?? normalized;
+  const dict = form === 'plural' ? CONTENT_TYPE_LABELS_PLURAL : CONTENT_TYPE_LABELS_SINGULAR;
+
+  if (dict[canonical]) return dict[canonical];
+  if (dict[normalized]) return dict[normalized];
+  return cleanKey.replace(/-/g, ' ').replace(/^\p{L}/u, v => v.toUpperCase());
+}
+
+export function getContentTypeRoutePrefix(rawKey?: string | null): string {
+  if (typeof rawKey !== 'string' || !rawKey.trim()) return '';
+  const cleanKey = rawKey.startsWith('diagram-') ? rawKey.slice('diagram-'.length) : rawKey;
+  const normalized = cleanKey.toLowerCase().trim();
+  const canonical = CONTENT_TYPE_ALIASES[normalized] ?? normalized;
+  return CONTENT_TYPE_CONFIG[canonical]?.routePrefix ?? '';
+}
+
+
+export const typeLabels: Record<string, string> = CONTENT_TYPE_LABELS_SINGULAR;
+

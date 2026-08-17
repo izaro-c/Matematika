@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
-import { resourceDisplayName } from '@/fixed-pages/editor/session/editorNavigationModel';
+import { getCategoryDisplayName, resourceDisplayName } from '@/fixed-pages/editor/session/editorNavigationModel';
 import { getTypeCssVar } from '@/design/contentTypeColors';
 import { editorApiClient } from '@/fixed-pages/editor/save/editorApiClient';
+import { getDiagramUsages } from '@/fixed-pages/editor/diagrams/references/usageIndex';
 import {
   classifyEmbeddedDiagramSource,
   parseDiagramSourceLocally,
@@ -19,45 +20,6 @@ interface EditorLandingCardProps {
   onToggleFavorite?: (path: string) => void;
 }
 
-const CATEGORY_DISPLAY: Record<string, string> = {
-  teorema: 'Teorema',
-  theorems: 'Teorema',
-  lema: 'Lema',
-  lemmas: 'Lema',
-  corolario: 'Corolario',
-  corollaries: 'Corolario',
-  demostracion: 'Demostración',
-  demonstrations: 'Demostración',
-  proofs: 'Demostración',
-  axioma: 'Axioma',
-  axioms: 'Axioma',
-  definicion: 'Definición',
-  definitions: 'Definición',
-  metodo: 'Método',
-  methods: 'Método',
-  ejercicio: 'Ejercicio',
-  exercises: 'Ejercicio',
-  ejemplo: 'Ejemplo',
-  examples: 'Ejemplo',
-  matematico: 'Matemático',
-  mathematicians: 'Matemático',
-  modelo: 'Modelo',
-  models: 'Modelo',
-  'caso-de-uso': 'Caso de Uso',
-  usecases: 'Caso de Uso',
-  'sistema-axiomatico': 'Sistema Axiomático',
-  'axiomatic-systems': 'Sistema Axiomático',
-  'plan-de-estudio': 'Plan de Estudio',
-  glosario: 'Glosario',
-};
-
-function getCategoryDisplayName(type: string): string {
-  const clean = type.startsWith('diagram-') ? type.slice('diagram-'.length) : type;
-  if (CATEGORY_DISPLAY[clean]) return CATEGORY_DISPLAY[clean];
-  if (CATEGORY_DISPLAY[type]) return CATEGORY_DISPLAY[type];
-  return clean.replace(/-/g, ' ').replace(/^\p{L}/u, v => v.toUpperCase());
-}
-
 export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
   file,
   isFavorite = false,
@@ -70,8 +32,51 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
   const [isLoadingContent, setIsLoadingContent] = useState(false);
   const [realTitle, setRealTitle] = useState<string>(() => resourceDisplayName(file));
 
-  const categoryLabel = getCategoryDisplayName(file.type);
-  const colorVar = getTypeCssVar(file.type);
+  // Para diagramas: calcular distintivos y colores de las páginas a las que está añadido
+  const badges = useMemo(() => {
+    if (file.kind !== 'diagram') {
+      const label = getCategoryDisplayName(file.type, 'singular');
+      const colorVar = getTypeCssVar(file.type);
+      return [{ type: file.type, label, colorVar }];
+    }
+
+    const usages = getDiagramUsages(file.path);
+    if (!usages.length) {
+      const label = getCategoryDisplayName(file.type, 'singular');
+      const colorVar = getTypeCssVar(file.type);
+      return [{ type: file.type, label, colorVar }];
+    }
+
+    // Extraer tipos únicos de páginas MDX donde se usa el diagrama
+    const seen = new Set<string>();
+    const result: Array<{ type: string; label: string; colorVar: string }> = [];
+
+    for (const usage of usages) {
+      const match = usage.contentPath.match(/content\/mdx\/([^/]+)\//);
+      const rawType = match?.[1] || 'general';
+      if (!seen.has(rawType)) {
+        seen.add(rawType);
+        result.push({
+          type: rawType,
+          label: getCategoryDisplayName(rawType, 'singular'),
+          colorVar: getTypeCssVar(rawType),
+        });
+      }
+    }
+
+    return result.length > 0
+      ? result
+      : [{
+          type: file.type,
+          label: getCategoryDisplayName(file.type, 'singular'),
+          colorVar: getTypeCssVar(file.type),
+        }];
+  }, [file.kind, file.path, file.type]);
+
+  const primaryColorVar = badges[0]?.colorVar ?? getTypeCssVar(file.type);
+  const accentBackground = badges.length > 1
+    ? `linear-gradient(to right, ${badges.map(b => b.colorVar).join(', ')})`
+    : primaryColorVar;
 
   // Lazy loading observer
   useEffect(() => {
@@ -170,29 +175,34 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
       onClick={() => onOpenFile(file.path)}
       className="group relative flex flex-col justify-between rounded-xl border p-4 shadow-2xs hover:shadow-md transition-all cursor-pointer overflow-hidden"
       style={{
-        borderColor: `color-mix(in srgb, ${colorVar} 45%, transparent)`,
-        backgroundColor: `color-mix(in srgb, ${colorVar} 8%, var(--color-lienzo, transparent))`,
+        borderColor: `color-mix(in srgb, ${primaryColorVar} 45%, transparent)`,
+        backgroundColor: `color-mix(in srgb, ${primaryColorVar} 8%, var(--color-lienzo, transparent))`,
       }}
     >
-      {/* Accent Top Border Line */}
+      {/* Accent Top Border Line (Color único o Degradado multicolor) */}
       <div
         className="absolute top-0 left-0 right-0 h-1 transition-all group-hover:h-1.5 opacity-90"
-        style={{ backgroundColor: colorVar }}
+        style={{ background: accentBackground }}
       />
 
       <div className="pt-1">
         {/* Badges & Actions row */}
         <div className="flex items-center justify-between gap-2">
-          {/* Tag con el nombre real de categoría en español */}
-          <span
-            className="ac-pill ac-pill-accent font-serif font-semibold text-xs"
-            style={{ ['--pill-accent' as string]: colorVar }}
-          >
-            <span className="ac-pill-ornament" aria-hidden>◆</span>
-            {categoryLabel}
-          </span>
+          {/* Tags con el nombre real de categoría / tipo de página en español */}
+          <div className="flex flex-wrap items-center gap-1.5 min-w-0">
+            {badges.map((badge, idx) => (
+              <span
+                key={`${badge.type}-${idx}`}
+                className="ac-pill ac-pill-accent font-serif font-semibold text-xs shrink-0"
+                style={{ ['--pill-accent' as string]: badge.colorVar }}
+              >
+                <span className="ac-pill-ornament" aria-hidden>◆</span>
+                {badge.label}
+              </span>
+            ))}
+          </div>
 
-          <div className="flex items-center space-x-1.5">
+          <div className="flex items-center space-x-1.5 shrink-0">
             <span className={`rounded border px-1.5 py-0.5 text-[9px] font-bold ${capabilityBadge.style}`}>
               {capabilityBadge.label}
             </span>
@@ -219,7 +229,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
         {/* Real Title */}
         <h3
           className="mt-3 font-serif text-sm font-bold text-carbon transition-colors line-clamp-2"
-          style={{ ['--hover-color' as string]: colorVar }}
+          style={{ ['--hover-color' as string]: primaryColorVar }}
         >
           <span className="group-hover:[color:var(--hover-color)] transition-colors">{file.title || realTitle || resourceDisplayName(file)}</span>
         </h3>
@@ -259,7 +269,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
         </span>
         <span
           className="flex items-center gap-1 font-semibold group-hover:translate-x-0.5 transition-transform text-xs"
-          style={{ color: colorVar }}
+          style={{ color: primaryColorVar }}
         >
           Abrir
           <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -1,6 +1,10 @@
 import { parseDiagramSpecV2 } from '@/diagrams/model/schema/schema';
 import { parseDiagramSpecV3 } from '@/diagrams/model/schema/schemaV3';
 import {
+  DEFAULT_LAYER_ID,
+  DEFAULT_VIEWPORT_MAX_ZOOM,
+  DEFAULT_VIEWPORT_MIN_ZOOM,
+  DEFAULT_VIEWPORT_PADDING,
   DIAGRAM_RENDERER_V2_ID,
   DIAGRAM_SPEC_V2_VERSION,
   DIAGRAM_SPEC_VERSION,
@@ -8,12 +12,6 @@ import {
 } from '@/diagrams/model/schema/types';
 import type { DiagramSpec } from '@/diagrams/model/schema/v3';
 import { migrateDiagramSpecV2ToV3 } from '@/diagrams/model/schema/v3Compatibility';
-import {
-  DEFAULT_LAYER_ID,
-  DEFAULT_VIEWPORT_MAX_ZOOM,
-  DEFAULT_VIEWPORT_MIN_ZOOM,
-  DEFAULT_VIEWPORT_PADDING,
-} from '@/diagrams/constants';
 
 export type DiagramSpecMigrationCode =
   | 'invalid-root'

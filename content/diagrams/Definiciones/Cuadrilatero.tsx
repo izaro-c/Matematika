@@ -374,8 +374,8 @@ export const CuadrilateroSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 2,
-        "y": 1.25
+        "x": 2.2,
+        "y": 1.5
       },
       "mobility": {
         "type": "constrained",
@@ -428,8 +428,8 @@ export const CuadrilateroSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -3,
-        "y": 1.25
+        "x": -2.2,
+        "y": 2.3
       },
       "mobility": {
         "type": "constrained",

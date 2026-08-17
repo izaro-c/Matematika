@@ -38,35 +38,15 @@ export const TYPE_ICONS: Record<SearchResultType, string> = {
   modelo: 'M',
 };
 
-export const TYPE_LABELS: Record<SearchResultType, string> = {
-  teorema: 'Teoremas',
-  método: 'Métodos',
-  definición: 'Definiciones',
-  axioma: 'Axiomas',
-  modelo: 'Modelos',
-  ejemplo: 'Ejemplos',
-  ejercicio: 'Ejercicios',
-  demo: 'Demostraciones',
-  matemático: 'Matemáticos',
-  caso_uso: 'Casos de uso',
-  glosario: 'Glosario',
-  msc2020: 'Clasificación MSC2020',
-};
+import { getContentTypeLabel } from '@/lib/theme/constants';
 
-export const TYPE_RESULT_LABELS: Record<SearchResultType, string> = {
-  teorema: 'Teorema',
-  método: 'Método',
-  definición: 'Definición',
-  axioma: 'Axioma',
-  modelo: 'Modelo',
-  ejemplo: 'Ejemplo',
-  ejercicio: 'Ejercicio',
-  demo: 'Demostración',
-  matemático: 'Matemático',
-  caso_uso: 'Caso de uso',
-  glosario: 'Glosario',
-  msc2020: 'MSC2020',
-};
+export const TYPE_LABELS: Record<SearchResultType, string> = Object.fromEntries(
+  ALL_TYPES.map(type => [type, getContentTypeLabel(type.replace('_', '-'), 'plural')]),
+) as Record<SearchResultType, string>;
+
+export const TYPE_RESULT_LABELS: Record<SearchResultType, string> = Object.fromEntries(
+  ALL_TYPES.map(type => [type, getContentTypeLabel(type.replace('_', '-'), 'singular')]),
+) as Record<SearchResultType, string>;
 
 export const TYPE_COLORS: Record<SearchResultType, string> = PAGE_ACCENTS;
 

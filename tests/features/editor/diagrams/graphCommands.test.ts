@@ -57,7 +57,7 @@ describe('diagram graph commands', () => {
     expect(groupRenamed.groups[0]).toMatchObject({ id: 'renamedGroup', targetId: 'renamedGroup' });
     expect(groupRenamed.points.find(item => item.id === 'pA')?.groupIds).toContain('renamedGroup');
 
-    const layerId = groupRenamed.layers[0].id;
+    const layerId = groupRenamed.points[0]?.layerId ?? groupRenamed.layers[0].id;
     const layerRenamed = renameDiagramId(groupRenamed, layerId, 'renamedLayer');
     expect([...layerRenamed.points, ...layerRenamed.elements, ...layerRenamed.sliders]
       .filter(item => item.layerId === 'renamedLayer').length).toBeGreaterThan(0);

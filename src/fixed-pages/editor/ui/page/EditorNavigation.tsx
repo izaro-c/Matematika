@@ -3,6 +3,7 @@ import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import {
   DEFAULT_EDITOR_CATALOG_FILTERS,
   filterCatalogResources,
+  getCategoryDisplayName,
   resourceDisplayName,
   type EditorCatalogFilters,
   type EditorResourceSection,
@@ -26,24 +27,10 @@ interface EditorNavigationProps {
   onCreateDiagram?: () => void;
 }
 
-const CATEGORY_LABELS: Record<string, string> = {
-  theorems: 'Teoremas y lemas',
-  definitions: 'Definiciones',
-  demonstrations: 'Demostraciones',
-  methods: 'Métodos',
-  exercises: 'Ejercicios',
-  mathematicians: 'Matemáticos',
-  axioms: 'Axiomas',
-  'axiomatic-systems': 'Sistemas axiomáticos',
-  models: 'Modelos',
-  usecases: 'Casos de uso',
-};
-
 function categoryLabel(type: string): string {
-  const diagramType = type.startsWith('diagram-') ? type.slice('diagram-'.length) : '';
-  if (diagramType) return diagramType.replace(/-/g, ' ').replace(/^\p{L}/u, value => value.toUpperCase());
-  return CATEGORY_LABELS[type] ?? type.replace(/-/g, ' ').replace(/^\p{L}/u, value => value.toUpperCase());
+  return getCategoryDisplayName(type, 'plural');
 }
+
 
 function capabilityPresentation(file: FileNode): { label: string; className: string } {
   if (file.capability === 'visual-exact') return { label: 'Editable', className: 'border-musgo/25 bg-musgo/10 text-musgo' };

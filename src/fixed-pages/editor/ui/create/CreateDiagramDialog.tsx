@@ -17,29 +17,27 @@ const EMPTY_DIAGRAM: CreateDiagramInput = {
   templateType: 'triangulo-deformable',
 };
 
-export const DIAGRAM_CATEGORY_OPTIONS = [
-  { value: 'Teoremas', label: 'Teoremas' },
-  { value: 'Definiciones', label: 'Definiciones' },
-  { value: 'Axiomas', label: 'Axiomas' },
-  { value: 'Demos', label: 'Demostraciones' },
-  { value: 'Ejercicios', label: 'Ejercicios' },
-  { value: 'Metodos', label: 'Métodos' },
-  { value: 'CasosUso', label: 'Casos de Uso' },
-  { value: 'Models', label: 'Modelos' },
+import { TEMPLATE_OPTIONS } from '@/fixed-pages/editor/diagrams/model/tools/diagramOptions';
+import { getContentTypeLabel } from '@/lib/theme/constants';
+
+const DIAGRAM_CATEGORIES: Array<{ folder: string; typeKey: string }> = [
+  { folder: 'Teoremas', typeKey: 'teorema' },
+  { folder: 'Definiciones', typeKey: 'definicion' },
+  { folder: 'Axiomas', typeKey: 'axioma' },
+  { folder: 'Demos', typeKey: 'demostracion' },
+  { folder: 'Ejercicios', typeKey: 'ejercicio' },
+  { folder: 'Metodos', typeKey: 'metodo' },
+  { folder: 'CasosUso', typeKey: 'caso-de-uso' },
+  { folder: 'Models', typeKey: 'modelo' },
 ];
 
-import type { TemplateKind } from '@/fixed-pages/editor/diagrams/model/types';
+export const DIAGRAM_CATEGORY_OPTIONS = DIAGRAM_CATEGORIES.map(({ folder, typeKey }) => ({
+  value: folder,
+  label: getContentTypeLabel(typeKey, 'plural'),
+}));
 
-export const DIAGRAM_TEMPLATE_OPTIONS: Array<{ value: TemplateKind; label: string }> = [
-  { value: 'triangulo-deformable', label: 'Triángulo deformable' },
-  { value: 'eje-cartesiano', label: 'Eje de coordenadas / cartesiano' },
-  { value: 'circunferencia', label: 'Circunferencia / Círculo unitario' },
-  { value: 'demostracion-pasos', label: 'Demostración con pasos' },
-  { value: 'lienzo-inicial', label: 'Lienzo inicial vacío' },
-  { value: 'cuadrilatero-clasificable', label: 'Cuadrilátero clasificable' },
-  { value: 'lugar-geometrico', label: 'Lugar geométrico' },
-  { value: 'modelo-estatico', label: 'Modelo estático' },
-];
+export const DIAGRAM_TEMPLATE_OPTIONS = TEMPLATE_OPTIONS.map(({ value, label }) => ({ value, label }));
+
 
 export const CreateDiagramDialog: React.FC<CreateDiagramDialogProps> = ({ open, onClose, onCreate }) => {
   const [value, setValue] = useState<CreateDiagramInput>(EMPTY_DIAGRAM);

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type ComponentType } from 'react';
 import { getContentPageAccent } from '@/design';
 import { DiagramSlot } from '@/components/ui/skeletons';
-import { useMathStore } from '@/lib/page-context/MathStoreContext';
+import { useOptionalMathStore } from '@/lib/page-context/MathStoreContext';
 import { DiagramStepSyncContext } from '@/lib/page-context/DiagramStepSyncContext';
 import { MobileContentHeaderSeparator, MobileDiagramToolbar } from './MobileDiagramChrome';
 
@@ -64,7 +64,7 @@ export function ContentLayout({
   const diagramId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   
-  const setVariable = useMathStore((state) => state.setVariable);
+  const setVariable = useOptionalMathStore((state) => state.setVariable);
   const [activeDiagramStepIndex, setActiveDiagramStepIndex] = useState<number | null>(null);
   const [activeDiagramStepId, setActiveDiagramStepId] = useState<string | null>(null);
   const activeStepIndexRef = useRef<number | null>(-1);
@@ -81,9 +81,9 @@ export function ContentLayout({
     if (!step) {
       setActiveDiagramStepIndex(null);
       setActiveDiagramStepId('initial');
-      setVariable('step', 'initial');
-      setVariable('diagramKey', null);
-      setVariable('highlight', null);
+      setVariable?.('step', 'initial');
+      setVariable?.('diagramKey', null);
+      setVariable?.('highlight', null);
       return;
     }
 
@@ -97,14 +97,14 @@ export function ContentLayout({
       setActiveDiagramStepId(null);
     }
 
-    setVariable('diagramKey', diagramKeyValue || null);
-    setVariable('highlight', null);
+    setVariable?.('diagramKey', diagramKeyValue || null);
+    setVariable?.('highlight', null);
 
     if (targetValue) {
       try {
-        setVariable('step', targetValue.startsWith('[') ? JSON.parse(targetValue) : targetValue);
+        setVariable?.('step', targetValue.startsWith('[') ? JSON.parse(targetValue) : targetValue);
       } catch {
-        setVariable('step', targetValue);
+        setVariable?.('step', targetValue);
       }
     }
   }, [setVariable]);
@@ -128,7 +128,7 @@ export function ContentLayout({
         activeStepIndexRef.current = matchingIndex;
         syncProofStepState(steps[matchingIndex]);
       } else {
-        setVariable('step', stepInput);
+        setVariable?.('step', stepInput);
       }
     }
   }, [proofSteps, syncProofStepState, setVariable]);

@@ -60,6 +60,7 @@ export const MdxWorkbench: React.FC = () => {
     files,
     filesLoading,
     filesError,
+    loading,
     currentFile,
     editorMode,
     metadata,
@@ -625,6 +626,7 @@ export const MdxWorkbench: React.FC = () => {
       ) : !currentFile ? (
         <EditorLandingView
           files={files}
+          isLoading={filesLoading}
           initialSection={landingSection}
           favoritePaths={workspace.favoritePaths}
           recentPaths={workspace.recentPaths}
@@ -756,6 +758,7 @@ export const MdxWorkbench: React.FC = () => {
               <div className="flex-1 h-full min-h-0 overflow-hidden">
                 <VisualEditorPanel
                   currentFile={currentFile}
+                  isLoading={loading}
                   metadata={metadata}
                   isReadOnly={isReadOnly}
                   canEditVisualMetadata={canEditVisualMetadata}
