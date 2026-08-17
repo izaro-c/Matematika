@@ -25,7 +25,7 @@ export const esLanguage: LanguageConfig = {
   },
   dictionary: {
     topbar: {
-      backToLibrary: 'Volver a la biblioteca',
+      backToLibrary: 'Biblioteca',
       search: 'Buscar en el catálogo',
       toggleTheme: 'Cambiar tema claro/oscuro',
       changeLanguage: 'Cambiar idioma',

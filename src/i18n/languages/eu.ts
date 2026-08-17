@@ -25,7 +25,7 @@ export const euLanguage: LanguageConfig = {
   },
   dictionary: {
     topbar: {
-      backToLibrary: 'Itzuli liburutegira',
+      backToLibrary: 'Liburutegia',
       search: 'Bilatu katalogoan',
       toggleTheme: 'Aldatu gai argia/iluna',
       changeLanguage: 'Aldatu hizkuntza',
