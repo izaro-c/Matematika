@@ -40,7 +40,11 @@ export function dependencyDeterminesConstructionOrder(
   if (dependency.relation === 'construction') return true;
   const targetPoint = spec.points.find(point => point.id === dependency.targetId);
   if (dependency.relation === 'constraint') {
-    return !targetPoint?.attractorIds?.includes(dependency.sourceId);
+    if (dependency.constraintId) {
+      const constraint = spec.constraints?.find(c => c.id === dependency.constraintId);
+      return constraint?.kind === 'on';
+    }
+    return targetPoint?.constraint === 'glider' && targetPoint.gliderTarget === dependency.sourceId;
   }
   if (targetPoint) {
     return expressionUsesSource(targetPoint.xExpression, dependency.sourceId)
