@@ -171,8 +171,49 @@ export function updateStepObjectState(steps: VisualStep[], stepId: string, objec
   });
 }
 
+export function sanitizeDiagramId(raw: string, fallbackPrefix = 'id'): string {
+  const normalized = raw
+    .trim()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+
+  let cleaned = normalized
+    .replace(/[^a-z0-9_-]+/g, '_')
+    .replace(/_+/g, '_')
+    .replace(/^_|_$/g, '');
+
+  const prefix = fallbackPrefix.toLowerCase();
+  if (!cleaned || !/^[a-z]/.test(cleaned)) {
+    cleaned = cleaned ? `${prefix}_${cleaned}` : prefix;
+  }
+
+  if (!/^[a-z][a-z0-9_-]*$/.test(cleaned)) {
+    cleaned = `${prefix}_${Date.now().toString(36).slice(-4)}`;
+  }
+
+  return cleaned;
+}
+
+export function generateUniqueDiagramId(
+  candidateRaw: string,
+  existingIds: Set<string> | Iterable<string>,
+  fallbackPrefix: string,
+): string {
+  const baseId = sanitizeDiagramId(candidateRaw, fallbackPrefix);
+  const idsSet = existingIds instanceof Set ? existingIds : new Set(existingIds);
+  if (!idsSet.has(baseId)) {
+    return baseId;
+  }
+  let counter = 2;
+  while (idsSet.has(`${baseId}_${counter}`)) {
+    counter += 1;
+  }
+  return `${baseId}_${counter}`;
+}
+
 export function cleanTargetId(value: string, fallback: string): string {
-  return value.replace(/[^A-Za-z0-9_-]/g, '') || fallback;
+  return sanitizeDiagramId(value, fallback);
 }
 
 export function nextPointId(points: VisualPoint[]): string {

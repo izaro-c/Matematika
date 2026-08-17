@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { VisualDiagramModel } from '../../model/types';
 import type { DiagramLayer, DiagramGroup } from '@/diagrams';
+import { DEFAULT_DIAGRAM_LAYERS } from '@/diagrams';
 import {
   bringSceneItemForward,
   listLayerSceneItemsFrontFirst,
@@ -8,6 +9,14 @@ import {
   moveSceneItemVisual,
   sendSceneItemBackward,
 } from '../../model/scene/sceneOrdering';
+import {
+  generateUniqueDiagramId,
+  sanitizeDiagramId,
+} from '../../model/elements/diagramElements';
+import {
+  allDiagramIds,
+  renameDiagramId,
+} from '../../model/tools/graphCommands';
 import {
   IconEye,
   IconEyeOff,
@@ -30,35 +39,16 @@ interface GroupsAndLayersManagerProps {
   onTogglePickingGroupId?: (groupId: string | null) => void;
 }
 
-const DEFAULT_LAYERS: DiagramLayer[] = [
-  { id: 'background', label: 'Fondo', order: 0, visible: true, locked: false },
-  { id: 'geometry', label: 'Geometría Principal', order: 10, visible: true, locked: false },
-  { id: 'annotations', label: 'Anotaciones & Texto', order: 20, visible: true, locked: false },
-  { id: 'controls', label: 'Controles & Deslizadores', order: 30, visible: true, locked: false },
-];
-
-function generateShortId(prefix: string): string {
-  return `${prefix}_${Date.now().toString(36).slice(-4)}`;
-}
-
-function ensureSceneStack(model: VisualDiagramModel, layersFallback: DiagramLayer[]): VisualDiagramModel {
-  const existing = model.layers?.length ? model.layers : [];
-  const existingIds = new Set(existing.map(layer => layer.id));
-  const layers = [
-    ...existing,
-    ...layersFallback.filter(layer => !existingIds.has(layer.id)),
-  ];
-  if (layers.length === 0) {
-    layers.push(...layersFallback);
-  }
-  const layerIds = new Set(layers.map(layer => layer.id));
-  const fallbackLayer = layers.find(layer => layer.id === 'geometry')?.id
-    ?? layers[0]?.id
+function ensureSceneStack(model: VisualDiagramModel): VisualDiagramModel {
+  const existing = model.layers?.length ? model.layers : DEFAULT_DIAGRAM_LAYERS.map(layer => ({ ...layer }));
+  const layerIds = new Set(existing.map(layer => layer.id));
+  const fallbackLayer = existing.find(layer => layer.id === 'geometry')?.id
+    ?? existing[0]?.id
     ?? 'geometry';
 
   return {
     ...model,
-    layers,
+    layers: existing,
     points: model.points.map(point => ({
       ...point,
       layerId: point.layerId && layerIds.has(point.layerId) ? point.layerId : fallbackLayer,
@@ -73,22 +63,24 @@ function ensureSceneStack(model: VisualDiagramModel, layersFallback: DiagramLaye
       ...slider,
       layerId: slider.layerId && layerIds.has(slider.layerId)
         ? slider.layerId
-        : (layers.find(layer => layer.id === 'controls')?.id ?? fallbackLayer),
+        : (existing.find(layer => layer.id === 'controls')?.id ?? fallbackLayer),
       order: Number.isFinite(slider.order) ? slider.order : 0,
     })),
   };
 }
 
-function ensureLayerExists(model: VisualDiagramModel, layerId: string, layersFallback: DiagramLayer[]): VisualDiagramModel {
+function ensureLayerExists(model: VisualDiagramModel, layerId: string): VisualDiagramModel {
   if (model.layers.some(layer => layer.id === layerId)) return model;
-  const fromDefaults = layersFallback.find(layer => layer.id === layerId);
-  const nextLayer: DiagramLayer = fromDefaults ?? {
-    id: layerId,
-    label: layerId,
-    order: (Math.max(0, ...model.layers.map(layer => layer.order)) + 10),
-    visible: true,
-    locked: false,
-  };
+  const fromDefaults = DEFAULT_DIAGRAM_LAYERS.find(layer => layer.id === layerId);
+  const nextLayer: DiagramLayer = fromDefaults
+    ? { ...fromDefaults, order: (Math.max(0, ...model.layers.map(layer => layer.order)) + 10) }
+    : {
+        id: layerId,
+        label: layerId,
+        order: (Math.max(0, ...model.layers.map(layer => layer.order)) + 10),
+        visible: true,
+        locked: false,
+      };
   return { ...model, layers: [...model.layers, nextLayer] };
 }
 
@@ -106,12 +98,14 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
   const [expandedLayerId, setExpandedLayerId] = useState<string | null>(null);
   const [expandedGroupId, setExpandedGroupId] = useState<string | null>(null);
   const [draggingItemId, setDraggingItemId] = useState<string | null>(null);
+  const [draggingLayerId, setDraggingLayerId] = useState<string | null>(null);
   const [dropTargetLayerId, setDropTargetLayerId] = useState<string | null>(null);
+  const [dropTargetLayerIndex, setDropTargetLayerIndex] = useState<number | null>(null);
   const [dropInsertBeforeId, setDropInsertBeforeId] = useState<string | null>(null);
 
   if (!model) return null;
 
-  const stacked = ensureSceneStack(model, DEFAULT_LAYERS);
+  const stacked = ensureSceneStack(model);
   const layers = stacked.layers.slice().sort((a, b) => a.order - b.order);
   const groups: DiagramGroup[] = model.groups || [];
 
@@ -122,7 +116,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
   ];
 
   const commit = (next: VisualDiagramModel, label: string) => {
-    onUpdateModel(ensureSceneStack(next, DEFAULT_LAYERS), label);
+    onUpdateModel(ensureSceneStack(next), label);
   };
 
   // --- Actions Capas ---
@@ -140,19 +134,51 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
     }, `Alternar bloqueo de capa ${layerId}`);
   };
 
-  const handleRenameLayerId = (oldId: string, candidateNewId: string) => {
-    const newId = candidateNewId.trim();
-    if (!newId || newId === oldId) return;
-    if (stacked.layers.some(l => l.id === newId)) return;
+  const handleMoveLayer = (layerId: string, direction: -1 | 1) => {
+    const currentIndex = layers.findIndex(l => l.id === layerId);
+    const targetIndex = currentIndex + direction;
+    if (currentIndex < 0 || targetIndex < 0 || targetIndex >= layers.length) return;
 
-    const nextLayers = stacked.layers.map(l => (l.id === oldId ? { ...l, id: newId } : l));
+    const reordered = [...layers];
+    const [moved] = reordered.splice(currentIndex, 1);
+    reordered.splice(targetIndex, 0, moved);
+
+    const nextLayers = reordered.map((l, index) => ({
+      ...l,
+      order: index * 10,
+    }));
+
     commit({
       ...stacked,
       layers: nextLayers,
-      points: stacked.points.map(p => (p.layerId === oldId ? { ...p, layerId: newId } : p)),
-      elements: stacked.elements.map(e => (e.layerId === oldId ? { ...e, layerId: newId } : e)),
-      sliders: stacked.sliders.map(s => (s.layerId === oldId ? { ...s, layerId: newId } : s)),
-    }, `Renombrar ID de capa ${oldId} a ${newId}`);
+    }, `Reordenar capa ${layerId}`);
+  };
+
+  const handleReorderLayerToIndex = (draggedId: string, targetIndex: number) => {
+    const currentIndex = layers.findIndex(l => l.id === draggedId);
+    if (currentIndex < 0 || targetIndex < 0 || targetIndex >= layers.length || currentIndex === targetIndex) return;
+
+    const reordered = [...layers];
+    const [moved] = reordered.splice(currentIndex, 1);
+    reordered.splice(targetIndex, 0, moved);
+
+    const nextLayers = reordered.map((l, index) => ({
+      ...l,
+      order: index * 10,
+    }));
+
+    commit({
+      ...stacked,
+      layers: nextLayers,
+    }, `Reordenar capa ${draggedId}`);
+  };
+
+  const handleRenameLayerId = (oldId: string, candidateNewId: string) => {
+    const newId = sanitizeDiagramId(candidateNewId, oldId);
+    if (!newId || newId === oldId) return;
+    if (allDiagramIds(stacked).has(newId)) return;
+
+    commit(renameDiagramId(stacked, oldId, newId), `Renombrar ID de capa ${oldId} a ${newId}`);
   };
 
   const handleRenameLayerLabel = (layerId: string, newLabel: string) => {
@@ -163,16 +189,17 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
   };
 
   const handleAddLayer = () => {
-    if (!newLayerLabel.trim()) return;
-    const id = generateShortId('layer');
+    const label = newLayerLabel.trim();
+    if (!label) return;
+    const id = generateUniqueDiagramId(label, allDiagramIds(stacked), 'layer');
     const newLayer: DiagramLayer = {
       id,
-      label: newLayerLabel.trim(),
+      label,
       order: (Math.max(0, ...stacked.layers.map(l => l.order)) + 10),
       visible: true,
       locked: false,
     };
-    commit({ ...stacked, layers: [...stacked.layers, newLayer] }, `Añadir capa ${newLayerLabel}`);
+    commit({ ...stacked, layers: [...stacked.layers, newLayer] }, `Añadir capa ${label}`);
     setNewLayerLabel('');
     setExpandedLayerId(id);
   };
@@ -187,13 +214,13 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
   };
 
   const handleMoveItemToLayer = (itemId: string, newLayerId: string) => {
-    const withLayer = ensureLayerExists(stacked, newLayerId, DEFAULT_LAYERS);
+    const withLayer = ensureLayerExists(stacked, newLayerId);
     commit(moveSceneItemToLayer(withLayer, itemId, newLayerId), `Mover ${itemId} a capa ${newLayerId}`);
     setExpandedLayerId(newLayerId);
   };
 
   const handleReorderBefore = (draggedId: string, targetId: string, layerId: string) => {
-    const withLayer = ensureLayerExists(stacked, layerId, DEFAULT_LAYERS);
+    const withLayer = ensureLayerExists(stacked, layerId);
     const frontFirst = listLayerSceneItemsFrontFirst(withLayer, layerId).filter(item => item.id !== draggedId);
     const targetIndex = frontFirst.findIndex(item => item.id === targetId);
     const visualIndex = targetIndex < 0 ? frontFirst.length : targetIndex;
@@ -213,17 +240,20 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
 
   const clearDrag = () => {
     setDraggingItemId(null);
+    setDraggingLayerId(null);
     setDropTargetLayerId(null);
+    setDropTargetLayerIndex(null);
     setDropInsertBeforeId(null);
   };
 
   // --- Actions Grupos ---
   const handleAddGroup = () => {
-    if (!newGroupLabel.trim()) return;
-    const id = generateShortId('grp');
+    const label = newGroupLabel.trim();
+    if (!label) return;
+    const id = generateUniqueDiagramId(label, allDiagramIds(model), 'grp');
     const newGroup: DiagramGroup = {
       id,
-      label: newGroupLabel.trim(),
+      label,
       memberIds: [],
       visible: true,
       locked: false,
@@ -231,35 +261,22 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
       target: true,
       targetId: id,
     };
-    onUpdateModel({ ...model, groups: [...groups, newGroup] }, `Añadir grupo ${newGroupLabel}`);
+    onUpdateModel({ ...model, groups: [...groups, newGroup] }, `Añadir grupo ${label}`);
     setNewGroupLabel('');
     setExpandedGroupId(id);
   };
 
   const handleRenameGroupId = (oldId: string, candidateNewId: string) => {
-    const newId = candidateNewId.trim();
+    const newId = sanitizeDiagramId(candidateNewId, oldId);
     if (!newId || newId === oldId) return;
-    if (groups.some(g => g.id === newId)) return;
-
-    const nextGroups = groups.map(g => (g.id === oldId ? { ...g, id: newId } : g));
-    const nextPoints = model.points.map(p => ({
-      ...p,
-      groupIds: (p.groupIds || []).map(gid => (gid === oldId ? newId : gid)),
-    }));
-    const nextElements = model.elements.map(e => ({
-      ...e,
-      groupIds: (e.groupIds || []).map(gid => (gid === oldId ? newId : gid)),
-    }));
-    const nextSliders = model.sliders.map(s => ({
-      ...s,
-      groupIds: (s.groupIds || []).map(gid => (gid === oldId ? newId : gid)),
-    }));
+    if (allDiagramIds(model).has(newId)) return;
 
     onUpdateModel(
-      { ...model, groups: nextGroups, points: nextPoints, elements: nextElements, sliders: nextSliders },
+      renameDiagramId(model, oldId, newId),
       `Renombrar ID de grupo ${oldId} a ${newId}`
     );
   };
+
 
   const handleRenameGroupLabel = (groupId: string, newLabel: string) => {
     const nextGroups = groups.map(g => (g.id === groupId ? { ...g, label: newLabel } : g));
@@ -465,104 +482,163 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
 
           {/* Lista de Capas */}
           <div className="space-y-2">
-            {layers.map(layer => {
+            {layers.map((layer, layerIndex) => {
               const layerItems = allItems.filter(item => item.layerId === layer.id);
               const isExpanded = expandedLayerId === layer.id;
               const isDropTarget = dropTargetLayerId === layer.id && draggingItemId !== null;
+              const isLayerDropTarget = dropTargetLayerIndex === layerIndex && draggingLayerId !== null && draggingLayerId !== layer.id;
               const draggingItem = allItems.find(item => item.id === draggingItemId);
               const draggingFromOtherLayer = Boolean(draggingItem && draggingItem.layerId !== layer.id);
 
               return (
-                <div
-                  key={layer.id}
-                  onDragOver={e => {
-                    e.preventDefault();
-                    if (!draggingItemId) return;
-                    setDropTargetLayerId(layer.id);
-                    if (!isExpanded) setExpandedLayerId(layer.id);
-                  }}
-                  onDragLeave={e => {
-                    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-                      setDropTargetLayerId(prev => (prev === layer.id ? null : prev));
-                      setDropInsertBeforeId(null);
-                    }
-                  }}
-                  onDrop={e => {
-                    e.preventDefault();
-                    const itemId = e.dataTransfer.getData('text/plain') || draggingItemId;
-                    if (itemId) {
-                      handleMoveItemToLayer(itemId, layer.id);
-                      clearDrag();
-                    }
-                  }}
-                  className={`rounded-2xl border shadow-2xs overflow-hidden transition-all duration-150 ${
-                    isDropTarget
-                      ? 'bg-salvia/10 border-salvia ring-2 ring-salvia/40 scale-[1.01]'
-                      : 'bg-lienzo border-carbon/15 hover:border-carbon/30'
-                  }`}
-                >
-                  {/* Fila Header de Capa */}
-                  <div className={`flex items-center justify-between p-2.5 ${isDropTarget ? 'bg-salvia/5' : 'bg-carbon/5'}`}>
-                    <button
-                      type="button"
-                      onClick={() => setExpandedLayerId(isExpanded ? null : layer.id)}
-                      className="flex items-center space-x-2 min-w-0 flex-1 text-left cursor-pointer"
-                    >
-                      <span className="text-carbon/50 hover:text-carbon transition-colors">
-                        {isExpanded ? <IconChevronDown className="w-3.5 h-3.5" /> : <IconChevronRight className="w-3.5 h-3.5" />}
-                      </span>
-                      <span className="font-mono text-[10px] bg-salvia/10 text-salvia font-bold px-1.5 py-0.5 rounded border border-salvia/20 shrink-0">
-                        {layer.id}
-                      </span>
-                      <span className="font-serif font-bold text-xs truncate text-carbon">{layer.label}</span>
-                      <span className="text-[10px] text-carbon/50 font-mono bg-carbon/10 px-1.5 py-0.2 rounded border border-carbon/10 shrink-0">
-                        {layerItems.length}
-                      </span>
-                      {isDropTarget && draggingFromOtherLayer && (
-                        <span className="text-[9px] font-bold text-salvia bg-salvia/15 px-1.5 py-0.5 rounded animate-pulse">
-                          Soltar aquí
+                <React.Fragment key={layer.id}>
+                  {isLayerDropTarget && (
+                    <div className="h-1 rounded-full bg-salvia my-1 shadow-2xs animate-pulse" aria-hidden />
+                  )}
+                  <div
+                    onDragOver={e => {
+                      e.preventDefault();
+                      if (draggingLayerId) {
+                        e.stopPropagation();
+                        setDropTargetLayerIndex(layerIndex);
+                        return;
+                      }
+                      if (!draggingItemId) return;
+                      setDropTargetLayerId(layer.id);
+                      if (!isExpanded) setExpandedLayerId(layer.id);
+                    }}
+                    onDragLeave={e => {
+                      if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                        if (draggingLayerId) {
+                          setDropTargetLayerIndex(prev => (prev === layerIndex ? null : prev));
+                        } else {
+                          setDropTargetLayerId(prev => (prev === layer.id ? null : prev));
+                          setDropInsertBeforeId(null);
+                        }
+                      }
+                    }}
+                    onDrop={e => {
+                      e.preventDefault();
+                      if (draggingLayerId) {
+                        e.stopPropagation();
+                        handleReorderLayerToIndex(draggingLayerId, layerIndex);
+                        clearDrag();
+                        return;
+                      }
+                      const itemId = e.dataTransfer.getData('text/plain') || draggingItemId;
+                      if (itemId) {
+                        handleMoveItemToLayer(itemId, layer.id);
+                        clearDrag();
+                      }
+                    }}
+                    className={`rounded-2xl border shadow-2xs overflow-hidden transition-all duration-150 ${
+                      draggingLayerId === layer.id
+                        ? 'opacity-30 scale-95 border-salvia border-dashed'
+                        : isDropTarget || isLayerDropTarget
+                        ? 'bg-salvia/10 border-salvia ring-2 ring-salvia/40 scale-[1.01]'
+                        : 'bg-lienzo border-carbon/15 hover:border-carbon/30'
+                    }`}
+                  >
+                    {/* Fila Header de Capa */}
+                    <div className={`flex items-center justify-between p-2.5 ${isDropTarget || isLayerDropTarget ? 'bg-salvia/5' : 'bg-carbon/5'}`}>
+                      <div className="flex items-center space-x-1 min-w-0 flex-1 text-left">
+                        <span
+                          draggable
+                          onDragStart={e => {
+                            e.dataTransfer.setData('text/plain', layer.id);
+                            e.dataTransfer.effectAllowed = 'move';
+                            setDraggingLayerId(layer.id);
+                          }}
+                          onDragEnd={clearDrag}
+                          className="text-carbon/30 hover:text-carbon font-mono text-xs cursor-grab active:cursor-grabbing select-none px-1 py-0.5"
+                          title="Arrastrar para reordenar capa"
+                          aria-label={`Arrastrar capa ${layer.label}`}
+                        >
+                          ⋮⋮
                         </span>
-                      )}
-                    </button>
-
-                    <div className="flex items-center space-x-1 shrink-0">
-                      <button
-                        type="button"
-                        onClick={() => handleToggleLayerVisible(layer.id)}
-                        className={`p-1 rounded-lg transition-colors cursor-pointer ${
-                          layer.visible !== false ? 'text-salvia hover:bg-salvia/10' : 'text-carbon/30 hover:bg-carbon/10'
-                        }`}
-                        title={layer.visible !== false ? 'Ocultar capa' : 'Mostrar capa'}
-                        aria-label={layer.visible !== false ? 'Ocultar capa' : 'Mostrar capa'}
-                      >
-                        {layer.visible !== false ? <IconEye /> : <IconEyeOff />}
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => handleToggleLayerLock(layer.id)}
-                        className={`p-1 rounded-lg transition-colors cursor-pointer ${
-                          layer.locked ? 'text-terracota hover:bg-terracota/10' : 'text-carbon/30 hover:bg-carbon/10'
-                        }`}
-                        title={layer.locked ? 'Desbloquear capa' : 'Bloquear capa'}
-                        aria-label={layer.locked ? 'Desbloquear capa' : 'Bloquear capa'}
-                      >
-                        {layer.locked ? <IconLock /> : <IconUnlock />}
-                      </button>
-
-                      {layerItems.length === 0 && (
                         <button
                           type="button"
-                          onClick={() => handleDeleteLayer(layer.id)}
-                          className="p-1 text-granada/70 hover:text-granada hover:bg-granada/10 rounded-lg transition-colors cursor-pointer"
-                          title="Eliminar capa vacía"
-                          aria-label="Eliminar capa vacía"
+                          onClick={() => setExpandedLayerId(isExpanded ? null : layer.id)}
+                          className="flex items-center space-x-2 min-w-0 flex-1 text-left cursor-pointer"
                         >
-                          <IconTrash className="w-3.5 h-3.5" />
+                          <span className="text-carbon/50 hover:text-carbon transition-colors">
+                            {isExpanded ? <IconChevronDown className="w-3.5 h-3.5" /> : <IconChevronRight className="w-3.5 h-3.5" />}
+                          </span>
+                          <span className="font-mono text-[10px] bg-salvia/10 text-salvia font-bold px-1.5 py-0.5 rounded border border-salvia/20 shrink-0">
+                            {layer.id}
+                          </span>
+                          <span className="font-serif font-bold text-xs truncate text-carbon">{layer.label}</span>
+                          <span className="text-[10px] text-carbon/50 font-mono bg-carbon/10 px-1.5 py-0.2 rounded border border-carbon/10 shrink-0">
+                            {layerItems.length}
+                          </span>
+                          {isDropTarget && draggingFromOtherLayer && (
+                            <span className="text-[9px] font-bold text-salvia bg-salvia/15 px-1.5 py-0.5 rounded animate-pulse">
+                              Soltar aquí
+                            </span>
+                          )}
                         </button>
-                      )}
+                      </div>
+
+                      <div className="flex items-center space-x-1 shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => handleMoveLayer(layer.id, -1)}
+                          disabled={layerIndex <= 0}
+                          className="p-1 text-carbon/60 hover:text-carbon hover:bg-carbon/10 rounded cursor-pointer disabled:opacity-20 transition-colors"
+                          title="Mover capa arriba"
+                          aria-label={`Mover capa arriba ${layer.label}`}
+                        >
+                          <IconChevronUp className="w-3.5 h-3.5" />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleMoveLayer(layer.id, 1)}
+                          disabled={layerIndex >= layers.length - 1}
+                          className="p-1 text-carbon/60 hover:text-carbon hover:bg-carbon/10 rounded cursor-pointer disabled:opacity-20 transition-colors"
+                          title="Mover capa abajo"
+                          aria-label={`Mover capa abajo ${layer.label}`}
+                        >
+                          <IconChevronDown className="w-3.5 h-3.5" />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleToggleLayerVisible(layer.id)}
+                          className={`p-1 rounded-lg transition-colors cursor-pointer ${
+                            layer.visible !== false ? 'text-salvia hover:bg-salvia/10' : 'text-carbon/30 hover:bg-carbon/10'
+                          }`}
+                          title={layer.visible !== false ? 'Ocultar capa' : 'Mostrar capa'}
+                          aria-label={layer.visible !== false ? 'Ocultar capa' : 'Mostrar capa'}
+                        >
+                          {layer.visible !== false ? <IconEye /> : <IconEyeOff />}
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleToggleLayerLock(layer.id)}
+                          className={`p-1 rounded-lg transition-colors cursor-pointer ${
+                            layer.locked ? 'text-terracota hover:bg-terracota/10' : 'text-carbon/30 hover:bg-carbon/10'
+                          }`}
+                          title={layer.locked ? 'Desbloquear capa' : 'Bloquear capa'}
+                          aria-label={layer.locked ? 'Desbloquear capa' : 'Bloquear capa'}
+                        >
+                          {layer.locked ? <IconLock /> : <IconUnlock />}
+                        </button>
+
+                        {layerItems.length === 0 && (
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteLayer(layer.id)}
+                            className="p-1 text-granada/70 hover:text-granada hover:bg-granada/10 rounded-lg transition-colors cursor-pointer"
+                            title="Eliminar capa vacía"
+                            aria-label="Eliminar capa vacía"
+                          >
+                            <IconTrash className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
                     </div>
-                  </div>
 
                   {/* Cuerpo Expandido de Capa */}
                   {isExpanded && (
@@ -721,7 +797,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                     </div>
                   )}
                 </div>
-              );
+              </React.Fragment>
+            );
             })}
           </div>
         </div>

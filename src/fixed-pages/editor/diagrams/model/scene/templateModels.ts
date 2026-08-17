@@ -1,4 +1,4 @@
-import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION, type DiagramSpecV2 } from '@/diagrams';
+import { DIAGRAM_RENDERER_V2_ID, DIAGRAM_SPEC_V2_VERSION, DEFAULT_DIAGRAM_LAYERS, type DiagramSpecV2 } from '@/diagrams';
 import { normalizeContentId } from '@/fixed-pages/editor/types/editorContracts';
 import { element, point, slider, step } from '../elements/diagramElements';
 import { defaultCategory, defaultMode } from '../tools/diagramOptions';
@@ -27,10 +27,7 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
       maxZoom: 12,
       padding: 0.16,
     },
-    layers: [
-      { id: 'geometry', label: 'Geometría', order: 0, visible: true, locked: false },
-      { id: 'controls', label: 'Controles', order: 1, visible: true, locked: false },
-    ],
+    layers: DEFAULT_DIAGRAM_LAYERS.map(layer => ({ ...layer })),
     groups: [],
     sliders: [] as VisualSlider[],
     steps: [] as VisualStep[],
