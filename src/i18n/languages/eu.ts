@@ -143,7 +143,7 @@ export const euLanguage: LanguageConfig = {
       backToTheorem: 'Itzuli Teoremara →',
     },
     studyPlan: {
-      backToArchive: '← Itzuli Artxibora',
+      backToArchive: '← Itzuli liburutegira',
       progress: 'Aurrerapena: {total}-tik {count} barneratuak',
       locked: 'Blokeatuta',
       assimilated: 'Barneratua',

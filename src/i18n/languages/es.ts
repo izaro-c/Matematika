@@ -143,7 +143,7 @@ export const esLanguage: LanguageConfig = {
       backToTheorem: 'Volver al Teorema →',
     },
     studyPlan: {
-      backToArchive: '← Retornar al Archivo',
+      backToArchive: '← Volver a la biblioteca',
       progress: 'Progreso: {count} de {total} asimilados',
       locked: 'Bloqueado',
       assimilated: 'Asimilado',
