@@ -1,10 +1,8 @@
-import { useLayoutEffect } from 'react';
 import type { Demo, Theorem } from '@/data/content/types';
 import { useParams } from "wouter";
 import { db } from "@/data/content";
 import { ContentLayout } from "@/components/layouts/ContentLayout";
 import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
-import { MetadataSidebar } from '@/components/metadata/MetadataSidebar';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { ContentCard } from '@/components/ui/ContentCard';
 import { ContentHeader } from '@/components/content/ContentHeader';
@@ -14,7 +12,6 @@ import { MaterialPracticoSection } from '@/components/content/MaterialPracticoSe
 import { AplicacionesSection } from '@/components/content/AplicacionesSection';
 import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { SectionTitle } from '@/components/ui/SectionTitle';
-import { useMetadataStore } from '@/data/metadata/MetadataStore';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { useI18n } from '@/i18n';
 
@@ -26,19 +23,11 @@ const TYPE_LABELS: Record<string, string> = {
 
 /**
  * Componente principal para visualizar un Teorema, Lema o Corolario.
- * 
- * Se encarga de:
- * 1. Extraer el slug de la URL.
- * 2. Cargar los metadatos y el componente MDX desde el `ContentStore`.
- * 3. Escanear dinámicamente las secciones y encabezados del DOM (MDX y secciones adicionales)
- *    para inyectar un índice interactivo en tiempo de ejecución.
- * 4. Componer índice + lectura + diagrama con ContentLayout.
  */
 export const TheoremPage = () => {
   const { id } = useParams();
   const slug = id || '';
   const { lang, t } = useI18n();
-  const setMetadata = useMetadataStore((state) => state.setMetadata);
 
   const theorem = id ? db.getTheorem(id, lang) : undefined;
   const isFallback = id ? db.isFallback(id, lang) : false;
@@ -54,76 +43,6 @@ export const TheoremPage = () => {
 
   const displayType = theorem ? (TYPE_LABELS[theorem.type || 'teorema'] || 'Teorema') : 'Teorema';
   const Simulation = theorem?.Simulation;
-
-  useLayoutEffect(() => {
-    if (!theorem) {
-      setMetadata(null);
-      return;
-    }
-
-    const tocList: { id: string; title: string; level: number }[] = [];
-    const seenIds = new Set<string>();
-
-    const elements = Array.from(
-      document.querySelectorAll(
-        '.content-reading h2, .content-reading h3, .content-reading h4, .content-secondary section'
-      )
-    );
-
-    elements.forEach((el, index) => {
-      let targetId = el.id;
-      let title = el.textContent || '';
-      let level: number;
-
-      if (el.tagName === 'SECTION') {
-        targetId = el.id;
-        const h2 = el.querySelector('h2');
-        if (h2) {
-          title = h2.textContent || '';
-        } else {
-          return;
-        }
-        level = 1;
-      } else {
-        const tagLevel = parseInt(el.tagName.substring(1), 10);
-        level = tagLevel - 1;
-
-        if (!targetId) {
-          targetId = title
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/(^-|-$)/g, '');
-          if (!targetId) targetId = `seccion-${index}`;
-          el.id = targetId;
-        }
-      }
-
-      if (targetId && title && !seenIds.has(targetId)) {
-        seenIds.add(targetId);
-        tocList.push({ id: targetId, title, level });
-      }
-    });
-
-    setMetadata({
-      id: theorem.id,
-      title: theorem.title,
-      type: displayType,
-      domain: undefined,
-      author: theorem.authors,
-      difficulty: theorem.difficulty,
-      tags: theorem.tags || [],
-      description: theorem.description,
-      tableOfContents: tocList,
-      lemmas: lemmas.map(l => ({ id: l.id, title: l.title })),
-      corollaries: corollaries.map(c => ({ id: c.id, title: c.title })),
-      demos: demos.map(d => ({ id: d.id, title: d.title })),
-      date: undefined,
-    });
-
-    return () => setMetadata(null);
-  }, [theorem, setMetadata, displayType, lemmas, corollaries, demos, id]);
 
   if (!theorem) {
     return (
@@ -179,17 +98,25 @@ export const TheoremPage = () => {
         <section id="demostraciones" className="mb-20">
           <SectionTitle>{t('content', 'availableDemos')}</SectionTitle>
           <div className="grid gap-4 lg:grid-cols-2">
-            {demos.map(demo => (
-              <ContentCard
-                key={demo.slug}
-                href={`/demo/${demo.id}`}
-                title={demo.title}
-                description={demo.description}
-                type="demostracion"
-                layout="row"
-                actionLabel={t('content', 'explore')}
-              />
-            ))}
+            {demos.map(demo => {
+              const isDemoLeanVerified =
+                demo.leanVerified === true ||
+                demo.verificationStatus === 'lean-checked' ||
+                demo.verificationStatus === 'lean-audited';
+
+              return (
+                <ContentCard
+                  key={demo.slug}
+                  href={`/demo/${demo.id}`}
+                  title={demo.title}
+                  description={demo.description}
+                  type="demostracion"
+                  layout="row"
+                  leanVerified={isDemoLeanVerified}
+                  actionLabel={t('content', 'explore')}
+                />
+              );
+            })}
           </div>
         </section>
       )}
@@ -251,7 +178,6 @@ export const TheoremPage = () => {
       className="theorem-content-layout"
       pageType={theorem.type || 'teorema'}
       variant="balanced"
-      metadata={<MetadataSidebar />}
       diagram={Simulation ? (
         <DiagramSlot>
           <Simulation />
@@ -264,3 +190,4 @@ export const TheoremPage = () => {
     </ContentLayout>
   );
 };
+

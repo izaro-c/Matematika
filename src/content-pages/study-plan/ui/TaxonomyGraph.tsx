@@ -51,7 +51,7 @@ function resolveSubBranchNodeId(
 }
 
 export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
-  const { isRead } = useProgressStore();
+  const { isRead, isExerciseComplete } = useProgressStore();
   const theme = useThemeColors();
   const graphBackgroundStyle = {
     '--graph-light-background': `url("${publicAsset('/images/bg-arts-crafts-1.png')}")`,
@@ -225,7 +225,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     if (node.x === undefined || node.y === undefined || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
 
     const isHighlighted = hoverNode ? highlightNodes.has(node) : true;
-    const isCompleted = isRead(node.id);
+    const isCompleted = isRead(node.id) || isExerciseComplete(node.id);
 
     const radius = node.val / 2;
     let color = getNodeColor(node);

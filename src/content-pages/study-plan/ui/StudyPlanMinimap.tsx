@@ -13,7 +13,7 @@ interface StudyPlanMinimapProps {
 }
 
 export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNodes }) => {
-  const { isRead } = useProgressStore();
+  const { isRead, isExerciseComplete } = useProgressStore();
   const [hoveredNode, setHoveredNode] = useState<any | null>(null);
 
   const nodesData = requiredNodes.map((id) => {
@@ -32,7 +32,7 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
       id,
       title: meta?.title || id,
       type: meta?.type || 'contenido',
-      completed: isRead(id),
+      completed: isRead(id) || isExerciseComplete(id),
     };
   });
 

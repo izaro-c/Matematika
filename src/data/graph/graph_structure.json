@@ -1055,7 +1055,7 @@
       "id": "metodo-contradiccion",
       "type": "metodo",
       "subtype": "demostracion",
-      "title": "Demostración por Contradicción",
+      "title": "Demostración por contradicción",
       "description": "Probar que una afirmación es verdadera mostrando que su negación conduce a una imposibilidad lógica. También conocida como reductio ad absurdum o reducción al absurdo.",
       "proofs": [],
       "directDependencies": [

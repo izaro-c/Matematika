@@ -51,7 +51,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
 
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
   const [selectedRight, setSelectedRight] = useState<string | null>(null);
-  const [matchedPairs, setMatchedPairs] = useState<string[]>([]);
+  const [matchedPairs, setMatchedPairs] = useState<string[]>(qState?.userAnswer ?? []);
   const [errorPair, setErrorPair] = useState<[string, string] | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -110,8 +110,8 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
       const isMatch = pairs.some(p => p.left === selectedLeft && p.right === selectedRight);
       
       if (isMatch) {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setMatchedPairs(prev => [...prev, selectedLeft]);
+        const newMatched = [...matchedPairs, selectedLeft];
+        setMatchedPairs(newMatched);
         setSelectedLeft(null);
         setSelectedRight(null);
       } else {
@@ -125,13 +125,13 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
         }, 800);
       }
     }
-  }, [selectedLeft, selectedRight, pairs, id, answer]);
+  }, [selectedLeft, selectedRight, pairs, id, answer, matchedPairs]);
 
   useEffect(() => {
     if (matchedPairs.length === pairs.length && pairs.length > 0) {
-      answer(id, true);
+      answer(id, true, matchedPairs);
     }
-  }, [matchedPairs.length, pairs.length, id, answer]);
+  }, [matchedPairs, pairs.length, id, answer]);
 
   useEffect(() => {
     if (qState?.isCorrect === null && matchedPairs.length > 0) {

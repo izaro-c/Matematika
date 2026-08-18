@@ -8,19 +8,25 @@ import { ContentHeader } from '@/components/content/ContentHeader';
 import { ContentBody } from '@/components/ui/ContentBody';
 import { DifficultyBadge } from '@/components/ui/DifficultyBadge';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { VintageSeal } from '@/components/ui/VintageSeal';
 import { useI18n } from '@/i18n';
 
 /**
  * Barra de progreso interactiva que se fija en el top del ExercisePage.
  * Refleja la puntuación (score) proveniente del `ExerciseContext`.
  */
-const ProgressBar: React.FC = () => {
+const ProgressBar: React.FC<{ onReset?: () => void; isCompleted?: boolean }> = ({ onReset, isCompleted }) => {
   const { score, reset } = useExercise();
   const { t } = useI18n();
   const { correct, total } = score;
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
 
   if (total === 0) return null;
+
+  const handleResetClick = () => {
+    reset();
+    onReset?.();
+  };
 
   return (
     <div className="sticky top-0 z-30 bg-lienzo/95 backdrop-blur-sm border-b border-carbon/10 px-6 py-3 lg:-mt-24">
@@ -40,10 +46,10 @@ const ProgressBar: React.FC = () => {
             {` / ${t('exercise', 'correctCount', { count: total })}`}
           </span>
         </span>
-        {score.answered > 0 && (
+        {(score.answered > 0 || isCompleted) && (
           <button
-            onClick={reset}
-            className="page-accent-text ac-eyebrow ac-eyebrow--sm opacity-60 hover:opacity-100 transition-opacity underline underline-offset-2 shrink-0"
+            onClick={handleResetClick}
+            className="page-accent-text ac-eyebrow ac-eyebrow--sm opacity-60 hover:opacity-100 transition-opacity underline underline-offset-2 shrink-0 cursor-pointer"
           >
             {t('exercise', 'reset')}
           </button>
@@ -59,8 +65,15 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
   const isFallback = id ? db.isFallback(id, lang) : false;
   const availableLangs = id ? db.getAvailableLanguages(id) : ['es'];
 
-  const { score } = useExercise();
-  const { markExerciseComplete } = useProgressStore();
+  const { score, reset } = useExercise();
+  const { markExerciseComplete, isExerciseComplete, unmarkExerciseComplete } = useProgressStore();
+  const alreadyCompleted = isExerciseComplete(id);
+  const isCompletedNow = score.total > 0 && score.correct === score.total;
+  const isCompleted = isCompletedNow || alreadyCompleted;
+
+  const handleReset = () => {
+    unmarkExerciseComplete(id);
+  };
 
   useEffect(() => {
     if (score.total > 0 && score.correct === score.total) {
@@ -85,7 +98,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
   return (
     <ContentLayout pageType="ejercicio" diagram={exercise.Simulation ? <ContentDiagram component={exercise.Simulation} /> : undefined}>
       <div className="min-h-viewport bg-transparent text-carbon font-serif pb-32">
-        <ProgressBar />
+        <ProgressBar onReset={handleReset} isCompleted={isCompleted} />
         <div className="w-full px-6 md:px-10 pt-4 pb-16">
           {isFallback && <UntranslatedFallbackBanner availableLangs={availableLangs} />}
           <ContentHeader
@@ -104,19 +117,30 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
             <exercise.Component />
           </ContentBody>
 
-          {score.total > 0 && score.correct === score.total && (
-            <div className="mt-16 p-6 border border-musgo/30 bg-musgo/5 text-center">
-              <div className="text-3xl mb-2 text-musgo">✦</div>
-              <p className="font-serif font-bold text-musgo text-lg">
-                {t('exercise', 'completedBanner', { correct: score.correct, total: score.total })}
+          {isCompleted && (
+            <div className="relative mt-16 p-8 border border-salvia/30 bg-salvia/5 text-center flex flex-col items-center justify-center gap-3">
+              <VintageSeal type="exercise" size="md" animated={true} className="-right-5 -top-10" />
+              <p className="font-serif font-bold text-salvia text-lg">
+                {t('exercise', 'completedBanner', { correct: score.correct || score.total, total: score.total })}
               </p>
-              {relatedTheorem && (
-                <Link href={getLocalizedPath(`/teorema/${relatedTheorem.id}`)}>
-                  <span className="ac-link-back ac-interactive mt-4 text-xs hover:text-carbon underline underline-offset-2 transition-colors cursor-pointer inline-block">
-                    {t('exercise', 'backToTheorem')}
-                  </span>
-                </Link>
-              )}
+              <div className="flex items-center gap-4 mt-2">
+                <button
+                  onClick={() => {
+                    unmarkExerciseComplete(id);
+                    reset();
+                  }}
+                  className="page-accent-text ac-eyebrow ac-eyebrow--sm opacity-70 hover:opacity-100 transition-opacity underline underline-offset-2 shrink-0 cursor-pointer"
+                >
+                  {t('exercise', 'reset')}
+                </button>
+                {relatedTheorem && (
+                  <Link href={getLocalizedPath(`/teorema/${relatedTheorem.id}`)}>
+                    <span className="ac-link-back ac-interactive text-xs hover:text-carbon underline underline-offset-2 transition-colors cursor-pointer inline-block">
+                      {t('exercise', 'backToTheorem')}
+                    </span>
+                  </Link>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -134,7 +158,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
 export const ExercisePage: React.FC = () => {
   const { id } = useParams();
   return (
-    <ExerciseProvider>
+    <ExerciseProvider key={id} exerciseId={id || ''}>
       <ExerciseContent id={id || ''} />
     </ExerciseProvider>
   );

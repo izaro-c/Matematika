@@ -8,6 +8,7 @@ import { TYPE_STYLES } from '@/lib/theme/constants';
 import { getContentPageAccent } from '@/design';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { MobileContentHeaderSeparator, MobileDiagramToolbar } from './MobileDiagramChrome';
+import { useI18n } from '@/i18n';
 
 interface CodexLayoutProps {
   /** Pasos de la demostración (columna de lectura). */
@@ -39,6 +40,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
   const setVariable = useMathStore((state) => state.setVariable);
   const activeJustifications = useMathStore((state) => state.variables?.['activeJustifications']) as string[] | undefined;
   const [location] = useLocation();
+  const { lang, getLocalizedPath } = useI18n();
   const rootRef = useRef<HTMLDivElement>(null);
   const [activeDiagramStepIndex, setActiveDiagramStepIndex] = useState<number | null>(null);
   const [activeDiagramStepId, setActiveDiagramStepId] = useState<string | null>(null);
@@ -46,13 +48,14 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
 
   const hasDiagram = !!diagram;
 
-  const isDemoPage = location.startsWith('/demo/');
-  const demoId = isDemoPage ? location.split('/')[2] : null;
-  const demo = demoId ? db.getDemo(demoId) : null;
+  const demoMatch = location.match(/\/(?:[a-z]{2}\/)?(?:demo|frogapena)\/([^/?#]+)/i);
+  const isDemoPage = Boolean(demoMatch) || location.startsWith('/demo/');
+  const demoId = demoMatch ? demoMatch[1] : (location.startsWith('/demo/') ? location.split('/')[2] : null);
+  const demo = demoId ? db.getDemo(demoId, lang) : null;
 
-  const parentTheorem = demo?.parentTheorem ? db.getTheorem(demo.parentTheorem) : null;
+  const parentTheorem = demo?.parentTheorem ? db.getTheorem(demo.parentTheorem, lang) : null;
   const breadcrumbs = parentTheorem
-    ? [{ name: parentTheorem.title, href: `/teorema/${parentTheorem.id}` }]
+    ? [{ name: parentTheorem.title, href: getLocalizedPath(`/teorema/${parentTheorem.id}`) }]
     : [];
 
   const proofSteps = useCallback(
@@ -308,17 +311,17 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
           authors={demo.authors || []}
           nodeId={demo.id}
           backLink={parentTheorem ? {
-            href: `/teorema/${parentTheorem.id}`,
+            href: getLocalizedPath(`/teorema/${parentTheorem.id}`),
             label: `← ${parentTheorem.title}`,
           } : undefined}
           badgesSlot={demo.proofMethod ? (
             <Link
-              href={`/metodo/${demo.proofMethod}`}
+              href={getLocalizedPath(`/metodo/${demo.proofMethod}`)}
               className="ac-pill ac-pill-accent"
               style={{ ['--pill-accent' as string]: 'var(--page-accent)' }}
             >
               <span className="ac-pill-ornament" aria-hidden>❧</span>
-              {db.getMethod(demo.proofMethod)?.title ?? demo.proofMethod.replace(/^metodo-/, '')}
+              {db.getMethod(demo.proofMethod, lang)?.title ?? demo.proofMethod.replace(/^metodo-/, '')}
             </Link>
           ) : undefined}
         />

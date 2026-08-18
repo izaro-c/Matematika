@@ -2,7 +2,7 @@
    CONTENT LAYOUT — columnas (texto | diagrama | bloque secundario)
    Proporciones: variables en .content-layout (bloque superior).
    Variantes: data-layout-variant="reading" | "balanced"
-   Atributos: data-page-type, data-has-diagram, data-has-metadata
+   Atributos: data-page-type, data-has-diagram
    ========================================================================== */
 
 .content-layout {
@@ -19,7 +19,6 @@
   --content-diagram-height: clamp(18rem, 46svh, 28rem);        /* altura diagrama (base) */
   --content-diagram-mobile-height: clamp(14rem, 36svh, 20rem); /* altura diagrama (móvil) */
   --content-diagram-sticky-min: 24rem;   /* min-height sticky escritorio */
-  --content-metadata-col: minmax(15rem, 19rem); /* ancho columna índice */
 
   width: 100%;
   min-height: 100dvh;

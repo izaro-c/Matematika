@@ -43,7 +43,8 @@ export const StudyPlanPage = () => {
   const plan = db.getStudyPlan(slug, lang);
   const isFallback = slug ? db.isFallback(slug, lang) : false;
   const availableLangs = slug ? db.getAvailableLanguages(slug) : ['es'];
-  const { isRead } = useProgressStore();
+  const { isRead, isExerciseComplete } = useProgressStore();
+  const isNodeDone = useCallback((nodeId: string) => isRead(nodeId) || isExerciseComplete(nodeId), [isRead, isExerciseComplete]);
 
   const [mounted, setMounted] = useState(false);
   const [fillHeight, setFillHeight] = useState<number>(0);
@@ -91,18 +92,18 @@ export const StudyPlanPage = () => {
     const prevBlock = blocks[targetBlockIdx - 1];
     const prevBlockCompleted = prevBlock.every((reqId) => {
       if (reqId.startsWith('checkpoint-')) return true;
-      return isRead(reqId);
+      return isNodeDone(reqId);
     });
 
     return !prevBlockCompleted;
-  }, [plan, isRead]);
+  }, [plan, isNodeDone]);
 
   useEffect(() => {
     if (!containerRef.current || !plan) return;
 
     const computeProgressLine = () => {
       const nodes = plan.requiredNodes || [];
-      const completedNodes = nodes.filter((nodeId) => isRead(nodeId));
+      const completedNodes = nodes.filter((nodeId) => isNodeDone(nodeId));
 
       if (completedNodes.length === 0) {
         setFillHeight(0);
@@ -143,7 +144,7 @@ export const StudyPlanPage = () => {
       window.removeEventListener('resize', computeProgressLine);
       if (resizeObserver) resizeObserver.disconnect();
     };
-  }, [plan, isRead]);
+  }, [plan, isNodeDone]);
 
   if (!plan) {
     return (
@@ -155,7 +156,7 @@ export const StudyPlanPage = () => {
 
   const requiredNodes = plan.requiredNodes || [];
   const totalItems = requiredNodes.length;
-  const completedCount = requiredNodes.filter(nodeId => isRead(nodeId)).length;
+  const completedCount = requiredNodes.filter(nodeId => isNodeDone(nodeId)).length;
 
   const MDXContent = plan.Component;
 

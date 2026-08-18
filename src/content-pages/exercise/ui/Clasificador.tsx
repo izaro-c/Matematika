@@ -44,7 +44,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
   const { register, answer, state } = useExercise();
   const qState = state.questions[id];
 
-  const [placedItems, setPlacedItems] = useState<Record<string, string>>({}); // itemId -> bucketId
+  const [placedItems, setPlacedItems] = useState<Record<string, string>>(qState?.userAnswer ?? {}); // itemId -> bucketId
   const [dragItem, setDragItem] = useState<string | null>(null);
   const [isShaking, setIsShaking] = useState(false);
 
@@ -102,7 +102,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
       }
     }
 
-    answer(id, allCorrect);
+    answer(id, allCorrect, placedItems);
     
     if (!allCorrect) {
       setIsShaking(true);

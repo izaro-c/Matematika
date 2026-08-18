@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useCallback } from 'react';
+import React, { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
 
 // ── Tipos ─────────────────────────────────────────────────────────────────────
 
@@ -10,6 +10,7 @@ export interface QuestionState {
   isCorrect: boolean | null; // null = sin responder
   tries: number;
   revealed: boolean;
+  userAnswer?: any;
 }
 
 interface ExerciseState {
@@ -18,7 +19,7 @@ interface ExerciseState {
 
 type Action =
   | { type: 'REGISTER'; id: string; qType: QuestionType }
-  | { type: 'ANSWER'; id: string; isCorrect: boolean }
+  | { type: 'ANSWER'; id: string; isCorrect: boolean; userAnswer?: any }
   | { type: 'REVEAL'; id: string }
   | { type: 'RESET' };
 
@@ -45,6 +46,7 @@ function reducer(state: ExerciseState, action: Action): ExerciseState {
             ...(state.questions[action.id] ?? { id: action.id, type: 'hueco', revealed: false }),
             isCorrect: action.isCorrect,
             tries: (state.questions[action.id]?.tries ?? 0) + 1,
+            userAnswer: action.userAnswer !== undefined ? action.userAnswer : state.questions[action.id]?.userAnswer,
           },
         },
       };
@@ -69,12 +71,28 @@ function reducer(state: ExerciseState, action: Action): ExerciseState {
   }
 }
 
+function getInitialState(exerciseId?: string): ExerciseState {
+  if (!exerciseId || typeof window === 'undefined') return { questions: {} };
+  try {
+    const stored = localStorage.getItem(`matematika-exercise-${exerciseId}`);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (parsed && typeof parsed === 'object' && parsed.questions) {
+        return parsed;
+      }
+    }
+  } catch {
+    // fallback
+  }
+  return { questions: {} };
+}
+
 // ── Contexto ──────────────────────────────────────────────────────────────────
 
 export interface ExerciseContextType {
   state: ExerciseState;
   register: (id: string, type: QuestionType) => void;
-  answer: (id: string, isCorrect: boolean) => void;
+  answer: (id: string, isCorrect: boolean, userAnswer?: any) => void;
   reveal: (id: string) => void;
   reset: () => void;
   /** Métricas de progreso calculadas en tiempo real */
@@ -109,15 +127,31 @@ export function useExercise(): ExerciseContextType {
 
 // ── Proveedor ─────────────────────────────────────────────────────────────────
 
-export const ExerciseProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, { questions: {} });
+export interface ExerciseProviderProps {
+  exerciseId?: string;
+  children: React.ReactNode;
+}
+
+export const ExerciseProvider: React.FC<ExerciseProviderProps> = ({ exerciseId, children }) => {
+  const [state, dispatch] = useReducer(reducer, exerciseId, getInitialState);
+
+  useEffect(() => {
+    if (!exerciseId || typeof window === 'undefined') return;
+    try {
+      if (Object.keys(state.questions).length > 0) {
+        localStorage.setItem(`matematika-exercise-${exerciseId}`, JSON.stringify(state));
+      }
+    } catch {
+      // ignore
+    }
+  }, [exerciseId, state]);
 
   const register = useCallback((id: string, type: QuestionType) => {
     dispatch({ type: 'REGISTER', id, qType: type });
   }, []);
 
-  const answer = useCallback((id: string, isCorrect: boolean) => {
-    dispatch({ type: 'ANSWER', id, isCorrect });
+  const answer = useCallback((id: string, isCorrect: boolean, userAnswer?: any) => {
+    dispatch({ type: 'ANSWER', id, isCorrect, userAnswer });
   }, []);
 
   const reveal = useCallback((id: string) => {
@@ -125,8 +159,15 @@ export const ExerciseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, []);
 
   const reset = useCallback(() => {
+    if (exerciseId && typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem(`matematika-exercise-${exerciseId}`);
+      } catch {
+        // ignore
+      }
+    }
     dispatch({ type: 'RESET' });
-  }, []);
+  }, [exerciseId]);
 
   const qs = Object.values(state.questions);
   const score = {
@@ -141,3 +182,4 @@ export const ExerciseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     </ExerciseContext.Provider>
   );
 };
+

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'wouter';
 import { ContentTypeBadge } from '@/components/ui/ContentTypeBadge';
+import { VintageSeal, SealType } from '@/components/ui/VintageSeal';
 import { getContentPageAccent } from '@/design';
 import { useI18n } from '@/i18n';
+import { useProgressStore } from '@/lib/stores/UserProgressStore';
 
 /**
  * Paleta de colores temáticos para acentuar tarjetas.
@@ -35,6 +37,14 @@ interface ContentCardProps {
   domain?: string;
   /** Icono o emoji representativo del dominio */
   domainIcon?: string;
+  /** Si está formalizado y verificado con Lean 4 */
+  leanVerified?: boolean;
+  /** ID explícito para seguimiento de progreso */
+  id?: string;
+  /** Si está marcado como leído (sobrescribe store) */
+  isRead?: boolean;
+  /** Si está completado como ejercicio (sobrescribe store) */
+  isCompleted?: boolean;
 }
 
 const ACCENT_TOKEN: Record<CardAccent, string> = {
@@ -60,17 +70,35 @@ export const ContentCard: React.FC<ContentCardProps> = ({
   layout = 'default',
   domain,
   domainIcon,
+  leanVerified,
+  id,
+  isRead: propIsRead,
+  isCompleted: propIsCompleted,
 }) => {
   const { getLocalizedPath } = useI18n();
+  const { isRead: checkRead, isExerciseComplete: checkExercise } = useProgressStore();
   const token = accent ? ACCENT_TOKEN[accent] : getContentPageAccent(type);
   const action = actionLabel ?? (type ? `Ver ${type}` : undefined);
   const localizedHref = getLocalizedPath(href);
+
+  const derivedId = id ?? href.replace(/^\/[a-z]{2}\//, '').replace(/^\//, '').split('/').pop();
+  const isCardRead = propIsRead ?? (derivedId ? checkRead(derivedId) : false);
+  const isCardExerciseComplete = propIsCompleted ?? (derivedId ? checkExercise(derivedId) : false);
+
+  let activeSealType: SealType | null = null;
+  if (leanVerified) {
+    activeSealType = 'lean';
+  } else if (isCardExerciseComplete) {
+    activeSealType = 'exercise';
+  } else if (isCardRead) {
+    activeSealType = 'read';
+  }
 
   if (layout === 'row') {
     return (
       <Link
         href={localizedHref}
-        className="group flex w-full min-w-0 justify-between items-center gap-4 p-5 elegant-panel"
+        className="group relative flex w-full min-w-0 justify-between items-center gap-4 p-5 elegant-panel"
         style={{ ['--hover-accent' as string]: token }}
       >
         <div className="min-w-0 flex-1">
@@ -88,6 +116,14 @@ export const ContentCard: React.FC<ContentCardProps> = ({
             <p className="text-sm text-ink-muted mt-1 font-sans line-clamp-2">{description}</p>
           )}
         </div>
+
+        {activeSealType && (
+          <VintageSeal
+            type={activeSealType}
+            className="-right-5 -top-10"
+          />
+        )}
+
         {action && (
           <span
             className="hidden sm:inline ac-eyebrow font-bold shrink-0"
@@ -103,19 +139,25 @@ export const ContentCard: React.FC<ContentCardProps> = ({
   return (
     <Link
       href={localizedHref}
-      className="group flex flex-col p-6 elegant-panel"
+      className="group relative flex flex-col p-6 elegant-panel"
       style={{ ['--hover-accent' as string]: token }}
     >
-      <div className="flex items-center gap-2 mb-3">
-        {type && <ContentTypeBadge type={type} label={badgeLabel ?? typeLabel} />}
-        {domain && (
-          <span
-            className="ac-pill ac-pill-accent"
-            style={{ ['--pill-accent' as string]: 'var(--theme-terracota)' }}
-          >
-            {domainIcon && <span className="ac-pill-ornament" aria-hidden>{domainIcon}</span>}
-            {domain}
-          </span>
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <div className="flex items-center gap-2">
+          {type && <ContentTypeBadge type={type} label={badgeLabel ?? typeLabel} />}
+          {domain && (
+            <span
+              className="ac-pill ac-pill-accent"
+              style={{ ['--pill-accent' as string]: 'var(--theme-terracota)' }}
+            >
+              {domainIcon && <span className="ac-pill-ornament" aria-hidden>{domainIcon}</span>}
+              {domain}
+            </span>
+          )}
+        </div>
+
+        {activeSealType && (
+          <VintageSeal type={activeSealType} className="-right-5 -top-10"/>
         )}
       </div>
 
@@ -137,3 +179,4 @@ export const ContentCard: React.FC<ContentCardProps> = ({
     </Link>
   );
 };
+

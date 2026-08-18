@@ -40,8 +40,7 @@ function lookupExists(id: string): boolean {
 
 export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
   const { lang, t, getLocalizedPath } = useI18n();
-  const { isRead } = useProgressStore();
-  const completed = isRead(id);
+  const { isRead, isExerciseComplete } = useProgressStore();
   const context = React.useContext(StudyPlanContext);
   const registerTaskRef = context?.registerTaskRef;
   const isLocked = context?.isLocked ? context.isLocked(id) : false;
@@ -68,6 +67,8 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
   else if (db.getExample(id))     resolvedType = 'ejemplo';
   else if (db.getExercise(id))    resolvedType = 'ejercicio';
   else if (db.getMethod(id))      resolvedType = 'metodo';
+
+  const completed = resolvedType === 'ejercicio' ? isExerciseComplete(id) : isRead(id);
 
   const rawHref = TYPE_PATH_PREFIX[resolvedType] ? `${TYPE_PATH_PREFIX[resolvedType]}${id}` : `/${id}`;
   const href = getLocalizedPath(rawHref);

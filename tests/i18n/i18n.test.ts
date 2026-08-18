@@ -115,5 +115,21 @@ describe('i18n system', () => {
     expect(esSpec.title).toBe('Teorema de Pitágoras');
     expect(esSpec.objects[0].label).toBe('triángulo ABC');
   });
+
+  it('provides complete seals translations for ES and EU', () => {
+    const es = getLanguage('es');
+    const eu = getLanguage('eu');
+
+    expect(es.dictionary.metadata.seals.lean.title).toBe('LEAN 4');
+    expect(es.dictionary.metadata.seals.lean.subtitle).toBe('VERIFICADO');
+    expect(eu.dictionary.metadata.seals.lean.subtitle).toBe('EGIAZTATUA');
+
+    expect(es.dictionary.metadata.seals.exercise.subtitle).toBe('RESUELTO');
+    expect(eu.dictionary.metadata.seals.exercise.subtitle).toBe('EBATZIA');
+
+    expect(es.dictionary.metadata.seals.read.subtitle).toBe('ASIMILADO');
+    expect(eu.dictionary.metadata.seals.read.subtitle).toBe('BARNERATUA');
+  });
 });
+
 

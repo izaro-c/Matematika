@@ -15,6 +15,9 @@ export interface PageMetadata {
   lemmas?: { id: string; title: string }[];
   corollaries?: { id: string; title: string }[];
   demos?: { id: string; title: string }[];
+  leanVerified?: boolean;
+  verificationStatus?: string;
+  foundation?: string;
 }
 
 interface MetadataState {
