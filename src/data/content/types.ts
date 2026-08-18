@@ -1,4 +1,3 @@
-import type { StudyPlanMeta, AxiomaticSystemMeta } from './schemas';
 import type { ComponentType, LazyExoticComponent } from 'react';
 
 export type MDXComponent = LazyExoticComponent<ComponentType<Record<string, unknown>>> | ComponentType<Record<string, unknown>>;

@@ -15,7 +15,7 @@ export const HomeFooter = () => {
     <footer className="border-t border-carbon/10 mt-8">
       <div className="max-w-5xl mx-auto px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex gap-3">
-          <Link href={getLocalizedPath('/diccionario')} className={`${footerLinkClass} min-h-11 border-terracota/20 text-terracota hover:bg-terracota hover:text-lienzo`}>
+          <Link href={getLocalizedPath('/diccionario')} className={`${footerLinkClass} min-h-11 border-dictionary/20 text-dictionary hover:bg-dictionary hover:text-lienzo`}>
             {t('navigation', 'dictionary')}
           </Link>
           <Link href={getLocalizedPath('/historia')} className={`${footerLinkClass} min-h-11 border-musgo/30 text-musgo hover:bg-musgo hover:text-lienzo hover:text-on-accent`}>

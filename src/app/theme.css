@@ -22,6 +22,8 @@
   --color-granada: var(--theme-granada);
   --color-musgo: var(--theme-musgo);
 
+  --color-dictionary: var(--theme-terracota);
+
   /* Sombras y bordes semánticos de Arts & Crafts */
   --shadow-elegant: var(--theme-shadow-elegant);
   --shadow-classic: var(--theme-shadow-classic);

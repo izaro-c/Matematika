@@ -34,8 +34,8 @@ export const TYPE_ICONS: Record<SearchResultType, string> = {
   demo: '❧',
   matemático: '❦',
   caso_uso: '◎',
-  glosario: '📖',
-  msc2020: '🏷️',
+  glosario: '§',
+  msc2020: '⑂',
 };
 
 export const TYPE_COLORS: Record<SearchResultType, string> = PAGE_ACCENTS;

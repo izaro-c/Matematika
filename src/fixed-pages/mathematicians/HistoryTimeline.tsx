@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import { Link } from 'wouter';
 import { resolvePublicOrExternalAsset } from '@/lib/routes';
 import { db } from '@/data/content';
-import { InteractiveTimePlot } from '@/components/ui/InteractiveTimePlot';
+import type { Mathematician } from '@/data/content/types';
 import { ArtsAndCraftsLiana } from '@/components/ui/ArtsAndCraftsLiana';
 import { useI18n } from '@/i18n';
 
@@ -19,6 +19,51 @@ const DEFAULT_ERA = { key: 'modern' as const, color: 'var(--theme-carbon)' };
 function getEra(year: number) {
   const era = ERA_STEPS.find(e => year < e.cutoff);
   return era ?? DEFAULT_ERA;
+}
+
+interface ContributionItem {
+  id: string;
+  title: string;
+  type: string;
+  routePrefix: string;
+}
+
+function getMathematicianContributions(matId: string, lang?: string): ContributionItem[] {
+  const items: ContributionItem[] = [];
+
+  // Teoremas
+  const thms = db.getTheoremsByAuthor(matId, lang);
+  thms.forEach(t => {
+    items.push({ id: t.id, title: t.title, type: t.type || 'teorema', routePrefix: '/teorema' });
+  });
+
+  // Sistemas axiomáticos
+  const sysList = db.getAllAxiomaticSystems(lang);
+  sysList.forEach(s => {
+    const mathList = (s as unknown as { mathematicians?: string[] }).mathematicians;
+    if (mathList?.includes(matId)) {
+      items.push({ id: s.id, title: s.title, type: 'sistema', routePrefix: '/sistema' });
+    }
+  });
+
+  // Métodos
+  const methods = db.getAllMethods(lang);
+  methods.forEach(m => {
+    if (m.authors?.includes(matId)) {
+      items.push({ id: m.id, title: m.title, type: 'metodo', routePrefix: '/metodo' });
+    }
+  });
+
+  // Axiomas
+  const axioms = db.getAllAxioms(lang);
+  axioms.forEach(a => {
+    const authors = (a as unknown as { authors?: string[] }).authors;
+    if (authors?.includes(matId)) {
+      items.push({ id: a.id, title: a.title, type: 'axioma', routePrefix: '/axioma' });
+    }
+  });
+
+  return items.slice(0, 4);
 }
 
 // ── Insignia de época ─────────────────────────────────────────────────────────
@@ -38,10 +83,185 @@ const EraInsignia: React.FC<{ eraLabel: string; year: number }> = ({ eraLabel, y
   );
 };
 
+// ── Tarjeta individual que brota estrictamente cuando la liana llega a su posición ─────
+interface CardProps {
+  node: Mathematician;
+  index: number;
+  lianaHeadY: number;
+  totalHeight: number;
+  lang: string;
+  t: any;
+  getLocalizedPath: (path: string) => string;
+}
+
+const MathematicianTimelineCard: React.FC<CardProps> = ({
+  node,
+  index,
+  lianaHeadY,
+  totalHeight,
+  lang,
+  t,
+  getLocalizedPath,
+}) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [cardY, setCardY] = useState<number>(0);
+
+  // Recalcular posición Y exacta cuando cambie el alto total o al montar
+  useEffect(() => {
+    if (cardRef.current) {
+      // El nodo central donde la liana cruza la tarjeta
+      const top = cardRef.current.offsetTop;
+      const height = cardRef.current.offsetHeight || 140;
+      setCardY(top + height * 0.5);
+    }
+  }, [totalHeight, node.id]);
+
+  const isEven = index % 2 === 0;
+  const period = getEra(node.birthYear || 0);
+  const eraLabel = t('timeline', period.key as any);
+  const contributions = useMemo(() => getMathematicianContributions(node.id, lang), [node.id, lang]);
+
+  // Crecimiento directo: comienza estrictamente cuando la liana alcanza cardY
+  const GROWTH_WINDOW = 95;
+  const rawProgress = (lianaHeadY - cardY) / GROWTH_WINDOW;
+  const clampedProgress = Math.max(0, Math.min(1, rawProgress));
+  // Curva de apertura botánica elástica natural
+  const easeOutBack = (x: number) => {
+    const c1 = 1.15;
+    const c3 = c1 + 1;
+    return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+  };
+  const scaleVal = rawProgress <= 0 ? 0 : (rawProgress >= 1 ? 1 : easeOutBack(clampedProgress));
+
+  return (
+    <div
+      ref={cardRef}
+      className={`relative flex items-center justify-between w-full ${
+        isEven ? 'flex-row-reverse' : 'flex-row'
+      }`}
+      style={{ '--hover-era-color': period.color } as React.CSSProperties}
+    >
+      {/* Tarjeta del personaje (Nace de la liana hacia fuera: escala 0 a 1) */}
+      <div
+        className="w-full md:w-5/12"
+        style={{
+          transformOrigin: isEven ? 'left center' : 'right center',
+          transform: `scale(${scaleVal})`,
+          visibility: scaleVal === 0 ? 'hidden' : 'visible',
+        }}
+      >
+        <div className="group relative elegant-panel p-6 bg-lienzo border border-carbon/20 hover:border-[var(--hover-era-color)] transition-all duration-300 hover:shadow-xl ">
+          <Link
+            href={getLocalizedPath(`/bio/${node.slug || node.id}`)}
+            className="flex items-start gap-4 cursor-pointer"
+          >
+            {node.image && (
+              <div className="relative w-16 h-16 shrink-0 rounded-full overflow-hidden border border-carbon/20 bg-carbon/5 shadow-inner">
+                <img
+                  src={resolvePublicOrExternalAsset(node.image)}
+                  alt={node.name}
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                  onError={(e) => {
+                    (e.target as HTMLElement).style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
+
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-2 mb-1">
+                <EraInsignia eraLabel={eraLabel} year={node.birthYear || 0} />
+                <span className="font-mono text-xs text-carbon/40">
+                  {node.birthYear !== undefined
+                    ? (node.birthYear < 0
+                      ? `${Math.abs(node.birthYear)} a.C.`
+                      : node.birthYear)
+                    : 's.d.'}
+                  {node.deathYear !== undefined
+                    ? ` — ${node.deathYear < 0
+                      ? `${Math.abs(node.deathYear)} a.C.`
+                      : node.deathYear}`
+                    : ''}
+                </span>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-bold text-carbon group-hover:text-[var(--hover-era-color)] transition-colors truncate font-serif">
+                  {node.name}
+                </h2>
+              </div>
+
+              {node.country && (
+                <p className="text-xs text-carbon/60 italic mt-0.5 truncate">
+                  {node.country}
+                </p>
+              )}
+            </div>
+
+            {/* Año — fondo decorativo */}
+            <div
+              className="absolute top-3 right-3 text-5xl font-serif text-carbon/[0.08] select-none pointer-events-none leading-none"
+              aria-hidden
+            >
+              {Math.abs(node.birthYear || 0)}
+            </div>
+          </Link>
+
+          {node.description && (
+            <p className="mt-3 text-xs font-sans text-carbon/75 leading-relaxed line-clamp-2">
+              {node.description}
+            </p>
+          )}
+
+          {/* Contribuciones en formato catálogo tipográfico Arts & Crafts */}
+          {contributions.length > 0 && (
+            <div className="mt-4 pt-3 border-t border-carbon/15">
+              <div className="text-[10px] ac-eyebrow text-carbon/45 mb-2 font-serif uppercase tracking-widest">
+                {t('timeline', 'contributions')}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {contributions.map((item) => (
+                  <Link
+                    key={item.id}
+                    href={getLocalizedPath(`${item.routePrefix}/${item.id}`)}
+                    style={{
+                      '--era-color': getEra(node.birthYear || 0).color,
+                    } as React.CSSProperties}
+                    className="group/tag inline-flex items-center gap-1.5 text-xs px-2.5 py-1 text-carbon border border-carbon/25 transition-all cursor-pointer bg-[color-mix(in_srgb,var(--theme-lienzo)_90%,var(--era-color)_10%)] hover:bg-[var(--era-color)] hover:text-lienzo"
+                  >
+                    <span className="font-serif text-xs italic tracking-wide">{item.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Espacio central donde pasa la liana con el brote indicador */}
+      <div className="hidden md:flex w-2/12 justify-center items-center">
+        <div
+          className="w-4 h-4 rounded-full border-2 border-lienzo shadow-md z-10 transition-transform duration-200"
+          style={{
+            backgroundColor: period.color,
+            transform: `scale(${0.35 + scaleVal * 0.85})`,
+            boxShadow: scaleVal === 1 ? `0 0 0 4px ${period.color}33` : 'none',
+          }}
+        />
+      </div>
+
+      {/* Lado vacío para equilibrar el zig-zag */}
+      <div className="hidden md:block w-5/12" />
+    </div>
+  );
+};
+
 // ── Página principal ──────────────────────────────────────────────────────────
 export const HistoryTimeline = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const targetHeadYRef = useRef(0);
+  const currentHeadYRef = useRef(0);
+  const [lianaHeadY, setLianaHeadY] = useState(0);
   const [totalHeight, setTotalHeight] = useState(2000);
   const [filter, setFilter] = useState<string>('all');
 
@@ -58,18 +278,68 @@ export const HistoryTimeline = () => {
     return getEra(n.birthYear || 0).key === filter;
   });
 
+  // Paradas de color exactas según los personajes de cada época en la línea temporal
+  const eraColorStops = useMemo(() => {
+    if (filter !== 'all') {
+      const eraObj = ERA_STEPS.find(e => e.key === filter) || DEFAULT_ERA;
+      return [
+        { offset: '0%', color: eraObj.color },
+        { offset: '100%', color: eraObj.color },
+      ];
+    }
+
+    const stops: { offset: string; color: string }[] = [];
+    const n = filtered.length;
+    if (n === 0) return [];
+
+    let lastEraKey = '';
+    filtered.forEach((m, idx) => {
+      const era = getEra(m.birthYear || 0);
+      if (era.key !== lastEraKey) {
+        const pct = Math.round((idx / Math.max(1, n - 1)) * 100);
+        stops.push({ offset: `${pct}%`, color: era.color });
+        lastEraKey = era.key;
+      }
+    });
+
+    if (stops.length > 0 && stops[0].offset !== '0%') {
+      stops.unshift({ offset: '0%', color: stops[0].color });
+    }
+    if (stops.length > 0 && stops[stops.length - 1].offset !== '100%') {
+      stops.push({ offset: '100%', color: stops[stops.length - 1].color });
+    }
+
+    return stops;
+  }, [filtered, filter]);
+
   useEffect(() => {
+    let animId: number;
+
+    const updateSmoothHead = () => {
+      const diff = targetHeadYRef.current - currentHeadYRef.current;
+      if (Math.abs(diff) > 0.2) {
+        currentHeadYRef.current += diff * 0.1; // Amortiguación de velocidad orgánica (lerp)
+        setLianaHeadY(currentHeadYRef.current);
+      }
+      animId = requestAnimationFrame(updateSmoothHead);
+    };
+
     const handleScroll = () => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const progress = Math.max(0, Math.min(1, -rect.top / (rect.height - windowHeight)));
-      setScrollProgress(progress);
+      const targetY = -rect.top + window.innerHeight * 0.7;
+      targetHeadYRef.current = Math.max(0, Math.min(totalHeight, targetY));
     };
 
+    handleScroll();
+    animId = requestAnimationFrame(updateSmoothHead);
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [totalHeight]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -132,103 +402,26 @@ export const HistoryTimeline = () => {
       ) : (
         <div className="relative w-full max-w-4xl mx-auto px-4 md:px-0">
           {/* Liana enredadera viva de Arts & Crafts */}
-          <ArtsAndCraftsLiana totalHeight={totalHeight} scrollProgress={scrollProgress} />
+          <ArtsAndCraftsLiana
+            totalHeight={totalHeight}
+            lianaHeadY={lianaHeadY}
+            eraStops={eraColorStops}
+          />
 
           {/* Nodos de la historia */}
           <div ref={containerRef} className="relative z-10 flex flex-col gap-24 py-12">
-            {filtered.map((node, i) => {
-              const isEven = i % 2 === 0;
-              const period = getEra(node.birthYear || 0);
-              const eraLabel = t('timeline', period.key);
-
-              return (
-                <div
-                  key={node.id}
-                  className={`relative flex items-center justify-between w-full ${isEven ? 'flex-row-reverse' : 'flex-row'
-                    }`}
-                >
-                  {/* Tarjeta del personaje */}
-                  <div className="w-full md:w-5/12" style={{ '--hover-era-color': getEra(node.birthYear || 0).color } as React.CSSProperties}>
-                    <Link
-                      href={getLocalizedPath(`/bio/${node.slug || node.id}`)}
-                      className="group block elegant-panel p-6 bg-lienzo border border-carbon/10 hover:border-[var(--hover-era-color)]/70 hover:outline-[var(--hover-era-color)]/30 transition-all duration-300 hover:shadow-md"
-                    >
-                      <div className="flex items-start gap-4">
-                        {node.image && (
-                          <div className="relative w-16 h-16 shrink-0 rounded-full overflow-hidden border border-carbon/20 bg-carbon/5">
-                            <img
-                              src={resolvePublicOrExternalAsset(node.image)}
-                              alt={node.name}
-                              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                              onError={(e) => {
-                                (e.target as HTMLElement).style.display = 'none';
-                              }}
-                            />
-                          </div>
-                        )}
-
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between gap-2 mb-1">
-                            <EraInsignia eraLabel={eraLabel} year={node.birthYear || 0} />
-                            <span className="font-mono text-xs text-carbon/40">
-                              {node.birthYear !== undefined
-                                ? (node.birthYear < 0
-                                  ? `${Math.abs(node.birthYear)} a.C.`
-                                  : node.birthYear)
-                                : 's.d.'}
-                              {node.deathYear !== undefined
-                                ? ` — ${node.deathYear < 0
-                                  ? `${Math.abs(node.deathYear)} a.C.`
-                                  : node.deathYear}`
-                                : ''}
-                            </span>
-                          </div>
-                          
-
-                          <div style={{ '--hover-era-color': getEra(node.birthYear || 0).color } as React.CSSProperties}>
-                            <h2 className="text-xl font-bold text-carbon group-hover:text-[var(--hover-era-color)] transition-colors truncate">
-                              {node.name}
-                            </h2>
-                          </div>
-
-                          {node.country && (
-                            <p className="text-xs text-carbon/60 italic mt-0.5 truncate">
-                              {node.country}
-                            </p>
-                          )}
-                        </div>
-                        {/* Año — fondo decorativo */}
-                        <div
-                          className="absolute top-3 right-3 text-5xl font-serif text-carbon/[0.08] select-none pointer-events-none leading-none"
-                          aria-hidden
-                        >
-                          {Math.abs((node.birthYear || 0))}
-                        </div>
-                        
-                      </div>
-
-                      {node.description && (
-                        <p className="mt-4 text-xs font-sans text-carbon/70 leading-relaxed line-clamp-2">
-                          {node.description}
-                        </p>
-                      )}
-
-                    </Link>
-                  </div>
-
-                  {/* Espacio central donde pasa la liana */}
-                  <div className="hidden md:flex w-2/12 justify-center items-center">
-                    <div
-                      className="w-3 h-3 rounded-full border-2 border-lienzo shadow-sm z-10 transition-transform duration-300 hover:scale-150"
-                      style={{ backgroundColor: period.color }}
-                    />
-                  </div>
-
-                  {/* Lado vacío para equilibrar el zig-zag */}
-                  <div className="hidden md:block w-5/12" />
-                </div>
-              );
-            })}
+            {filtered.map((node, i) => (
+              <MathematicianTimelineCard
+                key={node.id}
+                node={node}
+                index={i}
+                lianaHeadY={lianaHeadY}
+                totalHeight={totalHeight}
+                lang={lang}
+                t={t}
+                getLocalizedPath={getLocalizedPath}
+              />
+            ))}
           </div>
         </div>
       )}
