@@ -1749,7 +1749,7 @@
     {
       "id": "metodo-contradiccion",
       "type": "metodo",
-      "title": "Demostración por Contradicción",
+      "title": "Demostración por contradicción",
       "filePath": "es/methods/metodo-contradiccion.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [

@@ -23,6 +23,8 @@ export interface UserProgressState {
   toggleRead: (id: string) => void;
   /** Registra que un ejercicio fue resuelto de forma perfecta */
   markExerciseComplete: (id: string) => void;
+  /** Desmarca un ejercicio como completado */
+  unmarkExerciseComplete: (id: string) => void;
   /** Registra la visita a un caso práctico en el mundo real */
   markUseCaseVisited: (id: string) => void;
   /** Desbloquea a un matemático histórico en la biblioteca personal */
@@ -68,6 +70,10 @@ export const useProgressStore = create<UserProgressState>()(
         if (state.completedExercises.includes(id)) return state;
         return { completedExercises: [...state.completedExercises, id] };
       }),
+
+      unmarkExerciseComplete: (id: string) => set((state) => ({
+        completedExercises: state.completedExercises.filter(exId => exId !== id),
+      })),
 
       markUseCaseVisited: (id: string) => set((state) => {
         if (state.visitedUseCases.includes(id)) return state;

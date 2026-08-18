@@ -43,9 +43,10 @@ interface PreguntaProps {
  * Componente principal para renderizar una pregunta de Opción Múltiple.
  */
 export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct, answer: answerAlias, opciones, options }) => {
-  const { register, answer } = useExercise();
+  const { register, answer, state } = useExercise();
   const { setActiveStep } = useStepBinding();
-  const [selected, setSelected] = useState<string | null>(null);
+  const qState = state.questions[id];
+  const [selected, setSelected] = useState<string | null>(qState?.userAnswer ?? null);
 
   const displayTexto = texto || question || '';
   const correctAnswer = correct || answerAlias || '';
@@ -60,7 +61,7 @@ export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct
     setActiveStep(id);
     if (isAnswered) return;
     setSelected(value);
-    answer(id, value === correctAnswer);
+    answer(id, value === correctAnswer, value);
   };
 
   const selectedOpcion = displayOpciones.find(o => o.value === selected);

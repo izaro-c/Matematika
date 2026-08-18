@@ -63,6 +63,16 @@ describe('useProgressStore', () => {
     it('returns false for incomplete exercise', () => {
       expect(useProgressStore.getState().isExerciseComplete('ex-1')).toBe(false);
     });
+
+    it('unmarks a completed exercise', () => {
+      useProgressStore.getState().markExerciseComplete('ex-1');
+      useProgressStore.getState().markExerciseComplete('ex-2');
+      expect(useProgressStore.getState().isExerciseComplete('ex-1')).toBe(true);
+
+      useProgressStore.getState().unmarkExerciseComplete('ex-1');
+      expect(useProgressStore.getState().isExerciseComplete('ex-1')).toBe(false);
+      expect(useProgressStore.getState().isExerciseComplete('ex-2')).toBe(true);
+    });
   });
 
   describe('markUseCaseVisited', () => {

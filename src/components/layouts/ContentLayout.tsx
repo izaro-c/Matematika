@@ -6,8 +6,6 @@ import { DiagramStepSyncContext } from '@/lib/page-context/DiagramStepSyncContex
 import { MobileContentHeaderSeparator, MobileDiagramToolbar } from './MobileDiagramChrome';
 
 interface ContentLayoutProps {
-  /** Índice, atribución y relaciones del contenido. */
-  metadata?: React.ReactNode;
   /** Texto principal, limitado por el layout a una medida de lectura cómoda. */
   children: React.ReactNode;
   /** Simulación o diagrama que permanece montado al cambiar de breakpoint. */
@@ -43,12 +41,11 @@ export function ContentDiagram({ component: Diagram }: {
 }
 
 /**
- * Layout de páginas de contenido (texto | diagrama | secundario | índice).
+ * Layout de páginas de contenido (texto | diagrama | secundario).
  *
  * Sincroniza el paso activo en scroll mediante un detector geométrico centralizado.
  */
 export function ContentLayout({
-  metadata,
   children,
   diagram,
   secondary,
@@ -58,9 +55,7 @@ export function ContentLayout({
   variant = 'reading',
   className = '',
 }: ContentLayoutProps) {
-  const [isMetadataOpen, setIsMetadataOpen] = useState(false);
   const [isDiagramExpanded, setIsDiagramExpanded] = useState(true);
-  const metadataId = useId();
   const diagramId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   
@@ -69,7 +64,6 @@ export function ContentLayout({
   const [activeDiagramStepId, setActiveDiagramStepId] = useState<string | null>(null);
   const activeStepIndexRef = useRef<number | null>(-1);
 
-  const hasMetadata = metadata !== undefined && metadata !== null;
   const hasDiagram = diagram !== undefined && diagram !== null;
 
   const proofSteps = useCallback(
@@ -198,36 +192,12 @@ export function ContentLayout({
     };
   }, [hasDiagram, proofSteps, syncProofStepState]);
 
-  useEffect(() => {
-    if (!isMetadataOpen) return;
-
-    const previousOverflow = document.body.style.overflow;
-    const desktopQuery = window.matchMedia('(min-width: 1280px)');
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsMetadataOpen(false);
-    };
-    const closeAtDesktop = (event: MediaQueryListEvent) => {
-      if (event.matches) setIsMetadataOpen(false);
-    };
-
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', closeOnEscape);
-    desktopQuery.addEventListener('change', closeAtDesktop);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', closeOnEscape);
-      desktopQuery.removeEventListener('change', closeAtDesktop);
-    };
-  }, [isMetadataOpen]);
-
   return (
     <DiagramStepSyncContext.Provider value={diagramStepSyncValue}>
       <div
         ref={rootRef}
         className={`content-layout ${pageType ? 'page-accent-scope' : ''} ${embedded ? 'content-layout--embedded' : ''} ${className}`}
         data-has-diagram={hasDiagram}
-        data-has-metadata={hasMetadata}
         data-page-type={pageType}
         data-layout-variant={variant}
         style={pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties) : undefined}
@@ -237,45 +207,6 @@ export function ContentLayout({
             hasDiagram={hasDiagram}
             isDiagramExpanded={isDiagramExpanded}
           />
-        )}
-
-        {hasMetadata && (
-          <>
-            <button
-              type="button"
-              className="content-metadata-trigger"
-              aria-controls={metadataId}
-              aria-expanded={isMetadataOpen}
-              onClick={() => setIsMetadataOpen(true)}
-            >
-              <span aria-hidden>☰</span>
-              <span className="content-metadata-trigger-label">Índice</span>
-            </button>
-
-            <button
-              type="button"
-              className={`content-metadata-backdrop ${isMetadataOpen ? 'is-open' : ''}`}
-              aria-label="Cerrar índice"
-              tabIndex={isMetadataOpen ? 0 : -1}
-              onClick={() => setIsMetadataOpen(false)}
-            />
-
-            <aside
-              id={metadataId}
-              className={`content-metadata ${isMetadataOpen ? 'is-open' : ''}`}
-              aria-label="Metadatos e índice"
-            >
-              <button
-                type="button"
-                className="content-metadata-close"
-                aria-label="Cerrar índice"
-                onClick={() => setIsMetadataOpen(false)}
-              >
-                <span aria-hidden>×</span>
-              </button>
-              {metadata}
-            </aside>
-          </>
         )}
 
         <div className="content-content">

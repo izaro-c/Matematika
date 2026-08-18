@@ -103,12 +103,12 @@ export const Hueco: React.FC<HuecoProps> = ({
   tolerance = 0.001,
 }) => {
   const { state, register, answer, reveal } = useExercise();
-  const [input, setInput] = useState('');
+  const qState = state.questions[id];
+  const [input, setInput] = useState(qState?.userAnswer ?? '');
   const [isShaking, setIsShaking] = useState(false);
 
   useEffect(() => { register(id, 'hueco'); }, [id, register]);
 
-  const qState = state.questions[id];
   const isCorrect = qState?.isCorrect ?? null;
   const isRevealed = qState?.revealed ?? false;
   const isDone = isCorrect === true || isRevealed;
@@ -117,7 +117,7 @@ export const Hueco: React.FC<HuecoProps> = ({
   const check = useCallback(() => {
     if (!input.trim() || isDone) return;
     const ok = numericMatch(input, correct, tolerance) || normalizeStr(input) === normalizeStr(correct);
-    answer(id, ok);
+    answer(id, ok, input);
     if (!ok) {
       setInput('');
       setIsShaking(true);

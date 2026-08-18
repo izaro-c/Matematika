@@ -270,6 +270,57 @@ export interface TranslationDictionary {
     description: string;
     backHome: string;
   };
+  metadata: {
+    connectionNetwork: string;
+    connectionNetworkSubtitle: string;
+    tableOfContents: string;
+    prerequisites: string;
+    proofs: string;
+    corollaries: string;
+    domain: string;
+    difficulty: string;
+    attribution: string;
+    tags: string;
+    formalVerification: string;
+    verifiedLean4: string;
+    seals: {
+      lean: {
+        title: string;
+        subtitle: string;
+        ariaLabel: string;
+      };
+      exercise: {
+        title: string;
+        subtitle: string;
+        ariaLabel: string;
+      };
+      read: {
+        title: string;
+        subtitle: string;
+        ariaLabel: string;
+      };
+    };
+    colophon: string;
+    difficulties: {
+      basico: string;
+      elemental: string;
+      intermedio: string;
+      avanzado: string;
+      experto: string;
+    };
+    types: {
+      teorema: string;
+      lema: string;
+      corolario: string;
+      definicion: string;
+      axioma: string;
+      demostracion: string;
+      modelo: string;
+      metodo: string;
+      ejemplo: string;
+      ejercicio: string;
+    };
+  };
 }
 
 export interface LanguageConfig {
