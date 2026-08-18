@@ -19,7 +19,7 @@ export type SearchResult = {
 };
 
 export const ALL_TYPES: SearchResultType[] = [
-  'teorema', 'método', 'definición', 'axioma', 'modelo',
+  'teorema', 'método', 'definición', 'axioma', 'modelo', 'sistema_axiomatico',
   'ejemplo', 'ejercicio', 'demo', 'matemático', 'caso_uso', 'glosario', 'msc2020',
 ];
 
@@ -29,6 +29,7 @@ export const TYPE_ICONS: Record<SearchResultType, string> = {
   definición: '◆',
   axioma: '◈',
   modelo: '☙',
+  sistema_axiomatico: '⬡',
   ejemplo: '▸',
   ejercicio: '✎',
   demo: '❧',
@@ -46,6 +47,7 @@ export const TYPE_LABELS: Record<SearchResultType, string> = {
   definición: 'Definiciones',
   axioma: 'Axiomas',
   modelo: 'Modelos',
+  sistema_axiomatico: 'Sistemas axiomáticos',
   ejemplo: 'Ejemplos',
   ejercicio: 'Ejercicios',
   demo: 'Demostraciones',
@@ -61,6 +63,7 @@ export const TYPE_RESULT_LABELS: Record<SearchResultType, string> = {
   definición: 'Definición',
   axioma: 'Axioma',
   modelo: 'Modelo',
+  sistema_axiomatico: 'Sistema axiomático',
   ejemplo: 'Ejemplo',
   ejercicio: 'Ejercicio',
   demo: 'Demostración',
@@ -182,6 +185,16 @@ export function buildSearchIndex(lang?: string): SearchResult[] {
       title: model.title,
       subtitle: model.description,
       href: routePath(`/modelo/${model.slug}`),
+    });
+  }
+
+  for (const sys of db.getAllAxiomaticSystems(lang)) {
+    index.push({
+      id: `sys-${sys.id}`,
+      type: 'sistema_axiomatico',
+      title: sys.title,
+      subtitle: sys.description,
+      href: routePath(`/sistema/${sys.slug}`),
     });
   }
 

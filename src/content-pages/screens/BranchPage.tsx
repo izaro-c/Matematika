@@ -96,6 +96,8 @@ export const BranchPage = () => {
                     else if (entry.type === 'definition') link = `/definicion/${entry.item.id}`;
                     else if (entry.type === 'axiom') link = `/axioma/${entry.item.id}`;
                     else if (entry.type === 'model') link = `/modelo/${entry.item.id}`;
+                    else if (entry.type === 'axiomatic-system') link = `/sistema/${entry.item.id}`;
+                    else if (entry.type === 'usecase' || entry.type === 'useCase') link = `/caso/${entry.item.id}`;
 
                     const typeMap: Record<string, string> = {
                       'theorem': 'teorema',
@@ -104,8 +106,10 @@ export const BranchPage = () => {
                       'exercise': 'ejercicio',
                       'example': 'ejemplo',
                       'useCase': 'caso-de-uso',
+                      'usecase': 'caso-de-uso',
                       'axiom': 'axioma',
                       'model': 'modelo',
+                      'axiomatic-system': 'sistema-axiomatico',
                     };
                     const mappedType = typeMap[entry.type] || entry.type;
 

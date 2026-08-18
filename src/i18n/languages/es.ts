@@ -128,6 +128,7 @@ export const esLanguage: LanguageConfig = {
       fundamentalConcepts: 'Conceptos fundamentales',
       explore: 'Explorar',
       axiomaticSystem: 'Sistema axiomático',
+      axiomaticSystems: 'Sistemas axiomáticos',
       verifiedAxioms: 'Axiomas verificados',
       systemAxioms: 'Axiomas del sistema',
       modelsSatisfyingSystem: 'Modelos que satisfacen este sistema',
@@ -135,6 +136,12 @@ export const esLanguage: LanguageConfig = {
       practiceWithExercises: 'Practica con ejercicios relacionados',
       practice: 'Practicar',
       moreApplications: 'Más aplicaciones de este concepto',
+      seeExample: 'Ver ejemplo',
+      exploreCase: 'Explorar caso',
+      seeContent: 'Ver {content}'
+    },
+    action: {
+      practice: 'Practicar'
     },
     exercise: {
       correctCount: '{count} correctas',

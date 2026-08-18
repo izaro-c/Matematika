@@ -33,7 +33,7 @@ const TYPE_LABELS_BY_LANG: Record<string, Record<string, string>> = {
     matematico: 'Matematikaria',
     metodo: 'Metodoa',
     modelo: 'Eredua',
-    'sistema-axiomatico': 'Sistema Axiomatikoa',
+    'sistema-axiomatico': 'Sistema axiomatikoa',
     'plan-de-estudio': 'Ikasketa-plana',
   },
   es: {
@@ -49,10 +49,27 @@ const TYPE_LABELS_BY_LANG: Record<string, Record<string, string>> = {
     matematico: 'Matemático',
     metodo: 'Método',
     modelo: 'Modelo',
-    'sistema-axiomatico': 'Sistema Axiomático',
+    'sistema-axiomatico': 'Sistema axiomático',
     'plan-de-estudio': 'Plan de estudio',
   },
 };
+
+import { CONTENT_TYPE_ALIASES } from '@/design/contentTypeColors';
+
+const normalizeType = (type: string): string => {
+  const raw = type.toLowerCase().trim().replace(/_/g, '-').replace(/\s+/g, '-');
+  return CONTENT_TYPE_ALIASES[raw] ?? raw;
+};
+
+export const getContentTypeLabel = (type: string, lang: string = 'es'): string => {
+  const normalized = normalizeType(type);
+  const labels = TYPE_LABELS_BY_LANG[lang] || TYPE_LABELS_BY_LANG.es;
+  if (labels[normalized]) return labels[normalized];
+
+  const clean = normalized.replace(/-/g, ' ');
+  return clean.charAt(0).toUpperCase() + clean.slice(1);
+};
+
 
 interface ContentTypeBadgeProps {
   type: string;
@@ -62,14 +79,11 @@ interface ContentTypeBadgeProps {
 
 export const ContentTypeBadge: React.FC<ContentTypeBadgeProps> = ({ type, label, className = '' }) => {
   const { lang } = useI18n();
-  const token = getContentPageAccent(type);
-  const ornament = TYPE_ORNAMENTS[type] ?? '◆';
+  const normalizedType = normalizeType(type);
+  const token = getContentPageAccent(normalizedType);
+  const ornament = TYPE_ORNAMENTS[normalizedType] ?? '◆';
 
-  const normalized = type.toLowerCase().replace(/_/g, '-');
-  const labels = TYPE_LABELS_BY_LANG[lang] || TYPE_LABELS_BY_LANG.es;
-  const localizedLabel = labels[normalized] || labels[type];
-
-  const text = label ?? localizedLabel ?? type.charAt(0).toUpperCase() + type.slice(1).replace(/-/g, ' ');
+  const text = label ?? getContentTypeLabel(normalizedType, lang);
 
   return (
     <span

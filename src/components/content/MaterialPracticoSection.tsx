@@ -3,6 +3,7 @@ import { SectionTitle } from '@/components/ui/SectionTitle';
 import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { ContentCard } from '@/components/ui/ContentCard';
 import type { Example, Exercise } from '@/data/content/types';
+import { useI18n } from '@/i18n';
 
 interface MaterialPracticoSectionProps {
   examples: Example[];
@@ -11,6 +12,7 @@ interface MaterialPracticoSectionProps {
 
 export const MaterialPracticoSection: React.FC<MaterialPracticoSectionProps> = ({ examples, exercises }) => {
   const hasContent = examples.length > 0 || exercises.length > 0;
+  const { t } = useI18n();
   if (!hasContent) return null;
 
   return (
@@ -25,7 +27,7 @@ export const MaterialPracticoSection: React.FC<MaterialPracticoSectionProps> = (
             title={ex.title}
             description={ex.description}
             type="ejemplo"
-            actionLabel="Ver Ejemplo"
+            actionLabel={t('content', 'seeExample')}
           />
         ))}
         {exercises.map(ex => (
@@ -36,7 +38,7 @@ export const MaterialPracticoSection: React.FC<MaterialPracticoSectionProps> = (
             description={ex.description}
             type="ejercicio"
             accent="musgo"
-            actionLabel="Practicar"
+            actionLabel={t('content', 'practice')}
           />
         ))}
       </div>

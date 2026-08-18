@@ -7,6 +7,7 @@ import { ContentBody } from '@/components/ui/ContentBody';
 import { ContentCard } from '@/components/ui/ContentCard';
 import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
 import { useI18n } from '@/i18n';
 
 /**
@@ -63,6 +64,7 @@ export function AxiomaticSystemPage() {
         <ContentBody>
           <system.Component />
         </ContentBody>
+        <ReadingButton id={system.id} />
       </FadeIn>
     </div>
   );
@@ -76,7 +78,7 @@ export function AxiomaticSystemPage() {
             <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4">
               {`${t('content', 'systemAxioms')} (${axioms.length})`}
             </h2>
-            <div className="flex flex-col gap-3 max-w-4xl">
+            <div className="grid gap-4 lg:grid-cols-2">
               {axioms.map(ax => ax && (
                 <ContentCard
                   key={ax.id}
@@ -84,7 +86,7 @@ export function AxiomaticSystemPage() {
                   title={ax.title}
                   description={ax.description}
                   type="axioma"
-                  layout="row"
+                  layout="default"
                 />
               ))}
             </div>
@@ -97,7 +99,7 @@ export function AxiomaticSystemPage() {
             <h2 className="text-2xl font-bold mb-8 border-b border-carbon/10 pb-4">
               {`${t('content', 'modelsSatisfyingSystem')} (${models.length})`}
             </h2>
-            <div className="flex flex-col gap-3 max-w-4xl">
+            <div className="grid gap-4 lg:grid-cols-2">
               {models.map(m => (
                 <ContentCard
                   key={m.id}
@@ -105,19 +107,22 @@ export function AxiomaticSystemPage() {
                   title={m.title}
                   description={m.description}
                   type="modelo"
-                  layout="row"
+                  layout="default"
                 />
               ))}
             </div>
           </section>
         )}
+
+
       </FadeIn>
     </div>
   );
 
   return (
     <div className="min-h-viewport flex flex-col w-full">
-      <ContentLayout pageType="sistema-axiomatico" diagram={system.Simulation ? <ContentDiagram component={system.Simulation} /> : undefined}>
+      <ContentLayout 
+        pageType="sistema-axiomatico" diagram={system.Simulation ? <ContentDiagram component={system.Simulation} /> : undefined}>
         {renderMainContent()}
       </ContentLayout>
       {renderSecondaryContent()}

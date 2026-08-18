@@ -68,6 +68,7 @@ export const SearchOmnibar = () => {
     definición: t('content', 'definitions'),
     demo: t('content', 'demonstrations'),
     axioma: t('content', 'axioms'),
+    sistema_axiomatico: t('content', 'axiomaticSystem'),
     modelo: t('content', 'models'),
     método: t('content', 'methods'),
     ejercicio: t('content', 'exercises'),

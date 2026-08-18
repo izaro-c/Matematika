@@ -16,7 +16,8 @@ export type PageAccentType =
   | 'caso_uso'
   | 'axioma'
   | 'msc2020'
-  | 'modelo';
+  | 'modelo'
+  | 'sistema_axiomatico';
 
 export type ContentPageAccentType =
   | 'axioma'
@@ -51,6 +52,7 @@ export const PAGE_ACCENT_ROLES = {
   caso_uso: 'exampleAccent',
   glosario: 'conceptAccent',
   msc2020: 'conceptAccent',
+  sistema_axiomatico: 'neutralStrong',
 } as const satisfies Record<PageAccentType, SemanticColorRole>;
 
 /**
@@ -69,6 +71,7 @@ export const PAGE_ACCENTS = {
   caso_uso: SEMANTIC_COLOR_ROLES[PAGE_ACCENT_ROLES.caso_uso],
   glosario: SEMANTIC_COLOR_ROLES[PAGE_ACCENT_ROLES.glosario],
   msc2020: SEMANTIC_COLOR_ROLES[PAGE_ACCENT_ROLES.msc2020],
+  sistema_axiomatico: SEMANTIC_COLOR_ROLES[PAGE_ACCENT_ROLES.sistema_axiomatico],
 } as const satisfies Record<PageAccentType, ThemeColorVar>;
 
 /**
