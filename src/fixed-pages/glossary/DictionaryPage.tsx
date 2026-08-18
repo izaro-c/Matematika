@@ -84,7 +84,7 @@ export const DictionaryPage = () => {
           <div className="flex justify-center mb-6">
             <Logo decorative className="w-16 h-16 opacity-80" />
           </div>
-          <h1 className="text-5xl md:text-7xl text-terracota tracking-tight mb-6 font-bold mb-4">
+          <h1 className="text-5xl md:text-7xl text-dictionary tracking-tight mb-6 font-bold mb-4">
             {t('glossary', 'title')}
           </h1>
           <p className="text-xl text-carbon/60 italic max-w-2xl mx-auto mb-12">
@@ -98,7 +98,7 @@ export const DictionaryPage = () => {
               placeholder={t('search', 'placeholder')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-transparent border-b-2 border-carbon/20 py-2 px-4 text-center text-lg focus:outline-none focus:border-terracota transition-colors text-carbon placeholder:text-carbon/30 italic"
+              className="w-full bg-transparent border-b-2 border-carbon/20 py-2 px-4 text-center text-lg focus:outline-none focus:border-dictionary transition-colors text-carbon placeholder:text-carbon/30 italic"
             />
             {search && (
               <button 
@@ -117,7 +117,7 @@ export const DictionaryPage = () => {
           return (
             <div key={category} className="mb-24">
               <div className="flex items-center gap-6 mb-12">
-                <h2 className="text-3xl text-terracota font-bold ${UI.textBalance}">
+                <h2 className="text-3xl text-dictionary font-bold ${UI.textBalance}">
                   {category}
                 </h2>
                 <div className="flex-1 h-[1px] bg-carbon/10" />
@@ -138,7 +138,7 @@ export const DictionaryPage = () => {
                       <h3 className="text-2xl text-carbon mb-2 font-bold">
                         {data.title}
                       </h3>
-                      <div className="w-8 h-[1px] bg-terracota/30 mb-4 transition-all duration-500 group-hover:w-full group-hover:bg-terracota/50" />
+                      <div className="w-8 h-[1px] bg-dictionary/30 mb-4 transition-all duration-500 group-hover:w-full group-hover:bg-dictionary/50" />
                       <p className="text-carbon/80 leading-relaxed italic mb-4">
                         {data.definition}
                       </p>
@@ -152,7 +152,7 @@ export const DictionaryPage = () => {
 
                     {data.id && (
                       <Link href={getLocalizedPath(`/definicion/${data.id}`)}>
-                        <span className="inline-block mt-4 ac-eyebrow text-terracota hover:text-carbon transition-colors border-b border-terracota/30 pb-1 cursor-pointer">
+                        <span className="inline-block mt-4 ac-eyebrow text-dictionary hover:text-carbon transition-colors border-b border-dictionary/30 pb-1 cursor-pointer">
                           {t('glossary', 'readFullArticle')}
                         </span>
                       </Link>

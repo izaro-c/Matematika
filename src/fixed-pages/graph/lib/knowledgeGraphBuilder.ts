@@ -45,7 +45,7 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
 
   // Resolver el nodo rama de un item a partir de sus propiedades de rama o tags
   const resolveItemBranch = (item: BaseContent): string | null => {
-    const itemCodes = getItemBranchCodes(item);
+    const itemCodes = getItemBranchCodes(item as BaseContent & Record<string, unknown>);
     for (const mscCode of itemCodes) {
       for (const root of ROOT_BRANCHES) {
         if (mscCode === root) return `rama-${root}`;

@@ -104,6 +104,7 @@ export const euLanguage: LanguageConfig = {
       renaissance: 'Pizkundea',
       enlightenment: 'Ilustrazioa',
       modern: 'Aro modernoa',
+      contributions: 'Ekarpenak',
     },
     content: {
       by: 'Egilea:',

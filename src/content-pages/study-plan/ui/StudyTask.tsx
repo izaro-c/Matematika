@@ -39,7 +39,7 @@ function lookupExists(id: string): boolean {
 }
 
 export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
-  const { lang, getLocalizedPath } = useI18n();
+  const { lang, t, getLocalizedPath } = useI18n();
   const { isRead } = useProgressStore();
   const completed = isRead(id);
   const context = React.useContext(StudyPlanContext);

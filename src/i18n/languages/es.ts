@@ -104,6 +104,7 @@ export const esLanguage: LanguageConfig = {
       renaissance: 'Renacimiento',
       enlightenment: 'Ilustración',
       modern: 'Época Moderna',
+      contributions: 'Contribuciones',
     },
     content: {
       by: 'Por',

@@ -1,190 +1,303 @@
 import React, { useMemo } from 'react';
 
-interface ArtsAndCraftsLianaProps {
-  scrollProgress: number;
-  totalHeight: number;
+interface EraColorStop {
+  offset: string;
+  color: string;
 }
 
-// --- 1. Constantes Matemáticas Fundamentales ---
+interface ArtsAndCraftsLianaProps {
+  lianaHeadY: number;
+  totalHeight: number;
+  eraStops?: EraColorStop[];
+}
 
-const PHI = (1 + Math.sqrt(5)) / 2; // ~1.61803
+// ── 1. Constantes y Utilidades Matemáticas ────────────────────────────────────
 
-// --- 2. Funciones de Evaluación de Curvas de Bézier Cúbicas ---
+const PHI = (1 + Math.sqrt(5)) / 2; // Proporción áurea (~1.61803)
 
-const getCubicBezierPoint = (t: number, p0: number, p1: number, p2: number, p3: number): number =>
+interface Point {
+  x: number;
+  y: number;
+}
+
+interface BezierSegment {
+  p0: Point;
+  cp1: Point;
+  cp2: Point;
+  p3: Point;
+  length: number;
+}
+
+/**
+ * Evalúa punto en una curva Bézier cúbica.
+ */
+const evalBezier = (t: number, p0: number, p1: number, p2: number, p3: number): number =>
   Math.pow(1 - t, 3) * p0 +
   3 * Math.pow(1 - t, 2) * t * p1 +
   3 * (1 - t) * Math.pow(t, 2) * p2 +
   Math.pow(t, 3) * p3;
 
-const getCubicBezierDerivative = (t: number, p0: number, p1: number, p2: number, p3: number): number =>
-  3 * Math.pow(1 - t, 2) * (p1 - p0) +
-  6 * (1 - t) * t * (p2 - p1) +
-  3 * Math.pow(t, 2) * (p3 - p2);
-
 /**
- * Aproximación numérica de la integral de longitud de arco mediante 
- * discretización de segmentos de recta (n=20 ofrece un error < 0.1% en estas curvas).
+ * Aproximación numérica de longitud de arco de un segmento Bézier.
  */
-const approximateBezierLength = (
-  p0x: number, p1x: number, p2x: number, p3x: number,
-  p0y: number, p1y: number, p2y: number, p3y: number,
-  steps: number = 20
-): number => {
-  let length = 0;
-  let prevX = p0x;
-  let prevY = p0y;
-
+const getSegmentLength = (seg: Omit<BezierSegment, 'length'>, steps = 16): number => {
+  let len = 0;
+  let px = seg.p0.x;
+  let py = seg.p0.y;
   for (let i = 1; i <= steps; i++) {
     const t = i / steps;
-    const x = getCubicBezierPoint(t, p0x, p1x, p2x, p3x);
-    const y = getCubicBezierPoint(t, p0y, p1y, p2y, p3y);
-    const dx = x - prevX;
-    const dy = y - prevY;
-    length += Math.sqrt(dx * dx + dy * dy);
-    prevX = x;
-    prevY = y;
+    const x = evalBezier(t, seg.p0.x, seg.cp1.x, seg.cp2.x, seg.p3.x);
+    const y = evalBezier(t, seg.p0.y, seg.cp1.y, seg.cp2.y, seg.p3.y);
+    const dx = x - px;
+    const dy = y - py;
+    len += Math.sqrt(dx * dx + dy * dy);
+    px = x;
+    py = y;
   }
-  return length;
+  return len;
 };
 
-// --- 3. Tipos y Modelos de Datos Topológicos ---
+/**
+ * Convierte una serie de puntos muestreados a segmentos Bézier cúbicos Catmull-Rom
+ * garantizando continuidad C¹ (suavidad absoluta en todas las uniones sin codos).
+ */
+const pointsToBeziers = (points: Point[], tension = 1.0): BezierSegment[] => {
+  const segments: BezierSegment[] = [];
+  const n = points.length;
+  if (n < 2) return segments;
 
-interface NodeMetadata {
-  id: string;
-  globalY: number;      // Coordenada Y absoluta en el documento
-  baseTransform: string; // Traslación y rotación derivadas de la tangente
-  componentType: 'leaf' | 'tendril' | 'bud';
-}
+  for (let i = 0; i < n - 1; i++) {
+    const p0 = points[Math.max(0, i - 1)];
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const p3 = points[Math.min(n - 1, i + 2)];
 
-function placeNode(
-  nodes: NodeMetadata[],
-  id: string, type: 'leaf' | 'tendril' | 'bud',
-  t: number, p0x: number, p1x: number, p2x: number, p3x: number,
-  p0y: number, p1y: number, p2y: number, p3y: number,
-  angleOffset: number
-): void {
-  const x = getCubicBezierPoint(t, p0x, p1x, p2x, p3x);
-  const y = getCubicBezierPoint(t, p0y, p1y, p2y, p3y);
-  const dx = getCubicBezierDerivative(t, p0x, p1x, p2x, p3x);
-  const dy = getCubicBezierDerivative(t, p0y, p1y, p2y, p3y);
-  const tangentAngle = (Math.atan2(dy, dx) * 180) / Math.PI;
-  nodes.push({
-    id,
-    globalY: y,
-    baseTransform: `translate(${x}, ${y}) rotate(${tangentAngle + angleOffset})`,
-    componentType: type
-  });
-}
+    const cp1: Point = {
+      x: p1.x + (p2.x - p0.x) / (6 * tension),
+      y: p1.y + (p2.y - p0.y) / (6 * tension),
+    };
 
-// --- 4. Subcomponentes Vectoriales Base (Sin transformación propia) ---
+    const cp2: Point = {
+      x: p2.x - (p3.x - p1.x) / (6 * tension),
+      y: p2.y - (p3.y - p1.y) / (6 * tension),
+    };
 
-const SlenderWillowLeaf = () => (
+    const segBase = { p0: p1, cp1, cp2, p3: p2 };
+    const length = getSegmentLength(segBase);
+    segments.push({ ...segBase, length });
+  }
+
+  return segments;
+};
+
+/**
+ * Convierte lista de segmentos Bézier a string 'd' de SVG.
+ */
+const beziersToPathD = (segments: BezierSegment[]): string => {
+  if (segments.length === 0) return '';
+  let d = `M ${segments[0].p0.x.toFixed(2)},${segments[0].p0.y.toFixed(2)} `;
+  for (const seg of segments) {
+    d += `C ${seg.cp1.x.toFixed(2)},${seg.cp1.y.toFixed(2)} ${seg.cp2.x.toFixed(2)},${seg.cp2.y.toFixed(2)} ${seg.p3.x.toFixed(2)},${seg.p3.y.toFixed(2)} `;
+  }
+  return d;
+};
+
+// ── 2. Elementos Botánicos Vectoriales Arts & Crafts ──────────────────────────
+
+/**
+ * Hoja de sauce / acanto Arts & Crafts con peciolo y nervaduras grabadas.
+ */
+const ArtsAndCraftsLeaf: React.FC<{ variant?: 'large' | 'small' }> = ({ variant = 'large' }) => {
+  const scale = variant === 'large' ? 1 : 0.72;
+  return (
+    <g transform={`scale(${scale})`}>
+      {/* Peciolo (tallito que une la hoja a la liana) */}
+      <path d="M 0,0 Q 8,-3 14,-1" className="stroke-salvia/70 fill-none" strokeWidth="0.9" strokeLinecap="round" />
+      {/* Limbo foliar exterior */}
+      <path
+        d="M 14,-1 C 22,-12 42,-14 54,-2 C 40,6 26,8 14,-1 Z"
+        className="fill-salvia/20 stroke-salvia/60"
+        strokeWidth="0.8"
+        strokeLinejoin="round"
+      />
+      {/* Nervadura central */}
+      <path d="M 14,-1 Q 32,-3 48,-2" className="stroke-salvia/40 fill-none" strokeWidth="0.5" />
+      {/* Nervaduras secundarias */}
+      <path d="M 24,-2 Q 28,-7 34,-8" className="stroke-salvia/30 fill-none" strokeWidth="0.4" />
+      <path d="M 32,-2 Q 38,-6 44,-6" className="stroke-salvia/30 fill-none" strokeWidth="0.4" />
+      <path d="M 28,-1 Q 32,3 36,4" className="stroke-salvia/30 fill-none" strokeWidth="0.4" />
+    </g>
+  );
+};
+
+/**
+ * Zarcillo en espiral logarítmica que se enrosca con elegancia natural.
+ */
+const BotanicalSpiralTendril: React.FC = () => (
   <g>
-    <path d="M0,0 Q10,-2 15,0" className="stroke-salvia/40 fill-none" strokeWidth="0.5" />
     <path
-      d="M14,0 C20,-8 35,-10 45,-2 C35,4 25,6 14,0 Z"
-      className="fill-salvia/10 stroke-salvia/30"
-      strokeWidth="0.5"
-    />
-    <path d="M14,0 Q28,-3 40,-2" className="stroke-salvia/20 fill-none" strokeWidth="0.25" />
-  </g>
-);
-
-const DelicateTendril = () => (
-  <g>
-    <path
-      d="M0,0 C10,-10 25,-5 20,8 C15,20 0,15 5,5 C8,-2 15,0 13,4"
-      className="stroke-salvia/40 fill-none"
-      strokeWidth="0.5"
+      d="M 0,0 C 10,-8 18,-4 16,6 C 14,16 4,14 6,6 C 7.5,1.5 13,1 12,4 C 11.5,5.5 9.5,5 9.8,4.2"
+      className="stroke-salvia/70 fill-none"
+      strokeWidth="0.75"
       strokeLinecap="round"
     />
   </g>
 );
 
-const ElegantBud = () => (
+/**
+ * Capullo de flor silvestre con sépalos salvia y pétalos terracota en crecimiento.
+ */
+const BotanicalBud: React.FC = () => (
   <g>
-    <path d="M0,0 Q8,2 12,-4" className="stroke-salvia/50 fill-none" strokeWidth="0.75" />
-    <path d="M10,-3 L14,-8 L16,-3 Z" className="fill-salvia/20 stroke-salvia/50" strokeWidth="0.5" />
-    <g transform="translate(14, -6) rotate(10)">
-      <path d="M0,0 C5,-12 15,-15 15,0 C10,-2 5,2 0,0 Z" className="fill-terracota/20 stroke-terracota/40" strokeWidth="0.5" />
-      <path d="M0,0 C8,-8 18,5 15,0 C10,5 5,5 0,0 Z" className="fill-terracota/30 stroke-terracota/50" strokeWidth="0.5" />
+    <path d="M 0,0 Q 6,-4 11,-2" className="stroke-salvia/70 fill-none" strokeWidth="0.9" strokeLinecap="round" />
+    <path d="M 11,-2 L 15,-7 L 18,-2 Z" className="fill-salvia/40 stroke-salvia/70" strokeWidth="0.6" />
+    <g transform="translate(15, -4) rotate(12)">
+      <path
+        d="M 0,0 C 6,-10 16,-12 16,-1 C 11,2 5,3 0,0 Z"
+        className="fill-terracota/35 stroke-terracota/70"
+        strokeWidth="0.6"
+      />
+      <path
+        d="M 0,0 C 7,-7 17,2 14,-2 C 10,4 4,3 0,0 Z"
+        className="fill-ocre/30 stroke-ocre/60"
+        strokeWidth="0.5"
+      />
     </g>
   </g>
 );
 
-// --- 5. Motor de Renderizado Principal ---
+
+
+// ── 3. Tipos y Modelo de Nodos Botánicos ──────────────────────────────────────
+
+interface BotanicalNode {
+  id: string;
+  globalY: number;
+  transform: string;
+  type: 'leaf-large' | 'leaf-small' | 'tendril' | 'bud';
+}
+
+// ── 4. Componente Principal ArtsAndCraftsLiana ────────────────────────────────
 
 export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
-  scrollProgress,
+  lianaHeadY,
   totalHeight,
+  eraStops,
 }) => {
-  const SEGMENT_H = 400;
   const X_CENTER = 150;
-  // Aplicamos la proporción áurea a la amplitud para una dispersión más orgánica
-  const BASE_AMPLITUDE = 80;
-  const SECONDARY_AMPLITUDE = BASE_AMPLITUDE / PHI;
+  const SAMPLE_STEP = 28; // Muestreo denso para curvas de alta frecuencia
 
-  // Calculamos la topología y geometría matemática una única vez
-  const { pathPrimary, pathSecondary, totalPrimaryLength, totalSecondaryLength, nodesMap } = useMemo(() => {
-    const segments = Math.max(1, Math.ceil(totalHeight / SEGMENT_H));
+  // ── Generación de topología matemática ─────────────────────────────────────
+  const {
+    pathPrimaryD,
+    pathSecondaryD,
+    totalPrimaryLength,
+    totalSecondaryLength,
+    botanicalNodes,
+  } = useMemo(() => {
+    const numSamples = Math.max(4, Math.ceil(totalHeight / SAMPLE_STEP) + 1);
 
-    let mainPath = `M${X_CENTER},0 `;
-    let secondaryPath = `M${X_CENTER},0 `;
-    let accPrimaryLength = 0;
-    let accSecondaryLength = 0;
+    // Ondas botánicas alargadas, fluidas y majestuosas (cruces cada ~330px)
+    const samplePri = (y: number): Point => {
+      const w1 = Math.sin(y * 0.0095) * 46; // Curvas alargadas
+      const w2 = Math.cos(y * 0.0035 / PHI + 0.5) * 18; // Modulación áurea amplia
+      const w3 = Math.sin(y * 0.02 + 1.2) * 5; // Textura botánica sutil
+      return { x: X_CENTER + w1 + w2 + w3, y };
+    };
 
-    const nodes: NodeMetadata[] = [];
+    const sampleSec = (y: number): Point => {
+      // Fase π para cruce alargado y elegante
+      const w1 = Math.sin(y * 0.0095 + Math.PI) * 42;
+      const w2 = Math.cos(y * 0.0035 * PHI + 2.1) * 16;
+      const w3 = Math.sin(y * 0.02 + Math.PI) * 4;
+      return { x: X_CENTER + w1 + w2 + w3, y };
+    };
 
-    for (let i = 0; i < segments; i++) {
-      const yStart = i * SEGMENT_H;
-      const yEnd = (i + 1) * SEGMENT_H;
-      const isLeft = i % 2 === 0;
+    const rawPointsPri: Point[] = [];
+    const rawPointsSec: Point[] = [];
 
-      const cp1y = yStart + SEGMENT_H * 0.33;
-      const cp2y = yStart + SEGMENT_H * 0.66;
+    for (let i = 0; i < numSamples; i++) {
+      const y = Math.min(totalHeight, i * SAMPLE_STEP);
+      rawPointsPri.push(samplePri(y));
+      rawPointsSec.push(sampleSec(y));
+    }
 
-      const p1x_pri = X_CENTER + (isLeft ? BASE_AMPLITUDE : -BASE_AMPLITUDE);
-      const p2x_pri = X_CENTER - (isLeft ? BASE_AMPLITUDE : -BASE_AMPLITUDE);
+    // Convertir a curvas Bézier cúbicas continuas C¹
+    const segmentsPri = pointsToBeziers(rawPointsPri, 1.05);
+    const segmentsSec = pointsToBeziers(rawPointsSec, 1.05);
 
-      const p1x_sec = X_CENTER - (isLeft ? SECONDARY_AMPLITUDE : -SECONDARY_AMPLITUDE);
-      const p2x_sec = X_CENTER + (isLeft ? SECONDARY_AMPLITUDE : -SECONDARY_AMPLITUDE);
+    const lenPri = segmentsPri.reduce((acc, s) => acc + s.length, 0);
+    const lenSec = segmentsSec.reduce((acc, s) => acc + s.length, 0);
 
-      mainPath += `C ${p1x_pri} ${cp1y}, ${p2x_pri} ${cp2y}, ${X_CENTER} ${yEnd} `;
-      secondaryPath += `C ${p1x_sec} ${cp1y}, ${p2x_sec} ${cp2y}, ${X_CENTER} ${yEnd} `;
+    const pathPriD = beziersToPathD(segmentsPri);
+    const pathSecD = beziersToPathD(segmentsSec);
 
-      // Suma integral discreta
-      accPrimaryLength += approximateBezierLength(X_CENTER, p1x_pri, p2x_pri, X_CENTER, yStart, cp1y, cp2y, yEnd);
-      accSecondaryLength += approximateBezierLength(X_CENTER, p1x_sec, p2x_sec, X_CENTER, yStart, cp1y, cp2y, yEnd);
+    // ── Distribución Orgánica de Follaje ───────────────────────────────────
+    const nodes: BotanicalNode[] = [];
+    const NODE_INTERVAL = 130; // Espaciado entre brotes
+    const numNodes = Math.floor(totalHeight / NODE_INTERVAL);
 
-      // Inyección de Nodos Paramétricos
-      placeNode(nodes, `p-leaf-${i}`, 'leaf', 0.25, X_CENTER, p1x_pri, p2x_pri, X_CENTER, yStart, cp1y, cp2y, yEnd, isLeft ? -45 : 45);
-      placeNode(nodes, `p-bud-${i}`, 'bud', 0.75, X_CENTER, p1x_pri, p2x_pri, X_CENTER, yStart, cp1y, cp2y, yEnd, isLeft ? 50 : -50);
-      placeNode(nodes, `s-tendril-${i}`, 'tendril', 0.5, X_CENTER, p1x_sec, p2x_sec, X_CENTER, yStart, cp1y, cp2y, yEnd, isLeft ? 120 : -120);
-      placeNode(nodes, `s-leaf-${i}`, 'leaf', 0.85, X_CENTER, p1x_sec, p2x_sec, X_CENTER, yStart, cp1y, cp2y, yEnd, isLeft ? -60 : 60);
+    for (let i = 1; i <= numNodes; i++) {
+      const y = i * NODE_INTERVAL + (Math.sin(i * 1.8) * 20);
+      if (y >= totalHeight - 40) continue;
+
+      const pPri = samplePri(y);
+      const dyPri = (samplePri(y + 2).x - samplePri(y - 2).x) / 4;
+      const anglePri = (Math.atan2(1, dyPri) * 180) / Math.PI;
+
+      const isLeft = pPri.x < X_CENTER;
+      const leafAngle = anglePri + (isLeft ? -75 : 75) + (Math.sin(i * 2.1) * 12);
+
+      const typeChoice = i % 4;
+      let nodeType: BotanicalNode['type'] = 'leaf-large';
+      if (typeChoice === 1) nodeType = 'tendril';
+      else if (typeChoice === 2) nodeType = 'bud';
+      else if (typeChoice === 3) nodeType = 'leaf-small';
+
+      nodes.push({
+        id: `node-pri-${i}`,
+        globalY: y,
+        transform: `translate(${pPri.x.toFixed(2)}, ${y.toFixed(2)}) rotate(${leafAngle.toFixed(1)})`,
+        type: nodeType,
+      });
+
+      // Brotes en tallo secundario
+      if (i % 2 === 0) {
+        const pSec = sampleSec(y + 40);
+        const dySec = (sampleSec(y + 42).x - sampleSec(y + 38).x) / 4;
+        const angleSec = (Math.atan2(1, dySec) * 180) / Math.PI;
+        const secIsLeft = pSec.x < X_CENTER;
+        const secAngle = angleSec + (secIsLeft ? -70 : 70);
+
+        nodes.push({
+          id: `node-sec-${i}`,
+          globalY: y + 40,
+          transform: `translate(${pSec.x.toFixed(2)}, ${(y + 40).toFixed(2)}) rotate(${secAngle.toFixed(1)})`,
+          type: i % 4 === 0 ? 'leaf-small' : 'tendril',
+        });
+      }
     }
 
     return {
-      pathPrimary: mainPath,
-      pathSecondary: secondaryPath,
-      totalPrimaryLength: accPrimaryLength,
-      totalSecondaryLength: accSecondaryLength,
-      nodesMap: nodes
+      pathPrimaryD: pathPriD,
+      pathSecondaryD: pathSecD,
+      totalPrimaryLength: lenPri,
+      totalSecondaryLength: lenSec,
+      botanicalNodes: nodes,
     };
   }, [totalHeight]);
 
-  // --- 6. Cálculos de Cinemática Dinámica en Render ---
-
-  // Easing cúbico inverso (ease-out) para que el brote frene suavemente al alcanzar escala 1
+  // ── Cinemática Dinámica de Crecimiento (Adelantamiento Alterno) ─────────────
   const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
-  // Offset previsor: La animación comienza un poco antes de que el scroll alcance exactamente el punto
-  const SIGHT_OFFSET = typeof window !== 'undefined' ? window.innerHeight * 0.6 : 500;
-  const currentYOffset = scrollProgress * totalHeight + SIGHT_OFFSET;
+  // Variación armónica de velocidad: un tallo adelanta al otro alternadamente a lo largo del recorrido
+  const deltaLead = Math.sin(lianaHeadY * 0.0045) * 45;
+  const curYPri = lianaHeadY <= 0 ? 0 : Math.max(0, Math.min(totalHeight, lianaHeadY + deltaLead));
+  const curYSec = lianaHeadY <= 0 ? 0 : Math.max(0, Math.min(totalHeight, lianaHeadY - deltaLead));
 
-  // Offset del DashArray: 1.0 (invisible) a 0.0 (totalmente dibujado)
-  // Permite que el tallo crezca fluidamente
-  const strokeProgress = Math.min(1, Math.max(0, currentYOffset / totalHeight));
+  const progressPri = Math.min(1, Math.max(0, curYPri / totalHeight));
+  const progressSec = Math.min(1, Math.max(0, curYSec / totalHeight));
+
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-10 flex justify-center">
@@ -195,53 +308,87 @@ export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
         viewBox={`0 0 300 ${totalHeight}`}
         preserveAspectRatio="xMidYMin slice"
       >
-        {/* Guías estructurales pasivas (espectrales) */}
-        <path d={pathPrimary} className="stroke-salvia/5 fill-none" strokeWidth="0.5" />
-        <path d={pathSecondary} className="stroke-salvia/5 fill-none" strokeWidth="0.5" />
+        <defs>
+          {/* Gradiente cromático por épocas: respeta las posiciones exactas de cada época */}
+          <linearGradient id="liana-era-gradient-primary" x1="0%" y1="0%" x2="0%" y2="100%">
+            {eraStops && eraStops.length > 0 ? (
+              eraStops.map((stop, idx) => (
+                <stop key={idx} offset={stop.offset} stopColor={stop.color} />
+              ))
+            ) : (
+              <>
+                <stop offset="0%" stopColor="var(--theme-ocre)" />
+                <stop offset="25%" stopColor="var(--theme-salvia)" />
+                <stop offset="50%" stopColor="var(--theme-pizarra)" />
+                <stop offset="72%" stopColor="var(--theme-terracota)" />
+                <stop offset="88%" stopColor="var(--theme-granada)" />
+                <stop offset="100%" stopColor="var(--theme-carbon)" />
+              </>
+            )}
+          </linearGradient>
 
-        {/* Tallos Dinámicos impulsados por cálculo de longitud de arco */}
+          <linearGradient id="liana-era-gradient-secondary" x1="0%" y1="0%" x2="0%" y2="100%">
+            {eraStops && eraStops.length > 0 ? (
+              eraStops.map((stop, idx) => (
+                <stop key={idx} offset={stop.offset} stopColor={stop.color} stopOpacity="0.8" />
+              ))
+            ) : (
+              <>
+                <stop offset="0%" stopColor="var(--theme-ocre)" stopOpacity="0.8" />
+                <stop offset="25%" stopColor="var(--theme-salvia)" stopOpacity="0.8" />
+                <stop offset="50%" stopColor="var(--theme-pizarra)" stopOpacity="0.8" />
+                <stop offset="72%" stopColor="var(--theme-terracota)" stopOpacity="0.8" />
+                <stop offset="88%" stopColor="var(--theme-granada)" stopOpacity="0.8" />
+                <stop offset="100%" stopColor="var(--theme-carbon)" stopOpacity="0.8" />
+              </>
+            )}
+          </linearGradient>
+        </defs>
+
+        {/* ── 1. Tallo Secundario Trenzado ───────────────────────────────── */}
         <path
-          d={pathPrimary}
-          className="stroke-salvia/50 fill-none"
+          d={pathSecondaryD}
+          stroke="url(#liana-era-gradient-secondary)"
+          className="fill-none"
           strokeWidth="1.5"
           strokeLinecap="round"
-          strokeDasharray={totalPrimaryLength}
-          strokeDashoffset={totalPrimaryLength * (1 - strokeProgress)}
+          strokeDasharray={totalSecondaryLength}
+          strokeDashoffset={totalSecondaryLength * (1 - progressSec)}
         />
+
+        {/* ── 2. Tallo Primario Principal ────────────────────────────────── */}
         <path
-          d={pathSecondary}
-          className="stroke-salvia/30 fill-none"
-          strokeWidth="0.75"
-          strokeDasharray={`${totalSecondaryLength} ${totalSecondaryLength}`}
-          strokeDashoffset={totalSecondaryLength * (1 - strokeProgress)}
+          d={pathPrimaryD}
+          stroke="url(#liana-era-gradient-primary)"
+          className="fill-none"
+          strokeWidth="2.4"
           strokeLinecap="round"
+          strokeDasharray={totalPrimaryLength}
+          strokeDashoffset={totalPrimaryLength * (1 - progressPri)}
         />
 
-        {/* Instanciación y escalado de la botánica dinámica */}
-        {nodesMap.map((node) => {
-          // Ventana de crecimiento: cuántos píxeles de scroll toma ir de escala 0 a 1
-          const GROWTH_WINDOW = 200;
-
-          let rawProgress = (currentYOffset - node.globalY) / GROWTH_WINDOW;
+        {/* ── 3. Follaje Dinámico (Hojas, Brotes y Zarcillos) ─────────────── */}
+        {botanicalNodes.map((node) => {
+          const GROWTH_WINDOW = 95;
+          let rawProgress = (lianaHeadY - node.globalY) / GROWTH_WINDOW;
           rawProgress = Math.max(0, Math.min(1, rawProgress));
+          const scale = easeOutCubic(rawProgress);
 
-          const finalScale = easeOutCubic(rawProgress);
-
-          // Optimización en árbol de React: Si no ha empezado a crecer, no renderizamos el nodo
-          if (finalScale === 0) return null;
+          if (scale === 0) return null;
 
           return (
             <g
               key={node.id}
-              // Combinamos la topología precalculada con la cinemática en tiempo real
-              transform={`${node.baseTransform} scale(${finalScale})`}
+              transform={`${node.transform} scale(${scale.toFixed(3)})`}
             >
-              {node.componentType === 'leaf' && <SlenderWillowLeaf />}
-              {node.componentType === 'tendril' && <DelicateTendril />}
-              {node.componentType === 'bud' && <ElegantBud />}
+              {node.type === 'leaf-large' && <ArtsAndCraftsLeaf variant="large" />}
+              {node.type === 'leaf-small' && <ArtsAndCraftsLeaf variant="small" />}
+              {node.type === 'tendril' && <BotanicalSpiralTendril />}
+              {node.type === 'bud' && <BotanicalBud />}
             </g>
           );
         })}
+
       </svg>
     </div>
   );

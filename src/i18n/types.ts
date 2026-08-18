@@ -99,6 +99,7 @@ export interface TranslationDictionary {
     renaissance: string;
     enlightenment: string;
     modern: string;
+    contributions: string;
   };
   content: {
     by: string;

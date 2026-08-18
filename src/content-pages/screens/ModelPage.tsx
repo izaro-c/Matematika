@@ -32,7 +32,8 @@ export function ModelPage() {
     );
   }
 
-  const system = model.satisfies ? db.getAxiomaticSystem(model.satisfies, lang) : undefined;
+  const satisfiesId = Array.isArray(model.satisfies) ? model.satisfies[0] : model.satisfies;
+  const system = satisfiesId ? db.getAxiomaticSystem(satisfiesId, lang) : undefined;
   const verifiedAxioms = (model.axioms_verified || []).map(axId => db.getAxiom(axId, lang)).filter(Boolean);
 
   const breadcrumbs = db.getBreadcrumbs(
