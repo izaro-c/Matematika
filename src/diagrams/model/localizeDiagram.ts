@@ -45,9 +45,21 @@ export function localizeDiagramSpec<T extends DiagramSpecV2 | DiagramSpecV3>(spe
       }
       return obj;
     });
-  } else if (Array.isArray((localized as unknown as DiagramSpecV2).elements)) {
-    const v2 = localized as unknown as DiagramSpecV2;
-    v2.elements = v2.elements.map(el => {
+  }
+
+  // Also localize materialized scene points and elements (e.g. in VisualDiagramModel)
+  const anyLoc = localized as unknown as { points?: Array<{ id: string; label?: string }>; elements?: Array<{ id: string; kind?: string; label?: string; text?: string }> };
+  if (Array.isArray(anyLoc.points)) {
+    anyLoc.points = anyLoc.points.map(p => {
+      if (tr.labels?.[p.id]) {
+        return { ...p, label: tr.labels[p.id] };
+      }
+      return p;
+    });
+  }
+
+  if (Array.isArray(anyLoc.elements)) {
+    anyLoc.elements = anyLoc.elements.map(el => {
       let updated = el;
       if (tr.labels?.[el.id]) {
         updated = { ...updated, label: tr.labels[el.id] };

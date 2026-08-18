@@ -14,6 +14,7 @@ import {
 
 export interface BoardHostProps {
   model: VisualDiagramModel;
+  lang?: string;
   selectedIds: readonly string[];
   activeTool: CanvasTool;
   pendingRefs: string[];
@@ -31,6 +32,7 @@ const MIN_HOST_SIZE = 8;
 
 export const BoardHost: React.FC<BoardHostProps> = ({
   model,
+  lang,
   selectedIds,
   activeTool,
   pendingRefs,
@@ -70,6 +72,7 @@ export const BoardHost: React.FC<BoardHostProps> = ({
         <MathProvider>
           <DiagramRenderer
             spec={model}
+            lang={lang}
             mode="editor"
             viewportControls={false}
             stepControls={false}

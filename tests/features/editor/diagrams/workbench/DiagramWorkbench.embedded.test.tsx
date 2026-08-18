@@ -27,7 +27,7 @@ describe('DiagramWorkbench embedded confirm', () => {
       />,
     );
 
-    await waitFor(() => expect(screen.getByDisplayValue('Diagrama inline')).toBeTruthy());
+    await waitFor(() => expect(screen.getAllByDisplayValue('Diagrama inline').length).toBeGreaterThanOrEqual(1));
 
     const saveButtons = screen.getAllByRole('button', { name: /Guardar/i });
     const enabled = saveButtons.find(btn => !(btn as HTMLButtonElement).disabled) ?? saveButtons[0];

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { CONTENT_TYPE_OPTIONS } from '@/fixed-pages/editor/metadata/metadataFields';
+import { CONTENT_TYPE_OPTIONS, LANGUAGE_OPTIONS } from '@/fixed-pages/editor/metadata/metadataFields';
 import type { CreatePageInput } from '@/fixed-pages/editor/review/authoringModel';
 import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 import { useI18n } from '@/i18n';
@@ -8,19 +8,20 @@ interface CreatePageDialogProps {
   open: boolean;
   onClose: () => void;
   onCreate: (input: CreatePageInput) => Promise<boolean>;
+  initialLang?: string;
 }
 
 const ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const EMPTY_PAGE: CreatePageInput = { id: '', type: 'definicion', title: '', description: '' };
+const EMPTY_PAGE: CreatePageInput = { id: '', type: 'definicion', lang: 'es', title: '', description: '' };
 
-export const CreatePageDialog: React.FC<CreatePageDialogProps> = ({ open, onClose, onCreate }) => {
-  const [value, setValue] = useState<CreatePageInput>(EMPTY_PAGE);
+export const CreatePageDialog: React.FC<CreatePageDialogProps> = ({ open, onClose, onCreate, initialLang }) => {
+  const [value, setValue] = useState<CreatePageInput>(() => ({ ...EMPTY_PAGE, lang: initialLang || 'es' }));
   const [creating, setCreating] = useState(false);
   const idRef = useRef<HTMLInputElement>(null);
   const { t } = useI18n();
 
   const cancel = () => {
-    setValue(EMPTY_PAGE);
+    setValue({ ...EMPTY_PAGE, lang: initialLang || 'es' });
     setCreating(false);
     onClose();
   };
@@ -36,7 +37,7 @@ export const CreatePageDialog: React.FC<CreatePageDialogProps> = ({ open, onClos
     if (!valid || creating) return;
     setCreating(true);
     if (await onCreate(value)) {
-      setValue(EMPTY_PAGE);
+      setValue({ ...EMPTY_PAGE, lang: initialLang || 'es' });
       setCreating(false);
       onClose();
     } else setCreating(false);
@@ -66,6 +67,12 @@ export const CreatePageDialog: React.FC<CreatePageDialogProps> = ({ open, onClos
             </select>
           </label>
           <label className="grid gap-1 ac-label ac-label--sm ac-label--strong">
+            Idioma
+            <select value={value.lang || 'es'} onChange={event => setValue(previous => ({ ...previous, lang: event.target.value }))} className="rounded border border-carbon/15 bg-lienzo p-2 text-xs normal-case text-carbon">
+              {LANGUAGE_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+            </select>
+          </label>
+          <label className="grid gap-1 ac-label ac-label--sm ac-label--strong sm:col-span-2">
             {t('editor', 'slugLabel')}
             <input ref={idRef} value={value.id} onChange={event => setValue(previous => ({ ...previous, id: event.target.value }))} placeholder="definicion-nueva" className="rounded border border-carbon/15 bg-lienzo p-2 font-mono text-xs normal-case text-carbon" />
             {value.id && !ID_RE.test(value.id) && (

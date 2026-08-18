@@ -22,7 +22,7 @@ import {
 } from '@/fixed-pages/editor/save';
 import { validateEditorDocument } from './validation';
 import {
-  buildAuthoringIntegrityReport, createPagePath, createPageSource, type CreatePageInput,
+  buildAuthoringIntegrityReport, cloneMdxForTranslation, createPagePath, createPageSource, type CreatePageInput,
   type CreateDiagramInput, idToComponentName, createDiagramPath,
 } from '@/fixed-pages/editor/review/authoringModel';
 import { createTemplateModel } from '@/fixed-pages/editor/diagrams/model/scene/templateModels';
@@ -588,6 +588,48 @@ export const useEditorCore = () => {
     return true;
   }, [coordinator, editorSessionId]);
 
+  const createTranslation = useCallback(async (targetLang: string, targetTitle?: string): Promise<boolean> => {
+    if (editorApiUnavailableInProduction() || !editorWriteAccessGranted()) {
+      setMessage('No se puede crear la traducción: se requiere API configurada y token de edición.');
+      return false;
+    }
+    if (!currentFile || !currentFile.endsWith('.mdx')) {
+      setMessage('Solo se pueden crear traducciones de documentos MDX.');
+      return false;
+    }
+    try {
+      const source = sourceRef.current;
+      const meta = (doc?.metadata.value ?? {}) as Record<string, unknown>;
+      const targetSource = cloneMdxForTranslation(source, targetLang, targetTitle);
+      const parsedId = typeof meta.id === 'string' && meta.id ? meta.id : (currentFile.split('/').pop()?.replace(/\.mdx$/, '') || 'documento');
+      const parsedType = typeof meta.type === 'string' && meta.type ? meta.type : 'definicion';
+      const path = createPagePath({
+        id: parsedId,
+        type: parsedType,
+        title: targetTitle || (typeof meta.title === 'string' ? meta.title : parsedId),
+        description: typeof meta.description === 'string' ? meta.description : '',
+        lang: targetLang,
+      });
+      const candidate = parseEditorDocument(targetSource);
+      if (candidate.metadata.status !== 'readable' || !candidate.metadata.schemaValid || candidate.compatibility === 'unsupported') {
+        throw new Error('El documento clonado para traducción no cumple el schema autoritativo.');
+      }
+      const sourceHash = await hashSource(targetSource);
+      await editorApiClient.createContent({ path, source: targetSource, sourceHash, localRevision: 0, create: true });
+      await loadFileList();
+      await openFile(path, { discardLocalChanges: true });
+      setEditorMode('visual');
+      setMessage(`Traducción (${targetLang.toUpperCase()}) creada y abierta.`);
+      return true;
+    } catch (error) {
+      const detail = error && typeof error === 'object' && 'detail' in error
+        ? (error as { detail: PersistenceError }).detail
+        : null;
+      setMessage(detail ? persistenceMessage(detail) : `No se pudo crear la traducción: ${error instanceof Error ? error.message : String(error)}`);
+      return false;
+    }
+  }, [currentFile, doc, loadFileList, openFile]);
+
   return {
     files, filesLoading, filesError, loading, currentFile, editorMode, metadata, imports, exports, blocks, rawBody,
     baseSource, localRevision: persistence.localRevision, confirmedRevision: persistence.confirmedRevision,
@@ -596,7 +638,7 @@ export const useEditorCore = () => {
     persistenceLabel: persistenceStatusLabel(persistence.status),
     loadFileList, openFile, closeFile, toggleEditorMode, setEditorMode, updateRawBody, updateBlock, saveCurrentFile, saveDraftCurrentFile,
     compatibility, compatibilityReasons, capabilities,
-    removeBlock, addBlock, moveBlock, duplicateBlock, bindDiagram, assignDiagramStep, createPage, createDiagram, setMetadata, setImports, setExports, setBlocks,
+    removeBlock, addBlock, moveBlock, duplicateBlock, bindDiagram, assignDiagramStep, createPage, createDiagram, createTranslation, setMetadata, setImports, setExports, setBlocks,
     canMutateVisualStructure: capabilities.canEditSafeBlocks,
     canEditVisualMetadata: doc?.metadata.status === 'readable' && doc.metadata.schemaValid,
   };

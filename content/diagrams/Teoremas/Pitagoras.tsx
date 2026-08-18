@@ -11,6 +11,10 @@ export const PitagorasSpec = createDiagramSpec(
   "mode": "simulation",
   "axis": false,
   "grid": false,
+  "header": {
+    "readingsMode": "automatic",
+    "readings": []
+  },
   "viewport": {
     "bounds": [
       -4.2,
@@ -858,11 +862,11 @@ export const PitagorasSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastre A y B sobre las semirrectas: las áreas y la igualdad se actualizan sin perder el ángulo recto.",
+  "note": "Arrastre A y B.",
   "translations": {
     "eu": {
-      "title": "Pitagorasen Teorema",
-      "note": "Arrastatu A eta B semirrecten gainean: azalerak eta berdintza eguneratzen dira angelu zuzena galdu gabe.",
+      "title": "Pitagorasen teorema",
+      "note": "Mugitu A eta B.",
       "labels": {
         "triangulo": "ABC hirukia",
         "segBC": "a katetoa",

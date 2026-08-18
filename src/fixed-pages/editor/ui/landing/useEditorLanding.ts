@@ -1,6 +1,10 @@
 import { useMemo, useState } from 'react';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
-import { getCategoryDisplayName, resourceDisplayName } from '@/fixed-pages/editor/session/editorNavigationModel';
+import {
+  extractResourceIdentity,
+  getCategoryDisplayName,
+  resourceDisplayName,
+} from '@/fixed-pages/editor/session/editorNavigationModel';
 
 export type LandingSection = 'documents' | 'diagrams';
 export type SortOption = 'name' | 'type' | 'recent';
@@ -10,6 +14,7 @@ interface UseEditorLandingProps {
   section: LandingSection;
   favoritePaths?: string[];
   recentPaths?: string[];
+  currentLang?: string;
 }
 
 export function useEditorLanding({
@@ -17,6 +22,7 @@ export function useEditorLanding({
   section,
   favoritePaths = [],
   recentPaths = [],
+  currentLang,
 }: UseEditorLandingProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<string>('all');
@@ -25,13 +31,46 @@ export function useEditorLanding({
 
   // Filtrar archivos pertenecientes a la sección correspondiente (documentos MDX vs diagramas TSX)
   const sectionFiles = useMemo(() => {
-    return files.filter(file => {
+    const rawSection = files.filter(file => {
       if (section === 'diagrams') {
         return file.kind === 'diagram' || file.path.endsWith('.tsx');
       }
       return file.kind === 'mdx-document' || file.path.endsWith('.mdx');
     });
-  }, [files, section]);
+
+    if (section === 'diagrams') {
+      return rawSection;
+    }
+
+    // Deduplicar documentos MDX por concepto, mostrando solo 1 ficha con preferencia por el idioma actual
+    const conceptMap = new Map<string, FileNode[]>();
+    for (const file of rawSection) {
+      const { conceptId } = extractResourceIdentity(file);
+      const key = `${file.type}:${conceptId}`;
+      const list = conceptMap.get(key) || [];
+      list.push(file);
+      conceptMap.set(key, list);
+    }
+
+    const deduplicated: FileNode[] = [];
+    for (const variants of conceptMap.values()) {
+      if (variants.length === 1) {
+        deduplicated.push(variants[0]);
+        continue;
+      }
+      // 1. Preferir variante en idioma actual
+      const currentMatch = variants.find(f => extractResourceIdentity(f).lang === currentLang);
+      if (currentMatch) {
+        deduplicated.push(currentMatch);
+        continue;
+      }
+      // 2. Fallback: preferir base 'es' o la primera disponible
+      const esMatch = variants.find(f => extractResourceIdentity(f).lang === 'es');
+      deduplicated.push(esMatch || variants[0]);
+    }
+
+    return deduplicated;
+  }, [files, section, currentLang]);
 
   // Archivos base filtrados por los modificadores activos (favoritos y búsqueda)
   const baseFilteredFiles = useMemo(() => {

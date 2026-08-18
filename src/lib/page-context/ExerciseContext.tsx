@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useCallback, useEffect, useState } from 'react';
 
 // ── Tipos ─────────────────────────────────────────────────────────────────────
 
@@ -134,6 +134,7 @@ export interface ExerciseProviderProps {
 
 export const ExerciseProvider: React.FC<ExerciseProviderProps> = ({ exerciseId, children }) => {
   const [state, dispatch] = useReducer(reducer, exerciseId, getInitialState);
+  const [resetKey, setResetKey] = useState(0);
 
   useEffect(() => {
     if (!exerciseId || typeof window === 'undefined') return;
@@ -167,6 +168,7 @@ export const ExerciseProvider: React.FC<ExerciseProviderProps> = ({ exerciseId, 
       }
     }
     dispatch({ type: 'RESET' });
+    setResetKey((k: number) => k + 1);
   }, [exerciseId]);
 
   const qs = Object.values(state.questions);
@@ -178,7 +180,9 @@ export const ExerciseProvider: React.FC<ExerciseProviderProps> = ({ exerciseId, 
 
   return (
     <ExerciseContext.Provider value={{ state, register, answer, reveal, reset, score }}>
-      {children}
+      <React.Fragment key={resetKey}>
+        {children}
+      </React.Fragment>
     </ExerciseContext.Provider>
   );
 };

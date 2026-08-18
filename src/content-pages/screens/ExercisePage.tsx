@@ -24,8 +24,8 @@ const ProgressBar: React.FC<{ onReset?: () => void; isCompleted?: boolean }> = (
   if (total === 0) return null;
 
   const handleResetClick = () => {
-    reset();
     onReset?.();
+    reset();
   };
 
   return (
@@ -65,7 +65,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
   const isFallback = id ? db.isFallback(id, lang) : false;
   const availableLangs = id ? db.getAvailableLanguages(id) : ['es'];
 
-  const { score, reset } = useExercise();
+  const { score } = useExercise();
   const { markExerciseComplete, isExerciseComplete, unmarkExerciseComplete } = useProgressStore();
   const alreadyCompleted = isExerciseComplete(id);
   const isCompletedNow = score.total > 0 && score.correct === score.total;
@@ -118,29 +118,8 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
           </ContentBody>
 
           {isCompleted && (
-            <div className="relative mt-16 p-8 border border-salvia/30 bg-salvia/5 text-center flex flex-col items-center justify-center gap-3">
-              <VintageSeal type="exercise" size="md" animated={true} className="-right-5 -top-10" />
-              <p className="font-serif font-bold text-salvia text-lg">
-                {t('exercise', 'completedBanner', { correct: score.correct || score.total, total: score.total })}
-              </p>
-              <div className="flex items-center gap-4 mt-2">
-                <button
-                  onClick={() => {
-                    unmarkExerciseComplete(id);
-                    reset();
-                  }}
-                  className="page-accent-text ac-eyebrow ac-eyebrow--sm opacity-70 hover:opacity-100 transition-opacity underline underline-offset-2 shrink-0 cursor-pointer"
-                >
-                  {t('exercise', 'reset')}
-                </button>
-                {relatedTheorem && (
-                  <Link href={getLocalizedPath(`/teorema/${relatedTheorem.id}`)}>
-                    <span className="ac-link-back ac-interactive text-xs hover:text-carbon underline underline-offset-2 transition-colors cursor-pointer inline-block">
-                      {t('exercise', 'backToTheorem')}
-                    </span>
-                  </Link>
-                )}
-              </div>
+            <div className="relative">
+              <VintageSeal type="exercise" size="md" animated={true} className="-right-5 -top-25" />
             </div>
           )}
         </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import {
   DEFAULT_EDITOR_CATALOG_FILTERS,
+  extractResourceIdentity,
   filterCatalogResources,
   getCategoryDisplayName,
   resourceDisplayName,
@@ -9,6 +10,7 @@ import {
   type EditorResourceSection,
   type EditorWorkspaceLevel,
 } from '@/fixed-pages/editor/session/editorNavigationModel';
+import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 
 interface EditorNavigationProps {
   files: FileNode[];
@@ -25,12 +27,12 @@ interface EditorNavigationProps {
   width: number;
   onCreatePage?: () => void;
   onCreateDiagram?: () => void;
+  onCreateTranslation?: (file: FileNode, targetLang: string) => void;
 }
 
 function categoryLabel(type: string): string {
   return getCategoryDisplayName(type, 'plural');
 }
-
 
 function capabilityPresentation(file: FileNode): { label: string; className: string } {
   if (file.capability === 'visual-exact') return { label: 'Editable', className: 'border-musgo/25 bg-musgo/10 text-musgo' };
@@ -38,43 +40,96 @@ function capabilityPresentation(file: FileNode): { label: string; className: str
   return { label: 'Requiere corrección', className: 'border-granada/25 bg-granada/10 text-granada' };
 }
 
-function ResourceButton({ file, current, favorite, level, openFile, toggleFavorite }: {
+function ResourceButton({
+  file,
+  current,
+  favorite,
+  level,
+  openFile,
+  toggleFavorite,
+  variants,
+  onCreateTranslation,
+}: {
   file: FileNode;
   current: boolean;
   favorite: boolean;
   level: EditorWorkspaceLevel;
   openFile: (path: string) => void;
   toggleFavorite: (path: string) => void;
+  variants?: Record<string, FileNode>;
+  onCreateTranslation?: (file: FileNode, targetLang: string) => void;
 }) {
   const capability = capabilityPresentation(file);
+  const isDocument = file.kind === 'mdx-document';
+
   return (
-    <div className={`group flex items-start rounded border ${current ? 'border-salvia/35 bg-salvia/10' : 'border-transparent hover:border-carbon/10 hover:bg-carbon/5'}`}>
-      <button
-        type="button"
-        data-resource-path={file.path}
-        onClick={() => openFile(file.path)}
-        aria-current={current ? 'page' : undefined}
-        title={`${file.capabilityLabel}. ${file.reason}`}
-        className="min-w-0 flex-1 px-2.5 py-2 text-left"
-      >
-        <span className={`block truncate font-serif text-xs ${current ? 'font-bold text-carbon' : 'text-carbon/75'}`}>
-          {resourceDisplayName(file)}
-        </span>
-        <span className={`mt-1 inline-flex rounded border px-1.5 py-0.5 text-[9px] font-bold ${capability.className}`}>
+    <div className={`group flex flex-col rounded border p-1.5 ${current ? 'border-salvia/35 bg-salvia/10' : 'border-transparent hover:border-carbon/10 hover:bg-carbon/5'}`}>
+      <div className="flex items-start justify-between gap-1">
+        <button
+          type="button"
+          data-resource-path={file.path}
+          onClick={() => openFile(file.path)}
+          aria-current={current ? 'page' : undefined}
+          title={`${file.capabilityLabel}. ${file.reason}`}
+          className="min-w-0 flex-1 text-left"
+        >
+          <span className={`block truncate font-serif text-xs ${current ? 'font-bold text-carbon' : 'text-carbon/75'}`}>
+            {resourceDisplayName(file)}
+          </span>
+        </button>
+        <button
+          type="button"
+          onClick={() => toggleFavorite(file.path)}
+          aria-label={favorite ? `Quitar ${resourceDisplayName(file)} de favoritos` : `Añadir ${resourceDisplayName(file)} a favoritos`}
+          aria-pressed={favorite}
+          title={favorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
+          className={`rounded px-1 text-sm ${favorite ? 'text-ocre' : 'text-carbon/25 opacity-70 group-hover:opacity-100'}`}
+        >
+          {favorite ? '★' : '☆'}
+        </button>
+      </div>
+      <div className="mt-1 flex flex-wrap items-center justify-between gap-1">
+        <span className={`inline-flex rounded border px-1.5 py-0.5 text-[9px] font-bold ${capability.className}`}>
           {capability.label}
         </span>
-        {level === 'advanced' && <span className="mt-1 block truncate font-mono text-[9px] text-carbon/40">{file.path}</span>}
-      </button>
-      <button
-        type="button"
-        onClick={() => toggleFavorite(file.path)}
-        aria-label={favorite ? `Quitar ${resourceDisplayName(file)} de favoritos` : `Añadir ${resourceDisplayName(file)} a favoritos`}
-        aria-pressed={favorite}
-        title={favorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
-        className={`m-1.5 rounded px-1.5 py-1 text-sm ${favorite ? 'text-ocre' : 'text-carbon/25 opacity-70 group-hover:opacity-100'}`}
-      >
-        {favorite ? '★' : '☆'}
-      </button>
+        {isDocument && (
+          <div className="inline-flex items-center gap-1" role="group" aria-label="Versiones de idioma">
+            {SUPPORTED_LANGUAGES.map(lang => {
+              const variant = variants?.[lang.code];
+              if (variant) {
+                const isThisLangCurrent = current && variant.path === file.path;
+                return (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    onClick={() => openFile(variant.path)}
+                    title={`${lang.name}: ${variant.path}`}
+                    className={`rounded px-1.5 py-0.5 text-[8px] font-bold uppercase transition-colors cursor-pointer ${
+                      isThisLangCurrent
+                        ? 'border border-salvia/50 bg-salvia text-lienzo'
+                        : 'border border-carbon/20 bg-carbon/5 text-carbon/70 hover:bg-salvia/15 hover:text-salvia'
+                    }`}
+                  >
+                    {lang.code}
+                  </button>
+                );
+              }
+              return (
+                <button
+                  key={lang.code}
+                  type="button"
+                  onClick={() => onCreateTranslation?.(file, lang.code)}
+                  title={`Crear traducción en ${lang.name} (${lang.code})`}
+                  className="rounded border border-dashed border-carbon/25 px-1 py-0.5 text-[8px] font-mono text-carbon/40 hover:border-salvia hover:bg-salvia/10 hover:text-salvia cursor-pointer"
+                >
+                  +{lang.code}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+      {level === 'advanced' && <span className="mt-1 block truncate font-mono text-[9px] text-carbon/40">{file.path}</span>}
     </div>
   );
 }
@@ -94,6 +149,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
   width,
   onCreatePage,
   onCreateDiagram,
+  onCreateTranslation,
 }) => {
   const [section, setSection] = useState<EditorResourceSection>('documents');
   const [filters, setFilters] = useState<EditorCatalogFilters>(DEFAULT_EDITOR_CATALOG_FILTERS);
@@ -121,13 +177,27 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
   const byPath = useMemo(() => new Map(files.map(file => [file.path, file])), [files]);
   const favorites = favoritePaths.map(path => byPath.get(path)).filter((file): file is FileNode => Boolean(file) && (section === 'documents' ? file?.kind === 'mdx-document' : file?.kind === 'diagram'));
   const recents = recentPaths.map(path => byPath.get(path)).filter((file): file is FileNode => Boolean(file) && (section === 'documents' ? file?.kind === 'mdx-document' : file?.kind === 'diagram'));
+
+  const variantsByConcept = useMemo(() => {
+    const map = new Map<string, Record<string, FileNode>>();
+    for (const file of files) {
+      if (file.kind !== 'mdx-document') continue;
+      const { conceptId, lang } = extractResourceIdentity(file);
+      const key = `${file.type}:${conceptId}`;
+      const existing = map.get(key) ?? {};
+      existing[lang || 'es'] = file;
+      map.set(key, existing);
+    }
+    return map;
+  }, [files]);
+
   const grouped = useMemo(() => {
     const groups = new Map<string, FileNode[]>();
     for (const file of filtered) groups.set(file.type, [...(groups.get(file.type) ?? []), file]);
     return [...groups.entries()].sort(([a], [b]) => categoryLabel(a).localeCompare(categoryLabel(b), 'es'));
   }, [filtered]);
 
-  const advancedFilterCount = [filters.type !== 'all', filters.status !== 'all', filters.capability !== 'all'].filter(Boolean).length;
+  const advancedFilterCount = [filters.type !== 'all', filters.status !== 'all', filters.capability !== 'all', filters.language && filters.language !== 'all'].filter(Boolean).length;
   const filtersActive = filters.query !== '' || advancedFilterCount > 0;
   const updateFilter = <Key extends keyof EditorCatalogFilters>(key: Key, value: EditorCatalogFilters[Key]) => setFilters(previous => ({ ...previous, [key]: value }));
   const handleResourceKeys = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -233,15 +303,26 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
                 </select>
               </label>
             </div>
-            <label className="block ac-label ac-label--xs">
-              Cómo se edita
-              <select value={filters.capability} onChange={event => updateFilter('capability', event.target.value as EditorCatalogFilters['capability'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
-                <option value="all">Todas</option>
-                <option value="visual-exact">Editable</option>
-                <option value="code-preview">Solo fuente</option>
-                <option value="invalid">Con errores</option>
-              </select>
-            </label>
+            <div className="grid grid-cols-2 gap-2">
+              <label className="block ac-label ac-label--xs">
+                Cómo se edita
+                <select value={filters.capability} onChange={event => updateFilter('capability', event.target.value as EditorCatalogFilters['capability'])} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
+                  <option value="all">Todas</option>
+                  <option value="visual-exact">Editable</option>
+                  <option value="code-preview">Solo fuente</option>
+                  <option value="invalid">Con errores</option>
+                </select>
+              </label>
+              <label className="block ac-label ac-label--xs">
+                Idioma
+                <select value={filters.language || 'all'} onChange={event => updateFilter('language', event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2 py-1.5 text-xs font-normal normal-case text-carbon">
+                  <option value="all">Todos</option>
+                  {SUPPORTED_LANGUAGES.map(lang => (
+                    <option key={lang.code} value={lang.code}>{lang.name} ({lang.code})</option>
+                  ))}
+                </select>
+              </label>
+            </div>
             {advancedFilterCount > 0 && <button type="button" onClick={() => setFilters(previous => ({ ...DEFAULT_EDITOR_CATALOG_FILTERS, query: previous.query }))} className="w-full rounded border border-carbon/15 px-2 py-1.5 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5">Restablecer filtros avanzados</button>}
           </div>
         </details>
@@ -276,13 +357,41 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
         {!filtersActive && favorites.length > 0 && (
           <section className="mb-4" aria-labelledby="editor-favorites-heading">
             <h3 id="editor-favorites-heading" className="mb-1.5 px-1 ac-label ac-label--sm ac-label--ocre">Favoritos</h3>
-            <div className="space-y-1">{favorites.map(file => <ResourceButton key={`favorite-${file.path}`} file={file} current={file.path === currentFile} favorite level={level} openFile={openFile} toggleFavorite={toggleFavorite} />)}</div>
+            <div className="space-y-1">
+              {favorites.map(file => (
+                <ResourceButton
+                  key={`favorite-${file.path}`}
+                  file={file}
+                  current={file.path === currentFile}
+                  favorite
+                  level={level}
+                  openFile={openFile}
+                  toggleFavorite={toggleFavorite}
+                  variants={file.kind === 'mdx-document' ? variantsByConcept.get(`${file.type}:${extractResourceIdentity(file).conceptId}`) : undefined}
+                  onCreateTranslation={onCreateTranslation}
+                />
+              ))}
+            </div>
           </section>
         )}
         {!filtersActive && recents.length > 0 && (
           <section className="mb-4" aria-labelledby="editor-recents-heading">
             <h3 id="editor-recents-heading" className="mb-1.5 px-1 ac-label ac-label--sm ac-label--pizarra">Recientes</h3>
-            <div className="space-y-1">{recents.slice(0, 4).map(file => <ResourceButton key={`recent-${file.path}`} file={file} current={file.path === currentFile} favorite={favoritePaths.includes(file.path)} level={level} openFile={openFile} toggleFavorite={toggleFavorite} />)}</div>
+            <div className="space-y-1">
+              {recents.slice(0, 4).map(file => (
+                <ResourceButton
+                  key={`recent-${file.path}`}
+                  file={file}
+                  current={file.path === currentFile}
+                  favorite={favoritePaths.includes(file.path)}
+                  level={level}
+                  openFile={openFile}
+                  toggleFavorite={toggleFavorite}
+                  variants={file.kind === 'mdx-document' ? variantsByConcept.get(`${file.type}:${extractResourceIdentity(file).conceptId}`) : undefined}
+                  onCreateTranslation={onCreateTranslation}
+                />
+              ))}
+            </div>
           </section>
         )}
 
@@ -299,7 +408,23 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
                 <span>{categoryLabel(type)}</span>
                 <span className="font-mono text-[9px] text-carbon/40">{resources.length} {expanded ? '▾' : '▸'}</span>
               </button>
-              {expanded && <div className="ml-2 space-y-1 border-l border-carbon/10 pl-2">{resources.map(file => <ResourceButton key={file.path} file={file} current={file.path === currentFile} favorite={favoritePaths.includes(file.path)} level={level} openFile={openFile} toggleFavorite={toggleFavorite} />)}</div>}
+              {expanded && (
+                <div className="ml-2 space-y-1 border-l border-carbon/10 pl-2">
+                  {resources.map(file => (
+                    <ResourceButton
+                      key={file.path}
+                      file={file}
+                      current={file.path === currentFile}
+                      favorite={favoritePaths.includes(file.path)}
+                      level={level}
+                      openFile={openFile}
+                      toggleFavorite={toggleFavorite}
+                      variants={file.kind === 'mdx-document' ? variantsByConcept.get(`${file.type}:${extractResourceIdentity(file).conceptId}`) : undefined}
+                      onCreateTranslation={onCreateTranslation}
+                    />
+                  ))}
+                </div>
+              )}
             </section>
           );
         })}

@@ -1,4 +1,5 @@
 import { EDITOR_THEME_COLOR_OPTIONS } from '@/fixed-pages/editor/types/editorContracts';
+import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 
 export type MetadataFieldType = 'text' | 'textarea' | 'select' | 'array' | 'boolean';
 
@@ -29,10 +30,10 @@ export const CONTENT_TYPE_OPTIONS = [
   { value: 'matematico', label: 'Matemático' },
 ] as const;
 
-export const LANGUAGE_OPTIONS = [
-  { value: 'es', label: 'Español (es)' },
-  { value: 'eu', label: 'Euskara (eu)' },
-] as const;
+export const LANGUAGE_OPTIONS: ReadonlyArray<{ value: string; label: string }> = SUPPORTED_LANGUAGES.map(lang => ({
+  value: lang.code,
+  label: `${lang.name} (${lang.code})`,
+}));
 
 export const BRANCH_OPTIONS = [
   { value: 'fundamentos-y-logica', label: 'Fundamentos y Lógica (03, 08)' },

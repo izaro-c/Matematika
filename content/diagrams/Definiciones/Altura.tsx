@@ -977,7 +977,13 @@ export const AlturaSpec = createDiagramSpec(
       }
     }
   ],
-  "note": "Arrastra A, B y C"
+  "note": "Arrastra A, B y C",
+  "translations": {
+    "eu": {
+      "title": "Altuera",
+      "note": "Mugitu A, B eta C"
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

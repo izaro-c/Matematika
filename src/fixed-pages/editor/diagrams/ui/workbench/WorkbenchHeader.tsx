@@ -10,11 +10,14 @@ import {
 import { EditorWorkbenchHeader } from '@/fixed-pages/editor/ui/workbench/EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
 import { saveChromeFromCapability } from '@/fixed-pages/editor/save/saveCapability';
+import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 
 interface WorkbenchHeaderProps {
   model: VisualDiagramModel | null;
   componentName: string;
   metadataType?: string;
+  activeLang?: string;
+  onSelectActiveLang?: (lang: string) => void;
   canUndo: boolean;
   canRedo: boolean;
   frameMode: CanvasFrameMode;
@@ -42,8 +45,9 @@ interface WorkbenchHeaderProps {
 
 export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
   model,
-  componentName,
   metadataType,
+  activeLang,
+  onSelectActiveLang,
   canUndo,
   canRedo,
   frameMode,
@@ -67,7 +71,10 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
   isInspectorOpen,
   onToggleInspector,
 }) => {
-  const title = model?.title || 'Diagrama Sin Título';
+  const localizedTitle = activeLang && activeLang !== 'es'
+    ? (model?.translations?.[activeLang]?.title ?? '')
+    : (model?.title ?? '');
+  const title = localizedTitle || (activeLang && activeLang !== 'es' ? '' : (model?.title || 'Diagrama Sin Título'));
   const saving = syncStatus === 'saving';
   const saveChrome = saving
     ? { label: 'Guardando…', variant: 'saving' as const, title: 'Guardando cambios…', disabled: true }
@@ -76,22 +83,43 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
   return (
     <EditorWorkbenchHeader
       title={title}
-      titlePlaceholder="Nombre del Diagrama"
+      titlePlaceholder={activeLang && activeLang !== 'es' ? `Título en ${activeLang.toUpperCase()} (${model?.title || 'Base ES'})` : "Nombre del Diagrama"}
       onTitleChange={onTitleChange}
-      fileBadge={componentName || 'DiagramaCustom'}
       badges={
-        sandboxMode ? (
-          <HeaderBadge
-            variant="ocre"
-            title="Sandbox en memoria: no escribe al corpus ni enlaza MDX hasta guardar desde el workbench clásico."
+        <div className="flex items-center gap-2">
+          {sandboxMode ? (
+            <HeaderBadge variant="ocre" title="...">Sandbox</HeaderBadge>
+          ) : (
+            <HeaderBadge variant="salvia" className="hidden lg:inline">
+              {metadataType || 'Diagrama'}
+            </HeaderBadge>
+          )}
+
+          <div
+            className="hidden sm:inline-flex max-w-[200px] overflow-x-auto items-center gap-1 bg-carbon/5 p-0.5 rounded border border-carbon/15"
+            role="group"
+            aria-label="Idioma de vista previa del diagrama"
           >
-            Sandbox
-          </HeaderBadge>
-        ) : (
-          <HeaderBadge variant="salvia" className="hidden lg:inline">
-            {metadataType || 'Diagrama'}
-          </HeaderBadge>
-        )
+            {SUPPORTED_LANGUAGES.map(lang => {
+              const isActive = (activeLang || 'es') === lang.code;
+              return (
+                <button
+                  key={lang.code}
+                  type="button"
+                  onClick={() => onSelectActiveLang?.(lang.code)}
+                  className={`shrink-0 rounded px-1.5 py-0.5 text-[9px] font-bold uppercase transition-colors cursor-pointer ${
+                    isActive
+                      ? 'border border-salvia/50 bg-salvia text-lienzo'
+                      : 'text-carbon/60 hover:bg-salvia/15 hover:text-salvia'
+                  }`}
+                  title={`Editar/Visualizar en ${lang.name}`}
+                >
+                  {lang.code}
+                </button>
+              );
+            })}
+          </div>
+        </div>
       }
       isDirty={saveCapability.isDirty}
       isSidebarOpen={isSidebarOpen}
