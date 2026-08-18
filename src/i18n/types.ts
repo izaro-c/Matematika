@@ -123,6 +123,7 @@ export interface TranslationDictionary {
     fundamentalConcepts: string;
     explore: string;
     axiomaticSystem: string;
+    axiomaticSystems: string;
     verifiedAxioms: string;
     systemAxioms: string;
     modelsSatisfyingSystem: string;
@@ -130,6 +131,12 @@ export interface TranslationDictionary {
     practiceWithExercises: string;
     practice: string;
     moreApplications: string;
+    seeExample: string;
+    exploreCase: string;
+    seeContent: string;
+  };
+  action: {
+    practice: string;
   };
   exercise: {
     correctCount: string;

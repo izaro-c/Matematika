@@ -4,12 +4,14 @@ import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { ContentCard } from '@/components/ui/ContentCard';
 import { DOMAIN_ICONS } from '@/lib/theme/constants';
 import type { UseCase } from '@/data/content/types';
+import { useI18n } from '@/i18n';
 
 interface AplicacionesSectionProps {
   useCases: UseCase[];
 }
 
 export const AplicacionesSection: React.FC<AplicacionesSectionProps> = ({ useCases }) => {
+  const { t } = useI18n();
   if (useCases.length === 0) return null;
 
   return (
@@ -26,7 +28,7 @@ export const AplicacionesSection: React.FC<AplicacionesSectionProps> = ({ useCas
             type="caso-de-uso"
             domain={uc.domain}
             domainIcon={uc.domain ? DOMAIN_ICONS[uc.domain.toLowerCase()] : undefined}
-            actionLabel="Explorar Caso"
+            actionLabel={t('content', 'exploreCase')}
           />
         ))}
       </div>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'wouter';
-import { ContentTypeBadge } from '@/components/ui/ContentTypeBadge';
+import { ContentTypeBadge, getContentTypeLabel } from '@/components/ui/ContentTypeBadge';
 import { VintageSeal, SealType } from '@/components/ui/VintageSeal';
 import { getContentPageAccent } from '@/design';
 import { useI18n } from '@/i18n';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
+
 
 /**
  * Paleta de colores temáticos para acentuar tarjetas.
@@ -75,10 +76,11 @@ export const ContentCard: React.FC<ContentCardProps> = ({
   isRead: propIsRead,
   isCompleted: propIsCompleted,
 }) => {
-  const { getLocalizedPath } = useI18n();
+  const { getLocalizedPath, t, lang } = useI18n();
   const { isRead: checkRead, isExerciseComplete: checkExercise } = useProgressStore();
   const token = accent ? ACCENT_TOKEN[accent] : getContentPageAccent(type);
-  const action = actionLabel ?? (type ? `Ver ${type}` : undefined);
+  const effectiveLabel = typeLabel || badgeLabel || (type ? getContentTypeLabel(type, lang) : '');
+  const action = actionLabel ?? (effectiveLabel ? t('content', 'seeContent', { content: effectiveLabel.toLowerCase() }) : undefined);
   const localizedHref = getLocalizedPath(href);
 
   const derivedId = id ?? href.replace(/^\/[a-z]{2}\//, '').replace(/^\//, '').split('/').pop();

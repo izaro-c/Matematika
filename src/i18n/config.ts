@@ -35,6 +35,12 @@ SUPPORTED_LANGUAGES.forEach((lang) => {
 // Aliases comunes adicionales
 SEGMENT_TO_CANONICAL_TYPE['metodos'] = 'metodo';
 SEGMENT_TO_CANONICAL_TYPE['metodoak'] = 'metodo';
+SEGMENT_TO_CANONICAL_TYPE['sistema-axiomatico'] = 'sistema';
+SEGMENT_TO_CANONICAL_TYPE['sistemas-axiomaticos'] = 'sistema';
+SEGMENT_TO_CANONICAL_TYPE['sistemas'] = 'sistema';
+SEGMENT_TO_CANONICAL_TYPE['caso-de-uso'] = 'caso';
+SEGMENT_TO_CANONICAL_TYPE['casos-de-uso'] = 'caso';
+SEGMENT_TO_CANONICAL_TYPE['casos'] = 'caso';
 
 export function getCanonicalSegmentType(segment: string): keyof RouteSegmentMap | undefined {
   return SEGMENT_TO_CANONICAL_TYPE[segment.toLowerCase()];

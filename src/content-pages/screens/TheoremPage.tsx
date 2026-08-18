@@ -111,7 +111,7 @@ export const TheoremPage = () => {
                   title={demo.title}
                   description={demo.description}
                   type="demostracion"
-                  layout="row"
+                  layout="default"
                   leanVerified={isDemoLeanVerified}
                   actionLabel={t('content', 'explore')}
                 />

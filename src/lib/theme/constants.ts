@@ -6,19 +6,19 @@ export const DIFF_COLORS: Record<string, string> = {
 
 export const DOMAIN_ICONS: Record<string, string> = {
   ingeniería: '⚙',
-  arquitectura: '🏛',
+  arquitectura: '⌂',
   medicina: '⚕',
-  biología: '🌿',
-  economía: '📈',
-  finanzas: '💹',
-  naturaleza: '🌊',
-  arte: '🎨',
+  biología: '⌬',
+  economía: '◇',
+  finanzas: '◇',
+  naturaleza: '≈',
+  arte: '✎',
   música: '♩',
   astronomía: '✦',
   física: '⚛',
-  geografía: '🗺',
-  cartografía: '🗺',
-  informática: '◻',
+  geografía: '⊕',
+  cartografía: '◫',
+  informática: '⌘',
 };
 
 function mix(color: string, bg: string, pct: number): string {

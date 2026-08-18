@@ -24,6 +24,7 @@ const BASELINE_TYPE_COLORS = {
   caso_uso: 'var(--theme-pizarra)',
   glosario: 'var(--theme-carbon)',
   msc2020: 'var(--theme-carbon)',
+  sistema_axiomatico: 'var(--theme-carbon)',
 } as const;
 
 describe('design token contracts', () => {

@@ -111,7 +111,21 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     if (params) {
       Object.entries(params).forEach(([k, v]) => {
-        text = text.replace(new RegExp(`{${k}}`, 'g'), String(v));
+        const valStr = String(v);
+        if (!valStr) {
+          text = text.replace(new RegExp(`{${k}}`, 'g'), '');
+          return;
+        }
+        const placeholder = `{${k}}`;
+        let index = text.indexOf(placeholder);
+        while (index !== -1) {
+          const isAtStart = index === 0 || /[!:;\n]\s*$/.test(text.slice(0, index));
+          const formattedVal = isAtStart
+            ? valStr.charAt(0).toUpperCase() + valStr.slice(1)
+            : valStr.toLowerCase();
+          text = text.slice(0, index) + formattedVal + text.slice(index + placeholder.length);
+          index = text.indexOf(placeholder, index + formattedVal.length);
+        }
       });
     }
     return text;
@@ -155,7 +169,21 @@ export function useI18n(): I18nContextType {
         let text = (DEFAULT_LANGUAGE.dictionary[section] as unknown as Record<string, string>)?.[key as string] || '';
         if (params) {
           Object.entries(params).forEach(([k, v]) => {
-            text = text.replace(new RegExp(`{${k}}`, 'g'), String(v));
+            const valStr = String(v);
+            if (!valStr) {
+              text = text.replace(new RegExp(`{${k}}`, 'g'), '');
+              return;
+            }
+            const placeholder = `{${k}}`;
+            let index = text.indexOf(placeholder);
+            while (index !== -1) {
+              const isAtStart = index === 0 || /[!:;\n]\s*$/.test(text.slice(0, index));
+              const formattedVal = isAtStart
+                ? valStr.charAt(0).toUpperCase() + valStr.slice(1)
+                : valStr.toLowerCase();
+              text = text.slice(0, index) + formattedVal + text.slice(index + placeholder.length);
+              index = text.indexOf(placeholder, index + formattedVal.length);
+            }
           });
         }
         return text;

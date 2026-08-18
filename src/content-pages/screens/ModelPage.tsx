@@ -7,6 +7,7 @@ import { ContentBody } from '@/components/ui/ContentBody';
 import { ContentCard } from '@/components/ui/ContentCard';
 import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
 import { useI18n } from '@/i18n';
 
 /**
@@ -19,9 +20,59 @@ export function ModelPage() {
   const { id } = useParams();
   const { lang, getLocalizedPath, t } = useI18n();
   const slug = id || '';
-  const model = slug ? db.getModel(slug, lang) : undefined;
   const isFallback = slug ? db.isFallback(slug, lang) : false;
   const availableLangs = slug ? db.getAvailableLanguages(slug) : ['es'];
+  const model = slug ? db.getModel(slug, lang) : undefined;
+  const satisfiesIds = model ? (Array.isArray(model.satisfies) ? model.satisfies : [model.satisfies]).filter(Boolean) : [];
+  const systems = satisfiesIds.map(sysId => db.getAxiomaticSystem(sysId, lang)).filter(Boolean);
+  const primarySystem = systems[0];
+  const verifiedAxioms = (model?.axioms_verified || []).map(axId => db.getAxiom(axId, lang)).filter(Boolean);
+
+  const renderSecondaryContent = () => (
+    <FadeIn>
+      {systems.length > 0 && (
+          <section className="mt-16">
+            <SubtleSeparator />
+            <h2 className="text-2xl font-bold mb-6 border-b border-carbon/10 pb-4">
+              {systems.length > 1 ? `${t('content', 'axiomaticSystems')} (${systems.length})` : t('content', 'axiomaticSystem')}
+            </h2>
+            <div className="grid gap-4 lg:grid-cols-2">
+              {systems.map(sys => sys && (
+                <ContentCard
+                  key={sys.id}
+                  href={getLocalizedPath(`/sistema/${sys.id}`)}
+                  title={sys.title}
+                  description={sys.description}
+                  type="sistema-axiomatico"
+                  layout="default"
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {verifiedAxioms.length > 0 && (
+          <section className="mt-16">
+            <SubtleSeparator />
+            <h2 className="text-2xl font-bold mb-6 border-b border-carbon/10 pb-4">
+              {`${t('content', 'verifiedAxioms')} (${verifiedAxioms.length})`}
+            </h2>
+            <div className="grid gap-4 lg:grid-cols-2">
+              {verifiedAxioms.map(ax => ax && (
+                <ContentCard
+                  key={ax.id}
+                  href={getLocalizedPath(`/axioma/${ax.id}`)}
+                  title={ax.title}
+                  description={ax.description}
+                  type="axioma"
+                  layout="default"
+                />
+              ))}
+            </div>
+          </section>
+        )}
+    </FadeIn>
+  );
 
   if (!model) {
     return (
@@ -31,10 +82,6 @@ export function ModelPage() {
       </div>
     );
   }
-
-  const satisfiesId = Array.isArray(model.satisfies) ? model.satisfies[0] : model.satisfies;
-  const system = satisfiesId ? db.getAxiomaticSystem(satisfiesId, lang) : undefined;
-  const verifiedAxioms = (model.axioms_verified || []).map(axId => db.getAxiom(axId, lang)).filter(Boolean);
 
   const breadcrumbs = db.getBreadcrumbs(
     model.branch || model.tags || (verifiedAxioms[0] && (verifiedAxioms[0].branch || verifiedAxioms[0].tags)),
@@ -52,9 +99,9 @@ export function ModelPage() {
           breadcrumbs={breadcrumbs}
           tags={model.tags || []}
           nodeId={model.id}
-          backLink={system ? {
-            href: getLocalizedPath(`/sistema/${system.id}`),
-            label: `← ${t('content', 'axiomaticSystem')}: ${system.title}`,
+          backLink={primarySystem ? {
+            href: getLocalizedPath(`/sistema/${primarySystem.id}`),
+            label: `← ${t('content', 'axiomaticSystem')}: ${primarySystem.title}`,
           } : undefined}
         />
 
@@ -68,49 +115,17 @@ export function ModelPage() {
         <ContentBody>
           <model.Component />
         </ContentBody>
+        <ReadingButton id={model.id} />
 
-        {system && (
-          <section className="mt-16">
-            <SubtleSeparator />
-            <h2 className="text-2xl font-bold mb-6 border-b border-carbon/10 pb-4">
-              {t('content', 'axiomaticSystem')}
-            </h2>
-            <ContentCard
-              href={getLocalizedPath(`/sistema/${system.id}`)}
-              title={system.title}
-              description={system.description}
-              type="sistema-axiomatico"
-              layout="row"
-            />
-          </section>
-        )}
-
-        {verifiedAxioms.length > 0 && (
-          <section className="mt-16">
-            <SubtleSeparator />
-            <h2 className="text-2xl font-bold mb-6 border-b border-carbon/10 pb-4">
-              {`${t('content', 'verifiedAxioms')} (${verifiedAxioms.length})`}
-            </h2>
-            <div className="flex flex-col gap-3 max-w-2xl">
-              {verifiedAxioms.map(ax => ax && (
-                <ContentCard
-                  key={ax.id}
-                  href={getLocalizedPath(`/axioma/${ax.id}`)}
-                  title={ax.title}
-                  description={ax.description}
-                  type="axioma"
-                  layout="row"
-                />
-              ))}
-            </div>
-          </section>
-        )}
       </FadeIn>
     </div>
   );
 
   return (
-    <ContentLayout pageType="modelo" diagram={(model.Simulation || model.Diagram) ? <ContentDiagram component={model.Simulation || model.Diagram} /> : undefined}>
+    <ContentLayout pageType="modelo" 
+      diagram={(model.Simulation || model.Diagram) ? <ContentDiagram component={model.Simulation || model.Diagram} /> : undefined}
+      secondary={renderSecondaryContent()}
+      >
       {renderContent()}
     </ContentLayout>
   );
