@@ -220,18 +220,24 @@ export interface CreatePageInput {
   type: string;
   title: string;
   description: string;
+  lang?: string;
   relatedId?: string;
 }
 
 export function createPagePath(input: CreatePageInput): string {
   const directory = PAGE_TYPE_DIRECTORIES[input.type];
   if (!directory) throw new Error(`Tipo no soportado: ${input.type}`);
-  return `content/mdx/${directory}/${input.id}.mdx`;
+  const lang = input.lang ? `${input.lang}/` : '';
+  return `content/mdx/${lang}${directory}/${input.id}.mdx`;
 }
 
 function metadataForNewPage(input: CreatePageInput): Record<string, unknown> {
   const metadata: Record<string, unknown> = {
-    id: input.id, type: input.type, title: input.title, description: input.description,
+    id: input.id,
+    type: input.type,
+    lang: input.lang || 'es',
+    title: input.title,
+    description: input.description,
   };
   if (input.type === 'definicion') metadata.subtype = 'nominal';
   if (input.type === 'metodo') metadata.subtype = 'demostracion';
@@ -255,6 +261,36 @@ export function createPageSource(input: CreatePageInput): string {
     ? `<Capitular letra="${initial}" />${rest}\n\n<Separador />\n\n<ProofStep number={1} title="Hipótesis" target="step1">\nPor hipótesis, se fijan los objetos y relaciones declarados en el enunciado. La justificación pedagógica se completa antes de publicar.\n</ProofStep>`
     : `<Capitular letra="${initial}" />${rest}\n\n<Separador />\n\n### Desarrollo\n\nSe desarrolla el contenido mediante definiciones, enlaces semánticos y justificaciones explícitas.`;
   return `export const metadata = ${metadata};\n\n${body}\n`;
+}
+
+export function cloneMdxForTranslation(sourceMdx: string, targetLang: string, targetTitle?: string): string {
+  let next = sourceMdx;
+
+  if (/^---\r?\n[\s\S]*?\r?\n---/m.test(next)) {
+    if (/^lang\s*:\s*.+$/m.test(next)) {
+      next = next.replace(/^lang\s*:\s*.+$/m, `lang: ${targetLang}`);
+    } else {
+      next = next.replace(/^---\r?\n/, `---\nlang: ${targetLang}\n`);
+    }
+
+    if (targetTitle && targetTitle.trim()) {
+      if (/^title\s*:\s*.+$/m.test(next)) {
+        next = next.replace(/^title\s*:\s*.+$/m, `title: ${targetTitle}`);
+      }
+    }
+  } else {
+    if (/lang\s*:\s*['"][^'"]+['"]/.test(next)) {
+      next = next.replace(/lang\s*:\s*['"][^'"]+['"]/, `lang: '${targetLang}'`);
+    } else if (/export\s+const\s+metadata\s*=\s*\{/.test(next)) {
+      next = next.replace(/export\s+const\s+metadata\s*=\s*\{/, `export const metadata = {\n  lang: '${targetLang}',`);
+    }
+    if (targetTitle && targetTitle.trim()) {
+      if (/title\s*:\s*['"][^'"]+['"]/.test(next)) {
+        next = next.replace(/title\s*:\s*['"][^'"]+['"]/, `title: ${JSON.stringify(targetTitle)}`);
+      }
+    }
+  }
+  return next;
 }
 
 import type { TemplateKind } from '@/fixed-pages/editor/diagrams/model/types';

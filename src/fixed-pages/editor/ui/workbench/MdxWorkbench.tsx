@@ -7,6 +7,7 @@ import type { DiagramWorkbenchMode } from '@/fixed-pages/editor/diagrams/ui/work
 import { DiagramRewriteDialog } from '../../diagrams/ui/DiagramRewriteDialog';
 import type { Block } from '@/fixed-pages/editor/session/parser';
 import type { EditorDiagramReference, EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
+import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import { useDiagramUsages } from '@/fixed-pages/editor/diagrams/ui/workbench/useDiagramUsages';
 import { usePageDiagramTargets } from '@/fixed-pages/editor/diagrams/ui/workbench/usePageDiagramTargets';
 import { PublishedRuntimePreview } from '../preview/PublishedRuntimePreview';
@@ -19,6 +20,7 @@ import { EditorLandingView } from '../landing/EditorLandingView';
 
 import { useEditorNavigationFlow } from '@/fixed-pages/editor/ui/page/useEditorNavigationFlow';
 import { useUnsavedChangesGuard } from '@/fixed-pages/editor/ui/page/useUnsavedChangesGuard';
+import { useI18n, isSupportedLanguage } from '@/i18n';
 import { MathProviderBoundary } from '@/lib/page-context/MathStoreContext';
 import { DiagramStepSyncContext, type DiagramStepSyncContextValue } from '@/lib/page-context/DiagramStepSyncContext';
 import type { ProofStepData } from '@/fixed-pages/editor/session/parser';
@@ -56,6 +58,7 @@ import {
 } from '../page/editorPageModel';
 
 export const MdxWorkbench: React.FC = () => {
+  const { lang: appLang, setLang: setAppLang } = useI18n();
   const {
     files,
     filesLoading,
@@ -91,6 +94,7 @@ export const MdxWorkbench: React.FC = () => {
     assignDiagramStep,
     createPage,
     createDiagram,
+    createTranslation,
     compatibility,
     compatibilityReasons,
     canMutateVisualStructure,
@@ -167,6 +171,66 @@ export const MdxWorkbench: React.FC = () => {
   const [saveErrorModalOpen, setSaveErrorModalOpen] = useState(false);
   const [saveErrorMessage, setSaveErrorMessage] = useState<string | null>(null);
   const [warningSaveOpen, setWarningSaveOpen] = useState(false);
+
+  const currentLang = useMemo(() => {
+    if (metadata && typeof metadata === 'object' && 'lang' in metadata && typeof (metadata as { lang?: unknown }).lang === 'string') {
+      return (metadata as { lang: string }).lang;
+    }
+    if (currentFile) {
+      const match = currentFile.split('/').find(p => /^[a-z]{2}(-[A-Z]{2})?$/.test(p));
+      if (match) return match;
+    }
+    return 'es';
+  }, [currentFile, metadata]);
+
+  const currentConceptId = useMemo(() => {
+    if (metadata && typeof metadata === 'object' && 'id' in metadata && typeof (metadata as { id?: unknown }).id === 'string') {
+      return (metadata as { id: string }).id;
+    }
+    if (currentFile) {
+      return currentFile.split('/').pop()?.replace(/\.(mdx|tsx)$/, '') || '';
+    }
+    return '';
+  }, [currentFile, metadata]);
+
+  const currentConceptVariants = useMemo(() => {
+    if (!currentConceptId) return {};
+    const map: Record<string, FileNode> = {};
+    for (const file of files) {
+      if (file.kind !== 'mdx-document') continue;
+      const parts = file.path.split('/');
+      const slug = parts[parts.length - 1]?.replace(/\.mdx$/, '') || file.name.replace(/\.mdx$/, '');
+      const fileLang = file.lang || parts.find(p => /^[a-z]{2}(-[A-Z]{2})?$/.test(p)) || 'es';
+      if ((file.id && file.id === currentConceptId) || slug === currentConceptId) {
+        map[fileLang] = file;
+      }
+    }
+    return map;
+  }, [currentConceptId, files]);
+
+  const availableLangs = useMemo(() => Object.keys(currentConceptVariants), [currentConceptVariants]);
+
+  const handleSwitchLanguage = useCallback((targetLang: string) => {
+    const targetFile = currentConceptVariants[targetLang];
+    if (targetFile) {
+      openFileSafely(targetFile.path);
+      if (isSupportedLanguage(targetLang) && targetLang !== appLang) {
+        setAppLang(targetLang);
+      }
+    }
+  }, [currentConceptVariants, openFileSafely, appLang, setAppLang]);
+
+  const handleCreateTranslation = useCallback(async (fileOrLang: FileNode | string, maybeLang?: string) => {
+    const targetLang = typeof fileOrLang === 'string' ? fileOrLang : maybeLang;
+    if (!targetLang) return;
+    if (typeof fileOrLang !== 'string' && fileOrLang.path !== currentFile) {
+      openFileSafely(fileOrLang.path);
+    }
+    await createTranslation(targetLang);
+    if (isSupportedLanguage(targetLang) && targetLang !== appLang) {
+      setAppLang(targetLang);
+    }
+  }, [createTranslation, currentFile, openFileSafely, appLang, setAppLang]);
 
   const writeAvailable = !editorApiUnavailableInProduction() && editorWriteAccessGranted();
   const saveCapability = useMemo(
@@ -543,6 +607,10 @@ export const MdxWorkbench: React.FC = () => {
         currentFile={currentFile}
         fileTitle={currentTitle}
         contentType={currentContentType}
+        currentLang={currentLang}
+        availableLangs={availableLangs}
+        onSwitchLanguage={handleSwitchLanguage}
+        onCreateTranslation={(lang) => { void handleCreateTranslation(lang); }}
         saving={saving}
         viewMode={viewMode}
         onSetViewMode={(mode) => {
@@ -599,24 +667,6 @@ export const MdxWorkbench: React.FC = () => {
             onLeftPanelWidthChange={(width) => setWorkspace(prev => ({ ...prev, navigationWidth: width }))}
             inspectorWidth={workspace.inspectorWidth}
             onInspectorWidthChange={(width) => setWorkspace(prev => ({ ...prev, inspectorWidth: width }))}
-            leftPanel={
-              <EditorNavigation
-                files={files}
-                isLoading={filesLoading}
-                error={filesError}
-                currentFile={currentFile}
-                openFile={openFileSafely}
-                retry={loadFileList}
-                close={() => setIsSidebarOpen(false)}
-                level={workspace.level}
-                favoritePaths={workspace.favoritePaths}
-                recentPaths={workspace.recentPaths}
-                toggleFavorite={toggleFavorite}
-                width={workspace.navigationWidth}
-                onCreatePage={() => setCreatePageOpen(true)}
-                onCreateDiagram={() => setCreateDiagramOpen(true)}
-              />
-            }
             onConfirm={async (spec: EditorDiagramReference) => {
               await bindDiagram(spec);
               return true;
@@ -669,6 +719,7 @@ export const MdxWorkbench: React.FC = () => {
             width={workspace.navigationWidth}
             onCreatePage={() => setCreatePageOpen(true)}
             onCreateDiagram={() => setCreateDiagramOpen(true)}
+            onCreateTranslation={(file, lang) => { void handleCreateTranslation(file, lang); }}
           />
         }
         inspectorOpen={isInspectorOpen}
@@ -953,6 +1004,7 @@ export const MdxWorkbench: React.FC = () => {
         open={createPageOpen}
         onClose={() => setCreatePageOpen(false)}
         onCreate={async (params) => createPage(params)}
+        initialLang={currentLang}
       />
 
       {/* Create Diagram Modal */}

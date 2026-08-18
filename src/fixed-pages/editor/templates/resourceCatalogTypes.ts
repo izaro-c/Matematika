@@ -15,6 +15,8 @@ export interface EditorResourceCatalogEntry {
   capability: EditorResourceCapability;
   capabilityLabel: string;
   reason: string;
+  lang?: string;
+  id?: string;
 }
 
 export const RESOURCE_CAPABILITY_LABELS: Record<EditorResourceCapability, string> = {

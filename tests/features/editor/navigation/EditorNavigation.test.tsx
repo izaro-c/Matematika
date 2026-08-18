@@ -37,19 +37,19 @@ describe('explorador de recursos', () => {
     fireEvent.click(screen.getByText('Filtrar resultados'));
     expect(filterDisclosure?.open).toBe(true);
     expect(screen.getByRole('tab', { name: /Documentos 2/ }).getAttribute('aria-selected')).toBe('true');
-    expect(screen.getByRole('button', { name: /PuntoEditable/ })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Definición Punto' })).toBeTruthy();
     expect(screen.queryByRole('button', { name: /Solo fuente/ })).toBeNull();
 
     fireEvent.click(screen.getByRole('tab', { name: /Diagramas 1/ }));
-    expect(screen.getByRole('button', { name: /Solo fuente/ })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Punto' })).toBeTruthy();
     expect(screen.getByTitle(/Fuente autoritativa/)).toBeTruthy();
   });
 
   it('filtra por texto, tipo, estado y capacidad y explica el resultado vacío', () => {
     renderNavigation();
     fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'tales' } });
-    expect(screen.getByRole('button', { name: /TalesRequiere corrección/ })).toBeTruthy();
-    expect(screen.queryByRole('button', { name: /PuntoEditable/ })).toBeNull();
+    expect(screen.getByRole('button', { name: 'Teorema de Tales' })).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Definición Punto' })).toBeNull();
 
     fireEvent.change(screen.getByLabelText('Estado'), { target: { value: 'available' } });
     expect(screen.getByText('No hay resultados con estos filtros.')).toBeTruthy();
@@ -60,7 +60,7 @@ describe('explorador de recursos', () => {
 
   it('abre recursos, marca favoritos y permite recorrerlos con flechas', () => {
     const { props } = renderNavigation();
-    const punto = screen.getByRole('button', { name: /Definición PuntoEditable/ });
+    const punto = screen.getByRole('button', { name: 'Definición Punto' });
     fireEvent.click(punto);
     expect(props.openFile).toHaveBeenCalledWith(files[0].path);
     fireEvent.click(screen.getByRole('button', { name: /Añadir Definición Punto a favoritos/ }));

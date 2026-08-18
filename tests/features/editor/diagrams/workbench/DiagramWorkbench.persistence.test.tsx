@@ -22,7 +22,7 @@ describe('Editor V2 persistence mode', () => {
       />,
     );
 
-    await waitFor(() => expect(screen.getByDisplayValue('Diagrama inline')).toBeTruthy());
+    await waitFor(() => expect(screen.getAllByDisplayValue('Diagrama inline').length).toBeGreaterThanOrEqual(1));
     expect(screen.queryByText('Sandbox')).toBeNull();
   });
 });

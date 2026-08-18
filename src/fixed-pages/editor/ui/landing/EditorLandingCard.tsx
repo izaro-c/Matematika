@@ -110,10 +110,12 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
       .then(async res => {
         if (!active) return;
 
-        // Extraer título real del metadata MDX si existe
-        const mdxTitleMatch = res.source.match(/"title"\s*:\s*"([^"]+)"/);
-        if (mdxTitleMatch?.[1]) {
-          setRealTitle(mdxTitleMatch[1]);
+        // Extraer título real del metadata MDX si existe (YAML frontmatter o ESM export)
+        const yamlTitleMatch = res.source.match(/^title:\s*(?:"([^"]+)"|'([^']+)'|([^\r\n]+))/m);
+        const esmTitleMatch = res.source.match(/["']?title["']?\s*:\s*["']([^"']+)["']/);
+        const foundTitle = yamlTitleMatch?.[1] || yamlTitleMatch?.[2] || yamlTitleMatch?.[3] || esmTitleMatch?.[1];
+        if (foundTitle && foundTitle.trim()) {
+          setRealTitle(foundTitle.trim());
         }
 
         if (file.kind !== 'diagram') return;
@@ -276,6 +278,50 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </span>
+      </div>
+    </div>
+  );
+};
+
+export const EditorLandingCardSkeleton: React.FC<{ isDiagram?: boolean }> = ({ isDiagram = false }) => {
+  return (
+    <div
+      className="relative flex flex-col justify-between rounded-xl border border-carbon/15 bg-carbon/[0.03] p-4 shadow-2xs overflow-hidden animate-pulse"
+      style={{ minHeight: isDiagram ? '320px' : '150px' }}
+      aria-hidden="true"
+    >
+      <div className="absolute top-0 left-0 right-0 h-1 bg-carbon/10" />
+      <div className="pt-1">
+        {/* Header badges placeholder */}
+        <div className="flex items-center justify-between gap-2">
+          <div className="h-5 w-20 rounded-full bg-carbon/10" />
+          <div className="flex items-center space-x-1.5">
+            <div className="h-4 w-12 rounded bg-carbon/10" />
+            <div className="h-6 w-6 rounded-full bg-carbon/10" />
+          </div>
+        </div>
+
+        {/* Title placeholder */}
+        <div className="mt-3.5 space-y-1.5">
+          <div className="h-4 w-3/4 rounded bg-carbon/15" />
+          <div className="h-3.5 w-1/2 rounded bg-carbon/10" />
+        </div>
+
+        {/* Path placeholder */}
+        <div className="mt-2 h-2.5 w-2/3 rounded bg-carbon/10" />
+
+        {/* Diagram preview box placeholder */}
+        {isDiagram && (
+          <div className="mt-3 h-36 w-full rounded-lg border border-carbon/10 bg-carbon/5 flex items-center justify-center">
+            <div className="h-8 w-8 rounded-full bg-carbon/10" />
+          </div>
+        )}
+      </div>
+
+      {/* Footer placeholder */}
+      <div className="mt-4 flex items-center justify-between border-t border-carbon/10 pt-2.5">
+        <div className="h-3 w-24 rounded bg-carbon/10" />
+        <div className="h-3 w-12 rounded bg-carbon/10" />
       </div>
     </div>
   );

@@ -47,6 +47,8 @@ function entry(
   capability: EditorResourceCapability,
   reason: string,
   title?: string,
+  lang?: string,
+  id?: string,
 ): EditorResourceCatalogEntry {
   return {
     path: normalizedRelative(srcRoot, absolutePath),
@@ -57,6 +59,8 @@ function entry(
     capability,
     capabilityLabel: RESOURCE_CAPABILITY_LABELS[capability],
     reason,
+    lang,
+    id,
   };
 }
 
@@ -124,8 +128,18 @@ export function buildEditorResourceCatalog({
     const source = fs.readFileSync(absolutePath, 'utf8');
     const classified = mdxCapability(source);
     const title = extractMdxTitle(source);
-    const relativeDirectory = path.relative(contentRoot, path.dirname(absolutePath)).split(path.sep)[0] || 'content';
-    catalog.push(entry(srcRoot, absolutePath, relativeDirectory, 'mdx-document', classified.capability, classified.reason, title));
+    const relParts = path.relative(contentRoot, path.dirname(absolutePath)).split(path.sep).filter(Boolean);
+    let lang: string | undefined;
+    let typeDir = relParts[0] || 'content';
+    if (relParts.length > 1 && /^[a-z]{2}(-[A-Z]{2})?$/.test(relParts[0])) {
+      lang = relParts[0];
+      typeDir = relParts[1];
+    } else if (relParts.length === 1 && /^[a-z]{2}(-[A-Z]{2})?$/.test(relParts[0])) {
+      lang = relParts[0];
+      typeDir = 'content';
+    }
+    const id = path.basename(absolutePath, '.mdx');
+    catalog.push(entry(srcRoot, absolutePath, typeDir, 'mdx-document', classified.capability, classified.reason, title, lang, id));
   }
 
   for (const absolutePath of walkFiles(diagramsRoot)) {
@@ -140,7 +154,8 @@ export function buildEditorResourceCatalog({
     const classified = diagramCapability(source);
     const title = extractDiagramTitle(source);
     const category = path.relative(diagramsRoot, path.dirname(absolutePath)).split(path.sep)[0] || 'general';
-    catalog.push(entry(srcRoot, absolutePath, `diagram-${category.toLowerCase()}`, 'diagram', classified.capability, classified.reason, title));
+    const id = path.basename(absolutePath, '.tsx');
+    catalog.push(entry(srcRoot, absolutePath, `diagram-${category.toLowerCase()}`, 'diagram', classified.capability, classified.reason, title, undefined, id));
   }
 
   if (includeInternal) {

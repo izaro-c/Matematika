@@ -19,6 +19,8 @@ const fileListSchema = z.array(z.object({
   capability: z.enum(['visual-exact', 'code-preview', 'invalid']),
   capabilityLabel: z.string(),
   reason: z.string(),
+  lang: z.string().optional(),
+  id: z.string().optional(),
 }));
 
 async function readPayload(response: Response): Promise<unknown> {

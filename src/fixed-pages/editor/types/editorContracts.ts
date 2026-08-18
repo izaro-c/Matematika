@@ -52,6 +52,8 @@ export interface FileNode {
   capability: 'visual-exact' | 'code-preview' | 'invalid';
   capabilityLabel: string;
   reason: string;
+  lang?: string;
+  id?: string;
 }
 
 const BLOCK_SNIPPETS: Readonly<Record<string, string>> = {

@@ -10,10 +10,21 @@ export interface EditorCatalogFilters {
   type: string;
   status: 'all' | EditorCatalogStatus;
   capability: EditorCatalogCapability;
+  language?: string;
+}
+
+export interface EditorConceptualItem {
+  conceptId: string;
+  type: string;
+  kind: FileNode['kind'];
+  title: string;
+  primaryFile: FileNode;
+  variants: Record<string, FileNode>;
+  availableLangs: string[];
 }
 
 export interface EditorWorkspacePreferences {
-  version: 1;
+  version: number;
   level: EditorWorkspaceLevel;
   favoritePaths: string[];
   recentPaths: string[];
@@ -28,6 +39,7 @@ export const DEFAULT_EDITOR_CATALOG_FILTERS: EditorCatalogFilters = {
   type: 'all',
   status: 'all',
   capability: 'all',
+  language: 'all',
 };
 export const DEFAULT_EDITOR_WORKSPACE_PREFERENCES: EditorWorkspacePreferences = {
   version: 1,
@@ -36,7 +48,7 @@ export const DEFAULT_EDITOR_WORKSPACE_PREFERENCES: EditorWorkspacePreferences = 
   recentPaths: [],
   navigationWidth: 304,
   inspectorWidth: 336,
-  diagnosticsHeight: 184,
+  diagnosticsHeight: 220,
 };
 
 const MIN_NAVIGATION_WIDTH = 256;
@@ -199,6 +211,49 @@ export function resourceDisplayName(file: FileNode): string {
   return result.charAt(0).toUpperCase() + result.slice(1);
 }
 
+export function extractResourceIdentity(file: FileNode): { conceptId: string; lang?: string } {
+  if (file.id && file.lang) return { conceptId: file.id, lang: file.lang };
+  const parts = file.path.split('/');
+  const fileName = parts[parts.length - 1] || file.name;
+  const baseName = fileName.replace(/\.(mdx|tsx)$/i, '');
+  const langMatch = parts.find(p => /^[a-z]{2}(-[A-Z]{2})?$/.test(p));
+  return {
+    conceptId: file.id || baseName,
+    lang: file.lang || langMatch,
+  };
+}
+
+export function groupResourcesByConcept(files: FileNode[]): EditorConceptualItem[] {
+  const groups = new Map<string, EditorConceptualItem>();
+  for (const file of files) {
+    const { conceptId, lang } = extractResourceIdentity(file);
+    const key = `${file.kind}:${file.type}:${conceptId}`;
+    const existing = groups.get(key);
+    const langKey = lang || 'es';
+    if (!existing) {
+      groups.set(key, {
+        conceptId,
+        type: file.type,
+        kind: file.kind,
+        title: resourceDisplayName(file),
+        primaryFile: file,
+        variants: { [langKey]: file },
+        availableLangs: [langKey],
+      });
+    } else {
+      existing.variants[langKey] = file;
+      if (!existing.availableLangs.includes(langKey)) {
+        existing.availableLangs.push(langKey);
+      }
+      if (langKey === 'es' || !existing.primaryFile) {
+        existing.primaryFile = file;
+        existing.title = resourceDisplayName(file);
+      }
+    }
+  }
+  return [...groups.values()];
+}
+
 export function filterCatalogResources(
   files: FileNode[],
   section: EditorResourceSection,
@@ -210,6 +265,10 @@ export function filterCatalogResources(
     if (filters.type !== 'all' && file.type !== filters.type) return false;
     if (filters.status !== 'all' && resourceStatus(file) !== filters.status) return false;
     if (filters.capability !== 'all' && file.capability !== filters.capability) return false;
+    if (filters.language && filters.language !== 'all') {
+      const { lang } = extractResourceIdentity(file);
+      if (lang && lang !== filters.language) return false;
+    }
     if (!normalizedQuery) return true;
     const haystack = `${resourceDisplayName(file)} ${file.name} ${file.path} ${file.type}`.toLocaleLowerCase('es');
     return haystack.includes(normalizedQuery);

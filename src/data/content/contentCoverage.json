@@ -2069,26 +2069,6 @@
       ]
     },
     {
-      "id": "teorema-area-aditividad",
-      "type": "teorema",
-      "title": "Aditividad del Contenido",
-      "filePath": "es/theorems/teorema-area-aditividad.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_aditividad",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
-      "sourcesCount": 1,
-      "proofSteps": 0,
-      "mappedProofSteps": [],
-      "parentTheorem": null,
-      "demos": [
-        "demo-area-aditividad"
-      ]
-    },
-    {
       "id": "teorema-area-invariancia",
       "type": "teorema",
       "title": "Invariancia del Contenido por Congruencia",
@@ -2505,9 +2485,29 @@
       "demos": []
     },
     {
+      "id": "teorema-area-aditividad",
+      "type": "teorema",
+      "title": "Aditividad del Contenido",
+      "filePath": "eu/theorems/teorema-area-aditividad.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "leanId": "Matematika.Geometry.Hilbert.teorema_area_aditividad",
+      "leanVerified": true,
+      "verificationStatus": "human-proof",
+      "foundation": "pending",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "mappedProofSteps": [],
+      "parentTheorem": null,
+      "demos": [
+        "demo-area-aditividad"
+      ]
+    },
+    {
       "id": "teorema-pitagoras",
       "type": "teorema",
-      "title": "Pitagorasen Teorema",
+      "title": "Pitagorasen teorema",
       "filePath": "eu/theorems/teorema-pitagoras.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [

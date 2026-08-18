@@ -175,11 +175,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
             disabled={titleDisabled}
             placeholder={titlePlaceholder}
           />
-          {fileBadge && (
-            <HeaderBadge variant="subtle" className="hidden max-w-[130px] xl:inline">
-              {fileBadge}
-            </HeaderBadge>
-          )}
+          {fileBadge ? <HeaderBadge variant="subtle">{fileBadge}</HeaderBadge> : null}
           <span className="inline-flex min-w-0 shrink-0 items-center">{badges}</span>
           <span
             className={`h-2 w-2 shrink-0 rounded-full bg-ocre ${isDirty ? 'animate-pulse opacity-100' : 'opacity-0'}`}

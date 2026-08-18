@@ -9,6 +9,7 @@ import { EditorWorkbenchHeader } from './EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
 import { saveChromeFromCapability } from '@/fixed-pages/editor/save/saveCapability';
 import { useI18n } from '@/i18n';
+import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 
 export type MdxViewMode = 'code' | 'visual' | 'preview';
 
@@ -16,6 +17,10 @@ interface MdxWorkbenchHeaderProps {
   currentFile: string | null;
   fileTitle: string;
   contentType?: string;
+  currentLang?: string;
+  availableLangs?: string[];
+  onSwitchLanguage?: (lang: string) => void;
+  onCreateTranslation?: (targetLang: string) => void;
   saving: boolean;
   viewMode: MdxViewMode;
   onSetViewMode: (mode: MdxViewMode) => void;
@@ -40,6 +45,10 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
   currentFile,
   fileTitle,
   contentType,
+  currentLang,
+  availableLangs,
+  onSwitchLanguage,
+  onCreateTranslation,
   saving,
   viewMode,
   onSetViewMode,
@@ -77,13 +86,64 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
       titlePlaceholder={t('editor', 'pageTitlePlaceholder')}
       onTitleChange={onTitleChange}
       titleDisabled={isReadOnly}
-      fileBadge={currentFile?.split('/').pop() ?? 'nuevo.mdx'}
       badges={
-        contentType ? (
-          <HeaderBadge variant="salvia" className="hidden lg:inline">
-            {contentType}
-          </HeaderBadge>
-        ) : null
+        <div className="flex items-center gap-2">
+          {contentType ? (
+            <HeaderBadge variant="salvia" className="hidden lg:inline">
+              {contentType}
+            </HeaderBadge>
+          ) : null}
+
+          <div
+            className="hidden sm:inline-flex max-w-[240px] overflow-x-auto items-center gap-1 bg-carbon/5 p-0.5 rounded border border-carbon/15"
+            role="group"
+            aria-label="Idioma de edición"
+          >
+            {SUPPORTED_LANGUAGES.map(lang => {
+              const isActive = (currentLang || 'es') === lang.code;
+              const exists = availableLangs ? availableLangs.includes(lang.code) : true;
+
+              if (isActive) {
+                return (
+                  <span
+                    key={lang.code}
+                    className="shrink-0 rounded bg-salvia px-1.5 py-0.5 text-[9px] font-bold text-lienzo"
+                    title={`Idioma activo: ${lang.name}`}
+                  >
+                    {lang.code.toUpperCase()}
+                  </span>
+                );
+              }
+              if (exists && onSwitchLanguage) {
+                return (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    onClick={() => onSwitchLanguage(lang.code)}
+                    className="shrink-0 rounded px-1.5 py-0.5 text-[9px] font-bold text-carbon/60 hover:bg-salvia/15 hover:text-salvia transition-colors cursor-pointer"
+                    title={`Cambiar a ${lang.name}`}
+                  >
+                    {lang.code.toUpperCase()}
+                  </button>
+                );
+              }
+              if (onCreateTranslation) {
+                return (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    onClick={() => onCreateTranslation(lang.code)}
+                    className="shrink-0 rounded border border-dashed border-carbon/25 px-1 py-0.5 text-[9px] font-mono text-carbon/40 hover:border-salvia hover:text-salvia transition-colors cursor-pointer"
+                    title={`Crear traducción en ${lang.name}`}
+                  >
+                    +{lang.code.toUpperCase()}
+                  </button>
+                );
+              }
+              return null;
+            })}
+          </div>
+        </div>
       }
       isDirty={saveCapability.isDirty}
       isSidebarOpen={isSidebarOpen}

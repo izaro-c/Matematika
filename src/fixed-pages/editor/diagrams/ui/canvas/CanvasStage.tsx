@@ -11,6 +11,7 @@ import { useFitScale } from './useFitScale';
 
 export interface CanvasStageProps {
   model: VisualDiagramModel | null;
+  lang?: string;
   selectedIds: readonly string[];
   activeTool: CanvasTool;
   pendingRefs: string[];
@@ -38,6 +39,7 @@ export interface CanvasStageProps {
 
 export const CanvasStage: React.FC<CanvasStageProps> = ({
   model,
+  lang,
   selectedIds,
   activeTool,
   pendingRefs,
@@ -92,6 +94,7 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     >
       <BoardHost
         model={model}
+        lang={lang}
         selectedIds={selectedIds}
         activeTool={activeTool}
         pendingRefs={pendingRefs}

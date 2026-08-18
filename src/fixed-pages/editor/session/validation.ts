@@ -23,6 +23,7 @@ import {
   parseDiagramSpecV2,
 } from '@/diagrams';
 import { auditEditorSource } from '@/fixed-pages/editor/security/contentGuard';
+import { isSupportedLanguage } from '@/i18n/config';
 
 const CONTENT_ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HEX_RE = /#[0-9a-fA-F]{3,8}\b/;
@@ -61,10 +62,11 @@ function issue(
   return { id, severity, area, message, blockId };
 }
 
-function validateMetadata(metadata: Record<string, unknown>): EditorValidationIssue[] {
+function validateMetadata(metadata: Record<string, unknown> = {}): EditorValidationIssue[] {
   const issues: EditorValidationIssue[] = [];
-  const id = String(metadata.id || '');
-  const type = String(metadata.type || '');
+  const safeMeta = metadata || {};
+  const id = String(safeMeta.id || '');
+  const type = String(safeMeta.type || '');
 
   if (!id) {
     issues.push(issue('metadata-id-required', 'error', 'metadata', 'El campo "id" es obligatorio.'));
@@ -105,6 +107,10 @@ function validateMetadata(metadata: Record<string, unknown>): EditorValidationIs
 
   if (type === 'demostracion' && metadata.layout !== 'split' && metadata.layout !== 'text') {
     issues.push(issue('demo-layout-required', 'warning', 'metadata', 'Indica layout "split" para demostraciones geométricas o "text" para pruebas sin diagrama.'));
+  }
+
+  if (metadata.lang && typeof metadata.lang === 'string' && !isSupportedLanguage(metadata.lang)) {
+    issues.push(issue('metadata-lang-supported', 'warning', 'metadata', `El idioma "${metadata.lang}" no figura en el registro de idiomas soportados.`));
   }
 
   return issues;

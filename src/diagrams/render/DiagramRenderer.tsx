@@ -26,6 +26,7 @@ import { syncDiagramTextScale } from '@/diagrams/diagramTextScale';
 
 export interface DiagramRendererProps {
   spec: DiagramSpecV2 | DiagramSpecV3;
+  lang?: string;
   mode?: 'runtime' | 'editor' | 'preview';
   selectedIds?: readonly string[];
   highlightedIds?: readonly string[];
@@ -49,6 +50,7 @@ export interface DiagramRendererProps {
 
 const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   spec: inputSpec,
+  lang: propLang,
   mode = 'runtime',
   selectedIds = [],
   highlightedIds = [],
@@ -70,8 +72,9 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
 }) => {
   const reportPaint = useDiagramPaintReport();
   const readyNotifiedRef = useRef(false);
-  const { lang } = useI18n();
-  const localizedInputSpec = useMemo(() => localizeDiagramSpec(inputSpec, lang), [inputSpec, lang]);
+  const { lang: contextLang } = useI18n();
+  const effectiveLang = propLang || contextLang;
+  const localizedInputSpec = useMemo(() => localizeDiagramSpec(inputSpec, effectiveLang), [inputSpec, effectiveLang]);
   const spec = useMemo(() => prepareSceneSpec(localizedInputSpec), [localizedInputSpec]);
 
   const {

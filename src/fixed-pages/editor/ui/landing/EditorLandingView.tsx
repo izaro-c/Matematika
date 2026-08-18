@@ -5,7 +5,7 @@ import { isDarkMode, setTheme } from '@/lib/theme/theme';
 import { Logo } from '@/components/ui/Logo';
 import { IconSun, IconMoon } from '@/fixed-pages/editor/diagrams/ui/toolbar/WorkbenchIcons';
 import { HeaderContainer } from '../workbench/EditorHeaderPrimitives';
-import { EditorLandingCard } from './EditorLandingCard';
+import { EditorLandingCard, EditorLandingCardSkeleton } from './EditorLandingCard';
 import { useEditorLanding, type LandingSection } from './useEditorLanding';
 import { useI18n } from '@/i18n';
 
@@ -34,7 +34,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
 }) => {
   const [activeSection, setActiveSection] = useState<LandingSection>(initialSection);
   const [isDark, setIsDark] = useState(isDarkMode);
-  const { getLocalizedPath, t } = useI18n();
+  const { getLocalizedPath, t, lang: currentLang, languages, setLang } = useI18n();
 
   useEffect(() => {
     setActiveSection(initialSection);
@@ -64,6 +64,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
     section: activeSection,
     favoritePaths,
     recentPaths,
+    currentLang,
   });
 
   return (
@@ -114,6 +115,25 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
 
         {/* Header Right Actions */}
         <div className="flex items-center justify-end space-x-2">
+          {/* Language Switcher */}
+          <div className="flex items-center gap-1 rounded-lg border border-carbon/15 bg-carbon/5 p-0.5" role="group" aria-label="Idioma del editor">
+            {languages.map(l => (
+              <button
+                key={l.code}
+                type="button"
+                onClick={() => setLang(l.code)}
+                className={`rounded px-2 py-1 text-[10px] font-bold uppercase transition-all cursor-pointer ${
+                  currentLang === l.code
+                    ? 'border border-salvia/40 bg-salvia text-lienzo shadow-2xs'
+                    : 'text-carbon/60 hover:bg-salvia/10 hover:text-salvia'
+                }`}
+                title={`Cambiar idioma a ${l.name}`}
+              >
+                {l.code}
+              </button>
+            ))}
+          </div>
+
           <button
             type="button"
             onClick={toggleTheme}
@@ -253,7 +273,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             aria-label="Cargando elementos"
           >
             {Array.from({ length: 8 }).map((_, idx) => (
-              <div key={`skeleton-card-${idx}`} className="relative flex flex-col justify-between rounded-xl border border-carbon/15 bg-carbon/5 p-4 shadow-2xs overflow-hidden animate-pulse" />
+              <EditorLandingCardSkeleton key={`skeleton-card-${idx}`} isDiagram={activeSection === 'diagrams'} />
             ))}
           </div>
         ) : filteredFiles.length > 0 ? (

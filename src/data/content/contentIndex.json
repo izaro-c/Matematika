@@ -8593,11 +8593,13 @@
       "leanVerified": true,
       "verificationStatus": "human-proof",
       "availableLangs": [
-        "es"
+        "es",
+        "eu"
       ]
     },
     "availableLangs": [
-      "es"
+      "es",
+      "eu"
     ]
   },
   "teorema-area-aditividad": {
@@ -8636,11 +8638,13 @@
       "leanVerified": true,
       "verificationStatus": "human-proof",
       "availableLangs": [
-        "es"
+        "es",
+        "eu"
       ]
     },
     "availableLangs": [
-      "es"
+      "es",
+      "eu"
     ]
   },
   "es:teorema-area-invariancia": {
@@ -10479,6 +10483,51 @@
       "eu"
     ]
   },
+  "eu:teorema-area-aditividad": {
+    "id": "teorema-area-aditividad",
+    "slug": "teorema-area-aditividad",
+    "lang": "eu",
+    "filePath": "eu/theorems/teorema-area-aditividad.mdx",
+    "contentType": "teorema",
+    "metadata": {
+      "lang": "eu",
+      "id": "teorema-area-aditividad",
+      "type": "teorema",
+      "title": "Aditividad del Contenido",
+      "description": "Si un polígono se descompone en polígonos con interiores disjuntos, su contenido es la suma de los contenidos de las partes. Teorema derivado de la definición de equidescomponibilidad de Hilbert.",
+      "statement": "Sea P un polígono y P₁, P₂ una descomposición de P con interiores disjuntos. Entonces Cont(P) = Cont(P₁) + Cont(P₂).",
+      "tags": [
+        "geometria",
+        "areas"
+      ],
+      "authors": [
+        "hilbert"
+      ],
+      "difficulty": "básico",
+      "demos": [
+        "demo-area-aditividad"
+      ],
+      "hasSimulation": false,
+      "leanId": "Matematika.Geometry.Hilbert.teorema_area_aditividad",
+      "sources": [
+        {
+          "title": "Pending Formalization",
+          "author": "Matematika",
+          "role": "primary"
+        }
+      ],
+      "leanVerified": true,
+      "verificationStatus": "human-proof",
+      "availableLangs": [
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "es",
+      "eu"
+    ]
+  },
   "eu:teorema-pitagoras": {
     "id": "teorema-pitagoras",
     "slug": "teorema-pitagoras",
@@ -10490,7 +10539,7 @@
       "type": "teorema",
       "lang": "eu",
       "branch": "51M",
-      "title": "Pitagorasen Teorema",
+      "title": "Pitagorasen teorema",
       "description": "Triangelu angeluzuzen batean, hipotenusaren karratua katetoen karratuen baturaren berdina da.",
       "statement": "Izan bedi △ABC triangelu angeluzuzena, C erpinean angelu zuzena duena. a = |BC|, b = |CA| eta c = |AB| (hipotenusa) badira, orduan a² + b² = c².",
       "tags": [

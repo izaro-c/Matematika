@@ -55,6 +55,8 @@ import { WorkbenchAsideTabs } from '@/fixed-pages/editor/ui/workbench/WorkbenchA
 import { EDITOR_PANEL_LIMITS } from '@/fixed-pages/editor/session/editorNavigationModel';
 import { usePanelResize } from '@/fixed-pages/editor/ui/page/usePanelResize';
 import { UI } from '@/design';
+import { DiagramDataPanel } from './DiagramDataPanel';
+import { localizeDiagramSpec } from '@/diagrams/model/localizeDiagram';
 import { PresetsModal } from '../modals/PresetsModal';
 import { CodeModal } from '../modals/CodeModal';
 import { DiagramSettingsModal } from '../modals/DiagramSettingsModal';
@@ -170,6 +172,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   const [selectedIds, setSelectedIds] = useState<readonly string[]>([]);
   const [pendingRefs, setPendingRefs] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<InspectorTab>('scene');
+  const [diagramLang, setDiagramLang] = useState<string>('es');
   const [isInspectorOpen, setIsInspectorOpen] = useState(true);
   const [localInspectorWidth, setLocalInspectorWidth] = useState(336);
   const inspectorWidth = inspectorWidthProp ?? localInspectorWidth;
@@ -177,7 +180,8 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   const [localNavWidth, setLocalNavWidth] = useState(leftPanelWidth);
   const navigationWidth = onLeftPanelWidthChange ? leftPanelWidth : localNavWidth;
   const setNavigationWidth = onLeftPanelWidthChange ?? setLocalNavWidth;
-  const navigationOpen = Boolean(leftPanel && onToggleSidebar && isSidebarOpen);
+  const isSidebarCurrentlyOpen = isSidebarOpen !== undefined ? isSidebarOpen : true;
+  const navigationOpen = Boolean(isSidebarCurrentlyOpen);
   const navigationResize = usePanelResize({
     direction: 'horizontal',
     value: navigationWidth,
@@ -194,6 +198,11 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   const [activeStepIndex, setActiveStepIndex] = useState<number | null>(null);
   const [frameMode, setFrameMode] = useState<CanvasFrameMode>('editor');
   const [showAllObjects, setShowAllObjects] = useState(false);
+
+  const localizedModel = useMemo(
+    () => (model ? localizeDiagramSpec(model, diagramLang) : null),
+    [model, diagramLang],
+  );
 
   const [presetsOpen, setPresetsOpen] = useState(false);
   const [codeOpen, setCodeOpen] = useState(false);
@@ -251,9 +260,20 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   const handleTitleChange = useCallback(
     (newTitle: string) => {
       if (!model) return;
-      handleVisualEdit({ ...model, title: newTitle }, { label: 'Renombrar diagrama' });
+      if (diagramLang === 'es') {
+        handleVisualEdit({ ...model, title: newTitle }, { label: 'Renombrar diagrama' });
+      } else {
+        const currentTr = model.translations?.[diagramLang] || {};
+        handleVisualEdit({
+          ...model,
+          translations: {
+            ...model.translations,
+            [diagramLang]: { ...currentTr, title: newTitle },
+          },
+        }, { label: `Renombrar diagrama (${diagramLang.toUpperCase()})` });
+      }
     },
-    [handleVisualEdit, model]
+    [diagramLang, handleVisualEdit, model],
   );
 
   const handleAddElementWithRefs = useCallback(
@@ -734,6 +754,8 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
         model={model}
         metadataType={metadataType}
         componentName={state.componentName}
+        activeLang={diagramLang}
+        onSelectActiveLang={setDiagramLang}
         canUndo={canUndo}
         canRedo={canRedo}
         frameMode={frameMode}
@@ -776,7 +798,18 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
       </div>
 
       <div className="flex min-h-0 w-full flex-1 overflow-hidden">
-        {navigationOpen && leftPanel}
+        {navigationOpen && (
+          leftPanel ? leftPanel : (
+            <DiagramDataPanel
+              model={model}
+              activeLang={diagramLang}
+              onSelectActiveLang={setDiagramLang}
+              onUpdateModel={(updates, label) => model && handleVisualEdit({ ...model, ...updates }, { label })}
+              width={navigationWidth}
+              onClose={onToggleSidebar}
+            />
+          )
+        )}
         {navigationOpen && (
           <div
             {...navigationResize}
@@ -787,7 +820,8 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
         <main className="relative flex min-h-0 min-w-0 flex-1 overflow-hidden" aria-label="Lienzo del diagrama">
         <CanvasStage
-          model={model}
+          model={localizedModel ?? model}
+          lang={diagramLang}
           selectedIds={effectiveSelectedIds}
           activeTool={activeTool}
           pendingRefs={pendingRefs}

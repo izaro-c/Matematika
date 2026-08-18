@@ -180,10 +180,20 @@ export const AppRouter = () => {
   return (
     <Suspense fallback={<PageLoadingScreen />}>
       <Switch>
-        {/* EDITORES (Rutas directas de desarrollo sin prefijo obligatorio) */}
+        {/* EDITORES (Rutas con prefijo de idioma /:lang/editor o directas) */}
+        <Route path="/:lang/editor">
+          <MathProvider>
+            <EditorPage />
+          </MathProvider>
+        </Route>
         <Route path="/editor">
           <MathProvider>
             <EditorPage />
+          </MathProvider>
+        </Route>
+        <Route path="/:lang/editor_v2">
+          <MathProvider>
+            <DiagramEditorPage />
           </MathProvider>
         </Route>
         <Route path="/editor_v2">
@@ -191,8 +201,11 @@ export const AppRouter = () => {
             <DiagramEditorPage />
           </MathProvider>
         </Route>
+        <Route path="/:lang/editor-v2">
+          {(params) => <Redirect to={`/${params.lang}/editor_v2`} replace />}
+        </Route>
         <Route path="/editor-v2">
-          <Redirect to="/editor_v2" />
+          <Redirect to="/editor_v2" replace />
         </Route>
 
         {/* HOME PRINCIPAL */}
