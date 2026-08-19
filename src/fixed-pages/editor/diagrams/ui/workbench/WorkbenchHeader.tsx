@@ -6,11 +6,11 @@ import {
   HeaderPillContainer,
   HeaderPillButton,
   HeaderActionButton,
+  EditorLanguageBadges,
 } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
 import { EditorWorkbenchHeader } from '@/fixed-pages/editor/ui/workbench/EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
 import { saveChromeFromCapability } from '@/fixed-pages/editor/save/saveCapability';
-import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 
 interface WorkbenchHeaderProps {
   model: VisualDiagramModel | null;
@@ -88,37 +88,20 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
       badges={
         <div className="flex items-center gap-2">
           {sandboxMode ? (
-            <HeaderBadge variant="ocre" title="...">Sandbox</HeaderBadge>
+            <HeaderBadge variant="ocre" title="Modo Sandbox">Sandbox</HeaderBadge>
           ) : (
-            <HeaderBadge variant="salvia" className="hidden lg:inline">
+            <HeaderBadge variant="salvia" className="hidden lg:inline-flex">
               {metadataType || 'Diagrama'}
             </HeaderBadge>
           )}
 
-          <div
-            className="hidden sm:inline-flex max-w-[200px] overflow-x-auto items-center gap-1 bg-carbon/5 p-0.5 rounded border border-carbon/15"
-            role="group"
+          <EditorLanguageBadges
+            mode="diagram"
+            activeLang={activeLang || 'es'}
+            onSelectLang={onSelectActiveLang}
+            className="hidden sm:inline-flex"
             aria-label="Idioma de vista previa del diagrama"
-          >
-            {SUPPORTED_LANGUAGES.map(lang => {
-              const isActive = (activeLang || 'es') === lang.code;
-              return (
-                <button
-                  key={lang.code}
-                  type="button"
-                  onClick={() => onSelectActiveLang?.(lang.code)}
-                  className={`shrink-0 rounded px-1.5 py-0.5 text-[9px] font-bold uppercase transition-colors cursor-pointer ${
-                    isActive
-                      ? 'border border-salvia/50 bg-salvia text-lienzo'
-                      : 'text-carbon/60 hover:bg-salvia/15 hover:text-salvia'
-                  }`}
-                  title={`Editar/Visualizar en ${lang.name}`}
-                >
-                  {lang.code}
-                </button>
-              );
-            })}
-          </div>
+          />
         </div>
       }
       isDirty={saveCapability.isDirty}
@@ -148,7 +131,7 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
               type="button"
               onClick={onUndo}
               disabled={!canUndo}
-              className="flex h-7 w-7 items-center justify-center rounded-md text-carbon/70 hover:bg-carbon/10 hover:text-carbon disabled:opacity-30 disabled:hover:bg-transparent transition-all cursor-pointer"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-md text-carbon/70 hover:bg-carbon/10 hover:text-carbon disabled:opacity-30 disabled:hover:bg-transparent transition-all cursor-pointer"
               title="Deshacer última acción (Ctrl+Z)"
             >
               <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -159,7 +142,7 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
               type="button"
               onClick={onRedo}
               disabled={!canRedo}
-              className="flex h-7 w-7 items-center justify-center rounded-md text-carbon/70 hover:bg-carbon/10 hover:text-carbon disabled:opacity-30 disabled:hover:bg-transparent transition-all cursor-pointer"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-md text-carbon/70 hover:bg-carbon/10 hover:text-carbon disabled:opacity-30 disabled:hover:bg-transparent transition-all cursor-pointer"
               title="Rehacer acción (Ctrl+Y)"
             >
               <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,7 +153,7 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
             <button
               type="button"
               onClick={onResetViewport}
-              className="flex items-center space-x-1 rounded-md px-2 py-1 text-xs font-medium text-carbon/80 transition-all hover:bg-carbon/10 cursor-pointer"
+              className="inline-flex h-7 items-center gap-1 rounded-md px-2 text-xs font-medium text-carbon/80 transition-all hover:bg-carbon/10 cursor-pointer leading-none"
               title="Centrar y restablecer la cámara del lienzo"
             >
               <svg className="h-3.5 w-3.5 text-salvia" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,7 +162,7 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
               <span className="hidden md:inline">Centrar</span>
             </button>
           </HeaderPillContainer>
-          <HeaderPillContainer className="hidden lg:flex">
+          <HeaderPillContainer className="hidden lg:inline-flex">
             <HeaderPillButton active={frameMode === 'editor'} onClick={() => onSelectFrameMode('editor')}>
               Editor
             </HeaderPillButton>

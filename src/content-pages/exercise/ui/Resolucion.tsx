@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { PasoContext } from '@/content-pages/exercise/ui/PasoContext';
+import { useI18n } from '@/i18n';
 
 interface ResolucionProps {
   children: React.ReactNode;
@@ -12,13 +13,14 @@ interface ResolucionProps {
  */
 export const Resolucion: React.FC<ResolucionProps> = ({ children }) => {
   const { isCompleted } = useContext(PasoContext);
+  const { t } = useI18n();
 
   if (!isCompleted) return null;
 
   return (
     <div className="mt-6 p-5 bg-salvia/5 border border-salvia/20 animate-fade-in text-sm text-carbon/80 leading-relaxed [&_p]:mb-2 [&_p:last-child]:mb-0">
       <div className="ac-label ac-label--sm ac-label--salvia-soft mb-2 flex items-center gap-2">
-        <span>✦</span> Resolución explicada:
+        <span>✦</span> {t('exercise', 'resolutionExplained')}
       </div>
       {children}
     </div>

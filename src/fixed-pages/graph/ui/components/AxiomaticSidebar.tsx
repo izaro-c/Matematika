@@ -5,6 +5,7 @@ import { GraphExplorerLink } from './GraphExplorerLink';
 import { AxiomaticUniversePicker } from './AxiomaticUniversePicker';
 import { AxiomaticAxiomPicker } from './AxiomaticAxiomPicker';
 import { AxiomaticDisplayOptions } from './AxiomaticDisplayOptions';
+import { useI18n } from '@/i18n';
 
 interface AxiomaticSidebarProps {
   isMobile: boolean;
@@ -28,6 +29,7 @@ export function AxiomaticSidebar({
   typeColors,
 }: AxiomaticSidebarProps) {
   const [activeView, setActiveView] = useState<SidebarView>('logic');
+  const { t } = useI18n();
   const {
     systems,
     inactiveSystems,
@@ -60,16 +62,16 @@ export function AxiomaticSidebar({
   const activeModel = models.find(model => !inactiveModels.includes(model.id));
   const activeContext = activeSystem?.title
     ?? activeModel?.title
-    ?? (isNeutralBase ? 'Base neutral' : 'Selección manual');
+    ?? (isNeutralBase ? t('graph', 'neutralBase') : t('graph', 'manualSelection'));
 
-  let statusLabel = 'Actualizado';
+  let statusLabel = t('graph', 'updated');
   let statusColor = 'text-musgo';
   if (isLoading) {
-    statusLabel = 'Recalculando…';
+    statusLabel = t('graph', 'recalculating');
     statusColor = 'text-ocre';
   }
   if (status === 'error') {
-    statusLabel = 'Error';
+    statusLabel = t('graph', 'error');
     statusColor = 'text-granada';
   }
 
@@ -85,7 +87,7 @@ export function AxiomaticSidebar({
 
   return (
     <aside
-      aria-label="Controles del grafo de dependencias"
+      aria-label={t('graph', 'dependencyControlsAria')}
       className={isMobile
         ? 'fixed inset-x-0 bottom-0 top-24 z-50 w-full overflow-y-auto overscroll-contain border-t border-carbon/15 bg-lienzo shadow-2xl'
         : 'h-full w-[320px] shrink-0 overflow-y-auto overscroll-contain border-r border-carbon/15 bg-lienzo/95'}
@@ -94,17 +96,17 @@ export function AxiomaticSidebar({
         <div className="flex items-start gap-3">
           <div className="min-w-0 flex-1">
             <p className="ac-label ac-label--xs ac-label--terracota">
-              Explorador lógico
+              {t('graph', 'logicExplorer')}
             </p>
             <h1 className="mt-1 font-serif text-xl leading-tight tracking-tight text-carbon">
-              Dependencias axiomáticas
+              {t('graph', 'axiomaticDependencies')}
             </h1>
           </div>
           {isMobile && (
             <button
               type="button"
               onClick={() => setSidebarOpen(false)}
-              aria-label="Cerrar controles del grafo"
+              aria-label={t('graph', 'closeControlsAria')}
               className="flex size-11 shrink-0 items-center justify-center border border-carbon/15 text-lg text-carbon/55 transition-colors hover:border-carbon/30 hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
             >
               <span aria-hidden="true">×</span>
@@ -112,24 +114,24 @@ export function AxiomaticSidebar({
           )}
         </div>
         <p className="mt-2 max-w-[32ch] font-sans text-[11px] leading-relaxed text-carbon/60">
-          Se modifica la base lógica y se observa qué resultados permanecen válidos.
+          {t('graph', 'logicModificationDescription')}
         </p>
         <div className="mt-3 border-t border-carbon/10 pt-1">
           <GraphExplorerLink href="/grafo" direction="back">
-            Mapa general de conexiones
+            {t('graph', 'generalConnectionMap')}
           </GraphExplorerLink>
         </div>
       </header>
 
       <section
         aria-live="polite"
-        aria-label="Estado lógico actual"
+        aria-label={t('graph', 'currentLogicStateAria')}
         className="border-y border-carbon/15 bg-carbon/[0.025] px-5 py-3.5"
       >
         <div className="flex items-baseline justify-between gap-3">
           <div className="min-w-0">
             <p className="ac-label ac-label--2xs">
-              Base actual
+              {t('graph', 'currentBase')}
             </p>
             <p className="mt-0.5 truncate font-serif text-sm font-semibold text-carbon">
               {activeContext}
@@ -140,23 +142,23 @@ export function AxiomaticSidebar({
 
         {status === 'error' ? (
           <p role="alert" className="mt-2 font-sans text-[10px] leading-relaxed text-granada">
-            No se pudo recalcular la validez{error?.message ? `: ${error.message}` : '.'}
+            {t('graph', 'recalculateError')}{error?.message ? `: ${error.message}` : '.'}
           </p>
         ) : (
           <div className="mt-3 grid grid-cols-2 divide-x divide-carbon/10">
             <div className="pr-3">
               <span className="block font-serif text-lg leading-none text-carbon tabular-nums">{activeAxiomCount}</span>
-              <span className="mt-1 block font-sans text-[9px] text-carbon/55">de {axioms.length} axiomas</span>
+              <span className="mt-1 block font-sans text-[9px] text-carbon/55">{t('graph', 'ofAxioms', { total: axioms.length })}</span>
             </div>
             <div className="pl-3">
               <span className="block font-serif text-lg leading-none text-carbon tabular-nums">{validNodeCount}</span>
-              <span className="mt-1 block font-sans text-[9px] text-carbon/55">de {evaluatedNodeCount || '—'} nodos válidos</span>
+              <span className="mt-1 block font-sans text-[9px] text-carbon/55">{t('graph', 'ofValidNodes', { total: evaluatedNodeCount || '—' })}</span>
             </div>
           </div>
         )}
       </section>
 
-      <div className="sticky top-0 z-10 grid grid-cols-2 border-b border-carbon/15 bg-lienzo/95 px-5 pt-2 backdrop-blur-sm" role="tablist" aria-label="Organización de controles">
+      <div className="sticky top-0 z-10 grid grid-cols-2 border-b border-carbon/15 bg-lienzo/95 px-5 pt-2 backdrop-blur-sm" role="tablist" aria-label={t('graph', 'controlsOrganizationAria')}>
         <button
           type="button"
           role="tab"
@@ -172,7 +174,7 @@ export function AxiomaticSidebar({
               : 'border-transparent text-carbon/50 hover:text-carbon'
           }`}
         >
-          Base lógica
+          {t('graph', 'logicBase')}
         </button>
         <button
           type="button"
@@ -189,7 +191,7 @@ export function AxiomaticSidebar({
               : 'border-transparent text-carbon/50 hover:text-carbon'
           }`}
         >
-          Vista y lectura
+          {t('graph', 'viewAndReading')}
         </button>
       </div>
 

@@ -3,6 +3,7 @@ import { Link } from 'wouter';
 import { useGlossaryStore } from '@/lib/stores/GlossaryStore';
 import { db } from '@/data/content';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
+import { useI18n } from '@/i18n';
 
 interface RefLinkProps {
   targetId: string;
@@ -10,13 +11,14 @@ interface RefLinkProps {
 }
 
 export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
+  const { lang, t, getLocalizedPath } = useI18n();
   const { openTerm, activeTerms } = useGlossaryStore();
   const isRead = useProgressStore(state => state.isRead(targetId));
 
   const entity =
-    db.getTheorem(targetId) ||
-    db.getDefinition(targetId) ||
-    db.getMathematicianById(targetId) ||
+    db.getTheorem(targetId, lang) ||
+    db.getDefinition(targetId, lang) ||
+    db.getMathematicianById(targetId, lang) ||
     db.methods.get(targetId) ||
     db.examples.get(targetId) ||
     db.exercises.get(targetId) ||
@@ -31,20 +33,22 @@ export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
   if (!entity) {
     return (
       <Link
-        href={`/construccion/${targetId}`}
+        href={getLocalizedPath(`/construccion/${targetId}`)}
         className="page-accent-link--pending border-b border-dashed transition-all duration-150 px-[2px] rounded-none cursor-pointer"
-        title={`"${targetId}" — página en construcción`}
+        title={t('construction', 'pendingTitle', { id: targetId })}
       >
         {children}
       </Link>
     );
   }
 
+  const titleText = (entity as { title?: string, name?: string }).title || (entity as { title?: string, name?: string }).name || targetId;
+
   return (
     <span
       onClick={() => openTerm(targetId)}
       data-target-id={targetId}
-      title={`Ver: ${(entity as { title?: string, name?: string }).title || (entity as { title?: string, name?: string }).name}`}
+      title={titleText}
       className={[
         'page-accent-link font-bold border-b-2 cursor-pointer transition-all duration-150 px-[2px] rounded-none',
         isActive

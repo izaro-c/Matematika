@@ -35,7 +35,7 @@ describe('i18n system', () => {
     expect(thmEs).toBeDefined();
     expect(thmEu).toBeDefined();
     expect(thmEs?.title).toBe('Teorema de Pitágoras');
-    expect(thmEu?.title).toBe('Pitagorasen Teorema');
+    expect(thmEu?.title).toBe('Pitagorasen teorema');
 
     const langs = db.getAvailableLanguages('teorema-pitagoras');
     expect(langs).toContain('es');
@@ -129,6 +129,16 @@ describe('i18n system', () => {
 
     expect(es.dictionary.metadata.seals.read.subtitle).toBe('ASIMILADO');
     expect(eu.dictionary.metadata.seals.read.subtitle).toBe('BARNERATUA');
+  });
+
+  it('provides complete difficulty translations for ES and EU', () => {
+    const es = getLanguage('es');
+    const eu = getLanguage('eu');
+
+    expect(es.dictionary.metadata.difficulties.basico).toBe('Básico');
+    expect(eu.dictionary.metadata.difficulties.basico).toBe('Oinarrizkoa');
+    expect(eu.dictionary.metadata.difficulties.intermedio).toBe('Tartekoa');
+    expect(eu.dictionary.metadata.difficulties.avanzado).toBe('Aurreratua');
   });
 });
 

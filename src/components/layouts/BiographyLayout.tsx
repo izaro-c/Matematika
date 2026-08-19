@@ -3,7 +3,7 @@ import { Link } from 'wouter';
 import { resolvePublicOrExternalAsset } from '@/lib/routes';
 import { getContentPageAccent } from '@/design';
 import { PageLoadingScreen } from '@/components/ui/PageLoadingScreen';
-
+import { useI18n } from '@/i18n';
 import { db } from '@/data/content';
 
 const THEOREM_COLOR_CLASSES: Record<string, { text: string; hover: string }> = {
@@ -43,12 +43,13 @@ interface BiographyLayoutProps {
  * @param props - Propiedades que incluyen el componente a renderizar y sus metadatos.
  */
 export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sidebar, metadata }) => {
-  
+  const { lang, t, getLocalizedPath } = useI18n();
+
   const renderSidebarContent = () => {
     if (!metadata) return Sidebar ? <Sidebar /> : null;
 
     const { id, name, fullName, birthYear, deathYear, country, image } = metadata;
-    const theorems = db.getTheoremsByAuthor(id);
+    const theorems = db.getTheoremsByAuthor(id, lang);
     const displayName = fullName || name;
     
     // Extraer partes del nombre (ej: "Pitágoras" y "de Samos")
@@ -58,7 +59,7 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
 
     const formatYear = (year?: number) => {
       if (year === undefined) return null;
-      return year < 0 ? `${Math.abs(year)} a.C.` : `${year} d.C.`;
+      return year < 0 ? `${Math.abs(year)} ${t('biography', 'bc')}` : `${year} ${t('biography', 'ad')}`;
     };
 
     return (
@@ -88,13 +89,13 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
         <ul className="space-y-4 text-lienzo/70 text-sm ac-eyebrow mb-12 w-full">
           {birthYear !== undefined && (
             <li>
-              <span className="page-accent-text block font-serif capitalize text-xs mb-1 opacity-80">Nacimiento</span>
+              <span className="page-accent-text block font-serif capitalize text-xs mb-1 opacity-80">{t('biography', 'birth')}</span>
               <span>{formatYear(birthYear)}</span>
             </li>
           )}
           {deathYear !== undefined && (
             <li>
-              <span className="page-accent-text block font-serif capitalize text-xs mb-1 opacity-80">Fallecimiento</span>
+              <span className="page-accent-text block font-serif capitalize text-xs mb-1 opacity-80">{t('biography', 'death')}</span>
               <span>{formatYear(deathYear)}</span>
             </li>
           )}
@@ -103,20 +104,20 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
         {/* APORTES Y TEOREMAS (Automático) */}
         {theorems && theorems.length > 0 && (
           <div className="w-full text-left mt-4 border-t border-lienzo/10 pt-8">
-            <h3 className="ac-label ac-label--xs text-lienzo/40 mb-6">Aportes universales</h3>
+            <h3 className="ac-label ac-label--xs text-lienzo/40 mb-6">{t('biography', 'universalContributions')}</h3>
             
             <div className="flex flex-col gap-4">
               {theorems.map((th, idx) => {
                 const color = THEOREM_COLOR_CLASSES[th.color ?? ''] ?? { text: 'text-lienzo/80', hover: 'group-hover:text-lienzo' };
 
                 return (
-                  <Link key={idx} href={`/teorema/${th.id}`}>
+                  <Link key={idx} href={getLocalizedPath(`/teorema/${th.id}`)}>
                     <a className="block bg-lienzo/5 border border-lienzo/10 p-4 rounded-md hover:bg-lienzo/10 transition-colors group cursor-pointer">
                        <h4 className={`${color.text} font-serif text-lg mb-1 ${color.hover}`}>{th.title}</h4>
                       <p className="text-xs text-lienzo/60 line-clamp-2 mb-2">{th.description}</p>
                       
                       <span className="ac-label ac-label--md text-lienzo/40 group-hover:text-lienzo transition-colors">
-                        Explorar Teorema &rarr;
+                        {t('biography', 'exploreTheorem')}
                       </span>
                     </a>
                   </Link>
@@ -145,9 +146,9 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
 
           {/* Navegación de retorno */}
           <div className="mt-auto pt-8 lg:pt-16 w-full text-center">
-            <Link href="/historia">
+            <Link href={getLocalizedPath('/historia')}>
               <a className="ac-link-back ac-interactive text-xs text-lienzo/50 font-serif font-semibold hover:text-lienzo">
-                <span>&larr;</span> Volver al Códice
+                <span>&larr;</span> {t('biography', 'backToCodex')}
               </a>
             </Link>
           </div>
@@ -157,7 +158,7 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
       {/* PANEL DERECHO: LECTURA CON SCROLL */}
       <div className="lg:w-[60%] p-6 sm:p-8 lg:p-12 xl:p-20 lg:overflow-y-auto scroll-smooth relative bg-transparent text-carbon">
         <div className="prose prose-pizarra prose-lg max-w-none mx-auto biography-mdx editorial-reading text-carbon font-serif">
-          <Suspense fallback={<PageLoadingScreen embedded message="Desenrollando el pergamino…" />}>
+          <Suspense fallback={<PageLoadingScreen embedded message={t('biography', 'scrollLoading')} />}>
             <Component />
           </Suspense>
         </div>

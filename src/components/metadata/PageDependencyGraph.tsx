@@ -2,12 +2,10 @@ import React, { useMemo, useCallback, useEffect, useRef, useState } from 'react'
 import ForceGraph2D from 'react-force-graph-2d';
 import { useLocation } from 'wouter';
 import { db } from '@/data/content';
-import { dictionary } from '@/lib/stores/GlossaryStore';
+import { getGlossaryDictionary } from '@/lib/stores/GlossaryStore';
 import { useThemeColors } from '@/lib/theme/useThemeColors';
 import { GraphSkeleton } from '@/components/ui/skeletons';
-
-
-
+import { useI18n } from '@/i18n';
 
 interface GraphNode {
   id: string;
@@ -34,42 +32,41 @@ interface PageDependencyGraphProps {
   demos?: { id: string; title: string }[];
 }
 
-function resolveGroup(id: string): string {
-  const thm = db.getTheorem(id);
+function resolveGroup(id: string, lang: string): string {
+  const thm = db.getTheorem(id, lang);
   if (thm)                    return thm.type || 'teorema';
-  if (db.getDefinition(id))   return 'definicion';
-  if (db.axioms.get(id))      return 'axioma';
-  if (db.models.get(id))      return 'modelo';
-  if (db.demos.get(id))       return 'demostracion';
-  if (db.getMathematicianById(id)) return 'matematico';
-  if (dictionary[id])         return 'glosario';
+  if (db.getDefinition(id, lang))   return 'definicion';
+  if (db.axioms.get(id))            return 'axioma';
+  if (db.models.get(id))            return 'modelo';
+  if (db.demos.get(id))             return 'demostracion';
+  if (db.getMathematicianById(id, lang)) return 'matematico';
+  if (getGlossaryDictionary(lang)[id])   return 'glosario';
   return 'definicion';
 }
 
-function resolveTitle(id: string): string {
+function resolveTitle(id: string, lang: string): string {
   return (
-    db.getTheorem(id)?.title ||
-    db.getDefinition(id)?.title ||
+    db.getTheorem(id, lang)?.title ||
+    db.getDefinition(id, lang)?.title ||
     db.axioms.get(id)?.title ||
     db.models.get(id)?.title ||
-    db.getMathematicianById(id)?.name ||
+    db.getMathematicianById(id, lang)?.name ||
     db.demos.get(id)?.title ||
-    dictionary[id]?.title ||
+    getGlossaryDictionary(lang)[id]?.title ||
     id
   );
 }
 
-/** Wouter-relative routes (base is prepended automatically by the Router). */
-function resolveRoute(id: string, group: string): string {
+function resolveRoute(id: string, group: string, getLocalizedPath: (p: string) => string): string {
   switch (group) {
-    case 'demostracion': return `/demo/${id}`;
-    case 'definicion':   return `/definicion/${id}`;
-    case 'concepto':     return `/definicion/${id}`;
-    case 'modelo':       return `/modelo/${id}`;
-    case 'axioma':       return `/axioma/${id}`;
-    case 'glosario':     return `/definicion/${id}`;
-    case 'matematico':   return `/bio/${id}`;
-    default:             return `/teorema/${id}`;
+    case 'demostracion': return getLocalizedPath(`/demo/${id}`);
+    case 'definicion':   return getLocalizedPath(`/definicion/${id}`);
+    case 'concepto':     return getLocalizedPath(`/definicion/${id}`);
+    case 'modelo':       return getLocalizedPath(`/modelo/${id}`);
+    case 'axioma':       return getLocalizedPath(`/axioma/${id}`);
+    case 'glosario':     return getLocalizedPath(`/definicion/${id}`);
+    case 'matematico':   return getLocalizedPath(`/bio/${id}`);
+    default:             return getLocalizedPath(`/teorema/${id}`);
   }
 }
 
@@ -81,6 +78,7 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
   corollaries = [],
   demos = [],
 }) => {
+  const { lang, getLocalizedPath } = useI18n();
   const [, setLocation] = useLocation();
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useThemeColors();
@@ -172,7 +170,7 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
       if (!nodeMap.has(id)) {
         nodeMap.set(id, {
           id, name, group, val, isCenter,
-          url: resolveRoute(id, group),
+          url: resolveRoute(id, group, getLocalizedPath),
         });
       }
     };
@@ -211,8 +209,8 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
 
     // links[] and seeAlso[] from the DB entity
     const entity =
-      db.getTheorem(currentId) ||
-      db.getDefinition(currentId) ||
+      db.getTheorem(currentId, lang) ||
+      db.getDefinition(currentId, lang) ||
       db.axioms.get(currentId) ||
       db.models.get(currentId);
 
@@ -227,14 +225,14 @@ export const PageDependencyGraph: React.FC<PageDependencyGraphProps> = ({
 
     extra.forEach(id => {
       if (id && id !== currentId && !nodeMap.has(id)) {
-        const grp = resolveGroup(id);
-        addNode(id, resolveTitle(id), grp, 5, false);
+        const grp = resolveGroup(id, lang);
+        addNode(id, resolveTitle(id, lang), grp, 5, false);
         addLink(currentId, id);
       }
     });
 
     return { nodes: Array.from(nodeMap.values()), links };
-  }, [currentId, currentTitle, currentType, lemmas, corollaries, demos, domIds]);
+  }, [currentId, currentTitle, currentType, lemmas, corollaries, demos, domIds, lang, getLocalizedPath]);
 
   const drawNode = useCallback((node: GraphNode, ctx: CanvasRenderingContext2D, globalScale: number) => {
     if (node.x == null || node.y == null || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return;

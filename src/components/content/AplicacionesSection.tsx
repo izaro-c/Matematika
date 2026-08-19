@@ -11,18 +11,18 @@ interface AplicacionesSectionProps {
 }
 
 export const AplicacionesSection: React.FC<AplicacionesSectionProps> = ({ useCases }) => {
-  const { t } = useI18n();
+  const { t, getLocalizedPath } = useI18n();
   if (useCases.length === 0) return null;
 
   return (
     <section className="my-24">
       <SubtleSeparator />
-      <SectionTitle>Aplicaciones en el Mundo Real</SectionTitle>
+      <SectionTitle>{t('common', 'realWorldApplications')}</SectionTitle>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {useCases.map(uc => (
           <ContentCard
             key={uc.slug}
-            href={`/caso/${uc.slug}`}
+            href={getLocalizedPath(`/caso/${uc.slug}`)}
             title={uc.title}
             description={uc.description}
             type="caso-de-uso"

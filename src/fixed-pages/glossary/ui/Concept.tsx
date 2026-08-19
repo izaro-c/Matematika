@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGlossaryStore } from '@/lib/stores/GlossaryStore';
+import { useI18n } from '@/i18n';
 
 /**
  * Propiedades de Concept
@@ -17,12 +18,13 @@ interface ConceptProps {
  */
 export const Concept: React.FC<ConceptProps> = ({ link, children }) => {
   const { openTerm } = useGlossaryStore();
+  const { t } = useI18n();
 
   return (
     <span 
       onClick={() => openTerm(link)}
       className="page-accent-link cursor-pointer border-b border-dashed transition-colors px-[2px] rounded-sm font-semibold"
-      title="Ver definición en el glosario"
+      title={t('glossary', 'readFullArticle')}
     >
       {children}
     </span>

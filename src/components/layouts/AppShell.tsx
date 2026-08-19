@@ -6,9 +6,10 @@ import { db } from "@/data/content";
 import { getContentPageAccent, UI, CONTENT_PAGE_ACCENTS } from "@/design";
 import { useLocation } from "wouter";
 import { createPortal } from "react-dom";
-import { isSupportedLanguage, getCanonicalSegmentType } from "@/i18n";
+import { isSupportedLanguage, getCanonicalSegmentType, useI18n } from "@/i18n";
 
 export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { t } = useI18n();
   const [location] = useLocation();
   const rawParts = location.split('/').filter(Boolean);
   const parts = (rawParts.length > 0 && isSupportedLanguage(rawParts[0])) ? rawParts.slice(1) : rawParts;
@@ -46,7 +47,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
     >
       {!isEditor && (
         <a href="#contenido-principal" className="ac-skip-link">
-          Saltar al contenido
+          {t('accessibility', 'skipToContent')}
         </a>
       )}
       {!isEditor && <SymbolDictionaryManager />}

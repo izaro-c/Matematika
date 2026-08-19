@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useExercise } from '@/content-pages/exercise/ui/ExerciseContext';
 import { KatexText } from '@/components/ui/KatexText';
+import { useI18n } from '@/i18n';
 import { EXERCISE_SHAKE_MS } from '../constants';
 
 interface OrdenacionProps {
@@ -26,6 +27,7 @@ function shuffle<T>(array: T[]): T[] {
  */
 export const Ordenacion: React.FC<OrdenacionProps> = ({ id, pasos }) => {
   const { register, answer, state } = useExercise();
+  const { t } = useI18n();
   const qState = state.questions[id];
 
   const [currentOrder, setCurrentOrder] = useState<string[]>([]);
@@ -98,7 +100,7 @@ export const Ordenacion: React.FC<OrdenacionProps> = ({ id, pasos }) => {
           `}
         </style>
         <h4 className="font-bold text-carbon mb-6 mt-2 flex items-center gap-3 text-lg z-30 relative">
-          {isCompleted ? <span className="text-salvia">❦ Ordenación Completada</span> : <span>Ordena los pasos de la demostración lógica</span>}
+          {isCompleted ? <span className="text-salvia">❦ {t('exercise', 'sortingCompleted')}</span> : <span>{t('exercise', 'sortSteps')}</span>}
         </h4>
 
         <div className={`flex flex-col gap-3 ${isShaking ? 'animate-shake' : ''}`}>
@@ -119,7 +121,7 @@ export const Ordenacion: React.FC<OrdenacionProps> = ({ id, pasos }) => {
                 >
                 {/* Agarre Drag */}
                 {!isCompleted && (
-                  <div className="shrink-0 text-carbon/30 flex flex-col gap-0.5 px-1 py-2" title="Arrastrar">
+                  <div className="shrink-0 text-carbon/30 flex flex-col gap-0.5 px-1 py-2" title={t('exercise', 'drag')}>
                     <div className="w-1 h-1 bg-current rounded-full" />
                     <div className="w-1 h-1 bg-current rounded-full" />
                     <div className="w-1 h-1 bg-current rounded-full" />
@@ -146,7 +148,7 @@ export const Ordenacion: React.FC<OrdenacionProps> = ({ id, pasos }) => {
               onClick={checkOrder}
               className="ac-btn ac-interactive page-accent-button px-6 py-3 text-xs border border-carbon/30 text-carbon transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
             >
-              Comprobar Orden
+              {t('exercise', 'checkOrder')}
             </button>
           </div>
         )}

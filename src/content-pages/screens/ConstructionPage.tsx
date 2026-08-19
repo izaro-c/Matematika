@@ -1,8 +1,10 @@
 import { useParams, Link } from 'wouter';
 import { FadeIn } from '@/components/ui/FadeIn';
+import { useI18n } from '@/i18n';
 
 export const ConstructionPage: React.FC = () => {
   const { id } = useParams();
+  const { t, getLocalizedPath } = useI18n();
   const conceptId = id || '';
   const displayId = conceptId.replace(/-/g, ' ');
 
@@ -15,15 +17,14 @@ export const ConstructionPage: React.FC = () => {
           <h1
             className="text-4xl md:text-5xl font-bold mb-6 text-carbon"
           >
-            En Construcción
+            {t('construction', 'title')}
           </h1>
 
           <div className="w-16 h-px bg-terracota/60 mx-auto mb-8" />
 
           <p className="text-lg text-carbon/70 italic leading-relaxed mb-8">
-            La página para <strong className="text-carbon not-italic">{displayId}</strong>
-            {' '}está siendo desarrollada como parte del jardín digital de Matematika.
-            El contenido aparecerá aquí cuando esté listo, con el rigor y la interactividad que caracterizan al proyecto.
+            {t('construction', 'pageFor')} <strong className="text-carbon not-italic">{displayId}</strong>
+            {' '}{t('construction', 'description')}
           </p>
 
           <div className="flex items-center gap-3 opacity-40 my-10">
@@ -33,12 +34,12 @@ export const ConstructionPage: React.FC = () => {
           </div>
 
           <p className="ac-eyebrow text-sm text-carbon/50 mb-10">
-            Mientras tanto, puedes seguir explorando la enciclopedia
+            {t('construction', 'whileExploring')}
           </p>
 
-          <Link href="/">
+          <Link href={getLocalizedPath('/')}>
             <a className="inline-block px-8 py-3 border border-carbon/20 hover:border-terracota hover:text-terracota transition-all ac-eyebrow font-bold">
-              ← Volver a la Biblioteca
+              ← {t('construction', 'backToLibrary')}
             </a>
           </Link>
         </div>

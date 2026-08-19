@@ -28,6 +28,8 @@ import { UI } from '@/design';
 import { VisualBind, InteractiveElement } from '@/components/ui/VisualBind';
 import { Link } from 'wouter';
 
+import { useI18n } from '@/i18n';
+
 // === SISTEMA DE DISEÑO ARTS & CRAFTS (IMPRESIÓN CLÁSICA) ===
 
 /**
@@ -66,6 +68,7 @@ interface FormulaProps {
   title?: string, children: React.ReactNode;
 }
 export const Formula: React.FC<FormulaProps> = ({ title, children }) => {
+  const { t } = useI18n();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -112,11 +115,11 @@ export const Formula: React.FC<FormulaProps> = ({ title, children }) => {
         className="py-8 px-6 w-full border border-carbon/20 bg-carbon/[0.02] overflow-x-auto overflow-y-hidden formula-scrollbar"
         tabIndex={canScrollLeft || canScrollRight ? 0 : undefined}
         role={canScrollLeft || canScrollRight ? 'region' : undefined}
-        aria-label={canScrollLeft || canScrollRight ? 'Fórmula matemática. Desplaza horizontalmente si es necesario.' : undefined}
+        aria-label={canScrollLeft || canScrollRight ? t('accessibility', 'formulaScrollLabel') : undefined}
       >
         {(canScrollLeft || canScrollRight) && (
           <span className="sr-only">
-            Esta fórmula es más ancha que la pantalla. Usa el desplazamiento horizontal para verla completa.
+            {t('accessibility', 'formulaScrollSrOnly')}
           </span>
         )}
         <div className="flex flex-col items-center justify-center min-w-max mx-auto gap-4 text-xl font-serif">
@@ -143,39 +146,50 @@ export const EquationRow: React.FC<EquationRowProps> = ({ children }) => (
 interface DefinicionProps {
   title?: string, children: React.ReactNode;
 }
-export const Definicion: React.FC<DefinicionProps> = ({ title = "Definición", children }) => (
-  <div className="page-accent-border my-12 py-6 border-t-4 border-b font-serif">
-    <div className="page-accent-text ac-eyebrow text-sm mb-4">
-      {title}
+export const Definicion: React.FC<DefinicionProps> = ({ title, children }) => {
+  const { currentLanguage } = useI18n();
+  const defaultTitle = title || currentLanguage.dictionary.metadata.types['definicion'] || 'Definición';
+
+  return (
+    <div className="page-accent-border my-12 py-6 border-t-4 border-b font-serif">
+      <div className="page-accent-text ac-eyebrow text-sm mb-4">
+        {defaultTitle}
+      </div>
+      <div className="italic leading-relaxed text-carbon/90 text-justify">
+        {children}
+      </div>
     </div>
-    <div className="italic leading-relaxed text-carbon/90 text-justify">
-      {children}
-    </div>
-  </div>
-);
+  );
+};
 
 interface DemostracionProps {
   children: React.ReactNode;
 }
-export const Demostracion: React.FC<DemostracionProps> = ({ children }) => (
-  <div className="page-accent-border my-10 pl-8 font-serif text-justify text-carbon/90 border-l-2 relative">
-    <span className="page-accent-text italic font-bold mr-2">Demostración.</span>
-    <div className="inline">
-      {children}
+export const Demostracion: React.FC<DemostracionProps> = ({ children }) => {
+  const { t } = useI18n();
+  return (
+    <div className="page-accent-border my-10 pl-8 font-serif text-justify text-carbon/90 border-l-2 relative">
+      <span className="page-accent-text italic font-bold mr-2">{t('content', 'demonstration')}.</span>
+      <div className="inline">
+        {children}
+      </div>
+      <QedMark />
     </div>
-    <QedMark />
-  </div>
-);
+  );
+};
 
 interface NotaProps {
   children: React.ReactNode;
 }
-export const Nota: React.FC<NotaProps> = ({ children }) => (
-  <div className="page-accent-border my-8 pl-6 border-l-[1px] font-serif text-sm text-carbon/70 text-justify">
-    <span className="page-accent-text ac-label ac-label--md mr-2">Nota.</span>
-    {children}
-  </div>
-);
+export const Nota: React.FC<NotaProps> = ({ children }) => {
+  const { t } = useI18n();
+  return (
+    <div className="page-accent-border my-8 pl-6 border-l-[1px] font-serif text-sm text-carbon/70 text-justify">
+      <span className="page-accent-text ac-label ac-label--md mr-2">{t('common', 'note')}.</span>
+      {children}
+    </div>
+  );
+};
 
 interface CitaProps {
   author?: string, children: React.ReactNode;
@@ -190,16 +204,21 @@ export const Cita: React.FC<CitaProps> = ({ author, children }) => (
 interface CorolarioProps {
   children: React.ReactNode;
 }
-export const Corolario: React.FC<CorolarioProps> = ({ children }) => (
-  <div className="page-accent-border my-12 py-6 border-t-2 border-b font-serif">
-    <div className="page-accent-text ac-eyebrow text-sm mb-4">
-      Corolario
+export const Corolario: React.FC<CorolarioProps> = ({ children }) => {
+  const { currentLanguage } = useI18n();
+  const label = currentLanguage.dictionary.metadata.types['corolario'] || 'Corolario';
+
+  return (
+    <div className="page-accent-border my-12 py-6 border-t-2 border-b font-serif">
+      <div className="page-accent-text ac-eyebrow text-sm mb-4">
+        {label}
+      </div>
+      <div className="leading-relaxed text-carbon/90 text-justify">
+        {children}
+      </div>
     </div>
-    <div className="leading-relaxed text-carbon/90 text-justify">
-      {children}
-    </div>
-  </div>
-);
+  );
+};
 
 export const Separador: React.FC = () => (
   <div className="flex justify-center items-center my-16 opacity-30 hover:opacity-60 transition-opacity duration-500 select-none">
@@ -220,6 +239,20 @@ export const Capitular: React.FC<CapitularProps> = ({ letra }) => (
     {letra}
   </span>
 );
+
+const MDXAnchor: React.FC<React.ComponentProps<'a'>> = (props) => {
+  const { getLocalizedPath } = useI18n();
+  if (props.href?.startsWith('/')) {
+    return (
+      <Link href={getLocalizedPath(props.href)}>
+        <a className="page-accent-link font-bold border-b-2 transition-all cursor-pointer px-[2px] rounded-none">
+          {props.children}
+        </a>
+      </Link>
+    );
+  }
+  return <a className="page-accent-link font-bold border-b-2 transition-all cursor-pointer px-[2px] rounded-none" target="_blank" rel="noopener noreferrer" {...props} />;
+};
 
 /**
  * Diccionario central de componentes React disponibles globalmente
@@ -264,18 +297,7 @@ export const MDXComponents = {
   EquationRow,
   InteractiveElement,
   StepNavigator,
-  a: (props: React.ComponentProps<'a'>) => {
-    if (props.href?.startsWith('/')) {
-      return (
-        <Link href={props.href}>
-          <a className="page-accent-link font-bold border-b-2 transition-all cursor-pointer px-[2px] rounded-none">
-            {props.children}
-          </a>
-        </Link>
-      );
-    }
-    return <a className="page-accent-link font-bold border-b-2 transition-all cursor-pointer px-[2px] rounded-none" target="_blank" rel="noopener noreferrer" {...props} />;
-  },
+  a: MDXAnchor,
   h3: (props: React.ComponentProps<'h3'>) => <h3 className="page-accent-text text-3xl font-serif mt-12 mb-6 pb-2 border-b border-carbon/10 italic" {...props} />,
   h4: (props: React.ComponentProps<'h4'>) => <h4 className="text-xl font-serif text-carbon mt-8 mb-4 font-bold" {...props} />,
 };

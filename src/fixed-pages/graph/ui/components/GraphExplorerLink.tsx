@@ -1,4 +1,5 @@
 import { Link } from 'wouter';
+import { useI18n } from '@/i18n';
 
 interface GraphExplorerLinkProps {
   href: '/grafo' | '/axiomas';
@@ -8,9 +9,11 @@ interface GraphExplorerLinkProps {
 
 /** Enlace recíproco entre las dos vistas complementarias del grafo. */
 export function GraphExplorerLink({ href, children, direction }: GraphExplorerLinkProps) {
+  const { getLocalizedPath } = useI18n();
+
   return (
     <Link
-      href={href}
+      href={getLocalizedPath(href)}
       className="flex items-center justify-center gap-2 py-2 ac-label ac-label--xs ac-label--terracota transition-colors hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
       style={{ textDecoration: 'none' }}
     >

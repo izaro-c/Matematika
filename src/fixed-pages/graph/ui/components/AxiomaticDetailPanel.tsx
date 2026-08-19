@@ -1,6 +1,6 @@
 
-import { appPath } from '@/lib/routes';
 import { getNodeTypeColor, getDependencyDotColor, getNodeUrlPrefix } from '@/fixed-pages/graph/lib/graphUtils';
+import { useI18n } from '@/i18n';
 
 interface AxiomaticDetailPanelProps {
   isMobile: boolean;
@@ -21,6 +21,8 @@ export function AxiomaticDetailPanel({
   dependencyList,
   onDependencyClick,
 }: AxiomaticDetailPanelProps) {
+  const { t, getLocalizedPath } = useI18n();
+
   if (!selectedNodeData) return null;
 
   const nodeSystems = systems.filter(s => s.axioms.includes(selectedNodeId));
@@ -51,17 +53,17 @@ export function AxiomaticDetailPanel({
           type="button"
           onClick={() => setSelectedNodeId(null)}
           className="min-h-8 min-w-8 text-carbon/40 hover:text-carbon text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
-          aria-label="Cerrar detalle"
+          aria-label={t('graph', 'closeDetailAria')}
         >
           ✕
         </button>
       </div>
       <h2 className="font-serif text-base text-carbon font-bold leading-tight mb-2 capitalize">{selectedNodeData.label}</h2>
-      <p className="font-sans text-xs text-carbon/70 leading-relaxed mb-3">{selectedNodeData.description || 'Sin descripción.'}</p>
+      <p className="font-sans text-xs text-carbon/70 leading-relaxed mb-3">{selectedNodeData.description || t('graph', 'noDescription')}</p>
 
       {nodeSystems.length > 0 && (
         <div className="mb-2">
-          <h4 className="ac-label ac-label--xs ac-label--soft mb-1">Sistemas</h4>
+          <h4 className="ac-label ac-label--xs ac-label--soft mb-1">{t('graph', 'systemsHeading')}</h4>
           <div className="flex flex-wrap gap-1">
             {nodeSystems.map(s => {
               const color = getNodeTypeColor(selectedNodeData.nodeType);
@@ -85,7 +87,7 @@ export function AxiomaticDetailPanel({
 
       {dependencyList.length > 0 && (
         <div className="mb-2">
-          <h4 className="ac-label ac-label--xs ac-label--soft mb-1">Depende de</h4>
+          <h4 className="ac-label ac-label--xs ac-label--soft mb-1">{t('graph', 'dependsOn')}</h4>
           <ul className="space-y-0.5">
             {dependencyList.map((dep) => (
               <li key={dep.id} className="flex items-center gap-1.5">
@@ -104,11 +106,11 @@ export function AxiomaticDetailPanel({
         const color = getNodeTypeColor(selectedNodeData.nodeType);
         return (
           <a
-            href={appPath(`/${getNodeUrlPrefix(selectedNodeData.nodeType)}/${selectedNodeId}`)}
+            href={getLocalizedPath(`/${getNodeUrlPrefix(selectedNodeData.nodeType)}/${selectedNodeId}`)}
             className="inline-flex items-center gap-1.5 mt-3 text-xs font-sans font-bold transition-all hover:translate-x-0.5"
             style={{ color: color }}
           >
-            <span>Ver página &rarr;</span>
+            <span>{t('graph', 'viewPageLink')}</span>
           </a>
         );
       })()}

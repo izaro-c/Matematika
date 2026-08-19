@@ -41,6 +41,8 @@ SEGMENT_TO_CANONICAL_TYPE['sistemas'] = 'sistema';
 SEGMENT_TO_CANONICAL_TYPE['caso-de-uso'] = 'caso';
 SEGMENT_TO_CANONICAL_TYPE['casos-de-uso'] = 'caso';
 SEGMENT_TO_CANONICAL_TYPE['casos'] = 'caso';
+SEGMENT_TO_CANONICAL_TYPE['construccion'] = 'construccion';
+SEGMENT_TO_CANONICAL_TYPE['eraikuntzan'] = 'construccion';
 
 export function getCanonicalSegmentType(segment: string): keyof RouteSegmentMap | undefined {
   return SEGMENT_TO_CANONICAL_TYPE[segment.toLowerCase()];

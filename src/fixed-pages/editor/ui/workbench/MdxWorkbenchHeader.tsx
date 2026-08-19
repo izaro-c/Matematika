@@ -4,12 +4,12 @@ import {
   HeaderPillContainer,
   HeaderPillButton,
   HeaderActionButton,
+  EditorLanguageBadges,
 } from './EditorHeaderPrimitives';
 import { EditorWorkbenchHeader } from './EditorWorkbenchHeader';
 import type { EditorSaveCapability } from '@/fixed-pages/editor/save/saveCapability';
 import { saveChromeFromCapability } from '@/fixed-pages/editor/save/saveCapability';
 import { useI18n } from '@/i18n';
-import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 
 export type MdxViewMode = 'code' | 'visual' | 'preview';
 
@@ -89,60 +89,20 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
       badges={
         <div className="flex items-center gap-2">
           {contentType ? (
-            <HeaderBadge variant="salvia" className="hidden lg:inline">
+            <HeaderBadge variant="salvia" className="hidden lg:inline-flex">
               {contentType}
             </HeaderBadge>
           ) : null}
 
-          <div
-            className="hidden sm:inline-flex max-w-[240px] overflow-x-auto items-center gap-1 bg-carbon/5 p-0.5 rounded border border-carbon/15"
-            role="group"
-            aria-label="Idioma de edición"
-          >
-            {SUPPORTED_LANGUAGES.map(lang => {
-              const isActive = (currentLang || 'es') === lang.code;
-              const exists = availableLangs ? availableLangs.includes(lang.code) : true;
-
-              if (isActive) {
-                return (
-                  <span
-                    key={lang.code}
-                    className="shrink-0 rounded bg-salvia px-1.5 py-0.5 text-[9px] font-bold text-lienzo"
-                    title={`Idioma activo: ${lang.name}`}
-                  >
-                    {lang.code.toUpperCase()}
-                  </span>
-                );
-              }
-              if (exists && onSwitchLanguage) {
-                return (
-                  <button
-                    key={lang.code}
-                    type="button"
-                    onClick={() => onSwitchLanguage(lang.code)}
-                    className="shrink-0 rounded px-1.5 py-0.5 text-[9px] font-bold text-carbon/60 hover:bg-salvia/15 hover:text-salvia transition-colors cursor-pointer"
-                    title={`Cambiar a ${lang.name}`}
-                  >
-                    {lang.code.toUpperCase()}
-                  </button>
-                );
-              }
-              if (onCreateTranslation) {
-                return (
-                  <button
-                    key={lang.code}
-                    type="button"
-                    onClick={() => onCreateTranslation(lang.code)}
-                    className="shrink-0 rounded border border-dashed border-carbon/25 px-1 py-0.5 text-[9px] font-mono text-carbon/40 hover:border-salvia hover:text-salvia transition-colors cursor-pointer"
-                    title={`Crear traducción en ${lang.name}`}
-                  >
-                    +{lang.code.toUpperCase()}
-                  </button>
-                );
-              }
-              return null;
-            })}
-          </div>
+          <EditorLanguageBadges
+            mode="document"
+            activeLang={currentLang || 'es'}
+            availableLangs={availableLangs}
+            onSelectLang={onSwitchLanguage}
+            onCreateTranslation={onCreateTranslation}
+            className="hidden sm:inline-flex"
+            aria-label="Idioma de edición del documento"
+          />
         </div>
       }
       isDirty={saveCapability.isDirty}
@@ -184,14 +144,14 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
       actions={
         <>
           {onToggleWorkspaceLevel && (
-            <button
-              type="button"
+            <HeaderActionButton
               onClick={onToggleWorkspaceLevel}
-              className="hidden lg:inline-flex rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-[10px] font-bold text-carbon/65 hover:bg-carbon/5 transition-colors cursor-pointer"
+              variant="secondary"
+              className="hidden lg:inline-flex"
               title={workspaceLevel === 'advanced' ? t('editor', 'switchToBasic') : t('editor', 'switchToAdvanced')}
             >
               {workspaceLevel === 'advanced' ? t('editor', 'advanced') : t('editor', 'basic')}
-            </button>
+            </HeaderActionButton>
           )}
           {canSaveDraft && onSaveDraft && (
             <HeaderActionButton onClick={onSaveDraft} variant="secondary" className="hidden md:inline-flex" title={t('editor', 'saveDraft')}>

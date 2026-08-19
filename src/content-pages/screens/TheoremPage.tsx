@@ -13,13 +13,8 @@ import { AplicacionesSection } from '@/components/content/AplicacionesSection';
 import { SubtleSeparator } from '@/components/ui/SubtleSeparator';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { NotFoundState } from '@/components/ui/NotFoundState';
 import { useI18n } from '@/i18n';
-
-const TYPE_LABELS: Record<string, string> = {
-  teorema: 'Teorema',
-  lema: 'Lema',
-  corolario: 'Corolario',
-};
 
 /**
  * Componente principal para visualizar un Teorema, Lema o Corolario.
@@ -27,7 +22,7 @@ const TYPE_LABELS: Record<string, string> = {
 export const TheoremPage = () => {
   const { id } = useParams();
   const slug = id || '';
-  const { lang, t } = useI18n();
+  const { lang, t, currentLanguage, getLocalizedPath } = useI18n();
 
   const theorem = id ? db.getTheorem(id, lang) : undefined;
   const isFallback = id ? db.isFallback(id, lang) : false;
@@ -41,15 +36,12 @@ export const TheoremPage = () => {
   const exercises = theorem ? db.getExercisesByTheorem(theorem.id, lang) : [];
   const useCases = theorem ? db.getUseCasesByConcept(theorem.id) : [];
 
-  const displayType = theorem ? (TYPE_LABELS[theorem.type || 'teorema'] || 'Teorema') : 'Teorema';
+  const typesDict = currentLanguage.dictionary.metadata.types;
+  const displayType = theorem ? (typesDict[theorem.type as keyof typeof typesDict] || typesDict['teorema'] || 'Teorema') : 'Teorema';
   const Simulation = theorem?.Simulation;
 
   if (!theorem) {
-    return (
-      <div className="ac-page flex items-center justify-center">
-        <h1 className="text-2xl">El teorema especificado no existe o no ha sido catalogado.</h1>
-      </div>
-    );
+    return <NotFoundState missingId={id} />;
   }
 
   const breadcrumbs = db.getBreadcrumbs(theorem.branch || theorem.tags, undefined, lang);
@@ -70,7 +62,7 @@ export const TheoremPage = () => {
             nodeId={theorem.id}
             backLink={parentTheorem ? {
               href: `/teorema/${parentTheorem.id}`,
-              label: `← ${TYPE_LABELS[parentTheorem.type || 'teorema'] || 'Teorema'}: ${parentTheorem.title}`,
+              label: `← ${typesDict[parentTheorem.type as keyof typeof typesDict] || 'Teorema'}: ${parentTheorem.title}`,
             } : undefined}
           />
         </div>
@@ -107,7 +99,7 @@ export const TheoremPage = () => {
               return (
                 <ContentCard
                   key={demo.slug}
-                  href={`/demo/${demo.id}`}
+                  href={getLocalizedPath(`/demo/${demo.id}`)}
                   title={demo.title}
                   description={demo.description}
                   type="demostracion"
@@ -141,7 +133,7 @@ export const TheoremPage = () => {
             {lemmas.map(lem => (
               <ContentCard
                 key={lem.slug}
-                href={`/teorema/${lem.id}`}
+                href={getLocalizedPath(`/teorema/${lem.id}`)}
                 title={lem.title}
                 description={lem.description}
                 type="lema"
@@ -160,7 +152,7 @@ export const TheoremPage = () => {
             {corollaries.map(cor => (
               <ContentCard
                 key={cor.slug}
-                href={`/teorema/${cor.id}`}
+                href={getLocalizedPath(`/teorema/${cor.id}`)}
                 title={cor.title}
                 description={cor.description}
                 type="corolario"
@@ -183,7 +175,7 @@ export const TheoremPage = () => {
           <Simulation />
         </DiagramSlot>
       ) : undefined}
-      diagramLabel={`Visualización de ${theorem.title}`}
+      diagramLabel={t('common', 'visualizationOf', { title: theorem.title })}
       secondary={hasSecondaryContent ? renderSecondaryContent() : undefined}
     >
       {renderMainContent()}

@@ -8,6 +8,7 @@
  */
 import React, { useCallback, useState, useEffect } from 'react';
 import { useExercise } from '@/content-pages/exercise/ui/ExerciseContext';
+import { useI18n } from '@/i18n';
 import { EXERCISE_MAX_TRIES, EXERCISE_SHAKE_MS } from '../constants';
 
 const MAX_TRIES = EXERCISE_MAX_TRIES;
@@ -103,6 +104,7 @@ export const Hueco: React.FC<HuecoProps> = ({
   tolerance = 0.001,
 }) => {
   const { state, register, answer, reveal } = useExercise();
+  const { t } = useI18n();
   const qState = state.questions[id];
   const [input, setInput] = useState(qState?.userAnswer ?? '');
   const [isShaking, setIsShaking] = useState(false);
@@ -159,7 +161,7 @@ export const Hueco: React.FC<HuecoProps> = ({
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && check()}
-            placeholder="Respuesta..."
+            placeholder={t('exercise', 'answerPlaceholder')}
             className={`min-w-[120px] text-lg bg-transparent border-b-2 border-dashed font-serif text-carbon outline-none transition-all ${
               isShaking ? 'border-terracota animate-shake text-terracota' : 'page-accent-focus border-carbon/40'
             }`}
@@ -169,7 +171,7 @@ export const Hueco: React.FC<HuecoProps> = ({
             disabled={!input.trim()}
             className="ac-btn ac-interactive page-accent-button px-6 py-2 text-xs border border-carbon/40 text-carbon/80 transition-all shadow-sm disabled:opacity-30 disabled:cursor-not-allowed hover:-translate-y-0.5 hover:shadow-md"
           >
-            Comprobar
+            {t('exercise', 'check')}
           </button>
         </div>
       )}
@@ -188,7 +190,7 @@ export const Hueco: React.FC<HuecoProps> = ({
           onClick={() => reveal(id)}
           className="page-accent-text ac-eyebrow ac-eyebrow--sm mt-4 underline underline-offset-4 opacity-70 hover:opacity-100 transition-opacity"
         >
-          Revelar Solución
+          {t('exercise', 'revealSolution')}
         </button>
       )}
     </div>

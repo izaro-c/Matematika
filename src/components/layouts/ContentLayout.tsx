@@ -3,6 +3,7 @@ import { getContentPageAccent } from '@/design';
 import { DiagramSlot } from '@/components/ui/skeletons';
 import { useOptionalMathStore } from '@/lib/page-context/MathStoreContext';
 import { DiagramStepSyncContext } from '@/lib/page-context/DiagramStepSyncContext';
+import { useI18n } from '@/i18n';
 import { MobileContentHeaderSeparator, MobileDiagramToolbar } from './MobileDiagramChrome';
 
 interface ContentLayoutProps {
@@ -49,12 +50,14 @@ export function ContentLayout({
   children,
   diagram,
   secondary,
-  diagramLabel = 'Visualización interactiva',
+  diagramLabel,
   embedded = false,
   pageType,
   variant = 'reading',
   className = '',
 }: ContentLayoutProps) {
+  const { t } = useI18n();
+  const resolvedDiagramLabel = diagramLabel ?? t('common', 'interactiveVisualization');
   const [isDiagramExpanded, setIsDiagramExpanded] = useState(true);
   const diagramId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -218,7 +221,7 @@ export function ContentLayout({
             {hasDiagram && (
               <aside
                 className="content-diagram"
-                aria-label={diagramLabel}
+                aria-label={resolvedDiagramLabel}
                 data-mobile-collapsed={!isDiagramExpanded}
               >
                 <div className="content-diagram-sticky">
@@ -234,7 +237,7 @@ export function ContentLayout({
           </section>
 
           {secondary !== undefined && secondary !== null && (
-            <section className="content-secondary" aria-label="Contenido relacionado">
+            <section className="content-secondary" aria-label={t('common', 'relatedContent')}>
               <div className="content-secondary-inner">{secondary}</div>
             </section>
           )}

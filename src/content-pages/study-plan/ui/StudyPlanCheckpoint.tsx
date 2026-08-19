@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { StudyPlanContext } from '@/content-pages/study-plan/context/StudyPlanContext';
+import { useI18n } from '@/i18n';
 
 interface StudyPlanCheckpointProps {
   id: string;
@@ -18,6 +19,7 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
   explanation,
 }) => {
   const { isRead, markAsRead } = useProgressStore();
+  const { t } = useI18n();
   const completed = isRead(id);
   const context = useContext(StudyPlanContext);
   const isLocked = context?.isLocked ? context.isLocked(id) : false;
@@ -58,10 +60,10 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
           </div>
           <div className="flex-1">
             <div className="ac-label ac-label--xs ac-label--faint">
-              Checkpoint (Bloqueado)
+              {t('studyPlan', 'checkpointLocked')}
             </div>
             <h4 className="text-sm italic font-serif text-carbon/40">
-              Completa los conceptos de esta fase para habilitar el control
+              {t('studyPlan', 'checkpointPhaseHint')}
             </h4>
           </div>
         </div>
@@ -112,10 +114,10 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
               completed ? 'text-salvia' : 'text-carbon/40'
             }`}
           >
-            Checkpoint de Verificación
+            {t('studyPlan', 'checkpointVerification')}
           </div>
           <h4 className="text-sm italic font-serif text-carbon/60">
-            Responde correctamente para desbloquear el camino
+            {t('studyPlan', 'checkpointAnswerHint')}
           </h4>
         </div>
       </div>
@@ -158,7 +160,7 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
               <span>{option}</span>
               {completed && isCorrectOption && (
                 <span className="ac-label ac-label--md ac-label--salvia">
-                  Correcto
+                  {t('studyPlan', 'correct')}
                 </span>
               )}
             </button>
@@ -170,7 +172,7 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
       {showExplanation && (
         <div className="mt-6 pt-5 border-t border-carbon/10 animate-fade-in">
           <div className="ac-label ac-label--xs ac-label--salvia-soft mb-2">
-            Justificación Pedagógica
+            {t('studyPlan', 'pedagogicalJustification')}
           </div>
           <p className="text-sm font-serif italic text-carbon/70 leading-relaxed">
             {explanation}

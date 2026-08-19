@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'wouter';
-import { useGlossaryStore, dictionary } from '@/lib/stores/GlossaryStore';
+import { useGlossaryStore, getGlossaryDictionary } from '@/lib/stores/GlossaryStore';
 import { db } from '@/data/content';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
@@ -16,12 +16,15 @@ interface ConceptLinkProps {
   highlightColor?: string;
 }
 
-const isIdValid = (id: string): boolean => !!(  
-  dictionary[id] || db.getTheorem(id) || db.getDefinition(id) || db.getMathematicianById(id) ||
-  db.methods.get(id) || db.examples.get(id) || db.exercises.get(id) ||
-  db.usecases.get(id) || db.axioms.get(id) || db.getAxiomaticSystem(id) ||
-  db.models.get(id) || db.demos.get(id)
-);
+const isIdValid = (id: string, lang?: string): boolean => {
+  const dict = lang ? getGlossaryDictionary(lang) : getGlossaryDictionary('es');
+  return !!(  
+    dict[id] || db.getTheorem(id, lang) || db.getDefinition(id, lang) || db.getMathematicianById(id, lang) ||
+    db.methods.get(id) || db.examples.get(id) || db.exercises.get(id) ||
+    db.usecases.get(id) || db.axioms.get(id) || db.getAxiomaticSystem(id) ||
+    db.models.get(id) || db.demos.get(id)
+  );
+};
 
 const COLOR_MAP: Record<string, string> = {
   'terracota': 'var(--theme-terracota)',
@@ -40,14 +43,14 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
   highlightTarget,
   highlightColor
 }) => {
-  const { getLocalizedPath } = useI18n();
+  const { lang, t, getLocalizedPath } = useI18n();
   const { openTerm } = useGlossaryStore();
   const setVariable = useMathStore((state) => state.setVariable);
 
   const targetIds = Array.isArray(targetId) ? targetId : [targetId];
   const isRead = useProgressStore(state => targetIds.every(id => state.isRead(id)));
   
-  const validIds = targetIds.filter(isIdValid);
+  const validIds = targetIds.filter(id => isIdValid(id, lang));
   const allValid = validIds.length === targetIds.length;
   const dataAttr = validIds.length > 0 ? validIds.join(',') : undefined;
 
@@ -70,7 +73,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
   } : {};
 
   if (!allValid) {
-    const firstInvalid = targetIds.find(id => !isIdValid(id)) || targetIds[0];
+    const firstInvalid = targetIds.find(id => !isIdValid(id, lang)) || targetIds[0];
 
     return (
       <Link
@@ -85,7 +88,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
           "page-accent-link--pending underline decoration-dashed decoration-1 underline-offset-4 transition-colors duration-150 rounded-none cursor-pointer",
           highlightTarget ? "border-b-2 box-decoration-clone px-[2px] py-[1px]" : ""
         ].join(' ')}
-        title={`"${firstInvalid}" — página en construcción`}
+        title={t('construction', 'pendingTitle', { id: firstInvalid })}
       >
         {children}
       </Link>
@@ -101,7 +104,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       data-target-id={targetIds.join(',')}
-      title={`Ver contenido relacionado`}
+      title={t('common', 'relatedContent')}
       style={highlightStyles}
       className={[
         'page-accent-link font-bold cursor-pointer transition-all duration-150 rounded-none',

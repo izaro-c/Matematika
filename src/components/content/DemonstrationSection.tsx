@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { CodexLayout } from '@/components/layouts/CodexLayout';
 import { DiagramSlot } from '@/components/ui/skeletons';
+import { useI18n } from '@/i18n';
 import { insertQedAfterLastProofStep } from './insertQedAfterLastProofStep';
 
 /**
@@ -48,6 +49,7 @@ const DiagramTransition: React.FC<{ activeKey: React.Key; frames: DiagramFrame[]
  * - Implementa un extractor numérico tolerante a diferencias tipográficas en los pasos.
  */
 export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diagram, diagrams, children }) => {
+  const { t } = useI18n();
   const step = useMathStore(state => state.variables?.['step']);
   const diagramKey = useMathStore(state => state.variables?.['diagramKey']);
   const highlight = useMathStore(state => state.variables?.['highlight']);
@@ -121,7 +123,7 @@ export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diag
       diagram={hasDiagram && activeDiagram ? (
         <DiagramTransition activeKey={transitionKey} frames={diagramFrames} />
       ) : undefined}
-      diagramLabel="Diagrama de la demostración"
+      diagramLabel={t('common', 'proofDiagramLabel')}
     >
       <div className="prose prose-pizarra prose-lg max-w-none w-full editorial-reading">
         {proofContent}

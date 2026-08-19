@@ -12,6 +12,7 @@ import {
 import type { VisualDiagramModel } from '@/fixed-pages/editor/diagrams/model/types';
 import { DiagramRenderer } from '@/diagrams/public';
 import { DiagramSkeleton } from '@/components/ui/skeletons';
+import { useI18n } from '@/i18n';
 
 interface EditorLandingCardProps {
   file: FileNode;
@@ -32,17 +33,19 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
   const [isLoadingContent, setIsLoadingContent] = useState(false);
   const [realTitle, setRealTitle] = useState<string>(() => resourceDisplayName(file));
 
+  const { t, lang } = useI18n();
+
   // Para diagramas: calcular distintivos y colores de las páginas a las que está añadido
   const badges = useMemo(() => {
     if (file.kind !== 'diagram') {
-      const label = getCategoryDisplayName(file.type, 'singular');
+      const label = getCategoryDisplayName(file.type, 'singular', lang);
       const colorVar = getTypeCssVar(file.type);
       return [{ type: file.type, label, colorVar }];
     }
 
     const usages = getDiagramUsages(file.path);
     if (!usages.length) {
-      const label = getCategoryDisplayName(file.type, 'singular');
+      const label = getCategoryDisplayName(file.type, 'singular', lang);
       const colorVar = getTypeCssVar(file.type);
       return [{ type: file.type, label, colorVar }];
     }
@@ -58,7 +61,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
         seen.add(rawType);
         result.push({
           type: rawType,
-          label: getCategoryDisplayName(rawType, 'singular'),
+          label: getCategoryDisplayName(rawType, 'singular', lang),
           colorVar: getTypeCssVar(rawType),
         });
       }
@@ -68,10 +71,10 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
       ? result
       : [{
           type: file.type,
-          label: getCategoryDisplayName(file.type, 'singular'),
+          label: getCategoryDisplayName(file.type, 'singular', lang),
           colorVar: getTypeCssVar(file.type),
         }];
-  }, [file.kind, file.path, file.type]);
+  }, [file.kind, file.path, file.type, lang]);
 
   const primaryColorVar = badges[0]?.colorVar ?? getTypeCssVar(file.type);
   const accentBackground = badges.length > 1
@@ -166,10 +169,10 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
   }, [isVisible, file.kind, file.path]);
 
   const capabilityBadge = file.capability === 'visual-exact'
-    ? { label: 'Editable', style: 'border-salvia/30 bg-salvia/10 text-salvia' }
+    ? { label: t('editor', 'editable'), style: 'border-salvia/30 bg-salvia/10 text-salvia' }
     : file.capability === 'code-preview'
-      ? { label: 'Fuente', style: 'border-pavo/30 bg-pavo/10 text-pavo' }
-      : { label: 'Atención', style: 'border-granada/30 bg-granada/10 text-granada' };
+      ? { label: t('editor', 'sourceOnly'), style: 'border-pavo/30 bg-pavo/10 text-pavo' }
+      : { label: t('editor', 'attentionNeeded'), style: 'border-granada/30 bg-granada/10 text-granada' };
 
   return (
     <div
@@ -215,7 +218,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
                   e.stopPropagation();
                   onToggleFavorite(file.path);
                 }}
-                title={isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}
+                title={isFavorite ? t('editor', 'removeFromFavorites') : t('editor', 'addToFavorites')}
                 className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-all cursor-pointer active:scale-90 ${
                   isFavorite
                     ? 'bg-ocre text-lienzo shadow-sm ring-2 ring-ocre/30 scale-105'
@@ -245,7 +248,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
         {file.kind === 'diagram' && (
           <div className="mt-3 relative h-36 w-full overflow-hidden rounded-lg border border-carbon/10 bg-lienzo/60 pointer-events-none">
             {isLoadingContent && !diagramModel ? (
-              <DiagramSkeleton label="Cargando vista previa..." />
+              <DiagramSkeleton label={t('editor', 'loadingContent')} />
             ) : diagramModel ? (
               <DiagramRenderer
                 spec={diagramModel}
@@ -257,7 +260,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center text-[10px] text-carbon/40 italic font-mono">
-                {isVisible ? 'Diagrama TSX' : 'Esperando a scroll...'}
+                {isVisible ? t('editor', 'tsxDiagram') : t('editor', 'waitingForScroll')}
               </div>
             )}
           </div>
@@ -267,13 +270,13 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
       {/* Footer / Action */}
       <div className="mt-4 flex items-center justify-between border-t border-carbon/10 pt-2.5 text-xs">
         <span className="text-[11px] font-medium text-carbon/60 group-hover:text-carbon transition-colors">
-          {file.kind === 'diagram' ? 'Diagrama Interactivo' : 'Documento MDX'}
+          {file.kind === 'diagram' ? t('editor', 'interactiveDiagram') : t('editor', 'mdxDocument')}
         </span>
         <span
           className="flex items-center gap-1 font-semibold group-hover:translate-x-0.5 transition-transform text-xs"
           style={{ color: primaryColorVar }}
         >
-          Abrir
+          {t('editor', 'open')}
           <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>

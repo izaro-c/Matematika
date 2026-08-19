@@ -12,18 +12,18 @@ interface MaterialPracticoSectionProps {
 
 export const MaterialPracticoSection: React.FC<MaterialPracticoSectionProps> = ({ examples, exercises }) => {
   const hasContent = examples.length > 0 || exercises.length > 0;
-  const { t } = useI18n();
+  const { t, getLocalizedPath } = useI18n();
   if (!hasContent) return null;
 
   return (
     <section className="my-24">
       <SubtleSeparator />
-      <SectionTitle>Material Práctico</SectionTitle>
+      <SectionTitle>{t('content', 'practicalMaterial')}</SectionTitle>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {examples.map(ex => (
           <ContentCard
             key={ex.slug}
-            href={`/ejemplo/${ex.id}`}
+            href={getLocalizedPath(`/ejemplo/${ex.id}`)}
             title={ex.title}
             description={ex.description}
             type="ejemplo"
@@ -33,7 +33,7 @@ export const MaterialPracticoSection: React.FC<MaterialPracticoSectionProps> = (
         {exercises.map(ex => (
           <ContentCard
             key={ex.slug}
-            href={`/ejercicio/${ex.id}`}
+            href={getLocalizedPath(`/ejercicio/${ex.id}`)}
             title={ex.title}
             description={ex.description}
             type="ejercicio"

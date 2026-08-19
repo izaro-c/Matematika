@@ -13,6 +13,7 @@
  */
 import React, { useState } from 'react';
 import { useStepBinding } from '@/components/ui/StepBinding';
+import { useI18n } from '@/i18n';
 
 interface PasoProps {
   id?: string;
@@ -29,6 +30,7 @@ interface PasoProps {
  * Los pasos se revelan en orden.
  */
 export const Paso: React.FC<PasoProps> = ({ id, numero, titulo, children, visible = false }) => {
+  const { t } = useI18n();
   const [revealed, setRevealed] = useState(visible);
   const { setActiveStep } = useStepBinding();
   const displayNum = numero;
@@ -81,7 +83,7 @@ export const Paso: React.FC<PasoProps> = ({ id, numero, titulo, children, visibl
             className="page-accent-button text-xs font-sans text-carbon/50 border border-carbon/20 bg-lienzo px-4 py-2 rounded-none transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center gap-2 group"
           >
             <span className="group-hover:scale-110 transition-transform">▷</span>
-            Revelar paso
+            {t('exercise', 'revealStep')}
           </button>
         )}
       </div>

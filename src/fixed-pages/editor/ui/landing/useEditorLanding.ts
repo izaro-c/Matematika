@@ -114,13 +114,14 @@ export function useEditorLanding({
       .filter(([_, count]) => count > 0)
       .map(([id, count]) => ({
         id,
-        label: getCategoryDisplayName(id, 'plural'),
+        label: getCategoryDisplayName(id, 'plural', currentLang),
         count,
       }))
-      .sort((a, b) => a.label.localeCompare(b.label, 'es'));
+      .sort((a, b) => a.label.localeCompare(b.label, currentLang || 'es'));
 
-    return [{ id: 'all', label: 'Todos', count: baseFilteredFiles.length }, ...typesList];
-  }, [baseFilteredFiles]);
+    const allLabel = currentLang === 'eu' ? 'Guztiak' : 'Todos';
+    return [{ id: 'all', label: allLabel, count: baseFilteredFiles.length }, ...typesList];
+  }, [baseFilteredFiles, currentLang]);
 
   // Si la categoría seleccionada ya no existe entre las disponibles, usar 'all'
   const effectiveSelectedType = selectedType !== 'all' && availableTypes.some(t => t.id === selectedType)

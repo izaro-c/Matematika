@@ -53,7 +53,7 @@ function AvisosButton({ errorCount, warningCount, onOpen, healthyLabel = 'Avisos
     <button
       type="button"
       onClick={onOpen}
-      className={`flex items-center justify-center space-x-1 rounded-lg border px-2.5 py-1 text-xs font-semibold tabular-nums transition-all cursor-pointer ${
+      className={`inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border px-2.5 text-xs font-semibold tabular-nums transition-all cursor-pointer select-none ${
         hasErrors
           ? 'border-granada/30 bg-granada/10 text-granada animate-pulse'
           : hasWarnings
@@ -131,7 +131,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
   return (
     <>
     <HeaderContainer>
-      <div className="flex min-w-0 items-center justify-self-start space-x-2.5">
+      <div className="flex min-w-0 items-center justify-self-start gap-2">
         <Link
           href={routePath('/')}
           onClick={handleGoHome}
@@ -168,7 +168,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
           </HeaderIconButton>
         )}
 
-        <div className="flex min-w-0 items-center space-x-2">
+        <div className="flex min-w-0 items-center gap-2">
           <HeaderTitleInput
             value={title}
             onChange={e => onTitleChange(e.target.value)}
@@ -176,7 +176,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
             placeholder={titlePlaceholder}
           />
           {fileBadge ? <HeaderBadge variant="subtle">{fileBadge}</HeaderBadge> : null}
-          <span className="inline-flex min-w-0 shrink-0 items-center">{badges}</span>
+          <div className="inline-flex min-w-0 shrink-0 items-center gap-1.5">{badges}</div>
           <span
             className={`h-2 w-2 shrink-0 rounded-full bg-ocre ${isDirty ? 'animate-pulse opacity-100' : 'opacity-0'}`}
             title={isDirty ? 'Cambios no guardados' : undefined}
@@ -185,9 +185,9 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
         </div>
       </div>
 
-      <div className="flex items-center justify-self-center space-x-1.5 sm:space-x-2">{center}</div>
+      <div className="flex items-center justify-self-center gap-1.5 sm:gap-2">{center}</div>
 
-      <div className="flex items-center justify-self-end space-x-1.5">
+      <div className="flex items-center justify-self-end gap-1.5">
         {actions}
         <AvisosButton {...avisos} />
         <HeaderActionButton

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useI18n } from '@/i18n';
 
 interface ApoyoProps {
   /** Texto del botón o pestaña de ayuda */
@@ -13,10 +14,12 @@ interface ApoyoProps {
  * Se presenta como una nota al margen editorial Arts & Crafts plegada por defecto.
  */
 export const Apoyo: React.FC<ApoyoProps> = ({ 
-  titulo = "¿Necesitas ayuda con las operaciones?", 
+  titulo, 
   children 
 }) => {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
+  const displayTitle = titulo || t('exercise', 'needHelp');
 
   return (
     <div className="mt-4 pt-3 border-t border-dashed border-carbon/10 font-serif text-xs">
@@ -25,7 +28,7 @@ export const Apoyo: React.FC<ApoyoProps> = ({
         className="ac-eyebrow ac-eyebrow--xs text-carbon/50 hover:text-carbon/80 cursor-pointer select-none flex items-center gap-2"
       >
         <span>{open ? '▼' : '▶'}</span>
-        <span>{titulo}</span>
+        <span>{displayTitle}</span>
       </button>
 
       {open && (

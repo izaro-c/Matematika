@@ -121,7 +121,7 @@ const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
   return (
     <nav
       className={`${className}`}
-      aria-label="Navegación de pasos del diagrama"
+      aria-label={t('diagram', 'navigationAriaLabel')}
       data-step-navigator={scopeId || 'global'}
     >
       <div className="flex items-center justify-center gap-2">
@@ -145,7 +145,7 @@ const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
         )}
       </div>
       {!compact && !editorMode && (
-        <div className="mt-3 flex gap-1 overflow-x-auto border-t border-carbon/10 pt-3" role="list" aria-label="Línea temporal de pasos">
+        <div className="mt-3 flex gap-1 overflow-x-auto border-t border-carbon/10 pt-3" role="list" aria-label={t('diagram', 'timelineAriaLabel')}>
           {steps.map((step, index) => (
             <button
               key={step.id}
