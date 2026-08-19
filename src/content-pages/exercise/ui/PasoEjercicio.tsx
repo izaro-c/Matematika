@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useExercise } from '@/content-pages/exercise/ui/ExerciseContext';
 import { useStepBinding } from '@/components/ui/StepBinding';
 import { PasoContext } from '@/content-pages/exercise/ui/PasoContext';
+import { useI18n } from '@/i18n';
+import { ProofStepNumberBadge } from '@/components/content/ProofStepNumberBadge';
 
 interface PasoEjercicioProps {
   /** Identificador único del paso (para reportar hover/click al diagrama lateral) */
@@ -28,6 +30,7 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
 }) => {
   const { state, register } = useExercise();
   const { setActiveStep } = useStepBinding();
+  const { t } = useI18n();
 
   // Registrar todas las preguntas de este paso inmediatamente al montarse el componente
   useEffect(() => {
@@ -56,7 +59,7 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
   return (
     <PasoContext.Provider value={{ isCompleted }}>
       <div
-        className={`my-8 font-serif border-l-2 transition-all duration-300 pl-6 ${
+        className={`my-16 font-serif transition-all duration-300${
           isCompleted
             ? 'border-salvia/60'
             : isUnlocked
@@ -68,15 +71,11 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
       >
         {/* Cabecera del paso */}
         <div className="flex items-center gap-3 mb-4 select-none">
-          <div className={`flex items-center justify-center w-8 h-8 font-sans font-bold text-sm transition-all duration-300 border ${
-            isCompleted
-              ? 'bg-salvia/10 border-salvia text-salvia'
-              : isUnlocked
-                ? 'bg-ocre/10 border-ocre text-ocre'
-                : 'bg-carbon/5 border-carbon/10 text-carbon/30'
-          }`}>
-            {isCompleted ? '✓' : numero}
-          </div>
+          <ProofStepNumberBadge
+            number={numero}
+            size="compact"
+            status={isCompleted ? 'completed' : isUnlocked ? 'default' : 'locked'}
+          />
           <h3 className={`font-sans font-semibold text-sm transition-colors ${
             isCompleted
               ? 'text-salvia'
@@ -85,7 +84,7 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
                 : 'text-carbon/30'
           }`}>
             {titulo}
-            {!isUnlocked && <span className="ml-2 text-xs font-normal lowercase tracking-normal text-carbon/40 font-serif">(bloqueado)</span>}
+            {!isUnlocked && <span className="ml-2 text-xs font-normal lowercase tracking-normal text-carbon/40 font-serif">({t('exercise', 'blocked')})</span>}
           </h3>
         </div>
 
@@ -95,7 +94,7 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
             // Vista bloqueada
             <div className="p-5 border border-dashed border-carbon/20 bg-carbon/5 select-none rounded-none text-xs text-carbon/40 italic flex items-center gap-3">
               <span className="text-carbon/30 text-sm">❦</span>
-              <span className="ac-label ac-label--xs">Paso bloqueado — Resuelve el paso anterior para desbloquear</span>
+              <span className="ac-label ac-label--xs">{t('exercise', 'stepBlocked')}</span>
             </div>
           ) : (
             // Vista activa/desbloqueada (mantenemos children totalmente interactivo para apoyar clicks en Apoyo)
@@ -104,7 +103,7 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
 
               {!isCompleted && (
                 <div className="mt-4 p-4 border border-dashed border-ocre/20 bg-ocre/5 text-xs text-ocre/70 italic text-center rounded-none select-none">
-                  Completa las preguntas de arriba para revelar la resolución geométrica y el cálculo detallado.
+                  {t('exercise', 'completeQuestionsAbove')}
                 </div>
               )}
             </div>

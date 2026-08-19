@@ -30,7 +30,7 @@ export const NotFoundState: React.FC<NotFoundStateProps> = ({
           {missingId && (
             <>
               {' '}<code className={UI.codeInline}>{missingId}</code>{' '}
-              no existe en la base de datos.
+              {t('common', 'notInDatabase')}
             </>
           )}
         </p>

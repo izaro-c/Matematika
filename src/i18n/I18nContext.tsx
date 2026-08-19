@@ -119,12 +119,8 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const placeholder = `{${k}}`;
         let index = text.indexOf(placeholder);
         while (index !== -1) {
-          const isAtStart = index === 0 || /[!:;\n]\s*$/.test(text.slice(0, index));
-          const formattedVal = isAtStart
-            ? valStr.charAt(0).toUpperCase() + valStr.slice(1)
-            : valStr.toLowerCase();
-          text = text.slice(0, index) + formattedVal + text.slice(index + placeholder.length);
-          index = text.indexOf(placeholder, index + formattedVal.length);
+          text = text.slice(0, index) + valStr + text.slice(index + placeholder.length);
+          index = text.indexOf(placeholder, index + valStr.length);
         }
       });
     }
@@ -177,12 +173,8 @@ export function useI18n(): I18nContextType {
             const placeholder = `{${k}}`;
             let index = text.indexOf(placeholder);
             while (index !== -1) {
-              const isAtStart = index === 0 || /[!:;\n]\s*$/.test(text.slice(0, index));
-              const formattedVal = isAtStart
-                ? valStr.charAt(0).toUpperCase() + valStr.slice(1)
-                : valStr.toLowerCase();
-              text = text.slice(0, index) + formattedVal + text.slice(index + placeholder.length);
-              index = text.indexOf(placeholder, index + formattedVal.length);
+              text = text.slice(0, index) + valStr + text.slice(index + placeholder.length);
+              index = text.indexOf(placeholder, index + valStr.length);
             }
           });
         }

@@ -6,6 +6,7 @@
  */
 import React, { useState } from 'react';
 import { useStepBinding } from '@/components/ui/StepBinding';
+import { useI18n } from '@/i18n';
 
 interface SolucionProps {
   children: React.ReactNode;
@@ -16,9 +17,11 @@ interface SolucionProps {
 /**
  * Componente principal para renderizar la solución detallada de un ejercicio.
  */
-export const Solucion: React.FC<SolucionProps> = ({ children, label = 'Ver Solución Completa' }) => {
+export const Solucion: React.FC<SolucionProps> = ({ children, label }) => {
+  const { t } = useI18n();
   const [revealed, setRevealed] = useState(false);
   const { setActiveStep } = useStepBinding();
+  const buttonLabel = label ?? t('exercise', 'viewFullSolution');
 
   return (
     <div className="my-8 font-serif relative">
@@ -31,7 +34,7 @@ export const Solucion: React.FC<SolucionProps> = ({ children, label = 'Ver Soluc
           className="w-full flex items-center justify-center gap-3 py-4 elegant-panel ac-eyebrow text-carbon/60 hover:text-carbon group"
           style={{ '--hover-accent': 'var(--page-accent)' } as React.CSSProperties}
         >
-          <span className="page-accent-text opacity-80 group-hover:opacity-100 transition-all">{label}</span>
+          <span className="page-accent-text opacity-80 group-hover:opacity-100 transition-all">{buttonLabel}</span>
         </button>
       ) : (
         <div 
@@ -46,13 +49,13 @@ export const Solucion: React.FC<SolucionProps> = ({ children, label = 'Ver Soluc
             }}
             className="page-accent-text-hover absolute top-4 right-4 ac-eyebrow ac-eyebrow--sm text-carbon/30 transition-colors"
           >
-            ✕ Cerrar
+            ✕ {t('common', 'close')}
           </button>
 
           {/* Encabezado */}
           <div className="flex items-center gap-2 mb-6">
             <span className="text-carbon/50 ac-eyebrow ac-eyebrow--sm border-b border-carbon/20 pb-1">
-              Solución Detallada
+              {t('exercise', 'detailedSolution')}
             </span>
           </div>
           {/* Contenido */}

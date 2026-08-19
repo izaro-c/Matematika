@@ -1,4 +1,4 @@
-import { useGlossaryStore, dictionary } from '@/lib/stores/GlossaryStore';
+import { useGlossaryStore, getGlossaryDictionary } from '@/lib/stores/GlossaryStore';
 import { db } from '@/data/content';
 import type { 
   Theorem, Definition, Mathematician, Method,
@@ -8,7 +8,6 @@ import type {
 import katex from 'katex';
 import { Link } from 'wouter';
 import { ContentTypeBadge } from '@/components/ui/ContentTypeBadge';
-import { routePath } from '@/lib/routes';
 import { getContentPageAccent } from '@/design/pageAccents';
 import { useI18n } from '@/i18n';
 
@@ -26,7 +25,7 @@ interface TermData {
 
 interface TermMeta {
   type: string;
-  typeLabel: string;
+  typeLabel?: string;
   href: string;
 }
 
@@ -57,27 +56,26 @@ function resolveEntityMeta(entity: EntityWrapper): TermMeta | null {
     const type = getTheoremType(t);
     return {
       type,
-      typeLabel: type.charAt(0).toUpperCase() + type.slice(1),
-      href: routePath(`/teorema/${entity.theorem.slug}`),
+      href: `/teorema/${entity.theorem.slug}`,
     };
   }
-  if (entity.definition) return { type: 'definicion', typeLabel: 'Definición', href: routePath(`/definicion/${entity.definition.slug}`) };
-  if (entity.bio) return { type: 'matematico', typeLabel: 'Matemático', href: routePath(`/bio/${entity.bio.slug}`) };
-  if (entity.method) return { type: 'metodo', typeLabel: 'Método', href: routePath(`/metodo/${entity.method.slug}`) };
-  if (entity.example) return { type: 'ejemplo', typeLabel: 'Ejemplo', href: routePath(`/ejemplo/${entity.example.slug}`) };
-  if (entity.exercise) return { type: 'ejercicio', typeLabel: 'Ejercicio', href: routePath(`/ejercicio/${entity.exercise.slug}`) };
-  if (entity.useCase) return { type: 'caso-de-uso', typeLabel: 'Caso de Uso', href: routePath(`/caso/${entity.useCase.slug}`) };
-  if (entity.axiom) return { type: 'axioma', typeLabel: 'Axioma', href: routePath(`/axioma/${entity.axiom.slug}`) };
-  if (entity.system) return { type: 'sistema-axiomatico', typeLabel: 'Sistema Axiomático', href: routePath(`/sistema/${entity.system.slug}`) };
-  if (entity.model) return { type: 'modelo', typeLabel: 'Modelo', href: routePath(`/modelo/${entity.model.slug}`) };
-  if (entity.demo) return { type: 'demostracion', typeLabel: 'Demostración', href: routePath(`/demo/${entity.demo.slug}`) };
+  if (entity.definition) return { type: 'definicion', href: `/definicion/${entity.definition.slug}` };
+  if (entity.bio) return { type: 'matematico', href: `/bio/${entity.bio.slug}` };
+  if (entity.method) return { type: 'metodo', href: `/metodo/${entity.method.slug}` };
+  if (entity.example) return { type: 'ejemplo', href: `/ejemplo/${entity.example.slug}` };
+  if (entity.exercise) return { type: 'ejercicio', href: `/ejercicio/${entity.exercise.slug}` };
+  if (entity.useCase) return { type: 'caso-de-uso', href: `/caso/${entity.useCase.slug}` };
+  if (entity.axiom) return { type: 'axioma', href: `/axioma/${entity.axiom.slug}` };
+  if (entity.system) return { type: 'sistema-axiomatico', href: `/sistema/${entity.system.slug}` };
+  if (entity.model) return { type: 'modelo', href: `/modelo/${entity.model.slug}` };
+  if (entity.demo) return { type: 'demostracion', href: `/demo/${entity.demo.slug}` };
   return null;
 }
 
-function resolveTermFromDb(activeTerm: string): TermData | null {
-  const theorem = db.getTheorem(activeTerm);
-  const definition = db.getDefinition(activeTerm);
-  const bio = db.getMathematicianById(activeTerm);
+function resolveTermFromDb(activeTerm: string, lang: string = 'es'): TermData | null {
+  const theorem = db.getTheorem(activeTerm, lang);
+  const definition = db.getDefinition(activeTerm, lang);
+  const bio = db.getMathematicianById(activeTerm, lang);
   const method = db.methods.get(activeTerm);
   const example = db.examples.get(activeTerm);
   const exercise = db.exercises.get(activeTerm);
@@ -123,16 +121,17 @@ function resolveTermFromDb(activeTerm: string): TermData | null {
   };
 }
 
-function buildActiveTermDataList(activeTerms: string[] | null): (TermData & { isDefinition: boolean })[] {
+function buildActiveTermDataList(activeTerms: string[] | null, lang: string = 'es'): (TermData & { isDefinition: boolean })[] {
   if (!activeTerms) return [];
   const result: (TermData & { isDefinition: boolean })[] = [];
+  const dict = getGlossaryDictionary(lang);
 
   activeTerms.forEach(activeTerm => {
-    let termData: TermData | null = (dictionary[activeTerm] as unknown as TermData) || null;
+    let termData: TermData | null = (dict[activeTerm] as unknown as TermData) || null;
     let isDefinition = false;
 
     if (!termData) {
-      termData = resolveTermFromDb(activeTerm);
+      termData = resolveTermFromDb(activeTerm, lang);
       if (termData) {
         isDefinition = true;
       }
@@ -158,9 +157,10 @@ function computePanelClassName(isSidebar: boolean, isActive: boolean): string {
   return base;
 }
 
-function buildFormulaData(activeFormulaTerms: string[] | null): TermData[] | null {
+function buildFormulaData(activeFormulaTerms: string[] | null, lang: string = 'es'): TermData[] | null {
   if (!activeFormulaTerms) return null;
-  return activeFormulaTerms.map(id => dictionary[id]).filter(Boolean) as unknown as TermData[];
+  const dict = getGlossaryDictionary(lang);
+  return activeFormulaTerms.map(id => dict[id]).filter(Boolean) as unknown as TermData[];
 }
 
 function renderMathString(mathString: string): { __html: string } {
@@ -206,10 +206,10 @@ function renderTextWithMath(text: string): React.ReactNode {
 
 export const MarginaliaPanel = () => {
   const { activeTerms, activeFormulaTerms, closeTerm, displayMode, toggleDisplayMode } = useGlossaryStore();
-  const { getLocalizedPath } = useI18n();
+  const { lang, t, getLocalizedPath } = useI18n();
 
-  const activeTermDataList = buildActiveTermDataList(activeTerms);
-  const formulaData = buildFormulaData(activeFormulaTerms);
+  const activeTermDataList = buildActiveTermDataList(activeTerms, lang);
+  const formulaData = buildFormulaData(activeFormulaTerms, lang);
 
   const isActive = (activeTerms !== null && activeTerms.length > 0) ||
                    (activeFormulaTerms !== null && activeFormulaTerms.length > 0);
@@ -257,7 +257,7 @@ export const MarginaliaPanel = () => {
               {term.statement && (
                 <div className="page-accent-border mt-6 p-5 border-l-4" style={{ backgroundColor: 'color-mix(in srgb, var(--page-accent) 4%, transparent)' }}>
                   <h5 className="page-accent-text ac-label ac-label--sm mb-3">
-                    Enunciado
+                    {t('marginalia', 'statement')}
                   </h5>
                   <p className="italic text-carbon/90 m-0 leading-relaxed text-base">
                     {renderTextWithMath(term.statement)}
@@ -277,7 +277,7 @@ export const MarginaliaPanel = () => {
                       onClick={closeTerm}
                       className="page-accent-hover inline-block px-8 py-3 border border-carbon/20 transition-all ac-eyebrow font-bold"
                     >
-                      Leer Artículo Completo →
+                      {t('glossary', 'readFullArticle')}
                     </a>
                   </Link>
                 </div>
@@ -331,7 +331,7 @@ export const MarginaliaPanel = () => {
     );
   } else {
     panelContent = (
-      <p className="italic text-ink-muted text-center mt-12">No se han encontrado símbolos reconocidos en esta expresión.</p>
+      <p className="italic text-ink-muted text-center mt-12">{t('marginalia', 'noSymbolsFound')}</p>
     );
   }
 
@@ -350,7 +350,7 @@ export const MarginaliaPanel = () => {
         style={{ '--page-accent': panelAccent } as React.CSSProperties}
         role="dialog"
         aria-modal="true"
-        aria-label="Glosario y marginalia"
+        aria-label={t('marginalia', 'dialogAriaLabel')}
       >
         <div className="h-full flex flex-col relative overflow-hidden">
           <div className="absolute top-4 right-4 flex gap-2 text-ink-muted font-sans z-20">
@@ -358,8 +358,8 @@ export const MarginaliaPanel = () => {
               type="button"
               onClick={toggleDisplayMode}
               className="ac-hit-target page-accent-hover transition-colors text-sm inline-flex items-center justify-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
-              title={isSidebar ? 'Cambiar a ventana flotante' : 'Cambiar a panel lateral'}
-              aria-label="Cambiar modo de visualización"
+              title={isSidebar ? t('marginalia', 'switchToFloating') : t('marginalia', 'switchToSidebar')}
+              aria-label={t('marginalia', 'changeDisplayMode')}
             >
               {isSidebar ? '⧉' : '◫'}
             </button>
@@ -367,7 +367,7 @@ export const MarginaliaPanel = () => {
               type="button"
               onClick={closeTerm}
               className="ac-hit-target page-accent-hover transition-colors text-2xl leading-none inline-flex items-center justify-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
-              aria-label="Cerrar panel"
+              aria-label={t('marginalia', 'closePanel')}
             >
               ×
             </button>

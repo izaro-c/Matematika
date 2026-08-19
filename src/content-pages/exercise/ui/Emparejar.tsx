@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useExercise } from '@/content-pages/exercise/ui/ExerciseContext';
 import { KatexText } from '@/components/ui/KatexText';
+import { useI18n } from '@/i18n';
 
 interface Pair {
   left: string;
@@ -40,6 +41,7 @@ function shuffle<T>(array: T[]): T[] {
  */
 export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
   const { register, answer, state } = useExercise();
+  const { t } = useI18n();
   const qState = state.questions[id];
 
   useEffect(() => {
@@ -152,7 +154,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
         style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}
       >
         <h4 className="font-bold text-carbon mb-8 mt-2 flex items-center gap-3 text-lg z-30 relative">
-          {isCompleted ? <span className="text-salvia">❦ Completado</span> : <span>Une los conceptos correspondientes</span>}
+          {isCompleted ? <span className="text-salvia">❦ {t('exercise', 'completed')}</span> : <span>{t('exercise', 'matchConcepts')}</span>}
         </h4>
 
         <div className="relative flex gap-16" ref={containerRef}>

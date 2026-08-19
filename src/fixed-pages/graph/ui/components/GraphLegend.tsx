@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { CONTENT_TYPE_CONFIG } from '@/lib/theme/constants';
 import { getKnowledgeGraphLegendTypes } from '../../lib/graphUtils';
 import { GraphExplorerLink } from './GraphExplorerLink';
+import { useI18n } from '@/i18n';
 
 interface GraphLegendProps {
   nodeGroups: Iterable<string>;
@@ -16,6 +17,7 @@ interface GraphLegendProps {
  */
 export function GraphLegend({ nodeGroups }: GraphLegendProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useI18n();
   const legendTypes = getKnowledgeGraphLegendTypes(nodeGroups);
 
   return (
@@ -24,8 +26,8 @@ export function GraphLegend({ nodeGroups }: GraphLegendProps) {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="lg:hidden absolute bottom-6 right-6 z-50 elegant-panel rounded-full w-12 h-12 flex items-center justify-center cursor-pointer text-carbon shadow-lg active:scale-95 transition-transform"
-        title="Leyenda del mapa"
-        aria-label="Mostrar leyenda del mapa"
+        title={t('graph', 'mapLegendTitle')}
+        aria-label={t('graph', 'showLegendAria')}
         aria-expanded={isOpen}
         aria-controls="graph-legend-panel"
       >
@@ -44,7 +46,7 @@ export function GraphLegend({ nodeGroups }: GraphLegendProps) {
           <button
             onClick={() => setIsOpen(false)}
             className="lg:hidden absolute -top-1 -right-1 text-carbon/40 hover:text-carbon text-xs font-bold w-5 h-5 flex items-center justify-center border border-carbon/25 rounded-full"
-            aria-label="Cerrar leyenda"
+            aria-label={t('graph', 'closeLegendAria')}
           >
             ×
           </button>
@@ -52,7 +54,7 @@ export function GraphLegend({ nodeGroups }: GraphLegendProps) {
           <h4
             className="ac-label ac-label--sm ac-label--soft mb-4 text-center mt-1"
           >
-            Leyenda
+            {t('graph', 'legendHeading')}
           </h4>
 
           <div className="flex flex-col gap-2.5 text-xs italic text-carbon/80 font-serif">
@@ -73,7 +75,7 @@ export function GraphLegend({ nodeGroups }: GraphLegendProps) {
 
           <div className="mt-4 pt-3 border-t border-carbon/10">
             <GraphExplorerLink href="/axiomas" direction="forward">
-              Dependencias axiomáticas
+              {t('graph', 'axiomaticDependencies')}
             </GraphExplorerLink>
           </div>
         </div>

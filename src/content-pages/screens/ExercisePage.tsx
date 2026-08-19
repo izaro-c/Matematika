@@ -1,4 +1,4 @@
-import { useParams, Link } from 'wouter';
+import { useParams } from 'wouter';
 import { useEffect } from 'react';
 import { db } from '@/data/content';
 import { ExerciseProvider, useExercise } from '@/content-pages/exercise/ui/ExerciseContext';

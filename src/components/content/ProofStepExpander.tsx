@@ -1,5 +1,6 @@
 import proofBlocksData from '@/data/graph/proof_blocks.json';
 import type React from 'react';
+import { useI18n } from '@/i18n';
 
 interface ProofStepExpanderProps {
   blockIds: string[];
@@ -18,6 +19,7 @@ const proofBlocks = (proofBlocksData as { blocks?: ProofBlock[] }).blocks ?? [];
 const proofBlockMap = new Map(proofBlocks.map(block => [block.id, block]));
 
 export const ProofStepExpander: React.FC<ProofStepExpanderProps> = ({ blockIds }) => {
+  const { t } = useI18n();
   if (blockIds.length === 0) return null;
 
   const resolved = blockIds.map(id => ({ id, block: proofBlockMap.get(id) }));
@@ -25,7 +27,7 @@ export const ProofStepExpander: React.FC<ProofStepExpanderProps> = ({ blockIds }
   return (
     <details className="mt-5 border border-carbon/15 bg-lienzo px-4 py-3 text-sm">
       <summary className="page-accent-text ac-eyebrow ac-eyebrow--sm cursor-pointer select-none">
-        Ver en Lean
+        {t('accessibility', 'seeInLean')}
       </summary>
       <div className="mt-4 space-y-4">
         {resolved.map(({ id, block }) => (
@@ -39,7 +41,7 @@ export const ProofStepExpander: React.FC<ProofStepExpanderProps> = ({ blockIds }
               </pre>
             ) : (
               <p className="m-0 text-sm italic text-granada">
-                Bloque Lean no encontrado en proof_blocks.json.
+                {t('accessibility', 'leanBlockNotFound')}
               </p>
             )}
           </div>

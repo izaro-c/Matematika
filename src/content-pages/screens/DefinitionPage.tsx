@@ -10,6 +10,7 @@ import { ContentBody } from '@/components/ui/ContentBody';
 import { MaterialPracticoSection } from '@/components/content/MaterialPracticoSection';
 import { AplicacionesSection } from '@/components/content/AplicacionesSection';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
+import { NotFoundState } from '@/components/ui/NotFoundState';
 import { useI18n } from '@/i18n';
 
 /**
@@ -21,7 +22,7 @@ import { useI18n } from '@/i18n';
 export const DefinitionPage = () => {
   const { id } = useParams();
   const slug = id || '';
-  const { lang } = useI18n();
+  const { lang, currentLanguage } = useI18n();
   const setMetadata = useMetadataStore((state) => state.setMetadata);
 
   const definition = db.getDefinition(slug, lang);
@@ -33,20 +34,16 @@ export const DefinitionPage = () => {
       setMetadata({
         id: definition.id,
         title: definition.title,
-        type: 'Definición',
+        type: currentLanguage.dictionary.metadata.types['definicion'] || 'Definición',
         tags: definition.tags || [],
         description: definition.description,
       });
     }
     return () => setMetadata(null);
-  }, [definition, setMetadata]);
+  }, [definition, setMetadata, currentLanguage]);
 
   if (!definition) {
-    return (
-      <div className="ac-page flex items-center justify-center">
-        <h1 className="text-2xl">La definición especificada no existe o no ha sido catalogada.</h1>
-      </div>
-    );
+    return <NotFoundState missingId={slug} />;
   }
 
   const examples = db.getExamplesByTheorem(definition.id, lang);

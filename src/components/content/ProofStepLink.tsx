@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDiagramStepSync } from '@/lib/page-context/DiagramStepSyncContext';
+import { useI18n } from '@/i18n';
 import { ProofStepNumberBadge } from './ProofStepNumberBadge';
 
 interface ProofStepLinkProps {
@@ -13,6 +14,7 @@ interface ProofStepLinkProps {
  */
 export const ProofStepLink: React.FC<ProofStepLinkProps> = ({ step }) => {
   const stepSync = useDiagramStepSync();
+  const { t } = useI18n();
 
   const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -35,7 +37,7 @@ export const ProofStepLink: React.FC<ProofStepLinkProps> = ({ step }) => {
       type="button"
       onClick={handleClick}
       className="proof-step-link inline-flex align-middle mx-0.5 -translate-y-px rounded-sm transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo"
-      aria-label={`Ir al paso ${step}`}
+      aria-label={t('accessibility', 'goToStep', { step: String(step) })}
       data-proof-step-link={step}
     >
       <ProofStepNumberBadge number={step} size="inline" />

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { getNodeTypeColor } from '@/fixed-pages/graph/lib/graphUtils';
 import { GraphSearchResults } from './GraphSearchResults';
+import { useI18n } from '@/i18n';
 
 interface SearchResult {
   id: string;
@@ -21,6 +22,7 @@ export function AxiomaticSearch({
   searchResults,
   onSelect,
 }: AxiomaticSearchProps) {
+  const { t } = useI18n();
   const searchRef = useRef<HTMLInputElement>(null);
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -42,8 +44,8 @@ export function AxiomaticSearch({
             value={searchQuery}
             onChange={(e) => { setSearchQuery(e.target.value); setSearchOpen(true); }}
             onFocus={() => setSearchOpen(true)}
-            placeholder="Buscar nodo axiomático…"
-            aria-label="Buscar en las dependencias axiomáticas"
+            placeholder={t('graph', 'searchAxiomaticPlaceholder')}
+            aria-label={t('graph', 'searchAxiomaticAria')}
             className="graph-search-input min-w-0 flex-1 bg-transparent px-3 py-2 text-sm text-carbon font-serif placeholder:italic placeholder:text-carbon/35 outline-none"
           />
           {searchQuery && (
@@ -51,7 +53,7 @@ export function AxiomaticSearch({
               type="button"
               onClick={() => { setSearchQuery(''); setSearchOpen(false); }}
               className="min-h-9 min-w-9 text-carbon/40 transition-colors hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-terracota"
-              aria-label="Borrar búsqueda"
+              aria-label={t('graph', 'clearSearchAria')}
             >
               ✕
             </button>

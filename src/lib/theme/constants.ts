@@ -1,7 +1,10 @@
 export const DIFF_COLORS: Record<string, string> = {
   básico: 'var(--theme-musgo)',
+  basico: 'var(--theme-musgo)',
+  elemental: 'var(--theme-musgo)',
   intermedio: 'var(--theme-ocre)',
   avanzado: 'var(--theme-granada)',
+  experto: 'var(--theme-granada)',
 };
 
 export const DOMAIN_ICONS: Record<string, string> = {
@@ -263,6 +266,38 @@ const NON_CONTENT_CATEGORY_LABELS: Record<string, { singular: string; plural: st
   triangulos: { singular: 'Triángulo', plural: 'Triángulos' },
 };
 
+const NON_CONTENT_CATEGORY_LABELS_EU: Record<string, { singular: string; plural: string }> = {
+  geometria: { singular: 'Geometria', plural: 'Geometria' },
+  geometry: { singular: 'Geometria', plural: 'Geometria' },
+  algebra: { singular: 'Aljebra', plural: 'Aljebra' },
+  calculo: { singular: 'Kalkulua', plural: 'Kalkulua' },
+  calculus: { singular: 'Kalkulua', plural: 'Kalkulua' },
+  logica: { singular: 'Logika', plural: 'Logika' },
+  logic: { singular: 'Logika', plural: 'Logika' },
+  general: { singular: 'Orokorra', plural: 'Orokorra' },
+  triangulos: { singular: 'Hirukia', plural: 'Hirukiak' },
+};
+
+const CONTENT_TYPE_LABELS_EU: Record<string, { singular: string; plural: string }> = {
+  axioma: { singular: 'Axioma', plural: 'Axiomak' },
+  'sistema-axiomatico': { singular: 'Sistema axiomatikoa', plural: 'Sistema axiomatikoak' },
+  concepto: { singular: 'Kontzeptua', plural: 'Kontzeptuak' },
+  definicion: { singular: 'Definizioa', plural: 'Definizioak' },
+  lema: { singular: 'Lema', plural: 'Lemak' },
+  teorema: { singular: 'Teorema', plural: 'Teoremak' },
+  corolario: { singular: 'Korolarioa', plural: 'Korolarioak' },
+  demostracion: { singular: 'Frogapena', plural: 'Frogapenak' },
+  ejemplo: { singular: 'Adibidea', plural: 'Adibideak' },
+  ejercicio: { singular: 'Ariketa', plural: 'Ariketak' },
+  'caso-de-uso': { singular: 'Erabilera-kasua', plural: 'Erabilera-kasuak' },
+  matematico: { singular: 'Matematikaria', plural: 'Matematikariak' },
+  metodo: { singular: 'Metodoa', plural: 'Metodoak' },
+  modelo: { singular: 'Eredua', plural: 'Ereduak' },
+  'plan-de-estudio': { singular: 'Ikasketa-plana', plural: 'Ikasketa-planak' },
+  glosario: { singular: 'Glosarioa', plural: 'Glosarioa' },
+  msc2020: { singular: 'MSC2020 sailkapena', plural: 'MSC2020 sailkapena' },
+};
+
 export const CONTENT_TYPE_LABELS_SINGULAR: Record<string, string> = {
   ...Object.fromEntries(
     Object.entries(CONTENT_TYPE_CONFIG).map(([id, cfg]) => [id, cfg.labelSingular]),
@@ -281,11 +316,20 @@ export const CONTENT_TYPE_LABELS_PLURAL: Record<string, string> = {
   ),
 };
 
-export function getContentTypeLabel(rawKey?: string | null, form: 'singular' | 'plural' = 'singular'): string {
-  if (typeof rawKey !== 'string' || !rawKey.trim()) return form === 'plural' ? 'Teoremas' : 'Teorema';
+export function getContentTypeLabel(rawKey?: string | null, form: 'singular' | 'plural' = 'singular', lang?: string): string {
+  if (typeof rawKey !== 'string' || !rawKey.trim()) {
+    if (lang === 'eu') return form === 'plural' ? 'Teoremak' : 'Teorema';
+    return form === 'plural' ? 'Teoremas' : 'Teorema';
+  }
   const cleanKey = rawKey.startsWith('diagram-') ? rawKey.slice('diagram-'.length) : rawKey;
   const normalized = cleanKey.toLowerCase().trim();
   const canonical = CONTENT_TYPE_ALIASES[normalized] ?? normalized;
+
+  if (lang === 'eu') {
+    const euEntry = CONTENT_TYPE_LABELS_EU[canonical] || CONTENT_TYPE_LABELS_EU[normalized] || NON_CONTENT_CATEGORY_LABELS_EU[canonical] || NON_CONTENT_CATEGORY_LABELS_EU[normalized];
+    if (euEntry) return form === 'plural' ? euEntry.plural : euEntry.singular;
+  }
+
   const dict = form === 'plural' ? CONTENT_TYPE_LABELS_PLURAL : CONTENT_TYPE_LABELS_SINGULAR;
 
   if (dict[canonical]) return dict[canonical];

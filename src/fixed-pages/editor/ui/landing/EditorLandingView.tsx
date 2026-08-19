@@ -4,7 +4,13 @@ import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import { isDarkMode, setTheme } from '@/lib/theme/theme';
 import { Logo } from '@/components/ui/Logo';
 import { IconSun, IconMoon } from '@/fixed-pages/editor/diagrams/ui/toolbar/WorkbenchIcons';
-import { HeaderContainer } from '../workbench/EditorHeaderPrimitives';
+import {
+  HeaderContainer,
+  HeaderPillContainer,
+  HeaderPillButton,
+  HeaderIconButton,
+  EditorLanguageBadges,
+} from '../workbench/EditorHeaderPrimitives';
 import { EditorLandingCard, EditorLandingCardSkeleton } from './EditorLandingCard';
 import { useEditorLanding, type LandingSection } from './useEditorLanding';
 import { useI18n } from '@/i18n';
@@ -34,7 +40,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
 }) => {
   const [activeSection, setActiveSection] = useState<LandingSection>(initialSection);
   const [isDark, setIsDark] = useState(isDarkMode);
-  const { getLocalizedPath, t, lang: currentLang, languages, setLang } = useI18n();
+  const { getLocalizedPath, t, lang: currentLang, setLang } = useI18n();
 
   useEffect(() => {
     setActiveSection(initialSection);
@@ -71,10 +77,10 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
     <div className="flex h-screen w-screen flex-col overflow-y-auto bg-lienzo font-serif text-carbon select-none">
       {/* Top Header */}
       <HeaderContainer>
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center justify-self-start gap-2">
           <Link
             href={getLocalizedPath('/')}
-            className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-salvia cursor-pointer"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-salvia cursor-pointer"
             title={t('editor', 'backToMain')}
           >
             <Logo decorative className="h-8 w-8" />
@@ -82,66 +88,44 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
         </div>
 
         {/* Section Switcher in Header */}
-        <div className="flex items-center space-x-1 rounded-lg border border-carbon/15 bg-carbon/5 p-1 text-xs font-medium">
-          <button
-            type="button"
+        <HeaderPillContainer className="justify-self-center">
+          <HeaderPillButton
+            active={activeSection === 'documents'}
             onClick={() => {
               setActiveSection('documents');
               setSelectedType('all');
             }}
-            className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-              activeSection === 'documents'
-                ? 'bg-lienzo text-carbon shadow-2xs font-bold'
-                : 'text-carbon/65 hover:text-carbon hover:bg-carbon/5'
-            }`}
           >
             {t('editor', 'documents')}
-          </button>
-          <button
-            type="button"
+          </HeaderPillButton>
+          <HeaderPillButton
+            active={activeSection === 'diagrams'}
             onClick={() => {
               setActiveSection('diagrams');
               setSelectedType('all');
             }}
-            className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-              activeSection === 'diagrams'
-                ? 'bg-lienzo text-carbon shadow-2xs font-bold'
-                : 'text-carbon/65 hover:text-carbon hover:bg-carbon/5'
-            }`}
           >
             {t('editor', 'diagrams')}
-          </button>
-        </div>
+          </HeaderPillButton>
+        </HeaderPillContainer>
 
         {/* Header Right Actions */}
-        <div className="flex items-center justify-end space-x-2">
+        <div className="flex items-center justify-self-end gap-2">
           {/* Language Switcher */}
-          <div className="flex items-center gap-1 rounded-lg border border-carbon/15 bg-carbon/5 p-0.5" role="group" aria-label="Idioma del editor">
-            {languages.map(l => (
-              <button
-                key={l.code}
-                type="button"
-                onClick={() => setLang(l.code)}
-                className={`rounded px-2 py-1 text-[10px] font-bold uppercase transition-all cursor-pointer ${
-                  currentLang === l.code
-                    ? 'border border-salvia/40 bg-salvia text-lienzo shadow-2xs'
-                    : 'text-carbon/60 hover:bg-salvia/10 hover:text-salvia'
-                }`}
-                title={`Cambiar idioma a ${l.name}`}
-              >
-                {l.code}
-              </button>
-            ))}
-          </div>
+          <EditorLanguageBadges
+            mode="global"
+            activeLang={currentLang}
+            onSelectLang={setLang}
+            aria-label={t('topbar', 'changeLanguage')}
+          />
 
-          <button
-            type="button"
+          <HeaderIconButton
             onClick={toggleTheme}
-            className="flex h-8 w-8 items-center justify-center rounded-lg border border-carbon/15 bg-lienzo text-carbon/70 hover:bg-carbon/5 transition-all cursor-pointer"
             title={t('topbar', 'toggleTheme')}
+            aria-label={t('topbar', 'toggleTheme')}
           >
             {isDark ? <IconSun className="h-4 w-4" /> : <IconMoon className="h-4 w-4" />}
-          </button>
+          </HeaderIconButton>
         </div>
       </HeaderContainer>
 
@@ -270,7 +254,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
             role="status"
             aria-busy="true"
-            aria-label="Cargando elementos"
+            aria-label={t('editor', 'loadingElements')}
           >
             {Array.from({ length: 8 }).map((_, idx) => (
               <EditorLandingCardSkeleton key={`skeleton-card-${idx}`} isDiagram={activeSection === 'diagrams'} />
@@ -306,7 +290,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <p className="mt-3 font-serif text-base font-bold text-carbon">
-              {t('glossary', 'noResults').replace('"{search}"', '').trim() || 'No results'}
+              {t('search', 'noResults')}
             </p>
             <p className="mt-1 text-xs text-carbon/60 max-w-sm">
               {t('editor', 'noMatchingItems', { type: activeSection === 'documents' ? t('editor', 'documents').toLowerCase() : t('editor', 'diagrams').toLowerCase() })}

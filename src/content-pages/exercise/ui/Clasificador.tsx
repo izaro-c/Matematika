@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useExercise } from '@/content-pages/exercise/ui/ExerciseContext';
 import { KatexText } from '@/components/ui/KatexText';
+import { useI18n } from '@/i18n';
 import { EXERCISE_SHAKE_MS } from '../constants';
 
 interface BucketDef {
@@ -42,6 +43,7 @@ function shuffle<T>(array: T[]): T[] {
  */
 export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, buckets, items }) => {
   const { register, answer, state } = useExercise();
+  const { t } = useI18n();
   const qState = state.questions[id];
 
   const [placedItems, setPlacedItems] = useState<Record<string, string>>(qState?.userAnswer ?? {}); // itemId -> bucketId
@@ -127,7 +129,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
       </style>
       
       <h4 className="font-bold text-carbon mb-6 mt-2 flex items-center gap-3 text-lg z-30 relative">
-        {isCompleted ? <span className="text-salvia">❦ Clasificación Completada</span> : <span>{pregunta || 'Clasifica los siguientes elementos:'}</span>}
+        {isCompleted ? <span className="text-salvia">❦ {t('exercise', 'classificationCompleted')}</span> : <span>{pregunta || t('exercise', 'classifyElements')}</span>}
       </h4>
 
       <div className={`${isShaking ? 'animate-shake' : ''}`}>
@@ -140,7 +142,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
             onDragOver={handleDragOver}
           >
             <div className="text-xs font-serif italic text-carbon/60 mb-3">
-              Elementos a clasificar:
+              {t('exercise', 'elementsToClassify')}
             </div>
             <div className="flex flex-wrap gap-3 justify-center">
               {unplacedItems.map(item => (
@@ -211,7 +213,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
               onClick={check}
               className="ac-btn ac-interactive page-accent-button px-6 py-3 text-xs border border-carbon/30 text-carbon transition-colors"
             >
-              Comprobar Clasificación
+              {t('exercise', 'checkClassification')}
             </button>
           </div>
         )}

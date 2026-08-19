@@ -51,14 +51,14 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
   backLink,
   children,
 }) => {
-  const { getLocalizedPath } = useI18n();
+  const { lang, t, getLocalizedPath } = useI18n();
 
   const renderedAuthors = useMemo(() => {
     if (!authors || authors.length === 0) return null;
 
     const authList = authors
       .map((authId) => {
-        const mathematician = db.getMathematicianById(authId);
+        const mathematician = db.getMathematicianById(authId, lang);
         if (!mathematician) return null;
         return (
           <Link
@@ -76,10 +76,10 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
 
     return authList.reduce((prev, curr, idx) => {
       if (idx === 0) return [curr];
-      if (idx === authList.length - 1) return [...prev, ' y ', curr];
+      if (idx === authList.length - 1) return [...prev, t('common', 'andAuthors'), curr];
       return [...prev, ', ', curr];
     }, [] as React.ReactNode[]);
-  }, [authors]);
+  }, [authors, lang, getLocalizedPath, t]);
 
   return (
     <header className="content-header mb-8 md:mb-10 relative flex flex-col items-center text-center">
@@ -119,7 +119,7 @@ export const ContentHeader: React.FC<ContentHeaderProps> = ({
       {/* Byline de Autores */}
       {renderedAuthors && (
         <div className="font-serif italic text-lg text-carbon/60 mb-8 flex items-center gap-4 before:content-[''] before:h-px before:w-12 before:bg-carbon/20 after:content-[''] after:h-px after:w-12 after:bg-carbon/20">
-          Por {renderedAuthors}
+          {t('content', 'by')} {renderedAuthors}
         </div>
       )}
 

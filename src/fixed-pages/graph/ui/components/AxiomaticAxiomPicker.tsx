@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import { CONTENT_TYPE_COLORS } from '@/design/contentTypeColors';
 import { getAxiomGroup } from '../../lib/graphUtils';
+import { useI18n } from '@/i18n';
 
 export interface AxiomOption {
   id: string;
@@ -66,6 +67,7 @@ export function AxiomaticAxiomPicker({
   onRestoreBaseline,
   onDeactivateAll,
 }: AxiomaticAxiomPickerProps) {
+  const { t } = useI18n();
   const activeCount = axioms.length - disabledAxioms.size;
   const groups = groupAxioms(axioms);
   const activeAxiomIds = new Set(axioms.filter((axiom) => !disabledAxioms.has(axiom.id)).map((axiom) => axiom.id));
@@ -78,10 +80,10 @@ export function AxiomaticAxiomPicker({
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 id="axiom-picker-title" className="font-serif text-base font-semibold text-carbon">
-            Ajuste axiomático
+            {t('graph', 'axiomaticAdjustment')}
           </h2>
           <p className="mt-1 font-sans text-[10px] leading-relaxed text-carbon/60">
-            Las alternativas incompatibles se eligen por separado.
+            {t('graph', 'incompatibleAlternativesHint')}
           </p>
         </div>
         <span className="shrink-0 font-sans text-[9px] tabular-nums text-carbon/50">
@@ -96,7 +98,7 @@ export function AxiomaticAxiomPicker({
           disabled={isBaselineActive}
           className="font-sans text-[10px] font-semibold text-terracota transition-colors hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota disabled:cursor-default disabled:text-carbon/30"
         >
-          Restaurar base neutral
+          {t('graph', 'restoreNeutralBase')}
         </button>
         <button
           type="button"
@@ -104,7 +106,7 @@ export function AxiomaticAxiomPicker({
           disabled={activeCount === 0}
           className="font-sans text-[10px] font-semibold text-carbon/55 transition-colors hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota disabled:cursor-default disabled:text-carbon/30"
         >
-          Vaciar base
+          {t('graph', 'clearBase')}
         </button>
       </div>
 
@@ -134,7 +136,7 @@ export function AxiomaticAxiomPicker({
               </summary>
 
               <fieldset className="pb-2 pl-4">
-                <legend className="sr-only">Axiomas de {group.label}</legend>
+                <legend className="sr-only">{t('graph', 'axiomsOf', { group: group.label })}</legend>
                 {independentAxioms.map(axiom => {
                   const isActive = !disabledAxioms.has(axiom.id);
                   return (
@@ -183,7 +185,7 @@ export function AxiomaticAxiomPicker({
                           className="mt-0.5 size-3.5 shrink-0 cursor-pointer"
                           style={{ accentColor: group.color }}
                         />
-                        <span className="font-serif text-[11px] leading-tight">Ninguno — sin decidir</span>
+                        <span className="font-serif text-[11px] leading-tight">{t('graph', 'noneUndecided')}</span>
                       </label>
                       {options.map((axiom) => {
                         const isActive = !disabledAxioms.has(axiom.id);

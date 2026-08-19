@@ -1,4 +1,5 @@
 import React from 'react';
+export { EditorLanguageBadges, type EditorLanguageBadgesProps, type EditorLanguageBadgeMode } from './EditorLanguageBadges';
 
 export const HeaderContainer: React.FC<React.HTMLAttributes<HTMLElement>> = ({
   className = '',
@@ -19,7 +20,7 @@ export const HeaderTitleInput: React.FC<React.InputHTMLAttributes<HTMLInputEleme
 }) => (
   <input
     type="text"
-    className={`w-28 sm:w-44 md:w-52 max-w-[220px] min-w-[70px] font-serif font-bold text-sm text-carbon bg-transparent hover:bg-carbon/5 focus:bg-lienzo focus:outline-hidden focus:ring-1 focus:ring-salvia rounded px-1.5 py-0.5 transition-colors truncate ${className}`}
+    className={`h-8 w-28 sm:w-44 md:w-52 max-w-[220px] min-w-[70px] font-serif font-bold text-sm text-carbon bg-transparent hover:bg-carbon/5 focus:bg-lienzo focus:outline-hidden focus:ring-1 focus:ring-salvia rounded-lg px-2 py-0 transition-colors truncate leading-none ${className}`}
     {...props}
   />
 );
@@ -41,7 +42,7 @@ export const HeaderBadge: React.FC<{
   return (
     <span
       title={title}
-      className={`text-[10px] px-1.5 py-0.5 rounded border inline-block truncate ${variantStyles[variant]} ${className}`}
+      className={`inline-flex h-6 items-center justify-center rounded-md px-2 text-[10px] font-bold border truncate tracking-wider leading-none shrink-0 select-none ${variantStyles[variant]} ${className}`}
     >
       {children}
     </span>
@@ -52,7 +53,7 @@ export const HeaderPillContainer: React.FC<{ children: React.ReactNode; classNam
   children,
   className = '',
 }) => (
-  <div className={`flex items-center space-x-0.5 rounded-lg border border-carbon/15 bg-carbon/5 p-0.5 text-xs font-medium ${className}`}>
+  <div className={`inline-flex h-8 items-center gap-0.5 rounded-lg border border-carbon/15 bg-carbon/5 p-0.5 text-xs font-medium ${className}`}>
     {children}
   </div>
 );
@@ -70,7 +71,7 @@ export const HeaderPillButton: React.FC<{
     onClick={onClick}
     disabled={disabled}
     title={title}
-    className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed ${
+    className={`inline-flex h-7 items-center justify-center rounded-md px-2.5 text-xs font-medium transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed leading-none ${
       active
         ? 'bg-lienzo font-semibold text-carbon shadow-2xs'
         : 'text-carbon/70 hover:text-carbon hover:bg-carbon/5'
@@ -89,7 +90,7 @@ export const HeaderIconButton: React.FC<{
   className?: string;
   'aria-label'?: string;
 }> = ({ onClick, children, title, active, variant = 'default', className = '', 'aria-label': ariaLabel }) => {
-  const baseStyles = 'flex h-8 w-8 items-center justify-center rounded-lg border text-carbon transition-all cursor-pointer shrink-0';
+  const baseStyles = 'inline-flex h-8 w-8 items-center justify-center rounded-lg border text-carbon transition-all cursor-pointer shrink-0';
   const variantStyles = variant === 'danger'
     ? 'border-carbon/15 bg-lienzo hover:bg-crimson/10 hover:text-crimson hover:border-crimson/30 text-carbon/70 hover:text-crimson'
     : active
@@ -144,7 +145,7 @@ export const HeaderActionButton: React.FC<{
       title={title}
       aria-label={ariaLabel}
       aria-busy={ariaBusy}
-      className={`rounded-lg px-3 py-1 text-xs transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${className}`}
+      className={`inline-flex h-8 items-center justify-center rounded-lg px-3 text-xs transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed leading-none ${variantStyles[variant]} ${className}`}
     >
       {children}
     </button>

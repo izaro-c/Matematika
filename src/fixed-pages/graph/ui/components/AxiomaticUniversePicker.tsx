@@ -1,5 +1,6 @@
 import { useId, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import type { ModelInfo, SystemInfo } from '@/data/graph/graphTypes';
+import { useI18n } from '@/i18n';
 
 interface AxiomaticUniversePickerProps {
   systems: SystemInfo[];
@@ -28,6 +29,7 @@ function FrameworkMenu<T extends ModelInfo | SystemInfo>({
   onSelect,
 }: FrameworkMenuProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useI18n();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const menuId = useId();
@@ -104,7 +106,7 @@ function FrameworkMenu<T extends ModelInfo | SystemInfo>({
         </span>
         {activeOption && (
           <span className="shrink-0 font-sans text-[8px] tabular-nums text-carbon/40">
-            {activeOption.axioms.length} ax.
+            {activeOption.axioms.length} {t('graph', 'axAbbr')}
           </span>
         )}
         <span aria-hidden="true" className={`shrink-0 text-xs text-carbon/45 transition-transform ${isOpen ? 'rotate-180' : ''}`}>⌄</span>
@@ -161,6 +163,7 @@ export function AxiomaticUniversePicker({
   inactiveModels,
   onToggleModel,
 }: AxiomaticUniversePickerProps) {
+  const { t } = useI18n();
   const activeSystem = systems.find(system => !inactiveSystems.includes(system.id));
   const activeModel = models.find(model => !inactiveModels.includes(model.id));
 
@@ -168,25 +171,25 @@ export function AxiomaticUniversePicker({
     <section aria-labelledby="framework-picker-title">
       <div className="mb-3">
         <h2 id="framework-picker-title" className="font-serif text-base font-semibold text-carbon">
-          Partir de un marco
+          {t('graph', 'startFromFramework')}
         </h2>
         <p className="mt-1 font-sans text-[10px] leading-relaxed text-carbon/60">
-          Elegir una opción reemplaza la selección axiomática actual.
+          {t('graph', 'frameworkChoiceHint')}
         </p>
       </div>
 
       <div className="space-y-3">
         <FrameworkMenu
-          label="Sistema axiomático"
-          placeholder="Elegir un sistema…"
+          label={t('graph', 'axiomaticSystem')}
+          placeholder={t('graph', 'chooseSystem')}
           options={systems}
           activeId={activeSystem?.id}
           color="var(--theme-terracota)"
           onSelect={onToggleSystem}
         />
         <FrameworkMenu
-          label="Modelo concreto"
-          placeholder="Elegir un modelo…"
+          label={t('graph', 'concreteModel')}
+          placeholder={t('graph', 'chooseModel')}
           options={models}
           activeId={activeModel?.id}
           color="var(--theme-pavo)"

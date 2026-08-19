@@ -13,6 +13,7 @@
  */
 import React, { useState } from 'react';
 import { useExercise } from '@/content-pages/exercise/ui/ExerciseContext';
+import { useI18n } from '@/i18n';
 
 interface ErrorComunProps {
   titulo: string;
@@ -29,6 +30,7 @@ interface ErrorComunProps {
 export const ErrorComun: React.FC<ErrorComunProps> = ({ titulo, children, questionId }) => {
   const [open, setOpen] = useState(false);
   const { state } = useExercise();
+  const { t } = useI18n();
 
   // Si se provee un questionId, sólo renderizamos el bloque si el alumno ha fallado la pregunta
   if (questionId) {
@@ -50,7 +52,7 @@ export const ErrorComun: React.FC<ErrorComunProps> = ({ titulo, children, questi
         </span>
         {/* Etiqueta */}
         <span className="ac-label ac-label--sm ac-label--terracota-soft shrink-0">
-          Error frecuente:
+          {t('exercise', 'commonError')}
         </span>
         {/* Título */}
         <span className="text-sm font-semibold text-carbon leading-tight">

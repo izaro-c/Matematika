@@ -12,6 +12,8 @@ import {
 } from '@/fixed-pages/editor/session/editorNavigationModel';
 import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 
+import { EditorLanguageBadges } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
+
 interface EditorNavigationProps {
   files: FileNode[];
   isLoading: boolean;
@@ -61,6 +63,10 @@ function ResourceButton({
 }) {
   const capability = capabilityPresentation(file);
   const isDocument = file.kind === 'mdx-document';
+  const availableLangs = useMemo(() => Object.keys(variants ?? {}), [variants]);
+  const activeLang = current
+    ? (Object.entries(variants ?? {}).find(([_, v]) => v.path === file.path)?.[0] || 'es')
+    : '';
 
   return (
     <div className={`group flex flex-col rounded border p-1.5 ${current ? 'border-salvia/35 bg-salvia/10' : 'border-transparent hover:border-carbon/10 hover:bg-carbon/5'}`}>
@@ -93,40 +99,18 @@ function ResourceButton({
           {capability.label}
         </span>
         {isDocument && (
-          <div className="inline-flex items-center gap-1" role="group" aria-label="Versiones de idioma">
-            {SUPPORTED_LANGUAGES.map(lang => {
-              const variant = variants?.[lang.code];
-              if (variant) {
-                const isThisLangCurrent = current && variant.path === file.path;
-                return (
-                  <button
-                    key={lang.code}
-                    type="button"
-                    onClick={() => openFile(variant.path)}
-                    title={`${lang.name}: ${variant.path}`}
-                    className={`rounded px-1.5 py-0.5 text-[8px] font-bold uppercase transition-colors cursor-pointer ${
-                      isThisLangCurrent
-                        ? 'border border-salvia/50 bg-salvia text-lienzo'
-                        : 'border border-carbon/20 bg-carbon/5 text-carbon/70 hover:bg-salvia/15 hover:text-salvia'
-                    }`}
-                  >
-                    {lang.code}
-                  </button>
-                );
-              }
-              return (
-                <button
-                  key={lang.code}
-                  type="button"
-                  onClick={() => onCreateTranslation?.(file, lang.code)}
-                  title={`Crear traducción en ${lang.name} (${lang.code})`}
-                  className="rounded border border-dashed border-carbon/25 px-1 py-0.5 text-[8px] font-mono text-carbon/40 hover:border-salvia hover:bg-salvia/10 hover:text-salvia cursor-pointer"
-                >
-                  +{lang.code}
-                </button>
-              );
-            })}
-          </div>
+          <EditorLanguageBadges
+            mode="document"
+            size="compact"
+            activeLang={activeLang}
+            availableLangs={availableLangs}
+            onSelectLang={code => {
+              const target = variants?.[code];
+              if (target) openFile(target.path);
+            }}
+            onCreateTranslation={code => onCreateTranslation?.(file, code)}
+            aria-label="Versiones de idioma"
+          />
         )}
       </div>
       {level === 'advanced' && <span className="mt-1 block truncate font-mono text-[9px] text-carbon/40">{file.path}</span>}

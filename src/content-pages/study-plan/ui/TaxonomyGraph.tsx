@@ -1,11 +1,11 @@
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { navigate } from 'wouter/use-browser-location';
-import { routePath, publicAsset } from '@/lib/routes';
+import { publicAsset } from '@/lib/routes';
 import ForceGraph2D from 'react-force-graph-2d';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { useThemeColors } from '@/lib/theme/useThemeColors';
 import { getAllDescendantCodes } from '@/data/content/msc2020';
-
+import { useI18n } from '@/i18n';
 
 /**
  * Propiedades del Grafo Taxonómico
@@ -52,6 +52,7 @@ function resolveSubBranchNodeId(
 
 export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
   const { isRead, isExerciseComplete } = useProgressStore();
+  const { t, getLocalizedPath } = useI18n();
   const theme = useThemeColors();
   const graphBackgroundStyle = {
     '--graph-light-background': `url("${publicAsset('/images/bg-arts-crafts-1.png')}")`,
@@ -85,15 +86,15 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       const item = itemObj.item;
       const type = itemObj.type;
 
-      let url = routePath('/');
-      if (type === 'method') url = routePath(`/metodo/${item.slug}`);
-      else if (type === 'theorem') url = routePath(`/teorema/${item.id}`);
-      else if (type === 'definition') url = routePath(`/definicion/${item.id}`);
-      else if (type === 'example') url = routePath(`/ejemplo/${item.id}`);
-      else if (type === 'exercise') url = routePath(`/ejercicio/${item.id}`);
-      else if (type === 'usecase') url = routePath(`/caso/${item.id}`);
-      else if (type === 'model') url = routePath(`/modelo/${item.id}`);
-      else if (type === 'axiom') url = routePath(`/axioma/${item.id}`);
+      let url = getLocalizedPath('/');
+      if (type === 'method') url = getLocalizedPath(`/metodo/${item.slug}`);
+      else if (type === 'theorem') url = getLocalizedPath(`/teorema/${item.id}`);
+      else if (type === 'definition') url = getLocalizedPath(`/definicion/${item.id}`);
+      else if (type === 'example') url = getLocalizedPath(`/ejemplo/${item.id}`);
+      else if (type === 'exercise') url = getLocalizedPath(`/ejercicio/${item.id}`);
+      else if (type === 'usecase') url = getLocalizedPath(`/caso/${item.id}`);
+      else if (type === 'model') url = getLocalizedPath(`/modelo/${item.id}`);
+      else if (type === 'axiom') url = getLocalizedPath(`/axioma/${item.id}`);
 
       nodes.push({
         id: item.id, // ID exacto para isRead
@@ -299,7 +300,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       style={graphBackgroundStyle}
     >
       <div className="absolute z-10 top-4 left-4 ac-eyebrow ac-eyebrow--sm text-carbon/60 select-none pointer-events-none bg-lienzo/90 px-3 py-1.5 border border-carbon/10 shadow-sm backdrop-blur-sm rounded-none">
-        Grafo de dependencias: {taxonomy.name || taxonomy.id}
+        {t('studyPlan', 'dependencyGraphTitle', { name: taxonomy.name || taxonomy.id })}
       </div>
       <ForceGraph2D
         width={dimensions.width}

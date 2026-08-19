@@ -62,12 +62,15 @@ interface MobileDiagramToolbarProps {
   onToggle: () => void;
 }
 
+import { useI18n } from '@/i18n';
+
 export function MobileDiagramToolbar({
   diagramId,
   isExpanded,
   onToggle,
 }: MobileDiagramToolbarProps) {
-  const accessibleLabel = isExpanded ? 'Ocultar diagrama' : 'Mostrar diagrama';
+  const { t } = useI18n();
+  const accessibleLabel = isExpanded ? t('common', 'hideDiagram') : t('common', 'showDiagram');
 
   return (
     <div className="mobile-diagram-toolbar">
@@ -79,7 +82,7 @@ export function MobileDiagramToolbar({
         aria-label={accessibleLabel}
         onClick={onToggle}
       >
-        {isExpanded ? 'Ocultar' : 'Mostrar diagrama'}
+        {isExpanded ? t('common', 'hide') : t('common', 'showDiagram')}
         <span className="mobile-diagram-toggle__chevron" aria-hidden="true">⌃</span>
       </button>
     </div>

@@ -3,6 +3,7 @@ import type { VisualDiagramModel } from '../../model/types';
 import type { DiagramMode } from '@/diagrams';
 import { SUPPORTED_LANGUAGES } from '@/i18n/config';
 import { DiagramHeaderReadingsEditor } from '../DiagramHeaderReadingsEditor';
+import { EditorLanguageBadges } from '@/fixed-pages/editor/ui/workbench/EditorHeaderPrimitives';
 
 interface DiagramDataPanelProps {
   model: VisualDiagramModel | null;
@@ -121,29 +122,12 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
             <span className="text-[10px] font-bold text-salvia">{activeLangConfig.name}</span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Selector de idioma de edición">
-            {SUPPORTED_LANGUAGES.map(lang => {
-              const isActive = activeLang === lang.code;
-              const hasTranslation = lang.code === 'es' || Boolean(currentTranslations[lang.code]?.title || currentTranslations[lang.code]?.note);
-              return (
-                <button
-                  key={lang.code}
-                  type="button"
-                  onClick={() => onSelectActiveLang(lang.code)}
-                  className={`rounded px-2 py-1 text-[10px] font-bold uppercase transition-all cursor-pointer ${
-                    isActive
-                      ? 'border border-salvia/50 bg-salvia text-lienzo shadow-2xs'
-                      : hasTranslation
-                        ? 'border border-carbon/20 bg-carbon/5 text-carbon/75 hover:bg-salvia/10 hover:text-salvia'
-                        : 'border border-dashed border-carbon/25 text-carbon/45 hover:border-salvia hover:text-salvia'
-                  }`}
-                  title={`${lang.name} (${lang.code}) ${hasTranslation ? '· Traducido' : '· Sin traducción'}`}
-                >
-                  {lang.code} {!hasTranslation && <span className="opacity-60 text-[8px]">+</span>}
-                </button>
-              );
-            })}
-          </div>
+          <EditorLanguageBadges
+            mode="diagram"
+            activeLang={activeLang}
+            onSelectLang={onSelectActiveLang}
+            aria-label="Selector de idioma de edición del diagrama"
+          />
           {!isDefaultLang && (
             <p className="text-[10px] text-carbon/55 italic">
               Editando variante en <strong>{activeLangConfig.name}</strong>. Si dejas un campo vacío se utilizará la versión base en español.

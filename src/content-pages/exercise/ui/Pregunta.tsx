@@ -21,6 +21,7 @@ import React, { useState, useEffect } from 'react';
 import { useStepBinding } from '@/components/ui/StepBinding';
 import { useExercise } from '@/content-pages/exercise/ui/ExerciseContext';
 import { KatexText } from '@/components/ui/KatexText';
+import { useI18n } from '@/i18n';
 
 interface Opcion {
   value: string;
@@ -45,6 +46,7 @@ interface PreguntaProps {
 export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct, answer: answerAlias, opciones, options }) => {
   const { register, answer, state } = useExercise();
   const { setActiveStep } = useStepBinding();
+  const { t } = useI18n();
   const qState = state.questions[id];
   const [selected, setSelected] = useState<string | null>(qState?.userAnswer ?? null);
 
@@ -139,7 +141,7 @@ export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct
               {selectedOpcion?.feedback ? (
                 <KatexText text={selectedOpcion.feedback} />
               ) : (
-                <span>Respuesta incorrecta. Analiza el error e inténtalo de nuevo.</span>
+                <span>{t('exercise', 'incorrectFeedback')}</span>
               )}
             </div>
           </div>
@@ -147,7 +149,7 @@ export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct
             onClick={() => setSelected(null)}
             className="ac-btn ac-btn-ghost ac-interactive self-start mt-2 px-4 py-2 text-[10px] text-carbon/60 flex items-center gap-2"
           >
-            <span>❧</span> Intentar de nuevo
+            <span>❧</span> {t('exercise', 'tryAgain')}
           </button>
         </div>
       )}

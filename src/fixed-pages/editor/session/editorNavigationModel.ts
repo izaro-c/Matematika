@@ -182,8 +182,8 @@ import {
 export const CATEGORY_LABELS_SINGULAR = CONTENT_TYPE_LABELS_SINGULAR;
 export const CATEGORY_LABELS_PLURAL = CONTENT_TYPE_LABELS_PLURAL;
 
-export function getCategoryDisplayName(type: string, form: 'singular' | 'plural' = 'singular'): string {
-  return getContentTypeLabel(type, form);
+export function getCategoryDisplayName(type: string, form: 'singular' | 'plural' = 'singular', lang?: string): string {
+  return getContentTypeLabel(type, form, lang);
 }
 
 

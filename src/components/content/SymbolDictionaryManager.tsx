@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { useGlossaryStore, texSymbolMap } from '@/lib/stores/GlossaryStore';
+import { useI18n } from '@/i18n';
 
 /**
  * Gestor invisible (sin UI) que escanea todo el DOM renderizado en busca de fórmulas LaTeX
@@ -12,6 +13,7 @@ export const SymbolDictionaryManager = () => {
   const openTerm = useGlossaryStore((state) => state.openTerm);
   const openFormulaTerms = useGlossaryStore((state) => state.openFormulaTerms);
   const [location] = useLocation();
+  const { t } = useI18n();
 
   useEffect(() => {
     const makeFormulasInteractive = () => {
@@ -47,7 +49,7 @@ export const SymbolDictionaryManager = () => {
         const button = document.createElement('div');
         // Botón minúsculo, sin texto, transparente por defecto, sin fondo intrusivo
         button.className = 'page-accent-text-hover absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer text-carbon/40 hover:scale-110 p-1 z-20';
-        button.title = 'Analizar símbolos de esta fórmula';
+        button.title = t('marginalia', 'analyzeFormulaSymbols');
         button.innerHTML = `
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         `;
@@ -72,7 +74,7 @@ export const SymbolDictionaryManager = () => {
       katexInlines.forEach((inlineRoot) => {
         if (inlineRoot.classList.contains('formula-interactive-processed')) return;
         inlineRoot.classList.add('formula-interactive-processed', 'cursor-pointer', 'hover:bg-carbon/5', 'transition-colors', 'rounded-sm', 'px-[2px]');
-        inlineRoot.setAttribute('title', 'Haz clic para analizar esta expresión');
+        inlineRoot.setAttribute('title', t('marginalia', 'clickToAnalyzeExpression'));
 
         (inlineRoot as HTMLElement).onclick = (e) => {
           e.preventDefault();

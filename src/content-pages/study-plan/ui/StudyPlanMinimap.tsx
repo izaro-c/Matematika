@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { db } from '@/data/content';
+import { useI18n } from '@/i18n';
 import {
   STUDY_PLAN_HIGHLIGHT_MS,
   STUDY_PLAN_MINIMAP_HEIGHT,
@@ -14,18 +15,19 @@ interface StudyPlanMinimapProps {
 
 export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNodes }) => {
   const { isRead, isExerciseComplete } = useProgressStore();
+  const { lang, t } = useI18n();
   const [hoveredNode, setHoveredNode] = useState<any | null>(null);
 
   const nodesData = requiredNodes.map((id) => {
     const meta = (
-      db.getTheorem(id) ||
-      db.getDefinition(id) ||
+      db.getTheorem(id, lang) ||
+      db.getDefinition(id, lang) ||
       db.axioms.get(id) ||
       db.models.get(id) ||
-      db.getUseCase(id) ||
-      db.getExample(id) ||
-      db.getExercise(id)
-      || db.getMethod(id)
+      db.getUseCase(id, lang) ||
+      db.getExample(id, lang) ||
+      db.getExercise(id, lang) ||
+      db.getMethod(id, lang)
     ) as any;
 
     return {
@@ -98,8 +100,8 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
     <div className="w-full bg-arts-and-crafts border border-carbon/15 px-6 py-4 my-6 rounded-[2px] shadow-sm select-none relative overflow-hidden flex flex-col items-center">
       {/* Cabecera compacta */}
       <div className="w-full flex items-center justify-between ac-label ac-label--xs ac-label--faint mb-3 border-b border-carbon/5 pb-2">
-        <span>Mapa de la Ruta</span>
-        <span className="text-[8px] tracking-normal font-normal normal-case italic text-carbon/50">Pulsa un hito para navegar</span>
+        <span>{t('studyPlan', 'routeMap')}</span>
+        <span className="text-[8px] tracking-normal font-normal normal-case italic text-carbon/50">{t('studyPlan', 'clickMilestoneToNavigate')}</span>
       </div>
 
       {/* SVG Horizontal Adaptativo Curvado */}
@@ -235,19 +237,19 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
             </span>
             <span className="font-serif italic text-carbon/80">{hoveredNode.title.split(':')[0]}</span>
             {hoveredNode.completed ? (
-              <span className="ml-2 ac-label ac-label--2xs ac-label--salvia">✓ Asimilado</span>
+              <span className="ml-2 ac-label ac-label--2xs ac-label--salvia">✓ {t('studyPlan', 'assimilatedBadge')}</span>
             ) : (
-              <span className="ml-2 ac-label ac-label--2xs ac-label--faint">Pendiente</span>
+              <span className="ml-2 ac-label ac-label--2xs ac-label--faint">{t('studyPlan', 'pending')}</span>
             )}
           </div>
         ) : nextStepNode ? (
           <div className="text-[11px] font-sans tracking-wide text-carbon/50">
-            <span className="ac-label ac-label--2xs ac-label--faint mr-1.5">Siguiente objetivo:</span>
+            <span className="ac-label ac-label--2xs ac-label--faint mr-1.5">{t('studyPlan', 'nextObjective')}</span>
             <span className="font-serif italic">{nextStepNode.title.split(':')[0]}</span>
           </div>
         ) : (
           <div className="text-xs ac-label ac-label--md ac-label--salvia">
-            🎉 ¡Ruta completada!
+            {t('studyPlan', 'routeCompleted')}
           </div>
         )}
       </div>
