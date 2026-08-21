@@ -74,7 +74,7 @@ export const VintageSeal: React.FC<VintageSealProps> = ({
 
   return (
     <div
-      className={`vintage-seal absolute z-99 ${config.colorClass} ${sizeClass} ${animatedClass} ${className}`.trim()}
+      className={`vintage-seal absolute z-30 ${config.colorClass} ${sizeClass} ${animatedClass} ${className}`.trim()}
       title={ariaLabel}
       role="status"
       aria-label={ariaLabel}

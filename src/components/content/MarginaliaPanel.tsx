@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useGlossaryStore, getGlossaryDictionary } from '@/lib/stores/GlossaryStore';
 import { db } from '@/data/content';
 import type { 
@@ -146,12 +147,12 @@ function buildActiveTermDataList(activeTerms: string[] | null, lang: string = 'e
 }
 
 function computePanelClassName(isSidebar: boolean, isActive: boolean): string {
-  let base = 'parchment-panel fixed z-50 shadow-2xl flex flex-col font-serif transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]';
+  let base = 'parchment-panel fixed z-[80] shadow-2xl flex flex-col font-serif transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]';
   if (isSidebar) {
-    base += ' top-0 right-0 h-full w-full max-w-md';
-    base += isActive ? ' translate-x-0' : ' translate-x-full';
+    base += ' inset-y-0 right-0 h-dvh min-h-[100dvh] w-full max-w-md';
+    base += isActive ? ' translate-x-0' : ' translate-x-full pointer-events-none';
   } else {
-    base += ' top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-xl max-h-[85vh]';
+    base += ' top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-xl max-h-[85dvh]';
     base += isActive ? ' opacity-100 scale-100' : ' opacity-0 scale-95 pointer-events-none';
   }
   return base;
@@ -214,18 +215,37 @@ export const MarginaliaPanel = () => {
   const isActive = (activeTerms !== null && activeTerms.length > 0) ||
                    (activeFormulaTerms !== null && activeFormulaTerms.length > 0);
 
+  // Preserve content during exit animation without reading/writing refs in render
+  const [cachedTerms, setCachedTerms] = useState<(TermData & { isDefinition: boolean })[]>(activeTermDataList);
+  const [cachedFormulas, setCachedFormulas] = useState<TermData[] | null>(formulaData);
+
+  useEffect(() => {
+    if (activeTermDataList.length > 0) {
+      setCachedTerms(activeTermDataList);
+    }
+  }, [activeTermDataList]);
+
+  useEffect(() => {
+    if (formulaData && formulaData.length > 0) {
+      setCachedFormulas(formulaData);
+    }
+  }, [formulaData]);
+
+  const displayedTermDataList = activeTermDataList.length > 0 ? activeTermDataList : cachedTerms;
+  const displayedFormulaData = (formulaData && formulaData.length > 0) ? formulaData : cachedFormulas;
+
   const isSidebar = displayMode === 'sidebar';
   const panelClassName = computePanelClassName(isSidebar, isActive);
 
   // Resolver el color del panel a partir del primer término visible (fallback glosario -> piedra)
-  const firstType = activeTermDataList[0]?.type || formulaData?.[0]?.type || 'glosario';
+  const firstType = displayedTermDataList[0]?.type || displayedFormulaData?.[0]?.type || 'glosario';
   const panelAccent = getContentPageAccent(firstType);
 
   let panelContent: React.ReactNode;
-  if (activeTermDataList.length > 0) {
+  if (displayedTermDataList.length > 0) {
     panelContent = (
       <div className="flex flex-col">
-        {activeTermDataList.map((term, idx) => {
+        {displayedTermDataList.map((term, idx) => {
           const accent = getContentPageAccent(term.type);
           return (
             <article
@@ -282,7 +302,7 @@ export const MarginaliaPanel = () => {
                   </Link>
                 </div>
               )}
-              {idx < activeTermDataList.length - 1 && (
+              {idx < displayedTermDataList.length - 1 && (
                 <div className="page-accent-text mt-10 flex justify-center opacity-30 text-xl">❦</div>
               )}
             </article>
@@ -290,10 +310,10 @@ export const MarginaliaPanel = () => {
         })}
       </div>
     );
-  } else if (formulaData && formulaData.length > 0) {
+  } else if (displayedFormulaData && displayedFormulaData.length > 0) {
     panelContent = (
       <div className="flex flex-col">
-        {formulaData.map((data, idx) => {
+        {displayedFormulaData.map((data, idx) => {
           const accent = getContentPageAccent(data.type ?? 'glosario');
           return (
             <article
@@ -321,7 +341,7 @@ export const MarginaliaPanel = () => {
                   dangerouslySetInnerHTML={renderMathString(data.equation)}
                 />
               )}
-              {idx < formulaData.length - 1 && (
+              {idx < displayedFormulaData.length - 1 && (
                 <div className="page-accent-text mt-10 flex justify-center opacity-30 text-xl">❦</div>
               )}
             </article>
@@ -335,12 +355,12 @@ export const MarginaliaPanel = () => {
     );
   }
 
-  if (!isActive) return null;
-
   return (
     <>
       <div
-        className="fixed inset-0 bg-carbon/30 backdrop-blur-sm z-40 opacity-100 pointer-events-auto"
+        className={`fixed inset-0 bg-carbon/30 backdrop-blur-sm z-[70] touch-none transition-opacity duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          isActive ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
         onClick={closeTerm}
         aria-hidden="true"
       />
@@ -349,7 +369,8 @@ export const MarginaliaPanel = () => {
         className={panelClassName}
         style={{ '--page-accent': panelAccent } as React.CSSProperties}
         role="dialog"
-        aria-modal="true"
+        aria-modal={isActive}
+        aria-hidden={!isActive}
         aria-label={t('marginalia', 'dialogAriaLabel')}
       >
         <div className="h-full flex flex-col relative overflow-hidden">
@@ -373,7 +394,7 @@ export const MarginaliaPanel = () => {
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto h-full relative">
+          <div className="flex-1 overflow-y-auto overscroll-contain h-full relative">
             <div className="p-10 md:p-12 min-h-full flex flex-col relative">
               <div className="page-accent-border absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 opacity-40 pointer-events-none" aria-hidden />
               <div className="page-accent-border absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 opacity-40 pointer-events-none" aria-hidden />

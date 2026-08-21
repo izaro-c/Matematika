@@ -7,6 +7,7 @@
   --codex-top: 5.5rem;
   width: 100%;
   min-height: 100dvh;
+  overflow-x: clip;
   /* Eliminado padding-top global para permitir full-bleed del diagrama */
   background: var(--theme-lienzo);
 }
@@ -66,9 +67,9 @@
     position: sticky;
     top: var(--codex-top);
     z-index: 40;
-    width: 100vw;
+    width: 100%;
     height: clamp(14rem, 36svh, 20rem);
-    margin-left: calc(50% - 50vw);
+    margin-left: 0;
     background: transparent;
     border: 0;
     box-shadow: none;
