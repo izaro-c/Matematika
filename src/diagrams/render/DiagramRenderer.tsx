@@ -168,7 +168,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   const headerRef = useRef<HTMLElement>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
 
-  const showStepControls = (stepControls ?? mode === 'runtime') && spec.steps.length > 1;
+  const showStepControls = (stepControls ?? true) && spec.steps.length > 1;
   const showToolbar = viewportControls || showStepControls;
 
   const {
@@ -184,8 +184,6 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     headerLayout,
     sideChromeWidth,
     sidePad,
-    viewportMenuOpen,
-    setViewportMenuOpen,
   } = useDiagramViewport({
     spec: liveViewportSpec,
     mode,
@@ -360,77 +358,81 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         {showToolbar && (
           <div
             ref={toolbarRef}
-            className="absolute inset-x-0 bottom-0 z-30 grid grid-cols-[auto_1fr] items-center gap-2 px-3 pb-3 pt-2"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex items-end justify-between gap-2 p-3"
             data-diagram-toolbar
             data-diagram-toolbar-layout={toolbarLayout}
           >
             {viewportControls && (
-              <>
-                <div className="flex h-11 items-stretch justify-self-start divide-x divide-carbon/10 overflow-hidden rounded-full border border-carbon/15 bg-lienzo/90 backdrop-blur-[2px]" role="group" aria-label="Controles del viewport">
-                  <button type="button" className="min-w-11 px-2 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Acercar" onClick={() => commitCamera(zoomViewport(spec, bounds, 1.25))}>+</button>
-                  <button type="button" className="min-w-11 px-2 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Alejar" onClick={() => commitCamera(zoomViewport(spec, bounds, 0.8))}>−</button>
-                  <button type="button" className="diagram-viewport-secondary px-3 font-diagram text-xs text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Ajustar automáticamente al contenido visible en todos los pasos" title="Reencuadrar para mostrar todos los objetos visibles en algún paso" onClick={() => fitAutoViewport()}>Ajustar</button>
-                  <button
-                    type="button"
-                    className="diagram-viewport-secondary px-3 font-diagram text-xs text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
-                    disabled={missingItems.length === 0}
-                    aria-label="Recuperar objetos fuera del viewport"
-                    title={missingItems.length > 0 ? `${missingItems.length} objeto(s) visible(s) fuera de vista` : 'No hay objetos visibles fuera de vista'}
-                    onClick={() => recoverVisibleViewport()}
-                  >
-                    Recuperar
-                  </button>
-                  <button type="button" className="diagram-viewport-secondary px-3 font-diagram text-xs text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo" aria-label="Restablecer vista inicial" title="Volver a la vista inicial guardada" onClick={() => resetToHome()}>Inicio</button>
-                  {toolbarLayout === 'rails' && (
+              <div
+                className={`pointer-events-auto flex items-stretch divide-carbon/10 overflow-hidden border border-carbon/15 bg-lienzo/90 backdrop-blur-[2px] ${
+                  toolbarLayout === 'rails'
+                    ? 'h-auto w-11 flex-col divide-y rounded-2xl'
+                    : 'h-11 flex-row divide-x rounded-full'
+                }`}
+                role="group"
+                aria-label="Controles del viewport"
+              >
+                <button
+                  type="button"
+                  className="flex size-11 shrink-0 items-center justify-center font-diagram text-base leading-none text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
+                  aria-label="Acercar"
+                  title="Acercar (+)"
+                  onClick={() => commitCamera(zoomViewport(spec, bounds, 1.25))}
+                >
+                  +
+                </button>
+                <button
+                  type="button"
+                  className="flex size-11 shrink-0 items-center justify-center font-diagram text-base leading-none text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
+                  aria-label="Alejar"
+                  title="Alejar (−)"
+                  onClick={() => commitCamera(zoomViewport(spec, bounds, 0.8))}
+                >
+                  −
+                </button>
+                <button
+                  type="button"
+                  className={`inline-flex h-11 shrink-0 items-center justify-center gap-1.5 font-diagram text-xs text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo ${
+                    toolbarLayout === 'rails' ? 'w-11 px-0' : 'min-w-11 px-2.5 sm:px-3'
+                  }`}
+                  aria-label="Ajustar automáticamente al contenido visible en todos los pasos"
+                  title="Reencuadrar para mostrar todos los objetos visibles en algún paso"
+                  onClick={() => fitAutoViewport()}
+                >
+                  <span aria-hidden className="flex size-4 items-center justify-center text-sm leading-none">⌖</span>
+                  {toolbarLayout !== 'rails' && <span className="diagram-viewport-label">Ajustar</span>}
+                </button>
+                {toolbarLayout !== 'rails' && (
+                  <>
                     <button
                       type="button"
-                      className="min-w-11 px-2 font-diagram text-base text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
-                      aria-label="Opciones de encuadre"
-                      aria-expanded={viewportMenuOpen}
-                      title="Ajustar o recuperar el encuadre"
-                      onClick={() => setViewportMenuOpen(open => !open)}
-                    >
-                      ⌖
-                    </button>
-                  )}
-                </div>
-                {toolbarLayout === 'rails' && viewportMenuOpen && (
-                  <div className="absolute bottom-2 left-14 z-40 min-w-40 overflow-hidden rounded-xl border border-carbon/15 bg-lienzo/95 p-1 font-diagram text-xs text-carbon shadow-lg backdrop-blur-[3px]" role="menu" aria-label="Opciones de encuadre">
-                    <button
-                      type="button"
-                      className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo"
-                      role="menuitem"
-                      onClick={() => { fitAutoViewport(); setViewportMenuOpen(false); }}
-                    >
-                      Ajustar al contenido
-                    </button>
-                    <button
-                      type="button"
-                      className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35"
-                      role="menuitem"
+                      className="diagram-viewport-secondary inline-flex h-11 items-center justify-center px-3 font-diagram text-xs text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo disabled:opacity-35 disabled:cursor-not-allowed"
                       disabled={missingItems.length === 0}
-                      onClick={() => { recoverVisibleViewport(); setViewportMenuOpen(false); }}
+                      aria-label="Recuperar objetos fuera del viewport"
+                      title={missingItems.length > 0 ? `${missingItems.length} objeto(s) visible(s) fuera de vista` : 'No hay objetos visibles fuera de vista'}
+                      onClick={() => recoverVisibleViewport()}
                     >
-                      Recuperar fuera de vista
+                      Recuperar
                     </button>
                     <button
                       type="button"
-                      className="block w-full rounded-lg px-3 py-2 text-left hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-pavo"
-                      role="menuitem"
-                      onClick={() => { resetToHome(); setViewportMenuOpen(false); }}
+                      className="diagram-viewport-secondary inline-flex h-11 items-center justify-center px-3 font-diagram text-xs text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
+                      aria-label="Restablecer vista inicial"
+                      title="Volver a la vista inicial guardada"
+                      onClick={() => resetToHome()}
                     >
-                      Restablecer vista
+                      Inicio
                     </button>
-                  </div>
+                  </>
                 )}
-              </>
+              </div>
             )}
             {showStepControls && (
               <StepNavigator
                 steps={spec.steps}
                 scopeId={spec.componentId}
                 compact
-                className="col-start-2 justify-self-end"
+                className="pointer-events-auto ml-auto"
               />
             )}
           </div>

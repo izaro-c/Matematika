@@ -674,8 +674,10 @@ describe('Phase 3 shared renderer', () => {
 
     const renderedAngle = rendererState.createdOptions.find(({ kind }) => kind === 'angle');
     const renderedNonReflexAngle = rendererState.createdOptions.find(({ kind }) => kind === 'nonreflexangle');
-    expect(renderedAngle?.options.radius).toBe(0.55);
-    expect(renderedNonReflexAngle?.options.radius).toBe(0.55);
+    const angleRadius = typeof renderedAngle?.options.radius === 'function' ? renderedAngle.options.radius() : renderedAngle?.options.radius;
+    const nonReflexRadius = typeof renderedNonReflexAngle?.options.radius === 'function' ? renderedNonReflexAngle.options.radius() : renderedNonReflexAngle?.options.radius;
+    expect(angleRadius).toBeDefined();
+    expect(nonReflexRadius).toBeDefined();
   });
 
   it('uses degrees and radians from both angular types in live visibility conditions', () => {

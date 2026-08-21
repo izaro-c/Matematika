@@ -57,7 +57,7 @@ describe('DiagramRenderer shared runtime', () => {
     )).not.toThrow();
     expect(screen.getByTestId('math-board')).toBeTruthy();
     expect([...document.querySelectorAll('[data-interactive-label]')].map(node => node.textContent)).toEqual(['A', 'B']);
-    expect(screen.getByText(/Arrastre/).className).not.toContain('text-terracota');
+    expect(screen.getByText(/Mugitu|Arrastre/).className).not.toContain('text-terracota');
   });
 
   it('uses each movable element color for its reference in the diagram header', () => {
@@ -96,7 +96,7 @@ describe('DiagramRenderer shared runtime', () => {
         { id: 'step2', label: 'Paso 2', description: 'Figura avanzada', visibleTargets: ['pA', 'pB'] },
       ],
     };
-    render(<DiagramRenderer spec={spec} />);
+    render(<DiagramRenderer spec={spec} stepControls />);
     const renderer = document.querySelector('[data-diagram-renderer="matematika-diagram-renderer-v3"]');
     expect(renderer?.getAttribute('data-diagram-active-step')).toBe('step1');
     expect(screen.queryByLabelText('Lecturas dinámicas del diagrama')).toBeNull();
@@ -106,5 +106,20 @@ describe('DiagramRenderer shared runtime', () => {
     fireEvent.click(nextBtn);
     expect(renderer?.getAttribute('data-diagram-active-step')).toBe('step2');
     expect(renderer?.getAttribute('data-diagram-viewport-bounds')).toBe(initialBounds);
+  });
+
+  it('provides accessible, consistently sized viewport and fit buttons with centered icons', () => {
+    render(<DiagramRenderer spec={migrateDiagramSpec(v2Fixture).spec} />);
+    const fitButton = screen.getByRole('button', { name: 'Ajustar automáticamente al contenido visible en todos los pasos' });
+    expect(fitButton).toBeTruthy();
+    expect(fitButton.textContent).toContain('⌖');
+    expect(fitButton.className).toContain('h-11');
+    expect(fitButton.className).toContain('items-center');
+    expect(fitButton.className).toContain('justify-center');
+
+    const zoomIn = screen.getByRole('button', { name: 'Acercar' });
+    const zoomOut = screen.getByRole('button', { name: 'Alejar' });
+    expect(zoomIn.className).toContain('size-11');
+    expect(zoomOut.className).toContain('size-11');
   });
 });

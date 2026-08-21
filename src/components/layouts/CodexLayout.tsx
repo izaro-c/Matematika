@@ -7,6 +7,7 @@ import { Link, useLocation } from 'wouter';
 import { TYPE_STYLES } from '@/lib/theme/constants';
 import { getContentPageAccent } from '@/design';
 import { ContentHeader } from '@/components/content/ContentHeader';
+import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { MobileContentHeaderSeparator, MobileDiagramToolbar } from './MobileDiagramChrome';
 import { useI18n } from '@/i18n';
 
@@ -52,6 +53,8 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
   const isDemoPage = Boolean(demoMatch) || location.startsWith('/demo/');
   const demoId = demoMatch ? demoMatch[1] : (location.startsWith('/demo/') ? location.split('/')[2] : null);
   const demo = demoId ? db.getDemo(demoId, lang) : null;
+  const isFallback = Boolean(demoId && typeof db.isFallback === 'function' && db.isFallback(demoId, lang));
+  const availableLangs = demoId && typeof db.getAvailableLanguages === 'function' ? db.getAvailableLanguages(demoId) : ['es'];
 
   const parentTheorem = demo?.parentTheorem ? db.getTheorem(demo.parentTheorem, lang) : null;
   const breadcrumbs = parentTheorem
@@ -298,10 +301,11 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
     ? justificationSets
     : [...justificationSets, activeJustifications || []];
 
-  const renderHeader = (isMobile: boolean) => {
+  const renderHeader = () => {
     if (!shouldRenderHeader || !isDemoPage || !demo) return null;
     return (
-      <div className={`pt-4 pb-4 ${isMobile ? 'lg:hidden mb-6' : 'hidden lg:block'}`}>
+      <div className="pt-4 pb-4">
+        {isFallback && <UntranslatedFallbackBanner availableLangs={availableLangs} />}
         <ContentHeader
           type="demostracion"
           typeLabel="Demostración"
@@ -337,64 +341,57 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
         data-page-type="demostracion"
         style={{ '--page-accent': getContentPageAccent('demostracion') } as React.CSSProperties}
       >
-      <MobileContentHeaderSeparator
-        hasDiagram={hasDiagram}
-        isDiagramExpanded={isDiagramExpanded}
-      />
+        <MobileContentHeaderSeparator
+          hasDiagram={hasDiagram}
+          isDiagramExpanded={isDiagramExpanded}
+        />
 
-      {/* Cabecera en móviles: antes del grid para que no quede aplastada por el diagrama sticky */}
-      {shouldRenderHeader && isDemoPage && demo && (
-        <div className="max-w-[80ch] mx-auto px-6 mobile-header-container">
-          {renderHeader(true)}
-        </div>
-      )}
+        <div className={`codex-content ${!hasDiagram ? 'is-single-column' : ''}`}>
+          {/* Columna del Diagrama (va primero en el DOM para móvil, pero ordenado por CSS grid en escritorio) */}
+          {hasDiagram && (
+            <aside
+              className="codex-diagram"
+              aria-label={diagramLabel}
+              data-mobile-collapsed={!isDiagramExpanded}
+            >
+              <div className="codex-diagram-sticky">
+                <div id={diagramId} className="codex-diagram-surface">
+                  {diagram}
+                </div>
+                <MobileDiagramToolbar
+                  diagramId={diagramId}
+                  isExpanded={isDiagramExpanded}
+                  onToggle={() => setIsDiagramExpanded((isExpanded) => !isExpanded)}
+                />
 
-      <div className={`codex-content ${!hasDiagram ? 'is-single-column' : ''}`}>
-        {/* Columna del Diagrama (va primero en el DOM para móvil, pero ordenado por CSS grid en escritorio) */}
-        {hasDiagram && (
-          <aside 
-            className="codex-diagram" 
-            aria-label={diagramLabel}
-            data-mobile-collapsed={!isDiagramExpanded}
-          >
-            <div className="codex-diagram-sticky">
-              <div id={diagramId} className="codex-diagram-surface">
-                {diagram}
-              </div>
-              <MobileDiagramToolbar
-                diagramId={diagramId}
-                isExpanded={isDiagramExpanded}
-                onToggle={() => setIsDiagramExpanded((isExpanded) => !isExpanded)}
-              />
-
-              {/* Panel de Justificaciones Activas con altura máxima preservada por CSS Grid */}
-              <div className="codex-justifications">
-                <h4>Justificaciones del Paso</h4>
-                <div className="codex-justifications-grid">
-                  {allSets.map((set, idx) => {
-                    const isActive = JSON.stringify(set) === activeKey;
-                    return (
-                      <div
-                        key={idx}
-                        className={`codex-justifications-item ${isActive ? 'is-active' : ''}`}
-                        aria-hidden={!isActive}
-                      >
-                        {renderJustificationItems(set)}
-                      </div>
-                    );
-                  })}
+                {/* Panel de Justificaciones Activas con altura máxima preservada por CSS Grid */}
+                <div className="codex-justifications">
+                  <h4>Justificaciones del Paso</h4>
+                  <div className="codex-justifications-grid">
+                    {allSets.map((set, idx) => {
+                      const isActive = JSON.stringify(set) === activeKey;
+                      return (
+                        <div
+                          key={idx}
+                          className={`codex-justifications-item ${isActive ? 'is-active' : ''}`}
+                          aria-hidden={!isActive}
+                        >
+                          {renderJustificationItems(set)}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
-          </aside>
-        )}
+            </aside>
+          )}
 
-        {/* Columna de Lectura (Pasos de Demostración) */}
-        <main className="codex-reading">
-          {renderHeader(false)}
-          {children}
-        </main>
-      </div>
+          {/* Columna de Lectura (Pasos de Demostración) */}
+          <main className="codex-reading">
+            {renderHeader()}
+            {children}
+          </main>
+        </div>
       </div>
     </DiagramStepSyncContext.Provider>
   );
