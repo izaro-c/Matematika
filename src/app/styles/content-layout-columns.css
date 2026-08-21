@@ -22,6 +22,7 @@
 
   width: 100%;
   min-height: 100dvh;
+  overflow-x: clip;
   padding-top: var(--content-top);
 }
 
@@ -226,9 +227,9 @@
     position: sticky;
     top: var(--content-top);
     z-index: 40;
-    width: 100vw;
+    width: 100%;
     height: var(--content-diagram-mobile-height);
-    margin-left: calc(50% - 50vw);
+    margin-left: 0;
     background: transparent;
     border: 0;
     box-shadow: none;
@@ -317,13 +318,14 @@
 }
 
 .content-diagram-surface [class*="min-h-"] {
-  min-height: 0;
+  min-height: 0 !important;
+  height: 100% !important;
 }
 
 .content-diagram-surface .jxgbox {
   width: 100% !important;
   height: 100% !important;
-  min-height: 0;
+  min-height: 0 !important;
 }
 
 .content-diagram-surface > svg,

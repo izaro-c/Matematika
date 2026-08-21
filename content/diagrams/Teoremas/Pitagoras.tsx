@@ -5,7 +5,7 @@ export const PitagorasSpec = createDiagramSpec(
 {
   "version": 3,
   "renderer": "matematika-diagram-renderer-v3",
-  "title": "Teorema de Pitágoras",
+  "title": "Pitagorasen teorema",
   "componentId": "Pitagoras",
   "category": "Teoremas",
   "mode": "simulation",
@@ -94,8 +94,7 @@ export const PitagorasSpec = createDiagramSpec(
         "triangulo",
         "segBC",
         "segCA",
-        "segAB",
-        "anguloRecto"
+        "segAB"
       ],
       "visible": true,
       "locked": false,
@@ -165,7 +164,7 @@ export const PitagorasSpec = createDiagramSpec(
       "label": "C",
       "color": "carbon",
       "layerId": "geometria",
-      "order": 5,
+      "order": 4,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -249,7 +248,7 @@ export const PitagorasSpec = createDiagramSpec(
       "label": "A",
       "color": "carbon",
       "layerId": "geometria",
-      "order": 7,
+      "order": 6,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -283,7 +282,7 @@ export const PitagorasSpec = createDiagramSpec(
       "label": "B",
       "color": "carbon",
       "layerId": "geometria",
-      "order": 6,
+      "order": 5,
       "visible": true,
       "locked": false,
       "groupIds": [
@@ -297,12 +296,14 @@ export const PitagorasSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 3,
+        "x": 3.22,
         "y": 0
       },
       "mobility": {
-        "type": "axis-x",
-        "coordinate": 0
+        "type": "constrained",
+        "relationIds": [
+          "constraint1"
+        ]
       },
       "appearance": {
         "size": 7,
@@ -541,7 +542,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "triangulo",
-      "label": "triángulo ABC",
+      "label": "ABC hirukia",
       "color": "carbon",
       "layerId": "geometria",
       "order": 0,
@@ -574,7 +575,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "segBC",
-      "label": "cateto a",
+      "label": "a katetoa",
       "color": "pavo",
       "layerId": "geometria",
       "order": 1,
@@ -605,7 +606,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "segCA",
-      "label": "cateto b",
+      "label": "b katetoa",
       "color": "terracota",
       "layerId": "geometria",
       "order": 2,
@@ -636,7 +637,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "segAB",
-      "label": "hipotenusa c",
+      "label": "c hipotenusa",
       "color": "ocre",
       "layerId": "geometria",
       "order": 3,
@@ -666,41 +667,8 @@ export const PitagorasSpec = createDiagramSpec(
       }
     },
     {
-      "id": "anguloRecto",
-      "label": "ángulo recto en C",
-      "color": "pizarra",
-      "layerId": "geometria",
-      "order": 4,
-      "visible": true,
-      "locked": false,
-      "groupIds": [
-        "trianguloGrupo"
-      ],
-      "selection": {
-        "selectable": true,
-        "role": "secondary"
-      },
-      "target": false,
-      "objectType": "angle",
-      "points": [
-        "B",
-        "C",
-        "A"
-      ],
-      "sweep": "non-reflex",
-      "marker": "square",
-      "perpendicularRelationId": "anguloRecto-perpendicular",
-      "appearance": {
-        "radius": 0.6,
-        "strokeWidth": 1.5,
-        "fillOpacity": 0.4,
-        "highlightFillOpacity": 0.55,
-        "preserveColorOnHighlight": true
-      }
-    },
-    {
       "id": "cuadradoA",
-      "label": "cuadrado sobre a",
+      "label": "karratua a-ren gainean",
       "color": "pavo",
       "layerId": "areas",
       "order": 0,
@@ -737,7 +705,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "cuadradoB",
-      "label": "cuadrado sobre b",
+      "label": "karratua b-ren gainean",
       "color": "terracota",
       "layerId": "areas",
       "order": 1,
@@ -774,7 +742,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "cuadradoC",
-      "label": "cuadrado sobre c",
+      "label": "karratua c-ren gainean",
       "color": "ocre",
       "layerId": "areas",
       "order": 2,
@@ -841,28 +809,52 @@ export const PitagorasSpec = createDiagramSpec(
       "appearance": {
         "preserveColorOnHighlight": true
       }
+    },
+    {
+      "id": "nonReflexAngleBCA",
+      "label": "Ángulo no reflejo (≤ 180°)",
+      "color": "pizarra",
+      "layerId": "construccion",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleBCA",
+      "objectType": "angle",
+      "points": [
+        "B",
+        "C",
+        "A"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.55,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
   "relations": [
     {
-      "id": "anguloRecto-perpendicular",
-      "label": "Perpendicularidad de ángulo recto en C",
+      "id": "constraint1",
+      "label": "Movimiento horizontal",
       "enabled": true,
-      "type": "perpendicular",
-      "supports": [
-        [
-          "C",
-          "B"
-        ],
-        [
-          "C",
-          "A"
-        ]
+      "type": "coordinate-equality",
+      "axis": "y",
+      "points": [
+        "B",
+        "C"
       ]
     }
   ],
   "steps": [],
-  "note": "Arrastre A y B.",
+  "note": "Mugitu A eta B.",
   "translations": {
     "eu": {
       "title": "Pitagorasen teorema",

@@ -378,10 +378,14 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     const applyContainerSize = (width: number, height: number) => {
       const w = Math.round(width);
       const h = Math.round(height);
+      if (w <= 2 || h <= 2) {
+        lastApplied = { width: 0, height: 0 };
+        return;
+      }
       if (Math.abs(w - lastApplied.width) < 1 && Math.abs(h - lastApplied.height) < 1) return;
-      // Height-only shrinks are browser-chrome / vh flicker (width stable while
+      // Height-only minor shrinks are browser-chrome / vh flicker (width stable while
       // height oscillates). Real window resizes change width too.
-      if (lastApplied.width > 0 && Math.abs(w - lastApplied.width) < 1 && h < lastApplied.height - 1) {
+      if (lastApplied.width > 0 && Math.abs(w - lastApplied.width) < 1 && h < lastApplied.height - 1 && (lastApplied.height - h < 120)) {
         return;
       }
       beginLayoutSync();
