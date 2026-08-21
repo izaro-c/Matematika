@@ -27,7 +27,7 @@ vi.mock('@/data/content', () => ({
 }));
 
 describe('CodexLayout header deduplication', () => {
-  it('renders ContentHeader only once (1 mobile + 1 desktop) when multiple CodexLayout sections exist in a demonstration', () => {
+  it('renders ContentHeader only once when multiple CodexLayout sections exist in a demonstration', () => {
     render(
       <MathProvider>
         <DemonstrationHeaderProvider>
@@ -41,14 +41,14 @@ describe('CodexLayout header deduplication', () => {
       </MathProvider>
     );
 
-    // CodexLayout renders 1 mobile header (lg:hidden) and 1 desktop header (hidden lg:block) for the FIRST section only.
+    // CodexLayout renders ContentHeader for the FIRST section only inside codex-reading.
     const titleElements = screen.getAllByRole('heading', { name: 'Demostración: Área del Rectángulo' });
-    expect(titleElements).toHaveLength(2);
+    expect(titleElements).toHaveLength(1);
     expect(screen.getByText('Sección 1')).toBeDefined();
     expect(screen.getByText('Sección 2')).toBeDefined();
   });
 
-  it('renders ContentHeader (1 mobile + 1 desktop) when rendered standalone without provider', () => {
+  it('renders ContentHeader when rendered standalone without provider', () => {
     render(
       <MathProvider>
         <CodexLayout diagram={<div>Diagram 1</div>}>
@@ -58,6 +58,6 @@ describe('CodexLayout header deduplication', () => {
     );
 
     const titleElements = screen.getAllByRole('heading', { name: 'Demostración: Área del Rectángulo' });
-    expect(titleElements).toHaveLength(2);
+    expect(titleElements).toHaveLength(1);
   });
 });

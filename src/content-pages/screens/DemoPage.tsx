@@ -4,7 +4,6 @@ import { db } from '@/data/content';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { PageLoadingScreen } from '@/components/ui/PageLoadingScreen';
 import { DemonstrationHeaderProvider } from '@/lib/page-context/DemonstrationHeaderContext';
-import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';
 import { useI18n } from '@/i18n';
 
 /**
@@ -19,8 +18,6 @@ export const DemoPage: React.FC = () => {
   const { lang, getLocalizedPath, t } = useI18n();
 
   const demo = db.getDemo(demoId, lang);
-  const isFallback = demoId ? db.isFallback(demoId, lang) : false;
-  const availableLangs = demoId ? db.getAvailableLanguages(demoId) : ['es'];
 
   if (!demo) {
     return (
@@ -38,11 +35,6 @@ export const DemoPage: React.FC = () => {
   return (
     <FadeIn>
       <div className="ac-page relative w-full">
-        {isFallback && (
-          <div className="max-w-4xl mx-auto px-6 pt-6">
-            <UntranslatedFallbackBanner availableLangs={availableLangs} />
-          </div>
-        )}
         <Suspense fallback={<PageLoadingScreen message={t('common', 'loading')} />}>
           <DemonstrationHeaderProvider key={demoId}>
             <demo.Component />

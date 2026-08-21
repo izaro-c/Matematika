@@ -13,7 +13,7 @@ import {
 } from '@/diagrams/jsxgraph/MathFactory';
 import { applyBoardStackLayer } from '@/diagrams/jsxgraph/htmlTextLayer';
 import { renderKatexTextToHtml } from '@/components/ui/KatexText';
-import {DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS, evaluateMathExpression, type DiagramBounds, type DiagramSpecV2} from '@/diagrams/model'
+import {DEFAULT_RIGHT_ANGLE_RADIUS, evaluateMathExpression, type DiagramBounds, type DiagramSpecV2} from '@/diagrams/model'
 import {createSceneConstructionPlan, createScenePlan, itemLayerNumber, withMovedPoint, curveActsAsArea, onSupportTargetId, sampleCurveElement} from '@/diagrams/geometry';
 import {
   attachLabelSelection,
@@ -935,7 +935,9 @@ export function useBoardLifecycle({
           fill: { normal: 0.1, highlight: 0.28 },
           stroke: { normal: 1.5, primary: 2.6, highlight: 3.2, secondary: 2.2 },
         });
-        const angleSize = resolveStepEmphasisAngleRadius(sceneStyle, emphasisState, DEFAULT_RIGHT_ANGLE_RADIUS);
+        const angleSize = (sceneStyle?.angleRadius !== undefined || emphasisState.stepPrimary)
+          ? resolveStepEmphasisAngleRadius(sceneStyle, emphasisState, DEFAULT_RIGHT_ANGLE_RADIUS)
+          : undefined;
         const dashedBorder = { ...polygonAttrs.borderAttrs, dash: effectiveDashed ? 2 : 0 };
         commitElementVisuals(
           element,
@@ -944,7 +946,7 @@ export function useBoardLifecycle({
             fillColor: polygonAttrs.fillColor,
             borders: { ...polygonAttrs.borders, dash: effectiveDashed ? 2 : 0 },
           },
-          { fillOpacity: polygonAttrs.fillOpacity, radius: angleSize },
+          { fillOpacity: polygonAttrs.fillOpacity, ...(angleSize !== undefined ? { radius: angleSize } : {}) },
           shouldAnimate,
           {
             strokeWidth: dashedBorder.strokeWidth as number | undefined,
@@ -969,7 +971,6 @@ export function useBoardLifecycle({
               normal: 0.1,
               highlight: 0.28,
             }),
-            radius: resolveStepEmphasisAngleRadius(sceneStyle, emphasisState, DEFAULT_ANGLE_RADIUS),
           },
           shouldAnimate,
         );

@@ -125,23 +125,46 @@ const StepNavigatorContent: React.FC<StepNavigatorProps> = ({
       data-step-navigator={scopeId || 'global'}
     >
       <div className="flex items-center justify-center gap-2">
-        <button type="button" onClick={reset} className="flex size-11 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-sm text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo" aria-label={t('diagram', 'resetView')}>↺</button>
-        <button type="button" onClick={previous} disabled={activeIndex === 0} className="flex size-11 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-lg leading-none text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo disabled:opacity-35" aria-label={t('diagram', 'previousStep')}>‹</button>
+        <button
+          type="button"
+          onClick={reset}
+          className="flex size-11 shrink-0 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-sm leading-none text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo"
+          aria-label={t('diagram', 'resetView')}
+        >
+          ↺
+        </button>
+        <button
+          type="button"
+          onClick={previous}
+          disabled={activeIndex === 0}
+          className="flex size-11 shrink-0 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-lg leading-none text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo disabled:opacity-35 disabled:cursor-not-allowed"
+          aria-label={t('diagram', 'previousStep')}
+        >
+          ‹
+        </button>
         <button
           type="button"
           onClick={() => dispatch({ type: playback.playing ? 'pause' : 'play' })}
-          className={`inline-flex h-11 items-center justify-center gap-2 rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-xs font-semibold text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo ${compact ? 'w-11 px-0 sm:w-auto sm:px-3' : 'px-3'}`}
+          className={`inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-xs font-semibold text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo ${compact ? 'size-11 px-0 sm:h-11 sm:w-auto sm:px-3' : 'px-3'}`}
           aria-label={playback.playing ? t('diagram', 'pause') : t('diagram', 'play')}
           aria-pressed={playback.playing}
         >
-          <span aria-hidden className="text-[10px] text-pavo">{playback.playing ? 'Ⅱ' : '▶'}</span>
+          <span aria-hidden className="flex size-3.5 items-center justify-center text-[10px] leading-none text-pavo">{playback.playing ? 'Ⅱ' : '▶'}</span>
           <span className={compact ? 'hidden sm:inline' : ''}>{playback.playing ? t('diagram', 'pause') : t('diagram', 'play')}</span>
         </button>
-        <button type="button" onClick={next} disabled={activeIndex === steps.length - 1} className="flex size-11 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-lg leading-none text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo disabled:opacity-35" aria-label={t('diagram', 'nextStep')}>›</button>
+        <button
+          type="button"
+          onClick={next}
+          disabled={activeIndex === steps.length - 1}
+          className="flex size-11 shrink-0 items-center justify-center rounded-full border border-carbon/15 bg-lienzo/90 font-diagram text-lg leading-none text-carbon transition-colors hover:border-carbon/30 hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pavo disabled:opacity-35 disabled:cursor-not-allowed"
+          aria-label={t('diagram', 'nextStep')}
+        >
+          ›
+        </button>
         {!editorMode && (
-        <span className={`${compact ? 'sr-only sm:not-sr-only' : ''} min-w-8 font-diagram text-xs tabular-nums text-ink-muted`} aria-live="polite">
-          {activeIndex + 1} / {steps.length}{compact ? '' : ` · ${activeStep?.label ?? ''}`}
-        </span>
+          <span className={`${compact ? 'sr-only sm:not-sr-only' : ''} min-w-8 text-center font-diagram text-xs tabular-nums text-ink-muted leading-none`} aria-live="polite">
+            {activeIndex + 1} / {steps.length}{compact ? '' : ` · ${activeStep?.label ?? ''}`}
+          </span>
         )}
       </div>
       {!compact && !editorMode && (

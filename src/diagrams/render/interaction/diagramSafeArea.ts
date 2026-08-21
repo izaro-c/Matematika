@@ -152,6 +152,7 @@ export function computeDiagramSafeAreas(
 
   const useRails = Boolean(
     showToolbar
+    && !useSideHeader
     && (metrics.rootWidth < DIAGRAM_CHROME.railsMinWidth || metrics.rootHeight < DIAGRAM_CHROME.railsMinHeight),
   );
   const panelExtra = (hasHeader && hasTopViewportPanel) ? DIAGRAM_CHROME.topViewportPanelExtra : 0;

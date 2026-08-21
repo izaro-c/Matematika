@@ -11,6 +11,7 @@ import {
   resolveAdaptivePointSize,
   resolveAdaptiveHighlightPointSize,
   resolveAdaptiveAngleRadius,
+  DEFAULT_RIGHT_ANGLE_RADIUS_PX,
 } from '@/diagrams/render/elements/diagramAdaptiveScale';
 import {
   halfPlaneViewportPolygon,
@@ -539,18 +540,19 @@ export function createCongruenceMark(
   const layout: MarkLayout = { markHeight };
   const marks = Array.from({ length: count }, (_, index) => {
     const centered = index - (count - 1) / 2;
-    const offset = centered * 0.14;
     const coordinate = (side: -1 | 1, axis: 'x' | 'y') => () => {
-      const half = layout.markHeight / 2;
       const dx = b.X() - a.X();
       const dy = b.Y() - a.Y();
       const length = Math.hypot(dx, dy) || 1;
+      const effectiveMarkHeight = Math.min(layout.markHeight, length * 0.4);
+      const effectiveOffset = centered * Math.min(0.14, length * 0.15);
+      const half = effectiveMarkHeight / 2;
       const tangentX = dx / length;
       const tangentY = dy / length;
       const normalX = -tangentY;
       const normalY = tangentX;
-      const x = (a.X() + b.X()) / 2 + tangentX * offset + normalX * half * side;
-      const y = (a.Y() + b.Y()) / 2 + tangentY * offset + normalY * half * side;
+      const x = (a.X() + b.X()) / 2 + tangentX * effectiveOffset + normalX * half * side;
+      const y = (a.Y() + b.Y()) / 2 + tangentY * effectiveOffset + normalY * half * side;
       return axis === 'x' ? x : y;
     };
     const p1 = board.create('point', [coordinate(-1, 'x'), coordinate(-1, 'y')], { visible: false } as never);
@@ -572,12 +574,12 @@ export function createParallelMark(
   const layout: MarkLayout = { markHeight };
   const chevrons = Array.from({ length: count }, (_, index) => {
     const centered = index - (count - 1) / 2;
-    const offset = centered * layout.markHeight * 0.72;
     const coordinate = (part: 'tip' | 'upper' | 'lower', axis: 'x' | 'y') => () => {
-      const currentMarkHeight = layout.markHeight;
       const dx = b.X() - a.X();
       const dy = b.Y() - a.Y();
       const length = Math.hypot(dx, dy) || 1;
+      const currentMarkHeight = Math.min(layout.markHeight, length * 0.4);
+      const offset = centered * currentMarkHeight * 0.72;
       const tangentX = dx / length;
       const tangentY = dy / length;
       const normalX = -tangentY;
@@ -619,7 +621,8 @@ export function createDimensionLine(
     const dx = b.X() - a.X();
     const dy = b.Y() - a.Y();
     const length = Math.hypot(dx, dy) || 1;
-    return axis === 'x' ? point.X() - (dy / length) * offset : point.Y() + (dx / length) * offset;
+    const effectiveOffset = Math.sign(offset) * Math.min(Math.abs(offset), length * 0.5);
+    return axis === 'x' ? point.X() - (dy / length) * effectiveOffset : point.Y() + (dx / length) * effectiveOffset;
   };
   const a2 = board.create('point', [shifted(a, 'x'), shifted(a, 'y')], { visible: false } as never) as JXG.Point;
   const b2 = board.create('point', [shifted(b, 'x'), shifted(b, 'y')], { visible: false } as never) as JXG.Point;
@@ -866,16 +869,16 @@ export function createAngle(
   theme: ThemeColors,
 ): JXG.Angle {
   const { radius = DEFAULT_ANGLE_RADIUS, ...attrs } = options;
-  const getRadius = resolveAdaptiveAngleRadius(board, points[1], radius);
+  const getRadius = resolveAdaptiveAngleRadius(board, points[1], radius, [points[0], points[2]]);
   const angle = board.create('angle', points, {
     type: 'sector',
-    radius,
     fillColor: theme.ocre,
     fillOpacity: 0.1,
     strokeColor: theme.ocre,
     strokeWidth: 1.5,
     label: { visible: false },
     ...attrs,
+    radius: getRadius,
   } as never) as JXG.Angle;
 
   if (typeof (angle as any).visProp === 'object' && (angle as any).visProp) {
@@ -892,16 +895,16 @@ export function createNonReflexAngle(
   theme: ThemeColors,
 ): JXG.Angle {
   const { radius = DEFAULT_ANGLE_RADIUS, ...attrs } = options;
-  const getRadius = resolveAdaptiveAngleRadius(board, points[1], radius);
+  const getRadius = resolveAdaptiveAngleRadius(board, points[1], radius, [points[0], points[2]]);
   const angle = board.create('nonreflexangle', points, {
     type: 'sector',
-    radius,
     fillColor: theme.ocre,
     fillOpacity: 0.1,
     strokeColor: theme.ocre,
     strokeWidth: 1.5,
     label: { visible: false },
     ...attrs,
+    radius: getRadius,
   } as never) as JXG.Angle;
 
   if (typeof (angle as any).visProp === 'object' && (angle as any).visProp) {
@@ -919,7 +922,7 @@ export function createRightAngleMarker(
 ): JXGPolygon {
   const [legA, vertex, legB] = points;
   const { size = DEFAULT_RIGHT_ANGLE_RADIUS, ...attrs } = options;
-  const getSize = resolveAdaptiveAngleRadius(board, vertex, size);
+  const getSize = resolveAdaptiveAngleRadius(board, vertex, size, [legA, legB], DEFAULT_RIGHT_ANGLE_RADIUS_PX);
   const unit = (from: PointLike, to: PointLike) => {
     const dx = to.X() - from.X();
     const dy = to.Y() - from.Y();

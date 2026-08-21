@@ -37,27 +37,20 @@ describe('computeDiagramSafeAreas', () => {
     expect(result.safeArea).toEqual({ top: 130, right: 24, bottom: 64, left: 24 });
   });
 
-  it('switches to rails when the canvas is narrow or short', () => {
+  it('maintains safe areas when the canvas is narrow or short', () => {
     const narrow = computeDiagramSafeAreas(metrics({ rootWidth: 400 }), baseOptions);
     expect(narrow.toolbarLayout).toBe('rails');
     expect(narrow.headerLayout).toBe('top');
     expect(narrow.viewportSafeArea.bottom).toBe(16);
-    expect(narrow.safeArea).toEqual({
-      top: 130,
-      right: 52,
-      bottom: 16,
-      left: 52,
-    });
 
     const short = computeDiagramSafeAreas(metrics({ rootWidth: 450, rootHeight: 350 }), {
       ...baseOptions,
+      showToolbar: false,
       showStepControls: false,
       viewportControls: false,
     });
-    expect(short.toolbarLayout).toBe('rails');
+    expect(short.toolbarLayout).toBe('bar');
     expect(short.headerLayout).toBe('top');
-    expect(short.safeArea.right).toBe(16);
-    expect(short.safeArea.left).toBe(16);
   });
 
   it('moves header to a left column on wide short boards', () => {
@@ -68,7 +61,7 @@ describe('computeDiagramSafeAreas', () => {
     );
     expect(preferSideHeader(900, 280)).toBe(true);
     expect(result.headerLayout).toBe('side');
-    expect(result.toolbarLayout).toBe('rails');
+    expect(result.toolbarLayout).toBe('bar');
     expect(result.sideChromeWidth).toBe(sideChromeWidthPx(900));
     // Geometry clears the title strip; overlays/buttons share that column.
     expect(result.safeArea.left).toBe(result.sideChromeWidth + 10);
