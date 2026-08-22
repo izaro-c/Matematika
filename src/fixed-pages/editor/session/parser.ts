@@ -34,10 +34,6 @@ export interface ProofStepData {
   /** Clave en DemonstrationSection diagrams={{...}} cuando hay varios diagramas */
   diagramKey?: string;
   body?: string;
-  /** IDs Lean resueltos cuando la fuente contiene un array literal. Solo lectura en el editor. */
-  leanBlocks?: string[];
-  /** Expresión fuente (p. ej. metadata.stepTacticMap["1"]). Se conserva sin editar. */
-  leanBlocksExpression?: string;
 }
 
 export interface Block {
@@ -413,8 +409,6 @@ export function parseBodyToBlocks(body: string): Block[] {
         diagramStep: attrs.diagramStep !== undefined ? attrs.diagramStep : undefined,
         diagramKey: typeof attrs.diagramKey === 'string' ? attrs.diagramKey : undefined,
         body: (stepMatch[2] || '').trim(),
-        leanBlocks: Array.isArray(attrs.leanBlocks) ? attrs.leanBlocks : undefined,
-        leanBlocksExpression: typeof attrs.leanBlocks === 'string' ? attrs.leanBlocks : undefined,
       });
     }
 
@@ -716,8 +710,6 @@ export function stringifyBlocksToBody(blocks: Block[]): string {
           s.diagramStep !== undefined ? (typeof s.diagramStep === 'number' ? `diagramStep={${s.diagramStep}}` : `diagramStep="${s.diagramStep}"`) : '',
           s.diagramKey ? `diagramKey="${s.diagramKey}"` : '',
           s.title ? `title="${s.title}"` : '',
-          s.leanBlocks ? `leanBlocks={${JSON.stringify(s.leanBlocks)}}` : '',
-          s.leanBlocksExpression ? `leanBlocks={${s.leanBlocksExpression}}` : '',
         ].filter(Boolean).join(' ');
         const body = s.body?.trim();
         if (!body) return `  <ProofStep ${attrs} />`;

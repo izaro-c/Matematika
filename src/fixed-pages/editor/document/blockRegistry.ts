@@ -216,10 +216,6 @@ export function projectRegisteredBlock(source: string, node: MdxAstNode): Regist
       diagramStep: attributes.diagramStep,
       diagramKey: attributes.diagramKey,
       body: source.slice(editRange.start, editRange.end),
-      leanBlocks: Array.isArray(attributes.leanBlocks) ? attributes.leanBlocks : undefined,
-      leanBlocksExpression: typeof attributes.leanBlocksExpression === 'string'
-        ? attributes.leanBlocksExpression
-        : (typeof attributes.leanBlocks === 'string' ? attributes.leanBlocks : undefined),
     }];
   }
   return { blockType, editRange, data };

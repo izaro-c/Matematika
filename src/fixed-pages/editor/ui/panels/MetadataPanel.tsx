@@ -298,14 +298,8 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
         </div>
       </AccordionSection>
 
-      <AccordionSection sec="semantic" title="Lean / semántica" isOpen={openAccordion.semantic} onToggle={toggleAccordion}>
+      <AccordionSection sec="semantic" title="Semántica" isOpen={openAccordion.semantic} onToggle={toggleAccordion}>
         <div className="rounded-xl border border-carbon/10 bg-lienzo/60 p-3.5 shadow-2xs space-y-2">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-carbon/70 font-medium">ID Formalizado:</span>
-            <span className="ac-label ac-label--sm ac-label--canela font-mono font-bold">
-              {(metadata.leanId as string) || 'Sin asignar'}
-            </span>
-          </div>
           <p className="text-xs leading-relaxed text-carbon/60">
             Los enlaces <code className="font-mono text-[10px] text-canela bg-canela/10 px-1 py-0.5 rounded">ConceptLink</code> y <code className="font-mono text-[10px] text-canela bg-canela/10 px-1 py-0.5 rounded">RefLink</code> se insertan desde el editor de texto (atajo de enlazado semántico).
           </p>

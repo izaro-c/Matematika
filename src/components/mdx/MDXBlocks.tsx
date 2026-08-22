@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ProofStep } from "@/components/content/ProofStep";
 import { ProofStepLink } from "@/components/content/ProofStepLink";
 import { DemonstrationSection } from "@/components/content/DemonstrationSection";
-import { ProofStepExpander } from "@/components/content/ProofStepExpander";
 import { QedMark } from "@/components/content/QedMark";
 import { Concept } from "@/fixed-pages/glossary/ui/Concept";
 import { Paso } from '@/content-pages/exercise/ui/Paso';
@@ -271,7 +270,6 @@ export const MDXComponents = {
   DemonstrationSection,
   ProofStep,
   ProofStepLink,
-  ProofStepExpander,
   Concept,
   Paso,
   PasoEjercicio,

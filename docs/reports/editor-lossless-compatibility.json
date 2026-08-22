@@ -1,16 +1,16 @@
 {
   "schemaVersion": 4,
-  "corpusRoot": "src/database/content",
-  "totalFiles": 120,
+  "corpusRoot": "content/mdx",
+  "totalFiles": 124,
   "counts": {
-    "fully-editable": 120,
+    "fully-editable": 124,
     "partially-editable": 0,
     "read-only": 0,
     "unsupported": 0
   },
   "files": [
     {
-      "path": "src/database/content/axiomatic-systems/sistema-absoluto.mdx",
+      "path": "content/mdx/es/axiomatic-systems/sistema-absoluto.mdx",
       "originalHash": "74e777886f16602bb19c46f88e5593fcd76cf1d3e09824ee3ec8f348ca9d6c09",
       "finalHash": "74e777886f16602bb19c46f88e5593fcd76cf1d3e09824ee3ec8f348ca9d6c09",
       "compatibility": "fully-editable",
@@ -34,7 +34,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axiomatic-systems/sistema-euclidiano.mdx",
+      "path": "content/mdx/es/axiomatic-systems/sistema-euclidiano.mdx",
       "originalHash": "32182a0436fb437e467e93642e4e60d7bdf33e85a8285fcd869388d4a1247f2f",
       "finalHash": "32182a0436fb437e467e93642e4e60d7bdf33e85a8285fcd869388d4a1247f2f",
       "compatibility": "fully-editable",
@@ -58,7 +58,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axiomatic-systems/sistema-hiperbolico.mdx",
+      "path": "content/mdx/es/axiomatic-systems/sistema-hiperbolico.mdx",
       "originalHash": "0237212699b81ebadd628d48586df414b9e22ffef0f52f470a6c1f5f45084510",
       "finalHash": "0237212699b81ebadd628d48586df414b9e22ffef0f52f470a6c1f5f45084510",
       "compatibility": "fully-editable",
@@ -82,7 +82,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axiomatic-systems/sistema-incidencia.mdx",
+      "path": "content/mdx/es/axiomatic-systems/sistema-incidencia.mdx",
       "originalHash": "306c8d1c7c658a54c927b06aeb7fbe58ae63f898d026aa069dfa6783fe8f0c5e",
       "finalHash": "306c8d1c7c658a54c927b06aeb7fbe58ae63f898d026aa069dfa6783fe8f0c5e",
       "compatibility": "fully-editable",
@@ -106,9 +106,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-arquimedes.mdx",
-      "originalHash": "96f1a27cd697e3895157700759426ab497b53c605aa5c8f12156345f19f191a7",
-      "finalHash": "96f1a27cd697e3895157700759426ab497b53c605aa5c8f12156345f19f191a7",
+      "path": "content/mdx/es/axioms/axioma-arquimedes.mdx",
+      "originalHash": "8443eab3c2ae88603970a8ea42c41870f2dc7836a3d5f9b662cfe567e12c0c5b",
+      "finalHash": "8443eab3c2ae88603970a8ea42c41870f2dc7836a3d5f9b662cfe567e12c0c5b",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -130,9 +130,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-completitud.mdx",
-      "originalHash": "98597a19bc02e2a7dc20409f44fd6288d70f432dc78e0df967e796342be4144a",
-      "finalHash": "98597a19bc02e2a7dc20409f44fd6288d70f432dc78e0df967e796342be4144a",
+      "path": "content/mdx/es/axioms/axioma-completitud.mdx",
+      "originalHash": "a666ee207b5807afba182c744ce6b8b31c56f9a9e0ed130821ab78129fd65224",
+      "finalHash": "a666ee207b5807afba182c744ce6b8b31c56f9a9e0ed130821ab78129fd65224",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -154,9 +154,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-congruencia-1.mdx",
-      "originalHash": "0545f6a5378a4426c36fda3f35b02255194a42614680866129d9739c9d032915",
-      "finalHash": "0545f6a5378a4426c36fda3f35b02255194a42614680866129d9739c9d032915",
+      "path": "content/mdx/es/axioms/axioma-congruencia-1.mdx",
+      "originalHash": "297d75278ad58a44a1a2d724568e653033b7d310e34bae92a377abacd6cd04bc",
+      "finalHash": "297d75278ad58a44a1a2d724568e653033b7d310e34bae92a377abacd6cd04bc",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -178,9 +178,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-congruencia-2.mdx",
-      "originalHash": "03777fc9374207cc6c94ee0077919c7ac91f017c9f22c68d5cf0dc81e533a623",
-      "finalHash": "03777fc9374207cc6c94ee0077919c7ac91f017c9f22c68d5cf0dc81e533a623",
+      "path": "content/mdx/es/axioms/axioma-congruencia-2.mdx",
+      "originalHash": "85af6dbc5e63bfc2f33e65387b00d4e7d5e30850e404b48b4ef357c82f1a5c06",
+      "finalHash": "85af6dbc5e63bfc2f33e65387b00d4e7d5e30850e404b48b4ef357c82f1a5c06",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -202,9 +202,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-congruencia-3.mdx",
-      "originalHash": "0aa20dc35a8f75d66796fe72149a48c821b9974e05f77e425566ce6b6d8ed1fa",
-      "finalHash": "0aa20dc35a8f75d66796fe72149a48c821b9974e05f77e425566ce6b6d8ed1fa",
+      "path": "content/mdx/es/axioms/axioma-congruencia-3.mdx",
+      "originalHash": "37ebb096b0aa2a31c1245e184c2cf97fda1a6da1a860a9471993f8cf384064e6",
+      "finalHash": "37ebb096b0aa2a31c1245e184c2cf97fda1a6da1a860a9471993f8cf384064e6",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -226,9 +226,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-congruencia-4.mdx",
-      "originalHash": "5d5d13ac370502668f34093cdffa58ff9eb8181b6a26827cf29744d8047e6a69",
-      "finalHash": "5d5d13ac370502668f34093cdffa58ff9eb8181b6a26827cf29744d8047e6a69",
+      "path": "content/mdx/es/axioms/axioma-congruencia-4.mdx",
+      "originalHash": "c67c01580fe22a62f308f2d13352d013b547d1eb4f0ead7d6f535048dc05b2d2",
+      "finalHash": "c67c01580fe22a62f308f2d13352d013b547d1eb4f0ead7d6f535048dc05b2d2",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -250,9 +250,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-congruencia-5.mdx",
-      "originalHash": "31c85751ff294bb710bf764ebc1f562a64bcde5ed3ad7336e65ade0afed2cb12",
-      "finalHash": "31c85751ff294bb710bf764ebc1f562a64bcde5ed3ad7336e65ade0afed2cb12",
+      "path": "content/mdx/es/axioms/axioma-congruencia-5.mdx",
+      "originalHash": "bc8297c05177c505b9d90b0a9ea9ca1f628037934f57ddeca84fbdc86d065332",
+      "finalHash": "bc8297c05177c505b9d90b0a9ea9ca1f628037934f57ddeca84fbdc86d065332",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -274,9 +274,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-incidencia-1.mdx",
-      "originalHash": "c7d52e8ff9c4fec6d403d489850774a1ecad48e886c29fdc8bb53f22028479a4",
-      "finalHash": "c7d52e8ff9c4fec6d403d489850774a1ecad48e886c29fdc8bb53f22028479a4",
+      "path": "content/mdx/es/axioms/axioma-incidencia-1.mdx",
+      "originalHash": "cc2b573e5409258f65c627ac56deca320be567569ea814d968db969dadaa6736",
+      "finalHash": "cc2b573e5409258f65c627ac56deca320be567569ea814d968db969dadaa6736",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -298,9 +298,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-incidencia-2.mdx",
-      "originalHash": "6ca2136581fff3afcbc89026ca1560a0d1da1877602cdb80ad4b0e1466db4e09",
-      "finalHash": "6ca2136581fff3afcbc89026ca1560a0d1da1877602cdb80ad4b0e1466db4e09",
+      "path": "content/mdx/es/axioms/axioma-incidencia-2.mdx",
+      "originalHash": "85aa1c35951c6a24629d80d842ad8a79825c15c8016554fb76387e22ee965dab",
+      "finalHash": "85aa1c35951c6a24629d80d842ad8a79825c15c8016554fb76387e22ee965dab",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -322,9 +322,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-incidencia-3.mdx",
-      "originalHash": "9bbcd71e53081c1b7582ca923a251aff30ac0d7c82d4bad0b899313a174b6538",
-      "finalHash": "9bbcd71e53081c1b7582ca923a251aff30ac0d7c82d4bad0b899313a174b6538",
+      "path": "content/mdx/es/axioms/axioma-incidencia-3.mdx",
+      "originalHash": "922fa6c1c36be1a2cd8daa9eb6bcbfb3802e92b60866c8992efa7903856a60e5",
+      "finalHash": "922fa6c1c36be1a2cd8daa9eb6bcbfb3802e92b60866c8992efa7903856a60e5",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -346,9 +346,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-incidencia-4.mdx",
-      "originalHash": "cb83523638636a3edcda7027c3c001cb11cd2cadc12c9d8b531b80aa30e28b84",
-      "finalHash": "cb83523638636a3edcda7027c3c001cb11cd2cadc12c9d8b531b80aa30e28b84",
+      "path": "content/mdx/es/axioms/axioma-incidencia-4.mdx",
+      "originalHash": "f8d1edd41d4dc824d931b4d46c55ba6443eeb31e3af4c6296b8d0c11e95ed1ba",
+      "finalHash": "f8d1edd41d4dc824d931b4d46c55ba6443eeb31e3af4c6296b8d0c11e95ed1ba",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -370,9 +370,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-incidencia-5.mdx",
-      "originalHash": "2c1e45dbbcd727788cc134790faeab96a386a009beea1aa3524708ce268cf71d",
-      "finalHash": "2c1e45dbbcd727788cc134790faeab96a386a009beea1aa3524708ce268cf71d",
+      "path": "content/mdx/es/axioms/axioma-incidencia-5.mdx",
+      "originalHash": "4d32382584b4887f08ceeaab74457dae44ef49f6e9ffbc646aacc184c9ac9121",
+      "finalHash": "4d32382584b4887f08ceeaab74457dae44ef49f6e9ffbc646aacc184c9ac9121",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -394,9 +394,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-incidencia-6.mdx",
-      "originalHash": "77e9c5f304e358591a373838dfb80296a484d45bb2dfea4c4ac21ad5d5bb86d6",
-      "finalHash": "77e9c5f304e358591a373838dfb80296a484d45bb2dfea4c4ac21ad5d5bb86d6",
+      "path": "content/mdx/es/axioms/axioma-incidencia-6.mdx",
+      "originalHash": "c09b836860f463c46118bf595f40a6212a040d05cf0cbe00d057a351afd99f94",
+      "finalHash": "c09b836860f463c46118bf595f40a6212a040d05cf0cbe00d057a351afd99f94",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -418,9 +418,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-incidencia-7.mdx",
-      "originalHash": "8f3993f864f313bd4e693827e693fc726881a6e31446b82d58c0cae452933d38",
-      "finalHash": "8f3993f864f313bd4e693827e693fc726881a6e31446b82d58c0cae452933d38",
+      "path": "content/mdx/es/axioms/axioma-incidencia-7.mdx",
+      "originalHash": "98312006a486a49530730340fb82c3dc159786665037f7bb39508b0fed19e59e",
+      "finalHash": "98312006a486a49530730340fb82c3dc159786665037f7bb39508b0fed19e59e",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -442,9 +442,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-incidencia-8.mdx",
-      "originalHash": "e257546231eebb795bc65abb76357107c188ad06fb2e9f05358658643f454304",
-      "finalHash": "e257546231eebb795bc65abb76357107c188ad06fb2e9f05358658643f454304",
+      "path": "content/mdx/es/axioms/axioma-incidencia-8.mdx",
+      "originalHash": "9fbb51dfa94fa62fd89096a2ea88e99c89772058486ee71251f4f232049a92d5",
+      "finalHash": "9fbb51dfa94fa62fd89096a2ea88e99c89772058486ee71251f4f232049a92d5",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -466,9 +466,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-orden-1.mdx",
-      "originalHash": "5dfc89a1cfeaa3ff27aee0e4bd6a1dcd101e2d0c6100ac8a4cb2e90cba995a7e",
-      "finalHash": "5dfc89a1cfeaa3ff27aee0e4bd6a1dcd101e2d0c6100ac8a4cb2e90cba995a7e",
+      "path": "content/mdx/es/axioms/axioma-orden-1.mdx",
+      "originalHash": "4b3834debfb4cbb32c5f878e8b1ec81c7b090593710b35dbf64407e746d09e05",
+      "finalHash": "4b3834debfb4cbb32c5f878e8b1ec81c7b090593710b35dbf64407e746d09e05",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -490,9 +490,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-orden-2.mdx",
-      "originalHash": "e18b47d5c3c86ae601547ed537f2648f2f8cb4ee41ef624c6275b55431190322",
-      "finalHash": "e18b47d5c3c86ae601547ed537f2648f2f8cb4ee41ef624c6275b55431190322",
+      "path": "content/mdx/es/axioms/axioma-orden-2.mdx",
+      "originalHash": "5a89eca75db826b306bd2423642d14c3415b6dd68fe0dc0729720b35d0467d55",
+      "finalHash": "5a89eca75db826b306bd2423642d14c3415b6dd68fe0dc0729720b35d0467d55",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -514,9 +514,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-orden-3.mdx",
-      "originalHash": "ac844d15373f670f087e9ba0b26744211b17eb4e56dda9dfa9237ca3d4d8ae6e",
-      "finalHash": "ac844d15373f670f087e9ba0b26744211b17eb4e56dda9dfa9237ca3d4d8ae6e",
+      "path": "content/mdx/es/axioms/axioma-orden-3.mdx",
+      "originalHash": "d31f8999f7dcbf6889ce63b634fec3165955a7717ad2f6e3fe9f32ada1ffb255",
+      "finalHash": "d31f8999f7dcbf6889ce63b634fec3165955a7717ad2f6e3fe9f32ada1ffb255",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -538,9 +538,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-orden-4.mdx",
-      "originalHash": "eb8c45d4dd51a4b8073e55cd712c800afe7bf5e3b18d62042960918a1056bb63",
-      "finalHash": "eb8c45d4dd51a4b8073e55cd712c800afe7bf5e3b18d62042960918a1056bb63",
+      "path": "content/mdx/es/axioms/axioma-orden-4.mdx",
+      "originalHash": "0483126e602a9b4ce5f74cecc8296aadba301d84c0769003b9ced60233773715",
+      "finalHash": "0483126e602a9b4ce5f74cecc8296aadba301d84c0769003b9ced60233773715",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -562,9 +562,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-paralelas-euclides.mdx",
-      "originalHash": "344593657cc0c1842630df04d82c412939e05c33d6940dd5d87b90c250b050cb",
-      "finalHash": "344593657cc0c1842630df04d82c412939e05c33d6940dd5d87b90c250b050cb",
+      "path": "content/mdx/es/axioms/axioma-paralelas-euclides.mdx",
+      "originalHash": "ea23914a4d82ea9b139928f5b3b9a50d52e8dd1d96cd3ef1c23e36516320d2fe",
+      "finalHash": "ea23914a4d82ea9b139928f5b3b9a50d52e8dd1d96cd3ef1c23e36516320d2fe",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -586,9 +586,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/axioms/axioma-paralelas-hiperbolico.mdx",
-      "originalHash": "10f863ec13b2ca29b5aae364f35d461fa3d2c8a0e4276a1595b7709c434b9fad",
-      "finalHash": "10f863ec13b2ca29b5aae364f35d461fa3d2c8a0e4276a1595b7709c434b9fad",
+      "path": "content/mdx/es/axioms/axioma-paralelas-hiperbolico.mdx",
+      "originalHash": "713458f552bceda21059f63a35770932dc4a8efdba8f3446b61a159913e958ce",
+      "finalHash": "713458f552bceda21059f63a35770932dc4a8efdba8f3446b61a159913e958ce",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -610,9 +610,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/altura.mdx",
-      "originalHash": "9abcc85c9455047aa8d06c45ef2edf1e563a3388980aedeea3fdccacdfdb37cc",
-      "finalHash": "9abcc85c9455047aa8d06c45ef2edf1e563a3388980aedeea3fdccacdfdb37cc",
+      "path": "content/mdx/es/definitions/altura.mdx",
+      "originalHash": "ebd1ba83c6834f863b45913b7a1e3822be9cc6a03fe81cddbe73b419ed5edbe1",
+      "finalHash": "ebd1ba83c6834f863b45913b7a1e3822be9cc6a03fe81cddbe73b419ed5edbe1",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -634,9 +634,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/angulo.mdx",
-      "originalHash": "e0f2e60c58473408b323f480f727779da3cbd1280439873833601c70843563f7",
-      "finalHash": "e0f2e60c58473408b323f480f727779da3cbd1280439873833601c70843563f7",
+      "path": "content/mdx/es/definitions/angulo.mdx",
+      "originalHash": "d2807946140a427a0b463587fbfe5b41cba2bd44a3f6232ce7afd5975f622106",
+      "finalHash": "d2807946140a427a0b463587fbfe5b41cba2bd44a3f6232ce7afd5975f622106",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -658,7 +658,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/angulos-suplementarios.mdx",
+      "path": "content/mdx/es/definitions/angulos-suplementarios.mdx",
       "originalHash": "676dc51e809244598f8da60f7a56b67c0203352cd80c8418b9b400c03d966fcc",
       "finalHash": "676dc51e809244598f8da60f7a56b67c0203352cd80c8418b9b400c03d966fcc",
       "compatibility": "fully-editable",
@@ -682,9 +682,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/bisectriz.mdx",
-      "originalHash": "452b310b93859d34d86c496471552d0cc80673524a9c8afcfd9d74ea4401262c",
-      "finalHash": "452b310b93859d34d86c496471552d0cc80673524a9c8afcfd9d74ea4401262c",
+      "path": "content/mdx/es/definitions/bisectriz.mdx",
+      "originalHash": "112fff2cee8e892cf70ba5e8da8c14dd49e00a4563dd0dcbb8cff78517ce7c1f",
+      "finalHash": "112fff2cee8e892cf70ba5e8da8c14dd49e00a4563dd0dcbb8cff78517ce7c1f",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -706,9 +706,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/circunferencia.mdx",
-      "originalHash": "4e24e8de643edeee089f4147d7f3b2732c879d73b186231d32f9da7c2be2e4b0",
-      "finalHash": "4e24e8de643edeee089f4147d7f3b2732c879d73b186231d32f9da7c2be2e4b0",
+      "path": "content/mdx/es/definitions/circunferencia.mdx",
+      "originalHash": "6df281083764d2e1b167c18557d5d9276d23d2c59d99f30bba00119b23ea8077",
+      "finalHash": "6df281083764d2e1b167c18557d5d9276d23d2c59d99f30bba00119b23ea8077",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -730,7 +730,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/congruencia.mdx",
+      "path": "content/mdx/es/definitions/congruencia.mdx",
       "originalHash": "f06ce0deff80fe57319e4e85767328becffa5f8535b28f30c21c193ad6b3f3a8",
       "finalHash": "f06ce0deff80fe57319e4e85767328becffa5f8535b28f30c21c193ad6b3f3a8",
       "compatibility": "fully-editable",
@@ -754,7 +754,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/contenido.mdx",
+      "path": "content/mdx/es/definitions/contenido.mdx",
       "originalHash": "fb1dfdc6e45868b3d3ebfeafe684b59519800de63c35703e007689ec937a9ec2",
       "finalHash": "fb1dfdc6e45868b3d3ebfeafe684b59519800de63c35703e007689ec937a9ec2",
       "compatibility": "fully-editable",
@@ -778,9 +778,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/cuadrilatero.mdx",
-      "originalHash": "990e4a9204d1a7f7a3aa10b6fbb035564c5ee0ef47f34fa5fc11fbb8431a5c17",
-      "finalHash": "990e4a9204d1a7f7a3aa10b6fbb035564c5ee0ef47f34fa5fc11fbb8431a5c17",
+      "path": "content/mdx/es/definitions/cuadrilatero.mdx",
+      "originalHash": "504dffb26bb96facfcbc383abc383c122e3c479510d8fc96e82a28796d3ae814",
+      "finalHash": "504dffb26bb96facfcbc383abc383c122e3c479510d8fc96e82a28796d3ae814",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -802,7 +802,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/estar-entre.mdx",
+      "path": "content/mdx/es/definitions/estar-entre.mdx",
       "originalHash": "045a8c04d2d5c6e2e606f40f05d6f2a060b46785dc5495bfd67545517454aa83",
       "finalHash": "045a8c04d2d5c6e2e606f40f05d6f2a060b46785dc5495bfd67545517454aa83",
       "compatibility": "fully-editable",
@@ -826,7 +826,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/incidencia.mdx",
+      "path": "content/mdx/es/definitions/incidencia.mdx",
       "originalHash": "a269b0582d75bfe4fc24e4f69c2b70eaae70aa8607ff9ba3e164ba3bd8b9ad46",
       "finalHash": "a269b0582d75bfe4fc24e4f69c2b70eaae70aa8607ff9ba3e164ba3bd8b9ad46",
       "compatibility": "fully-editable",
@@ -850,9 +850,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/mediana.mdx",
-      "originalHash": "f1d7888b944a8488e092038531bd6c8c9807d54470787dc2bb8e205624641aca",
-      "finalHash": "f1d7888b944a8488e092038531bd6c8c9807d54470787dc2bb8e205624641aca",
+      "path": "content/mdx/es/definitions/mediana.mdx",
+      "originalHash": "f4b37bdad4f9ceaa06322544f7e73b36c36a6fc02a71cfde65a986dfe4cca929",
+      "finalHash": "f4b37bdad4f9ceaa06322544f7e73b36c36a6fc02a71cfde65a986dfe4cca929",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -874,9 +874,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/mediatriz.mdx",
-      "originalHash": "64be79aaae6e62e5756b67add1af42891cb85671ef46cf97e2855dc0f3b5e550",
-      "finalHash": "64be79aaae6e62e5756b67add1af42891cb85671ef46cf97e2855dc0f3b5e550",
+      "path": "content/mdx/es/definitions/mediatriz.mdx",
+      "originalHash": "f6f2299ededf6e54bc49303ef4ab45b17e9be811fb62886dda27ffe14f0442b1",
+      "finalHash": "f6f2299ededf6e54bc49303ef4ab45b17e9be811fb62886dda27ffe14f0442b1",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -898,9 +898,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/paralelas.mdx",
-      "originalHash": "d63cdc2b763fa61d6f212ae5ac1e8feeee2cceac8741b392a86871cb21134c6f",
-      "finalHash": "d63cdc2b763fa61d6f212ae5ac1e8feeee2cceac8741b392a86871cb21134c6f",
+      "path": "content/mdx/es/definitions/paralelas.mdx",
+      "originalHash": "59d92834baf47685b1ea1719e11341f398f93af35b94913b54d35477fe3afdbf",
+      "finalHash": "59d92834baf47685b1ea1719e11341f398f93af35b94913b54d35477fe3afdbf",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -922,9 +922,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/paralelogramo.mdx",
-      "originalHash": "6a5b3ee488c42dfdbf6c6703315d9a5567eb0275e885ca6c1e01daeb6440ca3d",
-      "finalHash": "6a5b3ee488c42dfdbf6c6703315d9a5567eb0275e885ca6c1e01daeb6440ca3d",
+      "path": "content/mdx/es/definitions/paralelogramo.mdx",
+      "originalHash": "5908b9d513afa958bafce524fef84c7545e14d5e3547ec7237656fc1e8f36946",
+      "finalHash": "5908b9d513afa958bafce524fef84c7545e14d5e3547ec7237656fc1e8f36946",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -946,9 +946,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/perpendicular.mdx",
-      "originalHash": "1bc999e3c29ef164490f0b5c93df47e4d3e993b03b366ac6f478b4f2c704bdf4",
-      "finalHash": "1bc999e3c29ef164490f0b5c93df47e4d3e993b03b366ac6f478b4f2c704bdf4",
+      "path": "content/mdx/es/definitions/perpendicular.mdx",
+      "originalHash": "a849d4b0d138cb2b4cadf206b6371060494f98f099f0f95f9f17c87962b8c107",
+      "finalHash": "a849d4b0d138cb2b4cadf206b6371060494f98f099f0f95f9f17c87962b8c107",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -970,9 +970,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/plano.mdx",
-      "originalHash": "d2987288a7a672f95c7b027ed60431c82215fcf4b508d507072e81bf6d29e744",
-      "finalHash": "d2987288a7a672f95c7b027ed60431c82215fcf4b508d507072e81bf6d29e744",
+      "path": "content/mdx/es/definitions/plano.mdx",
+      "originalHash": "0bf96c0144bcd66cb8c8e82b58bb0fe5cef5e03326c0c98fc03486a5516acbbc",
+      "finalHash": "0bf96c0144bcd66cb8c8e82b58bb0fe5cef5e03326c0c98fc03486a5516acbbc",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -994,9 +994,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/punto.mdx",
-      "originalHash": "26328e6a5784bd7b869e5be6ba7a663a5172103e0c6be3ff0fc20183123e4b66",
-      "finalHash": "26328e6a5784bd7b869e5be6ba7a663a5172103e0c6be3ff0fc20183123e4b66",
+      "path": "content/mdx/es/definitions/punto.mdx",
+      "originalHash": "3435f2f25f2a8b855f97b7f18a6b9915de9ba7e67db79dcae3d664b3287df747",
+      "finalHash": "3435f2f25f2a8b855f97b7f18a6b9915de9ba7e67db79dcae3d664b3287df747",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1018,9 +1018,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/recta.mdx",
-      "originalHash": "9dc543b8616bdf740d9ca55aa9e2a1e8447c50863a6c12f48c1307965658a397",
-      "finalHash": "9dc543b8616bdf740d9ca55aa9e2a1e8447c50863a6c12f48c1307965658a397",
+      "path": "content/mdx/es/definitions/recta.mdx",
+      "originalHash": "835c2af98d1e7ab5e000f0bf24ab8d6787e9808ad6193c3403bb70abefe50dc5",
+      "finalHash": "835c2af98d1e7ab5e000f0bf24ab8d6787e9808ad6193c3403bb70abefe50dc5",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1042,9 +1042,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/segmento.mdx",
-      "originalHash": "91ee9a979fe60fd45c1e19766a6ba16c599cf80435ff7db79de83ac778657e2e",
-      "finalHash": "91ee9a979fe60fd45c1e19766a6ba16c599cf80435ff7db79de83ac778657e2e",
+      "path": "content/mdx/es/definitions/segmento.mdx",
+      "originalHash": "e7a8559af46adea64cd8fd489a56117e37243a036ca12969aa4bd8ac78d0ea7d",
+      "finalHash": "e7a8559af46adea64cd8fd489a56117e37243a036ca12969aa4bd8ac78d0ea7d",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1066,9 +1066,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/semirrecta.mdx",
-      "originalHash": "2eb85fb253cc0ef63f8bd58cd3cfc4dc307f82544509a388afff8d9c948c4cc0",
-      "finalHash": "2eb85fb253cc0ef63f8bd58cd3cfc4dc307f82544509a388afff8d9c948c4cc0",
+      "path": "content/mdx/es/definitions/semirrecta.mdx",
+      "originalHash": "f03b51d7a3d857b3f3a5c9cbc8fdaa69ecbd0e035f7539c131672edcc84d9700",
+      "finalHash": "f03b51d7a3d857b3f3a5c9cbc8fdaa69ecbd0e035f7539c131672edcc84d9700",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1090,7 +1090,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/teoria-medida-area.mdx",
+      "path": "content/mdx/es/definitions/teoria-medida-area.mdx",
       "originalHash": "c6e42f2b83caeda3373e59d82e3db72f7c1cdf90505eae6080070abe5eee610c",
       "finalHash": "c6e42f2b83caeda3373e59d82e3db72f7c1cdf90505eae6080070abe5eee610c",
       "compatibility": "fully-editable",
@@ -1114,9 +1114,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/definitions/triangulo.mdx",
-      "originalHash": "e8f7b9edcb06b142bb31a7e197b9cd115076496ea94cae792640f6c851987ef1",
-      "finalHash": "e8f7b9edcb06b142bb31a7e197b9cd115076496ea94cae792640f6c851987ef1",
+      "path": "content/mdx/es/definitions/triangulo.mdx",
+      "originalHash": "4e66893ffa1ca7f93af2be43e821a9adcd4c1cdb98a905e7195b23c85c26be60",
+      "finalHash": "4e66893ffa1ca7f93af2be43e821a9adcd4c1cdb98a905e7195b23c85c26be60",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1138,9 +1138,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-angulo-externo.mdx",
-      "originalHash": "616a24b35e27d46b728d20816e589f042fe1c9a706906f11efa80d08dae5e1e2",
-      "finalHash": "616a24b35e27d46b728d20816e589f042fe1c9a706906f11efa80d08dae5e1e2",
+      "path": "content/mdx/es/demonstrations/demo-angulo-externo.mdx",
+      "originalHash": "1e282c62b5179e8f7bb23f4c2ac9175c64b4a9528cc6c93f744a4fa595ddb5a8",
+      "finalHash": "1e282c62b5179e8f7bb23f4c2ac9175c64b4a9528cc6c93f744a4fa595ddb5a8",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1162,9 +1162,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-angulos-alternos-internos.mdx",
-      "originalHash": "f25922aed661fdb5dcb497747de13e9432fc81d8d7ced53b0846a8b9487f8c9d",
-      "finalHash": "f25922aed661fdb5dcb497747de13e9432fc81d8d7ced53b0846a8b9487f8c9d",
+      "path": "content/mdx/es/demonstrations/demo-angulos-alternos-internos.mdx",
+      "originalHash": "c2e63ef357ce4e6f796d3c26473c062cfe1927173af6109c9a3f74a36b550b3c",
+      "finalHash": "c2e63ef357ce4e6f796d3c26473c062cfe1927173af6109c9a3f74a36b550b3c",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1186,9 +1186,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-angulos-opuestos-verticales.mdx",
-      "originalHash": "22550f3a08e5c94954167042e7c8fe6ed65133b52bceaf8c29a36a97ef164787",
-      "finalHash": "22550f3a08e5c94954167042e7c8fe6ed65133b52bceaf8c29a36a97ef164787",
+      "path": "content/mdx/es/demonstrations/demo-angulos-opuestos-verticales.mdx",
+      "originalHash": "a420718f59b0e048078edd45d44556cf87eb49dd776e7afa4ba1a5b5fb645b01",
+      "finalHash": "a420718f59b0e048078edd45d44556cf87eb49dd776e7afa4ba1a5b5fb645b01",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1210,9 +1210,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-area-aditividad.mdx",
-      "originalHash": "849924f00171bc45a41f51068ca3460ea9cbdbf9567be98f9034c70d2cd165a7",
-      "finalHash": "849924f00171bc45a41f51068ca3460ea9cbdbf9567be98f9034c70d2cd165a7",
+      "path": "content/mdx/es/demonstrations/demo-area-aditividad.mdx",
+      "originalHash": "9d129c6451676ff51ec060ef86a3461fcd02f03031b5e30657d5fc73c8ee7557",
+      "finalHash": "9d129c6451676ff51ec060ef86a3461fcd02f03031b5e30657d5fc73c8ee7557",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1234,9 +1234,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-area-invariancia.mdx",
-      "originalHash": "8e6800e567b67714fbe33161c5e358cfb065e8c757c14c3d6b5d2f19846e076d",
-      "finalHash": "8e6800e567b67714fbe33161c5e358cfb065e8c757c14c3d6b5d2f19846e076d",
+      "path": "content/mdx/es/demonstrations/demo-area-invariancia.mdx",
+      "originalHash": "c392189c1086ef023467ae45b0e02ac19e6a723e1a1efa02ac1bc407fa8cb36e",
+      "finalHash": "c392189c1086ef023467ae45b0e02ac19e6a723e1a1efa02ac1bc407fa8cb36e",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1258,9 +1258,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-area-rectangulo.mdx",
-      "originalHash": "6900f1a94186d170b701e7ab0867639b9fe85f77076f571babfff25937756184",
-      "finalHash": "6900f1a94186d170b701e7ab0867639b9fe85f77076f571babfff25937756184",
+      "path": "content/mdx/es/demonstrations/demo-area-rectangulo.mdx",
+      "originalHash": "a4f0055bd0cacedaef912ad50fca7f72d82ae6cb9d0b1b3cd90bc3bc205352fe",
+      "finalHash": "a4f0055bd0cacedaef912ad50fca7f72d82ae6cb9d0b1b3cd90bc3bc205352fe",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1282,9 +1282,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-area-triangulo.mdx",
-      "originalHash": "256940ee05cc7609d106ca48ee35d46c80ec58f13b195d3ca53febcc81a76de8",
-      "finalHash": "256940ee05cc7609d106ca48ee35d46c80ec58f13b195d3ca53febcc81a76de8",
+      "path": "content/mdx/es/demonstrations/demo-area-triangulo.mdx",
+      "originalHash": "1408ff45a154bfe965029c390bf21559d896f62445588ac3e7dd3f1435f57969",
+      "finalHash": "1408ff45a154bfe965029c390bf21559d896f62445588ac3e7dd3f1435f57969",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1306,9 +1306,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-congruencia-aal.mdx",
-      "originalHash": "8e95625de0550277aad9b2f5ab8a41548aca9c4d947f1a212e740b099712e4b0",
-      "finalHash": "8e95625de0550277aad9b2f5ab8a41548aca9c4d947f1a212e740b099712e4b0",
+      "path": "content/mdx/es/demonstrations/demo-congruencia-aal.mdx",
+      "originalHash": "cb35cb85097166265fb0d0dfbf86f9b45c9512df391989985a09d6b4be8d4c0a",
+      "finalHash": "cb35cb85097166265fb0d0dfbf86f9b45c9512df391989985a09d6b4be8d4c0a",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1330,9 +1330,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-congruencia-ala.mdx",
-      "originalHash": "661aefc5c692b56c25cc2141890b187cea1da658dfa46846561ceac7ca85879e",
-      "finalHash": "661aefc5c692b56c25cc2141890b187cea1da658dfa46846561ceac7ca85879e",
+      "path": "content/mdx/es/demonstrations/demo-congruencia-ala.mdx",
+      "originalHash": "c28677375253f9ff8c6ee19d5eacb9356d2e0ca86c524c1d4708cd15c34a0574",
+      "finalHash": "c28677375253f9ff8c6ee19d5eacb9356d2e0ca86c524c1d4708cd15c34a0574",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1354,9 +1354,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-congruencia-lll.mdx",
-      "originalHash": "7f2e79d3cc1d9fed926f6bc222daf5b594f1519d62cb20e18642c465c16d84ce",
-      "finalHash": "7f2e79d3cc1d9fed926f6bc222daf5b594f1519d62cb20e18642c465c16d84ce",
+      "path": "content/mdx/es/demonstrations/demo-congruencia-lll.mdx",
+      "originalHash": "4ba6fc13494d71b3514f88f89a6277ee0bf85fa3211d4cbfef00a65f38ed92c2",
+      "finalHash": "4ba6fc13494d71b3514f88f89a6277ee0bf85fa3211d4cbfef00a65f38ed92c2",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1378,9 +1378,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-desigualdad-triangular.mdx",
-      "originalHash": "0388b254919e779bf7a0ef6da5a20aa1265e1300d0ed6d2d34d9370c8d6a216f",
-      "finalHash": "0388b254919e779bf7a0ef6da5a20aa1265e1300d0ed6d2d34d9370c8d6a216f",
+      "path": "content/mdx/es/demonstrations/demo-desigualdad-triangular.mdx",
+      "originalHash": "de0c17f9bac42121e4f6dc8cecc80037814dd5b1b0b52ca1a92df9cdf6903dc5",
+      "finalHash": "de0c17f9bac42121e4f6dc8cecc80037814dd5b1b0b52ca1a92df9cdf6903dc5",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1402,9 +1402,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-dos-rectas-un-punto.mdx",
-      "originalHash": "67f07351906220be1e6c2bda71ee21a9c3614318e5b0d24962c9088a96c2051b",
-      "finalHash": "67f07351906220be1e6c2bda71ee21a9c3614318e5b0d24962c9088a96c2051b",
+      "path": "content/mdx/es/demonstrations/demo-dos-rectas-un-punto.mdx",
+      "originalHash": "c5dcb47e08166493ccdee4271105213efd42c53b0300cd0c33cc0f9abc0edbf3",
+      "finalHash": "c5dcb47e08166493ccdee4271105213efd42c53b0300cd0c33cc0f9abc0edbf3",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1426,9 +1426,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-existencia-bisectriz.mdx",
-      "originalHash": "3d4035a77838a4cab6ad1df0268d48492e93eac7e9802301f5b2b1f1c6d31f6a",
-      "finalHash": "3d4035a77838a4cab6ad1df0268d48492e93eac7e9802301f5b2b1f1c6d31f6a",
+      "path": "content/mdx/es/demonstrations/demo-existencia-bisectriz.mdx",
+      "originalHash": "0da26ddc8fd417447359827a53c0366f238fcb1e7f3a2f6d4c49e5deea961888",
+      "finalHash": "0da26ddc8fd417447359827a53c0366f238fcb1e7f3a2f6d4c49e5deea961888",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1450,9 +1450,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-existencia-perpendicular.mdx",
-      "originalHash": "4ce0da5ff2fb8fc1b69c3f3a308195474a285e24f5c854fc70e373180f0f8aa3",
-      "finalHash": "4ce0da5ff2fb8fc1b69c3f3a308195474a285e24f5c854fc70e373180f0f8aa3",
+      "path": "content/mdx/es/demonstrations/demo-existencia-perpendicular.mdx",
+      "originalHash": "8a46d3012cafe86a3cacd455178b56f59c5d02c0d1cb109f687186dd317e8577",
+      "finalHash": "8a46d3012cafe86a3cacd455178b56f59c5d02c0d1cb109f687186dd317e8577",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1474,9 +1474,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-invariancia-triangulacion.mdx",
-      "originalHash": "881cf2d8c93a902a813b75dd93de1f3ac2ddcefb277a70e0857b8ed1367e5613",
-      "finalHash": "881cf2d8c93a902a813b75dd93de1f3ac2ddcefb277a70e0857b8ed1367e5613",
+      "path": "content/mdx/es/demonstrations/demo-invariancia-triangulacion.mdx",
+      "originalHash": "b27881ac45510caa959600c2a967afb5f5e0943f7eae3cededac5fd5233d49ea",
+      "finalHash": "b27881ac45510caa959600c2a967afb5f5e0943f7eae3cededac5fd5233d49ea",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1498,9 +1498,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-pitagoras-areas.mdx",
-      "originalHash": "e029e40e2b1323ced3c03657ac67e5947b66ab2ec6e8da7f8e63ef5ada3cdc64",
-      "finalHash": "e029e40e2b1323ced3c03657ac67e5947b66ab2ec6e8da7f8e63ef5ada3cdc64",
+      "path": "content/mdx/es/demonstrations/demo-pitagoras-areas.mdx",
+      "originalHash": "5429a093937268f196f51a8e4d111c618e922762a4c8047f7e37d5fef0aa4405",
+      "finalHash": "5429a093937268f196f51a8e4d111c618e922762a4c8047f7e37d5fef0aa4405",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1522,9 +1522,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-pitagoras-euclides.mdx",
-      "originalHash": "32bfed02b1da8737de60e39abe850c4e43eb673056703fecee0cf22d1e05ead3",
-      "finalHash": "32bfed02b1da8737de60e39abe850c4e43eb673056703fecee0cf22d1e05ead3",
+      "path": "content/mdx/es/demonstrations/demo-pitagoras-euclides.mdx",
+      "originalHash": "8f614682509d3e569c706c83a362dc79180627643a63892f4e9b32571403f186",
+      "finalHash": "8f614682509d3e569c706c83a362dc79180627643a63892f4e9b32571403f186",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1546,9 +1546,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-punto-medio-perpendicular.mdx",
-      "originalHash": "8b68d313c455fb301fdbf1358d75fcebcc497c2690c9f71dc1a6799917f3de10",
-      "finalHash": "8b68d313c455fb301fdbf1358d75fcebcc497c2690c9f71dc1a6799917f3de10",
+      "path": "content/mdx/es/demonstrations/demo-punto-medio-perpendicular.mdx",
+      "originalHash": "eb66358deb6e00064c649e1ad2dc618c7bef6bbd8b3eae3cdca0881e8a815c2e",
+      "finalHash": "eb66358deb6e00064c649e1ad2dc618c7bef6bbd8b3eae3cdca0881e8a815c2e",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1570,9 +1570,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-punto-medio.mdx",
-      "originalHash": "49e8163582b7e84a93a0d396c7901663ae1adcd544abcdaaa9d05841f2a34456",
-      "finalHash": "49e8163582b7e84a93a0d396c7901663ae1adcd544abcdaaa9d05841f2a34456",
+      "path": "content/mdx/es/demonstrations/demo-punto-medio.mdx",
+      "originalHash": "f2a9cba053818c69f40f8df502ffb62d81814f230f5c68a9219ed98cae01c989",
+      "finalHash": "f2a9cba053818c69f40f8df502ffb62d81814f230f5c68a9219ed98cae01c989",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1594,9 +1594,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-reciproco-triangulo-isosceles.mdx",
-      "originalHash": "51ad705b1675dbb11e7df7bd8bb9266fc92508f8efff62f9733e5e6d39ef03f5",
-      "finalHash": "51ad705b1675dbb11e7df7bd8bb9266fc92508f8efff62f9733e5e6d39ef03f5",
+      "path": "content/mdx/es/demonstrations/demo-reciproco-triangulo-isosceles.mdx",
+      "originalHash": "7718141249e948e5ba098166b354bc7787accf1a05ebd19fd7e1c3a202431c6d",
+      "finalHash": "7718141249e948e5ba098166b354bc7787accf1a05ebd19fd7e1c3a202431c6d",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1618,9 +1618,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-rectas-coincidentes.mdx",
-      "originalHash": "578fd67e67fd024cd459f218d74c5e31be6ca83459ce2ca35fcd85e38b16dc86",
-      "finalHash": "578fd67e67fd024cd459f218d74c5e31be6ca83459ce2ca35fcd85e38b16dc86",
+      "path": "content/mdx/es/demonstrations/demo-rectas-coincidentes.mdx",
+      "originalHash": "6e8d8595c5567f3159e900f578f640e68b88af0ed202c1d47803a01e17ce0445",
+      "finalHash": "6e8d8595c5567f3159e900f578f640e68b88af0ed202c1d47803a01e17ce0445",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1642,9 +1642,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-suma-angulos-triangulo.mdx",
-      "originalHash": "49e2e891f544af0112bef09980ceac38bbe79c1c1891e7e795bb21c885ea04cb",
-      "finalHash": "49e2e891f544af0112bef09980ceac38bbe79c1c1891e7e795bb21c885ea04cb",
+      "path": "content/mdx/es/demonstrations/demo-suma-angulos-triangulo.mdx",
+      "originalHash": "b1a10ffb3a44e30589bbd073758d308256735ef6e98071368002a591a2151da1",
+      "finalHash": "b1a10ffb3a44e30589bbd073758d308256735ef6e98071368002a591a2151da1",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1666,9 +1666,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-tales.mdx",
-      "originalHash": "32aba02366288a47b84c9179dd69babb2467e93c3fc40cfa7ec9e0b2a2371958",
-      "finalHash": "32aba02366288a47b84c9179dd69babb2467e93c3fc40cfa7ec9e0b2a2371958",
+      "path": "content/mdx/es/demonstrations/demo-tales.mdx",
+      "originalHash": "aa515068215f3dd00f72b1688be5cb913ee04a4dafd732f1e20eab453c773bb4",
+      "finalHash": "aa515068215f3dd00f72b1688be5cb913ee04a4dafd732f1e20eab453c773bb4",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1690,9 +1690,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-triangulacion-poligono.mdx",
-      "originalHash": "7a630b3c28b1b686e004a1f7c109e1428bf5d9a46a6175a45a199164beb8792f",
-      "finalHash": "7a630b3c28b1b686e004a1f7c109e1428bf5d9a46a6175a45a199164beb8792f",
+      "path": "content/mdx/es/demonstrations/demo-triangulacion-poligono.mdx",
+      "originalHash": "96d8fc0384b1187f24509241e664f511e6fc2548a2c2448a40342bd12a4a0479",
+      "finalHash": "96d8fc0384b1187f24509241e664f511e6fc2548a2c2448a40342bd12a4a0479",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1714,9 +1714,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/demonstrations/demo-triangulo-isosceles.mdx",
-      "originalHash": "5e6183c6baa951768904d99c7dc89deddfd31ae3503657debf92b79524d16e51",
-      "finalHash": "5e6183c6baa951768904d99c7dc89deddfd31ae3503657debf92b79524d16e51",
+      "path": "content/mdx/es/demonstrations/demo-triangulo-isosceles.mdx",
+      "originalHash": "b4c1ec6be8c2822d83f9fff421813d6d3e8e20e0294ed63f72814966a1ca523e",
+      "finalHash": "b4c1ec6be8c2822d83f9fff421813d6d3e8e20e0294ed63f72814966a1ca523e",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1738,9 +1738,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/examples/ejemplo-pitagoras-calculo.mdx",
-      "originalHash": "1a014b735688875ec6e053f8f8da652ea8bd6e004f120ddf7c9cc63208574be7",
-      "finalHash": "1a014b735688875ec6e053f8f8da652ea8bd6e004f120ddf7c9cc63208574be7",
+      "path": "content/mdx/es/examples/ejemplo-pitagoras-calculo.mdx",
+      "originalHash": "cea408263053a7c0aab941e52d5fce122ed36a4e9502bf3d75158a04e2366a05",
+      "finalHash": "cea408263053a7c0aab941e52d5fce122ed36a4e9502bf3d75158a04e2366a05",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1762,9 +1762,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/exercises/ejercicio-pitagoras-cateto.mdx",
-      "originalHash": "31886f9dbc62de2f0359c8c19b034ac718ddbd44a5864a6385b3586a4c56a545",
-      "finalHash": "31886f9dbc62de2f0359c8c19b034ac718ddbd44a5864a6385b3586a4c56a545",
+      "path": "content/mdx/es/exercises/ejercicio-pitagoras-cateto.mdx",
+      "originalHash": "fd36665cdc701701caf4d81a4abaf98d587990d3d9925d438d011602beab2be6",
+      "finalHash": "fd36665cdc701701caf4d81a4abaf98d587990d3d9925d438d011602beab2be6",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -1786,7 +1786,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/mathematicians/arquimedes.mdx",
+      "path": "content/mdx/es/mathematicians/arquimedes.mdx",
       "originalHash": "69c1a986c3870e77f2c5f99f46d88ac80e09eca24eb50c9892121de073819295",
       "finalHash": "69c1a986c3870e77f2c5f99f46d88ac80e09eca24eb50c9892121de073819295",
       "compatibility": "fully-editable",
@@ -1810,7 +1810,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/mathematicians/bolyai.mdx",
+      "path": "content/mdx/es/mathematicians/bolyai.mdx",
       "originalHash": "3c5291f687a79f4ac7998ae123884a4a78a2e742745fded662b49117d35897dc",
       "finalHash": "3c5291f687a79f4ac7998ae123884a4a78a2e742745fded662b49117d35897dc",
       "compatibility": "fully-editable",
@@ -1834,7 +1834,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/mathematicians/dedekind.mdx",
+      "path": "content/mdx/es/mathematicians/dedekind.mdx",
       "originalHash": "7b5523d207206aa434ee5807256bd1fed12b81f4751a5ce43ff0645626f78a7a",
       "finalHash": "7b5523d207206aa434ee5807256bd1fed12b81f4751a5ce43ff0645626f78a7a",
       "compatibility": "fully-editable",
@@ -1858,7 +1858,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/mathematicians/euclides.mdx",
+      "path": "content/mdx/es/mathematicians/euclides.mdx",
       "originalHash": "ae856d69ad11d99e7ef056b2c49b9e5cc6a76bf96e6b952cb375a0cd9e56f4d1",
       "finalHash": "ae856d69ad11d99e7ef056b2c49b9e5cc6a76bf96e6b952cb375a0cd9e56f4d1",
       "compatibility": "fully-editable",
@@ -1882,7 +1882,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/mathematicians/hilbert.mdx",
+      "path": "content/mdx/es/mathematicians/hilbert.mdx",
       "originalHash": "7dbe5cdc8365b26fda8de9f56752474b8941d458eac3f9c1d43ec7ac931e87c3",
       "finalHash": "7dbe5cdc8365b26fda8de9f56752474b8941d458eac3f9c1d43ec7ac931e87c3",
       "compatibility": "fully-editable",
@@ -1906,7 +1906,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/mathematicians/lobachevski.mdx",
+      "path": "content/mdx/es/mathematicians/lobachevski.mdx",
       "originalHash": "ae37be31a978ea007225ab0a89f8281dd1ed40a966e04261d592c83c9f5d2240",
       "finalHash": "ae37be31a978ea007225ab0a89f8281dd1ed40a966e04261d592c83c9f5d2240",
       "compatibility": "fully-editable",
@@ -1930,7 +1930,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/mathematicians/pasch.mdx",
+      "path": "content/mdx/es/mathematicians/pasch.mdx",
       "originalHash": "6c8cc56d7c8f88b7b93748fe6e58ac2b1db645422470761f1ddc38cfe286d846",
       "finalHash": "6c8cc56d7c8f88b7b93748fe6e58ac2b1db645422470761f1ddc38cfe286d846",
       "compatibility": "fully-editable",
@@ -1954,7 +1954,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/mathematicians/pitagoras.mdx",
+      "path": "content/mdx/es/mathematicians/pitagoras.mdx",
       "originalHash": "7a28cdc2a61f0c0acfbaf9f9dab6ea7c14c5237826c3837a988bdc7b383580f1",
       "finalHash": "7a28cdc2a61f0c0acfbaf9f9dab6ea7c14c5237826c3837a988bdc7b383580f1",
       "compatibility": "fully-editable",
@@ -1978,7 +1978,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/mathematicians/tales.mdx",
+      "path": "content/mdx/es/mathematicians/tales.mdx",
       "originalHash": "e97ae4f86aba29ee31d58e20899e6eeeda224ce8ce40c64c8931f7e1f9767df0",
       "finalHash": "e97ae4f86aba29ee31d58e20899e6eeeda224ce8ce40c64c8931f7e1f9767df0",
       "compatibility": "fully-editable",
@@ -2002,9 +2002,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/methods/metodo-constructivo.mdx",
-      "originalHash": "44dc2f3658c09863916d88338d38eb39a49480c4e7d2264227dd100a76622b49",
-      "finalHash": "44dc2f3658c09863916d88338d38eb39a49480c4e7d2264227dd100a76622b49",
+      "path": "content/mdx/es/methods/metodo-constructivo.mdx",
+      "originalHash": "c0b515945e31bb3de4888ff4d2437f9c96c207c5129d2d2c5580dc4345e0991a",
+      "finalHash": "c0b515945e31bb3de4888ff4d2437f9c96c207c5129d2d2c5580dc4345e0991a",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2026,9 +2026,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/methods/metodo-contradiccion.mdx",
-      "originalHash": "2f867782904d4b7fcac77e95bc640e2a940ea42dbc7bf688e7421398f84b2ff8",
-      "finalHash": "2f867782904d4b7fcac77e95bc640e2a940ea42dbc7bf688e7421398f84b2ff8",
+      "path": "content/mdx/es/methods/metodo-contradiccion.mdx",
+      "originalHash": "8721e3bac6ae7b6a6a93a8bce812f06eab458169015d13a3a30733ba265aca79",
+      "finalHash": "8721e3bac6ae7b6a6a93a8bce812f06eab458169015d13a3a30733ba265aca79",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2050,9 +2050,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/methods/metodo-contraposicion.mdx",
-      "originalHash": "eeadaba1161f51526afe0dda1d66d9c18879c0471784ebc32c7e8ee51893217e",
-      "finalHash": "eeadaba1161f51526afe0dda1d66d9c18879c0471784ebc32c7e8ee51893217e",
+      "path": "content/mdx/es/methods/metodo-contraposicion.mdx",
+      "originalHash": "00e1b1d34f0b99d9291026745622fb1c9a8ea3cc8f72d036151f5062927f80f0",
+      "finalHash": "00e1b1d34f0b99d9291026745622fb1c9a8ea3cc8f72d036151f5062927f80f0",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2074,9 +2074,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/methods/metodo-directo.mdx",
-      "originalHash": "b1ac24d1017202ad64be27a26c89fc799890e7dffe335128d762cbbccd659d22",
-      "finalHash": "b1ac24d1017202ad64be27a26c89fc799890e7dffe335128d762cbbccd659d22",
+      "path": "content/mdx/es/methods/metodo-directo.mdx",
+      "originalHash": "010236b29789c3d337a978946494aea5a197390c493528f09b1544819ef141a4",
+      "finalHash": "010236b29789c3d337a978946494aea5a197390c493528f09b1544819ef141a4",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2098,9 +2098,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/methods/metodo-exhaustivo.mdx",
-      "originalHash": "cdcbe79bf6c524a96f4c8c391363b08169102386b958fc1de52b8bd3ac9821d5",
-      "finalHash": "cdcbe79bf6c524a96f4c8c391363b08169102386b958fc1de52b8bd3ac9821d5",
+      "path": "content/mdx/es/methods/metodo-exhaustivo.mdx",
+      "originalHash": "c98c933741644aabcd4b9e1991ae3aa15b3d32a5f11822f346d7ff06cb149c23",
+      "finalHash": "c98c933741644aabcd4b9e1991ae3aa15b3d32a5f11822f346d7ff06cb149c23",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2122,9 +2122,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/methods/metodo-geometrico.mdx",
-      "originalHash": "64dbde8ed781e1a0f8f0b7a4b1c00dc8285e67966a55a05e9d16a864b0768755",
-      "finalHash": "64dbde8ed781e1a0f8f0b7a4b1c00dc8285e67966a55a05e9d16a864b0768755",
+      "path": "content/mdx/es/methods/metodo-geometrico.mdx",
+      "originalHash": "dc71b16406e1338c6ead935b7c6347463f407e9e35530b9434b29329a74849bc",
+      "finalHash": "dc71b16406e1338c6ead935b7c6347463f407e9e35530b9434b29329a74849bc",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2146,9 +2146,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/methods/metodo-induccion.mdx",
-      "originalHash": "bd172ce5a4e46e49449e5afaf9077314f8083fac726a6f8dc857191004c704bb",
-      "finalHash": "bd172ce5a4e46e49449e5afaf9077314f8083fac726a6f8dc857191004c704bb",
+      "path": "content/mdx/es/methods/metodo-induccion.mdx",
+      "originalHash": "378651fc61c0ba13ebbbda7df7cbb7f285a9f14e3b74b6caa3bf4b8ae32e33c6",
+      "finalHash": "378651fc61c0ba13ebbbda7df7cbb7f285a9f14e3b74b6caa3bf4b8ae32e33c6",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2170,9 +2170,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/models/modelo-cartesiano.mdx",
-      "originalHash": "47941d14635dbabd537f496548a0d9070e0a84852b77b2b3eef993914000c3d7",
-      "finalHash": "47941d14635dbabd537f496548a0d9070e0a84852b77b2b3eef993914000c3d7",
+      "path": "content/mdx/es/models/modelo-cartesiano.mdx",
+      "originalHash": "73923a1ef57cbeb49571a7af27570d653e5288e0d09fd0e5a24cd6b36797c129",
+      "finalHash": "73923a1ef57cbeb49571a7af27570d653e5288e0d09fd0e5a24cd6b36797c129",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2194,9 +2194,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/models/modelo-fano.mdx",
-      "originalHash": "4fa5daa4b2e222f92233f2f19ab22a3d326f377cae03c7ab72feef52ecf74fd3",
-      "finalHash": "4fa5daa4b2e222f92233f2f19ab22a3d326f377cae03c7ab72feef52ecf74fd3",
+      "path": "content/mdx/es/models/modelo-fano.mdx",
+      "originalHash": "92beaaed3f4d79c6997d137cfafdb3abbc35b8a9e0449347a900c97cdcc5fa33",
+      "finalHash": "92beaaed3f4d79c6997d137cfafdb3abbc35b8a9e0449347a900c97cdcc5fa33",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2218,9 +2218,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/models/modelo-poincare.mdx",
-      "originalHash": "34d418c77e6878d66eea13532b6846847a4333e5da8c2d0c3e9a17d285570e2a",
-      "finalHash": "34d418c77e6878d66eea13532b6846847a4333e5da8c2d0c3e9a17d285570e2a",
+      "path": "content/mdx/es/models/modelo-poincare.mdx",
+      "originalHash": "a69a68b01230d8bdd300eb3ba9e74123371a5f66bd13e4e4373f3f8aea1693ed",
+      "finalHash": "a69a68b01230d8bdd300eb3ba9e74123371a5f66bd13e4e4373f3f8aea1693ed",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2242,9 +2242,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/models/modelo-tres-puntos.mdx",
-      "originalHash": "c549748be24c46773fd83e0f3c43c43a7606593ecb1dc52caea3f98bbeee0f42",
-      "finalHash": "c549748be24c46773fd83e0f3c43c43a7606593ecb1dc52caea3f98bbeee0f42",
+      "path": "content/mdx/es/models/modelo-tres-puntos.mdx",
+      "originalHash": "2ebb750e5fa67c3354439626c2e70effc033dacfa95b41e02d9361fb8c339498",
+      "finalHash": "2ebb750e5fa67c3354439626c2e70effc033dacfa95b41e02d9361fb8c339498",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2266,7 +2266,7 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
+      "path": "content/mdx/es/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
       "originalHash": "eafc4af90f7381bb67e0fb02bba4a2e4829fce87eb4ac372637229192adb5e64",
       "finalHash": "eafc4af90f7381bb67e0fb02bba4a2e4829fce87eb4ac372637229192adb5e64",
       "compatibility": "fully-editable",
@@ -2290,9 +2290,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/corolario-rectas-coincidentes.mdx",
-      "originalHash": "b718b0b9c5c97c337865e31e1a6f62698333513d90d6e91edf48d417dc04dffb",
-      "finalHash": "b718b0b9c5c97c337865e31e1a6f62698333513d90d6e91edf48d417dc04dffb",
+      "path": "content/mdx/es/theorems/corolario-rectas-coincidentes.mdx",
+      "originalHash": "93028fb4ebdbc38d3ebb8fae9a00c2a4e887322df8143fc2fb2181f67e40e152",
+      "finalHash": "93028fb4ebdbc38d3ebb8fae9a00c2a4e887322df8143fc2fb2181f67e40e152",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2314,9 +2314,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/lema-punto-medio.mdx",
-      "originalHash": "ee3ccf9caaf2e1f2f5140280bab62687080d1299010ec6d0e627632ece1668ce",
-      "finalHash": "ee3ccf9caaf2e1f2f5140280bab62687080d1299010ec6d0e627632ece1668ce",
+      "path": "content/mdx/es/theorems/lema-punto-medio.mdx",
+      "originalHash": "6677d9b7c5ce7cdc31ecd0032fd7d574c378e108574b0e4e891ebde319861d45",
+      "finalHash": "6677d9b7c5ce7cdc31ecd0032fd7d574c378e108574b0e4e891ebde319861d45",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2338,9 +2338,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-angulo-externo.mdx",
-      "originalHash": "5927bf11d471e8294a52e98f8c716c37d03203e25709e91ce404178464040268",
-      "finalHash": "5927bf11d471e8294a52e98f8c716c37d03203e25709e91ce404178464040268",
+      "path": "content/mdx/es/theorems/teorema-angulo-externo.mdx",
+      "originalHash": "fb509ba228fcf0984c822bd93cac460885c30dc308af9c57d6c9e2a7fbdea6ec",
+      "finalHash": "fb509ba228fcf0984c822bd93cac460885c30dc308af9c57d6c9e2a7fbdea6ec",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2362,9 +2362,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-angulos-alternos-internos.mdx",
-      "originalHash": "1fb121cf1809da989eea97152d12d745c3077a872b783cc55ffc7b4da0183fa8",
-      "finalHash": "1fb121cf1809da989eea97152d12d745c3077a872b783cc55ffc7b4da0183fa8",
+      "path": "content/mdx/es/theorems/teorema-angulos-alternos-internos.mdx",
+      "originalHash": "1e33cbdfbc0230a2a90a5d3b0925cd14822a4db3a360bff5a2b11dc2fdb7e8f9",
+      "finalHash": "1e33cbdfbc0230a2a90a5d3b0925cd14822a4db3a360bff5a2b11dc2fdb7e8f9",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2386,9 +2386,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-angulos-opuestos-verticales.mdx",
-      "originalHash": "ce295d974a5864af6a49ce59af48d55a30c3d4823389acfebc4cf4c34337f8e5",
-      "finalHash": "ce295d974a5864af6a49ce59af48d55a30c3d4823389acfebc4cf4c34337f8e5",
+      "path": "content/mdx/es/theorems/teorema-angulos-opuestos-verticales.mdx",
+      "originalHash": "17bf42c5af9cede271e69cda9ddff582b096a3e99140180eaedbcbddd88bb2d3",
+      "finalHash": "17bf42c5af9cede271e69cda9ddff582b096a3e99140180eaedbcbddd88bb2d3",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2410,9 +2410,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-area-aditividad.mdx",
-      "originalHash": "6f622eb379c27df294656213b4b270d1f8db3f54e5e1857c15cd82fa94271525",
-      "finalHash": "6f622eb379c27df294656213b4b270d1f8db3f54e5e1857c15cd82fa94271525",
+      "path": "content/mdx/es/theorems/teorema-area-aditividad.mdx",
+      "originalHash": "0c84daff8ee6d0fa3de3d0294f3550b0dca81dd74d8495714a31c503cb58abb5",
+      "finalHash": "0c84daff8ee6d0fa3de3d0294f3550b0dca81dd74d8495714a31c503cb58abb5",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2434,9 +2434,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-area-invariancia.mdx",
-      "originalHash": "28a6d95f8dab25c36a2f2aee779f54896c283838b8ee34bdfff1bc305c84edb0",
-      "finalHash": "28a6d95f8dab25c36a2f2aee779f54896c283838b8ee34bdfff1bc305c84edb0",
+      "path": "content/mdx/es/theorems/teorema-area-invariancia.mdx",
+      "originalHash": "1dde3968ac15fcee84fbebce93bc02244030fb0d9e710a279b19ff4ad0438c06",
+      "finalHash": "1dde3968ac15fcee84fbebce93bc02244030fb0d9e710a279b19ff4ad0438c06",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2458,9 +2458,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-area-rectangulo.mdx",
-      "originalHash": "e8afcd07b0e6389dadac8fa1ab0c4ed9871c0bd02c887fa9d37ff3c1a32785b5",
-      "finalHash": "e8afcd07b0e6389dadac8fa1ab0c4ed9871c0bd02c887fa9d37ff3c1a32785b5",
+      "path": "content/mdx/es/theorems/teorema-area-rectangulo.mdx",
+      "originalHash": "c86b66707ace45b78092c248d090cce011628a983cf6609f8bb92b29bef333a2",
+      "finalHash": "c86b66707ace45b78092c248d090cce011628a983cf6609f8bb92b29bef333a2",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2482,9 +2482,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-area-triangulo.mdx",
-      "originalHash": "33e9b840485903dc4e399a0e294fbb95b3122c9c4eb4316c949fca27a9ec1ebf",
-      "finalHash": "33e9b840485903dc4e399a0e294fbb95b3122c9c4eb4316c949fca27a9ec1ebf",
+      "path": "content/mdx/es/theorems/teorema-area-triangulo.mdx",
+      "originalHash": "49f28e5bfb28bf3a30e3de3bb2a65aa044518e5154fc79f5f0d279788014a3a7",
+      "finalHash": "49f28e5bfb28bf3a30e3de3bb2a65aa044518e5154fc79f5f0d279788014a3a7",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2506,9 +2506,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-congruencia-aal.mdx",
-      "originalHash": "65a21b5c55e2b25e687e03f669b402d9afaabac3608be61e821f6ff51bd89453",
-      "finalHash": "65a21b5c55e2b25e687e03f669b402d9afaabac3608be61e821f6ff51bd89453",
+      "path": "content/mdx/es/theorems/teorema-congruencia-aal.mdx",
+      "originalHash": "34071e724755ef0439fcd7bef7f2db86d29aff10648695e486b97e24ff559771",
+      "finalHash": "34071e724755ef0439fcd7bef7f2db86d29aff10648695e486b97e24ff559771",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2530,9 +2530,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-congruencia-ala.mdx",
-      "originalHash": "f63b88959d2987139424c23799c58b1e7a85a63ed31754cf5b39df5f2856547c",
-      "finalHash": "f63b88959d2987139424c23799c58b1e7a85a63ed31754cf5b39df5f2856547c",
+      "path": "content/mdx/es/theorems/teorema-congruencia-ala.mdx",
+      "originalHash": "92ba02948a1d11f8f78ab192b01dad4c02ded05fb6e0393df342f1c0c4c365e5",
+      "finalHash": "92ba02948a1d11f8f78ab192b01dad4c02ded05fb6e0393df342f1c0c4c365e5",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2554,9 +2554,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-congruencia-lll.mdx",
-      "originalHash": "eeb5ba2bc3bc2f1c26317b0db23f1046f03564c193f56567282da6601a0a6c0f",
-      "finalHash": "eeb5ba2bc3bc2f1c26317b0db23f1046f03564c193f56567282da6601a0a6c0f",
+      "path": "content/mdx/es/theorems/teorema-congruencia-lll.mdx",
+      "originalHash": "3006d6365d0f0d6531713face2a3f2ab34af1cd882f877dc50668033fc8c9cb9",
+      "finalHash": "3006d6365d0f0d6531713face2a3f2ab34af1cd882f877dc50668033fc8c9cb9",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2578,9 +2578,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-desigualdad-triangular.mdx",
-      "originalHash": "e54ca3f84a69dacae7af5c3730a87d82b91be56106bd45f98efa456f8313a530",
-      "finalHash": "e54ca3f84a69dacae7af5c3730a87d82b91be56106bd45f98efa456f8313a530",
+      "path": "content/mdx/es/theorems/teorema-desigualdad-triangular.mdx",
+      "originalHash": "1c0aa5323754c8976d5dc835df2dd4670e7b705174fe1eb5c19e3f3f9e13e45e",
+      "finalHash": "1c0aa5323754c8976d5dc835df2dd4670e7b705174fe1eb5c19e3f3f9e13e45e",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2602,9 +2602,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-dos-rectas-un-punto.mdx",
-      "originalHash": "34935b01c7548c65b5ee860e0326c696aea75e3e8ace685d9346877483f8a80d",
-      "finalHash": "34935b01c7548c65b5ee860e0326c696aea75e3e8ace685d9346877483f8a80d",
+      "path": "content/mdx/es/theorems/teorema-dos-rectas-un-punto.mdx",
+      "originalHash": "c58bcf41c895c4c7962f17fb9e7b2a953218cf063018f5445682e83b99592c00",
+      "finalHash": "c58bcf41c895c4c7962f17fb9e7b2a953218cf063018f5445682e83b99592c00",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2626,9 +2626,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-existencia-bisectriz.mdx",
-      "originalHash": "e14cd669e05267931bbf115909c03fabcf805e85b1c9bf5eb0e50df3f89d208a",
-      "finalHash": "e14cd669e05267931bbf115909c03fabcf805e85b1c9bf5eb0e50df3f89d208a",
+      "path": "content/mdx/es/theorems/teorema-existencia-bisectriz.mdx",
+      "originalHash": "b193178333a572b5e02d54b5b2c73db995bf8ac30f4320464bfbbb2daac99855",
+      "finalHash": "b193178333a572b5e02d54b5b2c73db995bf8ac30f4320464bfbbb2daac99855",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2650,9 +2650,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-existencia-perpendicular.mdx",
-      "originalHash": "e72dc7de2f2dc4b801d3ca14a626bc679157e69e375972c5d5a307f302bcb2f1",
-      "finalHash": "e72dc7de2f2dc4b801d3ca14a626bc679157e69e375972c5d5a307f302bcb2f1",
+      "path": "content/mdx/es/theorems/teorema-existencia-perpendicular.mdx",
+      "originalHash": "428c10d2f61a8c128f47d0c11e3947f9e1c40db96de316312726a10b5b9bd2e8",
+      "finalHash": "428c10d2f61a8c128f47d0c11e3947f9e1c40db96de316312726a10b5b9bd2e8",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2674,9 +2674,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-invariancia-triangulacion.mdx",
-      "originalHash": "4100862e8820a2d82ae2edd866ff92bc42f3b0b626c0e86798d60402de6410cb",
-      "finalHash": "4100862e8820a2d82ae2edd866ff92bc42f3b0b626c0e86798d60402de6410cb",
+      "path": "content/mdx/es/theorems/teorema-invariancia-triangulacion.mdx",
+      "originalHash": "d7683e6c9dcd1445d31c62a01062f23ea7058f65528f4a0dd97e692403d2580d",
+      "finalHash": "d7683e6c9dcd1445d31c62a01062f23ea7058f65528f4a0dd97e692403d2580d",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2698,9 +2698,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-pitagoras.mdx",
-      "originalHash": "45a921c41aa9b6c13c2c9695f4d40a05a152fca4ff5cc49448982c54d05f84fe",
-      "finalHash": "45a921c41aa9b6c13c2c9695f4d40a05a152fca4ff5cc49448982c54d05f84fe",
+      "path": "content/mdx/es/theorems/teorema-pitagoras.mdx",
+      "originalHash": "70b860f7a42dd1e1559cbfb89a66e8a27faaf08d21b351615cc0574ed3576284",
+      "finalHash": "70b860f7a42dd1e1559cbfb89a66e8a27faaf08d21b351615cc0574ed3576284",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2722,9 +2722,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-punto-medio-perpendicular.mdx",
-      "originalHash": "c71f6789b0cf01d517d657aae0dd143fe12cf5b7a7df7e52b5dddd1b7bb15b1d",
-      "finalHash": "c71f6789b0cf01d517d657aae0dd143fe12cf5b7a7df7e52b5dddd1b7bb15b1d",
+      "path": "content/mdx/es/theorems/teorema-punto-medio-perpendicular.mdx",
+      "originalHash": "0adba5f02b7288452093785751a54049e88259f49693b1ed12acff9fd09c19a7",
+      "finalHash": "0adba5f02b7288452093785751a54049e88259f49693b1ed12acff9fd09c19a7",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2746,9 +2746,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-reciproco-triangulo-isosceles.mdx",
-      "originalHash": "cd6d5f71de48279d5c0ca5b3cc1467eb95829b99ab4a19256e8bb30e254c60db",
-      "finalHash": "cd6d5f71de48279d5c0ca5b3cc1467eb95829b99ab4a19256e8bb30e254c60db",
+      "path": "content/mdx/es/theorems/teorema-reciproco-triangulo-isosceles.mdx",
+      "originalHash": "d9614b1569cd3eac29d213ed4403cf8450d70d5825d3998b19c4f76debd7572a",
+      "finalHash": "d9614b1569cd3eac29d213ed4403cf8450d70d5825d3998b19c4f76debd7572a",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2770,9 +2770,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-suma-angulos-triangulo.mdx",
-      "originalHash": "3dc53907242ef7cba6fe5f562f10dc643b2e0503252dee1237d517a8f688d733",
-      "finalHash": "3dc53907242ef7cba6fe5f562f10dc643b2e0503252dee1237d517a8f688d733",
+      "path": "content/mdx/es/theorems/teorema-suma-angulos-triangulo.mdx",
+      "originalHash": "b0c4511c1dd325bee7c89e7bcdc55f4e779b1e7c3fd9036d8fd6599380556bc0",
+      "finalHash": "b0c4511c1dd325bee7c89e7bcdc55f4e779b1e7c3fd9036d8fd6599380556bc0",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2794,9 +2794,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-tales.mdx",
-      "originalHash": "b57c03a337d63ca1a66f5c26743191ff4d5cd5f54b24372465787b9ea30b5e89",
-      "finalHash": "b57c03a337d63ca1a66f5c26743191ff4d5cd5f54b24372465787b9ea30b5e89",
+      "path": "content/mdx/es/theorems/teorema-tales.mdx",
+      "originalHash": "505c206a10257e19c31fd43a246b53ac3df8995078ef317fe0a643c07b1a7406",
+      "finalHash": "505c206a10257e19c31fd43a246b53ac3df8995078ef317fe0a643c07b1a7406",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2818,9 +2818,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-triangulacion-poligono.mdx",
-      "originalHash": "7075d5b81e92a07eb87e2b9f38945e9bbc989649331572641df0c753179abee7",
-      "finalHash": "7075d5b81e92a07eb87e2b9f38945e9bbc989649331572641df0c753179abee7",
+      "path": "content/mdx/es/theorems/teorema-triangulacion-poligono.mdx",
+      "originalHash": "44e35f0e1a55b70de5e3bcdcb7a62f1d3a79b8ea1721aa0ecc355befb7b4fe0d",
+      "finalHash": "44e35f0e1a55b70de5e3bcdcb7a62f1d3a79b8ea1721aa0ecc355befb7b4fe0d",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2842,9 +2842,9 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/theorems/teorema-triangulo-isosceles.mdx",
-      "originalHash": "2e9d72b6db243172d9a9298aa2a1e6fbbe1ef2deb4b7de195a672044c5626739",
-      "finalHash": "2e9d72b6db243172d9a9298aa2a1e6fbbe1ef2deb4b7de195a672044c5626739",
+      "path": "content/mdx/es/theorems/teorema-triangulo-isosceles.mdx",
+      "originalHash": "13399267167217278de0e2d8fb85c657482d53d9656910235ba14bfe15814e58",
+      "finalHash": "13399267167217278de0e2d8fb85c657482d53d9656910235ba14bfe15814e58",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,
@@ -2866,9 +2866,105 @@
       "preservedBlocks": 0
     },
     {
-      "path": "src/database/content/usecases/caso-gps-trilateracion.mdx",
-      "originalHash": "9b0f887df7809838e3b525c7b7bac4a664ce52ccd77e942d42ccc0a18251ef90",
-      "finalHash": "9b0f887df7809838e3b525c7b7bac4a664ce52ccd77e942d42ccc0a18251ef90",
+      "path": "content/mdx/es/usecases/caso-gps-trilateracion.mdx",
+      "originalHash": "810a2e664453d1e53d1bf3138f7acd1f533b1f91ab66a6ea5f6c1f05beebfee2",
+      "finalHash": "810a2e664453d1e53d1bf3138f7acd1f533b1f91ab66a6ea5f6c1f05beebfee2",
+      "compatibility": "fully-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true,
+      "classification": "exact",
+      "compatibilityStable": true,
+      "diagnosticsStable": true,
+      "cycles": 3,
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
+    },
+    {
+      "path": "content/mdx/eu/definitions/triangulo.mdx",
+      "originalHash": "84ae76160b2d6d43c2ce8c2d455ecac7b8afc8fea7eee9fc54847dab6a5cbaa7",
+      "finalHash": "84ae76160b2d6d43c2ce8c2d455ecac7b8afc8fea7eee9fc54847dab6a5cbaa7",
+      "compatibility": "fully-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true,
+      "classification": "exact",
+      "compatibilityStable": true,
+      "diagnosticsStable": true,
+      "cycles": 3,
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
+    },
+    {
+      "path": "content/mdx/eu/exercises/ejercicio-pitagoras-cateto.mdx",
+      "originalHash": "789912090588cfc18660018b15c9352cdfc02adeb84d0d0bde0ca81074ef5e67",
+      "finalHash": "789912090588cfc18660018b15c9352cdfc02adeb84d0d0bde0ca81074ef5e67",
+      "compatibility": "fully-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true,
+      "classification": "exact",
+      "compatibilityStable": true,
+      "diagnosticsStable": true,
+      "cycles": 3,
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
+    },
+    {
+      "path": "content/mdx/eu/theorems/teorema-area-aditividad.mdx",
+      "originalHash": "66d570810f1c9cdd087aa409c0e51564087546267a781ee1e34485f714372805",
+      "finalHash": "66d570810f1c9cdd087aa409c0e51564087546267a781ee1e34485f714372805",
+      "compatibility": "fully-editable",
+      "diagnostics": [],
+      "exact": true,
+      "idempotent": true,
+      "envelopePreserved": true,
+      "bodyPreserved": true,
+      "classification": "exact",
+      "compatibilityStable": true,
+      "diagnosticsStable": true,
+      "cycles": 3,
+      "authorizedOperations": [
+        "audit-edit",
+        "audit-revert"
+      ],
+      "reversibleOperationExact": true,
+      "metadataReadable": true,
+      "metadataSchemaValid": true,
+      "opaqueBlocks": 0,
+      "preservedBlocks": 0
+    },
+    {
+      "path": "content/mdx/eu/theorems/teorema-pitagoras.mdx",
+      "originalHash": "dd5e470f327d61d449426c08adc299ef26906eba6b39989b5e46a5ae7fd54efc",
+      "finalHash": "dd5e470f327d61d449426c08adc299ef26906eba6b39989b5e46a5ae7fd54efc",
       "compatibility": "fully-editable",
       "diagnostics": [],
       "exact": true,

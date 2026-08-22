@@ -2,8 +2,7 @@
 
 Mapa vivo del monorepo Matematika. **Primario:** `src/` + `content/`.
 
-Docs in-code: [DOCSTYLE.md](./DOCSTYLE.md) · generar API: `npm run docs:build` → `docs/api/`  
-Migración: [plan](../superpowers/plans/2026-08-01-src-migration.md) · [spec](../superpowers/specs/2026-08-01-src-architecture-design.md)
+Docs in-code: [DOCSTYLE.md](./DOCSTYLE.md) · generar API: `npm run docs:build` → `docs/api/`
 
 ## Alias
 

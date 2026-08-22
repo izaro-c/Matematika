@@ -5,19 +5,6 @@ import { VintageSeal } from '@/components/ui/VintageSeal';
 import { I18nProvider } from '@/i18n/I18nContext';
 
 describe('VintageSeal component', () => {
-  it('renders lean verification seal with proper classes and accessibility attributes', () => {
-    render(
-      <I18nProvider>
-        <VintageSeal type="lean" />
-      </I18nProvider>
-    );
-
-    const seal = screen.getByRole('status');
-    expect(seal).toBeDefined();
-    expect(seal.className).toContain('vintage-seal--musgo');
-    expect(seal.textContent).toContain('LEAN 4');
-    expect(seal.textContent).toContain('VERIFICADO');
-  });
 
   it('renders exercise completed seal with canela theme and animation class', () => {
     render(

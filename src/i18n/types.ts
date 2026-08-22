@@ -240,8 +240,6 @@ export interface TranslationDictionary {
     skipToContent: string;
     goToStep: string;
     endOfProof: string;
-    seeInLean: string;
-    leanBlockNotFound: string;
     formulaRegion: string;
     formulaSrOnly: string;
     formulaScrollLabel: string;
@@ -375,7 +373,6 @@ export interface TranslationDictionary {
     previous: string;
     seeMore: string;
     seeProof: string;
-    verifiedWithLean: string;
     humanProof: string;
     axiomaticFoundation: string;
     prerequisites: string;
@@ -518,13 +515,7 @@ export interface TranslationDictionary {
     attribution: string;
     tags: string;
     formalVerification: string;
-    verifiedLean4: string;
     seals: {
-      lean: {
-        title: string;
-        subtitle: string;
-        ariaLabel: string;
-      };
       exercise: {
         title: string;
         subtitle: string;

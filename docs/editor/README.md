@@ -26,7 +26,7 @@ El source completo es siempre la autoridad. Una edición visual nunca reconstruy
 | `read-only` | Lectura visual; escritura bloqueada. |
 | `unsupported` | Código autoritativo; conversión bloqueada. |
 
-La auditoría oficial del corpus actual mide roundtrip byte a byte y clasificación por documento; cifras vivas en [`ai/current-state.md`](../../ai/current-state.md). Es una métrica del corpus fechado, no una promesa de compatibilidad con MDX arbitrario.
+La auditoría oficial del corpus actual mide roundtrip byte a byte y clasificación por documento; cifras vivas en [`docs/reports/editor-roundtrip-baseline.md`](../reports/editor-roundtrip-baseline.md). Es una métrica del corpus fechado, no una promesa de compatibilidad con MDX arbitrario.
 
 El soporte de diagramas (`visual-exact` vs `code-preview`) lo mide `npm run editor:diagrams:check`; no se anuncia edición visual exacta fuera de esa clasificación.
 
@@ -74,7 +74,7 @@ El índice inverso `diagramUsageIndex.json` evita escanear todo el corpus al abr
 | `npm run editor:release-check` | Gate de release completo, incluido E2E y visual. |
 | `npm run full-check` | Gate global de producto. |
 
-Los artefactos generados se actualizan exclusivamente mediante `generate-index`, `content:coverage`, `diagram-usages:index`, `lean:graph`, `ai:index` y `ai:debt`. No se editan a mano.
+Los artefactos generados se actualizan exclusivamente mediante `generate-index`, `content:coverage`, `diagram-usages:index` y `lean:graph`. No se editan a mano.
 
 ## Fixtures y regresiones
 

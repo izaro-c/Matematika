@@ -88,9 +88,9 @@ describe('Phase 5 real acceptance migrations', () => {
           "kinds": {
             "areaDecomposition": 3,
             "infoPanel": 1,
+            "nonReflexAngle": 1,
             "polygon": 1,
             "ray": 2,
-            "rightAngle": 1,
             "segment": 3,
           },
           "layers": [
@@ -106,6 +106,7 @@ describe('Phase 5 real acceptance migrations', () => {
           "steps": [],
           "targets": [
             "infoPanel14",
+            "nonReflexAngleBCA",
             "triangulo",
             "cuadrado-a",
             "cuadrado-b",

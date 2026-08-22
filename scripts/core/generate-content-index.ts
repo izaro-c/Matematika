@@ -4,7 +4,6 @@ import { pathToFileURL } from 'url';
 
 const CONTENT_DIR = path.resolve('./content/mdx');
 const OUTPUT_PATH = path.resolve('./src/data/content/contentIndex.json');
-const LEAN_GRAPH_PATH = path.resolve('./src/data/graph/lean_graph.json');
 
 export interface ContentEntry {
   id: string;
@@ -14,10 +13,6 @@ export interface ContentEntry {
   contentType: string;
   availableLangs?: string[];
   metadata: Record<string, unknown>;
-}
-
-interface LeanGraph {
-  nodes?: { leanId: string; matematikaId: string; status?: string }[];
 }
 
 function parseMetadata(content: string, filePath: string): Record<string, unknown> | null {
@@ -51,17 +46,6 @@ function getMdxFiles(dir: string): string[] {
   return files;
 }
 
-export function getLeanNodeStatus(leanGraphPath = LEAN_GRAPH_PATH): Map<string, string> {
-  if (!fs.existsSync(leanGraphPath)) return new Map();
-  try {
-    const graph = JSON.parse(fs.readFileSync(leanGraphPath, 'utf-8')) as LeanGraph;
-    return new Map((graph.nodes ?? []).map(node => [node.leanId, node.verificationStatus ?? 'human-proof']));
-  } catch {
-    console.warn(`  [WARN] Invalid Lean graph JSON: ${leanGraphPath}`);
-    return new Map();
-  }
-}
-
 const contentTypes: Record<string, string> = {
   mathematicians: 'matematico',
   theorems: 'teorema',
@@ -80,15 +64,12 @@ const contentTypes: Record<string, string> = {
 interface GenerateContentIndexOptions {
   contentDir?: string;
   outputPath?: string;
-  leanGraphPath?: string;
 }
 
 export function generateContentIndex(options: GenerateContentIndexOptions = {}): Record<string, ContentEntry> {
   const contentDir = options.contentDir ?? CONTENT_DIR;
   const outputPath = options.outputPath ?? OUTPUT_PATH;
-  const leanGraphPath = options.leanGraphPath ?? LEAN_GRAPH_PATH;
   const allFiles = getMdxFiles(contentDir);
-  const leanNodeStatus = getLeanNodeStatus(leanGraphPath);
 
   const availableLangsById: Record<string, string[]> = {};
   const rawEntries: ContentEntry[] = [];
@@ -118,12 +99,6 @@ export function generateContentIndex(options: GenerateContentIndexOptions = {}):
     const contentType = contentTypes[dirName] || (meta.type as string) || 'unknown';
     const slug = path.basename(file, '.mdx').toLowerCase();
     const id = (meta.id as string) || slug;
-
-    if (typeof meta.leanId === 'string') {
-      const status = leanNodeStatus.get(meta.leanId);
-      meta.leanVerified = status !== undefined;
-      meta.verificationStatus = status ?? 'human-proof';
-    }
 
     if (!availableLangsById[id]) {
       availableLangsById[id] = [];

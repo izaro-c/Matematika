@@ -245,8 +245,6 @@ export const euLanguage: LanguageConfig = {
       skipToContent: 'Joan zuzenean edukira',
       goToStep: 'Joan {step}. urratsera',
       endOfProof: 'Frogapenaren amaiera',
-      seeInLean: 'Ikusi Lean-en',
-      leanBlockNotFound: 'Lean blokea ez da aurkitu proof_blocks.json fitxategian.',
       formulaRegion: 'Formula matematikoa. Mugitu horizontalki beharrezkoa bada.',
       formulaSrOnly: 'Formula hau pantaila baino zabalagoa da. Erabili desplazamendu horizontala osoa ikusteko.',
       formulaScrollLabel: 'Formula matematikoa. Mugitu horizontalki beharrezkoa bada.',
@@ -380,7 +378,6 @@ export const euLanguage: LanguageConfig = {
       previous: 'Aurrekoa',
       seeMore: 'Ikusi gehiago',
       seeProof: 'Ikusi frogapena',
-      verifiedWithLean: 'Lean 4 bidez formalki egiaztatua',
       humanProof: 'Urratsz urratseko frogapena',
       axiomaticFoundation: 'Oinarri axiomatikoa',
       prerequisites: 'Aurrebaldintzak',
@@ -523,13 +520,7 @@ export const euLanguage: LanguageConfig = {
       attribution: 'Egiletza',
       tags: 'Gaiak',
       formalVerification: 'Egiaztapen formala',
-      verifiedLean4: 'Lean 4 bidez formalki egiaztatua',
       seals: {
-        lean: {
-          title: 'LEAN 4',
-          subtitle: 'EGIAZTATUA',
-          ariaLabel: 'Lean 4 bidez formalki egiaztatua',
-        },
         exercise: {
           title: 'ARIKETA',
           subtitle: 'EBATZIA',

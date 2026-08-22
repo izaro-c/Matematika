@@ -22,22 +22,12 @@
       "none": 58,
       "exported": 62
     },
-    "lean": {
-      "none": 71,
-      "human-proof": 45,
-      "lean-checked": 4
-    },
     "theoremLike": {
       "total": 24,
-      "leanLinked": 24,
-      "leanChecked": 2,
-      "humanProof": 22,
       "withDeclaredDiagram": 11
     },
     "demonstrations": {
-      "total": 25,
-      "leanLinked": 25,
-      "withMappedProofSteps": 25
+      "total": 25
     }
   },
   "items": [
@@ -49,13 +39,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -67,13 +52,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -85,13 +65,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -103,13 +78,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -123,13 +93,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.archimedean",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -143,13 +108,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.no_proper_axiomatic_extension",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -163,13 +123,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.segment_transport",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -183,13 +138,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.segment_congruence_transitive",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -203,13 +153,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.segment_addition",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -223,13 +168,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.angle_transport",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -243,13 +183,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.sas_congruence",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -263,13 +198,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.line_through_two_points",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -283,13 +213,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.line_has_two_points",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -303,13 +228,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.exists_noncollinear_points",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -323,13 +243,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.plane_through_three_noncollinear_points",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -343,13 +258,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.plane_has_three_noncollinear_points",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -363,13 +273,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.line_contained_in_plane",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -383,13 +288,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.intersecting_planes_share_a_line",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -403,13 +303,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.exists_noncoplanar_points",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -423,13 +318,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.between_distinct_symmetric",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -443,13 +333,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.exists_between_distinct_points",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -463,13 +348,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.order_trichotomy",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -483,13 +363,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.pasch",
-      "leanVerified": true,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -503,13 +378,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -523,13 +393,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -543,13 +408,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -563,13 +423,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -581,13 +436,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -601,13 +451,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -621,13 +466,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -639,13 +479,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -657,13 +492,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -677,13 +507,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -695,13 +520,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -713,13 +533,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -733,13 +548,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -753,13 +563,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -773,13 +578,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -793,13 +593,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -813,13 +608,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -833,13 +623,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -853,13 +638,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -873,13 +653,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -893,13 +668,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -913,13 +683,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -931,13 +696,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -949,25 +709,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_angulo_externo",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 3,
       "proofSteps": 11,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "11"
-      ],
       "parentTheorem": "teorema-angulo-externo",
       "demos": []
     },
@@ -979,20 +722,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_angulos_alternos_internos",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 6,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6"
-      ],
       "parentTheorem": "teorema-angulos-alternos-internos",
       "demos": []
     },
@@ -1004,19 +735,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_angulos_opuestos_verticales",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 5,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
       "parentTheorem": "teorema-angulos-opuestos-verticales",
       "demos": []
     },
@@ -1028,17 +748,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_area_aditividad",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 3,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3"
-      ],
       "parentTheorem": "teorema-area-aditividad",
       "demos": []
     },
@@ -1050,18 +761,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_area_invariancia",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 4,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4"
-      ],
       "parentTheorem": "teorema-area-invariancia",
       "demos": []
     },
@@ -1073,17 +774,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_area_rectangulo",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 3,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3"
-      ],
       "parentTheorem": "teorema-area-rectangulo",
       "demos": []
     },
@@ -1095,19 +787,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_area_triangulo",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 5,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
       "parentTheorem": "teorema-area-triangulo",
       "demos": []
     },
@@ -1119,21 +800,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_congruencia_aal",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 7,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7"
-      ],
       "parentTheorem": "teorema-congruencia-aal",
       "demos": []
     },
@@ -1145,17 +813,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_congruencia_ala",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 3,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3"
-      ],
       "parentTheorem": "teorema-congruencia-ala",
       "demos": []
     },
@@ -1167,18 +826,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_congruencia_lll",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 4,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4"
-      ],
       "parentTheorem": "teorema-congruencia-lll",
       "demos": []
     },
@@ -1190,19 +839,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_desigualdad_triangular",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 5,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
       "parentTheorem": "teorema-desigualdad-triangular",
       "demos": []
     },
@@ -1214,18 +852,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
-      "leanVerified": true,
-      "verificationStatus": "lean-checked",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 4,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4"
-      ],
       "parentTheorem": "teorema-dos-rectas-un-punto",
       "demos": []
     },
@@ -1237,19 +865,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_existencia_bisectriz",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 5,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
       "parentTheorem": "teorema-existencia-bisectriz",
       "demos": []
     },
@@ -1261,22 +878,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_existencia_perpendicular",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 8,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8"
-      ],
       "parentTheorem": "teorema-existencia-perpendicular",
       "demos": []
     },
@@ -1288,18 +891,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_invariancia_triangulacion",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 4,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4"
-      ],
       "parentTheorem": "teorema-invariancia-triangulacion",
       "demos": []
     },
@@ -1311,18 +904,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_pitagoras_areas",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 4,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4"
-      ],
       "parentTheorem": "teorema-pitagoras",
       "demos": []
     },
@@ -1334,21 +917,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_pitagoras_euclides",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 7,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7"
-      ],
       "parentTheorem": "teorema-pitagoras",
       "demos": []
     },
@@ -1360,19 +930,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_punto_medio_perpendicular",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 5,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
       "parentTheorem": "teorema-punto-medio-perpendicular",
       "demos": []
     },
@@ -1384,19 +943,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_punto_medio",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 5,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
       "parentTheorem": "lema-punto-medio",
       "demos": []
     },
@@ -1408,20 +956,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_reciproco_triangulo_isosceles",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 6,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6"
-      ],
       "parentTheorem": "teorema-reciproco-triangulo-isosceles",
       "demos": []
     },
@@ -1433,19 +969,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
-      "leanVerified": true,
-      "verificationStatus": "lean-checked",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 5,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
       "parentTheorem": "corolario-rectas-coincidentes",
       "demos": []
     },
@@ -1457,19 +982,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_suma_angulos_triangulo",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 5,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
       "parentTheorem": "teorema-suma-angulos-triangulo",
       "demos": []
     },
@@ -1481,20 +995,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_tales",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 6,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6"
-      ],
       "parentTheorem": "teorema-tales",
       "demos": []
     },
@@ -1506,18 +1008,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_triangulacion_poligono",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 4,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4"
-      ],
       "parentTheorem": "teorema-triangulacion-poligono",
       "demos": []
     },
@@ -1529,18 +1021,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.demo_triangulo_isosceles",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 4,
-      "mappedProofSteps": [
-        "1",
-        "2",
-        "3",
-        "4"
-      ],
       "parentTheorem": "teorema-triangulo-isosceles",
       "demos": []
     },
@@ -1554,13 +1036,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1572,13 +1049,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1590,13 +1062,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1608,13 +1075,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1626,13 +1088,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1644,13 +1101,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1662,13 +1114,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1680,13 +1127,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1698,13 +1140,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1716,13 +1153,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1736,13 +1168,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1756,13 +1183,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1776,13 +1198,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1796,13 +1213,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1816,13 +1228,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1836,13 +1243,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1856,13 +1258,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1876,13 +1273,8 @@
         "Diagram"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1896,13 +1288,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1916,13 +1303,8 @@
         "Diagram"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1936,13 +1318,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1954,13 +1331,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -1972,13 +1344,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
-      "leanVerified": true,
-      "verificationStatus": "lean-checked",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": "teorema-dos-rectas-un-punto",
       "demos": [
         "demo-rectas-coincidentes"
@@ -1994,13 +1361,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.lema_punto_medio",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": "teorema-punto-medio-perpendicular",
       "demos": [
         "demo-punto-medio"
@@ -2014,13 +1376,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_angulo_externo",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-angulo-externo"
@@ -2034,13 +1391,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_angulos_alternos_internos",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-angulos-alternos-internos"
@@ -2056,13 +1408,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_angulos_opuestos_verticales",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-angulos-opuestos-verticales"
@@ -2076,13 +1423,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_invariancia",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-area-invariancia"
@@ -2096,13 +1438,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_rectangulo",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-area-rectangulo"
@@ -2116,13 +1453,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_triangulo",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-area-triangulo"
@@ -2136,13 +1468,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_aal",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-congruencia-aal"
@@ -2158,13 +1485,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_ala",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-congruencia-ala"
@@ -2180,13 +1502,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_lll",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-congruencia-lll"
@@ -2202,13 +1519,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_desigualdad_triangular",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-desigualdad-triangular"
@@ -2224,13 +1536,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
-      "leanVerified": true,
-      "verificationStatus": "lean-checked",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-dos-rectas-un-punto"
@@ -2244,13 +1551,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_existencia_bisectriz",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-existencia-bisectriz"
@@ -2264,13 +1566,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_existencia_perpendicular",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-existencia-perpendicular"
@@ -2284,13 +1581,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_invariancia_triangulacion",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-invariancia-triangulacion"
@@ -2306,13 +1598,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_punto_medio_perpendicular",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-punto-medio-perpendicular"
@@ -2326,13 +1613,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_reciproco_triangulo_isosceles",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-reciproco-triangulo-isosceles"
@@ -2348,13 +1630,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_suma_angulos_triangulo",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-suma-angulos-triangulo"
@@ -2370,13 +1647,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_tales",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-tales"
@@ -2390,13 +1662,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_triangulacion_poligono",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-triangulacion-poligono"
@@ -2412,13 +1679,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_triangulo_isosceles",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 2,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-triangulo-isosceles"
@@ -2434,13 +1696,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -2454,13 +1711,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -2474,13 +1726,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": null,
-      "leanVerified": false,
-      "verificationStatus": "none",
-      "foundation": "pending",
       "sourcesCount": 0,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": []
     },
@@ -2492,13 +1739,8 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_aditividad",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-area-aditividad"
@@ -2514,13 +1756,8 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "leanId": "Matematika.Geometry.Hilbert.teorema_pitagoras",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
-      "foundation": "pending",
       "sourcesCount": 1,
       "proofSteps": 0,
-      "mappedProofSteps": [],
       "parentTheorem": null,
       "demos": [
         "demo-pitagoras-euclides",

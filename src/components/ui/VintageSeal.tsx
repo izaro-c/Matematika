@@ -1,11 +1,11 @@
 import React from 'react';
 import { useI18n } from '@/i18n';
 
-export type SealType = 'lean' | 'exercise' | 'read';
+export type SealType = 'exercise' | 'read';
 export type SealSize = 'sm' | 'md' | 'lg';
 
 export interface VintageSealProps {
-  /** Tipo de sello: 'lean' (verificación formal), 'exercise' (resuelto), 'read' (asimilado) */
+  /** Tipo de sello: 'exercise' (resuelto), 'read' (asimilado) */
   type?: SealType;
   /** Tamaño del sello: 'sm' (6rem), 'md' (8rem, default), 'lg' (9.5rem) */
   size?: SealSize;
@@ -24,14 +24,9 @@ const TYPE_CONFIG: Record<
   {
     colorClass: string;
     glyph: string;
-    i18nKey: 'lean' | 'exercise' | 'read';
+    i18nKey: 'exercise' | 'read';
   }
 > = {
-  lean: {
-    colorClass: 'vintage-seal--musgo',
-    glyph: '✓',
-    i18nKey: 'lean',
-  },
   exercise: {
     colorClass: 'vintage-seal--canela',
     glyph: '✓',
@@ -51,10 +46,10 @@ const SIZE_CLASSES: Record<SealSize, string> = {
 };
 
 /**
- * Sello vintage de tinta estilo Arts & Crafts para verificación formal y progreso.
+ * Sello vintage de tinta estilo Arts & Crafts para progreso.
  */
 export const VintageSeal: React.FC<VintageSealProps> = ({
-  type = 'lean',
+  type = 'read',
   size = 'md',
   animated = false,
   className = '',
@@ -62,11 +57,11 @@ export const VintageSeal: React.FC<VintageSealProps> = ({
   customSubtitle,
 }) => {
   const { currentLanguage } = useI18n();
-  const config = TYPE_CONFIG[type] ?? TYPE_CONFIG.lean;
+  const config = TYPE_CONFIG[type] ?? TYPE_CONFIG.read;
   const sealI18n = currentLanguage.dictionary.metadata.seals?.[config.i18nKey];
 
-  const titleText = customTitle ?? sealI18n?.title ?? 'LEAN 4';
-  const subtitleText = customSubtitle ?? sealI18n?.subtitle ?? 'VERIFICADO';
+  const titleText = customTitle ?? sealI18n?.title ?? 'CONCEPTO';
+  const subtitleText = customSubtitle ?? sealI18n?.subtitle ?? 'ASIMILADO';
   const ariaLabel = sealI18n?.ariaLabel ?? `${titleText} ${subtitleText}`;
 
   const sizeClass = SIZE_CLASSES[size] ?? '';

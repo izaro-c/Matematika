@@ -120,10 +120,6 @@ describe('i18n system', () => {
     const es = getLanguage('es');
     const eu = getLanguage('eu');
 
-    expect(es.dictionary.metadata.seals.lean.title).toBe('LEAN 4');
-    expect(es.dictionary.metadata.seals.lean.subtitle).toBe('VERIFICADO');
-    expect(eu.dictionary.metadata.seals.lean.subtitle).toBe('EGIAZTATUA');
-
     expect(es.dictionary.metadata.seals.exercise.subtitle).toBe('RESUELTO');
     expect(eu.dictionary.metadata.seals.exercise.subtitle).toBe('EBATZIA');
 

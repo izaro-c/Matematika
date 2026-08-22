@@ -90,25 +90,17 @@ export const TheoremPage = () => {
         <section id="demostraciones" className="mb-20">
           <SectionTitle>{t('content', 'availableDemos')}</SectionTitle>
           <div className="grid gap-4 lg:grid-cols-2">
-            {demos.map(demo => {
-              const isDemoLeanVerified =
-                demo.leanVerified === true ||
-                demo.verificationStatus === 'lean-checked' ||
-                demo.verificationStatus === 'lean-audited';
-
-              return (
-                <ContentCard
-                  key={demo.slug}
-                  href={getLocalizedPath(`/demo/${demo.id}`)}
-                  title={demo.title}
-                  description={demo.description}
-                  type="demostracion"
-                  layout="default"
-                  leanVerified={isDemoLeanVerified}
-                  actionLabel={t('content', 'explore')}
-                />
-              );
-            })}
+            {demos.map(demo => (
+              <ContentCard
+                key={demo.slug}
+                href={getLocalizedPath(`/demo/${demo.id}`)}
+                title={demo.title}
+                description={demo.description}
+                type="demostracion"
+                layout="default"
+                actionLabel={t('content', 'explore')}
+              />
+            ))}
           </div>
         </section>
       )}
