@@ -64,7 +64,7 @@ export const ContradictionSimulation = () => {
                   {b.label}
                 </div>
                 {visible && (
-                  <span className="text-[9px] text-pizarra/30 max-w-[80px] text-center leading-tight">{b.sub}</span>
+                  <span className="text-[9px] text-mora/30 max-w-[80px] text-center leading-tight">{b.sub}</span>
                 )}
               </div>
             </div>
@@ -88,12 +88,12 @@ export const ContradictionSimulation = () => {
               <div className="flex flex-col items-center gap-1">
                 <div className={`
                   px-3 py-1.5 rounded-sm border text-xs font-bold whitespace-nowrap
-                  ${visible ? 'border-salvia/40 bg-salvia/8 text-salvia' : ''}
+                  ${visible ? 'border-canela/40 bg-canela/8 text-canela' : ''}
                 `}>
                   {b.label}
                 </div>
                 {visible && (
-                  <span className="text-[9px] text-pizarra/30 max-w-[80px] text-center leading-tight">{b.sub}</span>
+                  <span className="text-[9px] text-mora/30 max-w-[80px] text-center leading-tight">{b.sub}</span>
                 )}
               </div>
             </div>
@@ -107,7 +107,7 @@ export const ContradictionSimulation = () => {
             width: step >= 3 ? 12 : 2,
             height: step >= 3 ? 12 : 80,
             borderRadius: step >= 3 ? '50%' : '1px',
-            backgroundColor: step >= 4 ? 'var(--theme-granada)' : step >= 3 ? 'var(--theme-pizarra)' : 'transparent',
+            backgroundColor: step >= 4 ? 'var(--theme-granada)' : step >= 3 ? 'var(--theme-mora)' : 'transparent',
             opacity: step >= 2 ? 0.3 : 0,
             transform: step >= 4 ? 'translate(-50%, -50%) scale(8)' : 'translate(-50%, -50%) scale(1)',
             transition: 'all 0.6s cubic-bezier(0.34,1.56,0.64,1)',
@@ -142,7 +142,7 @@ export const ContradictionSimulation = () => {
             <div className="px-5 py-2 rounded-sm bg-carbon/5 border border-carbon/20 text-carbon text-base font-bold">
               ∴ P ⇒ Q
             </div>
-            <span className="text-[10px] text-pizarra/40">El supuesto ¬Q era insostenible</span>
+            <span className="text-[10px] text-mora/40">El supuesto ¬Q era insostenible</span>
           </div>
         )}
       </div>
@@ -150,16 +150,16 @@ export const ContradictionSimulation = () => {
       {/* Mensaje */}
       <div className="text-center h-8 flex items-center justify-center">
         {phase === 'idle' && (
-          <p className="text-sm text-pizarra/30 italic">Avanza para ver cómo el absurdo emerge</p>
+          <p className="text-sm text-mora/30 italic">Avanza para ver cómo el absurdo emerge</p>
         )}
         {phase === 'step1' && (
-          <p className="text-sm"><span className="text-terracota">P</span> <span className="text-pizarra/30">y</span> <span className="text-salvia">¬Q</span> <span className="text-pizarra/30">: dos afirmaciones opuestas en escena</span></p>
+          <p className="text-sm"><span className="text-terracota">P</span> <span className="text-mora/30">y</span> <span className="text-canela">¬Q</span> <span className="text-mora/30">: dos afirmaciones opuestas en escena</span></p>
         )}
         {phase === 'step2' && (
-          <p className="text-sm text-pizarra/40">Cada una produce sus consecuencias lógicas…</p>
+          <p className="text-sm text-mora/40">Cada una produce sus consecuencias lógicas…</p>
         )}
         {phase === 'step3' && (
-          <p className="text-sm text-pizarra/40">…que se acercan peligrosamente</p>
+          <p className="text-sm text-mora/40">…que se acercan peligrosamente</p>
         )}
         {phase === 'crash' && (
           <p className="text-sm text-granada font-bold">¡Imposible! Las consecuencias se contradicen.</p>
@@ -175,7 +175,7 @@ export const ContradictionSimulation = () => {
           onClick={advance}
           disabled={phase === 'crash'}
           className="px-5 py-2 text-sm rounded-sm font-serif transition-all
-            bg-pizarra text-lienzo hover:bg-pizarra/85
+            bg-mora text-lienzo hover:bg-mora/85
             disabled:opacity-25 disabled:cursor-default"
         >
           {phase === 'idle' ? '① Plantear supuesto' :
@@ -192,7 +192,7 @@ export const ContradictionSimulation = () => {
           </button>
         )}
         {phase === 'done' && (
-          <button onClick={reset} className="px-3 py-2 text-sm rounded-sm font-serif border border-pizarra/12 text-pizarra/50 hover:text-pizarra hover:bg-pizarra/5 transition-all">
+          <button onClick={reset} className="px-3 py-2 text-sm rounded-sm font-serif border border-mora/12 text-mora/50 hover:text-mora hover:bg-mora/5 transition-all">
             ⟳
           </button>
         )}

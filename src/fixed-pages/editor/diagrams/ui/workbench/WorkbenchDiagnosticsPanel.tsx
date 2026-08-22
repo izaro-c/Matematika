@@ -39,8 +39,8 @@ export const WorkbenchDiagnosticsPanel: React.FC<WorkbenchDiagnosticsPanelProps>
 
       <InspectorExpandableBlock title="Resultados del Análisis" defaultOpen={true}>
         {diagnostics.length === 0 ? (
-          <div className="p-4 text-center text-salvia border border-salvia/30 bg-salvia/5 rounded-2xl shadow-2xs">
-            <svg className="w-6 h-6 mx-auto mb-1.5 text-salvia" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="p-4 text-center text-canela border border-canela/30 bg-canela/5 rounded-2xl shadow-2xs">
+            <svg className="w-6 h-6 mx-auto mb-1.5 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
             <p className="font-serif font-bold text-xs">Diagrama 100% sano</p>

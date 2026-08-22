@@ -43,7 +43,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
               onKeyDown={e => {
                 if (e.key === 'Enter') handleRenameId(model, slider.id, e.currentTarget.value, onUpdateModel, onSelectId);
               }}
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
             />
           </div>
 
@@ -56,7 +56,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
               value={slider.label || ''}
               onChange={e => onUpdateSlider(slider.id, { label: e.target.value })}
               placeholder="ej. Parámetro k"
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 placeholder-carbon/30"
+              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
             />
           </div>
         </div>
@@ -67,7 +67,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="text-[11px] font-bold text-carbon/75 tracking-tight">Valor Actual</label>
-              <span className="font-mono text-xs font-bold text-salvia bg-salvia/10 px-2 py-0.5 rounded border border-salvia/20">{slider.value}</span>
+              <span className="font-mono text-xs font-bold text-canela bg-canela/10 px-2 py-0.5 rounded border border-canela/20">{slider.value}</span>
             </div>
             <input
               type="range"
@@ -76,7 +76,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
               step={slider.step ?? 0.1}
               value={slider.value ?? 0}
               onChange={e => onUpdateSlider(slider.id, { value: parseOptionalNumber(e.target.value, slider.value ?? 0) })}
-              className="w-full cursor-pointer accent-salvia"
+              className="w-full cursor-pointer accent-canela"
             />
           </div>
 
@@ -89,7 +89,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
                 type="number"
                 value={slider.min ?? -5}
                 onChange={e => onUpdateSlider(slider.id, { min: parseOptionalNumber(e.target.value, slider.min ?? -5) })}
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none"
               />
             </div>
             <div>
@@ -100,7 +100,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
                 type="number"
                 value={slider.max ?? 5}
                 onChange={e => onUpdateSlider(slider.id, { max: parseOptionalNumber(e.target.value, slider.max ?? 5) })}
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none"
               />
             </div>
             <div>
@@ -112,7 +112,7 @@ export const SliderInspector: React.FC<SliderPanelProps & {
                 step="0.01"
                 value={slider.step ?? 0.1}
                 onChange={e => onUpdateSlider(slider.id, { step: parseOptionalNumber(e.target.value, slider.step ?? 0.1) })}
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none"
               />
             </div>
           </div>

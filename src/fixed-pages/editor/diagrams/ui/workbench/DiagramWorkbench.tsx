@@ -1079,7 +1079,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
       {statusMessage && (
         <div
           role="status"
-          className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 rounded-xl border border-salvia/40 bg-lienzo px-4 py-2 text-xs font-bold text-salvia shadow-lg"
+          className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 rounded-xl border border-canela/40 bg-lienzo px-4 py-2 text-xs font-bold text-canela shadow-lg"
           onAnimationEnd={() => setStatusMessage('')}
         >
           {statusMessage}

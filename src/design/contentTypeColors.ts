@@ -65,14 +65,14 @@ export function getTypeCssVar(group: string): string {
   return (
     CONTENT_TYPE_COLORS[normalized as ContentTypeKey]?.cssVar ??
     DIAGRAM_CATEGORY_COLORS[cleanGroup] ??
-    'var(--theme-salvia)'
+    'var(--theme-canela)'
   );
 }
 
 // Colores para categorías de diagramas no editoriales
 const DIAGRAM_CATEGORY_COLORS: Record<string, string> = {
-  geometria: 'var(--theme-salvia)',
-  geometry: 'var(--theme-salvia)',
+  geometria: 'var(--theme-canela)',
+  geometry: 'var(--theme-canela)',
   algebra: 'var(--theme-terracota)',
   calculo: 'var(--theme-musgo)',
   calculus: 'var(--theme-musgo)',

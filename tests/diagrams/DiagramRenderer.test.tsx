@@ -61,8 +61,8 @@ describe('DiagramRenderer shared runtime', () => {
   });
 
   it('uses each movable element color for its reference in the diagram header', () => {
-    const movableColors: ReadonlyMap<string, 'salvia' | 'pavo'> = new Map([
-      ['A', 'salvia'],
+    const movableColors: ReadonlyMap<string, 'canela' | 'pavo'> = new Map([
+      ['A', 'canela'],
       ['B', 'pavo'],
     ]);
     const pitagoras = toWorkingSceneV2(PitagorasSpec);
@@ -78,11 +78,11 @@ describe('DiagramRenderer shared runtime', () => {
 
     const labels = [...document.querySelectorAll<HTMLElement>('[data-interactive-label]')];
     expect(labels.map(label => [label.textContent, label.dataset.interactiveColor])).toEqual([
-      ['A', 'salvia'],
+      ['A', 'canela'],
       ['B', 'pavo'],
     ]);
     expect(labels.map(label => label.style.color)).toEqual([
-      'var(--theme-salvia)',
+      'var(--theme-canela)',
       'var(--theme-pavo)',
     ]);
   });

@@ -69,7 +69,7 @@ function ResourceButton({
     : '';
 
   return (
-    <div className={`group flex flex-col rounded border p-1.5 ${current ? 'border-salvia/35 bg-salvia/10' : 'border-transparent hover:border-carbon/10 hover:bg-carbon/5'}`}>
+    <div className={`group flex flex-col rounded border p-1.5 ${current ? 'border-canela/35 bg-canela/10' : 'border-transparent hover:border-carbon/10 hover:bg-carbon/5'}`}>
       <div className="flex items-start justify-between gap-1">
         <button
           type="button"
@@ -202,7 +202,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
     >
       <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-3">
         <div>
-          <p className="ac-label ac-label--sm ac-label--salvia">Editor</p>
+          <p className="ac-label ac-label--sm ac-label--canela">Editor</p>
           <h2 className="font-serif text-base font-bold text-carbon">Recursos matemáticos</h2>
         </div>
         <button type="button" onClick={close} className="rounded border border-carbon/15 px-2 py-1 text-xs text-carbon/65" aria-label="Ocultar explorador">Ocultar</button>
@@ -239,14 +239,14 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
               value={filters.query}
               onChange={event => updateFilter('query', event.target.value)}
               placeholder={`Buscar ${section === 'documents' ? 'documentos' : 'diagramas'}…`}
-              className="w-full rounded border border-carbon/20 bg-lienzo px-3 py-2 text-xs text-carbon outline-none placeholder:text-carbon/35 focus:border-salvia"
+              className="w-full rounded border border-carbon/20 bg-lienzo px-3 py-2 text-xs text-carbon outline-none placeholder:text-carbon/35 focus:border-canela"
             />
           </label>
           {section === 'documents' && onCreatePage && (
             <button
               type="button"
               onClick={onCreatePage}
-              className="rounded bg-salvia/10 px-2 py-2 text-[10px] font-bold text-salvia hover:bg-salvia/20 whitespace-nowrap cursor-pointer"
+              className="rounded bg-canela/10 px-2 py-2 text-[10px] font-bold text-canela hover:bg-canela/20 whitespace-nowrap cursor-pointer"
               title="Crear nueva página estructurada"
             >
               ＋ Página
@@ -256,7 +256,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
             <button
               type="button"
               onClick={onCreateDiagram}
-              className="rounded bg-salvia/10 px-2 py-2 text-[10px] font-bold text-salvia hover:bg-salvia/20 whitespace-nowrap cursor-pointer"
+              className="rounded bg-canela/10 px-2 py-2 text-[10px] font-bold text-canela hover:bg-canela/20 whitespace-nowrap cursor-pointer"
               title="Crear nuevo diagrama"
             >
               ＋ Diagrama
@@ -264,7 +264,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
           )}
         </div>
         <details className="group rounded border border-carbon/10 bg-carbon/[0.02]" open={advancedFilterCount > 0 || undefined}>
-          <summary className="flex cursor-pointer list-none items-center justify-between rounded px-3 py-2 text-[10px] font-bold text-carbon/60 hover:bg-carbon/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-salvia [&::-webkit-details-marker]:hidden">
+          <summary className="flex cursor-pointer list-none items-center justify-between rounded px-3 py-2 text-[10px] font-bold text-carbon/60 hover:bg-carbon/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-canela [&::-webkit-details-marker]:hidden">
             <span>Filtrar resultados</span>
             <span className="font-mono text-[9px] text-carbon/45">{advancedFilterCount > 0 ? `${advancedFilterCount} activos` : 'Tipo, estado, capacidad'} <span aria-hidden="true">▾</span></span>
           </summary>
@@ -360,7 +360,7 @@ export const EditorNavigation: React.FC<EditorNavigationProps> = ({
         )}
         {!filtersActive && recents.length > 0 && (
           <section className="mb-4" aria-labelledby="editor-recents-heading">
-            <h3 id="editor-recents-heading" className="mb-1.5 px-1 ac-label ac-label--sm ac-label--pizarra">Recientes</h3>
+            <h3 id="editor-recents-heading" className="mb-1.5 px-1 ac-label ac-label--sm ac-label--mora">Recientes</h3>
             <div className="space-y-1">
               {recents.slice(0, 4).map(file => (
                 <ResourceButton

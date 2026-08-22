@@ -62,7 +62,7 @@ export const CircunferenciaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "diametro",
-      "color": "salvia"
+      "color": "canela"
     },
     {
       "id": "grupoCuerda",
@@ -210,7 +210,7 @@ export const CircunferenciaSpec = createDiagramSpec(
     {
       "id": "D",
       "label": "D",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 120,
       "visible": false,
@@ -379,7 +379,7 @@ export const CircunferenciaSpec = createDiagramSpec(
     {
       "id": "discoInterior",
       "label": "Círculo interior",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 10,
       "visible": false,
@@ -441,7 +441,7 @@ export const CircunferenciaSpec = createDiagramSpec(
     {
       "id": "diametroDP",
       "label": "Diámetro DP",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 30,
       "visible": false,
@@ -473,7 +473,7 @@ export const CircunferenciaSpec = createDiagramSpec(
     {
       "id": "radioOP",
       "label": "Radio OP",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 40,
       "visible": true,

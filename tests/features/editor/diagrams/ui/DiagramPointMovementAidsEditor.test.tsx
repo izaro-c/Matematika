@@ -113,7 +113,7 @@ describe('DiagramPointMovementAidsEditor style', () => {
     expect(screen.getByLabelText('Ajuste a cuadrícula')).toBeTruthy();
   });
 
-  it('usa tokens carbon/salvia en checkbox de snap (no accent-pavo/ocre)', () => {
+  it('usa tokens carbon/canela en checkbox de snap (no accent-pavo/ocre)', () => {
     const p = point({ snapToGrid: true });
     render(
       <DiagramPointMovementAidsEditor
@@ -125,7 +125,7 @@ describe('DiagramPointMovementAidsEditor style', () => {
     );
 
     const snap = screen.getByLabelText('Ajuste a cuadrícula');
-    expect(snap.className).toMatch(/text-salvia|focus:ring-salvia|border-carbon\/30/);
+    expect(snap.className).toMatch(/text-canela|focus:ring-canela|border-carbon\/30/);
     expect(snap.className).not.toMatch(/accent-pavo|accent-ocre/);
   });
 

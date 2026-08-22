@@ -98,7 +98,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
       {/* Header */}
       <header className="flex items-center justify-between border-b border-carbon/15 px-4 py-3 bg-carbon/[0.02]">
         <div>
-          <p className="ac-label ac-label--sm ac-label--salvia">Diagrama</p>
+          <p className="ac-label ac-label--sm ac-label--canela">Diagrama</p>
           <h2 className="font-serif text-sm font-bold text-carbon">Datos del diagrama</h2>
         </div>
         {onClose && (
@@ -119,7 +119,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
         <div className="rounded-lg border border-carbon/15 bg-carbon/[0.02] p-3 space-y-2">
           <div className="flex items-center justify-between">
             <span className="ac-label ac-label--xs">Idioma de trabajo</span>
-            <span className="text-[10px] font-bold text-salvia">{activeLangConfig.name}</span>
+            <span className="text-[10px] font-bold text-canela">{activeLangConfig.name}</span>
           </div>
 
           <EditorLanguageBadges
@@ -145,7 +145,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
             value={currentTitle}
             onChange={e => handleTitleChange(e.target.value)}
             placeholder={isDefaultLang ? 'Título del diagrama' : (model.title || 'Título en español')}
-            className="w-full rounded border border-carbon/20 bg-lienzo px-2.5 py-1.5 text-xs font-bold text-carbon focus:border-salvia outline-none"
+            className="w-full rounded border border-carbon/20 bg-lienzo px-2.5 py-1.5 text-xs font-bold text-carbon focus:border-canela outline-none"
           />
         </div>
 
@@ -159,7 +159,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
             onChange={e => handleNoteChange(e.target.value)}
             rows={3}
             placeholder={isDefaultLang ? 'Instrucciones pedagógicas o notas para el estudiante…' : (model.note || 'Instrucciones en español…')}
-            className="w-full rounded border border-carbon/20 bg-lienzo px-2.5 py-1.5 text-xs text-carbon focus:border-salvia outline-none"
+            className="w-full rounded border border-carbon/20 bg-lienzo px-2.5 py-1.5 text-xs text-carbon focus:border-canela outline-none"
           />
         </div>
 
@@ -170,7 +170,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
             <select
               value={model.mode || 'simulation'}
               onChange={e => onUpdateModel({ mode: e.target.value as DiagramMode }, 'Editar modo de publicación')}
-              className="w-full rounded border border-carbon/20 bg-lienzo px-2 py-1.5 text-xs text-carbon focus:border-salvia outline-none"
+              className="w-full rounded border border-carbon/20 bg-lienzo px-2 py-1.5 text-xs text-carbon focus:border-canela outline-none"
             >
               <option value="simulation">Simulación</option>
               <option value="diagram">Fijo</option>
@@ -184,7 +184,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
               value={model.category || ''}
               onChange={e => onUpdateModel({ category: e.target.value }, 'Editar categoría')}
               placeholder="Teoremas"
-              className="w-full rounded border border-carbon/20 bg-lienzo px-2 py-1.5 text-xs text-carbon focus:border-salvia outline-none"
+              className="w-full rounded border border-carbon/20 bg-lienzo px-2 py-1.5 text-xs text-carbon focus:border-canela outline-none"
             />
           </div>
         </div>
@@ -198,7 +198,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
                 type="checkbox"
                 checked={Boolean(model.grid)}
                 onChange={e => onUpdateModel({ grid: e.target.checked }, 'Alternar rejilla')}
-                className="rounded border-carbon/30 text-salvia focus:ring-salvia"
+                className="rounded border-carbon/30 text-canela focus:ring-canela"
               />
               <span>Rejilla</span>
             </label>
@@ -207,7 +207,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
                 type="checkbox"
                 checked={Boolean(model.axis)}
                 onChange={e => onUpdateModel({ axis: e.target.checked }, 'Alternar ejes')}
-                className="rounded border-carbon/30 text-salvia focus:ring-salvia"
+                className="rounded border-carbon/30 text-canela focus:ring-canela"
               />
               <span>Ejes</span>
             </label>
@@ -216,7 +216,7 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
                 type="checkbox"
                 checked={model.showLabels !== false}
                 onChange={e => onUpdateModel({ showLabels: e.target.checked }, 'Alternar etiquetas globales')}
-                className="rounded border-carbon/30 text-salvia focus:ring-salvia"
+                className="rounded border-carbon/30 text-canela focus:ring-canela"
               />
               <span>Etiquetas</span>
             </label>

@@ -334,7 +334,7 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
               <li>Cursiva: <em className="italic">*texto*</em> o _texto_</li>
               <li>Matemáticas: <code>$x^2 + y^2 = r^2$</code></li>
               <li>Cálculos: use «Insertar cálculo»; cada resultado puede tener su unidad y decimales.</li>
-              <li>Color: <code>[granada:texto rojo]</code> (colores: carbon, pavo, granada, ocre, salvia, musgo, terracota, pizarra)</li>
+              <li>Color: <code>[granada:texto rojo]</code> (colores: carbon, pavo, granada, ocre, canela, musgo, terracota, mora)</li>
             </ul>
           </DiagramPanel>
 

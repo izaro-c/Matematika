@@ -41,7 +41,7 @@ function normalizeSearch(value: string): string {
 function validationStatusClass(kind: 'empty' | 'error' | 'warning' | 'valid'): string {
   if (kind === 'error') return 'border-granada/25 bg-granada/5 text-granada';
   if (kind === 'warning') return 'border-ocre/25 bg-ocre/5 text-ocre';
-  if (kind === 'valid') return 'border-salvia/30 bg-salvia/10 text-musgo';
+  if (kind === 'valid') return 'border-canela/30 bg-canela/10 text-musgo';
   return 'border-carbon/10 bg-carbon/[0.02] text-carbon/45';
 }
 

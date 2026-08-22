@@ -467,13 +467,13 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                 if (e.key === 'Enter') handleAddLayer();
               }}
               placeholder="Nueva capa..."
-              className="flex-1 bg-lienzo border border-carbon/20 rounded-xl px-3 py-1.5 text-xs text-carbon placeholder-carbon/40 focus:border-salvia focus:ring-1 focus:ring-salvia outline-none transition-all shadow-2xs"
+              className="flex-1 bg-lienzo border border-carbon/20 rounded-xl px-3 py-1.5 text-xs text-carbon placeholder-carbon/40 focus:border-canela focus:ring-1 focus:ring-canela outline-none transition-all shadow-2xs"
             />
             <button
               type="button"
               onClick={handleAddLayer}
               disabled={!newLayerLabel.trim()}
-              className="flex items-center space-x-1 px-3 py-1.5 bg-salvia text-lienzo rounded-xl font-bold hover:bg-salvia/90 disabled:opacity-40 transition-all cursor-pointer text-xs shadow-2xs shrink-0"
+              className="flex items-center space-x-1 px-3 py-1.5 bg-canela text-lienzo rounded-xl font-bold hover:bg-canela/90 disabled:opacity-40 transition-all cursor-pointer text-xs shadow-2xs shrink-0"
             >
               <IconPlus className="w-3.5 h-3.5" />
               <span>Capa</span>
@@ -493,7 +493,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
               return (
                 <React.Fragment key={layer.id}>
                   {isLayerDropTarget && (
-                    <div className="h-1 rounded-full bg-salvia my-1 shadow-2xs animate-pulse" aria-hidden />
+                    <div className="h-1 rounded-full bg-canela my-1 shadow-2xs animate-pulse" aria-hidden />
                   )}
                   <div
                     onDragOver={e => {
@@ -533,14 +533,14 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                     }}
                     className={`rounded-2xl border shadow-2xs overflow-hidden transition-all duration-150 ${
                       draggingLayerId === layer.id
-                        ? 'opacity-30 scale-95 border-salvia border-dashed'
+                        ? 'opacity-30 scale-95 border-canela border-dashed'
                         : isDropTarget || isLayerDropTarget
-                        ? 'bg-salvia/10 border-salvia ring-2 ring-salvia/40 scale-[1.01]'
+                        ? 'bg-canela/10 border-canela ring-2 ring-canela/40 scale-[1.01]'
                         : 'bg-lienzo border-carbon/15 hover:border-carbon/30'
                     }`}
                   >
                     {/* Fila Header de Capa */}
-                    <div className={`flex items-center justify-between p-2.5 ${isDropTarget || isLayerDropTarget ? 'bg-salvia/5' : 'bg-carbon/5'}`}>
+                    <div className={`flex items-center justify-between p-2.5 ${isDropTarget || isLayerDropTarget ? 'bg-canela/5' : 'bg-carbon/5'}`}>
                       <div className="flex items-center space-x-1 min-w-0 flex-1 text-left">
                         <span
                           draggable
@@ -564,7 +564,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           <span className="text-carbon/50 hover:text-carbon transition-colors">
                             {isExpanded ? <IconChevronDown className="w-3.5 h-3.5" /> : <IconChevronRight className="w-3.5 h-3.5" />}
                           </span>
-                          <span className="font-mono text-[10px] bg-salvia/10 text-salvia font-bold px-1.5 py-0.5 rounded border border-salvia/20 shrink-0">
+                          <span className="font-mono text-[10px] bg-canela/10 text-canela font-bold px-1.5 py-0.5 rounded border border-canela/20 shrink-0">
                             {layer.id}
                           </span>
                           <span className="font-serif font-bold text-xs truncate text-carbon">{layer.label}</span>
@@ -572,7 +572,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                             {layerItems.length}
                           </span>
                           {isDropTarget && draggingFromOtherLayer && (
-                            <span className="text-[9px] font-bold text-salvia bg-salvia/15 px-1.5 py-0.5 rounded animate-pulse">
+                            <span className="text-[9px] font-bold text-canela bg-canela/15 px-1.5 py-0.5 rounded animate-pulse">
                               Soltar aquí
                             </span>
                           )}
@@ -606,7 +606,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           type="button"
                           onClick={() => handleToggleLayerVisible(layer.id)}
                           className={`p-1 rounded-lg transition-colors cursor-pointer ${
-                            layer.visible !== false ? 'text-salvia hover:bg-salvia/10' : 'text-carbon/30 hover:bg-carbon/10'
+                            layer.visible !== false ? 'text-canela hover:bg-canela/10' : 'text-carbon/30 hover:bg-carbon/10'
                           }`}
                           title={layer.visible !== false ? 'Ocultar capa' : 'Mostrar capa'}
                           aria-label={layer.visible !== false ? 'Ocultar capa' : 'Mostrar capa'}
@@ -655,7 +655,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                             onKeyDown={e => {
                               if (e.key === 'Enter') handleRenameLayerId(layer.id, e.currentTarget.value);
                             }}
-                            className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-mono font-bold text-salvia focus:border-salvia outline-none"
+                            className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-mono font-bold text-canela focus:border-canela outline-none"
                           />
                         </div>
                         <div>
@@ -664,7 +664,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                             type="text"
                             value={layer.label}
                             onChange={e => handleRenameLayerLabel(layer.id, e.target.value)}
-                            className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-bold text-carbon focus:border-salvia outline-none"
+                            className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-bold text-carbon focus:border-canela outline-none"
                           />
                         </div>
                       </div>
@@ -674,7 +674,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                         <div
                           className={`rounded-xl border-2 border-dashed p-4 text-center transition-colors ${
                             isDropTarget
-                              ? 'border-salvia bg-salvia/10 text-salvia'
+                              ? 'border-canela bg-canela/10 text-canela'
                               : 'border-carbon/15 text-carbon/40 bg-carbon/5'
                           }`}
                         >
@@ -692,7 +692,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                             return (
                               <React.Fragment key={item.id}>
                                 {dropInsertBeforeId === item.id && draggingItemId && draggingItemId !== item.id && (
-                                  <div className="h-0.5 rounded-full bg-salvia my-1 shadow-2xs animate-pulse" aria-hidden />
+                                  <div className="h-0.5 rounded-full bg-canela my-1 shadow-2xs animate-pulse" aria-hidden />
                                 )}
                                 <div
                                   onDragOver={e => {
@@ -714,9 +714,9 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                   }}
                                   className={`flex items-center justify-between gap-1.5 p-2 bg-lienzo rounded-xl border text-xs transition-all duration-150 ${
                                     draggingItemId === item.id
-                                      ? 'opacity-30 scale-95 border-salvia border-dashed'
+                                      ? 'opacity-30 scale-95 border-canela border-dashed'
                                       : dropInsertBeforeId === item.id
-                                      ? 'border-salvia ring-1 ring-salvia/50'
+                                      ? 'border-canela ring-1 ring-canela/50'
                                       : 'border-carbon/10 hover:border-carbon/25 hover:shadow-2xs'
                                   }`}
                                 >
@@ -778,7 +778,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                         }
                                       }}
                                       onClick={e => e.stopPropagation()}
-                                      className="bg-carbon/5 border border-carbon/15 rounded-md px-1.5 py-0.5 text-[10px] font-bold text-salvia hover:border-salvia/40 cursor-pointer focus:outline-none"
+                                      className="bg-carbon/5 border border-carbon/15 rounded-md px-1.5 py-0.5 text-[10px] font-bold text-canela hover:border-canela/40 cursor-pointer focus:outline-none"
                                       aria-label={`Cambiar capa de ${item.id}`}
                                     >
                                       {layers.map(l => (
@@ -815,13 +815,13 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                 if (e.key === 'Enter') handleAddGroup();
               }}
               placeholder="Nuevo grupo..."
-              className="flex-1 bg-lienzo border border-carbon/20 rounded-xl px-3 py-1.5 text-xs text-carbon placeholder-carbon/40 focus:border-salvia focus:ring-1 focus:ring-salvia outline-none transition-all shadow-2xs"
+              className="flex-1 bg-lienzo border border-carbon/20 rounded-xl px-3 py-1.5 text-xs text-carbon placeholder-carbon/40 focus:border-canela focus:ring-1 focus:ring-canela outline-none transition-all shadow-2xs"
             />
             <button
               type="button"
               onClick={handleAddGroup}
               disabled={!newGroupLabel.trim()}
-              className="flex items-center space-x-1 px-3 py-1.5 bg-salvia text-lienzo rounded-xl font-bold hover:bg-salvia/90 disabled:opacity-40 transition-all cursor-pointer text-xs shadow-2xs shrink-0"
+              className="flex items-center space-x-1 px-3 py-1.5 bg-canela text-lienzo rounded-xl font-bold hover:bg-canela/90 disabled:opacity-40 transition-all cursor-pointer text-xs shadow-2xs shrink-0"
             >
               <IconPlus className="w-3.5 h-3.5" />
               <span>Grupo</span>
@@ -860,7 +860,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                         </span>
                         <span className="font-serif font-bold text-xs truncate text-carbon">{grp.label}</span>
                         {grp.target !== false && (
-                          <span className="font-mono text-[9px] bg-salvia/10 text-salvia font-bold px-1.5 py-0.2 rounded border border-salvia/20 shrink-0" title={`Target público: ${grp.targetId || grp.id}`}>
+                          <span className="font-mono text-[9px] bg-canela/10 text-canela font-bold px-1.5 py-0.2 rounded border border-canela/20 shrink-0" title={`Target público: ${grp.targetId || grp.id}`}>
                             target
                           </span>
                         )}
@@ -874,7 +874,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                           type="button"
                           onClick={() => handleToggleGroupVisible(grp.id)}
                           className={`p-1 rounded-lg transition-colors cursor-pointer ${
-                            grp.visible !== false ? 'text-salvia hover:bg-salvia/10' : 'text-carbon/30 hover:bg-carbon/10'
+                            grp.visible !== false ? 'text-canela hover:bg-canela/10' : 'text-carbon/30 hover:bg-carbon/10'
                           }`}
                           title={grp.visible !== false ? 'Ocultar grupo' : 'Mostrar grupo'}
                           aria-label={grp.visible !== false ? `Ocultar grupo ${grp.label}` : `Mostrar grupo ${grp.label}`}
@@ -927,7 +927,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                               type="text"
                               value={grp.label}
                               onChange={e => handleRenameGroupLabel(grp.id, e.target.value)}
-                              className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-bold text-carbon focus:border-salvia outline-none"
+                              className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-bold text-carbon focus:border-canela outline-none"
                             />
                           </div>
                         </div>
@@ -940,7 +940,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                               type="checkbox"
                               checked={grp.target !== false}
                               onChange={e => handleToggleGroupTarget(grp.id, e.target.checked)}
-                              className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+                              className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
                             />
                           </label>
                           {grp.target !== false && (
@@ -952,7 +952,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                   value={grp.targetId ?? grp.id}
                                   onChange={e => handleUpdateGroupTargetId(grp.id, e.target.value)}
                                   placeholder={grp.id}
-                                  className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-mono font-bold text-carbon focus:border-salvia outline-none"
+                                  className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-mono font-bold text-carbon focus:border-canela outline-none"
                                 />
                               </div>
                               <div>
@@ -960,14 +960,14 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                 <select
                                   value={grp.color || ''}
                                   onChange={e => handleUpdateGroupColor(grp.id, e.target.value || undefined)}
-                                  className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-bold text-carbon focus:border-salvia outline-none cursor-pointer"
+                                  className="w-full bg-lienzo border border-carbon/20 rounded-lg px-2 py-1 text-xs font-bold text-carbon focus:border-canela outline-none cursor-pointer"
                                 >
                                   <option value="">(Auto por miembros)</option>
-                                  <option value="salvia">salvia</option>
+                                  <option value="canela">canela</option>
                                   <option value="terracota">terracota</option>
                                   <option value="ocre">ocre</option>
                                   <option value="pavo">pavo</option>
-                                  <option value="pizarra">pizarra</option>
+                                  <option value="mora">mora</option>
                                   <option value="granada">granada</option>
                                   <option value="musgo">musgo</option>
                                 </select>
@@ -988,8 +988,8 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                   onClick={() => onTogglePickingGroupId(pickingGroupId === grp.id ? null : grp.id)}
                                   className={`px-2 py-1 rounded-lg text-[10px] font-bold cursor-pointer transition-all border ${
                                     pickingGroupId === grp.id
-                                      ? 'bg-salvia text-lienzo border-salvia shadow-2xs ring-1 ring-salvia/50 animate-pulse'
-                                      : 'bg-lienzo text-carbon/80 border-carbon/20 hover:border-salvia hover:text-salvia'
+                                      ? 'bg-canela text-lienzo border-canela shadow-2xs ring-1 ring-canela/50 animate-pulse'
+                                      : 'bg-lienzo text-carbon/80 border-carbon/20 hover:border-canela hover:text-canela'
                                   }`}
                                   title="Hacer clic en elementos del lienzo para añadirlos o quitarlos de este grupo"
                                 >
@@ -1001,7 +1001,7 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                   <button
                                     type="button"
                                     onClick={() => handleAddSelectedToGroup(grp.id)}
-                                    className="px-2 py-1 bg-salvia/10 text-salvia hover:bg-salvia/20 rounded-lg text-[10px] font-bold cursor-pointer transition-all border border-salvia/30"
+                                    className="px-2 py-1 bg-canela/10 text-canela hover:bg-canela/20 rounded-lg text-[10px] font-bold cursor-pointer transition-all border border-canela/30"
                                     title="Añadir los elementos seleccionados en el lienzo a este grupo"
                                   >
                                     + Añadir sel. ({selectedIds.length})
@@ -1033,9 +1033,9 @@ export const GroupsAndLayersManager: React.FC<GroupsAndLayersManagerProps> = ({
                                   }}
                                   className={`flex items-center space-x-1.5 px-2 py-1 rounded-lg border text-[10px] font-mono transition-all cursor-pointer select-none ${
                                     isMember
-                                      ? 'bg-salvia text-lienzo border-salvia shadow-2xs font-bold'
-                                      : 'bg-lienzo text-carbon/70 border-carbon/20 hover:border-salvia/50 hover:text-carbon'
-                                  } ${isCanvasSelected ? 'ring-2 ring-salvia/60' : ''}`}
+                                      ? 'bg-canela text-lienzo border-canela shadow-2xs font-bold'
+                                      : 'bg-lienzo text-carbon/70 border-carbon/20 hover:border-canela/50 hover:text-carbon'
+                                  } ${isCanvasSelected ? 'ring-2 ring-canela/60' : ''}`}
                                   title={`${isMember ? 'Quitar del grupo' : 'Añadir al grupo'}: ${item.label} (${item.id})`}
                                 >
                                   <span className={`w-1.5 h-1.5 rounded-full ${isMember ? 'bg-lienzo' : 'bg-carbon/30'}`} />

@@ -285,7 +285,7 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
     {
       "id": "dAM",
       "label": "AM",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": -2000,
       "visible": true,
@@ -317,7 +317,7 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
     {
       "id": "dMB",
       "label": "MB",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": -1000,
       "visible": true,

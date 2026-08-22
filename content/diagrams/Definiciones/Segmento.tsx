@@ -198,7 +198,7 @@ export const SegmentoSpec = createDiagramSpec(
     {
       "id": "length",
       "label": "Longitud de AB",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2,
       "visible": true,

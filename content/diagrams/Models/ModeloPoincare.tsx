@@ -699,7 +699,7 @@ export const ModeloPoincareSpec = createDiagramSpec(
     {
       "id": "ultra1",
       "label": "ultraparalela 1",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geodesicas",
       "order": 21,
       "visible": true,
@@ -731,7 +731,7 @@ export const ModeloPoincareSpec = createDiagramSpec(
     {
       "id": "ultra2",
       "label": "ultraparalela 2",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geodesicas",
       "order": 22,
       "visible": true,
@@ -762,7 +762,7 @@ export const ModeloPoincareSpec = createDiagramSpec(
     {
       "id": "ultra3",
       "label": "ultraparalela 3",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geodesicas",
       "order": 23,
       "visible": true,
@@ -793,7 +793,7 @@ export const ModeloPoincareSpec = createDiagramSpec(
     {
       "id": "ultra4",
       "label": "ultraparalela 4",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geodesicas",
       "order": 24,
       "visible": true,
@@ -824,7 +824,7 @@ export const ModeloPoincareSpec = createDiagramSpec(
     {
       "id": "radioP",
       "label": "distancia euclídea de P al centro",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "anotaciones",
       "order": 30,
       "visible": true,

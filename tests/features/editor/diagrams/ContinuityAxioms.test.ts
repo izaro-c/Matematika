@@ -116,7 +116,7 @@ describe('axiomas de continuidad editables', () => {
     expect(model.elements.find(item => item.id === 'rayR')).toMatchObject({
       kind: 'ray',
       refs: ['pP', 'pRight'],
-      color: 'salvia',
+      color: 'canela',
     });
     expect(model.groups.find(item => item.id === 'classL')).toMatchObject({ targetId: 'claseL', memberIds: ['rayL', 'labelL'] });
     expect(model.groups.find(item => item.id === 'classR')).toMatchObject({ targetId: 'claseR', memberIds: ['rayR', 'labelR'] });

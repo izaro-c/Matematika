@@ -173,7 +173,7 @@ export const CongruenciaALASpec = createDiagramSpec(
     {
       "id": "A1",
       "label": "A",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometria",
       "order": 7015,
       "visible": true,
@@ -206,7 +206,7 @@ export const CongruenciaALASpec = createDiagramSpec(
     {
       "id": "B1",
       "label": "B",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometria",
       "order": 1015,
       "visible": true,
@@ -239,7 +239,7 @@ export const CongruenciaALASpec = createDiagramSpec(
     {
       "id": "C1",
       "label": "C",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometria",
       "order": 3015,
       "visible": true,
@@ -381,7 +381,7 @@ export const CongruenciaALASpec = createDiagramSpec(
     {
       "id": "triangulo1",
       "label": "triángulo ABC",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "rellenos",
       "order": 1,
       "visible": true,
@@ -446,7 +446,7 @@ export const CongruenciaALASpec = createDiagramSpec(
     {
       "id": "segAB1",
       "label": "lado AB",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometria",
       "order": 10,
       "visible": true,
@@ -477,7 +477,7 @@ export const CongruenciaALASpec = createDiagramSpec(
     {
       "id": "segAC1",
       "label": "lado AC",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometria",
       "order": 11,
       "visible": true,
@@ -507,7 +507,7 @@ export const CongruenciaALASpec = createDiagramSpec(
     {
       "id": "segBC1",
       "label": "lado BC",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometria",
       "order": 12,
       "visible": true,
@@ -822,7 +822,7 @@ export const CongruenciaALASpec = createDiagramSpec(
     {
       "id": "cotaAB1",
       "label": "|AB|",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "cotas",
       "order": -3000,
       "visible": true,

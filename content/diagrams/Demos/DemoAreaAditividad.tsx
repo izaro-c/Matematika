@@ -77,7 +77,7 @@ export const DemoAreaAditividadSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "poligono-p2",
-      "color": "pizarra"
+      "color": "mora"
     },
     {
       "id": "gTri1",
@@ -111,7 +111,7 @@ export const DemoAreaAditividadSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "triangulacion-p2",
-      "color": "pizarra"
+      "color": "mora"
     },
     {
       "id": "gUnion",
@@ -233,7 +233,7 @@ export const DemoAreaAditividadSpec = createDiagramSpec(
     {
       "id": "D",
       "label": "D",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2350,
       "visible": true,
@@ -265,7 +265,7 @@ export const DemoAreaAditividadSpec = createDiagramSpec(
     {
       "id": "E",
       "label": "E",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2360,
       "visible": true,
@@ -331,7 +331,7 @@ export const DemoAreaAditividadSpec = createDiagramSpec(
     {
       "id": "p2",
       "label": "Polígono P₂",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2380,
       "visible": true,
@@ -430,7 +430,7 @@ export const DemoAreaAditividadSpec = createDiagramSpec(
     {
       "id": "t2a",
       "label": "Triángulo B₁",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2410,
       "visible": true,

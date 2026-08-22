@@ -36,7 +36,7 @@ import { DemoAngulosAlternosInternos } from "@content/diagrams/Demos/DemoAngulos
 ### Parte 1: Ángulos congruentes ⇒ rectas paralelas (geometría absoluta)
 
 <ProofStep number={1} title="Disposición de la figura" target={["recta-l", "recta-m", "transversal-t"]} leanBlocks={metadata.stepTacticMap["1"]}>
-Sean <InteractiveElement target="recta-l" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="recta-m" color="carbon">$m$</InteractiveElement> dos rectas cortadas por la <InteractiveElement target="transversal-t" color="salvia">transversal $t$</InteractiveElement> en los puntos <InteractiveElement target="punto-a" color="pizarra">$A \in l$</InteractiveElement> y <InteractiveElement target="punto-b" color="pizarra">$B \in m$</InteractiveElement>. Por hipótesis, los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> alternos internos son congruentes:
+Sean <InteractiveElement target="recta-l" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="recta-m" color="carbon">$m$</InteractiveElement> dos rectas cortadas por la <InteractiveElement target="transversal-t" color="canela">transversal $t$</InteractiveElement> en los puntos <InteractiveElement target="punto-a" color="mora">$A \in l$</InteractiveElement> y <InteractiveElement target="punto-b" color="mora">$B \in m$</InteractiveElement>. Por hipótesis, los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> alternos internos son congruentes:
 
 <Formula>
   $$ \angle 1 \cong \angle 2 $$
@@ -54,7 +54,7 @@ Consideremos el <ConceptLink targetId="angulo" isDependency={false}>ángulo</Con
   $$ \angle\text{externo} \gt \angle\text{interior remoto} $$
 </Formula>
 
-Pero por hipótesis $\angle 1 \cong \angle 2$, y por el <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>teorema de los ángulos opuestos por el vértice</ConceptLink>, $\angle 2$ es congruente con el ángulo interior remoto del triángulo (o bien $\angle 1$ lo es con el exterior, dependiendo de la configuración). En cualquier caso, el <InteractiveElement target="angulo-externo" color="terracota">ángulo externo</InteractiveElement> resultaría congruente al <InteractiveElement target="angulo-remoto" color="salvia">ángulo interior remoto</InteractiveElement>, en contradicción con el teorema del ángulo externo que exige desigualdad estricta.
+Pero por hipótesis $\angle 1 \cong \angle 2$, y por el <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>teorema de los ángulos opuestos por el vértice</ConceptLink>, $\angle 2$ es congruente con el ángulo interior remoto del triángulo (o bien $\angle 1$ lo es con el exterior, dependiendo de la configuración). En cualquier caso, el <InteractiveElement target="angulo-externo" color="terracota">ángulo externo</InteractiveElement> resultaría congruente al <InteractiveElement target="angulo-remoto" color="canela">ángulo interior remoto</InteractiveElement>, en contradicción con el teorema del ángulo externo que exige desigualdad estricta.
 </ProofStep>
 
 <ProofStep number={4} title="Conclusión de paralelismo" target={["recta-l", "recta-m"]} leanBlocks={metadata.stepTacticMap["4"]}>
@@ -70,7 +70,7 @@ La <ConceptLink targetId="metodo-contradiccion" isDependency={false}>contradicci
 ### Parte 2: Rectas paralelas ⇒ ángulos congruentes (geometría euclidiana)
 
 <ProofStep number={5} title="Construcción de la paralela por el ángulo transportado" target={["recta-n"]} leanBlocks={metadata.stepTacticMap["5"]}>
-Sean ahora $l \parallel m$ cortadas por <InteractiveElement target="transversal-t2" color="salvia">$t$</InteractiveElement>. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transporte de ángulos (III-4)</ConceptLink>, construimos por $A$ una recta <InteractiveElement target="recta-n" color="terracota">$n$</InteractiveElement> que forme con $t$ un ángulo congruente al que $t$ forma con $m$ en $B$, de modo que dichos ángulos queden en posición de <ConceptLink targetId="angulo" isDependency={false}>alternos internos</ConceptLink>.
+Sean ahora $l \parallel m$ cortadas por <InteractiveElement target="transversal-t2" color="canela">$t$</InteractiveElement>. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transporte de ángulos (III-4)</ConceptLink>, construimos por $A$ una recta <InteractiveElement target="recta-n" color="terracota">$n$</InteractiveElement> que forme con $t$ un ángulo congruente al que $t$ forma con $m$ en $B$, de modo que dichos ángulos queden en posición de <ConceptLink targetId="angulo" isDependency={false}>alternos internos</ConceptLink>.
 </ProofStep>
 
 <ProofStep number={6} title="Unicidad de la paralela" target={["recta-l", "recta-n"]} leanBlocks={metadata.stepTacticMap["6"]}>
@@ -80,7 +80,7 @@ Por la Parte 1 (<ConceptLink targetId="sistema-absoluto" isDependency={false}>ge
   $$ l = n $$
 </Formula>
 
-Por el paso 5, $n$ forma con $t$ ángulos alternos internos congruentes con los de $m$. Como $l = n$, los <InteractiveElement target="angulos-alternos" color="salvia">ángulos alternos internos</InteractiveElement> entre $l$, $m$ y $t$ son congruentes.
+Por el paso 5, $n$ forma con $t$ ángulos alternos internos congruentes con los de $m$. Como $l = n$, los <InteractiveElement target="angulos-alternos" color="canela">ángulos alternos internos</InteractiveElement> entre $l$, $m$ y $t$ son congruentes.
 </ProofStep>
 
 <Separador />

@@ -40,7 +40,7 @@ Por hipótesis de inducción aplicada a $T_a$ y $T_b$ (cada uno con menos de $k$
 </ProofStep>
 
 <ProofStep number={2} title="Refinamiento común de dos triangulaciones" target="step3" leanBlocks={metadata.stepTacticMap["2"]}>
-Sean <InteractiveElement target="triangulacion-t1" color="terracota">$\mathcal{T} = \{A_1, \dots, A_n\}$</InteractiveElement> y <InteractiveElement target="triangulacion-t2" color="salvia">$\mathcal{T}' = \{B_1, \dots, B_m\}$</InteractiveElement> dos triangulaciones de $P$. Superponemos ambas: las aristas de $\mathcal{T}$ y $\mathcal{T}'$ se intersecan en un número finito de <InteractiveElement target="intersecciones" color="pizarra">puntos de intersección</InteractiveElement>. Añadiendo estos puntos como nuevos vértices y subdividiendo los triángulos afectados, obtenemos una tercera <InteractiveElement target="refinamiento-t-star" color="carbon">triangulación $\mathcal{T}^*$ que es un refinamiento de ambas</InteractiveElement>: cada triángulo de $\mathcal{T}^*$ está contenido en exactamente un triángulo de $\mathcal{T}$ y en exactamente un triángulo de $\mathcal{T}'$.
+Sean <InteractiveElement target="triangulacion-t1" color="terracota">$\mathcal{T} = \{A_1, \dots, A_n\}$</InteractiveElement> y <InteractiveElement target="triangulacion-t2" color="canela">$\mathcal{T}' = \{B_1, \dots, B_m\}$</InteractiveElement> dos triangulaciones de $P$. Superponemos ambas: las aristas de $\mathcal{T}$ y $\mathcal{T}'$ se intersecan en un número finito de <InteractiveElement target="intersecciones" color="mora">puntos de intersección</InteractiveElement>. Añadiendo estos puntos como nuevos vértices y subdividiendo los triángulos afectados, obtenemos una tercera <InteractiveElement target="refinamiento-t-star" color="carbon">triangulación $\mathcal{T}^*$ que es un refinamiento de ambas</InteractiveElement>: cada triángulo de $\mathcal{T}^*$ está contenido en exactamente un triángulo de $\mathcal{T}$ y en exactamente un triángulo de $\mathcal{T}'$.
 
 La finitud de las intersecciones se sigue del <ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={true}>teorema de intersección única</ConceptLink>: dos rectas distintas se cortan en a lo sumo un punto. Como las aristas son segmentos finitos, el número total de intersecciones es finito.
 </ProofStep>
@@ -54,7 +54,7 @@ Sumando sobre todos los $A_i \in \mathcal{T}$:
 
 $$ \sum_{A \in \mathcal{T}} \text{Cont}(A) = \sum_{T^* \in \mathcal{T}^*} \text{Cont}(T^*) $$
 
-Análogamente, $\mathcal{T}^*$ se obtiene a partir de <InteractiveElement target="triangulacion-t2" color="salvia">$\mathcal{T}'$</InteractiveElement> subdividiendo cada $B_j$. Por el mismo lema:
+Análogamente, $\mathcal{T}^*$ se obtiene a partir de <InteractiveElement target="triangulacion-t2" color="canela">$\mathcal{T}'$</InteractiveElement> subdividiendo cada $B_j$. Por el mismo lema:
 
 $$ \sum_{B \in \mathcal{T}'} \text{Cont}(B) = \sum_{T^* \in \mathcal{T}^*} \text{Cont}(T^*) $$
 </ProofStep>

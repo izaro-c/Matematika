@@ -27,7 +27,7 @@ function PanelHeader({
       <span className="flex items-center gap-2">
         <span>{title}</span>
         {badge && (
-          <span className="rounded-full bg-salvia/10 border border-salvia/20 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-salvia">
+          <span className="rounded-full bg-canela/10 border border-canela/20 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-canela">
             {badge}
           </span>
         )}

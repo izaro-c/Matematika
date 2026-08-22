@@ -271,7 +271,7 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
           const conceptType = theorem ? (theorem.type || 'teorema') : 'definicion';
           const typeStyle = TYPE_STYLES[conceptType];
           const badgeText = typeStyle?.badge ?? 'CONCEPTO';
-          const badgeColor = typeStyle?.bg ?? 'var(--theme-pizarra)';
+          const badgeColor = typeStyle?.bg ?? 'var(--theme-mora)';
 
           const prefix = definition ? 'definicion' : 'teorema';
 

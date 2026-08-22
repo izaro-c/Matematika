@@ -49,7 +49,7 @@ function parseObjectProperties(node?: ts.Expression): Record<string, any> {
     } else if (valNode.kind === ts.SyntaxKind.FalseKeyword) {
       result[name] = false;
     } else if (ts.isPropertyAccessExpression(valNode)) {
-      // e.g. theme.salvia or theme.ocre
+      // e.g. theme.canela or theme.ocre
       result[name] = valNode.name.text;
     } else if (ts.isArrayLiteralExpression(valNode)) {
       result[name] = valNode.elements

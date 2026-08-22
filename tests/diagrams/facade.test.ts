@@ -14,9 +14,9 @@ describe('diagram facade', () => {
     expect(DIAGRAM_THEME_TOKENS).toEqual([
       'lienzo',
       'carbon',
-      'salvia',
+      'canela',
       'terracota',
-      'pizarra',
+      'mora',
       'ocre',
       'pavo',
       'granada',

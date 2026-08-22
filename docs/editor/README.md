@@ -36,7 +36,7 @@ El soporte de diagramas (`visual-exact` vs `code-preview`) lo mide `npm run edit
 - Toolbar, tabs, estados de carga y error, diff y preview exponen nombres, estados ARIA y regiones anunciables.
 - Los bloques editables se abren con `Enter` o `F2`; `Alt+↑/↓` conserva la reordenación. Puntos móviles y sliders del renderer aceptan flechas; `Shift` amplía el paso.
 - El foco global usa un anillo de 3 px y `prefers-reduced-motion` desactiva animaciones no esenciales.
-- La paleta canónica contiene solo `lienzo`, `carbon`, `salvia`, `terracota`, `pizarra`, `ocre`, `pavo`, `granada` y `musgo`. Un test calcula contraste WCAG AA en claro y oscuro.
+- La paleta canónica contiene solo `lienzo`, `carbon`, `canela`, `terracota`, `mora`, `ocre`, `pavo`, `granada` y `musgo`. Un test calcula contraste WCAG AA en claro y oscuro.
 - El E2E comprueba ausencia de overflow a 390×844, 1024×768 y 1440×900; la regresión de diagramas añade 1600×1100.
 
 La semántica ARIA se prueba automáticamente. No se ha ejecutado en esta fase una sesión humana con NVDA, JAWS o VoiceOver; esa verificación asistiva permanece como validación manual recomendada, no como compatibilidad declarada.

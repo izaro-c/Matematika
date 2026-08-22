@@ -120,7 +120,7 @@ export const CreateDiagramDialog: React.FC<CreateDiagramDialogProps> = ({ open, 
               <span className="normal-case text-granada text-[10px]">Usa minúsculas y guiones (ej. triangulo-pasos).</span>
             )}
             {derivedComponentName && ID_RE.test(value.id) && (
-              <span className="normal-case font-mono text-[10px] text-salvia">
+              <span className="normal-case font-mono text-[10px] text-canela">
                 Componente: &lt;{derivedComponentName} /&gt;
               </span>
             )}
@@ -158,7 +158,7 @@ export const CreateDiagramDialog: React.FC<CreateDiagramDialogProps> = ({ open, 
           <button type="button" onClick={cancel} className="rounded border border-carbon/15 px-3 py-2 text-xs font-bold text-carbon/60 hover:bg-carbon/5">
             Cancelar
           </button>
-          <button disabled={!valid || creating} className="rounded bg-salvia px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40 hover:bg-salvia/90">
+          <button disabled={!valid || creating} className="rounded bg-canela px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40 hover:bg-canela/90">
             {creating ? 'Creando…' : 'Crear y abrir'}
           </button>
         </div>

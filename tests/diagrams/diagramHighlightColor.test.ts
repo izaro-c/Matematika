@@ -15,11 +15,11 @@ describe('preserve color on highlight', () => {
   it('propaga highlight:false a borders para evitar el azul nativo de JSXGraph', () => {
     expect(withNativeHighlightDisabledBorders({
       strokeColor: 'carbon',
-      borders: { strokeColor: 'salvia', strokeWidth: 1.5, fixed: true },
+      borders: { strokeColor: 'canela', strokeWidth: 1.5, fixed: true },
     })).toEqual({
       strokeColor: 'carbon',
       highlight: false,
-      borders: { strokeColor: 'salvia', strokeWidth: 1.5, fixed: true, highlight: false },
+      borders: { strokeColor: 'canela', strokeWidth: 1.5, fixed: true, highlight: false },
     });
   });
 });

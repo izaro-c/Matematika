@@ -140,24 +140,24 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
     <div ref={(el) => registerTaskRef?.(id, el)} data-node-id={id}>
       <Link href={href}>
         <span 
-          className={`group elegant-panel flex flex-col md:flex-row md:items-center gap-4 p-5 my-6 cursor-pointer ${completed ? 'bg-salvia/5 border-salvia/30' : ''}`}
-          style={{ ['--hover-accent' as string]: completed ? 'var(--theme-salvia)' : 'var(--page-accent)' }}
+          className={`group elegant-panel flex flex-col md:flex-row md:items-center gap-4 p-5 my-6 cursor-pointer ${completed ? 'bg-canela/5 border-canela/30' : ''}`}
+          style={{ ['--hover-accent' as string]: completed ? 'var(--theme-canela)' : 'var(--page-accent)' }}
         >
           <div className={`w-5 h-5 border flex items-center justify-center shrink-0 transition-all duration-300 ${
             completed 
-              ? 'border-salvia bg-transparent rotate-45' 
+              ? 'border-canela bg-transparent rotate-45' 
               : 'page-accent-group-border border-carbon/30 rotate-0 group-hover:rotate-45'
           }`}>
             {completed && (
-              <div className="w-2.5 h-2.5 bg-salvia scale-animation"></div>
+              <div className="w-2.5 h-2.5 bg-canela scale-animation"></div>
             )}
           </div>
 
           <div className="flex-1">
-            <div className={`ac-label ac-label--xs mb-1 font-bold transition-colors ${completed ? 'text-salvia/80' : 'page-accent-group-hover text-carbon/50'}`}>
+            <div className={`ac-label ac-label--xs mb-1 font-bold transition-colors ${completed ? 'text-canela/80' : 'page-accent-group-hover text-carbon/50'}`}>
               {type}
             </div>
-            <h3 className={`text-xl font-serif font-bold transition-colors ${completed ? 'text-salvia' : 'page-accent-group-hover text-carbon'}`}>
+            <h3 className={`text-xl font-serif font-bold transition-colors ${completed ? 'text-canela' : 'page-accent-group-hover text-carbon'}`}>
               {displayTitle}
             </h3>
           </div>
@@ -167,7 +167,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
             <ContentThumbnail id={id} />
           </div>
 
-          <div className={`ac-eyebrow ac-eyebrow--sm font-bold transition-colors ${completed ? 'text-salvia' : 'page-accent-group-hover text-carbon/40'}`}>
+          <div className={`ac-eyebrow ac-eyebrow--sm font-bold transition-colors ${completed ? 'text-canela' : 'page-accent-group-hover text-carbon/40'}`}>
             {actionLabel}
           </div>
         </span>

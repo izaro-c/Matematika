@@ -12,7 +12,7 @@
     { "id": "pC", "label": "C", "x": 0, "y": 2, "color": "terracota", "fixed": false, "target": true }
   ],
   "elements": [
-    { "id": "polyABC", "label": "Triángulo ABC", "kind": "polygon", "refs": ["pA", "pB", "pC"], "color": "salvia", "target": true }
+    { "id": "polyABC", "label": "Triángulo ABC", "kind": "polygon", "refs": ["pA", "pB", "pC"], "color": "canela", "target": true }
   ],
   "sliders": [],
   "steps": [

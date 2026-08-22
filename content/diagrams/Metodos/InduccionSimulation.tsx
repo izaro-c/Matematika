@@ -75,7 +75,7 @@ export const InduccionSimulation = () => {
             const f = fallen.has(i);
             const isBase = i === 0;
             const color = f
-              ? isBase ? 'var(--theme-terracota)' : 'var(--theme-salvia)'
+              ? isBase ? 'var(--theme-terracota)' : 'var(--theme-canela)'
               : 'var(--theme-carbon)';
             // Opacidad: primeros bien visibles, últimos se desvanecen progresivamente
             const vis = i < 4 ? 1
@@ -111,28 +111,28 @@ export const InduccionSimulation = () => {
           })}
         </div>
         {/* Indicador de continuación infinita a la derecha */}
-        <div className="absolute top-1/2 right-4 -translate-y-1/2 text-xl text-pizarra/15 font-serif select-none">⋯</div>
+        <div className="absolute top-1/2 right-4 -translate-y-1/2 text-xl text-mora/15 font-serif select-none">⋯</div>
       </div>
 
       {/* Mensaje */}
       <div className="text-center h-12 flex flex-col items-center justify-center gap-0.5">
         {!blasted && !induced && (
-          <p className="text-sm text-pizarra/35 italic">Pulsa cualquier botón para explorar</p>
+          <p className="text-sm text-mora/35 italic">Pulsa cualquier botón para explorar</p>
         )}
         {onlyBlasted && (
           <>
-            <p className="text-sm"><span className="text-terracota font-bold">✓ P(1) cierto.</span> <span className="text-pizarra/35">Pero los demás no caen solos.</span></p>
+            <p className="text-sm"><span className="text-terracota font-bold">✓ P(1) cierto.</span> <span className="text-mora/35">Pero los demás no caen solos.</span></p>
             <p className="text-[10px] text-granada/45">Demasiado separados: una ficha caída no alcanza a la siguiente</p>
           </>
         )}
         {onlyInduced && (
           <>
-            <p className="text-sm"><span className="text-salvia font-bold">P(k) ⇒ P(k+1) establecido.</span> <span className="text-pizarra/35">Pero nadie ha caído aún.</span></p>
+            <p className="text-sm"><span className="text-canela font-bold">P(k) ⇒ P(k+1) establecido.</span> <span className="text-mora/35">Pero nadie ha caído aún.</span></p>
             <p className="text-[10px] text-granada/45">Falta el caso base: el primer dominó sigue de pie</p>
           </>
         )}
         {blasted && induced && !chainDone && (
-          <p className="text-sm text-salvia font-bold">P(k) ⇒ P(k+1): la cadena se propaga</p>
+          <p className="text-sm text-canela font-bold">P(k) ⇒ P(k+1): la cadena se propaga</p>
         )}
         {chainDone && (
           <p className="text-base text-carbon font-bold">∴ ∀n, P(n) es cierto</p>
@@ -151,14 +151,14 @@ export const InduccionSimulation = () => {
         <button
           onClick={doInduction}
           className="px-5 py-2 text-sm rounded-sm font-serif transition-all
-            bg-salvia text-lienzo hover:bg-salvia/85"
+            bg-canela text-lienzo hover:bg-canela/85"
         >
           ② Paso de inducción
         </button>
         {(blasted || induced) && (
           <button
             onClick={reset}
-            className="px-3 py-2 text-sm rounded-sm font-serif border border-pizarra/12 text-pizarra/50 hover:text-pizarra hover:bg-pizarra/5 transition-all"
+            className="px-3 py-2 text-sm rounded-sm font-serif border border-mora/12 text-mora/50 hover:text-mora hover:bg-mora/5 transition-all"
           >
             ⟳
           </button>

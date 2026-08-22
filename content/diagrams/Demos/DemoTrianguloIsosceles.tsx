@@ -41,19 +41,19 @@ export const DemoTrianguloIsosceles = () => {
         els.ladoBC = createSegment(board, [B, C], { strokeColor: theme.carbon, strokeWidth: 2 }, theme);
 
         els.polyABC = createPolygon(board, [A, B, C], {
-          fillColor: theme.salvia, fillOpacity: 0.1,
+          fillColor: theme.canela, fillOpacity: 0.1,
           borders: { visible: false }, vertices: { visible: false }
         }, theme);
 
         const puntoD = createPoint(board, [() => M.X(), () => M.Y()], {
           name: 'D', size: 3,
-          fillColor: theme.pizarra, strokeColor: theme.pizarra,
-          label: { fontSize: 14, cssClass: 'font-serif italic', strokeColor: theme.pizarra },
+          fillColor: theme.mora, strokeColor: theme.mora,
+          label: { fontSize: 14, cssClass: 'font-serif italic', strokeColor: theme.mora },
           visible: false
         }, theme);
         els.puntoD = puntoD;
         els.bisectriz = createSegment(board, [A, puntoD], {
-          dash: 2, strokeColor: theme.pizarra, strokeWidth: 1.5, visible: false
+          dash: 2, strokeColor: theme.mora, strokeWidth: 1.5, visible: false
         }, theme);
 
         els.polyABD = createPolygon(board, [A, B, puntoD], {
@@ -61,7 +61,7 @@ export const DemoTrianguloIsosceles = () => {
           borders: { visible: false }, vertices: { visible: false }, visible: false
         }, theme);
         els.polyACD = createPolygon(board, [A, C, puntoD], {
-          fillColor: theme.salvia, fillOpacity: 0.3,
+          fillColor: theme.canela, fillOpacity: 0.3,
           borders: { visible: false }, vertices: { visible: false }, visible: false
         }, theme);
 
@@ -71,15 +71,15 @@ export const DemoTrianguloIsosceles = () => {
         }, theme);
         els.anguloCAD = createAngle(board, [C, A, puntoD], {
           name: '', radius: 0.8,
-          fillColor: theme.salvia, strokeColor: theme.salvia, fillOpacity: 0.2, visible: false
+          fillColor: theme.canela, strokeColor: theme.canela, fillOpacity: 0.2, visible: false
         }, theme);
         els.anguloB = createAngle(board, [C, B, A], {
           name: '\\beta', radius: 1,
-          fillColor: theme.pizarra, strokeColor: theme.pizarra, fillOpacity: 0.2, visible: false
+          fillColor: theme.mora, strokeColor: theme.mora, fillOpacity: 0.2, visible: false
         }, theme);
         els.anguloC = createAngle(board, [A, C, B], {
           name: '\\gamma', radius: 1,
-          fillColor: theme.pizarra, strokeColor: theme.pizarra, fillOpacity: 0.2, visible: false
+          fillColor: theme.mora, strokeColor: theme.mora, fillOpacity: 0.2, visible: false
         }, theme);
       }}
       onUpdate={(_board, els, theme, _isStep, isHL) => {
@@ -110,7 +110,7 @@ export const DemoTrianguloIsosceles = () => {
         const showBisectriz = isBisectriz || isLadoAD || isTriIzq || isTriDer || isBAD || isCAD || isPuntoD || isAngB;
         els.bisectriz.setAttribute({
           visible: showBisectriz,
-          strokeColor: isLadoAD ? theme.terracota : theme.pizarra,
+          strokeColor: isLadoAD ? theme.terracota : theme.mora,
           strokeWidth: isLadoAD ? 3 : 1.5
         });
         els.puntoD.setAttribute({ visible: isPuntoD || showBisectriz });

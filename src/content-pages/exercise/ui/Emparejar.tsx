@@ -150,11 +150,11 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
   return (
     <div className="my-8 font-serif">
       <div 
-        className={`p-8 elegant-panel relative group ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`}
-        style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}
+        className={`p-8 elegant-panel relative group ${isCompleted ? 'bg-canela/5 border-canela/30' : ''}`}
+        style={{ '--hover-accent': isCompleted ? 'var(--theme-canela)' : 'var(--page-accent)' } as React.CSSProperties}
       >
         <h4 className="font-bold text-carbon mb-8 mt-2 flex items-center gap-3 text-lg z-30 relative">
-          {isCompleted ? <span className="text-salvia">❦ {t('exercise', 'completed')}</span> : <span>{t('exercise', 'matchConcepts')}</span>}
+          {isCompleted ? <span className="text-canela">❦ {t('exercise', 'completed')}</span> : <span>{t('exercise', 'matchConcepts')}</span>}
         </h4>
 
         <div className="relative flex gap-16" ref={containerRef}>
@@ -172,7 +172,7 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
                   key={i}
                   d={`M ${line.x1} ${line.y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${line.x2} ${line.y2}`}
                   fill="none"
-                  stroke={line.isMatched ? "var(--theme-salvia)" : "var(--theme-terracota)"}
+                  stroke={line.isMatched ? "var(--theme-canela)" : "var(--theme-terracota)"}
                   strokeWidth="2"
                   strokeDasharray={line.isMatched ? "none" : "4 4"}
                   className="transition-all duration-300 drop-shadow-sm"
@@ -189,14 +189,14 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
               const isError = errorPair && errorPair[0] === item;
 
               let btnClass = "px-5 py-4 border rounded-none text-left transition-all duration-300 relative ";
-              if (isMatched) btnClass += "bg-salvia/10 border-salvia/40 text-salvia cursor-default ac-inset-shadow";
+              if (isMatched) btnClass += "bg-canela/10 border-canela/40 text-canela cursor-default ac-inset-shadow";
               else if (isError) btnClass += "bg-terracota/5 border-terracota/60 text-terracota animate-shake";
               else if (isSelected) btnClass += "bg-carbon/10 border-carbon text-carbon transform scale-[1.02] shadow-md z-30";
               else btnClass += "page-accent-button bg-transparent border-carbon/20 cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm";
 
               let dotClass: string;
               if (isMatched) {
-                dotClass = 'border-salvia bg-lienzo';
+                dotClass = 'border-canela bg-lienzo';
               } else if (isSelected) {
                 dotClass = 'border-carbon bg-carbon';
               } else {
@@ -228,14 +228,14 @@ export const Emparejar: React.FC<EmparejarProps> = ({ id, pairs }) => {
               const isError = errorPair && errorPair[1] === item;
 
               let btnClass = "px-5 py-4 border rounded-none text-left transition-all duration-300 relative ";
-              if (isMatched) btnClass += "bg-salvia/10 border-salvia/40 text-salvia cursor-default ac-inset-shadow";
+              if (isMatched) btnClass += "bg-canela/10 border-canela/40 text-canela cursor-default ac-inset-shadow";
               else if (isError) btnClass += "bg-terracota/5 border-terracota/60 text-terracota animate-shake";
               else if (isSelected) btnClass += "bg-carbon/10 border-carbon text-carbon transform scale-[1.02] shadow-md z-30";
               else btnClass += "page-accent-button bg-transparent border-carbon/20 cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm";
 
               let dotClass: string;
               if (isMatched) {
-                dotClass = 'border-salvia bg-lienzo';
+                dotClass = 'border-canela bg-lienzo';
               } else if (isSelected) {
                 dotClass = 'border-carbon bg-carbon';
               } else {

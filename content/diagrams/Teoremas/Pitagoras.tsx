@@ -813,7 +813,7 @@ export const PitagorasSpec = createDiagramSpec(
     {
       "id": "nonReflexAngleBCA",
       "label": "Ángulo no reflejo (≤ 180°)",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "construccion",
       "order": 10,
       "visible": true,

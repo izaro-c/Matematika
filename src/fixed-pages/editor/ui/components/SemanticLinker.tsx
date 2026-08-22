@@ -20,11 +20,11 @@ type LinkType = 'concept' | 'reference' | 'graphic' | 'combined';
 type SelectedConcept = string | string[] | null;
 
 const ARTS_CRAFTS_COLORS = [
-  { name: 'salvia' },
+  { name: 'canela' },
   { name: 'terracota' },
   { name: 'ocre' },
   { name: 'pavo' },
-  { name: 'pizarra' },
+  { name: 'mora' },
   { name: 'granada' }
 ];
 
@@ -72,7 +72,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedConcept, setSelectedConcept] = useState<SelectedConcept>(null);
   const [graphElementId, setGraphElementId] = useState('');
-  const [selectedColor, setSelectedColor] = useState('salvia');
+  const [selectedColor, setSelectedColor] = useState('canela');
   const [isDependency, setIsDependency] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const containerRef = useModalFocus<HTMLDivElement>(isOpen, onClose, closeButtonRef);
@@ -99,13 +99,13 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
             setLinkType('combined');
             setSelectedConcept(selectedConceptFrom(initialAttrs.targetId));
             setGraphElementId(initialAttrs.highlightTarget || '');
-            setSelectedColor(initialAttrs.highlightColor || 'salvia');
+            setSelectedColor(initialAttrs.highlightColor || 'canela');
             setIsDependency(initialAttrs.isDependency === true || initialAttrs.isDependency === 'true');
           } else {
             setLinkType('concept');
             setSelectedConcept(selectedConceptFrom(initialAttrs.targetId));
             setGraphElementId('');
-            setSelectedColor('salvia');
+            setSelectedColor('canela');
             setIsDependency(initialAttrs.isDependency === true || initialAttrs.isDependency === 'true');
           }
         } else if (editingTag === 'RefLink') {
@@ -115,14 +115,14 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
         } else if (editingTag === 'InteractiveElement') {
           setLinkType('graphic');
           setGraphElementId(initialAttrs.target || '');
-          setSelectedColor(initialAttrs.color || 'salvia');
+          setSelectedColor(initialAttrs.color || 'canela');
           setSelectedConcept(null);
         }
       } else {
         // Modo creación nuevo
         setSelectedConcept(null);
         setGraphElementId('');
-        setSelectedColor('salvia');
+        setSelectedColor('canela');
         setSearchQuery(selectedText.trim());
         setLinkType(editingTag === 'InteractiveElement' ? 'graphic' : 'concept');
         setIsDependency(false);
@@ -259,8 +259,8 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
         <div className="space-y-1.5">
           <label className="block ac-label ac-label--xs">Concepto en Biblioteca</label>
           {selectedConcept ? (
-            <div className="flex items-center justify-between p-1.5 bg-salvia/5 border border-salvia/20 rounded text-xs">
-              <span className="font-serif font-bold text-salvia">{Array.isArray(selectedConcept) ? selectedConcept.join(', ') : selectedConcept}</span>
+            <div className="flex items-center justify-between p-1.5 bg-canela/5 border border-canela/20 rounded text-xs">
+              <span className="font-serif font-bold text-canela">{Array.isArray(selectedConcept) ? selectedConcept.join(', ') : selectedConcept}</span>
               <button
                 type="button"
                 onClick={() => setSelectedConcept(null)}
@@ -274,7 +274,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
               <input
                 type="text"
                 placeholder="Buscar por nombre, tipo o carpeta..."
-                className="w-full bg-carbon/5 border border-carbon/15 p-1.5 rounded text-xs focus:outline-none focus:border-salvia/50 text-carbon"
+                className="w-full bg-carbon/5 border border-carbon/15 p-1.5 rounded text-xs focus:outline-none focus:border-canela/50 text-carbon"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 autoFocus
@@ -311,7 +311,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
               type="checkbox"
               checked={isDependency}
               onChange={(event) => setIsDependency(event.target.checked)}
-              className="accent-salvia"
+              className="accent-canela"
             />
           </label>}
         </div>
@@ -331,7 +331,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
                       setGraphElementId(target.id);
                       setSelectedColor(target.kind === 'step' ? 'terracota' : target.color);
                     }}
-                    className={`block w-full rounded border px-2 py-1 text-left transition-colors hover:border-salvia/30 hover:bg-salvia/5 ${graphElementId === target.id ? 'border-salvia/40 bg-salvia/10' : 'border-carbon/10 bg-carbon/5'}`}
+                    className={`block w-full rounded border px-2 py-1 text-left transition-colors hover:border-canela/30 hover:bg-canela/5 ${graphElementId === target.id ? 'border-canela/40 bg-canela/10' : 'border-carbon/10 bg-carbon/5'}`}
                     title={target.label}
                   >
                     <div className="flex items-center justify-between">
@@ -350,7 +350,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
             <input
               type="text"
               placeholder="Target manual avanzado"
-              className="mt-1 w-full bg-carbon/5 border border-carbon/15 p-1.5 rounded text-xs focus:outline-none focus:border-salvia/50 text-carbon font-mono"
+              className="mt-1 w-full bg-carbon/5 border border-carbon/15 p-1.5 rounded text-xs focus:outline-none focus:border-canela/50 text-carbon font-mono"
               value={graphElementId}
               onChange={(e) => setGraphElementId(e.target.value)}
             />
@@ -392,7 +392,7 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
             ((linkType === 'graphic' || linkType === 'combined') && !selectedTargetIsValid)
           }
           onClick={handleCreate}
-          className="w-full py-1.5 bg-salvia text-lienzo rounded text-xs font-serif font-bold hover:bg-salvia/80 disabled:opacity-40 transition-all shadow-sm"
+          className="w-full py-1.5 bg-canela text-lienzo rounded text-xs font-serif font-bold hover:bg-canela/80 disabled:opacity-40 transition-all shadow-sm"
         >
           {editingMarkup ? 'Guardar Cambios' : 'Crear Vínculo'}
         </button>

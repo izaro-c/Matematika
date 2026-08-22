@@ -12,7 +12,7 @@ import { EjemploPitagorasCalculo } from '@content/diagrams/Ejercicios/EjemploPit
 
 export const Simulation = EjemploPitagorasCalculo;
 
-<Capitular letra="S" />ea un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink> <InteractiveElement target="poly" color="pizarra">$\triangle ABC$</InteractiveElement> con <ConceptLink targetId="angulo-recto" isDependency={false} highlightTarget="rightAng" highlightColor="pavo">ángulo recto</ConceptLink> en el <InteractiveElement target="C" color="carbon">vértice $C$</InteractiveElement>. Las longitudes de los <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segCA" highlightColor="salvia">cateto $a$</ConceptLink> y <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segBC" highlightColor="terracota">cateto $b$</ConceptLink> son $a = |CA| = 5$ y $b = |BC| = 12$ unidades respectivamente. Se determina la medida exacta de la <ConceptLink targetId="hipotenusa" isDependency={false} highlightTarget="segAB" highlightColor="ocre">hipotenusa</ConceptLink> $c = |AB|$ y se analiza la aritmética de la <ConceptLink targetId="terna-pitagorica" isDependency={false}>terna pitagórica</ConceptLink> resultante.
+<Capitular letra="S" />ea un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink> <InteractiveElement target="poly" color="mora">$\triangle ABC$</InteractiveElement> con <ConceptLink targetId="angulo-recto" isDependency={false} highlightTarget="rightAng" highlightColor="pavo">ángulo recto</ConceptLink> en el <InteractiveElement target="C" color="carbon">vértice $C$</InteractiveElement>. Las longitudes de los <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segCA" highlightColor="canela">cateto $a$</ConceptLink> y <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segBC" highlightColor="terracota">cateto $b$</ConceptLink> son $a = |CA| = 5$ y $b = |BC| = 12$ unidades respectivamente. Se determina la medida exacta de la <ConceptLink targetId="hipotenusa" isDependency={false} highlightTarget="segAB" highlightColor="ocre">hipotenusa</ConceptLink> $c = |AB|$ y se analiza la aritmética de la <ConceptLink targetId="terna-pitagorica" isDependency={false}>terna pitagórica</ConceptLink> resultante.
 
 <Separador />
 
@@ -30,7 +30,7 @@ Determinar el valor de la longitud del tercer lado del triángulo a partir de lo
   <Paso numero={1} id="datos" titulo="Datos e Hipótesis">
     Las longitudes de los catetos del triángulo están definidas por las hipótesis geométricas del enunciado:
     
-    * <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segCA" highlightColor="salvia">Cateto $a$</ConceptLink> (vertical): $a = 5$
+    * <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segCA" highlightColor="canela">Cateto $a$</ConceptLink> (vertical): $a = 5$
     * <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segBC" highlightColor="terracota">Cateto $b$</ConceptLink> (horizontal): $b = 12$
     
     La longitud de la <ConceptLink targetId="hipotenusa" isDependency={false} highlightTarget="segAB" highlightColor="ocre">hipotenusa $c$</ConceptLink> representa la incógnita del problema, siendo el lado opuesto al <ConceptLink targetId="angulo-recto" isDependency={false} highlightTarget="rightAng" highlightColor="pavo">ángulo recto</ConceptLink> situado en el <InteractiveElement target="C" color="carbon">vértice $C$</InteractiveElement>.
@@ -49,7 +49,7 @@ Determinar el valor de la longitud del tercer lado del triángulo a partir de lo
       $$ 5^2 + 12^2 = c^2 $$
     </Formula>
     
-    Geométricamente, esta relación establece que la suma de las áreas de los cuadrados construidos sobre los catetos (el <InteractiveElement target="sqCA" color="salvia">cuadrado de lado $a$</InteractiveElement> con área $5^2 = 25$ y el <InteractiveElement target="sqBC" color="terracota">cuadrado de lado $b$</InteractiveElement> con área $12^2 = 144$) equivale al área del <InteractiveElement target="sqAB" color="ocre">cuadrado de la hipotenusa $c$</InteractiveElement> con área $c^2$.
+    Geométricamente, esta relación establece que la suma de las áreas de los cuadrados construidos sobre los catetos (el <InteractiveElement target="sqCA" color="canela">cuadrado de lado $a$</InteractiveElement> con área $5^2 = 25$ y el <InteractiveElement target="sqBC" color="terracota">cuadrado de lado $b$</InteractiveElement> con área $12^2 = 144$) equivale al área del <InteractiveElement target="sqAB" color="ocre">cuadrado de la hipotenusa $c$</InteractiveElement> con área $c^2$.
     
     <Formula>
       $$ 25 + 144 = c^2 $$
@@ -73,7 +73,7 @@ Determinar el valor de la longitud del tercer lado del triángulo a partir de lo
   </Paso>
 
   <Paso numero={4} id="terna" titulo="Verificación de la Terna Pitagórica">
-    Las tres longitudes obtenidas en el <ConceptLink targetId="triangulo" isDependency={false} highlightTarget="poly" highlightColor="pizarra">triángulo</ConceptLink> son números enteros positivos:
+    Las tres longitudes obtenidas en el <ConceptLink targetId="triangulo" isDependency={false} highlightTarget="poly" highlightColor="mora">triángulo</ConceptLink> son números enteros positivos:
     
     * $a = 5 \in \mathbb{Z}^+$
     * $b = 12 \in \mathbb{Z}^+$

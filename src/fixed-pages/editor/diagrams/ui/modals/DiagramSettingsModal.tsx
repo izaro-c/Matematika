@@ -35,7 +35,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
         <div className="flex items-center justify-between p-4 border-b border-carbon/10 bg-carbon/5">
           <div>
             <h2 className="font-serif font-bold text-base text-carbon">Configuración Global del Diagrama</h2>
-            <p className="text-xs text-pizarra/70 italic">Edita el título, modo, notas explicativas y lienzo.</p>
+            <p className="text-xs text-mora/70 italic">Edita el título, modo, notas explicativas y lienzo.</p>
           </div>
           <button
             type="button"
@@ -54,7 +54,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
               type="text"
               value={model.title || ''}
               onChange={(e) => onUpdateModel({ title: e.target.value }, 'Editar título del diagrama')}
-              className="w-full bg-carbon/5 border border-carbon/20 rounded px-2.5 py-1.5 text-xs font-bold text-carbon focus:ring-1 focus:ring-salvia"
+              className="w-full bg-carbon/5 border border-carbon/20 rounded px-2.5 py-1.5 text-xs font-bold text-carbon focus:ring-1 focus:ring-canela"
             />
           </div>
 
@@ -64,7 +64,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
             <textarea
               value={model.note || ''}
               onChange={(e) => onUpdateModel({ note: e.target.value }, 'Editar nota del diagrama')}
-              className="w-full bg-carbon/5 border border-carbon/20 rounded px-2.5 py-1.5 text-xs text-carbon focus:ring-1 focus:ring-salvia"
+              className="w-full bg-carbon/5 border border-carbon/20 rounded px-2.5 py-1.5 text-xs text-carbon focus:ring-1 focus:ring-canela"
               rows={3}
               placeholder="Ejemplo: Arrastre los vértices A y B para comprobar que el área permanece constante."
             />
@@ -77,7 +77,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
               <select
                 value={model.mode || 'simulation'}
                 onChange={(e) => onUpdateModel({ mode: e.target.value as DiagramMode }, 'Editar modo de publicación')}
-                className="w-full bg-carbon/5 border border-carbon/20 rounded px-2 py-1.5 text-xs text-carbon focus:ring-1 focus:ring-salvia"
+                className="w-full bg-carbon/5 border border-carbon/20 rounded px-2 py-1.5 text-xs text-carbon focus:ring-1 focus:ring-canela"
               >
                 <option value="simulation">Simulación (Arrastrable por el estudiante)</option>
                 <option value="diagram">Diagrama Fijo (Demostración estática)</option>
@@ -90,7 +90,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
                 type="text"
                 value={model.category || ''}
                 onChange={(e) => onUpdateModel({ category: e.target.value }, 'Editar categoría')}
-                className="w-full bg-carbon/5 border border-carbon/20 rounded px-2 py-1.5 text-xs text-carbon focus:ring-1 focus:ring-salvia"
+                className="w-full bg-carbon/5 border border-carbon/20 rounded px-2 py-1.5 text-xs text-carbon focus:ring-1 focus:ring-canela"
                 placeholder="geometria-plana"
               />
             </div>
@@ -105,7 +105,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
                   type="checkbox"
                   checked={Boolean(model.grid)}
                   onChange={(e) => onUpdateModel({ grid: e.target.checked }, 'Alternar rejilla')}
-                  className="rounded border-carbon/30 text-salvia focus:ring-salvia"
+                  className="rounded border-carbon/30 text-canela focus:ring-canela"
                 />
                 <span>Mostrar Rejilla</span>
               </label>
@@ -114,7 +114,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
                   type="checkbox"
                   checked={Boolean(model.axis)}
                   onChange={(e) => onUpdateModel({ axis: e.target.checked }, 'Alternar ejes')}
-                  className="rounded border-carbon/30 text-salvia focus:ring-salvia"
+                  className="rounded border-carbon/30 text-canela focus:ring-canela"
                 />
                 <span>Mostrar Ejes Cartesianos</span>
               </label>
@@ -123,7 +123,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
                   type="checkbox"
                   checked={model.showLabels !== false}
                   onChange={(e) => onUpdateModel({ showLabels: e.target.checked }, 'Alternar etiquetas globales')}
-                  className="rounded border-carbon/30 text-salvia focus:ring-salvia"
+                  className="rounded border-carbon/30 text-canela focus:ring-canela"
                 />
                 <span>Etiquetas Visibles</span>
               </label>
@@ -166,7 +166,7 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-1.5 bg-salvia text-lienzo rounded-lg font-bold text-xs hover:bg-salvia/90 transition-all cursor-pointer shadow-2xs"
+            className="px-4 py-1.5 bg-canela text-lienzo rounded-lg font-bold text-xs hover:bg-canela/90 transition-all cursor-pointer shadow-2xs"
           >
             Guardar en memoria y Cerrar
           </button>

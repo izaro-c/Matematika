@@ -515,7 +515,7 @@ function buildDesignTokenMap(): JsonRecord {
       'src/app/index.css',
     ]),
     visualConstants,
-    allowedArtsAndCraftsPalette: ['carbon', 'granada', 'lienzo', 'musgo', 'ocre', 'pavo', 'pizarra', 'salvia', 'terracota'],
+    allowedArtsAndCraftsPalette: ['carbon', 'granada', 'lienzo', 'musgo', 'ocre', 'pavo', 'mora', 'canela', 'terracota'],
     detectedThemeTokens,
     approximateHexColorOccurrencesInSrc: totalHexColors,
     possibleVisualHardcodingPoints: colorFiles,

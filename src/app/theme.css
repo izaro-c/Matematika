@@ -14,9 +14,9 @@
   /* Nuestra Paleta Semántica referenciando a variables CSS */
   --color-lienzo: var(--theme-lienzo);
   --color-carbon: var(--theme-carbon);
-  --color-salvia: var(--theme-salvia);
+  --color-canela: var(--theme-canela);
   --color-terracota: var(--theme-terracota);
-  --color-pizarra: var(--theme-pizarra);
+  --color-mora: var(--theme-mora);
   --color-ocre: var(--theme-ocre);
   --color-pavo: var(--theme-pavo);
   --color-granada: var(--theme-granada);
@@ -94,9 +94,9 @@
   --theme-ocre:      #8B6914;  /* Axiomas — (Oro óptimo WCAG) */
   --theme-granada:   #8A3A52;  /* Demostraciones — (Carmín/Rubia) */
   --theme-musgo:     #406E45;  /* Biografías — (Verde botánico) */
-  --theme-salvia:    #9E5B22;  /* Definiciones — (Naranja/Cobre) */
+  --theme-canela:    #9E5B22;  /* Definiciones — (Naranja/Cobre) */
   --theme-pavo:      #2A4B7C;  /* Modelos — (Azul Lapislázuli) */
-  --theme-pizarra:   #63457A;  /* Ejemplos — (Violeta/Amatista) */
+  --theme-mora:   #63457A;  /* Ejemplos — (Violeta/Amatista) */
 
   /* Tinta semántica opaca (WCAG AA ≥4.5:1 sobre --theme-lienzo) */
   --ink-text: #3A342F;
@@ -119,9 +119,9 @@
   --theme-ocre:      #E5C355;  /* Axiomas (Alta luminancia) */
   --theme-granada:   #D9738E;  /* Demostraciones (Alta luminancia) */
   --theme-musgo:     #88BE8D;  /* Biografías (Alta luminancia) */
-  --theme-salvia:    #E08643;  /* Definiciones (Alta luminancia) */
+  --theme-canela:    #E08643;  /* Definiciones (Alta luminancia) */
   --theme-pavo:      #7DA2DA;  /* Modelos (Alta luminancia) */
-  --theme-pizarra:   #B392CD;  /* Ejemplos (Alta luminancia) */
+  --theme-mora:   #B392CD;  /* Ejemplos (Alta luminancia) */
   --theme-graph-bg-url: var(--bg-arts-and-crafts-dark-url, url('/images/bg-arts-crafts-dark.jpg'));
   --bg-arts-and-crafts-url: var(--theme-graph-bg-url);
 
@@ -228,8 +228,8 @@ h1, h2 {
   --seal-color: var(--theme-musgo);
 }
 
-.vintage-seal--salvia {
-  --seal-color: var(--theme-salvia);
+.vintage-seal--canela {
+  --seal-color: var(--theme-canela);
 }
 
 .vintage-seal--terracota {

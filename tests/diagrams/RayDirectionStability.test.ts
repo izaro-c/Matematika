@@ -18,8 +18,8 @@ const WIDTH = 600;
 const HEIGHT = 600;
 
 const theme: ThemeColors = {
-  carbon: '#000000', terracota: '#000000', salvia: '#000000', lienzo: '#000000',
-  pizarra: '#000000', ocre: '#000000', pavo: '#000000', granada: '#000000', musgo: '#000000',
+  carbon: '#000000', terracota: '#000000', canela: '#000000', lienzo: '#000000',
+  mora: '#000000', ocre: '#000000', pavo: '#000000', granada: '#000000', musgo: '#000000',
 };
 
 let containerSequence = 0;

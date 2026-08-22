@@ -61,9 +61,9 @@ export const EjemploPitagorasCalculo = () => {
         els.ptsAB = projectSquareVertices(board, els.A, els.B, els.C);
 
         // Polígonos de los cuadrados
-        els.sqCA = createPolygon(board, els.ptsCA, { fillColor: theme.salvia }, theme);
+        els.sqCA = createPolygon(board, els.ptsCA, { fillColor: theme.canela }, theme);
         els.sqBC = createPolygon(board, els.ptsBC, { fillColor: theme.terracota }, theme);
-        els.sqAB = createPolygon(board, els.ptsAB, { fillColor: theme.pizarra }, theme);
+        els.sqAB = createPolygon(board, els.ptsAB, { fillColor: theme.mora }, theme);
 
         // Cuadrículas internas unitarias
         els.gridCA = createSquareGrid(board, els.ptsCA, 5, theme);
@@ -95,7 +95,7 @@ export const EjemploPitagorasCalculo = () => {
         // Textos de las áreas
         els.textAreaA = board.create('text', [-2.5, 2.5, 'a² = 5² = 25'], {
           fixed: true, fontSize: 13, cssClass: 'font-serif italic font-bold',
-          anchorX: 'middle', anchorY: 'middle', color: theme.salvia, visible: false
+          anchorX: 'middle', anchorY: 'middle', color: theme.canela, visible: false
         });
         els.textAreaB = board.create('text', [6, -6, 'b² = 12² = 144'], {
           fixed: true, fontSize: 13, cssClass: 'font-serif italic font-bold',
@@ -116,7 +116,7 @@ export const EjemploPitagorasCalculo = () => {
           'c² = 169'
         ], {
           fixed: true, fontSize: 13, cssClass: 'font-serif italic font-bold',
-          anchorX: 'middle', anchorY: 'middle', color: theme.pizarra, visible: false
+          anchorX: 'middle', anchorY: 'middle', color: theme.mora, visible: false
         });
       }}
       onUpdate={(_board, els, theme, _isStep, _isHL) => {
@@ -138,9 +138,9 @@ export const EjemploPitagorasCalculo = () => {
           els.labC.setText('c');
         }
 
-        els.labA.setAttribute({ visible: true, color: theme.salvia });
+        els.labA.setAttribute({ visible: true, color: theme.canela });
         els.labB.setAttribute({ visible: true, color: theme.terracota });
-        els.labC.setAttribute({ visible: true, color: theme.pizarra });
+        els.labC.setAttribute({ visible: true, color: theme.mora });
 
         // 3. Modulación de visibilidad de los cuadrados auxiliares
         const updateSquareElement = (name: string, visible: boolean, color: string, isHighlighted: boolean) => {
@@ -153,14 +153,14 @@ export const EjemploPitagorasCalculo = () => {
           });
         };
 
-        updateSquareElement('CA', showSquares, theme.salvia, isHighlight('sqCA'));
+        updateSquareElement('CA', showSquares, theme.canela, isHighlight('sqCA'));
         updateSquareElement('BC', showSquares, theme.terracota, isHighlight('sqBC'));
-        updateSquareElement('AB', showSquares, theme.pizarra, isHighlight('sqAB'));
+        updateSquareElement('AB', showSquares, theme.mora, isHighlight('sqAB'));
 
         // 4. Textos de las áreas
-        els.textAreaA.setAttribute({ visible: showSquares, color: theme.salvia });
+        els.textAreaA.setAttribute({ visible: showSquares, color: theme.canela });
         els.textAreaB.setAttribute({ visible: showSquares, color: theme.terracota });
-        els.textAreaC.setAttribute({ visible: showSquares, color: theme.pizarra });
+        els.textAreaC.setAttribute({ visible: showSquares, color: theme.mora });
 
         if (activeStep === 'calculo') {
           els.textAreaC.setText('c² = 169');
@@ -179,9 +179,9 @@ export const EjemploPitagorasCalculo = () => {
         const isHighlightSegAB = isHighlight('segAB');
         const isHighlightPoly = isHighlight('poly');
 
-        els.segCA.setAttribute({ strokeColor: theme.salvia, strokeWidth: isHighlightSegCA ? 4.5 : (activeStep ? 3.5 : 2) });
+        els.segCA.setAttribute({ strokeColor: theme.canela, strokeWidth: isHighlightSegCA ? 4.5 : (activeStep ? 3.5 : 2) });
         els.segBC.setAttribute({ strokeColor: theme.terracota, strokeWidth: isHighlightSegBC ? 4.5 : (activeStep ? 3.5 : 2) });
-        els.segAB.setAttribute({ strokeColor: theme.pizarra, strokeWidth: isHighlightSegAB ? 4.5 : (activeStep ? 3.5 : 2) });
+        els.segAB.setAttribute({ strokeColor: theme.mora, strokeWidth: isHighlightSegAB ? 4.5 : (activeStep ? 3.5 : 2) });
 
         els.poly.setAttribute({ fillColor: theme.carbon, fillOpacity: isHighlightPoly ? 0.15 : 0.04 });
 

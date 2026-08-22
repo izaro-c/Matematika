@@ -33,7 +33,7 @@ const TYPE_CONFIG: Record<
     i18nKey: 'lean',
   },
   exercise: {
-    colorClass: 'vintage-seal--salvia',
+    colorClass: 'vintage-seal--canela',
     glyph: '✓',
     i18nKey: 'exercise',
   },

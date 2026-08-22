@@ -89,11 +89,11 @@ export const ExerciseBlockEditor: React.FC<Props> = ({ block, isReadOnly, update
         <div className="flex items-center justify-between gap-2"><p className="ac-label ac-label--sm ac-label--pavo">Pregunta {questionIndex + 1}</p><span className="font-mono text-[9px] text-carbon/40">{question.id}</span></div>
         <textarea disabled={isReadOnly} value={question.text} onChange={event => updateQuestionAttribute(question, 'texto', event.target.value)} className="mt-2 min-h-16 w-full resize-y bg-transparent font-serif text-sm font-bold leading-relaxed text-carbon outline-none" placeholder="Escriba la pregunta…" />
         <div className="mt-2 space-y-1.5">
-          {question.options.map((option, optionIndex) => <label key={`${option.value}-${optionIndex}`} className={`flex items-center gap-2 rounded border p-2 ${question.correct === option.value ? 'border-salvia/35 bg-salvia/10' : 'border-carbon/10'}`}>
+          {question.options.map((option, optionIndex) => <label key={`${option.value}-${optionIndex}`} className={`flex items-center gap-2 rounded border p-2 ${question.correct === option.value ? 'border-canela/35 bg-canela/10' : 'border-carbon/10'}`}>
             <input disabled={isReadOnly} type="radio" name={`${block.id}-${question.id}`} checked={question.correct === option.value} onChange={() => updateQuestionAttribute(question, 'correct', option.value)} />
             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-carbon/5 text-[9px] font-bold text-carbon/50">{String.fromCharCode(65 + optionIndex)}</span>
             <input disabled={isReadOnly} value={option.text} onChange={event => updateOption(question, optionIndex, event.target.value)} className="min-w-0 flex-1 bg-transparent font-serif text-xs text-carbon outline-none" />
-            {question.correct === option.value && <span className="text-[9px] font-bold text-salvia">Correcta</span>}
+            {question.correct === option.value && <span className="text-[9px] font-bold text-canela">Correcta</span>}
           </label>)}
         </div>
       </article>)}

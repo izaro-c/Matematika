@@ -22,13 +22,13 @@ import { buildTargets, targetKind } from '../../../../src/fixed-pages/editor/dia
 
 describe('Diagram Model & Selectors', () => {
   it('should construct visual point with correct options', () => {
-    const pt = point('pA', 'A', 2.5, -3.1, true, 'salvia');
+    const pt = point('pA', 'A', 2.5, -3.1, true, 'canela');
     expect(pt.id).toBe('pA');
     expect(pt.label).toBe('A');
     expect(pt.x).toBe(2.5);
     expect(pt.y).toBeCloseTo(-3.1);
     expect(pt.fixed).toBe(true);
-    expect(pt.color).toBe('salvia');
+    expect(pt.color).toBe('canela');
     expect(pt.constraint).toBe('fixed');
   });
 

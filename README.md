@@ -27,7 +27,7 @@ Para iniciar una sesión con el mínimo contexto, se leen `AGENTS.md`, `ai/curre
 - **Validación**: Zod
 - **Visualización**: `react-force-graph-2d` (Físicas d3-force)
 - **Formalización**: Lean 4
-- **Estilos**: Tailwind CSS (con un sistema de diseño "Arts and Crafts" personalizado: lienzo, carbon, salvia, terracota, etc).
+- **Estilos**: Tailwind CSS (con un sistema de diseño "Arts and Crafts" personalizado: lienzo, carbon, canela, terracota, etc).
 
 ---
 

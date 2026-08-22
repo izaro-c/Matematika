@@ -51,7 +51,7 @@ export const GuidedConstructionsModal: React.FC<GuidedConstructionsModalProps> =
     <div role="presentation" className="fixed inset-0 z-50 flex items-center justify-center bg-carbon/60 backdrop-blur-xs p-4 font-serif">
       <div role="dialog" aria-modal="true" className="w-full max-w-md bg-lienzo rounded-2xl border border-carbon/20 shadow-2xl p-4 space-y-4 animate-in fade-in zoom-in duration-150 text-carbon">
         <div className="flex items-center justify-between border-b border-carbon/10 pb-2">
-          <div className="flex items-center space-x-2 text-salvia font-bold text-sm">
+          <div className="flex items-center space-x-2 text-canela font-bold text-sm">
             <IconSparkles className="w-4 h-4" />
             <h3>Construcciones Guiadas</h3>
           </div>
@@ -75,7 +75,7 @@ export const GuidedConstructionsModal: React.FC<GuidedConstructionsModalProps> =
           <select
             value={kind}
             onChange={e => handleKindChange(e.target.value as ConstructionKind)}
-            className="w-full bg-carbon/5 border border-carbon/20 rounded-xl p-2 text-xs text-carbon focus:ring-1 focus:ring-salvia"
+            className="w-full bg-carbon/5 border border-carbon/20 rounded-xl p-2 text-xs text-carbon focus:ring-1 focus:ring-canela"
           >
             {CONSTRUCTION_OPTIONS.map(opt => (
               <option key={opt.value} value={opt.value}>
@@ -85,7 +85,7 @@ export const GuidedConstructionsModal: React.FC<GuidedConstructionsModalProps> =
           </select>
         </div>
 
-        <div className="p-3 bg-salvia/10 rounded-xl border border-salvia/20 text-xs text-salvia font-medium">
+        <div className="p-3 bg-canela/10 rounded-xl border border-canela/20 text-xs text-canela font-medium">
           {selectedOption.description}
         </div>
 
@@ -125,7 +125,7 @@ export const GuidedConstructionsModal: React.FC<GuidedConstructionsModalProps> =
             type="button"
             onClick={handleCreate}
             disabled={!isReady}
-            className="flex items-center space-x-1.5 px-4 py-1.5 rounded-xl bg-salvia text-lienzo text-xs font-bold shadow-xs hover:bg-salvia/90 disabled:opacity-40 transition-all cursor-pointer"
+            className="flex items-center space-x-1.5 px-4 py-1.5 rounded-xl bg-canela text-lienzo text-xs font-bold shadow-xs hover:bg-canela/90 disabled:opacity-40 transition-all cursor-pointer"
           >
             <IconSparkles />
             <span>Crear {selectedOption.label}</span>

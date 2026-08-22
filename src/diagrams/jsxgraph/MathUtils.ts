@@ -5,9 +5,9 @@ import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
 export const DIAGRAM_THEME_TOKENS = [
   'lienzo',
   'carbon',
-  'salvia',
+  'canela',
   'terracota',
-  'pizarra',
+  'mora',
   'ocre',
   'pavo',
   'granada',

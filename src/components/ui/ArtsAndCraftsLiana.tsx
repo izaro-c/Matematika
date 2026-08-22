@@ -112,20 +112,20 @@ const ArtsAndCraftsLeaf: React.FC<{ variant?: 'large' | 'small' }> = ({ variant 
   return (
     <g transform={`scale(${scale})`}>
       {/* Peciolo (tallito que une la hoja a la liana) */}
-      <path d="M 0,0 Q 8,-3 14,-1" className="stroke-salvia/70 fill-none" strokeWidth="0.9" strokeLinecap="round" />
+      <path d="M 0,0 Q 8,-3 14,-1" className="stroke-canela/70 fill-none" strokeWidth="0.9" strokeLinecap="round" />
       {/* Limbo foliar exterior */}
       <path
         d="M 14,-1 C 22,-12 42,-14 54,-2 C 40,6 26,8 14,-1 Z"
-        className="fill-salvia/20 stroke-salvia/60"
+        className="fill-canela/20 stroke-canela/60"
         strokeWidth="0.8"
         strokeLinejoin="round"
       />
       {/* Nervadura central */}
-      <path d="M 14,-1 Q 32,-3 48,-2" className="stroke-salvia/40 fill-none" strokeWidth="0.5" />
+      <path d="M 14,-1 Q 32,-3 48,-2" className="stroke-canela/40 fill-none" strokeWidth="0.5" />
       {/* Nervaduras secundarias */}
-      <path d="M 24,-2 Q 28,-7 34,-8" className="stroke-salvia/30 fill-none" strokeWidth="0.4" />
-      <path d="M 32,-2 Q 38,-6 44,-6" className="stroke-salvia/30 fill-none" strokeWidth="0.4" />
-      <path d="M 28,-1 Q 32,3 36,4" className="stroke-salvia/30 fill-none" strokeWidth="0.4" />
+      <path d="M 24,-2 Q 28,-7 34,-8" className="stroke-canela/30 fill-none" strokeWidth="0.4" />
+      <path d="M 32,-2 Q 38,-6 44,-6" className="stroke-canela/30 fill-none" strokeWidth="0.4" />
+      <path d="M 28,-1 Q 32,3 36,4" className="stroke-canela/30 fill-none" strokeWidth="0.4" />
     </g>
   );
 };
@@ -137,7 +137,7 @@ const BotanicalSpiralTendril: React.FC = () => (
   <g>
     <path
       d="M 0,0 C 10,-8 18,-4 16,6 C 14,16 4,14 6,6 C 7.5,1.5 13,1 12,4 C 11.5,5.5 9.5,5 9.8,4.2"
-      className="stroke-salvia/70 fill-none"
+      className="stroke-canela/70 fill-none"
       strokeWidth="0.75"
       strokeLinecap="round"
     />
@@ -145,12 +145,12 @@ const BotanicalSpiralTendril: React.FC = () => (
 );
 
 /**
- * Capullo de flor silvestre con sépalos salvia y pétalos terracota en crecimiento.
+ * Capullo de flor silvestre con sépalos canela y pétalos terracota en crecimiento.
  */
 const BotanicalBud: React.FC = () => (
   <g>
-    <path d="M 0,0 Q 6,-4 11,-2" className="stroke-salvia/70 fill-none" strokeWidth="0.9" strokeLinecap="round" />
-    <path d="M 11,-2 L 15,-7 L 18,-2 Z" className="fill-salvia/40 stroke-salvia/70" strokeWidth="0.6" />
+    <path d="M 0,0 Q 6,-4 11,-2" className="stroke-canela/70 fill-none" strokeWidth="0.9" strokeLinecap="round" />
+    <path d="M 11,-2 L 15,-7 L 18,-2 Z" className="fill-canela/40 stroke-canela/70" strokeWidth="0.6" />
     <g transform="translate(15, -4) rotate(12)">
       <path
         d="M 0,0 C 6,-10 16,-12 16,-1 C 11,2 5,3 0,0 Z"
@@ -318,8 +318,8 @@ export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
             ) : (
               <>
                 <stop offset="0%" stopColor="var(--theme-ocre)" />
-                <stop offset="25%" stopColor="var(--theme-salvia)" />
-                <stop offset="50%" stopColor="var(--theme-pizarra)" />
+                <stop offset="25%" stopColor="var(--theme-canela)" />
+                <stop offset="50%" stopColor="var(--theme-mora)" />
                 <stop offset="72%" stopColor="var(--theme-terracota)" />
                 <stop offset="88%" stopColor="var(--theme-granada)" />
                 <stop offset="100%" stopColor="var(--theme-carbon)" />
@@ -335,8 +335,8 @@ export const ArtsAndCraftsLiana: React.FC<ArtsAndCraftsLianaProps> = ({
             ) : (
               <>
                 <stop offset="0%" stopColor="var(--theme-ocre)" stopOpacity="0.8" />
-                <stop offset="25%" stopColor="var(--theme-salvia)" stopOpacity="0.8" />
-                <stop offset="50%" stopColor="var(--theme-pizarra)" stopOpacity="0.8" />
+                <stop offset="25%" stopColor="var(--theme-canela)" stopOpacity="0.8" />
+                <stop offset="50%" stopColor="var(--theme-mora)" stopOpacity="0.8" />
                 <stop offset="72%" stopColor="var(--theme-terracota)" stopOpacity="0.8" />
                 <stop offset="88%" stopColor="var(--theme-granada)" stopOpacity="0.8" />
                 <stop offset="100%" stopColor="var(--theme-carbon)" stopOpacity="0.8" />

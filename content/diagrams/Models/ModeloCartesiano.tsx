@@ -193,7 +193,7 @@ export const ModeloCartesianoSpec = createDiagramSpec(
     {
       "id": "parallelP",
       "label": "l′",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "rectas",
       "order": 11,
       "visible": true,
@@ -230,7 +230,7 @@ export const ModeloCartesianoSpec = createDiagramSpec(
     {
       "id": "distAB",
       "label": "d(A,B)",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "medidas",
       "order": 20,
       "visible": true,

@@ -26,14 +26,14 @@ interface InsertOption {
 }
 
 const INSERT_OPTIONS: InsertOption[] = [
-  { type: 'paragraph', label: 'Párrafo', className: 'text-salvia hover:bg-salvia/10' },
-  { type: 'heading', label: 'Título', className: 'text-pizarra hover:bg-pizarra/10' },
+  { type: 'paragraph', label: 'Párrafo', className: 'text-canela hover:bg-canela/10' },
+  { type: 'heading', label: 'Título', className: 'text-mora hover:bg-mora/10' },
   { type: 'list', label: 'Lista', className: 'text-pavo hover:bg-pavo/10' },
   { type: 'table', label: 'Tabla', className: 'text-ocre hover:bg-ocre/10' },
   { type: 'formula', label: 'Fórmula', className: 'text-ocre hover:bg-ocre/10' },
   { type: 'separator', label: 'Separador', className: 'text-carbon hover:bg-carbon/10' },
   { type: 'note', label: 'Nota', className: 'text-ocre hover:bg-ocre/10' },
-  { type: 'citation', label: 'Cita', className: 'text-salvia hover:bg-salvia/10' },
+  { type: 'citation', label: 'Cita', className: 'text-canela hover:bg-canela/10' },
   { type: 'definition_box', label: 'Def Inline', className: 'text-terracota hover:bg-terracota/10' },
 ];
 
@@ -46,7 +46,7 @@ interface BlockInsertMenuProps {
 export const BlockInsertMenu: React.FC<BlockInsertMenuProps> = ({ index, addBlock, openDiagramBuilder }) => {
   const [open, setOpen] = useState(false);
   return <div className="relative z-20 mx-auto mt-3 flex w-full justify-center opacity-0 transition-opacity group-hover/block:opacity-100 group-focus-within/block:opacity-100">
-    <button type="button" onClick={() => setOpen(value => !value)} aria-expanded={open} className="rounded-full border border-carbon/20 bg-lienzo px-3 py-1 text-[10px] font-bold text-carbon/55 shadow-sm hover:border-salvia/30 hover:text-salvia">＋ Insertar aquí</button>
+    <button type="button" onClick={() => setOpen(value => !value)} aria-expanded={open} className="rounded-full border border-carbon/20 bg-lienzo px-3 py-1 text-[10px] font-bold text-carbon/55 shadow-sm hover:border-canela/30 hover:text-canela">＋ Insertar aquí</button>
     {open && <div className="absolute top-full mt-2 grid w-80 grid-cols-2 gap-1 rounded border border-carbon/20 bg-lienzo p-2 shadow-xl sm:grid-cols-3">
       {INSERT_OPTIONS.map(option => <button key={option.type} type="button" onClick={() => { addBlock(index + 1, option.type); setOpen(false); }} className={`rounded px-2 py-2 text-left font-serif text-[10px] font-bold ${option.className}`}>{option.label}</button>)}
       <button type="button" onClick={() => { openDiagramBuilder(index + 1); setOpen(false); }} className="rounded px-2 py-2 text-left font-serif text-[10px] font-bold text-pavo hover:bg-pavo/10">Diagrama</button>

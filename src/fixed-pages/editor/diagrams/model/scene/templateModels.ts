@@ -53,8 +53,8 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
       ...base,
       points: [point('pO', 'O', 0, 0, true), point('pA', 'A', 2.4, 0)],
       elements: [
-        element('circle', 'Circunferencia', 'circle', ['pO', 'pA'], 'salvia'),
-        element('segOA', 'Radio OA', 'segment', ['pO', 'pA'], 'pizarra'),
+        element('circle', 'Circunferencia', 'circle', ['pO', 'pA'], 'canela'),
+        element('segOA', 'Radio OA', 'segment', ['pO', 'pA'], 'mora'),
         element('measRadio', 'Radio', 'text', ['pO'], 'carbon', true, { text: 'r = OA' }),
       ],
     });
@@ -69,8 +69,8 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
       points: [point('pP', 'P', 2, 2)],
       sliders: [slider('sliderT', 'Parámetro t', -4.2, -4.2, 2)],
       elements: [
-        element('coordX', 'Coordenada x', 'text', ['pP'], 'pizarra', true, { text: 'x(P)' }),
-        element('coordY', 'Coordenada y', 'text', ['pP'], 'salvia', true, { text: 'y(P)' }),
+        element('coordX', 'Coordenada x', 'text', ['pP'], 'mora', true, { text: 'x(P)' }),
+        element('coordY', 'Coordenada y', 'text', ['pP'], 'canela', true, { text: 'y(P)' }),
       ],
     });
   }
@@ -82,9 +82,9 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
       mode: 'diagram',
       points: [point('pA', 'A', -2, -1, true), point('pB', 'B', 2, -0.6, true), point('pC', 'C', 0, 2.2, true)],
       elements: [
-        element('segAB', 'Recta AB del modelo', 'segment', ['pA', 'pB'], 'pizarra', true, { dashed: true }),
-        element('segBC', 'Recta BC del modelo', 'segment', ['pB', 'pC'], 'pizarra', true, { dashed: true }),
-        element('segCA', 'Recta CA del modelo', 'segment', ['pC', 'pA'], 'pizarra', true, { dashed: true }),
+        element('segAB', 'Recta AB del modelo', 'segment', ['pA', 'pB'], 'mora', true, { dashed: true }),
+        element('segBC', 'Recta BC del modelo', 'segment', ['pB', 'pC'], 'mora', true, { dashed: true }),
+        element('segCA', 'Recta CA del modelo', 'segment', ['pC', 'pA'], 'mora', true, { dashed: true }),
       ],
       note: 'Modelo fijo: los puntos no se arrastran en el producto final.',
     });
@@ -96,7 +96,7 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
       ...base,
       points: [point('pA', 'A', -2.6, -1.5), point('pB', 'B', 2.2, -1.2), point('pC', 'C', 2.6, 1.7), point('pD', 'D', -1.8, 2)],
       elements: [
-        element('polyCuadrilatero', 'Cuadrilátero', 'polygon', ['pA', 'pB', 'pC', 'pD'], 'salvia'),
+        element('polyCuadrilatero', 'Cuadrilátero', 'polygon', ['pA', 'pB', 'pC', 'pD'], 'canela'),
         element('segAB', 'Lado AB', 'segment', ['pA', 'pB'], 'carbon'),
         element('segBC', 'Lado BC', 'segment', ['pB', 'pC'], 'carbon'),
         element('segCD', 'Lado CD', 'segment', ['pC', 'pD'], 'carbon'),
@@ -119,8 +119,8 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
         element('segAB', 'Segmento AB', 'segment', ['pA', 'pB'], 'carbon'),
         element('midAB', 'Punto medio de AB', 'midpoint', ['pA', 'pB'], 'terracota'),
         element('lineMediatriz', 'Mediatriz de AB', 'perpendicular', ['pA', 'pB', 'midAB'], 'pavo', true, { dashed: true }),
-        element('segPA', 'Distancia PA', 'segment', ['pP', 'pA'], 'salvia', true, { dashed: true }),
-        element('segPB', 'Distancia PB', 'segment', ['pP', 'pB'], 'salvia', true, { dashed: true }),
+        element('segPA', 'Distancia PA', 'segment', ['pP', 'pA'], 'canela', true, { dashed: true }),
+        element('segPB', 'Distancia PB', 'segment', ['pP', 'pB'], 'canela', true, { dashed: true }),
         element('measEquidistancia', 'Equidistancia', 'text', ['pP'], 'carbon', true, { text: 'PA = PB' }),
       ],
       note: 'Arrastre P sobre la mediatriz para explorar el lugar de puntos equidistantes de A y B.',
@@ -133,7 +133,7 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
       ...base,
       points: [point('pA', 'A', -2.5, -1.6), point('pB', 'B', 2.5, -1.6), point('pC', 'C', -0.2, 2.2)],
       elements: [
-        element('step1Triangulo', 'Triángulo inicial', 'polygon', ['pA', 'pB', 'pC'], 'salvia'),
+        element('step1Triangulo', 'Triángulo inicial', 'polygon', ['pA', 'pB', 'pC'], 'canela'),
         element('segAB', 'Base AB', 'segment', ['pA', 'pB'], 'carbon'),
         element('step2Altura', 'Altura auxiliar', 'segment', ['pC', 'pA'], 'terracota', true, { dashed: true }),
         element('angleC', 'Ángulo C', 'angle', ['pA', 'pC', 'pB'], 'ocre'),
@@ -152,12 +152,12 @@ export function createTemplateModel(kind: TemplateKind, title: string, metadataT
     ...base,
     points: [point('pA', 'A', -2.4, -1.6), point('pB', 'B', 2.4, -1.4), point('pC', 'C', 0.2, 2.2)],
     elements: [
-      element('polyTriangulo', 'Triángulo', 'polygon', ['pA', 'pB', 'pC'], 'salvia'),
+      element('polyTriangulo', 'Triángulo', 'polygon', ['pA', 'pB', 'pC'], 'canela'),
       element('segAB', 'Lado AB', 'segment', ['pA', 'pB'], 'carbon'),
       element('segBC', 'Lado BC', 'segment', ['pB', 'pC'], 'carbon'),
       element('segCA', 'Lado CA', 'segment', ['pC', 'pA'], 'carbon'),
       element('angleC', 'Ángulo C', 'angle', ['pA', 'pC', 'pB'], 'ocre'),
-      element('measArea', 'Área', 'text', ['pC'], 'pizarra', true, { text: 'Área variable' }),
+      element('measArea', 'Área', 'text', ['pC'], 'mora', true, { text: 'Área variable' }),
     ],
   });
 }

@@ -25,12 +25,12 @@ function SceneContent() {
     }
   }, [camera]);
 
-  const salvia = getCSSVar('--theme-salvia');
+  const canela = getCSSVar('--theme-canela');
   const terracota = getCSSVar('--theme-terracota');
   const carbon = getCSSVar('--theme-carbon');
   const ocre = getCSSVar('--theme-ocre');
 
-  const planeColor = highlight === 'planeMesh' ? ocre : salvia;
+  const planeColor = highlight === 'planeMesh' ? ocre : canela;
   const planeOpacity = highlight === 'planeMesh' ? 0.4 : 0.3;
   const pointColorA = highlight === 'pA' ? ocre : terracota;
   const pointColorB = highlight === 'pB' ? ocre : terracota;
@@ -86,8 +86,8 @@ function SceneContent() {
 
 export const Plano = () => {
   return (
-    <div className="w-full h-full min-h-[400px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
-      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-pizarra/50 pointer-events-none">
+    <div className="w-full h-full min-h-[400px] relative bg-lienzo/40 border border-mora/10 rounded-sm overflow-hidden">
+      <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-mora/50 pointer-events-none">
         Rota la escena en 3D con el ratón
       </div>
       <Canvas gl={{ antialias: true }} style={{ width: '100%', height: '100%' }}>

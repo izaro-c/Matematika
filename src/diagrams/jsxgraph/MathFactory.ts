@@ -226,13 +226,13 @@ export function createPolygon(
 ): JXGPolygon {
   const borderHighlight = options.highlight === false ? { highlight: false as const } : {};
   return board.create('polygon', vertices, {
-    fillColor: theme.salvia,
+    fillColor: theme.canela,
     fillOpacity: 0.12,
-    borders: { strokeColor: theme.salvia, strokeWidth: 1.5, ...borderHighlight },
+    borders: { strokeColor: theme.canela, strokeWidth: 1.5, ...borderHighlight },
     vertices: { visible: false },
     ...options,
     ...(options.borders
-      ? { borders: { strokeColor: theme.salvia, strokeWidth: 1.5, ...borderHighlight, ...options.borders } }
+      ? { borders: { strokeColor: theme.canela, strokeWidth: 1.5, ...borderHighlight, ...options.borders } }
       : {}),
   } as never) as unknown as JXGPolygon;
 }
@@ -244,7 +244,7 @@ export function createCircle(
   theme: ThemeColors,
 ): JXG.Circle {
   return board.create('circle', points, {
-    strokeColor: theme.salvia,
+    strokeColor: theme.canela,
     strokeWidth: 2,
     fillOpacity: 0,
     ...options,
@@ -258,7 +258,7 @@ export function createArc(
   theme: ThemeColors,
 ): JXG.Curve {
   return board.create('arc', points, {
-    strokeColor: theme.salvia,
+    strokeColor: theme.canela,
     strokeWidth: 2,
     fillOpacity: 0,
     ...options,
@@ -364,9 +364,9 @@ export function createStaticAreaPolygon(
   const vertexPoints = subsamplePolygonPoints(points, budget);
   const polygonPoints = vertexPoints.map(point => board.create('point', [point.x, point.y], { visible: false } as never) as JXG.Point);
   return createPolygon(board, polygonPoints, {
-    fillColor: theme.salvia,
+    fillColor: theme.canela,
     fillOpacity: 0.12,
-    borders: { strokeColor: theme.salvia, strokeWidth: 1.2, strokeOpacity: 0.45 },
+    borders: { strokeColor: theme.canela, strokeWidth: 1.2, strokeOpacity: 0.45 },
     fixed: true,
     hasInnerPoints: true,
     ...options,
@@ -615,7 +615,7 @@ export function createDimensionLine(
 ): CompositeElement {
   const [a, b] = points;
   const { fontSize, textOffset = [0, 0], labelVisible = true, ...lineOptions } = options;
-  const strokeColor = typeof lineOptions.strokeColor === 'string' ? lineOptions.strokeColor : theme.pizarra;
+  const strokeColor = typeof lineOptions.strokeColor === 'string' ? lineOptions.strokeColor : theme.mora;
   const strokeWidth = lineOptions.strokeWidth ?? 1.5;
   const shifted = (point: PointLike, axis: 'x' | 'y') => () => {
     const dx = b.X() - a.X();
@@ -750,7 +750,7 @@ export function createParallelLine(
   const [baseA, baseB, through] = points;
   const baseLine = board.create('line', [baseA, baseB], { visible: false } as never);
   return board.create('parallel', [baseLine, through], {
-    strokeColor: theme.salvia,
+    strokeColor: theme.canela,
     strokeWidth: 2,
     dash: 2,
     ...options,
@@ -819,7 +819,7 @@ export function createSegmentExtensionToFoot(
   ], { visible: false } as never);
 
   return board.create('segment', [extensionEnd, foot], {
-    strokeColor: theme.pizarra,
+    strokeColor: theme.mora,
     strokeWidth: 1.5,
     dash: 2,
     visible: false,
@@ -989,7 +989,7 @@ export function createSlider(
   const { label, ...attributes } = options;
   return board.create('slider', [anchors[0], anchors[1], values], {
     name: '',
-    baseline: { strokeColor: theme.pizarra, strokeWidth: 2 },
+    baseline: { strokeColor: theme.mora, strokeWidth: 2 },
     highline: { strokeColor: theme.terracota, strokeWidth: 3 },
     fillColor: theme.terracota,
     strokeColor: theme.terracota,
@@ -1070,9 +1070,9 @@ export function createDynamicAreaPolygon(
     },
   ], { visible: false } as never) as JXG.Point);
   return createPolygon(board, polygonPoints, {
-    fillColor: theme.salvia,
+    fillColor: theme.canela,
     fillOpacity: 0.12,
-    borders: { strokeColor: theme.salvia, strokeWidth: 1.2, strokeOpacity: 0.45 },
+    borders: { strokeColor: theme.canela, strokeWidth: 1.2, strokeOpacity: 0.45 },
     fixed: true,
     ...options,
   }, theme);
@@ -1112,7 +1112,7 @@ export function createAreaIntersectionFills(
   if (polygons.length === 0) return [];
   return polygons.map(polygon => createStaticAreaPolygon(board, polygon, {
     fillOpacity: 0.14,
-    borders: { strokeColor: theme.salvia, strokeWidth: 1.2, strokeOpacity: 0.5 },
+    borders: { strokeColor: theme.canela, strokeWidth: 1.2, strokeOpacity: 0.5 },
     fixed: true,
     ...options,
   }, theme, Math.min(96, Math.max(32, polygon.length)))).filter((polygon): polygon is JXGPolygon => Boolean(polygon));

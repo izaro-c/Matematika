@@ -23,13 +23,13 @@ export const DemoInvarianciaTriangulacion: React.FC = () => {
         els.diagT1 = createSegment(board, [els.P_A, els.P_C], { strokeColor: theme.terracota, strokeWidth: 2, dash: 1 }, theme);
 
         // Triangulación 2 (B-D)
-        els.t2_1 = createPolygon(board, [els.P_A, els.P_B, els.P_D], { fillColor: theme.salvia, fillOpacity: 0, borders: { strokeColor: theme.salvia, strokeWidth: 2, dash: 2 } }, theme);
-        els.t2_2 = createPolygon(board, [els.P_B, els.P_C, els.P_D], { fillColor: theme.salvia, fillOpacity: 0, borders: { strokeColor: theme.salvia, strokeWidth: 2, dash: 2 } }, theme);
-        els.diagT2 = createSegment(board, [els.P_B, els.P_D], { strokeColor: theme.salvia, strokeWidth: 2, dash: 2 }, theme);
+        els.t2_1 = createPolygon(board, [els.P_A, els.P_B, els.P_D], { fillColor: theme.canela, fillOpacity: 0, borders: { strokeColor: theme.canela, strokeWidth: 2, dash: 2 } }, theme);
+        els.t2_2 = createPolygon(board, [els.P_B, els.P_C, els.P_D], { fillColor: theme.canela, fillOpacity: 0, borders: { strokeColor: theme.canela, strokeWidth: 2, dash: 2 } }, theme);
+        els.diagT2 = createSegment(board, [els.P_B, els.P_D], { strokeColor: theme.canela, strokeWidth: 2, dash: 2 }, theme);
 
         // Intersección
         els.intersect = board.create('intersection', [els.diagT1, els.diagT2], {
-          name: '', fillColor: theme.pizarra, strokeColor: theme.pizarra, size: 5, visible: false
+          name: '', fillColor: theme.mora, strokeColor: theme.mora, size: 5, visible: false
         });
 
       }}
@@ -51,7 +51,7 @@ export const DemoInvarianciaTriangulacion: React.FC = () => {
         els.intersect.setAttribute({
           visible: s3 || hlInter,
           size: hlInter ? 8 : 4,
-          fillColor: hlInter ? theme.terracota : theme.pizarra
+          fillColor: hlInter ? theme.terracota : theme.mora
         });
 
         els.t1_1.setAttribute({ fillOpacity: hlT1 ? 0.2 : 0 });

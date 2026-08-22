@@ -196,7 +196,7 @@ export const PaschSpec = createDiagramSpec(
     {
       "id": "pDir",
       "label": "dir",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 22001,
       "visible": true,
@@ -337,7 +337,7 @@ export const PaschSpec = createDiagramSpec(
     {
       "id": "lineDirP",
       "label": "Recta",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": -1000,
       "visible": true,

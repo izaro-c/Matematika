@@ -93,7 +93,7 @@ Enlace semántico a un nodo con página propia. Abre el MarginaliaPanel.
 Enlace semántico suave. Abre el MarginaliaPanel pero sin crear dependencia formal.
 - **Props:** `targetId: string`
 - **Children:** texto del enlace
-- **Color:** pizarra
+- **Color:** mora
 - **Ejemplo:** `<RefLink targetId="teorema-tales">ver también Tales</RefLink>`
 
 ### `<GlossaryLink term="término">`

@@ -117,12 +117,12 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
             strokeLinecap="round"
           />
 
-          {/* Conector de progreso (salvia) */}
+          {/* Conector de progreso (canela) */}
           {progressPathD && (
             <path
               d={progressPathD}
               fill="none"
-              stroke="var(--theme-salvia)"
+              stroke="var(--theme-canela)"
               strokeWidth="3.5"
               strokeLinecap="round"
               className="transition-all duration-1000"
@@ -137,7 +137,7 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
 
             let strokeColor = 'var(--theme-carbon)';
             let strokeWidth = p.completed ? 1.8 : 1.2;
-            const nodeColor = p.completed ? 'var(--theme-salvia)' : 'var(--theme-lienzo)';
+            const nodeColor = p.completed ? 'var(--theme-canela)' : 'var(--theme-lienzo)';
 
             if (isCurrent) {
               strokeColor = 'var(--page-accent)';
@@ -216,7 +216,7 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
                     fontFamily="sans-serif"
                     fontWeight="bold"
                     textAnchor="middle"
-                    fill={p.completed ? 'var(--theme-salvia)' : 'var(--theme-carbon)'}
+                    fill={p.completed ? 'var(--theme-canela)' : 'var(--theme-carbon)'}
                     opacity={p.completed ? 0 : 0.6}
                   >
                     ?
@@ -237,7 +237,7 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
             </span>
             <span className="font-serif italic text-carbon/80">{hoveredNode.title.split(':')[0]}</span>
             {hoveredNode.completed ? (
-              <span className="ml-2 ac-label ac-label--2xs ac-label--salvia">✓ {t('studyPlan', 'assimilatedBadge')}</span>
+              <span className="ml-2 ac-label ac-label--2xs ac-label--canela">✓ {t('studyPlan', 'assimilatedBadge')}</span>
             ) : (
               <span className="ml-2 ac-label ac-label--2xs ac-label--faint">{t('studyPlan', 'pending')}</span>
             )}
@@ -248,7 +248,7 @@ export const StudyPlanMinimap: React.FC<StudyPlanMinimapProps> = ({ requiredNode
             <span className="font-serif italic">{nextStepNode.title.split(':')[0]}</span>
           </div>
         ) : (
-          <div className="text-xs ac-label ac-label--md ac-label--salvia">
+          <div className="text-xs ac-label ac-label--md ac-label--canela">
             {t('studyPlan', 'routeCompleted')}
           </div>
         )}

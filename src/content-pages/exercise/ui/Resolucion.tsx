@@ -18,8 +18,8 @@ export const Resolucion: React.FC<ResolucionProps> = ({ children }) => {
   if (!isCompleted) return null;
 
   return (
-    <div className="mt-6 p-5 bg-salvia/5 border border-salvia/20 animate-fade-in text-sm text-carbon/80 leading-relaxed [&_p]:mb-2 [&_p:last-child]:mb-0">
-      <div className="ac-label ac-label--sm ac-label--salvia-soft mb-2 flex items-center gap-2">
+    <div className="mt-6 p-5 bg-canela/5 border border-canela/20 animate-fade-in text-sm text-carbon/80 leading-relaxed [&_p]:mb-2 [&_p:last-child]:mb-0">
+      <div className="ac-label ac-label--sm ac-label--canela-soft mb-2 flex items-center gap-2">
         <span>✦</span> {t('exercise', 'resolutionExplained')}
       </div>
       {children}

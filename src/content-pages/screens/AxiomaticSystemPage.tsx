@@ -28,7 +28,7 @@ export function AxiomaticSystemPage() {
     return (
       <div className="min-h-viewport flex flex-col items-center justify-center bg-lienzo text-carbon">
         <h1 className="font-serif text-3xl mb-4">{t('notFound', 'title')}</h1>
-        <p className="text-pizarra mb-6">{t('notFound', 'description')}</p>
+        <p className="text-mora mb-6">{t('notFound', 'description')}</p>
       </div>
     );
   }

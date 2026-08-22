@@ -26,7 +26,7 @@ describe('EditorLanguageBadges Component', () => {
     // Active badge 'ES' is present
     const activeSpan = screen.getByText('ES');
     expect(activeSpan.tagName).toBe('SPAN');
-    expect(activeSpan.className).toContain('bg-salvia');
+    expect(activeSpan.className).toContain('bg-canela');
 
     // Switch buttons for other supported languages (e.g. EU, EN)
     const euButton = screen.getByText('EU');
@@ -97,11 +97,11 @@ describe('EditorLanguageBadges Component', () => {
 describe('Header Primitives Cohesion', () => {
   it('renders HeaderBadge with uniform h-6 class and variants', () => {
     const { container } = render(
-      <HeaderBadge variant="salvia">Teorema</HeaderBadge>
+      <HeaderBadge variant="canela">Teorema</HeaderBadge>
     );
     const badge = container.querySelector('span');
     expect(badge?.className).toContain('h-6');
-    expect(badge?.className).toContain('text-salvia');
+    expect(badge?.className).toContain('text-canela');
   });
 
   it('renders HeaderPillContainer with h-8 and HeaderPillButton with h-7', () => {

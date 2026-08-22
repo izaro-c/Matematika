@@ -28,10 +28,10 @@ export const DirectoSimulation = () => {
             <div className="relative flex items-center justify-center" style={{ width: 56 }}>
               <svg width="56" height="2">
                 <line x1="4" y1="1" x2="52" y2="1"
-                  stroke="var(--theme-pizarra)" strokeWidth="1.5"
+                  stroke="var(--theme-mora)" strokeWidth="1.5"
                   opacity={step > i ? 0.5 : 0.1} />
                 {step > i && (
-                  <polygon points="52,1 46,-4 46,6" fill="var(--theme-pizarra)" opacity="0.5" />
+                  <polygon points="52,1 46,-4 46,6" fill="var(--theme-mora)" opacity="0.5" />
                 )}
               </svg>
             </div>
@@ -44,7 +44,7 @@ export const DirectoSimulation = () => {
               <div className="px-4 py-2.5 rounded-sm border border-carbon/30 bg-carbon/5">
                 <span className="text-sm font-bold text-carbon/70">{STEPS[i]}</span>
               </div>
-              <span className="text-[9px] text-pizarra/40">{LABELS[i]}</span>
+              <span className="text-[9px] text-mora/40">{LABELS[i]}</span>
             </div>
           </div>
         ))}
@@ -54,10 +54,10 @@ export const DirectoSimulation = () => {
           <div className="relative flex items-center justify-center" style={{ width: 56 }}>
             <svg width="56" height="2">
               <line x1="4" y1="1" x2="52" y2="1"
-                stroke="var(--theme-salvia)" strokeWidth="2"
+                stroke="var(--theme-canela)" strokeWidth="2"
                 opacity={step >= 3 ? 0.7 : 0.1} />
               {step >= 3 && (
-                <polygon points="52,1 46,-4 46,6" fill="var(--theme-salvia)" opacity="0.7" />
+                <polygon points="52,1 46,-4 46,6" fill="var(--theme-canela)" opacity="0.7" />
               )}
             </svg>
           </div>
@@ -68,14 +68,14 @@ export const DirectoSimulation = () => {
             <div className={`
               px-5 py-3 rounded-sm border-2 transition-all duration-500
               ${step >= 3
-                ? 'border-salvia bg-salvia/10'
+                ? 'border-canela bg-canela/10'
                 : 'border-carbon/15 bg-transparent'}
             `}>
-              <span className={`text-xl font-bold transition-colors duration-500 ${step >= 3 ? 'text-salvia' : 'text-carbon/20'}`}>
+              <span className={`text-xl font-bold transition-colors duration-500 ${step >= 3 ? 'text-canela' : 'text-carbon/20'}`}>
                 Q
               </span>
             </div>
-            <span className={`text-[10px] transition-colors duration-500 ${step >= 3 ? 'text-salvia/50' : 'text-pizarra/15'}`}>
+            <span className={`text-[10px] transition-colors duration-500 ${step >= 3 ? 'text-canela/50' : 'text-mora/15'}`}>
               Tesis
             </span>
           </div>
@@ -84,10 +84,10 @@ export const DirectoSimulation = () => {
 
       {/* Mensaje */}
       <div className="h-8 flex items-center justify-center mt-2">
-        {step === 0 && <p className="text-sm text-pizarra/35 italic">Construye la cadena de implicaciones</p>}
-        {step === 1 && <p className="text-sm text-pizarra/50">Primera deducción a partir de P</p>}
-        {step === 2 && <p className="text-sm text-pizarra/50">Segunda deducción</p>}
-        {step === 3 && <p className="text-sm text-salvia font-bold">✓ P ⇒ Q demostrado</p>}
+        {step === 0 && <p className="text-sm text-mora/35 italic">Construye la cadena de implicaciones</p>}
+        {step === 1 && <p className="text-sm text-mora/50">Primera deducción a partir de P</p>}
+        {step === 2 && <p className="text-sm text-mora/50">Segunda deducción</p>}
+        {step === 3 && <p className="text-sm text-canela font-bold">✓ P ⇒ Q demostrado</p>}
       </div>
 
       {/* Botón */}
@@ -96,7 +96,7 @@ export const DirectoSimulation = () => {
           onClick={() => setStep(s => Math.min(s + 1, 3))}
           disabled={step >= 3}
           className="px-5 py-2 text-sm rounded-sm font-serif transition-all
-            bg-pizarra text-lienzo hover:bg-pizarra/85
+            bg-mora text-lienzo hover:bg-mora/85
             disabled:opacity-25 disabled:cursor-default"
         >
           {step === 0 ? '① Deducir P₁' : step === 1 ? '② Deducir P₂' : step === 2 ? '③ Concluir Q' : 'Completado'}
@@ -104,7 +104,7 @@ export const DirectoSimulation = () => {
         {step >= 3 && (
           <button
             onClick={() => setStep(0)}
-            className="px-3 py-2 text-sm rounded-sm font-serif border border-pizarra/12 text-pizarra/50 hover:text-pizarra hover:bg-pizarra/5 transition-all"
+            className="px-3 py-2 text-sm rounded-sm font-serif border border-mora/12 text-mora/50 hover:text-mora hover:bg-mora/5 transition-all"
           >
             ⟳
           </button>

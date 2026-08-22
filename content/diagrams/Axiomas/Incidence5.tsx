@@ -15,12 +15,12 @@ function SceneContent() {
     camera.lookAt(0, 0, 0);
   }, [camera]);
 
-  const salvia = getCSSVar('--theme-salvia');
+  const canela = getCSSVar('--theme-canela');
   const terracota = getCSSVar('--theme-terracota');
   const carbon = getCSSVar('--theme-carbon');
   const ocre = getCSSVar('--theme-ocre');
 
-  const planeColor = highlight === 'plano' ? ocre : salvia;
+  const planeColor = highlight === 'plano' ? ocre : canela;
   const pAColor = highlight === 'pA' ? ocre : terracota;
   const pBColor = highlight === 'pB' ? ocre : terracota;
   const pCColor = highlight === 'pC' ? ocre : terracota;
@@ -60,7 +60,7 @@ function SceneContent() {
 
 export const Incidence5 = () => {
   return (
-    <div className="w-full h-full min-h-[350px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
+    <div className="w-full h-full min-h-[350px] relative bg-lienzo/40 border border-mora/10 rounded-sm overflow-hidden">
       <Canvas gl={{ antialias: true }}>
         <SceneContent />
       </Canvas>

@@ -54,7 +54,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     }}
                     className={`py-1 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
                       currentCount === cnt
-                        ? 'bg-salvia text-lienzo border-salvia shadow-2xs'
+                        ? 'bg-canela text-lienzo border-canela shadow-2xs'
                         : 'bg-lienzo text-carbon border-carbon/15 hover:bg-carbon/5'
                     }`}
                   >
@@ -107,7 +107,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                       onUpdateModel(next, `${e.target.checked ? 'Añadir' : 'Eliminar'} cota en ${element.id}`);
                     }
                   }}
-                  className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+                  className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
                 />
                 <span>Línea de Cota</span>
               </label>
@@ -126,7 +126,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                             properties: { ...(dimLine.properties || {}), offset: parseOptionalNumber(e.target.value, 0.4) },
                           })
                         }
-                        className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none"
+                        className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                       />
                     </div>
                     <div>
@@ -142,7 +142,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                             properties: { ...(dimLine.properties || {}), precision: parseOptionalNumber(e.target.value, 2) },
                           })
                         }
-                        className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none"
+                        className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                       />
                     </div>
                   </div>
@@ -158,7 +158,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                           properties: { ...(dimLine.properties || {}), unit: e.target.value },
                         })
                       }
-                      className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none"
+                      className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                     />
                   </div>
                 </div>
@@ -176,7 +176,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                       onUpdateModel(next, `${e.target.checked ? 'Añadir' : 'Eliminar'} medida en ${element.id}`);
                     }
                   }}
-                  className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+                  className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
                 />
                 <span>Etiqueta de Medida</span>
               </label>
@@ -197,7 +197,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                             properties: { ...(meas.properties || {}), anchorParameter: parseOptionalNumber(e.target.value, 0.5) },
                           })
                         }
-                        className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none"
+                        className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                       />
                     </div>
                     <div>
@@ -213,7 +213,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                             properties: { ...(meas.properties || {}), precision: parseOptionalNumber(e.target.value, 2) },
                           })
                         }
-                        className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none"
+                        className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                       />
                     </div>
                   </div>
@@ -228,7 +228,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                           properties: { ...(meas.properties || {}), unit: e.target.value },
                         })
                       }
-                      className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none"
+                      className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
                     />
                   </div>
                 </div>
@@ -255,7 +255,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     properties: { ...(element.properties || {}), offset: parseOptionalNumber(e.target.value, 0.35) },
                   })
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
             <div>
@@ -273,7 +273,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     properties: { ...(element.properties || {}), precision: parseOptionalNumber(e.target.value, 2) },
                   })
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
           </div>
@@ -299,7 +299,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     properties: { ...(element.properties || {}), anchorParameter: parseOptionalNumber(e.target.value, 0.5) },
                   })
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
             <div>
@@ -315,7 +315,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     properties: { ...(element.properties || {}), unit: e.target.value },
                   })
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
           </div>
@@ -340,7 +340,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     },
                   })
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
             <div>
@@ -363,7 +363,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     },
                   })
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
           </div>
@@ -386,7 +386,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                 properties: { ...(element.properties || {}), markCount: parseOptionalNumber(e.target.value, 1) },
               })
             }
-            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
           />
         </div>
       )}
@@ -409,7 +409,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                 style: { ...(element.style || {}), markHeight: val },
               });
             }}
-            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
           />
         </div>
       )}
@@ -432,7 +432,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     properties: { ...(element.properties || {}), tickDistance: parseOptionalNumber(e.target.value, 2) },
                   })
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
             <div>
@@ -449,7 +449,7 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                     properties: { ...(element.properties || {}), minorTickCount: parseOptionalNumber(e.target.value, 0) },
                   })
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
           </div>

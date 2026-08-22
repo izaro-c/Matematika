@@ -34,10 +34,10 @@ function stringifyAttrs(attrs: Record<string, unknown>): string {
 }
 
 function chipClass(tag: string, attrs: Record<string, unknown>): string {
-  if (tag === 'ConceptLink') return `${CHIP_BASE} mdx-chip--concept text-salvia border-salvia/30 bg-salvia/5`;
+  if (tag === 'ConceptLink') return `${CHIP_BASE} mdx-chip--concept text-canela border-canela/30 bg-canela/5`;
   if (tag === 'RefLink') return `${CHIP_BASE} mdx-chip--ref text-pavo border-pavo/30 bg-pavo/5`;
   if (tag === 'ProofStepLink') return `${CHIP_BASE} mdx-chip--step text-pavo border-pavo/40 bg-pavo/10`;
-  const color = String(attrs.color || 'salvia');
+  const color = String(attrs.color || 'canela');
   return `${CHIP_BASE} mdx-chip--interactive text-${color} border-${color}/30 bg-${color}/5`;
 }
 
@@ -47,7 +47,7 @@ export function latexSpanHtml(code: string): string {
   const rendered = renderKatex(cleanCode, false);
   return `<span data-mdx="latex" data-latex="${escapeHtml(cleanCode)}" class="${LATEX_CLASS}" title="Fórmula inline: $${escapeHtml(cleanCode)}$">`
     + `<span data-latex-preview="1" contenteditable="false" class="mdx-latex-preview pointer-events-none group-[.is-editing]/latex:hidden">${rendered}</span>`
-    + `<span data-latex-source="1" class="mdx-latex-source hidden font-mono text-xs text-carbon outline-none focus:ring-1 focus:ring-salvia rounded px-0.5 group-[.is-editing]/latex:inline-block">$${escapeHtml(cleanCode)}$</span>`
+    + `<span data-latex-source="1" class="mdx-latex-source hidden font-mono text-xs text-carbon outline-none focus:ring-1 focus:ring-canela rounded px-0.5 group-[.is-editing]/latex:inline-block">$${escapeHtml(cleanCode)}$</span>`
     + `</span>`;
 }
 
@@ -67,7 +67,7 @@ export function formulaBlockHtml(inner: string): string {
   return `<div data-mdx="formula" class="${FORMULA_CLASS}" contenteditable="false">`
     + `<div class="mb-1 text-[9px] font-bold uppercase tracking-wider text-ocre/80">Fórmula</div>`
     + (preview ? `<div class="mb-2 overflow-x-auto text-center pointer-events-none" data-formula-preview="1">${preview}</div>` : '')
-    + `<div data-formula-source="1" contenteditable="true" class="font-mono text-sm text-carbon outline-none focus:ring-1 focus:ring-salvia rounded px-1">${escapeHtml(trimmed || '$$ x $$')}</div>`
+    + `<div data-formula-source="1" contenteditable="true" class="font-mono text-sm text-carbon outline-none focus:ring-1 focus:ring-canela rounded px-1">${escapeHtml(trimmed || '$$ x $$')}</div>`
     + `</div>`;
 }
 

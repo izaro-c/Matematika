@@ -3,9 +3,9 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { CONTENT_TYPE_CONFIG, GRAPH_NODE_COLORS } from '@/lib/theme/constants';
 
-const CANONICAL_NAMES = ['lienzo', 'carbon', 'salvia', 'terracota', 'pizarra', 'ocre', 'pavo', 'granada', 'musgo'] as const;
+const CANONICAL_NAMES = ['lienzo', 'carbon', 'canela', 'terracota', 'mora', 'ocre', 'pavo', 'granada', 'musgo'] as const;
 const ACCENT_NAMES = CANONICAL_NAMES.filter(name => name !== 'lienzo' && name !== 'carbon');
-const BODY_INK_NAMES = ['carbon', 'pizarra', 'pavo', 'granada', 'musgo'] as const;
+const BODY_INK_NAMES = ['carbon', 'mora', 'pavo', 'granada', 'musgo'] as const;
 
 function cssPalette(selector: ':root' | '.dark'): Record<string, string> {
   const css = readFileSync(resolve(process.cwd(), 'src/app/theme.css'), 'utf8');
@@ -56,7 +56,7 @@ describe('Arts & Crafts contrast contract', () => {
     for (const name of BODY_INK_NAMES) {
       expect(contrast(background, palette[name]), `${name} lacks 4.5:1 contrast`).toBeGreaterThanOrEqual(4.5);
     }
-    for (const name of ['salvia', 'terracota', 'ocre'] as const) {
+    for (const name of ['canela', 'terracota', 'ocre'] as const) {
       expect(contrast(background, palette[name]), `${name} lacks 3:1 non-text contrast`).toBeGreaterThanOrEqual(3);
     }
   });

@@ -24,12 +24,12 @@ export const DemoTriangulacionPoligono: React.FC = () => {
 
         // Oreja P4
         els.oreja = createPolygon(board, [els.P3, els.P4, els.P5], {
-          fillColor: theme.salvia, fillOpacity: 0, borders: { strokeColor: theme.carbon, strokeWidth: 1 }
+          fillColor: theme.canela, fillOpacity: 0, borders: { strokeColor: theme.carbon, strokeWidth: 1 }
         }, theme);
 
         // Resto del polígono
         els.resto = createPolygon(board, [els.P1, els.P2, els.P3, els.P5], {
-          fillColor: theme.pizarra, fillOpacity: 0, borders: { strokeColor: theme.carbon, strokeWidth: 1 }
+          fillColor: theme.mora, fillOpacity: 0, borders: { strokeColor: theme.carbon, strokeWidth: 1 }
         }, theme);
       }}
       onUpdate={(_board: any, els: any, _theme: any, isStep: any, isHL: any) => {

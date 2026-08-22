@@ -109,11 +109,11 @@ export function AxiomaticDisplayOptions({
         </h2>
         <div className="mt-3 space-y-3 font-sans text-[10px] leading-relaxed text-carbon/65">
           <div className="flex items-start gap-3">
-            <span aria-hidden="true" className="mt-0.5 size-4 shrink-0 rounded-full bg-salvia shadow-sm" />
+            <span aria-hidden="true" className="mt-0.5 size-4 shrink-0 rounded-full bg-canela shadow-sm" />
             <p><strong className="font-semibold text-carbon">{t('graph', 'fullColorState')}</strong> {t('graph', 'fullColorDesc')}</p>
           </div>
           <div className="flex items-start gap-3">
-            <span aria-hidden="true" className="mt-0.5 size-4 shrink-0 rounded-full bg-salvia opacity-25" />
+            <span aria-hidden="true" className="mt-0.5 size-4 shrink-0 rounded-full bg-canela opacity-25" />
             <p><strong className="font-semibold text-carbon">{t('graph', 'fadedState')}</strong> {t('graph', 'fadedDesc')}</p>
           </div>
           <div className="flex items-start gap-3">

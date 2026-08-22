@@ -19,7 +19,7 @@ const extensionsSchema = z.record(z.string(), z.unknown()).default({});
 const optionalExtensionsSchema = z.record(z.string(), z.unknown()).optional();
 
 export const diagramColorTokenSchema = z.enum([
-  'carbon', 'terracota', 'salvia', 'pizarra', 'ocre', 'pavo', 'granada', 'musgo',
+  'carbon', 'terracota', 'canela', 'mora', 'ocre', 'pavo', 'granada', 'musgo',
 ]);
 
 export const diagramElementKindSchema = z.enum([

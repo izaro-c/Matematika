@@ -82,7 +82,7 @@ export const BranchLibrary = () => {
         { id: 'ecuaciones-diferenciales', codes: ['34'] },
         { id: 'analisis-funcional-y-armonico', codes: ['46'] },
       ],
-      accent: 'var(--theme-pizarra)',
+      accent: 'var(--theme-mora)',
       desc: t('library', 'sectionIIIDesc'),
       icon: '∫',
     },
@@ -123,9 +123,9 @@ export const BranchLibrary = () => {
           </span>
         </div>
         <div className="flex items-center gap-4 text-sm font-sans tracking-wide text-ink-muted bg-carbon/5 px-4 py-2.5 rounded tabular-nums">
-          <span>{t('library', 'read')}: <strong className="text-salvia font-semibold">{readConcepts.length}</strong></span>
+          <span>{t('library', 'read')}: <strong className="text-canela font-semibold">{readConcepts.length}</strong></span>
           <span aria-hidden="true">·</span>
-          <span>{t('library', 'exercises')}: <strong className="text-salvia font-semibold">{completedExercises.length}</strong></span>
+          <span>{t('library', 'exercises')}: <strong className="text-canela font-semibold">{completedExercises.length}</strong></span>
         </div>
       </div>
 

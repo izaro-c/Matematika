@@ -100,7 +100,7 @@ export const MedianaSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "punto-medio",
-      "color": "pizarra"
+      "color": "mora"
     }
   ],
   "objects": [
@@ -252,7 +252,7 @@ export const MedianaSpec = createDiagramSpec(
     {
       "id": "Ma",
       "label": "Punto medio de BC",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 350,
       "visible": true,
@@ -284,7 +284,7 @@ export const MedianaSpec = createDiagramSpec(
     {
       "id": "Mb",
       "label": "Punto medio de CA",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 360,
       "visible": true,
@@ -316,7 +316,7 @@ export const MedianaSpec = createDiagramSpec(
     {
       "id": "Mc",
       "label": "Punto medio de AB",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 370,
       "visible": true,
@@ -503,7 +503,7 @@ export const MedianaSpec = createDiagramSpec(
     {
       "id": "GMa",
       "label": "GMₐ",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 430,
       "visible": false,

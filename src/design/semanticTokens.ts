@@ -9,7 +9,7 @@ import {
  * variables en runtime mediante useThemeColors().
  */
 export const SEMANTIC_COLOR_ROLES = {
-  primaryAccent:      THEME_COLOR_VARS.salvia,
+  primaryAccent:      THEME_COLOR_VARS.canela,
   secondaryAccent:    THEME_COLOR_VARS.pavo,
   neutralStrong:      THEME_COLOR_VARS.carbon,
   warningAccent:      THEME_COLOR_VARS.terracota,
@@ -19,13 +19,13 @@ export const SEMANTIC_COLOR_ROLES = {
   definitionAccent:   THEME_COLOR_VARS.musgo,
   lemmaAccent:        THEME_COLOR_VARS.granada,
   theoremAccent:      THEME_COLOR_VARS.terracota,  // terracota
-  corollaryAccent:    THEME_COLOR_VARS.salvia,
+  corollaryAccent:    THEME_COLOR_VARS.canela,
   proofAccent:        THEME_COLOR_VARS.granada,    // granada
   methodAccent:       THEME_COLOR_VARS.ocre,
   modelAccent:        THEME_COLOR_VARS.pavo,       // pavo
-  exampleAccent:      THEME_COLOR_VARS.pizarra,    // pizarra
+  exampleAccent:      THEME_COLOR_VARS.mora,    // mora
   exerciseAccent:     THEME_COLOR_VARS.granada,
-  biographyAccent:    THEME_COLOR_VARS.pizarra,
+  biographyAccent:    THEME_COLOR_VARS.mora,
 
   // Editorial secundario y roles de utilidad
   conceptAccent:      THEME_COLOR_VARS.carbon,

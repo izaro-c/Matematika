@@ -103,7 +103,7 @@ export const CreatePageDialog: React.FC<CreatePageDialogProps> = ({ open, onClos
           <button type="button" onClick={cancel} className="rounded border border-carbon/15 px-3 py-2 text-xs font-bold text-carbon/60">
             {t('editor', 'cancel')}
           </button>
-          <button disabled={!valid || creating} className="rounded bg-salvia px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40">
+          <button disabled={!valid || creating} className="rounded bg-canela px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40">
             {creating
               ? t('editor', 'creating')
               : t('editor', 'createAndOpen')}

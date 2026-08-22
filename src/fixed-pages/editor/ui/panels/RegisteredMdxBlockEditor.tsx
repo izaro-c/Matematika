@@ -12,23 +12,23 @@ interface Props {
 }
 
 const labels: Record<string, { title: string; help: string; tone: string }> = {
-  StudyTask: { title: 'Recurso del plan', help: 'Enlaza una parada del itinerario con una página de Matematika.', tone: 'border-salvia/25 bg-salvia/5' },
+  StudyTask: { title: 'Recurso del plan', help: 'Enlaza una parada del itinerario con una página de Matematika.', tone: 'border-canela/25 bg-canela/5' },
   StudyPlanCheckpoint: { title: 'Comprobación del plan', help: 'Pregunta de control antes de continuar con el itinerario.', tone: 'border-ocre/25 bg-ocre/5' },
   Paso: { title: 'Paso de ejemplo', help: 'Una etapa visible de la resolución, con orden, título y explicación.', tone: 'border-pavo/25 bg-pavo/5' },
-  Solucion: { title: 'Solución revelable', help: 'Agrupa los pasos que desarrollan la solución completa.', tone: 'border-salvia/25 bg-salvia/5' },
-  Resolucion: { title: 'Resolución', help: 'Explica la respuesta del paso con su justificación.', tone: 'border-salvia/25 bg-salvia/5' },
+  Solucion: { title: 'Solución revelable', help: 'Agrupa los pasos que desarrollan la solución completa.', tone: 'border-canela/25 bg-canela/5' },
+  Resolucion: { title: 'Resolución', help: 'Explica la respuesta del paso con su justificación.', tone: 'border-canela/25 bg-canela/5' },
   Apoyo: { title: 'Ayuda contextual', help: 'Ofrece una pista o un enlace de repaso sin revelar la solución.', tone: 'border-ocre/25 bg-ocre/5' },
   ErrorComun: { title: 'Error común', help: 'Explica una respuesta incorrecta y cómo reconocerla.', tone: 'border-granada/25 bg-granada/5' },
   Pregunta: { title: 'Pregunta', help: 'Pregunta evaluable con sus opciones y respuesta correcta.', tone: 'border-pavo/25 bg-pavo/5' },
   Hueco: { title: 'Respuesta breve', help: 'Campo que comprueba una respuesta corta.', tone: 'border-ocre/25 bg-ocre/5' },
-  Capitular: { title: 'Capitular', help: 'Inicial decorativa aplicada al párrafo siguiente.', tone: 'border-salvia/25 bg-salvia/5' },
+  Capitular: { title: 'Capitular', help: 'Inicial decorativa aplicada al párrafo siguiente.', tone: 'border-canela/25 bg-canela/5' },
 };
 
 function TextField({ label, value, placeholder, onChange, type = 'text' }: {
   label: string; value: string | number; placeholder?: string; onChange: (value: string) => void; type?: string;
 }) {
   return <label className="block text-[10px] font-bold text-carbon/60">{label}
-    <input type={type} value={value} placeholder={placeholder} onChange={event => onChange(event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2.5 py-2 text-xs font-normal text-carbon outline-none focus:border-salvia" />
+    <input type={type} value={value} placeholder={placeholder} onChange={event => onChange(event.target.value)} className="mt-1 w-full rounded border border-carbon/15 bg-lienzo px-2.5 py-2 text-xs font-normal text-carbon outline-none focus:border-canela" />
   </label>;
 }
 
@@ -41,7 +41,7 @@ export const RegisteredMdxBlockEditor: React.FC<Props> = ({ block, isReadOnly, u
 
   if (component === 'Capitular') {
     return <div className={`flex items-center gap-3 rounded border p-3 ${presentation.tone}`}>
-      <span className="flex h-12 w-12 items-center justify-center font-serif text-4xl font-bold text-salvia" aria-hidden="true">{String(block.metadata?.letra || 'A').slice(0, 1)}</span>
+      <span className="flex h-12 w-12 items-center justify-center font-serif text-4xl font-bold text-canela" aria-hidden="true">{String(block.metadata?.letra || 'A').slice(0, 1)}</span>
       <div className="min-w-0 flex-1"><p className="text-xs font-bold text-carbon">Capitular del párrafo siguiente</p><p className="text-[10px] text-carbon/50">La letra se une visualmente al texto al publicar.</p></div>
       <label className="text-[10px] font-bold text-carbon/55">Letra<input disabled={isReadOnly} maxLength={1} value={String(block.metadata?.letra || '')} onChange={event => setAttribute('letra', event.target.value.toUpperCase())} className="ml-2 h-9 w-10 rounded border border-carbon/15 bg-lienzo text-center font-serif text-lg font-bold" /></label>
     </div>;
@@ -64,7 +64,7 @@ export const RegisteredMdxBlockEditor: React.FC<Props> = ({ block, isReadOnly, u
       <div className="mb-3"><h4 className="font-serif text-sm font-bold text-carbon">{presentation.title}</h4><p className="text-[10px] text-carbon/50">{presentation.help}</p></div>
       <label className="block text-[10px] font-bold text-carbon/60">Pregunta<textarea value={String(block.metadata?.question || '')} onChange={event => setAttribute('question', event.target.value)} className="mt-1 min-h-20 w-full rounded border border-carbon/15 bg-lienzo p-2.5 font-serif text-sm font-normal leading-relaxed" /></label>
       <div className="mt-3 space-y-2">
-        {options.map((option, index) => <label key={`${block.id}-option-${index}`} className={`flex items-center gap-2 rounded border p-2 ${index === correctAnswer ? 'border-salvia/30 bg-salvia/10' : 'border-carbon/10 bg-lienzo'}`}>
+        {options.map((option, index) => <label key={`${block.id}-option-${index}`} className={`flex items-center gap-2 rounded border p-2 ${index === correctAnswer ? 'border-canela/30 bg-canela/10' : 'border-carbon/10 bg-lienzo'}`}>
           <input type="radio" name={`${block.id}-correct`} checked={index === correctAnswer} onChange={() => setAttribute('correctAnswer', index)} />
           <span className="text-[10px] font-bold text-carbon/45">{index + 1}</span>
           <input value={option} onChange={event => { const next = [...options]; next[index] = event.target.value; setAttribute('options', next); }} className="min-w-0 flex-1 bg-transparent text-xs text-carbon outline-none" />

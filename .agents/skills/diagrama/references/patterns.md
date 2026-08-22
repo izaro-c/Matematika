@@ -10,7 +10,7 @@
 - Tratar `code-preview` únicamente como clasificación conservadora de fuentes heredadas. No es una salida válida al crear un diagrama ni al modificar uno solicitado: migrar ese diagrama a `visual-exact` antes de cambiarlo.
 - Si `DiagramSpec v2` o el workbench no representan alguna parte del diagrama deseado, implementar esa capacidad en el producto antes de crear el diagrama. No sustituirla con TSX manual, SVG opaco, Canvas opaco, HTML opaco ni datos escondidos en `extensions`.
 - `board.create` solo se admite para auxiliares invisibles aún no cubiertos por `MathFactory`; un elemento reutilizable se añade primero a `src/diagrams/core/MathFactory.ts`.
-- Los únicos colores son `lienzo`, `carbon`, `salvia`, `terracota`, `pizarra`, `ocre`, `pavo`, `granada` y `musgo`: `theme.*` en JSXGraph y `var(--theme-*)` en SVG/CSS, sin hex o RGB locales.
+- Los únicos colores son `lienzo`, `carbon`, `canela`, `terracota`, `mora`, `ocre`, `pavo`, `granada` y `musgo`: `theme.*` en JSXGraph y `var(--theme-*)` en SVG/CSS, sin hex o RGB locales.
 - Todo objeto móvil o control tiene alternativa de teclado, nombre accesible e instrucciones. Los targets responden a foco, Enter o Espacio además de puntero.
 - Se verifica foco visible, modo claro/oscuro, `prefers-reduced-motion`, viewport responsive y coste acotado con escenas complejas.
 
@@ -178,9 +178,9 @@ Todo diagrama DEBE usar los tokens semánticos de color del proyecto. **NUNCA us
 | Token | JSXGraph | SVG / CSS | Significado matemático |
 |---|---|---|---|
 | `carbon` | `theme.carbon` | `var(--theme-carbon)` | Ejes, bordes, etiquetas, texto principal, grid |
-| `salvia` | `theme.salvia` | `var(--theme-salvia)` | Planos, coeficientes, geometría secundaria, líneas de construcción |
+| `canela` | `theme.canela` | `var(--theme-canela)` | Planos, coeficientes, geometría secundaria, líneas de construcción |
 | `terracota` | `theme.terracota` | `var(--theme-terracota)` | Puntos, vectores, incógnitas, elementos interactivos primarios |
-| `pizarra` | `theme.pizarra` | `var(--theme-pizarra)` | Distancias, resultados, mediciones secundarias, valores calculados |
+| `mora` | `theme.mora` | `var(--theme-mora)` | Distancias, resultados, mediciones secundarias, valores calculados |
 | `lienzo` | `theme.lienzo` | `var(--theme-lienzo)` | Fondo del diagrama, áreas de relleno |
 | `ocre` | `theme.ocre` | `var(--theme-ocre)` | Resaltados, valores especiales, elementos auxiliares |
 | `pavo` | `theme.pavo` | `var(--theme-pavo)` | Acento alternativo, elementos terciarios, construcciones alternativas |
@@ -206,7 +206,7 @@ Un diagrama en Matematika NO es solo una ilustración — es una **herramienta p
 Cada diagrama debe tener exactamente **un elemento primario** por estado de vista. La mirada debe ir a lo que importa.
 
 1. **Primario** (terracota, bold) — el elemento geométrico principal en discusión
-2. **Secundario** (salvia, más fino) — líneas de construcción, elementos de soporte
+2. **Secundario** (canela, más fino) — líneas de construcción, elementos de soporte
 3. **Terciario** (carbon, fino) — ejes, grid, etiquetas
 4. **Fondo** (lienzo, opacidad baja) — áreas de relleno
 
@@ -232,8 +232,8 @@ Cada color DEBE tener un significado consistente dentro de un mismo diagrama:
 |---|---|---|
 | Dado / conocido | `carbon` | Puntos, segmentos dados por hipótesis |
 | Incógnita / a encontrar | `terracota` | El lado o ángulo que se busca |
-| Construcción | `salvia` | Líneas auxiliares, pasos intermedios |
-| Resultado | `pizarra` | Valor calculado, relación demostrada |
+| Construcción | `canela` | Líneas auxiliares, pasos intermedios |
+| Resultado | `mora` | Valor calculado, relación demostrada |
 | Error / contradicción | `granada` | Elementos inconsistentes, falacias |
 | Verificado | `musgo` | Respuesta correcta, condición verificada |
 
@@ -331,7 +331,7 @@ export const MiDiagrama = () => {
         const stepPoly = s2;
         els.poly.setAttribute({
             fillOpacity: getOp(hlTri, stepPoly, 0, 0.4),
-            fillColor: getC(hlTri, theme.salvia)
+            fillColor: getC(hlTri, theme.canela)
         });
 
         // Los puntos siempre visibles, pero brillan si se hace hover
@@ -683,8 +683,8 @@ Esto incluye:
 - **Referencias dentro de fórmulas**: envolver cada variable en `<InteractiveElement>`:
   ```mdx
   <InteractiveElement target="cateto-a" color="terracota">$a$</InteractiveElement>^2 +
-  <InteractiveElement target="cateto-b" color="salvia">$b$</InteractiveElement>^2 =
-  <InteractiveElement target="hipotenusa" color="pizarra">$c$</InteractiveElement>^2
+  <InteractiveElement target="cateto-b" color="canela">$b$</InteractiveElement>^2 =
+  <InteractiveElement target="hipotenusa" color="mora">$c$</InteractiveElement>^2
   ```
 - **Si dentro de una fórmula no se puede** (LaTeX complejo con fracciones, subíndices...), **explicar fuera de la fórmula** a qué se refiere cada símbolo:
   ```mdx
@@ -712,7 +712,7 @@ Cada paso tiene su propio componente de diagrama:
   </ProofStep>
   <ProofStep number={2} target="step2" title="Razonamiento">
     Por la propiedad de <ConceptLink targetId="axioma-congruencia-1">transporte</ConceptLink>,
-    el <InteractiveElement target="segmento-cd" color="salvia">segmento $CD$</InteractiveElement>...
+    el <InteractiveElement target="segmento-cd" color="canela">segmento $CD$</InteractiveElement>...
   </ProofStep>
   <ProofStep number={3} target="step3" title="Conclusión">
     ... $\blacksquare$
@@ -729,8 +729,8 @@ Cuando los pasos comparten la misma construcción y solo cambia el highlight, un
 ```typescript
 onUpdate={(_board, els, theme, _isStep, isHL) => {
     // RESET — TODOS los atributos modificados
-    els.lineAB.setAttribute({ strokeWidth: 2, strokeColor: theme.pizarra, strokeOpacity: 1 });
-    els.angleC.setAttribute({ fillColor: theme.salvia, fillOpacity: 0.2 });
+    els.lineAB.setAttribute({ strokeWidth: 2, strokeColor: theme.mora, strokeOpacity: 1 });
+    els.angleC.setAttribute({ fillColor: theme.canela, fillOpacity: 0.2 });
 
     // APLICAR highlight sin cambiar el significado cromático
     if (isHL('segAB')) els.lineAB.setAttribute({ strokeWidth: 6 });

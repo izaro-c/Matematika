@@ -29,7 +29,7 @@ function halfPlaneModel(): VisualDiagramModel {
       item.id === 'pD' ? { ...item, constraintIds: ['inside-half'] } : item
     )),
     elements: [
-      element('half1', 'Semiplano superior', 'halfPlane', ['pA', 'pB', 'pC'], 'salvia'),
+      element('half1', 'Semiplano superior', 'halfPlane', ['pA', 'pB', 'pC'], 'canela'),
     ],
     sliders: [],
     steps: [{ id: 'initial', label: 'Inicio', description: '', visibleTargets: ['pA', 'pB', 'pC', 'pD', 'half1'], durationMs: 0 }],
@@ -75,7 +75,7 @@ describe('area elements', () => {
         { ...point('pD', 'D', 0, 0, false, 'terracota', 'constrained'), constraintIds: ['on-circle'] },
       ],
       elements: [
-        element('circle1', 'Círculo', 'circle', ['pO', 'pR'], 'salvia'),
+        element('circle1', 'Círculo', 'circle', ['pO', 'pR'], 'canela'),
       ],
       constraints: [
         diagramConstraint('on-circle', 'D en el perímetro', 'insideArea', ['pD', 'circle1'], { areaMembership: 'boundary' }),
@@ -99,7 +99,7 @@ describe('area elements', () => {
         { ...point('pD', 'D', 0, -4, false, 'terracota', 'constrained'), constraintIds: ['inside-sin'] },
       ],
       elements: [
-        element('sinArea', 'sin(x)', 'functionCurve', ['pSide'], 'salvia', true, {
+        element('sinArea', 'sin(x)', 'functionCurve', ['pSide'], 'canela', true, {
           properties: {
             expression: 'sin(x)',
             parameter: 'x',

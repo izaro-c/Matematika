@@ -25,7 +25,7 @@ Slot de texto fijo con dos labels en la misma celda CSS Grid:
 2. El texto más largo («Marcar como Leído») define el ancho intrínseco del slot en ambos estados.
 3. Visibilidad: activo `opacity-100`; inactivo `opacity-0` + `pointer-events-none` (y `aria-hidden` en el inactivo).
 4. Transición de opacity ~300–500ms, coherente con las transitions existentes del botón.
-5. Rombo, hover, colores (`salvia` / `page-accent`) y `toggleRead` sin cambios de comportamiento.
+5. Rombo, hover, colores (`canela` / `page-accent`) y `toggleRead` sin cambios de comportamiento.
 
 ## Criterio de éxito
 

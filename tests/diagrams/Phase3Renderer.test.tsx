@@ -113,7 +113,7 @@ vi.mock('@/diagrams/jsxgraph/MathBoard', () => ({
         getUsrCoordsOfMouse: vi.fn(() => [0, 0]),
         getBoundingBox: vi.fn(() => [-4, 4, 4, -4]),
       });
-    const themeRef = React.useRef({ carbon: 'carbon', terracota: 'terracota', salvia: 'salvia', pizarra: 'pizarra', ocre: 'ocre', pavo: 'pavo', granada: 'granada', musgo: 'musgo', lienzo: 'lienzo' });
+    const themeRef = React.useRef({ carbon: 'carbon', terracota: 'terracota', canela: 'canela', mora: 'mora', ocre: 'ocre', pavo: 'pavo', granada: 'granada', musgo: 'musgo', lienzo: 'lienzo' });
     const onInitRef = React.useRef(onInit);
     const onUpdateRef = React.useRef(onUpdate);
     onInitRef.current = onInit;

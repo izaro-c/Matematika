@@ -75,7 +75,7 @@ export function SelectionLinkBubble({
     >
       <button
         type="button"
-        className="rounded-lg px-2.5 py-1.5 text-xs font-bold text-salvia hover:bg-salvia/10"
+        className="rounded-lg px-2.5 py-1.5 text-xs font-bold text-canela hover:bg-canela/10"
         onMouseDown={keep(onLinkSelection)}
         title="Enlazar concepto, teorema o definición"
       >

@@ -11,9 +11,9 @@
 export const THEME_COLOR_VARS = {
   lienzo:     'var(--theme-lienzo)',
   carbon:     'var(--theme-carbon)',
-  salvia:     'var(--theme-salvia)',
+  canela:     'var(--theme-canela)',
   terracota:  'var(--theme-terracota)',
-  pizarra:    'var(--theme-pizarra)',
+  mora:    'var(--theme-mora)',
   ocre:       'var(--theme-ocre)',
   pavo:       'var(--theme-pavo)',
   granada:    'var(--theme-granada)',

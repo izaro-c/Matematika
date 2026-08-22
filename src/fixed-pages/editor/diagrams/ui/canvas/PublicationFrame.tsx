@@ -39,7 +39,7 @@ export const PublicationFrame: React.FC<PublicationFrameProps> = ({
         {mode === 'desktop' && (
           <div className="flex gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-terracota/70" />
-            <span className="h-2.5 w-2.5 rounded-full bg-salvia/70" />
+            <span className="h-2.5 w-2.5 rounded-full bg-canela/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-carbon/30" />
           </div>
         )}

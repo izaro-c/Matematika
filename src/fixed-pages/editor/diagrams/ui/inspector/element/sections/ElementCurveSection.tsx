@@ -12,7 +12,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
     {element.kind === 'functionCurve' && (
       <div>
         <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-          Expresión <code className="font-mono text-[10px] text-salvia">f(x)</code>
+          Expresión <code className="font-mono text-[10px] text-canela">f(x)</code>
         </label>
         <input
           type="text"
@@ -24,7 +24,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
             })
           }
           placeholder="ej. sin(x) o x^2 - 2*x + 1"
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 placeholder-carbon/30"
+          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
         />
       </div>
     )}
@@ -33,7 +33,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
       <div className="grid grid-cols-2 gap-2.5">
         <div>
           <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-            Expresión <code className="font-mono text-[10px] text-salvia">x(t)</code>
+            Expresión <code className="font-mono text-[10px] text-canela">x(t)</code>
           </label>
           <input
             type="text"
@@ -45,12 +45,12 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
               })
             }
             placeholder="ej. cos(t)"
-            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 placeholder-carbon/30"
+            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
           />
         </div>
         <div>
           <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-            Expresión <code className="font-mono text-[10px] text-salvia">y(t)</code>
+            Expresión <code className="font-mono text-[10px] text-canela">y(t)</code>
           </label>
           <input
             type="text"
@@ -62,7 +62,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
               })
             }
             placeholder="ej. sin(t)"
-            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 placeholder-carbon/30"
+            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-mono text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
           />
         </div>
       </div>
@@ -85,7 +85,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
               properties: { ...(element.properties || {}), domain: [minVal, maxVal] },
             });
           }}
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
         />
       </div>
       <div>
@@ -104,7 +104,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
               properties: { ...(element.properties || {}), domain: [minVal, maxVal] },
             });
           }}
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
         />
       </div>
     </div>
@@ -122,7 +122,7 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
               },
             })
           }
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 cursor-pointer"
+          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-bold text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 cursor-pointer"
         >
           <option value="none">Sin relleno de área</option>
           <option value="interior">Relleno hasta el eje X (Interior)</option>
@@ -131,15 +131,15 @@ export const ElementCurveSection: React.FC<ElementPanelProps> = ({
       </div>
 
       {element.properties?.areaFill === 'half-plane' && (
-        <div className="p-2.5 rounded-lg border border-salvia/20 bg-salvia/5 space-y-1">
-          <label className="block text-[10px] font-bold text-salvia uppercase tracking-wider mb-1">Punto de Referencia del Semiplano</label>
+        <div className="p-2.5 rounded-lg border border-canela/20 bg-canela/5 space-y-1">
+          <label className="block text-[10px] font-bold text-canela uppercase tracking-wider mb-1">Punto de Referencia del Semiplano</label>
           <select
             value={element.refs[0] || ''}
             onChange={e => {
               const nextRefs = [e.target.value, ...element.refs.slice(1)];
               onUpdateElement(element.id, { refs: nextRefs });
             }}
-            className="w-full rounded-md border border-salvia/20 bg-lienzo px-2.5 py-1 text-xs font-mono font-bold text-carbon focus:border-salvia focus:outline-none"
+            className="w-full rounded-md border border-canela/20 bg-lienzo px-2.5 py-1 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none"
           >
             <option value="">-- Seleccionar punto --</option>
             {model.points.map(p => (

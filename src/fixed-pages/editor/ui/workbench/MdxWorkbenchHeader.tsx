@@ -89,7 +89,7 @@ export const MdxWorkbenchHeader: React.FC<MdxWorkbenchHeaderProps> = ({
       badges={
         <div className="flex items-center gap-2">
           {contentType ? (
-            <HeaderBadge variant="salvia" className="hidden lg:inline-flex">
+            <HeaderBadge variant="canela" className="hidden lg:inline-flex">
               {contentType}
             </HeaderBadge>
           ) : null}

@@ -12,8 +12,8 @@
     { "id": "segAB", "label": "Segmento", "kind": "segment", "refs": ["pA", "pB"], "color": "carbon", "layerId": "geometry", "order": 10, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
     { "id": "lineBC", "label": "Recta", "kind": "line", "refs": ["pB", "pC"], "color": "pavo", "layerId": "geometry", "order": 11, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
     { "id": "rayOA", "label": "Semirrecta", "kind": "ray", "refs": ["pO", "pA"], "color": "pavo", "layerId": "geometry", "order": 12, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
-    { "id": "polyABC", "label": "Polígono", "kind": "polygon", "refs": ["pA", "pB", "pC"], "color": "salvia", "layerId": "geometry", "order": 13, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
-    { "id": "circleOA", "label": "Círculo", "kind": "circle", "refs": ["pO", "pA"], "color": "salvia", "layerId": "geometry", "order": 14, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "polyABC", "label": "Polígono", "kind": "polygon", "refs": ["pA", "pB", "pC"], "color": "canela", "layerId": "geometry", "order": 13, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
+    { "id": "circleOA", "label": "Círculo", "kind": "circle", "refs": ["pO", "pA"], "color": "canela", "layerId": "geometry", "order": 14, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true },
     { "id": "arcOAB", "label": "Arco", "kind": "arc", "refs": ["pO", "pA", "pB"], "color": "ocre", "layerId": "geometry", "order": 15, "visible": true, "locked": false, "groupIds": [], "selection": { "selectable": true }, "target": true }
   ],
   "sliders": [], "steps": [], "constraints": [], "dependencies": [], "note": "Familia de primitivas euclídeas.", "extensions": { "acceptanceFamily": "euclidean-primitives" }

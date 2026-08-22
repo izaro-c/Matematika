@@ -42,12 +42,12 @@ function keep(handler: () => void) {
   };
 }
 
-function btnClass(active = false, variant: 'default' | 'salvia' = 'default') {
-  return `flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia disabled:opacity-40 disabled:cursor-not-allowed ${
+function btnClass(active = false, variant: 'default' | 'canela' = 'default') {
+  return `flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela disabled:opacity-40 disabled:cursor-not-allowed ${
     active
-      ? 'bg-salvia text-lienzo shadow-xs font-bold'
-      : variant === 'salvia'
-      ? 'bg-salvia/10 text-salvia border border-salvia/30 hover:bg-salvia/20 font-bold'
+      ? 'bg-canela text-lienzo shadow-xs font-bold'
+      : variant === 'canela'
+      ? 'bg-canela/10 text-canela border border-canela/30 hover:bg-canela/20 font-bold'
       : 'bg-carbon/5 border border-carbon/15 text-carbon/80 hover:bg-carbon/10'
   }`;
 }
@@ -191,11 +191,11 @@ export function MdxFormatBar({
           title="Resaltar elemento del diagrama"
           onMouseDown={keep(() => {
             const selected = getSelectedPlainText().trim() || 'elemento';
-            if (insertHtmlAtSelection(mdxToEditableHtml(buildInteractiveReference('elemento', 'salvia', selected)))) after();
+            if (insertHtmlAtSelection(mdxToEditableHtml(buildInteractiveReference('elemento', 'canela', selected)))) after();
             else onNotify?.('Haz clic en el texto del paso y selecciona o escribe el rótulo.');
           })}
         >
-          <IconSparkles className="w-3.5 h-3.5 text-salvia" />
+          <IconSparkles className="w-3.5 h-3.5 text-canela" />
           <span>Diagrama</span>
         </button>
 
@@ -222,7 +222,7 @@ export function MdxFormatBar({
                   value={query}
                   onChange={e => setQuery(e.target.value)}
                   placeholder="Buscar bloque…"
-                  className="h-8 w-full rounded-lg border border-carbon/15 bg-carbon/5 px-2.5 text-xs outline-none focus:border-salvia font-sans"
+                  className="h-8 w-full rounded-lg border border-carbon/15 bg-carbon/5 px-2.5 text-xs outline-none focus:border-canela font-sans"
                 />
               </div>
               <div className="max-h-72 overflow-y-auto p-1.5 space-y-0.5">
@@ -231,7 +231,7 @@ export function MdxFormatBar({
                     key={`${preset.type}-${preset.label}`}
                     type="button"
                     role="menuitem"
-                    className="w-full rounded-xl border border-transparent px-3 py-2 text-left hover:border-salvia/30 hover:bg-salvia/5 transition-all cursor-pointer"
+                    className="w-full rounded-xl border border-transparent px-3 py-2 text-left hover:border-canela/30 hover:bg-canela/5 transition-all cursor-pointer"
                     onClick={() => {
                       onInsertPreset(preset);
                       setOpen(null);
@@ -267,7 +267,7 @@ export function MdxFormatBar({
               <button
                 type="button"
                 role="menuitem"
-                className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-xs font-bold text-salvia hover:bg-salvia/10 transition-colors cursor-pointer"
+                className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-left text-xs font-bold text-canela hover:bg-canela/10 transition-colors cursor-pointer"
                 onClick={() => {
                   onInsertStep();
                   setOpen(null);
@@ -332,7 +332,7 @@ export function MdxFormatBar({
 
         <div className="ml-auto hidden md:flex items-center space-x-2 bg-carbon/5 px-2.5 py-1 rounded-lg border border-carbon/15 text-xs">
           <span className="text-[11px] text-carbon/50">Modo:</span>
-          <span className="font-bold text-salvia">Formato MDX</span>
+          <span className="font-bold text-canela">Formato MDX</span>
         </div>
       </nav>
 

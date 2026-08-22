@@ -47,24 +47,24 @@ export const DemoPitagorasAreas = () => {
       }, theme);
     };
 
-    const t1 = movingTriangle('triangulo-1', theme.salvia, () => [0, 0], () => [a, 0], () => [0, b]);
+    const t1 = movingTriangle('triangulo-1', theme.canela, () => [0, 0], () => [a, 0], () => [0, b]);
     const t2 = movingTriangle(
       'triangulo-2',
-      theme.salvia,
+      theme.canela,
       () => [side, b * slider.Value()],
       () => [side, a + b * slider.Value()],
       () => [a, b * slider.Value()],
     );
     const t3 = movingTriangle(
       'triangulo-3',
-      theme.salvia,
+      theme.canela,
       () => [side - b * slider.Value(), side - a * slider.Value()],
       () => [b - b * slider.Value(), side - a * slider.Value()],
       () => [side - b * slider.Value(), a - a * slider.Value()],
     );
     const t4 = movingTriangle(
       'triangulo-4',
-      theme.salvia,
+      theme.canela,
       () => [a * slider.Value(), side],
       () => [a * slider.Value(), b],
       () => [b + a * slider.Value(), side],
@@ -75,7 +75,7 @@ export const DemoPitagorasAreas = () => {
     const c3 = createPoint(board, [b, side], { visible: false, target: false }, theme);
     const c4 = createPoint(board, [0, b], { visible: false, target: false }, theme);
     const emptyC = createPolygon(board, [c1, c2, c3, c4], {
-      fillColor: theme.pizarra,
+      fillColor: theme.mora,
       fillOpacity: () => 0.5 * (1 - slider.Value()),
       borders: { strokeWidth: 0 },
       vertices: { visible: false },
@@ -134,12 +134,12 @@ export const DemoPitagorasAreas = () => {
     }
     if (isHL('segmento-b')) {
       [els.t1, els.t2, els.t3, els.t4].forEach((triangle: any) => {
-        triangle.borders[2].setAttribute({ strokeColor: theme.salvia, strokeWidth: 5 });
+        triangle.borders[2].setAttribute({ strokeColor: theme.canela, strokeWidth: 5 });
       });
     }
     if (isHL('segmento-c')) {
       [els.t1, els.t2, els.t3, els.t4].forEach((triangle: any) => {
-        triangle.borders[1].setAttribute({ strokeColor: theme.pizarra, strokeWidth: 5 });
+        triangle.borders[1].setAttribute({ strokeColor: theme.mora, strokeWidth: 5 });
       });
     }
   };

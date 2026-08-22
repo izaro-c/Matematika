@@ -40,7 +40,7 @@
 
 .teoria-mdx p {
   margin-bottom: 1.2rem;
-  color: var(--color-pizarra);
+  color: var(--color-mora);
 }
 
 .teoria-mdx a {
@@ -321,8 +321,8 @@
 
 .matematika-info-panel__block--carbon,
 .matematika-info-panel__block--terracota,
-.matematika-info-panel__block--salvia,
-.matematika-info-panel__block--pizarra,
+.matematika-info-panel__block--canela,
+.matematika-info-panel__block--mora,
 .matematika-info-panel__block--ocre,
 .matematika-info-panel__block--pavo,
 .matematika-info-panel__block--granada,
@@ -334,8 +334,8 @@
 
 .matematika-info-panel__block--carbon { color: var(--theme-carbon); }
 .matematika-info-panel__block--terracota { color: var(--theme-terracota); }
-.matematika-info-panel__block--salvia { color: var(--theme-salvia); }
-.matematika-info-panel__block--pizarra { color: var(--theme-pizarra); }
+.matematika-info-panel__block--canela { color: var(--theme-canela); }
+.matematika-info-panel__block--mora { color: var(--theme-mora); }
 .matematika-info-panel__block--ocre { color: var(--theme-ocre); }
 .matematika-info-panel__block--pavo { color: var(--theme-pavo); }
 .matematika-info-panel__block--granada { color: var(--theme-granada); }

@@ -18,10 +18,10 @@ export const UI = {
   labelMuted: 'ac-label ac-label--sm ac-label--muted',
   labelSoft: 'ac-label ac-label--sm ac-label--soft',
   labelStrong: 'ac-label ac-label--sm ac-label--strong',
-  labelSalvia: 'ac-label ac-label--sm ac-label--salvia',
+  labelcanela: 'ac-label ac-label--sm ac-label--canela',
   labelPavo: 'ac-label ac-label--sm ac-label--pavo',
   labelOcre: 'ac-label ac-label--sm ac-label--ocre',
-  labelPizarra: 'ac-label ac-label--sm ac-label--pizarra',
+  labelmora: 'ac-label ac-label--sm ac-label--mora',
   labelTerracota: 'ac-label ac-label--sm ac-label--terracota',
 
   fieldsetLegend: 'ac-fieldset-legend',

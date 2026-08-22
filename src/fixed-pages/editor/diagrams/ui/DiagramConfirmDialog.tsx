@@ -64,10 +64,10 @@ const variantStyles: Record<
     ),
   },
   success: {
-    headerBg: 'bg-salvia/10 border-salvia/20',
-    titleColor: 'text-salvia',
-    iconBg: 'bg-salvia/15',
-    iconColor: 'text-salvia',
+    headerBg: 'bg-canela/10 border-canela/20',
+    titleColor: 'text-canela',
+    iconBg: 'bg-canela/15',
+    iconColor: 'text-canela',
     buttonVariant: 'success',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -122,7 +122,7 @@ export const DiagramConfirmDialog: React.FC<DiagramConfirmDialogProps> = ({
             ref={cancelRef}
             type="button"
             onClick={onCancel}
-            className="px-3.5 py-1.5 rounded-xl border border-carbon/20 text-xs font-bold text-carbon/80 hover:bg-carbon/10 hover:text-carbon transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-salvia"
+            className="px-3.5 py-1.5 rounded-xl border border-carbon/20 text-xs font-bold text-carbon/80 hover:bg-carbon/10 hover:text-carbon transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-canela"
           >
             {cancelLabel}
           </button>

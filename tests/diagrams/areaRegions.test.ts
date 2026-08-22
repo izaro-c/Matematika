@@ -23,9 +23,9 @@ function baseSpec(): DiagramSpecV2 {
       { id: 'pD', label: 'D', x: 0, y: -2, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pD', constraint: 'free', layerId: 'geometry', order: 3, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
     ],
     elements: [
-      { id: 'halfTop', label: 'Superior', kind: 'halfPlane', refs: ['pA', 'pB', 'pC'], color: 'salvia', layerId: 'geometry', order: 4, visible: true, locked: false, groupIds: [], target: true, targetId: 'halfTop', selection: { selectable: true, role: 'secondary' } },
-      { id: 'halfBottom', label: 'Inferior', kind: 'halfPlane', refs: ['pA', 'pB', 'pD'], color: 'salvia', layerId: 'geometry', order: 5, visible: true, locked: false, groupIds: [], target: true, targetId: 'halfBottom', selection: { selectable: true, role: 'secondary' } },
-      { id: 'strip', label: 'Franja', kind: 'areaIntersection', refs: ['halfTop', 'halfBottom'], color: 'salvia', layerId: 'geometry', order: 6, visible: true, locked: false, groupIds: [], target: true, targetId: 'strip', selection: { selectable: true, role: 'secondary' } },
+      { id: 'halfTop', label: 'Superior', kind: 'halfPlane', refs: ['pA', 'pB', 'pC'], color: 'canela', layerId: 'geometry', order: 4, visible: true, locked: false, groupIds: [], target: true, targetId: 'halfTop', selection: { selectable: true, role: 'secondary' } },
+      { id: 'halfBottom', label: 'Inferior', kind: 'halfPlane', refs: ['pA', 'pB', 'pD'], color: 'canela', layerId: 'geometry', order: 5, visible: true, locked: false, groupIds: [], target: true, targetId: 'halfBottom', selection: { selectable: true, role: 'secondary' } },
+      { id: 'strip', label: 'Franja', kind: 'areaIntersection', refs: ['halfTop', 'halfBottom'], color: 'canela', layerId: 'geometry', order: 6, visible: true, locked: false, groupIds: [], target: true, targetId: 'strip', selection: { selectable: true, role: 'secondary' } },
     ],
     sliders: [],
     steps: [{ id: 'initial', label: 'Inicio', description: '', visibleTargets: [], durationMs: 0 }],
@@ -66,8 +66,8 @@ describe('areaRegions', () => {
       ],
       elements: [
         baseSpec().elements[0],
-        { id: 'tri', label: 'Triángulo', kind: 'polygon', refs: ['p1', 'p2', 'p3'], color: 'salvia', layerId: 'geometry', order: 7, visible: true, locked: false, groupIds: [], target: true, targetId: 'tri', selection: { selectable: true, role: 'secondary' } },
-        { id: 'mix', label: 'Mezcla', kind: 'areaIntersection', refs: ['tri', 'halfTop'], color: 'salvia', layerId: 'geometry', order: 8, visible: true, locked: false, groupIds: [], target: true, targetId: 'mix', selection: { selectable: true, role: 'secondary' } },
+        { id: 'tri', label: 'Triángulo', kind: 'polygon', refs: ['p1', 'p2', 'p3'], color: 'canela', layerId: 'geometry', order: 7, visible: true, locked: false, groupIds: [], target: true, targetId: 'tri', selection: { selectable: true, role: 'secondary' } },
+        { id: 'mix', label: 'Mezcla', kind: 'areaIntersection', refs: ['tri', 'halfTop'], color: 'canela', layerId: 'geometry', order: 8, visible: true, locked: false, groupIds: [], target: true, targetId: 'mix', selection: { selectable: true, role: 'secondary' } },
       ],
     };
     const polygon = resolveAreaDisplayPolygon(spec, spec.elements.find(item => item.id === 'mix')!);
@@ -89,7 +89,7 @@ describe('areaRegions', () => {
         { id: 'pR', label: 'R', x: 3, y: 0, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pR', constraint: 'free', layerId: 'geometry', order: 1, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
       ],
       elements: [
-        { id: 'disk', label: 'Disco', kind: 'circle', refs: ['pO', 'pR'], color: 'salvia', layerId: 'geometry', order: 2, visible: true, locked: false, groupIds: [], target: true, targetId: 'disk', selection: { selectable: true, role: 'secondary' } },
+        { id: 'disk', label: 'Disco', kind: 'circle', refs: ['pO', 'pR'], color: 'canela', layerId: 'geometry', order: 2, visible: true, locked: false, groupIds: [], target: true, targetId: 'disk', selection: { selectable: true, role: 'secondary' } },
       ],
     };
     const clipped = clipPolygonToAreaElement(spec, viewportPolygon(spec.viewport.bounds), spec.elements[0]);
@@ -106,8 +106,8 @@ describe('areaRegions', () => {
       ],
       elements: [
         baseSpec().elements[0],
-        { id: 'disk', label: 'Disco', kind: 'circle', refs: ['pO', 'pR'], color: 'salvia', layerId: 'geometry', order: 7, visible: true, locked: false, groupIds: [], target: true, targetId: 'disk', selection: { selectable: true, role: 'secondary' } },
-        { id: 'mix', label: 'Mezcla', kind: 'areaIntersection', refs: ['disk', 'halfTop'], color: 'salvia', layerId: 'geometry', order: 8, visible: true, locked: false, groupIds: [], target: true, targetId: 'mix', selection: { selectable: true, role: 'secondary' } },
+        { id: 'disk', label: 'Disco', kind: 'circle', refs: ['pO', 'pR'], color: 'canela', layerId: 'geometry', order: 7, visible: true, locked: false, groupIds: [], target: true, targetId: 'disk', selection: { selectable: true, role: 'secondary' } },
+        { id: 'mix', label: 'Mezcla', kind: 'areaIntersection', refs: ['disk', 'halfTop'], color: 'canela', layerId: 'geometry', order: 8, visible: true, locked: false, groupIds: [], target: true, targetId: 'mix', selection: { selectable: true, role: 'secondary' } },
       ],
     };
     const polygon = resolveAreaDisplayPolygon(spec, spec.elements.find(item => item.id === 'mix')!);
@@ -132,7 +132,7 @@ describe('areaRegions', () => {
           label: 'sin(x)',
           kind: 'functionCurve',
           refs: ['pSide'],
-          color: 'salvia',
+          color: 'canela',
           layerId: 'geometry',
           order: 5,
           visible: true,
@@ -167,9 +167,9 @@ describe('areaRegions', () => {
         { id: 'pR', label: 'R', x: 3, y: 0, showLabel: true, fixed: false, color: 'carbon', target: true, targetId: 'pR', constraint: 'free', layerId: 'geometry', order: 4, visible: true, locked: false, groupIds: [], selection: { selectable: true, role: 'primary' } },
       ],
       elements: [
-        { id: 'tri', label: 'Triángulo', kind: 'polygon', refs: ['p1', 'p2', 'p3'], color: 'salvia', layerId: 'geometry', order: 5, visible: true, locked: false, groupIds: [], target: true, targetId: 'tri', selection: { selectable: true, role: 'secondary' } },
-        { id: 'disk', label: 'Disco', kind: 'circle', refs: ['pO', 'pR'], color: 'salvia', layerId: 'geometry', order: 6, visible: true, locked: false, groupIds: [], target: true, targetId: 'disk', selection: { selectable: true, role: 'secondary' } },
-        { id: 'mix', label: 'Mezcla', kind: 'areaIntersection', refs: ['tri', 'disk'], color: 'salvia', layerId: 'geometry', order: 7, visible: true, locked: false, groupIds: [], target: true, targetId: 'mix', selection: { selectable: true, role: 'secondary' } },
+        { id: 'tri', label: 'Triángulo', kind: 'polygon', refs: ['p1', 'p2', 'p3'], color: 'canela', layerId: 'geometry', order: 5, visible: true, locked: false, groupIds: [], target: true, targetId: 'tri', selection: { selectable: true, role: 'secondary' } },
+        { id: 'disk', label: 'Disco', kind: 'circle', refs: ['pO', 'pR'], color: 'canela', layerId: 'geometry', order: 6, visible: true, locked: false, groupIds: [], target: true, targetId: 'disk', selection: { selectable: true, role: 'secondary' } },
+        { id: 'mix', label: 'Mezcla', kind: 'areaIntersection', refs: ['tri', 'disk'], color: 'canela', layerId: 'geometry', order: 7, visible: true, locked: false, groupIds: [], target: true, targetId: 'mix', selection: { selectable: true, role: 'secondary' } },
       ],
     };
     const polygon = resolveAreaDisplayPolygon(spec, spec.elements.find(item => item.id === 'mix')!);
@@ -194,7 +194,7 @@ describe('areaRegions', () => {
           label: 'sin(x)',
           kind: 'functionCurve',
           refs: ['pSide'],
-          color: 'salvia',
+          color: 'canela',
           layerId: 'geometry',
           order: 5,
           visible: true,
@@ -211,7 +211,7 @@ describe('areaRegions', () => {
             areaFill: 'half-plane',
           },
         },
-        { id: 'mix', label: 'Mezcla', kind: 'areaIntersection', refs: ['halfTop', 'sinArea'], color: 'salvia', layerId: 'geometry', order: 8, visible: true, locked: false, groupIds: [], target: true, targetId: 'mix', selection: { selectable: true, role: 'secondary' } },
+        { id: 'mix', label: 'Mezcla', kind: 'areaIntersection', refs: ['halfTop', 'sinArea'], color: 'canela', layerId: 'geometry', order: 8, visible: true, locked: false, groupIds: [], target: true, targetId: 'mix', selection: { selectable: true, role: 'secondary' } },
       ],
     };
     const polygons = resolveAreaDisplayPolygons(spec, spec.elements.find(item => item.id === 'mix')!);

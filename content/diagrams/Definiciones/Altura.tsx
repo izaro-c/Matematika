@@ -268,7 +268,7 @@ export const AlturaSpec = createDiagramSpec(
     {
       "id": "extAlturaCAB",
       "label": "Extensión de base AB",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 0,
       "visible": true,
@@ -399,7 +399,7 @@ export const AlturaSpec = createDiagramSpec(
     {
       "id": "extAlturaABC",
       "label": "Extensión de base BC",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 1000,
       "visible": true,
@@ -528,7 +528,7 @@ export const AlturaSpec = createDiagramSpec(
     {
       "id": "extAlturaBAC",
       "label": "Extensión de base AC",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 1000,
       "visible": true,

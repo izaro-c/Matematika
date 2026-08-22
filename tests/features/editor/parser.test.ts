@@ -64,7 +64,7 @@ describe('Editor MDX Parser', () => {
   });
 
   it('should parse common inline markdown variants and unquoted JSX attributes', () => {
-    const nodes = parseInlineNodes('__base__ y _altura_ conectan <ConceptLink targetId=altura highlightTarget=segAltura highlightColor=salvia>altura</ConceptLink>.');
+    const nodes = parseInlineNodes('__base__ y _altura_ conectan <ConceptLink targetId=altura highlightTarget=segAltura highlightColor=canela>altura</ConceptLink>.');
 
     expect(nodes).toEqual(expect.arrayContaining([
       { type: 'bold', value: 'base' },
@@ -75,7 +75,7 @@ describe('Editor MDX Parser', () => {
         attrs: expect.objectContaining({
           targetId: 'altura',
           highlightTarget: 'segAltura',
-          highlightColor: 'salvia',
+          highlightColor: 'canela',
         }),
       }),
     ]));
@@ -159,7 +159,7 @@ describe('Editor MDX Parser', () => {
   });
 
   it('should preserve ProofStep bodies and ignore legacy justification attrs', () => {
-    const rawBody = `<Demostracion>\n  <ProofStep number={1} target="segAB" title="Paso con diagrama" justificacion="Definición de segmento" justificationType="definicion" dependencyId="segmento">\n    El elemento <InteractiveElement target="segAB" color="salvia">AB</InteractiveElement> queda determinado por sus extremos.\n  </ProofStep>\n</Demostracion>`;
+    const rawBody = `<Demostracion>\n  <ProofStep number={1} target="segAB" title="Paso con diagrama" justificacion="Definición de segmento" justificationType="definicion" dependencyId="segmento">\n    El elemento <InteractiveElement target="segAB" color="canela">AB</InteractiveElement> queda determinado por sus extremos.\n  </ProofStep>\n</Demostracion>`;
     const blocks = parseBodyToBlocks(rawBody);
 
     expect(blocks[0].type).toBe('demonstration');
@@ -178,14 +178,14 @@ describe('Editor MDX Parser', () => {
   });
 
   it('should parse diagrams, citations and definition boxes', () => {
-    const rawBody = `<TrianguloDeformable color="salvia" size={300} />\n\n<Cita author="Pitagoras">\n  El todo es la suma.\n</Cita>\n\n<Definicion title="Suma">\n  Operacion aritmetica.\n</Definicion>`;
+    const rawBody = `<TrianguloDeformable color="canela" size={300} />\n\n<Cita author="Pitagoras">\n  El todo es la suma.\n</Cita>\n\n<Definicion title="Suma">\n  Operacion aritmetica.\n</Definicion>`;
     const blocks = parseBodyToBlocks(rawBody);
 
     expect(blocks).toHaveLength(3);
     
     expect(blocks[0].type).toBe('diagram');
     expect(blocks[0].content).toBe('TrianguloDeformable');
-    expect(blocks[0].metadata?.color).toBe('salvia');
+    expect(blocks[0].metadata?.color).toBe('canela');
     expect(blocks[0].metadata?.size).toBe(300);
 
     expect(blocks[1].type).toBe('citation');
@@ -201,7 +201,7 @@ describe('Editor MDX Parser', () => {
   });
 
   it('should parse and serialize complex InteractiveGeometryCanvas attributes', () => {
-    const rawBody = `<InteractiveGeometryCanvas points='[{"id":"p-1","x":100,"y":150,"label":"A"}]' segments='[{"id":"s-1","p1":"p-1","p2":"p-2","color":"salvia"}]' polygons='[]' />`;
+    const rawBody = `<InteractiveGeometryCanvas points='[{"id":"p-1","x":100,"y":150,"label":"A"}]' segments='[{"id":"s-1","p1":"p-1","p2":"p-2","color":"canela"}]' polygons='[]' />`;
     const blocks = parseBodyToBlocks(rawBody);
 
     expect(blocks).toHaveLength(1);
@@ -209,7 +209,7 @@ describe('Editor MDX Parser', () => {
     expect(blocks[0].content).toBe('InteractiveGeometryCanvas');
     expect(blocks[0].metadata?.points).toHaveLength(1);
     expect(blocks[0].metadata?.points[0]).toEqual({ id: 'p-1', x: 100, y: 150, label: 'A' });
-    expect(blocks[0].metadata?.segments[0].color).toBe('salvia');
+    expect(blocks[0].metadata?.segments[0].color).toBe('canela');
 
     const rebuiltBody = stringifyBlocksToBody(blocks);
     expect(rebuiltBody).toBe(rawBody);

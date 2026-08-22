@@ -67,7 +67,7 @@ export const BranchPage = () => {
                       key={sub.slug}
                       href={getLocalizedPath(`/rama/${sub.slug}`)}
                       className="group flex items-center justify-between p-6 elegant-panel"
-                      style={{ ['--hover-accent' as string]: 'var(--theme-pizarra)' }}
+                      style={{ ['--hover-accent' as string]: 'var(--theme-mora)' }}
                     >
                       <span className="flex items-baseline gap-3">
                         {/^\d{2}[A-Z]?$/.test(sub.slug) && (
@@ -75,7 +75,7 @@ export const BranchPage = () => {
                         )}
                         <span className="text-xl font-bold">{sub.name}</span>
                       </span>
-                      <span className="text-xs font-sans tracking-widest opacity-50 group-hover:opacity-100 text-pizarra">
+                      <span className="text-xs font-sans tracking-widest opacity-50 group-hover:opacity-100 text-mora">
                         {t('content', 'explore')} →
                       </span>
                     </Link>

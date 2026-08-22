@@ -32,7 +32,7 @@ export const Logo: React.FC<LogoProps> = ({
         <line x1="90" y1="10" x2="10" y2="90" />
         <circle cx="50" cy="50" r="40" fill="none" />
       </g>
-      <circle cx="50" cy="50" r="32" fill="var(--color-salvia)" opacity="0.15" aria-hidden="true" />
+      <circle cx="50" cy="50" r="32" fill="var(--color-canela)" opacity="0.15" aria-hidden="true" />
       <text
         x="50"
         y="78"

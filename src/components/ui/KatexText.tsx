@@ -44,7 +44,7 @@ export function renderKatexTextToHtml(text: string): string {
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
     .replace(/_([^_]+)_/g, '<em>$1</em>')
-    .replace(/\[(carbon|terracota|salvia|pizarra|ocre|pavo|granada|musgo):([^\]]+)\]/g, '<span style="color: var(--theme-$1)">$2</span>');
+    .replace(/\[(carbon|terracota|canela|mora|ocre|pavo|granada|musgo):([^\]]+)\]/g, '<span style="color: var(--theme-$1)">$2</span>');
 }
 
 /**

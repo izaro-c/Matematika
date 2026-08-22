@@ -83,7 +83,7 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "triangleCStar",
-      "color": "pizarra"
+      "color": "mora"
     },
     {
       "id": "gAB",
@@ -153,7 +153,7 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "sideACStar",
-      "color": "pizarra"
+      "color": "mora"
     },
     {
       "id": "gBCstar",
@@ -170,7 +170,7 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "sideBCStar",
-      "color": "pizarra"
+      "color": "mora"
     },
     {
       "id": "gIsoLeft",
@@ -208,7 +208,7 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "isoRight",
-      "color": "pizarra"
+      "color": "mora"
     }
   ],
   "objects": [
@@ -314,7 +314,7 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
     {
       "id": "Cstar",
       "label": "C*",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2050,
       "visible": true,
@@ -383,7 +383,7 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
     {
       "id": "triStar",
       "label": "Triángulo A'B'C*",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2070,
       "visible": true,
@@ -515,7 +515,7 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
     {
       "id": "ACstar",
       "label": "A'C*",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2110,
       "visible": true,
@@ -549,7 +549,7 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
     {
       "id": "BCstar",
       "label": "B'C*",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2120,
       "visible": true,
@@ -583,7 +583,7 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
     {
       "id": "CCstar",
       "label": "C'C*",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 2130,
       "visible": true,

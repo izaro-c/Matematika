@@ -80,7 +80,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
         <div className="flex items-center justify-self-start gap-2">
           <Link
             href={getLocalizedPath('/')}
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-salvia cursor-pointer"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-canela cursor-pointer"
             title={t('editor', 'backToMain')}
           >
             <Logo decorative className="h-8 w-8" />
@@ -133,7 +133,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <div className="relative overflow-hidden rounded-2xl border border-carbon/15 bg-lienzo/80 p-6 sm:p-8 shadow-sm backdrop-blur-xs">
-          <div className="absolute top-0 right-0 -mt-8 -mr-8 h-48 w-48 rounded-full bg-salvia/10 blur-2xl" />
+          <div className="absolute top-0 right-0 -mt-8 -mr-8 h-48 w-48 rounded-full bg-canela/10 blur-2xl" />
           <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="max-w-2xl">
               <h1 className="mt-3 font-serif text-2xl sm:text-3xl font-bold tracking-tight text-carbon">
@@ -146,7 +146,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
             <button
               type="button"
               onClick={activeSection === 'documents' ? onCreateDocument : onCreateDiagram}
-              className="flex items-center justify-center space-x-2 rounded-xl bg-salvia px-5 py-3 text-sm font-bold text-lienzo shadow-xs hover:bg-salvia/90 transition-all shrink-0 cursor-pointer"
+              className="flex items-center justify-center space-x-2 rounded-xl bg-canela px-5 py-3 text-sm font-bold text-lienzo shadow-xs hover:bg-canela/90 transition-all shrink-0 cursor-pointer"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -169,7 +169,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder={activeSection === 'documents' ? t('editor', 'searchDocPlaceholder') : t('editor', 'searchDiagramPlaceholder')}
-                className="w-full rounded-xl border border-carbon/15 bg-lienzo py-2 pl-9 pr-4 text-xs text-carbon placeholder:text-carbon/40 focus:border-salvia focus:outline-none shadow-2xs font-serif"
+                className="w-full rounded-xl border border-carbon/15 bg-lienzo py-2 pl-9 pr-4 text-xs text-carbon placeholder:text-carbon/40 focus:border-canela focus:outline-none shadow-2xs font-serif"
               />
               {searchQuery && (
                 <button
@@ -199,7 +199,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
               <select
                 value={sortBy}
                 onChange={e => setSortBy(e.target.value as typeof sortBy)}
-                className="rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-semibold text-carbon/80 focus:border-salvia focus:outline-none cursor-pointer"
+                className="rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs font-semibold text-carbon/80 focus:border-canela focus:outline-none cursor-pointer"
               >
                 <option value="name">{t('editor', 'sortByName')}</option>
                 <option value="type">{t('editor', 'sortByType')}</option>
@@ -236,7 +236,7 @@ export const EditorLandingView: React.FC<EditorLandingViewProps> = ({
           </h2>
           {isLoading ? (
             <div className="flex items-center gap-2" role="status" aria-live="polite">
-              <span className="h-2 w-2 rounded-full bg-salvia animate-pulse" />
+              <span className="h-2 w-2 rounded-full bg-canela animate-pulse" />
               <span className="font-serif text-xs italic text-carbon/60">
                 {t('editor', 'loadingContent')}
               </span>

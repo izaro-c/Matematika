@@ -25,7 +25,7 @@ export const DemoTales = () => {
       void board; void els; void theme;
       const C_PRIM = theme.carbon;
     const C_ACC  = theme.terracota;
-    const C_PAR  = theme.salvia;
+    const C_PAR  = theme.canela;
     const C_H    = theme.ocre;
 
     const A = createPoint(board, [-3, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);

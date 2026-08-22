@@ -10,7 +10,7 @@ import { useProgressStore } from '@/lib/stores/UserProgressStore';
 /**
  * Paleta de colores temáticos para acentuar tarjetas.
  */
-export type CardAccent = 'terracota' | 'salvia' | 'pizarra' | 'ocre' | 'pavo' | 'granada' | 'musgo' | 'carbon';
+export type CardAccent = 'terracota' | 'canela' | 'mora' | 'ocre' | 'pavo' | 'granada' | 'musgo' | 'carbon';
 
 /**
  * Propiedades del componente genérico ContentCard.
@@ -50,8 +50,8 @@ interface ContentCardProps {
 
 const ACCENT_TOKEN: Record<CardAccent, string> = {
   terracota: 'var(--theme-terracota)',
-  salvia: 'var(--theme-salvia)',
-  pizarra: 'var(--theme-pizarra)',
+  canela: 'var(--theme-canela)',
+  mora: 'var(--theme-mora)',
   ocre: 'var(--theme-ocre)',
   pavo: 'var(--theme-pavo)',
   granada: 'var(--theme-granada)',

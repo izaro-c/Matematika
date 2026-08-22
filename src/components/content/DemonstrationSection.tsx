@@ -125,7 +125,7 @@ export const DemonstrationSection: React.FC<DemonstrationSectionProps> = ({ diag
       ) : undefined}
       diagramLabel={t('common', 'proofDiagramLabel')}
     >
-      <div className="prose prose-pizarra prose-lg max-w-none w-full editorial-reading">
+      <div className="prose prose-mora prose-lg max-w-none w-full editorial-reading">
         {proofContent}
       </div>
     </CodexLayout>

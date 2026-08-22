@@ -62,7 +62,7 @@ const InlineHueco: React.FC<{
 }> = ({ input, isShaking, isDone, isCorrect, isRevealed, correct, showHint, pista, onInputChange, onCheck }) => {
   if (isDone) {
     return (
-      <span className="inline-block px-2 font-bold font-serif text-salvia transition-all duration-500">
+      <span className="inline-block px-2 font-bold font-serif text-canela transition-all duration-500">
         {isRevealed && isCorrect !== true ? correct : input}
       </span>
     );
@@ -141,17 +141,17 @@ export const Hueco: React.FC<HuecoProps> = ({
     );
   }
 
-  const feedbackClass = isCorrect === true ? 'border-salvia/40 bg-salvia/5'
+  const feedbackClass = isCorrect === true ? 'border-canela/40 bg-canela/5'
     : isCorrect === false ? 'border-terracota/50 bg-terracota/5'
     : '';
 
   return (
-    <div className={`my-8 p-8 elegant-panel font-serif transition-all duration-500 relative group ${feedbackClass}`} style={{ '--hover-accent': isCorrect === true ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}>
+    <div className={`my-8 p-8 elegant-panel font-serif transition-all duration-500 relative group ${feedbackClass}`} style={{ '--hover-accent': isCorrect === true ? 'var(--theme-canela)' : 'var(--page-accent)' } as React.CSSProperties}>
        <style>{SHAKE_STYLE}</style>
       <p className="text-base text-carbon mb-6 mt-2 leading-relaxed">{pregunta}</p>
 
       {isDone ? (
-        <div className="text-xl font-bold text-salvia transition-all duration-500">
+        <div className="text-xl font-bold text-canela transition-all duration-500">
           {isRevealed && isCorrect !== true ? correct : input}
         </div>
       ) : (

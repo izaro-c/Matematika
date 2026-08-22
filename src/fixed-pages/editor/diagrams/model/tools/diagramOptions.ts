@@ -20,7 +20,7 @@ export const CONSTRUCTION_OPTIONS: Array<{ value: ConstructionKind; label: strin
 
 export const COLOR_OPTIONS: Array<{ value: ColorToken; label: string }> = [
   { value: 'carbon', label: 'Carbon' }, { value: 'terracota', label: 'Terracota' },
-  { value: 'salvia', label: 'Salvia' }, { value: 'pizarra', label: 'Pizarra' },
+  { value: 'canela', label: 'canela' }, { value: 'mora', label: 'mora' },
   { value: 'ocre', label: 'Ocre' }, { value: 'pavo', label: 'Pavo' },
   { value: 'granada', label: 'Granada' }, { value: 'musgo', label: 'Musgo' },
 ];

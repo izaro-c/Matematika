@@ -36,7 +36,7 @@ function setupV2InspectorForKind(
   const base = createTemplateModel('estatico', 'Escena', 'diagram');
   const segment = base.elements.find(item => item.kind === 'segment')!;
   const refs = kind === 'label' ? [segment.id] : [base.points[0].id];
-  const targetElement = element(`el-${kind}`, `Elemento ${kind}`, kind, refs, 'pizarra', true, {
+  const targetElement = element(`el-${kind}`, `Elemento ${kind}`, kind, refs, 'mora', true, {
     text: 'Texto base',
     properties: { anchorMode: 'reference', anchorParameter: 0.5 },
     ...extra,

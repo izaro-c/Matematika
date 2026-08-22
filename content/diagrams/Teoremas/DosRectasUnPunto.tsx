@@ -344,7 +344,7 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
     {
       "id": "infoPanel4",
       "label": "Panel informativo",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 3480,
       "visible": true,

@@ -95,7 +95,7 @@ export const ContentThumbnail: React.FC<ContentThumbnailProps> = ({ id }) => {
           {/* Ángulo B */}
           <path d="M 56,44 A 8,8 0 0 0 49,52" fill="none" stroke="var(--theme-ocre)" strokeWidth="1.5" />
           {/* Ángulo C */}
-          <path d="M 32,27 A 8,8 0 0 0 39,27" fill="none" stroke="var(--theme-salvia)" strokeWidth="1.5" />
+          <path d="M 32,27 A 8,8 0 0 0 39,27" fill="none" stroke="var(--theme-canela)" strokeWidth="1.5" />
         </svg>
       );
 

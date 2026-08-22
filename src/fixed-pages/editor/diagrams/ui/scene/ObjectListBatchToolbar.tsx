@@ -61,7 +61,7 @@ export const ObjectListBatchToolbar: React.FC<ObjectListBatchToolbarProps> = ({
               type="button"
               title="Mostrar los objetos seleccionados en todos los pasos del diagrama"
               onClick={handleShowInAllSteps}
-              className="rounded border border-salvia/30 bg-lienzo px-2 py-1 text-[10px] font-bold text-musgo hover:bg-salvia/10"
+              className="rounded border border-canela/30 bg-lienzo px-2 py-1 text-[10px] font-bold text-musgo hover:bg-canela/10"
             >
               👁️ Mostrar en todos
             </button>

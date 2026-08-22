@@ -57,7 +57,7 @@ export const RefLink: React.FC<RefLinkProps> = ({ targetId, children }) => {
       ].join(' ')}
     >
       {children}
-      {isRead && <span className="ml-[2px] text-salvia opacity-80" style={{ fontSize: '0.85em' }}>✓</span>}
+      {isRead && <span className="ml-[2px] text-canela opacity-80" style={{ fontSize: '0.85em' }}>✓</span>}
     </span>
   );
 };
