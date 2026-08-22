@@ -19,6 +19,11 @@ export const dictionary: Record<string, GlossaryEntry> = {
     definition: "Una proposición tan clara y evidente que se admite sin demostración. Es el ladrillo fundamental sobre el que se construye cualquier teoría matemática.",
     category: "Conceptos Fundamentales"
   },
+  hipotesis: {
+    title: "Hipótesis",
+    definition: "Suposición o premisa inicial que sirve de punto de partida para una deducción o demostración.",
+    category: "Conceptos Fundamentales"
+  },
   lema: {
     title: "Lema",
     definition: "Un teorema menor o secundario cuya demostración es un paso previo necesario para demostrar un teorema principal.",
@@ -80,8 +85,104 @@ export const dictionary: Record<string, GlossaryEntry> = {
     equation: "(P \\implies Q) \\iff (\\neg Q \\implies \\neg P)",
     category: "Lógica"
   },
+  modus_ponens: {
+    title: "Modus Ponens",
+    definition: "Regla fundamental de inferencia: si una implicación P ⟹ Q es verdadera y su antecedente P es verdadero, se concluye necesariamente que Q es verdadero.",
+    equation: "\\frac{P, \\ P \\implies Q}{\\therefore Q}",
+    category: "Lógica"
+  },
+  modus_tollens: {
+    title: "Modus Tollens",
+    definition: "Regla de inferencia formal: si P ⟹ Q es verdadera y el consecuente Q es falso (¬Q), entonces el antecedente P debe ser falso (¬P).",
+    equation: "\\frac{P \\implies Q, \\ \\neg Q}{\\therefore \\neg P}",
+    category: "Lógica"
+  },
+  silogismo_hipotetico: {
+    title: "Silogismo Hipotético",
+    definition: "Regla de transitividad condicional: si P ⟹ Q y Q ⟹ R, entonces se deduce válidamente P ⟹ R.",
+    equation: "(P \\implies Q) \\land (Q \\implies R) \\implies (P \\implies R)",
+    category: "Lógica"
+  },
+  silogismo_disyuntivo: {
+    title: "Silogismo Disyuntivo",
+    definition: "Regla de inferencia: dada una disyunción P ∨ Q y sabiendo que ¬P, se concluye necesariamente Q.",
+    equation: "\\frac{P \\lor Q, \\ \\neg P}{\\therefore Q}",
+    category: "Lógica"
+  },
+  doble_negacion: {
+    title: "Doble Negación",
+    definition: "Principio de la lógica clásica que establece que una proposición es equivalente a la negación de su negación.",
+    equation: "\\neg(\\neg P) \\iff P",
+    category: "Lógica"
+  },
+  leyes_de_morgan: {
+    title: "Leyes de De Morgan",
+    definition: "Reglas de equivalencia lógica que relacionan la negación de conjunciones con la disyunción de negaciones y viceversa.",
+    equation: "\\neg(P \\land Q) \\iff (\\neg P \\lor \\neg Q)",
+    category: "Lógica"
+  },
+  simplificacion: {
+    title: "Simplificación Lógica",
+    definition: "Regla de inferencia que permite deducir cualquiera de los dos términos de una conjunción verdadera P ∧ Q.",
+    equation: "\\frac{P \\land Q}{\\therefore P}",
+    category: "Lógica"
+  },
+  adicion: {
+    title: "Adición Lógica",
+    definition: "Regla de inferencia que permite deducir válidamente la disyunción P ∨ Q a partir de una premisa verdadera P.",
+    equation: "\\frac{P}{\\therefore P \\lor Q}",
+    category: "Lógica"
+  },
+  resolucion: {
+    title: "Resolución Lógica",
+    definition: "Regla de inferencia que permite deducir (Q ∨ R) a partir de (P ∨ Q) y (¬P ∨ R).",
+    equation: "\\frac{P \\lor Q, \\ \\neg P \\lor R}{\\therefore Q \\lor R}",
+    category: "Lógica"
+  },
+  reduccion_al_absurdo: {
+    title: "Reducción al Absurdo",
+    definition: "Método de demostración y regla lógica que prueba una proposición P demostrando que su negación ¬P conduce a una contradicción formal.",
+    equation: "(\\neg P \\implies \\bot) \\implies P",
+    category: "Lógica"
+  },
 
   // ÁLGEBRA
+  sustitucion: {
+    title: "Principio de Sustitución",
+    definition: "Propiedad de la igualdad que establece que si dos expresiones son iguales (a = b), una puede sustituir a la otra en cualquier contexto matemático sin alterar el valor de verdad.",
+    equation: "a = b \\implies f(a) = f(b)",
+    category: "Álgebra"
+  },
+  propiedad_distributiva: {
+    title: "Propiedad Distributiva",
+    definition: "Propiedad de las operaciones algebraicas donde la multiplicación se distribuye sobre la suma.",
+    equation: "a \\cdot (b + c) = a \\cdot b + a \\cdot c",
+    category: "Álgebra"
+  },
+  propiedad_conmutativa: {
+    title: "Propiedad Conmutativa",
+    definition: "Propiedad según la cual el orden de los operandos no altera el resultado de la operación.",
+    equation: "a + b = b + a, \\quad a \\cdot b = b \\cdot a",
+    category: "Álgebra"
+  },
+  propiedad_asociativa: {
+    title: "Propiedad Asociativa",
+    definition: "Propiedad que establece que en una serie de operaciones consecutivas, la forma de agrupar los términos no altera el resultado final.",
+    equation: "(a + b) + c = a + (b + c)",
+    category: "Álgebra"
+  },
+  propiedad_transitiva: {
+    title: "Propiedad Transitiva de la Igualdad",
+    definition: "Propiedad fundamental de las relaciones de equivalencia: si a = b y b = c, entonces a = c.",
+    equation: "a = b \\land b = c \\implies a = c",
+    category: "Álgebra"
+  },
+  propiedad_cancelativa: {
+    title: "Ley de Cancelación",
+    definition: "Regla algebraica que permite cancelar términos comunes a ambos lados de una igualdad.",
+    equation: "a + c = b + c \\implies a = b",
+    category: "Álgebra"
+  },
   equals: {
     title: "Igualdad ( = )",
     definition: "Indica que dos expresiones matemáticas representan el mismo valor o entidad.",

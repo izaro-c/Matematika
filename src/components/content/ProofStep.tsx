@@ -16,7 +16,7 @@ interface ProofStepProps {
   children?: React.ReactNode;
 }
 
-// Función recursiva para extraer automáticamente los targetId de ConceptLink o RefLink en los children de React
+// Función recursiva para extraer automáticamente los identificadores de justificación en los children de React
 const extractConceptIds = (nodes: React.ReactNode): string[] => {
   const ids: string[] = [];
   React.Children.forEach(nodes, (child) => {
@@ -25,10 +25,17 @@ const extractConceptIds = (nodes: React.ReactNode): string[] => {
       const targetId = props?.targetId;
       if (targetId) {
         if (Array.isArray(targetId)) {
-          ids.push(targetId[0] as string);
-        } else if (typeof targetId === 'string') {
-          ids.push(targetId);
+          for (const item of targetId) {
+            if (typeof item === 'string' && item.trim()) {
+              ids.push(item.trim());
+            }
+          }
+        } else if (typeof targetId === 'string' && targetId.trim()) {
+          ids.push(targetId.trim());
         }
+      }
+      if (props?.step !== undefined && props?.step !== null && props?.step !== '') {
+        ids.push(`paso-${props.step}`);
       }
       const innerChildren = props?.children as React.ReactNode;
       if (innerChildren) {

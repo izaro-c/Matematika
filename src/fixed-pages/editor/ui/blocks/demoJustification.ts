@@ -46,9 +46,19 @@ export function withDemoDiagramSlots(attributesStr: string | undefined, slots: D
   return [serialized, cleaned].filter(Boolean).join(' ');
 }
 
+const JUSTIFICATION_KEYWORDS = [
+  'hipótesis', 'hipotesis', 'axioma', 'teorema', 'definición', 'definicion',
+  'lema', 'corolario', 'paso', 'regla', 'propiedad', 'ley', 'principio',
+  'construcción', 'construccion', 'modus ponens', 'modus tollens',
+  'simplificación', 'simplificacion', 'adición', 'adicion', 'resolución',
+  'resolucion', 'sustitución', 'sustitucion', 'distributiva', 'conmutativa',
+  'asociativa', 'transitividad',
+];
+
 export function bodyHasLogicalJustification(body: string): boolean {
-  if (/<(?:ConceptLink|RefLink)\b/i.test(body)) return true;
-  return /\b(?:por (?:hipótesis|axioma|teorema|definición|el paso|regla (?:de )?lógica|construcción)|hipótesis)\b/i.test(body);
+  if (/<(?:ConceptLink|RefLink|ProofStepLink)\b/i.test(body)) return true;
+  const lower = body.toLowerCase();
+  return JUSTIFICATION_KEYWORDS.some(kw => lower.includes(kw));
 }
 
 export function extractJustificationIdsFromBody(body: string): string[] {
@@ -64,5 +74,11 @@ export function extractJustificationIdsFromBody(body: string): string[] {
       }
     }
   }
+
+  const stepRe = /<ProofStepLink\b[^>]*\bstep=\{?(\d+)\}?[^>]*>/gi;
+  while ((m = stepRe.exec(body)) !== null) {
+    if (m[1]) ids.push(`paso-${m[1]}`);
+  }
+
   return [...new Set(ids)];
 }

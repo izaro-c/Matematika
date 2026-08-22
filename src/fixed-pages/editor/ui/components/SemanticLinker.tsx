@@ -2,6 +2,20 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import type { FileNode } from '@/fixed-pages/editor/types/editorContracts';
 import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
 import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
+import { getGlossaryDictionary } from '@/lib/stores/GlossaryStore';
+
+interface ConceptOption {
+  id: string;
+  name: string;
+  type: string;
+  badge?: string;
+  path?: string;
+}
+
+function getTargetId(path: string): string {
+  const basename = path.split('/').pop() || '';
+  return basename.replace('.mdx', '');
+}
 
 interface SemanticLinkerProps {
   isOpen: boolean;
@@ -130,25 +144,47 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
     }
   }
 
-  const suggestions = useMemo(() => {
+  const suggestions = useMemo<ConceptOption[]>(() => {
+    const fileOptions: ConceptOption[] = files
+      .filter(f => f.path.endsWith('.mdx'))
+      .map(f => ({
+        id: getTargetId(f.path),
+        name: readableName(f),
+        type: readableType(f),
+        path: f.path,
+      }));
+
+    const dict = getGlossaryDictionary('es');
+    const glossaryOptions: ConceptOption[] = Object.entries(dict).map(([key, entry]) => ({
+      id: key,
+      name: entry.title,
+      type: entry.category || 'Glosario',
+      badge: entry.category?.toLowerCase().includes('lóg') ? 'LÓGICA'
+        : entry.category?.toLowerCase().includes('álg') ? 'ÁLGEBRA'
+        : 'GLOSARIO',
+    }));
+
+    const allOptions = [...fileOptions, ...glossaryOptions];
+
     if (!searchQuery.trim()) {
-      return files.filter(f => f.path.endsWith('.mdx'));
+      return allOptions;
     }
 
     const query = searchQuery.toLowerCase();
-    const filtered = files
-      .filter(f =>
-        f.path.endsWith('.mdx') &&
-        (`${readableName(f)} ${f.path}`.toLowerCase().includes(query))
+    return allOptions
+      .filter(item =>
+        item.name.toLowerCase().includes(query) ||
+        item.id.toLowerCase().includes(query) ||
+        item.type.toLowerCase().includes(query) ||
+        (item.path && item.path.toLowerCase().includes(query))
       )
       .sort((a, b) => {
-        const aName = readableName(a).toLowerCase();
-        const bName = readableName(b).toLowerCase();
-        const aScore = aName === query ? 0 : aName.startsWith(query) ? 1 : 2;
-        const bScore = bName === query ? 0 : bName.startsWith(query) ? 1 : 2;
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
+        const aScore = aName === query || a.id === query ? 0 : aName.startsWith(query) || a.id.startsWith(query) ? 1 : 2;
+        const bScore = bName === query || b.id === query ? 0 : bName.startsWith(query) || b.id.startsWith(query) ? 1 : 2;
         return aScore - bScore || aName.localeCompare(bName);
       });
-    return filtered;
   }, [searchQuery, files]);
 
   useEffect(() => {
@@ -166,11 +202,6 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
   }, [containerRef, isOpen, onClose]);
 
   if (!isOpen) return null;
-
-  const getTargetId = (path: string): string => {
-    const basename = path.split('/').pop() || '';
-    return basename.replace('.mdx', '');
-  };
 
   const handleCreate = () => {
     let markup = '';
@@ -279,27 +310,24 @@ export const SemanticLinker: React.FC<SemanticLinkerProps> = ({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 autoFocus
               />
-              <div className="max-h-28 overflow-y-auto border border-carbon/10 rounded divide-y divide-carbon/5 bg-lienzo">
+              <div className="max-h-36 overflow-y-auto border border-carbon/10 rounded divide-y divide-carbon/5 bg-lienzo">
                 {suggestions.length === 0 ? (
                   <p className="text-[10px] text-carbon/40 p-2 italic text-center">No se encontraron conceptos</p>
                 ) : (
-                  suggestions.map(s => {
-                    const targetId = getTargetId(s.path);
-                    return (
-                      <button
-                        key={s.path}
-                        type="button"
-                        onClick={() => setSelectedConcept(targetId)}
-                        className="w-full text-left px-2 py-1.5 text-[11px] hover:bg-carbon/5 hover:text-carbon transition-colors"
-                      >
-                        <span className="block truncate font-serif font-bold capitalize">{readableName(s)}</span>
-                        <span className="mt-0.5 flex items-center justify-between gap-2">
-                          <span className="truncate text-[9px] text-carbon/45">{readableType(s)}</span>
-                          <span className="truncate font-mono text-[8px] text-carbon/35">{targetId}</span>
-                        </span>
-                      </button>
-                    );
-                  })
+                  suggestions.map(s => (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => setSelectedConcept(s.id)}
+                      className="w-full text-left px-2 py-1.5 text-[11px] hover:bg-carbon/5 hover:text-carbon transition-colors cursor-pointer"
+                    >
+                      <span className="block truncate font-serif font-bold capitalize">{s.name}</span>
+                      <span className="mt-0.5 flex items-center justify-between gap-2">
+                        <span className="truncate text-[9px] text-carbon/45">{s.type}</span>
+                        <span className="truncate font-mono text-[8px] text-carbon/35">{s.id}</span>
+                      </span>
+                    </button>
+                  ))
                 )}
               </div>
             </div>
