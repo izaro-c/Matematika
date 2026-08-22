@@ -245,8 +245,6 @@ export const esLanguage: LanguageConfig = {
       skipToContent: 'Saltar al contenido',
       goToStep: 'Ir al paso {step}',
       endOfProof: 'Fin de la demostración',
-      seeInLean: 'Ver en Lean',
-      leanBlockNotFound: 'Bloque Lean no encontrado en proof_blocks.json.',
       formulaRegion: 'Fórmula matemática. Desplaza horizontalmente si es necesario.',
       formulaSrOnly: 'Esta fórmula es más ancha que la pantalla. Usa el desplazamiento horizontal para verla completa.',
       formulaScrollLabel: 'Fórmula matemática. Desplaza horizontalmente si es necesario.',
@@ -380,7 +378,6 @@ export const esLanguage: LanguageConfig = {
       previous: 'Anterior',
       seeMore: 'Ver más',
       seeProof: 'Ver demostración',
-      verifiedWithLean: 'Verificado formalmente con Lean 4',
       humanProof: 'Demostración paso a paso',
       axiomaticFoundation: 'Fundamentación axiomática',
       prerequisites: 'Requisitos previos',
@@ -523,13 +520,7 @@ export const esLanguage: LanguageConfig = {
       attribution: 'Atribución',
       tags: 'Etiquetas',
       formalVerification: 'Verificación formal',
-      verifiedLean4: 'Verificado formalmente con Lean 4',
       seals: {
-        lean: {
-          title: 'LEAN 4',
-          subtitle: 'VERIFICADO',
-          ariaLabel: 'Verificado formalmente con Lean 4',
-        },
         exercise: {
           title: 'EJERCICIO',
           subtitle: 'RESUELTO',

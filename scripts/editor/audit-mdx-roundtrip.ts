@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { assertSafeReport, runCorpusAudit, type CorpusAuditReport } from './corpusAuditCore';
 
-const reportPath = path.join(process.cwd(), 'ai/reports/editor-roundtrip-baseline.json');
-const markdownPath = path.join(process.cwd(), 'ai/reports/editor-roundtrip-baseline.md');
+const reportPath = path.join(process.cwd(), 'docs/reports/editor-roundtrip-baseline.json');
+const markdownPath = path.join(process.cwd(), 'docs/reports/editor-roundtrip-baseline.md');
 
 function markdown(report: CorpusAuditReport): string {
   return `# Auditoría lossless del editor
@@ -50,6 +50,7 @@ function main() {
   const current = runCorpusAudit();
   assertSafeReport(current);
   if (process.argv.includes('--audit')) {
+    fs.mkdirSync(path.dirname(reportPath), { recursive: true });
     fs.writeFileSync(reportPath, `${JSON.stringify(current, null, 2)}\n`, 'utf8');
     fs.writeFileSync(markdownPath, markdown(current), 'utf8');
     console.log(`[SUCCESS] Auditoría escrita para ${current.totalFiles} documentos.`);

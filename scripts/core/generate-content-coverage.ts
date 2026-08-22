@@ -1,21 +1,20 @@
 import fs from 'fs';
 import path from 'path';
 import { pathToFileURL } from 'url';
-import {
-  loadContentMetadata,
-  readJsonFile,
-  type ContentMetadataEntry,
-  type LeanGraph,
-} from './lean-graph-utils.ts';
 
 const CONTENT_DIR = path.resolve('./content/mdx');
-const LEAN_GRAPH_PATH = path.resolve('./src/data/graph/lean_graph.json');
 const OUTPUT_PATH = path.resolve('./src/data/content/contentCoverage.json');
 
 type DiagramStatus = 'exported' | 'declared-missing-export' | 'exported-undeclared' | 'none';
-type CoverageStatus = 'none' | 'human-proof' | 'lean-checked' | 'lean-audited';
 
-interface ContentCoverageEntry {
+export interface ContentMetadataEntry {
+  id: string;
+  filePath: string;
+  metadata: Record<string, unknown>;
+  content?: string;
+}
+
+export interface ContentCoverageEntry {
   id: string;
   type: string;
   title: string;
@@ -23,35 +22,24 @@ interface ContentCoverageEntry {
   hasDeclaredDiagram: boolean;
   diagramExports: string[];
   diagramStatus: DiagramStatus;
-  leanId: string | null;
-  leanVerified: boolean;
-  verificationStatus: CoverageStatus;
-  foundation: string;
   sourcesCount: number;
   proofSteps: number;
-  mappedProofSteps: string[];
   parentTheorem: string | null;
   demos: string[];
 }
 
-interface ContentCoverage {
+export interface ContentCoverage {
   generatedAt: string;
   summary: {
     total: number;
     byType: Record<string, number>;
     diagrams: Record<DiagramStatus, number>;
-    lean: Record<CoverageStatus, number>;
     theoremLike: {
       total: number;
-      leanLinked: number;
-      leanChecked: number;
-      humanProof: number;
       withDeclaredDiagram: number;
     };
     demonstrations: {
       total: number;
-      leanLinked: number;
-      withMappedProofSteps: number;
     };
   };
   items: ContentCoverageEntry[];
@@ -59,7 +47,6 @@ interface ContentCoverage {
 
 interface GenerateContentCoverageOptions {
   contentDir?: string;
-  leanGraphPath?: string;
   outputPath?: string;
 }
 
@@ -95,29 +82,54 @@ function countProofSteps(content: string): number {
   return [...content.matchAll(/<ProofStep\b/g)].length;
 }
 
-function mappedProofSteps(value: unknown): string[] {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return [];
-  return Object.keys(value).sort((a, b) => Number(a) - Number(b));
+function getMdxFiles(dir: string, fileList: string[] = []): string[] {
+  if (!fs.existsSync(dir)) return fileList;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      getMdxFiles(fullPath, fileList);
+    } else if (entry.name.endsWith('.mdx')) {
+      fileList.push(fullPath);
+    }
+  }
+  return fileList;
 }
 
-function createLeanStatusMap(leanGraphPath: string): Map<string, CoverageStatus> {
-  const graph = readJsonFile<LeanGraph>(leanGraphPath, { generatedAt: null, nodes: [] });
-  return new Map(graph.nodes.map(node => [node.leanId, node.verificationStatus]));
+function parseMetadata(content: string, filePath: string): Record<string, unknown> | null {
+  const metadataRegex = /export\s+const\s+metadata\s*=\s*(\{[\s\S]*?\n\});?/;
+  const match = content.match(metadataRegex);
+  if (!match) return null;
+  try {
+    // eslint-disable-next-line sonarjs/code-eval -- internal script, trusted MDX content
+    const fn = new Function(`return ${match[1]}`);
+    return fn();
+  } catch (error) {
+    console.warn(`[WARN] Invalid metadata syntax in ${filePath}: ${error instanceof Error ? error.message : String(error)}`);
+    return null;
+  }
+}
+
+export function loadContentMetadata(contentDir: string): Map<string, ContentMetadataEntry> {
+  const entries = new Map<string, ContentMetadataEntry>();
+  for (const filePath of getMdxFiles(contentDir)) {
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const metadata = parseMetadata(content, filePath);
+    if (!metadata) continue;
+    const id = typeof metadata.id === 'string' ? metadata.id : path.basename(filePath, '.mdx');
+    entries.set(id, { id, filePath, metadata, content });
+  }
+  return entries;
 }
 
 function toCoverageEntry(
   entry: ContentMetadataEntry,
   contentDir: string,
-  leanStatusById: Map<string, CoverageStatus>,
 ): ContentCoverageEntry {
   const content = entry.content ?? '';
   const metadata = entry.metadata;
   const type = asString(metadata.type, 'unknown');
   const declaredDiagram = metadata.hasSimulation === true || metadata.hasDiagram === true;
   const diagramExports = getDiagramExports(content);
-  const leanId = asString(metadata.leanId) || null;
-  const verificationStatus = leanId ? leanStatusById.get(leanId) ?? 'none' : 'none';
-  const foundation = asString(metadata.foundation) || 'pending';
   const sources = Array.isArray(metadata.sources) ? metadata.sources : [];
 
   return {
@@ -128,13 +140,8 @@ function toCoverageEntry(
     hasDeclaredDiagram: declaredDiagram,
     diagramExports,
     diagramStatus: getDiagramStatus(declaredDiagram, diagramExports),
-    leanId,
-    leanVerified: leanId !== null && leanStatusById.has(leanId),
-    verificationStatus,
-    foundation,
     sourcesCount: sources.length,
     proofSteps: countProofSteps(content),
-    mappedProofSteps: mappedProofSteps(metadata.stepTacticMap),
     parentTheorem: asString(metadata.parentTheorem) || null,
     demos: asStringArray(metadata.demos),
   };
@@ -149,30 +156,22 @@ function summarize(items: ContentCoverageEntry[]): ContentCoverage['summary'] {
     total: items.length,
     byType: countBy(items.map(item => item.type)),
     diagrams: countBy(items.map(item => item.diagramStatus)),
-    lean: countBy(items.map(item => item.verificationStatus)),
     theoremLike: {
       total: theoremLike.length,
-      leanLinked: theoremLike.filter(item => item.leanId !== null).length,
-      leanChecked: theoremLike.filter(item => item.verificationStatus === 'lean-checked').length,
-      humanProof: theoremLike.filter(item => item.verificationStatus === 'human-proof').length,
       withDeclaredDiagram: theoremLike.filter(item => item.hasDeclaredDiagram).length,
     },
     demonstrations: {
       total: demonstrations.length,
-      leanLinked: demonstrations.filter(item => item.leanId !== null).length,
-      withMappedProofSteps: demonstrations.filter(item => item.mappedProofSteps.length > 0).length,
     },
   };
 }
 
 export function generateContentCoverage(options: GenerateContentCoverageOptions = {}): ContentCoverage {
   const contentDir = options.contentDir ?? CONTENT_DIR;
-  const leanGraphPath = options.leanGraphPath ?? LEAN_GRAPH_PATH;
   const outputPath = options.outputPath ?? OUTPUT_PATH;
-  const leanStatusById = createLeanStatusMap(leanGraphPath);
   const content = loadContentMetadata(contentDir);
   const items = [...content.values()]
-    .map(entry => toCoverageEntry(entry, contentDir, leanStatusById))
+    .map(entry => toCoverageEntry(entry, contentDir))
     .sort((a, b) => a.filePath.localeCompare(b.filePath));
 
   let generatedAt = new Date().toISOString();
@@ -201,6 +200,5 @@ export function generateContentCoverage(options: GenerateContentCoverageOptions 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const coverage = generateContentCoverage();
   console.log(`✅ Generated content coverage: ${coverage.summary.total} entries`);
-  console.log(`   Lean-linked theorem/lemma/corollary pages: ${coverage.summary.theoremLike.leanLinked}/${coverage.summary.theoremLike.total}`);
-  console.log(`   Lean-linked demonstrations: ${coverage.summary.demonstrations.leanLinked}/${coverage.summary.demonstrations.total}`);
+  console.log(`   Theorem-like with declared diagrams: ${coverage.summary.theoremLike.withDeclaredDiagram}/${coverage.summary.theoremLike.total}`);
 }

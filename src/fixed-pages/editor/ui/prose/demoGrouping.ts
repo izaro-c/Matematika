@@ -63,8 +63,6 @@ export function proofStepUpdatePayload(step: ProofStepData): {
       diagramStep: step.diagramStep,
       diagramKey: step.diagramKey,
       steps: [step],
-      leanBlocks: step.leanBlocks,
-      leanBlocksExpression: step.leanBlocksExpression,
     },
   };
 }

@@ -376,12 +376,10 @@ describe('editor validation', () => {
     expect(result.errorCount).toBe(0);
   });
 
-  it('allows saving MDX documents with Lean metadata, diagramStep="initial" or unresolved diagram targets', () => {
+  it('allows saving MDX documents with diagramStep="initial" or unresolved diagram targets', () => {
     const result = validateEditorDocument({
       metadata: {
         ...validDefinitionMetadata,
-        leanId: 'Lean.Theorem.Unchecked',
-        verificationStatus: 'none',
       },
       imports: '',
       exports: '',

@@ -1,18 +1,5 @@
 import { z } from 'zod';
 
-export const VerificationStatusSchema = z.enum([
-  'none',
-  'human-proof',
-  'lean-checked',
-  'lean-audited',
-]);
-
-export const FoundationSchema = z.enum([
-  'matematika-axioms',
-  'bridge',
-  'pending',
-]);
-
 const MathematicalSourceSchema = z.object({
   title: z.string(),
   author: z.string().optional(),
@@ -29,20 +16,6 @@ const BaseContentSchemaFields = {
   branches: z.array(z.string()).optional(),
   /** Etiquetas temáticas para búsqueda y clasificación secundaria. */
   tags: z.array(z.string()).optional(),
-};
-
-const LeanMetadataSchema = {
-  ...BaseContentSchemaFields,
-  /** Identificador de la declaración formal en el core de Lean de Matematika. */
-  leanId: z.string().optional(),
-  /** SHA del entorno Lean usado para verificar esta página, o 'local-bridge'. */
-  leanCommitSha: z.string().optional(),
-  /** Campo generado por el índice: true si leanId aparece en lean_graph.json. */
-  leanVerified: z.boolean().optional(),
-  /** Campo generado por el índice: nivel de verificación de la prueba. */
-  verificationStatus: VerificationStatusSchema.optional(),
-  /** Campo generado por el índice: fundamento lógico de la prueba. */
-  foundation: FoundationSchema.optional(),
   /** Referencias que fijan la definición, el enunciado o la formalización. */
   sources: z.array(MathematicalSourceSchema).optional(),
 };
@@ -89,7 +62,7 @@ export const TheoremSchema = z.object({
   parentTheorem: z.string().optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
   hasSimulation: z.boolean().optional(),
-  ...LeanMetadataSchema,
+  ...BaseContentSchemaFields,
 });
 
 /**
@@ -130,9 +103,8 @@ export const DemoSchema = z.object({
   authors: z.array(z.string()).optional(),
   layout: z.enum(['split', 'text']).optional(),
   dependencias: z.array(z.string()).optional(),
-  stepTacticMap: z.record(z.string(), z.array(z.string())).optional(),
   initialStep: z.union([z.string(), z.number()]).optional(),
-  ...LeanMetadataSchema,
+  ...BaseContentSchemaFields,
 });
 
 /**
@@ -150,7 +122,7 @@ export const DefinitionSchema = z.object({
   color: z.string().optional(),
   subtype: z.enum(['primitivo', 'nominal', 'fundamentada']).optional(),
   hasSimulation: z.boolean().optional(),
-  ...LeanMetadataSchema,
+  ...BaseContentSchemaFields,
 });
 
 /**
@@ -218,7 +190,7 @@ export const AxiomSchema = z.object({
   /** Grupo de alternativas mutuamente excluyentes dentro de una base lógica. */
   alternativeGroup: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).optional(),
   hasSimulation: z.boolean().optional(),
-  ...LeanMetadataSchema,
+  ...BaseContentSchemaFields,
 });
 
 /**

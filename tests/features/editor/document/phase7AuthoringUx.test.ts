@@ -316,22 +316,20 @@ La conclusión se obtiene de las condiciones declaradas, no de la apariencia vis
     expect(document.bodyBlocks.every(block => block.kind === 'editable')).toBe(true);
   });
 
-  it('preserves dynamic leanBlocks expression attributes upon block update and does not corrupt types', () => {
+  it('updates ProofStep block attributes cleanly upon block update', () => {
     const source = `export const metadata = {
   "id": "demo-prueba",
-  "type": "demostracion",
-  "stepTacticMap": { "1": [] }
+  "type": "demostracion"
 };
 
-<ProofStep number={1} title="Paso 1" leanBlocks={metadata.stepTacticMap["1"]}>
+<ProofStep number={1} title="Paso 1">
   Por hipótesis, cuerpo del paso
 </ProofStep>
 `;
     const document = parseEditorDocument(source);
     const block = document.bodyBlocks.find(item => item.kind === 'editable' && item.blockType === 'demonstration');
     expect(block).toBeDefined();
-    expect(block!.data.steps[0].leanBlocks).toBeUndefined();
-    expect(block!.data.steps[0].leanBlocksExpression).toBe('metadata.stepTacticMap["1"]');
+    expect(block!.data.steps[0].number).toBe(1);
 
     const updatedSteps = [
       {
@@ -346,8 +344,6 @@ La conclusión se obtiene de las condiciones declaradas, no de la apariencia vis
     });
     const updated = applyMutationPlan(document, mutation);
 
-    expect(updated.source).toContain('leanBlocks={metadata.stepTacticMap["1"]}');
-    expect(updated.source).not.toContain('leanBlocks="metadata.stepTacticMap["1"]"');
     expect(updated.source).toContain('title="Paso 1 actualizado"');
     expect(updated.source).not.toContain('justificacion=');
   });

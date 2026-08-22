@@ -418,8 +418,6 @@
         "arquimedes"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.archimedean",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -440,8 +438,6 @@
         "estar-entre"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -473,8 +469,6 @@
         "arquimedes"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.archimedean",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -495,8 +489,6 @@
         "estar-entre"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -528,8 +520,6 @@
         "dedekind"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.no_proper_axiomatic_extension",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -547,8 +537,6 @@
         "punto"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -580,8 +568,6 @@
         "dedekind"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.no_proper_axiomatic_extension",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -599,8 +585,6 @@
         "punto"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -630,8 +614,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.segment_transport",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -651,8 +633,6 @@
         "congruencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -682,8 +662,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.segment_transport",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -703,8 +681,6 @@
         "congruencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -734,8 +710,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.segment_congruence_transitive",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -754,8 +728,6 @@
         "congruencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -785,8 +757,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.segment_congruence_transitive",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -805,8 +775,6 @@
         "congruencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -836,8 +804,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.segment_addition",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -858,8 +824,6 @@
         "congruencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -889,8 +853,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.segment_addition",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -911,8 +873,6 @@
         "congruencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -942,8 +902,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.angle_transport",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -964,8 +922,6 @@
         "congruencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -995,8 +951,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.angle_transport",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1017,8 +971,6 @@
         "congruencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1049,8 +1001,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.sas_congruence",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1069,8 +1019,6 @@
         "congruencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1101,8 +1049,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.sas_congruence",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1121,8 +1067,6 @@
         "congruencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1147,8 +1091,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.line_through_two_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1168,8 +1110,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1194,8 +1134,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.line_through_two_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1215,8 +1153,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1241,8 +1177,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.line_has_two_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1262,8 +1196,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1288,8 +1220,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.line_has_two_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1309,8 +1239,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1335,8 +1263,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.exists_noncollinear_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1357,8 +1283,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1383,8 +1307,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.exists_noncollinear_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1405,8 +1327,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1431,8 +1351,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.plane_through_three_noncollinear_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1452,8 +1370,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1478,8 +1394,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.plane_through_three_noncollinear_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1499,8 +1413,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1525,8 +1437,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.plane_has_three_noncollinear_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1547,8 +1457,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1573,8 +1481,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.plane_has_three_noncollinear_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1595,8 +1501,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1621,8 +1525,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.line_contained_in_plane",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1643,8 +1545,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1669,8 +1569,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.line_contained_in_plane",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1691,8 +1589,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1717,8 +1613,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.intersecting_planes_share_a_line",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1739,8 +1633,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1765,8 +1657,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.intersecting_planes_share_a_line",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1787,8 +1677,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1813,8 +1701,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.exists_noncoplanar_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1834,8 +1720,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1860,8 +1744,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.exists_noncoplanar_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1881,8 +1763,6 @@
         "incidencia"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1907,8 +1787,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.between_distinct_symmetric",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1928,8 +1806,6 @@
         "estar-entre"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -1954,8 +1830,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.between_distinct_symmetric",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -1975,8 +1849,6 @@
         "estar-entre"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -2001,8 +1873,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.exists_between_distinct_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -2021,8 +1891,6 @@
         "estar-entre"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -2047,8 +1915,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.exists_between_distinct_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -2067,8 +1933,6 @@
         "estar-entre"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -2093,8 +1957,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.order_trichotomy",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -2114,8 +1976,6 @@
         "estar-entre"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -2140,8 +2000,6 @@
         "hilbert"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.order_trichotomy",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -2161,8 +2019,6 @@
         "estar-entre"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -2188,8 +2044,6 @@
         "pasch"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.pasch",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -2209,8 +2063,6 @@
         "estar-entre"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -2236,8 +2088,6 @@
         "pasch"
       ],
       "axiomSystem": "sistema-absoluto",
-      "leanId": "Matematika.Geometry.Hilbert.pasch",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -2257,8 +2107,6 @@
         "estar-entre"
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "none",
       "availableLangs": [
         "es"
       ]
@@ -4021,7 +3869,6 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_angulo_externo",
       "stepTacticMap": {
         "1": [],
         "2": [],
@@ -4036,8 +3883,6 @@
         "11": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4088,7 +3933,6 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_angulo_externo",
       "stepTacticMap": {
         "1": [],
         "2": [],
@@ -4103,8 +3947,6 @@
         "11": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4135,15 +3977,6 @@
         "paralelas"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_angulos_alternos_internos",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -4152,8 +3985,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4184,15 +4015,6 @@
         "paralelas"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_angulos_alternos_internos",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -4201,8 +4023,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4245,7 +4065,6 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_angulos_opuestos_verticales",
       "stepTacticMap": {
         "1": [],
         "2": [],
@@ -4254,8 +4073,6 @@
         "5": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4298,7 +4115,6 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_angulos_opuestos_verticales",
       "stepTacticMap": {
         "1": [],
         "2": [],
@@ -4307,8 +4123,6 @@
         "5": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4338,12 +4152,6 @@
         "geometria",
         "areas"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_area_aditividad",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -4352,8 +4160,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4383,12 +4189,6 @@
         "geometria",
         "areas"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_area_aditividad",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -4397,8 +4197,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4429,13 +4227,6 @@
         "areas",
         "congruencia"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_area_invariancia",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -4444,8 +4235,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4476,13 +4265,6 @@
         "areas",
         "congruencia"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_area_invariancia",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -4491,8 +4273,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4523,12 +4303,6 @@
         "areas",
         "rectangulo"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_area_rectangulo",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -4537,8 +4311,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4569,12 +4341,6 @@
         "areas",
         "rectangulo"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_area_rectangulo",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -4583,8 +4349,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4615,14 +4379,6 @@
         "triangulos",
         "areas"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_area_triangulo",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -4631,8 +4387,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4663,14 +4417,6 @@
         "triangulos",
         "areas"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_area_triangulo",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -4679,8 +4425,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4724,7 +4468,6 @@
           "role": "primary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_congruencia_aal",
       "stepTacticMap": {
         "1": [],
         "2": [],
@@ -4735,8 +4478,6 @@
         "7": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4780,7 +4521,6 @@
           "role": "primary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_congruencia_aal",
       "stepTacticMap": {
         "1": [],
         "2": [],
@@ -4791,8 +4531,6 @@
         "7": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4830,15 +4568,12 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_congruencia_ala",
       "stepTacticMap": {
         "1": [],
         "2": [],
         "3": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4876,15 +4611,12 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_congruencia_ala",
       "stepTacticMap": {
         "1": [],
         "2": [],
         "3": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4922,7 +4654,6 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_congruencia_lll",
       "stepTacticMap": {
         "1": [],
         "2": [],
@@ -4930,8 +4661,6 @@
         "4": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -4969,7 +4698,6 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_congruencia_lll",
       "stepTacticMap": {
         "1": [],
         "2": [],
@@ -4977,8 +4705,6 @@
         "4": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5009,14 +4735,6 @@
       "parentTheorem": "teorema-desigualdad-triangular",
       "proofMethod": "metodo-directo",
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_desigualdad_triangular",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5025,8 +4743,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5057,14 +4773,6 @@
       "parentTheorem": "teorema-desigualdad-triangular",
       "proofMethod": "metodo-directo",
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_desigualdad_triangular",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5073,8 +4781,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5104,8 +4810,6 @@
         "incidencia"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -5135,8 +4839,6 @@
         ]
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "lean-checked",
       "availableLangs": [
         "es"
       ]
@@ -5166,8 +4868,6 @@
         "incidencia"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -5197,8 +4897,6 @@
         ]
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "lean-checked",
       "availableLangs": [
         "es"
       ]
@@ -5229,14 +4927,6 @@
         "bisectriz"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_existencia_bisectriz",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5245,8 +4935,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5277,14 +4965,6 @@
         "bisectriz"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_existencia_bisectriz",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5293,8 +4973,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5325,17 +5003,6 @@
         "geometria-absoluta"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_existencia_perpendicular",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": [],
-        "7": [],
-        "8": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5344,8 +5011,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5376,17 +5041,6 @@
         "geometria-absoluta"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_existencia_perpendicular",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": [],
-        "7": [],
-        "8": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5395,8 +5049,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5428,13 +5080,6 @@
         "triangulos",
         "areas"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_invariancia_triangulacion",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5443,8 +5088,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5476,13 +5119,6 @@
         "triangulos",
         "areas"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_invariancia_triangulacion",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5491,8 +5127,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5525,13 +5159,6 @@
       "parentTheorem": "teorema-pitagoras",
       "proofMethod": "metodo-directo",
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_pitagoras_areas",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5540,8 +5167,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5574,13 +5199,6 @@
       "parentTheorem": "teorema-pitagoras",
       "proofMethod": "metodo-directo",
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_pitagoras_areas",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5589,8 +5207,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5623,16 +5239,6 @@
       "parentTheorem": "teorema-pitagoras",
       "proofMethod": "metodo-directo",
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_pitagoras_euclides",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": [],
-        "7": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5641,8 +5247,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5675,16 +5279,6 @@
       "parentTheorem": "teorema-pitagoras",
       "proofMethod": "metodo-directo",
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_pitagoras_euclides",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": [],
-        "7": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5693,8 +5287,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5725,14 +5317,6 @@
         "orden"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_punto_medio_perpendicular",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5741,8 +5325,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5773,14 +5355,6 @@
         "orden"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_punto_medio_perpendicular",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5789,8 +5363,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5821,14 +5393,6 @@
         "orden"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_punto_medio",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5837,8 +5401,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5869,14 +5431,6 @@
         "orden"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_punto_medio",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -5885,8 +5439,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5930,7 +5482,6 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_reciproco_triangulo_isosceles",
       "stepTacticMap": {
         "1": [],
         "2": [],
@@ -5940,8 +5491,6 @@
         "6": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -5985,7 +5534,6 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_reciproco_triangulo_isosceles",
       "stepTacticMap": {
         "1": [],
         "2": [],
@@ -5995,8 +5543,6 @@
         "6": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -6022,8 +5568,6 @@
         "hilbert"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -6056,8 +5600,6 @@
         ]
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "lean-checked",
       "availableLangs": [
         "es"
       ]
@@ -6083,8 +5625,6 @@
         "hilbert"
       ],
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -6117,8 +5657,6 @@
         ]
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "lean-checked",
       "availableLangs": [
         "es"
       ]
@@ -6149,14 +5687,6 @@
       "parentTheorem": "teorema-suma-angulos-triangulo",
       "proofMethod": "metodo-directo",
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_suma_angulos_triangulo",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -6165,8 +5695,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -6197,14 +5725,6 @@
       "parentTheorem": "teorema-suma-angulos-triangulo",
       "proofMethod": "metodo-directo",
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_suma_angulos_triangulo",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -6213,8 +5733,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -6244,15 +5762,6 @@
       "parentTheorem": "teorema-tales",
       "proofMethod": "metodo-directo",
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_tales",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -6261,8 +5770,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -6292,15 +5799,6 @@
       "parentTheorem": "teorema-tales",
       "proofMethod": "metodo-directo",
       "layout": "split",
-      "leanId": "Matematika.Geometry.Hilbert.demo_tales",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -6309,8 +5807,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -6341,13 +5837,6 @@
         "polígonos",
         "triangulos"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_triangulacion_poligono",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -6356,8 +5845,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -6388,13 +5875,6 @@
         "polígonos",
         "triangulos"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_triangulacion_poligono",
-      "stepTacticMap": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": []
-      },
       "sources": [
         {
           "title": "Pending Formalization",
@@ -6403,8 +5883,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -6448,7 +5926,6 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_triangulo_isosceles",
       "stepTacticMap": {
         "1": [],
         "2": [],
@@ -6456,8 +5933,6 @@
         "4": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -6501,7 +5976,6 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.demo_triangulo_isosceles",
       "stepTacticMap": {
         "1": [],
         "2": [],
@@ -6509,8 +5983,6 @@
         "4": []
       },
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8100,8 +7572,6 @@
       "demos": [
         "demo-rectas-coincidentes"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -8117,8 +7587,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "lean-checked",
       "availableLangs": [
         "es"
       ]
@@ -8148,8 +7616,6 @@
       "demos": [
         "demo-rectas-coincidentes"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.lines_coincide_of_two_common_points",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -8165,8 +7631,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "lean-checked",
       "availableLangs": [
         "es"
       ]
@@ -8202,7 +7666,6 @@
         "demo-punto-medio"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.lema_punto_medio",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -8211,8 +7674,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8248,7 +7709,6 @@
         "demo-punto-medio"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.lema_punto_medio",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -8257,8 +7717,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8306,10 +7764,7 @@
       "demos": [
         "demo-angulo-externo"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_angulo_externo",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8357,10 +7812,7 @@
       "demos": [
         "demo-angulo-externo"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_angulo_externo",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8394,7 +7846,6 @@
       "demos": [
         "demo-angulos-alternos-internos"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_angulos_alternos_internos",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -8403,8 +7854,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8438,7 +7887,6 @@
       "demos": [
         "demo-angulos-alternos-internos"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_angulos_alternos_internos",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -8447,8 +7895,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8495,10 +7941,7 @@
       "demos": [
         "demo-angulos-opuestos-verticales"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_angulos_opuestos_verticales",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8545,10 +7988,7 @@
       "demos": [
         "demo-angulos-opuestos-verticales"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_angulos_opuestos_verticales",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8581,7 +8021,6 @@
         "demo-area-aditividad"
       ],
       "hasSimulation": false,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_aditividad",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -8590,8 +8029,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es",
         "eu"
@@ -8626,7 +8063,6 @@
         "demo-area-aditividad"
       ],
       "hasSimulation": false,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_aditividad",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -8635,8 +8071,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es",
         "eu"
@@ -8672,7 +8106,6 @@
         "demo-area-invariancia"
       ],
       "hasSimulation": false,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_invariancia",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -8681,8 +8114,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8716,7 +8147,6 @@
         "demo-area-invariancia"
       ],
       "hasSimulation": false,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_invariancia",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -8725,8 +8155,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8761,7 +8189,6 @@
         "demo-area-rectangulo"
       ],
       "hasSimulation": false,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_rectangulo",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -8770,8 +8197,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8806,7 +8231,6 @@
         "demo-area-rectangulo"
       ],
       "hasSimulation": false,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_rectangulo",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -8815,8 +8239,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8864,10 +8286,7 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_triangulo",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8915,10 +8334,7 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_triangulo",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -8966,10 +8382,7 @@
       "demos": [
         "demo-congruencia-aal"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_aal",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9017,10 +8430,7 @@
       "demos": [
         "demo-congruencia-aal"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_aal",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9062,10 +8472,7 @@
       "demos": [
         "demo-congruencia-ala"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_ala",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9107,10 +8514,7 @@
       "demos": [
         "demo-congruencia-ala"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_ala",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9152,10 +8556,7 @@
       "demos": [
         "demo-congruencia-lll"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_lll",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9197,10 +8598,7 @@
       "demos": [
         "demo-congruencia-lll"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_congruencia_lll",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9248,10 +8646,7 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_desigualdad_triangular",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9299,10 +8694,7 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_desigualdad_triangular",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9339,8 +8731,6 @@
         "corolario-rectas-coincidentes"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -9356,8 +8746,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "lean-checked",
       "availableLangs": [
         "es"
       ]
@@ -9394,8 +8782,6 @@
         "corolario-rectas-coincidentes"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.two_lines_meet_at_most_one_point",
-      "leanCommitSha": "local-hilbert-core",
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
@@ -9411,8 +8797,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "lean-checked",
       "availableLangs": [
         "es"
       ]
@@ -9447,7 +8831,6 @@
       "demos": [
         "demo-existencia-bisectriz"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_existencia_bisectriz",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -9456,8 +8839,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9492,7 +8873,6 @@
       "demos": [
         "demo-existencia-bisectriz"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_existencia_bisectriz",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -9501,8 +8881,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9536,7 +8914,6 @@
       "demos": [
         "demo-existencia-perpendicular"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_existencia_perpendicular",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -9545,8 +8922,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9580,7 +8955,6 @@
       "demos": [
         "demo-existencia-perpendicular"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_existencia_perpendicular",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -9589,8 +8963,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9626,7 +8998,6 @@
         "demo-invariancia-triangulacion"
       ],
       "hasSimulation": false,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_invariancia_triangulacion",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -9635,8 +9006,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9672,7 +9041,6 @@
         "demo-invariancia-triangulacion"
       ],
       "hasSimulation": false,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_invariancia_triangulacion",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -9681,8 +9049,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9725,7 +9091,6 @@
         "ejercicio-pitagoras-cateto"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_pitagoras",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -9734,8 +9099,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es",
         "eu"
@@ -9780,7 +9143,6 @@
         "ejercicio-pitagoras-cateto"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_pitagoras",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -9789,8 +9151,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es",
         "eu"
@@ -9830,7 +9190,6 @@
         "lema-punto-medio"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_punto_medio_perpendicular",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -9839,8 +9198,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9878,7 +9235,6 @@
         "lema-punto-medio"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_punto_medio_perpendicular",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -9887,8 +9243,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9936,10 +9290,7 @@
       "demos": [
         "demo-reciproco-triangulo-isosceles"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_reciproco_triangulo_isosceles",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -9987,10 +9338,7 @@
       "demos": [
         "demo-reciproco-triangulo-isosceles"
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_reciproco_triangulo_isosceles",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -10024,7 +9372,6 @@
         "demo-suma-angulos-triangulo"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_suma_angulos_triangulo",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -10033,8 +9380,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -10068,7 +9413,6 @@
         "demo-suma-angulos-triangulo"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_suma_angulos_triangulo",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -10077,8 +9421,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -10112,7 +9454,6 @@
         "demo-tales"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_tales",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -10121,8 +9462,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -10156,7 +9495,6 @@
         "demo-tales"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_tales",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -10165,8 +9503,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -10201,7 +9537,6 @@
         "demo-triangulacion-poligono"
       ],
       "hasSimulation": false,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_triangulacion_poligono",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -10210,8 +9545,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -10246,7 +9579,6 @@
         "demo-triangulacion-poligono"
       ],
       "hasSimulation": false,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_triangulacion_poligono",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -10255,8 +9587,6 @@
         }
       ],
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -10303,10 +9633,7 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_triangulo_isosceles",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -10353,10 +9680,7 @@
           "role": "secondary"
         }
       ],
-      "leanId": "Matematika.Geometry.Hilbert.teorema_triangulo_isosceles",
       "lang": "es",
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es"
       ]
@@ -10508,7 +9832,6 @@
         "demo-area-aditividad"
       ],
       "hasSimulation": false,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_area_aditividad",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -10516,8 +9839,6 @@
           "role": "primary"
         }
       ],
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es",
         "eu"
@@ -10564,7 +9885,6 @@
         "ejercicio-pitagoras-cateto"
       ],
       "hasSimulation": true,
-      "leanId": "Matematika.Geometry.Hilbert.teorema_pitagoras",
       "sources": [
         {
           "title": "Pending Formalization",
@@ -10572,8 +9892,6 @@
           "role": "primary"
         }
       ],
-      "leanVerified": true,
-      "verificationStatus": "human-proof",
       "availableLangs": [
         "es",
         "eu"

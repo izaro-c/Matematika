@@ -38,8 +38,6 @@ interface ContentCardProps {
   domain?: string;
   /** Icono o emoji representativo del dominio */
   domainIcon?: string;
-  /** Si está formalizado y verificado con Lean 4 */
-  leanVerified?: boolean;
   /** ID explícito para seguimiento de progreso */
   id?: string;
   /** Si está marcado como leído (sobrescribe store) */
@@ -71,7 +69,6 @@ export const ContentCard: React.FC<ContentCardProps> = ({
   layout = 'default',
   domain,
   domainIcon,
-  leanVerified,
   id,
   isRead: propIsRead,
   isCompleted: propIsCompleted,
@@ -88,9 +85,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
   const isCardExerciseComplete = propIsCompleted ?? (derivedId ? checkExercise(derivedId) : false);
 
   let activeSealType: SealType | null = null;
-  if (leanVerified) {
-    activeSealType = 'lean';
-  } else if (isCardExerciseComplete) {
+  if (isCardExerciseComplete) {
     activeSealType = 'exercise';
   } else if (isCardRead) {
     activeSealType = 'read';

@@ -2,8 +2,6 @@ import type { ComponentType, LazyExoticComponent } from 'react';
 
 export type MDXComponent = LazyExoticComponent<ComponentType<Record<string, unknown>>> | ComponentType<Record<string, unknown>>;
 export type Difficulty =  'básico' | 'intermedio' | 'avanzado' | 'experto';
-export type VerificationStatus = 'none' | 'human-proof' | 'lean-checked' | 'lean-audited';
-export type Foundation = 'matematika-axioms' | 'bridge' | 'pending';
 
 export interface MathematicalSource {
   title: string;
@@ -21,11 +19,6 @@ export interface BaseContent {
   tags?: string[];
   links?: string[];
   seeAlso?: string[];
-  leanId?: string;
-  leanCommitSha?: string;
-  leanVerified?: boolean;
-  verificationStatus?: VerificationStatus;
-  foundation?: Foundation;
   sources?: MathematicalSource[];
 }
 
@@ -90,7 +83,6 @@ export interface Demo extends BaseContent {
   authors?: string[];
   layout?: 'split' | 'text';
   dependencias?: string[];
-  stepTacticMap?: Record<string, string[]>;
   Component: MDXComponent;
 }
 

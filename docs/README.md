@@ -4,12 +4,11 @@ Living sources of truth and generated artefacts. Prefer regenerating over writin
 
 | Path | Role | Keep current with |
 |------|------|-------------------|
-| `ai/` | Multi-AI governance | Edit when protocol changes |
 | `architecture/` | CODEMAP — dónde editar X | Tras reorg / nuevos dominios |
 | `adr/` | Architecture decisions | Append; don't rewrite history |
 | `editor/` | Editor stability / ops | After release gates |
 | `lean/bridge-debt.json` | Lean bridge debt | `npm run bridge:audit` |
+| `reports/` | Baselines lossless y roundtrip del editor | `npm run editor:roundtrip:audit` |
 | `testing/` | Test taxonomy + partition report | `npm run test:report` |
-| `uml/` | PlantUML sources (+ PNGs); jar se descarga en `docs:uml` | `npm run docs:uml` |
 | `api/` | TypeDoc (gitignored) | `npm run docs:build` |
-| `uml/dependency_graph.svg` | Depcruise graph (gitignored) | `npm run depcruise:graph` |
+| `dependency_graph.svg` | Depcruise graph (gitignored) | `npm run depcruise:graph` |

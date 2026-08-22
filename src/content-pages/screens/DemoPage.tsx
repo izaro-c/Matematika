@@ -4,6 +4,7 @@ import { db } from '@/data/content';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { PageLoadingScreen } from '@/components/ui/PageLoadingScreen';
 import { DemonstrationHeaderProvider } from '@/lib/page-context/DemonstrationHeaderContext';
+import { ReadingButton } from '@/content-pages/study-plan/ui/ReadingButton';
 import { useI18n } from '@/i18n';
 
 /**
@@ -38,6 +39,7 @@ export const DemoPage: React.FC = () => {
         <Suspense fallback={<PageLoadingScreen message={t('common', 'loading')} />}>
           <DemonstrationHeaderProvider key={demoId}>
             <demo.Component />
+            <ReadingButton id={demoId} />
           </DemonstrationHeaderProvider>
         </Suspense>
       </div>

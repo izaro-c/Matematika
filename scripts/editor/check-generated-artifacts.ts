@@ -7,22 +7,15 @@ interface GateCommand {
 }
 
 const generatedPaths = [
-  'ai/indexes',
-  'ai/reports/debt-report.md',
   'src/data/content/contentCoverage.json',
   'src/data/content/contentIndex.json',
   'src/data/content/diagramUsageIndex.json',
-  'src/data/graph/lean_graph.json',
-  'src/data/graph/proof_blocks.json',
 ];
 
 const commands: GateCommand[] = [
   { label: 'content index', command: 'npm', args: ['run', 'generate-index'] },
   { label: 'content coverage', command: 'npm', args: ['run', 'content:coverage'] },
   { label: 'diagram usage index', command: 'npm', args: ['run', 'diagram-usages:index'] },
-  { label: 'Lean graph and proof blocks', command: 'npm', args: ['run', 'lean:graph'] },
-  { label: 'AI indexes', command: 'npm', args: ['run', 'ai:index'] },
-  { label: 'AI debt report', command: 'npm', args: ['run', 'ai:debt'] },
 ];
 
 let failures = 0;

@@ -44,21 +44,6 @@ const allNodes = new Set<string>();
 const metadataMap = new Map<string, Record<string, unknown>>();
 const contentDepsMap = new Map<string, string[]>();
 
-const leanGraphPath = path.resolve(process.cwd(), 'src/data/graph/lean_graph.json');
-const leanDepsMap: Record<string, string[]> = {};
-if (fs.existsSync(leanGraphPath)) {
-  try {
-    const leanData = JSON.parse(fs.readFileSync(leanGraphPath, 'utf-8'));
-    for (const node of leanData.nodes) {
-      if (node.leanId && Array.isArray(node.declaredDeps)) {
-        leanDepsMap[node.leanId] = node.declaredDeps;
-      }
-    }
-  } catch (e) {
-    console.error("[WARNING] No se pudo leer lean_graph.json", e);
-  }
-}
-
 // Pass 1: Extract all metadata and auto-infer dependencies from text
 function processMdxFile(file: string) {
   const content = fs.readFileSync(file, 'utf-8');
@@ -71,12 +56,8 @@ function processMdxFile(file: string) {
     metadataMap.set(id, metadata as Record<string, unknown>);
     allNodes.add(id);
 
-    // Graph edges come strictly from explicit metadata arrays and Lean declared dependencies
+    // Graph edges come strictly from explicit metadata arrays
     const contentDeps: string[] = [];
-    if (metadata.leanId && leanDepsMap[metadata.leanId as string]) {
-      contentDeps.push(...leanDepsMap[metadata.leanId as string]);
-    }
-    
     if (Array.isArray(metadata.links)) contentDeps.push(...metadata.links);
     if (Array.isArray(metadata.requires)) contentDeps.push(...metadata.requires);
     if (Array.isArray(metadata.dependencias)) contentDeps.push(...metadata.dependencias);

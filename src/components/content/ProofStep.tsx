@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
-import { ProofStepExpander } from './ProofStepExpander';
 import { ProofStepNumberBadge } from './ProofStepNumberBadge';
 
 interface ProofStepProps {
@@ -12,8 +11,6 @@ interface ProofStepProps {
   diagramStep?: string | number;
   /** Clave en DemonstrationSection diagrams={{...}} cuando hay varios diagramas. */
   diagramKey?: string;
-  /** IDs de bloques de táctica Lean asociados a este paso. Se muestran colapsados por defecto. */
-  leanBlocks?: string[];
   /** IDs de justificaciones (axiomas, teoremas, definiciones…) Si no se provee, se extraen de ConceptLink/RefLink del cuerpo. */
   justifications?: string[];
   children?: React.ReactNode;
@@ -55,7 +52,6 @@ export const ProofStep: React.FC<ProofStepProps> = ({
   target,
   diagramStep,
   diagramKey,
-  leanBlocks = [],
   justifications,
   children,
 }) => {
@@ -96,7 +92,6 @@ export const ProofStep: React.FC<ProofStepProps> = ({
       {children && (
         <div className="proof-step-content">
           {children}
-          <ProofStepExpander blockIds={leanBlocks} />
         </div>
       )}
     </div>

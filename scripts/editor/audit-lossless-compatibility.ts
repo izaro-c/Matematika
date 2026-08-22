@@ -2,12 +2,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { assertSafeReport, runCorpusAudit } from './corpusAuditCore';
 
-const output = path.join(process.cwd(), 'ai/reports/editor-lossless-compatibility.json');
-const markdownOutput = path.join(process.cwd(), 'ai/reports/editor-lossless-compatibility.md');
+const output = path.join(process.cwd(), 'docs/reports/editor-lossless-compatibility.json');
+const markdownOutput = path.join(process.cwd(), 'docs/reports/editor-lossless-compatibility.md');
 const report = runCorpusAudit();
 assertSafeReport(report);
 
 if (process.argv.includes('--audit')) {
+  fs.mkdirSync(path.dirname(output), { recursive: true });
   fs.writeFileSync(output, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
   fs.writeFileSync(markdownOutput, `# Compatibilidad lossless del corpus\n\n| Compatibilidad | Documentos |\n| --- | ---: |\n| fully-editable | ${report.counts['fully-editable']} |\n| partially-editable | ${report.counts['partially-editable']} |\n| read-only | ${report.counts['read-only']} |\n| unsupported | ${report.counts.unsupported} |\n| **Total** | **${report.totalFiles}** |\n\nMetadata legible y válida: ${report.files.filter(file => file.metadataReadable && file.metadataSchemaValid).length}/${report.totalFiles}. Regiones opacas: ${report.files.reduce((total, file) => total + file.opaqueBlocks, 0)}.\n\nTodos los documentos se conservaron exactamente tras apertura, proyección, cambios de modo y tres ciclos.\n`, 'utf8');
   console.log(`[SUCCESS] Compatibilidad auditada para ${report.totalFiles} documentos.`);

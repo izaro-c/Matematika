@@ -1,13 +1,13 @@
 # Declaración de estabilidad del editor
 
-**Fecha de cierre:** 2026-07-14 (veredicto); métricas vivas en [`ai/current-state.md`](../../ai/current-state.md).
+**Fecha de cierre:** 2026-07-14 (veredicto); métricas vivas en [`docs/reports/editor-roundtrip-baseline.md`](../reports/editor-roundtrip-baseline.md).
 **Alcance:** corpus y arquitectura presentes en el repositorio; no MDX o TSX arbitrario.
 
 ## Veredicto
 
 El editor queda estable para los flujos comprobados de autoría, revisión y recuperación. La estabilidad no significa edición visual universal: el catálogo mezcla `visual-exact` y `code-preview` deliberados; un documento futuro puede clasificarse como parcial, solo lectura o no soportado.
 
-El cierre del 2026-07-14 aprobó `npm run full-check` y `npm run editor:release-check` (E2E + regresión visual). Conteos actuales: `npm run editor:diagrams:check` / `ai/current-state.md`.
+El cierre del 2026-07-14 aprobó `npm run full-check` y `npm run editor:release-check` (E2E + regresión visual). Conteos actuales: `npm run editor:diagrams:check` / `docs/reports/editor-roundtrip-baseline.md`.
 
 | Subsistema | Estado | Evidencia | Límite explícito |
 | --- | --- | --- | --- |
@@ -31,4 +31,4 @@ El cierre del 2026-07-14 aprobó `npm run full-check` y `npm run editor:release-
 - Chunks grandes de build y aviso `eval` interno de JessieCode/JSXGraph.
 - Referencias a conceptos sin página y avisos históricos de Dependency Cruiser sin error de gate.
 
-Baselines: `ai/reports/editor-roundtrip-baseline.*` y `ai/reports/editor-lossless-compatibility.*` (`editor:roundtrip:*` / `editor:lossless:*`).
+Baselines: `docs/reports/editor-roundtrip-baseline.*` y `docs/reports/editor-lossless-compatibility.*` (`editor:roundtrip:*` / `editor:lossless:*`).

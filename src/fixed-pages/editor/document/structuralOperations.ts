@@ -166,8 +166,6 @@ function proofStepInput(input: UpdateBlockInput): UpdateBlockInput {
       target: step.target ?? '',
       diagramStep: step.diagramStep,
       diagramKey: step.diagramKey,
-      leanBlocks: Array.isArray(step.leanBlocks) ? step.leanBlocks : undefined,
-      leanBlocksExpression: typeof step.leanBlocksExpression === 'string' ? step.leanBlocksExpression : undefined,
     },
   };
 }
