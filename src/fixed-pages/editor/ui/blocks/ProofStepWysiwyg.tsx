@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { ProofStepData } from '@/fixed-pages/editor/session/parser';
 import type { DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
 import { ProofStepNumberBadge } from '@/components/content/ProofStepNumberBadge';
 import { RichProseSurface } from '../prose/RichProseSurface';
 import { bodyHasLogicalJustification, extractJustificationIdsFromBody } from '../blocks/demoJustification';
+import { resolveJustification } from '@/lib/justifications/resolveJustification';
+import { ProofStepLinkModal } from '../components/ProofStepLinkModal';
 
 export interface ProofStepWysiwygProps {
   blockId: string;
@@ -56,6 +58,8 @@ export function ProofStepWysiwyg({
   const cited = extractJustificationIdsFromBody(step.body || '');
   const missingJustification = !bodyHasLogicalJustification(step.body || '');
 
+  const [stepModalOpen, setStepModalOpen] = useState(false);
+
   const toggleTarget = (id: string) => {
     const next = targets.includes(id) ? targets.filter(t => t !== id) : [...targets, id];
     onChangeStep({
@@ -70,13 +74,14 @@ export function ProofStepWysiwyg({
       : step.diagramStep === undefined || step.diagramStep === '' ? 'auto'
         : 'manual';
 
-  const handleAppendBlockToStep = (type: 'formula' | 'list' | 'table' | 'note' | 'citation') => {
+  const handleAppendBlockToStep = (type: 'formula' | 'list' | 'table' | 'note' | 'citation' | 'justification') => {
     let snippet = '';
     if (type === 'formula') snippet = '\n<Formula>\n  $$ x = y $$\n</Formula>\n';
     else if (type === 'list') snippet = '\n- Elemento 1\n- Elemento 2\n';
     else if (type === 'table') snippet = '\n| Columna 1 | Columna 2 |\n| --- | --- |\n| Valor 1 | Valor 2 |\n';
     else if (type === 'note') snippet = '\n<Nota>Nota explicativa</Nota>\n';
     else if (type === 'citation') snippet = '\n<Cita autor="Autor">Texto de la cita</Cita>\n';
+    else if (type === 'justification') snippet = '\nPor <ConceptLink targetId="axioma" isDependency={true}>axioma o resultado previo</ConceptLink>, afirmamos el paso.\n';
 
     const currentBody = step.body || '';
     onChangeStep({
@@ -173,6 +178,8 @@ export function ProofStepWysiwyg({
           <div className="mt-2 flex flex-wrap items-center gap-1.5 font-sans border-t border-carbon/10 pt-2 text-[10px]">
             <span className="font-bold uppercase tracking-wider text-carbon/40 mr-1">Insertar en paso:</span>
             <button type="button" onClick={() => handleAppendBlockToStep('formula')} className="rounded border border-ocre/30 bg-ocre/5 px-2 py-0.5 font-mono font-bold text-ocre hover:bg-ocre/15 cursor-pointer">+ Fórmula</button>
+            <button type="button" onClick={() => setStepModalOpen(true)} className="rounded border border-canela/30 bg-canela/5 px-2 py-0.5 font-bold text-canela hover:bg-canela/15 cursor-pointer">+ Ref Paso</button>
+            <button type="button" onClick={() => handleAppendBlockToStep('justification')} className="rounded border border-mora/30 bg-mora/5 px-2 py-0.5 font-bold text-mora hover:bg-mora/15 cursor-pointer">+ Justificación</button>
             <button type="button" onClick={() => handleAppendBlockToStep('list')} className="rounded border border-pavo/30 bg-pavo/5 px-2 py-0.5 font-bold text-pavo hover:bg-pavo/15 cursor-pointer">+ Lista</button>
             <button type="button" onClick={() => handleAppendBlockToStep('table')} className="rounded border border-ocre/30 bg-ocre/5 px-2 py-0.5 font-bold text-ocre hover:bg-ocre/15 cursor-pointer">+ Tabla</button>
             <button type="button" onClick={() => handleAppendBlockToStep('note')} className="rounded border border-carbon/20 bg-carbon/5 px-2 py-0.5 font-bold text-carbon/70 hover:bg-carbon/10 cursor-pointer">+ Nota</button>
@@ -223,41 +230,81 @@ export function ProofStepWysiwyg({
             </div>
 
             <div>
-              <div className="mb-1 flex flex-wrap items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">Resaltes</span>
-                {cited.length > 0 && (
-                  <span className="font-serif text-[11px] italic text-canela">Cita: {cited.join(' · ')}</span>
+              <div className="mb-1 flex flex-col gap-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">Justificaciones del Paso</span>
+                {cited.length > 0 ? (
+                  <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
+                    {cited.map(id => {
+                      const res = resolveJustification(id);
+                      return (
+                        <span
+                          key={id}
+                          className="inline-flex items-center gap-1.5 rounded border border-carbon/15 bg-lienzo px-2 py-0.5 text-[10px] text-carbon font-serif"
+                        >
+                          <span
+                            className="rounded px-1 text-[7px] font-sans font-bold text-lienzo"
+                            style={{ backgroundColor: res?.badgeColor || 'var(--theme-mora)' }}
+                          >
+                            {res?.badge || 'CONCEPTO'}
+                          </span>
+                          <span className="italic font-medium">{res?.title || id}</span>
+                        </span>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p className="text-[10px] italic text-carbon/50 font-serif">Por hipótesis o inferencia lógica elemental.</p>
                 )}
                 {missingJustification && (
-                  <span className="text-[11px] text-granada">Falta justificación en el texto (axioma, teorema, definición, paso previo o regla).</span>
+                  <span className="text-[10px] text-granada">Falta justificación en el texto (axioma, teorema, definición, paso previo o regla).</span>
                 )}
               </div>
-              {diagramTargets.length === 0 ? (
-                <p className="text-[11px] italic text-carbon/45">Sin elementos de diagrama registrados.</p>
-              ) : (
-                <div className="flex max-h-24 flex-wrap gap-1.5 overflow-y-auto">
-                  {diagramTargets.map(t => {
-                    const selected = targets.includes(t.id);
-                    return (
-                      <button
-                        key={t.qualifiedId ?? t.id}
-                        type="button"
-                        disabled={isReadOnly}
-                        onClick={() => toggleTarget(t.id)}
-                        className={`rounded-lg border px-2 py-0.5 font-mono text-[10px] cursor-pointer ${
-                          selected ? 'border-canela bg-canela text-lienzo font-bold' : 'border-carbon/15 bg-lienzo text-carbon/70'
-                        }`}
-                      >
-                        {t.id}{t.label ? ` (${t.label})` : ''}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
+
+              <div className="mt-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/50 block mb-1">Resaltes de Diagrama</span>
+                {diagramTargets.length === 0 ? (
+                  <p className="text-[11px] italic text-carbon/45">Sin elementos de diagrama registrados.</p>
+                ) : (
+                  <div className="flex max-h-24 flex-wrap gap-1.5 overflow-y-auto">
+                    {diagramTargets.map(t => {
+                      const selected = targets.includes(t.id);
+                      return (
+                        <button
+                          key={t.qualifiedId ?? t.id}
+                          type="button"
+                          disabled={isReadOnly}
+                          onClick={() => toggleTarget(t.id)}
+                          className={`rounded-lg border px-2 py-0.5 font-mono text-[10px] cursor-pointer ${
+                            selected ? 'border-canela bg-canela text-lienzo font-bold' : 'border-carbon/15 bg-lienzo text-carbon/70'
+                          }`}
+                        >
+                          {t.id}{t.label ? ` (${t.label})` : ''}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
       </div>
+
+      <ProofStepLinkModal
+        isOpen={stepModalOpen}
+        initialStep={Math.max(1, displayNumber - 1)}
+        maxSteps={Math.max(totalSteps, displayNumber)}
+        onClose={() => setStepModalOpen(false)}
+        onConfirm={refStep => {
+          const currentBody = step.body || '';
+          const snippet = ` <ProofStepLink step={${refStep}} />`;
+          onChangeStep({
+            ...step,
+            number: displayNumber,
+            body: currentBody.trim() ? `${currentBody}${snippet}` : `<ProofStepLink step={${refStep}} />`,
+          });
+        }}
+      />
     </article>
   );
 }

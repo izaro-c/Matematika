@@ -116,9 +116,19 @@ function validateMetadata(metadata: Record<string, unknown> = {}): EditorValidat
   return issues;
 }
 
+const JUSTIFICATION_KEYWORDS = [
+  'hipótesis', 'hipotesis', 'axioma', 'teorema', 'definición', 'definicion',
+  'lema', 'corolario', 'paso', 'regla', 'propiedad', 'ley', 'principio',
+  'construcción', 'construccion', 'modus ponens', 'modus tollens',
+  'simplificación', 'simplificacion', 'adición', 'adicion', 'resolución',
+  'resolucion', 'sustitución', 'sustitucion', 'distributiva', 'conmutativa',
+  'asociativa', 'transitividad',
+];
+
 function bodyHasLogicalJustification(body: string): boolean {
-  if (/<(?:ConceptLink|RefLink)\b/i.test(body)) return true;
-  return /\b(?:por (?:hipótesis|axioma|teorema|definición|el paso|regla (?:de )?lógica|construcción)|hipótesis)\b/i.test(body);
+  if (/<(?:ConceptLink|RefLink|ProofStepLink)\b/i.test(body)) return true;
+  const lower = body.toLowerCase();
+  return JUSTIFICATION_KEYWORDS.some(kw => lower.includes(kw));
 }
 
 function validateProofStep(step: ProofStepData, blockId: string): EditorValidationIssue[] {

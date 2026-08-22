@@ -19,10 +19,11 @@ interface ConceptLinkProps {
 const isIdValid = (id: string, lang?: string): boolean => {
   const dict = lang ? getGlossaryDictionary(lang) : getGlossaryDictionary('es');
   return !!(  
-    dict[id] || db.getTheorem(id, lang) || db.getDefinition(id, lang) || db.getMathematicianById(id, lang) ||
-    db.methods.get(id) || db.examples.get(id) || db.exercises.get(id) ||
-    db.usecases.get(id) || db.axioms.get(id) || db.getAxiomaticSystem(id) ||
-    db.models.get(id) || db.demos.get(id)
+    dict[id] || dict[id.replace(/-/g, '_')] || dict[id.replace(/_/g, '-')] ||
+    db.getTheorem(id, lang) || db.getDefinition(id, lang) || db.getMathematicianById(id, lang) ||
+    db.methods.get(id) || db.getMethod(id, lang) || db.examples.get(id) || db.exercises.get(id) ||
+    db.usecases.get(id) || db.axioms.get(id) || db.getAxiom(id, lang) || db.getAxiomaticSystem(id, lang) ||
+    db.models.get(id) || db.getModel(id, lang) || db.demos.get(id) || db.getDemo(id, lang)
   );
 };
 

@@ -3,6 +3,8 @@ import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { DiagramStepSyncContext } from '@/lib/page-context/DiagramStepSyncContext';
 import { useDemonstrationHeaderClaim } from '@/lib/page-context/DemonstrationHeaderContext';
 import { db } from '@/data/content';
+import { useGlossaryStore } from '@/lib/stores/GlossaryStore';
+import { resolveJustification } from '@/lib/justifications/resolveJustification';
 import { Link, useLocation } from 'wouter';
 import { TYPE_STYLES } from '@/lib/theme/constants';
 import { getContentPageAccent } from '@/design';
@@ -254,42 +256,108 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
     setJustificationSets(sets);
   }, [proofSteps, children]);
 
+  const { openTerm } = useGlossaryStore();
+
   const renderJustificationItems = (justificationIds?: string[]) => {
     if (!justificationIds || justificationIds.length === 0) {
-      return <p className="m-0 text-xs italic text-carbon/50 font-serif">Por hipótesis o inferencia lógica elemental.</p>;
+      return <p className="m-0 text-xs italic text-carbon/50 font-serif">{lang === 'eu' ? 'Hipotesiaz edo oinarrizko inferentzia logikoaz.' : 'Por hipótesis o inferencia lógica elemental.'}</p>;
+    }
+
+    const resolvedList = justificationIds
+      .map((id) => resolveJustification(id, lang, getLocalizedPath))
+      .filter((item): item is NonNullable<typeof item> => item !== null);
+
+    if (resolvedList.length === 0) {
+      return <p className="m-0 text-xs italic text-carbon/50 font-serif">{lang === 'eu' ? 'Hipotesiaz edo oinarrizko inferentzia logikoaz.' : 'Por hipótesis o inferencia lógica elemental.'}</p>;
     }
 
     return (
       <div className="flex flex-wrap gap-2 mt-1">
-        {justificationIds.map((id) => {
-          const theorem = db.getTheorem(id);
-          const definition = db.getDefinition(id);
-          const concept = theorem || definition;
-          
-          if (!concept) return null;
-          
-          const conceptType = theorem ? (theorem.type || 'teorema') : 'definicion';
-          const typeStyle = TYPE_STYLES[conceptType];
-          const badgeText = typeStyle?.badge ?? 'CONCEPTO';
-          const badgeColor = typeStyle?.bg ?? 'var(--theme-mora)';
+        {resolvedList.map((item) => {
+          if (item.isStepLink && item.stepNumber !== undefined) {
+            return (
+              <button
+                type="button"
+                key={item.id}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.getElementById(`proof-step-${item.stepNumber}`);
+                  if (target) {
+                    if (item.stepNumber !== undefined) {
+                      selectDiagramStep(item.stepNumber - 1);
+                    }
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }
+                }}
+                className="page-accent-hover inline-flex items-center gap-2 px-2.5 py-1 text-xs border border-carbon/15 rounded bg-lienzo transition-all text-carbon cursor-pointer hover:scale-105"
+                title={item.title}
+              >
+                <span
+                  className="px-1 text-[8px] font-sans font-bold rounded text-lienzo"
+                  style={{ backgroundColor: item.badgeColor }}
+                >
+                  {item.badge}
+                </span>
+                <span className="font-serif italic font-semibold">{item.title}</span>
+              </button>
+            );
+          }
 
-          const prefix = definition ? 'definicion' : 'teorema';
+          if (item.isGlossary) {
+            return (
+              <button
+                type="button"
+                key={item.id}
+                onClick={(e) => {
+                  e.preventDefault();
+                  openTerm([item.glossaryKey || item.id]);
+                }}
+                className="page-accent-hover inline-flex items-center gap-2 px-2.5 py-1 text-xs border border-carbon/15 rounded bg-lienzo transition-all text-carbon cursor-pointer hover:border-carbon/30"
+                title={item.title}
+              >
+                <span
+                  className="px-1 text-[8px] font-sans font-bold rounded text-lienzo"
+                  style={{ backgroundColor: item.badgeColor }}
+                >
+                  {item.badge}
+                </span>
+                <span className="font-serif italic font-semibold">{item.title}</span>
+              </button>
+            );
+          }
+
+          if (item.href) {
+            return (
+              <Link
+                key={item.id}
+                href={item.href}
+                className="page-accent-hover inline-flex items-center gap-2 px-2.5 py-1 text-xs border border-carbon/15 rounded bg-lienzo transition-all text-carbon"
+                style={{ textDecoration: 'none' }}
+              >
+                <span
+                  className="px-1 text-[8px] font-sans font-bold rounded text-lienzo"
+                  style={{ backgroundColor: item.badgeColor }}
+                >
+                  {item.badge}
+                </span>
+                <span className="font-serif italic font-semibold">{item.title}</span>
+              </Link>
+            );
+          }
 
           return (
-            <Link
-              key={id}
-              href={`/${prefix}/${id}`}
-              className="page-accent-hover inline-flex items-center gap-2 px-2.5 py-1 text-xs border border-carbon/15 rounded bg-lienzo transition-all text-carbon"
-              style={{ textDecoration: 'none' }}
+            <span
+              key={item.id}
+              className="inline-flex items-center gap-2 px-2.5 py-1 text-xs border border-carbon/15 rounded bg-lienzo text-carbon"
             >
               <span
                 className="px-1 text-[8px] font-sans font-bold rounded text-lienzo"
-                style={{ backgroundColor: badgeColor }}
+                style={{ backgroundColor: item.badgeColor }}
               >
-                {badgeText}
+                {item.badge}
               </span>
-              <span className="font-serif italic font-semibold">{concept.title}</span>
-            </Link>
+              <span className="font-serif italic font-semibold">{item.title}</span>
+            </span>
           );
         })}
       </div>

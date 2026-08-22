@@ -7,6 +7,11 @@ export const dictionaryEu: Record<string, Partial<GlossaryEntry>> = {
     definition: 'Frogarik gabe onartzen den proposizio argi eta agerikoa. Edozein teoria matematiko eraikitzeko oinarrizko adreilua da.',
     category: 'Oinarrizko Kontzeptuak' as any,
   },
+  hipotesis: {
+    title: 'Hipotesia',
+    definition: 'Dedukzio edo froga baterako abiapuntutzat hartzen den hasierako premisa edo suposizioa.',
+    category: 'Oinarrizko Kontzeptuak' as any,
+  },
   lema: {
     title: 'Lema',
     definition: 'Teorema nagusi bat frogatzeko aldez aurreko urrats gisa frogatzen den teorema laguntzaile edo sekundarioa.',
@@ -59,8 +64,88 @@ export const dictionaryEu: Record<string, Partial<GlossaryEntry>> = {
     definition: 'Inplikazio logiko bat emanda (P-k Q dakar), bere kontrajarria (Ez Q-k Ez P dakar) da. Bi proposizioak logikoki baliokideak dira.',
     category: 'Logika' as any,
   },
+  modus_ponens: {
+    title: 'Modus Ponens',
+    definition: 'Oinarrizko inferentzia-araua: P ⟹ Q egiazkoa bada eta P egiazkoa bada, orduan Q ezinbestean egiazkoa da.',
+    category: 'Logika' as any,
+  },
+  modus_tollens: {
+    title: 'Modus Tollens',
+    definition: 'Inferentzia-arau formala: P ⟹ Q egiazkoa bada eta Q gezurrezkoa bada (¬Q), orduan P gezurrezkoa izan behar da (¬P).',
+    category: 'Logika' as any,
+  },
+  silogismo_hipotetico: {
+    title: 'Silogismo Hipotetikoa',
+    definition: 'Baldintzazko iragankortasunaren araua: P ⟹ Q eta Q ⟹ R badira, orduan P ⟹ R ondorioztatzen da.',
+    category: 'Logika' as any,
+  },
+  silogismo_disyuntivo: {
+    title: 'Silogismo Disjuntiboa',
+    definition: 'Inferentzia-araua: P ∨ Q disjuntzioa emanda eta ¬P jakinda, orduan Q ondorioztatzen da nahitaez.',
+    category: 'Logika' as any,
+  },
+  doble_negacion: {
+    title: 'Ukazio Bikoitza',
+    definition: 'Logika klasikoaren printzipioa: proposizio bat bere ukazioaren ukazioaren baliokidea da.',
+    category: 'Logika' as any,
+  },
+  leyes_de_morgan: {
+    title: 'De Morganen Legeak',
+    definition: 'Baliokidetasun logikoko arauak, konjuntzioen ukazioa eta disjuntzioen ukazioa erlazionatzen dituztenak.',
+    category: 'Logika' as any,
+  },
+  simplificacion: {
+    title: 'Sinplifikazio Logikoa',
+    definition: 'P ∧ Q konjuntzio egiazko batetik bere edozein gai ondorioztatzeko aukera ematen duen araua.',
+    category: 'Logika' as any,
+  },
+  adicion: {
+    title: 'Batuketa Logikoa',
+    definition: 'P premisa egiazko batetik P ∨ Q disjuntzioa baliozkotasunez ondorioztatzeko aukera ematen duen araua.',
+    category: 'Logika' as any,
+  },
+  resolucion: {
+    title: 'Ebazpen Logikoa',
+    definition: '(P ∨ Q) eta (¬P ∨ R) premisetatik (Q ∨ R) ondorioztatzeko inferentzia-araua.',
+    category: 'Logika' as any,
+  },
+  reduccion_al_absurdo: {
+    title: 'Absurdora Murriztea',
+    definition: 'P proposizio bat frogatzeko metodoa, ¬P ukazioak kontraesan formal batera daramala erakutsiz.',
+    category: 'Logika' as any,
+  },
 
   // ALJEBRA
+  sustitucion: {
+    title: 'Ordezkapen Printzipioa',
+    definition: 'Berdintzaren propietatea: bi adierazpen berdinak badira (a = b), bata bestearekin ordezka daiteke edozein testuinguru matematikotan.',
+    category: 'Aljebra' as any,
+  },
+  propiedad_distributiva: {
+    title: 'Propietate Banatzailea',
+    definition: 'Eragiketa aljebraikoen propietatea non biderketak batuketarekiko banatzen den.',
+    category: 'Aljebra' as any,
+  },
+  propiedad_conmutativa: {
+    title: 'Propietate Trukakorra',
+    definition: 'Eragikigaien ordenak eragiketaren emaitza aldatzen ez dueneko propietatea.',
+    category: 'Aljebra' as any,
+  },
+  propiedad_asociativa: {
+    title: 'Propietate Elkartzailea',
+    definition: 'Segidako eragiketetan gaiak taldekatzeko moduak azken emaitza aldatzen ez dueneko propietatea.',
+    category: 'Aljebra' as any,
+  },
+  propiedad_transitiva: {
+    title: 'Berdintzaren Propietate Iragankorra',
+    definition: 'Baliokidetasun-erlazioen oinarrizko propietatea: a = b eta b = c badira, orduan a = c.',
+    category: 'Aljebra' as any,
+  },
+  propiedad_cancelativa: {
+    title: 'Ezeztapen Legea',
+    definition: 'Berdintza baten bi aldeetako gai komunak deuseztatzeko aukera ematen duen arau aljebraikoa.',
+    category: 'Aljebra' as any,
+  },
   equals: {
     title: 'Berdintza ( = )',
     definition: 'Bi adierazpen matematikok balio edo entitate bera adierazten dutela adierazten du.',
