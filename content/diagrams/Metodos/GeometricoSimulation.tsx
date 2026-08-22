@@ -44,22 +44,22 @@ export const GeometricoSimulation = () => {
             <text x="24" y="204" fontSize="15" fontWeight="bold" fill="var(--theme-terracota)" fontFamily="serif">A</text>
             <circle cx="260" cy="180" r="5" fill="var(--theme-terracota)" />
             <text x="268" y="204" fontSize="15" fontWeight="bold" fill="var(--theme-terracota)" fontFamily="serif">B</text>
-            <circle cx="80" cy="70" r="5" fill="var(--theme-salvia)" />
-            <text x="60" y="56" fontSize="15" fontWeight="bold" fill="var(--theme-salvia)" fontFamily="serif">D</text>
-            <circle cx="300" cy="70" r="5" fill="var(--theme-salvia)" />
-            <text x="308" y="56" fontSize="15" fontWeight="bold" fill="var(--theme-salvia)" fontFamily="serif">C</text>
+            <circle cx="80" cy="70" r="5" fill="var(--theme-canela)" />
+            <text x="60" y="56" fontSize="15" fontWeight="bold" fill="var(--theme-canela)" fontFamily="serif">D</text>
+            <circle cx="300" cy="70" r="5" fill="var(--theme-canela)" />
+            <text x="308" y="56" fontSize="15" fontWeight="bold" fill="var(--theme-canela)" fontFamily="serif">C</text>
           </>}
 
           {/* Alturas */}
           {s(1) && (
             <>
-              <line x1="80" y1="70" x2="80" y2="180" stroke="var(--theme-pizarra)" strokeWidth="1" strokeDasharray="4,3" opacity="0.5" />
-              <line x1="300" y1="70" x2="300" y2="180" stroke="var(--theme-pizarra)" strokeWidth="1" strokeDasharray="4,3" opacity="0.5" />
-              <circle cx="80" cy="180" r="3" fill="var(--theme-pizarra)" opacity="0.4" />
-              <circle cx="300" cy="180" r="3" fill="var(--theme-pizarra)" opacity="0.4" />
+              <line x1="80" y1="70" x2="80" y2="180" stroke="var(--theme-mora)" strokeWidth="1" strokeDasharray="4,3" opacity="0.5" />
+              <line x1="300" y1="70" x2="300" y2="180" stroke="var(--theme-mora)" strokeWidth="1" strokeDasharray="4,3" opacity="0.5" />
+              <circle cx="80" cy="180" r="3" fill="var(--theme-mora)" opacity="0.4" />
+              <circle cx="300" cy="180" r="3" fill="var(--theme-mora)" opacity="0.4" />
               {/* Hueco derecho fijo (donde debe encajar el triangulo) */}
               <polygon points="260,180 300,70 300,180"
-                fill="color-mix(in srgb, var(--theme-salvia) 8%, transparent)" stroke="var(--theme-salvia)" strokeWidth="1" strokeDasharray="3,3" opacity="0.5" />
+                fill="color-mix(in srgb, var(--theme-canela) 8%, transparent)" stroke="var(--theme-canela)" strokeWidth="1" strokeDasharray="3,3" opacity="0.5" />
               <text x="190" y="140" textAnchor="middle" fontSize="16"
                 fill="var(--theme-carbon)" fontFamily="serif" opacity={s(2) ? 0.08 : 0.4}>≅</text>
             </>
@@ -87,22 +87,22 @@ export const GeometricoSimulation = () => {
       </div>
 
       <div className="h-10 flex flex-col items-center justify-center gap-0.5">
-        {step === 0 && <p className="text-sm text-pizarra/35 italic">Partimos de un paralelogramo</p>}
-        {step === 1 && <p className="text-xs"><span className="text-pizarra/50">El paralelogramo desborda el rectangulo por la izquierda</span>{' '}<span className="font-bold" style={{color:'var(--theme-terracota)'}}>y le falta por la derecha</span></p>}
-        {step === 2 && <p className="text-xs"><span className="font-bold" style={{color:'var(--theme-terracota)'}}>Deslizamos</span>{' '}<span className="text-pizarra/40">el sobrante izquierdo al hueco derecho. Al ser congruentes, encaja.</span></p>}
+        {step === 0 && <p className="text-sm text-mora/35 italic">Partimos de un paralelogramo</p>}
+        {step === 1 && <p className="text-xs"><span className="text-mora/50">El paralelogramo desborda el rectangulo por la izquierda</span>{' '}<span className="font-bold" style={{color:'var(--theme-terracota)'}}>y le falta por la derecha</span></p>}
+        {step === 2 && <p className="text-xs"><span className="font-bold" style={{color:'var(--theme-terracota)'}}>Deslizamos</span>{' '}<span className="text-mora/40">el sobrante izquierdo al hueco derecho. Al ser congruentes, encaja.</span></p>}
         {step === 3 && <p className="text-sm font-bold text-carbon">El area del paralelogramo es base x altura.</p>}
       </div>
 
       <div className="flex gap-3 pt-1">
         <button onClick={() => setStep(s => Math.min(s + 1, 3) as Step)} disabled={step >= 3}
-          className="px-5 py-2 text-sm rounded-sm font-serif transition-all bg-pizarra text-lienzo hover:bg-pizarra/85 disabled:opacity-25 disabled:cursor-default">
+          className="px-5 py-2 text-sm rounded-sm font-serif transition-all bg-mora text-lienzo hover:bg-mora/85 disabled:opacity-25 disabled:cursor-default">
           {['Empezar', 'Alturas', 'Deslizar', 'Concluir'][step]}
         </button>
         {step >= 3 && <button onClick={() => setStep(0)}
-          className="px-3 py-2 text-sm rounded-sm font-serif border border-pizarra/12 text-pizarra/50 hover:text-pizarra hover:bg-pizarra/5 transition-all">⟳</button>}
+          className="px-3 py-2 text-sm rounded-sm font-serif border border-mora/12 text-mora/50 hover:text-mora hover:bg-mora/5 transition-all">⟳</button>}
       </div>
 
-      <p className="text-[10px] text-pizarra/25 text-center max-w-[280px] leading-relaxed mt-2">
+      <p className="text-[10px] text-mora/25 text-center max-w-[280px] leading-relaxed mt-2">
         El paralelogramo desborda el rectangulo por un lado y le falta por el otro. Al trasladar el sobrante, encaja.
       </p>
     </div>

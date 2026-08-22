@@ -40,13 +40,13 @@ function statusDescription(status: EditorPersistenceStatus): string {
 function validationPresentation(validation: EditorValidationResult): { className: string; label: string } {
   if (validation.errorCount > 0) return { className: 'bg-granada/10 text-granada', label: `${validation.errorCount} errores` };
   if (validation.warningCount > 0) return { className: 'bg-ocre/10 text-ocre', label: `${validation.warningCount} avisos` };
-  return { className: 'bg-salvia/10 text-salvia', label: 'Sin errores' };
+  return { className: 'bg-canela/10 text-canela', label: 'Sin errores' };
 }
 
 function persistenceIndicator(status: EditorPersistenceStatus): string {
   if (status.kind === 'conflict' || status.kind === 'save-error' || status.kind === 'blocked') return 'bg-granada';
   if (status.kind === 'ready-dirty' || status.kind === 'saving-file' || status.kind === 'saving-draft') return 'bg-ocre';
-  return 'bg-salvia';
+  return 'bg-canela';
 }
 
 export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
@@ -108,8 +108,8 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
           )}
 
           {currentFile && validation.issues.length === 0 && (
-            <div className="rounded-2xl border border-salvia/30 bg-salvia/5 p-4 text-center text-salvia shadow-2xs">
-              <svg className="w-6 h-6 mx-auto mb-1.5 text-salvia" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="rounded-2xl border border-canela/30 bg-canela/5 p-4 text-center text-canela shadow-2xs">
+              <svg className="w-6 h-6 mx-auto mb-1.5 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               <p className="font-serif text-xs font-bold">Todo en orden</p>
@@ -135,14 +135,14 @@ export const EditorDiagnosticsPanel: React.FC<EditorDiagnosticsPanelProps> = ({
                         ? 'border-granada/30 bg-granada/5 hover:border-granada/50 hover:bg-granada/10'
                         : isWarning
                           ? 'border-ocre/30 bg-ocre/5 hover:border-ocre/50 hover:bg-ocre/10'
-                          : 'border-salvia/30 bg-salvia/5 hover:border-salvia/50 hover:bg-salvia/10'
+                          : 'border-canela/30 bg-canela/5 hover:border-canela/50 hover:bg-canela/10'
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <span
                           className={`h-2.5 w-2.5 rounded-full shrink-0 ${
-                            isError ? 'bg-granada animate-pulse' : isWarning ? 'bg-ocre' : 'bg-salvia'
+                            isError ? 'bg-granada animate-pulse' : isWarning ? 'bg-ocre' : 'bg-canela'
                           }`}
                         />
                         <span className="font-bold text-[11px] uppercase tracking-wider text-carbon">

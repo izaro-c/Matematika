@@ -16,12 +16,12 @@ function SceneContent() {
     camera.lookAt(0, 0, 0);
   }, [camera]);
 
-  const salvia = getCSSVar('--theme-salvia');
+  const canela = getCSSVar('--theme-canela');
   const terracota = getCSSVar('--theme-terracota');
   const carbon = getCSSVar('--theme-carbon');
   const ocre = getCSSVar('--theme-ocre');
 
-  const piColor = highlight === 'plano-pi' ? terracota : salvia;
+  const piColor = highlight === 'plano-pi' ? terracota : canela;
   const sigmaColor = highlight === 'plano-sigma' ? terracota : ocre;
   const lineColor = highlight === 'recta-l' ? terracota : carbon;
 
@@ -46,7 +46,7 @@ function SceneContent() {
 
       <Line points={linePoints} color={lineColor} lineWidth={3} />
 
-      <Html position={[-2, 0.2, 2]} className={`font-serif italic text-3xl ${highlight === 'plano-pi' ? 'text-terracota font-bold' : 'text-salvia/80'}`}>π</Html>
+      <Html position={[-2, 0.2, 2]} className={`font-serif italic text-3xl ${highlight === 'plano-pi' ? 'text-terracota font-bold' : 'text-canela/80'}`}>π</Html>
       <Html position={[-2, 1.5, -1.5]} className={`font-serif italic text-3xl ${highlight === 'plano-sigma' ? 'text-terracota font-bold' : 'text-ocre/80'}`}>σ</Html>
       <Html position={[2.5, 0.3, 0]} className={`font-serif italic text-2xl ${highlight === 'recta-l' ? 'text-terracota font-bold' : 'text-carbon'}`}>l</Html>
     </>
@@ -54,7 +54,7 @@ function SceneContent() {
 }
 
 export const Incidence7: React.FC = () => (
-  <div className="w-full h-full min-h-[350px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden">
+  <div className="w-full h-full min-h-[350px] relative bg-lienzo/40 border border-mora/10 rounded-sm overflow-hidden">
     <Canvas gl={{ antialias: true }}><SceneContent /></Canvas>
   </div>
 );

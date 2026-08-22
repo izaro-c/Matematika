@@ -116,7 +116,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
   const unplacedItems = shuffledItems.filter(item => !placedItems[item.id]);
 
   return (
-    <div className={`my-8 p-8 elegant-panel relative font-serif group ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}>
+    <div className={`my-8 p-8 elegant-panel relative font-serif group ${isCompleted ? 'bg-canela/5 border-canela/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-canela)' : 'var(--page-accent)' } as React.CSSProperties}>
        <style>
         {`
           @keyframes shake {
@@ -129,7 +129,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
       </style>
       
       <h4 className="font-bold text-carbon mb-6 mt-2 flex items-center gap-3 text-lg z-30 relative">
-        {isCompleted ? <span className="text-salvia">❦ {t('exercise', 'classificationCompleted')}</span> : <span>{pregunta || t('exercise', 'classifyElements')}</span>}
+        {isCompleted ? <span className="text-canela">❦ {t('exercise', 'classificationCompleted')}</span> : <span>{pregunta || t('exercise', 'classifyElements')}</span>}
       </h4>
 
       <div className={`${isShaking ? 'animate-shake' : ''}`}>
@@ -160,7 +160,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
         )}
 
         {/* Cubos (Categorías) - Estilo Tabla Clásica (Escalable) */}
-        <div className={`border-y-[3px] grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-[1px] relative transition-colors duration-500 ${isCompleted ? 'border-salvia bg-salvia/30' : 'border-carbon/80 bg-carbon/30'}`}>
+        <div className={`border-y-[3px] grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-[1px] relative transition-colors duration-500 ${isCompleted ? 'border-canela bg-canela/30' : 'border-carbon/80 bg-carbon/30'}`}>
           {buckets.map((bucket) => {
             const bucketItems = items.filter(item => placedItems[item.id] === bucket.id);
 
@@ -172,7 +172,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
                 className="flex flex-col min-h-[160px] bg-lienzo"
               >
                 {/* Cabecera del Cubo */}
-                <div className={`py-3 text-center text-sm font-semibold ac-eyebrow border-b transition-colors ${isCompleted ? 'text-salvia border-salvia/40' : 'text-carbon border-carbon/60'}`}>
+                <div className={`py-3 text-center text-sm font-semibold ac-eyebrow border-b transition-colors ${isCompleted ? 'text-canela border-canela/40' : 'text-carbon border-carbon/60'}`}>
                   {bucket.title}
                 </div>
 
@@ -183,7 +183,7 @@ export const Clasificador: React.FC<ClasificadorProps> = ({ id, pregunta, bucket
 
                     let itemClass: string;
                     if (isCompleted) {
-                      itemClass = 'border-salvia/40 bg-salvia/[0.02] text-salvia cursor-default';
+                      itemClass = 'border-canela/40 bg-canela/[0.02] text-canela cursor-default';
                     } else if (isWrong) {
                       itemClass = 'border-terracota bg-terracota/[0.02] text-terracota';
                     } else {

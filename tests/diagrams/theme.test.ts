@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import type { ThemeColors } from '@/diagrams/jsxgraph/theme';
 
 const PALETTE_KEYS = [
-  'carbon', 'terracota', 'salvia', 'lienzo', 'pizarra', 'ocre', 'pavo', 'granada', 'musgo',
+  'carbon', 'terracota', 'canela', 'lienzo', 'mora', 'ocre', 'pavo', 'granada', 'musgo',
 ] as const;
 
 describe('ThemeColors contract', () => {

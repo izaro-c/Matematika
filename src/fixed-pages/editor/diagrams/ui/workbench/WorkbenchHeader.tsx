@@ -90,7 +90,7 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
           {sandboxMode ? (
             <HeaderBadge variant="ocre" title="Modo Sandbox">Sandbox</HeaderBadge>
           ) : (
-            <HeaderBadge variant="salvia" className="hidden lg:inline-flex">
+            <HeaderBadge variant="canela" className="hidden lg:inline-flex">
               {metadataType || 'Diagrama'}
             </HeaderBadge>
           )}
@@ -156,7 +156,7 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
               className="inline-flex h-7 items-center gap-1 rounded-md px-2 text-xs font-medium text-carbon/80 transition-all hover:bg-carbon/10 cursor-pointer leading-none"
               title="Centrar y restablecer la cámara del lienzo"
             >
-              <svg className="h-3.5 w-3.5 text-salvia" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="h-3.5 w-3.5 text-canela" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
               <span className="hidden md:inline">Centrar</span>
@@ -186,10 +186,10 @@ export const WorkbenchHeader: React.FC<WorkbenchHeaderProps> = ({
           <HeaderActionButton onClick={onOpenSettings} variant="secondary" className="hidden sm:inline-flex">
             Config
           </HeaderActionButton>
-          <HeaderActionButton onClick={onOpenMdxLinks} variant="secondary" className="hidden xl:inline-flex text-salvia">
+          <HeaderActionButton onClick={onOpenMdxLinks} variant="secondary" className="hidden xl:inline-flex text-canela">
             MDX
           </HeaderActionButton>
-          <HeaderActionButton onClick={onOpenCode} variant="salvia">
+          <HeaderActionButton onClick={onOpenCode} variant="canela">
             Código
           </HeaderActionButton>
         </>

@@ -54,7 +54,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
   const hasError = blockIssues.some(i => i.severity === 'error');
   const hasWarning = blockIssues.some(i => i.severity === 'warning');
 
-  let borderClasses = 'border-transparent bg-transparent hover:border-carbon/15 hover:bg-carbon/5 focus:border-salvia/40';
+  let borderClasses = 'border-transparent bg-transparent hover:border-carbon/15 hover:bg-carbon/5 focus:border-canela/40';
   if (isHighlighted) {
     borderClasses = 'border-2 border-granada ring-4 ring-granada/25 bg-granada/10 animate-pulse shadow-xl';
   } else if (hasError) {
@@ -134,7 +134,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                           capitular: letter,
                         });
                       }}
-                      className={`text-base ${hasDropCap ? 'first-letter:float-left first-letter:mr-2 first-letter:mt-1 first-letter:font-serif first-letter:text-5xl first-letter:font-bold first-letter:text-salvia' : ''}`}
+                      className={`text-base ${hasDropCap ? 'first-letter:float-left first-letter:mr-2 first-letter:mt-1 first-letter:font-serif first-letter:text-5xl first-letter:font-bold first-letter:text-canela' : ''}`}
                     />
                   </PublishedEditSurface>
                 </div>
@@ -190,7 +190,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         onChange={(e) => updateBlock(block.id, e.target.value)}
                         onSelect={(e) => handleTextareaSelect(e, block.id)}
                         onBlur={() => setEditingBlockId(null)}
-                        className="min-h-24 w-full resize-none rounded border border-carbon/15 bg-carbon/5 p-3 text-sm leading-relaxed text-carbon outline-none focus:border-salvia"
+                        className="min-h-24 w-full resize-none rounded border border-carbon/15 bg-carbon/5 p-3 text-sm leading-relaxed text-carbon outline-none focus:border-canela"
                         placeholder="Un elemento por línea..."
                       />
                     </div>
@@ -229,7 +229,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         onChange={(e) => updateBlock(block.id, e.target.value)}
                         onSelect={(e) => handleTextareaSelect(e, block.id)}
                         onBlur={() => setEditingBlockId(null)}
-                        className="min-h-32 w-full resize-none rounded border border-carbon/15 bg-carbon/5 p-3 font-mono text-xs leading-relaxed text-carbon outline-none focus:border-salvia"
+                        className="min-h-32 w-full resize-none rounded border border-carbon/15 bg-carbon/5 p-3 font-mono text-xs leading-relaxed text-carbon outline-none focus:border-canela"
                         placeholder="| Columna | Valor |\n|---|---|\n| a | $1$ |"
                       />
                     </div>
@@ -304,7 +304,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                     <span className="text-[8px] text-carbon/30 italic font-sans">Haga clic para editar</span>
                   </div>
                   {editingBlockId === block.id ? (
-                    <div className="py-3 px-5 border-l-2 border-salvia/30 bg-salvia/5 rounded-r space-y-2">
+                    <div className="py-3 px-5 border-l-2 border-canela/30 bg-canela/5 rounded-r space-y-2">
                       {renderInlineToolbar(block)}
                       <textarea
                         autoFocus
@@ -325,7 +325,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                   ) : (
                     <div
                       onClick={() => !isReadOnly && setEditingBlockId(block.id)}
-                      className="py-4 px-6 border-l-2 border-salvia/30 italic text-carbon/85 font-serif text-sm leading-relaxed cursor-text relative"
+                      className="py-4 px-6 border-l-2 border-canela/30 italic text-carbon/85 font-serif text-sm leading-relaxed cursor-text relative"
                     >
                       <p>"{renderFormattedText(block.content, block.id, handleEditLink) || 'Escriba la cita aquí...'}"</p>
                       {block.metadata?.author && (
@@ -343,11 +343,11 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                     <span className="text-[8px] text-carbon/30 italic font-sans">Haga clic para editar</span>
                   </div>
                   {editingBlockId === block.id ? (
-                    <div className="p-4 border border-salvia/20 bg-salvia/5 rounded-sm space-y-2">
+                    <div className="p-4 border border-canela/20 bg-canela/5 rounded-sm space-y-2">
                       <input
                         value={block.metadata?.title || ''}
                         onChange={(e) => updateBlock(block.id, block.content, { title: e.target.value })}
-                        className="w-full bg-transparent border-none outline-none text-xs font-serif font-bold text-salvia p-0 focus:ring-0"
+                        className="w-full bg-transparent border-none outline-none text-xs font-serif font-bold text-canela p-0 focus:ring-0"
                         placeholder="Título de la definición..."
                       />
                       {renderInlineToolbar(block)}
@@ -364,9 +364,9 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                   ) : (
                     <div
                       onClick={() => !isReadOnly && setEditingBlockId(block.id)}
-                      className="p-4 border border-salvia/20 bg-salvia/5 rounded-sm font-serif text-sm text-carbon cursor-text"
+                      className="p-4 border border-canela/20 bg-canela/5 rounded-sm font-serif text-sm text-carbon cursor-text"
                     >
-                      <div className="ac-label ac-label--sm ac-label--salvia mb-1 select-none">
+                      <div className="ac-label ac-label--sm ac-label--canela mb-1 select-none">
                         Definición: {block.metadata?.title || 'Sin Título'}
                       </div>
                       <div>{renderFormattedText(block.content, block.id, handleEditLink) || <span className="text-carbon/25 italic">Cuerpo de la definición...</span>}</div>
@@ -430,7 +430,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                           setActiveDiagramIndex(null);
                           setDiagramBuilderOpen(true);
                         }}
-                        className="text-[9px] bg-salvia/10 text-salvia hover:bg-salvia/20 px-2 py-0.5 rounded font-serif font-bold transition-all cursor-pointer"
+                        className="text-[9px] bg-canela/10 text-canela hover:bg-canela/20 px-2 py-0.5 rounded font-serif font-bold transition-all cursor-pointer"
                       >
                         Reemplazar
                       </button>
@@ -442,7 +442,7 @@ export const VisualEditorBlock: React.FC<VisualEditorBlockProps> = ({
                         <p className="font-serif text-sm font-bold text-carbon">{block.content}</p>
                         <p className="mt-0.5 font-mono text-[10px] text-carbon/50">{block.metadata?.path || 'Diagrama heredado sin archivo asociado'}</p>
                       </div>
-                      <span className="rounded bg-salvia/10 px-2.5 py-1 text-[10px] font-bold text-salvia select-none shrink-0">
+                      <span className="rounded bg-canela/10 px-2.5 py-1 text-[10px] font-bold text-canela select-none shrink-0">
                         Catálogo de diagramas finales
                       </span>
                     </div>

@@ -28,9 +28,9 @@ const CSS_VARS = [
   '--theme-ocre',
   '--theme-granada',
   '--theme-musgo',
-  '--theme-salvia',
+  '--theme-canela',
   '--theme-pavo',
-  '--theme-pizarra',
+  '--theme-mora',
 ] as const;
 
 export type ThemeColorSnapshot = {

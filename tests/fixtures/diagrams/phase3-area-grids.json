@@ -10,7 +10,7 @@
   ],
   "elements": [
     { "id": "squareGrid", "label": "Cuadrícula del cuadrado", "kind": "grid", "refs": ["pA", "pB", "pC", "pD"], "color": "carbon", "layerId": "areas", "order": 10, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "rows": 4, "columns": 4 } },
-    { "id": "areaSquare", "label": "Descomposición del cuadrado", "kind": "areaDecomposition", "refs": ["pA", "pB", "pC", "pD"], "color": "salvia", "layerId": "areas", "order": 11, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "rows": 2, "columns": 2 } }
+    { "id": "areaSquare", "label": "Descomposición del cuadrado", "kind": "areaDecomposition", "refs": ["pA", "pB", "pC", "pD"], "color": "canela", "layerId": "areas", "order": 11, "visible": true, "locked": true, "groupIds": [], "selection": { "selectable": true }, "target": true, "properties": { "rows": 2, "columns": 2 } }
   ],
   "sliders": [], "steps": [], "constraints": [], "dependencies": [], "note": "Fixture para cuadrados de Pitágoras y descomposición de área.", "extensions": { "acceptanceFamily": "area-grids" }
 }

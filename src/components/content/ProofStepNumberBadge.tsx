@@ -34,9 +34,9 @@ const statusClasses = {
     text: 'page-accent-text',
   },
   completed: {
-    box: 'border-salvia bg-lienzo shadow-[0_0_0_1px_rgba(var(--theme-salvia-rgb,100,140,110),0.3)]',
-    innerBorder: 'border-salvia/30',
-    text: 'text-salvia font-bold',
+    box: 'border-canela bg-lienzo shadow-[0_0_0_1px_rgba(var(--theme-canela-rgb,100,140,110),0.3)]',
+    innerBorder: 'border-canela/30',
+    text: 'text-canela font-bold',
   },
   locked: {
     box: 'border-carbon/20 bg-carbon/5 opacity-40 grayscale',
@@ -76,7 +76,7 @@ export const ProofStepNumberBadge: React.FC<ProofStepNumberBadgeProps> = ({
       
       {/* Sello o marca sutil de completado */}
       {isCompleted && (
-        <span className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-15 text-salvia select-none text-2xl font-serif">
+        <span className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-15 text-canela select-none text-2xl font-serif">
           ✓
         </span>
       )}

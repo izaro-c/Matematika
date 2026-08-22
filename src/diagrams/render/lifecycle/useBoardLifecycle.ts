@@ -623,7 +623,7 @@ export function useBoardLifecycle({
           highlightFillColor: hoverColor,
           highlightStrokeColor: hoverColor,
           ...(!highlightable ? {
-            baseline: { highlight: false, strokeColor: theme.pizarra, strokeWidth: 2 },
+            baseline: { highlight: false, strokeColor: theme.mora, strokeWidth: 2 },
             highline: { highlight: false, strokeColor: theme.terracota, strokeWidth: 3 },
             point1: { highlight: false },
             point2: { highlight: false },

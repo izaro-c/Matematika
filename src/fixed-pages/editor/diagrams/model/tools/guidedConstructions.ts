@@ -53,12 +53,12 @@ export function applyGuidedConstruction(model: VisualDiagramModel, kind: Constru
     const pair = `${pointNameFromRef(a)}${pointNameFromRef(b)}`;
     const vertex = pointNameFromRef(c);
     const midpointId = addOrReuse(`mid${pair}`, `Punto medio de ${pair}`, 'midpoint', [a, b], 'terracota', true);
-    addOrReuse(`segMediana${vertex}${pair}`, `Mediana desde ${vertex} a ${pair}`, 'segment', [c, midpointId], 'salvia', true);
+    addOrReuse(`segMediana${vertex}${pair}`, `Mediana desde ${vertex} a ${pair}`, 'segment', [c, midpointId], 'canela', true);
   } else if (kind === 'altura') {
     const pair = `${pointNameFromRef(a)}${pointNameFromRef(b)}`;
     const vertex = pointNameFromRef(c);
     const footId = addOrReuse(`foot${vertex}${pair}`, `Pie de altura ${vertex}${pair}`, 'perpendicularFoot', [a, b, c], 'ocre');
-    addOrReuse(`extAltura${vertex}${pair}`, `Extensión de segmento ${pair}`, 'segmentExtension', [a, b, footId], 'pizarra', false, { dashed: true });
+    addOrReuse(`extAltura${vertex}${pair}`, `Extensión de segmento ${pair}`, 'segmentExtension', [a, b, footId], 'mora', false, { dashed: true });
     addOrReuse(`lineAltura${vertex}${pair}`, `Recta de altura desde ${vertex}`, 'perpendicular', [a, b, c], 'pavo', false, { dashed: true });
     addOrReuse(`segAltura${vertex}${pair}`, `Altura desde ${vertex} a ${pair}`, 'segment', [c, footId], 'terracota', true);
     addOrReuse(`rightAngleAltura${vertex}${pair}`, 'Ángulo recto de la altura', 'rightAngle', [a, footId, c], 'ocre');

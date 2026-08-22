@@ -212,7 +212,7 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
     {
       "id": "L",
       "label": "L",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2190,
       "visible": true,
@@ -248,7 +248,7 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
     {
       "id": "R",
       "label": "R",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2200,
       "visible": true,
@@ -413,7 +413,7 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
     {
       "id": "parallel",
       "label": "Paralela por C",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2250,
       "visible": true,
@@ -546,7 +546,7 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
     {
       "id": "altA",
       "label": "α'",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2290,
       "visible": true,
@@ -578,7 +578,7 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
     {
       "id": "altB",
       "label": "β'",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2300,
       "visible": true,

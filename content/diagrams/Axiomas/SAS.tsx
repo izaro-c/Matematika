@@ -237,7 +237,7 @@ export const SASSpec = createDiagramSpec(
     {
       "id": "pAA",
       "label": "A'",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 20000,
       "visible": true,
@@ -272,7 +272,7 @@ export const SASSpec = createDiagramSpec(
     {
       "id": "pBB",
       "label": "B'",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 22000,
       "visible": true,
@@ -310,7 +310,7 @@ export const SASSpec = createDiagramSpec(
     {
       "id": "pCC",
       "label": "C'",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 21000,
       "visible": true,

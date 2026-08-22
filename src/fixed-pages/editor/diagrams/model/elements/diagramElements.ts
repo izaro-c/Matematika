@@ -250,12 +250,12 @@ export function generatedElementId(kind: ElementKind, refs: string[], existing: 
 }
 
 export function elementColorForKind(kind: ElementKind): ColorToken {
-  if (kind === 'polygon' || kind === 'areaDecomposition' || kind === 'grid' || kind === 'halfPlane' || kind === 'areaIntersection') return 'salvia';
+  if (kind === 'polygon' || kind === 'areaDecomposition' || kind === 'grid' || kind === 'halfPlane' || kind === 'areaIntersection') return 'canela';
   if (kind === 'intersection' || kind === 'midpoint') return 'terracota';
   if (kind === 'measureTicks') return 'carbon';
   if (kind === 'perpendicularFoot' || kind === 'angle' || kind === 'nonReflexAngle' || kind === 'rightAngle' || kind === 'perpendicularMark' || kind === 'congruenceMark') return 'ocre';
   if (kind === 'parallelMark') return 'pavo';
-  if (kind === 'segmentExtension' || kind === 'measurement' || kind === 'dimensionLine' || kind === 'formula' || kind === 'infoPanel') return 'pizarra';
+  if (kind === 'segmentExtension' || kind === 'measurement' || kind === 'dimensionLine' || kind === 'formula' || kind === 'infoPanel') return 'mora';
   if (kind === 'perpendicular' || kind === 'parallel' || kind === 'angleBisector' || kind === 'line' || kind === 'ray' || kind === 'functionCurve' || kind === 'parametricCurve' || kind === 'poincareGeodesic' || kind === 'poincareArc') return 'pavo';
   return 'carbon';
 }

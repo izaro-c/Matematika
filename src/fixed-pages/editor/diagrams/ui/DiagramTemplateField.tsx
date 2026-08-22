@@ -98,7 +98,7 @@ export const DiagramTemplateField: React.FC<DiagramTemplateFieldProps> = ({
             }}
           >
             <option value="">Color…</option>
-            {['carbon', 'pavo', 'granada', 'ocre', 'salvia', 'musgo', 'terracota', 'pizarra'].map(color => <option key={color} value={color}>{color}</option>)}
+            {['carbon', 'pavo', 'granada', 'ocre', 'canela', 'musgo', 'terracota', 'mora'].map(color => <option key={color} value={color}>{color}</option>)}
           </select>
         </>}
         <button

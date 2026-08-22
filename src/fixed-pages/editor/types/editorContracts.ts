@@ -8,18 +8,18 @@ export type ArtsAndCraftsColor = ThemeColorName;
 
 export const EDITOR_THEME_COLOR_OPTIONS = [
   { value: 'terracota', label: 'Terracota (Teoremas, Default)' },
-  { value: 'salvia', label: 'Salvia (Lógica, Análisis)' },
+  { value: 'canela', label: 'canela (Lógica, Análisis)' },
   { value: 'ocre', label: 'Ocre (Corolarios, Especial)' },
   { value: 'carbon', label: 'Carbón (Definiciones)' },
-  { value: 'pizarra', label: 'Pizarra (Auxiliar)' },
+  { value: 'mora', label: 'mora (Auxiliar)' },
 ] as const satisfies ReadonlyArray<{ value: ArtsAndCraftsColor; label: string }>;
 
 export const EDITOR_REFERENCE_COLORS = [
   'carbon',
-  'salvia',
+  'canela',
   'terracota',
   'ocre',
-  'pizarra',
+  'mora',
 ] as const satisfies ReadonlyArray<ArtsAndCraftsColor>;
 
 export interface WizardData {
@@ -115,7 +115,7 @@ export function buildConceptLink(targetId: string, text: string): string {
 }
 
 export function buildInteractiveReference(target: string, color: string, text: string): string {
-  const safeColor = normalizeEditorColor(color, 'salvia');
+  const safeColor = normalizeEditorColor(color, 'canela');
   return `<InteractiveElement target="${escapeAttribute(target)}" color="${safeColor}">${text}</InteractiveElement>`;
 }
 

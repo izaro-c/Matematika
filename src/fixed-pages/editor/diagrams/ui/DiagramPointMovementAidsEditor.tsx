@@ -13,7 +13,7 @@ interface DiagramPointMovementAidsEditorProps {
 const inspectorInputClass =
   'mt-0.5 w-full bg-lienzo border border-carbon/20 rounded px-2 py-1 text-xs text-carbon';
 const inspectorCheckboxClass =
-  'rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer';
+  'rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer';
 const sectionLabelClass = 'block text-[11px] font-bold text-carbon/70 mb-0.5';
 
 export const DiagramPointMovementAidsEditor: React.FC<DiagramPointMovementAidsEditorProps> = ({

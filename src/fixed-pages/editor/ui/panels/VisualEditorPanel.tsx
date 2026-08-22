@@ -206,7 +206,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
 
   const highlightSelection = () => {
     const selected = getSelectedPlainText().trim() || 'elemento';
-    if (insertHtmlAtSelection(mdxToEditableHtml(buildInteractiveReference('elemento', 'salvia', selected)))) {
+    if (insertHtmlAtSelection(mdxToEditableHtml(buildInteractiveReference('elemento', 'canela', selected)))) {
       persistFocusedProse();
       return;
     }
@@ -378,7 +378,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
     return (
       <div className="mb-8 pb-6 border-b border-carbon/15 space-y-4">
         <div>
-          <span className="ac-label ac-label--sm ac-label--salvia select-none">
+          <span className="ac-label ac-label--sm ac-label--canela select-none">
             {String(metadata.type || 'Concepto')}
           </span>
           <textarea
@@ -411,7 +411,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
           />
         </div>
 
-        {isMathematician && <section className="grid gap-4 rounded border border-salvia/20 bg-salvia/5 p-4 sm:grid-cols-[7rem_1fr]" aria-label="Ficha del matemático">
+        {isMathematician && <section className="grid gap-4 rounded border border-canela/20 bg-canela/5 p-4 sm:grid-cols-[7rem_1fr]" aria-label="Ficha del matemático">
           <div className="overflow-hidden rounded border border-carbon/10 bg-lienzo">
             {metadata.image ? <img src={resolvePublicOrExternalAsset(String(metadata.image))} alt="" className="aspect-[4/5] h-full w-full object-cover" /> : <div className="flex aspect-[4/5] items-center justify-center font-serif text-3xl text-carbon/25">∑</div>}
           </div>
@@ -475,7 +475,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
           <span className="sr-only">Cargando contenido…</span>
           {/* Header Skeleton */}
           <div className="pb-6 border-b border-carbon/15 space-y-3">
-            <div className="h-5 w-20 rounded-full bg-salvia/20" />
+            <div className="h-5 w-20 rounded-full bg-canela/20" />
             <div className="h-8 w-3/4 rounded-lg bg-carbon/15 mt-2" />
             <div className="space-y-1.5 pt-1">
               <div className="h-4 w-full rounded bg-carbon/10" />
@@ -527,7 +527,7 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
               type="button"
               disabled={!canMutateVisualStructure}
               onClick={() => addBlock(0, 'paragraph')}
-              className="mt-4 px-4 py-2 bg-salvia text-lienzo rounded-xl text-xs font-serif font-bold hover:bg-salvia/90 transition-all shadow-sm cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+              className="mt-4 px-4 py-2 bg-canela text-lienzo rounded-xl text-xs font-serif font-bold hover:bg-canela/90 transition-all shadow-sm cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Añadir Párrafo
             </button>
@@ -684,13 +684,13 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
       {commandOpen && <div className="absolute inset-0 z-40 flex items-start justify-center bg-carbon/20 p-4 pt-[10vh]" role="presentation">
         <div ref={commandDialogRef} className="w-full max-w-lg rounded border border-carbon/20 bg-lienzo p-3 shadow-xl" role="dialog" aria-modal="true" aria-label="Insertar bloque">
           <div className="flex items-center gap-2">
-            <input ref={commandSearchRef} value={commandQuery} onChange={event => setCommandQuery(event.target.value)} placeholder="Buscar bloque: definición, advertencia, ejemplo…" aria-label="Buscar tipo de bloque" className="min-w-0 flex-1 rounded border border-carbon/15 bg-carbon/5 px-3 py-2 text-sm text-carbon outline-none focus:border-salvia" />
+            <input ref={commandSearchRef} value={commandQuery} onChange={event => setCommandQuery(event.target.value)} placeholder="Buscar bloque: definición, advertencia, ejemplo…" aria-label="Buscar tipo de bloque" className="min-w-0 flex-1 rounded border border-carbon/15 bg-carbon/5 px-3 py-2 text-sm text-carbon outline-none focus:border-canela" />
             <button type="button" onClick={() => setCommandOpen(false)} className="rounded px-2 py-1 text-xs text-carbon/55">Esc</button>
           </div>
           <div className="mt-3 grid max-h-80 gap-2 overflow-y-auto sm:grid-cols-2">
             {[...allPresets]
               .filter(preset => `${preset.label} ${preset.type}`.toLowerCase().includes(commandQuery.toLowerCase()))
-              .map(preset => <button key={`${preset.label}-${preset.type}`} type="button" onClick={() => insertPresetNearSelection(preset)} className="rounded border border-carbon/10 bg-carbon/5 p-3 text-left hover:border-salvia/30 hover:bg-salvia/5">
+              .map(preset => <button key={`${preset.label}-${preset.type}`} type="button" onClick={() => insertPresetNearSelection(preset)} className="rounded border border-carbon/10 bg-carbon/5 p-3 text-left hover:border-canela/30 hover:bg-canela/5">
                 <span className="block font-serif text-xs font-bold text-carbon">{preset.label}</span><span className="mt-1 block text-[9px] text-carbon/45">{preset.type}</span>
               </button>)}
           </div>

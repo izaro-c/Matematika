@@ -101,7 +101,7 @@ export const AxiomaDedekindSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "claseR",
-      "color": "salvia"
+      "color": "canela"
     }
   ],
   "objects": [
@@ -211,7 +211,7 @@ export const AxiomaDedekindSpec = createDiagramSpec(
     {
       "id": "realLine",
       "label": "Recta completa",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "supports",
       "order": 1000,
       "visible": true,
@@ -313,7 +313,7 @@ export const AxiomaDedekindSpec = createDiagramSpec(
     {
       "id": "rayR",
       "label": "Clase derecha R",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 4000,
       "visible": true,
@@ -344,7 +344,7 @@ export const AxiomaDedekindSpec = createDiagramSpec(
     {
       "id": "labelR",
       "label": "Etiqueta de R",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "annotations",
       "order": 7100,
       "visible": true,
@@ -442,7 +442,7 @@ export const AxiomaDedekindSpec = createDiagramSpec(
     {
       "id": "sampleR",
       "label": "Ejemplo de elemento de R",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "annotations",
       "order": 10200,
       "visible": true,

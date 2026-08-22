@@ -86,7 +86,7 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "copiasAB",
-      "color": "salvia"
+      "color": "canela"
     },
     {
       "id": "group2",
@@ -113,7 +113,7 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
     {
       "id": "pA",
       "label": "A",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 1000,
       "visible": true,
@@ -216,7 +216,7 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
     {
       "id": "pB",
       "label": "B",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 3000,
       "visible": true,
@@ -458,7 +458,7 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
     {
       "id": "segAB",
       "label": "Segmento menor AB",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 6000,
       "visible": true,
@@ -522,7 +522,7 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
     {
       "id": "readingAB",
       "label": "Longitud de AB",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "annotations",
       "order": 20000,
       "visible": true,
@@ -646,7 +646,7 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
     {
       "id": "accumulatedCarrier",
       "label": "Soporte de la longitud acumulada",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "supports",
       "order": 3000,
       "visible": false,
@@ -677,7 +677,7 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
     {
       "id": "accumulatedBefore",
       "label": "n copias antes de superar CD",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "constructions",
       "order": 9000,
       "visible": true,

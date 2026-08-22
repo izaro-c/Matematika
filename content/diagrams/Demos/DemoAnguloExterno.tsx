@@ -197,7 +197,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "pF",
       "label": "F",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 41,
       "visible": true,
@@ -641,7 +641,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "midAC",
       "label": "E",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 42,
       "visible": true,
@@ -673,7 +673,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "segBmidAC",
       "label": "Segmento EB",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 15,
       "visible": true,
@@ -734,7 +734,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "segmidACF",
       "label": "Segmento EF",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 16,
       "visible": true,
@@ -764,7 +764,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "segCF",
       "label": "Segmento CF",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 17,
       "visible": true,
@@ -794,7 +794,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "polygonABmidAC",
       "label": "Polígono ABE",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 18,
       "visible": true,
@@ -823,7 +823,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "polygonCFmidAC",
       "label": "Polígono CEF",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 19,
       "visible": true,
@@ -1658,7 +1658,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "polygonHmidGC",
       "label": "Triangulo HGC",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 34,
       "visible": true,
@@ -1865,7 +1865,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "areaInthalfACDhalfBCA",
       "label": "Intersección de áreas",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 55,
       "visible": true,

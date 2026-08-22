@@ -60,7 +60,7 @@ export function buildTargets(model: VisualDiagramModel): DiagramTargetRegistry {
 }
 
 export function safeColorToken(value: string): ColorToken {
-  const tokens: ColorToken[] = ['carbon', 'terracota', 'salvia', 'pizarra', 'ocre', 'pavo', 'granada', 'musgo'];
+  const tokens: ColorToken[] = ['carbon', 'terracota', 'canela', 'mora', 'ocre', 'pavo', 'granada', 'musgo'];
   return tokens.includes(value as ColorToken) ? (value as ColorToken) : 'terracota';
 }
 

@@ -7,7 +7,7 @@ import { useI18n } from '@/i18n';
 import { db } from '@/data/content';
 
 const THEOREM_COLOR_CLASSES: Record<string, { text: string; hover: string }> = {
-  salvia: { text: 'text-salvia', hover: 'group-hover:text-salvia' },
+  canela: { text: 'text-canela', hover: 'group-hover:text-canela' },
   terracota: { text: 'text-terracota', hover: 'group-hover:text-terracota-light' },
 };
 
@@ -157,7 +157,7 @@ export const BiographyLayout: React.FC<BiographyLayoutProps> = ({ Component, Sid
 
       {/* PANEL DERECHO: LECTURA CON SCROLL */}
       <div className="lg:w-[60%] p-6 sm:p-8 lg:p-12 xl:p-20 lg:overflow-y-auto scroll-smooth relative bg-transparent text-carbon">
-        <div className="prose prose-pizarra prose-lg max-w-none mx-auto biography-mdx editorial-reading text-carbon font-serif">
+        <div className="prose prose-mora prose-lg max-w-none mx-auto biography-mdx editorial-reading text-carbon font-serif">
           <Suspense fallback={<PageLoadingScreen embedded message={t('biography', 'scrollLoading')} />}>
             <Component />
           </Suspense>

@@ -115,7 +115,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
 
         {/* Pie de Acciones */}
         <div className="flex items-center justify-between p-4 border-t border-carbon/10 bg-lienzo">
-          <span className="text-xs text-pizarra/70 italic">
+          <span className="text-xs text-mora/70 italic">
             {generated.ok
               ? sandboxMode
                 ? 'Exportación de lectura: el sandbox no guarda en el corpus.'
@@ -134,7 +134,7 @@ export const CodeModal: React.FC<CodeModalProps> = ({
             <button
               type="button"
               onClick={handleCopy}
-              className="px-4 py-1.5 text-xs font-bold text-lienzo bg-salvia hover:bg-salvia/90 rounded-lg shadow-sm transition-all cursor-pointer"
+              className="px-4 py-1.5 text-xs font-bold text-lienzo bg-canela hover:bg-canela/90 rounded-lg shadow-sm transition-all cursor-pointer"
             >
               {copied ? '¡Copiado!' : 'Copiar'}
             </button>

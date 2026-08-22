@@ -46,8 +46,8 @@ export const DemoRectasCoincidentes = () => {
         const getC = (hovered: boolean, c1: string, c2 = theme.terracota) => hovered ? c2 : c1;
 
         // Points
-        els.A.setAttribute({ fillOpacity: getOp(hlA, true), strokeOpacity: getOp(hlA, true), size: hlA ? 8 : 5, fillColor: getC(hlA, theme.carbon, theme.salvia), strokeColor: getC(hlA, theme.carbon, theme.salvia) });
-        els.B.setAttribute({ fillOpacity: getOp(hlB, true), strokeOpacity: getOp(hlB, true), size: hlB ? 8 : 5, fillColor: getC(hlB, theme.carbon, theme.salvia), strokeColor: getC(hlB, theme.carbon, theme.salvia) });
+        els.A.setAttribute({ fillOpacity: getOp(hlA, true), strokeOpacity: getOp(hlA, true), size: hlA ? 8 : 5, fillColor: getC(hlA, theme.carbon, theme.canela), strokeColor: getC(hlA, theme.carbon, theme.canela) });
+        els.B.setAttribute({ fillOpacity: getOp(hlB, true), strokeOpacity: getOp(hlB, true), size: hlB ? 8 : 5, fillColor: getC(hlB, theme.carbon, theme.canela), strokeColor: getC(hlB, theme.carbon, theme.canela) });
 
         // Animation logic
         if (s4 || s5) {

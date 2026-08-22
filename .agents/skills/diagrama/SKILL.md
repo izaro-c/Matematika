@@ -36,7 +36,7 @@ Reservar `code-preview` para fuentes heredadas no intervenidas. Al modificar un 
 - Mantener contrato, core y renderer en `src/diagrams/` (`@/diagrams`; shims en `src/diagrams/`).
 - Encapsular JSXGraph, SVG, Canvas o HTML dentro del renderer compartido. Si un backend aún no está modelado, añadir su representación declarativa y sus controles antes de usarlo.
 - Añadir primitivas reutilizables a `src/diagrams/core/MathFactory.ts`; reservar `board.create` para auxiliares invisibles internos y no usar nunca `JXG.JSXGraph.initBoard`.
-- Consumir únicamente `lienzo`, `carbon`, `salvia`, `terracota`, `pizarra`, `ocre`, `pavo`, `granada` y `musgo` mediante los tokens del tema.
+- Consumir únicamente `lienzo`, `carbon`, `canela`, `terracota`, `mora`, `ocre`, `pavo`, `granada` y `musgo` mediante los tokens del tema.
 - Estandarizar tamaños visuales: usar siempre `pointSize: 7`, `highlightPointSize: 10`, `strokeWidth: 2.4` (o 3 para resaltar), y configurar `"preserveColorOnHighlight": true` en el `style` de todos los elementos para evitar el cambio por defecto al iluminarse.
 - Conectar pasos y targets con `MathStore`; mantener IDs públicos estables y bidireccionalidad entre texto y diagrama.
 - Modelar todo punto construido como `PointObject`; distinguir intersección, punto medio, proyección, expresión y coordenadas mediante `definition`, nunca mediante un tipo visual paralelo.

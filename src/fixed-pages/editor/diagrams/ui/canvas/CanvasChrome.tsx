@@ -72,7 +72,7 @@ export const CanvasChrome: React.FC<CanvasChromeProps> = ({
       {showToolAssist && (
         <div className="absolute top-3 left-3 z-30 flex flex-col gap-2 max-w-sm pointer-events-auto">
           <div className={`flex items-start gap-2.5 px-3 py-2 ${dockShell}`}>
-            <div className="mt-0.5 text-salvia shrink-0">
+            <div className="mt-0.5 text-canela shrink-0">
               <ToolDrawingIcon tool={activeTool} className="w-4 h-4" />
             </div>
             <div className="min-w-0">
@@ -82,7 +82,7 @@ export const CanvasChrome: React.FC<CanvasChromeProps> = ({
                   : `Creando ${KIND_LABELS[activeTool] || activeTool}`}
               </p>
               {isReferenceToolActive && (
-                <p className="text-[10px] text-salvia font-medium mt-0.5">
+                <p className="text-[10px] text-canela font-medium mt-0.5">
                   {pendingRefs.length + 1}/{requiredRefs}: {nextLabel}
                   {nextPurpose ? ` · ${nextPurpose}` : ''}
                 </p>
@@ -99,13 +99,13 @@ export const CanvasChrome: React.FC<CanvasChromeProps> = ({
           </div>
 
           {isReferenceToolActive && (
-            <div className={`p-3 space-y-2 border-salvia/30 ${dockShell}`}>
+            <div className={`p-3 space-y-2 border-canela/30 ${dockShell}`}>
               {pendingRefs.length > 0 && (
                 <div className="flex flex-wrap gap-1">
                   {pendingRefs.map((rId, idx) => (
                     <span
                       key={`${rId}-${idx}`}
-                      className="bg-salvia/15 text-salvia px-1.5 py-0.5 rounded font-mono font-bold text-[10px]"
+                      className="bg-canela/15 text-canela px-1.5 py-0.5 rounded font-mono font-bold text-[10px]"
                     >
                       {rId}
                     </span>
@@ -198,7 +198,7 @@ export const CanvasChrome: React.FC<CanvasChromeProps> = ({
           type="button"
           onClick={onToggleGrid}
           className={`px-2.5 py-1 text-[11px] font-medium rounded-lg cursor-pointer ${
-            model.grid ? 'bg-salvia/15 text-salvia font-bold' : 'text-carbon/60 hover:bg-carbon/5'
+            model.grid ? 'bg-canela/15 text-canela font-bold' : 'text-carbon/60 hover:bg-carbon/5'
           }`}
         >
           Rejilla
@@ -207,7 +207,7 @@ export const CanvasChrome: React.FC<CanvasChromeProps> = ({
           type="button"
           onClick={onToggleAxis}
           className={`px-2.5 py-1 text-[11px] font-medium rounded-lg cursor-pointer ${
-            model.axis ? 'bg-salvia/15 text-salvia font-bold' : 'text-carbon/60 hover:bg-carbon/5'
+            model.axis ? 'bg-canela/15 text-canela font-bold' : 'text-carbon/60 hover:bg-carbon/5'
           }`}
         >
           Ejes
@@ -224,7 +224,7 @@ export const CanvasChrome: React.FC<CanvasChromeProps> = ({
             type="button"
             onClick={onToggleShowAllObjects}
             className={`px-2.5 py-1 text-[11px] font-medium rounded-lg cursor-pointer ${
-              showAllObjects ? 'bg-salvia/15 text-salvia font-bold' : 'text-carbon/60 hover:bg-carbon/5'
+              showAllObjects ? 'bg-canela/15 text-canela font-bold' : 'text-carbon/60 hover:bg-carbon/5'
             }`}
             title="Ignorar filtro de paso"
           >

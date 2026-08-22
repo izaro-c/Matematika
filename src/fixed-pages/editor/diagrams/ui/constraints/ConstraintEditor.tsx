@@ -128,7 +128,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
     <div className="p-2.5 space-y-3 font-serif text-xs text-carbon">
       <div className="flex items-center justify-between border-b border-carbon/10 pb-2">
         <div>
-          <h3 className="font-bold text-[10px] uppercase tracking-wider text-salvia">
+          <h3 className="font-bold text-[10px] uppercase tracking-wider text-canela">
             Restricciones {selectedId ? `(${selectedId})` : `Totales (${constraints.length})`}
           </h3>
           <p className="text-[10px] text-carbon/55">
@@ -141,7 +141,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
             setNewTargetId(selectedId || points[0]?.id || '');
             setShowAddModal(true);
           }}
-          className="flex items-center space-x-1 px-2.5 py-1 bg-salvia text-lienzo rounded font-bold hover:bg-salvia/90 transition-all cursor-pointer text-[11px] shadow-2xs"
+          className="flex items-center space-x-1 px-2.5 py-1 bg-canela text-lienzo rounded font-bold hover:bg-canela/90 transition-all cursor-pointer text-[11px] shadow-2xs"
         >
           <IconPlus className="w-3 h-3" />
           <span>Restricción</span>
@@ -173,7 +173,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                       type="checkbox"
                       checked={c.enabled !== false}
                       onChange={() => handleToggleConstraint(c.id)}
-                      className="rounded text-salvia border-carbon/20 focus:ring-salvia cursor-pointer"
+                      className="rounded text-canela border-carbon/20 focus:ring-canela cursor-pointer"
                       title={c.enabled === false ? 'Activar restricción' : 'Desactivar restricción'}
                     />
                     <span className="font-bold text-xs text-carbon">{c.label || presentation.label}</span>
@@ -205,7 +205,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
                       return (
                         <div key={slotIdx} className="flex flex-col space-y-0.5 text-[10px] bg-lienzo p-1.5 rounded border border-carbon/10">
                           <div className="flex items-center justify-between">
-                            <span className="font-mono text-salvia font-bold">Slot {slotIdx + 1}:</span>
+                            <span className="font-mono text-canela font-bold">Slot {slotIdx + 1}:</span>
                             <span className="text-[10px] text-carbon/60 font-medium italic">
                               {slot.label || getConstraintSlotLabel(c.kind, slotIdx)}
                             </span>
@@ -392,7 +392,7 @@ export const ConstraintEditor: React.FC<ConstraintEditorProps> = ({
               <button
                 type="button"
                 onClick={handleAddConstraint}
-                className="px-4 py-1.5 bg-salvia text-lienzo rounded-lg text-xs font-bold hover:bg-salvia/90 transition-all cursor-pointer shadow-2xs"
+                className="px-4 py-1.5 bg-canela text-lienzo rounded-lg text-xs font-bold hover:bg-canela/90 transition-all cursor-pointer shadow-2xs"
               >
                 Crear Restricción
               </button>

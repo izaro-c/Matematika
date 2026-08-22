@@ -96,7 +96,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "poligono",
-      "color": "salvia"
+      "color": "canela"
     },
     {
       "id": "grupoLados",
@@ -268,7 +268,7 @@ export const CuadrilateroSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "diagonales",
-      "color": "pizarra"
+      "color": "mora"
     }
   ],
   "objects": [
@@ -466,7 +466,7 @@ export const CuadrilateroSpec = createDiagramSpec(
     {
       "id": "guiaRectoB",
       "label": "Guía perpendicular en B",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "guides",
       "order": 0,
       "visible": false,
@@ -501,7 +501,7 @@ export const CuadrilateroSpec = createDiagramSpec(
     {
       "id": "guiaIgualBC",
       "label": "Guía circular BC igual a AB",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "guides",
       "order": 1,
       "visible": false,
@@ -530,7 +530,7 @@ export const CuadrilateroSpec = createDiagramSpec(
     {
       "id": "guiaParalelaCD",
       "label": "Guía CD paralela a AB",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "guides",
       "order": 2,
       "visible": false,
@@ -565,7 +565,7 @@ export const CuadrilateroSpec = createDiagramSpec(
     {
       "id": "guiaParalelaDA",
       "label": "Guía DA paralela a BC",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "guides",
       "order": 3,
       "visible": false,
@@ -600,7 +600,7 @@ export const CuadrilateroSpec = createDiagramSpec(
     {
       "id": "guiaRectoA",
       "label": "Guía perpendicular en A",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "guides",
       "order": 4,
       "visible": false,
@@ -635,7 +635,7 @@ export const CuadrilateroSpec = createDiagramSpec(
     {
       "id": "guiaIgualDA",
       "label": "Guía circular DA igual a AB",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "guides",
       "order": 5,
       "visible": false,
@@ -664,7 +664,7 @@ export const CuadrilateroSpec = createDiagramSpec(
     {
       "id": "guiaIgualCD",
       "label": "Guía circular CD igual a CB",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "guides",
       "order": 6,
       "visible": false,
@@ -693,7 +693,7 @@ export const CuadrilateroSpec = createDiagramSpec(
     {
       "id": "poligono",
       "label": "Cuadrilátero ABCD",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 0,
       "visible": true,
@@ -1709,7 +1709,7 @@ export const CuadrilateroSpec = createDiagramSpec(
     {
       "id": "AC",
       "label": "Diagonal AC",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "details",
       "order": 4,
       "visible": false,
@@ -1744,7 +1744,7 @@ export const CuadrilateroSpec = createDiagramSpec(
     {
       "id": "BD",
       "label": "Diagonal BD",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "details",
       "order": 5,
       "visible": false,

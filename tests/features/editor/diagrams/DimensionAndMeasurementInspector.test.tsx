@@ -37,7 +37,7 @@ function setupInspectorWithElement(el: VisualElement, baseModel?: VisualDiagramM
 describe('Dimension and Measurement Inspector Editability', () => {
   describe('dimensionLine (Cotas)', () => {
     it('allows editing reference offset, precision, unit, and text template', () => {
-      const dimLine = element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'pizarra', true, {
+      const dimLine = element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'mora', true, {
         text: 'AB: {value}',
         properties: { offset: 0.35, precision: 2, unit: 'cm' },
       });
@@ -76,7 +76,7 @@ describe('Dimension and Measurement Inspector Editability', () => {
     });
 
     it('allows toggling label visibility in canvas', () => {
-      const dimLine = element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'pizarra', true, {
+      const dimLine = element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'mora', true, {
         showLabel: true,
         properties: { offset: 0.35, precision: 2 },
       });
@@ -91,7 +91,7 @@ describe('Dimension and Measurement Inspector Editability', () => {
     });
 
     it('allows adding and removing dimension line to header subtitle readings', () => {
-      const dimLine = element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'pizarra', true, {
+      const dimLine = element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'mora', true, {
         properties: { offset: 0.35, precision: 2 },
       });
 
@@ -107,7 +107,7 @@ describe('Dimension and Measurement Inspector Editability', () => {
     });
 
     it('allows editing fine text offset X and Y', () => {
-      const dimLine = element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'pizarra', true, {
+      const dimLine = element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'mora', true, {
         style: { textOffset: [0.1, 0.2] },
       });
 

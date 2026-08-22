@@ -169,7 +169,7 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
   }, [isVisible, file.kind, file.path]);
 
   const capabilityBadge = file.capability === 'visual-exact'
-    ? { label: t('editor', 'editable'), style: 'border-salvia/30 bg-salvia/10 text-salvia' }
+    ? { label: t('editor', 'editable'), style: 'border-canela/30 bg-canela/10 text-canela' }
     : file.capability === 'code-preview'
       ? { label: t('editor', 'sourceOnly'), style: 'border-pavo/30 bg-pavo/10 text-pavo' }
       : { label: t('editor', 'attentionNeeded'), style: 'border-granada/30 bg-granada/10 text-granada' };

@@ -101,7 +101,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
               properties: { ...(element.properties || {}), title: e.target.value },
             })
           }
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-bold text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 placeholder-carbon/30"
+          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 font-bold text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 placeholder-carbon/30"
           placeholder={isCota || isMedida ? '{value} o etiqueta personalizada...' : 'Título o texto...'}
         />
         {(isCota || isMedida) && (
@@ -128,16 +128,16 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
               showLabel: e.target.checked,
             })
           }
-          className="h-4 w-4 rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+          className="h-4 w-4 rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
         />
       </div>
 
       {/* Mostrar como subtítulo / Información bajo el título */}
       {isMeasurableOrHeadingCandidate && (
-        <div className="space-y-2 rounded-lg border border-salvia/20 bg-salvia/[0.03] p-2.5">
+        <div className="space-y-2 rounded-lg border border-canela/20 bg-canela/[0.03] p-2.5">
           <div className="flex items-center justify-between">
             <div>
-              <span className="block text-[11px] font-bold text-salvia">Mostrar en subtítulo</span>
+              <span className="block text-[11px] font-bold text-canela">Mostrar en subtítulo</span>
               <span className="block text-[9px] text-carbon/50">Información bajo el título del diagrama</span>
             </div>
             <input
@@ -145,12 +145,12 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
               aria-label="Mostrar como subtítulo en la cabecera"
               checked={isInHeaderReadings}
               onChange={e => toggleHeaderReading(e.target.checked)}
-              className="h-4 w-4 rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+              className="h-4 w-4 rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
             />
           </div>
 
           {isInHeaderReadings && currentReading && (
-            <div className="pt-2 border-t border-salvia/15 space-y-1.5">
+            <div className="pt-2 border-t border-canela/15 space-y-1.5">
               <label className="block text-[10px] font-bold text-carbon/70">
                 Formato en subtítulo
               </label>
@@ -174,14 +174,14 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                     `Cambiar formato de lectura ${currentReading.id}`
                   );
                 }}
-                className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none"
+                className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
               >
                 <option value="label-value">Nombre y valor (ej. AB: 5 cm)</option>
                 <option value="value">Solo el valor (ej. 5 cm)</option>
                 <option value="equality">Igualdad condicional (ej. AB = BC = 5 cm)</option>
               </select>
               {currentReading.presentation === 'equality' && (
-                <p className="text-[9px] text-salvia/90 leading-tight">
+                <p className="text-[9px] text-canela/90 leading-tight">
                   La igualdad solo se mostrará combinada cuando los valores coincidan; si difieren, se mostrarán por separado.
                 </p>
               )}
@@ -193,7 +193,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
       {/* Parámetros específicos de Cota (dimensionLine) */}
       {isCota && (
         <div className="space-y-2.5 pt-2 border-t border-carbon/10">
-          <span className="block text-[10px] font-bold text-salvia uppercase tracking-wider">
+          <span className="block text-[10px] font-bold text-canela uppercase tracking-wider">
             Ajustes de Cota
           </span>
           <div className="grid grid-cols-2 gap-2.5">
@@ -211,7 +211,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                     properties: { ...(element.properties || {}), offset: parseOptionalNumber(e.target.value, 0.35) },
                   })
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
             <div>
@@ -229,7 +229,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                     properties: { ...(element.properties || {}), precision: parseOptionalNumber(e.target.value, 2) },
                   })
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
           </div>
@@ -247,7 +247,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                 })
               }
               placeholder="ej. cm, m, °"
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
             />
           </div>
         </div>
@@ -256,7 +256,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
       {/* Parámetros específicos de Medida (measurement) */}
       {isMedida && (
         <div className="space-y-2.5 pt-2 border-t border-carbon/10">
-          <span className="block text-[10px] font-bold text-salvia uppercase tracking-wider">
+          <span className="block text-[10px] font-bold text-canela uppercase tracking-wider">
             Ajustes de Medida
           </span>
           <div className="grid grid-cols-2 gap-2.5">
@@ -273,7 +273,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                     properties: { ...(element.properties || {}), unit: e.target.value },
                   })
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
             <div>
@@ -291,7 +291,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                     properties: { ...(element.properties || {}), precision: parseOptionalNumber(e.target.value, 2) },
                   })
                 }
-                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
               />
             </div>
           </div>
@@ -301,7 +301,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
       {/* Posición a lo largo del padre (para medidas, etiquetas, textos referenciados) */}
       {hasParentRef && !isCota && (
         <div className="space-y-2 pt-2 border-t border-carbon/10">
-          <span className="block text-[10px] font-bold text-salvia uppercase tracking-wider">
+          <span className="block text-[10px] font-bold text-canela uppercase tracking-wider">
             Posición respecto a la referencia ({element.refs.join(', ')})
           </span>
           <div>
@@ -325,7 +325,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                   },
                 })
               }
-              className="w-full cursor-pointer accent-salvia"
+              className="w-full cursor-pointer accent-canela"
             />
           </div>
         </div>
@@ -333,7 +333,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
 
       {/* Desplazamiento / Offsets finos de texto (X, Y) para TODOS los elementos de texto/cota/medida */}
       <div className="space-y-2 pt-2 border-t border-carbon/10">
-        <span className="block text-[10px] font-bold text-salvia uppercase tracking-wider">
+        <span className="block text-[10px] font-bold text-canela uppercase tracking-wider">
           Desplazamiento fino del texto (Offset X, Y)
         </span>
         <div className="grid grid-cols-2 gap-2">
@@ -357,7 +357,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                   },
                 })
               }
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none"
+              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
             />
           </div>
           <div>
@@ -380,7 +380,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                   },
                 })
               }
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon shadow-2xs focus:border-salvia focus:outline-none"
+              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
             />
           </div>
         </div>

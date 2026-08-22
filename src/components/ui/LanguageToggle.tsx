@@ -54,7 +54,7 @@ export const LanguageToggle: React.FC = () => {
                 setLang(lang.code);
                 setIsOpen(false);
               }}
-              className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-salvia/10 dark:hover:bg-salvia/20 transition-colors ${
+              className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-canela/10 dark:hover:bg-canela/20 transition-colors ${
                 lang.code === currentLanguage.code ? 'font-bold text-terracota dark:text-ocre' : 'text-carbon'
               }`}
             >

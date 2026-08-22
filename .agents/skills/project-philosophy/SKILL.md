@@ -82,7 +82,7 @@ Si un concepto puede visualizarse, se visualiza. Si un ejercicio puede ser inter
 El diseño sirve a las matemáticas, no compite con ellas.
 
 **Implicaciones prácticas:**
-- Paleta Arts & Crafts exclusivamente (`lienzo`, `carbon`, `salvia`, `terracota`, `pizarra`, `ocre`, `pavo`, `granada`, `musgo`)
+- Paleta Arts & Crafts exclusivamente (`lienzo`, `carbon`, `canela`, `terracota`, `mora`, `ocre`, `pavo`, `granada`, `musgo`)
 - Cero hex arbitrarios en cualquier parte del código
 - Tipografía: serif para cuerpo matemático, monoespaciada para código
 - Espacio en blanco generoso, densidad visual controlada

@@ -74,7 +74,7 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
   };
 
   return (
-    <div className={`my-8 p-8 font-serif elegant-panel relative transition-all duration-500 ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}>
+    <div className={`my-8 p-8 font-serif elegant-panel relative transition-all duration-500 ${isCompleted ? 'bg-canela/5 border-canela/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-canela)' : 'var(--page-accent)' } as React.CSSProperties}>
       <style>
         {`
           @keyframes shake {
@@ -88,7 +88,7 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
       
       {pregunta && (
         <p className="text-base font-bold text-carbon mb-6 leading-relaxed flex items-center gap-2 relative z-30">
-          {isCompleted && <span className="text-salvia">❦</span>}
+          {isCompleted && <span className="text-canela">❦</span>}
           {pregunta}
         </p>
       )}
@@ -98,7 +98,7 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
         {/* Renderizado de la matriz con corchetes */}
         <div className="relative flex items-center">
           {/* Corchete Izquierdo */}
-          <div className={`border-l-2 border-y-2 w-3 absolute left-0 top-0 bottom-0 transition-colors ${isCompleted ? 'border-salvia' : 'border-carbon/70'}`} />
+          <div className={`border-l-2 border-y-2 w-3 absolute left-0 top-0 bottom-0 transition-colors ${isCompleted ? 'border-canela' : 'border-carbon/70'}`} />
           
           <div className="grid gap-2 p-4" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
             {grid.map((row, r) =>
@@ -111,7 +111,7 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
                     onChange={e => handleCellChange(r, c, e.target.value)}
                     className={`w-14 h-12 text-center text-lg font-serif outline-none transition-all ${
                       isCompleted 
-                        ? 'bg-transparent text-salvia font-bold border-none' 
+                        ? 'bg-transparent text-canela font-bold border-none' 
                         : 'page-accent-focus bg-lienzo border-b-2 border-dashed border-carbon/40 text-carbon'
                     }`}
                   />
@@ -121,7 +121,7 @@ export const MatrizInteractiva: React.FC<MatrizInteractivaProps> = ({ id, pregun
           </div>
 
           {/* Corchete Derecho */}
-          <div className={`border-r-2 border-y-2 w-3 absolute right-0 top-0 bottom-0 transition-colors ${isCompleted ? 'border-salvia' : 'border-carbon/70'}`} />
+          <div className={`border-r-2 border-y-2 w-3 absolute right-0 top-0 bottom-0 transition-colors ${isCompleted ? 'border-canela' : 'border-carbon/70'}`} />
         </div>
 
         {!isCompleted && (

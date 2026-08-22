@@ -91,8 +91,8 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
       data-node-id={id}
       className={`border-2 p-6 my-8 rounded-[2px] transition-all duration-500 shadow-sm ${
         completed
-          ? 'bg-salvia/5 border-salvia/40'
-          : 'bg-pizarra/[0.02] border-carbon/15'
+          ? 'bg-canela/5 border-canela/40'
+          : 'bg-mora/[0.02] border-carbon/15'
       }`}
     >
       {/* Cabecera del Checkpoint */}
@@ -100,7 +100,7 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
         <div
           className={`w-6 h-6 border flex items-center justify-center font-bold text-xs rotate-0 transition-transform duration-500 ${
             completed
-              ? 'border-salvia bg-salvia text-lienzo rotate-45'
+              ? 'border-canela bg-canela text-lienzo rotate-45'
               : 'border-carbon/30 bg-transparent text-carbon/50'
           }`}
         >
@@ -111,7 +111,7 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
         <div className="flex-1">
           <div
             className={`ac-label ac-label--xs font-bold ${
-              completed ? 'text-salvia' : 'text-carbon/40'
+              completed ? 'text-canela' : 'text-carbon/40'
             }`}
           >
             {t('studyPlan', 'checkpointVerification')}
@@ -136,7 +136,7 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
           let btnClass = 'border-carbon/15 hover:bg-carbon/[0.03] hover:border-carbon/30 text-carbon/80';
           if (completed) {
             if (isCorrectOption) {
-              btnClass = 'border-salvia bg-salvia/10 text-salvia font-bold';
+              btnClass = 'border-canela bg-canela/10 text-canela font-bold';
             } else if (isSelected) {
               btnClass = 'border-granada/30 bg-granada/5 text-granada/80 opacity-70';
             } else {
@@ -159,7 +159,7 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
             >
               <span>{option}</span>
               {completed && isCorrectOption && (
-                <span className="ac-label ac-label--md ac-label--salvia">
+                <span className="ac-label ac-label--md ac-label--canela">
                   {t('studyPlan', 'correct')}
                 </span>
               )}
@@ -171,7 +171,7 @@ export const StudyPlanCheckpoint: React.FC<StudyPlanCheckpointProps> = ({
       {/* Explicación y feedback pedagógico */}
       {showExplanation && (
         <div className="mt-6 pt-5 border-t border-carbon/10 animate-fade-in">
-          <div className="ac-label ac-label--xs ac-label--salvia-soft mb-2">
+          <div className="ac-label ac-label--xs ac-label--canela-soft mb-2">
             {t('studyPlan', 'pedagogicalJustification')}
           </div>
           <p className="text-sm font-serif italic text-carbon/70 leading-relaxed">

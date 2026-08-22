@@ -90,7 +90,7 @@ export function ProofStepWysiwyg({
     <article
       className={`proof-step group/step relative mt-8 mb-6 w-full rounded-sm transition-all ${
         active
-          ? 'is-active border-l-4 border-salvia bg-salvia/5 py-3 pl-3 pr-2 shadow-sm ring-1 ring-salvia/25'
+          ? 'is-active border-l-4 border-canela bg-canela/5 py-3 pl-3 pr-2 shadow-sm ring-1 ring-canela/25'
           : 'border-l-4 border-transparent py-2 pl-3 pr-2 opacity-90 hover:bg-carbon/[0.03]'
       }`}
       data-block-id={blockId}
@@ -139,7 +139,7 @@ export function ProofStepWysiwyg({
       )}
 
       {active && (
-        <div className="mb-2 font-sans text-[10px] font-bold uppercase tracking-wider text-salvia">
+        <div className="mb-2 font-sans text-[10px] font-bold uppercase tracking-wider text-canela">
           Paso seleccionado
         </div>
       )}
@@ -176,7 +176,7 @@ export function ProofStepWysiwyg({
             <button type="button" onClick={() => handleAppendBlockToStep('list')} className="rounded border border-pavo/30 bg-pavo/5 px-2 py-0.5 font-bold text-pavo hover:bg-pavo/15 cursor-pointer">+ Lista</button>
             <button type="button" onClick={() => handleAppendBlockToStep('table')} className="rounded border border-ocre/30 bg-ocre/5 px-2 py-0.5 font-bold text-ocre hover:bg-ocre/15 cursor-pointer">+ Tabla</button>
             <button type="button" onClick={() => handleAppendBlockToStep('note')} className="rounded border border-carbon/20 bg-carbon/5 px-2 py-0.5 font-bold text-carbon/70 hover:bg-carbon/10 cursor-pointer">+ Nota</button>
-            <button type="button" onClick={() => handleAppendBlockToStep('citation')} className="rounded border border-salvia/30 bg-salvia/5 px-2 py-0.5 font-bold text-salvia hover:bg-salvia/15 cursor-pointer">+ Cita</button>
+            <button type="button" onClick={() => handleAppendBlockToStep('citation')} className="rounded border border-canela/30 bg-canela/5 px-2 py-0.5 font-bold text-canela hover:bg-canela/15 cursor-pointer">+ Cita</button>
           </div>
         )}
 
@@ -198,7 +198,7 @@ export function ProofStepWysiwyg({
                     } else onChangeStep({ ...step, number: displayNumber, diagramStep: displayNumber });
                   }}
                   className={`rounded-lg border px-2.5 py-1 text-[10px] font-bold cursor-pointer disabled:opacity-30 ${
-                    moment === mode ? 'border-salvia bg-salvia/10 text-carbon' : 'border-carbon/15 text-carbon/60'
+                    moment === mode ? 'border-canela bg-canela/10 text-carbon' : 'border-carbon/15 text-carbon/60'
                   }`}
                 >
                   {mode === 'initial' ? 'Figura inicial' : mode === 'auto' ? 'Automático' : 'Manual'}
@@ -226,7 +226,7 @@ export function ProofStepWysiwyg({
               <div className="mb-1 flex flex-wrap items-center gap-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-carbon/50">Resaltes</span>
                 {cited.length > 0 && (
-                  <span className="font-serif text-[11px] italic text-salvia">Cita: {cited.join(' · ')}</span>
+                  <span className="font-serif text-[11px] italic text-canela">Cita: {cited.join(' · ')}</span>
                 )}
                 {missingJustification && (
                   <span className="text-[11px] text-granada">Falta justificación en el texto (axioma, teorema, definición, paso previo o regla).</span>
@@ -245,7 +245,7 @@ export function ProofStepWysiwyg({
                         disabled={isReadOnly}
                         onClick={() => toggleTarget(t.id)}
                         className={`rounded-lg border px-2 py-0.5 font-mono text-[10px] cursor-pointer ${
-                          selected ? 'border-salvia bg-salvia text-lienzo font-bold' : 'border-carbon/15 bg-lienzo text-carbon/70'
+                          selected ? 'border-canela bg-canela text-lienzo font-bold' : 'border-carbon/15 bg-lienzo text-carbon/70'
                         }`}
                       >
                         {t.id}{t.label ? ` (${t.label})` : ''}

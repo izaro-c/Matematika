@@ -282,7 +282,7 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
     {
       "id": "segPA",
       "label": "Distancia PA",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 1000,
       "visible": true,
@@ -313,7 +313,7 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
     {
       "id": "segPB",
       "label": "Distancia PB",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 1000,
       "visible": true,
@@ -406,7 +406,7 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
     {
       "id": "measurementPB",
       "label": "Medición",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 13000,
       "visible": true,

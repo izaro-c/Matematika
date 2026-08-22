@@ -138,7 +138,7 @@ export const ParalelasSpec = createDiagramSpec(
     {
       "id": "P",
       "label": "P",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 470,
       "visible": true,

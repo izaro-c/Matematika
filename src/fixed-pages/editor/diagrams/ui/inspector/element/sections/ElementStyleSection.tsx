@@ -65,7 +65,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
                   style: { ...(element.style || {}), strokeWidth: parseOptionalNumber(e.target.value, 2.4) },
                 })
               }
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 font-bold"
+              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 font-bold"
             />
           </div>
           <div>
@@ -84,7 +84,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
                   style: { ...(element.style || {}), highlightStrokeWidth: parseOptionalNumber(e.target.value, 3) },
                 })
               }
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 font-bold"
+              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 font-bold"
             />
           </div>
         </div>
@@ -108,7 +108,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
                   style: { ...(element.style || {}), fillOpacity: parseOptionalNumber(e.target.value, 0) },
                 })
               }
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
             />
           </div>
           <div>
@@ -126,7 +126,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
                   style: { ...(element.style || {}), highlightFillOpacity: parseOptionalNumber(e.target.value, 0.35) },
                 })
               }
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
             />
           </div>
         </div>
@@ -148,7 +148,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
                 style: { ...(element.style || {}), angleRadius: parseOptionalNumber(e.target.value, 1) },
               })
             }
-            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20"
+            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
           />
         </div>
       )}
@@ -167,7 +167,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
       )}
 
       {capabilities.attachedLabel && (
-        <div className="rounded-lg border border-salvia/20 bg-salvia/5 p-2.5 text-xs">
+        <div className="rounded-lg border border-canela/20 bg-canela/5 p-2.5 text-xs">
           <p className="font-bold text-carbon">Etiqueta vinculada</p>
           {attachedLabel ? (
             <label className="mt-1.5 flex items-center gap-2 text-carbon cursor-pointer select-none">
@@ -175,7 +175,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
                 type="checkbox"
                 checked={attachedLabel.visible !== false}
                 onChange={event => onUpdateElement(attachedLabel.id, { visible: event.target.checked })}
-                className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+                className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
               />
               Mostrar junto al elemento
             </label>
@@ -193,7 +193,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
               id={`dashed-${element.id}`}
               checked={element.dashed || false}
               onChange={e => onUpdateElement(element.id, { dashed: e.target.checked })}
-              className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+              className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
             />
             <label htmlFor={`dashed-${element.id}`} className="text-xs font-bold text-carbon/80 cursor-pointer select-none">
               Línea Discontinua / Auxiliar
@@ -211,7 +211,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
                 style: { ...(element.style || {}), preserveColorOnHighlight: e.target.checked },
               })
             }
-            className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+            className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
           />
           <label htmlFor={`preserveColor-${element.id}`} className="text-xs text-carbon/80 cursor-pointer select-none">
             Conservar color propio en hover (sin resaltar en amarillo)
@@ -228,7 +228,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
                 selection: { ...(element.selection || { selectable: true }), highlightable: e.target.checked },
               })
             }
-            className="rounded border-carbon/30 text-salvia focus:ring-salvia cursor-pointer"
+            className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
           />
           <label htmlFor={`highlightable-${element.id}`} className="text-xs text-carbon/80 cursor-pointer select-none">
             Permitir resaltado visual con el puntero
@@ -241,7 +241,7 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
         <select
           value={element.layerId || 'geometry'}
           onChange={e => onUpdateElement(element.id, { layerId: e.target.value })}
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 cursor-pointer"
+          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 cursor-pointer"
         >
           {layers.map(l => (
             <option key={l.id} value={l.id}>

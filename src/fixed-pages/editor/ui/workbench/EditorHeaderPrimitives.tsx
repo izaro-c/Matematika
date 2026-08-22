@@ -20,20 +20,20 @@ export const HeaderTitleInput: React.FC<React.InputHTMLAttributes<HTMLInputEleme
 }) => (
   <input
     type="text"
-    className={`h-8 w-28 sm:w-44 md:w-52 max-w-[220px] min-w-[70px] font-serif font-bold text-sm text-carbon bg-transparent hover:bg-carbon/5 focus:bg-lienzo focus:outline-hidden focus:ring-1 focus:ring-salvia rounded-lg px-2 py-0 transition-colors truncate leading-none ${className}`}
+    className={`h-8 w-28 sm:w-44 md:w-52 max-w-[220px] min-w-[70px] font-serif font-bold text-sm text-carbon bg-transparent hover:bg-carbon/5 focus:bg-lienzo focus:outline-hidden focus:ring-1 focus:ring-canela rounded-lg px-2 py-0 transition-colors truncate leading-none ${className}`}
     {...props}
   />
 );
 
 export const HeaderBadge: React.FC<{
-  variant?: 'subtle' | 'salvia' | 'ocre' | 'musgo' | 'granada';
+  variant?: 'subtle' | 'canela' | 'ocre' | 'musgo' | 'granada';
   className?: string;
   children: React.ReactNode;
   title?: string;
 }> = ({ variant = 'subtle', className = '', children, title }) => {
   const variantStyles = {
     subtle: 'text-carbon/50 bg-carbon/5 border-carbon/10 font-mono',
-    salvia: 'text-salvia bg-salvia/15 border-salvia/30 font-bold uppercase tracking-wider',
+    canela: 'text-canela bg-canela/15 border-canela/30 font-bold uppercase tracking-wider',
     ocre: 'text-ocre bg-ocre/15 border-ocre/30 font-bold uppercase tracking-wider',
     musgo: 'text-musgo bg-musgo/15 border-musgo/30 font-bold uppercase tracking-wider',
     granada: 'text-granada bg-granada/10 border-granada/20 font-bold',
@@ -94,7 +94,7 @@ export const HeaderIconButton: React.FC<{
   const variantStyles = variant === 'danger'
     ? 'border-carbon/15 bg-lienzo hover:bg-crimson/10 hover:text-crimson hover:border-crimson/30 text-carbon/70 hover:text-crimson'
     : active
-      ? 'border-salvia/40 bg-salvia/10 text-salvia font-semibold'
+      ? 'border-canela/40 bg-canela/10 text-canela font-semibold'
       : 'border-carbon/15 bg-lienzo hover:bg-carbon/5 text-carbon/70 hover:text-carbon';
 
   return (
@@ -121,7 +121,7 @@ export type HeaderSaveState = {
 export const HeaderActionButton: React.FC<{
   onClick?: () => void;
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'saved' | 'saving' | 'pavo' | 'salvia';
+  variant?: 'primary' | 'secondary' | 'saved' | 'saving' | 'pavo' | 'canela';
   disabled?: boolean;
   title?: string;
   className?: string;
@@ -131,9 +131,9 @@ export const HeaderActionButton: React.FC<{
   const variantStyles = {
     primary: 'bg-musgo text-lienzo hover:bg-musgo/90 shadow-2xs font-bold',
     pavo: 'bg-pavo text-lienzo hover:bg-pavo/90 shadow-2xs font-bold',
-    salvia: 'bg-salvia text-lienzo hover:bg-salvia/90 shadow-2xs font-bold',
+    canela: 'bg-canela text-lienzo hover:bg-canela/90 shadow-2xs font-bold',
     saved: 'bg-musgo text-lienzo opacity-90 cursor-default font-bold',
-    saving: 'bg-pizarra text-lienzo cursor-wait font-bold',
+    saving: 'bg-mora text-lienzo cursor-wait font-bold',
     secondary: 'border border-carbon/15 bg-lienzo text-carbon/80 hover:bg-carbon/5 hover:text-carbon font-semibold',
   };
 

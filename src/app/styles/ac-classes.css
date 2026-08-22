@@ -46,15 +46,15 @@
 .ac-label--emphasis { --ac-label-color: var(--ink-text); }
 
 .ac-label--terracota { --ac-label-color: var(--theme-terracota); }
-.ac-label--salvia { --ac-label-color: var(--theme-salvia); }
+.ac-label--canela { --ac-label-color: var(--theme-canela); }
 .ac-label--pavo { --ac-label-color: var(--theme-pavo); }
 .ac-label--ocre { --ac-label-color: var(--theme-ocre); }
 .ac-label--granada { --ac-label-color: var(--theme-granada); }
 .ac-label--musgo { --ac-label-color: var(--theme-musgo); }
-.ac-label--pizarra { --ac-label-color: var(--theme-pizarra); }
+.ac-label--mora { --ac-label-color: var(--theme-mora); }
 
 /* Soft = acento mezclado con carbon (opaco, no alpha) para ≥4.5:1 en lienzo */
-.ac-label--salvia-soft { --ac-label-color: color-mix(in srgb, var(--theme-salvia) 72%, var(--theme-carbon)); }
+.ac-label--canela-soft { --ac-label-color: color-mix(in srgb, var(--theme-canela) 72%, var(--theme-carbon)); }
 .ac-label--pavo-soft { --ac-label-color: color-mix(in srgb, var(--theme-pavo) 72%, var(--theme-carbon)); }
 .ac-label--ocre-soft { --ac-label-color: color-mix(in srgb, var(--theme-ocre) 70%, var(--theme-carbon)); }
 .ac-label--terracota-soft { --ac-label-color: color-mix(in srgb, var(--theme-terracota) 72%, var(--theme-carbon)); }
@@ -416,7 +416,7 @@
 
 .ac-editor-resize-handle:hover,
 .ac-editor-resize-handle:focus {
-  background: color-mix(in srgb, var(--theme-salvia) 30%, transparent);
+  background: color-mix(in srgb, var(--theme-canela) 30%, transparent);
 }
 
 .ac-editor-resize-handle--row {

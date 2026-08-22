@@ -71,7 +71,7 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
 
   if (!model) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-lienzo text-pizarra/60 font-serif italic">
+      <div className="flex h-full w-full items-center justify-center bg-lienzo text-mora/60 font-serif italic">
         Cargando lienzo…
       </div>
     );

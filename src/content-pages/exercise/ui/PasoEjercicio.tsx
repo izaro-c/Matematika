@@ -61,7 +61,7 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
       <div
         className={`my-16 font-serif transition-all duration-300${
           isCompleted
-            ? 'border-salvia/60'
+            ? 'border-canela/60'
             : isUnlocked
               ? 'border-ocre/60'
               : 'border-carbon/10'
@@ -78,7 +78,7 @@ export const PasoEjercicio: React.FC<PasoEjercicioProps> = ({
           />
           <h3 className={`font-sans font-semibold text-sm transition-colors ${
             isCompleted
-              ? 'text-salvia'
+              ? 'text-canela'
               : isUnlocked
                 ? 'text-carbon'
                 : 'text-carbon/30'

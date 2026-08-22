@@ -13,7 +13,7 @@ const expression = z.string().min(1).superRefine((source, context) => {
   try { parseMathExpression(source); }
   catch (error) { context.addIssue({ code: 'custom', message: error instanceof DiagramExpressionError ? error.message : 'Expresión matemática no válida.' }); }
 });
-const color = z.enum(['carbon', 'terracota', 'salvia', 'pizarra', 'ocre', 'pavo', 'granada', 'musgo']);
+const color = z.enum(['carbon', 'terracota', 'canela', 'mora', 'ocre', 'pavo', 'granada', 'musgo']);
 const pair = z.tuple([id, id]);
 const pointTriple = z.tuple([id, id, id]);
 const selection = z.object({

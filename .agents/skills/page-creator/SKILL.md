@@ -506,7 +506,7 @@ import { DemoMiTeorema } from '@content/diagrams/Demos/DemoMiTeorema';
 <Separador />
 
 <ProofStep number={1} title="Existencia" target="step1">
-  Por el <ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia 1</ConceptLink>, dados los puntos <InteractiveElement target="punto-a" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="punto-b" color="terracota">$B$</InteractiveElement>, existe una única <InteractiveElement target="recta-ab" color="salvia">recta $AB$</InteractiveElement> que los contiene.
+  Por el <ConceptLink targetId="axioma-incidencia-1">Axioma de Incidencia 1</ConceptLink>, dados los puntos <InteractiveElement target="punto-a" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="punto-b" color="terracota">$B$</InteractiveElement>, existe una única <InteractiveElement target="recta-ab" color="canela">recta $AB$</InteractiveElement> que los contiene.
 </ProofStep>
 
 <ProofStep number={2} title="Construcción" target="step2">
@@ -586,10 +586,10 @@ La navegación interna NUNCA usa enlaces Markdown estándar `[texto](url)`. Usar
 **NUNCA** se debe anidar `<ConceptLink>` dentro de `<InteractiveElement>` (o viceversa) para lograr un enlace que a la vez haga hover sobre el gráfico. Esto corrompe la propagación de eventos en el DOM. En su lugar, utiliza directamente las propiedades integradas de `<ConceptLink>`:
 ```jsx
 // CORRECTO (Sintaxis integrada limpia)
-<ConceptLink targetId="cateto" isDependency={false} highlightTarget="segCA" highlightColor="salvia">cateto</ConceptLink>
+<ConceptLink targetId="cateto" isDependency={false} highlightTarget="segCA" highlightColor="canela">cateto</ConceptLink>
 
 // INCORRECTO (Genera conflictos de propagación)
-<InteractiveElement target="segCA" color="salvia"><ConceptLink targetId="cateto">cateto</ConceptLink></InteractiveElement>
+<InteractiveElement target="segCA" color="canela"><ConceptLink targetId="cateto">cateto</ConceptLink></InteractiveElement>
 ```
 
 ### 8.2 Rigor Pedagógico y Enlazado Didáctico Completo
@@ -613,9 +613,9 @@ Para maximizar el valor educativo y la coherencia del jardín digital de Matemat
 |---|---|---|
 | `lienzo` | `bg-lienzo` | Fondo general, lienzo |
 | `carbon` | `text-carbon` | Ejes, bordes, texto principal, grid |
-| `salvia` | `text-salvia` | Planos, coeficientes, geometría secundaria |
+| `canela` | `text-canela` | Planos, coeficientes, geometría secundaria |
 | `terracota` | `text-terracota` | Puntos, vectores, incógnitas |
-| `pizarra` | `text-pizarra` | Distancias, resultados, mediciones |
+| `mora` | `text-mora` | Distancias, resultados, mediciones |
 | `ocre` | `text-ocre` | Resaltados, valores especiales |
 | `pavo` | `text-pavo` | Acento alternativo |
 | `granada` | `text-granada` | Errores, contradicciones, absurdos lógicos (RAA) |

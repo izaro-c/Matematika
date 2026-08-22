@@ -116,7 +116,7 @@ export const SemirrectaSpec = createDiagramSpec(
     {
       "id": "lineOA",
       "label": "Recta",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2000,
       "visible": true,

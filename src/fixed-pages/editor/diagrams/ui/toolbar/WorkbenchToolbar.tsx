@@ -192,9 +192,9 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
         aria-label="Mover / Seleccionar"
         aria-pressed={activeTool === 'select'}
         onClick={() => onSelectTool('select')}
-        className={`flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia ${
+        className={`flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela ${
           activeTool === 'select'
-            ? 'bg-salvia text-lienzo shadow-xs font-bold'
+            ? 'bg-canela text-lienzo shadow-xs font-bold'
             : 'bg-carbon/5 border border-carbon/15 text-carbon/80 hover:bg-carbon/10'
         }`}
       >
@@ -207,9 +207,9 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
         aria-label="Punto libre"
         aria-pressed={activeTool === 'point'}
         onClick={() => onSelectTool('point')}
-        className={`flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia ${
+        className={`flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela ${
           activeTool === 'point'
-            ? 'bg-salvia text-lienzo shadow-xs font-bold'
+            ? 'bg-canela text-lienzo shadow-xs font-bold'
             : 'bg-carbon/5 border border-carbon/15 text-carbon/80 hover:bg-carbon/10'
         }`}
       >
@@ -222,7 +222,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
           type="button"
           onClick={onOpenGuidedClick}
           aria-label="Construcciones guiadas"
-          className="flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold text-salvia bg-salvia/10 hover:bg-salvia/20 border border-salvia/30 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia"
+          className="flex h-8 items-center space-x-1.5 px-3 rounded-lg text-xs font-bold text-canela bg-canela/10 hover:bg-canela/20 border border-canela/30 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela"
           title="Abrir asistente de construcciones guiadas"
         >
           <IconSparkles className="w-3.5 h-3.5" />
@@ -240,7 +240,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
             value={toolQuery}
             onChange={e => setToolQuery(e.target.value)}
             placeholder="Buscar…"
-            className="h-8 w-28 sm:w-44 rounded-lg border border-carbon/15 bg-carbon/5 px-2.5 text-xs text-carbon placeholder-carbon/40 focus:bg-lienzo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia transition-colors font-sans"
+            className="h-8 w-28 sm:w-44 rounded-lg border border-carbon/15 bg-carbon/5 px-2.5 text-xs text-carbon placeholder-carbon/40 focus:bg-lienzo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela transition-colors font-sans"
           />
         </label>
 
@@ -283,12 +283,12 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                       }}
                       className={`w-full text-left p-2 rounded-xl border transition-all cursor-pointer disabled:opacity-40 ${
                         isSelected
-                          ? 'bg-salvia text-lienzo border-salvia'
+                          ? 'bg-canela text-lienzo border-canela'
                           : 'bg-carbon/5 border-carbon/10 text-carbon hover:bg-carbon/10'
                       }`}
                     >
                       <div className="flex items-center gap-2">
-                        <div className={`p-1.5 rounded-lg shrink-0 ${isSelected ? 'bg-lienzo/20' : 'bg-salvia/10 text-salvia'}`}>
+                        <div className={`p-1.5 rounded-lg shrink-0 ${isSelected ? 'bg-lienzo/20' : 'bg-canela/10 text-canela'}`}>
                           <ToolDrawingIcon tool={drawingTool} className="w-4 h-4" />
                         </div>
                         <div className="min-w-0 flex-1">
@@ -333,9 +333,9 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
               aria-haspopup="menu"
               disabled={isSearching}
               onClick={() => setOpenMenu(isOpen ? null : category.id)}
-              className={`flex h-8 items-center space-x-1.5 px-2.5 rounded-lg text-xs font-bold transition-all cursor-pointer border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-salvia ${
+              className={`flex h-8 items-center space-x-1.5 px-2.5 rounded-lg text-xs font-bold transition-all cursor-pointer border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canela ${
                 hasActiveTool
-                  ? 'bg-salvia text-lienzo shadow-xs font-bold'
+                  ? 'bg-canela text-lienzo shadow-xs font-bold'
                   : isOpen
                   ? 'bg-carbon/10 border-carbon/20 text-carbon font-bold'
                   : 'bg-carbon/5 border-carbon/15 text-carbon/80 hover:bg-carbon/10'
@@ -343,7 +343,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
             >
               <span>{category.shortLabel || category.label}</span>
               {isSearching && matchCount > 0 && (
-                <span className="text-[9px] font-mono bg-salvia/20 text-salvia px-1 rounded">{matchCount}</span>
+                <span className="text-[9px] font-mono bg-canela/20 text-canela px-1 rounded">{matchCount}</span>
               )}
               <IconChevronDown className="w-3 h-3 opacity-60" />
             </button>
@@ -358,7 +358,7 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                     type="button"
                     aria-label="Cerrar menú"
                     onClick={() => setOpenMenu(null)}
-                    className="text-carbon/40 hover:text-carbon text-xs font-bold cursor-pointer focus-visible:ring-2 focus-visible:ring-salvia rounded"
+                    className="text-carbon/40 hover:text-carbon text-xs font-bold cursor-pointer focus-visible:ring-2 focus-visible:ring-canela rounded"
                   >
                     <IconClose className="w-3.5 h-3.5" />
                   </button>
@@ -394,14 +394,14 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
                         disabled={disabled}
                         aria-pressed={isSelected}
                         onClick={() => handleToolSelect(t.toolId, t.action)}
-                        className={`w-full text-left p-2 rounded-xl border transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-salvia ${
+                        className={`w-full text-left p-2 rounded-xl border transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-canela ${
                           isSelected
-                            ? 'bg-salvia text-lienzo border-salvia shadow-2xs font-bold'
+                            ? 'bg-canela text-lienzo border-canela shadow-2xs font-bold'
                             : 'bg-carbon/5 border-carbon/10 text-carbon hover:bg-carbon/10'
                         }`}
                       >
                         <div className="flex items-center space-x-2.5">
-                          <div className={`p-1.5 rounded-lg shrink-0 ${isSelected ? 'bg-lienzo/20 text-lienzo' : 'bg-salvia/10 text-salvia'}`}>
+                          <div className={`p-1.5 rounded-lg shrink-0 ${isSelected ? 'bg-lienzo/20 text-lienzo' : 'bg-canela/10 text-canela'}`}>
                             <ToolDrawingIcon tool={drawingTool} className="w-4 h-4" />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -439,8 +439,8 @@ export const WorkbenchToolbar: React.FC<WorkbenchToolbarProps> = ({
       <div className="ml-auto hidden sm:flex items-center space-x-2 bg-carbon/5 px-2.5 py-1 rounded-lg border border-carbon/15 text-xs">
         <span className="text-[11px] text-carbon/50">Activa:</span>
         <div className="flex items-center space-x-1">
-          <ToolDrawingIcon tool={activeTool} className="w-3.5 h-3.5 text-salvia" />
-          <span className="font-bold text-salvia">{getToolDisplayName(activeTool)}</span>
+          <ToolDrawingIcon tool={activeTool} className="w-3.5 h-3.5 text-canela" />
+          <span className="font-bold text-canela">{getToolDisplayName(activeTool)}</span>
         </div>
       </div>
     </nav>

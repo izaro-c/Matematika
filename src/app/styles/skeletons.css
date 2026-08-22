@@ -17,7 +17,7 @@
   height: 100%;
   border-style: solid;
   border-width: 2px;
-  border-color: var(--page-accent, var(--theme-pizarra));
+  border-color: var(--page-accent, var(--theme-mora));
   border-radius: 20px;
 }
 
@@ -30,7 +30,7 @@
   place-items: center;
   margin-bottom: 1.75rem;
   pointer-events: none;
-  color: color-mix(in srgb, var(--page-accent, var(--theme-pizarra)) 30%, transparent);
+  color: color-mix(in srgb, var(--page-accent, var(--theme-mora)) 30%, transparent);
 }
 
 .sk__figure {
@@ -70,7 +70,7 @@
   bottom: 0.95rem;
   height: 2px;
   border-radius: 1px;
-  background: color-mix(in srgb, var(--page-accent, var(--theme-pizarra)) 22%, transparent);
+  background: color-mix(in srgb, var(--page-accent, var(--theme-mora)) 22%, transparent);
   overflow: hidden;
   pointer-events: none;
 }
@@ -85,7 +85,7 @@
   position: absolute;
   inset: 0;
   width: 40%;
-  background: color-mix(in srgb, var(--page-accent, var(--theme-pizarra)) 70%, transparent);
+  background: color-mix(in srgb, var(--page-accent, var(--theme-mora)) 70%, transparent);
   animation: sk-ink 1.6s ease-in-out infinite;
 }
 

@@ -11,7 +11,7 @@ export const ContraposicionSimulation = () => {
       {/* Diagrama */}
       <div className="relative" style={{ width: 380, height: 300 }}>
         {/* Universo */}
-        <div className="absolute rounded-sm border border-dashed border-pizarra/10"
+        <div className="absolute rounded-sm border border-dashed border-mora/10"
           style={{ left: 8, top: 8, right: 8, bottom: 8 }} />
 
         {/* Q — contenedor exterior */}
@@ -19,12 +19,12 @@ export const ContraposicionSimulation = () => {
           className="absolute rounded-sm border-2 transition-all duration-700 flex items-start"
           style={{
             left: 40, top: 30, width: 300, height: 240,
-            borderColor: 'var(--theme-salvia)',
-            backgroundColor: d ? 'color-mix(in srgb, var(--theme-salvia) 13%, transparent)' : 'color-mix(in srgb, var(--theme-salvia) 4%, transparent)',
+            borderColor: 'var(--theme-canela)',
+            backgroundColor: d ? 'color-mix(in srgb, var(--theme-canela) 13%, transparent)' : 'color-mix(in srgb, var(--theme-canela) 4%, transparent)',
           }}
         >
           <span className="text-xl font-bold mt-3 ml-4 transition-all duration-500"
-            style={{ color: 'var(--theme-salvia)', opacity: d ? 1 : 0.3 }}>
+            style={{ color: 'var(--theme-canela)', opacity: d ? 1 : 0.3 }}>
             Q
           </span>
 
@@ -62,13 +62,13 @@ export const ContraposicionSimulation = () => {
         {/* ¬Q — fuera de Q, arriba-izquierda */}
         <div className="absolute transition-all duration-500"
           style={{ left: 18, top: 2, opacity: d ? 0 : 1 }}>
-          <span className="text-lg font-bold text-salvia">¬Q</span>
+          <span className="text-lg font-bold text-canela">¬Q</span>
         </div>
 
         {/* ¬P — dentro de Q, fuera de P */}
         <div className="absolute transition-all duration-500"
           style={{ left: 268, top: 200, opacity: d ? 0 : 1 }}>
-          <span className="text-lg font-bold text-salvia">¬P</span>
+          <span className="text-lg font-bold text-canela">¬P</span>
         </div>
 
         {/* Flecha ¬Q → ¬P: clara, gruesa, visible */}
@@ -76,23 +76,23 @@ export const ContraposicionSimulation = () => {
           style={{ opacity: d ? 0 : 0.75 }}
           width="380" height="300" viewBox="0 0 380 300">
           <defs>
-            <marker id="arrowSalvia" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-              <path d="M0,0 L8,4 L0,8 Z" fill="var(--theme-salvia)" />
+            <marker id="arrowcanela" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="var(--theme-canela)" />
             </marker>
           </defs>
           <path
             d="M 34 14 Q 40 50, 130 120 Q 200 175, 275 208"
-            fill="none" stroke="var(--theme-salvia)" strokeWidth="2.5"
-            markerEnd="url(#arrowSalvia)"
+            fill="none" stroke="var(--theme-canela)" strokeWidth="2.5"
+            markerEnd="url(#arrowcanela)"
           />
         </svg>
       </div>
 
       {/* Texto interpretativo */}
-      <p className={`text-sm mt-2 transition-all duration-400 font-bold ${d ? 'text-terracota' : 'text-salvia'}`}>
+      <p className={`text-sm mt-2 transition-all duration-400 font-bold ${d ? 'text-terracota' : 'text-canela'}`}>
         {d ? 'P ⇒ Q' : '¬Q ⇒ ¬P'}
       </p>
-      <p className={`text-xs mt-0.5 transition-all duration-400 ${d ? 'text-terracota/60' : 'text-salvia/60'}`}>
+      <p className={`text-xs mt-0.5 transition-all duration-400 ${d ? 'text-terracota/60' : 'text-canela/60'}`}>
         {d ? 'Todo lo que está en P, está en Q' : 'Todo lo que está fuera de Q, está fuera de P'}
       </p>
 
@@ -100,7 +100,7 @@ export const ContraposicionSimulation = () => {
       <button
         onClick={() => setView(v => v === 'direct' ? 'contra' : 'direct')}
         className={`mt-4 px-6 py-2.5 text-sm rounded-sm font-serif transition-all duration-500
-          ${d ? 'bg-salvia text-lienzo hover:bg-salvia/85' : 'bg-terracota text-lienzo hover:bg-terracota/85'}`}
+          ${d ? 'bg-canela text-lienzo hover:bg-canela/85' : 'bg-terracota text-lienzo hover:bg-terracota/85'}`}
       >
         {d ? 'Ver contrarrecíproco' : 'Ver directo'}
       </button>

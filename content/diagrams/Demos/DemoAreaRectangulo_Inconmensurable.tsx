@@ -321,7 +321,7 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
     {
       "id": "Ao",
       "label": "Ao",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2640,
       "visible": true,
@@ -357,7 +357,7 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
     {
       "id": "Bo",
       "label": "Bo",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2650,
       "visible": true,
@@ -393,7 +393,7 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
     {
       "id": "Co",
       "label": "Co",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2660,
       "visible": true,
@@ -429,7 +429,7 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
     {
       "id": "Do",
       "label": "Do",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2670,
       "visible": true,
@@ -465,7 +465,7 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
     {
       "id": "outer",
       "label": "Rectángulo exterior Rₖ⁺",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2680,
       "visible": true,

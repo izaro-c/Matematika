@@ -25,7 +25,7 @@ export const NotFoundState: React.FC<NotFoundStateProps> = ({
       <p className={`${UI.labelSm} ac-label--faint mb-3`}>Error 404</p>
       <h1 className={`text-2xl md:text-3xl mb-4 ${UI.textBalance} text-center`}>{defaultTitle}</h1>
       {(defaultMessage || missingId) && (
-        <p className={`text-pizarra mb-8 text-center max-w-md ${UI.textPretty} leading-relaxed`}>
+        <p className={`text-mora mb-8 text-center max-w-md ${UI.textPretty} leading-relaxed`}>
           {defaultMessage}
           {missingId && (
             <>

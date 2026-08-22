@@ -71,7 +71,7 @@ export const HyperbolicParallelSpec = createDiagramSpec(
     {
       "id": "O",
       "label": "centro del disco",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "construccion",
       "order": 1,
       "visible": false,
@@ -100,7 +100,7 @@ export const HyperbolicParallelSpec = createDiagramSpec(
     {
       "id": "R",
       "label": "radio del disco",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "construccion",
       "order": 2,
       "visible": false,
@@ -231,7 +231,7 @@ export const HyperbolicParallelSpec = createDiagramSpec(
     {
       "id": "frontera",
       "label": "borde ideal del disco",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "disco",
       "order": 1,
       "visible": true,

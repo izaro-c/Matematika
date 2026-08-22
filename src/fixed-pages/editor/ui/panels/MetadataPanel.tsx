@@ -101,7 +101,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
           <h3 className="font-serif text-base font-bold text-carbon">Diagramas y Objetos</h3>
           <p className="text-xs italic text-carbon/50">Recursos interactivos y enlazado bidireccional</p>
         </div>
-        <span className="ac-label ac-label--sm ac-label--salvia select-none uppercase tracking-wider">
+        <span className="ac-label ac-label--sm ac-label--canela select-none uppercase tracking-wider">
           {pageDiagramLinks.length} {pageDiagramLinks.length === 1 ? 'Diagrama' : 'Diagramas'}
         </span>
       </div>
@@ -114,7 +114,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
               <button
                 type="button"
                 onClick={() => openBuilder(null, blocks.length)}
-                className="mt-3 rounded-lg border border-salvia/30 bg-salvia/10 px-3 py-1.5 text-xs font-bold text-salvia hover:bg-salvia/20 transition-colors cursor-pointer"
+                className="mt-3 rounded-lg border border-canela/30 bg-canela/10 px-3 py-1.5 text-xs font-bold text-canela hover:bg-canela/20 transition-colors cursor-pointer"
               >
                 + Vincular diagrama
               </button>
@@ -127,7 +127,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 <button
                   type="button"
                   onClick={() => openBuilder(null, blocks.length)}
-                  className="rounded-lg border border-salvia/30 bg-salvia/10 px-2.5 py-1 text-xs font-bold text-salvia hover:bg-salvia/20 transition-colors cursor-pointer"
+                  className="rounded-lg border border-canela/30 bg-canela/10 px-2.5 py-1 text-xs font-bold text-canela hover:bg-canela/20 transition-colors cursor-pointer"
                 >
                   + Añadir
                 </button>
@@ -143,7 +143,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                       <p className="truncate font-serif text-xs font-bold text-carbon">{link.componentName}</p>
                       <p className="mt-0.5 truncate font-mono text-[10px] text-carbon/50">{link.path || link.importSource || 'Sin archivo detectado'}</p>
                     </div>
-                    <span className="ac-label ac-label--xs ac-label--salvia shrink-0">{link.role}</span>
+                    <span className="ac-label ac-label--xs ac-label--canela shrink-0">{link.role}</span>
                   </div>
 
                   {canMutateVisualStructure && link.targets && link.targets.length > 0 && (
@@ -155,10 +155,10 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                             key={target.qualifiedId ?? target.id}
                             type="button"
                             onClick={() => insertInteractiveTargetParagraph(target)}
-                            className="inline-flex items-center gap-1 rounded-md border border-carbon/15 bg-lienzo px-2 py-0.5 font-mono text-[10px] text-carbon/70 hover:border-salvia/40 hover:bg-salvia/5 hover:text-salvia transition-colors cursor-pointer shadow-2xs"
+                            className="inline-flex items-center gap-1 rounded-md border border-carbon/15 bg-lienzo px-2 py-0.5 font-mono text-[10px] text-carbon/70 hover:border-canela/40 hover:bg-canela/5 hover:text-canela transition-colors cursor-pointer shadow-2xs"
                             title={`Insertar texto interactivo para ${target.label}`}
                           >
-                            <span className="text-salvia/70 font-sans font-bold">+</span>
+                            <span className="text-canela/70 font-sans font-bold">+</span>
                             <span>{target.id}</span>
                           </button>
                         ))}
@@ -239,10 +239,10 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 onFocus={() => setVariable('highlight', target.qualifiedId ?? target.id)}
                 onBlur={() => setVariable('highlight', null)}
                 onClick={() => setVariable('highlight', target.qualifiedId ?? target.id)}
-                className="group flex items-center justify-between rounded-lg border border-carbon/15 bg-lienzo px-3 py-2 text-left hover:border-salvia/40 hover:bg-salvia/5 transition-all cursor-pointer shadow-2xs"
+                className="group flex items-center justify-between rounded-lg border border-carbon/15 bg-lienzo px-3 py-2 text-left hover:border-canela/40 hover:bg-canela/5 transition-all cursor-pointer shadow-2xs"
                 aria-label={`Resaltar target ${target.label}`}
               >
-                <span className="text-xs font-bold text-carbon group-hover:text-salvia transition-colors">{target.label}</span>
+                <span className="text-xs font-bold text-carbon group-hover:text-canela transition-colors">{target.label}</span>
                 <span className="font-mono text-[10px] text-carbon/50 bg-carbon/5 px-1.5 py-0.5 rounded border border-carbon/10">{target.qualifiedId ?? target.id}</span>
               </button>
             ))}
@@ -269,7 +269,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
               {pageConnectionSummary.connected.slice(0, 8).map((connection, index) => (
                 <div key={`${connection.target}-${index}`} className="flex items-center justify-between gap-2 rounded-lg border border-carbon/10 bg-lienzo px-3 py-2 text-xs shadow-2xs">
                   <span className="truncate font-serif font-bold text-carbon">{connection.label || connection.target}</span>
-                  <span className="shrink-0 font-mono text-[10px] font-medium text-salvia bg-salvia/10 px-2 py-0.5 rounded border border-salvia/20">{connection.target}</span>
+                  <span className="shrink-0 font-mono text-[10px] font-medium text-canela bg-canela/10 px-2 py-0.5 rounded border border-canela/20">{connection.target}</span>
                 </div>
               ))}
             </div>
@@ -285,10 +285,10 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                     key={target.id}
                     type="button"
                     onClick={() => insertInteractiveTargetParagraph(target)}
-                    className="inline-flex items-center gap-1 rounded-md border border-carbon/15 bg-lienzo px-2 py-1 font-mono text-[10px] text-carbon/70 hover:border-salvia/40 hover:bg-salvia/5 hover:text-salvia transition-colors cursor-pointer shadow-2xs"
+                    className="inline-flex items-center gap-1 rounded-md border border-carbon/15 bg-lienzo px-2 py-1 font-mono text-[10px] text-carbon/70 hover:border-canela/40 hover:bg-canela/5 hover:text-canela transition-colors cursor-pointer shadow-2xs"
                     title={`Insertar referencia interactiva para ${target.label}`}
                   >
-                    <span className="text-salvia font-bold font-sans">+</span>
+                    <span className="text-canela font-bold font-sans">+</span>
                     <span>{target.id}</span>
                   </button>
                 ))}
@@ -302,12 +302,12 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
         <div className="rounded-xl border border-carbon/10 bg-lienzo/60 p-3.5 shadow-2xs space-y-2">
           <div className="flex items-center justify-between text-xs">
             <span className="text-carbon/70 font-medium">ID Formalizado:</span>
-            <span className="ac-label ac-label--sm ac-label--salvia font-mono font-bold">
+            <span className="ac-label ac-label--sm ac-label--canela font-mono font-bold">
               {(metadata.leanId as string) || 'Sin asignar'}
             </span>
           </div>
           <p className="text-xs leading-relaxed text-carbon/60">
-            Los enlaces <code className="font-mono text-[10px] text-salvia bg-salvia/10 px-1 py-0.5 rounded">ConceptLink</code> y <code className="font-mono text-[10px] text-salvia bg-salvia/10 px-1 py-0.5 rounded">RefLink</code> se insertan desde el editor de texto (atajo de enlazado semántico).
+            Los enlaces <code className="font-mono text-[10px] text-canela bg-canela/10 px-1 py-0.5 rounded">ConceptLink</code> y <code className="font-mono text-[10px] text-canela bg-canela/10 px-1 py-0.5 rounded">RefLink</code> se insertan desde el editor de texto (atajo de enlazado semántico).
           </p>
         </div>
       </AccordionSection>

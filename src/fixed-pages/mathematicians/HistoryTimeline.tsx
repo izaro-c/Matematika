@@ -9,8 +9,8 @@ import { useI18n } from '@/i18n';
 // ── Utilidad: clasificación de año histórico a época ───────────────────────────
 const ERA_STEPS: readonly { cutoff: number; key: 'antiquity' | 'classical' | 'medieval' | 'renaissance' | 'enlightenment'; color: string }[] = [
   { cutoff: -200, key: 'antiquity',   color: 'var(--theme-ocre)' },
-  { cutoff: 500,  key: 'classical',   color: 'var(--theme-salvia)' },
-  { cutoff: 1400, key: 'medieval',    color: 'var(--theme-pizarra)' },
+  { cutoff: 500,  key: 'classical',   color: 'var(--theme-canela)' },
+  { cutoff: 1400, key: 'medieval',    color: 'var(--theme-mora)' },
   { cutoff: 1700, key: 'renaissance', color: 'var(--theme-terracota)' },
   { cutoff: 1900, key: 'enlightenment', color: 'var(--theme-granada)' },
 ];

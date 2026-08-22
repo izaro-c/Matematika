@@ -30,15 +30,15 @@ function mix(color: string, bg: string, pct: number): string {
 
 export const DOMAIN_COLORS: Record<string, { bg: string; text: string; border: string }> = {
   ingeniería: { bg: mix('var(--theme-ocre)', 'var(--theme-lienzo)', 85), text: 'var(--theme-ocre)', border: mix('var(--theme-ocre)', 'transparent', 50) },
-  arquitectura: { bg: mix('var(--theme-pizarra)', 'var(--theme-lienzo)', 85), text: 'var(--theme-pizarra)', border: mix('var(--theme-pizarra)', 'transparent', 50) },
-  medicina: { bg: mix('var(--theme-salvia)', 'var(--theme-lienzo)', 85), text: 'var(--theme-salvia)', border: mix('var(--theme-salvia)', 'transparent', 50) },
+  arquitectura: { bg: mix('var(--theme-mora)', 'var(--theme-lienzo)', 85), text: 'var(--theme-mora)', border: mix('var(--theme-mora)', 'transparent', 50) },
+  medicina: { bg: mix('var(--theme-canela)', 'var(--theme-lienzo)', 85), text: 'var(--theme-canela)', border: mix('var(--theme-canela)', 'transparent', 50) },
   biología: { bg: mix('var(--theme-musgo)', 'var(--theme-lienzo)', 85), text: 'var(--theme-musgo)', border: mix('var(--theme-musgo)', 'transparent', 50) },
   economía: { bg: mix('var(--theme-ocre)', 'var(--theme-lienzo)', 85), text: 'var(--theme-ocre)', border: mix('var(--theme-ocre)', 'transparent', 50) },
   finanzas: { bg: mix('var(--theme-ocre)', 'var(--theme-lienzo)', 85), text: 'var(--theme-ocre)', border: mix('var(--theme-ocre)', 'transparent', 50) },
-  naturaleza: { bg: mix('var(--theme-salvia)', 'var(--theme-lienzo)', 85), text: 'var(--theme-salvia)', border: mix('var(--theme-salvia)', 'transparent', 50) },
+  naturaleza: { bg: mix('var(--theme-canela)', 'var(--theme-lienzo)', 85), text: 'var(--theme-canela)', border: mix('var(--theme-canela)', 'transparent', 50) },
   física: { bg: mix('var(--theme-pavo)', 'var(--theme-lienzo)', 85), text: 'var(--theme-pavo)', border: mix('var(--theme-pavo)', 'transparent', 50) },
-  astronomía: { bg: mix('var(--theme-pizarra)', 'var(--theme-lienzo)', 85), text: 'var(--theme-pizarra)', border: mix('var(--theme-pizarra)', 'transparent', 50) },
-  cartografía: { bg: mix('var(--theme-salvia)', 'var(--theme-lienzo)', 85), text: 'var(--theme-salvia)', border: mix('var(--theme-salvia)', 'transparent', 50) },
+  astronomía: { bg: mix('var(--theme-mora)', 'var(--theme-lienzo)', 85), text: 'var(--theme-mora)', border: mix('var(--theme-mora)', 'transparent', 50) },
+  cartografía: { bg: mix('var(--theme-canela)', 'var(--theme-lienzo)', 85), text: 'var(--theme-canela)', border: mix('var(--theme-canela)', 'transparent', 50) },
 };
 
 export interface ContentTypeStyle {

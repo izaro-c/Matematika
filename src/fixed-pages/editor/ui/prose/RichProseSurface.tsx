@@ -258,7 +258,7 @@ export function RichProseSurface({
       onKeyDown={handleKeyDown}
       onPaste={handlePaste}
       onClick={handleClick}
-      className={`prose prose-pizarra max-w-none font-serif text-sm leading-relaxed text-carbon outline-none focus:outline-none [&:empty]:before:pointer-events-none [&:empty]:before:text-carbon/30 [&:empty]:before:content-[attr(data-placeholder)] ${className}`}
+      className={`prose prose-mora max-w-none font-serif text-sm leading-relaxed text-carbon outline-none focus:outline-none [&:empty]:before:pointer-events-none [&:empty]:before:text-carbon/30 [&:empty]:before:content-[attr(data-placeholder)] ${className}`}
     />
   );
 }

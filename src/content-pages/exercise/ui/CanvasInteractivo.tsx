@@ -37,17 +37,17 @@ export const CanvasInteractivo: React.FC<CanvasInteractivoProps> = ({ id, title,
   });
 
   return (
-    <div className={`my-8 font-serif elegant-panel p-8 ${isCompleted ? 'bg-salvia/5 border-salvia/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-salvia)' : 'var(--page-accent)' } as React.CSSProperties}>
+    <div className={`my-8 font-serif elegant-panel p-8 ${isCompleted ? 'bg-canela/5 border-canela/30' : ''}`} style={{ '--hover-accent': isCompleted ? 'var(--theme-canela)' : 'var(--page-accent)' } as React.CSSProperties}>
       <h4 className="font-bold text-carbon mb-6 flex items-center justify-between z-30 relative text-lg">
         <span>{title || 'Lienzo Interactivo'}</span>
-        {isCompleted && <span className="text-salvia font-serif text-base">❦ Objetivo cumplido</span>}
+        {isCompleted && <span className="text-canela font-serif text-base">❦ Objetivo cumplido</span>}
       </h4>
           <div className="relative">
             {childWithProps}
             
             {/* Overlay if completed to prevent further interaction, optional */}
             {isCompleted && (
-              <div className="absolute inset-0 z-50 pointer-events-none border-2 border-salvia/20 rounded-none bg-salvia/[0.02]"></div>
+              <div className="absolute inset-0 z-50 pointer-events-none border-2 border-canela/20 rounded-none bg-canela/[0.02]"></div>
             )}
           </div>
     </div>

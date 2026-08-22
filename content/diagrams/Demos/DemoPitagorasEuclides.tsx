@@ -58,16 +58,16 @@ export const DemoPitagorasEuclides = () => {
       label: { strokeColor: theme.terracota, fontSize: 18, offset: [10, -15] },
     });
     polyABC.borders[1].setAttribute({
-      strokeColor: theme.pizarra,
+      strokeColor: theme.mora,
       name: 'c',
       withLabel: true,
-      label: { strokeColor: theme.pizarra, fontSize: 18, offset: [15, 15] },
+      label: { strokeColor: theme.mora, fontSize: 18, offset: [15, 15] },
     });
     polyABC.borders[2].setAttribute({
-      strokeColor: theme.salvia,
+      strokeColor: theme.canela,
       name: 'b',
       withLabel: true,
-      label: { strokeColor: theme.salvia, fontSize: 18, offset: [-20, 10] },
+      label: { strokeColor: theme.canela, fontSize: 18, offset: [-20, 10] },
     });
     const rightAngle = createRightAngleMarker(board, [B, C, A], {}, theme);
 
@@ -80,9 +80,9 @@ export const DemoPitagorasEuclides = () => {
     }, theme);
     const H = createPoint(board, [() => -A.Y(), 0], { name: 'H', visible: false, target: false }, theme);
     const sqB = createPolygon(board, [C, A, K, H], {
-      fillColor: theme.salvia,
+      fillColor: theme.canela,
       fillOpacity: 0.2,
-      borders: { strokeColor: theme.salvia, strokeWidth: 2 },
+      borders: { strokeColor: theme.canela, strokeWidth: 2 },
       vertices: { visible: false },
     }, theme);
 
@@ -116,9 +116,9 @@ export const DemoPitagorasEuclides = () => {
       strokeColor: theme.carbon,
     }, theme);
     const sqC = createPolygon(board, [A, B, E, D], {
-      fillColor: theme.pizarra,
+      fillColor: theme.mora,
       fillOpacity: 0.2,
-      borders: { strokeColor: theme.pizarra, strokeWidth: 2 },
+      borders: { strokeColor: theme.mora, strokeWidth: 2 },
       vertices: { visible: false },
     }, theme);
 
@@ -134,9 +134,9 @@ export const DemoPitagorasEuclides = () => {
     }, theme);
 
     const rectADML = createPolygon(board, [A, D, M, L], {
-      fillColor: theme.salvia,
+      fillColor: theme.canela,
       fillOpacity: 0,
-      borders: { strokeColor: theme.salvia, strokeWidth: 2, visible: false },
+      borders: { strokeColor: theme.canela, strokeWidth: 2, visible: false },
       vertices: { visible: false },
     }, theme);
     const rectBEML = createPolygon(board, [B, E, M, L], {
@@ -152,13 +152,13 @@ export const DemoPitagorasEuclides = () => {
     const lineAF = createSegment(board, [A, F], { strokeColor: theme.carbon, strokeWidth: 2, dash: 1, visible: false }, theme);
 
     const triACD = createPolygon(board, [A, C, D], {
-      fillColor: theme.salvia,
+      fillColor: theme.canela,
       fillOpacity: 0,
       borders: { strokeWidth: 0 },
       vertices: { visible: false },
     }, theme);
     const triAKB = createPolygon(board, [A, K, B], {
-      fillColor: theme.salvia,
+      fillColor: theme.canela,
       fillOpacity: 0,
       borders: { strokeWidth: 0 },
       vertices: { visible: false },

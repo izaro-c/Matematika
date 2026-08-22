@@ -74,8 +74,8 @@ export const DiagramReferencesPanel: React.FC<DiagramReferencesPanelProps> = ({
                     u.referenceKind === 'Simulation'
                       ? 'bg-pavo/15 text-pavo'
                       : u.referenceKind === 'Diagram'
-                        ? 'bg-salvia/15 text-salvia'
-                        : 'bg-pizarra/15 text-pizarra'
+                        ? 'bg-canela/15 text-canela'
+                        : 'bg-mora/15 text-mora'
                   }`}>
                     {u.referenceKind}
                   </span>

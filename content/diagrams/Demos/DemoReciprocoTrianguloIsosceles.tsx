@@ -4,8 +4,8 @@
  */
 export const DemoReciprocoTrianguloIsosceles = () => {
   return (
-    <div className="w-full h-full min-h-[350px] relative bg-lienzo/40 border border-pizarra/10 rounded-sm overflow-hidden flex items-center justify-center">
-      <span className="text-pizarra/30 font-serif italic text-sm">Diagrama en construcción</span>
+    <div className="w-full h-full min-h-[350px] relative bg-lienzo/40 border border-mora/10 rounded-sm overflow-hidden flex items-center justify-center">
+      <span className="text-mora/30 font-serif italic text-sm">Diagrama en construcción</span>
     </div>
   );
 };

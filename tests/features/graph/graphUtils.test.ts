@@ -42,8 +42,8 @@ describe('knowledge graph presentation', () => {
 
     expect(new Set(colors).size).toBe(colors.length);
     expect(CONTENT_TYPE_CONFIG.definicion.graphColor).toBe('var(--theme-musgo)');
-    expect(CONTENT_TYPE_CONFIG.corolario.graphColor).toBe('var(--theme-salvia)');
+    expect(CONTENT_TYPE_CONFIG.corolario.graphColor).toBe('var(--theme-canela)');
     expect(CONTENT_TYPE_CONFIG.lema.graphColor).toBe('var(--theme-granada)');
-    expect(CONTENT_TYPE_CONFIG.matematico.graphColor).toBe('var(--theme-pizarra)');
+    expect(CONTENT_TYPE_CONFIG.matematico.graphColor).toBe('var(--theme-mora)');
   });
 });

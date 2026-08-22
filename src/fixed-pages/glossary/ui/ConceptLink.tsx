@@ -28,8 +28,8 @@ const isIdValid = (id: string, lang?: string): boolean => {
 
 const COLOR_MAP: Record<string, string> = {
   'terracota': 'var(--theme-terracota)',
-  'salvia': 'var(--theme-salvia)',
-  'pizarra': 'var(--theme-pizarra)',
+  'canela': 'var(--theme-canela)',
+  'mora': 'var(--theme-mora)',
   'carbon': 'var(--theme-carbon)',
   'granada': 'var(--theme-granada)',
   'ocre': 'var(--theme-ocre)',
@@ -66,7 +66,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
   };
 
   // Estilos visuales de interactividad si tiene highlightTarget
-  const cssColor = highlightColor ? (COLOR_MAP[highlightColor] ?? COLOR_MAP['salvia']) : undefined;
+  const cssColor = highlightColor ? (COLOR_MAP[highlightColor] ?? COLOR_MAP['canela']) : undefined;
   const highlightStyles: React.CSSProperties = cssColor ? {
     borderColor: cssColor,
     backgroundColor: `color-mix(in srgb, ${cssColor} 12%, transparent)`,
@@ -113,7 +113,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
       ].join(' ')}
     >
       {children}
-      {isRead && <span className="ml-[2px] text-salvia opacity-80" style={{ fontSize: '0.85em' }}>✓</span>}
+      {isRead && <span className="ml-[2px] text-canela opacity-80" style={{ fontSize: '0.85em' }}>✓</span>}
     </span>
   );
 };

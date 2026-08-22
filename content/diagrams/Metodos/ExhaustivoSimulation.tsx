@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 const CASES = [
   { id: 'pp', label: 'a ≥ 0, b ≥ 0', color: 'var(--theme-terracota)', x: 1, y: 1 },
-  { id: 'pn', label: 'a ≥ 0, b < 0', color: 'var(--theme-salvia)', x: 2, y: 1 },
-  { id: 'np', label: 'a < 0, b ≥ 0', color: 'var(--theme-pizarra)', x: 1, y: 2 },
+  { id: 'pn', label: 'a ≥ 0, b < 0', color: 'var(--theme-canela)', x: 2, y: 1 },
+  { id: 'np', label: 'a < 0, b ≥ 0', color: 'var(--theme-mora)', x: 1, y: 2 },
   { id: 'nn', label: 'a < 0, b < 0', color: 'var(--theme-pavo)', x: 2, y: 2 },
 ];
 
@@ -69,7 +69,7 @@ export const ExhaustivoSimulation = () => {
                     <span className="text-sm font-bold animate-fade-in" style={{ color: c.color }}>✓ Probado</span>
                   )}
                   {!done && (
-                    <span className="text-[9px] text-pizarra/25">Clic para probar</span>
+                    <span className="text-[9px] text-mora/25">Clic para probar</span>
                   )}
                 </div>
               );
@@ -91,10 +91,10 @@ export const ExhaustivoSimulation = () => {
       {/* Mensaje */}
       <div className="h-8 flex items-center justify-center mt-2">
         {proven.size === 0 && (
-          <p className="text-sm text-pizarra/35 italic">Prueba cada caso por separado</p>
+          <p className="text-sm text-mora/35 italic">Prueba cada caso por separado</p>
         )}
         {proven.size > 0 && !allDone && (
-          <p className="text-sm text-pizarra/50">{proven.size} de 4 casos probados</p>
+          <p className="text-sm text-mora/50">{proven.size} de 4 casos probados</p>
         )}
         {allDone && (
           <p className="text-sm text-carbon font-bold">✓ Todos los casos probados. La afirmación es cierta.</p>
@@ -103,12 +103,12 @@ export const ExhaustivoSimulation = () => {
 
       {/* Botón */}
       {allDone && (
-        <button onClick={reset} className="mt-1 px-4 py-2 text-sm rounded-sm font-serif border border-pizarra/12 text-pizarra/50 hover:text-pizarra hover:bg-pizarra/5 transition-all">
+        <button onClick={reset} className="mt-1 px-4 py-2 text-sm rounded-sm font-serif border border-mora/12 text-mora/50 hover:text-mora hover:bg-mora/5 transition-all">
           ⟳ Reiniciar
         </button>
       )}
 
-      <p className="text-[10px] text-pizarra/25 text-center max-w-[260px] leading-relaxed mt-2">
+      <p className="text-[10px] text-mora/25 text-center max-w-[260px] leading-relaxed mt-2">
         Si los casos cubren todas las posibilidades y cada uno se prueba, la afirmación queda demostrada.
       </p>
     </div>

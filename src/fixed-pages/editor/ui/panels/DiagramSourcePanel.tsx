@@ -63,7 +63,7 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
             key={page.path}
             type="button"
             onClick={() => openFile(page.path)}
-            className="block w-full rounded border border-carbon/10 bg-carbon/5 px-3 py-2 text-left hover:border-salvia/30 hover:bg-salvia/5 cursor-pointer"
+            className="block w-full rounded border border-carbon/10 bg-carbon/5 px-3 py-2 text-left hover:border-canela/30 hover:bg-canela/5 cursor-pointer"
           >
             <span className="block truncate font-serif text-xs font-bold text-carbon">{formatFileName(page.name)}</span>
             <span className="mt-1 block truncate font-mono text-[9px] text-carbon/45">{page.path}</span>
@@ -92,7 +92,7 @@ export const DiagramSourcePanel: React.FC<DiagramSourcePanelProps> = ({
               setActiveDiagramIndex(null);
               setDiagramBuilderOpen(true);
             }}
-            className="mb-3 w-full rounded bg-salvia/10 px-3 py-2 text-xs font-bold text-salvia hover:bg-salvia/20 cursor-pointer"
+            className="mb-3 w-full rounded bg-canela/10 px-3 py-2 text-xs font-bold text-canela hover:bg-canela/20 cursor-pointer"
           >
             {capability === 'visual-exact' ? 'Abrir edición visual exacta' : 'Abrir código y vista previa'}
           </button>

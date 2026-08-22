@@ -38,7 +38,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
       id: p.id,
       label: p.label || p.id,
       type: 'Punto',
-      color: p.color || 'salvia',
+      color: p.color || 'canela',
       target: p.target !== false,
       groupIds: p.groupIds || [],
       kind: 'point' as const,
@@ -47,7 +47,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
       id: e.id,
       label: e.label || e.id,
       type: e.kind,
-      color: e.color || 'salvia',
+      color: e.color || 'canela',
       target: e.target !== false,
       groupIds: e.groupIds || [],
       kind: 'element' as const,
@@ -102,7 +102,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
         <div className="flex items-center justify-between p-4 border-b border-carbon/10 bg-carbon/5">
           <div>
             <h2 className="font-bold text-base text-carbon">Gestor de Enlaces y Referencias MDX</h2>
-            <p className="text-xs text-pizarra/70 italic">
+            <p className="text-xs text-mora/70 italic">
               {sandboxMode
                 ? 'Sandbox: solo copia snippets JSX al portapapeles; no vincula páginas MDX del corpus.'
                 : 'Configura qué elementos se pueden referenciar y edita sus IDs de grupos para intercalar en lecciones.'}
@@ -126,7 +126,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
               <button
                 type="button"
                 onClick={() => copyToClipboard(componentSnippet, 'comp')}
-                className="px-2.5 py-1 bg-salvia text-lienzo rounded-lg text-[11px] font-bold hover:bg-salvia/90 transition-all cursor-pointer shadow-2xs"
+                className="px-2.5 py-1 bg-canela text-lienzo rounded-lg text-[11px] font-bold hover:bg-canela/90 transition-all cursor-pointer shadow-2xs"
               >
                 {copiedTargetId === 'comp' ? '¡Copiado!' : 'Copiar JSX'}
               </button>
@@ -146,7 +146,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
             <h4 className="font-bold text-sm text-carbon mb-1">
               Elementos Destacables en Texto (`InteractiveElement`)
             </h4>
-            <p className="text-[11px] text-pizarra/70 italic mb-2">
+            <p className="text-[11px] text-mora/70 italic mb-2">
               Edita la referenciabilidad (`target`) y los `groupIds` de cada objeto.
             </p>
             <div className="space-y-2 max-h-80 overflow-y-auto p-2 bg-carbon/5 rounded-xl border border-carbon/10">
@@ -156,7 +156,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
                   <div
                     key={t.id}
                     className={`p-2.5 rounded-xl border transition-all bg-carbon/5 ${
-                      t.target ? 'border-salvia/30 shadow-2xs' : 'border-carbon/10 opacity-70'
+                      t.target ? 'border-canela/30 shadow-2xs' : 'border-carbon/10 opacity-70'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1.5">
@@ -165,10 +165,10 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
                           type="checkbox"
                           checked={t.target}
                           onChange={() => handleToggleTarget(t.id, t.kind, t.target)}
-                          className="rounded text-salvia border-carbon/20 focus:ring-salvia cursor-pointer"
+                          className="rounded text-canela border-carbon/20 focus:ring-canela cursor-pointer"
                           title="Permitir referencia interactiva"
                         />
-                        <span className="font-mono font-bold text-xs text-salvia">{t.id}</span>
+                        <span className="font-mono font-bold text-xs text-canela">{t.id}</span>
                         <span className="text-carbon/80 truncate font-bold">({t.label})</span>
                         <span className="text-[10px] font-mono text-carbon/40 bg-carbon/5 px-1.5 py-0.5 rounded">
                           {t.type}
@@ -177,7 +177,7 @@ export const MdxLinkModal: React.FC<MdxLinkModalProps> = ({
                       <button
                         type="button"
                         onClick={() => copyToClipboard(snippet, t.id)}
-                        className="px-2.5 py-1 bg-carbon/10 text-carbon hover:bg-salvia hover:text-lienzo rounded-lg text-[10px] font-bold transition-all cursor-pointer"
+                        className="px-2.5 py-1 bg-carbon/10 text-carbon hover:bg-canela hover:text-lienzo rounded-lg text-[10px] font-bold transition-all cursor-pointer"
                       >
                         {copiedTargetId === t.id ? '¡Copiado!' : 'Copiar Elemento'}
                       </button>

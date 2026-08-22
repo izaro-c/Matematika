@@ -24,7 +24,7 @@ interface WorkbenchStepsEditorProps {
 
 const EMPHASIS_COLORS: Record<string, { label: string; bg: string; text: string }> = {
   none: { label: 'Normal', bg: 'bg-carbon/10 text-carbon/70', text: 'text-carbon/60' },
-  primary: { label: 'Principal', bg: 'bg-salvia text-lienzo', text: 'text-salvia' },
+  primary: { label: 'Principal', bg: 'bg-canela text-lienzo', text: 'text-canela' },
   secondary: { label: 'Secundario', bg: 'bg-terracota text-lienzo', text: 'text-terracota' },
 };
 
@@ -116,7 +116,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
         <button
           type="button"
           onClick={onAddStep}
-          className="flex items-center space-x-1 px-3 py-1.5 bg-salvia text-lienzo rounded-lg font-bold shadow-2xs hover:bg-salvia/90 transition-all cursor-pointer"
+          className="flex items-center space-x-1 px-3 py-1.5 bg-canela text-lienzo rounded-lg font-bold shadow-2xs hover:bg-canela/90 transition-all cursor-pointer"
         >
           <IconPlus className="w-3.5 h-3.5" />
           <span>Añadir Paso</span>
@@ -133,7 +133,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
             <select
               value={effectiveBulkId}
               onChange={e => setBulkObjectId(e.target.value)}
-              className="flex-1 bg-lienzo border border-carbon/20 rounded-lg px-2.5 py-1.5 text-xs text-carbon focus:border-salvia focus:outline-none"
+              className="flex-1 bg-lienzo border border-carbon/20 rounded-lg px-2.5 py-1.5 text-xs text-carbon focus:border-canela focus:outline-none"
             >
               {allObjects.map(obj => (
                 <option key={obj.id} value={obj.id}>
@@ -146,7 +146,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
               onClick={() => {
                 if (effectiveBulkId) onToggleObjectInAllSteps(effectiveBulkId, true);
               }}
-              className="px-2.5 py-1.5 bg-salvia text-lienzo rounded-lg font-bold text-[10px] hover:bg-salvia/90 transition-colors cursor-pointer"
+              className="px-2.5 py-1.5 bg-canela text-lienzo rounded-lg font-bold text-[10px] hover:bg-canela/90 transition-colors cursor-pointer"
               title="Mostrar en todos los pasos"
             >
               Mostrar
@@ -171,7 +171,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
           <button
             type="button"
             onClick={onAddStep}
-            className="mt-2 text-salvia underline font-bold cursor-pointer"
+            className="mt-2 text-canela underline font-bold cursor-pointer"
           >
             Crear el primer paso
           </button>
@@ -186,7 +186,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                 key={st.id || `step-${idx}`}
                 className={`p-3 rounded-xl border transition-all ${
                   isActive
-                    ? 'border-salvia bg-salvia/10 shadow-xs ring-1 ring-salvia'
+                    ? 'border-canela bg-canela/10 shadow-xs ring-1 ring-canela'
                     : 'border-carbon/15 bg-lienzo/40 hover:border-carbon/30'
                 }`}
               >
@@ -201,7 +201,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                       type="text"
                       value={st.label || ''}
                       onChange={(e) => onUpdateStep(idx, { label: e.target.value })}
-                      className="font-bold text-xs bg-transparent border-b border-transparent hover:border-carbon/20 focus:border-salvia focus:outline-none px-1 py-0.5 text-carbon truncate"
+                      className="font-bold text-xs bg-transparent border-b border-transparent hover:border-carbon/20 focus:border-canela focus:outline-none px-1 py-0.5 text-carbon truncate"
                       placeholder={`Paso ${idx + 1}`}
                     />
                   </div>
@@ -228,7 +228,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                     <button
                       type="button"
                       onClick={() => handleDuplicateStep(st.id)}
-                      className="p-1 text-salvia hover:bg-salvia/10 rounded cursor-pointer"
+                      className="p-1 text-canela hover:bg-canela/10 rounded cursor-pointer"
                       title="Duplicar paso"
                     >
                       <IconCopy className="w-3.5 h-3.5" />
@@ -249,7 +249,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                       type="button"
                       onClick={() => onSelectStepIndex(isActive ? null : idx)}
                       className={`px-2 py-0.5 rounded-md text-[10px] font-bold cursor-pointer ${
-                        isActive ? 'bg-salvia text-lienzo' : 'bg-carbon/10 text-carbon hover:bg-carbon/20'
+                        isActive ? 'bg-canela text-lienzo' : 'bg-carbon/10 text-carbon hover:bg-carbon/20'
                       }`}
                     >
                       {isActive ? 'Viendo' : 'Ver'}
@@ -269,7 +269,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                 <textarea
                   value={st.description || ''}
                   onChange={(e) => onUpdateStep(idx, { description: e.target.value })}
-                  className="w-full bg-lienzo border border-carbon/15 rounded-lg p-2 text-xs text-carbon focus:ring-1 focus:ring-salvia mb-2 placeholder-carbon/30"
+                  className="w-full bg-lienzo border border-carbon/15 rounded-lg p-2 text-xs text-carbon focus:ring-1 focus:ring-canela mb-2 placeholder-carbon/30"
                   rows={2}
                   placeholder="Descripción explicativa del paso..."
                 />
@@ -286,8 +286,8 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                           onClick={() => onTogglePickingStepIndex(pickingStepIndex === idx ? null : idx)}
                           className={`px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition-all border ${
                             pickingStepIndex === idx
-                              ? 'bg-salvia text-lienzo border-salvia shadow-2xs ring-1 ring-salvia/50 animate-pulse'
-                              : 'bg-lienzo text-carbon/80 border-carbon/20 hover:border-salvia hover:text-salvia'
+                              ? 'bg-canela text-lienzo border-canela shadow-2xs ring-1 ring-canela/50 animate-pulse'
+                              : 'bg-lienzo text-carbon/80 border-carbon/20 hover:border-canela hover:text-canela'
                           }`}
                           title="Hacer clic en elementos del lienzo para alternar su visibilidad en este paso"
                         >
@@ -305,7 +305,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                               });
                               onUpdateStep(idx, nextStep);
                             }}
-                            className="px-1.5 py-0.5 bg-salvia/10 text-salvia hover:bg-salvia/20 rounded text-[9px] font-bold cursor-pointer transition-all border border-salvia/30"
+                            className="px-1.5 py-0.5 bg-canela/10 text-canela hover:bg-canela/20 rounded text-[9px] font-bold cursor-pointer transition-all border border-canela/30"
                             title="Mostrar en este paso los elementos seleccionados en lienzo"
                           >
                             + Mostrar sel. ({selectedIds.length})
@@ -340,7 +340,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                         <div
                           key={obj.id}
                           className={`flex items-center space-x-1 bg-lienzo px-2 py-0.5 rounded-md border text-[10px] ${
-                            isCanvasSelected ? 'border-salvia ring-1 ring-salvia/60' : 'border-carbon/15'
+                            isCanvasSelected ? 'border-canela ring-1 ring-canela/60' : 'border-carbon/15'
                           }`}
                         >
                           <button
@@ -350,7 +350,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                               onUpdateStep(idx, syncStepObjectVisibility(st, obj.id, !isVis));
                               onSelectObjects?.([obj.id]);
                             }}
-                            className={`font-mono font-bold cursor-pointer ${isVisible ? 'text-salvia' : 'text-carbon/30 line-through'}`}
+                            className={`font-mono font-bold cursor-pointer ${isVisible ? 'text-canela' : 'text-carbon/30 line-through'}`}
                           >
                             {obj.label}
                           </button>
@@ -371,9 +371,9 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                   </div>
                 </div>
                 {isActive && selectedObject && (
-                  <div className="mt-2 rounded-xl border border-salvia/25 bg-salvia/5 p-2.5">
+                  <div className="mt-2 rounded-xl border border-canela/25 bg-canela/5 p-2.5">
                     <div className="mb-2 flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-salvia">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-canela">
                         Apariencia de {selectedObject.label || selectedObject.id}
                       </span>
                       <label className="flex items-center gap-1 text-[10px] font-bold text-carbon cursor-pointer">
@@ -389,7 +389,7 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                               },
                             },
                           })}
-                          className="rounded text-salvia focus:ring-salvia cursor-pointer"
+                          className="rounded text-canela focus:ring-canela cursor-pointer"
                         />
                         Interactivo
                       </label>

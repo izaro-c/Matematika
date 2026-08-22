@@ -77,7 +77,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
     if (field.type === 'select') {
       return (
         <select
-          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-2 text-xs font-sans text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 disabled:bg-carbon/5 cursor-pointer"
+          className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-2 text-xs font-sans text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 disabled:bg-carbon/5 cursor-pointer"
           value={String(value)}
           disabled={field.readonly || disabled}
           onChange={(e) => onChange(field.key, e.target.value)}
@@ -93,7 +93,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
     if (field.type === 'textarea') {
       return (
         <textarea
-          className="min-h-[72px] w-full resize-y rounded-lg border border-carbon/15 bg-lienzo p-2.5 text-xs font-serif text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 disabled:bg-carbon/5 placeholder-carbon/25"
+          className="min-h-[72px] w-full resize-y rounded-lg border border-carbon/15 bg-lienzo p-2.5 text-xs font-serif text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 disabled:bg-carbon/5 placeholder-carbon/25"
           value={String(value)}
           disabled={field.readonly || disabled}
           placeholder={field.placeholder || 'Detalles del campo...'}
@@ -113,14 +113,14 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
               items.map((item, idx) => (
                 <span
                   key={`${item}-${idx}`}
-                  className="inline-flex items-center gap-1 rounded-md bg-salvia/10 border border-salvia/20 px-2 py-0.5 text-xs font-medium text-salvia"
+                  className="inline-flex items-center gap-1 rounded-md bg-canela/10 border border-canela/20 px-2 py-0.5 text-xs font-medium text-canela"
                 >
                   <span className="truncate max-w-[140px]">{item}</span>
                   {!field.readonly && !disabled && (
                     <button
                       type="button"
                       onClick={() => handleArrayRemove(field.key, idx)}
-                      className="text-salvia/70 hover:text-salvia font-bold ml-0.5 cursor-pointer"
+                      className="text-canela/70 hover:text-canela font-bold ml-0.5 cursor-pointer"
                       title="Eliminar"
                     >
                       ×
@@ -134,7 +134,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
             <div className="flex gap-1.5">
               <input
                 type="text"
-                className="flex-1 rounded-md border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon placeholder-carbon/30 focus:border-salvia focus:outline-none focus:ring-1 focus:ring-salvia/30"
+                className="flex-1 rounded-md border border-carbon/15 bg-lienzo px-2.5 py-1 text-xs text-carbon placeholder-carbon/30 focus:border-canela focus:outline-none focus:ring-1 focus:ring-canela/30"
                 placeholder={field.placeholder || 'Agregar ID o valor...'}
                 value={newArrayItem[field.key] || ''}
                 onChange={(e) => setNewArrayItem(prev => ({ ...prev, [field.key]: e.target.value }))}
@@ -148,7 +148,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
               <button
                 type="button"
                 onClick={() => handleArrayAdd(field.key)}
-                className="rounded-md border border-salvia/30 bg-salvia/10 px-2.5 py-1 text-xs font-bold text-salvia hover:bg-salvia/20 transition-colors cursor-pointer"
+                className="rounded-md border border-canela/30 bg-canela/10 px-2.5 py-1 text-xs font-bold text-canela hover:bg-canela/20 transition-colors cursor-pointer"
               >
                 + Añadir
               </button>
@@ -167,12 +167,12 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
           onClick={() => onChange(field.key, !boolVal)}
           className={`flex w-full items-center justify-between rounded-lg border px-3 py-2 transition-all cursor-pointer ${
             boolVal
-              ? 'border-salvia bg-salvia/10 text-salvia font-bold'
+              ? 'border-canela bg-canela/10 text-canela font-bold'
               : 'border-carbon/15 bg-lienzo text-carbon/60 hover:bg-carbon/5'
           }`}
         >
           <span className="text-xs">{boolVal ? 'Activado' : 'Desactivado'}</span>
-          <span className={`h-3.5 w-3.5 rounded-full border ${boolVal ? 'bg-salvia border-salvia' : 'bg-transparent border-carbon/30'}`} />
+          <span className={`h-3.5 w-3.5 rounded-full border ${boolVal ? 'bg-canela border-canela' : 'bg-transparent border-carbon/30'}`} />
         </button>
       );
     }
@@ -180,7 +180,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
     return (
       <input
         type="text"
-        className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-2 text-xs font-sans text-carbon shadow-2xs transition-colors focus:border-salvia focus:outline-none focus:ring-2 focus:ring-salvia/20 disabled:bg-carbon/5 placeholder-carbon/25"
+        className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-2 text-xs font-sans text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20 disabled:bg-carbon/5 placeholder-carbon/25"
         value={String(value)}
         disabled={field.readonly || disabled}
         placeholder={field.placeholder || ''}
@@ -236,9 +236,9 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
       <div className="flex items-center justify-between border-b border-carbon/15 pb-3">
         <div>
           <h3 className="font-serif text-base font-bold text-carbon">Metadatos del Documento</h3>
-          <p className="text-xs italic text-carbon/50">Esquema oficial para <span className="font-bold text-salvia">{type || 'concepto'}</span></p>
+          <p className="text-xs italic text-carbon/50">Esquema oficial para <span className="font-bold text-canela">{type || 'concepto'}</span></p>
         </div>
-        <span className="ac-label ac-label--sm ac-label--salvia select-none uppercase tracking-wider">
+        <span className="ac-label ac-label--sm ac-label--canela select-none uppercase tracking-wider">
           {type || 'General'}
         </span>
       </div>
@@ -266,10 +266,10 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
             {customKeys.length > 0 && (
               <div className="space-y-2">
                 {customKeys.map(key => (
-                  <div key={key} className="flex items-center gap-2 rounded-lg border border-salvia/20 bg-salvia/5 p-2">
-                    <span className="ac-label ac-label--xs ac-label--salvia shrink-0">{key}</span>
+                  <div key={key} className="flex items-center gap-2 rounded-lg border border-canela/20 bg-canela/5 p-2">
+                    <span className="ac-label ac-label--xs ac-label--canela shrink-0">{key}</span>
                     <input
-                      className="flex-1 rounded-md border border-salvia/20 bg-lienzo px-2.5 py-1 text-xs text-carbon focus:border-salvia focus:outline-none"
+                      className="flex-1 rounded-md border border-canela/20 bg-lienzo px-2.5 py-1 text-xs text-carbon focus:border-canela focus:outline-none"
                       value={Array.isArray(metadata[key]) ? (metadata[key] as string[]).join(', ') : String(metadata[key] || '')}
                       onChange={(e) => {
                         const raw = e.target.value;
@@ -291,7 +291,7 @@ export const MetadataInspector: React.FC<MetadataInspectorProps> = ({
 
             <div className="flex gap-2 pt-1">
               <input
-                className="flex-1 rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon placeholder-carbon/30 focus:border-salvia focus:outline-none focus:ring-1 focus:ring-salvia/30"
+                className="flex-1 rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon placeholder-carbon/30 focus:border-canela focus:outline-none focus:ring-1 focus:ring-canela/30"
                 value={customFieldKey}
                 placeholder="Nombre del nuevo campo..."
                 onChange={(e) => setCustomFieldKey(e.target.value)}

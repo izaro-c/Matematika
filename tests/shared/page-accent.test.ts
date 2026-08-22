@@ -26,9 +26,9 @@ describe('page accents', () => {
   it('uses only canonical Arts & Crafts theme variables', () => {
     const canonicalTokens = new Set([
       'var(--theme-carbon)',
-      'var(--theme-salvia)',
+      'var(--theme-canela)',
       'var(--theme-terracota)',
-      'var(--theme-pizarra)',
+      'var(--theme-mora)',
       'var(--theme-ocre)',
       'var(--theme-pavo)',
       'var(--theme-granada)',

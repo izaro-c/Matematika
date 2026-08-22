@@ -145,7 +145,7 @@ export const Incidence4Spec = createDiagramSpec(
     {
       "id": "polyTriangulo",
       "label": "Triángulo",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 1000,
       "visible": true,

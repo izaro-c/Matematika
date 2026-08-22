@@ -3,9 +3,9 @@
 export interface ThemeColors {
   carbon: string;
   terracota: string;
-  salvia: string;
+  canela: string;
   lienzo: string;
-  pizarra: string;
+  mora: string;
   ocre: string;
   pavo: string;
   granada: string;

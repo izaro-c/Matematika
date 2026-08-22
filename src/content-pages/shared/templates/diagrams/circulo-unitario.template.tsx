@@ -31,11 +31,11 @@ export const TemplateComponent = () => {
         // Proyección sobre el eje X (Coseno)
         els.pCos = createPoint(board, [() => els.pAngle.X(), 0], { name: '', visible: false }, theme);
         els.cosSeg = board.create('segment', [els.O, els.pCos], {
-          strokeColor: theme.pizarra,
+          strokeColor: theme.mora,
           strokeWidth: 3,
           name: 'cos(θ)',
           withLabel: true,
-          label: { position: 'bot', offset: [0, -10], strokeColor: theme.pizarra }
+          label: { position: 'bot', offset: [0, -10], strokeColor: theme.mora }
         });
 
         // Proyección sobre el eje Y (Seno)

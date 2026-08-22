@@ -182,7 +182,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
         onClick={event => onSelectObjects([id], event.ctrlKey || event.metaKey || event.shiftKey)}
         className={`flex items-center justify-between p-2 rounded-xl border transition-all cursor-pointer ${
           isSelected
-            ? 'border-salvia bg-salvia/10 text-carbon font-bold shadow-2xs'
+            ? 'border-canela bg-canela/10 text-carbon font-bold shadow-2xs'
             : 'border-carbon/10 hover:border-carbon/25 hover:bg-carbon/5 bg-lienzo'
         }`}
       >
@@ -215,7 +215,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
                 onToggleLock();
               }}
               className={`p-1 rounded text-carbon/50 hover:text-carbon hover:bg-carbon/10 cursor-pointer ${
-                locked ? 'text-salvia opacity-100 font-bold' : 'opacity-40'
+                locked ? 'text-canela opacity-100 font-bold' : 'opacity-40'
               }`}
               title={locked ? 'Desbloquear' : 'Bloquear (fijar)'}
             >
@@ -249,7 +249,7 @@ export const WorkbenchSceneTree: React.FC<WorkbenchSceneTreeProps> = ({
           <h3 className="font-serif text-base font-bold text-carbon">Objetos de la Escena</h3>
           <p className="text-xs italic text-carbon/50">Elementos e iteraciones en el lienzo</p>
         </div>
-        <span className="ac-label ac-label--sm ac-label--salvia select-none uppercase tracking-wider">
+        <span className="ac-label ac-label--sm ac-label--canela select-none uppercase tracking-wider">
           {totalObjects} {totalObjects === 1 ? 'Objeto' : 'Objetos'}
         </span>
       </div>

@@ -10,8 +10,8 @@ interface VisualBindProps {
 
 const COLOR_MAP: Record<string, string> = {
   'terracota': 'var(--theme-terracota)',
-  'salvia': 'var(--theme-salvia)',
-  'pizarra': 'var(--theme-pizarra)',
+  'canela': 'var(--theme-canela)',
+  'mora': 'var(--theme-mora)',
   'carbon': 'var(--theme-carbon)',
   'granada': 'var(--theme-granada)',
   'ocre': 'var(--theme-ocre)',
@@ -19,10 +19,10 @@ const COLOR_MAP: Record<string, string> = {
   'musgo': 'var(--theme-musgo)',
 };
 
-export const VisualBind: React.FC<VisualBindProps> = ({ element, color = 'salvia', children }) => {
+export const VisualBind: React.FC<VisualBindProps> = ({ element, color = 'canela', children }) => {
   const setVariable = useMathStore(state => state.setVariable);
   const targetRegistry = useDiagramTargetRegistry();
-  const cssColor = COLOR_MAP[color] ?? COLOR_MAP['salvia'];
+  const cssColor = COLOR_MAP[color] ?? COLOR_MAP['canela'];
   const activate = () => setVariable('highlight', targetRegistry.resolve(element));
 
   return (

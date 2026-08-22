@@ -348,7 +348,7 @@ export const DemoCongruenciaALASpec = createDiagramSpec(
     {
       "id": "Cstar",
       "label": "C*",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 1880,
       "visible": true,
@@ -451,7 +451,7 @@ export const DemoCongruenciaALASpec = createDiagramSpec(
     {
       "id": "triConstructed",
       "label": "Triángulo A'B'C*",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 1910,
       "visible": true,
@@ -577,7 +577,7 @@ export const DemoCongruenciaALASpec = createDiagramSpec(
     {
       "id": "A2Cstar",
       "label": "A'C*",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 1950,
       "visible": true,
@@ -606,7 +606,7 @@ export const DemoCongruenciaALASpec = createDiagramSpec(
     {
       "id": "rayAC",
       "label": "Semirrecta A'C*",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 1960,
       "visible": true,

@@ -53,7 +53,7 @@
   ],
   "elements": [
     {
-      "id": "polyABC", "label": "Triángulo ABC", "kind": "polygon", "refs": ["pA", "pB", "pC"], "color": "salvia",
+      "id": "polyABC", "label": "Triángulo ABC", "kind": "polygon", "refs": ["pA", "pB", "pC"], "color": "canela",
       "layerId": "geometry", "order": 100, "visible": true, "locked": false, "groupIds": ["triangle-group"], "target": true,
       "selection": { "selectable": true, "ariaLabel": "Triángulo ABC", "role": "primary" }
     },

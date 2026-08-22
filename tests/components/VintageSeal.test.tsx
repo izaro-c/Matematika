@@ -19,7 +19,7 @@ describe('VintageSeal component', () => {
     expect(seal.textContent).toContain('VERIFICADO');
   });
 
-  it('renders exercise completed seal with salvia theme and animation class', () => {
+  it('renders exercise completed seal with canela theme and animation class', () => {
     render(
       <I18nProvider>
         <VintageSeal type="exercise" animated={true} size="sm" />
@@ -27,7 +27,7 @@ describe('VintageSeal component', () => {
     );
 
     const seal = screen.getByRole('status');
-    expect(seal.className).toContain('vintage-seal--salvia');
+    expect(seal.className).toContain('vintage-seal--canela');
     expect(seal.className).toContain('vintage-seal--sm');
     expect(seal.className).toContain('vintage-seal--animated');
     expect(seal.textContent).toContain('EJERCICIO');

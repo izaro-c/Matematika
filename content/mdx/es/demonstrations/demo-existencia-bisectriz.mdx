@@ -28,7 +28,7 @@ import { DemoExistenciaBisectriz } from "@content/diagrams/Demos/DemoExistenciaB
 <ProofStep number={1} title="Puntos equidistantes sobre los lados" target={["angulo-aob", "punto-c", "punto-d"]} leanBlocks={metadata.stepTacticMap["1"]}>
 Por hipótesis, sea <InteractiveElement target="angulo-aob" color="carbon">$\angle AOB$</InteractiveElement> un ángulo con vértice <InteractiveElement target="vertice-o" color="carbon">$O$</InteractiveElement>. Por el <ConceptLink targetId="axioma-incidencia-2" isDependency={true}>axioma I-2</ConceptLink>, existe un punto sobre la semirrecta $\overrightarrow{OA}$ distinto de $O$. Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma de transporte de segmentos (III-1)</ConceptLink>, fijamos un punto <InteractiveElement target="punto-c" color="terracota">$C \in \overrightarrow{OA}$</InteractiveElement> con $C \neq O$.
 
-Por el mismo axioma, transportamos la longitud $OC$ sobre $\overrightarrow{OB}$ para obtener un punto <InteractiveElement target="punto-d" color="salvia">$D \in \overrightarrow{OB}$</InteractiveElement> tal que:
+Por el mismo axioma, transportamos la longitud $OC$ sobre $\overrightarrow{OB}$ para obtener un punto <InteractiveElement target="punto-d" color="canela">$D \in \overrightarrow{OB}$</InteractiveElement> tal que:
 
 <Formula>
   $$ OC \cong OD $$
@@ -36,13 +36,13 @@ Por el mismo axioma, transportamos la longitud $OC$ sobre $\overrightarrow{OB}$ 
 </ProofStep>
 
 <ProofStep number={2} title="Segmento CD y su punto medio" target={["segmento-cd", "punto-m"]} leanBlocks={metadata.stepTacticMap["2"]}>
-Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, los puntos $C$ y $D$ determinan el segmento <InteractiveElement target="segmento-cd" color="pizarra">$\overline{CD}$</InteractiveElement>.
+Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, los puntos $C$ y $D$ determinan el segmento <InteractiveElement target="segmento-cd" color="mora">$\overline{CD}$</InteractiveElement>.
 
 Por el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink>, $\overline{CD}$ posee un único <ConceptLink targetId="punto-medio" isDependency={false}>punto medio</ConceptLink> <InteractiveElement target="punto-m" color="carbon">$M$</InteractiveElement>, que satisface $C * M * D$ y $CM \cong DM$.
 </ProofStep>
 
 <ProofStep number={3} title="Congruencia LLL" target={["triangulo-ocm", "triangulo-odm"]} leanBlocks={metadata.stepTacticMap["3"]}>
-Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, trazamos $\overline{OM}$. Consideremos los <InteractiveElement target="triangulo-ocm" color="terracota">triángulos $\triangle OCM$</InteractiveElement> y <InteractiveElement target="triangulo-odm" color="salvia">$\triangle ODM$</InteractiveElement>:
+Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma I-1</ConceptLink>, trazamos $\overline{OM}$. Consideremos los <InteractiveElement target="triangulo-ocm" color="terracota">triángulos $\triangle OCM$</InteractiveElement> y <InteractiveElement target="triangulo-odm" color="canela">$\triangle ODM$</InteractiveElement>:
 
 1. $OC \cong OD$ (por el paso 1).
 2. $\overline{OM}$ es común a ambos triángulos.
@@ -62,7 +62,7 @@ Por la <ConceptLink targetId="congruencia" isDependency={false}>definición de c
   $$ \angle COM \cong \angle DOM $$
 </Formula>
 
-Es decir, $\overrightarrow{OM}$ divide al ángulo $\angle AOB$ en dos ángulos congruentes: <InteractiveElement target="angulo-com" color="terracota">$\angle COM$</InteractiveElement> y <InteractiveElement target="angulo-dom" color="salvia">$\angle DOM$</InteractiveElement>. Por la <ConceptLink targetId="bisectriz" isDependency={false}>definición de bisectriz</ConceptLink>, $\overrightarrow{OM}$ es la bisectriz de $\angle AOB$. Queda demostrada la **existencia**.
+Es decir, $\overrightarrow{OM}$ divide al ángulo $\angle AOB$ en dos ángulos congruentes: <InteractiveElement target="angulo-com" color="terracota">$\angle COM$</InteractiveElement> y <InteractiveElement target="angulo-dom" color="canela">$\angle DOM$</InteractiveElement>. Por la <ConceptLink targetId="bisectriz" isDependency={false}>definición de bisectriz</ConceptLink>, $\overrightarrow{OM}$ es la bisectriz de $\angle AOB$. Queda demostrada la **existencia**.
 </ProofStep>
 
 <ProofStep number={5} title="Unicidad" target={["bisectriz-unica"]} leanBlocks={metadata.stepTacticMap["5"]}>

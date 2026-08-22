@@ -26,7 +26,7 @@ const baseModel: VisualDiagramModel = {
   groups: [],
   points: [
     { id: 'pP', label: 'P', x: 1, y: 3, showLabel: true, fixed: false, color: 'terracota', constraint: 'free', layerId: 'geometry', order: 0, visible: true, locked: false, groupIds: [], selection: { selectable: true }, target: true },
-    { id: 'pC', label: 'C', x: 3, y: 3, showLabel: true, fixed: true, color: 'salvia', constraint: 'fixed', layerId: 'geometry', order: 1, visible: true, locked: false, groupIds: [], selection: { selectable: true }, target: true },
+    { id: 'pC', label: 'C', x: 3, y: 3, showLabel: true, fixed: true, color: 'canela', constraint: 'fixed', layerId: 'geometry', order: 1, visible: true, locked: false, groupIds: [], selection: { selectable: true }, target: true },
     { id: 'pPrime', label: "P'", x: 0, y: 0, showLabel: true, fixed: false, color: 'ocre', constraint: 'constrained', constraintIds: ['cReflP'], layerId: 'geometry', order: 2, visible: true, locked: false, groupIds: [], selection: { selectable: true }, target: true },
     { id: 'pA', label: 'A', x: 0, y: 0, showLabel: true, fixed: true, color: 'pavo', constraint: 'fixed', layerId: 'geometry', order: 3, visible: true, locked: false, groupIds: [], selection: { selectable: true }, target: true },
     { id: 'pB', label: 'B', x: 4, y: 0, showLabel: true, fixed: true, color: 'pavo', constraint: 'fixed', layerId: 'geometry', order: 4, visible: true, locked: false, groupIds: [], selection: { selectable: true }, target: true },

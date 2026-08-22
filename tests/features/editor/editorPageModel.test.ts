@@ -45,7 +45,7 @@ describe('editor page model', () => {
   });
 
   it('classifies connected, missing and invalid interactive targets', () => {
-    const blocks: Block[] = [{ id: 'p', type: 'paragraph', content: '<InteractiveElement target="A" color="salvia">punto A</InteractiveElement> <InteractiveElement target="X">desconocido</InteractiveElement>' }];
+    const blocks: Block[] = [{ id: 'p', type: 'paragraph', content: '<InteractiveElement target="A" color="canela">punto A</InteractiveElement> <InteractiveElement target="X">desconocido</InteractiveElement>' }];
     const summary = buildPageConnectionSummary(blocks, [{ id: 'A', label: 'A' }, { id: 'B', label: 'B' }]);
     expect(summary.connected.map(item => item.target)).toEqual(['A', 'X']);
     expect(summary.missingTargets.map(item => item.id)).toEqual(['B']);

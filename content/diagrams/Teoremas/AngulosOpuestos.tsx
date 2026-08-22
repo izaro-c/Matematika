@@ -79,7 +79,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "beta",
-      "color": "pizarra"
+      "color": "mora"
     },
     {
       "id": "gSupp12",
@@ -115,7 +115,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "supp23",
-      "color": "pizarra"
+      "color": "mora"
     },
     {
       "id": "gCongruence13",
@@ -208,7 +208,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "B",
       "label": "B",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 4000,
       "visible": true,
@@ -279,7 +279,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "Bp",
       "label": "B'",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 5000,
       "visible": true,
@@ -415,7 +415,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "angle2",
       "label": "β",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 980,
       "visible": true,
@@ -484,7 +484,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "angle4",
       "label": "β'",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 1000,
       "visible": true,

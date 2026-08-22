@@ -49,7 +49,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
     {
       "id": "S1",
       "label": "S₁",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2720,
       "visible": true,
@@ -148,7 +148,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
     {
       "id": "R",
       "label": "R",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2750,
       "visible": true,
@@ -184,7 +184,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
     {
       "id": "H1",
       "label": "H₁",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2760,
       "visible": true,
@@ -220,7 +220,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
     {
       "id": "circ1",
       "label": "Circunferencia de señal S₁",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2770,
       "visible": true,
@@ -309,7 +309,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
     {
       "id": "rad1",
       "label": "d₁",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2800,
       "visible": true,
@@ -399,7 +399,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
     {
       "id": "catH1",
       "label": "Δx",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2830,
       "visible": true,
@@ -430,7 +430,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
     {
       "id": "catV1",
       "label": "Δy",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2840,
       "visible": true,
@@ -461,7 +461,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
     {
       "id": "right1",
       "label": "Ángulo recto",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2850,
       "visible": true,
@@ -491,7 +491,7 @@ export const GpsTrilateracionSpec = createDiagramSpec(
     {
       "id": "d1",
       "label": "d₁",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 2860,
       "visible": true,

@@ -186,7 +186,7 @@ export const Congruence2Spec = createDiagramSpec(
     {
       "id": "pC",
       "label": "C",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 13000,
       "visible": true,
@@ -221,7 +221,7 @@ export const Congruence2Spec = createDiagramSpec(
     {
       "id": "pD",
       "label": "D",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 16000,
       "visible": true,
@@ -365,7 +365,7 @@ export const Congruence2Spec = createDiagramSpec(
     {
       "id": "segCD",
       "label": "Segmento",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "geometry",
       "order": 7000,
       "visible": true,

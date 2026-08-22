@@ -36,7 +36,7 @@
 
 #### [Crítico] Opacidades y `color-mix` como “muted” rompen el contraste por diseño
 - **Ubicación:** `src/app/styles/design-system.css` (`.ac-eyebrow`, `.ac-label--*`, `.ac-meta`); chips home `opacity-60`; CTA `ac-cta-card__eyebrow` / `__action`.
-- **Evidencia (CDP, home 1440/375):** 36 muestras < 4.5:1. Peores: badges MSC ocre/terracota/pizarra con `opacity-60` → **2.25–2.79:1**; CTAs lienzo-sobre-terracota/musgo → **3.79–4.09:1**.
+- **Evidencia (CDP, home 1440/375):** 36 muestras < 4.5:1. Peores: badges MSC ocre/terracota/mora con `opacity-60` → **2.25–2.79:1**; CTAs lienzo-sobre-terracota/musgo → **3.79–4.09:1**.
 - **Snippet:**
 ```9:22:src/app/styles/design-system.css
 .ac-eyebrow {

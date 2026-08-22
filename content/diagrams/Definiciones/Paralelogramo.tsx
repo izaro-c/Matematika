@@ -82,7 +82,7 @@ export const ParalelogramoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "poligono",
-      "color": "salvia"
+      "color": "canela"
     },
     {
       "id": "grupoParalelismo",
@@ -190,7 +190,7 @@ export const ParalelogramoSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "diagonales",
-      "color": "pizarra"
+      "color": "mora"
     }
   ],
   "objects": [
@@ -366,7 +366,7 @@ export const ParalelogramoSpec = createDiagramSpec(
     {
       "id": "guiaRectangulo",
       "label": "Guía perpendicular para rectángulos",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "guides",
       "order": 10,
       "visible": false,
@@ -401,7 +401,7 @@ export const ParalelogramoSpec = createDiagramSpec(
     {
       "id": "guiaLadosIguales",
       "label": "Guía circular para lados iguales",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "guides",
       "order": 20,
       "visible": false,
@@ -431,7 +431,7 @@ export const ParalelogramoSpec = createDiagramSpec(
     {
       "id": "poligono",
       "label": "Paralelogramo ABCD",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 200,
       "visible": true,
@@ -1163,7 +1163,7 @@ export const ParalelogramoSpec = createDiagramSpec(
     {
       "id": "AC",
       "label": "Diagonal AC",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "details",
       "order": 700,
       "visible": false,
@@ -1197,7 +1197,7 @@ export const ParalelogramoSpec = createDiagramSpec(
     {
       "id": "BD",
       "label": "Diagonal BD",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "details",
       "order": 710,
       "visible": false,
@@ -1231,7 +1231,7 @@ export const ParalelogramoSpec = createDiagramSpec(
     {
       "id": "M",
       "label": "Punto medio común M",
-      "color": "pizarra",
+      "color": "mora",
       "layerId": "details",
       "order": 720,
       "visible": false,

@@ -58,12 +58,12 @@ function AvisosButton({ errorCount, warningCount, onOpen, healthyLabel = 'Avisos
           ? 'border-granada/30 bg-granada/10 text-granada animate-pulse'
           : hasWarnings
             ? 'border-ocre/30 bg-ocre/10 text-ocre'
-            : 'border-salvia/30 bg-salvia/10 text-salvia'
+            : 'border-canela/30 bg-canela/10 text-canela'
       }`}
       title={hasErrors || hasWarnings ? `${errorCount} errores, ${warningCount} avisos` : healthyLabel}
       aria-label={hasErrors || hasWarnings ? `${errorCount} errores, ${warningCount} avisos` : healthyLabel}
     >
-      <span className={`h-2 w-2 rounded-full ${hasErrors ? 'bg-granada' : hasWarnings ? 'bg-ocre' : 'bg-salvia'}`} />
+      <span className={`h-2 w-2 rounded-full ${hasErrors ? 'bg-granada' : hasWarnings ? 'bg-ocre' : 'bg-canela'}`} />
       <span className="hidden sm:inline">
         {hasErrors ? `${errorCount} Err` : hasWarnings ? `${warningCount} Av` : healthyLabel}
       </span>
@@ -135,7 +135,7 @@ export const EditorWorkbenchHeader: React.FC<EditorWorkbenchHeaderProps> = ({
         <Link
           href={routePath('/')}
           onClick={handleGoHome}
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-salvia cursor-pointer"
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-carbon/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-canela cursor-pointer"
           title="Ir al Inicio"
           aria-label="Ir al Inicio"
         >

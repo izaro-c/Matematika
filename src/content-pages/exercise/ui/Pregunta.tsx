@@ -89,7 +89,7 @@ export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct
 
           let btnClass: string;
           if (showCorrect) {
-            btnClass = 'border-salvia bg-salvia/10 text-salvia ac-inset-shadow';
+            btnClass = 'border-canela bg-canela/10 text-canela ac-inset-shadow';
           } else if (showWrong) {
             btnClass = 'border-terracota bg-terracota/5 text-terracota';
           } else if (isSelected) {
@@ -102,7 +102,7 @@ export const Pregunta: React.FC<PreguntaProps> = ({ id, texto, question, correct
 
           let badgeClass: string, badgeChar: string;
           if (showCorrect) {
-            badgeClass = 'border-salvia bg-salvia text-lienzo';
+            badgeClass = 'border-canela bg-canela text-lienzo';
             badgeChar = '✓';
           } else if (showWrong) {
             badgeClass = 'border-terracota bg-terracota text-lienzo';

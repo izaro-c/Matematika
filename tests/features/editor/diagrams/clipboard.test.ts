@@ -31,7 +31,7 @@ describe('diagram structured clipboard', () => {
   it('copies a group as one coherent subgraph and rewrites expressions, targets and step states', () => {
     const base = createTemplateModel('triangulo-deformable', 'Copia de grupo', 'definicion');
     const sourceSegment = base.elements.find(item => item.id === 'segAB')!;
-    const formula = element('formulaArea', 'Fórmula de longitud', 'formula', [sourceSegment.id], 'pizarra', true, {
+    const formula = element('formulaArea', 'Fórmula de longitud', 'formula', [sourceSegment.id], 'mora', true, {
       text: 'L^2 = {value}',
       properties: { expression: 'segAB.length^2', precision: 2 },
       groupIds: ['groupTriangle'],
@@ -76,7 +76,7 @@ describe('diagram structured clipboard', () => {
 
   it('rewrites expressions nested in composite panel blocks and their variants', () => {
     const base = createTemplateModel('triangulo-deformable', 'Copia de panel', 'definicion');
-    const panel = element('panel', 'Lecturas', 'infoPanel', [], 'pizarra', true, {
+    const panel = element('panel', 'Lecturas', 'infoPanel', [], 'mora', true, {
       text: '',
       properties: {
         anchorMode: 'viewport', viewportPosition: [0.1, 0.2], infoPanelLayout: 'stack',

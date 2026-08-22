@@ -183,7 +183,7 @@ export const TalesSpec = createDiagramSpec(
     {
       "id": "polygonABC",
       "label": "Polígono",
-      "color": "salvia",
+      "color": "canela",
       "layerId": "geometry",
       "order": 3000,
       "visible": true,

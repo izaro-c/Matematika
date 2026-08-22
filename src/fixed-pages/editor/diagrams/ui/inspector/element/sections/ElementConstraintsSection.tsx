@@ -20,10 +20,10 @@ import type { ElementPanelProps } from '../../types';
 import { constraintScopeForKind } from '../../elementSections';
 
 const fieldClass =
-  'w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1.5 text-xs font-mono font-bold text-carbon focus:border-salvia focus:outline-none';
+  'w-full rounded-lg border border-carbon/15 bg-lienzo px-2.5 py-1.5 text-xs font-mono font-bold text-carbon focus:border-canela focus:outline-none';
 const cardClass = 'space-y-2 rounded-lg border border-carbon/10 bg-lienzo/60 p-3 shadow-2xs';
 const applyBtn =
-  'w-full py-1.5 bg-salvia text-lienzo rounded-lg font-bold text-[10px] hover:bg-salvia/90 transition-all cursor-pointer disabled:opacity-40';
+  'w-full py-1.5 bg-canela text-lienzo rounded-lg font-bold text-[10px] hover:bg-canela/90 transition-all cursor-pointer disabled:opacity-40';
 const removeBtn =
   'w-full py-1.5 bg-granada/10 hover:bg-granada/20 text-granada rounded-lg font-bold text-[10px] transition-all cursor-pointer';
 
@@ -42,7 +42,7 @@ const SegmentReflectionCard: React.FC<{
 
   return (
     <div className={cardClass}>
-      <span className="font-bold text-salvia block uppercase tracking-wider text-[10px]">Reflejo Simétrico</span>
+      <span className="font-bold text-canela block uppercase tracking-wider text-[10px]">Reflejo Simétrico</span>
       <p className="text-[11px] text-carbon/60 leading-relaxed">
         El segmento queda como reflejo respecto a un centro o eje.
       </p>
@@ -122,7 +122,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
     return (
       <div className="space-y-3">
         <div className={cardClass}>
-          <span className="font-bold text-salvia block uppercase tracking-wider text-[10px]">Igualar Longitud de Segmento</span>
+          <span className="font-bold text-canela block uppercase tracking-wider text-[10px]">Igualar Longitud de Segmento</span>
           <p className="text-[11px] text-carbon/60 leading-relaxed">
             Un extremo se ajusta para copiar la longitud de otro segmento.
           </p>
@@ -209,7 +209,7 @@ export const ElementConstraintsSection: React.FC<ElementPanelProps> = ({
   return (
     <div className="space-y-3">
       <div className={cardClass}>
-        <span className="font-bold text-salvia block uppercase tracking-wider text-[10px]">Igualar Amplitud de Ángulo</span>
+        <span className="font-bold text-canela block uppercase tracking-wider text-[10px]">Igualar Amplitud de Ángulo</span>
         <p className="text-[11px] text-carbon/60 leading-relaxed">
           La amplitud de este ángulo se igualará a la del ángulo de referencia.
         </p>

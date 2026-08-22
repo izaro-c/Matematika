@@ -115,7 +115,7 @@ describe('editor MDX generation contracts', () => {
     expect(EDITOR_REFERENCE_COLORS.every(color => palette.has(color))).toBe(true);
     expect(EDITOR_THEME_COLOR_OPTIONS.some(option => option.value === 'dorado')).toBe(false);
     expect(buildInteractiveReference('lado-c', 'dorado', '$c$')).toBe(
-      '<InteractiveElement target="lado-c" color="salvia">$c$</InteractiveElement>',
+      '<InteractiveElement target="lado-c" color="canela">$c$</InteractiveElement>',
     );
   });
 });

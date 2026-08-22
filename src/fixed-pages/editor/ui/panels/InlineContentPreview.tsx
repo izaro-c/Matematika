@@ -34,7 +34,7 @@ export function renderFormattedText(text: string, blockId: string, onEditLink?: 
 
     if (node.type === 'conceptLink' || node.type === 'refLink') {
       const tag = node.type === 'conceptLink' ? 'ConceptLink' : 'RefLink';
-      const colorClass = node.type === 'conceptLink' ? 'text-salvia border-b border-dashed border-salvia/30' : 'text-pavo border-b border-dashed border-pavo/30';
+      const colorClass = node.type === 'conceptLink' ? 'text-canela border-b border-dashed border-canela/30' : 'text-pavo border-b border-dashed border-pavo/30';
       const targetLabel = Array.isArray(node.attrs.targetId) ? node.attrs.targetId.join(', ') : node.attrs.targetId || '';
       return <InteractivePreviewToken key={key} blockId={blockId} raw={node.raw} text={node.value} attrs={node.attrs} tag={tag}
         target={String(node.attrs.highlightTarget || '')} colorClass={colorClass} title={`Vínculo a: ${targetLabel} (Click para editar)`}
@@ -43,7 +43,7 @@ export function renderFormattedText(text: string, blockId: string, onEditLink?: 
       </InteractivePreviewToken>;
     }
 
-    const color = node.attrs.color || 'salvia';
+    const color = node.attrs.color || 'canela';
     return <InteractivePreviewToken key={key} blockId={blockId} raw={node.raw} text={node.value} attrs={node.attrs} tag="InteractiveElement"
       target={String(node.attrs.target || '')} colorClass={`text-${color} border-b border-dashed border-${color}/30`}
       title={`Resalta en gráfico: ${node.attrs.target || ''} (Click para editar)`} onEditLink={onEditLink}

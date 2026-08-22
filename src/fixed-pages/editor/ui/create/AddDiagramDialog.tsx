@@ -145,7 +145,7 @@ export const AddDiagramDialog: React.FC<AddDiagramDialogProps> = ({
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   placeholder="Buscar diagrama por nombre, categoría o ruta…"
-                  className="w-full rounded border border-carbon/20 bg-lienzo px-3 py-2 text-xs text-carbon placeholder:text-carbon/35 focus:border-salvia outline-none"
+                  className="w-full rounded border border-carbon/20 bg-lienzo px-3 py-2 text-xs text-carbon placeholder:text-carbon/35 focus:border-canela outline-none"
                 />
               </label>
 
@@ -164,13 +164,13 @@ export const AddDiagramDialog: React.FC<AddDiagramDialogProps> = ({
                         onClick={() => setSelectedPath(file.path)}
                         className={`group relative cursor-pointer rounded border p-3 transition-all ${
                           isSelected
-                            ? 'border-salvia bg-salvia/5 ring-1 ring-salvia'
+                            ? 'border-canela bg-canela/5 ring-1 ring-canela'
                             : 'border-carbon/15 bg-lienzo hover:border-carbon/30 hover:bg-carbon/[0.02]'
                         }`}
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div>
-                            <span className="ac-label ac-label--2xs ac-label--salvia block font-mono text-[9px]">
+                            <span className="ac-label ac-label--2xs ac-label--canela block font-mono text-[9px]">
                               {file.type || 'Geometría'}
                             </span>
                             <h3 className="font-serif text-sm font-bold text-carbon">{componentName}</h3>
@@ -180,7 +180,7 @@ export const AddDiagramDialog: React.FC<AddDiagramDialogProps> = ({
                             name="selected-diagram"
                             checked={isSelected}
                             onChange={() => setSelectedPath(file.path)}
-                            className="mt-1 accent-salvia"
+                            className="mt-1 accent-canela"
                           />
                         </div>
                         <p className="mt-1 truncate font-mono text-[9px] text-carbon/45">{file.path}</p>
@@ -224,7 +224,7 @@ export const AddDiagramDialog: React.FC<AddDiagramDialogProps> = ({
                     <span className="normal-case text-granada text-[10px]">Usa minúsculas y guiones (ej. triangulo-pasos).</span>
                   )}
                   {derivedComponentName && ID_RE.test(newDiagram.id) && (
-                    <span className="normal-case font-mono text-[10px] text-salvia">
+                    <span className="normal-case font-mono text-[10px] text-canela">
                       Componente: &lt;{derivedComponentName} /&gt;
                     </span>
                   )}
@@ -275,7 +275,7 @@ export const AddDiagramDialog: React.FC<AddDiagramDialogProps> = ({
               type="button"
               disabled={!selectedPath || busy}
               onClick={handleInsertExisting}
-              className="rounded bg-salvia px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40 hover:bg-salvia/90"
+              className="rounded bg-canela px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40 hover:bg-canela/90"
             >
               {busy ? 'Viculando…' : 'Vincular e Insertar Diagrama'}
             </button>
@@ -283,7 +283,7 @@ export const AddDiagramDialog: React.FC<AddDiagramDialogProps> = ({
             <button
               type="submit"
               disabled={!validNew || busy}
-              className="rounded bg-salvia px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40 hover:bg-salvia/90"
+              className="rounded bg-canela px-4 py-2 text-xs font-bold text-lienzo disabled:opacity-40 hover:bg-canela/90"
             >
               {busy ? 'Creando…' : 'Crear y Vincular'}
             </button>
