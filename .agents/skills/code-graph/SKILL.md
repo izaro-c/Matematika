@@ -21,7 +21,7 @@ Grafo estructural del repositorio TypeScript. **Cargar esta skill antes de explo
 
 ## Cuándo NO usar el grafo
 
-- Archivos **Lean** (`.lean`), **MDX** de contenido (`src/database/content/`) y assets estáticos: usar `Grep`/`Read`.
+- Archivos **MDX** de contenido (`src/database/content/`) y assets estáticos: usar `Grep`/`Read`.
 - Texto literal, comentarios o cadenas: `Grep`.
 - Validación de producto: `npm run full-check` (independiente del grafo MCP).
 
@@ -47,7 +47,7 @@ El nombre del proyecto lo devuelve `index_repository` (derivado de la ruta del r
 ## Límites conocidos
 
 - Cobertura principal: **TypeScript/JavaScript**, CSS, HTML, YAML.
-- No sustituye `depcruise`, `validate-graph` ni el grafo Lean-MDX del proyecto.
+- No sustituye `depcruise`, `validate-graph` ni el grafo MDX del proyecto.
 - `index_status` no existe como herramienta MCP; el estado viene de `index_repository` y `get_architecture`.
 
 ## Referencia detallada
