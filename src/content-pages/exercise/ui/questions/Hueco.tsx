@@ -78,7 +78,7 @@ export const Hueco: HuecoComponent = ({
   if (!pregunta && !errorComunData && !resolucionData) {
     if (isCompleted) {
       return (
-        <span className="inline-block px-2 font-bold font-serif text-canela transition-all duration-500">
+        <span className="inline-block px-2 font-bold font-serif text-musgo transition-all duration-500">
           {input || (userAnswer as string)}
         </span>
       );
@@ -115,7 +115,7 @@ export const Hueco: HuecoComponent = ({
   }
 
   const feedbackClass = isCorrect === true
-    ? 'border-canela/40 bg-canela/5'
+    ? 'border-musgo/40 bg-musgo/5'
     : isCorrect === false
       ? 'border-terracota/50 bg-terracota/5'
       : '';
@@ -138,7 +138,7 @@ export const Hueco: HuecoComponent = ({
       )}
 
       {isCompleted ? (
-        <div className="text-2xl font-bold text-canela text-center my-6 transition-all duration-500">
+        <div className="text-2xl font-bold text-musgo text-center my-6 transition-all duration-500">
           {input || (userAnswer as string)}
         </div>
       ) : (

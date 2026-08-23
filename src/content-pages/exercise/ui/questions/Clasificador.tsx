@@ -127,11 +127,11 @@ export const Clasificador: ClasificadorComponent = ({ id, pregunta, buckets = []
       hasFailed={hasFailed}
       activeTab={activeTab}
       onTabChange={setActiveTab}
-      className={`group ${isCompleted ? 'bg-canela/5 border-canela/30' : ''}`}
+      className={`group ${isCompleted ? 'bg-musgo/5 border-musgo/30' : ''}`}
     >
       <h4 className={`font-bold text-carbon mb-6 mt-2 text-lg z-30 relative leading-relaxed ${showBookmarks ? 'pr-20 sm:pr-28' : ''}`}>
         {isCompleted ? (
-          <span className="text-canela">❦ {t('exercise', 'classificationCompleted')}</span>
+          <span className="text-musgo">❦ {t('exercise', 'classificationCompleted')}</span>
         ) : (
           <span>{pregunta || t('exercise', 'classifyElements')}</span>
         )}
@@ -177,7 +177,7 @@ export const Clasificador: ClasificadorComponent = ({ id, pregunta, buckets = []
         {/* Categorías / Contenedores */}
         <div
           className={`border-y-[3px] grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-[1px] relative transition-colors duration-500 ${
-            isCompleted ? 'border-canela bg-canela/30' : 'border-carbon/80 bg-carbon/30'
+            isCompleted ? 'border-musgo bg-musgo/30' : 'border-carbon/80 bg-carbon/30'
           }`}
         >
           {safeBuckets.map((bucket) => {
@@ -199,7 +199,7 @@ export const Clasificador: ClasificadorComponent = ({ id, pregunta, buckets = []
               >
                 <div
                   className={`py-3 text-center text-sm font-semibold ac-eyebrow border-b transition-colors ${
-                    isCompleted ? 'text-canela border-canela/40' : 'text-carbon border-carbon/60'
+                    isCompleted ? 'text-musgo border-musgo/40' : 'text-carbon border-carbon/60'
                   }`}
                 >
                   {bucket.title}
@@ -221,7 +221,7 @@ export const Clasificador: ClasificadorComponent = ({ id, pregunta, buckets = []
 
                     let itemClass = 'border-carbon/40 cursor-grab active:cursor-grabbing hover:bg-carbon/[0.02]';
                     if (isCompleted) {
-                      itemClass = 'border-canela/40 bg-canela/[0.02] text-canela cursor-default';
+                      itemClass = 'border-musgo/40 bg-musgo/[0.02] text-musgo cursor-default';
                     } else if (isWrong) {
                       itemClass = 'border-terracota bg-terracota/[0.02] text-terracota';
                     }

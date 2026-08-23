@@ -11,6 +11,7 @@ import {
   ExerciseStep,
   ExerciseCard,
 } from '@/content-pages/exercise';
+import { useCanvasControl } from '@/diagrams/render/CanvasControlContext';
 import { MathProvider } from '@/lib/page-context/MathStoreContext';
 
 describe('Exercise Modular Components Suite', () => {
@@ -205,12 +206,15 @@ describe('Exercise Modular Components Suite', () => {
   });
 
   it('locks interaction and prevents modifications once CanvasInteractivo is completed and correct', () => {
-    const DummyDiagram = ({ onPointMove, isCompleted }: { onPointMove?: (id: string, x: number, y: number) => void; isCompleted?: boolean }) => (
-      <div>
-        <span data-testid="diagram-status">{isCompleted ? 'locked' : 'interactive'}</span>
-        <button onClick={() => onPointMove?.('p1', 10, 10)}>Mover Punto</button>
-      </div>
-    );
+    const DummyDiagram = () => {
+      const ctx = useCanvasControl();
+      return (
+        <div>
+          <span data-testid="diagram-status">{ctx?.isCompleted ? 'locked' : 'interactive'}</span>
+          <button onClick={() => ctx?.onPointMove?.('p1', 10, 10)}>Mover Punto</button>
+        </div>
+      );
+    };
 
     const TestCanvas = () => (
       <CanvasInteractivo id="canvas_lock_test" title="Lienzo Bloqueable" validator={() => true}>
@@ -240,12 +244,16 @@ describe('Exercise Modular Components Suite', () => {
   });
 
   it('restores the modified correct spec and locks interaction on page reload / restoration', () => {
-    const DummyDiagram = ({ spec, isCompleted }: { spec?: any; isCompleted?: boolean }) => (
-      <div>
-        <span data-testid="restored-status">{isCompleted ? 'locked' : 'interactive'}</span>
-        <span data-testid="spec-x">{spec?.objects?.[0]?.definition?.x ?? 'default'}</span>
-      </div>
-    );
+    const DummyDiagram = ({ spec: propSpec }: { spec?: any }) => {
+      const ctx = useCanvasControl();
+      const activeSpec = ctx?.activeSpec;
+      return (
+        <div>
+          <span data-testid="restored-status">{ctx?.isCompleted ? 'locked' : 'interactive'}</span>
+          <span data-testid="spec-x">{(activeSpec ?? propSpec)?.objects?.[0]?.definition?.x ?? 'default'}</span>
+        </div>
+      );
+    };
 
     const initialSpec: any = {
       version: 3,

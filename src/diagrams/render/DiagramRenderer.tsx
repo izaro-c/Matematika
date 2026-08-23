@@ -81,6 +81,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
 }) => {
   const canvasControl = useCanvasControl();
   const effectiveOnPointMove = onPointMove || canvasControl?.onPointMove;
+  const effectiveHideHeader = hideHeader || canvasControl?.hideHeader;
 
   const reportPaint = useDiagramPaintReport();
   const readyNotifiedRef = useRef(false);
@@ -189,7 +190,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   const showToolbar = viewportControls || showStepControls;
 
   const hasHeader = Boolean(
-    !hideHeader &&
+    !effectiveHideHeader &&
     spec.showHeader !== false &&
     (spec.title || spec.note || ('readings' in spec && Array.isArray(spec.readings) && spec.readings.length > 0))
   );
@@ -315,7 +316,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         onInit={handleBoardInitAndReady}
         onUpdate={handleBoardUpdate}
       >
-        {!hideHeader && spec.showHeader !== false && (
+        {!effectiveHideHeader && spec.showHeader !== false && (
           <header
             ref={headerRef}
             className={`pointer-events-none absolute z-20 ${

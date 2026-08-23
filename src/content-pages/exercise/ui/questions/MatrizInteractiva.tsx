@@ -105,11 +105,11 @@ export const MatrizInteractiva: MatrizInteractivaComponent = ({ id, pregunta, co
       hasFailed={hasFailed}
       activeTab={activeTab}
       onTabChange={setActiveTab}
-      className={`transition-all duration-500 ${isCompleted ? 'bg-canela/5 border-canela/30' : ''}`}
+      className={`transition-all duration-500 ${isCompleted ? 'bg-musgo/5 border-musgo/30' : ''}`}
     >
       {pregunta && (
         <p className={`text-base font-bold text-carbon mb-6 leading-relaxed relative z-30 ${showBookmarks ? 'pr-20 sm:pr-28' : ''}`}>
-          {isCompleted && <span className="text-canela mr-2">❦</span>}
+          {isCompleted && <span className="text-musgo mr-2">❦</span>}
           {pregunta}
         </p>
       )}
@@ -120,7 +120,7 @@ export const MatrizInteractiva: MatrizInteractivaComponent = ({ id, pregunta, co
           <div className="relative flex items-center min-w-fit">
             <div
               className={`border-l-2 border-y-2 w-3 absolute left-0 top-0 bottom-0 transition-colors ${
-                isCompleted ? 'border-canela' : 'border-carbon/70'
+                isCompleted ? 'border-musgo' : 'border-carbon/70'
               }`}
             />
 
@@ -139,7 +139,7 @@ export const MatrizInteractiva: MatrizInteractivaComponent = ({ id, pregunta, co
                     onKeyDown={(e) => handleKeyDown(e, r, c)}
                     className={`w-14 h-12 text-center text-lg font-serif outline-none transition-all ${
                       isCompleted
-                        ? 'bg-transparent text-canela font-bold border-none'
+                        ? 'bg-transparent text-musgo font-bold border-none'
                         : 'page-accent-focus bg-lienzo border-b-2 border-dashed border-carbon/40 text-carbon'
                     }`}
                   />
@@ -149,7 +149,7 @@ export const MatrizInteractiva: MatrizInteractivaComponent = ({ id, pregunta, co
 
             <div
               className={`border-r-2 border-y-2 w-3 absolute right-0 top-0 bottom-0 transition-colors ${
-                isCompleted ? 'border-canela' : 'border-carbon/70'
+                isCompleted ? 'border-musgo' : 'border-carbon/70'
               }`}
             />
           </div>

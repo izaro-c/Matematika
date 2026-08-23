@@ -69,7 +69,7 @@ export function useDiagramState() {
       filePath: null,
       componentName,
       source,
-      model: model ?? null,
+      model: isExact ? model : null,
       parseStatus: isExact ? 'visual-exact' : 'code-preview',
       diagnostics: isExact ? [] : [{
         code: 'inline-model-missing',
@@ -196,7 +196,6 @@ export function useDiagramState() {
         dispatch({
           type: 'PARSE_CODE_PREVIEW',
           diagnostics: parsed.diagnostics,
-          previewModel: parsed.previewModel,
         });
       } else {
         dispatch({
