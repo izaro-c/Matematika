@@ -328,6 +328,10 @@ export const esLanguage: LanguageConfig = {
       lockedStep: 'bloqueado',
       lockedStepDesc: 'Paso bloqueado — Resuelve el paso anterior para desbloquear',
       completeQuestionsAbove: 'Completa las preguntas de arriba para revelar la resolución geométrica y el cálculo detallado.',
+      backToQuestion: 'Volver a la pregunta',
+      checkMatrix: 'Comprobar Matriz',
+      interactiveCanvas: 'Lienzo Interactivo',
+      goalAchieved: 'Objetivo cumplido',
     },
     studyPlan: {
       backToArchive: '← Volver a la biblioteca',

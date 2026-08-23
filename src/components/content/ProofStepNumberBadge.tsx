@@ -34,19 +34,19 @@ const statusClasses = {
     text: 'page-accent-text',
   },
   completed: {
-    box: 'border-canela bg-lienzo shadow-[0_0_0_1px_rgba(var(--theme-canela-rgb,100,140,110),0.3)]',
-    innerBorder: 'border-canela/30',
-    text: 'text-canela font-bold',
+    box: 'border-musgo bg-lienzo shadow-[0_0_0_1px_rgba(var(--theme-musgo-rgb,100,140,110),0.3)]',
+    innerBorder: 'border-musgo/30',
+    text: 'text-musgo font-bold',
   },
   locked: {
-    box: 'border-carbon/20 bg-carbon/5 opacity-40 grayscale',
+    box: 'border-carbon/20 bg-lienzo opacity-40 grayscale',
     innerBorder: 'border-carbon/10',
     text: 'text-carbon/40',
   },
 } as const;
 
 /**
- * Cuadrado numerado o con estado compartido por ProofStep, ProofStepLink y PasoEjercicio.
+ * Cuadrado numerado o con estado compartido por ProofStep, ProofStepLink y ExerciseStep.
  */
 export const ProofStepNumberBadge: React.FC<ProofStepNumberBadgeProps> = ({
   number,
@@ -76,7 +76,7 @@ export const ProofStepNumberBadge: React.FC<ProofStepNumberBadgeProps> = ({
       
       {/* Sello o marca sutil de completado */}
       {isCompleted && (
-        <span className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-15 text-canela select-none text-2xl font-serif">
+        <span className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-15 text-musgo select-none text-2xl font-serif">
           ✓
         </span>
       )}

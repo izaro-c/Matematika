@@ -1,9 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import React from 'react';
-import { ExerciseProvider, useExercise } from '@/lib/page-context/ExerciseContext';
-import { Pregunta } from '@/content-pages/exercise/ui/Pregunta';
-import { PasoEjercicio } from '@/content-pages/exercise/ui/PasoEjercicio';
+import { ExerciseProvider, useExercise, Pregunta, ExerciseStep } from '@/content-pages/exercise';
 
 import { MathProvider } from '@/lib/page-context/MathStoreContext';
 
@@ -16,7 +14,7 @@ const TestExercise = () => {
         Reset
       </button>
 
-      <PasoEjercicio id="p1" numero={1} titulo="Paso 1" questionIds={['q1']}>
+      <ExerciseStep id="p1" numero={1} titulo="Paso 1" questionIds={['q1']}>
         <Pregunta
           id="q1"
           correct="opt_a"
@@ -26,9 +24,9 @@ const TestExercise = () => {
             { value: 'opt_b', texto: 'Opción B' },
           ]}
         />
-      </PasoEjercicio>
+      </ExerciseStep>
 
-      <PasoEjercicio
+      <ExerciseStep
         id="p2"
         numero={2}
         titulo="Paso 2"
@@ -44,7 +42,7 @@ const TestExercise = () => {
             { value: 'opt_d', texto: 'Opción D' },
           ]}
         />
-      </PasoEjercicio>
+      </ExerciseStep>
     </div>
   );
 };

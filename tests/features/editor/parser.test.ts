@@ -114,25 +114,25 @@ describe('Editor MDX Parser', () => {
   });
 
   it('should parse and serialize interactive exercise steps as editable blocks', () => {
-    const rawBody = `<PasoEjercicio\n  id="p1"\n  numero={1}\n  titulo="Planteamiento"\n  questionIds={["p1_q1"]}\n>\n  Identifica la ecuación.\n\n  <Pregunta id="p1_q1" correct="a" texto="Pregunta" options={["a", "b"]} />\n\n  <Resolucion>\n    Se justifica la respuesta.\n  </Resolucion>\n</PasoEjercicio>`;
+    const rawBody = `<ExerciseStep\n  id="p1"\n  numero={1}\n  titulo="Planteamiento"\n  questionIds={["p1_q1"]}\n>\n  Identifica la ecuación.\n\n  <Pregunta id="p1_q1" correct="a" texto="Pregunta" options={["a", "b"]} />\n\n  <Resolucion>\n    Se justifica la respuesta.\n  </Resolucion>\n</ExerciseStep>`;
     const blocks = parseBodyToBlocks(rawBody);
 
     expect(blocks).toHaveLength(1);
     expect(blocks[0].type).toBe('exercise');
     expect(blocks[0].metadata).toMatchObject({
-      component: 'PasoEjercicio',
+      component: 'ExerciseStep',
       id: 'p1',
       numero: 1,
       titulo: 'Planteamiento',
       questionIds: ['p1_q1'],
     });
     expect(blocks[0].content).toContain('<Pregunta');
-    expect(stringifyBlocksToBody(blocks)).toContain('<PasoEjercicio');
+    expect(stringifyBlocksToBody(blocks)).toContain('<ExerciseStep');
     expect(stringifyBlocksToBody(blocks)).toContain('<Resolucion>');
   });
 
   it('should preserve spaces inside serialized exercise attributes', () => {
-    const blocks = parseBodyToBlocks(`<PasoEjercicio id="p1" numero={1} titulo="Cálculo final" questionIds={["q1"]}>\n  Texto.\n</PasoEjercicio>`);
+    const blocks = parseBodyToBlocks(`<ExerciseStep id="p1" numero={1} titulo="Cálculo final" questionIds={["q1"]}>\n  Texto.\n</ExerciseStep>`);
     const serialized = stringifyBlocksToBody(blocks);
 
     expect(serialized).toContain('titulo="Cálculo final"');

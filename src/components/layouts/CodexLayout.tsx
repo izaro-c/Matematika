@@ -6,7 +6,6 @@ import { db } from '@/data/content';
 import { useGlossaryStore } from '@/lib/stores/GlossaryStore';
 import { resolveJustification } from '@/lib/justifications/resolveJustification';
 import { Link, useLocation } from 'wouter';
-import { TYPE_STYLES } from '@/lib/theme/constants';
 import { getContentPageAccent } from '@/design';
 import { ContentHeader } from '@/components/content/ContentHeader';
 import { UntranslatedFallbackBanner } from '@/components/content/UntranslatedFallbackBanner';

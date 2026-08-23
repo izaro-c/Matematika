@@ -1,15 +1,11 @@
 import React, { useContext } from 'react';
-import { PasoContext } from '@/content-pages/exercise/ui/PasoContext';
 import { useI18n } from '@/i18n';
-
-interface ResolucionProps {
-  children: React.ReactNode;
-}
+import { PasoContext } from '../steps/PasoContext';
+import type { ResolucionProps } from '../../types';
 
 /**
- * Componente Resolucion: Muestra la explicación didáctica y la resolución detallada
- * del paso en el ejercicio. Consume el PasoContext para renderizarse y desplegarse
- * únicamente cuando el alumno ha respondido correctamente a todas las preguntas de dicho paso.
+ * Resolucion — Despliega la demostración y resolución detallada del paso
+ * cuando el alumno ha respondido correctamente todas las preguntas del paso actual.
  */
 export const Resolucion: React.FC<ResolucionProps> = ({ children }) => {
   const { isCompleted } = useContext(PasoContext);

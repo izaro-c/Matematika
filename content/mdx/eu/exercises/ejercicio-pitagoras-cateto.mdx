@@ -19,7 +19,7 @@ export const Simulation = EjercicioPitagorasCateto;
 
 <Separador />
 
-<PasoEjercicio
+<ExerciseStep
   id="p1"
   numero={1}
   titulo="Ekuazioaren Planteamendua"
@@ -36,69 +36,109 @@ export const Simulation = EjercicioPitagorasCateto;
       { value: 'opt_suma_catetos', texto: "$a^2 = 10^2 + 8^2$", feedback: "Kalkulua hipotenusa bilatuko bazenu bezala planteatu duzu azalerak batuz. Gogoratu hipotenusa dagoeneko ezaguna dela ($c=10$). Kateto bat bilatzeko: $a^2 = c^2 - b^2$." },
       { value: 'opt_hipotenusa_err', texto: "$10^2 + a^2 = 8^2$", feedback: "Hipotenusa ($10^2$) eta katetoa ($a^2$) batu dituzu. Gogoratu hipotenusa karratua ($10^2$) bakarrik geratu behar dela kideetako batean: $a^2 + b^2 = c^2$." }
     ]}
-  />
+  >
+    <Pregunta.ErrorComun titulo="Alde ezagunen karratuak batzea kentzearen ordez">
+      Kateto bat bakantzerakoan ohiko akats bat formula zuzena nahastea eta azalera ezagunak batzea da: $a^2 = c^2 + b^2$. Horrek $a^2 = 10^2 + 8^2 = 164 \implies a \approx 12.8$ emango luke. Luzera hori geometrikoki ezinezkoa da, hipotenusa beti baita alderik luzeena.
+    </Pregunta.ErrorComun>
 
-  <ErrorComun questionId="p1_q1" titulo="Alde ezagunen karratuak batzea kentzearen ordez">
-    Kateto bat bakantzerakoan ohiko akats bat formula zuzena nahastea eta azalera ezagunak batzea da: $a^2 = c^2 + b^2$. Horrek $a^2 = 10^2 + 8^2 = 164 \implies a \approx 12.8$ emango luke. Luzera hori geometrikoki ezinezkoa da, hipotenusa beti baita alderik luzeena.
-  </ErrorComun>
+    <Pregunta.Resolucion>
+      Triangelu honetan betetzen den oinarrizko ekuazioa $a^2 + b^2 = c^2$ da. Datu ezagunak ordezkatuz:
+      $$ a^2 + 8^2 = 10^2 $$
+    </Pregunta.Resolucion>
+  </Pregunta>
 
   <Apoyo titulo="Triangelu angeluzuzen baten atalak errepasatu nahi dituzu?">
     Kontsultatu <RefLink targetId="triangulo-rectangulo">triangelu angeluzuzenaren</RefLink> kontzeptua edo errepasatu <RefLink targetId="cateto">katetoen</RefLink> eta <RefLink targetId="hipotenusa">hipotenusaren</RefLink> arteko aldea.
   </Apoyo>
+</ExerciseStep>
 
-  <Resolucion>
-    Triangelu honetan betetzen den oinarrizko ekuazioa $a^2 + b^2 = c^2$ da. Datu ezagunak ordezkatuz:
-    $$ a^2 + 8^2 = 10^2 $$
-  </Resolucion>
-</PasoEjercicio>
-
-<PasoEjercicio
+<ExerciseStep
   id="p2"
   numero={2}
-  titulo="Gainerako Azaleraren Kalkulua"
+  titulo="Azaleren Korrespondentzia Geometrikoa"
   questionIds={["p2_q1"]}
   dependeDeQuestions={["p1_q1"]}
 >
-  Bakandu $a^2$ eta kalkulatu kateto bertikalaren gaineko karratuaren azalera:
+  Parekatu elementu geometrikoa dagokion azalera-balio edo adierazpenarekin:
 
-  <Pregunta
+  <Emparejar
     id="p2_q1"
-    correct="opt_correcta"
-    texto="Zenbat da $a^2$-ren balioa?"
-    opciones={[
-      { value: 'opt_correcta', texto: "$a^2 = 36$" },
-      { value: 'opt_err_1', texto: "$a^2 = 64$" },
-      { value: 'opt_err_2', texto: "$a^2 = 100$" }
+    pregunta="Lotu triangeluaren aldeen gainean eraikitako karratu bakoitza bere azalerarekin:"
+    pairs={[
+      { left: "$c=10$ hipotenusaren gaineko karratua", right: "$c^2 = 100\\text{ u}^2$" },
+      { left: "$b=8$ katetoaren gaineko karratua", right: "$b^2 = 64\\text{ u}^2$" },
+      { left: "$a$ kateto ezezagunaren gaineko azalera", right: "$a^2 = 100 - 64 = 36\\text{ u}^2$" }
     ]}
-  />
+  >
+    <Emparejar.ErrorComun titulo="Azalerak eta luzera linealak nahastea">
+      Gogoratu Pitagorasen teoremak gainazal karratuak ($a^2, b^2, c^2$) alderatzen dituela, ez luzera zuzenak ($a, b, c$).
+    </Emparejar.ErrorComun>
 
-  <Resolucion>
-    $$ a^2 = 10^2 - 8^2 = 100 - 64 = 36 $$
-  </Resolucion>
-</PasoEjercicio>
+    <Emparejar.Resolucion>
+      Hiru karratu laguntzaileen azalerak hauek dira:
+      $$ c^2 = 10^2 = 100, \quad b^2 = 8^2 = 64, \quad a^2 = 100 - 64 = 36 $$
+    </Emparejar.Resolucion>
+  </Emparejar>
+</ExerciseStep>
 
-<PasoEjercicio
+<ExerciseStep
   id="p3"
   numero={3}
-  titulo="Luzeraren Zehaztapena"
+  titulo="Dedukzio Aljebraikoaren Sekuentzia"
   questionIds={["p3_q1"]}
   dependeDeQuestions={["p2_q1"]}
 >
-  Kalkulatu $a$ katetoaren azken luzera erro karratua eginez:
+  Ordenatu modu logikoan $a$ katetoaren luzera zehatza bakantzeko pauso aljebraikoak:
 
-  <Pregunta
+  <Ordenacion
     id="p3_q1"
-    correct="opt_correcta"
-    texto="Zenbat da $a = |CA|$ katetoaren luzera?"
-    opciones={[
-      { value: 'opt_correcta', texto: "$a = 6$" },
-      { value: 'opt_err_1', texto: "$a = 8$" },
-      { value: 'opt_err_2', texto: "$a = 12$" }
+    pregunta="Arrastatu urratsak dedukzio-ordena egokian jartzeko:"
+    pasos={[
+      "$a^2 + 8^2 = 10^2$",
+      "$a^2 + 64 = 100$",
+      "$a^2 = 100 - 64$",
+      "$a = \\sqrt{36} = 6$"
     ]}
-  />
+  >
+    <Ordenacion.ErrorComun titulo="Erro karratua kenketa sinplifikatu aurretik ateratzea">
+      Ezin da erroa gai bakoitzari banan-banan aplikatu ($\sqrt{100 - 64} \neq \sqrt{100} - \sqrt{64} = 10 - 8 = 2$). Lehenik $100 - 64 = 36$ kalkulatu behar da, eta ondoren erro karratua atera.
+    </Ordenacion.ErrorComun>
 
-  <Resolucion>
-    $$ a = \sqrt{36} = 6 $$
-    Beraz, kateto bertikalaren luzera zehatza $6$ unitatekoa da.
-  </Resolucion>
-</PasoEjercicio>
+    <Ordenacion.Resolucion>
+      Dedukzio-ordena zuzena hauxe da:
+      1. Planteamendua: $a^2 + 8^2 = 10^2$
+      2. Potentziak: $a^2 + 64 = 100$
+      3. Bakantzea: $a^2 = 100 - 64 = 36$
+      4. Erro karratua: $a = \sqrt{36} = 6$
+    </Ordenacion.Resolucion>
+  </Ordenacion>
+</ExerciseStep>
+
+<ExerciseStep
+  id="p4"
+  numero={4}
+  titulo="Katetoaren Azken Kalkulua"
+  questionIds={["p4_q1"]}
+  dependeDeQuestions={["p3_q1"]}
+>
+  Sartu $a$ kateto bertikalaren luzerarako lortutako azken zenbakizko balioa:
+
+  <Hueco
+    id="p4_q1"
+    pregunta="Kateto bertikalaren kalkulatutako luzera a:"
+    correct="6"
+    pista="Zein zenbaki erreal positibo karratura eramanda ematen du 36?"
+  >
+    <Hueco.ErrorComun titulo="Emaitza negatiboa kontuan hartzea">
+      Aljebraikoki $(-6)^2 = 36$ izan arren, geometria euklidearrean distantzia bat beti da hertsiki zenbaki positiboa ($a > 0$).
+    </Hueco.ErrorComun>
+
+    <Hueco.Resolucion>
+      Lortutako azalerari erro karratua ateraz ($a^2 = 36$), $a = \sqrt{36} = 6$ unitate lortzen dugu.
+    </Hueco.Resolucion>
+  </Hueco>
+
+  <Apoyo titulo="36ren erro karratua kalkulatzeko zalantzak dituzu?">
+    $36$ren erro karratua kalkulatzea bere buruarekin biderkatuta zehazki $36$ ematen duen zenbaki erreal positibo bat bilatzean datza. <RefLink targetId="raiz-cuadrada">Erro karratuaren</RefLink> kontzeptua errepasatu dezakezu.
+  </Apoyo>
+</ExerciseStep>

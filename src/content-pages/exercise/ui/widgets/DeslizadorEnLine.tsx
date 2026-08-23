@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDynamicVarStore } from '@/lib/stores/DynamicVarStore';
 import { KatexText } from '@/components/ui/KatexText';
 
-interface DeslizadorEnLineProps {
+export interface DeslizadorEnLineProps {
   /** Nombre de la variable (ej. "n", "x") */
   name: string;
   /** Valor mínimo */
@@ -18,8 +18,7 @@ interface DeslizadorEnLineProps {
 }
 
 /**
- * Componente que permite modificar una variable global interactiva.
- * Muy útil para ver cómo cambia una fórmula al variar un parámetro.
+ * DeslizadorEnLine — Control deslizante interactivo en línea para modificar variables dinámicas.
  */
 export const DeslizadorEnLine: React.FC<DeslizadorEnLineProps> = ({
   name,
@@ -27,12 +26,11 @@ export const DeslizadorEnLine: React.FC<DeslizadorEnLineProps> = ({
   max,
   initial,
   step = 1,
-  label
+  label,
 }) => {
   const { vars, setVar } = useDynamicVarStore();
   const value = vars[name] ?? initial ?? min;
 
-  // Registrar valor inicial al montar
   useEffect(() => {
     if (vars[name] === undefined) {
       setVar(name, initial ?? min);
@@ -41,7 +39,11 @@ export const DeslizadorEnLine: React.FC<DeslizadorEnLineProps> = ({
 
   return (
     <span className="inline-flex items-center gap-2 bg-lienzo border border-carbon/20 px-2 py-0.5 font-serif my-1 transition-colors align-middle relative top-[-1px]">
-      {label && <span className="text-[11px] font-serif italic text-carbon/80"><KatexText text={label} /></span>}
+      {label && (
+        <span className="text-[11px] font-serif italic text-carbon/80">
+          <KatexText text={label} />
+        </span>
+      )}
       <span className="page-accent-text text-[11px] font-bold mr-1">{value}</span>
       <input
         type="range"
@@ -57,9 +59,9 @@ export const DeslizadorEnLine: React.FC<DeslizadorEnLineProps> = ({
 };
 
 /**
- * Componente de solo lectura para renderizar el valor actual de una variable global.
+ * DynamicValue — Visualizador de solo lectura del valor reactivo de una variable dinámica.
  */
-export const DynamicValue: React.FC<{ name: string, fallback: number }> = ({ name, fallback }) => {
-  const val = useDynamicVarStore(state => state.vars[name]);
+export const DynamicValue: React.FC<{ name: string; fallback: number }> = ({ name, fallback }) => {
+  const val = useDynamicVarStore((state) => state.vars[name]);
   return <span className="page-accent-text font-bold transition-all duration-200">{val ?? fallback}</span>;
 };

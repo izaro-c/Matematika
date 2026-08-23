@@ -65,7 +65,7 @@ export const PAGE_PROFILE_PRESETS: Record<string, BlockPreset[]> = {
       label: 'Pregunta interactiva',
       type: 'exercise',
       content: `Identifica la relación matemática adecuada.\n\n<Pregunta\n  id="p1_q1"\n  correct="a"\n  texto="¿Qué afirmación es correcta?"\n  opciones={[\n    { value: "a", texto: "Respuesta correcta" },\n    { value: "b", texto: "Distractor razonable" }\n  ]}\n/>\n\n<Resolucion>\n  Se justifica la respuesta paso a paso.\n</Resolucion>`,
-      metadata: { component: 'PasoEjercicio', id: 'p1', numero: 1, titulo: 'Planteamiento', questionIds: ['p1_q1'] },
+      metadata: { component: 'ExerciseStep', id: 'p1', numero: 1, titulo: 'Planteamiento', questionIds: ['p1_q1'] },
       group: 'profile',
     },
     { label: 'Hueco', type: 'advancedMdx', content: '', metadata: { component: 'Hueco', id: 'q1', correct: 'respuesta', pista: 'Pista breve.' }, group: 'profile' },

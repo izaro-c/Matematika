@@ -20,6 +20,7 @@ interface ExerciseState {
 type Action =
   | { type: 'REGISTER'; id: string; qType: QuestionType }
   | { type: 'ANSWER'; id: string; isCorrect: boolean; userAnswer?: any }
+  | { type: 'CLEAR_ANSWER'; id: string }
   | { type: 'REVEAL'; id: string }
   | { type: 'RESET' };
 
@@ -47,6 +48,20 @@ function reducer(state: ExerciseState, action: Action): ExerciseState {
             isCorrect: action.isCorrect,
             tries: (state.questions[action.id]?.tries ?? 0) + 1,
             userAnswer: action.userAnswer !== undefined ? action.userAnswer : state.questions[action.id]?.userAnswer,
+          },
+        },
+      };
+
+    case 'CLEAR_ANSWER':
+      if (!state.questions[action.id]) return state;
+      return {
+        ...state,
+        questions: {
+          ...state.questions,
+          [action.id]: {
+            ...state.questions[action.id],
+            isCorrect: null,
+            userAnswer: undefined,
           },
         },
       };
@@ -93,6 +108,7 @@ export interface ExerciseContextType {
   state: ExerciseState;
   register: (id: string, type: QuestionType) => void;
   answer: (id: string, isCorrect: boolean, userAnswer?: any) => void;
+  clearAnswer: (id: string) => void;
   reveal: (id: string) => void;
   reset: () => void;
   /** Métricas de progreso calculadas en tiempo real */
@@ -117,6 +133,7 @@ export function useExercise(): ExerciseContextType {
       state: { questions: {} },
       register: () => {},
       answer: () => {},
+      clearAnswer: () => {},
       reveal: () => {},
       reset: () => {},
       score: { correct: 0, total: 0, answered: 0 },
@@ -155,6 +172,10 @@ export const ExerciseProvider: React.FC<ExerciseProviderProps> = ({ exerciseId, 
     dispatch({ type: 'ANSWER', id, isCorrect, userAnswer });
   }, []);
 
+  const clearAnswer = useCallback((id: string) => {
+    dispatch({ type: 'CLEAR_ANSWER', id });
+  }, []);
+
   const reveal = useCallback((id: string) => {
     dispatch({ type: 'REVEAL', id });
   }, []);
@@ -179,7 +200,7 @@ export const ExerciseProvider: React.FC<ExerciseProviderProps> = ({ exerciseId, 
   };
 
   return (
-    <ExerciseContext.Provider value={{ state, register, answer, reveal, reset, score }}>
+    <ExerciseContext.Provider value={{ state, register, answer, clearAnswer, reveal, reset, score }}>
       <React.Fragment key={resetKey}>
         {children}
       </React.Fragment>
