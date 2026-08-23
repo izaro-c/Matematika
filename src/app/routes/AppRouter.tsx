@@ -5,6 +5,7 @@ import { BiographyLayout } from "@/components/layouts/BiographyLayout";
 import { PageLoadingScreen } from "@/components/ui/PageLoadingScreen";
 import { db } from '@/data/content';
 import { useI18n, isSupportedLanguage, getLanguage, SEGMENT_TO_CANONICAL_TYPE } from '@/i18n';
+import { SeoHead } from "@/components/seo/SeoHead";
 
 const HomePage = lazy(() => import("@/fixed-pages/home/HomePage").then(m => ({ default: m.HomePage })));
 const DictionaryPage = lazy(() => import("@/fixed-pages/glossary/DictionaryPage").then(m => ({ default: m.DictionaryPage })));
@@ -41,7 +42,12 @@ const LocalizedContentRouteDispatcher: React.FC = () => {
   const canonicalType = SEGMENT_TO_CANONICAL_TYPE[rawSegment];
 
   if (!canonicalType || !id) {
-    return <NotFoundPage />;
+    return (
+      <>
+        <SeoHead title="Página no encontrada" noindex={true} />
+        <NotFoundPage />
+      </>
+    );
   }
 
   const langConfig = getLanguage(activeLang);
@@ -52,43 +58,136 @@ const LocalizedContentRouteDispatcher: React.FC = () => {
     return <Redirect to={`/${activeLang}/${targetSegment}/${id}`} replace />;
   }
 
+  // Obtener metadatos de SEO directamente del ContentStore
+  let itemTitle: string | undefined;
+  let itemDescription: string | undefined;
+  let itemAuthors: string[] | undefined;
+  let itemTagsOrBranch: string | string[] | undefined;
+
   switch (canonicalType) {
-    case 'teorema':
-      return <MathProvider><TheoremPage /></MathProvider>;
-    case 'definicion':
-      return <MathProvider><DefinitionPage /></MathProvider>;
-    case 'ejercicio':
-      return <MathProvider><ExercisePage /></MathProvider>;
-    case 'ejemplo':
-      return <MathProvider><ExamplePage /></MathProvider>;
-    case 'axioma':
-      return <MathProvider><AxiomPage /></MathProvider>;
-    case 'modelo':
-      return <MathProvider><ModelPage /></MathProvider>;
-    case 'sistema':
-      return <MathProvider><AxiomaticSystemPage /></MathProvider>;
-    case 'metodo':
-      return <MathProvider><MethodPage /></MathProvider>;
-    case 'demo':
-      return <MathProvider><DemoPage /></MathProvider>;
-    case 'caso':
-      return <MathProvider><UseCasePage /></MathProvider>;
-    case 'plan':
-      return <StudyPlanPage />;
-    case 'rama':
-      return <BranchPage />;
+    case 'teorema': {
+      const thm = db.getTheorem(id, activeLang);
+      itemTitle = thm?.title; itemDescription = thm?.description; itemAuthors = thm?.authors; itemTagsOrBranch = thm?.branch || thm?.tags;
+      break;
+    }
+    case 'definicion': {
+      const def = db.getDefinition(id, activeLang);
+      itemTitle = def?.title; itemDescription = def?.description; itemAuthors = def?.authors; itemTagsOrBranch = def?.branch || def?.tags;
+      break;
+    }
+    case 'ejercicio': {
+      const ez = db.getExercise(id, activeLang);
+      itemTitle = ez?.title; itemDescription = ez?.description; itemTagsOrBranch = ez?.branch || ez?.tags;
+      break;
+    }
+    case 'ejemplo': {
+      const ex = db.getExample(id, activeLang);
+      itemTitle = ex?.title; itemDescription = ex?.description; itemTagsOrBranch = ex?.branch || ex?.tags;
+      break;
+    }
+    case 'axioma': {
+      const ax = db.getAxiom(id, activeLang);
+      itemTitle = ax?.title; itemDescription = ax?.description; itemAuthors = ax?.authors; itemTagsOrBranch = ax?.branch || ax?.tags;
+      break;
+    }
+    case 'modelo': {
+      const mod = db.getModel(id, activeLang);
+      itemTitle = mod?.title; itemDescription = mod?.description; itemTagsOrBranch = mod?.branch || mod?.tags;
+      break;
+    }
+    case 'sistema': {
+      const sys = db.getAxiomaticSystem(id, activeLang);
+      itemTitle = sys?.title; itemDescription = sys?.description; itemAuthors = sys?.authors; itemTagsOrBranch = sys?.branch || sys?.tags;
+      break;
+    }
+    case 'metodo': {
+      const met = db.getMethod(id, activeLang);
+      itemTitle = met?.title; itemDescription = met?.description; itemAuthors = met?.authors; itemTagsOrBranch = met?.branch || met?.tags;
+      break;
+    }
+    case 'demo': {
+      const demo = db.getDemo(id, activeLang);
+      itemTitle = demo?.title; itemDescription = demo?.description; itemAuthors = demo?.authors; itemTagsOrBranch = demo?.branch || demo?.tags;
+      break;
+    }
+    case 'caso': {
+      const uc = db.getUseCase(id, activeLang);
+      itemTitle = uc?.title; itemDescription = uc?.description; itemTagsOrBranch = uc?.branch || uc?.tags;
+      break;
+    }
+    case 'plan': {
+      const plan = db.getStudyPlan(id, activeLang);
+      itemTitle = plan?.title; itemDescription = plan?.description; itemTagsOrBranch = plan?.branch || plan?.tags;
+      break;
+    }
+    case 'rama': {
+      const taxonomy = db.getBranchTaxonomy(id, activeLang);
+      itemTitle = taxonomy.name || taxonomy.id;
+      break;
+    }
     case 'bio': {
       const mat = db.getMathematicianById(id, activeLang);
-      if (!mat) return <NotFoundPage />;
-      return (
-        <MathProvider>
-          <BiographyLayout Component={mat.Component} metadata={mat} />
-        </MathProvider>
-      );
+      itemTitle = mat?.name;
+      itemDescription = mat?.description;
+      break;
     }
-    default:
-      return <NotFoundPage />;
   }
+
+  const breadcrumbs = itemTagsOrBranch ? db.getBreadcrumbs(itemTagsOrBranch, undefined, activeLang) : [];
+  const seoType = canonicalType === 'definicion' || canonicalType === 'axioma' ? 'defined-term' : 'article';
+
+  const renderComponent = () => {
+    switch (canonicalType) {
+      case 'teorema':
+        return <MathProvider><TheoremPage /></MathProvider>;
+      case 'definicion':
+        return <MathProvider><DefinitionPage /></MathProvider>;
+      case 'ejercicio':
+        return <MathProvider><ExercisePage /></MathProvider>;
+      case 'ejemplo':
+        return <MathProvider><ExamplePage /></MathProvider>;
+      case 'axioma':
+        return <MathProvider><AxiomPage /></MathProvider>;
+      case 'modelo':
+        return <MathProvider><ModelPage /></MathProvider>;
+      case 'sistema':
+        return <MathProvider><AxiomaticSystemPage /></MathProvider>;
+      case 'metodo':
+        return <MathProvider><MethodPage /></MathProvider>;
+      case 'demo':
+        return <MathProvider><DemoPage /></MathProvider>;
+      case 'caso':
+        return <MathProvider><UseCasePage /></MathProvider>;
+      case 'plan':
+        return <StudyPlanPage />;
+      case 'rama':
+        return <BranchPage />;
+      case 'bio': {
+        const mat = db.getMathematicianById(id, activeLang);
+        if (!mat) return <NotFoundPage />;
+        return (
+          <MathProvider>
+            <BiographyLayout Component={mat.Component} metadata={mat} />
+          </MathProvider>
+        );
+      }
+      default:
+        return <NotFoundPage />;
+    }
+  };
+
+  return (
+    <>
+      <SeoHead
+        title={itemTitle}
+        description={itemDescription}
+        type={seoType}
+        author={itemAuthors}
+        breadcrumbs={breadcrumbs}
+      />
+      {renderComponent()}
+    </>
+  );
 };
 
 /**
@@ -99,7 +198,7 @@ const LocalizedContentRouteDispatcher: React.FC = () => {
  */
 const TwoSegmentRouteDispatcher: React.FC = () => {
   const { first, second } = useParams<{ first?: string; second?: string }>();
-  const { lang: userLang } = useI18n();
+  const { lang: userLang, t } = useI18n();
 
   const rawFirst = (first || '').toLowerCase();
   const rawSecond = (second || '').toLowerCase();
@@ -110,7 +209,12 @@ const TwoSegmentRouteDispatcher: React.FC = () => {
     const canonicalType = SEGMENT_TO_CANONICAL_TYPE[rawSecond];
 
     if (!canonicalType) {
-      return <NotFoundPage />;
+      return (
+        <>
+          <SeoHead title="Página no encontrada" noindex={true} />
+          <NotFoundPage />
+        </>
+      );
     }
 
     const langConfig = getLanguage(activeLang);
@@ -122,17 +226,47 @@ const TwoSegmentRouteDispatcher: React.FC = () => {
 
     switch (canonicalType) {
       case 'diccionario':
-        return <DictionaryPage />;
+        return (
+          <>
+            <SeoHead title={t('glossary', 'title')} description={t('glossary', 'subtitle')} type="website" />
+            <DictionaryPage />
+          </>
+        );
       case 'historia':
-        return <HistoryTimeline />;
+        return (
+          <>
+            <SeoHead title={t('timeline', 'title')} type="website" />
+            <HistoryTimeline />
+          </>
+        );
       case 'grafo':
-        return <GraphPage />;
+        return (
+          <>
+            <SeoHead title={t('graph', 'logicExplorer')} type="website" />
+            <GraphPage />
+          </>
+        );
       case 'axiomas':
-        return <AxiomGraphPage />;
+        return (
+          <>
+            <SeoHead title={t('graph', 'axiomaticDependencies')} type="website" />
+            <AxiomGraphPage />
+          </>
+        );
       case 'metodo':
-        return <MethodsPage />;
+        return (
+          <>
+            <SeoHead title={t('methods', 'title')} description={t('methods', 'description')} type="website" />
+            <MethodsPage />
+          </>
+        );
       default:
-        return <NotFoundPage />;
+        return (
+          <>
+            <SeoHead title="Página no encontrada" noindex={true} />
+            <NotFoundPage />
+          </>
+        );
     }
   }
 
@@ -144,7 +278,12 @@ const TwoSegmentRouteDispatcher: React.FC = () => {
     return <Redirect to={`/${userLang}/${localizedSegment}/${second}`} replace />;
   }
 
-  return <NotFoundPage />;
+  return (
+    <>
+      <SeoHead title="Página no encontrada" noindex={true} />
+      <NotFoundPage />
+    </>
+  );
 };
 
 /**
@@ -159,7 +298,12 @@ const SingleSegmentRouteDispatcher: React.FC = () => {
   const raw = (segment || '').toLowerCase();
 
   if (isSupportedLanguage(raw)) {
-    return <HomePage />;
+    return (
+      <>
+        <SeoHead title="Matematika | La Enciclopedia Interactiva" />
+        <HomePage />
+      </>
+    );
   }
 
   const canonical = SEGMENT_TO_CANONICAL_TYPE[raw];
@@ -169,7 +313,12 @@ const SingleSegmentRouteDispatcher: React.FC = () => {
     return <Redirect to={`/${userLang}/${localizedSegment}`} replace />;
   }
 
-  return <NotFoundPage />;
+  return (
+    <>
+      <SeoHead title="Página no encontrada" noindex={true} />
+      <NotFoundPage />
+    </>
+  );
 };
 
 export const AppRouter = () => {
@@ -178,23 +327,31 @@ export const AppRouter = () => {
   return (
     <Suspense fallback={<PageLoadingScreen />}>
       <Switch>
-        {/* EDITORES (Rutas con prefijo de idioma /:lang/editor o directas) */}
+        {/* EDITORES (Rutas con prefijo de idioma /:lang/editor o directas - NUNCA INDEXAR) */}
         <Route path="/:lang/editor">
+          <SeoHead title="Editor" noindex={true} />
           <MathProvider>
             <EditorPage />
           </MathProvider>
         </Route>
         <Route path="/editor">
+          <SeoHead title="Editor" noindex={true} />
           <MathProvider>
             <EditorPage />
           </MathProvider>
         </Route>
 
         {/* HOME PRINCIPAL */}
-        <Route path="/" component={HomePage} />
+        <Route path="/">
+          <SeoHead title="Matematika | La Enciclopedia Interactiva" />
+          <HomePage />
+        </Route>
 
         {/* CONSTRUCCIÓN */}
-        <Route path="/:lang/construccion/:id" component={ConstructionPage} />
+        <Route path="/:lang/construccion/:id">
+          <SeoHead title="Página en Construcción" noindex={true} />
+          <ConstructionPage />
+        </Route>
         <Route path="/construccion/:id">
           {(params) => <Redirect to={`/${lang}/construccion/${params.id}`} replace />}
         </Route>
@@ -214,8 +371,12 @@ export const AppRouter = () => {
         <Route path="/:segment" component={SingleSegmentRouteDispatcher} />
 
         {/* 404 CATCH-ALL */}
-        <Route path="/:rest*" component={NotFoundPage} />
+        <Route path="/:rest*">
+          <SeoHead title="Página no encontrada" noindex={true} />
+          <NotFoundPage />
+        </Route>
       </Switch>
     </Suspense>
   );
 };
+

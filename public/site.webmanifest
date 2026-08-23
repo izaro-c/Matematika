@@ -1,0 +1,21 @@
+{
+  "name": "Matematika",
+  "short_name": "Matematika",
+  "description": "La Enciclopedia Interactiva, Visual y Formal de la Matemática",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fafaf9",
+  "theme_color": "#c86450",
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
