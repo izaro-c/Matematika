@@ -165,10 +165,10 @@ export const CanvasInteractivo: CanvasInteractivoComponent = ({
       )}
 
       <CanvasControlContext.Provider value={{ onComplete: handleComplete, isCompleted, activeSpec: activeCompletedSpec, onPointMove: handlePointMove, hideHeader: true }}>
-        <div className={`relative mb-3 w-full h-[360px] max-h-[360px] overflow-hidden border border-carbon/20 rounded-sm bg-lienzo transition-colors ${isCompleted ? 'pointer-events-none select-none' : ''}`}>
+        <div className={`relative mb-3 w-full h-[360px] max-h-[360px] overflow-hidden bg-lienzo transition-colors ${isCompleted ? 'pointer-events-none select-none' : ''}`}>
           {renderedChildren}
           {isCompleted && (
-            <div className="absolute inset-0 z-50 pointer-events-none border-2 border-musgo/20 rounded-none bg-musgo/[0.02]" />
+            <div className="absolute inset-0 z-50 pointer-events-none bg-musgo/[0.02]" />
           )}
         </div>
 
