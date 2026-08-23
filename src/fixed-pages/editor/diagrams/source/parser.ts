@@ -121,7 +121,7 @@ export async function parseDiagramSourceOnServer(source: string, signal?: AbortS
   if (embeddedClassification?.status === 'visual-exact') return embeddedClassification;
 
   try {
-    const response = await fetch('/api/content/parse-diagram', {
+    const response = await fetch('/Matematika/api/content/parse-diagram', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ source }),

@@ -395,7 +395,7 @@ function validateRelation(item: DiagramRelation, index: number, validation: Vali
 
 export const diagramSpecV3Schema = z.object({
   version: z.literal(DIAGRAM_SPEC_VERSION), renderer: z.literal(DIAGRAM_RENDERER_ID), title: z.string().min(1), componentId: id,
-  category: z.string().min(1), mode: z.enum(['simulation', 'diagram', 'inline']), axis: z.boolean(), grid: z.boolean(), showLabels: z.boolean().optional(),
+  category: z.string().min(1), mode: z.enum(['simulation', 'diagram', 'inline']), axis: z.boolean(), grid: z.boolean(), showLabels: z.boolean().optional(), showHeader: z.boolean().optional(),
   header: header.optional(),
   viewport: z.object({ bounds: z.tuple([number, number, number, number]), home: z.tuple([number, number, number, number]), minZoom: number.positive(), maxZoom: number.positive(), padding: number.min(0).max(0.5) }).strict(),
   layers: z.array(layer).min(1), groups: z.array(group), objects: z.array(diagramObject).min(1), relations: z.array(relation), steps: z.array(step), note: z.string(),

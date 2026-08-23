@@ -23,6 +23,33 @@ describe('Diagram TSX Parser (Local & AST)', () => {
     }
   });
 
+  it('parses EjercicioClasificacionTriangulos.tsx source cleanly with local diagram parser', async () => {
+    const fs = await import('fs');
+    const path = await import('path');
+    const sourcePath = path.join(process.cwd(), 'content/diagrams/Ejercicios/EjercicioClasificacionTriangulos.tsx');
+    let source = fs.readFileSync(sourcePath, 'utf8');
+    const model = parseDiagramSourceLocally(source, 'ejercicio');
+    expect(model).not.toBeNull();
+    expect(model?.componentId).toBe('ejercicio-clasificacion-triangulos');
+
+    const { classifyEmbeddedDiagramSource } = await import('../../../../src/fixed-pages/editor/diagrams/source/parser');
+    const { generateDiagramSource } = await import('../../../../src/fixed-pages/editor/diagrams/source/generator');
+
+    model!.showHeader = false;
+    const gen = generateDiagramSource(model!, 'EjercicioClasificacionTriangulos');
+    if (gen.ok) {
+      fs.writeFileSync(sourcePath, gen.source, 'utf8');
+      source = gen.source;
+    }
+
+    const res = classifyEmbeddedDiagramSource(source, 'ejercicio');
+    expect(res?.status).toBe('visual-exact');
+  });
+
+
+
+
+
   it('classifies generated source as exact only when the complete model roundtrips byte for byte', () => {
     const model = createTemplateModel('circunferencia', 'Test', 'definicion');
     const gen = generateDiagramSource(model, 'Test');

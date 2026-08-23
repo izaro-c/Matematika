@@ -193,7 +193,7 @@ export function diagramReducer(state: DiagramState, action: DiagramAction): Diag
     case 'PARSE_CODE_PREVIEW':
       return {
         ...state,
-        currentModel: null,
+        currentModel: action.previewModel ?? state.currentModel,
         diagnostics: action.diagnostics,
         parseStatus: 'code-preview',
         status: 'source-authoritative',

@@ -111,7 +111,7 @@ describe('DiagramRepository', () => {
       'diagram',
     )).resolves.toEqual({ success: true, modified: true });
 
-    expect(fetch).toHaveBeenCalledWith('/api/content/update-imports-exports', expect.objectContaining({
+    expect(fetch).toHaveBeenCalledWith('/Matematika/api/content/update-imports-exports', expect.objectContaining({
       method: 'POST',
       body: JSON.stringify({
         path: 'content/mdx/definitions/a.mdx',

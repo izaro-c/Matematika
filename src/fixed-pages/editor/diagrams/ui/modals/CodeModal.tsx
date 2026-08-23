@@ -42,12 +42,35 @@ export const CodeModal: React.FC<CodeModalProps> = ({
   const canApplySource = !sandboxMode && Boolean(onSourceChange) && sourceDraft.trim().length > 0;
 
   const handleCopy = async () => {
+    let success = false;
     try {
-      await navigator.clipboard.writeText(contentToCopy);
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        await navigator.clipboard.writeText(contentToCopy);
+        success = true;
+      }
+    } catch {
+      success = false;
+    }
+
+    if (!success) {
+      try {
+        const textarea = document.createElement('textarea');
+        textarea.value = contentToCopy;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        success = document.execCommand('copy');
+        document.body.removeChild(textarea);
+      } catch {
+        success = false;
+      }
+    }
+
+    if (success) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch {
-      console.error('No se pudo copiar al portapapeles');
     }
   };
 
@@ -100,17 +123,17 @@ export const CodeModal: React.FC<CodeModalProps> = ({
         </div>
 
         <div className="flex-1 overflow-auto p-4 bg-carbon text-lienzo font-mono text-xs leading-relaxed select-text">
-          {sandboxMode ? (
-            <pre>{contentToCopy}</pre>
-          ) : (
-            <textarea
-              aria-label="Aplicar desde la fuente"
-              value={sourceDraft}
-              onChange={event => setSourceDraft(event.target.value)}
-              spellCheck={false}
-              className="min-h-80 w-full resize-y bg-transparent text-lienzo outline-none"
-            />
-          )}
+          <textarea
+            aria-label="Código fuente o especificación del diagrama"
+            value={sandboxMode ? contentToCopy : sourceDraft}
+            readOnly={sandboxMode}
+            onChange={event => {
+              if (!sandboxMode) setSourceDraft(event.target.value);
+            }}
+            onClick={event => (event.target as HTMLTextAreaElement).select()}
+            spellCheck={false}
+            className="min-h-80 w-full resize-y bg-transparent text-lienzo outline-none font-mono text-xs select-all"
+          />
         </div>
 
         {/* Pie de Acciones */}

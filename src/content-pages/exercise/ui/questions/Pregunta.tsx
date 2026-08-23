@@ -27,6 +27,7 @@ const PreguntaResolucion: React.FC<ResolucionProps> = () => null;
 PreguntaResolucion.displayName = 'PreguntaResolucion';
 
 function shuffle<T>(array: T[]): T[] {
+  if (!array || !Array.isArray(array)) return [];
   const arr = [...array];
   const buf = new Uint32Array(arr.length);
   crypto.getRandomValues(buf);

@@ -1,1642 +1,34 @@
 {
   "generatedAt": "2026-07-12T14:50:29.392Z",
   "summary": {
-    "total": 120,
+    "total": 81,
     "byType": {
+      "teorema": 10,
       "sistema-axiomatico": 4,
       "axioma": 21,
-      "definicion": 22,
-      "demostracion": 25,
+      "definicion": 17,
+      "demostracion": 8,
       "ejemplo": 1,
+      "ejercicio": 2,
       "matematico": 9,
-      "metodo": 7,
+      "metodo": 3,
       "modelo": 4,
       "plan-de-estudio": 1,
-      "corolario": 1,
-      "lema": 1,
-      "teorema": 22,
-      "caso-de-uso": 1,
-      "ejercicio": 1
+      "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 58,
-      "exported": 62
+      "exported": 47,
+      "none": 34
     },
     "theoremLike": {
-      "total": 24,
-      "withDeclaredDiagram": 11
+      "total": 10,
+      "withDeclaredDiagram": 6
     },
     "demonstrations": {
-      "total": 25
+      "total": 8
     }
   },
   "items": [
-    {
-      "id": "sistema-absoluto",
-      "type": "sistema-axiomatico",
-      "title": "Geometría Absoluta",
-      "filePath": "es/axiomatic-systems/sistema-absoluto.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "sistema-euclidiano",
-      "type": "sistema-axiomatico",
-      "title": "Geometría Euclídea",
-      "filePath": "es/axiomatic-systems/sistema-euclidiano.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "sistema-hiperbolico",
-      "type": "sistema-axiomatico",
-      "title": "Geometría Hiperbólica",
-      "filePath": "es/axiomatic-systems/sistema-hiperbolico.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "sistema-incidencia",
-      "type": "sistema-axiomatico",
-      "title": "Sistema de Incidencia",
-      "filePath": "es/axiomatic-systems/sistema-incidencia.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-arquimedes",
-      "type": "axioma",
-      "title": "Axioma de Arquímedes",
-      "filePath": "es/axioms/axioma-arquimedes.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-completitud",
-      "type": "axioma",
-      "title": "Axioma de Completitud (Dedekind)",
-      "filePath": "es/axioms/axioma-completitud.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-congruencia-1",
-      "type": "axioma",
-      "title": "Axioma III-1 (Congruencia)",
-      "filePath": "es/axioms/axioma-congruencia-1.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-congruencia-2",
-      "type": "axioma",
-      "title": "Axioma III-2 (Congruencia)",
-      "filePath": "es/axioms/axioma-congruencia-2.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-congruencia-3",
-      "type": "axioma",
-      "title": "Axioma III-3 (Congruencia)",
-      "filePath": "es/axioms/axioma-congruencia-3.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-congruencia-4",
-      "type": "axioma",
-      "title": "Axioma III-4 (Congruencia)",
-      "filePath": "es/axioms/axioma-congruencia-4.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-congruencia-5",
-      "type": "axioma",
-      "title": "Axioma III-5 (SAS / LAL)",
-      "filePath": "es/axioms/axioma-congruencia-5.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-incidencia-1",
-      "type": "axioma",
-      "title": "Axioma I-1 (Incidencia)",
-      "filePath": "es/axioms/axioma-incidencia-1.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-incidencia-2",
-      "type": "axioma",
-      "title": "Axioma I-2 (Incidencia)",
-      "filePath": "es/axioms/axioma-incidencia-2.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-incidencia-3",
-      "type": "axioma",
-      "title": "Axioma I-3 (Incidencia)",
-      "filePath": "es/axioms/axioma-incidencia-3.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-incidencia-4",
-      "type": "axioma",
-      "title": "Axioma I-4 (Incidencia)",
-      "filePath": "es/axioms/axioma-incidencia-4.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-incidencia-5",
-      "type": "axioma",
-      "title": "Axioma I-5 (Incidencia)",
-      "filePath": "es/axioms/axioma-incidencia-5.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-incidencia-6",
-      "type": "axioma",
-      "title": "Axioma I-6 (Incidencia)",
-      "filePath": "es/axioms/axioma-incidencia-6.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-incidencia-7",
-      "type": "axioma",
-      "title": "Axioma I-7 (Incidencia)",
-      "filePath": "es/axioms/axioma-incidencia-7.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-incidencia-8",
-      "type": "axioma",
-      "title": "Axioma I-8 (Incidencia)",
-      "filePath": "es/axioms/axioma-incidencia-8.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-orden-1",
-      "type": "axioma",
-      "title": "Axioma II-1 (Orden)",
-      "filePath": "es/axioms/axioma-orden-1.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-orden-2",
-      "type": "axioma",
-      "title": "Axioma II-2 (Orden)",
-      "filePath": "es/axioms/axioma-orden-2.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-orden-3",
-      "type": "axioma",
-      "title": "Axioma II-3 (Orden)",
-      "filePath": "es/axioms/axioma-orden-3.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-orden-4",
-      "type": "axioma",
-      "title": "Axioma II-4 (Pasch)",
-      "filePath": "es/axioms/axioma-orden-4.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-paralelas-euclides",
-      "type": "axioma",
-      "title": "Axioma de las Paralelas (Euclides)",
-      "filePath": "es/axioms/axioma-paralelas-euclides.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "axioma-paralelas-hiperbolico",
-      "type": "axioma",
-      "title": "Axioma de las Paralelas (Lobachevski)",
-      "filePath": "es/axioms/axioma-paralelas-hiperbolico.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "altura",
-      "type": "definicion",
-      "title": "Altura",
-      "filePath": "es/definitions/altura.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "angulo",
-      "type": "definicion",
-      "title": "Ángulo",
-      "filePath": "es/definitions/angulo.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "angulos-suplementarios",
-      "type": "definicion",
-      "title": "Ángulos Suplementarios",
-      "filePath": "es/definitions/angulos-suplementarios.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "bisectriz",
-      "type": "definicion",
-      "title": "Bisectriz",
-      "filePath": "es/definitions/bisectriz.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "circunferencia",
-      "type": "definicion",
-      "title": "Circunferencia",
-      "filePath": "es/definitions/circunferencia.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "congruencia",
-      "type": "definicion",
-      "title": "Congruencia",
-      "filePath": "es/definitions/congruencia.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "contenido",
-      "type": "definicion",
-      "title": "Contenido (Equidescomposición)",
-      "filePath": "es/definitions/contenido.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "cuadrilatero",
-      "type": "definicion",
-      "title": "Cuadrilátero",
-      "filePath": "es/definitions/cuadrilatero.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "estar-entre",
-      "type": "definicion",
-      "title": "Estar Entre (Intermediación)",
-      "filePath": "es/definitions/estar-entre.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "incidencia",
-      "type": "definicion",
-      "title": "Incidencia",
-      "filePath": "es/definitions/incidencia.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "mediana",
-      "type": "definicion",
-      "title": "Mediana",
-      "filePath": "es/definitions/mediana.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "mediatriz",
-      "type": "definicion",
-      "title": "Mediatriz",
-      "filePath": "es/definitions/mediatriz.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "paralelas",
-      "type": "definicion",
-      "title": "Paralelas",
-      "filePath": "es/definitions/paralelas.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "paralelogramo",
-      "type": "definicion",
-      "title": "Paralelogramo",
-      "filePath": "es/definitions/paralelogramo.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "perpendicular",
-      "type": "definicion",
-      "title": "Perpendicular",
-      "filePath": "es/definitions/perpendicular.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "plano",
-      "type": "definicion",
-      "title": "Plano",
-      "filePath": "es/definitions/plano.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "punto",
-      "type": "definicion",
-      "title": "Punto",
-      "filePath": "es/definitions/punto.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "recta",
-      "type": "definicion",
-      "title": "Recta",
-      "filePath": "es/definitions/recta.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "segmento",
-      "type": "definicion",
-      "title": "Segmento",
-      "filePath": "es/definitions/segmento.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "semirrecta",
-      "type": "definicion",
-      "title": "Semirrecta (Rayo)",
-      "filePath": "es/definitions/semirrecta.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "teoria-medida-area",
-      "type": "definicion",
-      "title": "Teoría de la Medida de Áreas",
-      "filePath": "es/definitions/teoria-medida-area.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "demo-angulo-externo",
-      "type": "demostracion",
-      "title": "Demostración: Teorema del ángulo externo",
-      "filePath": "es/demonstrations/demo-angulo-externo.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 3,
-      "proofSteps": 11,
-      "parentTheorem": "teorema-angulo-externo",
-      "demos": []
-    },
-    {
-      "id": "demo-angulos-alternos-internos",
-      "type": "demostracion",
-      "title": "Demostración: Teorema de los ángulos alternos internos",
-      "filePath": "es/demonstrations/demo-angulos-alternos-internos.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 6,
-      "parentTheorem": "teorema-angulos-alternos-internos",
-      "demos": []
-    },
-    {
-      "id": "demo-angulos-opuestos-verticales",
-      "type": "demostracion",
-      "title": "Demostración: Ángulos opuestos por el vértice",
-      "filePath": "es/demonstrations/demo-angulos-opuestos-verticales.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 2,
-      "proofSteps": 5,
-      "parentTheorem": "teorema-angulos-opuestos-verticales",
-      "demos": []
-    },
-    {
-      "id": "demo-area-aditividad",
-      "type": "demostracion",
-      "title": "Demostración: Aditividad del Contenido",
-      "filePath": "es/demonstrations/demo-area-aditividad.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 3,
-      "parentTheorem": "teorema-area-aditividad",
-      "demos": []
-    },
-    {
-      "id": "demo-area-invariancia",
-      "type": "demostracion",
-      "title": "Demostración: Invariancia del Contenido por Congruencia",
-      "filePath": "es/demonstrations/demo-area-invariancia.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 4,
-      "parentTheorem": "teorema-area-invariancia",
-      "demos": []
-    },
-    {
-      "id": "demo-area-rectangulo",
-      "type": "demostracion",
-      "title": "Demostración: Área del Rectángulo",
-      "filePath": "es/demonstrations/demo-area-rectangulo.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 3,
-      "parentTheorem": "teorema-area-rectangulo",
-      "demos": []
-    },
-    {
-      "id": "demo-area-triangulo",
-      "type": "demostracion",
-      "title": "Demostración: Área del Triángulo",
-      "filePath": "es/demonstrations/demo-area-triangulo.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 5,
-      "parentTheorem": "teorema-area-triangulo",
-      "demos": []
-    },
-    {
-      "id": "demo-congruencia-aal",
-      "type": "demostracion",
-      "title": "Demostración: Criterio de congruencia AAL",
-      "filePath": "es/demonstrations/demo-congruencia-aal.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 2,
-      "proofSteps": 7,
-      "parentTheorem": "teorema-congruencia-aal",
-      "demos": []
-    },
-    {
-      "id": "demo-congruencia-ala",
-      "type": "demostracion",
-      "title": "Demostración: Criterio de congruencia ALA",
-      "filePath": "es/demonstrations/demo-congruencia-ala.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 3,
-      "parentTheorem": "teorema-congruencia-ala",
-      "demos": []
-    },
-    {
-      "id": "demo-congruencia-lll",
-      "type": "demostracion",
-      "title": "Demostración: Criterio de congruencia LLL",
-      "filePath": "es/demonstrations/demo-congruencia-lll.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 4,
-      "parentTheorem": "teorema-congruencia-lll",
-      "demos": []
-    },
-    {
-      "id": "demo-desigualdad-triangular",
-      "type": "demostracion",
-      "title": "Demostración: Desigualdad triangular",
-      "filePath": "es/demonstrations/demo-desigualdad-triangular.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 5,
-      "parentTheorem": "teorema-desigualdad-triangular",
-      "demos": []
-    },
-    {
-      "id": "demo-dos-rectas-un-punto",
-      "type": "demostracion",
-      "title": "Demostración: Dos rectas se cortan en a lo sumo un punto",
-      "filePath": "es/demonstrations/demo-dos-rectas-un-punto.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 2,
-      "proofSteps": 4,
-      "parentTheorem": "teorema-dos-rectas-un-punto",
-      "demos": []
-    },
-    {
-      "id": "demo-existencia-bisectriz",
-      "type": "demostracion",
-      "title": "Demostración: Existencia y unicidad de la bisectriz",
-      "filePath": "es/demonstrations/demo-existencia-bisectriz.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 5,
-      "parentTheorem": "teorema-existencia-bisectriz",
-      "demos": []
-    },
-    {
-      "id": "demo-existencia-perpendicular",
-      "type": "demostracion",
-      "title": "Demostración: Existencia y unicidad de la perpendicular",
-      "filePath": "es/demonstrations/demo-existencia-perpendicular.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 8,
-      "parentTheorem": "teorema-existencia-perpendicular",
-      "demos": []
-    },
-    {
-      "id": "demo-invariancia-triangulacion",
-      "type": "demostracion",
-      "title": "Demostración: Independencia de la Triangulación",
-      "filePath": "es/demonstrations/demo-invariancia-triangulacion.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 4,
-      "parentTheorem": "teorema-invariancia-triangulacion",
-      "demos": []
-    },
-    {
-      "id": "demo-pitagoras-areas",
-      "type": "demostracion",
-      "title": "Demostración: Teorema de Pitágoras (Equivalencia de Áreas)",
-      "filePath": "es/demonstrations/demo-pitagoras-areas.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 4,
-      "parentTheorem": "teorema-pitagoras",
-      "demos": []
-    },
-    {
-      "id": "demo-pitagoras-euclides",
-      "type": "demostracion",
-      "title": "Demostración: Teorema de Pitágoras (El molino de viento)",
-      "filePath": "es/demonstrations/demo-pitagoras-euclides.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 7,
-      "parentTheorem": "teorema-pitagoras",
-      "demos": []
-    },
-    {
-      "id": "demo-punto-medio-perpendicular",
-      "type": "demostracion",
-      "title": "Demostración: La mediatriz es perpendicular al segmento",
-      "filePath": "es/demonstrations/demo-punto-medio-perpendicular.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 5,
-      "parentTheorem": "teorema-punto-medio-perpendicular",
-      "demos": []
-    },
-    {
-      "id": "demo-punto-medio",
-      "type": "demostracion",
-      "title": "Demostración: Existencia y unicidad del punto medio",
-      "filePath": "es/demonstrations/demo-punto-medio.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 5,
-      "parentTheorem": "lema-punto-medio",
-      "demos": []
-    },
-    {
-      "id": "demo-reciproco-triangulo-isosceles",
-      "type": "demostracion",
-      "title": "Demostración: Teorema recíproco del triángulo isósceles",
-      "filePath": "es/demonstrations/demo-reciproco-triangulo-isosceles.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 2,
-      "proofSteps": 6,
-      "parentTheorem": "teorema-reciproco-triangulo-isosceles",
-      "demos": []
-    },
-    {
-      "id": "demo-rectas-coincidentes",
-      "type": "demostracion",
-      "title": "Demostración: Identidad de rectas con dos puntos en común",
-      "filePath": "es/demonstrations/demo-rectas-coincidentes.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 2,
-      "proofSteps": 5,
-      "parentTheorem": "corolario-rectas-coincidentes",
-      "demos": []
-    },
-    {
-      "id": "demo-suma-angulos-triangulo",
-      "type": "demostracion",
-      "title": "Demostración: Suma de los ángulos de un triángulo",
-      "filePath": "es/demonstrations/demo-suma-angulos-triangulo.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 5,
-      "parentTheorem": "teorema-suma-angulos-triangulo",
-      "demos": []
-    },
-    {
-      "id": "demo-tales",
-      "type": "demostracion",
-      "title": "Demostración: Teorema de Tales",
-      "filePath": "es/demonstrations/demo-tales.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 6,
-      "parentTheorem": "teorema-tales",
-      "demos": []
-    },
-    {
-      "id": "demo-triangulacion-poligono",
-      "type": "demostracion",
-      "title": "Demostración: Triangulación de Polígonos",
-      "filePath": "es/demonstrations/demo-triangulacion-poligono.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 4,
-      "parentTheorem": "teorema-triangulacion-poligono",
-      "demos": []
-    },
-    {
-      "id": "demo-triangulo-isosceles",
-      "type": "demostracion",
-      "title": "Demostración: Pons Asinorum",
-      "filePath": "es/demonstrations/demo-triangulo-isosceles.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 2,
-      "proofSteps": 4,
-      "parentTheorem": "teorema-triangulo-isosceles",
-      "demos": []
-    },
-    {
-      "id": "ejemplo-pitagoras-calculo",
-      "type": "ejemplo",
-      "title": "Cálculo de la hipotenusa en un triángulo rectángulo",
-      "filePath": "es/examples/ejemplo-pitagoras-calculo.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "arquimedes",
-      "type": "matematico",
-      "title": "arquimedes",
-      "filePath": "es/mathematicians/arquimedes.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "bolyai",
-      "type": "matematico",
-      "title": "bolyai",
-      "filePath": "es/mathematicians/bolyai.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "dedekind",
-      "type": "matematico",
-      "title": "dedekind",
-      "filePath": "es/mathematicians/dedekind.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "euclides",
-      "type": "matematico",
-      "title": "euclides",
-      "filePath": "es/mathematicians/euclides.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "hilbert",
-      "type": "matematico",
-      "title": "hilbert",
-      "filePath": "es/mathematicians/hilbert.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "lobachevski",
-      "type": "matematico",
-      "title": "lobachevski",
-      "filePath": "es/mathematicians/lobachevski.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "pasch",
-      "type": "matematico",
-      "title": "pasch",
-      "filePath": "es/mathematicians/pasch.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "pitagoras",
-      "type": "matematico",
-      "title": "pitagoras",
-      "filePath": "es/mathematicians/pitagoras.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "tales",
-      "type": "matematico",
-      "title": "tales",
-      "filePath": "es/mathematicians/tales.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "metodo-constructivo",
-      "type": "metodo",
-      "title": "Método Constructivo",
-      "filePath": "es/methods/metodo-constructivo.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "metodo-contradiccion",
-      "type": "metodo",
-      "title": "Demostración por contradicción",
-      "filePath": "es/methods/metodo-contradiccion.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "metodo-contraposicion",
-      "type": "metodo",
-      "title": "Demostración por Contraposición",
-      "filePath": "es/methods/metodo-contraposicion.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "metodo-directo",
-      "type": "metodo",
-      "title": "Método Directo",
-      "filePath": "es/methods/metodo-directo.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "metodo-exhaustivo",
-      "type": "metodo",
-      "title": "Método Exhaustivo",
-      "filePath": "es/methods/metodo-exhaustivo.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "metodo-geometrico",
-      "type": "metodo",
-      "title": "Método Geométrico",
-      "filePath": "es/methods/metodo-geometrico.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "metodo-induccion",
-      "type": "metodo",
-      "title": "Inducción Matemática",
-      "filePath": "es/methods/metodo-induccion.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "modelo-cartesiano",
-      "type": "modelo",
-      "title": "Plano Cartesiano",
-      "filePath": "es/models/modelo-cartesiano.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Diagram"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "modelo-fano",
-      "type": "modelo",
-      "title": "Plano de Fano",
-      "filePath": "es/models/modelo-fano.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "modelo-poincare",
-      "type": "modelo",
-      "title": "Disco de Poincaré",
-      "filePath": "es/models/modelo-poincare.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Diagram"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "modelo-tres-puntos",
-      "type": "modelo",
-      "title": "Modelo de Tres Puntos",
-      "filePath": "es/models/modelo-tres-puntos.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "camino-teorema-pitagoras",
-      "type": "plan-de-estudio",
-      "title": "El Camino hacia el Teorema de Pitágoras",
-      "filePath": "es/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 0,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": []
-    },
-    {
-      "id": "corolario-rectas-coincidentes",
-      "type": "corolario",
-      "title": "Corolario: Identidad de rectas con dos puntos en común",
-      "filePath": "es/theorems/corolario-rectas-coincidentes.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": "teorema-dos-rectas-un-punto",
-      "demos": [
-        "demo-rectas-coincidentes"
-      ]
-    },
-    {
-      "id": "lema-punto-medio",
-      "type": "lema",
-      "title": "Lema: Existencia y unicidad del punto medio",
-      "filePath": "es/theorems/lema-punto-medio.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 1,
-      "proofSteps": 0,
-      "parentTheorem": "teorema-punto-medio-perpendicular",
-      "demos": [
-        "demo-punto-medio"
-      ]
-    },
-    {
-      "id": "teorema-angulo-externo",
-      "type": "teorema",
-      "title": "Teorema del ángulo externo",
-      "filePath": "es/theorems/teorema-angulo-externo.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-angulo-externo"
-      ]
-    },
-    {
-      "id": "teorema-angulos-alternos-internos",
-      "type": "teorema",
-      "title": "Teorema de los ángulos alternos internos",
-      "filePath": "es/theorems/teorema-angulos-alternos-internos.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-angulos-alternos-internos"
-      ]
-    },
-    {
-      "id": "teorema-angulos-opuestos-verticales",
-      "type": "teorema",
-      "title": "Teorema de los ángulos opuestos por el vértice",
-      "filePath": "es/theorems/teorema-angulos-opuestos-verticales.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-angulos-opuestos-verticales"
-      ]
-    },
-    {
-      "id": "teorema-area-invariancia",
-      "type": "teorema",
-      "title": "Invariancia del Contenido por Congruencia",
-      "filePath": "es/theorems/teorema-area-invariancia.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-area-invariancia"
-      ]
-    },
-    {
-      "id": "teorema-area-rectangulo",
-      "type": "teorema",
-      "title": "Área del Rectángulo",
-      "filePath": "es/theorems/teorema-area-rectangulo.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-area-rectangulo"
-      ]
-    },
-    {
-      "id": "teorema-area-triangulo",
-      "type": "teorema",
-      "title": "Área del Triángulo",
-      "filePath": "es/theorems/teorema-area-triangulo.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-area-triangulo"
-      ]
-    },
-    {
-      "id": "teorema-congruencia-aal",
-      "type": "teorema",
-      "title": "Criterio de congruencia AAL",
-      "filePath": "es/theorems/teorema-congruencia-aal.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-congruencia-aal"
-      ]
-    },
-    {
-      "id": "teorema-congruencia-ala",
-      "type": "teorema",
-      "title": "Teorema de Congruencia ALA",
-      "filePath": "es/theorems/teorema-congruencia-ala.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 1,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-congruencia-ala"
-      ]
-    },
-    {
-      "id": "teorema-congruencia-lll",
-      "type": "teorema",
-      "title": "Teorema de Congruencia LLL",
-      "filePath": "es/theorems/teorema-congruencia-lll.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 1,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-congruencia-lll"
-      ]
-    },
-    {
-      "id": "teorema-desigualdad-triangular",
-      "type": "teorema",
-      "title": "Desigualdad triangular",
-      "filePath": "es/theorems/teorema-desigualdad-triangular.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-desigualdad-triangular"
-      ]
-    },
-    {
-      "id": "teorema-dos-rectas-un-punto",
-      "type": "teorema",
-      "title": "Teorema: Dos rectas se cortan en a lo sumo un punto",
-      "filePath": "es/theorems/teorema-dos-rectas-un-punto.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-dos-rectas-un-punto"
-      ]
-    },
-    {
-      "id": "teorema-existencia-bisectriz",
-      "type": "teorema",
-      "title": "Teorema de existencia y unicidad de la bisectriz",
-      "filePath": "es/theorems/teorema-existencia-bisectriz.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-existencia-bisectriz"
-      ]
-    },
-    {
-      "id": "teorema-existencia-perpendicular",
-      "type": "teorema",
-      "title": "Teorema de existencia y unicidad de la perpendicular",
-      "filePath": "es/theorems/teorema-existencia-perpendicular.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-existencia-perpendicular"
-      ]
-    },
-    {
-      "id": "teorema-invariancia-triangulacion",
-      "type": "teorema",
-      "title": "Independencia de la Triangulación",
-      "filePath": "es/theorems/teorema-invariancia-triangulacion.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 1,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-invariancia-triangulacion"
-      ]
-    },
-    {
-      "id": "teorema-punto-medio-perpendicular",
-      "type": "teorema",
-      "title": "Teorema: La mediatriz es perpendicular al segmento en su punto medio",
-      "filePath": "es/theorems/teorema-punto-medio-perpendicular.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 1,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-punto-medio-perpendicular"
-      ]
-    },
-    {
-      "id": "teorema-reciproco-triangulo-isosceles",
-      "type": "teorema",
-      "title": "Teorema recíproco del triángulo isósceles",
-      "filePath": "es/theorems/teorema-reciproco-triangulo-isosceles.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
-      "sourcesCount": 2,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-reciproco-triangulo-isosceles"
-      ]
-    },
-    {
-      "id": "teorema-suma-angulos-triangulo",
-      "type": "teorema",
-      "title": "Teorema de la suma de los ángulos de un triángulo",
-      "filePath": "es/theorems/teorema-suma-angulos-triangulo.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
-      "sourcesCount": 1,
-      "proofSteps": 0,
-      "parentTheorem": null,
-      "demos": [
-        "demo-suma-angulos-triangulo"
-      ]
-    },
     {
       "id": "teorema-tales",
       "type": "teorema",
@@ -1655,25 +47,62 @@
       ]
     },
     {
-      "id": "teorema-triangulacion-poligono",
-      "type": "teorema",
-      "title": "Triangulación de Polígonos",
-      "filePath": "es/theorems/teorema-triangulacion-poligono.mdx",
+      "id": "sistema-absoluto",
+      "type": "sistema-axiomatico",
+      "title": "Geometría Absoluta",
+      "filePath": "eu/axiomatic-systems/sistema-absoluto.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 1,
+      "sourcesCount": 0,
       "proofSteps": 0,
       "parentTheorem": null,
-      "demos": [
-        "demo-triangulacion-poligono"
-      ]
+      "demos": []
     },
     {
-      "id": "teorema-triangulo-isosceles",
-      "type": "teorema",
-      "title": "Teorema del triángulo isósceles",
-      "filePath": "es/theorems/teorema-triangulo-isosceles.mdx",
+      "id": "sistema-euclidiano",
+      "type": "sistema-axiomatico",
+      "title": "Geometría Euclídea",
+      "filePath": "eu/axiomatic-systems/sistema-euclidiano.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "sistema-hiperbolico",
+      "type": "sistema-axiomatico",
+      "title": "Geometría Hiperbólica",
+      "filePath": "eu/axiomatic-systems/sistema-hiperbolico.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "sistema-incidencia",
+      "type": "sistema-axiomatico",
+      "title": "Intzidentzia Sistema",
+      "filePath": "eu/axiomatic-systems/sistema-incidencia.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-arquimedes",
+      "type": "axioma",
+      "title": "Axioma de Arquímedes",
+      "filePath": "eu/axioms/axioma-arquimedes.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
         "Simulation"
@@ -1682,20 +111,529 @@
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
-      "demos": [
-        "demo-triangulo-isosceles"
-      ]
+      "demos": []
     },
     {
-      "id": "caso-gps-trilateracion",
-      "type": "caso-de-uso",
-      "title": "Localización por satélite (GPS) y trilateración",
-      "filePath": "es/usecases/caso-gps-trilateracion.mdx",
+      "id": "axioma-completitud",
+      "type": "axioma",
+      "title": "Axioma de Completitud (Dedekind)",
+      "filePath": "eu/axioms/axioma-completitud.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
         "Simulation"
       ],
       "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-congruencia-1",
+      "type": "axioma",
+      "title": "Axioma III-1 (Congruencia)",
+      "filePath": "eu/axioms/axioma-congruencia-1.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-congruencia-2",
+      "type": "axioma",
+      "title": "Axioma III-2 (Congruencia)",
+      "filePath": "eu/axioms/axioma-congruencia-2.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-congruencia-3",
+      "type": "axioma",
+      "title": "Axioma III-3 (Congruencia)",
+      "filePath": "eu/axioms/axioma-congruencia-3.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-congruencia-4",
+      "type": "axioma",
+      "title": "Axioma III-4 (Congruencia)",
+      "filePath": "eu/axioms/axioma-congruencia-4.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-congruencia-5",
+      "type": "axioma",
+      "title": "Axioma III-5 (SAS / LAL)",
+      "filePath": "eu/axioms/axioma-congruencia-5.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-incidencia-1",
+      "type": "axioma",
+      "title": "Axioma I-1 (Incidencia)",
+      "filePath": "eu/axioms/axioma-incidencia-1.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-incidencia-2",
+      "type": "axioma",
+      "title": "Axioma I-2 (Incidencia)",
+      "filePath": "eu/axioms/axioma-incidencia-2.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-incidencia-3",
+      "type": "axioma",
+      "title": "Axioma I-3 (Incidencia)",
+      "filePath": "eu/axioms/axioma-incidencia-3.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-incidencia-4",
+      "type": "axioma",
+      "title": "Axioma I-4 (Incidencia)",
+      "filePath": "eu/axioms/axioma-incidencia-4.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-incidencia-5",
+      "type": "axioma",
+      "title": "Axioma I-5 (Incidencia)",
+      "filePath": "eu/axioms/axioma-incidencia-5.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-incidencia-6",
+      "type": "axioma",
+      "title": "Axioma I-6 (Incidencia)",
+      "filePath": "eu/axioms/axioma-incidencia-6.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-incidencia-7",
+      "type": "axioma",
+      "title": "Axioma I-7 (Incidencia)",
+      "filePath": "eu/axioms/axioma-incidencia-7.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-incidencia-8",
+      "type": "axioma",
+      "title": "Axioma I-8 (Incidencia)",
+      "filePath": "eu/axioms/axioma-incidencia-8.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-orden-1",
+      "type": "axioma",
+      "title": "Axioma II-1 (Orden)",
+      "filePath": "eu/axioms/axioma-orden-1.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-orden-2",
+      "type": "axioma",
+      "title": "Axioma II-2 (Orden)",
+      "filePath": "eu/axioms/axioma-orden-2.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-orden-3",
+      "type": "axioma",
+      "title": "Axioma II-3 (Orden)",
+      "filePath": "eu/axioms/axioma-orden-3.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-orden-4",
+      "type": "axioma",
+      "title": "Axioma II-4 (Pasch)",
+      "filePath": "eu/axioms/axioma-orden-4.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-paralelas-euclides",
+      "type": "axioma",
+      "title": "Axioma de las Paralelas (Euclides)",
+      "filePath": "eu/axioms/axioma-paralelas-euclides.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "axioma-paralelas-hiperbolico",
+      "type": "axioma",
+      "title": "Axioma de las Paralelas (Lobachevski)",
+      "filePath": "eu/axioms/axioma-paralelas-hiperbolico.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "angulo",
+      "type": "definicion",
+      "title": "Angelua",
+      "filePath": "eu/definitions/angulo.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "angulos-suplementarios",
+      "type": "definicion",
+      "title": "Angelu osagarriak (Suplementarioak)",
+      "filePath": "eu/definitions/angulos-suplementarios.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "circunferencia",
+      "type": "definicion",
+      "title": "Zirkunferentzia",
+      "filePath": "eu/definitions/circunferencia.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "congruencia",
+      "type": "definicion",
+      "title": "Kongruentzia",
+      "filePath": "eu/definitions/congruencia.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "cuadrado",
+      "type": "definicion",
+      "title": "Karratua",
+      "filePath": "eu/definitions/cuadrado.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "cuadrilatero",
+      "type": "definicion",
+      "title": "Lauhitza (Koadrilateroa)",
+      "filePath": "eu/definitions/cuadrilatero.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "estar-entre",
+      "type": "definicion",
+      "title": "Tartean Egon (Tartekotasuna)",
+      "filePath": "eu/definitions/estar-entre.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "paralelas",
+      "type": "definicion",
+      "title": "Paralelas",
+      "filePath": "eu/definitions/paralelas.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "paralelogramo",
+      "type": "definicion",
+      "title": "Paralelogramoa",
+      "filePath": "eu/definitions/paralelogramo.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "perpendicular",
+      "type": "definicion",
+      "title": "Perpendicular",
+      "filePath": "eu/definitions/perpendicular.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "punto",
+      "type": "definicion",
+      "title": "Puntua",
+      "filePath": "eu/definitions/punto.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "recta",
+      "type": "definicion",
+      "title": "Zuzena",
+      "filePath": "eu/definitions/recta.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "segmento",
+      "type": "definicion",
+      "title": "Segmentua",
+      "filePath": "eu/definitions/segmento.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "semejanza",
+      "type": "definicion",
+      "title": "Hirukien Antzekotasuna",
+      "filePath": "eu/definitions/semejanza.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "teoria-medida-area",
+      "type": "definicion",
+      "title": "Teoría de la Medida de Áreas",
+      "filePath": "eu/definitions/teoria-medida-area.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "triangulo-rectangulo",
+      "type": "definicion",
+      "title": "Hiruki Zuzena",
+      "filePath": "eu/definitions/triangulo-rectangulo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
       "sourcesCount": 0,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -1717,6 +655,138 @@
       "demos": []
     },
     {
+      "id": "demo-angulos-alternos-internos",
+      "type": "demostracion",
+      "title": "Demostración: Teorema de los ángulos alternos internos",
+      "filePath": "eu/demonstrations/demo-angulos-alternos-internos.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 6,
+      "parentTheorem": "teorema-angulos-alternos-internos",
+      "demos": []
+    },
+    {
+      "id": "demo-angulos-opuestos-verticales",
+      "type": "demostracion",
+      "title": "Demostración: Ángulos opuestos por el vértice",
+      "filePath": "eu/demonstrations/demo-angulos-opuestos-verticales.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 5,
+      "parentTheorem": "teorema-angulos-opuestos-verticales",
+      "demos": []
+    },
+    {
+      "id": "demo-existencia-bisectriz",
+      "type": "demostracion",
+      "title": "Demostración: Existencia y unicidad de la bisectriz",
+      "filePath": "eu/demonstrations/demo-existencia-bisectriz.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 5,
+      "parentTheorem": "teorema-existencia-bisectriz",
+      "demos": []
+    },
+    {
+      "id": "demo-pitagoras-areas",
+      "type": "demostracion",
+      "title": "Froga: Pitagorasen Teorema (Azaleren Baliokidetza)",
+      "filePath": "eu/demonstrations/demo-pitagoras-areas.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 4,
+      "parentTheorem": "teorema-pitagoras",
+      "demos": []
+    },
+    {
+      "id": "demo-pitagoras-euclides",
+      "type": "demostracion",
+      "title": "Froga: Pitagorasen Teorema (Aize-errota)",
+      "filePath": "eu/demonstrations/demo-pitagoras-euclides.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 7,
+      "parentTheorem": "teorema-pitagoras",
+      "demos": []
+    },
+    {
+      "id": "demo-suma-angulos-triangulo",
+      "type": "demostracion",
+      "title": "Froga: Hiruki baten angeluen batura",
+      "filePath": "eu/demonstrations/demo-suma-angulos-triangulo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 5,
+      "parentTheorem": "teorema-suma-angulos-triangulo",
+      "demos": []
+    },
+    {
+      "id": "demo-tales",
+      "type": "demostracion",
+      "title": "Froga: Talesen Teorema",
+      "filePath": "eu/demonstrations/demo-tales.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 6,
+      "parentTheorem": "teorema-tales",
+      "demos": []
+    },
+    {
+      "id": "demo-triangulo-isosceles",
+      "type": "demostracion",
+      "title": "Demostración: Pons Asinorum",
+      "filePath": "eu/demonstrations/demo-triangulo-isosceles.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 4,
+      "parentTheorem": "teorema-triangulo-isosceles",
+      "demos": []
+    },
+    {
+      "id": "ejemplo-pitagoras-calculo",
+      "type": "ejemplo",
+      "title": "Cálculo de la hipotenusa en un triángulo rectángulo",
+      "filePath": "eu/examples/ejemplo-pitagoras-calculo.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "ejercicio-clasificacion-triangulos",
+      "type": "ejercicio",
+      "title": "Hirukiak beren Angeluen Arabera Sailkatzea",
+      "filePath": "eu/exercises/ejercicio-clasificacion-triangulos.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "ejercicio-pitagoras-cateto",
       "type": "ejercicio",
       "title": "Kateto baten kalkulua triangelu angeluzuzenean",
@@ -1732,6 +802,273 @@
       "demos": []
     },
     {
+      "id": "arquimedes",
+      "type": "matematico",
+      "title": "arquimedes",
+      "filePath": "eu/mathematicians/arquimedes.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "bolyai",
+      "type": "matematico",
+      "title": "bolyai",
+      "filePath": "eu/mathematicians/bolyai.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "dedekind",
+      "type": "matematico",
+      "title": "dedekind",
+      "filePath": "eu/mathematicians/dedekind.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "euclides",
+      "type": "matematico",
+      "title": "euclides",
+      "filePath": "eu/mathematicians/euclides.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "hilbert",
+      "type": "matematico",
+      "title": "hilbert",
+      "filePath": "eu/mathematicians/hilbert.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "lobachevski",
+      "type": "matematico",
+      "title": "lobachevski",
+      "filePath": "eu/mathematicians/lobachevski.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "pasch",
+      "type": "matematico",
+      "title": "pasch",
+      "filePath": "eu/mathematicians/pasch.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "pitagoras",
+      "type": "matematico",
+      "title": "pitagoras",
+      "filePath": "eu/mathematicians/pitagoras.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "tales",
+      "type": "matematico",
+      "title": "tales",
+      "filePath": "eu/mathematicians/tales.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "metodo-contradiccion",
+      "type": "metodo",
+      "title": "Demostración por contradicción",
+      "filePath": "eu/methods/metodo-contradiccion.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "metodo-directo",
+      "type": "metodo",
+      "title": "Zuzeneko Metodoa",
+      "filePath": "eu/methods/metodo-directo.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "metodo-induccion",
+      "type": "metodo",
+      "title": "Inducción Matemática",
+      "filePath": "eu/methods/metodo-induccion.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "modelo-cartesiano",
+      "type": "modelo",
+      "title": "Plano Cartesiano",
+      "filePath": "eu/models/modelo-cartesiano.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Diagram"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "modelo-fano",
+      "type": "modelo",
+      "title": "Plano de Fano",
+      "filePath": "eu/models/modelo-fano.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "modelo-poincare",
+      "type": "modelo",
+      "title": "Disco de Poincaré",
+      "filePath": "eu/models/modelo-poincare.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Diagram"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "modelo-tres-puntos",
+      "type": "modelo",
+      "title": "Modelo de Tres Puntos",
+      "filePath": "eu/models/modelo-tres-puntos.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "camino-teorema-pitagoras",
+      "type": "plan-de-estudio",
+      "title": "Pitagorasen Teoremarako Bidea",
+      "filePath": "eu/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "teorema-angulos-alternos-internos",
+      "type": "teorema",
+      "title": "Teorema de los ángulos alternos internos",
+      "filePath": "eu/theorems/teorema-angulos-alternos-internos.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-angulos-alternos-internos"
+      ]
+    },
+    {
+      "id": "teorema-angulos-opuestos-verticales",
+      "type": "teorema",
+      "title": "Teorema de los ángulos opuestos por el vértice",
+      "filePath": "eu/theorems/teorema-angulos-opuestos-verticales.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-angulos-opuestos-verticales"
+      ]
+    },
+    {
       "id": "teorema-area-aditividad",
       "type": "teorema",
       "title": "Aditividad del Contenido",
@@ -1744,6 +1081,53 @@
       "parentTheorem": null,
       "demos": [
         "demo-area-aditividad"
+      ]
+    },
+    {
+      "id": "teorema-area-rectangulo",
+      "type": "teorema",
+      "title": "Área del Rectángulo",
+      "filePath": "eu/theorems/teorema-area-rectangulo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-area-rectangulo"
+      ]
+    },
+    {
+      "id": "teorema-area-triangulo",
+      "type": "teorema",
+      "title": "Área del Triángulo",
+      "filePath": "eu/theorems/teorema-area-triangulo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-area-triangulo"
+      ]
+    },
+    {
+      "id": "teorema-congruencia-ala",
+      "type": "teorema",
+      "title": "Teorema de Congruencia ALA",
+      "filePath": "eu/theorems/teorema-congruencia-ala.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-congruencia-ala"
       ]
     },
     {
@@ -1763,6 +1147,55 @@
         "demo-pitagoras-euclides",
         "demo-pitagoras-areas"
       ]
+    },
+    {
+      "id": "teorema-suma-angulos-triangulo",
+      "type": "teorema",
+      "title": "Teorema de la suma de los ángulos de un triángulo",
+      "filePath": "eu/theorems/teorema-suma-angulos-triangulo.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-suma-angulos-triangulo"
+      ]
+    },
+    {
+      "id": "teorema-triangulo-isosceles",
+      "type": "teorema",
+      "title": "Teorema del triángulo isósceles",
+      "filePath": "eu/theorems/teorema-triangulo-isosceles.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": [
+        "demo-triangulo-isosceles"
+      ]
+    },
+    {
+      "id": "caso-gps-trilateracion",
+      "type": "caso-de-uso",
+      "title": "Localización por satélite (GPS) y trilateración",
+      "filePath": "eu/usecases/caso-gps-trilateracion.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
     }
   ]
 }

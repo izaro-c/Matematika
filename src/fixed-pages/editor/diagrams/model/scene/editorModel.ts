@@ -21,6 +21,7 @@ function sceneFieldsToV2(model: VisualDiagramModel | (DiagramSpecV3 & Partial<Di
     axis: model.axis,
     grid: model.grid,
     showLabels: model.showLabels,
+    showHeader: model.showHeader,
     header: model.header,
     viewport: model.viewport,
     layers: model.layers,

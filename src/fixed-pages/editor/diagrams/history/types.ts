@@ -68,7 +68,7 @@ export type DiagramAction =
   | { type: 'SET_STATUS'; status: DiagramSyncStatus }
   | { type: 'SET_DIAGNOSTICS'; diagnostics: DiagramDiagnostic[] }
   | { type: 'APPLY_PARSED_MODEL'; model: VisualDiagramModel; diagnostics: DiagramDiagnostic[] }
-  | { type: 'PARSE_CODE_PREVIEW'; diagnostics: DiagramDiagnostic[] }
+  | { type: 'PARSE_CODE_PREVIEW'; diagnostics: DiagramDiagnostic[]; previewModel?: VisualDiagramModel | null }
   | { type: 'PARSE_FAILED'; diagnostics: DiagramDiagnostic[] }
   | { type: 'RESOLVE_TO_VISUAL'; source: string; diagnostics: DiagramDiagnostic[] }
   | { type: 'RESOLVE_TO_SOURCE'; model: VisualDiagramModel }

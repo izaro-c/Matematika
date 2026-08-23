@@ -26,6 +26,7 @@ type OrdenacionComponent = React.FC<OrdenacionProps> & {
 };
 
 function shuffle<T>(array: T[]): T[] {
+  if (!array || !Array.isArray(array)) return [];
   const arr = [...array];
   const buf = new Uint32Array(arr.length);
   crypto.getRandomValues(buf);
@@ -39,7 +40,7 @@ function shuffle<T>(array: T[]): T[] {
 /**
  * Ordenacion — Ejercicio interactivo para ordenar secuencialmente deducciones o pasos matemáticos.
  */
-export const Ordenacion: OrdenacionComponent = ({ id, pregunta, pasos, children }) => {
+export const Ordenacion: OrdenacionComponent = ({ id, pregunta, pasos = [], children }) => {
   const { t } = useI18n();
 
   const {
@@ -55,10 +56,12 @@ export const Ordenacion: OrdenacionComponent = ({ id, pregunta, pasos, children 
   const { errorComunData, resolucionData, otherChildren } = useSubcomponents(children);
 
   const initialOrder = useMemo(() => {
-    if (pasos.length <= 1) return pasos;
+    if (!pasos || !Array.isArray(pasos) || pasos.length <= 1) return pasos ?? [];
     let shuffled = shuffle(pasos);
-    while (JSON.stringify(shuffled) === JSON.stringify(pasos)) {
+    let attempts = 0;
+    while (JSON.stringify(shuffled) === JSON.stringify(pasos) && attempts < 10) {
       shuffled = shuffle(pasos);
+      attempts++;
     }
     return shuffled;
   }, [pasos]);

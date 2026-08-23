@@ -127,6 +127,15 @@ export const DiagramSettingsModal: React.FC<DiagramSettingsModalProps> = ({
                 />
                 <span>Etiquetas Visibles</span>
               </label>
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={model.showHeader !== false}
+                  onChange={(e) => onUpdateModel({ showHeader: e.target.checked }, 'Alternar cabecera (Título y Subtítulo)')}
+                  className="rounded border-carbon/30 text-canela focus:ring-canela"
+                />
+                <span>Mostrar Título y Subtítulo</span>
+              </label>
             </div>
           </div>
 

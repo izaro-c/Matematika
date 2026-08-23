@@ -83,29 +83,52 @@ function json(requestBody: unknown, signal?: AbortSignal): RequestInit {
   };
 }
 
+import { getLocalCatalog, readLocalContent, applyLocalContent, saveLocalDraft } from './localEditorStore';
+
 export class EditorApiClient {
-  readContent(file: EditorFileIdentity, signal?: AbortSignal): Promise<ReadContentResponse> {
-    return request(editorApiPath(`/api/content?path=${encodeURIComponent(file.path)}`), readContentResponseSchema, { signal });
+  async readContent(file: EditorFileIdentity, signal?: AbortSignal): Promise<ReadContentResponse> {
+    try {
+      return await request(editorApiPath(`/Matematika/api/content?path=${encodeURIComponent(file.path)}`), readContentResponseSchema, { signal });
+    } catch {
+      return readLocalContent(file.path);
+    }
   }
-  listContent(signal?: AbortSignal) {
-    return request(editorApiPath('/api/list-content'), fileListSchema, { signal });
+  async listContent(signal?: AbortSignal) {
+    try {
+      return await request(editorApiPath('/api/list-content'), fileListSchema, { signal });
+    } catch {
+      return getLocalCatalog();
+    }
   }
-  readDraft(file: EditorFileIdentity, signal?: AbortSignal): Promise<ReadDraftResponse> {
+  async readDraft(file: EditorFileIdentity, signal?: AbortSignal): Promise<ReadDraftResponse> {
     return request(editorApiPath(`/api/draft?path=${encodeURIComponent(file.path)}`), readDraftResponseSchema, { signal });
   }
-  saveDraft(value: SaveDraftRequest, signal?: AbortSignal): Promise<SaveDraftResponse> {
-    return request(editorApiPath('/api/draft'), saveDraftResponseSchema, json(value, signal));
+  async saveDraft(value: SaveDraftRequest, signal?: AbortSignal): Promise<SaveDraftResponse> {
+    try {
+      return await request(editorApiPath('/api/draft'), saveDraftResponseSchema, json(value, signal));
+    } catch {
+      return saveLocalDraft(value);
+    }
   }
-  applyContent(value: ApplyContentRequest, signal?: AbortSignal): Promise<ApplyContentResponse> {
-    return request(editorApiPath('/api/content'), applyContentResponseSchema, json(value, signal));
+  async applyContent(value: ApplyContentRequest, signal?: AbortSignal): Promise<ApplyContentResponse> {
+    try {
+      return await request(editorApiPath('/Matematika/api/content'), applyContentResponseSchema, json(value, signal));
+    } catch {
+      return applyLocalContent(value);
+    }
   }
-  createContent(value: CreateContentRequest, signal?: AbortSignal): Promise<ApplyContentResponse> {
+  async createContent(value: CreateContentRequest, signal?: AbortSignal): Promise<ApplyContentResponse> {
     const checked = createContentRequestSchema.parse(value);
-    return request(editorApiPath('/api/content'), applyContentResponseSchema, json(checked, signal));
+    try {
+      return await request(editorApiPath('/Matematika/api/content'), applyContentResponseSchema, json(checked, signal));
+    } catch {
+      return applyLocalContent(checked);
+    }
   }
   restoreBackup(value: RestoreBackupRequest, signal?: AbortSignal): Promise<RestoreBackupResponse> {
-    return request(editorApiPath('/api/content/restore'), restoreBackupResponseSchema, json(value, signal));
+    return request(editorApiPath('/Matematika/api/content/restore'), restoreBackupResponseSchema, json(value, signal));
   }
 }
 
 export const editorApiClient = new EditorApiClient();
+

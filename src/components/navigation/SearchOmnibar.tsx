@@ -123,11 +123,6 @@ export const SearchOmnibar = () => {
 
   useEffect(() => {
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
-        event.preventDefault();
-        if (useNavigationStore.getState().isSearchOpen) resetAndClose();
-        else useNavigationStore.getState().openSearch();
-      }
       if (event.key === 'Escape') {
         if (isTypeMenuOpen) {
           event.preventDefault();

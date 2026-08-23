@@ -352,6 +352,7 @@ export interface UseBoardLifecycleOptions {
   errorHighlightedIds?: readonly string[];
   effectiveStepId?: string;
   bounds: DiagramBounds;
+  readOnly?: boolean;
   interactionCallbacksRef: MutableRefObject<{
     onSelectionChange?: (id: string, intent?: DiagramSelectionIntent) => void;
     onPointMove?: (id: string, x: number, y: number) => void;
@@ -374,6 +375,7 @@ export function useBoardLifecycle({
   errorHighlightedIds = [],
   effectiveStepId,
   bounds,
+  readOnly = false,
   interactionCallbacksRef,
   setTargetHighlight,
   localTargetHighlightRef,
@@ -458,7 +460,7 @@ export function useBoardLifecycle({
     }
     createSceneConstructionPlan(spec).forEach(entry => {
       const sceneItem = entry.item;
-      const directInteractionLocked = entry.locked || !sceneItem.selection.selectable;
+      const directInteractionLocked = readOnly || entry.locked || !sceneItem.selection.selectable;
       const highlightable = sceneItem.selection.highlightable !== false;
       const hoverColor = !highlightable || preservesOwnColorOnHighlight(sceneItem.style) ? theme[sceneItem.color] : theme.ocre;
       const pointLabelOptions = {
@@ -713,7 +715,7 @@ export function useBoardLifecycle({
     spec.points.forEach(point => {
       const element = elements[point.id];
       if (!element) return;
-      const directInteractionLocked = point.locked || !point.selection.selectable;
+      const directInteractionLocked = readOnly || point.locked || !point.selection.selectable;
       if (directInteractionLocked) {
         if (element.visProp) {
           element.visProp.attractors = [];

@@ -468,6 +468,7 @@ export function migrateDiagramSpecV2ToV3(spec: DiagramSpecV2): DiagramSpecV3 {
     axis: spec.axis,
     grid: spec.grid,
     ...(spec.showLabels !== undefined ? { showLabels: spec.showLabels } : {}),
+    ...(spec.showHeader !== undefined ? { showHeader: spec.showHeader } : {}),
     ...(spec.header ? { header: structuredClone(spec.header) } : {}),
     viewport: structuredClone(spec.viewport),
     layers: structuredClone(spec.layers).map(({ extensions: _extensions, ...layer }) => layer),
@@ -952,7 +953,7 @@ export function toWorkingSceneV2(spec: DiagramSpecV3): DiagramSpecV2 {
   points.forEach(point => { if (point.constraint === 'derived') point.dependencies = dependencies?.filter(edge => edge.targetId === point.id).map(edge => edge.sourceId) ?? []; });
   return {
     version: DIAGRAM_SPEC_V2_VERSION, renderer: DIAGRAM_RENDERER_V2_ID, title: spec.title, componentId: spec.componentId,
-    category: spec.category, mode: spec.mode, axis: spec.axis, grid: spec.grid, ...(spec.showLabels !== undefined ? { showLabels: spec.showLabels } : {}),
+    category: spec.category, mode: spec.mode, axis: spec.axis, grid: spec.grid, ...(spec.showLabels !== undefined ? { showLabels: spec.showLabels } : {}), ...(spec.showHeader !== undefined ? { showHeader: spec.showHeader } : {}),
     ...(spec.header ? { header: structuredClone(spec.header) } : {}),
     viewport: structuredClone(spec.viewport), layers: structuredClone(spec.layers), groups: structuredClone(spec.groups), points, elements, sliders,
     steps: structuredClone(spec.steps), constraints: compatibilityRelations.map(relation => relationToConstraint(relation, spec.objects)), dependencies, note: spec.note, extensions: {},

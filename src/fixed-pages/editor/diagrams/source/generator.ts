@@ -71,7 +71,7 @@ ${serializeDiagramSpec(currentParsed.data)}
 );
 ${SPEC_END}
 
-export const ${componentName} = () => <DiagramRenderer spec={${specName}} />;
+export const ${componentName} = (props?: any) => <DiagramRenderer spec={${specName}} {...props} />;
 `;
 
   return { ok: true, source, diagnostics };

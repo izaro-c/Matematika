@@ -1,0 +1,104 @@
+export const metadata = {
+  "id": "ejercicio-clasificacion-triangulos",
+  "type": "ejercicio",
+  "lang": "eu",
+  "branch": "51M",
+  "title": "Hirukiak beren Angeluen Arabera Sailkatzea",
+  "description": "Barne-angeluen neurriaren arabera hiruki motak sailkatzeko, zenbatzeko eta aztertzeko ariketa interaktiboa.",
+  "relatedTheorem": "teorema-suma-angulos-triangulo",
+  "hasSimulation": false,
+  "difficulty": "básico",
+  "hint": "Gogoratu: 90°-ko angelu bat badu hiruki zuzena da; hiru angeluak 90° baino txikiagoak badira zehitza da; eta 90° baino handiagoa den angelu bat badu kamutsa da."
+};
+
+import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/EjercicioClasificacionTriangulos';
+
+<Capitular letra="H" />irukiak beren angeluen arabera sailkatzea oinarrizko trebezia da kongruentzia eta antzekotasun teoremoak aplikatzeko. Ariketa honetan hiruki ezberdinak beren barne-angeluen arabera sailkatuko dituzu, zenbaketa-matrizea eraikiko duzu eta ezaugarriak mihisean egiaztatuko dituzu.
+
+<Separador />
+
+<ExerciseStep
+  id="p1"
+  numero={1}
+  titulo="Barne-Angeluen Araberako Sailkapena"
+  questionIds={["p1_q1"]}
+>
+  Arrastatu hiruki bakoitza bere kategoria egokira beren angeluen arabera:
+
+  <Clasificador
+    id="p1_q1"
+    pregunta="Sailkatu hurrengo hirukiak beren kategoria egokian:"
+    buckets={[
+      { id: "rectangulo", title: "Hiruki Zuzena (90°-ko angelu bat)" },
+      { id: "acutangulo", title: "Hiruki Zehitza (3 angelu < 90°)" },
+      { id: "obtusangulo", title: "Hiruki Kamutsa (angelu bat > 90°)" }
+    ]}
+    items={[
+      { id: "t1", content: "90^\\circ, 45^\\circ, 45^\\circ", bucketId: "rectangulo" },
+      { id: "t2", content: "60^\\circ, 60^\\circ, 60^\\circ", bucketId: "acutangulo" },
+      { id: "t3", content: "120^\\circ, 30^\\circ, 30^\\circ", bucketId: "obtusangulo" },
+      { id: "t4", content: "3, 4, 5\\text{ (aldeak)}", bucketId: "rectangulo" }
+    ]}
+  >
+    <Clasificador.ErrorComun titulo="Hiruko pitagorikoa edo angelu kamutsak nahastea">
+      Gogoratu Pitagorasen teoremagatik ($3^2 + 4^2 = 5^2$) 3, 4 eta 5 aldeak dituen hirukia zuzena dela. Era berean, nahikoa da 90° baino handiagoa den angelu bakar bat kamutsa izateko.
+    </Clasificador.ErrorComun>
+
+    <Clasificador.Resolucion>
+      - **Zuzenak**: 90°-ko angelu bat dute ($90^\circ-45^\circ-45^\circ$ edo $3-4-5$ hiruko pitagorikoa).
+      - **Zehitzak**: Hiru angeluak 90° baino txikiagoak dira ($60^\circ-60^\circ-60^\circ$).
+      - **Kamutsak**: 90° baino handiagoa den angelu bat dute ($120^\circ-30^\circ-30^\circ$).
+    </Clasificador.Resolucion>
+  </Clasificador>
+</ExerciseStep>
+
+<ExerciseStep
+  id="p2"
+  numero={2}
+  titulo="Sailkapenaren Zenbaketa Matriziala"
+  questionIds={["p2_q1"]}
+  dependeDeQuestions={["p1_q1"]}
+>
+  Adierazi aurreko sailkapenaren emaitzak errenkada-bektore formatuan $[\text{Zuzenak}, \text{Zehitzak}, \text{Kamutsak}]$:
+
+  <MatrizInteractiva
+    id="p2_q1"
+    pregunta="Sartu kategoria bakoitzari dagozkion hiruki kopurua [Zuzenak, Zehitzak, Kamutsak]:"
+    correct={[["2", "1", "1"]]}
+  >
+    <MatrizInteractiva.ErrorComun titulo="Zenbaketa akatsa elementuetan">
+      Errepasatu aurreko urratseko hirukiak: 2 hiruki zuzen daude ($90^\circ-45^\circ-45^\circ$ eta $3-4-5$), 1 zehitza ($60^\circ-60^\circ-60^\circ$) eta 1 kamutsa ($120^\circ-30^\circ-30^\circ$).
+    </MatrizInteractiva.ErrorComun>
+
+    <MatrizInteractiva.Resolucion>
+      Sailkatutako 4 hirukiak taldekatzean 2 zuzen, 1 zehitz eta 1 kamuts lortzen ditugu. Dagookion errenkada-matrizea $[2 \quad 1 \quad 1]$ da.
+    </MatrizInteractiva.Resolucion>
+  </MatrizInteractiva>
+</ExerciseStep>
+
+<ExerciseStep
+  id="p3"
+  numero={3}
+  titulo="Egiaztapen Bisuala Mihisean"
+  questionIds={["p3_q1"]}
+  dependeDeQuestions={["p2_q1"]}
+>
+  Bieztatu sailkapena angeluen antolaketa bisuala aztertuz mihise interaktiboan:
+
+  <CanvasInteractivo
+    id="p3_q1"
+    title="Angelu Zuzenketarako Mihise Interaktiboa"
+    pregunta="Egin klik mihiseko ikuskapen-botoietan hiruki mota bakoitzaren irekiera egiaztatzeko:"
+    botonTexto="Balioztatu Mihisearen Analisia"
+  >
+    <EjercicioClasificacionTriangulos />
+
+    <CanvasInteractivo.ErrorComun titulo="Huts egitea angeluen batura egiaztatzean">
+      Gogoratu hiruki euklidear guztietan barne-angeluen batura zehazki 180° dela ($\alpha + \beta + \gamma = 180^\circ$).
+    </CanvasInteractivo.ErrorComun>
+
+    <CanvasInteractivo.Resolucion>
+      Mihisean egiaztatzen da kasu guztietan barne-angeluen baturak $\alpha + \beta + \gamma = 180^\circ$ betetzen duela, egindako sailkapen geometrikoa berretsiz.
+    </CanvasInteractivo.Resolucion>
+  </CanvasInteractivo>
+</ExerciseStep>

@@ -249,6 +249,7 @@ export interface DiagramSpecV3 {
   axis: boolean;
   grid: boolean;
   showLabels?: boolean;
+  showHeader?: boolean;
   header?: DiagramHeaderConfiguration;
   viewport: DiagramViewport;
   layers: DiagramLayer[];

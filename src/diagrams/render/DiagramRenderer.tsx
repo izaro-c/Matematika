@@ -22,6 +22,7 @@ import {
 } from '@/diagrams/render/DiagramKatexOverlay';
 import { liveVariables, useBoardLifecycle } from '@/diagrams/render/lifecycle/useBoardLifecycle';
 import { useDiagramPaintReport } from '@/components/ui/skeletons';
+import { useCanvasControl } from './CanvasControlContext';
 import { syncDiagramTextScale } from '@/diagrams/diagramTextScale';
 
 export interface DiagramRendererProps {
@@ -46,6 +47,10 @@ export interface DiagramRendererProps {
   /** Aviso cuando el tablero ha construido la escena (para quitar skeleton). */
   onReady?: () => void;
   stepControls?: boolean;
+  interactive?: boolean;
+  readOnly?: boolean;
+  disabled?: boolean;
+  isCompleted?: boolean;
 }
 
 const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
@@ -69,13 +74,24 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   onViewportChange,
   onReady,
   stepControls,
+  interactive = true,
+  readOnly = false,
+  disabled = false,
+  isCompleted = false,
 }) => {
+  const canvasControl = useCanvasControl();
+  const effectiveOnPointMove = onPointMove || canvasControl?.onPointMove;
+
   const reportPaint = useDiagramPaintReport();
   const readyNotifiedRef = useRef(false);
   const { lang: contextLang } = useI18n();
   const effectiveLang = propLang || contextLang;
-  const localizedInputSpec = useMemo(() => localizeDiagramSpec(inputSpec, effectiveLang), [inputSpec, effectiveLang]);
+
+  const effectiveInputSpec = (canvasControl?.isCompleted && canvasControl?.activeSpec) || inputSpec;
+  const localizedInputSpec = useMemo(() => localizeDiagramSpec(effectiveInputSpec, effectiveLang), [effectiveInputSpec, effectiveLang]);
   const spec = useMemo(() => prepareSceneSpec(localizedInputSpec), [localizedInputSpec]);
+
+  const isInteractionLocked = Boolean(readOnly || disabled || isCompleted || canvasControl?.isCompleted || interactive === false);
 
   const {
     interactionCallbacksRef,
@@ -84,8 +100,9 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   } = useDiagramSelection({
     spec,
     mode,
+    readOnly: isInteractionLocked,
     onSelectionChange,
-    onPointMove,
+    onPointMove: effectiveOnPointMove,
     onSliderChange,
     onAnnotationMove,
     onCanvasPointCreate,
@@ -171,6 +188,12 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   const showStepControls = (stepControls ?? true) && spec.steps.length > 1;
   const showToolbar = viewportControls || showStepControls;
 
+  const hasHeader = Boolean(
+    !hideHeader &&
+    spec.showHeader !== false &&
+    (spec.title || spec.note || ('readings' in spec && Array.isArray(spec.readings) && spec.readings.length > 0))
+  );
+
   const {
     bounds,
     commitCamera,
@@ -192,7 +215,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     viewportControls,
     showStepControls,
     showToolbar,
-    hasHeader: !hideHeader,
+    hasHeader,
     onViewportChange,
     rendererRef,
     headerRef,
@@ -210,6 +233,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
     errorHighlightedIds,
     effectiveStepId,
     bounds,
+    readOnly: isInteractionLocked,
     interactionCallbacksRef,
     setTargetHighlight,
     localTargetHighlightRef,
@@ -291,7 +315,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         onInit={handleBoardInitAndReady}
         onUpdate={handleBoardUpdate}
       >
-        {!hideHeader && (
+        {!hideHeader && spec.showHeader !== false && (
           <header
             ref={headerRef}
             className={`pointer-events-none absolute z-20 ${

@@ -88,7 +88,7 @@ export class DiagramRepository {
     signal?: AbortSignal
   ): Promise<{ success: boolean; modified: boolean }> {
     // Call the newly created update-imports-exports route
-    const response = await fetch('/api/content/update-imports-exports', {
+    const response = await fetch('/Matematika/api/content/update-imports-exports', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

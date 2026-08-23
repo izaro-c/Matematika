@@ -249,7 +249,7 @@ function sourceDifference(expected: string, actual: string): string {
 }
 
 async function readContent(relativePath: string) {
-  const response = await fetch(`${BASE_URL}/api/content?path=${encodeURIComponent(relativePath)}`);
+  const response = await fetch(`${BASE_URL}/Matematika/api/content?path=${encodeURIComponent(relativePath)}`);
   if (!response.ok) throw new Error(`Cannot read ${relativePath}: ${response.status}`);
   return await response.json() as { source: string; version: string; sourceHash: string };
 }
@@ -257,7 +257,7 @@ async function readContent(relativePath: string) {
 async function applyContent(relativePath: string, source: string, expectedVersion: string, localRevision: number) {
   const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(source));
   const sourceHash = [...new Uint8Array(hashBuffer)].map(byte => byte.toString(16).padStart(2, '0')).join('');
-  const response = await fetch(`${BASE_URL}/api/content`, {
+  const response = await fetch(`${BASE_URL}/Matematika/api/content`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ path: relativePath, source, sourceHash, expectedVersion, localRevision }),
@@ -417,7 +417,7 @@ async function main() {
 
       let aborted = false;
       const intercept = (request: HTTPRequest) => {
-        if (!aborted && request.url().endsWith('/api/content') && request.method() === 'POST') {
+        if (!aborted && request.url().endsWith('/Matematika/api/content') && request.method() === 'POST') {
           aborted = true;
           console.log(`[${new Date().toISOString()}] FLOW 4: Intercepted and aborting save request`);
           request.abort().catch(() => undefined);
@@ -474,7 +474,7 @@ async function main() {
       const body = applied.body as { backupId?: string; version?: string };
       if (!applied.response.ok || !body.backupId || !body.version) throw new Error('Could not create backup');
       console.log(`[${new Date().toISOString()}] FLOW 6: Calling API content restore...`);
-      const restore = await fetch(`${BASE_URL}/api/content/restore`, {
+      const restore = await fetch(`${BASE_URL}/Matematika/api/content/restore`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ path: 'content/mdx/definitions/parcial.mdx', backupId: body.backupId, expectedVersion: body.version }),

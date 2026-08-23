@@ -265,4 +265,54 @@ describe('DiagramSpec v2 schema and migrations', () => {
     }
     expect(() => migrateDiagramSpec({ ...v2Fixture, version: 0 })).toThrow(/no tiene una ruta/);
   });
+
+  it('validates EjercicioClasificacionTriangulosSpec cleanly against parseDiagramSpecV3 and tests exercise validation', async () => {
+    const { AnguloSpec } = await import('@content/diagrams/Definiciones/Angulo');
+    const { EjercicioClasificacionTriangulosSpec } = await import('@content/diagrams/Ejercicios/EjercicioClasificacionTriangulos');
+    const { validateClasificacionTriangulos } = await import('@/content-pages/exercise/validators/canvasValidators');
+    const { createDiagramSpec } = await import('@/diagrams/public');
+
+    expect(() => createDiagramSpec(AnguloSpec)).not.toThrow();
+    expect(() => createDiagramSpec(EjercicioClasificacionTriangulosSpec)).not.toThrow();
+
+    // Initial position is misaligned -> validation returns false
+    expect(validateClasificacionTriangulos(EjercicioClasificacionTriangulosSpec)).toBe(false);
+
+    // Corrected position:
+    // C1 (pR3) at (0, 2.5) -> Right angle at R1 (90°)
+    // C2 (pA3) at (8, 3) -> All acute angles (< 90°)
+    // C3 (pO3) at (11, 2) -> Obtuse angle at O1 (> 90°)
+    const validSpec: typeof EjercicioClasificacionTriangulosSpec = {
+      ...EjercicioClasificacionTriangulosSpec,
+      objects: EjercicioClasificacionTriangulosSpec.objects.map((obj) => {
+        if (obj.id === 'pR3' && obj.objectType === 'point') return { ...obj, definition: { type: 'coordinates', x: 0, y: 2.5 } };
+        if (obj.id === 'pA3' && obj.objectType === 'point') return { ...obj, definition: { type: 'coordinates', x: 8, y: 3 } };
+        if (obj.id === 'pO3' && obj.objectType === 'point') return { ...obj, definition: { type: 'coordinates', x: 11, y: 2 } };
+        return obj;
+      }),
+    };
+    expect(validateClasificacionTriangulos(validSpec)).toBe(true);
+
+    // Partially valid position (only 2 out of 3 correct) -> returns false
+    const partialSpec: typeof EjercicioClasificacionTriangulosSpec = {
+      ...EjercicioClasificacionTriangulosSpec,
+      objects: EjercicioClasificacionTriangulosSpec.objects.map((obj) => {
+        if (obj.id === 'pR3' && obj.objectType === 'point') return { ...obj, definition: { type: 'coordinates', x: 0, y: 2.5 } };
+        if (obj.id === 'pA3' && obj.objectType === 'point') return { ...obj, definition: { type: 'coordinates', x: 8, y: 3 } };
+        return obj;
+      }),
+    };
+    expect(validateClasificacionTriangulos(partialSpec)).toBe(false);
+  });
 });
+
+
+
+
+
+
+
+
+
+
+

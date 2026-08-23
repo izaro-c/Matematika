@@ -1,0 +1,61 @@
+export const metadata = {
+  "lang": "eu",
+  "id": "sistema-euclidiano",
+  "type": "sistema-axiomatico",
+  "title": "Geometría Euclídea",
+  "description": "Geometría clásica del plano y el espacio tridimensional, basada en los axiomas de incidencia, orden, congruencia, continuidad y el quinto postulado de Euclides.",
+  "axiomas": [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-incidencia-4",
+    "axioma-incidencia-5",
+    "axioma-incidencia-6",
+    "axioma-incidencia-7",
+    "axioma-incidencia-8",
+    "axioma-orden-1",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-4",
+    "axioma-congruencia-1",
+    "axioma-congruencia-2",
+    "axioma-congruencia-3",
+    "axioma-congruencia-4",
+    "axioma-congruencia-5",
+    "axioma-arquimedes",
+    "axioma-completitud",
+    "axioma-paralelas-euclides"
+  ],
+  "models": [],
+  "mathematicians": ["euclides", "hilbert"],
+  "tags": ["geometria", "euclidiana", "clasica", "fundamentos"]
+};
+
+<Capitular letra="L" />
+a <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> es la teoría axiomática que incorpora el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> a los cimientos de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>. Matemáticamente, modela el espacio <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> intuitivo y ha servido como paradigma del espacio físico a lo largo de más de dos milenios.
+
+<Separador />
+
+### <ConceptLink targetId="axioma" isDependency={false}>Axiomas</ConceptLink>
+
+La <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> comprende los 19 axiomas de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> más el <ConceptLink targetId={["axioma-paralelas-euclides", "axioma", "paralelas"]} isDependency={false}>axioma de las paralelas</ConceptLink> de Euclides:
+
+<ConceptLink targetId="axioma-paralelas-euclides"  isDependency={false}>Axioma V (Paralelas)</ConceptLink>: Por un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> exterior a una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> pasa exactamente una recta <ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink> a la dada.
+
+Este axioma, también conocido como el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink>, es el que distingue la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> de las geometrías no euclídeas. Es equivalente a afirmar que la suma de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es $180^\circ$.
+
+<Separador />
+
+### Modelos
+
+- **Espacio cartesiano** $\mathbb{R}^n$ con la métrica euclídea: el modelo estándar.
+- **Plano euclídeo** $\mathbb{R}^2$: el modelo bidimensional clásico.
+- **Plano complejo** $\mathbb{C}$: isomorfo al plano euclídeo mediante la identificación $\mathbb{C} \cong \mathbb{R}^2$.
+
+<Separador />
+
+### Propiedades
+
+La <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> es **consistente** (relativamente a la teoría de los números reales). Es **categórica**: todo modelo que satisface los axiomas es isomórficamente equivalente al espacio $\mathbb{R}^3$. Esta propiedad es consecuencia directa del <ConceptLink targetId={["axioma-completitud", "axioma"]} isDependency={false}>axioma de completitud</ConceptLink>, el cual garantiza que toda recta euclídea es biyectiva con $\mathbb{R}$.
+
+El <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink> es **independiente** de los demás axiomas: existen geometrías (hiperbólica, elíptica) que satisfacen todos los axiomas excepto el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink>, demostrando que no puede deducirse de los anteriores.
