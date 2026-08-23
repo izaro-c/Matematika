@@ -634,7 +634,7 @@ async function main() {
     // El fixture TSX provoca HMR y el conflicto deja una sesión dirty. Los
     // flujos de cierre son independientes y arrancan en páginas limpias.
     await resetPage();
-    await runTest(results, '15 Navegación y filtros de Fase 1', evidenceDir, async () => {
+    await runTest(results, '15 Navegación y filtros', evidenceDir, async () => {
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
       await openEditor(page);
       const search = await page.$('input[type="search"]');
@@ -652,7 +652,7 @@ async function main() {
     });
 
     await resetPage();
-    await runTest(results, '16 Paneles, teclado y responsive de Fase 1', evidenceDir, async () => {
+    await runTest(results, '16 Paneles, teclado y responsive', evidenceDir, async () => {
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
       await openEditor(page);
       await clickByText(page, 'Compatible');
@@ -673,7 +673,7 @@ async function main() {
       await expectText(page, 'Ningún recurso abierto');
       const laptopOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
       if (laptopOverflow) throw new Error('The laptop editor introduced horizontal page overflow');
-      await page.screenshot({ path: path.join(evidenceDir, 'fase-1-laptop-1024x768.png'), fullPage: false });
+      await page.screenshot({ path: path.join(evidenceDir, 'laptop-1024x768.png'), fullPage: false });
 
       await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
       await page.reload({ waitUntil: 'domcontentloaded' });
@@ -682,14 +682,14 @@ async function main() {
       await expectText(page, 'Recursos matemáticos');
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
       if (overflow) throw new Error('The mobile editor introduced horizontal page overflow');
-      await page.screenshot({ path: path.join(evidenceDir, 'fase-1-mobile-390x844.png'), fullPage: false });
+      await page.screenshot({ path: path.join(evidenceDir, 'mobile-390x844.png'), fullPage: false });
 
       await page.setViewport({ width: 1600, height: 1100, deviceScaleFactor: 1 });
       await page.reload({ waitUntil: 'domcontentloaded' });
       await expectText(page, 'Ningún recurso abierto');
       const desktopOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
       if (desktopOverflow) throw new Error('The wide desktop editor introduced horizontal page overflow');
-      await page.screenshot({ path: path.join(evidenceDir, 'fase-1-desktop-1600x1100.png'), fullPage: false });
+      await page.screenshot({ path: path.join(evidenceDir, 'desktop-1600x1100.png'), fullPage: false });
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
     });
 
@@ -720,7 +720,7 @@ async function main() {
     });
 
     await resetPage();
-    await runTest(results, '18 Autoría visual compleja, diagrama y roundtrip de Fase 7', evidenceDir, async () => {
+    await runTest(results, '18 Autoría visual compleja, diagrama y roundtrip', evidenceDir, async () => {
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
       await openEditor(page);
       await clickByText(page, 'Nueva');
@@ -803,7 +803,7 @@ async function main() {
       await expectText(page, 'Guardar');
       await expectText(page, 'Una vista');
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
-      if (overflow) throw new Error('The Phase 7 mobile authoring UI introduced horizontal page overflow');
+      if (overflow) throw new Error('The mobile authoring UI introduced horizontal page overflow');
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
     });
 

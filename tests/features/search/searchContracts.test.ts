@@ -111,4 +111,22 @@ describe('search contracts', () => {
       expect(result.subtitle === undefined || typeof result.subtitle === 'string').toBe(true);
     }
   });
+
+  it('handles empty, whitespace, and special character queries gracefully', () => {
+    const fuse = new Fuse(searchIndex, SEARCH_FUSE_OPTIONS);
+
+    expect(fuse.search('')).toBeDefined();
+    expect(fuse.search('   ')).toBeDefined();
+    expect(fuse.search('!!!')).toBeDefined();
+  });
+
+  it('finds results regardless of uppercase or lowercase query formatting', () => {
+    const fuse = new Fuse(searchIndex, SEARCH_FUSE_OPTIONS);
+    const lowerResults = fuse.search('pitagoras');
+    const upperResults = fuse.search('PITAGORAS');
+
+    expect(lowerResults.length).toBeGreaterThan(0);
+    expect(lowerResults).toHaveLength(upperResults.length);
+    expect(lowerResults[0].item.id).toBe(upperResults[0].item.id);
+  });
 });

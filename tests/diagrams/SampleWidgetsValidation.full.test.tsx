@@ -1,5 +1,5 @@
 /**
- * Validación de la Fase 3 de la auditoría del runtime de diagramas: repite la
+ * Validación de la auditoría del runtime de diagramas: repite la
  * batería de estabilidad sobre una muestra representativa adicional que
  * `RayDirectionStability.full.test.tsx` no cubre — Ángulo (dos semirrectas
  * ancladas a un vértice fijo, con atractores) y Paralelogramo (región

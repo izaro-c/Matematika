@@ -1,0 +1,1121 @@
+import React from 'react';
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import primitivesFixture from '../fixtures/diagrams/euclidean-primitives.json';
+import curvesFixture from '../fixtures/diagrams/curves.json';
+import poincareFixture from '../fixtures/diagrams/poincare.json';
+import marksFixture from '../fixtures/diagrams/marks-angles.json';
+import measurementsFixture from '../fixtures/diagrams/measurements.json';
+import areasFixture from '../fixtures/diagrams/area-grids.json';
+import annotationsFixture from '../fixtures/diagrams/annotations-layers.json';
+import { migrateDiagramSpec, parseDiagramSpecV2 } from '@/diagrams/public';
+import { toWorkingSceneV2 } from '@/diagrams/model/schema/v3Compatibility';
+import { MathProvider, useMathStore } from '@/lib/page-context/MathStoreContext';
+
+const rendererState = vi.hoisted(() => ({
+  createdKinds: [] as string[],
+  createdOptions: [] as Array<{ kind: string; args: any[]; options: Record<string, unknown> }>,
+  nodes: [] as HTMLElement[],
+  labelNodes: [] as HTMLElement[],
+  geometries: [] as any[],
+  boardHandlers: {} as Record<string, Array<(event?: unknown) => void>>,
+}));
+
+vi.mock('@/diagrams/jsxgraph/MathBoard', () => ({
+  MathBoard: ({ children, onInit, onUpdate, scopeId = '' }: { children?: React.ReactNode; onInit?: (board: unknown, elements: Record<string, unknown>, theme: Record<string, string>) => void; onUpdate?: (board: unknown, elements: Record<string, unknown>, theme: Record<string, string>, isStep: () => boolean, isHL: (target: string) => boolean) => void; scopeId?: string }) => {
+    const elementsRef = React.useRef<Record<string, any>>({});
+    const highlight = useMathStore(state => state.variables?.[scopeId ? `highlight:${scopeId}` : 'highlight'] ?? state.variables?.highlight);
+    const number = (value: unknown, fallback = 0) => typeof value === 'function' ? fallback : typeof value === 'number' ? value : fallback;
+    const boardRef = React.useRef({
+        create: (kind: string, args: any[] = [], options: Record<string, unknown> = {}) => {
+          rendererState.createdKinds.push(kind);
+          rendererState.createdOptions.push({ kind, args, options });
+          const node = document.createElement('span');
+          rendererState.nodes.push(node);
+          const labelNode = document.createElement('span');
+          const labelHandlers: Record<string, Array<(event?: unknown) => void>> = {};
+          let x = number(args[0]);
+          let y = number(args[1]);
+          if (kind === 'intersection') {
+            const first = args[0];
+            const second = args[1];
+            const a = first?.point1;
+            const b = first?.point2;
+            const c = second?.point1;
+            const d = second?.point2;
+            if (a && b && c && d) {
+              const abX = b.X() - a.X();
+              const abY = b.Y() - a.Y();
+              const cdX = d.X() - c.X();
+              const cdY = d.Y() - c.Y();
+              const denominator = abX * cdY - abY * cdX;
+              const parameter = ((c.X() - a.X()) * cdY - (c.Y() - a.Y()) * cdX) / denominator;
+              x = a.X() + parameter * abX;
+              y = a.Y() + parameter * abY;
+            }
+          }
+          let value = 1;
+          const handlers: Record<string, Array<(event?: unknown) => void>> = {};
+          const geometry: any = {
+            elType: kind,
+            X: () => x,
+            Y: () => y,
+            Value: () => value,
+            moveTo: vi.fn(([nextX, nextY]: [number, number]) => { x = nextX; y = nextY; }),
+            setPosition: vi.fn((_type: unknown, [nextX, nextY]: [number, number]) => { x = nextX; y = nextY; }),
+            setValue: vi.fn((next: number) => { value = next; }),
+            Dist: (other: any) => Math.hypot(geometry.X() - other.X(), geometry.Y() - other.Y()),
+            setAttribute: vi.fn(),
+            animate: vi.fn(function animate(this: any, hash: Record<string, unknown>) {
+              this.setAttribute(hash);
+            }),
+            fullUpdate: vi.fn(),
+            highlight: vi.fn(),
+            noHighlight: vi.fn(),
+            on: vi.fn((eventName: string, handler: (event?: unknown) => void) => {
+              handlers[eventName] = [...(handlers[eventName] ?? []), handler];
+            }),
+            handlers,
+            visProp: {},
+            slideObject: null,
+            slideObjects: [],
+            popSlideObject: vi.fn(() => {
+              geometry.slideObjects.pop();
+              geometry.slideObject = geometry.slideObjects.at(-1) ?? null;
+            }),
+            rendNode: node,
+          };
+          if (args[0]?.X && args[1]?.X && kind !== 'intersection') {
+            geometry.point1 = args[0];
+            geometry.point2 = args[1];
+          }
+          if (options.name) {
+            geometry.label = {
+              setAttribute: vi.fn(),
+              setText: vi.fn(),
+              highlight: vi.fn(),
+              noHighlight: vi.fn(),
+              on: vi.fn((eventName: string, handler: (event?: unknown) => void) => {
+                labelHandlers[eventName] = [...(labelHandlers[eventName] ?? []), handler];
+              }),
+              handlers: labelHandlers,
+              rendNode: labelNode,
+            };
+            rendererState.labelNodes.push(labelNode);
+          }
+          rendererState.geometries.push(geometry);
+          return geometry;
+        },
+        on: vi.fn((eventName: string, handler: (event?: unknown) => void) => {
+          rendererState.boardHandlers[eventName] = [...(rendererState.boardHandlers[eventName] ?? []), handler];
+        }),
+        getAllObjectsUnderMouse: vi.fn(() => []),
+        getUsrCoordsOfMouse: vi.fn(() => [0, 0]),
+        getBoundingBox: vi.fn(() => [-4, 4, 4, -4]),
+      });
+    const themeRef = React.useRef({ carbon: 'carbon', terracota: 'terracota', canela: 'canela', mora: 'mora', ocre: 'ocre', pavo: 'pavo', granada: 'granada', musgo: 'musgo', lienzo: 'lienzo' });
+    const onInitRef = React.useRef(onInit);
+    const onUpdateRef = React.useRef(onUpdate);
+    onInitRef.current = onInit;
+    onUpdateRef.current = onUpdate;
+    const runUpdate = React.useCallback(() => {
+      const isHL = (target: string) => highlight === target || highlight === `${scopeId}:${target}`;
+      onUpdateRef.current?.(boardRef.current, elementsRef.current, themeRef.current, () => false, isHL);
+    }, [highlight, onUpdate, scopeId]);
+    boardRef.current.update = vi.fn(runUpdate);
+    React.useEffect(() => {
+      onInitRef.current?.(boardRef.current, elementsRef.current, themeRef.current);
+    }, []);
+    React.useEffect(() => {
+      runUpdate();
+    }, [runUpdate]);
+    return <div data-testid="geometry-board">{children}</div>;
+  },
+}));
+
+import { DiagramRenderer } from '@/diagrams/render/DiagramRenderer';
+import { Incidence2Spec } from '../../content/diagrams/Axiomas/Incidence2';
+import { Congruence1Spec } from '../../content/diagrams/Axiomas/Congruence1';
+import { PaschSpec } from '../../content/diagrams/Axiomas/Pasch';
+import { AxiomaArquimedesSpec } from '../../content/diagrams/Axiomas/AxiomaArquimedes';
+import { TrianguloSpec } from '../../content/diagrams/Definiciones/Triangulo';
+
+const congruenceScene = toWorkingSceneV2(Congruence1Spec);
+const trianguloScene = toWorkingSceneV2(TrianguloSpec);
+import { addLabelToElement, setPointAttractors } from '../../src/fixed-pages/editor/diagrams/model';
+
+afterEach(() => {
+  cleanup();
+  rendererState.createdKinds.length = 0;
+  rendererState.createdOptions.length = 0;
+  rendererState.nodes.length = 0;
+  rendererState.labelNodes.length = 0;
+  rendererState.geometries.length = 0;
+  Object.keys(rendererState.boardHandlers).forEach(key => delete rendererState.boardHandlers[key]);
+});
+
+function HighlightProbe() {
+  const highlight = useMathStore(state => state.variables.highlight);
+  return <output aria-label="highlight desde diagrama">{String(highlight ?? '')}</output>;
+}
+
+function ExternalHighlightControl({ value }: { value: string }) {
+  const setVariable = useMathStore(state => state.setVariable);
+  return <button type="button" onClick={() => setVariable('highlight', value)}>Resaltar desde MDX</button>;
+}
+
+function lastCommittedAttrs(geometry: { setAttribute: { mock: { calls: unknown[][] } }; animate?: { mock: { calls: unknown[][] } } }) {
+  const setCalls = geometry.setAttribute.mock.calls;
+  if ((geometry.animate?.mock.calls.length ?? 0) > 0) {
+    const animated = setCalls.at(-1)?.[0] as Record<string, unknown> | undefined;
+    const staticAttrs = setCalls.at(-2)?.[0] as Record<string, unknown> | undefined;
+    return { ...staticAttrs, ...animated };
+  }
+  return setCalls.at(-1)?.[0] as Record<string, unknown> | undefined;
+}
+
+describe('Shared geometry renderer', () => {
+  it('keeps a point visibly selected after the pointer leaves it', () => {
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const target = spec.points.find(point => !point.fixed && point.selection.selectable)!;
+
+    function SelectionHarness() {
+      const [selection, setSelection] = React.useState<string[]>([]);
+      return (
+        <DiagramRenderer
+          spec={spec}
+          mode="editor"
+          selectedIds={selection}
+          viewportControls={false}
+          onSelectionChange={id => setSelection([id])}
+        />
+      );
+    }
+
+    render(<MathProvider><SelectionHarness /></MathProvider>);
+    const pointIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === target.id);
+    const point = rendererState.geometries[pointIndex];
+
+    act(() => point.handlers.over[0]());
+    act(() => point.handlers.down[0]());
+    expect(point.setAttribute).toHaveBeenLastCalledWith(expect.objectContaining({
+      size: target.style?.highlightPointSize ?? 10,
+    }));
+
+    act(() => point.handlers.out[0]());
+    expect(point.setAttribute).toHaveBeenLastCalledWith(expect.objectContaining({
+      size: target.style?.highlightPointSize ?? 10,
+    }));
+  });
+
+  it('keeps constructed sides selectable but immovable so constraints cannot be bypassed', () => {
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const onSelectionChange = vi.fn();
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={spec} mode="editor" viewportControls={false} onSelectionChange={onSelectionChange} />
+      </MathProvider>,
+    );
+
+    const segmentIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === 'segAB');
+    const segment = rendererState.geometries[segmentIndex];
+    expect(rendererState.createdOptions[segmentIndex]?.options.fixed).toBe(true);
+    expect(segment.setAttribute).toHaveBeenCalledWith(expect.objectContaining({ fixed: true }));
+
+    segment.handlers.down[0]();
+    expect(onSelectionChange).toHaveBeenCalledWith('segAB', { additive: false });
+    onSelectionChange.mockClear();
+    rendererState.boardHandlers.down.at(-1)?.({ target: rendererState.nodes[segmentIndex], shiftKey: false });
+    expect(onSelectionChange).toHaveBeenCalledWith('segAB', { additive: false });
+
+    const movablePoint = spec.points.find(point => !point.fixed && point.selection.selectable)!;
+    const pointIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === movablePoint.id);
+    expect(rendererState.createdOptions[pointIndex]?.options.fixed).toBe(false);
+    expect(rendererState.geometries[pointIndex].setAttribute).toHaveBeenCalledWith(expect.objectContaining({ fixed: false }));
+  });
+
+  it('keeps local hover disabled while allowing explicit MDX emphasis', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const target = base.points.find(point => !point.fixed && point.target)!;
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === target.id
+        ? { ...point, selection: { ...point.selection, selectable: true, highlightable: false } }
+        : point),
+    };
+    const onSelectionChange = vi.fn();
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={spec} mode="editor" viewportControls={false} onSelectionChange={onSelectionChange} />
+        <HighlightProbe />
+        <ExternalHighlightControl value={`${spec.componentId}:${target.targetId ?? target.id}`} />
+      </MathProvider>,
+    );
+
+    const pointIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === target.id);
+    const point = rendererState.geometries[pointIndex];
+    const creation = rendererState.createdOptions[pointIndex];
+    expect(creation.options).toMatchObject({
+      highlight: false,
+      highlightFillColor: target.color,
+      highlightStrokeColor: target.color,
+      label: expect.objectContaining({ highlightStrokeColor: target.color }),
+    });
+    expect(point.setAttribute).toHaveBeenCalledWith(expect.objectContaining({
+      size: target.style?.pointSize ?? 4,
+      fillColor: target.color,
+      strokeColor: target.color,
+      fillOpacity: 1,
+    }));
+    expect(point.handlers.over).toBeUndefined();
+
+    point.handlers.down[0]();
+    expect(onSelectionChange).toHaveBeenCalledWith(target.id, { additive: false });
+    fireEvent.mouseEnter(rendererState.nodes[pointIndex]);
+    expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe('');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Resaltar desde MDX' }));
+    expect(lastCommittedAttrs(point)).toMatchObject({
+      size: target.style?.highlightPointSize ?? 10,
+      fillColor: 'ocre',
+      strokeColor: 'ocre',
+      fillOpacity: 1,
+    });
+  });
+
+  it('renders exact intersections and keeps them on finite authored supports', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const line = {
+      ...base.elements.find(item => item.id === 'lineBC')!,
+      id: 'lineOC',
+      label: 'Recta OC',
+      refs: ['pO', 'pC'],
+      target: false,
+    };
+    const intersection = {
+      ...base.elements.find(item => item.id === 'segAB')!,
+      id: 'intQ',
+      label: 'Q',
+      kind: 'intersection' as const,
+      refs: ['lineOC', 'segAB'],
+      order: 80,
+      locked: true,
+      target: false,
+      properties: { restrictToSupports: true },
+      style: { pointSize: 5, highlightPointSize: 8 },
+    };
+    const spec = { ...base, elements: [...base.elements, line, intersection] };
+
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
+
+    const rendered = rendererState.createdOptions.find(item => item.kind === 'intersection');
+    expect(rendered?.options).toMatchObject({ name: 'Q', fixed: true, size: 5 });
+    const geometryIndex = rendererState.createdOptions.findIndex(item => item.kind === 'intersection');
+    expect(rendererState.geometries[geometryIndex].setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: true, size: 5 }));
+  });
+
+  it('hides a restricted intersection when the carrier meets only the extension of a segment', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const line = { ...base.elements.find(item => item.id === 'lineBC')!, id: 'lineOC', label: 'Recta OC', refs: ['pO', 'pC'], target: false };
+    const intersection = {
+      ...base.elements.find(item => item.id === 'segAB')!,
+      id: 'intQ', label: 'Q', kind: 'intersection' as const, refs: ['lineOC', 'segAB'], order: 80,
+      locked: true, target: false, properties: { restrictToSupports: true },
+    };
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === 'pC' ? { ...point, y: 1 } : point),
+      elements: [...base.elements, line, intersection],
+    };
+
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
+
+    const geometryIndex = rendererState.createdOptions.findIndex(item => item.kind === 'intersection');
+    expect(rendererState.geometries[geometryIndex].setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: false }));
+  });
+
+  it('shows exactly one exit point Q on the two candidate sides of Pasch', () => {
+    render(<MathProvider><DiagramRenderer spec={PaschSpec} viewportControls={false} /></MathProvider>);
+
+    const intersectionIndexes = rendererState.createdOptions
+      .map((item, index) => item.kind === 'intersection' ? index : -1)
+      .filter(index => index >= 0);
+    expect(intersectionIndexes).toHaveLength(2);
+    const visibilities = intersectionIndexes.map(index => {
+      const calls = rendererState.geometries[index].setAttribute.mock.calls;
+      return calls.at(-1)?.[0]?.visible;
+    });
+    expect(visibilities.filter(Boolean)).toHaveLength(1);
+  });
+
+  it('renders incidence points as movable gliders on their supporting line', () => {
+    render(<MathProvider><DiagramRenderer spec={Incidence2Spec} viewportControls={false} /></MathProvider>);
+
+    const gliders = rendererState.createdOptions.filter(item => item.kind === 'glider');
+    expect(gliders).toHaveLength(2);
+    expect(gliders.every(item => item.options.fixed === false)).toBe(true);
+    expect(rendererState.nodes.filter(node => node.getAttribute('aria-roledescription') === 'punto móvil del diagrama')).toHaveLength(2);
+  });
+
+  it('propagates equal segment lengths live while a source endpoint is dragged', () => {
+    render(<MathProvider><DiagramRenderer spec={Congruence1Spec} viewportControls={false} /></MathProvider>);
+    const pointDCreation = rendererState.createdOptions.find((item, index) => (
+      item.kind === 'glider' && rendererState.nodes[index]?.dataset.diagramObjectId === 'pD'
+    ));
+    expect(pointDCreation).toBeDefined();
+    const geometryFor = (id: string) => {
+      const index = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === id);
+      return rendererState.geometries[index];
+    };
+    const pointA = geometryFor('pA');
+    const pointB = geometryFor('pB');
+    const pointC = geometryFor('pC');
+    const pointD = geometryFor('pD');
+
+    pointA.moveTo([-8, 2], 0);
+    pointA.handlers.drag[0]();
+
+    expect(pointC.Dist(pointD)).toBeCloseTo(pointA.Dist(pointB));
+
+    pointD.moveTo([2, 4], 0);
+    pointD.handlers.drag[0]();
+    const pointDir = geometryFor('pDir');
+    const rayX = pointDir.X() - pointC.X();
+    const rayY = pointDir.Y() - pointC.Y();
+    const cdX = pointD.X() - pointC.X();
+    const cdY = pointD.Y() - pointC.Y();
+    expect(rayX * cdY - rayY * cdX).toBeCloseTo(0);
+    expect(pointC.Dist(pointD)).toBeCloseTo(pointA.Dist(pointB));
+  });
+
+  it('blocks direct interaction without making a point immovable for relations', () => {
+    const spec = {
+      ...congruenceScene,
+      points: congruenceScene.points.map(point => point.id === 'pD'
+        ? { ...point, selection: { ...point.selection, selectable: false, highlightable: true } }
+        : point),
+    };
+    const onSelectionChange = vi.fn();
+    const onPointMove = vi.fn();
+    render(
+      <MathProvider>
+        <DiagramRenderer
+          spec={spec}
+          mode="editor"
+          viewportControls={false}
+          onSelectionChange={onSelectionChange}
+          onPointMove={onPointMove}
+        />
+        <HighlightProbe />
+      </MathProvider>,
+    );
+    const geometryFor = (id: string) => {
+      const index = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === id);
+      return {
+        creation: rendererState.createdOptions[index],
+        geometry: rendererState.geometries[index],
+        node: rendererState.nodes[index],
+      };
+    };
+    const pointA = geometryFor('pA');
+    const pointB = geometryFor('pB');
+    const pointC = geometryFor('pC');
+    const pointD = geometryFor('pD');
+
+    expect(pointD.creation.options.fixed).toBe(true);
+    expect(pointD.geometry.handlers.down).toBeUndefined();
+    expect(pointD.geometry.handlers.drag).toBeUndefined();
+    expect(pointD.geometry.handlers.up).toBeUndefined();
+    expect(pointD.node.getAttribute('tabindex')).toBe('0');
+    expect(pointD.node.getAttribute('aria-keyshortcuts')).toBeNull();
+    fireEvent.focus(pointD.node);
+    expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe(`${spec.componentId}:pD`);
+    fireEvent.keyDown(pointD.node, { key: 'Enter' });
+    expect(onSelectionChange).not.toHaveBeenCalled();
+    expect(onPointMove).not.toHaveBeenCalled();
+
+    pointA.geometry.moveTo([-8, 2], 0);
+    pointA.geometry.handlers.drag[0]();
+
+    // El manejador de arrastre reposiciona los puntos dependientes con
+    // setPosition (no moveTo) para reconciliar una sola vez por gesto en vez
+    // de disparar un board.update() por punto — ver useBoardLifecycle.ts.
+    expect(pointD.geometry.setPosition).toHaveBeenCalled();
+    expect(pointC.geometry.Dist(pointD.geometry)).toBeCloseTo(pointA.geometry.Dist(pointB.geometry));
+    expect(spec.points.find(point => point.id === 'pD')).toMatchObject({
+      fixed: false,
+      selection: { selectable: false, highlightable: true },
+    });
+  });
+
+  it('uses the dedicated mathematical typography for diagram labels and headings', () => {
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
+
+    const labelledPoint = rendererState.createdOptions.find(item => item.kind === 'point' && item.options.name);
+    expect(labelledPoint?.options).toMatchObject({
+      highlightSize: 6,
+      highlightFillColor: 'carbon',
+      highlightStrokeColor: 'carbon',
+      label: {
+        fontSize: 19,
+        cssClass: expect.stringContaining('matematika-point-label'),
+        highlightCssClass: expect.stringContaining('matematika-point-label--highlight'),
+        cssDefaultStyle: 'font-family: var(--font-diagram-family);',
+        highlightCssDefaultStyle: 'font-family: var(--font-diagram-family);',
+        highlightStrokeColor: 'carbon',
+      },
+    });
+    expect(screen.getByText(spec.title).className).toContain('font-diagram');
+  });
+
+  it('uses the current point-creation callback after the editor tool changes', () => {
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const onCanvasPointCreate = vi.fn();
+    const view = render(<MathProvider><DiagramRenderer spec={spec} mode="editor" viewportControls={false} /></MathProvider>);
+
+    expect(rendererState.boardHandlers.down).toHaveLength(1);
+    view.rerender(<MathProvider><DiagramRenderer spec={spec} mode="editor" viewportControls={false} onCanvasPointCreate={onCanvasPointCreate} /></MathProvider>);
+    rendererState.boardHandlers.down[0]({});
+
+    expect(onCanvasPointCreate).toHaveBeenCalledWith(0, 0);
+  });
+
+  it('uses the current selection callback while a multi-reference tool is active', () => {
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const initialSelection = vi.fn();
+    const toolSelection = vi.fn();
+    const view = render(<MathProvider><DiagramRenderer spec={spec} mode="editor" viewportControls={false} onSelectionChange={initialSelection} /></MathProvider>);
+    const pointIndex = rendererState.nodes.findIndex(node => node.getAttribute('aria-roledescription') === 'punto móvil del diagrama');
+    const pointId = rendererState.nodes[pointIndex]?.dataset.diagramObjectId;
+
+    view.rerender(<MathProvider><DiagramRenderer spec={spec} mode="editor" viewportControls={false} onSelectionChange={toolSelection} /></MathProvider>);
+    rendererState.geometries[pointIndex].handlers.down[0]();
+
+    expect(initialSelection).not.toHaveBeenCalled();
+    expect(toolSelection).toHaveBeenCalledWith(pointId, { additive: false });
+  });
+
+  it('highlights the corresponding MDX target when a published diagram object is hovered or focused', () => {
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /><HighlightProbe /></MathProvider>);
+    const targetNode = rendererState.nodes.find(node => node.dataset.diagramTarget);
+    expect(targetNode).toBeDefined();
+    fireEvent.mouseEnter(targetNode as HTMLElement);
+    expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe(`${spec.componentId}:${targetNode?.dataset.diagramTarget}`);
+    fireEvent.mouseLeave(targetNode as HTMLElement);
+    expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe('');
+  });
+
+  it('keeps local hover additive while MDX references dim the rest by default', () => {
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const target = spec.points.find(point => point.target)!;
+    const other = spec.points.find(point => point.id !== target.id)!;
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={spec} viewportControls={false} />
+        <ExternalHighlightControl value={`${spec.componentId}:${target.targetId ?? target.id}`} />
+      </MathProvider>,
+    );
+    const targetIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === target.id);
+    const otherIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === other.id);
+    const otherPoint = rendererState.geometries[otherIndex];
+
+    fireEvent.mouseEnter(rendererState.nodes[targetIndex]);
+    expect(otherPoint.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillOpacity: 1 });
+    fireEvent.mouseLeave(rendererState.nodes[targetIndex]);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Resaltar desde MDX' }));
+    expect(otherPoint.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillOpacity: 0.28 });
+  });
+
+  it('supports additive highlighting for an MDX target when authored in the editor', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const target = base.points.find(point => point.target)!;
+    const other = base.points.find(point => point.id !== target.id)!;
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === target.id
+        ? { ...point, selection: { ...point.selection, dimOthersOnHighlight: false } }
+        : point),
+    };
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={spec} viewportControls={false} />
+        <ExternalHighlightControl value={`${spec.componentId}:${target.targetId ?? target.id}`} />
+      </MathProvider>,
+    );
+    const otherIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === other.id);
+    const otherPoint = rendererState.geometries[otherIndex];
+
+    fireEvent.click(screen.getByRole('button', { name: 'Resaltar desde MDX' }));
+    expect(otherPoint.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillOpacity: 1 });
+  });
+
+  it('keeps a native label interactive and visually synchronized with its point', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const target = base.points.find(point => point.target) ?? base.points[0];
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === target.id
+        ? { ...point, style: { ...point.style, labelSize: 23, preserveColorOnHighlight: true } }
+        : point),
+    };
+    const preservedColor = target.color;
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={spec} highlightedIds={[target.id]} viewportControls={false} />
+        <HighlightProbe />
+      </MathProvider>,
+    );
+
+    const pointIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === target.id);
+    const point = rendererState.geometries[pointIndex];
+    const pointCreation = rendererState.createdOptions.find(item => item.options.name === target.label);
+    expect(pointCreation?.options).toMatchObject({
+      highlightFillColor: preservedColor,
+      highlightStrokeColor: preservedColor,
+      label: { fontSize: 23, highlightStrokeColor: preservedColor },
+    });
+    expect(point.label.setAttribute).toHaveBeenCalledWith(expect.objectContaining({
+      visible: true,
+      color: preservedColor,
+      highlightStrokeColor: preservedColor,
+      opacity: 1,
+    }));
+    expect(point.label.setText).toHaveBeenCalledWith(target.label);
+    expect(point.label.rendNode.dataset.diagramLabelFor).toBe(target.id);
+
+    const attributeCallCount = point.setAttribute.mock.calls.length;
+    point.handlers.over[0]();
+    expect(point.setAttribute.mock.calls.length).toBeGreaterThan(attributeCallCount);
+    expect(point.label.rendNode.classList).toContain('matematika-point-label--highlight');
+    point.handlers.out[0]();
+    expect(point.label.rendNode.classList).toContain('matematika-point-label--highlight');
+
+    point.label.handlers.over[0]();
+    expect(point.label.rendNode.classList).toContain('matematika-point-label--highlight');
+    point.label.handlers.out[0]();
+    expect(point.label.rendNode.classList).toContain('matematika-point-label--highlight');
+
+    fireEvent.mouseEnter(point.label.rendNode);
+    expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe(`${spec.componentId}:${target.targetId ?? target.id}`);
+    fireEvent.mouseLeave(point.label.rendNode);
+    expect(screen.getByLabelText('highlight desde diagrama').textContent).toBe('');
+  });
+
+  it('exposes movable points to the keyboard and reports their constrained coordinates', () => {
+    const spec = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const onPointMove = vi.fn();
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} onPointMove={onPointMove} /></MathProvider>);
+    const pointNode = rendererState.nodes.find(node => node.getAttribute('aria-roledescription') === 'punto móvil del diagrama');
+
+    expect(pointNode).toBeDefined();
+    expect(pointNode?.getAttribute('tabindex')).toBe('0');
+    fireEvent.keyDown(pointNode as HTMLElement, { key: 'ArrowRight' });
+    expect(onPointMove).toHaveBeenCalledTimes(1);
+    expect(pointNode?.getAttribute('aria-label')).toMatch(/x -?\d+\.\d{2}, y -?\d+\.\d{2}/);
+  });
+
+  it('reveals a hidden object while its highlight is previewed in the editor', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const target = base.points[0];
+    const spec = { ...base, points: base.points.map(point => point.id === target.id ? { ...point, visible: false } : point) };
+    render(<MathProvider><DiagramRenderer spec={spec} mode="editor" highlightedIds={[target.id]} viewportControls={false} /></MathProvider>);
+    const nodeIndex = rendererState.nodes.findIndex(node => node.getAttribute('aria-label') === (target.selection.ariaLabel ?? target.label));
+    expect(nodeIndex).toBeGreaterThanOrEqual(0);
+    expect(rendererState.geometries[nodeIndex].setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: true }));
+    expect(rendererState.geometries[nodeIndex].label.setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: true }));
+  });
+
+  it('reveals a hidden runtime object only when its MDX target is highlighted', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const target = base.points.find(point => point.target)!;
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === target.id
+        ? { ...point, visible: false, style: { ...point.style, highlightVisible: true } }
+        : point),
+    };
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={spec} viewportControls={false} />
+        <ExternalHighlightControl value={`${spec.componentId}:${target.targetId ?? target.id}`} />
+      </MathProvider>,
+    );
+    const nodeIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === target.id);
+    const geometry = rendererState.geometries[nodeIndex];
+    expect(geometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ visible: false });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Resaltar desde MDX' }));
+    expect(lastCommittedAttrs(geometry)).toMatchObject({ visible: true });
+    expect(geometry.label.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ visible: true });
+  });
+
+  it.each([
+    ['primitives', primitivesFixture, ['segment', 'line', 'polygon', 'circle', 'arc']],
+    ['curves', curvesFixture, ['curve', 'curve']],
+    ['Poincaré', poincareFixture, ['circle', 'curve']],
+    ['marks', marksFixture, ['angle', 'nonreflexangle', 'polygon', 'segment', 'ticks']],
+    ['measurements', measurementsFixture, ['segment', 'text']],
+    ['area grids', areasFixture, ['polygon', 'segment']],
+    ['annotations', annotationsFixture, ['text']],
+  ] as const)('renders %s through MathFactory-backed JSXGraph elements', (_family, fixture, expectedKinds) => {
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(fixture).spec)} viewportControls={false} />
+      </MathProvider>,
+    );
+    expectedKinds.forEach(kind => expect(rendererState.createdKinds).toContain(kind));
+  });
+
+  it('renders angles without an authored radius using the canonical default', () => {
+    render(<MathProvider><DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec)} viewportControls={false} /></MathProvider>);
+
+    const renderedAngle = rendererState.createdOptions.find(({ kind }) => kind === 'angle');
+    const renderedNonReflexAngle = rendererState.createdOptions.find(({ kind }) => kind === 'nonreflexangle');
+    const angleRadius = typeof renderedAngle?.options.radius === 'function' ? renderedAngle.options.radius() : renderedAngle?.options.radius;
+    const nonReflexRadius = typeof renderedNonReflexAngle?.options.radius === 'function' ? renderedNonReflexAngle.options.radius() : renderedNonReflexAngle?.options.radius;
+    expect(angleRadius).toBeDefined();
+    expect(nonReflexRadius).toBeDefined();
+  });
+
+  it('uses degrees and radians from both angular types in live visibility conditions', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec);
+    const spec = {
+      ...base,
+      elements: base.elements.map(element => element.id === 'angleAVB'
+        ? {
+            ...element,
+            properties: {
+              ...element.properties,
+              visibleWhen: 'and(approx(angleAVB.degrees, 270), approx(nonReflexAngleAVB.radians, pi / 2))',
+            },
+          }
+        : element),
+      dependencies: [
+        ...(base.dependencies ?? []),
+        { sourceId: 'angleAVB', targetId: 'angleAVB', relation: 'expression' as const },
+        { sourceId: 'nonReflexAngleAVB', targetId: 'angleAVB', relation: 'expression' as const },
+      ],
+    };
+    const parsed = parseDiagramSpecV2(spec);
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+
+    render(<MathProvider><DiagramRenderer spec={parsed.data} viewportControls={false} /></MathProvider>);
+
+    const angleIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === 'angleAVB');
+    expect(rendererState.geometries[angleIndex].setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: true }));
+  });
+
+  it('renders several conditional readings inside one responsive information panel', () => {
+    render(<MathProvider><DiagramRenderer spec={TrianguloSpec} viewportControls={false} /></MathProvider>);
+
+    const panelIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === 'infoPanel26');
+    expect(panelIndex).toBeGreaterThanOrEqual(0);
+    const textFactory = rendererState.createdOptions[panelIndex]?.args[2];
+    expect(typeof textFactory).toBe('function');
+    const html = textFactory();
+    expect(html).toContain('data-info-panel-layout="stack"');
+    expect(html).toContain('data-info-panel-block="por-lados"');
+    expect(html).toContain('data-info-panel-block="por-angulos"');
+  });
+
+  it('renders measure ticks as repeated ruler graduations while keeping congruence marks separate', () => {
+    render(<MathProvider><DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec)} viewportControls={false} /></MathProvider>);
+
+    const renderedTicks = rendererState.createdOptions.find(({ kind }) => kind === 'ticks');
+    expect(renderedTicks?.args).toHaveLength(1);
+    expect(renderedTicks?.options).toMatchObject({
+      insertTicks: false,
+      ticksDistance: 2,
+      minorTicks: 4,
+      drawLabels: false,
+      majorHeight: 12,
+    });
+    expect(renderedTicks?.options.minorHeight).toBeCloseTo(4.8);
+    const centralCongruenceSegments = rendererState.createdOptions.filter(({ kind, options }) => (
+      kind === 'segment' && options.strokeColor === 'terracota'
+    ));
+    expect(centralCongruenceSegments.length).toBeGreaterThanOrEqual(2);
+    const hiddenCongruencePoints = rendererState.createdOptions.filter(({ kind, options }) => (
+      kind === 'point' && options.visible === false
+    ));
+    const hiddenCoordinates = hiddenCongruencePoints.map(point => [point.args[0](), point.args[1]()] as const);
+    expect(hiddenCoordinates.some((first, index) => hiddenCoordinates.slice(index + 1).some(second => (
+      Math.hypot(second[0] - first[0], second[1] - first[1]) >= 0.395
+      && Math.hypot(second[0] - first[0], second[1] - first[1]) <= 0.405
+    )))).toBe(true);
+  });
+
+  it('renders conventional parallel arrows separately from congruence ticks', () => {
+    render(<MathProvider><DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec)} viewportControls={false} /></MathProvider>);
+
+    const parallelSegments = rendererState.createdOptions.filter(({ kind, options }) => (
+      kind === 'segment' && options.strokeColor === 'pavo'
+    ));
+    expect(parallelSegments).toHaveLength(4);
+    expect(parallelSegments.every(({ options }) => options.strokeWidth === 2)).toBe(true);
+  });
+
+  it('passes authored geometric attractors to a movable point after constructing their supports', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === 'pA'
+        ? { ...point, attractorIds: ['lineBC'], attractorDistance: 0.4, snatchDistance: 0.6 }
+        : point),
+      dependencies: [...(base.dependencies ?? []), { sourceId: 'lineBC', targetId: 'pA', relation: 'constraint' as const }],
+    };
+
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
+
+    const point = rendererState.createdOptions.find(({ kind, options }) => kind === 'point' && options.name === 'A' && options.attractorDistance === 0.4);
+    expect(point?.options).toMatchObject({ attractorDistance: 0.4, snatchDistance: 0.6 });
+    const pointIndex = rendererState.createdOptions.indexOf(point!);
+    expect(rendererState.geometries[pointIndex].visProp.attractors).toHaveLength(1);
+  });
+
+  it('keeps magnetism exclusive to the actively dragged point and releases it on pointer up', () => {
+    const onPointMove = vi.fn();
+    render(<MathProvider><DiagramRenderer spec={TrianguloSpec} viewportControls={false} onPointMove={onPointMove} /></MathProvider>);
+    const geometryFor = (id: string) => {
+      const index = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === id);
+      return rendererState.geometries[index];
+    };
+    const pointA = geometryFor('A');
+    const pointB = geometryFor('B');
+    const attractorA = geometryFor(trianguloScene.points.find(point => point.id === 'A')!.attractorIds![0]);
+    const attractorB = geometryFor(trianguloScene.points.find(point => point.id === 'B')!.attractorIds![0]);
+    pointA.slideObject = attractorA;
+    pointA.slideObjects = [attractorA];
+    pointB.slideObject = attractorB;
+    pointB.slideObjects = [attractorB];
+
+    pointA.handlers.drag[0]();
+
+    expect(pointB.popSlideObject).toHaveBeenCalledOnce();
+    expect(pointA.popSlideObject).not.toHaveBeenCalled();
+
+    pointA.handlers.up[0]();
+
+    expect(pointA.popSlideObject).toHaveBeenCalledOnce();
+    expect(pointA.slideObject).toBeNull();
+    expect(onPointMove).toHaveBeenCalledWith('A', pointA.X(), pointA.Y());
+  });
+
+  it('keeps all three perpendicular bisectors rendered with reciprocal vertex attractors', () => {
+    const editable = trianguloScene;
+    const withA = setPointAttractors(editable, 'A', ['lineMediatrizBC']);
+    const withB = setPointAttractors(withA, 'B', ['lineMediatrizAC']);
+    const spec = setPointAttractors(withB, 'C', ['lineMediatrizAB']);
+
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
+
+    for (const id of ['lineMediatrizAB', 'lineMediatrizAC', 'lineMediatrizBC']) {
+      expect(rendererState.nodes.some(node => node.dataset.diagramObjectId === id)).toBe(true);
+    }
+    for (const id of ['A', 'B', 'C']) {
+      const index = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === id);
+      expect(rendererState.geometries[index].visProp.attractors).toHaveLength(1);
+    }
+  });
+
+  it('renders the Archimedean slider and copy graduations from live expressions with keyboard access', () => {
+    render(<MathProvider><DiagramRenderer spec={AxiomaArquimedesSpec} viewportControls={false} /></MathProvider>);
+
+    const sliderCreation = rendererState.createdOptions.find(({ kind }) => kind === 'slider');
+    expect(sliderCreation?.args[2]).toEqual([1, 4, 7]);
+    const sliderNode = rendererState.nodes.find(node => node.dataset.diagramObjectId === 'n');
+    expect(sliderNode?.getAttribute('role')).toBe('slider');
+    expect(sliderNode?.getAttribute('aria-valuemax')).toBe('7');
+    fireEvent.keyDown(sliderNode as HTMLElement, { key: 'End' });
+    const sliderIndex = rendererState.nodes.findIndex(node => node === sliderNode);
+    expect(rendererState.geometries[sliderIndex].setValue).toHaveBeenCalledWith(7);
+
+    const ticks = rendererState.createdOptions.find(({ kind, options }) => kind === 'ticks' && options.ticksDistance === 1);
+    expect(ticks?.options.ticksDistance).toBe(1);
+  });
+
+  it('applies the dashed style to polygon borders', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const polygon = base.elements.find(item => item.kind === 'polygon');
+    const spec = {
+      ...base,
+      elements: base.elements.map(item => item.id === polygon?.id ? { ...item, dashed: true } : item),
+    };
+
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
+
+    const renderedPolygon = rendererState.createdOptions.find(({ kind }) => kind === 'polygon');
+    expect(renderedPolygon?.options).toMatchObject({ borders: { dash: 2 } });
+  });
+
+  it('keeps information panels in their editorial hover style at rest and on hover', () => {
+    render(
+      <MathProvider>
+        <DiagramRenderer spec={toWorkingSceneV2(migrateDiagramSpec(annotationsFixture).spec)} viewportControls={false} />
+      </MathProvider>,
+    );
+    const panel = rendererState.createdOptions.find(({ kind, options }) => kind === 'text' && String(options.cssClass).includes('matematika-info-panel'));
+    expect(panel?.options).toMatchObject({
+      cssClass: 'JXGtext matematika-info-panel',
+      highlightCssClass: 'JXGtext matematika-info-panel',
+      highlightStrokeOpacity: 1,
+    });
+  });
+
+  it('anchors an information panel to normalized viewport coordinates without a geometric reference', () => {
+    const spec = toWorkingSceneV2(migrateDiagramSpec(annotationsFixture).spec);
+    const viewportPanelSpec = {
+      ...spec,
+      elements: spec.elements.map(item => item.id === 'panelA'
+        ? { ...item, refs: [], properties: { ...item.properties, anchorMode: 'viewport' as const, viewportPosition: [0.25, 0.2] as [number, number] } }
+        : item),
+    };
+    render(<MathProvider><DiagramRenderer spec={viewportPanelSpec} viewportControls={false} /></MathProvider>);
+    const panel = rendererState.createdOptions.find(({ kind, options }) => kind === 'text' && String(options.cssClass).includes('matematika-info-panel'));
+    expect(panel).toBeDefined();
+    expect((panel?.args[0] as () => number)()).toBe(-2);
+    expect((panel?.args[1] as () => number)()).toBeCloseTo(2.4);
+    expect(panel?.options).toMatchObject({ anchorX: 'left', anchorY: 'top' });
+  });
+
+  it('turns viewport panel anchors inward near the lower-right edge', () => {
+    const spec = toWorkingSceneV2(migrateDiagramSpec(annotationsFixture).spec);
+    const viewportPanelSpec = {
+      ...spec,
+      elements: spec.elements.map(item => item.id === 'panelA'
+        ? { ...item, refs: [], properties: { ...item.properties, anchorMode: 'viewport' as const, viewportPosition: [0.9, 0.85] as [number, number] } }
+        : item),
+    };
+    render(<MathProvider><DiagramRenderer spec={viewportPanelSpec} viewportControls={false} /></MathProvider>);
+    const panel = rendererState.createdOptions.find(({ kind, options }) => kind === 'text' && String(options.cssClass).includes('matematika-info-panel'));
+    expect(panel?.options).toMatchObject({ anchorX: 'right', anchorY: 'bottom' });
+  });
+
+  it('anchors an authored label close to the referenced element at the chosen parameter', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const source = base.elements.find(item => item.kind === 'segment')!;
+    const labelled = addLabelToElement(base, source.id);
+    const labelModel = {
+      ...labelled.model,
+      elements: labelled.model.elements.map(item => item.id === labelled.labelId
+        ? { ...item, style: { ...item.style, labelSize: 17 }, properties: { ...item.properties, anchorParameter: 0.25 } }
+        : item),
+    };
+    render(<MathProvider><DiagramRenderer spec={labelModel} viewportControls={false} /></MathProvider>);
+
+    const renderedLabel = rendererState.createdOptions.find(({ kind, options }) => kind === 'text' && options.cssClass === 'font-diagram text-sm');
+    expect(renderedLabel?.options.fontSize).toBe(17);
+    const start = base.points.find(point => point.id === source.refs[0])!;
+    const end = base.points.find(point => point.id === source.refs[1])!;
+    expect((renderedLabel?.args[0] as () => number)()).toBeCloseTo(start.x + (end.x - start.x) * 0.25 + 0.04);
+    expect((renderedLabel?.args[1] as () => number)()).toBeCloseTo(start.y + (end.y - start.y) * 0.25 + 0.04);
+  });
+
+  it('hides authored and native labels together when labels are disabled', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const source = base.elements.find(item => item.kind === 'segment')!;
+    const labelled = addLabelToElement(base, source.id);
+    render(<MathProvider><DiagramRenderer spec={{ ...labelled.model, showLabels: false }} viewportControls={false} /></MathProvider>);
+
+    const textIndex = rendererState.createdOptions.findIndex(({ kind, options }) => kind === 'text' && options.cssClass === 'font-diagram text-sm');
+    expect(rendererState.geometries[textIndex].setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: false }));
+    expect(rendererState.geometries.some(geometry => geometry.label?.setAttribute.mock.calls.some((call: unknown[]) => (
+      typeof call[0] === 'object' && call[0] !== null && (call[0] as { visible?: boolean }).visible === false
+    )))).toBe(true);
+  });
+
+  it('persists direct annotation movement as an authored offset in editor mode', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const source = base.elements.find(item => item.kind === 'segment')!;
+    const labelled = addLabelToElement(base, source.id);
+    const onAnnotationMove = vi.fn();
+    render(<MathProvider><DiagramRenderer spec={labelled.model} mode="editor" viewportControls={false} onAnnotationMove={onAnnotationMove} /></MathProvider>);
+
+    const textIndex = rendererState.createdOptions.findIndex(({ kind, options }) => kind === 'text' && options.cssClass === 'font-diagram text-sm');
+    expect(rendererState.createdOptions[textIndex].options.fixed).toBe(false);
+    const rendered = rendererState.geometries[textIndex];
+    rendered.moveTo([3, 2], 0);
+    rendered.handlers.up[0]();
+
+    expect(onAnnotationMove).toHaveBeenCalledWith(labelled.labelId, {
+      textOffset: expect.arrayContaining([expect.any(Number), expect.any(Number)]),
+    });
+  });
+
+  it('hides one point label without hiding the point or the other labels', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const target = base.points.find(point => point.visible)!;
+    const spec = {
+      ...base,
+      points: base.points.map(point => point.id === target.id ? { ...point, showLabel: false } : point),
+    };
+    render(<MathProvider><DiagramRenderer spec={spec} viewportControls={false} /></MathProvider>);
+
+    const pointIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === target.id);
+    const point = rendererState.geometries[pointIndex];
+    expect(point.setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: true }));
+    expect(point.label.setAttribute).toHaveBeenCalledWith(expect.objectContaining({ visible: false }));
+    expect(rendererState.geometries.some(geometry => geometry !== point && geometry.label?.setAttribute.mock.calls.some((call: unknown[]) => (
+      typeof call[0] === 'object' && call[0] !== null && (call[0] as { visible?: boolean }).visible === true
+    )))).toBe(true);
+  });
+
+  it('applies native label position presets and restores automatic placement', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const target = base.points.find(point => point.id === 'pA')!;
+    const positioned = {
+      ...base,
+      points: base.points.map(point => point.id === target.id
+        ? { ...point, style: { ...point.style, labelPosition: 'lft' } }
+        : point),
+    };
+    const view = render(<MathProvider><DiagramRenderer spec={positioned} viewportControls={false} /></MathProvider>);
+    const pointIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === target.id);
+    const point = rendererState.geometries[pointIndex];
+    expect(rendererState.createdOptions[pointIndex].options.label).toMatchObject({ position: 'lft' });
+    expect(point.setAttribute).toHaveBeenCalledWith(expect.objectContaining({ label: expect.objectContaining({ position: 'lft' }) }));
+
+    const automatic = {
+      ...positioned,
+      points: positioned.points.map(point => point.id === target.id
+        ? { ...point, style: { ...point.style, labelPosition: undefined } }
+        : point),
+    };
+    view.rerender(<MathProvider><DiagramRenderer spec={automatic} viewportControls={false} /></MathProvider>);
+    expect(point.setAttribute.mock.calls.some(call => {
+      const label = (call[0] as { label?: { position?: string; autoPosition?: boolean } })?.label;
+      return label?.autoPosition === false && label?.position === 'urt';
+    })).toBe(true);
+  });
+
+  it('updates native line label positioning along path and applies offsets dynamically', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const lineTarget = base.elements.find(el => el.kind === 'segment' || el.kind === 'line')!;
+
+    const positionedLine = {
+      ...base,
+      elements: base.elements.map(el => el.id === lineTarget.id
+        ? { ...el, label: 's_1', showLabel: true, style: { ...el.style, labelPosition: 0.75, labelOffset: [5, -10] } }
+        : el),
+    };
+
+    render(<MathProvider><DiagramRenderer spec={positionedLine} viewportControls={false} /></MathProvider>);
+
+    const lineIndex = rendererState.createdOptions.findIndex(({ options }) => options.name === 's_1');
+    expect(lineIndex).toBeGreaterThan(-1);
+    expect(rendererState.createdOptions[lineIndex].options.label).toMatchObject({
+      visible: true,
+      position: 0.75,
+      offset: [5, -10],
+    });
+  });
+
+  it('keeps step emphasis in the original color, supports an override and yields exclusively to MDX', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const primary = base.points[0];
+    const custom = base.points[1];
+    const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
+    const spec = {
+      ...base,
+      steps: [{
+        id: 'focus-step', label: 'Énfasis', description: '', visibleTargets,
+        objectStates: {
+          [primary.id]: { emphasis: 'primary' as const },
+          [custom.id]: { emphasis: 'secondary' as const, emphasisColor: 'granada' as const },
+        },
+      }],
+    };
+    const view = render(<MathProvider><DiagramRenderer spec={spec} activeStepId="focus-step" viewportControls={false} /></MathProvider>);
+    const primaryIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === primary.id);
+    const customIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === custom.id);
+    const primaryGeometry = rendererState.geometries[primaryIndex];
+    const customGeometry = rendererState.geometries[customIndex];
+    expect(primaryGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillColor: primary.color, size: primary.style?.highlightPointSize ?? 10 });
+    expect(customGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({ fillColor: 'granada', size: custom.style?.highlightPointSize ?? 10 });
+
+    view.rerender(<MathProvider><DiagramRenderer spec={spec} activeStepId="focus-step" highlightedIds={[custom.id]} viewportControls={false} /></MathProvider>);
+    expect(lastCommittedAttrs(primaryGeometry)).toMatchObject({
+      fillColor: primary.color,
+      size: primary.style?.pointSize ?? 4,
+    });
+    expect(lastCommittedAttrs(customGeometry)).toMatchObject({ size: custom.style?.highlightPointSize ?? 10 });
+  });
+
+  it('pulses primary step emphasis on line-like elements', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const segment = base.elements.find(element => element.id === 'segAB');
+    if (!segment) throw new Error('La fixture debe incluir segAB.');
+    const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
+    const spec = {
+      ...base,
+      steps: [{
+        id: 'focus-step', label: 'Énfasis', description: '', visibleTargets,
+        objectStates: {
+          [segment.id]: { emphasis: 'primary' as const },
+        },
+      }],
+    };
+    render(<MathProvider><DiagramRenderer spec={spec} activeStepId="focus-step" viewportControls={false} /></MathProvider>);
+    const segmentIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === segment.id);
+    const segmentGeometry = rendererState.geometries[segmentIndex];
+    expect(segmentGeometry.setAttribute.mock.calls.at(-1)?.[0]).toMatchObject({
+      strokeColor: segment.color,
+      strokeWidth: segment.style?.highlightStrokeWidth ?? 3.2,
+      strokeOpacity: 1,
+    });
+  });
+
+  it('applies secondary step emphasis on line-like elements with hover highlight width', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(primitivesFixture).spec);
+    const segment = base.elements.find(element => element.id === 'segAB');
+    if (!segment) throw new Error('La fixture debe incluir segAB.');
+    const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
+    const spec = {
+      ...base,
+      steps: [{
+        id: 'focus-step', label: 'Énfasis', description: '', visibleTargets,
+        objectStates: {
+          [segment.id]: { emphasis: 'secondary' as const, emphasisColor: 'granada' as const },
+        },
+      }],
+    };
+    render(<MathProvider><DiagramRenderer spec={spec} activeStepId="focus-step" viewportControls={false} /></MathProvider>);
+    const segmentIndex = rendererState.nodes.findIndex(node => node.dataset.diagramObjectId === segment.id);
+    const segmentGeometry = rendererState.geometries[segmentIndex];
+    expect(lastCommittedAttrs(segmentGeometry)).toMatchObject({
+      strokeColor: 'granada',
+      strokeWidth: segment.style?.highlightStrokeWidth ?? 3.6,
+      strokeOpacity: 1,
+    });
+  });
+
+  it('pulses primary step emphasis on tick graduations', () => {
+    const base = toWorkingSceneV2(migrateDiagramSpec(marksFixture).spec);
+    const ticks = base.elements.find(element => element.id === 'ticksAV');
+    if (!ticks) throw new Error('La fixture de marcas debe incluir ticksAV.');
+    const visibleTargets = [...base.points, ...base.elements, ...base.sliders].map(item => item.id);
+    const spec = {
+      ...base,
+      steps: [{
+        id: 'focus-step', label: 'Énfasis', description: '', visibleTargets,
+        objectStates: {
+          [ticks.id]: { emphasis: 'primary' as const },
+        },
+      }],
+    };
+    render(<MathProvider><DiagramRenderer spec={spec} activeStepId="focus-step" viewportControls={false} /></MathProvider>);
+    const tickUpdate = rendererState.geometries
+      .flatMap(geometry => geometry.setAttribute.mock.calls)
+      .map(call => call[0])
+      .find(attrs => attrs?.majorHeight !== undefined);
+    expect(tickUpdate).toMatchObject({
+      majorHeight: ticks.style?.markHeight ?? 12,
+      minorHeight: (ticks.style?.markHeight ?? 12) * 0.4,
+      strokeWidth: 3.6,
+    });
+  });
+});

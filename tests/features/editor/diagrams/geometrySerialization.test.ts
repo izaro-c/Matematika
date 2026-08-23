@@ -1,0 +1,310 @@
+import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+import pointsFixture from '../../../fixtures/diagrams/points-constraints.json';
+import annotationsFixture from '../../../fixtures/diagrams/annotations-layers.json';
+import marksFixture from '../../../fixtures/diagrams/marks-angles.json';
+import primitivesFixture from '../../../fixtures/diagrams/euclidean-primitives.json';
+import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
+import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
+import { convertAngleKind, setEqualAngleConstraint, setSegmentMeasureTicks, toEditorModel, workingScene } from '../../../../src/fixed-pages/editor/diagrams/model';
+import type { VisualDiagramModel } from '../../../../src/fixed-pages/editor/diagrams/model/types';
+
+function asModel(value: unknown): VisualDiagramModel {
+  const model = toEditorModel(value);
+  if (!model) throw new Error('fixture inválido');
+  return model;
+}
+
+/** Compara la escena editable; objects/relations se reifican al generar. */
+function withoutDerivedGraph(model: VisualDiagramModel) {
+  const scene = workingScene(model);
+  const semantic: Record<string, unknown> = { ...scene };
+  delete semantic.dependencies;
+  delete semantic.extensions;
+  delete semantic.version;
+  delete semantic.renderer;
+  return semantic;
+}
+
+describe('Diagram source serialization', () => {
+  it.each([
+    ['constraints', pointsFixture, 'GeometryConstraints'],
+    ['reactive annotations', annotationsFixture, 'GeometryAnnotations'],
+    ['angular marks', marksFixture, 'GeometryAngles'],
+  ] as const)('roundtrips %s through the production TSX adapter', (_family, fixture, componentName) => {
+    const model = asModel(fixture);
+    const generated = generateDiagramSource(model, componentName);
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(withoutDerivedGraph(parsed.model)).toEqual(withoutDerivedGraph(model));
+    const regenerated = generateDiagramSource(parsed.model, componentName);
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
+  it('roundtrips an in-place angular type conversion byte for byte', () => {
+    const base = asModel(marksFixture);
+    const converted = convertAngleKind(base, 'angleAVB', 'nonReflexAngle');
+    const generated = generateDiagramSource(converted, 'ConvertedAngle');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(withoutDerivedGraph(parsed.model)).toEqual(withoutDerivedGraph(converted));
+    expect(parsed.model.elements.find(element => element.id === 'angleAVB')).toMatchObject({ kind: 'nonReflexAngle' });
+    const regenerated = generateDiagramSource(parsed.model, 'ConvertedAngle');
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
+  it('blocks unsafe expressions before source generation and reports their schema path', () => {
+    const model = asModel(annotationsFixture);
+    const unsafe = {
+      ...model,
+      elements: model.elements.map(element => element.id === 'formulaA'
+        ? { ...element, properties: { ...element.properties, expression: 'window.location.href' } }
+        : element),
+    };
+    const generated = generateDiagramSource(unsafe, 'UnsafeFormula');
+    expect(generated.ok).toBe(false);
+    if (generated.ok) return;
+    expect(generated.diagnostics[0].path?.[0]).toMatch(/^(elements|objects)$/);
+  });
+
+  it('roundtrips viewport-relative information panel positions', () => {
+    const model = asModel(annotationsFixture);
+    const positioned = {
+      ...model,
+      elements: model.elements.map(element => element.id === 'panelA'
+        ? { ...element, refs: [], properties: { ...element.properties, anchorMode: 'viewport' as const, viewportPosition: [0.12, 0.18] as [number, number] } }
+        : element),
+    };
+    const generated = generateDiagramSource(positioned, 'ViewportPanel');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status === 'visual-exact') expect(withoutDerivedGraph(parsed.model)).toEqual(withoutDerivedGraph(positioned));
+  });
+
+  it('roundtrips composite panel blocks and their conditional values byte for byte', () => {
+    const base = asModel(annotationsFixture);
+    const composed = {
+      ...base,
+      elements: base.elements.map(element => element.id === 'panelA'
+        ? {
+            ...element,
+            properties: {
+              ...element.properties,
+              infoPanelLayout: 'columns' as const,
+              infoPanelBlocks: [
+                { id: 'x-reading', title: 'Coordenada x', text: 'x = {value}', expression: 'pA.x', precision: 3 },
+                { id: 'sign-reading', title: 'Signo', text: 'No positivo', rules: [{ when: 'gt(pA.x,0)', text: 'Positivo: {value}', expression: 'pA.x', unit: 'u', precision: 1 }] },
+              ],
+            },
+          }
+        : element),
+    };
+    const generated = generateDiagramSource(composed, 'CompositePanel');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(withoutDerivedGraph(parsed.model)).toEqual(withoutDerivedGraph(composed));
+    expect(generateDiagramSource(parsed.model, 'CompositePanel')).toMatchObject({ ok: true, source: generated.source });
+  });
+
+  it('roundtrips an explicit, ordered header equality byte for byte', () => {
+    const base = asModel(annotationsFixture);
+    const firstPanel = base.elements.find(element => element.id === 'panelA')!;
+    const secondPanel = { ...firstPanel, id: 'panelB', label: 'Segunda medida', order: firstPanel.order + 1, groupIds: [], target: false, targetId: undefined };
+    const model = {
+      ...base,
+      elements: [...base.elements, secondPanel],
+      dependencies: [...(base.dependencies ?? []), { sourceId: 'pA', targetId: 'panelB', relation: 'expression' as const }],
+      header: {
+        readingsMode: 'custom' as const,
+        readings: [{
+          id: 'same-measure',
+          sourceIds: ['panelA', 'panelB'],
+          presentation: 'equality' as const,
+          label: 'AB = CD',
+        }],
+      },
+    };
+    const generated = generateDiagramSource(model, 'ExplicitHeaderEquality');
+    expect(generated.ok, generated.ok ? '' : JSON.stringify(generated.diagnostics)).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model.header).toEqual(model.header);
+    expect(generateDiagramSource(parsed.model, 'ExplicitHeaderEquality')).toMatchObject({ ok: true, source: generated.source });
+  });
+
+  it('roundtrips the independent highlightability option exactly', () => {
+    const base = asModel(primitivesFixture);
+    const target = base.elements[0];
+    const model = {
+      ...base,
+      elements: base.elements.map(element => element.id === target.id
+        ? { ...element, selection: { ...element.selection, highlightable: false } }
+        : element),
+    };
+    const generated = generateDiagramSource(model, 'NonHighlightableElement');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model.elements.find(item => item.id === target.id)?.selection).toMatchObject({ selectable: true, highlightable: false });
+    const regenerated = generateDiagramSource(parsed.model, 'NonHighlightableElement');
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
+  it('adds per-element label visibility without reordering canonical point fields', () => {
+    const base = asModel(primitivesFixture);
+    const model = {
+      ...base,
+      elements: base.elements.map((element, index) => index === 0 ? { ...element, showLabel: false } : element),
+    };
+    const generated = generateDiagramSource(model, 'ElementLabelVisibility');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    expect(generated.source.indexOf('"y":')).toBeLessThan(generated.source.indexOf('"labelVisible":'));
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status === 'visual-exact') expect(parsed.model.elements[0].showLabel).toBe(false);
+  });
+
+  it('roundtrips additive MDX highlighting exactly', () => {
+    const base = asModel(primitivesFixture);
+    const target = base.elements[0];
+    const model = {
+      ...base,
+      elements: base.elements.map(element => element.id === target.id
+        ? { ...element, selection: { ...element.selection, dimOthersOnHighlight: false } }
+        : element),
+    };
+    const generated = generateDiagramSource(model, 'AdditiveHighlightElement');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model.elements.find(item => item.id === target.id)?.selection.dimOthersOnHighlight).toBe(false);
+    const regenerated = generateDiagramSource(parsed.model, 'AdditiveHighlightElement');
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
+  it('roundtrips an editable intersection and its finite-support policy', () => {
+    const base = asModel(primitivesFixture);
+    const line = { ...base.elements.find(item => item.id === 'lineBC')!, id: 'lineOC', label: 'Recta OC', refs: ['pO', 'pC'], target: false };
+    const intersection = {
+      ...base.elements.find(item => item.id === 'segAB')!,
+      id: 'intQ', label: 'Q', kind: 'intersection' as const, refs: ['lineOC', 'segAB'], order: 80,
+      locked: true, target: false, properties: { restrictToSupports: true },
+    };
+    const model = { ...base, elements: [...base.elements, line, intersection] };
+    const generated = generateDiagramSource(model, 'EditableIntersection');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model.elements.find(item => item.id === 'intQ')).toMatchObject({
+      kind: 'intersection',
+      refs: ['lineOC', 'segAB'],
+      properties: { restrictToSupports: true },
+    });
+    const regenerated = generateDiagramSource(parsed.model, 'EditableIntersection');
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
+  it('roundtrips measure marks added from the segment inspector byte for byte', () => {
+    const base = asModel(primitivesFixture);
+    const model = setSegmentMeasureTicks(base, 'segAB', 2);
+    const generated = generateDiagramSource(model, 'SegmentMeasureMarks');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(withoutDerivedGraph(parsed.model)).toEqual(withoutDerivedGraph(model));
+    const regenerated = generateDiagramSource(parsed.model, 'SegmentMeasureMarks');
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
+  it('roundtrips the equal-length relation authored in Congruence1 byte for byte', () => {
+    const source = readFileSync('content/diagrams/Axiomas/Congruence1.tsx', 'utf8');
+    const parsed = parseDiagramSourceAST(source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model.constraints).toEqual(expect.arrayContaining([
+      expect.objectContaining({ kind: 'equalLength', refs: ['pD', 'pC', 'segAB'] }),
+    ]));
+    const regenerated = generateDiagramSource(parsed.model, 'Congruence1');
+    expect(regenerated.ok && regenerated.source).toBe(source);
+  });
+
+  it('reopens Congruence4 with its equal-angle relation as visual-exact', () => {
+    const source = readFileSync('content/diagrams/Axiomas/Congruence4.tsx', 'utf8');
+    const parsed = parseDiagramSourceAST(source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(parsed.model.constraints).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        kind: 'equalAngle',
+        refs: ['pBB', 'pOO', 'pAA', 'nonReflexAngleAOB', 'nonReflexAngleAAOOBB'],
+      }),
+    ]));
+    const regenerated = generateDiagramSource(parsed.model, 'Congruence4');
+    expect(regenerated.ok && regenerated.source).toBe(source);
+  });
+
+  it('roundtrips an equal-angle relation authored from the angle inspector byte for byte', () => {
+    const base = asModel(marksFixture);
+    const pointTemplate = base.points[0];
+    const angleTemplate = base.elements.find(element => element.kind === 'nonReflexAngle')!;
+    const model = setEqualAngleConstraint({
+      ...base,
+      points: [
+        ...base.points,
+        { ...pointTemplate, id: 'pC', label: 'C', x: 5, y: 0, order: 3 },
+        { ...pointTemplate, id: 'pW', label: 'W', x: 4, y: 0, fixed: true, constraint: 'fixed' as const, locked: true, order: 4 },
+        { ...pointTemplate, id: 'pD', label: 'D', x: 4.5, y: Math.sqrt(3) / 2, order: 5 },
+      ],
+      elements: [
+        ...base.elements,
+        { ...angleTemplate, id: 'angleCWD', label: 'Ángulo CWD', refs: ['pC', 'pW', 'pD'], order: 20 },
+      ],
+    }, 'nonReflexAngleAVB', 'pA', 'angleCWD');
+
+    const generated = generateDiagramSource(model, 'EqualAngles');
+    expect(generated.ok).toBe(true);
+    if (!generated.ok) return;
+    const parsed = parseDiagramSourceAST(generated.source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    expect(withoutDerivedGraph(parsed.model)).toEqual(withoutDerivedGraph(model));
+    const regenerated = generateDiagramSource(parsed.model, 'EqualAngles');
+    expect(regenerated.ok && regenerated.source).toBe(generated.source);
+  });
+
+  it('reopens Congruence2 with independent ruler spacing and height controls', () => {
+    const source = readFileSync('content/diagrams/Axiomas/Congruence2.tsx', 'utf8');
+    const parsed = parseDiagramSourceAST(source);
+    expect(parsed.status).toBe('visual-exact');
+    if (parsed.status !== 'visual-exact') return;
+    const measureTicks = parsed.model.elements.filter(element => element.kind === 'measureTicks');
+    expect(measureTicks).toHaveLength(3);
+    expect(measureTicks.every(element => (element.properties?.tickDistance ?? 0) > 0)).toBe(true);
+    expect(measureTicks.every(element => (element.style?.markHeight ?? 0) > 0)).toBe(true);
+    const regenerated = generateDiagramSource(parsed.model, 'Congruence2');
+    expect(regenerated.ok && regenerated.source).toBe(source);
+  });
+});
