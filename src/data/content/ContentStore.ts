@@ -128,7 +128,7 @@ export class ContentStore {
         }
         const meta = entry.metadata;
         const finalId = (meta.id as string) || slug;
-        if (!schema.safeParse(meta).success) {
+        if (!import.meta.env.PROD && !schema.safeParse(meta).success) {
           console.warn(`[ContentStore] ${dirName}: inválido ${path}`);
         }
 

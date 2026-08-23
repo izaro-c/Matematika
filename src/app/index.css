@@ -7,6 +7,7 @@
 @import "./theme.css";
 @import "katex/dist/katex.min.css";
 @import "./styles/katex.css";
+@import "../../node_modules/jsxgraph/distrib/jsxgraph.css";
 @import "tailwindcss";
 
 /* Base */

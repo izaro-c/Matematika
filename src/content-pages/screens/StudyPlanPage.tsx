@@ -166,7 +166,7 @@ export const StudyPlanPage = () => {
         <div
           className="absolute inset-0 z-0 pointer-events-none opacity-[0.02] mix-blend-multiply fixed"
           style={{
-            backgroundImage: `linear-gradient(var(--page-accent), var(--page-accent)), url(${publicAsset('/images/backgrounds/bg-botanical.png')})`,
+            backgroundImage: `linear-gradient(var(--page-accent), var(--page-accent)), url(${publicAsset('/images/backgrounds/bg-botanical.webp')})`,
             backgroundBlendMode: 'color',
             backgroundSize: '400px',
           }}

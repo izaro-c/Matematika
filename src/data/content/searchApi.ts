@@ -233,4 +233,5 @@ export function getSearchIndex(lang?: string): SearchResult[] {
   return searchIndexes[key];
 }
 
-export const SEARCH_INDEX = buildSearchIndex();
+export const getSearchIndexLazy = getSearchIndex;
+

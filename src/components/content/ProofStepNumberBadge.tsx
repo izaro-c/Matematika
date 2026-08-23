@@ -67,7 +67,7 @@ export const ProofStepNumberBadge: React.FC<ProofStepNumberBadgeProps> = ({
       <span
         className="absolute inset-0 opacity-70 mix-blend-multiply pointer-events-none"
         style={{
-          backgroundImage: `url(${publicAsset('/images/backgrounds/bg-arts-crafts-2.png')})`,
+          backgroundImage: `url(${publicAsset('/images/backgrounds/bg-arts-crafts-2.webp')})`,
           backgroundSize: '400%',
           backgroundPosition: 'center',
         }}

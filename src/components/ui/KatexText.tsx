@@ -11,8 +11,14 @@ interface KatexTextProps {
   className?: string;
 }
 
+const katexCache = new Map<string, string>();
+const MAX_CACHE_SIZE = 500;
+
 /** Convierte texto mixto con expresiones $...$ o $$...$$ en HTML seguro de KaTeX. */
 export function renderKatexTextToHtml(text: string): string {
+  const cached = katexCache.get(text);
+  if (cached !== undefined) return cached;
+
   let html = text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -39,12 +45,19 @@ export function renderKatexTextToHtml(text: string): string {
     }
   });
 
-  return html
+  const result = html
     .replace(/\n/g, '<br/>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
     .replace(/_([^_]+)_/g, '<em>$1</em>')
     .replace(/\[(carbon|terracota|canela|mora|ocre|pavo|granada|musgo):([^\]]+)\]/g, '<span style="color: var(--theme-$1)">$2</span>');
+
+  if (katexCache.size >= MAX_CACHE_SIZE) {
+    const firstKey = katexCache.keys().next().value;
+    if (firstKey !== undefined) katexCache.delete(firstKey);
+  }
+  katexCache.set(text, result);
+  return result;
 }
 
 /**

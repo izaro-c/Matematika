@@ -29,8 +29,8 @@ import { getAxiomGroup, computeDependencyChain } from '../lib/graphUtils';
 function FlowContent() {
   const theme = useThemeColors();
   const graphBackgroundStyle = {
-    '--graph-light-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-1.png')}")`,
-    '--graph-dark-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-dark.jpg')}")`,
+    '--graph-light-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-1.webp')}")`,
+    '--graph-dark-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-dark.webp')}")`,
   } as CSSProperties;
   const {
     baseNodes, edges: baseEdges, isLoading,

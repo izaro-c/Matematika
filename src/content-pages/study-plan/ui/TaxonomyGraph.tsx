@@ -55,8 +55,8 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
   const { t, getLocalizedPath } = useI18n();
   const theme = useThemeColors();
   const graphBackgroundStyle = {
-    '--graph-light-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-1.png')}")`,
-    '--graph-dark-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-dark.jpg')}")`,
+    '--graph-light-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-1.webp')}")`,
+    '--graph-dark-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-dark.webp')}")`,
   } as React.CSSProperties;
   const [hoverNode, setHoverNode] = useState<GraphNode | null>(null);
 
