@@ -1,4 +1,4 @@
-
+import { Link } from 'wouter';
 import { getNodeTypeColor, getDependencyDotColor, getNodeUrlPrefix } from '@/fixed-pages/graph/lib/graphUtils';
 import { useI18n } from '@/i18n';
 
@@ -26,19 +26,25 @@ export function AxiomaticDetailPanel({
   if (!selectedNodeData) return null;
 
   const nodeSystems = systems.filter(s => s.axioms.includes(selectedNodeId));
+  const color = getNodeTypeColor(selectedNodeData.nodeType);
 
   return (
     <div className={
       isMobile
         ? 'elegant-panel fixed bottom-0 left-0 right-0 z-50 shadow-xl p-4 max-h-[70vh] overflow-y-auto'
         : 'elegant-panel absolute top-24 right-3 z-30 shadow-xl p-4 w-[280px] max-h-[calc(100vh-7rem)] overflow-y-auto'
-    }>
+    }
+    style={
+      {
+        '--hover-accent': color,
+      } as React.CSSProperties
+    }
+    >
       <div className="flex justify-between items-start mb-2">
         {(() => {
-          const color = getNodeTypeColor(selectedNodeData.nodeType);
           return (
             <span
-              className="ac-editor-badge px-2.5 py-0.5 rounded-sm border"
+              className="ac-editor-badge px-2.5 py-0.5 rounded-none border"
               style={{
                 backgroundColor: `color-mix(in srgb, ${color} 8%, transparent)`,
                 borderColor: `color-mix(in srgb, ${color} 30%, transparent)`,
@@ -70,7 +76,7 @@ export function AxiomaticDetailPanel({
               return (
                 <span
                   key={s.id}
-                  className="text-[10px] font-serif px-2 py-0.5 rounded-sm border"
+                  className="text-[10px] font-serif px-2 py-0.5 rounded-none border"
                   style={{
                     backgroundColor: `color-mix(in srgb, ${color} 6%, transparent)`,
                     borderColor: `color-mix(in srgb, ${color} 20%, transparent)`,
@@ -105,13 +111,13 @@ export function AxiomaticDetailPanel({
       {(() => {
         const color = getNodeTypeColor(selectedNodeData.nodeType);
         return (
-          <a
+          <Link
             href={getLocalizedPath(`/${getNodeUrlPrefix(selectedNodeData.nodeType)}/${selectedNodeId}`)}
             className="inline-flex items-center gap-1.5 mt-3 text-xs font-sans font-bold transition-all hover:translate-x-0.5"
             style={{ color: color }}
           >
             <span>{t('graph', 'viewPageLink')}</span>
-          </a>
+          </Link>
         );
       })()}
     </div>

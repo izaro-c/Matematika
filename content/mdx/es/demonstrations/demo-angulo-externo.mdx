@@ -74,7 +74,7 @@ Comparamos $\triangle AEB$ y $\triangle CEF$ con la correspondencia $A \leftrigh
 </ProofStep>
 
 <ProofStep number={5} title="Identificamos los ángulos congruentes">
-Por la <ConceptLink targetId="congruencia" isDependency={true}>correspondencia de elementos en triángulos congruentes</ConceptLink>, el ángulo del vértice $A$ corresponde al del vértice $C$:
+Por la <ConceptLink targetId="congruencia" >correspondencia de elementos en triángulos congruentes</ConceptLink>, el ángulo del vértice $A$ corresponde al del vértice $C$:
 
 <Formula>
   $$ \angle BAE \cong \angle ECF$$
@@ -84,7 +84,7 @@ Como $A * E * C$, las semirrectas $\overrightarrow{AE}$ y $\overrightarrow{AC}$ 
 </ProofStep>
 
 <ProofStep number={6} title="Situamos el ángulo dentro del ángulo exterior">
-Por el <ConceptLink targetId="teorema-separacion" isDependency={true}>teorema de separación del plano</ConceptLink>, consecuencia del <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch</ConceptLink>, las relaciones $A * E * C$, $B * E * F$ y $B * C * D$ sitúan a $F$ en el mismo semiplano que $D$ respecto de $AC$, y en el mismo semiplano que $A$ respecto de $BC$. Por la <ConceptLink targetId="interior-angulo" isDependency={true}>caracterización del interior de un ángulo</ConceptLink>:
+Por el <ConceptLink targetId="teorema-separacion" >teorema de separación del plano</ConceptLink>, consecuencia del <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch</ConceptLink>, las relaciones $A * E * C$, $B * E * F$ y $B * C * D$ sitúan a $F$ en el mismo semiplano que $D$ respecto de $AC$, y en el mismo semiplano que $A$ respecto de $BC$. Por la <ConceptLink targetId="interior-angulo" >caracterización del interior de un ángulo</ConceptLink>:
 
 <Formula>
   $$ \overrightarrow{CF}\setminus\{C\} \subset \operatorname{int}(\angle ACD)$$
@@ -92,7 +92,7 @@ Por el <ConceptLink targetId="teorema-separacion" isDependency={true}>teorema de
 </ProofStep>
 
 <ProofStep number={7} title="Concluimos la desigualdad para el ángulo A">
-Como $A * E * C$, la semirrecta $\overrightarrow{CE}$ coincide con $\overrightarrow{CA}$. El paso <ProofStepLink step={6} /> hace de $\angle ECF$ una parte propia de $\angle ACD$; por el <ConceptLink targetId="orden-angular" isDependency={true}>orden angular</ConceptLink>, $\angle ECF < \angle ACD$. Junto con $\angle A \cong \angle ECF$ y la <ConceptLink targetId="compatibilidad-orden-congruencia-angular" isDependency={true}>compatibilidad del orden con la congruencia</ConceptLink>, podemos reemplazar el subángulo por cualquier ángulo congruente:
+Como $A * E * C$, la semirrecta $\overrightarrow{CE}$ coincide con $\overrightarrow{CA}$. El paso <ProofStepLink step={6} /> hace de $\angle ECF$ una parte propia de $\angle ACD$; por el <ConceptLink targetId="orden-angular" >orden angular</ConceptLink>, $\angle ECF < \angle ACD$. Junto con $\angle A \cong \angle ECF$ y la <ConceptLink targetId="compatibilidad-orden-congruencia-angular" >compatibilidad del orden con la congruencia</ConceptLink>, podemos reemplazar el subángulo por cualquier ángulo congruente:
 
 <Formula>
   $$ \angle A < \angle ACD$$
@@ -104,7 +104,7 @@ Tomamos el punto medio $G$ de $BC$, de modo que $B * G * C$ y $BG \cong GC$. Tra
 </ProofStep>
 
 <ProofStep number={9} title="Obtenemos la desigualdad para B respecto del segundo ángulo exterior">
-Aplicamos el mismo argumento a $\triangle AGB$ y $\triangle HGC$, con correspondencia $A \leftrightarrow H$, $G \leftrightarrow G$, $B \leftrightarrow C$. Tenemos $AG \cong GH$, $GB \cong GC$ y $\angle AGB \cong \angle HGC$ por ser opuestos por el vértice. Por <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink>, $\angle ABG \cong \angle HCG$. Como $B * G * C$, $\angle ABG = \angle ABC = \angle B$. La <ConceptLink targetId="teorema-separacion" isDependency={true}>separación del plano</ConceptLink> sitúa $\overrightarrow{CH}$ dentro de $\angle BCK$; el <ConceptLink targetId="orden-angular" isDependency={true}>orden angular</ConceptLink> y su <ConceptLink targetId="compatibilidad-orden-congruencia-angular" isDependency={true}>compatibilidad con la congruencia</ConceptLink> dan:
+Aplicamos el mismo argumento a $\triangle AGB$ y $\triangle HGC$, con correspondencia $A \leftrightarrow H$, $G \leftrightarrow G$, $B \leftrightarrow C$. Tenemos $AG \cong GH$, $GB \cong GC$ y $\angle AGB \cong \angle HGC$ por ser opuestos por el vértice. Por <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink>, $\angle ABG \cong \angle HCG$. Como $B * G * C$, $\angle ABG = \angle ABC = \angle B$. La <ConceptLink targetId="teorema-separacion" >separación del plano</ConceptLink> sitúa $\overrightarrow{CH}$ dentro de $\angle BCK$; el <ConceptLink targetId="orden-angular" >orden angular</ConceptLink> y su <ConceptLink targetId="compatibilidad-orden-congruencia-angular" >compatibilidad con la congruencia</ConceptLink> dan:
 
 <Formula>
   $$ \angle B < \angle BCK$$
@@ -120,7 +120,7 @@ Las relaciones $A * C * K$ y $B * C * D$ muestran que las rectas $AC$ y $BD$ se 
 </ProofStep>
 
 <ProofStep number={11} title="Reunimos las dos desigualdades">
-El paso <ProofStepLink step={7} /> da $\angle A < \angle ACD$. El paso <ProofStepLink step={9} /> da $\angle B < \angle BCK$, y el paso <ProofStepLink step={10} /> establece $\angle BCK \cong \angle ACD$. Por la <ConceptLink targetId="compatibilidad-orden-congruencia-angular" isDependency={true}>compatibilidad del orden angular con la congruencia</ConceptLink>, la segunda desigualdad se conserva al reemplazar $\angle BCK$ por $\angle ACD$. Reunimos entonces ambos resultados. El ángulo exterior original domina estrictamente a cada uno de los dos ángulos interiores no adyacentes:
+El paso <ProofStepLink step={7} /> da $\angle A < \angle ACD$. El paso <ProofStepLink step={9} /> da $\angle B < \angle BCK$, y el paso <ProofStepLink step={10} /> establece $\angle BCK \cong \angle ACD$. Por la <ConceptLink targetId="compatibilidad-orden-congruencia-angular" >compatibilidad del orden angular con la congruencia</ConceptLink>, la segunda desigualdad se conserva al reemplazar $\angle BCK$ por $\angle ACD$. Reunimos entonces ambos resultados. El ángulo exterior original domina estrictamente a cada uno de los dos ángulos interiores no adyacentes:
 
 <Formula>
   $$ \angle A < \angle ACD \space \text{ y } \space \angle B < \angle ACD $$
@@ -131,10 +131,10 @@ El paso <ProofStepLink step={7} /> da $\angle A < \angle ACD$. El paso <ProofSte
 
 ### Análisis
 
-La prueba sigue la construcción clásica de la Proposición I.16 de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>. La congruencia LAL transporta cada ángulo interior a una parte propia de un ángulo exterior. La desigualdad no procede de una medida numérica, sino del <ConceptLink targetId="orden-angular" isDependency={true}>orden entre ángulos</ConceptLink>: una parte propia es menor que el ángulo que la contiene.
+La prueba sigue la construcción clásica de la Proposición I.16 de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>. La congruencia LAL transporta cada ángulo interior a una parte propia de un ángulo exterior. La desigualdad no procede de una medida numérica, sino del <ConceptLink targetId="orden-angular" >orden entre ángulos</ConceptLink>: una parte propia es menor que el ángulo que la contiene.
 
 <Nota>
-La formulación rigurosa del paso <ProofStepLink step={6} /> utiliza el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch</ConceptLink>, el <ConceptLink targetId="teorema-separacion" isDependency={true}>teorema de separación del plano</ConceptLink> y la <ConceptLink targetId="interior-angulo" isDependency={true}>caracterización del interior de un ángulo</ConceptLink>. Son resultados generales de orden geométrico; no se vuelven a demostrar aquí.
+La formulación rigurosa del paso <ProofStepLink step={6} /> utiliza el <ConceptLink targetId="axioma-orden-4" isDependency={true} isDependency={false}>axioma de Pasch</ConceptLink>, el <ConceptLink targetId="teorema-separacion" >teorema de separación del plano</ConceptLink> y la <ConceptLink targetId="interior-angulo" >caracterización del interior de un ángulo</ConceptLink>. Son resultados generales de orden geométrico; no se vuelven a demostrar aquí.
 </Nota>
 
 </DemonstrationSection>

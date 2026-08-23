@@ -44,6 +44,34 @@ const allNodes = new Set<string>();
 const metadataMap = new Map<string, Record<string, unknown>>();
 const contentDepsMap = new Map<string, string[]>();
 
+function extractConceptLinkDependencies(content: string): string[] {
+  const deps: string[] = [];
+  const regex = /<ConceptLink\b([^>]*)>/g;
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(content)) !== null) {
+    const attrsStr = match[1];
+    // Skip if explicitly marked as not a dependency (isDependency={false} or isDependency="false")
+    const isExplicitlyFalse = /\bisDependency=\{(?:false|"false")\}|\bisDependency="false"/.test(attrsStr);
+    if (isExplicitlyFalse) continue;
+
+    const singleMatch = attrsStr.match(/\btargetId=(?:["']([^"']+)["']|\{["']([^"']+)["']\})/);
+    if (singleMatch) {
+      const id = singleMatch[1] || singleMatch[2];
+      if (id) deps.push(id);
+      continue;
+    }
+
+    const arrayMatch = attrsStr.match(/\btargetId=\{\[(.*?)\]\}/);
+    if (arrayMatch) {
+      const idMatches = arrayMatch[1].matchAll(/["']([^"']+)["']/g);
+      for (const m of idMatches) {
+        if (m[1]) deps.push(m[1]);
+      }
+    }
+  }
+  return deps;
+}
+
 // Pass 1: Extract all metadata and auto-infer dependencies from text
 function processMdxFile(file: string) {
   const content = fs.readFileSync(file, 'utf-8');
@@ -56,7 +84,7 @@ function processMdxFile(file: string) {
     metadataMap.set(id, metadata as Record<string, unknown>);
     allNodes.add(id);
 
-    // Graph edges come strictly from explicit metadata arrays
+    // Graph edges come from explicit metadata arrays and ConceptLink with isDependency={true}
     const contentDeps: string[] = [];
     if (Array.isArray(metadata.links)) contentDeps.push(...metadata.links);
     if (Array.isArray(metadata.requires)) contentDeps.push(...metadata.requires);
@@ -67,9 +95,7 @@ function processMdxFile(file: string) {
     if (metadata.parentTheorem && typeof metadata.parentTheorem === 'string') contentDeps.push(metadata.parentTheorem);
     if (Array.isArray(metadata.corollaries)) contentDeps.push(...metadata.corollaries);
     if (Array.isArray(metadata.axioms_verified)) contentDeps.push(...metadata.axioms_verified);
-    // NOTE: 'satisfies' (modelos → sistemas) no crea dependencia lógica:
-    // es una asociación semántica, no un prerrequisito deductivo.
-    // NOTE: seeAlso and ConceptLink targets with isDependency={false} are NOT included
+    contentDeps.push(...extractConceptLinkDependencies(content));
 
     // Remove duplicates
     contentDepsMap.set(id, Array.from(new Set(contentDeps)));

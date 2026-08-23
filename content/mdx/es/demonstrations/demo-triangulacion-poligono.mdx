@@ -24,7 +24,7 @@ Sea $P$ un polígono simple de $n \geq 3$ vértices $v_1, v_2, \dots, v_n$ en or
 <Separador />
 
 <ProofStep number={1} title="Caso base: n = 3">
-Si $n = 3$, $P$ es un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> por definición. Ya está triangulado: $1$ triángulo, $0$ diagonales. Se cumple $n-2 = 1$ y $n-3 = 0$.
+Si $n = 3$, $P$ es un <ConceptLink targetId="triangulo" >triángulo</ConceptLink> por definición. Ya está triangulado: $1$ triángulo, $0$ diagonales. Se cumple $n-2 = 1$ y $n-3 = 0$.
 </ProofStep>
 
 <ProofStep number={2} title="Existencia de un vértice oreja (n ≥ 4)" target="step1">
@@ -56,6 +56,6 @@ Por el principio de <ConceptLink targetId="metodo-induccion" isDependency={false
 
 La existencia de un vértice oreja es el corazón de la demostración. En el plano euclídeo, todo polígono simple de $n \geq 4$ tiene al menos dos orejas (Teorema de las Dos Orejas de Meisters, 1975). La demostración aquí presentada garantiza al menos una, que es suficiente para la inducción.
 
-El <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch</ConceptLink> es esencial: sin él, no podríamos garantizar que la diagonal $\overline{v_{k-1}v_{k+1}}$ no cruza otras aristas del polígono. Este axioma es precisamente lo que distingue la geometría plana de otras geometrías de incidencia donde la triangulación podría no ser posible.
+El <ConceptLink targetId="axioma-orden-4" isDependency={true} isDependency={false}>axioma de Pasch</ConceptLink> es esencial: sin él, no podríamos garantizar que la diagonal $\overline{v_{k-1}v_{k+1}}$ no cruza otras aristas del polígono. Este axioma es precisamente lo que distingue la geometría plana de otras geometrías de incidencia donde la triangulación podría no ser posible.
 
 </DemonstrationSection>

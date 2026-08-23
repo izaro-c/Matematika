@@ -32,7 +32,7 @@ La demostración procede por <ConceptLink targetId="metodo-induccion" isDependen
 
 1. **Caso base** ($n = 3$): El polígono ya es un triángulo. No se necesitan diagonales.
 
-2. **Paso inductivo** ($n \geq 4$): Se demuestra que todo polígono de $n \geq 4$ vértices posee al menos un **vértice oreja**: un vértice $v_i$ tal que el segmento $\overline{v_{i-1}v_{i+1}}$ es una diagonal interior del polígono. La existencia de una oreja se prueba usando el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch (II-4)</ConceptLink> y los <ConceptLink targetId="axioma-orden-1" isDependency={false}>axiomas de orden</ConceptLink>: se toma el vértice de menor coordenada en una dirección dada y se analiza el triángulo formado por él y sus vecinos.
+2. **Paso inductivo** ($n \geq 4$): Se demuestra que todo polígono de $n \geq 4$ vértices posee al menos un **vértice oreja**: un vértice $v_i$ tal que el segmento $\overline{v_{i-1}v_{i+1}}$ es una diagonal interior del polígono. La existencia de una oreja se prueba usando el <ConceptLink targetId="axioma-orden-4" isDependency={true}>axioma de Pasch (II-4)</ConceptLink> y los <ConceptLink targetId="axioma-orden-1" >axiomas de orden</ConceptLink>: se toma el vértice de menor coordenada en una dirección dada y se analiza el triángulo formado por él y sus vecinos.
 
 3. Al eliminar el triángulo formado por la oreja, se obtiene un polígono de $n-1$ vértices. Por hipótesis de inducción, este polígono admite triangulación. Añadiendo la diagonal de la oreja, se obtiene una triangulación del polígono original.
 
