@@ -183,12 +183,16 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
         <div
           role="tabpanel"
           style={{ height: height !== undefined ? `${height}px` : undefined }}
-          className="transition-[height] duration-300 ease-out motion-reduce:transition-none overflow-hidden"
+          className="transition-[height] duration-300 ease-out motion-reduce:transition-none"
         >
           <div ref={contentRef} className="flow-root">
             {/* Pestaña: Pregunta */}
             {activeTab === 'pregunta' && (
               <div key="pregunta" className="animate-page-enter">
+                {/* Muesca invisible para esquivar los marcapáginas */}
+                {showBookmarks && (
+                  <div className="float-right h-5 w-18 sm:w-22 pointer-events-none" />
+                )}
                 {children}
               </div>
             )}
