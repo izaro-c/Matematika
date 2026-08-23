@@ -99,7 +99,7 @@ const ExerciseContent: React.FC<{ id: string }> = ({ id }) => {
     <ContentLayout pageType="ejercicio" diagram={exercise.Simulation ? <ContentDiagram component={exercise.Simulation} /> : undefined}>
       <div className="min-h-viewport bg-transparent text-carbon font-serif pb-32">
         <ProgressBar onReset={handleReset} isCompleted={isCompleted} />
-        <div className="w-full px-6 md:px-10 pt-4 pb-16">
+        <div className="w-full md:px-10 pt-4 pb-16">
           {isFallback && <UntranslatedFallbackBanner availableLangs={availableLangs} />}
           <ContentHeader
             type="ejercicio"

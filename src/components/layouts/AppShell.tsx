@@ -1,4 +1,5 @@
 import { TopBar } from "@/components/navigation/TopBar";
+import { MarginaliaPanel } from "@/components/content/MarginaliaPanel";
 import { SymbolDictionaryManager } from "@/components/content/SymbolDictionaryManager";
 import { db } from "@/data/content";
 import { getContentPageAccent, UI, CONTENT_PAGE_ACCENTS } from "@/design";
@@ -7,18 +8,13 @@ import { createPortal } from "react-dom";
 import { isSupportedLanguage, getCanonicalSegmentType, useI18n } from "@/i18n";
 import { lazy, Suspense } from "react";
 import { useNavigationStore } from "@/lib/stores/NavigationStore";
-import { useGlossaryStore } from "@/lib/stores/GlossaryStore";
 
 const SearchOmnibar = lazy(() => import("@/components/navigation/SearchOmnibar").then(m => ({ default: m.SearchOmnibar })));
-const MarginaliaPanel = lazy(() => import("@/components/content/MarginaliaPanel").then(m => ({ default: m.MarginaliaPanel })));
 
 export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { t } = useI18n();
   const [location] = useLocation();
   const isSearchOpen = useNavigationStore((state) => state.isSearchOpen);
-  const activeTerms = useGlossaryStore((state) => state.activeTerms);
-  const activeFormulaTerms = useGlossaryStore((state) => state.activeFormulaTerms);
-  const hasActiveMarginalia = Boolean(activeTerms || activeFormulaTerms);
   const rawParts = location.split('/').filter(Boolean);
   const parts = (rawParts.length > 0 && isSupportedLanguage(rawParts[0])) ? rawParts.slice(1) : rawParts;
   const routePrefix = parts[0] || '';
@@ -65,7 +61,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
           <SearchOmnibar />
         </Suspense>
       )}
-      {!isEditor && hasActiveMarginalia && (
+      {!isEditor && (
         <Suspense fallback={null}>
           <MarginaliaPanel />
         </Suspense>

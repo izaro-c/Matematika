@@ -128,37 +128,11 @@ export const CanvasInteractivo: CanvasInteractivoComponent = ({
     tryAgain();
   };
 
-  const renderedChildren = otherChildren.map((child, index) => {
-    if (React.isValidElement(child)) {
-      const childProps = child.props as any;
-      const specToPass = activeCompletedSpec || (isCompleted ? childProps.spec : undefined);
-
-      return React.cloneElement(
-        child as React.ReactElement<{
-          spec?: DiagramSpecV3;
-          onPointMove?: (pointId: string, x: number, y: number, updatedSpec: DiagramSpecV3) => void;
-          onComplete?: () => void;
-          isCompleted?: boolean;
-          readOnly?: boolean;
-          disabled?: boolean;
-          interactive?: boolean;
-          hideHeader?: boolean;
-        }>,
-        {
-          key: child.key ?? index,
-          ...(specToPass ? { spec: specToPass } : {}),
-          onPointMove: handlePointMove,
-          onComplete: handleComplete,
-          isCompleted,
-          readOnly: isCompleted,
-          disabled: isCompleted,
-          interactive: !isCompleted,
-          hideHeader: true,
-        }
-      );
-    }
-    return child;
-  });
+  const renderedChildren = otherChildren.map((child, index) =>
+    React.isValidElement(child)
+      ? React.cloneElement(child, { key: child.key ?? index } as any)
+      : child
+  );
 
   const showBookmarks = Boolean(errorComunData || (isCompleted && resolucionData));
 
@@ -171,13 +145,13 @@ export const CanvasInteractivo: CanvasInteractivoComponent = ({
       hasFailed={hasFailed}
       activeTab={activeTab}
       onTabChange={setActiveTab}
-      className={`transition-all ${isCompleted ? 'bg-canela/5 border-canela/30' : ''}`}
+      className={`transition-all ${isCompleted ? 'bg-musgo/5 border-musgo/30' : ''}`}
     >
       {title && (
         <h4 className={`font-bold text-carbon mb-2 flex items-center justify-between z-30 relative text-lg leading-relaxed ${showBookmarks ? 'pr-20 sm:pr-28' : ''}`}>
           <span>{title}</span>
           {isCompleted && (
-            <span className="text-canela font-serif text-base shrink-0 ml-2">
+            <span className="text-musgo font-serif text-base shrink-0 ml-2">
               ❦ {t('exercise', 'goalAchieved') || 'Objetivo cumplido'}
             </span>
           )}
@@ -190,11 +164,11 @@ export const CanvasInteractivo: CanvasInteractivoComponent = ({
         </p>
       )}
 
-      <CanvasControlContext.Provider value={{ onComplete: handleComplete, isCompleted, activeSpec: activeCompletedSpec }}>
+      <CanvasControlContext.Provider value={{ onComplete: handleComplete, isCompleted, activeSpec: activeCompletedSpec, onPointMove: handlePointMove, hideHeader: true }}>
         <div className={`relative mb-3 w-full h-[360px] max-h-[360px] overflow-hidden border border-carbon/20 rounded-sm bg-lienzo transition-colors ${isCompleted ? 'pointer-events-none select-none' : ''}`}>
           {renderedChildren}
           {isCompleted && (
-            <div className="absolute inset-0 z-50 pointer-events-none border-2 border-canela/20 rounded-none bg-canela/[0.02]" />
+            <div className="absolute inset-0 z-50 pointer-events-none border-2 border-musgo/20 rounded-none bg-musgo/[0.02]" />
           )}
         </div>
 

@@ -306,11 +306,11 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
       hasFailed={hasFailed}
       activeTab={activeTab}
       onTabChange={setActiveTab}
-      className={isCompleted ? 'bg-canela/5 border-canela/30' : ''}
+      className={isCompleted ? 'bg-musgo/5 border-musgo/30' : ''}
     >
       <h4 className={`font-bold text-carbon mb-8 mt-2 text-lg z-30 relative leading-relaxed ${showBookmarks ? 'pr-20 sm:pr-28' : ''}`}>
         {isCompleted ? (
-          <span className="text-canela">❦ {t('exercise', 'completed')}</span>
+          <span className="text-musgo">❦ {t('exercise', 'completed')}</span>
         ) : (
           <span>{pregunta || t('exercise', 'matchConcepts')}</span>
         )}
@@ -344,7 +344,7 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
                   fill="none"
                   stroke={
                     isCompleted
-                      ? 'var(--theme-canela)'
+                      ? 'var(--theme-musgo)'
                       : line.isError
                         ? 'var(--theme-terracota)'
                         : 'var(--theme-carbon)'
@@ -371,14 +371,14 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
             const isError = wrongPairs.includes(item);
 
             let btnClass = 'px-5 py-4 border rounded-none text-left transition-all duration-300 relative ';
-            if (isCompleted) btnClass += 'bg-canela/10 border-canela/40 text-canela cursor-default ac-inset-shadow';
+            if (isCompleted) btnClass += 'bg-musgo/10 border-musgo/40 text-musgo cursor-default ac-inset-shadow';
             else if (isError) btnClass += 'bg-terracota/5 border-terracota/60 text-terracota animate-shake cursor-pointer';
             else if (isSelected) btnClass += 'bg-carbon/10 border-carbon text-carbon transform scale-[1.02] shadow-md z-30';
             else if (isConnected) btnClass += 'bg-carbon/5 border-carbon/50 text-carbon hover:border-terracota/60 cursor-pointer';
             else btnClass += 'page-accent-button bg-transparent border-carbon/20 cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm';
 
             let dotClass = 'border-carbon/30 bg-lienzo';
-            if (isCompleted) dotClass = 'border-canela bg-lienzo';
+            if (isCompleted) dotClass = 'border-musgo bg-lienzo';
             else if (isError) dotClass = 'border-terracota bg-terracota';
             else if (isSelected || isConnected) dotClass = 'border-carbon bg-carbon';
 
@@ -409,14 +409,14 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
             const isError = connectedLeft ? wrongPairs.includes(connectedLeft) : false;
 
             let btnClass = 'px-5 py-4 border rounded-none text-left transition-all duration-300 relative ';
-            if (isCompleted) btnClass += 'bg-canela/10 border-canela/40 text-canela cursor-default ac-inset-shadow';
+            if (isCompleted) btnClass += 'bg-musgo/10 border-musgo/40 text-musgo cursor-default ac-inset-shadow';
             else if (isError) btnClass += 'bg-terracota/5 border-terracota/60 text-terracota animate-shake cursor-pointer';
             else if (isSelected) btnClass += 'bg-carbon/10 border-carbon text-carbon transform scale-[1.02] shadow-md z-30';
             else if (isConnected) btnClass += 'bg-carbon/5 border-carbon/50 text-carbon hover:border-terracota/60 cursor-pointer';
             else btnClass += 'page-accent-button bg-transparent border-carbon/20 cursor-pointer text-carbon hover:-translate-y-0.5 hover:shadow-sm';
 
             let dotClass = 'border-carbon/30 bg-lienzo';
-            if (isCompleted) dotClass = 'border-canela bg-lienzo';
+            if (isCompleted) dotClass = 'border-musgo bg-lienzo';
             else if (isError) dotClass = 'border-terracota bg-terracota';
             else if (isSelected || isConnected) dotClass = 'border-carbon bg-carbon';
 

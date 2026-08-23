@@ -126,11 +126,11 @@ export const Ordenacion: OrdenacionComponent = ({ id, pregunta, pasos = [], chil
       hasFailed={hasFailed}
       activeTab={activeTab}
       onTabChange={setActiveTab}
-      className={isCompleted ? 'bg-canela/5 border-canela/30' : ''}
+      className={isCompleted ? 'bg-musgo/5 border-musgo/30' : ''}
     >
       <h4 className={`font-bold text-carbon mb-6 mt-2 text-lg z-30 relative leading-relaxed ${showBookmarks ? 'pr-20 sm:pr-28' : ''}`}>
         {isCompleted ? (
-          <span className="text-canela">❦ {t('exercise', 'sortingCompleted')}</span>
+          <span className="text-musgo">❦ {t('exercise', 'sortingCompleted')}</span>
         ) : (
           <span>{pregunta || t('exercise', 'sortSteps')}</span>
         )}
@@ -150,7 +150,7 @@ export const Ordenacion: OrdenacionComponent = ({ id, pregunta, pasos = [], chil
               onDragOver={(e) => e.preventDefault()}
               className={`flex items-center gap-3 sm:gap-4 bg-lienzo border border-carbon/20 p-3 sm:p-4 rounded-none transition-all duration-300 ${
                 isCompleted
-                  ? 'border-canela/40 bg-canela/10 cursor-default'
+                  ? 'border-musgo/40 bg-musgo/10 cursor-default'
                   : 'page-accent-button hover:shadow-md hover:-translate-y-0.5 cursor-grab active:cursor-grabbing shadow-sm'
               } ${isDragging ? 'opacity-40 scale-[0.98] border-dashed border-carbon/40' : 'opacity-100'}`}
             >
