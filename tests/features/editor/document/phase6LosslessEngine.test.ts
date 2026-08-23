@@ -140,7 +140,7 @@ Texto con <ConceptLink targetId="segmento">segmento</ConceptLink>.`;
     expect(() => planMetadataUpdate(valid, { ...valid.metadata.value, id: 'otro-id' })).toThrow('immutable');
     expect(() => planMetadataUpdate(valid, { ...valid.metadata.value, description: undefined })).toThrow('JSON-serializable');
 
-    const idBearingSource = `${validEnvelope}\n\n<PasoEjercicio id="paso-publico">Planteamiento.</PasoEjercicio>`;
+    const idBearingSource = `${validEnvelope}\n\n<ExerciseStep id="paso-publico">Planteamiento.</ExerciseStep>`;
     const idBearing = parseEditorDocument(idBearingSource);
     expect(() => planBlockDuplication(idBearing, idBearing.bodyBlocks[0].id)).toThrow('ID-bearing');
 

@@ -1,21 +1,16 @@
-/**
- * Solucion.tsx — Bloque de Solución Oculta
- *
- * Muestra un botón "Ver Solución" que revela el contenido al hacer clic.
- * Se puede usar tanto en ejercicios como en ejemplos.
- */
 import React, { useState } from 'react';
 import { useStepBinding } from '@/components/ui/StepBinding';
 import { useI18n } from '@/i18n';
 
-interface SolucionProps {
-  children: React.ReactNode;
-  /** Etiqueta del botón (por defecto "Ver Solución Completa") */
+export interface SolucionProps {
+  /** Etiqueta personalizada del botón */
   label?: string;
+  /** Contenido de la solución completa */
+  children: React.ReactNode;
 }
 
 /**
- * Componente principal para renderizar la solución detallada de un ejercicio.
+ * Solucion — Bloque desplegable de solución completa para ejercicios y ejemplos.
  */
 export const Solucion: React.FC<SolucionProps> = ({ children, label }) => {
   const { t } = useI18n();
@@ -31,34 +26,32 @@ export const Solucion: React.FC<SolucionProps> = ({ children, label }) => {
             setRevealed(true);
             setActiveStep('Solucion');
           }}
-          className="w-full flex items-center justify-center gap-3 py-4 elegant-panel ac-eyebrow text-carbon/60 hover:text-carbon group"
+          className="w-full flex items-center justify-center gap-3 py-4 elegant-panel ac-eyebrow text-carbon/60 hover:text-carbon group cursor-pointer"
           style={{ '--hover-accent': 'var(--page-accent)' } as React.CSSProperties}
         >
-          <span className="page-accent-text opacity-80 group-hover:opacity-100 transition-all">{buttonLabel}</span>
+          <span className="page-accent-text opacity-80 group-hover:opacity-100 transition-all">
+            {buttonLabel}
+          </span>
         </button>
       ) : (
-        <div 
-          className="elegant-panel p-8 animate-fade-in relative"
-        >
-          {/* Ocultar arriba (opcional) */}
+        <div className="elegant-panel p-8 animate-fade-in relative">
           <button
             onClick={(e) => {
               e.stopPropagation();
               setRevealed(false);
               setActiveStep(null);
             }}
-            className="page-accent-text-hover absolute top-4 right-4 ac-eyebrow ac-eyebrow--sm text-carbon/30 transition-colors"
+            className="page-accent-text-hover absolute top-4 right-4 ac-eyebrow ac-eyebrow--sm text-carbon/30 transition-colors cursor-pointer"
           >
             ✕ {t('common', 'close')}
           </button>
 
-          {/* Encabezado */}
           <div className="flex items-center gap-2 mb-6">
             <span className="text-carbon/50 ac-eyebrow ac-eyebrow--sm border-b border-carbon/20 pb-1">
               {t('exercise', 'detailedSolution')}
             </span>
           </div>
-          {/* Contenido */}
+
           <div className="text-sm text-carbon/80 leading-relaxed [&_strong]:text-carbon [&_p]:mb-4 [&_p:last-child]:mb-0">
             {children}
           </div>

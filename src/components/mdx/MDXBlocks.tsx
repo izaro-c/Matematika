@@ -4,20 +4,23 @@ import { ProofStepLink } from "@/components/content/ProofStepLink";
 import { DemonstrationSection } from "@/components/content/DemonstrationSection";
 import { QedMark } from "@/components/content/QedMark";
 import { Concept } from "@/fixed-pages/glossary/ui/Concept";
-import { Paso } from '@/content-pages/exercise/ui/Paso';
-import { PasoEjercicio } from '@/content-pages/exercise/ui/PasoEjercicio';
-import { Solucion } from '@/content-pages/exercise/ui/Solucion';
-import { Resolucion } from '@/content-pages/exercise/ui/Resolucion';
-import { Pregunta } from '@/content-pages/exercise/ui/Pregunta';
-import { Hueco } from '@/content-pages/exercise/ui/Hueco';
-import { ErrorComun } from '@/content-pages/exercise/ui/ErrorComun';
-import { Apoyo } from '@/content-pages/exercise/ui/Apoyo';
-import { Emparejar } from '@/content-pages/exercise/ui/Emparejar';
-import { CanvasInteractivo } from '@/content-pages/exercise/ui/CanvasInteractivo';
-import { Clasificador } from '@/content-pages/exercise/ui/Clasificador';
-import { Ordenacion } from '@/content-pages/exercise/ui/Ordenacion';
-import { MatrizInteractiva } from '@/content-pages/exercise/ui/MatrizInteractiva';
-import { DeslizadorEnLine, DynamicValue } from '@/content-pages/exercise/ui/DeslizadorEnLine';
+import {
+  Paso,
+  ExerciseStep,
+  Solucion,
+  Resolucion,
+  Pregunta,
+  Hueco,
+  ErrorComun,
+  Apoyo,
+  Emparejar,
+  CanvasInteractivo,
+  Clasificador,
+  Ordenacion,
+  MatrizInteractiva,
+  DeslizadorEnLine,
+  DynamicValue,
+} from '@/content-pages/exercise';
 import { StepBind, StepSection } from '@/components/ui/StepBinding';
 import { ConceptLink } from "@/fixed-pages/glossary/ui/ConceptLink";
 import { RefLink } from "@/fixed-pages/glossary/ui/RefLink";
@@ -272,7 +275,7 @@ export const MDXComponents = {
   ProofStepLink,
   Concept,
   Paso,
-  PasoEjercicio,
+  ExerciseStep,
   Solucion,
   Resolucion,
   Pregunta,

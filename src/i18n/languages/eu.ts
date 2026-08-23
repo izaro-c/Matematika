@@ -328,6 +328,10 @@ export const euLanguage: LanguageConfig = {
       lockedStep: 'blokeatuta',
       lockedStepDesc: 'Urrats blokeatua — Ebatzi aurreko urratsa desblokeatzeko',
       completeQuestionsAbove: 'Bete goiko galderak ebazpen geometrikoa eta kalkulu zehatza ikusteko.',
+      backToQuestion: 'Itzuli galderara',
+      checkMatrix: 'Egiaztatu matrizea',
+      interactiveCanvas: 'Mihise interaktiboa',
+      goalAchieved: 'Helburua lortuta',
     },
     studyPlan: {
       backToArchive: '← Itzuli liburutegira',

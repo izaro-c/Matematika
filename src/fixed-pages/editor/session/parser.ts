@@ -44,7 +44,7 @@ export interface Block {
 }
 
 function componentTypeForName(componentName: string): BlockType {
-  if (componentName === 'PasoEjercicio') return 'exercise';
+  if (componentName === 'ExerciseStep') return 'exercise';
   return 'advancedMdx';
 }
 
@@ -356,7 +356,7 @@ export function parseBodyToBlocks(body: string): Block[] {
   const defBoxRegex = /<Definicion\b([^>]*?)>([\s\S]*?)<\/Definicion>/g;
   const noteRegex = /<Nota>([\s\S]*?)<\/Nota>/g;
   const separatorRegex = /<Separador\s*\/>/g;
-  const exerciseRegex = /<PasoEjercicio\b([^>]*?)>([\s\S]*?)<\/PasoEjercicio>/g;
+  const exerciseRegex = /<ExerciseStep\b([^>]*?)>([\s\S]*?)<\/ExerciseStep>/g;
   const advancedComponentRegex = /<(Apoyo|ErrorComun|Resolucion|Solucion|Pregunta|Hueco|Paso|Corolario|Emparejar|Clasificador|Ordenacion|MatrizInteractiva)\b([^>]*?)(?:\/>|>([\s\S]*?)<\/\1>)/g;
   
   // Buscar diagramas autocerrados (ej. <TrianguloDeformable id="..." /> o cualquier componente que empiece por mayúscula)
@@ -489,7 +489,7 @@ export function parseBodyToBlocks(body: string): Block[] {
   // Buscar componentes MDX especiales que no tienen todavía un editor dedicado.
   advancedComponentRegex.lastIndex = 0;
   while ((match = advancedComponentRegex.exec(body)) !== null) {
-    if (match[1] === 'Formula' || match[1] === 'PasoEjercicio') continue;
+    if (match[1] === 'Formula' || match[1] === 'ExerciseStep') continue;
     matches.push({
       type: componentTypeForName(match[1]),
       index: match.index,
@@ -587,7 +587,7 @@ export function parseBodyToBlocks(body: string): Block[] {
         id: createBlockId(),
         type: 'exercise',
         content: m.content,
-        metadata: { component: 'PasoEjercicio', ...attrs }
+        metadata: { component: 'ExerciseStep', ...attrs }
       });
     } else if (m.type === 'advancedMdx') {
       const attrs = parseAttributes(m.attributesStr || '');
@@ -680,7 +680,7 @@ export function stringifyBlocksToBody(blocks: Block[]): string {
       const attrString = serializeAttributeLines(attrs);
       const attrLines = attrString ? `\n  ${attrString}` : '';
       const body = b.content.trim().replace(/\n/g, '\n  ');
-      parts.push(`<PasoEjercicio${attrLines}\n>\n  ${body}\n</PasoEjercicio>`);
+      parts.push(`<ExerciseStep${attrLines}\n>\n  ${body}\n</ExerciseStep>`);
     } else if (b.type === 'advancedMdx') {
       const componentName = b.metadata?.component;
       if (componentName && componentName !== 'MDX') {

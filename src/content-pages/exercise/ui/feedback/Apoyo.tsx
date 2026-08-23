@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import { useI18n } from '@/i18n';
 
-interface ApoyoProps {
-  /** Texto del botón o pestaña de ayuda */
+export interface ApoyoProps {
+  /** Texto del botón de ayuda */
   titulo?: string;
-  /** El contenido didáctico de apoyo o enlace a repasar */
+  /** Contenido didáctico o enlaces a repasar */
   children: React.ReactNode;
 }
 
 /**
- * Componente Apoyo: Provee soporte contextual sutil (links a conceptos, pistas, tablas de referencia)
- * al pie de un paso o pregunta sin interrumpir visualmente el flujo principal de resolución.
- * Se presenta como una nota al margen editorial Arts & Crafts plegada por defecto.
+ * Apoyo — Soporte contextual sutil en nota al margen Arts & Crafts, plegada por defecto.
  */
-export const Apoyo: React.FC<ApoyoProps> = ({ 
-  titulo, 
-  children 
-}) => {
+export const Apoyo: React.FC<ApoyoProps> = ({ titulo, children }) => {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const displayTitle = titulo || t('exercise', 'needHelp');
@@ -24,7 +19,7 @@ export const Apoyo: React.FC<ApoyoProps> = ({
   return (
     <div className="mt-4 pt-3 border-t border-dashed border-carbon/10 font-serif text-xs">
       <button
-        onClick={() => setOpen(o => !o)}
+        onClick={() => setOpen((o) => !o)}
         className="ac-eyebrow ac-eyebrow--xs text-carbon/50 hover:text-carbon/80 cursor-pointer select-none flex items-center gap-2"
       >
         <span>{open ? '▼' : '▶'}</span>

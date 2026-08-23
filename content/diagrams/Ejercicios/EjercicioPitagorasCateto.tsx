@@ -35,7 +35,7 @@ export const EjercicioPitagorasCateto = () => {
     Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
 
   const getSideFactor = () => {
-    const showSquares = activeStep === 'p2' || activeStep === 'p3';
+    const showSquares = activeStep === 'p2' || activeStep === 'p3' || activeStep === 'p4';
     return showSquares ? -1.5 : 1.5;
   };
 
@@ -127,11 +127,13 @@ export const EjercicioPitagorasCateto = () => {
       }}
       onUpdate={(_board, els, theme, _isStep, _isHL) => {
         // 1. Mostrar los cuadrados y áreas a partir del Paso 2
-        const showSquares = activeStep === 'p2' || activeStep === 'p3';
+        const showSquares = activeStep === 'p2' || activeStep === 'p3' || activeStep === 'p4';
 
         // 2. Determinar si las preguntas específicas del ejercicio ya están resueltas correctamente
         const isAreaSolved = exerciseState.questions['p2_q1']?.isCorrect === true;
-        const isCatetoSolved = exerciseState.questions['p3_q1']?.isCorrect === true;
+        const isCatetoSolved =
+          exerciseState.questions['p4_q1']?.isCorrect === true ||
+          exerciseState.questions['p3_q1']?.isCorrect === true;
 
         // 3. Actualizar dinámicamente los textos de longitud de los lados
         if (isCatetoSolved) {

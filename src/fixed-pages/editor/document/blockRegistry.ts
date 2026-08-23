@@ -38,7 +38,7 @@ export const SUPPORTED_JSX_BLOCKS = {
   Ordenacion: 'advancedMdx',
   MatrizInteractiva: 'advancedMdx',
   ProofStep: 'demonstration',
-  PasoEjercicio: 'exercise',
+  ExerciseStep: 'exercise',
   Resolucion: 'advancedMdx',
   Apoyo: 'advancedMdx',
   Hueco: 'advancedMdx',
@@ -286,7 +286,7 @@ export function serializeRegisteredBlock(
   if (blockType === 'note') return serializeJsxBlock('Nota', content || 'Observación.');
   if (blockType === 'citation') return serializeJsxBlock('Cita', content || 'Cita.', metadata);
   if (blockType === 'definition_box') return serializeJsxBlock('Definicion', content || 'Definición.', metadata);
-  if (blockType === 'exercise') return serializeJsxBlock('PasoEjercicio', content || 'Planteamiento.', metadata);
+  if (blockType === 'exercise') return serializeJsxBlock('ExerciseStep', content || 'Planteamiento.', metadata);
   if (blockType === 'demonstration') return serializeJsxBlock('ProofStep', content || 'Paso justificado.', metadata);
   if (blockType === 'advancedMdx' && typeof metadata.component === 'string') {
     const { component, ...attributes } = metadata;

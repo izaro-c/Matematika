@@ -1,7 +1,7 @@
 import { useParams } from 'wouter';
 import { useEffect } from 'react';
 import { db } from '@/data/content';
-import { ExerciseProvider, useExercise } from '@/content-pages/exercise/ui/ExerciseContext';
+import { ExerciseProvider, useExercise } from '@/content-pages/exercise';
 import { ContentDiagram, ContentLayout } from '@/components/layouts/ContentLayout';
 import { useProgressStore } from '@/lib/stores/UserProgressStore';
 import { ContentHeader } from '@/components/content/ContentHeader';

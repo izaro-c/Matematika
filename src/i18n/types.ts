@@ -323,6 +323,10 @@ export interface TranslationDictionary {
     lockedStep: string;
     lockedStepDesc: string;
     completeQuestionsAbove: string;
+    backToQuestion: string;
+    checkMatrix: string;
+    interactiveCanvas: string;
+    goalAchieved: string;
   };
   studyPlan: {
     backToArchive: string;

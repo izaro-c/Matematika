@@ -18,7 +18,7 @@ export const Simulation = EjercicioPitagorasCateto;
 
 <Separador />
 
-<PasoEjercicio
+<ExerciseStep
   id="p1"
   numero={1}
   titulo="Planteamiento de la Ecuación"
@@ -35,66 +35,111 @@ export const Simulation = EjercicioPitagorasCateto;
       { value: 'opt_suma_catetos', texto: "$a^2 = 10^2 + 8^2$", feedback: "Has planteado el cálculo como si buscaras la hipotenusa sumando las áreas. Recuerda que la hipotenusa ya es conocida ($c=10$). Para hallar un cateto, debes restar el cuadrado del cateto conocido al de la hipotenusa: $a^2 = c^2 - b^2$." },
       { value: 'opt_hipotenusa_err', texto: "$10^2 + a^2 = 8^2$", feedback: "Has sumado la hipotenusa ($10^2$) con el cateto ($a^2$), colocando el cateto conocido ($8^2$) en el miembro solitario. Recuerda que la hipotenusa al cuadrado ($10^2$) debe quedar sola en uno de los miembros: $a^2 + b^2 = c^2$." }
     ]}
-  />
+  >
+    <Pregunta.ErrorComun titulo="Sumar los cuadrados de los lados conocidos en lugar de restarlos">
+      Un error recurrente al despejar un cateto es confundir la fórmula directa y sumar las superficies conocidas: $a^2 = c^2 + b^2$. Esto daría $a^2 = 10^2 + 8^2 = 100 + 64 = 164 \implies a \approx 12.8$.
 
-  <ErrorComun questionId="p1_q1" titulo="Sumar los cuadrados de los lados conocidos en lugar de restarlos">
-    Un error recurrente al despejar un cateto es confundir la fórmula directa y sumar las superficies conocidas: $a^2 = c^2 + b^2$. Esto daría $a^2 = 10^2 + 8^2 = 100 + 64 = 164 \implies a \approx 12.8$.
+      Esta longitud es geométricamente imposible. En todo triángulo rectángulo, la hipotenusa es el lado opuesto al ángulo de mayor apertura (el ángulo recto) y, por lo tanto, debe ser estrictamente el de mayor longitud ($c > a$ y $c > b$). Un cateto jamás puede medir más que la hipotenusa.
+    </Pregunta.ErrorComun>
 
-    Esta longitud es geométricamente imposible. En todo triángulo rectángulo, la hipotenusa es el lado opuesto al ángulo de mayor apertura (el ángulo recto) y, por lo tanto, debe ser estrictamente el de mayor longitud ($c > a$ y $c > b$). Un cateto jamás puede medir más que la hipotenusa.
-  </ErrorComun>
+    <Pregunta.Resolucion>
+      La ecuación fundamental que rige en este triángulo por el teorema de Pitágoras es $a^2 + b^2 = c^2$. Sustituyendo los datos conocidos $b = 8$ y $c = 10$, obtenemos la relación particular:
+      $$ a^2 + 8^2 = 10^2 $$
+    </Pregunta.Resolucion>
+  </Pregunta>
 
   <Apoyo titulo="¿Quieres repasar las partes de un triángulo rectángulo o su ecuación?">
     Consulta el concepto de <RefLink targetId="triangulo-rectangulo">triángulo rectángulo</RefLink> para ver su definición, o repasa la diferencia geométrica entre los <RefLink targetId="cateto">catetos</RefLink> y la <RefLink targetId="hipotenusa">hipotenusa</RefLink>.
   </Apoyo>
+</ExerciseStep>
 
-  <Resolucion>
-    La ecuación fundamental que rige en este triángulo por el teorema de Pitágoras es $a^2 + b^2 = c^2$. Sustituyendo los datos conocidos $b = 8$ y $c = 10$, obtenemos la relación particular:
-    $$ a^2 + 8^2 = 10^2 $$
-  </Resolucion>
-</PasoEjercicio>
-
-<PasoEjercicio
+<ExerciseStep
   id="p2"
   numero={2}
-  titulo="Cálculo de la Superficie Restante"
+  titulo="Correspondencia Geométrica de Áreas"
   questionIds={["p2_q1"]}
   dependeDeQuestions={["p1_q1"]}
 >
-  Despeja la superficie del cuadrado vertical y calcula su valor numérico de área:
+  Empareja cada elemento geométrico con su valor o expresión de área correspondiente:
 
-  <Formula>
-    $$ a^2 = 10^2 - 8^2 \implies a^2 = \text{ } $$
-    <Hueco id="p2_q1" correct="36" pista="Resta el área del cateto horizontal (64) al área total de la hipotenusa (100)." />
-  </Formula>
+  <Emparejar
+    id="p2_q1"
+    pregunta="Asocia cada cuadrado construido sobre los lados del triángulo con su área:"
+    pairs={[
+      { left: "Cuadrado sobre hipotenusa $c=10$", right: "$c^2 = 100\\text{ u}^2$" },
+      { left: "Cuadrado sobre cateto $b=8$", right: "$b^2 = 64\\text{ u}^2$" },
+      { left: "Superficie sobre cateto desconocido $a$", right: "$a^2 = 100 - 64 = 36\\text{ u}^2$" }
+    ]}
+  >
+    <Emparejar.ErrorComun titulo="Confundir las áreas con las longitudes lineales">
+      Recuerda que el teorema de Pitágoras compara las superficies cuadradas ($a^2, b^2, c^2$), no las longitudes directas ($a, b, c$).
+    </Emparejar.ErrorComun>
 
-  <Resolucion>
-    Despejando el término de área del cateto desconocido $a^2$ en la ecuación:
-    $$ a^2 = 10^2 - 8^2 = 100 - 64 = 36 $$
-    El área de la superficie construida sobre el cateto vertical es exactamente $36$ unidades cuadradas (representada por el cuadrado canela de cuadrícula $6 \times 6$).
-  </Resolucion>
-</PasoEjercicio>
+    <Emparejar.Resolucion>
+      Las áreas de los tres cuadrados auxiliares son:
+      $$ c^2 = 10^2 = 100, \quad b^2 = 8^2 = 64, \quad a^2 = 100 - 64 = 36 $$
+    </Emparejar.Resolucion>
+  </Emparejar>
+</ExerciseStep>
 
-<PasoEjercicio
+<ExerciseStep
   id="p3"
   numero={3}
-  titulo="Longitud Final del Cateto"
+  titulo="Secuencia de Deducción Algebraica"
   questionIds={["p3_q1"]}
   dependeDeQuestions={["p2_q1"]}
 >
-  Halla la longitud del cateto vertical $a$ extrayendo la raíz cuadrada de la superficie calculada:
+  Ordena de forma lógica los pasos algebraicos para despejar la longitud exacta del cateto $a$:
 
-  <Formula>
-    $$ a = \sqrt{36} \implies a = \text{ } $$
-    <Hueco id="p3_q1" correct="6" pista="¿Qué número multiplicado por sí mismo da 36?" />
-  </Formula>
+  <Ordenacion
+    id="p3_q1"
+    pregunta="Arrastra los pasos para colocarlos en el orden de deducción correcto:"
+    pasos={[
+      "$a^2 + 8^2 = 10^2$",
+      "$a^2 + 64 = 100$",
+      "$a^2 = 100 - 64$",
+      "$a = \\sqrt{36} = 6$"
+    ]}
+  >
+    <Ordenacion.ErrorComun titulo="Extraer la raíz cuadrada antes de simplificar la resta">
+      No se puede aplicar la raíz término a término ($\sqrt{100 - 64} \neq \sqrt{100} - \sqrt{64} = 10 - 8 = 2$). Primero se debe calcular la diferencia $100 - 64 = 36$ y luego extraer la raíz.
+    </Ordenacion.ErrorComun>
+
+    <Ordenacion.Resolucion>
+      El orden deductivo correcto es:
+      1. Planteamiento: $a^2 + 8^2 = 10^2$
+      2. Potencias: $a^2 + 64 = 100$
+      3. Despeje: $a^2 = 100 - 64 = 36$
+      4. Raíz cuadrada: $a = \sqrt{36} = 6$
+    </Ordenacion.Resolucion>
+  </Ordenacion>
+</ExerciseStep>
+
+<ExerciseStep
+  id="p4"
+  numero={4}
+  titulo="Cálculo Final del Cateto"
+  questionIds={["p4_q1"]}
+  dependeDeQuestions={["p3_q1"]}
+>
+  Introduce el valor numérico final obtenido para la longitud del cateto vertical $a$:
+
+  <Hueco
+    id="p4_q1"
+    pregunta="Longitud calculada del cateto vertical a:"
+    correct="6"
+    pista="¿Qué número real positivo al cuadrado resulta en 36?"
+  >
+    <Hueco.ErrorComun titulo="Considerar la solución negativa">
+      Aunque algebraicamente $(-6)^2 = 36$, una distancia en geometría euclidiana siempre es un número estrictamente positivo ($a > 0$).
+    </Hueco.ErrorComun>
+
+    <Hueco.Resolucion>
+      Extrayendo la raíz cuadrada al área obtenida ($a^2 = 36$), obtenemos $a = \sqrt{36} = 6$ unidades.
+    </Hueco.Resolucion>
+  </Hueco>
 
   <Apoyo titulo="¿Tienes dudas sobre cómo extraer la raíz cuadrada de 36?">
-    La raíz cuadrada de $36$ consiste en buscar un número real positivo que multiplicado por sí mismo dé exactamente $36$. Puedes repasar el concepto de <RefLink targetId="raiz-cuadrada">raíz cuadrada</RefLink> o consultar la tabla de <RefLink targetId="cuadrado">cuadrados perfectos</RefLink> para revisar los cuadrados del 1 al 10.
+    La raíz cuadrada de $36$ consiste en buscar un número real positivo que multiplicado por sí mismo dé exactamente $36$. Puedes repasar el concepto de <RefLink targetId="raiz-cuadrada">raíz cuadrada</RefLink> o consultar la tabla de <RefLink targetId="cuadrado">cuadrados perfectos</RefLink>.
   </Apoyo>
-
-  <Resolucion>
-    Extrayendo la raíz cuadrada al área obtenida ($a^2 = 36$), obtenemos:
-    $$ a = \sqrt{36} = 6 $$
-    Omitimos la solución negativa ($a = -6$) dado que la magnitud física de una longitud geométrica real siempre es estrictamente positiva.
-  </Resolucion>
-</PasoEjercicio>
+</ExerciseStep>

@@ -186,6 +186,101 @@
   100% { transform: scale(1); opacity: 1; }
 }
 
+@keyframes bookmark-emerge-back {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.animate-bookmark-emerge-back {
+  transform-origin: 50% 0;
+  animation: bookmark-emerge-back 0.18s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes bookmark-emerge-front {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.animate-bookmark-emerge-front {
+  transform-origin: 50% -0.5rem;
+  animation: bookmark-emerge-front 0.32s cubic-bezier(0.22, 1, 0.36, 1) 0.14s both;
+}
+
+.animate-bookmark-emerge {
+  animation: bookmark-emerge-front 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes bookmark-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(-6px);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-bookmark-bounce {
+  animation: bookmark-bounce 0.8s ease-out infinite;
+}
+
+@keyframes page-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: page-enter 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-bookmark-emerge,
+  .animate-bookmark-emerge-back,
+  .animate-bookmark-emerge-front,
+  .animate-bookmark-bounce,
+  .animate-page-enter,
+  .animate-shake {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
 .bg-arts-and-crafts {
   background-color: var(--theme-lienzo);
   background-image: var(--bg-arts-and-crafts-url, none);
