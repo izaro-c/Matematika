@@ -65,6 +65,12 @@ export interface TranslationDictionary {
     sectionIIIDesc: string;
     sectionIV: string;
     sectionIVDesc: string;
+    sectionV: string;
+    sectionVDesc: string;
+    sectionVI: string;
+    sectionVIDesc: string;
+    sectionVII: string;
+    sectionVIIDesc: string;
   };
   search: {
     placeholder: string;

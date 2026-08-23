@@ -70,6 +70,12 @@ export const euLanguage: LanguageConfig = {
       sectionIIIDesc: 'Aldaketa jarraituaren, mugen, funtzioen eta konbergentzia amaigabeen azterketa.',
       sectionIV: 'Geometria eta Topologia',
       sectionIVDesc: 'Espazioaren propietate metriko, diferentzial eta topologikoen azterketa formala.',
+      sectionV: 'Matematika Diskretua eta Konputazioa',
+      sectionVDesc: 'Konbinatoria, grafoen teoria, konputagarritasunaren teoria eta algoritmoak.',
+      sectionVI: 'Probabilitatea, Estatistika eta Aplikazioak',
+      sectionVIDesc: 'Zoriaren azterketa, datuen analisia, optimizazioa eta zientzien eredu matematikoak.',
+      sectionVII: 'Orokorrak, Historia eta Hezkuntza',
+      sectionVIIDesc: 'Nohiko alderdiak, matematika jolasa, matematikaren historia eta hezkuntza.',
     },
     search: {
       placeholder: 'Bilatu teoremak, definizioak, axiomak...',
