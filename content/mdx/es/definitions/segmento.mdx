@@ -14,7 +14,7 @@ export const metadata = {
 import { Segmento } from '@content/diagrams/Definiciones/Segmento';
 export const Simulation = Segmento;
 
-<Capitular letra="U" />n segmento es la porción de una <ConceptLink targetId="recta">recta</ConceptLink> comprendida entre dos <ConceptLink targetId="punto">puntos</ConceptLink>, llamados extremos. A diferencia de la recta, el segmento tiene <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> finita y es la unidad básica para las relaciones de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink>.
+<Capitular letra="U" />n segmento es la porción de una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> comprendida entre dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, llamados extremos. A diferencia de la recta, el segmento tiene <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> finita y es la unidad básica para las relaciones de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink>.
 
 <Separador />
 
@@ -26,7 +26,7 @@ Dados dos puntos <InteractiveElement target="pA" color="musgo">$A$</InteractiveE
   $$ AB = \{X \in l \mid A * X * B \lor X = A \lor X = B \} $$
 </Formula>
 
-donde $A * X * B$ denota que el punto $X$ incide entre $A$ y $B$ en el sentido de la relación primitiva del <ConceptLink targetId="axioma-orden-1" isDependency={false}>axioma II-1</ConceptLink>.
+donde $A * X * B$ denota que el punto $X$ incide entre $A$ y $B$ en el sentido de la relación primitiva del <ConceptLink targetId="axioma-orden-1" >axioma II-1</ConceptLink>.
 
 <Separador />
 
@@ -54,4 +54,4 @@ El segmento se construye a partir de la relación de intermediación:
 
 ### Observaciones
 
-En <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>, el segmento es un concepto definido a partir de la relación primitiva "estar entre". No requiere la noción de distancia numérica, aunque en el <ConceptLink targetId="modelo-cartesiano" isDependency={false}>modelo cartesiano</ConceptLink> la longitud del segmento $AB$ se calcula como $\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}$.
+En <ConceptLink targetId={["sistema-absoluto", "geometria"]} isDependency={false}>geometría absoluta</ConceptLink>, el segmento es un concepto definido a partir de la relación primitiva "estar entre". No requiere la noción de distancia numérica, aunque en el <ConceptLink targetId="modelo-cartesiano" isDependency={false}>modelo cartesiano</ConceptLink> la longitud del segmento $AB$ se calcula como $\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}$.

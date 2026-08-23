@@ -51,4 +51,15 @@ describe('graph_structure.json', () => {
       expect(validTypes).toContain(node.type);
     }
   });
+
+  it('theorems with proofs contain dependencies extracted from proof steps', () => {
+    const theoremsWithProofs = Object.values(graph.nodes).filter(
+      n => (n.type === 'teorema' || n.type === 'lema') && n.proofs && n.proofs.length > 0
+    );
+    expect(theoremsWithProofs.length).toBeGreaterThan(0);
+    const hasExtractedDeps = theoremsWithProofs.some(
+      n => n.proofs.some(p => p.dependencies && p.dependencies.length > 0)
+    );
+    expect(hasExtractedDeps).toBe(true);
+  });
 });

@@ -25,73 +25,85 @@
     "axioma-congruencia-5",
     "axioma-arquimedes",
     "axioma-completitud",
-    "sistema-absoluto",
     "axioma-paralelas-euclides",
     "sistema-euclidiano",
+    "sistema-incidencia",
     "axioma-paralelas-hiperbolico",
     "sistema-hiperbolico",
-    "sistema-incidencia",
+    "sistema-absoluto",
     "segmento",
     "triangulo",
     "semirrecta",
     "angulo",
     "perpendicular",
     "altura",
+    "demo-angulos-opuestos-verticales",
+    "teorema-angulos-opuestos-verticales",
     "angulos-suplementarios",
     "bisectriz",
     "circunferencia",
     "demo-triangulacion-poligono",
     "teorema-triangulacion-poligono",
+    "demo-area-aditividad",
+    "teorema-area-aditividad",
+    "demo-dos-rectas-un-punto",
+    "teorema-dos-rectas-un-punto",
+    "demo-invariancia-triangulacion",
+    "teorema-invariancia-triangulacion",
+    "demo-area-invariancia",
+    "teorema-area-invariancia",
+    "demo-triangulo-isosceles",
+    "teorema-triangulo-isosceles",
+    "demo-congruencia-lll",
+    "teorema-congruencia-lll",
+    "demo-congruencia-ala",
+    "teorema-congruencia-ala",
+    "demo-punto-medio",
+    "lema-punto-medio",
+    "demo-angulo-externo",
+    "teorema-angulo-externo",
+    "demo-existencia-perpendicular",
+    "teorema-existencia-perpendicular",
+    "demo-area-triangulo",
+    "teorema-area-triangulo",
+    "demo-area-rectangulo",
+    "teorema-area-rectangulo",
     "contenido",
+    "demo-angulos-alternos-internos",
+    "teorema-angulos-alternos-internos",
+    "demo-suma-angulos-triangulo",
+    "teorema-suma-angulos-triangulo",
     "cuadrilatero",
     "mediana",
     "mediatriz",
     "paralelas",
     "paralelogramo",
-    "teoria-medida-area",
-    "demo-angulo-externo",
-    "demo-angulos-alternos-internos",
-    "demo-angulos-opuestos-verticales",
-    "demo-area-aditividad",
-    "demo-area-invariancia",
-    "demo-area-rectangulo",
-    "demo-area-triangulo",
-    "demo-congruencia-aal",
-    "demo-congruencia-ala",
-    "demo-congruencia-lll",
-    "demo-desigualdad-triangular",
-    "demo-dos-rectas-un-punto",
-    "demo-existencia-bisectriz",
-    "demo-existencia-perpendicular",
-    "demo-invariancia-triangulacion",
     "demo-pitagoras-areas",
     "demo-pitagoras-euclides",
+    "teorema-pitagoras",
+    "teoria-medida-area",
+    "demo-congruencia-aal",
+    "demo-desigualdad-triangular",
+    "demo-existencia-bisectriz",
     "demo-punto-medio-perpendicular",
-    "demo-punto-medio",
     "demo-reciproco-triangulo-isosceles",
     "demo-rectas-coincidentes",
-    "demo-suma-angulos-triangulo",
     "demo-tales",
-    "demo-triangulo-isosceles",
     "ejemplo-pitagoras-calculo",
     "ejercicio-pitagoras-cateto",
     "arquimedes",
     "bolyai",
     "dedekind",
-    "teorema-pitagoras",
     "teorema-tales",
-    "teorema-suma-angulos-triangulo",
+    "pitagoras",
+    "tales",
     "euclides",
     "hilbert",
     "lobachevski",
     "pasch",
-    "pitagoras",
-    "tales",
     "metodo-constructivo",
-    "teorema-dos-rectas-un-punto",
     "metodo-contradiccion",
     "metodo-contraposicion",
-    "teorema-congruencia-ala",
     "metodo-directo",
     "metodo-exhaustivo",
     "metodo-geometrico",
@@ -102,23 +114,11 @@
     "modelo-tres-puntos",
     "camino-teorema-pitagoras",
     "corolario-rectas-coincidentes",
-    "lema-punto-medio",
-    "teorema-angulo-externo",
-    "teorema-angulos-alternos-internos",
-    "teorema-angulos-opuestos-verticales",
-    "teorema-area-aditividad",
-    "teorema-area-invariancia",
-    "teorema-area-rectangulo",
-    "teorema-area-triangulo",
     "teorema-congruencia-aal",
-    "teorema-congruencia-lll",
     "teorema-desigualdad-triangular",
     "teorema-existencia-bisectriz",
-    "teorema-existencia-perpendicular",
-    "teorema-invariancia-triangulacion",
     "teorema-punto-medio-perpendicular",
     "teorema-reciproco-triangulo-isosceles",
-    "teorema-triangulo-isosceles",
     "caso-gps-trilateracion"
   ],
   "nodes": {
@@ -147,7 +147,12 @@
         "axioma-congruencia-4",
         "axioma-congruencia-5",
         "axioma-arquimedes",
-        "axioma-completitud"
+        "axioma-completitud",
+        "sistema-incidencia",
+        "incidencia",
+        "sistema-euclidiano",
+        "sistema-hiperbolico",
+        "plano"
       ]
     },
     "sistema-euclidiano": {
@@ -205,7 +210,9 @@
         "axioma-congruencia-5",
         "axioma-arquimedes",
         "axioma-completitud",
-        "axioma-paralelas-hiperbolico"
+        "axioma-paralelas-hiperbolico",
+        "plano",
+        "sistema-euclidiano"
       ]
     },
     "sistema-incidencia": {
@@ -222,7 +229,10 @@
         "axioma-incidencia-5",
         "axioma-incidencia-6",
         "axioma-incidencia-7",
-        "axioma-incidencia-8"
+        "axioma-incidencia-8",
+        "incidencia",
+        "plano",
+        "sistema-euclidiano"
       ]
     },
     "axioma-arquimedes": {
@@ -235,7 +245,8 @@
         "punto",
         "recta",
         "congruencia",
-        "estar-entre"
+        "estar-entre",
+        "axioma-congruencia-1"
       ]
     },
     "axioma-completitud": {
@@ -354,7 +365,8 @@
       "directDependencies": [
         "punto",
         "plano",
-        "incidencia"
+        "incidencia",
+        "axioma-incidencia-1"
       ]
     },
     "axioma-incidencia-5": {
@@ -478,7 +490,8 @@
       "directDependencies": [
         "punto",
         "recta",
-        "incidencia"
+        "incidencia",
+        "axioma-paralelas-euclides"
       ]
     },
     "altura": {
@@ -504,7 +517,9 @@
       "proofs": [],
       "directDependencies": [
         "punto",
-        "semirrecta"
+        "semirrecta",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5"
       ]
     },
     "angulos-suplementarios": {
@@ -515,7 +530,9 @@
       "description": "Dos ángulos son suplementarios si la suma de sus medidas es un ángulo llano (180° o π radianes).",
       "proofs": [],
       "directDependencies": [
-        "angulo"
+        "angulo",
+        "axioma-congruencia-4",
+        "teorema-angulos-opuestos-verticales"
       ]
     },
     "bisectriz": {
@@ -562,7 +579,15 @@
       "proofs": [],
       "directDependencies": [
         "teorema-triangulacion-poligono",
-        "triangulo"
+        "triangulo",
+        "axioma-congruencia-1",
+        "axioma-congruencia-5",
+        "teorema-invariancia-triangulacion",
+        "teorema-area-invariancia",
+        "teorema-area-aditividad",
+        "teorema-area-rectangulo",
+        "axioma-arquimedes",
+        "axioma-completitud"
       ]
     },
     "cuadrilatero": {
@@ -575,7 +600,8 @@
       "directDependencies": [
         "punto",
         "segmento",
-        "angulo"
+        "angulo",
+        "teorema-suma-angulos-triangulo"
       ]
     },
     "estar-entre": {
@@ -606,7 +632,8 @@
       "directDependencies": [
         "segmento",
         "punto",
-        "triangulo"
+        "triangulo",
+        "lema-punto-medio"
       ]
     },
     "mediatriz": {
@@ -620,7 +647,8 @@
         "recta",
         "segmento",
         "punto",
-        "perpendicular"
+        "perpendicular",
+        "lema-punto-medio"
       ]
     },
     "paralelas": {
@@ -633,7 +661,8 @@
       "directDependencies": [
         "recta",
         "plano",
-        "punto"
+        "punto",
+        "axioma-paralelas-euclides"
       ]
     },
     "paralelogramo": {
@@ -648,7 +677,9 @@
         "recta",
         "paralelas",
         "segmento",
-        "angulo"
+        "angulo",
+        "lema-punto-medio",
+        "punto"
       ]
     },
     "perpendicular": {
@@ -661,7 +692,12 @@
       "directDependencies": [
         "recta",
         "angulo",
-        "punto"
+        "punto",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2",
+        "axioma-congruencia-3",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5"
       ]
     },
     "plano": {
@@ -700,7 +736,16 @@
       "proofs": [],
       "directDependencies": [
         "punto",
-        "estar-entre"
+        "estar-entre",
+        "axioma-orden-1",
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-4",
+        "axioma-congruencia-1",
+        "axioma-congruencia-3"
       ]
     },
     "semirrecta": {
@@ -713,7 +758,15 @@
       "directDependencies": [
         "punto",
         "recta",
-        "estar-entre"
+        "estar-entre",
+        "axioma-orden-1",
+        "axioma-orden-2",
+        "axioma-orden-3",
+        "axioma-orden-4",
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3",
+        "axioma-congruencia-1"
       ]
     },
     "teoria-medida-area": {
@@ -724,7 +777,17 @@
       "description": "Visión panorámica de la teoría del contenido de Hilbert: equidescomponibilidad, triangulación, y los teoremas fundamentales que permiten calcular áreas de figuras planas.",
       "proofs": [],
       "directDependencies": [
-        "contenido"
+        "contenido",
+        "teorema-triangulacion-poligono",
+        "axioma-orden-4",
+        "teorema-invariancia-triangulacion",
+        "axioma-incidencia-1",
+        "teorema-area-invariancia",
+        "teorema-area-aditividad",
+        "teorema-area-rectangulo",
+        "axioma-arquimedes",
+        "teorema-area-triangulo",
+        "teorema-pitagoras"
       ]
     },
     "triangulo": {
@@ -945,7 +1008,9 @@
       "title": "Cálculo de la hipotenusa en un triángulo rectángulo",
       "description": "Aplicación del teorema de Pitágoras para calcular la longitud de la hipotenusa a partir de los catetos, analizando la terna pitagórica resultante.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "teorema-pitagoras"
+      ]
     },
     "ejercicio-pitagoras-cateto": {
       "id": "ejercicio-pitagoras-cateto",
@@ -961,7 +1026,9 @@
       "title": "arquimedes",
       "description": "El más grande matemático y científico de la antigüedad. Pionero en el método exhaustivo para calcular áreas y volúmenes.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-arquimedes"
+      ]
     },
     "bolyai": {
       "id": "bolyai",
@@ -969,7 +1036,11 @@
       "title": "bolyai",
       "description": "Matemático húngaro que descubrió de forma independiente la geometría hiperbólica, desafiando la creencia milenaria en la unicidad de la geometría euclídea.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "sistema-hiperbolico",
+        "axioma-paralelas-euclides",
+        "paralelas"
+      ]
     },
     "dedekind": {
       "id": "dedekind",
@@ -977,7 +1048,9 @@
       "title": "dedekind",
       "description": "Matemático alemán que formalizó los números reales mediante cortaduras y realizó contribuciones fundamentales a la teoría de números y álgebra.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-completitud"
+      ]
     },
     "euclides": {
       "id": "euclides",
@@ -990,7 +1063,10 @@
         "teorema-pitagoras",
         "teorema-tales",
         "teorema-suma-angulos-triangulo",
-        "sistema-euclidiano"
+        "sistema-euclidiano",
+        "pitagoras",
+        "tales",
+        "paralelas"
       ]
     },
     "hilbert": {
@@ -999,7 +1075,10 @@
       "title": "hilbert",
       "description": "Uno de los matemáticos más influyentes del siglo XIX y XX. Reformuló la geometría euclídea sobre una base axiomática rigurosa en sus Fundamentos de la Geometría (1899).",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "sistema-euclidiano",
+        "euclides"
+      ]
     },
     "lobachevski": {
       "id": "lobachevski",
@@ -1007,7 +1086,11 @@
       "title": "lobachevski",
       "description": "Matemático ruso que descubrió la geometría hiperbólica al negar el quinto postulado de Euclides.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-paralelas-euclides",
+        "paralelas",
+        "sistema-hiperbolico"
+      ]
     },
     "pasch": {
       "id": "pasch",
@@ -1107,7 +1190,8 @@
         "demo-pitagoras-areas",
         "demo-pitagoras-euclides",
         "teorema-tales",
-        "demo-tales"
+        "demo-tales",
+        "teorema-congruencia-ala"
       ]
     },
     "metodo-induccion": {
@@ -1140,7 +1224,8 @@
         "axioma-congruencia-4",
         "axioma-congruencia-5",
         "axioma-arquimedes",
-        "axioma-completitud"
+        "axioma-completitud",
+        "sistema-euclidiano"
       ]
     },
     "modelo-fano": {
@@ -1152,7 +1237,10 @@
       "directDependencies": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
-        "axioma-incidencia-3"
+        "axioma-incidencia-3",
+        "plano",
+        "sistema-incidencia",
+        "incidencia"
       ]
     },
     "modelo-poincare": {
@@ -1176,7 +1264,11 @@
         "axioma-congruencia-4",
         "axioma-congruencia-5",
         "axioma-arquimedes",
-        "axioma-completitud"
+        "axioma-completitud",
+        "plano",
+        "sistema-hiperbolico",
+        "sistema-absoluto",
+        "sistema-euclidiano"
       ]
     },
     "modelo-tres-puntos": {
@@ -1188,7 +1280,10 @@
       "directDependencies": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
-        "axioma-incidencia-3"
+        "axioma-incidencia-3",
+        "sistema-incidencia",
+        "incidencia",
+        "sistema-absoluto"
       ]
     },
     "camino-teorema-pitagoras": {
@@ -1207,7 +1302,9 @@
       "proofs": [
         {
           "id": "demo-rectas-coincidentes",
-          "dependencies": []
+          "dependencies": [
+            "teorema-dos-rectas-un-punto"
+          ]
         }
       ],
       "directDependencies": [
@@ -1222,10 +1319,25 @@
       "proofs": [
         {
           "id": "demo-punto-medio",
-          "dependencies": []
+          "dependencies": [
+            "axioma-incidencia-3",
+            "axioma-congruencia-4",
+            "axioma-congruencia-1",
+            "axioma-orden-4",
+            "axioma-congruencia-5",
+            "teorema-congruencia-lll",
+            "teorema-congruencia-ala",
+            "axioma-orden-3"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "congruencia",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2",
+        "axioma-orden-1"
+      ]
     },
     "teorema-angulo-externo": {
       "id": "teorema-angulo-externo",
@@ -1235,10 +1347,22 @@
       "proofs": [
         {
           "id": "demo-angulo-externo",
-          "dependencies": []
+          "dependencies": [
+            "axioma-orden-3",
+            "lema-punto-medio",
+            "axioma-incidencia-1",
+            "axioma-congruencia-1",
+            "teorema-angulos-opuestos-verticales",
+            "axioma-congruencia-5",
+            "congruencia",
+            "axioma-orden-4"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-paralelas-euclides",
+        "axioma-orden-3"
+      ]
     },
     "teorema-angulos-alternos-internos": {
       "id": "teorema-angulos-alternos-internos",
@@ -1248,10 +1372,18 @@
       "proofs": [
         {
           "id": "demo-angulos-alternos-internos",
-          "dependencies": []
+          "dependencies": [
+            "axioma-paralelas-euclides",
+            "teorema-angulo-externo",
+            "teorema-angulos-opuestos-verticales",
+            "axioma-congruencia-4"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "teorema-angulo-externo",
+        "axioma-paralelas-euclides"
+      ]
     },
     "teorema-angulos-opuestos-verticales": {
       "id": "teorema-angulos-opuestos-verticales",
@@ -1261,7 +1393,11 @@
       "proofs": [
         {
           "id": "demo-angulos-opuestos-verticales",
-          "dependencies": []
+          "dependencies": [
+            "angulos-suplementarios",
+            "axioma-congruencia-4",
+            "axioma-congruencia-3"
+          ]
         }
       ],
       "directDependencies": []
@@ -1274,10 +1410,15 @@
       "proofs": [
         {
           "id": "demo-area-aditividad",
-          "dependencies": []
+          "dependencies": [
+            "teorema-triangulacion-poligono",
+            "teorema-invariancia-triangulacion"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "teorema-triangulacion-poligono"
+      ]
     },
     "teorema-area-invariancia": {
       "id": "teorema-area-invariancia",
@@ -1287,10 +1428,17 @@
       "proofs": [
         {
           "id": "demo-area-invariancia",
-          "dependencies": []
+          "dependencies": [
+            "teorema-triangulacion-poligono",
+            "axioma-congruencia-5",
+            "axioma-incidencia-1"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-congruencia-1",
+        "teorema-triangulacion-poligono"
+      ]
     },
     "teorema-area-rectangulo": {
       "id": "teorema-area-rectangulo",
@@ -1300,10 +1448,18 @@
       "proofs": [
         {
           "id": "demo-area-rectangulo",
-          "dependencies": []
+          "dependencies": [
+            "teorema-area-aditividad",
+            "axioma-arquimedes",
+            "axioma-completitud"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-arquimedes",
+        "teorema-area-aditividad",
+        "teorema-area-triangulo"
+      ]
     },
     "teorema-area-triangulo": {
       "id": "teorema-area-triangulo",
@@ -1313,7 +1469,13 @@
       "proofs": [
         {
           "id": "demo-area-triangulo",
-          "dependencies": []
+          "dependencies": [
+            "teorema-existencia-perpendicular",
+            "teorema-area-aditividad",
+            "axioma-congruencia-5",
+            "teorema-area-invariancia",
+            "teorema-area-rectangulo"
+          ]
         }
       ],
       "directDependencies": []
@@ -1326,7 +1488,11 @@
       "proofs": [
         {
           "id": "demo-congruencia-aal",
-          "dependencies": []
+          "dependencies": [
+            "axioma-congruencia-1",
+            "axioma-congruencia-5",
+            "teorema-angulo-externo"
+          ]
         }
       ],
       "directDependencies": []
@@ -1339,7 +1505,11 @@
       "proofs": [
         {
           "id": "demo-congruencia-ala",
-          "dependencies": []
+          "dependencies": [
+            "axioma-congruencia-1",
+            "axioma-congruencia-5",
+            "axioma-congruencia-4"
+          ]
         }
       ],
       "directDependencies": []
@@ -1352,10 +1522,23 @@
       "proofs": [
         {
           "id": "demo-congruencia-lll",
-          "dependencies": []
+          "dependencies": [
+            "triangulo",
+            "segmento",
+            "axioma-congruencia-1",
+            "axioma-congruencia-4",
+            "axioma-congruencia-5",
+            "teorema-triangulo-isosceles",
+            "axioma-congruencia-3"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-congruencia-5",
+        "axioma-congruencia-1",
+        "axioma-congruencia-4",
+        "teorema-triangulo-isosceles"
+      ]
     },
     "teorema-desigualdad-triangular": {
       "id": "teorema-desigualdad-triangular",
@@ -1365,7 +1548,15 @@
       "proofs": [
         {
           "id": "demo-desigualdad-triangular",
-          "dependencies": []
+          "dependencies": [
+            "axioma-orden-3",
+            "axioma-congruencia-1",
+            "axioma-incidencia-1",
+            "teorema-triangulo-isosceles",
+            "teorema-angulo-externo",
+            "axioma-congruencia-4",
+            "axioma-congruencia-3"
+          ]
         }
       ],
       "directDependencies": []
@@ -1378,10 +1569,14 @@
       "proofs": [
         {
           "id": "demo-dos-rectas-un-punto",
-          "dependencies": []
+          "dependencies": [
+            "axioma-incidencia-1"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-incidencia-1"
+      ]
     },
     "teorema-existencia-bisectriz": {
       "id": "teorema-existencia-bisectriz",
@@ -1391,10 +1586,20 @@
       "proofs": [
         {
           "id": "demo-existencia-bisectriz",
-          "dependencies": []
+          "dependencies": [
+            "axioma-incidencia-2",
+            "axioma-congruencia-1",
+            "axioma-incidencia-1",
+            "lema-punto-medio",
+            "teorema-congruencia-lll",
+            "axioma-congruencia-4"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "lema-punto-medio",
+        "teorema-congruencia-lll"
+      ]
     },
     "teorema-existencia-perpendicular": {
       "id": "teorema-existencia-perpendicular",
@@ -1404,10 +1609,21 @@
       "proofs": [
         {
           "id": "demo-existencia-perpendicular",
-          "dependencies": []
+          "dependencies": [
+            "axioma-incidencia-2",
+            "axioma-incidencia-3",
+            "axioma-congruencia-4",
+            "axioma-orden-4",
+            "axioma-congruencia-1",
+            "axioma-congruencia-5",
+            "teorema-angulo-externo",
+            "axioma-incidencia-1"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-paralelas-euclides"
+      ]
     },
     "teorema-invariancia-triangulacion": {
       "id": "teorema-invariancia-triangulacion",
@@ -1417,10 +1633,15 @@
       "proofs": [
         {
           "id": "demo-invariancia-triangulacion",
-          "dependencies": []
+          "dependencies": [
+            "teorema-area-aditividad",
+            "teorema-dos-rectas-un-punto"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "teorema-area-aditividad"
+      ]
     },
     "teorema-pitagoras": {
       "id": "teorema-pitagoras",
@@ -1430,14 +1651,24 @@
       "proofs": [
         {
           "id": "demo-pitagoras-areas",
-          "dependencies": []
+          "dependencies": [
+            "axioma-congruencia-5",
+            "teorema-suma-angulos-triangulo"
+          ]
         },
         {
           "id": "demo-pitagoras-euclides",
-          "dependencies": []
+          "dependencies": [
+            "teorema-existencia-perpendicular",
+            "axioma-incidencia-1",
+            "axioma-congruencia-5",
+            "teorema-area-triangulo"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-paralelas-euclides"
+      ]
     },
     "teorema-punto-medio-perpendicular": {
       "id": "teorema-punto-medio-perpendicular",
@@ -1447,11 +1678,17 @@
       "proofs": [
         {
           "id": "demo-punto-medio-perpendicular",
-          "dependencies": []
+          "dependencies": [
+            "lema-punto-medio",
+            "punto",
+            "axioma-congruencia-5",
+            "teorema-congruencia-lll"
+          ]
         }
       ],
       "directDependencies": [
-        "lema-punto-medio"
+        "lema-punto-medio",
+        "punto"
       ]
     },
     "teorema-reciproco-triangulo-isosceles": {
@@ -1462,10 +1699,18 @@
       "proofs": [
         {
           "id": "demo-reciproco-triangulo-isosceles",
-          "dependencies": []
+          "dependencies": [
+            "teorema-triangulo-isosceles",
+            "axioma-congruencia-1",
+            "axioma-incidencia-1",
+            "teorema-angulo-externo"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "teorema-triangulo-isosceles",
+        "teorema-angulo-externo"
+      ]
     },
     "teorema-suma-angulos-triangulo": {
       "id": "teorema-suma-angulos-triangulo",
@@ -1475,10 +1720,15 @@
       "proofs": [
         {
           "id": "demo-suma-angulos-triangulo",
-          "dependencies": []
+          "dependencies": [
+            "axioma-paralelas-euclides",
+            "teorema-angulos-alternos-internos"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-paralelas-euclides"
+      ]
     },
     "teorema-tales": {
       "id": "teorema-tales",
@@ -1488,7 +1738,10 @@
       "proofs": [
         {
           "id": "demo-tales",
-          "dependencies": []
+          "dependencies": [
+            "axioma-paralelas-euclides",
+            "axioma-incidencia-1"
+          ]
         }
       ],
       "directDependencies": []
@@ -1501,10 +1754,17 @@
       "proofs": [
         {
           "id": "demo-triangulacion-poligono",
-          "dependencies": []
+          "dependencies": [
+            "triangulo",
+            "axioma-orden-3",
+            "axioma-orden-4"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "axioma-orden-4",
+        "axioma-orden-1"
+      ]
     },
     "teorema-triangulo-isosceles": {
       "id": "teorema-triangulo-isosceles",
@@ -1514,10 +1774,17 @@
       "proofs": [
         {
           "id": "demo-triangulo-isosceles",
-          "dependencies": []
+          "dependencies": [
+            "axioma-congruencia-5"
+          ]
         }
       ],
-      "directDependencies": []
+      "directDependencies": [
+        "triangulo",
+        "segmento",
+        "angulo",
+        "congruencia"
+      ]
     },
     "caso-gps-trilateracion": {
       "id": "caso-gps-trilateracion",
@@ -1525,7 +1792,9 @@
       "title": "Localización por satélite (GPS) y trilateración",
       "description": "Aplicación del teorema de Pitágoras y el cálculo de distancias euclídeas para determinar la posición exacta de un receptor a partir de tres puntos de referencia.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "teorema-pitagoras"
+      ]
     }
   }
 }
