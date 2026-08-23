@@ -99,6 +99,39 @@ export const BranchLibrary = () => {
       desc: t('library', 'sectionIVDesc'),
       icon: '△',
     },
+    {
+      title: t('library', 'sectionV'),
+      slug: 'matematica-discreta-y-computacional',
+      roman: 'V',
+      codes: ['05', '68'],
+      groups: [],
+      accent: 'var(--theme-canela)',
+      desc: t('library', 'sectionVDesc'),
+      icon: '∑',
+    },
+    {
+      title: t('library', 'sectionVI'),
+      slug: 'probabilidad-estadistica-y-aplicaciones',
+      roman: 'VI',
+      codes: ['49', '60', '62', '65', '70', '74', '76', '78', '80', '81', '82', '83', '85', '86', '90', '91', '92'],
+      groups: [
+        { id: 'optimizacion-y-teoria-de-juegos', codes: ['49', '90', '91'] },
+        { id: 'fisica-matematica-y-biologia', codes: ['70', '74', '76', '78', '80', '81', '82', '83', '85', '86', '92'] },
+      ],
+      accent: 'var(--theme-pavo)',
+      desc: t('library', 'sectionVIDesc'),
+      icon: '⨀',
+    },
+    {
+      title: t('library', 'sectionVII'),
+      slug: 'metadatos-y-divulgacion',
+      roman: 'VII',
+      codes: ['00', '01', '97'],
+      groups: [],
+      accent: 'var(--theme-granada)',
+      desc: t('library', 'sectionVIIDesc'),
+      icon: '∞',
+    },
   ];
 
   const typeLabels: Record<string, string> = {

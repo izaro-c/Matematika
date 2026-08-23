@@ -70,6 +70,12 @@ export const esLanguage: LanguageConfig = {
       sectionIIIDesc: 'Estudio del cambio continuo, los límites, las funciones y las convergencias infinitas.',
       sectionIV: 'Geometría y Topología',
       sectionIVDesc: 'Estudio formal de las propiedades métricas, diferenciales y topológicas del espacio.',
+      sectionV: 'Matemática Discreta y Computación',
+      sectionVDesc: 'Combinatoria, teoría de grafos, teoría de la computabilidad y algoritmos.',
+      sectionVI: 'Probabilidad, Estadística y Aplicaciones',
+      sectionVIDesc: 'Estudio del azar, análisis de datos, optimización y modelos matemáticos de las ciencias.',
+      sectionVII: 'Generalidades, Historia y Educación',
+      sectionVIIDesc: 'Aspectos generales, recreación matemática, historia de las matemáticas y educación.',
     },
     search: {
       placeholder: 'Buscar teoremas, definiciones, axiomas...',
