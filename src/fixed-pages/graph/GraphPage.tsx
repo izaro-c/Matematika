@@ -43,8 +43,8 @@ export const GraphPage: React.FC = () => {
   const theme = useThemeColors();
   const graphRef = useRef<KnowledgeGraphRef | undefined>(undefined);
   const graphBackgroundStyle = {
-    '--graph-light-background': `url("${publicAsset('/images/bg-arts-crafts-1.png')}")`,
-    '--graph-dark-background': `url("${publicAsset('/images/bg-arts-crafts-dark.jpg')}")`,
+    '--graph-light-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-1.png')}")`,
+    '--graph-dark-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-dark.jpg')}")`,
   } as React.CSSProperties;
 
   // Extraer datos del ContentStore usando jerarquía MSC2020 definida

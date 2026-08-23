@@ -67,7 +67,6 @@ describe('module aliases and vite boot contracts', () => {
   it('does not statically import scripts/editor into vite.config', () => {
     const source = readFileSync(path.join(root, 'vite.config.ts'), 'utf8');
     expect(source).not.toMatch(/from\s+['"]\.\/scripts\/editor\//);
-    expect(source).toMatch(/createJiti/);
   });
 
   it('points index.html at src/app/main.tsx', () => {

@@ -106,7 +106,7 @@
   --on-accent: #F3EFE7; /* texto sobre CTAs de color sólido */
   --ink-pigment-mix: 26%;
 
-  --theme-graph-bg-url: var(--bg-arts-and-crafts-light-url, url('/images/bg-arts-crafts-1.png'));
+  --theme-graph-bg-url: var(--bg-arts-and-crafts-light-url, url('/images/backgrounds/bg-arts-crafts-1.png'));
   --bg-arts-and-crafts-url: var(--theme-graph-bg-url);
 }
 
@@ -122,7 +122,7 @@
   --theme-canela:    #E08643;  /* Definiciones (Alta luminancia) */
   --theme-pavo:      #7DA2DA;  /* Modelos (Alta luminancia) */
   --theme-mora:   #B392CD;  /* Ejemplos (Alta luminancia) */
-  --theme-graph-bg-url: var(--bg-arts-and-crafts-dark-url, url('/images/bg-arts-crafts-dark.jpg'));
+  --theme-graph-bg-url: var(--bg-arts-and-crafts-dark-url, url('/images/backgrounds/bg-arts-crafts-dark.jpg'));
   --bg-arts-and-crafts-url: var(--theme-graph-bg-url);
 
   /* Parámetros Visuales y Decorativos del Códice */

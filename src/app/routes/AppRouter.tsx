@@ -26,7 +26,6 @@ const NotFoundPage = lazy(() => import("@/content-pages/screens/NotFoundPage").t
 const ConstructionPage = lazy(() => import("@/content-pages/screens/ConstructionPage").then(m => ({ default: m.ConstructionPage })));
 
 const EditorPage = lazy(() => import("@/fixed-pages/editor/ui/page/EditorPage").then(m => ({ default: m.EditorPage })));
-const DiagramEditorPage = lazy(() => import("@/fixed-pages/editor/DiagramEditorPage").then(m => ({ default: m.DiagramEditorPage })));
 const GraphPage = lazy(() => import("@/fixed-pages/graph/GraphPage").then(m => ({ default: m.GraphPage })));
 const AxiomGraphPage = lazy(() => import("@/fixed-pages/graph/AxiomGraphPage").then(m => ({ default: m.AxiomGraphPage })));
 
@@ -190,22 +189,6 @@ export const AppRouter = () => {
           <MathProvider>
             <EditorPage />
           </MathProvider>
-        </Route>
-        <Route path="/:lang/editor_v2">
-          <MathProvider>
-            <DiagramEditorPage />
-          </MathProvider>
-        </Route>
-        <Route path="/editor_v2">
-          <MathProvider>
-            <DiagramEditorPage />
-          </MathProvider>
-        </Route>
-        <Route path="/:lang/editor-v2">
-          {(params) => <Redirect to={`/${params.lang}/editor_v2`} replace />}
-        </Route>
-        <Route path="/editor-v2">
-          <Redirect to="/editor_v2" replace />
         </Route>
 
         {/* HOME PRINCIPAL */}

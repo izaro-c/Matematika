@@ -1,0 +1,62 @@
+// @vitest-environment jsdom
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { SemanticLinker } from '@/fixed-pages/editor/ui/components/SemanticLinker';
+
+const files = [{
+  path: 'content/mdx/definitions/punto.mdx', name: 'punto.mdx', type: 'content-definitions',
+  kind: 'mdx-document' as const, capability: 'visual-exact' as const,
+  capabilityLabel: 'Editable', reason: 'Compatible',
+}];
+
+describe('Semantic link selector', () => {
+  it('creates a validated RefLink selected from the content catalog', () => {
+    const onLinkCreated = vi.fn();
+    render(<SemanticLinker isOpen onClose={vi.fn()} files={files} selectedText="punto auxiliar"
+      onLinkCreated={onLinkCreated} position={{ top: 0, left: 0 }} />);
+
+    fireEvent.click(screen.getByRole('tab', { name: 'Ref' }));
+    fireEvent.change(screen.getByPlaceholderText(/Buscar por nombre/), { target: { value: 'punto' } });
+    fireEvent.click(screen.getByRole('button', { name: /puntodefiniciónpunto/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Crear Vínculo' }));
+    expect(onLinkCreated).toHaveBeenCalledWith('<RefLink targetId="punto">punto auxiliar</RefLink>');
+  });
+
+  it('rejects a diagram target that is not published by the linked diagram', () => {
+    render(<SemanticLinker isOpen onClose={vi.fn()} files={files} selectedText="lado"
+      onLinkCreated={vi.fn()} position={{ top: 0, left: 0 }}
+      diagramTargets={[{ id: 'lado-ab', label: 'Lado AB', color: 'terracota', kind: 'segment' }]} />);
+    fireEvent.click(screen.getByRole('tab', { name: 'Gráfico' }));
+    fireEvent.change(screen.getByPlaceholderText('Target manual avanzado'), { target: { value: 'lado-inexistente' } });
+    expect(screen.getByRole('alert').textContent).toContain('no está publicado');
+    expect((screen.getByRole('button', { name: 'Crear Vínculo' }) as HTMLButtonElement).disabled).toBe(true);
+  });
+
+  it('preserves multiple target IDs when editing an existing semantic link', () => {
+    const onLinkCreated = vi.fn();
+    render(<SemanticLinker isOpen onClose={vi.fn()} files={files} selectedText="geometría euclídea"
+      onLinkCreated={onLinkCreated} position={{ top: 0, left: 0 }}
+      editingTag="ConceptLink"
+      editingMarkup={'<ConceptLink targetId={["sistema-euclidiano", "geometria"]}>geometría euclídea</ConceptLink>'}
+      initialAttrs={{ targetId: ['sistema-euclidiano', 'geometria'] }} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Guardar Cambios' }));
+
+    expect(onLinkCreated).toHaveBeenCalledWith(
+      '<ConceptLink targetId={["sistema-euclidiano","geometria"]} isDependency={false}>geometría euclídea</ConceptLink>',
+    );
+  });
+
+  it('removes an existing link when Quitar Vínculo button is clicked', () => {
+    const onLinkCreated = vi.fn();
+    render(<SemanticLinker isOpen onClose={vi.fn()} files={files} selectedText="geometría euclídea"
+      onLinkCreated={onLinkCreated} position={{ top: 0, left: 0 }}
+      editingTag="ConceptLink"
+      editingMarkup={'<ConceptLink targetId="geometria">geometría euclídea</ConceptLink>'}
+      initialAttrs={{ targetId: 'geometria' }} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Quitar Vínculo' }));
+
+    expect(onLinkCreated).toHaveBeenCalledWith('geometría euclídea');
+  });
+});
