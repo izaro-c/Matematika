@@ -1,0 +1,103 @@
+export const metadata = {
+  "id": "ejercicio-clasificacion-triangulos",
+  "type": "ejercicio",
+  "branch": "51M",
+  "title": "Clasificación de Triángulos por sus Ángulos",
+  "description": "Ejercicio interactivo de clasificación, recuento matricial y análisis visual de triángulos según la medida de sus ángulos internos.",
+  "relatedTheorem": "teorema-suma-angulos-triangulo",
+  "hasSimulation": false,
+  "difficulty": "básico",
+  "hint": "Recuerda: si un triángulo tiene un ángulo de 90° es rectángulo; si todos sus ángulos son menores de 90° es acutángulo; y si tiene un ángulo mayor de 90° es obtusángulo."
+};
+
+import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/EjercicioClasificacionTriangulos';
+
+<Capitular letra="C" />lasificar figuras geométricas según sus propiedades angulares es una habilidad fundamental para aplicar teoremas de congruencia y semejanzas. En este ejercicio clasificarás diferentes triángulos según sus ángulos internos, construirás su matriz de recuento y verificarás las propiedades en el lienzo.
+
+<Separador />
+
+<ExerciseStep
+  id="p1"
+  numero={1}
+  titulo="Clasificación por Ángulos Internos"
+  questionIds={["p1_q1"]}
+>
+  Arrastra cada triángulo a la categoría correspondiente según sus ángulos:
+
+  <Clasificador
+    id="p1_q1"
+    pregunta="Clasifica los siguientes triángulos en su categoría correspondiente:"
+    buckets={[
+      { id: "rectangulo", title: "Triángulo Rectángulo (un ángulo de 90°)" },
+      { id: "acutangulo", title: "Triángulo Acutángulo (3 ángulos < 90°)" },
+      { id: "obtusangulo", title: "Triángulo Obtusángulo (un ángulo > 90°)" }
+    ]}
+    items={[
+      { id: "t1", content: "90^\\circ, 45^\\circ, 45^\\circ", bucketId: "rectangulo" },
+      { id: "t2", content: "60^\\circ, 60^\\circ, 60^\\circ", bucketId: "acutangulo" },
+      { id: "t3", content: "120^\\circ, 30^\\circ, 30^\\circ", bucketId: "obtusangulo" },
+      { id: "t4", content: "3, 4, 5\\text{ (lados)}", bucketId: "rectangulo" }
+    ]}
+  >
+    <Clasificador.ErrorComun titulo="Confundir la terna pitagórica o los ángulos obtusos">
+      Recuerda que por el teorema de Pitágoras ($3^2 + 4^2 = 5^2$), los lados 3, 4 y 5 forman un triángulo rectángulo. Asimismo, basta con un solo ángulo mayor de 90° para que sea obtusángulo.
+    </Clasificador.ErrorComun>
+
+    <Clasificador.Resolucion>
+      - **Rectángulos**: Tienen un ángulo de 90° (como $90^\circ-45^\circ-45^\circ$ o la terna $3-4-5$).
+      - **Acutángulos**: Sus 3 ángulos son menores de 90° (como $60^\circ-60^\circ-60^\circ$).
+      - **Obtusángulos**: Poseen un ángulo mayor de 90° (como $120^\circ-30^\circ-30^\circ$).
+    </Clasificador.Resolucion>
+  </Clasificador>
+</ExerciseStep>
+
+<ExerciseStep
+  id="p2"
+  numero={2}
+  titulo="Recuento Matricial de la Clasificación"
+  questionIds={["p2_q1"]}
+  dependeDeQuestions={["p1_q1"]}
+>
+  Expresa los resultados de la clasificación anterior en formato de vector fila $[\text{Rectángulos}, \text{Acutángulos}, \text{Obtusángulos}]$:
+
+  <MatrizInteractiva
+    id="p2_q1"
+    pregunta="Introduce el número de triángulos pertenecientes a cada categoría [Rectángulos, Acutángulos, Obtusángulos]:"
+    correct={[["2", "1", "1"]]}
+  >
+    <MatrizInteractiva.ErrorComun titulo="Erróneo recuento de elementos">
+      Repasa los elementos clasificados en el paso anterior: hay 2 triángulos rectángulos ($90^\circ-45^\circ-45^\circ$ y $3-4-5$), 1 acutángulo ($60^\circ-60^\circ-60^\circ$) y 1 obtusángulo ($120^\circ-30^\circ-30^\circ$).
+    </MatrizInteractiva.ErrorComun>
+
+    <MatrizInteractiva.Resolucion>
+      Al agrupar los 4 triángulos clasificados obtenemos 2 rectángulos, 1 acutángulo y 1 obtusángulo. La matriz fila correspondiente es $[2 \quad 1 \quad 1]$.
+    </MatrizInteractiva.Resolucion>
+  </MatrizInteractiva>
+</ExerciseStep>
+
+<ExerciseStep
+  id="p3"
+  numero={3}
+  titulo="Verificación Visual en el Lienzo"
+  questionIds={["p3_q1"]}
+  dependeDeQuestions={["p2_q1"]}
+>
+  Confirma la clasificación analizando la disposición visual de los ángulos en el lienzo interactivo:
+
+  <CanvasInteractivo
+    id="p3_q1"
+    title="Lienzo de Comprobación Angular"
+    pregunta="Interactúa con los botones de inspección angular en el lienzo para verificar la apertura de cada tipo de triángulo:"
+    botonTexto="Validar Análisis del Lienzo"
+  >
+    <EjercicioClasificacionTriangulos />
+
+    <CanvasInteractivo.ErrorComun titulo="Fallo al verificar la suma angular">
+      Recuerda que en todo triángulo euclidiano la suma de los ángulos internos debe ser exactamente 180° ($\alpha + \beta + \gamma = 180^\circ$).
+    </CanvasInteractivo.ErrorComun>
+
+    <CanvasInteractivo.Resolucion>
+      En el lienzo se constata que la suma de ángulos internos en todos los casos satisface $\alpha + \beta + \gamma = 180^\circ$, verificando la clasificación geométrica realizada.
+    </CanvasInteractivo.Resolucion>
+  </CanvasInteractivo>
+</ExerciseStep>

@@ -1,0 +1,52 @@
+export const metadata = {
+  "id": "triangulo",
+  "type": "definicion",
+  "subtype": "nominal",
+  "lang": "eu",
+  "branch": "51M",
+  "title": "Triangelua",
+  "description": "Hiru puntu ez-kolineal (erpinak) lotzen dituzten hiru segmentuk (aldeak) osatutako figura geometrikoa.",
+  "statement": "△ABC triangelua hiru segmenturen (AB, BC eta CA) batasuna da, non A, B eta C puntu ez-kolinealak diren.",
+  "tags": ["geometria", "poligonoa", "oinarrizkoa"],
+  "authors": ["euclides"],
+  "links": ["punto", "segmento"],
+  "seeAlso": ["teorema-congruencia-ala", "teorema-congruencia-lll", "teorema-suma-angulos-triangulo"],
+  "hasSimulation": true
+};
+
+import { Triangulo } from '@content/diagrams/Definiciones/Triangulo';
+export const Simulation = Triangulo;
+
+<Capitular letra="T" />riangelua <ConceptLink targetId="poligono" isDependency={false}>poligonorik</ConceptLink> sinpleena eta trigonometriaren oinarria da. Hiru <ConceptLink targetId="punto" isDependency={false}>puntu</ConceptLink> ez-<ConceptLink targetId="colineal" isDependency={false}>kolinealez</ConceptLink> eta horiek lotzen dituzten hiru <ConceptLink targetId="segmento" isDependency={false}>segmentuz</ConceptLink> osatuta dago.
+
+<Separador />
+
+### Enuntziatu Formala
+
+Hiru <ConceptLink targetId="punto" isDependency={false}>puntu</ConceptLink> ez-kolineal <InteractiveElement target="vertice-a" color="musgo">$A$</InteractiveElement>, <InteractiveElement target="vertice-b" color="musgo">$B$</InteractiveElement> eta <InteractiveElement target="vertice-c" color="musgo">$C$</InteractiveElement> emanda, <InteractiveElement target="triangulo" color="musgo">$\triangle ABC$ triangelua</InteractiveElement> dagozkien segmentuen batasuna da:
+
+<Formula>
+  $$ \triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA} $$
+</Formula>
+
+$A$, $B$, $C$ puntuei erpin deritze, eta <InteractiveElement target="lado-ab" color="musgo">$\overline{AB}$</InteractiveElement>, <InteractiveElement target="lado-bc" color="musgo">$\overline{BC}$</InteractiveElement>, <InteractiveElement target="lado-ca" color="musgo">$\overline{CA}$</InteractiveElement> segmentuak aldeak dira. Triangeluak <ConceptLink targetId="plano" isDependency={false}>planoko</ConceptLink> eskualde bat mugatzen du eta barneko hiru <ConceptLink targetId="angulo" isDependency={false}>angelu</ConceptLink> definitzen ditu.
+
+<Separador />
+
+### Sailkapena
+
+Triangeluak aldeen eta angeluen arabera sailkatzen dira:
+
+| Aldeen arabera | Deskribapena | Angeluen arabera | Deskribapena |
+|---|---|---|---|
+| Aldekidea | 3 alde <ConceptLink targetId="congruencia" isDependency={false}>kongruente</ConceptLink> | Zorrotza | 3 angelu zorrotz |
+| Isoszelea | 2 alde kongruente | Angeluzuzena | Angelu zuzen 1 |
+| Eskalenoa | 0 alde kongruente | Kamutsa | Angelu kamuts 1 |
+
+<Separador />
+
+### Oharrak
+
+- **Ez-kolinealtasun** baldintza ezinbestekoa da: $A$, $B$, $C$ <ConceptLink targetId="recta" isDependency={false}>zuzen</ConceptLink> berean baleude, ez litzateke triangelurik sortuko.
+- Triangeluak kongruentziaren (<RefLink targetId="teorema-congruencia-ala">ALA</RefLink>, <RefLink targetId="teorema-congruencia-lll">LLL</RefLink>) eta antzekotasunaren oinarria dira.
+- <ConceptLink targetId="sistema-euclidiano">Geometria euklidearrean</ConceptLink>, barne-angeluen batura $180^\circ$ da. <ConceptLink targetId="sistema-hiperbolico">Geometria hiperbolikoan</ConceptLink>, hura baino txikiagoa da.

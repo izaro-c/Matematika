@@ -28,6 +28,12 @@ export function useKeyboardShortcuts() {
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        toggleSearch();
+        return;
+      }
+
       if (isEditing()) return;
 
       if (e.key === 'Escape') {

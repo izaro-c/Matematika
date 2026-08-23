@@ -396,6 +396,8 @@ export interface DiagramSpecV2 {
   grid: boolean;
   /** Permite ocultar en conjunto las etiquetas sin eliminar sus objetos editables. */
   showLabels?: boolean;
+  /** Controla la visibilidad del título y subtítulo en la cabecera. */
+  showHeader?: boolean;
   /** Configuración explícita de las lecturas situadas bajo el título. */
   header?: DiagramHeaderConfiguration;
   viewport: DiagramViewport;

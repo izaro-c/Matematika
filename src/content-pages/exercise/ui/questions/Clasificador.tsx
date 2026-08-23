@@ -28,6 +28,7 @@ type ClasificadorComponent = React.FC<ClasificadorProps> & {
 };
 
 function shuffle<T>(array: T[]): T[] {
+  if (!array || !Array.isArray(array)) return [];
   const arr = [...array];
   const buf = new Uint32Array(arr.length);
   crypto.getRandomValues(buf);
@@ -41,7 +42,7 @@ function shuffle<T>(array: T[]): T[] {
 /**
  * Clasificador — Ejercicio de clasificación y agrupación lógica por arrastre (drag-and-drop).
  */
-export const Clasificador: ClasificadorComponent = ({ id, pregunta, buckets, items, children }) => {
+export const Clasificador: ClasificadorComponent = ({ id, pregunta, buckets = [], items = [], children }) => {
   const { t } = useI18n();
 
   const {
@@ -65,7 +66,7 @@ export const Clasificador: ClasificadorComponent = ({ id, pregunta, buckets, ite
   const [dragItem, setDragItem] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
-  const shuffledItems = useMemo(() => shuffle(items), [items]);
+  const shuffledItems = useMemo(() => shuffle(items ?? []), [items]);
 
   const handleDragStart = (_e: React.DragEvent<HTMLDivElement>, itemId: string) => {
     if (isCompleted) return;
@@ -100,18 +101,22 @@ export const Clasificador: ClasificadorComponent = ({ id, pregunta, buckets, ite
   const check = () => {
     if (isCompleted) return;
 
-    if (Object.keys(placedItems).length !== items.length) {
+    const currentItems = items || [];
+    if (Object.keys(placedItems).length !== currentItems.length) {
       triggerShake();
       return;
     }
 
-    const allCorrect = items.every((item) => placedItems[item.id] === item.bucketId);
+    const allCorrect = currentItems.every((item) => placedItems[item.id] === item.bucketId);
     submitAnswer(allCorrect, placedItems);
   };
 
   const unplacedItems = shuffledItems.filter((item) => !placedItems[item.id]);
   const showResolutionBookmark = isCompleted && Boolean(resolucionData);
   const showBookmarks = Boolean(errorComunData || showResolutionBookmark);
+
+  const safeBuckets = buckets || [];
+  const safeItems = items || [];
 
   return (
     <ExerciseCard
@@ -175,8 +180,8 @@ export const Clasificador: ClasificadorComponent = ({ id, pregunta, buckets, ite
             isCompleted ? 'border-canela bg-canela/30' : 'border-carbon/80 bg-carbon/30'
           }`}
         >
-          {buckets.map((bucket) => {
-            const bucketItems = items.filter((item) => placedItems[item.id] === bucket.id);
+          {safeBuckets.map((bucket) => {
+            const bucketItems = safeItems.filter((item) => placedItems[item.id] === bucket.id);
 
             return (
               <div

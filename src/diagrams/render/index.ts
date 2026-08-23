@@ -6,3 +6,4 @@ export * from './stepEmphasisAnimation';
 export * from './lifecycle';
 export * from './elements';
 export * from './interaction';
+export * from './CanvasControlContext';

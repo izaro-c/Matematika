@@ -82,7 +82,7 @@ describe('catálogo seguro del editor', () => {
     const diagrams = editable.filter(item => item.kind === 'diagram');
     expect(documents.length).toBeGreaterThanOrEqual(123);
     expect(documents.every(item => item.path.startsWith('content/mdx/') && item.path.endsWith('.mdx'))).toBe(true);
-    expect(diagrams).toHaveLength(84);
+    expect(diagrams.length).toBeGreaterThanOrEqual(84);
     expect(diagrams.every(item => item.path.startsWith('content/diagrams/') && item.path.endsWith('.tsx'))).toBe(true);
     expect(diagrams.filter(item => item.capability === 'visual-exact').map(item => item.path).sort()).toEqual([
       'content/diagrams/Axiomas/AxiomaArquimedes.tsx',

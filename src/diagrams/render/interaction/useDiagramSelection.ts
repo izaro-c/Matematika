@@ -18,6 +18,7 @@ export interface DiagramSelectionIntent {
 export interface UseDiagramSelectionOptions {
   spec: DiagramSpecV2;
   mode?: 'runtime' | 'editor' | 'preview';
+  readOnly?: boolean;
   onSelectionChange?: (id: string, intent?: DiagramSelectionIntent) => void;
   onPointMove?: (id: string, x: number, y: number) => void;
   onSliderChange?: (id: string, value: number) => void;
@@ -219,6 +220,7 @@ export function suspendInactiveAttractors(spec: DiagramSpecV2, elements: JxgElem
 
 export function useDiagramSelection({
   spec,
+  readOnly = false,
   onSelectionChange,
   onPointMove,
   onSliderChange,
@@ -226,12 +228,13 @@ export function useDiagramSelection({
   onCanvasPointCreate,
 }: UseDiagramSelectionOptions) {
   const targetRegistry = useDiagramTargetRegistry();
-  const interactionCallbacksRef = useRef({ onSelectionChange, onPointMove, onSliderChange, onAnnotationMove, onCanvasPointCreate });
+  const activeCallbacks = readOnly ? {} : { onSelectionChange, onPointMove, onSliderChange, onAnnotationMove, onCanvasPointCreate };
+  const interactionCallbacksRef = useRef(activeCallbacks);
   const localTargetHighlightRef = useRef<string | null>(null);
 
   useEffect(() => {
-    interactionCallbacksRef.current = { onSelectionChange, onPointMove, onSliderChange, onAnnotationMove, onCanvasPointCreate };
-  }, [onAnnotationMove, onCanvasPointCreate, onPointMove, onSelectionChange, onSliderChange]);
+    interactionCallbacksRef.current = readOnly ? {} : { onSelectionChange, onPointMove, onSliderChange, onAnnotationMove, onCanvasPointCreate };
+  }, [readOnly, onAnnotationMove, onCanvasPointCreate, onPointMove, onSelectionChange, onSliderChange]);
 
   const setVariable = useMathStore(state => state.setVariable);
 

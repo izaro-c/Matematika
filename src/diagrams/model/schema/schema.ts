@@ -325,6 +325,7 @@ export const diagramSpecV2Schema = z.object({
   axis: z.boolean(),
   grid: z.boolean(),
   showLabels: z.boolean().optional(),
+  showHeader: z.boolean().optional(),
   header: headerSchema.optional(),
   viewport: z.object({
     bounds: boundsSchema,

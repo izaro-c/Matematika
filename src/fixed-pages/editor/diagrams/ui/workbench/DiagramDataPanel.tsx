@@ -220,6 +220,15 @@ export const DiagramDataPanel: React.FC<DiagramDataPanelProps> = ({
               />
               <span>Etiquetas</span>
             </label>
+            <label className="flex items-center gap-1.5 text-xs cursor-pointer">
+              <input
+                type="checkbox"
+                checked={model.showHeader !== false}
+                onChange={e => onUpdateModel({ showHeader: e.target.checked }, 'Alternar cabecera (Título y Subtítulo)')}
+                className="rounded border-carbon/30 text-canela focus:ring-canela"
+              />
+              <span>Título y Subtítulo</span>
+            </label>
           </div>
         </div>
 

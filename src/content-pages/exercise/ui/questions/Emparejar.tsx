@@ -26,6 +26,7 @@ type EmparejarComponent = React.FC<EmparejarProps> & {
 };
 
 function shuffle<T>(array: T[]): T[] {
+  if (!array || !Array.isArray(array)) return [];
   const arr = [...array];
   const buf = new Uint32Array(arr.length);
   crypto.getRandomValues(buf);
@@ -50,7 +51,7 @@ interface BezierLine {
  * Emparejar — Ejercicio interactivo de correspondencia con conexiones Bézier,
  * corte de enlaces manual y comprobación bajo demanda.
  */
-export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs, children }) => {
+export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], children }) => {
   const { t } = useI18n();
 
   const {
@@ -67,8 +68,8 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs, children })
   const { errorComunData, resolucionData, otherChildren } = useSubcomponents(children);
 
   // Elementos barajados en ambas columnas
-  const [leftItems, setLeftItems] = useState<string[]>(() => shuffle(pairs.map((p) => p.left)));
-  const [rightItems, setRightItems] = useState<string[]>(() => shuffle(pairs.map((p) => p.right)));
+  const [leftItems, setLeftItems] = useState<string[]>(() => shuffle((pairs || []).map((p) => p.left)));
+  const [rightItems, setRightItems] = useState<string[]>(() => shuffle((pairs || []).map((p) => p.right)));
 
   // Conexiones actuales establecidas por el usuario: { [leftVal]: rightVal }
   const [userPairs, setUserPairs] = useState<Record<string, string>>(() => {
@@ -93,14 +94,15 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs, children })
   const shuffleTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Evita re-barajados accidentales cuando el padre pasa una nueva referencia de `pairs`
-  const pairsKey = useMemo(() => pairs.map((p) => `${p.left}:::${p.right}`).join('|||'), [pairs]);
+  const pairsKey = useMemo(() => (pairs || []).map((p) => `${p.left}:::${p.right}`).join('|||'), [pairs]);
   const prevPairsKeyRef = useRef(pairsKey);
 
   useEffect(() => {
     if (prevPairsKeyRef.current !== pairsKey) {
       prevPairsKeyRef.current = pairsKey;
-      setLeftItems(shuffle(pairs.map((p) => p.left)));
-      setRightItems(shuffle(pairs.map((p) => p.right)));
+      const safePairs = pairs || [];
+      setLeftItems(shuffle(safePairs.map((p) => p.left)));
+      setRightItems(shuffle(safePairs.map((p) => p.right)));
       setUserPairs({});
       setSelectedLeft(null);
       setSelectedRight(null);
@@ -265,10 +267,11 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs, children })
 
     let count = 0;
     const maxTicks = 12;
+    const safePairs = pairs || [];
     shuffleTimerRef.current = setInterval(() => {
       count++;
-      setLeftItems(shuffle(pairs.map((p) => p.left)));
-      setRightItems(shuffle(pairs.map((p) => p.right)));
+      setLeftItems(shuffle(safePairs.map((p) => p.left)));
+      setRightItems(shuffle(safePairs.map((p) => p.right)));
 
       if (count >= maxTicks) {
         if (shuffleTimerRef.current) clearInterval(shuffleTimerRef.current);

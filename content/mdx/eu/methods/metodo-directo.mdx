@@ -1,0 +1,82 @@
+export const metadata = {
+  "lang": "eu",
+  "id": "metodo-directo",
+  "type": "metodo",
+  "subtype": "demostracion",
+  "title": "Zuzeneko Metodoa",
+  "description": "La estrategia fundamental de demostración: encadenar implicaciones lógicas desde la hipótesis hasta la tesis mediante inferencias válidas.",
+  "tags": ["logica", "metodos", "demostracion"],
+  "authors": [],
+  "links": ["teorema-pitagoras", "teorema-congruencia-ala", "teorema-suma-angulos-triangulo"],
+  "seeAlso": ["metodo-contradiccion", "metodo-contraposicion"],
+  "hasSimulation": true,
+  "difficulty": "intermedio"
+};
+
+import { DirectoSimulation } from "@content/diagrams/Metodos/DirectoSimulation";
+export const Simulation = DirectoSimulation;
+
+<Capitular letra="E" />l <ConceptLink targetId="demostracion" isDependency={false}>método</ConceptLink> directo — también llamado *demostración directa* o *prueba por implicación directa* — es la forma más natural y primitiva de razonamiento matemático. Su esencia es simple: se asume que una proposición $P$ (la **hipótesis**) es verdadera, y mediante una secuencia de implicaciones lógicas válidas se concluye que $Q$ (la **tesis**) también lo es.
+
+<Separador />
+
+### Estructura Lógica
+
+El argumento fluye en una única dirección, sin desvíos ni rodeos:
+
+$$ P \implies P_1 \implies P_2 \implies \dots \implies P_n \implies Q $$
+
+Cada paso intermedio $P_i$ es una afirmación que se deduce de las anteriores combinando:
+
+- Los <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink> del sistema formal en el que se trabaja.
+- <ConceptLink targetId="teorema" isDependency={false}>Teoremas</ConceptLink> ya demostrados.
+- Definiciones establecidas.
+- Reglas de inferencia lógica (como *modus ponens*).
+
+<Separador />
+
+### El Esquema General
+
+En notación lógica, el método directo se resume así:
+
+1. **Hipótesis**: Sea $P$ verdadero.
+2. **Paso $i$**: De $P_{i-1}$ y los axiomas/teoremas conocidos, se infiere $P_i$.
+3. **Conclusión**: La cadena termina en $Q$, por lo tanto $P \implies Q$.
+
+En la práctica, las demostraciones directas suelen comenzar con frases como *«Supongamos $P$»*, *«Sea $x$ tal que...»* o *«Por definición...»*, y avanzan con conectores del tipo *«entonces»*, *«por lo tanto»*, *«en consecuencia»* y *«así pues»*.
+
+<Separador />
+
+### Ejemplos Clásicos
+
+La gran mayoría de demostraciones en geometría euclidiana emplean el método directo. Entre los ejemplos más representativos en esta base se encuentran:
+
+- **<ConceptLink targetId="teorema-congruencia-ala" >Teorema ALA</ConceptLink>**: Dados dos ángulos y el lado comprendido de un triángulo, el tercer vértice queda determinado de forma única. La demostración toma los elementos dados y los superpone paso a paso.
+
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo" >Suma de ángulos del triángulo</ConceptLink>**: Se traza una paralela a la base y se comparan ángulos alternos internos para deducir directamente que la suma es $180^\circ$.
+
+- **<ConceptLink targetId="teorema-pitagoras" >Teorema de Pitágoras</ConceptLink>** (demostración por áreas): Se construyen cuadrados sobre los catetos y la hipotenusa, y mediante descomposición de figuras se prueba que $a^2 + b^2 = c^2$.
+
+<Separador />
+
+### Cuándo Usarlo
+
+El método directo es la primera opción a intentar. Es especialmente adecuado cuando:
+
+- La hipótesis proporciona información concreta que se puede manipular algebraicamente.
+- Existe una cadena clara de teoremas previos que conectan $P$ con $Q$.
+- La estructura de $P$ y $Q$ es de tipo «si... entonces...» o «para todo...».
+
+Cuando la conexión directa no es evidente, conviene explorar métodos indirectos como la <ConceptLink targetId="metodo-contradiccion" isDependency={false}>contradicción</ConceptLink> o la <ConceptLink targetId="metodo-contraposicion" isDependency={false}>contraposición</ConceptLink>.
+
+<Separador />
+
+### Fortalezas y Debilidades
+
+<Nota>
+**Fortaleza**: Es el método más constructivo y transparente. El lector puede seguir cada paso y convencerse por sí mismo.
+
+**Debilidad**: Requiere que exista un camino deductivo visible desde $P$ hasta $Q$. Cuando la conexión es remota o no hay teoremas intermedios aplicables, el método directo puede resultar impracticable.
+</Nota>
+
+

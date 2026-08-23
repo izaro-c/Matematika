@@ -26,7 +26,7 @@ describe('editorApiBase', () => {
 
   it('prefixes paths with the configured API base URL', () => {
     vi.stubEnv('VITE_EDITOR_API_URL', 'https://api.example.com/');
-    expect(editorApiPath('/api/content')).toBe('https://api.example.com/api/content');
+    expect(editorApiPath('/Matematika/api/content')).toBe('https://api.example.com/Matematika/api/content');
     expect(editorApiConfigured()).toBe(true);
     expect(editorWriteAccessGranted()).toBe(false);
   });

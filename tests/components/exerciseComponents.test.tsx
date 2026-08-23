@@ -204,6 +204,90 @@ describe('Exercise Modular Components Suite', () => {
     expect(screen.getByText('Completar Diagrama')).toBeDefined();
   });
 
+  it('locks interaction and prevents modifications once CanvasInteractivo is completed and correct', () => {
+    const DummyDiagram = ({ onPointMove, isCompleted }: { onPointMove?: (id: string, x: number, y: number) => void; isCompleted?: boolean }) => (
+      <div>
+        <span data-testid="diagram-status">{isCompleted ? 'locked' : 'interactive'}</span>
+        <button onClick={() => onPointMove?.('p1', 10, 10)}>Mover Punto</button>
+      </div>
+    );
+
+    const TestCanvas = () => (
+      <CanvasInteractivo id="canvas_lock_test" title="Lienzo Bloqueable" validator={() => true}>
+        <DummyDiagram />
+      </CanvasInteractivo>
+    );
+
+    render(
+      <MathProvider>
+        <ExerciseProvider exerciseId="test-canvas-lock">
+          <TestCanvas />
+        </ExerciseProvider>
+      </MathProvider>
+    );
+
+    expect(screen.getByTestId('diagram-status').textContent).toBe('interactive');
+    const validateBtn = screen.getByRole('button', { name: /comprobar|validar/i });
+    expect(validateBtn).toBeDefined();
+
+    // Completar el ejercicio
+    fireEvent.click(validateBtn);
+
+    // El diagrama debe marcarse como bloqueado
+    expect(screen.getByTestId('diagram-status').textContent).toBe('locked');
+    // El botón de validación se oculta
+    expect(screen.queryByRole('button', { name: /comprobar|validar/i })).toBeNull();
+  });
+
+  it('restores the modified correct spec and locks interaction on page reload / restoration', () => {
+    const DummyDiagram = ({ spec, isCompleted }: { spec?: any; isCompleted?: boolean }) => (
+      <div>
+        <span data-testid="restored-status">{isCompleted ? 'locked' : 'interactive'}</span>
+        <span data-testid="spec-x">{spec?.objects?.[0]?.definition?.x ?? 'default'}</span>
+      </div>
+    );
+
+    const initialSpec: any = {
+      version: 3,
+      title: 'Initial',
+      objects: [{ id: 'p1', objectType: 'point', definition: { type: 'coordinates', x: 0, y: 0 } }],
+    };
+
+    const TestCanvas = () => (
+      <CanvasInteractivo id="canvas_reload_test" validator={() => true}>
+        <DummyDiagram spec={initialSpec} />
+      </CanvasInteractivo>
+    );
+
+    const { rerender } = render(
+      <MathProvider>
+        <ExerciseProvider exerciseId="test-canvas-reload">
+          <TestCanvas />
+        </ExerciseProvider>
+      </MathProvider>
+    );
+
+    expect(screen.getByTestId('spec-x').textContent).toBe('0');
+    expect(screen.getByTestId('restored-status').textContent).toBe('interactive');
+
+    // Mover un punto
+    const moveBtn = screen.getByRole('button', { name: /comprobar|validar/i });
+    fireEvent.click(moveBtn);
+
+    // Re-renderizar simulando la recarga de página (con el mismo ExerciseProvider/localStorage)
+    rerender(
+      <MathProvider>
+        <ExerciseProvider exerciseId="test-canvas-reload">
+          <TestCanvas />
+        </ExerciseProvider>
+      </MathProvider>
+    );
+
+    // Debe conservar el estado correcto y permanecer bloqueado
+    expect(screen.getByTestId('restored-status').textContent).toBe('locked');
+    expect(screen.queryByRole('button', { name: /comprobar|validar/i })).toBeNull();
+  });
+
   it('renders locked step indicator when dependencies are incomplete in ExerciseStep', () => {
     const TestSteps = () => (
       <div>

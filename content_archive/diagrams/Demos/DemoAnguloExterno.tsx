@@ -1,0 +1,5154 @@
+import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';
+
+/* @matematika-diagram-spec:start */
+export const DemoAnguloExternoSpec = createDiagramSpec(
+{
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
+  "title": "Teorema del ángulo externo",
+  "componentId": "teorema-del-angulo-externo",
+  "category": "Demos",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "showLabels": true,
+  "viewport": {
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "minZoom": 0.2,
+    "maxZoom": 12,
+    "padding": 0.16
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "controls",
+      "label": "Controles",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "background",
+      "label": "Fondo",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Anotaciones & Texto",
+      "order": 20,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [],
+  "objects": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 46,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3.45,
+        "y": -2.09
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 45,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1.97,
+        "y": -2.09
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "pC",
+      "label": "C",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 44,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto C",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pC",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.81,
+        "y": 1.68
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "pD",
+      "label": "D",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 43,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto D",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pD",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.8643701292823758,
+        "y": 2.9205239869339215
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "rayCaux"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "pF",
+      "label": "F",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 41,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto 6",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pF",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -4.61,
+        "y": 1.68
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "constraint3"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "pH",
+      "label": "H",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 48,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto E",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pH",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 6.23,
+        "y": 1.68
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "constraint4"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "paux",
+      "label": "aux",
+      "color": "terracota",
+      "layerId": "background",
+      "order": 1,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto E",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "paux",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 2.0512190957166068,
+        "y": 30
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "rayBC"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "paux2",
+      "label": "Aux2",
+      "color": "terracota",
+      "layerId": "background",
+      "order": 0,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto E",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "paux2",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.4319105631062765,
+        "y": 30
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "rayAC"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "pK",
+      "label": "K",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 52,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto E",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pK",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.9229274793639923,
+        "y": 3.8936461523114696
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "rayCaux2"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "polygonABC",
+      "label": "Triángulo ABC",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 6,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Polígono",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "polygonABC",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA",
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segAB",
+      "label": "Segmento AB",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 7,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAB",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pB"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segBC",
+      "label": "Segmento BC",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 8,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segBC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segAC",
+      "label": "Segmento AC",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 9,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayBC",
+      "label": "Semirrecta BC",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayBC",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAngleABC",
+      "label": "Ángulo ABC",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 12,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleABC",
+      "objectType": "angle",
+      "points": [
+        "pA",
+        "pB",
+        "pC"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAngleBAC",
+      "label": "Ángulo BAC",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 29,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleBAC",
+      "objectType": "angle",
+      "points": [
+        "pB",
+        "pA",
+        "pC"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAngleBCA",
+      "label": "Ángulo BCA",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 13,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleBCA",
+      "objectType": "angle",
+      "points": [
+        "pB",
+        "pC",
+        "pA"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAngleBCD",
+      "label": "Ángulo BCD",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 14,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleBCD",
+      "objectType": "angle",
+      "points": [
+        "pB",
+        "pC",
+        "pD"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "midAC",
+      "label": "E",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 42,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto medio",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "midAC",
+      "objectType": "point",
+      "definition": {
+        "type": "midpoint",
+        "points": [
+          "pA",
+          "pC"
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segBmidAC",
+      "label": "Segmento EB",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 15,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segBmidAC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "midAC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayBmidAC",
+      "label": "Semirrecta BE",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 5,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayBmidAC",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pB",
+          "midAC"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segmidACF",
+      "label": "Segmento EF",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 16,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segmidACF",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "midAC",
+          "pF"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segCF",
+      "label": "Segmento CF",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 17,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segCF",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pC",
+          "pF"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 5,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "polygonABmidAC",
+      "label": "Polígono ABE",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 18,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Polígono",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "polygonABmidAC",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA",
+          "pB",
+          "midAC"
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "polygonCFmidAC",
+      "label": "Polígono CEF",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 19,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Polígono",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "polygonCFmidAC",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pC",
+          "pF",
+          "midAC"
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAngleAmidACB",
+      "label": "Ángulo AEB",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 20,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleAmidACB",
+      "objectType": "angle",
+      "points": [
+        "pA",
+        "midAC",
+        "pB"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAngleCmidACF",
+      "label": "Ángulo CEF",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 21,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleCmidACF",
+      "objectType": "angle",
+      "points": [
+        "pC",
+        "midAC",
+        "pF"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAnglemidACCF",
+      "label": "Ángulo ECF",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 32,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAnglemidACCF",
+      "objectType": "angle",
+      "points": [
+        "midAC",
+        "pC",
+        "pF"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayCF",
+      "label": "Semirrecta CF",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 22,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayCF",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pC",
+          "pF"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAngleACD",
+      "label": "Ángulo ACD",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 11,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleACD",
+      "objectType": "angle",
+      "points": [
+        "pD",
+        "pC",
+        "pA"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "labelVisible": false,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segAmidAC",
+      "label": "Segmento AE",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 23,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAmidAC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "midAC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segmidACC",
+      "label": "Segmento EC",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 25,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segmidACC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "midAC",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "congruenceMarkAmidAC",
+      "label": "Marca de congruencia AE",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 28,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia de Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkAmidAC",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA",
+          "midAC"
+        ]
+      },
+      "count": 2,
+      "height": 0.5,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "congruenceMarkmidACC",
+      "label": "Marca de congruencia EC",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 31,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia de Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkmidACC",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "midAC",
+          "pC"
+        ]
+      },
+      "count": 2,
+      "height": 0.5,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "congruenceMarkBmidAC",
+      "label": "Marca de congruencia de Segmento EB",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 36,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia de Segmento EB",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkBmidAC",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pB",
+          "midAC"
+        ]
+      },
+      "count": 3,
+      "height": 0.5,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "congruenceMarkmidACF",
+      "label": "Marca de congruencia de Segmento EF",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 37,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia de Segmento EF",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkmidACF",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "midAC",
+          "pF"
+        ]
+      },
+      "count": 3,
+      "height": 0.5,
+      "appearance": {
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayCF_2",
+      "label": "Semirrecta",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 4,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayCF_2",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pC",
+          "pF"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "midG",
+      "label": "G",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 47,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto medio",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "midG",
+      "objectType": "point",
+      "definition": {
+        "type": "midpoint",
+        "points": [
+          "pB",
+          "pC"
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segAH",
+      "label": "Segmento AH",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 26,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segAH",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pH"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "labelVisible": false,
+        "labelPosition": 0.71,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "congruenceMarkmidBCG",
+      "label": "Marca de congruencia",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 49,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkmidBCG",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "midG",
+          "pH"
+        ]
+      },
+      "count": 1,
+      "height": 0.6,
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "congruenceMarkAmidBC",
+      "label": "Marca de congruencia",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 50,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkAmidBC",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pA",
+          "midG"
+        ]
+      },
+      "count": 1,
+      "height": 0.6,
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segBmidAC_2",
+      "label": "Segmento BE",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 3,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segBmidAC_2",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "midAC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "halfACD",
+      "label": "Semiplano",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 1,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": false,
+        "ariaLabel": "Semiplano",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "halfACD",
+      "objectType": "area",
+      "geometry": {
+        "type": "half-plane",
+        "boundary": [
+          "pA",
+          "pC"
+        ],
+        "side": "pD"
+      },
+      "appearance": {
+        "strokeWidth": 0,
+        "strokeOpacity": 1,
+        "fillOpacity": 0,
+        "highlightFillOpacity": 0.2,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "halfBCA",
+      "label": "Semiplano",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 2,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": false,
+        "ariaLabel": "Semiplano",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "halfBCA",
+      "objectType": "area",
+      "geometry": {
+        "type": "half-plane",
+        "boundary": [
+          "pB",
+          "pC"
+        ],
+        "side": "pA"
+      },
+      "appearance": {
+        "strokeWidth": 0,
+        "fillOpacity": 0,
+        "highlightFillOpacity": 0.2,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayCA",
+      "label": "Semirrecta",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 0,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayCA",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pC",
+          "pA"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayCaux",
+      "label": "Semirrecta",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 51,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayCaux",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pC",
+          "paux"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayAC",
+      "label": "Semirrecta AC",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 27,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayAC",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pA",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayCaux2",
+      "label": "Semirrecta CK",
+      "color": "pavo",
+      "layerId": "geometry",
+      "order": 24,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayCaux2",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pC",
+          "paux2"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "congruenceMarkCmidG",
+      "label": "Marca de congruencia",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 53,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkCmidG",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pC",
+          "midG"
+        ]
+      },
+      "count": 2,
+      "height": 0.6,
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "congruenceMarkmidGB",
+      "label": "Marca de congruencia",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 54,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruenceMarkmidGB",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "midG",
+          "pB"
+        ]
+      },
+      "count": 2,
+      "height": 0.6,
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "polygonABmidG",
+      "label": "Triangulo ABG",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 35,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Polígono",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "polygonABmidG",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA",
+          "pB",
+          "midG"
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "polygonHmidGC",
+      "label": "Triangulo HGC",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 34,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Polígono",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "polygonHmidGC",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pH",
+          "midG",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAngleAmidGB",
+      "label": "Ángulo no reflejo (≤ 180°)",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 33,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleAmidGB",
+      "objectType": "angle",
+      "points": [
+        "pA",
+        "midG",
+        "pB"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.6,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAngleCmidGH",
+      "label": "Ángulo no reflejo (≤ 180°)",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 30,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleCmidGH",
+      "objectType": "angle",
+      "points": [
+        "pC",
+        "midG",
+        "pH"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.6,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayCH",
+      "label": "Semirrecta",
+      "color": "pavo",
+      "layerId": "background",
+      "order": 2,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayCH",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pC",
+          "pH"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAngleHCmidG",
+      "label": "Ángulo no reflejo (≤ 180°)",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 40,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleHCmidG",
+      "objectType": "angle",
+      "points": [
+        "pH",
+        "pC",
+        "midG"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAngleKCB",
+      "label": "Ángulo no reflejo (≤ 180°)",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 38,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleKCB",
+      "objectType": "angle",
+      "points": [
+        "pK",
+        "pC",
+        "pB"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayCB",
+      "label": "Semirrecta",
+      "color": "pavo",
+      "layerId": "background",
+      "order": 55,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayCB",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pC",
+          "pB"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "areaInthalfACDhalfBCA",
+      "label": "Intersección de áreas",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 55,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Intersección de áreas",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "areaInthalfACDhalfBCA",
+      "objectType": "area",
+      "geometry": {
+        "type": "intersection",
+        "areas": [
+          "halfACD",
+          "halfBCA"
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "constraint3",
+      "label": "Reflejo simétrico",
+      "enabled": true,
+      "type": "reflection",
+      "refs": [
+        "pF",
+        "midAC",
+        "pB"
+      ]
+    },
+    {
+      "id": "constraint4",
+      "label": "Reflejo simétrico",
+      "enabled": true,
+      "type": "reflection",
+      "refs": [
+        "pH",
+        "midG",
+        "pA"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "initial",
+      "label": "Hipótesis",
+      "description": "",
+      "visibleTargets": [
+        "segAB",
+        "segBC",
+        "segAC",
+        "rayBC",
+        "nonReflexAngleACD",
+        "polygonABC",
+        "nonReflexAngleBAC",
+        "nonReflexAngleABC",
+        "pA",
+        "pB",
+        "pC",
+        "pD"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "pA": {
+          "visible": true,
+          "emphasis": "none",
+          "overlay": {
+            "visible": false,
+            "title": "A",
+            "content": "{value}",
+            "position": "bottom-right"
+          },
+          "interactive": true
+        },
+        "pB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleABC": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "nonReflexAngleBAC": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "nonReflexAngleBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonCFmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleACD": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "segAmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidBCG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABmidG": {
+          "visible": false
+        },
+        "polygonHmidGC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidGB": {
+          "visible": false
+        },
+        "nonReflexAngleCmidGH": {
+          "visible": false
+        },
+        "rayCH": {
+          "visible": false
+        },
+        "nonReflexAngleHCmidG": {
+          "visible": false
+        },
+        "nonReflexAngleKCB": {
+          "visible": false
+        },
+        "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "step1",
+      "label": "Construcción inicial",
+      "description": "Se añade punto E",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "polygonABC",
+        "segAB",
+        "segBC",
+        "segAC",
+        "rayBC",
+        "segAmidAC",
+        "segmidACC",
+        "congruenceMarkAmidAC",
+        "congruenceMarkmidACC",
+        "midAC",
+        "segBmidAC_2"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "pA": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleABC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midAC": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "segBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonCFmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidAC": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "congruenceMarkmidACC": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "rayCF_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidBCG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC_2": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABmidG": {
+          "visible": false
+        },
+        "polygonHmidGC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidGB": {
+          "visible": false
+        },
+        "nonReflexAngleCmidGH": {
+          "visible": false
+        },
+        "rayCH": {
+          "visible": false
+        },
+        "nonReflexAngleHCmidG": {
+          "visible": false
+        },
+        "nonReflexAngleKCB": {
+          "visible": false
+        },
+        "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "step2",
+      "label": "Prolongación de BE",
+      "description": "Se añade punto E",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "polygonABC",
+        "segAB",
+        "segBC",
+        "segAC",
+        "rayBC",
+        "segAmidAC",
+        "segmidACC",
+        "segBmidAC_2",
+        "rayBmidAC",
+        "midAC",
+        "congruenceMarkAmidAC",
+        "congruenceMarkmidACC"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "pA": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleABC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBmidAC": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "segmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonCFmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidBCG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC_2": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABmidG": {
+          "visible": false
+        },
+        "polygonHmidGC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidGB": {
+          "visible": false
+        },
+        "nonReflexAngleCmidGH": {
+          "visible": false
+        },
+        "rayCH": {
+          "visible": false
+        },
+        "nonReflexAngleHCmidG": {
+          "visible": false
+        },
+        "nonReflexAngleKCB": {
+          "visible": false
+        },
+        "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "step3",
+      "label": "Duplicación de la mediana",
+      "description": "Describa qué cambia y por qué.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "pF",
+        "polygonABC",
+        "segAB",
+        "segBC",
+        "segAC",
+        "rayBC",
+        "midAC",
+        "segBmidAC",
+        "rayBmidAC",
+        "segmidACF",
+        "segAmidAC",
+        "segmidACC",
+        "congruenceMarkAmidAC",
+        "congruenceMarkmidACC",
+        "congruenceMarkBmidAC",
+        "congruenceMarkmidACF",
+        "segBmidAC_2"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "pA": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pF": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "polygonABC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleABC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACF": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonCFmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkBmidAC": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "congruenceMarkmidACF": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "rayCF_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidBCG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC_2": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABmidG": {
+          "visible": false
+        },
+        "polygonHmidGC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidGB": {
+          "visible": false
+        },
+        "nonReflexAngleCmidGH": {
+          "visible": false
+        },
+        "rayCH": {
+          "visible": false
+        },
+        "nonReflexAngleHCmidG": {
+          "visible": false
+        },
+        "nonReflexAngleKCB": {
+          "visible": false
+        },
+        "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "step4",
+      "label": "Congruencia LAL",
+      "description": "Describa qué cambia y por qué.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "pF",
+        "polygonABC",
+        "segAB",
+        "segBC",
+        "segAC",
+        "rayBC",
+        "midAC",
+        "segBmidAC",
+        "rayBmidAC",
+        "segmidACF",
+        "segAmidAC",
+        "segmidACC",
+        "congruenceMarkAmidAC",
+        "congruenceMarkmidACC",
+        "congruenceMarkBmidAC",
+        "congruenceMarkmidACF",
+        "segCF",
+        "polygonABmidAC",
+        "polygonCFmidAC",
+        "nonReflexAngleAmidACB",
+        "nonReflexAngleCmidACF",
+        "segBmidAC_2"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "pA": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pF": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleABC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACF": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segCF": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABmidAC": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "polygonCFmidAC": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidAC": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "congruenceMarkmidACC": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "congruenceMarkBmidAC": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "congruenceMarkmidACF": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "rayCF_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidBCG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC_2": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABmidG": {
+          "visible": false
+        },
+        "polygonHmidGC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidGB": {
+          "visible": false
+        },
+        "nonReflexAngleCmidGH": {
+          "visible": false
+        },
+        "rayCH": {
+          "visible": false
+        },
+        "nonReflexAngleHCmidG": {
+          "visible": false
+        },
+        "nonReflexAngleKCB": {
+          "visible": false
+        },
+        "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "step5",
+      "label": "Ángulos congruentes",
+      "description": "Describa qué cambia y por qué.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "pF",
+        "polygonABC",
+        "segAB",
+        "segBC",
+        "segAC",
+        "rayBC",
+        "midAC",
+        "segBmidAC",
+        "rayBmidAC",
+        "segmidACF",
+        "segAmidAC",
+        "segmidACC",
+        "segCF",
+        "polygonABmidAC",
+        "polygonCFmidAC",
+        "segBmidAC_2",
+        "nonReflexAngleBAC",
+        "nonReflexAnglemidACCF"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "pA": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pF": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleABC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBAC": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "nonReflexAngleBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACF": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segCF": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABmidAC": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "polygonCFmidAC": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "rayCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidBCG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC_2": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABmidG": {
+          "visible": false
+        },
+        "polygonHmidGC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidGB": {
+          "visible": false
+        },
+        "nonReflexAngleCmidGH": {
+          "visible": false
+        },
+        "rayCH": {
+          "visible": false
+        },
+        "nonReflexAngleHCmidG": {
+          "visible": false
+        },
+        "nonReflexAngleKCB": {
+          "visible": false
+        },
+        "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "step6",
+      "label": "Contenencia angular",
+      "description": "Describa qué cambia y por qué.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "polygonABC",
+        "segAB",
+        "segBC",
+        "segAC",
+        "rayBC",
+        "nonReflexAngleACD",
+        "halfACD",
+        "halfBCA",
+        "rayCF",
+        "pF",
+        "midAC",
+        "segBmidAC",
+        "segmidACF",
+        "areaInthalfACDhalfBCA"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "pA": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pF": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "polygonABC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleABC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACF": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonCFmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "nonReflexAngleACD": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "segAmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidBCG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": true,
+          "emphasis": "none",
+          "style": {
+            "strokeWidth": 0.7,
+            "strokeOpacity": 0,
+            "fillOpacity": 0
+          },
+          "interactive": false
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABmidG": {
+          "visible": false
+        },
+        "polygonHmidGC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidGB": {
+          "visible": false
+        },
+        "nonReflexAngleCmidGH": {
+          "visible": false
+        },
+        "rayCH": {
+          "visible": false
+        },
+        "nonReflexAngleHCmidG": {
+          "visible": false
+        },
+        "nonReflexAngleKCB": {
+          "visible": false
+        },
+        "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": true
+        }
+      }
+    },
+    {
+      "id": "step7",
+      "label": "Contenencia angular 2",
+      "description": "Describa qué cambia y por qué.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "polygonABC",
+        "segAB",
+        "segBC",
+        "segAC",
+        "rayBC",
+        "nonReflexAnglemidACCF",
+        "nonReflexAngleBAC",
+        "rayCF_2",
+        "pF",
+        "nonReflexAngleACD",
+        "midAC",
+        "rayCA"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "pA": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pF": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleABC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBAC": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "nonReflexAngleBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonCFmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": true,
+          "emphasis": "primary",
+          "interactive": true
+        },
+        "rayCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleACD": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "segAmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF_2": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "midG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidBCG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCaux2": {
+          "visible": false
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": false
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABmidG": {
+          "visible": false
+        },
+        "polygonHmidGC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidGB": {
+          "visible": false
+        },
+        "nonReflexAngleCmidGH": {
+          "visible": false
+        },
+        "rayCH": {
+          "visible": false
+        },
+        "nonReflexAngleHCmidG": {
+          "visible": false
+        },
+        "nonReflexAngleKCB": {
+          "visible": false
+        },
+        "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "step8",
+      "label": "Paso 8",
+      "description": "Descripción del nuevo paso de la demostración.",
+      "visibleTargets": [
+        "midG",
+        "segBC",
+        "pB",
+        "pC",
+        "congruenceMarkmidBCG",
+        "congruenceMarkAmidBC",
+        "segAH",
+        "pH",
+        "pA",
+        "polygonABC",
+        "segAC",
+        "segAB",
+        "rayCaux2",
+        "congruenceMarkmidGB",
+        "congruenceMarkCmidG",
+        "pK"
+      ],
+      "objectStates": {
+        "pF": {
+          "visible": false
+        },
+        "segAH": {
+          "visible": true
+        },
+        "segmidACF": {
+          "visible": false
+        },
+        "pA": {
+          "visible": true
+        },
+        "pB": {
+          "visible": true
+        },
+        "pC": {
+          "visible": true
+        },
+        "pD": {
+          "visible": false
+        },
+        "pH": {
+          "visible": true
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABC": {
+          "visible": true
+        },
+        "segBC": {
+          "visible": true
+        },
+        "segAC": {
+          "visible": true
+        },
+        "rayBC": {
+          "visible": false
+        },
+        "segAB": {
+          "visible": true
+        },
+        "nonReflexAngleABC": {
+          "visible": false
+        },
+        "nonReflexAngleBCD": {
+          "visible": false
+        },
+        "midAC": {
+          "visible": false
+        },
+        "nonReflexAngleBCA": {
+          "visible": false
+        },
+        "nonReflexAngleBAC": {
+          "visible": false
+        },
+        "segBmidAC": {
+          "visible": false
+        },
+        "rayBmidAC": {
+          "visible": false
+        },
+        "segCF": {
+          "visible": false
+        },
+        "polygonABmidAC": {
+          "visible": false
+        },
+        "polygonCFmidAC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false
+        },
+        "congruenceMarkAmidAC": {
+          "visible": false
+        },
+        "nonReflexAngleACD": {
+          "visible": false
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": false
+        },
+        "segAmidAC": {
+          "visible": false
+        },
+        "segmidACC": {
+          "visible": false
+        },
+        "rayCF": {
+          "visible": false
+        },
+        "congruenceMarkmidACC": {
+          "visible": false
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false
+        },
+        "congruenceMarkmidACF": {
+          "visible": false
+        },
+        "rayCF_2": {
+          "visible": false
+        },
+        "midG": {
+          "visible": true,
+          "emphasis": "primary"
+        },
+        "congruenceMarkmidBCG": {
+          "visible": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": true
+        },
+        "halfACD": {
+          "visible": false
+        },
+        "halfBCA": {
+          "visible": false
+        },
+        "rayCA": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "segBmidAC_2": {
+          "visible": false
+        },
+        "rayCaux2": {
+          "visible": true
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": true
+        },
+        "congruenceMarkCmidG": {
+          "visible": true
+        },
+        "pK": {
+          "visible": true
+        },
+        "paux2": {
+          "visible": false
+        },
+        "polygonABmidG": {
+          "visible": false
+        },
+        "polygonHmidGC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidGB": {
+          "visible": false
+        },
+        "nonReflexAngleCmidGH": {
+          "visible": false
+        },
+        "rayCH": {
+          "visible": false
+        },
+        "nonReflexAngleHCmidG": {
+          "visible": false
+        },
+        "nonReflexAngleKCB": {
+          "visible": false
+        },
+        "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "step9",
+      "label": "Paso 9",
+      "description": "Descripción del nuevo paso de la demostración.",
+      "visibleTargets": [
+        "midG",
+        "segBC",
+        "pB",
+        "pC",
+        "congruenceMarkmidBCG",
+        "congruenceMarkAmidBC",
+        "segAH",
+        "pH",
+        "pA",
+        "polygonABC",
+        "segAC",
+        "segAB",
+        "rayCaux2",
+        "congruenceMarkmidGB",
+        "congruenceMarkCmidG",
+        "pK",
+        "polygonHmidGC",
+        "polygonABmidG",
+        "nonReflexAngleCmidGH",
+        "nonReflexAngleAmidGB",
+        "rayCH",
+        "nonReflexAngleHCmidG",
+        "nonReflexAngleKCB",
+        "nonReflexAngleABC"
+      ],
+      "objectStates": {
+        "pF": {
+          "visible": false
+        },
+        "segAH": {
+          "visible": true
+        },
+        "segmidACF": {
+          "visible": false
+        },
+        "pA": {
+          "visible": true
+        },
+        "pB": {
+          "visible": true
+        },
+        "pC": {
+          "visible": true
+        },
+        "pD": {
+          "visible": false
+        },
+        "pH": {
+          "visible": true
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABC": {
+          "visible": true
+        },
+        "segBC": {
+          "visible": true
+        },
+        "segAC": {
+          "visible": true
+        },
+        "rayBC": {
+          "visible": false
+        },
+        "segAB": {
+          "visible": true
+        },
+        "nonReflexAngleABC": {
+          "visible": true,
+          "emphasis": "secondary"
+        },
+        "nonReflexAngleBCD": {
+          "visible": false
+        },
+        "midAC": {
+          "visible": false
+        },
+        "nonReflexAngleBCA": {
+          "visible": false
+        },
+        "nonReflexAngleBAC": {
+          "visible": false
+        },
+        "segBmidAC": {
+          "visible": false
+        },
+        "rayBmidAC": {
+          "visible": false
+        },
+        "segCF": {
+          "visible": false
+        },
+        "polygonABmidAC": {
+          "visible": false
+        },
+        "polygonCFmidAC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false
+        },
+        "congruenceMarkAmidAC": {
+          "visible": false
+        },
+        "nonReflexAngleACD": {
+          "visible": false
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": false
+        },
+        "segAmidAC": {
+          "visible": false
+        },
+        "segmidACC": {
+          "visible": false
+        },
+        "rayCF": {
+          "visible": false
+        },
+        "congruenceMarkmidACC": {
+          "visible": false
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false
+        },
+        "congruenceMarkmidACF": {
+          "visible": false
+        },
+        "rayCF_2": {
+          "visible": false
+        },
+        "midG": {
+          "visible": true,
+          "emphasis": "none"
+        },
+        "congruenceMarkmidBCG": {
+          "visible": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": true
+        },
+        "halfACD": {
+          "visible": false
+        },
+        "halfBCA": {
+          "visible": false
+        },
+        "rayCA": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "segBmidAC_2": {
+          "visible": false
+        },
+        "rayCaux2": {
+          "visible": true
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": true
+        },
+        "congruenceMarkCmidG": {
+          "visible": true
+        },
+        "pK": {
+          "visible": true
+        },
+        "paux2": {
+          "visible": false
+        },
+        "polygonABmidG": {
+          "visible": true,
+          "emphasis": "secondary"
+        },
+        "polygonHmidGC": {
+          "visible": true,
+          "emphasis": "secondary"
+        },
+        "nonReflexAngleAmidGB": {
+          "visible": true,
+          "emphasis": "secondary"
+        },
+        "nonReflexAngleCmidGH": {
+          "visible": true,
+          "emphasis": "secondary"
+        },
+        "rayCH": {
+          "visible": true,
+          "emphasis": "none"
+        },
+        "nonReflexAngleHCmidG": {
+          "visible": true,
+          "emphasis": "secondary"
+        },
+        "nonReflexAngleKCB": {
+          "visible": true,
+          "emphasis": "none"
+        },
+        "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "step10",
+      "label": "Paso 10",
+      "description": "Descripción del nuevo paso de la demostración.",
+      "visibleTargets": [
+        "segBC",
+        "pB",
+        "pC",
+        "pA",
+        "polygonABC",
+        "segAC",
+        "segAB",
+        "pK",
+        "nonReflexAngleKCB",
+        "pD",
+        "rayBC",
+        "rayCA",
+        "rayCaux2",
+        "nonReflexAngleACD",
+        "rayCB"
+      ],
+      "objectStates": {
+        "pF": {
+          "visible": false
+        },
+        "segAH": {
+          "visible": false
+        },
+        "segmidACF": {
+          "visible": false
+        },
+        "pA": {
+          "visible": true
+        },
+        "pB": {
+          "visible": true
+        },
+        "pC": {
+          "visible": true
+        },
+        "pD": {
+          "visible": true
+        },
+        "pH": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABC": {
+          "visible": true
+        },
+        "segBC": {
+          "visible": true
+        },
+        "segAC": {
+          "visible": true
+        },
+        "rayBC": {
+          "visible": true
+        },
+        "segAB": {
+          "visible": true
+        },
+        "nonReflexAngleABC": {
+          "visible": false
+        },
+        "nonReflexAngleBCD": {
+          "visible": false
+        },
+        "midAC": {
+          "visible": false
+        },
+        "nonReflexAngleBCA": {
+          "visible": false
+        },
+        "nonReflexAngleBAC": {
+          "visible": false
+        },
+        "segBmidAC": {
+          "visible": false
+        },
+        "rayBmidAC": {
+          "visible": false
+        },
+        "segCF": {
+          "visible": false
+        },
+        "polygonABmidAC": {
+          "visible": false
+        },
+        "polygonCFmidAC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false
+        },
+        "congruenceMarkAmidAC": {
+          "visible": false
+        },
+        "nonReflexAngleACD": {
+          "visible": true,
+          "emphasis": "primary"
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": false
+        },
+        "segAmidAC": {
+          "visible": false
+        },
+        "segmidACC": {
+          "visible": false
+        },
+        "rayCF": {
+          "visible": false
+        },
+        "congruenceMarkmidACC": {
+          "visible": false
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false
+        },
+        "congruenceMarkmidACF": {
+          "visible": false
+        },
+        "rayCF_2": {
+          "visible": false
+        },
+        "midG": {
+          "visible": false,
+          "emphasis": "none"
+        },
+        "congruenceMarkmidBCG": {
+          "visible": false
+        },
+        "congruenceMarkAmidBC": {
+          "visible": false
+        },
+        "halfACD": {
+          "visible": false
+        },
+        "halfBCA": {
+          "visible": false
+        },
+        "rayCA": {
+          "visible": true
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "segBmidAC_2": {
+          "visible": false
+        },
+        "rayCaux2": {
+          "visible": true,
+          "emphasis": "none"
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": true
+        },
+        "paux2": {
+          "visible": false
+        },
+        "polygonABmidG": {
+          "visible": false,
+          "emphasis": "secondary"
+        },
+        "polygonHmidGC": {
+          "visible": false,
+          "emphasis": "secondary"
+        },
+        "nonReflexAngleAmidGB": {
+          "visible": false,
+          "emphasis": "secondary"
+        },
+        "nonReflexAngleCmidGH": {
+          "visible": false,
+          "emphasis": "secondary"
+        },
+        "rayCH": {
+          "visible": false,
+          "emphasis": "none"
+        },
+        "nonReflexAngleHCmidG": {
+          "visible": false
+        },
+        "nonReflexAngleKCB": {
+          "visible": true,
+          "emphasis": "primary"
+        },
+        "rayCB": {
+          "visible": true
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "step11",
+      "label": "Conclusión",
+      "description": "",
+      "visibleTargets": [
+        "segAB",
+        "segBC",
+        "segAC",
+        "rayBC",
+        "nonReflexAngleACD",
+        "polygonABC",
+        "nonReflexAngleBAC",
+        "nonReflexAngleABC",
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "rayCaux2",
+        "pK",
+        "nonReflexAngleKCB"
+      ],
+      "durationMs": 1800,
+      "objectStates": {
+        "pA": {
+          "visible": true,
+          "emphasis": "none",
+          "overlay": {
+            "visible": false,
+            "title": "A",
+            "content": "{value}",
+            "position": "bottom-right"
+          },
+          "interactive": true
+        },
+        "pB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pD": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAB": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBC": {
+          "visible": true,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleABC": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "nonReflexAngleBAC": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "nonReflexAngleBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleBCD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonABmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "polygonCFmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleAmidACB": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleCmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAnglemidACCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "nonReflexAngleACD": {
+          "visible": true,
+          "emphasis": "secondary",
+          "interactive": true
+        },
+        "segAmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segmidACC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkBmidAC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidACF": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCF_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "midG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segAH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkmidBCG": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "congruenceMarkAmidBC": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "pH": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "segBmidAC_2": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfACD": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "halfBCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCA": {
+          "visible": false,
+          "emphasis": "none",
+          "interactive": true
+        },
+        "rayCaux2": {
+          "visible": true
+        },
+        "rayAC": {
+          "visible": false
+        },
+        "rayCaux": {
+          "visible": false
+        },
+        "congruenceMarkmidGB": {
+          "visible": false
+        },
+        "congruenceMarkCmidG": {
+          "visible": false
+        },
+        "pK": {
+          "visible": true
+        },
+        "paux2": {
+          "visible": false
+        },
+        "paux": {
+          "visible": false
+        },
+        "polygonABmidG": {
+          "visible": false
+        },
+        "polygonHmidGC": {
+          "visible": false
+        },
+        "nonReflexAngleAmidGB": {
+          "visible": false
+        },
+        "nonReflexAngleCmidGH": {
+          "visible": false
+        },
+        "rayCH": {
+          "visible": false
+        },
+        "nonReflexAngleHCmidG": {
+          "visible": false
+        },
+        "nonReflexAngleKCB": {
+          "visible": true
+        },
+        "rayCB": {
+          "visible": false
+        },
+        "areaInthalfACDhalfBCA": {
+          "visible": false
+        }
+      }
+    }
+  ],
+  "note": "Arrastra A, B y C"
+}
+);
+/* @matematika-diagram-spec:end */
+
+export const DemoAnguloExterno = () => <DiagramRenderer spec={DemoAnguloExternoSpec} />;

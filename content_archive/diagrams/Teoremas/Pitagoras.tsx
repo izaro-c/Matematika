@@ -1,0 +1,878 @@
+import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';
+
+/* @matematika-diagram-spec:start */
+export const PitagorasSpec = createDiagramSpec(
+{
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
+  "title": "Pitagorasen teorema",
+  "componentId": "Pitagoras",
+  "category": "Teoremas",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "header": {
+    "readingsMode": "automatic",
+    "readings": []
+  },
+  "viewport": {
+    "bounds": [
+      -4.2,
+      7.2,
+      7.2,
+      -3.2
+    ],
+    "home": [
+      -4.2,
+      7.2,
+      7.2,
+      -3.2
+    ],
+    "minZoom": 0.65,
+    "maxZoom": 4,
+    "padding": 0.06
+  },
+  "layers": [
+    {
+      "id": "construccion",
+      "label": "Construcción",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "geometria",
+      "label": "Triángulo",
+      "order": 3,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "areas",
+      "label": "Cuadrados",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "geometry",
+      "label": "Geometría Principal",
+      "order": 10,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Anotaciones & Texto",
+      "order": 20,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "background",
+      "label": "Fondo",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "controls",
+      "label": "Controles & Deslizadores",
+      "order": 30,
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "groups": [
+    {
+      "id": "trianguloGrupo",
+      "label": "Triángulo rectángulo",
+      "memberIds": [
+        "A",
+        "B",
+        "C",
+        "triangulo",
+        "segBC",
+        "segCA",
+        "segAB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "triangulo",
+      "color": "carbon"
+    },
+    {
+      "id": "cuadradoAGrupo",
+      "label": "Cuadrado del cateto a",
+      "memberIds": [
+        "segBC",
+        "cuadradoA"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "cuadrado-a",
+      "color": "pavo"
+    },
+    {
+      "id": "cuadradoBGrupo",
+      "label": "Cuadrado del cateto b",
+      "memberIds": [
+        "segCA",
+        "cuadradoB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "cuadrado-b",
+      "color": "terracota"
+    },
+    {
+      "id": "cuadradoCGrupo",
+      "label": "Cuadrado de la hipotenusa",
+      "memberIds": [
+        "segAB",
+        "cuadradoC"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "cuadrado-c",
+      "color": "ocre"
+    }
+  ],
+  "objects": [
+    {
+      "id": "C",
+      "label": "C",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 4,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "ejeX",
+      "label": "eje X",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 0,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "ejeY",
+      "label": "eje Y",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 2,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 1
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "A",
+      "label": "A",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 6,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 4
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "rayoY"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 5,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 3.22,
+        "y": 0
+      },
+      "mobility": {
+        "type": "constrained",
+        "relationIds": [
+          "constraint1"
+        ]
+      },
+      "appearance": {
+        "size": 7,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "sqA3",
+      "label": "sqA3",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 4,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "C.x",
+        "y": "C.y-B.x",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "cuadrado-a",
+      "label": "sqA4",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 5,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "B.x",
+        "y": "B.y-B.x",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "cuadrado-b",
+      "label": "sqB3",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 6,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "A.x-A.y",
+        "y": "A.y",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "sqB4",
+      "label": "sqB4",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 7,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "C.x-A.y",
+        "y": "C.y",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "cuadrado-c",
+      "label": "sqC3",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 8,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "B.x+A.y",
+        "y": "B.y+B.x",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "sqC4",
+      "label": "sqC4",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 9,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "A.x+A.y",
+        "y": "A.y+B.x",
+        "fallback": [
+          0,
+          0
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
+    },
+    {
+      "id": "rayoX",
+      "label": "semirrecta horizontal",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 1,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "C",
+          "ejeX"
+        ]
+      },
+      "appearance": {}
+    },
+    {
+      "id": "rayoY",
+      "label": "semirrecta vertical",
+      "color": "carbon",
+      "layerId": "construccion",
+      "order": 3,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "role": "construction"
+      },
+      "target": false,
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "C",
+          "ejeY"
+        ]
+      },
+      "appearance": {}
+    },
+    {
+      "id": "triangulo",
+      "label": "ABC hirukia",
+      "color": "carbon",
+      "layerId": "geometria",
+      "order": 0,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "highlightable": false,
+        "role": "secondary"
+      },
+      "target": false,
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "fillOpacity": 0.06,
+        "highlightFillOpacity": 0.22,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segBC",
+      "label": "a katetoa",
+      "color": "pavo",
+      "layerId": "geometria",
+      "order": 1,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo",
+        "cuadradoAGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "B",
+          "C"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segCA",
+      "label": "b katetoa",
+      "color": "terracota",
+      "layerId": "geometria",
+      "order": 2,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo",
+        "cuadradoBGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "C",
+          "A"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segAB",
+      "label": "c hipotenusa",
+      "color": "ocre",
+      "layerId": "geometria",
+      "order": 3,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "trianguloGrupo",
+        "cuadradoCGrupo"
+      ],
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": false,
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "A",
+          "B"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 4.5,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "cuadradoA",
+      "label": "karratua a-ren gainean",
+      "color": "pavo",
+      "layerId": "areas",
+      "order": 0,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "cuadradoAGrupo"
+      ],
+      "selection": {
+        "selectable": false,
+        "highlightable": false,
+        "role": "secondary"
+      },
+      "target": false,
+      "objectType": "region",
+      "geometry": {
+        "type": "area-decomposition",
+        "points": [
+          "B",
+          "C",
+          "sqA3",
+          "cuadrado-a"
+        ],
+        "rows": 3,
+        "columns": 3
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "strokeOpacity": 0.45,
+        "fillOpacity": 0.1,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "cuadradoB",
+      "label": "karratua b-ren gainean",
+      "color": "terracota",
+      "layerId": "areas",
+      "order": 1,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "cuadradoBGrupo"
+      ],
+      "selection": {
+        "selectable": false,
+        "highlightable": false,
+        "role": "secondary"
+      },
+      "target": false,
+      "objectType": "region",
+      "geometry": {
+        "type": "area-decomposition",
+        "points": [
+          "C",
+          "A",
+          "cuadrado-b",
+          "sqB4"
+        ],
+        "rows": 4,
+        "columns": 4
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "strokeOpacity": 0.45,
+        "fillOpacity": 0.1,
+        "highlightFillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "cuadradoC",
+      "label": "karratua c-ren gainean",
+      "color": "ocre",
+      "layerId": "areas",
+      "order": 2,
+      "visible": true,
+      "locked": false,
+      "groupIds": [
+        "cuadradoCGrupo"
+      ],
+      "selection": {
+        "selectable": false,
+        "highlightable": false,
+        "role": "secondary"
+      },
+      "target": false,
+      "objectType": "region",
+      "geometry": {
+        "type": "area-decomposition",
+        "points": [
+          "A",
+          "B",
+          "cuadrado-c",
+          "sqC4"
+        ],
+        "rows": 5,
+        "columns": 5
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "strokeOpacity": 0.5,
+        "fillOpacity": 0.12,
+        "highlightFillOpacity": 0.35,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "identidad",
+      "label": "Panel identidad",
+      "color": "terracota",
+      "layerId": "annotations",
+      "order": 0,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Panel informativo",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "infoPanel14",
+      "objectType": "annotation",
+      "variant": "panel",
+      "content": {
+        "text": "$a^2 + b^2 = c^2 \\implies {B.x^2} + {A.y^2} = {B.x^2 + A.y^2}$",
+        "unit": "u²"
+      },
+      "anchor": {
+        "type": "viewport",
+        "position": [
+          0,
+          0
+        ]
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "nonReflexAngleBCA",
+      "label": "Ángulo no reflejo (≤ 180°)",
+      "color": "mora",
+      "layerId": "construccion",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo no reflejo (≤ 180°)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "nonReflexAngleBCA",
+      "objectType": "angle",
+      "points": [
+        "B",
+        "C",
+        "A"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.55,
+        "preserveColorOnHighlight": true
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "constraint1",
+      "label": "Movimiento horizontal",
+      "enabled": true,
+      "type": "coordinate-equality",
+      "axis": "y",
+      "points": [
+        "B",
+        "C"
+      ]
+    }
+  ],
+  "steps": [],
+  "note": "Mugitu A eta B.",
+  "translations": {
+    "eu": {
+      "title": "Pitagorasen teorema",
+      "note": "Mugitu A eta B.",
+      "labels": {
+        "triangulo": "ABC hirukia",
+        "segBC": "a katetoa",
+        "segCA": "b katetoa",
+        "segAB": "c hipotenusa",
+        "anguloRecto": "angelu zuzena C-n",
+        "cuadradoA": "karratua a-ren gainean",
+        "cuadradoB": "karratua b-ren gainean",
+        "cuadradoC": "karratua c-ren gainean"
+      }
+    }
+  }
+}
+);
+/* @matematika-diagram-spec:end */
+
+export const Pitagoras = () => <DiagramRenderer spec={PitagorasSpec} />;
