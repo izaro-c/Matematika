@@ -11,7 +11,7 @@ Scaffold only. Current app still runs from `src/`.
 | Global CSS (layouts, `.ac-*`, prose) | `app/styles/` — see README there |
 | Reusable UI (not a full screen) | `components/` |
 | Hooks, helpers, generic stores | `lib/` |
-| Schemas, ContentStore, lean graph data types | `data/` |
+| Schemas, ContentStore | `data/` |
 | Diagram **engine** (spec / runtime / renderer) | `diagrams/` |
 | Fixed product screens (home, graph, editor, …) | `fixed-pages/` |
 | How MDX content types are rendered | `content-pages/` |

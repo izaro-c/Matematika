@@ -1,112 +1,87 @@
 # Matematika - Enciclopedia Viva
 
-Matematika es una plataforma enciclopédica interactiva y orgánica diseñada para explorar el conocimiento matemático. En lugar de presentar páginas aisladas, los conceptos, teoremas, y matemáticos están fuertemente entrelazados en una "Red Semántica" navegable, permitiendo a los estudiantes explorar las matemáticas como lo que realmente son: un ecosistema profundamente interconectado.
-
-## Trabajo con IA
-
-El proyecto usa una infraestructura común, no ligada a un proveedor. Toda herramienta comienza en [`AGENTS.md`](AGENTS.md); el gobierno formal vive en [`docs/ai/`](docs/ai/README.md), el estado y los paquetes de trabajo diarios en [`ai/`](ai/README.md), y los procedimientos reutilizables en [`.agents/skills/`](.agents/skills/). OpenCode dispone de su adaptador oficial en [`.opencode/`](.opencode/).
-
-Para iniciar una sesión con el mínimo contexto, se leen `AGENTS.md`, `ai/current-state.md`, una fila de `ai/goals.md` y, cuando corresponda, una skill.
-
-## Características Principales
-
-1. **Grafo de Conocimiento (Knowledge Graph)**: Un lienzo interactivo bidimensional que mapea dinámicamente las relaciones semánticas entre conceptos. Si un teorema menciona una definición o una demostración, una conexión orgánica se renderiza automáticamente.
-2. **Validación Estricta de Contenido**: Todo el contenido está escrito en MDX (Markdown + React). Los metadatos de cada artículo (*frontmatter*) se validan estrictamente mediante **Zod** para garantizar la integridad referencial y de esquemas.
-3. **Lectura Marginal (Marginalia)**: Inspirado en los textos clásicos, los enlaces a otros conceptos no expulsan al usuario de su contexto de lectura. En su lugar, abren elegantes paneles laterales (`MarginaliaPanel`) con resúmenes rápidos, axiomas matemáticos y simulaciones interactivas incrustadas.
-4. **Simulaciones Reactivas**: Los diagramas interactivos se inyectan en tiempo real dentro del contenido y en el panel lateral, proporcionando intuición geométrica o conceptual in situ.
+Matematika es una plataforma enciclopédica interactiva diseñada para explorar el conocimiento matemático. En lugar de presentar páginas aisladas, los conceptos, teoremas y biografía de matemáticos están entrelazados en una red navegable.
 
 ---
 
-## 🛠 Stack Tecnológico
+## Características Principales
+
+1. **Grafo de Conocimiento**: Lienzo interactivo bidimensional que mapea las relaciones lógicas entre conceptos, teoremas y axiomas.
+2. **Validación Estricta con Zod**: Contenido escrito en MDX (Markdown + React) con metadatos validados en tiempo de compilación.
+3. **Lectura Marginal (Marginalia)**: Panel lateral desplegable para consultar referencias y conceptos sin perder el contexto de lectura.
+4. **Diagramas Reactivos con JSXGraph**: Simulaciones 2D interactivas integradas en el contenido y sincronizadas con variables numéricas.
+5. **Editor MDX Sin Pérdidas**: Editor híbrido (Monaco + panel visual) que aplica modificaciones mediante rangos de offsets para preservar el formato original.
+
+---
+
+## Documentación Técnica
+
+La documentación completa del proyecto se encuentra en la carpeta [/docs](docs/README.md):
+
+- **[docs/architecture/fsd-design.md](docs/architecture/fsd-design.md)**: Estructura FSD en `src/`, capas, rutas en Wouter y Zustand stores.
+- **[docs/architecture/editor-engine.md](docs/architecture/editor-engine.md)**: Motor del editor MDX sin pérdidas, Monaco y reglas de seguridad estática.
+- **[docs/architecture/diagram-engine.md](docs/architecture/diagram-engine.md)**: Integración de JSXGraph con React, capas KaTeX y reactividad con `MathStore`.
+- **[docs/architecture/knowledge-graph.md](docs/architecture/knowledge-graph.md)**: Grafo de conocimiento (DAG), ordenación topológica y prevención de ciclos lógicos.
+- **[docs/content/mdx-authoring-guide.md](docs/content/mdx-authoring-guide.md)**: Guía práctica para redactar o editar artículos MDX y uso de `<ConceptLink>`.
+- **[docs/quality-and-ci/validation-pipelines.md](docs/quality-and-ci/validation-pipelines.md)**: Scripts de validación en `scripts/` y secuencia del gate de release.
+- **[docs/testing/testing-strategy.md](docs/testing/testing-strategy.md)**: Pruebas unitarias con Vitest, E2E con Puppeteer y auditorías de integridad.
+
+---
+
+## Stack Tecnológico
 
 - **Framework**: React 19 + TypeScript
 - **Arquitectura**: Feature-Sliced Design (FSD)
 - **Bundler**: Vite + Rollup
-- **Routing**: Wouter (Routing ligero y declarativo)
-- **Contenido**: MDX (`@mdx-js/rollup`) + Remark/Rehype Math (Soporte KaTeX)
+- **Routing**: Wouter (dispatchers de 1, 2 y 3 segmentos con i18n)
+- **Contenido**: MDX (`@mdx-js/rollup`) + Remark Math + KaTeX
 - **Validación**: Zod
-- **Visualización**: `react-force-graph-2d` (Físicas d3-force)
-- **Formalización**: Lean 4
-- **Estilos**: Tailwind CSS (con un sistema de diseño "Arts and Crafts" personalizado: lienzo, carbon, canela, terracota, etc).
+- **Visualización**: `react-force-graph-2d` + JSXGraph + Monaco Editor
+- **Estilos**: Tailwind CSS (sistema de diseño "Arts and Crafts")
 
 ---
 
-## 🚀 Requisitos Previos
+## Requisitos Previos e Instalación
 
-- **Node.js** (recomendado v20+) y **npm**
-- **Lean 4** y **Elan/Lake** (requeridos para las validaciones lógicas profundas y el puente interactivo de pruebas)
+- **Node.js** (v20+) y **npm**
 
----
-
-## ⚙️ Instalación y Uso
-
-1. **Clonar e instalar dependencias**:
+1. Clonar e instalar dependencias:
    ```bash
    npm install
    ```
 
-2. **Ejecutar servidor de desarrollo**:
+2. Ejecutar servidor de desarrollo:
    ```bash
    npm run dev
    ```
-   Abre [http://localhost:5173](http://localhost:5173) para ver la aplicación en funcionamiento.
+   Abre [http://localhost:5173](http://localhost:5173) en el navegador.
 
-3. **Compilar para producción**:
+3. Compilar para producción:
    ```bash
    npm run build
    ```
 
 ---
 
-## 🧪 Validaciones y Comandos
+## Validaciones y Comandos
 
-Matematika aplica un estricto flujo de validación. Las siguientes validaciones se aseguran de que no se rompan las dependencias arquitectónicas, lógicas o referenciales.
-
-- **`npm run lint`**: Validación de estilo y código.
-- **`npm run typecheck`**: Verificación estricta de tipos TypeScript.
-- **`npm run test`**: Ejecutar pruebas funcionales y de componentes con Vitest.
-- **`npm run test:coverage`**: Generar reporte de cobertura de código.
-- **`npm run depcruise`**: Asegura que se cumple estrictamente la arquitectura Feature-Sliced Design (FSD).
-- **`npm run validate-references`**: Valida que los enlaces (ConceptLink) sean íntegros.
-- **`npm run validate-graph`**: Verifica que el DAG lógico (grafo acíclico dirigido) no tenga ciclos lógicos.
-- **`npm run validate-lean`**: Requiere Lean instalado. Compila Lean, regenera el grafo lógico y valida la coherencia entre el texto en MDX y las pruebas certificadas en Lean.
-- **`npm run bridge:audit`**: Verifica la cobertura Lean y la deuda explícita (temporal) de las declaraciones que todavía no están formalmente certificadas.
-
-### Gates del editor
-
-- **`npm run editor:generated:check`**: Regenera artefactos versionados del editor/IA y falla si aparece diff.
-- **`npm run editor:roundtrip:check`**: Ejecuta la barrera lossless del corpus MDX.
-- **`npm run editor:test:unit`**: Ejecuta tests unitarios del editor, documento, estado y diagramas.
-- **`npm run editor:test:integration`**: Ejecuta tests de persistencia, hook principal y round-trip integrado.
-- **`npm run editor:test:coverage`**: Ejecuta cobertura del editor con umbrales por riesgo y por archivo crítico.
-- **`npm run editor:test:e2e`**: Ejecuta 14 flujos E2E críticos contra Vite/Puppeteer reales.
-- **`npm run editor:architecture`**: Verifica fronteras arquitectónicas y patrones inseguros del editor.
-- **`npm run editor:release-check`**: Gate completo de cierre del editor con tests, cobertura, E2E, grafo y Lean.
-
-> **Política Editorial**: La carga del sistema y de las páginas en sí no falla ni se bloquea completamente si un autor enlaza hacia un artículo que "aún no existe" (ideal para flujo de redacción). El `ContentStore` (`src/data/content/ContentStore.ts`) registrará warnings o mostrará estados 404 controlados para que la plataforma principal siga siendo navegable mientras se construye nuevo contenido.
+- **`npm run lint`**: Validación de estilo con ESLint.
+- **`npm run typecheck`**: Verificación estricta de tipos TypeScript (`tsc -b`).
+- **`npm run test`**: Ejecutar suite de pruebas con Vitest.
+- **`npm run depcruise`**: Verificar fronteras arquitectónicas FSD.
+- **`npm run validate-references`**: Valida que los enlaces `<ConceptLink>` apunten a artículos existentes.
+- **`npm run validate-graph`**: Comprueba que el grafo de conocimiento no contenga ciclos lógicos.
+- **`npm run editor:release-check`**: Gate completo de lanzamiento del editor (tests + e2e + cobertura + roundtrip).
+- **`npm run full-check`**: Ejecuta la suite completa de calidad del repositorio.
 
 ---
 
-## ✍️ Cómo Añadir Contenido
+## Cómo Añadir Contenido
 
-Matematika utiliza el sistema de archivos como base de datos de contenido estático (MDX).
-Los metadatos se validan en el inicio a través de `ContentStore` (`src/data/content/ContentStore.ts`).
+El contenido reside en la carpeta `content/mdx/` distribuido por categorías (`theorems`, `definitions`, `examples`, `exercises`, `usecases`, `demonstrations`, `mathematicians`, `axioms`, `axiomatic-systems`, `models`, `lessons`, `study-plans`).
 
-### 1. Ubicaciones (MDX)
-El contenido real escrito en Markdown reside en `content/mdx/`:
-- `theorems/`: Teoremas principales, lemas y corolarios.
-- `definitions/`: Conceptos, axiomas y definiciones formales.
-- `examples/`: Ejemplos prácticos y numéricos resueltos.
-- `exercises/`: Ejercicios propuestos con pistas y soluciones ocultas.
-- `usecases/`: Aplicaciones del mundo real de conceptos matemáticos abstractos.
-- `demonstrations/`: Demostraciones formales y paso a paso.
-- `mathematicians/`: Biografías históricas.
-- `axioms/`, `axiomatic-systems/`, `models/`, `lessons/`.
+Cada archivo `.mdx` debe exportar la constante `metadata` validada por Zod:
 
-### 2. Formato MDX y Zod (Frontmatter)
-Todo archivo `.mdx` debe exportar obligatoriamente una constante `metadata` que cumpla con su esquema correspondiente especificado en `src/data/content/schemas.ts`. Se exige el formato `kebab-case` para todos los identificadores (`id`).
-
-Ejemplo de un `teorema.mdx`:
 ```mdx
 export const metadata = {
   id: "teorema-ejemplo",
@@ -114,27 +89,26 @@ export const metadata = {
   title: "Teorema de Ejemplo",
   description: "Descripción breve que aparecerá en el panel lateral.",
   statement: "El enunciado formal con matemáticas en LaTeX: $a^2 = b^2 + c^2$.",
-  requires: ["definicion-previa"], // Grafo de dependencias lógicas
+  requires: ["definicion-previa"],
 };
 
 <Capitular letra="C" />onsidérese el <ConceptLink targetId="definicion-asociada">concepto asociado</ConceptLink>...
 ```
 
-### 3. El componente `<ConceptLink>`
-Es el corazón de la navegación interna. **Nunca uses `<a>` o `<Link>` estándar para navegar entre conceptos**.
-Usa `<ConceptLink targetId="slug-del-archivo">Texto a mostrar</ConceptLink>`. Esto alimenta automáticamente el Grafo de Conocimiento y habilita el panel lateral.
+Para navegar entre conceptos usa siempre `<ConceptLink targetId="slug-del-archivo">Texto</ConceptLink>`. No utilices etiquetas `<a>` ni `<Link>` convencionales. Consulta la [guía de redacción en docs](docs/content/mdx-authoring-guide.md) para más detalles.
 
 ---
 
-## 📂 Arquitectura Feature-Sliced Design (FSD)
+## Arquitectura del Proyecto (FSD)
 
 ```
 src/
-├── app/            # Entry point (AppRouter, Providers, CSS global)
-├── pages/          # Páginas principales con enrutamiento de Wouter
-├── widgets/        # Bloques de UI compuestos y Lados (Marginalia, TopBar, Layouts)
-├── features/       # Módulos de dominio y stores (Graph, Editor, Glossary, Search...)
-├── entities/       # Lógica central de datos y tipados (ContentStore, Schemas, Graph Types)
-├── shared/         # Componentes atómicos (UI base, Layouts, Libs, Theme, JSXGraph Diagrams)
-└── database/       # Colecciones Markdown reactivas (Contenido MDX real)
+├── app/            # Punto de entrada (AppRouter, proveedores, CSS global)
+├── fixed-pages/    # Pantallas de la app (home, grafo, diccionario, editor, historia)
+├── content-pages/  # Plantillas de visualización de artículos MDX
+├── widgets/        # Componentes complejos de UI (SearchOmnibar, MarginaliaPanel)
+├── features/       # Lógica de dominio y stores (GlossaryStore, GraphStore, MathStore)
+├── entities/       # Acceso a datos, ContentStore y esquemas Zod
+├── shared/         # Componentes base, UI atómica, wrappers de JSXGraph e i18n
+└── data/           # Índices generados y estructuras del grafo
 ```

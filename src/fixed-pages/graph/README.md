@@ -2,7 +2,7 @@
 
 **Qué es:** UI y worker del grafo de conocimiento.
 
-**Qué no es:** grafo Lean/MDX de validación (`npm run validate-graph`), content MDX.
+**Qué no es:** grafo MDX de validación (`npm run validate-graph`), content MDX.
 
 ## Layout
 

@@ -43,7 +43,7 @@ const DIAGRAM_ACCORDION = {
   semantic: true,
 };
 
-/** Diagramas tab body for the MDX inspector (linked diagrams, targets, connections, lean). */
+/** Diagramas tab body for the MDX inspector (linked diagrams, targets, connections). */
 export const MetadataPanel: React.FC<MetadataPanelProps> = ({
   metadata,
   canMutateVisualStructure,
