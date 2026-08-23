@@ -7,8 +7,8 @@ import { publicAsset } from '@/lib/routes';
 
 // Configurar las dos texturas con BASE_URL. El tema elige cuál queda activa
 // desde CSS, de modo que el atributo inline no bloquee el cambio a modo oscuro.
-document.documentElement.style.setProperty('--bg-arts-and-crafts-light-url', `url(${publicAsset('/images/backgrounds/bg-arts-crafts-1.png')})`);
-document.documentElement.style.setProperty('--bg-arts-and-crafts-dark-url', `url(${publicAsset('/images/backgrounds/bg-arts-crafts-dark.jpg')})`);
+document.documentElement.style.setProperty('--bg-arts-and-crafts-light-url', `url(${publicAsset('/images/backgrounds/bg-arts-crafts-1.webp')})`);
+document.documentElement.style.setProperty('--bg-arts-and-crafts-dark-url', `url(${publicAsset('/images/backgrounds/bg-arts-crafts-dark.webp')})`);
 
 /**
  * Punto de entrada principal de la aplicación React.

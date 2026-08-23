@@ -2,8 +2,6 @@
    MATEMATIKA DESIGN SYSTEM - THEME CONFIGURATION
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Fondamento:ital@0;1&family=Source+Sans+3:ital,wght@0,400..700;1,400..700&family=UnifrakturMaguntia&display=swap');
-
 @theme {
   --font-title: var(--font-title-family);
   --font-serif: var(--font-body-family);
@@ -106,7 +104,7 @@
   --on-accent: #F3EFE7; /* texto sobre CTAs de color sólido */
   --ink-pigment-mix: 26%;
 
-  --theme-graph-bg-url: var(--bg-arts-and-crafts-light-url, url('/images/backgrounds/bg-arts-crafts-1.png'));
+  --theme-graph-bg-url: var(--bg-arts-and-crafts-light-url, url('/images/backgrounds/bg-arts-crafts-1.webp'));
   --bg-arts-and-crafts-url: var(--theme-graph-bg-url);
 }
 
@@ -122,7 +120,7 @@
   --theme-canela:    #E08643;  /* Definiciones (Alta luminancia) */
   --theme-pavo:      #7DA2DA;  /* Modelos (Alta luminancia) */
   --theme-mora:   #B392CD;  /* Ejemplos (Alta luminancia) */
-  --theme-graph-bg-url: var(--bg-arts-and-crafts-dark-url, url('/images/backgrounds/bg-arts-crafts-dark.jpg'));
+  --theme-graph-bg-url: var(--bg-arts-and-crafts-dark-url, url('/images/backgrounds/bg-arts-crafts-dark.webp'));
   --bg-arts-and-crafts-url: var(--theme-graph-bg-url);
 
   /* Parámetros Visuales y Decorativos del Códice */

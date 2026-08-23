@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useLayoutEffect, useRef } from 'react';
 import JXG from 'jsxgraph';
+import './jsxgraph.css';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { matchesScopedDiagramTarget } from '@/lib/page-context/DiagramTargetRegistryContext';
 import { syncBoardToContainerSize, readLayoutBoxSize } from '@/diagrams/jsxgraph/mathBoardContainerSize';

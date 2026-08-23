@@ -43,4 +43,28 @@ export default defineConfig({
   server: {
     host: true,
   },
+  build: {
+    target: 'es2020',
+    cssMinify: true,
+    minify: 'esbuild',
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('contentIndex.json') || id.includes('contentCoverage.json')) {
+            return 'content-index-data';
+          }
+          if (id.includes('node_modules')) {
+            if (id.includes('jsxgraph')) return 'vendor-jsxgraph';
+            if (id.includes('@monaco-editor') || id.includes('monaco-editor')) return 'vendor-monaco';
+            if (id.includes('three') || id.includes('@react-three')) return 'vendor-three';
+            if (id.includes('react-force-graph') || id.includes('@xyflow') || id.includes('d3-')) return 'vendor-graph';
+            if (id.includes('katex')) return 'vendor-katex';
+            if (id.includes('fuse.js')) return 'vendor-fuse';
+            if (id.includes('react') || id.includes('wouter')) return 'vendor-react';
+          }
+        }
+      }
+    }
+  }
 })

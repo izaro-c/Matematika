@@ -174,7 +174,6 @@ const SingleSegmentRouteDispatcher: React.FC = () => {
 
 export const AppRouter = () => {
   const { lang } = useI18n();
-  const methods = db.getAllMethods();
 
   return (
     <Suspense fallback={<PageLoadingScreen />}>
@@ -201,11 +200,9 @@ export const AppRouter = () => {
         </Route>
 
         {/* ALIAS HISTÓRICOS DE LECCIÓN */}
-        {methods.map(({ id }) => (
-          <Route key={`legacy-method-${id}`} path={`/leccion-${id}`}>
-            <Redirect to={`/${lang}/metodo/${id}`} replace />
-          </Route>
-        ))}
+        <Route path="/leccion-:id">
+          {(params) => <Redirect to={`/${lang}/metodo/${params.id}`} replace />}
+        </Route>
 
         {/* RUTAS DE 3 SEGMENTOS: /:lang/:segment/:id */}
         <Route path="/:lang/:segment/:id" component={LocalizedContentRouteDispatcher} />
