@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /editor
+Disallow: /*/editor
+
+Sitemap: https://izaro-c.github.io/Matematika/sitemap.xml
