@@ -82,16 +82,20 @@ aplicación rigurosa es demostrar que en un triángulo isósceles, los ángulos 
 
 <StudyPlanCheckpoint
   id="checkpoint-pitagoras-congruencia"
-  question="¿Qué criterio de congruencia nos permite demostrar formalmente que los ángulos basales de un triángulo isósceles son iguales?"
-  options={[
-    "Ángulo-Lado-Ángulo (ALA)",
-    "Lado-Ángulo-Lado (LAL / SAS)",
-    "Lado-Lado-Lado (LLL)",
-    "Ángulo-Ángulo-Lado (AAL)"
-  ]}
-  correctAnswer={1}
   explanation="El teorema del triángulo isósceles se demuestra duplicando mentalmente el triángulo e igualando sus lados y el ángulo comprendido (SAS). Esto genera una congruencia que fuerza a los ángulos correspondientes de la base a ser iguales."
-/>
+>
+  <Pregunta
+    id="checkpoint-pitagoras-congruencia"
+    question="¿Qué criterio de congruencia nos permite demostrar formalmente que los ángulos basales de un triángulo isósceles son iguales?"
+    options={[
+      "Ángulo-Lado-Ángulo (ALA)",
+      "Lado-Ángulo-Lado (LAL / SAS)",
+      "Lado-Lado-Lado (LLL)",
+      "Ángulo-Ángulo-Lado (AAL)"
+    ]}
+    correct="Lado-Ángulo-Lado (LAL / SAS)"
+  />
+</StudyPlanCheckpoint>
 
 <Separador />
 
@@ -116,16 +120,17 @@ internos de cualquier triángulo en el plano es exactamente 180° (dos ángulos 
 
 <StudyPlanCheckpoint
   id="checkpoint-pitagoras-paralelas"
-  question="¿Por qué la suma de los ángulos de un triángulo es exactamente 180° en la geometría plana?"
-  options={[
-    "Es una verdad evidente que no requiere demostración",
-    "Porque depende críticamente del Quinto Postulado de las paralelas de Euclides",
-    "Es válido también en geometría hiperbólica y esférica",
-    "Porque se define así por convención matemática"
-  ]}
-  correctAnswer={1}
   explanation="Para demostrar que la suma de ángulos es 180°, trazamos una recta paralela a la base por el vértice opuesto. Esto requiere el Quinto Postulado para asegurar que los ángulos alternos internos sumen un ángulo llano."
-/>
+>
+  <Emparejar
+    id="checkpoint-pitagoras-paralelas"
+    pregunta="Relaciona cada propiedad geométrica con su fundamento clave en la Fase 3:"
+    pairs={[
+      { left: "Suma de ángulos (180°)", right: "Quinto Postulado de las Paralelas" },
+      { left: "Ángulos alternos internos", right: "Línea paralela auxiliar por el vértice" }
+    ]}
+  />
+</StudyPlanCheckpoint>
 
 <Separador />
 

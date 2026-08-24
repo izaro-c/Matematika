@@ -294,9 +294,6 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
     startShuffleAnimation();
   };
 
-  const showResolutionBookmark = isCompleted && Boolean(resolucionData);
-  const showBookmarks = Boolean(errorComunData || showResolutionBookmark);
-
   return (
     <ExerciseCard
       id={id}
@@ -306,15 +303,9 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
       hasFailed={hasFailed}
       activeTab={activeTab}
       onTabChange={setActiveTab}
-      className={isCompleted ? 'bg-musgo/5 border-musgo/30' : ''}
+      className={''}
+      pregunta={pregunta}
     >
-      <h4 className={`font-bold text-carbon mb-8 mt-2 text-lg z-30 relative leading-relaxed ${showBookmarks ? 'pr-20 sm:pr-28' : ''}`}>
-        {isCompleted ? (
-          <span className="text-musgo">❦ {t('exercise', 'completed')}</span>
-        ) : (
-          <span>{pregunta || t('exercise', 'matchConcepts')}</span>
-        )}
-      </h4>
 
       <div className="relative flex flex-col sm:flex-row gap-6 sm:gap-12 md:gap-16" ref={containerRef}>
         {/* Curvas Bézier de conexión y área de corte interactivo */}
@@ -335,7 +326,7 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
                     className="pointer-events-auto cursor-pointer"
                     onClick={() => disconnectLeft(line.leftVal)}
                   >
-                    <title>Clic para cortar conexión</title>
+                    <title>{t('exercise', 'clickToCutConnection')}</title>
                   </path>
                 )}
                 {/* Línea visible de conexión */}

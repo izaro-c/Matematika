@@ -65,8 +65,8 @@ describe('EditorApiClient', () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValueOnce(new TypeError('offline'))
       .mockRejectedValueOnce(new DOMException('Aborted', 'AbortError')));
     const client = new EditorApiClient();
-    expect(await errorKind(client.readContent({ path: validRead.path }))).toBe('network-error');
-    expect(await errorKind(client.readContent({ path: validRead.path }))).toBe('aborted');
+    expect(await errorKind(client.readDraft({ path: validRead.path }))).toBe('network-error');
+    expect(await errorKind(client.readDraft({ path: validRead.path }))).toBe('aborted');
   });
 
   it('sends expectedVersion and supports AbortSignal', async () => {

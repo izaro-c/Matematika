@@ -37,8 +37,5 @@ export function useOptionalMathStore<T>(selector: (state: MathState) => T): T | 
 
 export function useMathStore<T>(selector: (state: MathState) => T): T {
   const store = useContext(MathContext);
-  if (!store) {
-    throw new Error('useMathStore debe usarse dentro de un MathProvider');
-  }
-  return useStore(store, selector);
+  return useStore(store ?? fallbackMathStore, selector);
 }

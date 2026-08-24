@@ -201,7 +201,7 @@ export const SearchOmnibar = () => {
     options?.[index]?.focus();
   };
 
-  const handleTypeOptionKeyDown = (event: React.KeyboardEvent, index: number) => {
+  const handleTypeMenuKeyDown = (event: React.KeyboardEvent, index: number) => {
     if (event.key === 'ArrowDown') {
       event.preventDefault();
       focusTypeOption(Math.min(index + 1, availableTypes.length));
@@ -222,10 +222,6 @@ export const SearchOmnibar = () => {
   const hasSearch = query.trim().length > 0;
   const hasResults = results.length > 0;
   const showIntroduction = !hasSearch && selectedType === 'all';
-  const resultNoun = allResults.length === 1 ? 'resultado' : 'resultados';
-  const resultSummary = allResults.length > results.length
-    ? `${results.length} de ${allResults.length} resultados`
-    : `${allResults.length} ${resultNoun}`;
 
   return (
     <div
@@ -240,7 +236,7 @@ export const SearchOmnibar = () => {
         aria-labelledby="search-title"
         className="relative flex h-[100dvh] w-full flex-col overflow-hidden border-carbon/30 bg-lienzo font-sans shadow-parchment outline-carbon/15 sm:h-auto sm:max-h-[84vh] sm:max-w-2xl sm:overflow-visible sm:rounded-[2px] sm:border sm:outline sm:outline-1 sm:outline-offset-[-5px]"
       >
-        <h2 id="search-title" className="sr-only">Buscar en Matematika</h2>
+        <h2 id="search-title" className="sr-only">{t('search', 'searchTitle')}</h2>
         <div className="flex min-h-16 items-center border-b border-carbon/15 px-4 sm:px-5">
           <svg className="mr-3 h-5 w-5 shrink-0 text-terracota/80" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -249,7 +245,7 @@ export const SearchOmnibar = () => {
             ref={inputRef}
             type="search"
             role="searchbox"
-            aria-label="Buscar contenido matemático"
+            aria-label={t('search', 'searchAria')}
             aria-controls="search-results"
             aria-activedescendant={hasResults ? `search-result-${selectedIndex}` : undefined}
             className="min-w-0 flex-1 bg-transparent font-serif text-xl text-carbon outline-none placeholder:text-carbon/35"
@@ -260,39 +256,16 @@ export const SearchOmnibar = () => {
               setSelectedIndex(0);
             }}
           />
-          {query && (
-            <button
-              type="button"
-              onClick={() => {
-                setQuery('');
-                setSelectedIndex(0);
-              }}
-              className="ml-2 min-h-11 px-2 text-sm text-carbon/50 transition-colors hover:text-carbon focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
-              aria-label={t('search', 'clear')}
-            >
-              {t('search', 'clear')}
-            </button>
-          )}
-          <button
-            type="button"
-            onClick={resetAndClose}
-            className="ml-2 flex min-h-11 min-w-11 items-center justify-center rounded-[2px] border border-carbon/20 font-serif text-xs font-bold tracking-wider text-carbon/55 outline outline-1 outline-offset-[-4px] outline-carbon/10 transition-colors hover:border-terracota/60 hover:text-terracota focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota"
-            aria-label={t('search', 'pressEscToClose')}
-          >
-            ESC
-          </button>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 border-b border-carbon/15 bg-carbon/[0.025] px-4 py-3 sm:px-5">
-          <label htmlFor="search-type" className="ac-label ac-label--sm">
-            {t('search', 'catalog')}
-          </label>
+        {/* Sub-toolbar con selector de tipo de contenido */}
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-carbon/10 bg-carbon/[0.025] px-4 py-2 sm:px-5">
           <div ref={typeMenuRef} className="relative">
             <button
               ref={typeTriggerRef}
               id="search-type"
               type="button"
-              aria-label="Tipo de contenido"
+              aria-label={t('search', 'contentTypeAria')}
               aria-haspopup="listbox"
               aria-expanded={isTypeMenuOpen}
               onClick={() => setIsTypeMenuOpen(open => !open)}
@@ -305,27 +278,18 @@ export const SearchOmnibar = () => {
                   ));
                 }
               }}
-              className="flex min-h-11 min-w-52 items-center gap-2 rounded-[2px] border border-carbon/25 bg-lienzo py-2 pl-3 pr-3 font-serif text-base font-semibold text-carbon outline outline-1 outline-offset-[-4px] outline-carbon/10 transition-colors hover:border-terracota/50 focus-visible:border-terracota focus-visible:ring-2 focus-visible:ring-terracota/20"
+              className="flex items-center gap-2 rounded-[2px] px-2 py-1.5 font-serif text-sm font-semibold text-carbon hover:bg-carbon/[0.05]"
             >
-              <span
-                className="w-5 text-center"
-                style={{ color: selectedType === 'all' ? 'var(--theme-terracota)' : TYPE_COLORS[selectedType] }}
-                aria-hidden="true"
-              >
+              <span style={{ color: selectedType === 'all' ? 'var(--theme-terracota)' : TYPE_COLORS[selectedType] }}>
                 {selectedType === 'all' ? '✦' : TYPE_ICONS[selectedType]}
               </span>
-              <span className="flex-1 text-left">
-                {typeLabels[selectedType]}
-              </span>
-              <span className={`text-xs text-carbon/45 transition-transform ${isTypeMenuOpen ? 'rotate-180' : ''}`} aria-hidden="true">
-                ▾
-              </span>
+              {typeLabels[selectedType]}
             </button>
 
             {isTypeMenuOpen && (
               <div
                 role="listbox"
-                aria-label="Tipos de contenido"
+                aria-label={t('search', 'contentTypesAria')}
                 className="fixed left-4 right-4 top-[8rem] z-30 max-h-[calc(100dvh-9rem)] overflow-y-auto overscroll-contain rounded-[2px] border border-carbon/30 bg-lienzo p-2 shadow-parchment outline outline-1 outline-offset-[-5px] outline-carbon/15 [scrollbar-gutter:stable] sm:absolute sm:left-0 sm:right-auto sm:top-[calc(100%+0.5rem)] sm:grid sm:w-[24rem] sm:grid-cols-2 sm:gap-1"
               >
                 <button
@@ -333,53 +297,46 @@ export const SearchOmnibar = () => {
                   role="option"
                   aria-selected={selectedType === 'all'}
                   onClick={() => changeType('all')}
-                  onKeyDown={event => handleTypeOptionKeyDown(event, 0)}
-                  className={`flex min-h-11 w-full items-center gap-3 border-l-2 px-3 py-2 text-left font-serif text-sm transition-colors sm:col-span-2 ${
-                    selectedType === 'all'
-                      ? 'border-l-terracota bg-terracota/[0.07] text-carbon'
-                      : 'border-l-transparent text-carbon/70 hover:bg-carbon/[0.04] hover:text-carbon'
+                  onKeyDown={event => handleTypeMenuKeyDown(event, 0)}
+                  className={`flex items-center gap-2.5 rounded-[2px] px-3 py-2 text-left font-serif text-sm transition-colors ${
+                    selectedType === 'all' ? 'bg-terracota/10 font-bold text-terracota' : 'text-carbon hover:bg-carbon/[0.05]'
                   }`}
                 >
-                  <span className="w-5 text-center text-terracota" aria-hidden="true">✦</span>
-                  <span className="flex-1 font-semibold">{t('search', 'allContent')}</span>
-                  {selectedType === 'all' && <span className="text-terracota" aria-hidden="true">✓</span>}
+                  <span className="w-4 text-center text-terracota" aria-hidden="true">✦</span>
+                  <span>{t('search', 'allCategories')}</span>
                 </button>
 
-                {availableTypes.map((type, index) => (
+                {availableTypes.map((type, idx) => (
                   <button
                     key={type}
                     type="button"
                     role="option"
                     aria-selected={selectedType === type}
                     onClick={() => changeType(type)}
-                    onKeyDown={event => handleTypeOptionKeyDown(event, index + 1)}
-                    style={{ borderLeftColor: selectedType === type ? TYPE_COLORS[type] : undefined }}
-                    className={`flex min-h-11 w-full items-center gap-3 border-l-2 px-3 py-2 text-left font-serif text-sm transition-colors ${
-                      selectedType === type
-                        ? 'bg-carbon/[0.055] text-carbon'
-                        : 'border-l-transparent text-carbon/70 hover:bg-carbon/[0.04] hover:text-carbon'
+                    onKeyDown={event => handleTypeMenuKeyDown(event, idx + 1)}
+                    className={`flex items-center gap-2.5 rounded-[2px] px-3 py-2 text-left font-serif text-sm transition-colors ${
+                      selectedType === type ? 'bg-carbon/[0.08] font-bold text-carbon' : 'text-carbon/80 hover:bg-carbon/[0.05]'
                     }`}
                   >
-                    <span className="w-5 text-center" style={{ color: TYPE_COLORS[type] }} aria-hidden="true">
+                    <span className="w-4 text-center font-bold" style={{ color: TYPE_COLORS[type] }} aria-hidden="true">
                       {TYPE_ICONS[type]}
                     </span>
-                    <span className="flex-1 font-semibold">{typeLabels[type]}</span>
-                    {selectedType === type && <span style={{ color: TYPE_COLORS[type] }} aria-hidden="true">✓</span>}
+                    <span>{typeLabels[type]}</span>
                   </button>
                 ))}
               </div>
             )}
           </div>
-          {(hasSearch || selectedType !== 'all') && (
-            <span className="ml-auto text-xs tabular-nums text-carbon/45" role="status" aria-live="polite">
-              {resultSummary}
-            </span>
-          )}
+
+          <div className="hidden items-center gap-3 text-xs text-carbon/50 sm:flex">
+            <span>{t('search', 'navigateTip')}</span>
+          </div>
         </div>
 
+        {/* Lista de Resultados */}
         <div className="min-h-0 flex-1 overflow-y-auto sm:min-h-60">
           {hasResults && (
-            <div id="search-results" ref={listRef} role="listbox" aria-label="Resultados de búsqueda">
+            <div id="search-results" ref={listRef} role="listbox" aria-label={t('search', 'resultsAria')}>
               {results.map(({ item, matches }, index) => {
                 const isSelected = index === selectedIndex;
                 const isNavigable = Boolean(item.href);
@@ -452,7 +409,7 @@ export const SearchOmnibar = () => {
               <p className="mt-2 max-w-lg font-serif text-base leading-relaxed text-carbon/55">
                 {t('search', 'exploreDesc')}
               </p>
-              <div className="mt-6 flex flex-wrap gap-2" aria-label="Explorar por tipo">
+              <div className="mt-6 flex flex-wrap gap-2" aria-label={t('search', 'exploreByTypeAria')}>
                 {QUICK_FILTERS.filter(type => availableTypes.includes(type)).map(type => (
                   <button
                     key={type}

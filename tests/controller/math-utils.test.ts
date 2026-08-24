@@ -44,7 +44,7 @@ describe('StyleManager', () => {
     it('returns base if anyHovered is true but this element is not hovered', () => {
       const manager = new StyleManager(() => false, () => false, true, dummyTheme);
       // hovered=false, activeInStep=true, anyHovered=true -> should fade out to base
-      expect(manager.getOp(false, true, 0.2)).toBe(0.2);
+      expect(manager.getOp(false, true, 0.2)).toBeCloseTo(0.2);
     });
 
     it('returns 1 if active in step and nothing is hovered', () => {
@@ -55,24 +55,24 @@ describe('StyleManager', () => {
 
     it('returns base if not active and nothing is hovered', () => {
       const manager = new StyleManager(() => false, () => false, false, dummyTheme);
-      expect(manager.getOp(false, false, 0.3)).toBe(0.3);
+      expect(manager.getOp(false, false, 0.3)).toBeCloseTo(0.3);
     });
   });
 
   describe('getOpAng (Angle Opacity)', () => {
     it('returns hoverVal if hovered', () => {
       const manager = new StyleManager(() => false, () => false, false, dummyTheme);
-      expect(manager.getOpAng(true, false, 0.05, 0.5, 0.2)).toBe(0.5);
+      expect(manager.getOpAng(true, false, 0.05, 0.5, 0.2)).toBeCloseTo(0.5);
     });
 
     it('returns base if anyHovered but this is not hovered', () => {
       const manager = new StyleManager(() => false, () => false, true, dummyTheme);
-      expect(manager.getOpAng(false, true, 0.05, 0.5, 0.2)).toBe(0.05);
+      expect(manager.getOpAng(false, true, 0.05, 0.5, 0.2)).toBeCloseTo(0.05);
     });
 
     it('returns activeVal if active in step and nothing is hovered', () => {
       const manager = new StyleManager(() => false, () => false, false, dummyTheme);
-      expect(manager.getOpAng(false, true, 0.05, 0.5, 0.2)).toBe(0.2);
+      expect(manager.getOpAng(false, true, 0.05, 0.5, 0.2)).toBeCloseTo(0.2);
     });
   });
 

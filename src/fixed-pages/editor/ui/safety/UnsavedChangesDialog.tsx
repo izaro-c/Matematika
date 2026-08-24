@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { useI18n } from '@/i18n';
 import type { SafetyPresentation } from '@/fixed-pages/editor/review/safetyPresentation';
 import { useModalFocus } from '@/fixed-pages/editor/ui/page/useModalFocus';
 
@@ -26,6 +27,7 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
   canSave,
   canSaveDraft,
 }) => {
+  const { t } = useI18n();
   const cancelRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useModalFocus<HTMLElement>(isOpen, onCancel, cancelRef);
 
@@ -42,7 +44,7 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
         className="w-full max-w-xl rounded-xl border border-carbon/20 bg-lienzo shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-150"
       >
         <header className="border-b border-carbon/15 bg-ocre/10 p-4">
-          <h2 id="unsaved-dialog-title" className="font-serif text-lg font-bold text-carbon">Hay cambios locales</h2>
+          <h2 id="unsaved-dialog-title" className="font-serif text-lg font-bold text-carbon">{t('editor', 'unsavedChanges')}</h2>
           <p id="unsaved-dialog-description" className="mt-1 text-sm leading-snug text-carbon/70">
             La acción hacia {targetLabel} descartaría cambios que todavía no están aplicados al archivo real.
           </p>
@@ -63,7 +65,7 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
             onClick={onCancel}
             className="rounded border border-carbon/20 px-3 py-2 text-xs font-bold text-carbon hover:bg-carbon/5"
           >
-            Permanecer
+            {t('editor', 'stay')}
           </button>
           <button
             type="button"
@@ -71,7 +73,7 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
             disabled={!canSaveDraft}
             className="rounded border border-carbon/20 px-3 py-2 text-xs font-bold text-carbon hover:bg-carbon/5 disabled:cursor-not-allowed disabled:opacity-45"
           >
-            Guardar borrador
+            {t('editor', 'saveDraft')}
           </button>
           <button
             type="button"
@@ -79,14 +81,14 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
             disabled={!canSave}
             className="rounded bg-carbon px-3 py-2 text-xs font-bold text-lienzo hover:bg-carbon/85 disabled:cursor-not-allowed disabled:opacity-45"
           >
-            Guardar
+            {t('editor', 'save')}
           </button>
           <button
             type="button"
             onClick={onDiscardAndContinue}
             className="rounded border border-granada/30 bg-granada/5 px-3 py-2 text-xs font-bold text-granada hover:bg-granada/10"
           >
-            Descartar y continuar
+            {t('editor', 'discard')}
           </button>
         </footer>
       </section>

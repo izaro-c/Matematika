@@ -99,7 +99,7 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
           <span className="text-carbon/30 text-[10px]">◈</span>
         </div>
         <div>
-          <div className="ac-label ac-label--xs ac-label--soft mb-1">{type}</div>
+          <div className="ac-label ac-label--xs ac-label--soft mb-1">{t('metadata','types', type)}</div>
           <h3 className="text-xl font-serif text-carbon">{displayTitle}</h3>
           <div className="text-xs italic text-carbon/50 mt-1">{t('studyPlan', 'comingSoon')}</div>
         </div>
@@ -110,68 +110,102 @@ export const StudyTask: React.FC<StudyTaskProps> = ({ id, type, title }) => {
   // Renderizado en estado Bloqueado (Niebla de Guerra)
   if (isLocked) {
     return (
-      <div
+     <div
         ref={(el) => registerTaskRef?.(id, el)}
         data-node-id={id}
-        className={`flex flex-col md:flex-row md:items-center gap-4 p-5 my-6 border border-carbon/10 bg-carbon/[0.01] filter blur-[0.6px] opacity-40 select-none pointer-events-none ${containerStyle}`}
+        className={`elegant-panel flex items-center justify-between gap-3 sm:gap-4 p-4 sm:p-5 my-6 border border-carbon/50 bg-carbon/[0.01] filter blur-[0.5px] opacity-70 select-none pointer-events-none w-full ${containerStyle}`}
       >
-        <div className="w-5 h-5 border border-carbon/20 flex items-center justify-center shrink-0 rotate-0 opacity-40">
-          <span className="text-carbon/30 text-[10px]">◈</span>
-        </div>
-        <div className="flex-1">
-          <div className="ac-label ac-label--xs ac-label--faint mb-1">
-            {type} ({t('studyPlan', 'locked')})
+        {/* Contenedor principal izquierdo: Cuadrado + Textos */}
+        <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+          {/* Cuadrado indicador bloqueado: Centrado verticalmente de forma fija */}
+          <div 
+            className="w-5 h-5 border border-carbon/50 flex items-center justify-center shrink-0 rotate-0 opacity-40" 
+            aria-hidden="true"
+          />
+
+          {/* Textos: Justo al lado del cuadrado */}
+          <div className="min-w-0 flex-1 flex flex-col justify-center">
+            <div className="ac-label ac-label--xs ac-label--faint truncate leading-tight">
+              {t('metadata', 'types', type)}
+            </div>
+            <h3 className="text-base sm:text-lg md:text-xl font-serif text-carbon/80 font-bold break-words leading-snug mt-0.5">
+              {displayTitle}
+            </h3>
           </div>
-          <h3 className="text-xl font-serif text-carbon/50 font-bold">
-            {displayTitle}
-          </h3>
-          <div className="text-xs italic text-carbon/40 mt-1">
-            {t('studyPlan', 'unlockHint')}
-          </div>
         </div>
-        <div className="ac-eyebrow ac-eyebrow--sm font-bold text-carbon/30">
-          {actionLabel}
+
+        {/* Contenedor derecho: Miniatura y Acción */}
+        <div className="flex items-center gap-3 sm:gap-4 shrink-0 pl-2">
+          {/* Miniatura gráfica visual de la tarea */}
+          <div className="block shrink-0">
+            <ContentThumbnail id={id} />
+          </div>
+
+          {/* Etiqueta de acción */}
+          <div className="ac-eyebrow ac-eyebrow--sm font-bold text-carbon/50 whitespace-nowrap">
+            {actionLabel}
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div ref={(el) => registerTaskRef?.(id, el)} data-node-id={id}>
-      <Link href={href}>
-        <span 
-          className={`group elegant-panel flex flex-col md:flex-row md:items-center gap-4 p-5 my-6 cursor-pointer ${completed ? 'bg-canela/5 border-canela/30' : ''}`}
-          style={{ ['--hover-accent' as string]: completed ? 'var(--theme-canela)' : 'var(--page-accent)' }}
-        >
-          <div className={`w-5 h-5 border flex items-center justify-center shrink-0 transition-all duration-300 ${
-            completed 
-              ? 'border-canela bg-transparent rotate-45' 
-              : 'page-accent-group-border border-carbon/30 rotate-0 group-hover:rotate-45'
-          }`}>
+  <div ref={(el) => registerTaskRef?.(id, el)} data-node-id={id} className="w-full my-6">
+    <Link href={href} className="block w-full no-underline">
+      <div 
+        className={`group elegant-panel flex items-center justify-between gap-3 sm:gap-4 p-4 sm:p-5 cursor-pointer transition-all duration-300 ${
+          completed ? 'bg-canela/5 border-canela/30' : ''
+        }`}
+        style={{ ['--hover-accent' as string]: completed ? 'var(--theme-canela)' : 'var(--page-accent)' }}
+      >
+        {/* Contenedor principal izquierdo: Cuadrado + Textos */}
+        <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+          {/* Cuadrado indicador: Centrado verticalmente de forma fija */}
+          <div 
+            className={`w-5 h-5 border flex items-center justify-center shrink-0 transition-all duration-300 ${
+              completed 
+                ? 'border-canela bg-transparent rotate-45' 
+                : 'page-accent-group-border border-carbon/30 rotate-0 group-hover:rotate-45'
+            }`}
+            aria-hidden="true"
+          >
             {completed && (
-              <div className="w-2.5 h-2.5 bg-canela scale-animation"></div>
+              <div className="w-2.5 h-2.5 bg-canela scale-animation" />
             )}
           </div>
 
-          <div className="flex-1">
-            <div className={`ac-label ac-label--xs mb-1 font-bold transition-colors ${completed ? 'text-canela/80' : 'page-accent-group-hover text-carbon/50'}`}>
-              {type}
+          {/* Textos: Pegados al cuadrado, ocupando el espacio disponible */}
+          <div className="min-w-0 flex-1 flex flex-col justify-center">
+            <div className={`ac-label ac-label--xs font-bold truncate transition-colors leading-tight ${
+              completed ? 'text-canela/80' : 'page-accent-group-hover text-carbon/50'
+            }`}>
+              {t('metadata','types', type)}
             </div>
-            <h3 className={`text-xl font-serif font-bold transition-colors ${completed ? 'text-canela' : 'page-accent-group-hover text-carbon'}`}>
+            <h3 className={`text-base sm:text-lg md:text-xl font-serif font-bold break-words transition-colors leading-snug mt-0.5 ${
+              completed ? 'text-canela' : 'page-accent-group-hover text-carbon'
+            }`}>
               {displayTitle}
             </h3>
           </div>
+        </div>
 
-          {/* Miniatura gráfica visual de la tarea */}
-          <div className="hidden sm:block shrink-0">
+        {/* Contenedor derecho: Miniatura y Acción */}
+        <div className="flex items-center gap-3 sm:gap-4 shrink-0 pl-2">
+          {/* Miniatura gráfica (oculta en pantallas muy estrechas) */}
+          <div className="block shrink-0">
             <ContentThumbnail id={id} />
           </div>
 
-          <div className={`ac-eyebrow ac-eyebrow--sm font-bold transition-colors ${completed ? 'text-canela' : 'page-accent-group-hover text-carbon/40'}`}>
+          {/* Etiqueta de acción */}
+          <div className={`ac-eyebrow ac-eyebrow--sm font-bold whitespace-nowrap transition-colors ${
+            completed ? 'text-canela' : 'page-accent-group-hover text-carbon/40'
+          }`}>
             {actionLabel}
           </div>
-        </span>
-      </Link>
-    </div>
+        </div>
+      </div>
+    </Link>
+  </div>
   );
 };

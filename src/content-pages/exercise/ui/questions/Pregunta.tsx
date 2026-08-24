@@ -71,6 +71,7 @@ export const Pregunta: PreguntaComponent = ({
   const { errorComunData, resolucionData, otherChildren } = useSubcomponents(children);
 
   const [selected, setSelected] = useState<string | null>((userAnswer as string) ?? null);
+  const [failedValues, setFailedValues] = useState<string[]>([]);
 
   const displayTexto = texto || question || '';
   const correctAnswer = correct || answerAlias || '';
@@ -80,20 +81,26 @@ export const Pregunta: PreguntaComponent = ({
     return shuffle(raw);
   });
 
-  const isAnswered = selected !== null;
-  const isQuestionCorrect = selected === correctAnswer || isCorrect === true;
-  const showResolutionBookmark = isQuestionCorrect && Boolean(resolucionData);
-  const showBookmarks = Boolean(errorComunData || showResolutionBookmark);
+  const isQuestionCorrect =
+    (selected !== null && Boolean(correctAnswer) && selected === correctAnswer) || isCorrect === true;
 
   const handleSelect = (value: string) => {
     setActiveStep(id);
-    if (isAnswered) return;
+    if (isQuestionCorrect) return;
+
     setSelected(value);
-    submitAnswer(value === correctAnswer, value);
+    const isOk = value === correctAnswer;
+    if (isOk) {
+      submitAnswer(true, value);
+    } else {
+      setFailedValues((prev) => (prev.includes(value) ? prev : [...prev, value]));
+      submitAnswer(false, value);
+    }
   };
 
   const handleTryAgain = () => {
     setSelected(null);
+    setFailedValues([]);
     tryAgain();
   };
 
@@ -108,44 +115,37 @@ export const Pregunta: PreguntaComponent = ({
       hasFailed={hasFailed}
       activeTab={activeTab}
       onTabChange={setActiveTab}
+      pregunta={displayTexto}
     >
-      {displayTexto && (
-        <div className={`text-base font-bold text-carbon mb-5 leading-relaxed ${showBookmarks ? 'pr-20 sm:pr-28' : ''}`}>
-          <KatexText text={displayTexto} />
-        </div>
-      )}
 
       <div className="flex flex-col gap-3">
         {displayOpciones.map((opt, index) => {
           const letter = String.fromCharCode(65 + index);
           const isThisSelected = selected === opt.value;
-          const isThisCorrect = opt.value === correctAnswer;
-          const showSuccess = isAnswered && isThisCorrect && isQuestionCorrect;
-          const showFailure = isAnswered && isThisSelected && !isThisCorrect;
+          const isThisCorrect = opt.value === correctAnswer && isQuestionCorrect;
+          const isThisFailed = failedValues.includes(opt.value) || (isThisSelected && !isQuestionCorrect);
 
           let btnClass = 'page-accent-button border-carbon/30 cursor-pointer hover:-translate-y-0.5 hover:shadow-sm';
           let badgeClass = 'border-carbon/40 text-carbon/60 bg-transparent';
           let badgeChar = letter;
 
-          if (showSuccess) {
+          if (isThisCorrect) {
             btnClass = 'border-musgo bg-musgo/10 text-musgo ac-inset-shadow';
             badgeClass = 'border-musgo bg-musgo text-lienzo';
             badgeChar = '✓';
-          } else if (showFailure) {
+          } else if (isThisFailed) {
             btnClass = 'border-terracota bg-terracota/5 text-terracota';
             badgeClass = 'border-terracota bg-terracota text-lienzo';
             badgeChar = '✗';
           } else if (isThisSelected) {
             btnClass = 'border-carbon/50 bg-carbon/5';
-          } else if (isAnswered) {
-            btnClass = 'border-carbon/10 text-carbon/40 cursor-not-allowed opacity-60';
           }
 
           return (
             <button
               key={opt.value}
               onClick={() => handleSelect(opt.value)}
-              disabled={isAnswered}
+              disabled={isQuestionCorrect}
               className={`text-left px-5 py-3 border rounded-none text-[15px] font-serif transition-all duration-300 flex items-center gap-4 ${btnClass}`}
             >
               <span

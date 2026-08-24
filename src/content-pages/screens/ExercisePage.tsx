@@ -29,7 +29,7 @@ const ProgressBar: React.FC<{ onReset?: () => void; isCompleted?: boolean }> = (
   };
 
   return (
-    <div className="sticky top-0 z-30 bg-lienzo/95 backdrop-blur-sm border-b border-carbon/10 px-6 py-3 lg:-mt-24">
+    <div className="lg:sticky lg:top-0 z-30 bg-lienzo/95 backdrop-blur-sm border-b border-carbon/10 px-6 py-3 lg:-mt-24">
       <div className="w-full flex items-center gap-4">
         <div className="flex-1 h-1.5 bg-carbon/10 rounded-full overflow-hidden">
           <div

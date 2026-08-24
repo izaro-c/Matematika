@@ -120,7 +120,7 @@ describe('v3Compatibility', () => {
     expect(dim.label).toBe('Cateto a');
     expect(dim.text).toBe('Cateto a: {value}');
     expect(dim.showLabel).toBe(false);
-    expect(dim.properties?.offset).toBe(0.6);
+    expect(dim.properties?.offset).toBeCloseTo(0.6, 5);
     expect(dim.properties?.precision).toBe(1);
     expect(dim.properties?.unit).toBe('cm');
     expect(dim.style?.textOffset).toEqual([0.2, -0.4]);

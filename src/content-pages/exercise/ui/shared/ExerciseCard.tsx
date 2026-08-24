@@ -1,6 +1,14 @@
-import React, { useRef, useState, useLayoutEffect } from 'react';
+import React, { useRef, useState, useLayoutEffect, createContext, useContext } from 'react';
 import { useI18n } from '@/i18n';
 import type { ErrorComunData, ResolucionData, ExerciseCardTab } from '../../types';
+
+export interface ExerciseCardContextType {
+  bare?: boolean;
+}
+
+export const ExerciseCardContext = createContext<ExerciseCardContextType>({ bare: false });
+
+export const useExerciseCardContext = () => useContext(ExerciseCardContext);
 
 export interface ExerciseCardProps {
   id?: string;
@@ -13,6 +21,8 @@ export interface ExerciseCardProps {
   onTabChange: (tab: ExerciseCardTab) => void;
   children: React.ReactNode;
   className?: string;
+  pregunta?: string;
+  bare?: boolean;
 }
 
 const RIBBON_CLIP_PATH = 'polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 6px), 0 100%)';
@@ -136,10 +146,14 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
   onTabChange,
   children,
   className = '',
+  pregunta = '',
+  bare,
 }) => {
   const { t } = useI18n();
   const contentRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number | undefined>(undefined);
+  const { bare: contextBare } = useExerciseCardContext();
+  const isBare = bare ?? contextBare ?? false;
 
   useLayoutEffect(() => {
     const el = contentRef.current;
@@ -159,6 +173,20 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
       return () => resizeObserver.disconnect();
     }
   }, [activeTab]);
+
+  if (isBare) {
+    return (
+      <div id={id} className={`my-2 relative font-serif isolate ${className}`}>
+        {pregunta && (
+          <p className="text-base font-bold text-carbon mb-4 leading-relaxed relative z-30">
+            {isCorrect && <span className="text-musgo mr-2">❦</span>}
+            {pregunta}
+          </p>
+        )}
+        {children}
+      </div>
+    );
+  }
 
   const showResolutionBookmark = isCorrect && Boolean(resolucionData);
   const showBookmarks = hasBookmarks ?? Boolean(errorComunData || showResolutionBookmark);
@@ -187,7 +215,8 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
       )}
 
       {/* 2. Capa Principal: Panel Arts & Crafts impreso (z-10) */}
-      <div className="p-6 md:p-8 elegant-panel relative z-10 overflow-visible transition-all duration-300 ease-out">
+      <div className={`p-6 md:p-8 elegant-panel relative z-10 overflow-visible transition-all duration-300 ease-out`}
+          style={{ '--hover-accent': isCorrect ? 'var(--theme-musgo)' : undefined } as React.CSSProperties}>
         <div
           role="tabpanel"
           style={{ height: height !== undefined ? `${height}px` : undefined }}
@@ -200,6 +229,12 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
                 {/* Muesca invisible para esquivar los marcapáginas */}
                 {showBookmarks && (
                   <div className="float-right h-5 w-18 sm:w-22 pointer-events-none" />
+                )}
+                {pregunta && (
+                  <p className={`text-base font-bold text-carbon mb-6 leading-relaxed relative z-30`}>
+                    {isCorrect && <span className="text-musgo mr-2">❦</span>}
+                    {pregunta}
+                  </p>
                 )}
                 {children}
               </div>
@@ -263,7 +298,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
       {showBookmarks && (
         <div
           role="tablist"
-          aria-label="Pestañas del ejercicio"
+          aria-label={t('exercise', 'tabsAria')}
           className="absolute top-0 right-2 sm:right-6 left-0 h-0 pointer-events-none z-20"
           style={{
             ['--ribbon-carbon-right' as string]: '5rem',
@@ -272,8 +307,8 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
           }}
         >
           <RibbonFront
-            title="Pregunta"
-            ariaLabel="Pregunta"
+            title={t('exercise', 'question')}
+            ariaLabel={t('exercise', 'question')}
             icon={
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />

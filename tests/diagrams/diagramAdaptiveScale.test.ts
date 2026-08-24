@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 import {
   MIN_POINT_SIZE,
   MIN_HIGHLIGHT_POINT_SIZE,
-  MIN_ANGLE_MARKER_CLEARANCE_PX,
   resolveAdaptivePointSize,
   resolveAdaptiveHighlightPointSize,
   resolveAdaptiveAngleRadius,

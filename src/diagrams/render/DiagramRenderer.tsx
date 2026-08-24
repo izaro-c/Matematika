@@ -85,7 +85,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
 
   const reportPaint = useDiagramPaintReport();
   const readyNotifiedRef = useRef(false);
-  const { lang: contextLang } = useI18n();
+  const { lang: contextLang, t } = useI18n();
   const effectiveLang = propLang || contextLang;
 
   const effectiveInputSpec = (canvasControl?.isCompleted && canvasControl?.activeSpec) || inputSpec;
@@ -362,7 +362,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 }`}
                 style={{ '--diagram-authored-font-size': isCompactMode ? '11px' : '16px' } as React.CSSProperties}
                 aria-live="polite"
-                aria-label="Lecturas dinámicas del diagrama"
+                aria-label={t('diagram', 'dynamicReadings')}
               >
                 {compactReadings.map(({ id, itemIds, text, visibility }, index) => {
                   const visible = visibility === 'all'
@@ -395,13 +395,13 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                     : 'h-11 flex-row divide-x rounded-full'
                 }`}
                 role="group"
-                aria-label="Controles del viewport"
+                aria-label={t('diagram', 'viewportControls')}
               >
                 <button
                   type="button"
                   className="flex size-11 shrink-0 items-center justify-center font-diagram text-base leading-none text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
-                  aria-label="Acercar"
-                  title="Acercar (+)"
+                  aria-label={t('diagram', 'zoomIn')}
+                  title={t('diagram', 'zoomInTitle')}
                   onClick={() => commitCamera(zoomViewport(spec, bounds, 1.25))}
                 >
                   +
@@ -409,8 +409,8 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                 <button
                   type="button"
                   className="flex size-11 shrink-0 items-center justify-center font-diagram text-base leading-none text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo"
-                  aria-label="Alejar"
-                  title="Alejar (−)"
+                  aria-label={t('diagram', 'zoomOut')}
+                  title={t('diagram', 'zoomOutTitle')}
                   onClick={() => commitCamera(zoomViewport(spec, bounds, 0.8))}
                 >
                   −
@@ -420,12 +420,12 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
                   className={`inline-flex h-11 shrink-0 items-center justify-center gap-1.5 font-diagram text-xs text-carbon transition-colors hover:bg-carbon/5 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-pavo ${
                     toolbarLayout === 'rails' ? 'w-11 px-0' : 'min-w-11 px-2.5 sm:px-3'
                   }`}
-                  aria-label="Ajustar automáticamente al contenido visible en todos los pasos"
-                  title="Reencuadrar para mostrar todos los objetos visibles en algún paso"
+                  aria-label={t('diagram', 'fitView')}
+                  title={t('diagram', 'fitView')}
                   onClick={() => fitAutoViewport()}
                 >
                   <span aria-hidden className="flex size-4 items-center justify-center text-sm leading-none">⌖</span>
-                  {toolbarLayout !== 'rails' && <span className="diagram-viewport-label">Ajustar</span>}
+                  {toolbarLayout !== 'rails' && <span className="diagram-viewport-label">{t('diagram', 'fitView')}</span>}
                 </button>
                 {toolbarLayout !== 'rails' && (
                   <>

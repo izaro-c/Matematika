@@ -2,10 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   resolveBranchCode,
   getItemBranchCodes,
-  buildBranchTaxonomy,
-  getItemsByBranch,
   getMscName,
-  mscHierarchy,
 } from '@/data/content/msc2020';
 import { db } from '@/data/content';
 import { getMetadataFields, BRANCH_OPTIONS } from '@/fixed-pages/editor/metadata/metadataFields';

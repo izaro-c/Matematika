@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { DiagramSpecV2, DiagramElement } from '@/diagrams/model';
+import type { DiagramSpecV2 } from '@/diagrams/model';
 import { compactHeaderReadings, headerReadingText } from '@/diagrams/render/DiagramKatexOverlay';
 
 describe('Header Readings Equality Behavior', () => {

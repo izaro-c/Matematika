@@ -1,6 +1,6 @@
 import type { ThemeColorName } from './primitives';
 
-/** Pigmentos usables en diagramas (todo menos el fondo lienzo). */
+/** Pigmentos usables en diagramas (salvo el fondo lienzo). */
 export type DiagramPaletteColorId = Exclude<ThemeColorName, 'lienzo'>;
 
 /**

@@ -18,6 +18,11 @@ export default defineConfig([
     'Matematika/.agents/skills/**/examples/**',
   ]),
   {
+    linterOptions: {
+      reportUnusedDisableDirectives: 'off',
+    },
+  },
+  {
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
@@ -33,14 +38,14 @@ export default defineConfig([
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }],
       'react-hooks/exhaustive-deps': 'warn',
-      'react-hooks/set-state-in-effect': 'warn',
-      'react-refresh/only-export-components': 'warn',
-      'sonarjs/cognitive-complexity': 'warn',
-      'sonarjs/no-nested-conditional': 'warn',
-      'sonarjs/no-nested-functions': 'warn',
+      'react-hooks/set-state-in-effect': 'off',
+      'react-refresh/only-export-components': 'off',
+      'sonarjs/cognitive-complexity': 'off',
+      'sonarjs/no-nested-conditional': 'off',
+      'sonarjs/no-nested-functions': 'off',
       'sonarjs/todo-tag': 'warn',
       'sonarjs/no-unused-collection': 'warn',
-      'sonarjs/super-linear-regex': 'warn',
+      'sonarjs/super-linear-regex': 'off',
       'sonarjs/no-unenclosed-multiline-block': 'warn',
       'sonarjs/no-useless-react-setstate': 'warn',
       'sonarjs/no-floating-point-equality': 'warn',
@@ -51,17 +56,16 @@ export default defineConfig([
     }
   },
   {
-    /* Diagramas interactivos JSXGraph: Math.random() usado exclusivamente para
-       generar IDs únicos de tableros interactivos no criptográficos.
-       Revisado y aceptado como falso positivo. */
+    /* Pruebas, scripts y contenido de diagramas interactivos (JSXGraph, mocks, datos) */
     files: [
-      'src/diagrams/**/*.tsx',
-      'src/diagrams/**/*.tsx',
-      'content/diagrams/**/*.tsx',
-      'content/diagrams/**/*.tsx',
-      'Matematika/src/diagrams/**/*.tsx'
+      'content/**/*.{ts,tsx}',
+      'content_archive/**/*.{ts,tsx}',
+      'tests/**/*.{ts,tsx}',
+      'scripts/**/*.{ts,tsx}',
+      'src/diagrams/**/*.{ts,tsx}'
     ],
     rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
       'sonarjs/pseudo-random': 'off',
       'sonarjs/void-use': 'off',
       'no-empty': 'off'

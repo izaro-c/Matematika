@@ -19,7 +19,7 @@ describe('editor modal accessibility', () => {
       <CreatePageDialog open onClose={onClose} onCreate={vi.fn(async () => true)} />
     </>);
 
-    const dialog = screen.getByRole('dialog', { name: 'Nueva página estructurada' });
+    const dialog = screen.getByRole('dialog', { name: /Página Estructurada/ });
     const idInput = within(dialog).getByPlaceholderText('definicion-nueva');
     await waitFor(() => expect(document.activeElement).toBe(idInput));
 

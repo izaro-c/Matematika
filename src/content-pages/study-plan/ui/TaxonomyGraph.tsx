@@ -132,7 +132,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
     });
 
     return { nodes, links };
-  }, [taxonomy]);
+  }, [taxonomy, getLocalizedPath]);
 
   const updateHighlight = useCallback(() => {
     setHighlightNodes(new Set(highlightNodes));
@@ -268,7 +268,7 @@ export const TaxonomyGraph: React.FC<TaxonomyGraphProps> = ({ taxonomy }) => {
       isHighlighted,
       radius
     );
-  }, [hoverNode, highlightNodes, isRead, taxonomy.slug, drawNodeLabel, getNodeColor, theme]);
+  }, [hoverNode, highlightNodes, isRead, isExerciseComplete, taxonomy.slug, drawNodeLabel, getNodeColor, theme]);
 
   // Ajuste automático de tamaño del Canvas
   const [dimensions, setDimensions] = useState({ width: 0, height: 400 });

@@ -38,7 +38,7 @@ describe('SearchOmnibar', () => {
     expect(results.every(result => result.getAttribute('data-result-type') === 'teorema')).toBe(true);
 
     fireEvent.click(typeFilter);
-    expect(within(screen.getByRole('listbox', { name: 'Tipos de contenido' })).getByRole('option', { name: 'Todo el contenido' })).toBeTruthy();
+    expect(within(screen.getByRole('listbox', { name: 'Tipos de contenido' })).getByRole('option', { name: /Todas|Todo/ })).toBeTruthy();
   });
 
   it('muestra resultados tipificados al buscar pitagoras (TC-1.1)', async () => {

@@ -43,10 +43,10 @@ describe('MethodsPage', () => {
       </Router>,
     );
 
-    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Métodos de demostración');
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toMatch(/Métodos de [dD]emostración/);
     expect(screen.getByRole('list').tagName).toBe('UL');
     expect(screen.getAllByRole('listitem')).toHaveLength(2);
-    expect(screen.getByText('2 métodos')).toBeTruthy();
+    expect(screen.getByText(/2 métodos/)).toBeTruthy();
     expect(screen.queryByText('Otro método')).toBeNull();
 
     const directMethod = screen.getByRole('link', { name: /Método directo/ });

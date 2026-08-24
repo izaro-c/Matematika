@@ -93,6 +93,12 @@ export interface TranslationDictionary {
     mscClassification: string;
     useCases: string;
     glossary: string;
+    searchTitle: string;
+    searchAria: string;
+    contentTypeAria: string;
+    contentTypesAria: string;
+    resultsAria: string;
+    exploreByTypeAria: string;
   };
   timeline: {
     title: string;
@@ -107,6 +113,7 @@ export interface TranslationDictionary {
     enlightenment: string;
     modern: string;
     contributions: string;
+    historicalDensity: string;
   };
   biography: {
     birth: string;
@@ -250,6 +257,7 @@ export interface TranslationDictionary {
     formulaSrOnly: string;
     formulaScrollLabel: string;
     formulaScrollSrOnly: string;
+    breadcrumb: string;
   };
   content: {
     by: string;
@@ -285,6 +293,7 @@ export interface TranslationDictionary {
     seeExample: string;
     exploreCase: string;
     seeContent: string;
+    modelPrefix: string;
   };
   action: {
     practice: string;
@@ -333,6 +342,12 @@ export interface TranslationDictionary {
     checkMatrix: string;
     interactiveCanvas: string;
     goalAchieved: string;
+    removeClassifiedItem: string;
+    clickToCutConnection: string;
+    moveUp: string;
+    moveDown: string;
+    tabsAria: string;
+    question: string;
   };
   studyPlan: {
     backToArchive: string;
@@ -360,6 +375,7 @@ export interface TranslationDictionary {
     pedagogicalExplanation: string;
     pedagogicalJustification: string;
     dependencyGraphTitle: string;
+    completed: string;
   };
   diagram: {
     resetView: string;
@@ -374,6 +390,10 @@ export interface TranslationDictionary {
     dragToExplore: string;
     navigationAriaLabel: string;
     timelineAriaLabel: string;
+    dynamicReadings: string;
+    viewportControls: string;
+    zoomInTitle: string;
+    zoomOutTitle: string;
   };
   common: {
     loading: string;
@@ -405,6 +425,7 @@ export interface TranslationDictionary {
     note: string;
     close: string;
     visualizationOf: string;
+    renderError: string;
   };
   methods: {
     eyebrow: string;
@@ -502,6 +523,30 @@ export interface TranslationDictionary {
     waitingForScroll: string;
     tsxDiagram: string;
     loadingElements: string;
+    addPage: string;
+    addDiagram: string;
+    filterResults: string;
+    howToEdit: string;
+    checkingCatalog: string;
+    catalogLoadError: string;
+    retry: string;
+    noEditableResources: string;
+    memoryEditing: string;
+    editToken: string;
+    activateSave: string;
+    cannotSaveTitle: string;
+    understood: string;
+    goToError: string;
+    viewWarnings: string;
+    stay: string;
+    exitWithoutSaving: string;
+    bold: string;
+    italic: string;
+    inlineFormula: string;
+    blockFormula: string;
+    insertBlock: string;
+    addStep: string;
+    deleteStep: string;
   };
   fallback: {
     notAvailableInLang: string;
@@ -512,6 +557,8 @@ export interface TranslationDictionary {
     title: string;
     description: string;
     backHome: string;
+    siteTitle: string;
+    constructionTitle: string;
   };
   metadata: {
     connectionNetwork: string;

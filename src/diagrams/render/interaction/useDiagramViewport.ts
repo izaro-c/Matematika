@@ -105,7 +105,7 @@ export function useDiagramViewport({
   headerRef,
   toolbarRef,
 }: UseDiagramViewportOptions) {
-  const configuredBounds = useMemo(() => resolveInitialCamera(spec), [spec.viewport.bounds, spec.viewport.home]);
+  const configuredBounds = useMemo(() => resolveInitialCamera(spec), [spec]);
   const configuredBoundsKey = configuredBounds.join(',');
   const [cameraBounds, setCameraBounds] = useState<DiagramBounds>(configuredBounds);
   const lastConfiguredKeyRef = useRef(configuredBoundsKey);

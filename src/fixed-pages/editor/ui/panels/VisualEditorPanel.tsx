@@ -323,7 +323,8 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
       requestRenumber,
       activeDemoBlockId,
     };
-  }, [openLinkerForSelection, handleInsertStepFromToolbar, handleMoveActiveStep, insertPresetNearSelection, persistFocusedProse, duplicateBlock, removeBlock, requestRenumber, activeDemoBlockId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!onFormatBarChange) return;

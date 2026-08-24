@@ -12,6 +12,7 @@ const defsPath = path.resolve(__dirname, 'test-definitions.json');
 console.log('Ejecutando pruebas CPT en Vitest...');
 
 try {
+  // eslint-disable-next-line sonarjs/no-os-command-from-path
   execSync('npx vitest run tests/boundary/cpt.test.tsx --reporter=json --outputFile=test-results.json', {
     cwd: rootDir,
     stdio: 'ignore'

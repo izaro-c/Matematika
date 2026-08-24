@@ -57,7 +57,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   );
 
   return (
-    <nav aria-label="Breadcrumb" className={`${UI.breadcrumbs} ${className}`}>
+    <nav aria-label={t('accessibility', 'breadcrumb')} className={`${UI.breadcrumbs} ${className}`}>
       {showHome && (
         <Link href={localizedHomeHref} className={`${UI.breadcrumbsLink} shrink-0`}>
           {defaultHomeLabel}

@@ -25,6 +25,8 @@ interface ContentLayoutProps {
    */
   variant?: 'reading' | 'balanced';
   className?: string;
+  /** Content rendered above the diagram on mobile (e.g. exercise progress bar). */
+  aboveDiagram?: React.ReactNode;
 }
 
 /** Diagrama perezoso dentro del layout de página de contenido. */
@@ -55,6 +57,7 @@ export function ContentLayout({
   pageType,
   variant = 'reading',
   className = '',
+  aboveDiagram,
 }: ContentLayoutProps) {
   const { t } = useI18n();
   const resolvedDiagramLabel = diagramLabel ?? t('common', 'interactiveVisualization');
@@ -68,6 +71,7 @@ export function ContentLayout({
   const activeStepIndexRef = useRef<number | null>(-1);
 
   const hasDiagram = diagram !== undefined && diagram !== null;
+  const hasTopbar = aboveDiagram != null;
 
   const proofSteps = useCallback(
     () => Array.from(rootRef.current?.querySelectorAll<HTMLElement>('.proof-step') ?? []),
@@ -201,6 +205,7 @@ export function ContentLayout({
         ref={rootRef}
         className={`content-layout ${pageType ? 'page-accent-scope' : ''} ${embedded ? 'content-layout--embedded' : ''} ${className}`}
         data-has-diagram={hasDiagram}
+        data-has-topbar={hasTopbar || undefined}
         data-page-type={pageType}
         data-layout-variant={variant}
         style={pageType ? ({ '--page-accent': getContentPageAccent(pageType) } as React.CSSProperties) : undefined}
@@ -214,6 +219,7 @@ export function ContentLayout({
 
         <div className="content-content">
           <section className="content-primary">
+            {hasTopbar && <div className="content-top-bar">{aboveDiagram}</div>}
             <div className="content-reading" role={embedded ? undefined : 'main'}>
               {children}
             </div>

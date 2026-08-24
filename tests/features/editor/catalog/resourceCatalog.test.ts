@@ -127,6 +127,7 @@ describe('catálogo seguro del editor', () => {
       'content/diagrams/Demos/DemoCongruenciaLLL.tsx',
       'content/diagrams/Demos/DemoExistenciaBisectriz.tsx',
       'content/diagrams/Demos/DemoSumaAngulos.tsx',
+      'content/diagrams/Ejercicios/EjercicioClasificacionTriangulos.tsx',
       'content/diagrams/Models/ModeloCartesiano.tsx',
       'content/diagrams/Models/ModeloFano.tsx',
       'content/diagrams/Models/ModeloPoincare.tsx',
