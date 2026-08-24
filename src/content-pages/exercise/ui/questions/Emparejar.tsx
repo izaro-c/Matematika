@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } from 'react';
 import { KatexText } from '@/components/ui/KatexText';
 import { useI18n } from '@/i18n';
 import { useExerciseQuestion } from '../../hooks/useExerciseQuestion';
@@ -12,6 +12,8 @@ export interface EmparejarProps extends BaseQuestionProps {
   pregunta?: string;
   /** Lista de pares correspondientes { left, right } */
   pairs: Pair[];
+  /** Renderizado plano sin tarjeta contenedora ni pestañas */
+  bare?: boolean;
 }
 
 const EmparejarErrorComun: React.FC<ErrorComunProps> = () => null;
@@ -25,6 +27,17 @@ type EmparejarComponent = React.FC<EmparejarProps> & {
   Resolucion: React.FC<ResolucionProps>;
 };
 
+interface BezierLine {
+  leftVal: string;
+  rightVal: string;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  isError: boolean;
+}
+
+/** Baraja un array de forma determinista y segura */
 function shuffle<T>(array: T[]): T[] {
   if (!array || !Array.isArray(array)) return [];
   const arr = [...array];
@@ -37,21 +50,19 @@ function shuffle<T>(array: T[]): T[] {
   return arr;
 }
 
-interface BezierLine {
-  leftVal: string;
-  rightVal: string;
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-  isError: boolean;
+/** Construye el mapa de correspondencia canónico a partir de los pares correctos */
+function getCanonicalPairsMap(pairs: Pair[]): Record<string, string> {
+  const map: Record<string, string> = {};
+  for (const p of pairs || []) {
+    if (p.left && p.right) map[p.left] = p.right;
+  }
+  return map;
 }
 
 /**
- * Emparejar — Ejercicio interactivo de correspondencia con conexiones Bézier,
- * corte de enlaces manual y comprobación bajo demanda.
+ * Emparejar — Ejercicio interactivo de correspondencia con curvas Bézier y corte manual.
  */
-export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], children }) => {
+export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], bare, children }) => {
   const { t } = useI18n();
 
   const {
@@ -67,23 +78,20 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
 
   const { errorComunData, resolucionData, otherChildren } = useSubcomponents(children);
 
-  // Elementos barajados en ambas columnas
+  // Columnas barajadas
   const [leftItems, setLeftItems] = useState<string[]>(() => shuffle((pairs || []).map((p) => p.left)));
   const [rightItems, setRightItems] = useState<string[]>(() => shuffle((pairs || []).map((p) => p.right)));
 
-  // Conexiones actuales establecidas por el usuario: { [leftVal]: rightVal }
+  // Conexiones activas del usuario { [left]: right }
   const [userPairs, setUserPairs] = useState<Record<string, string>>(() => {
-    if (userAnswer && typeof userAnswer === 'object') {
+    if (userAnswer && typeof userAnswer === 'object' && Object.keys(userAnswer).length > 0) {
       return userAnswer as Record<string, string>;
     }
-    return {};
+    return isCompleted && pairs.length > 0 ? getCanonicalPairsMap(pairs) : {};
   });
 
-  // Claves de pares que fallaron la última comprobación
   const [wrongPairs, setWrongPairs] = useState<string[]>([]);
   const [isShuffling, setIsShuffling] = useState(false);
-
-  // Selección activa para enlazar
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
   const [selectedRight, setSelectedRight] = useState<string | null>(null);
 
@@ -93,7 +101,21 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
   const [lines, setLines] = useState<BezierLine[]>([]);
   const shuffleTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Evita re-barajados accidentales cuando el padre pasa una nueva referencia de `pairs`
+  // Sincronización de pares persistidos o completados tras hidratación
+  useEffect(() => {
+    if (userAnswer && typeof userAnswer === 'object' && Object.keys(userAnswer).length > 0) {
+      setUserPairs((prev) => {
+        const isSame =
+          Object.keys(prev).length === Object.keys(userAnswer).length &&
+          Object.entries(userAnswer).every(([k, v]) => prev[k] === v);
+        return isSame ? prev : (userAnswer as Record<string, string>);
+      });
+    } else if (isCompleted && Object.keys(userPairs).length === 0 && pairs.length > 0) {
+      setUserPairs(getCanonicalPairsMap(pairs));
+    }
+  }, [userAnswer, isCompleted, pairs, userPairs]);
+
+  // Reiniciar estado si la prop `pairs` cambia estructuralmente
   const pairsKey = useMemo(() => (pairs || []).map((p) => `${p.left}:::${p.right}`).join('|||'), [pairs]);
   const prevPairsKeyRef = useRef(pairsKey);
 
@@ -111,7 +133,7 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
     }
   }, [pairsKey, pairs]);
 
-  // Recalcula las coordenadas relativas de las curvas Bézier
+  // Recalculo geométrico de curvas Bézier relativas al contenedor
   const updateLines = useCallback(() => {
     if (!containerRef.current) return;
     const cr = containerRef.current.getBoundingClientRect();
@@ -125,6 +147,7 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
 
       const lRect = lEl.getBoundingClientRect();
       const rRect = rEl.getBoundingClientRect();
+      if (lRect.width === 0 || rRect.width === 0) continue;
 
       newLines.push({
         leftVal,
@@ -140,20 +163,27 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
     setLines(newLines);
   }, [userPairs, wrongPairs]);
 
-  // Sincroniza líneas ante cambios de elementos, conexiones y redimensionamiento
-  useEffect(() => {
-    updateLines();
-    if (!containerRef.current) return;
-    const ro = new ResizeObserver(() => updateLines());
-    ro.observe(containerRef.current);
-    window.addEventListener('resize', updateLines);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener('resize', updateLines);
-    };
-  }, [updateLines, userPairs, leftItems, rightItems]);
+  // Observador de redimensionamiento y sincronización de trazado
+  useLayoutEffect(() => {
+    const sync = () => updateLines();
 
-  // Cortar conexión de un elemento (izquierdo o derecho)
+    sync();
+    const frameId = requestAnimationFrame(sync);
+
+    if (!containerRef.current) return () => cancelAnimationFrame(frameId);
+
+    const ro = new ResizeObserver(() => requestAnimationFrame(sync));
+    ro.observe(containerRef.current);
+    window.addEventListener('resize', sync);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      ro.disconnect();
+      window.removeEventListener('resize', sync);
+    };
+  }, [updateLines, userPairs, leftItems, rightItems, isCompleted, activeTab]);
+
+  // Desconectar enlace izquierdo
   const disconnectLeft = (leftVal: string) => {
     if (isCompleted || isShuffling) return;
     setUserPairs((prev) => {
@@ -165,6 +195,7 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
     if (selectedLeft === leftVal) setSelectedLeft(null);
   };
 
+  // Desconectar enlace derecho
   const disconnectRight = (rightVal: string) => {
     if (isCompleted || isShuffling) return;
     setUserPairs((prev) => {
@@ -181,17 +212,11 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
     if (selectedRight === rightVal) setSelectedRight(null);
   };
 
-  // Click en elemento izquierdo
+  // Manejo de interacción de selección en columna izquierda
   const handleLeftClick = (item: string) => {
     if (isCompleted || isShuffling) return;
+    if (userPairs[item]) return disconnectLeft(item);
 
-    // Si ya está conectado, clicarlo corta la conexión
-    if (userPairs[item]) {
-      disconnectLeft(item);
-      return;
-    }
-
-    // Si ya había seleccionado un derecho, los conecta directamente
     if (selectedRight) {
       setUserPairs((prev) => ({ ...prev, [item]: selectedRight }));
       setSelectedRight(null);
@@ -199,22 +224,14 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
       setWrongPairs([]);
       return;
     }
-
     setSelectedLeft(selectedLeft === item ? null : item);
   };
 
-  // Click en elemento derecho
+  // Manejo de interacción de selección en columna derecha
   const handleRightClick = (item: string) => {
     if (isCompleted || isShuffling) return;
+    if (Object.values(userPairs).includes(item)) return disconnectRight(item);
 
-    // Si ya está conectado, clicarlo corta la conexión
-    const isConnected = Object.values(userPairs).includes(item);
-    if (isConnected) {
-      disconnectRight(item);
-      return;
-    }
-
-    // Si ya había seleccionado un izquierdo, los conecta directamente
     if (selectedLeft) {
       setUserPairs((prev) => ({ ...prev, [selectedLeft]: item }));
       setSelectedLeft(null);
@@ -222,15 +239,14 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
       setWrongPairs([]);
       return;
     }
-
     setSelectedRight(selectedRight === item ? null : item);
   };
 
-  // Comprobar respuestas (Botón Egiaztatu / Comprobar)
+  // Validación de la respuesta
   const handleCheck = () => {
     if (isCompleted || isShuffling) return;
-
     const connectedCount = Object.keys(userPairs).length;
+
     if (connectedCount === 0) {
       triggerShake();
       return;
@@ -238,14 +254,11 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
 
     const wrongKeys: string[] = [];
     for (const [lVal, rVal] of Object.entries(userPairs)) {
-      const matches = pairs.some((p) => p.left === lVal && p.right === rVal);
-      if (!matches) {
-        wrongKeys.push(lVal);
-      }
+      const isValid = pairs.some((p) => p.left === lVal && p.right === rVal);
+      if (!isValid) wrongKeys.push(lVal);
     }
 
     const isAllCorrect = connectedCount === pairs.length && wrongKeys.length === 0;
-
     if (isAllCorrect) {
       setWrongPairs([]);
       submitAnswer(true, userPairs);
@@ -255,7 +268,7 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
     }
   };
 
-  // Animación de barajado fluido en ráfaga rápida
+  // Animación visual de barajado al reiniciar
   const startShuffleAnimation = useCallback(() => {
     if (shuffleTimerRef.current) clearInterval(shuffleTimerRef.current);
     setIsShuffling(true);
@@ -268,6 +281,7 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
     let count = 0;
     const maxTicks = 12;
     const safePairs = pairs || [];
+
     shuffleTimerRef.current = setInterval(() => {
       count++;
       setLeftItems(shuffle(safePairs.map((p) => p.left)));
@@ -281,14 +295,12 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
     }, 45);
   }, [pairs]);
 
-  // Limpieza de temporizadores
   useEffect(() => {
     return () => {
       if (shuffleTimerRef.current) clearInterval(shuffleTimerRef.current);
     };
   }, []);
 
-  // Reintentar (Saiatu berriro / Intentar de nuevo)
   const handleTryAgain = () => {
     tryAgain();
     startShuffleAnimation();
@@ -297,18 +309,18 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
   return (
     <ExerciseCard
       id={id}
+      bare={bare}
       errorComunData={errorComunData}
       resolucionData={resolucionData}
       isCorrect={isCompleted}
       hasFailed={hasFailed}
       activeTab={activeTab}
       onTabChange={setActiveTab}
-      className={''}
+      className=""
       pregunta={pregunta}
     >
-
       <div className="relative flex flex-col sm:flex-row gap-6 sm:gap-12 md:gap-16" ref={containerRef}>
-        {/* Curvas Bézier de conexión y área de corte interactivo */}
+        {/* Curvas Bézier SVG */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" style={{ overflow: 'visible' }}>
           {lines.map((line) => {
             const dx = Math.max(20, Math.abs(line.x2 - line.x1) * 0.4);
@@ -316,7 +328,6 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
 
             return (
               <g key={`${line.leftVal}-${line.rightVal}`} className="group/line">
-                {/* Zona de impacto ampliada para cortar la línea con un clic */}
                 {!isCompleted && !isShuffling && (
                   <path
                     d={d}
@@ -329,7 +340,6 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
                     <title>{t('exercise', 'clickToCutConnection')}</title>
                   </path>
                 )}
-                {/* Línea visible de conexión */}
                 <path
                   d={d}
                   fill="none"
@@ -340,7 +350,7 @@ export const Emparejar: EmparejarComponent = ({ id, pregunta, pairs = [], childr
                         ? 'var(--theme-terracota)'
                         : 'var(--theme-carbon)'
                   }
-                  strokeWidth={'2'}
+                  strokeWidth="2"
                   strokeDasharray={line.isError ? '4 4' : 'none'}
                   className={`transition-all duration-300 drop-shadow-sm ${
                     !isCompleted && !isShuffling

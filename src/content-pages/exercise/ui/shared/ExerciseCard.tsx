@@ -191,14 +191,6 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
   const showResolutionBookmark = isCorrect && Boolean(resolucionData);
   const showBookmarks = hasBookmarks ?? Boolean(errorComunData || showResolutionBookmark);
 
-  console.log('[ExerciseCard Debug]', {
-  id,
-  isCorrect,
-  resolucionData,
-  showResolutionBookmark,
-  showBookmarks
-});
-
   return (
     <div id={id} className={`my-8 relative font-serif isolate ${className}`}>
       {/* 1. Capa Trasera: Tiras que se extienden físicamente detrás del panel (z-0) */}
