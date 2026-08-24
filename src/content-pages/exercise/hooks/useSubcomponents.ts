@@ -24,7 +24,7 @@ export function useSubcomponents(children?: React.ReactNode): ExtractedSubcompon
       }
 
       const childType = child.type;
-      const typeName = typeof childType === 'function' ? childType.name : '';
+      const typeName = (childType as any)?.displayName || (typeof childType === 'function' ? childType.name : '');
       const isErrorComun =
         typeName.includes('ErrorComun') ||
         (child.props && typeof child.props === 'object' && ('titulo' in child.props || 'title' in child.props));
