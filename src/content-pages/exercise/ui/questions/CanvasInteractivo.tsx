@@ -134,8 +134,6 @@ export const CanvasInteractivo: CanvasInteractivoComponent = ({
       : child
   );
 
-  const showBookmarks = Boolean(errorComunData || (isCompleted && resolucionData));
-
   return (
     <ExerciseCard
       id={id}
@@ -145,18 +143,9 @@ export const CanvasInteractivo: CanvasInteractivoComponent = ({
       hasFailed={hasFailed}
       activeTab={activeTab}
       onTabChange={setActiveTab}
-      className={`transition-all ${isCompleted ? 'bg-musgo/5 border-musgo/30' : ''}`}
+      className={`transition-all`}
+      pregunta={title}
     >
-      {title && (
-        <h4 className={`font-bold text-carbon mb-2 flex items-center justify-between z-30 relative text-lg leading-relaxed ${showBookmarks ? 'pr-20 sm:pr-28' : ''}`}>
-          <span>{title}</span>
-          {isCompleted && (
-            <span className="text-musgo font-serif text-base shrink-0 ml-2">
-              ❦ {t('exercise', 'goalAchieved') || 'Objetivo cumplido'}
-            </span>
-          )}
-        </h4>
-      )}
 
       {pregunta && (
         <p className="text-sm text-carbon/80 mb-3 font-serif italic">

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { db } from '@/data/content';
 import { appPath } from '@/lib/routes';
+import { useI18n } from '@/i18n';
 import modelRegistry from '@/data/content/model_badges_registry.json';
 
 interface ModelBadgeProps {
@@ -9,6 +10,7 @@ interface ModelBadgeProps {
 }
 
 export const ModelBadge: React.FC<ModelBadgeProps> = ({ modelId }) => {
+  const { t } = useI18n();
   const model = db.getModel(modelId);
 
   if (!model) return null;
@@ -17,11 +19,11 @@ export const ModelBadge: React.FC<ModelBadgeProps> = ({ modelId }) => {
     <a
       href={appPath(`/modelo/${model.id}`)}
       className="ac-pill"
-      title={model.description || `Modelo: ${model.title}`}
+      title={model.description || `${t('content', 'modelPrefix')} ${model.title}`}
       style={{ ['--pill-accent' as string]: 'var(--theme-pavo)', textDecoration: 'none' }}
     >
       <span className="ac-pill-ornament" aria-hidden style={{ color: 'var(--pill-accent)' }}>☙</span>
-      <span className="ac-pill-serif">Modelo: <strong>{model.title}</strong></span>
+      <span className="ac-pill-serif">{t('content', 'modelPrefix')} <strong>{model.title}</strong></span>
     </a>
   );
 };

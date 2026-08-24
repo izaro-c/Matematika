@@ -11,6 +11,7 @@ interface CruisedViolation {
 }
 
 describe('src architecture invariants', () => {
+  // eslint-disable-next-line sonarjs/no-os-command-from-path
   const depcruiseOutput = execSync('npx depcruise src content/diagrams --output-type json', {
     encoding: 'utf-8',
     maxBuffer: 10 * 1024 * 1024,

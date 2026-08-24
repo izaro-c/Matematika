@@ -379,10 +379,16 @@ export interface DiagramViewport {
 
 export interface DiagramTranslation {
   title?: string;
+  subtitle?: string;
   note?: string;
+  description?: string;
   steps?: Record<string, string | { label?: string; description?: string }>;
   labels?: Record<string, string>;
   annotations?: Record<string, string>;
+  titles?: Record<string, string>;
+  subtitles?: Record<string, string>;
+  texts?: Record<string, string>;
+  descriptions?: Record<string, string>;
 }
 
 export interface DiagramSpecV2 {

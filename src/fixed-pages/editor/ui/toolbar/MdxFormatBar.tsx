@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useI18n } from '@/i18n';
 import {
   getSelectedPlainText,
   insertHtmlAtSelection,
@@ -67,6 +68,7 @@ export function MdxFormatBar({
   onNotify,
   onProseMutated,
 }: MdxFormatBarProps) {
+  const { t } = useI18n();
   const [open, setOpen] = useState<'insert' | 'paso' | null>(null);
   const [query, setQuery] = useState('');
   const [stepModalOpen, setStepModalOpen] = useState(false);
@@ -90,45 +92,45 @@ export function MdxFormatBar({
 
   return (
     <>
-      <nav
+      <div
         data-mdx-format-bar
         className="relative z-50 flex w-full min-w-0 shrink-0 flex-wrap items-center gap-1.5 border-b border-carbon/10 bg-lienzo/95 p-1.5 font-serif text-carbon shadow-2xs backdrop-blur-md select-none transition-colors motion-safe:transition-all"
-        aria-label="Barra de formato del documento"
+        aria-label={t('editor', 'toolbar')}
       >
         {/* Formato de Texto */}
         <button
           type="button"
           disabled={proseOff}
           className={btnClass()}
-          title="Alternar Negrita (Ctrl+B)"
+          title={t('editor', 'bold')}
           onMouseDown={keep(() => {
             if (wrapSelectionWithTag('strong')) after();
             else onNotify?.('Selecciona texto para poner o quitar negrita.');
           })}
         >
           <span className="font-bold">N</span>
-          <span className="hidden sm:inline font-medium">Negrita</span>
+          <span className="hidden sm:inline font-medium">{t('editor', 'bold')}</span>
         </button>
 
         <button
           type="button"
           disabled={proseOff}
           className={btnClass()}
-          title="Alternar Cursiva (Ctrl+I)"
+          title={t('editor', 'italic')}
           onMouseDown={keep(() => {
             if (wrapSelectionWithTag('em')) after();
             else onNotify?.('Selecciona texto para poner o quitar cursiva.');
           })}
         >
           <span className="italic font-serif">C</span>
-          <span className="hidden sm:inline font-medium">Cursiva</span>
+          <span className="hidden sm:inline font-medium">{t('editor', 'italic')}</span>
         </button>
 
         <button
           type="button"
           disabled={proseOff}
           className={btnClass()}
-          title="Fórmula inline $…$"
+          title={t('editor', 'inlineFormula')}
           onMouseDown={keep(() => {
             const code = getSelectedPlainText().trim() || 'x';
             if (insertHtmlAtSelection(latexSpanHtml(code))) after();
@@ -136,7 +138,7 @@ export function MdxFormatBar({
           })}
         >
           <span className="font-mono text-xs">$x$</span>
-          <span className="hidden sm:inline font-medium">Fórmula Inline</span>
+          <span className="hidden sm:inline font-medium">{t('editor', 'inlineFormula')}</span>
         </button>
 
         <button
@@ -334,7 +336,7 @@ export function MdxFormatBar({
           <span className="text-[11px] text-carbon/50">Modo:</span>
           <span className="font-bold text-canela">Formato MDX</span>
         </div>
-      </nav>
+      </div>
 
       <ProofStepLinkModal
         isOpen={stepModalOpen}

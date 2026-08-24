@@ -93,9 +93,6 @@ export const MatrizInteractiva: MatrizInteractivaComponent = ({ id, pregunta, co
     }
   };
 
-  const showResolutionBookmark = isCompleted && Boolean(resolucionData);
-  const showBookmarks = Boolean(errorComunData || showResolutionBookmark);
-
   return (
     <ExerciseCard
       id={id}
@@ -105,14 +102,9 @@ export const MatrizInteractiva: MatrizInteractivaComponent = ({ id, pregunta, co
       hasFailed={hasFailed}
       activeTab={activeTab}
       onTabChange={setActiveTab}
-      className={`transition-all duration-500 ${isCompleted ? 'bg-musgo/5 border-musgo/30' : ''}`}
+      className={`transition-all`}
+      pregunta={pregunta}
     >
-      {pregunta && (
-        <p className={`text-base font-bold text-carbon mb-6 leading-relaxed relative z-30 ${showBookmarks ? 'pr-20 sm:pr-28' : ''}`}>
-          {isCompleted && <span className="text-musgo mr-2">❦</span>}
-          {pregunta}
-        </p>
-      )}
 
       <div className={`flex flex-col items-center gap-4 ${isShaking ? 'animate-shake' : ''}`}>
         {/* Renderizado de la matriz con corchetes Arts & Crafts */}

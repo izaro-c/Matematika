@@ -348,8 +348,8 @@ export const MathBoard: React.FC<MathBoardProps> = ({
     checkControlledViewport();
 
     // 'down'/'up' son los eventos unificados de JSXGraph (cubren mouse, touch
-    // y pointer) y se disparan a nivel de documento, por lo que capturan todo
-    // el gesto real incluso si el puntero se suelta fuera del contenedor.
+    // y pointer) y se disparan a nivel de documento, por lo que capturan el gesto
+    // completo incluso si el puntero se suelta fuera del contenedor.
     board.on('down', beginUserGesture);
     board.on('up', endUserGesture);
     board.on('mousewheel', markWheelNavigation);
@@ -454,6 +454,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       JXG.JSXGraph.freeBoard(board);
       elementsRef.current = {};
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ariaLabel, axis, generatedId, grid, id, instructionsId, keepaspectratio, pan, revision, scopeId, zoom]);
 
   useEffect(() => {
@@ -474,6 +475,7 @@ export const MathBoard: React.FC<MathBoardProps> = ({
       applyFittedDisplayBounds(board, fittedBounds);
     }
     safeBoardUpdate(board);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boundingbox, keepaspectratio, safeArea, viewportSafeArea]);
 
   useEffect(() => {

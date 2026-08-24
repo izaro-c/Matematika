@@ -89,14 +89,16 @@ export class EditorApiClient {
   async readContent(file: EditorFileIdentity, signal?: AbortSignal): Promise<ReadContentResponse> {
     try {
       return await request(editorApiPath(`/Matematika/api/content?path=${encodeURIComponent(file.path)}`), readContentResponseSchema, { signal });
-    } catch {
+    } catch (error) {
+      if (error instanceof PersistenceFailure && error.detail.kind !== 'network-error') throw error;
       return readLocalContent(file.path);
     }
   }
   async listContent(signal?: AbortSignal) {
     try {
       return await request(editorApiPath('/api/list-content'), fileListSchema, { signal });
-    } catch {
+    } catch (error) {
+      if (error instanceof PersistenceFailure && error.detail.kind !== 'network-error') throw error;
       return getLocalCatalog();
     }
   }
@@ -106,14 +108,16 @@ export class EditorApiClient {
   async saveDraft(value: SaveDraftRequest, signal?: AbortSignal): Promise<SaveDraftResponse> {
     try {
       return await request(editorApiPath('/api/draft'), saveDraftResponseSchema, json(value, signal));
-    } catch {
+    } catch (error) {
+      if (error instanceof PersistenceFailure && error.detail.kind !== 'network-error') throw error;
       return saveLocalDraft(value);
     }
   }
   async applyContent(value: ApplyContentRequest, signal?: AbortSignal): Promise<ApplyContentResponse> {
     try {
       return await request(editorApiPath('/Matematika/api/content'), applyContentResponseSchema, json(value, signal));
-    } catch {
+    } catch (error) {
+      if (error instanceof PersistenceFailure && error.detail.kind !== 'network-error') throw error;
       return applyLocalContent(value);
     }
   }
@@ -121,7 +125,8 @@ export class EditorApiClient {
     const checked = createContentRequestSchema.parse(value);
     try {
       return await request(editorApiPath('/Matematika/api/content'), applyContentResponseSchema, json(checked, signal));
-    } catch {
+    } catch (error) {
+      if (error instanceof PersistenceFailure && error.detail.kind !== 'network-error') throw error;
       return applyLocalContent(checked);
     }
   }

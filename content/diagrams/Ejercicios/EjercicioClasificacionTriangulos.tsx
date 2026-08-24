@@ -978,4 +978,4 @@ export const EjercicioClasificacionTriangulosSpec = createDiagramSpec(
 );
 /* @matematika-diagram-spec:end */
 
-export const EjercicioClasificacionTriangulos = (props?: any) => <DiagramRenderer spec={EjercicioClasificacionTriangulosSpec} {...props} />;
+export const EjercicioClasificacionTriangulos = () => <DiagramRenderer spec={EjercicioClasificacionTriangulosSpec} />;

@@ -1,25 +1,68 @@
 import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
 import { useLocation } from 'wouter';
 import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES, getLanguage, isSupportedLanguage, SEGMENT_TO_CANONICAL_TYPE } from './config';
-import type { LanguageConfig, RouteSegmentMap, TranslationDictionary } from './types';
+import type { LanguageConfig, RouteSegmentMap } from './types';
 
-interface I18nContextType {
+export type TranslationParams = Record<string, string | number>;
+
+export interface I18nContextType {
   lang: string;
   currentLanguage: LanguageConfig;
   languages: LanguageConfig[];
-  setLang: (code: string) => void;
-  t: <K1 extends keyof TranslationDictionary, K2 extends keyof TranslationDictionary[K1]>(
-    section: K1,
-    key: K2,
-    params?: Record<string, string | number>
-  ) => string;
-  getRouteSegment: (segmentKey: keyof RouteSegmentMap, langCode?: string) => string;
-  getLocalizedPath: (pathWithoutLang: string, targetLang?: string) => string;
+  setLang: (lang: string) => void;
+  t: (...args: [...string[], TranslationParams] | string[]) => string;
+  getRouteSegment: (segmentKey: keyof RouteSegmentMap, targetLang?: string) => string;
+  getLocalizedPath: (rawPath: string, targetLang?: string) => string;
 }
 
 const I18nContext = createContext<I18nContextType | null>(null);
 
 const STORAGE_KEY = 'matematika_user_lang';
+
+function resolveNestedValue(dict: Record<string, unknown>, keys: string[]): string | undefined {
+  let current: unknown = dict;
+  for (const key of keys) {
+    if (current && typeof current === 'object' && key in (current as Record<string, unknown>)) {
+      current = (current as Record<string, unknown>)[key];
+    } else {
+      return undefined;
+    }
+  }
+  return typeof current === 'string' ? current : undefined;
+}
+
+function interpolateParams(text: string, params?: TranslationParams): string {
+  if (!params) return text;
+  return Object.entries(params).reduce((acc, [key, val]) => {
+    return acc.replace(new RegExp(`\\{${key}\\}`, 'g'), String(val ?? ''));
+  }, text);
+}
+
+function resolveTranslation(
+  currentDict: Record<string, any>,
+  defaultDict: Record<string, any>,
+  args: any[]
+): string {
+  if (args.length === 0) return '';
+
+  let params: TranslationParams | undefined;
+  let keys: string[];
+
+  const lastArg = args[args.length - 1];
+  if (lastArg !== null && typeof lastArg === 'object' && !Array.isArray(lastArg)) {
+    params = lastArg;
+    keys = args.slice(0, -1).map(String);
+  } else {
+    keys = args.map(String);
+  }
+
+  if (keys.length === 1 && keys[0].includes('.')) {
+    keys = keys[0].split('.');
+  }
+
+  const rawText = resolveNestedValue(currentDict, keys) ?? resolveNestedValue(defaultDict, keys) ?? keys.join('.');
+  return interpolateParams(rawText, params);
+}
 
 export function getInitialLanguage(): string {
   if (typeof window === 'undefined') return DEFAULT_LANGUAGE.code;
@@ -54,7 +97,6 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [persistedLang, setPersistedLang] = useState<string>(getInitialLanguage);
   const [location, setLocation] = useLocation();
 
-  // Derive current language from URL if present, otherwise fallback to persisted user preference
   const urlSegments = location.split('/').filter(Boolean);
   const langCode = (urlSegments.length > 0 && isSupportedLanguage(urlSegments[0]))
     ? urlSegments[0]
@@ -72,7 +114,6 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // ignore
     }
 
-    // Rewrite current URL to new language prefix and translated segments
     const segments = location.split('/').filter(Boolean);
     if (segments.length === 0) {
       setLocation(`/${newLang}`);
@@ -100,31 +141,8 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLocation(`/${newLang}/${remainingSegments.join('/')}`);
   }, [location, setLocation]);
 
-  const t = useCallback(<K1 extends keyof TranslationDictionary, K2 extends keyof TranslationDictionary[K1]>(
-    section: K1,
-    key: K2,
-    params?: Record<string, string | number>
-  ): string => {
-    const dict = currentLanguage.dictionary;
-    const sectionDict = dict[section] as unknown as Record<string, string> | undefined;
-    let text = sectionDict?.[key as string] || (DEFAULT_LANGUAGE.dictionary[section] as unknown as Record<string, string>)?.[key as string] || String(key);
-    
-    if (params) {
-      Object.entries(params).forEach(([k, v]) => {
-        const valStr = String(v);
-        if (!valStr) {
-          text = text.replace(new RegExp(`{${k}}`, 'g'), '');
-          return;
-        }
-        const placeholder = `{${k}}`;
-        let index = text.indexOf(placeholder);
-        while (index !== -1) {
-          text = text.slice(0, index) + valStr + text.slice(index + placeholder.length);
-          index = text.indexOf(placeholder, index + valStr.length);
-        }
-      });
-    }
-    return text;
+  const t = useCallback((...args: unknown[]): string => {
+    return resolveTranslation(currentLanguage.dictionary, DEFAULT_LANGUAGE.dictionary, args);
   }, [currentLanguage]);
 
   const getRouteSegment = useCallback((segmentKey: keyof RouteSegmentMap, targetLang?: string): string => {
@@ -161,30 +179,12 @@ export function useI18n(): I18nContextType {
       currentLanguage: DEFAULT_LANGUAGE,
       languages: SUPPORTED_LANGUAGES,
       setLang: () => {},
-      t: (section, key, params) => {
-        let text = (DEFAULT_LANGUAGE.dictionary[section] as unknown as Record<string, string>)?.[key as string] || '';
-        if (params) {
-          Object.entries(params).forEach(([k, v]) => {
-            const valStr = String(v);
-            if (!valStr) {
-              text = text.replace(new RegExp(`{${k}}`, 'g'), '');
-              return;
-            }
-            const placeholder = `{${k}}`;
-            let index = text.indexOf(placeholder);
-            while (index !== -1) {
-              text = text.slice(0, index) + valStr + text.slice(index + placeholder.length);
-              index = text.indexOf(placeholder, index + valStr.length);
-            }
-          });
-        }
-        return text;
-      },
-      getRouteSegment: (segmentKey, targetLang) => {
+      t: (...args: unknown[]) => resolveTranslation(DEFAULT_LANGUAGE.dictionary, DEFAULT_LANGUAGE.dictionary, args),
+      getRouteSegment: (segmentKey: keyof RouteSegmentMap, targetLang?: string) => {
         const targetConfig = getLanguage(targetLang || DEFAULT_LANGUAGE.code);
         return targetConfig.routeSegments[segmentKey] || segmentKey;
       },
-      getLocalizedPath: (rawPath, targetLang) => {
+      getLocalizedPath: (rawPath: string, targetLang?: string) => {
         return localizePath(rawPath, targetLang || DEFAULT_LANGUAGE.code);
       },
     };

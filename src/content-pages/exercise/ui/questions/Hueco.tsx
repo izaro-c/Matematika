@@ -72,7 +72,6 @@ export const Hueco: HuecoComponent = ({
   }, [input, isCompleted, correct, tolerance, submitAnswer]);
 
   const showHint = tries >= 2 && !isCompleted && Boolean(pista);
-  const showBookmarks = Boolean(errorComunData || (isCompleted && resolucionData));
 
   // Renderizado en línea si no tiene enunciado de bloque ni pestañas de error/resolución
   if (!pregunta && !errorComunData && !resolucionData) {
@@ -130,12 +129,8 @@ export const Hueco: HuecoComponent = ({
       activeTab={activeTab}
       onTabChange={setActiveTab}
       className={`transition-all duration-500 group ${feedbackClass}`}
+      pregunta={pregunta}
     >
-      {pregunta && (
-        <p className={`text-base font-bold text-carbon mb-6 leading-relaxed relative z-30 ${showBookmarks ? 'pr-20 sm:pr-28' : ''}`}>
-          {pregunta}
-        </p>
-      )}
 
       {isCompleted ? (
         <div className="text-2xl font-bold text-musgo text-center my-6 transition-all duration-500">

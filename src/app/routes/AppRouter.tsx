@@ -36,7 +36,7 @@ const AxiomGraphPage = lazy(() => import("@/fixed-pages/graph/AxiomGraphPage").t
  */
 const LocalizedContentRouteDispatcher: React.FC = () => {
   const { lang, segment, id } = useParams<{ lang?: string; segment?: string; id?: string }>();
-  const { lang: userLang } = useI18n();
+  const { lang: userLang, t } = useI18n();
   const activeLang = isSupportedLanguage(lang) ? (lang as string) : userLang;
   const rawSegment = (segment || '').toLowerCase();
   const canonicalType = SEGMENT_TO_CANONICAL_TYPE[rawSegment];
@@ -44,7 +44,7 @@ const LocalizedContentRouteDispatcher: React.FC = () => {
   if (!canonicalType || !id) {
     return (
       <>
-        <SeoHead title="Página no encontrada" noindex={true} />
+        <SeoHead title={t('notFound', 'title')} noindex={true} />
         <NotFoundPage />
       </>
     );
@@ -159,7 +159,7 @@ const LocalizedContentRouteDispatcher: React.FC = () => {
       case 'caso':
         return <MathProvider><UseCasePage /></MathProvider>;
       case 'plan':
-        return <StudyPlanPage />;
+        return <MathProvider><StudyPlanPage /></MathProvider>;
       case 'rama':
         return <BranchPage />;
       case 'bio': {
@@ -211,7 +211,7 @@ const TwoSegmentRouteDispatcher: React.FC = () => {
     if (!canonicalType) {
       return (
         <>
-          <SeoHead title="Página no encontrada" noindex={true} />
+          <SeoHead title={t('notFound', 'title')} noindex={true} />
           <NotFoundPage />
         </>
       );
@@ -263,7 +263,7 @@ const TwoSegmentRouteDispatcher: React.FC = () => {
       default:
         return (
           <>
-            <SeoHead title="Página no encontrada" noindex={true} />
+            <SeoHead title={t('notFound', 'title')} noindex={true} />
             <NotFoundPage />
           </>
         );
@@ -280,7 +280,7 @@ const TwoSegmentRouteDispatcher: React.FC = () => {
 
   return (
     <>
-      <SeoHead title="Página no encontrada" noindex={true} />
+      <SeoHead title={t('notFound', 'title')} noindex={true} />
       <NotFoundPage />
     </>
   );
@@ -294,13 +294,13 @@ const TwoSegmentRouteDispatcher: React.FC = () => {
  */
 const SingleSegmentRouteDispatcher: React.FC = () => {
   const { segment } = useParams<{ segment?: string }>();
-  const { lang: userLang } = useI18n();
+  const { lang: userLang, t } = useI18n();
   const raw = (segment || '').toLowerCase();
 
   if (isSupportedLanguage(raw)) {
     return (
       <>
-        <SeoHead title="Matematika | La Enciclopedia Interactiva" />
+        <SeoHead title={t('notFound', 'siteTitle')} />
         <HomePage />
       </>
     );
@@ -315,27 +315,27 @@ const SingleSegmentRouteDispatcher: React.FC = () => {
 
   return (
     <>
-      <SeoHead title="Página no encontrada" noindex={true} />
+      <SeoHead title={t('notFound', 'title')} noindex={true} />
       <NotFoundPage />
     </>
   );
 };
 
 export const AppRouter = () => {
-  const { lang } = useI18n();
+  const { lang, t } = useI18n();
 
   return (
     <Suspense fallback={<PageLoadingScreen />}>
       <Switch>
         {/* EDITORES (Rutas con prefijo de idioma /:lang/editor o directas - NUNCA INDEXAR) */}
         <Route path="/:lang/editor">
-          <SeoHead title="Editor" noindex={true} />
+          <SeoHead title={t('editor', 'docHeroTitle')} noindex={true} />
           <MathProvider>
             <EditorPage />
           </MathProvider>
         </Route>
         <Route path="/editor">
-          <SeoHead title="Editor" noindex={true} />
+          <SeoHead title={t('editor', 'docHeroTitle')} noindex={true} />
           <MathProvider>
             <EditorPage />
           </MathProvider>
@@ -343,13 +343,13 @@ export const AppRouter = () => {
 
         {/* HOME PRINCIPAL */}
         <Route path="/">
-          <SeoHead title="Matematika | La Enciclopedia Interactiva" />
+          <SeoHead title={t('notFound', 'siteTitle')} />
           <HomePage />
         </Route>
 
         {/* CONSTRUCCIÓN */}
         <Route path="/:lang/construccion/:id">
-          <SeoHead title="Página en Construcción" noindex={true} />
+          <SeoHead title={t('notFound', 'constructionTitle')} noindex={true} />
           <ConstructionPage />
         </Route>
         <Route path="/construccion/:id">
@@ -372,7 +372,7 @@ export const AppRouter = () => {
 
         {/* 404 CATCH-ALL */}
         <Route path="/:rest*">
-          <SeoHead title="Página no encontrada" noindex={true} />
+          <SeoHead title={t('notFound', 'title')} noindex={true} />
           <NotFoundPage />
         </Route>
       </Switch>

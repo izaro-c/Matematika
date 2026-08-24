@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useI18n } from '@/i18n';
 import {
   editorApiUnavailableInProduction,
   editorRequiresAuthForWrites,
@@ -8,6 +9,7 @@ import {
 } from '@/fixed-pages/editor/save/editorApiBase';
 
 export const EditorApiStatusBanner: React.FC = () => {
+  const { t } = useI18n();
   const [tokenInput, setTokenInput] = useState(() => getEditorAuthToken() ?? '');
   const [writeGranted, setWriteGranted] = useState(() => editorWriteAccessGranted());
 
@@ -29,10 +31,10 @@ export const EditorApiStatusBanner: React.FC = () => {
   return (
     <div
       role="region"
-      aria-label="Autenticación del editor"
+      aria-label={t('editor', 'inspectorAriaLabel')}
       className="border-b border-terracota/25 bg-terracota/10 px-4 py-3 text-xs text-carbon"
     >
-      <p className="font-semibold">Edición en memoria</p>
+      <p className="font-semibold">{t('editor', 'memoryEditing')}</p>
       <p className="mt-1 text-carbon/70">
         Puedes explorar y modificar documentos en esta sesión. Para guardar en el repositorio,
         introduce el token de edición.
@@ -46,13 +48,13 @@ export const EditorApiStatusBanner: React.FC = () => {
           setWriteGranted(true);
         }}
       >
-        <label className="sr-only" htmlFor="editor-api-token">Token de edición</label>
+        <label className="sr-only" htmlFor="editor-api-token">{t('editor', 'editToken')}</label>
         <input
           id="editor-api-token"
           type="password"
           value={tokenInput}
           onChange={event => setTokenInput(event.target.value)}
-          placeholder="Token de edición"
+          placeholder={t('editor', 'editToken')}
           className="min-w-[12rem] flex-1 rounded border border-carbon/20 bg-lienzo px-2 py-1 font-mono text-[11px]"
           autoComplete="off"
         />
@@ -61,7 +63,7 @@ export const EditorApiStatusBanner: React.FC = () => {
           className="rounded bg-terracota px-3 py-1 font-semibold text-lienzo disabled:opacity-40"
           disabled={!tokenInput.trim()}
         >
-          Activar guardado
+          {t('editor', 'activateSave')}
         </button>
       </form>
     </div>

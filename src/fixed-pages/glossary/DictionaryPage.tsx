@@ -65,7 +65,7 @@ export const DictionaryPage = () => {
     });
 
     return groups;
-  }, [search, lang]);
+  }, [search, lang, t]);
 
   const renderMath = (tex: string) => {
     try {

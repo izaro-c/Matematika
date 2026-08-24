@@ -114,9 +114,6 @@ export const Ordenacion: OrdenacionComponent = ({ id, pregunta, pasos = [], chil
 
   if (currentOrder.length === 0) return null;
 
-  const showResolutionBookmark = isCompleted && Boolean(resolucionData);
-  const showBookmarks = Boolean(errorComunData || showResolutionBookmark);
-
   return (
     <ExerciseCard
       id={id}
@@ -126,15 +123,9 @@ export const Ordenacion: OrdenacionComponent = ({ id, pregunta, pasos = [], chil
       hasFailed={hasFailed}
       activeTab={activeTab}
       onTabChange={setActiveTab}
-      className={isCompleted ? 'bg-musgo/5 border-musgo/30' : ''}
+      className={''}
+      pregunta={pregunta}
     >
-      <h4 className={`font-bold text-carbon mb-6 mt-2 text-lg z-30 relative leading-relaxed ${showBookmarks ? 'pr-20 sm:pr-28' : ''}`}>
-        {isCompleted ? (
-          <span className="text-musgo">❦ {t('exercise', 'sortingCompleted')}</span>
-        ) : (
-          <span>{pregunta || t('exercise', 'sortSteps')}</span>
-        )}
-      </h4>
 
       <div className={`flex flex-col gap-3 ${isShaking ? 'animate-shake' : ''}`}>
         {currentOrder.map((paso, index) => {
@@ -160,7 +151,7 @@ export const Ordenacion: OrdenacionComponent = ({ id, pregunta, pasos = [], chil
                     type="button"
                     disabled={index === 0}
                     onClick={() => moveItem(index, index - 1)}
-                    aria-label="Mover arriba"
+                    aria-label={t('exercise', 'moveUp')}
                     className="w-5 h-5 flex items-center justify-center text-[10px] text-carbon/40 hover:text-carbon disabled:opacity-20 cursor-pointer disabled:cursor-default"
                   >
                     ▲
@@ -169,7 +160,7 @@ export const Ordenacion: OrdenacionComponent = ({ id, pregunta, pasos = [], chil
                     type="button"
                     disabled={index === currentOrder.length - 1}
                     onClick={() => moveItem(index, index + 1)}
-                    aria-label="Mover abajo"
+                    aria-label={t('exercise', 'moveDown')}
                     className="w-5 h-5 flex items-center justify-center text-[10px] text-carbon/40 hover:text-carbon disabled:opacity-20 cursor-pointer disabled:cursor-default"
                   >
                     ▼

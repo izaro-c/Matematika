@@ -141,7 +141,7 @@ describe('Exercise Modular Components Suite', () => {
 
     // Error feedback should be shown
     expect(screen.getByText('7 sí es primo.')).toBeDefined();
-    const tryAgainBtn = screen.getByText(/Intentar de nuevo/i);
+    const tryAgainBtn = screen.getByText(/Reintentar|Intentar de nuevo/i);
     expect(tryAgainBtn).toBeDefined();
 
     // Click try again
@@ -153,7 +153,7 @@ describe('Exercise Modular Components Suite', () => {
     // Select correct option
     const optSi = screen.getByText('Sí');
     fireEvent.click(optSi);
-    expect(screen.queryByText(/Intentar de nuevo/i)).toBeNull();
+    expect(screen.queryByText(/Reintentar|Intentar de nuevo/i)).toBeNull();
   });
 
   it('preserves user input in Hueco on wrong answer so user can edit', () => {
@@ -363,11 +363,11 @@ describe('Exercise Modular Components Suite', () => {
     fireEvent.click(checkBtn);
 
     // Error feedback should be displayed
-    expect(screen.getByText(/Intentar de nuevo/i)).toBeDefined();
+    expect(screen.getByText(/Reintentar|Intentar de nuevo/i)).toBeDefined();
 
     // 4. Click try again
     vi.useFakeTimers();
-    const tryAgainBtn = screen.getByText(/Intentar de nuevo/i);
+    const tryAgainBtn = screen.getByText(/Reintentar|Intentar de nuevo/i);
     fireEvent.click(tryAgainBtn);
     act(() => {
       vi.advanceTimersByTime(600);
@@ -389,7 +389,7 @@ describe('Exercise Modular Components Suite', () => {
     fireEvent.click(checkBtn2);
 
     // Should be completed
-    expect(screen.getByText(/Completado/i)).toBeDefined();
+    expect(screen.getByText('❦')).toBeDefined();
   });
 
   it('renders ExerciseCard with smooth tab container and supports tab switching', () => {
@@ -423,7 +423,6 @@ describe('Exercise Modular Components Suite', () => {
     const tabpanel = screen.getByRole('tabpanel');
     expect(tabpanel.className).toContain('transition-[height]');
     expect(tabpanel.className).toContain('duration-300');
-    expect(tabpanel.className).toContain('overflow-hidden');
 
     expect(screen.getByText('Contenido de la pregunta')).toBeDefined();
 

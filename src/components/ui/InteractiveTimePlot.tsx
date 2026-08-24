@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useI18n } from '@/i18n';
 
 interface InteractiveTimePlotProps {
   nodes: Array<{ birthYear?: number }>;
@@ -10,6 +11,7 @@ interface InteractiveTimePlotProps {
  * Agrupa los datos de nacimiento/muerte en "bins" de 100 años (siglos).
  */
 export const InteractiveTimePlot: React.FC<InteractiveTimePlotProps> = ({ nodes }) => {
+  const { t } = useI18n();
   // Compute histogram of mathematicians over centuries
   const histogram = useMemo(() => {
     const bins = new Map<number, number>();
@@ -43,7 +45,7 @@ export const InteractiveTimePlot: React.FC<InteractiveTimePlotProps> = ({ nodes 
 
   return (
     <div className="w-full mt-6 mb-2 border-b border-carbon/20 pb-4">
-      <div className="ac-eyebrow ac-eyebrow--sm ac-eyebrow--muted mb-2">Densidad histórica</div>
+      <div className="ac-eyebrow ac-eyebrow--sm ac-eyebrow--muted mb-2">{t('timeline', 'historicalDensity')}</div>
       <div className="relative w-full flex items-end group" style={{ height: `${height}px` }}>
         {bins.map(([century, count]) => {
           const h = maxCount > 0 ? (count / maxCount) * height : 0;

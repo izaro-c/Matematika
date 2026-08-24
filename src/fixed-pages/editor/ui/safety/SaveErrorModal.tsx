@@ -1,4 +1,5 @@
 import React from 'react';
+import { useI18n } from '@/i18n';
 import type { EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
 
 interface SaveErrorModalProps {
@@ -18,6 +19,8 @@ export const SaveErrorModal: React.FC<SaveErrorModalProps> = ({
   onJumpToIssue,
   onOpenAvisos,
 }) => {
+  const { t } = useI18n();
+
   if (!isOpen) return null;
 
   // Callers should pass blocking issues only; keep a filter as belt-and-suspenders.
@@ -45,7 +48,7 @@ export const SaveErrorModal: React.FC<SaveErrorModalProps> = ({
           </div>
           <div className="min-w-0 flex-1">
             <h2 id="save-error-title" className="font-serif text-lg font-bold text-granada">
-              No se puede guardar el documento
+              {t('editor', 'cannotSaveTitle')}
             </h2>
             <p className="mt-0.5 text-xs text-carbon/70">
               {saveMessage
@@ -108,7 +111,7 @@ export const SaveErrorModal: React.FC<SaveErrorModalProps> = ({
               }}
               className="px-3 py-1.5 text-xs font-bold text-carbon/70 hover:bg-carbon/10 rounded-lg transition-colors cursor-pointer"
             >
-              Ver avisos
+              {t('editor', 'viewWarnings')}
             </button>
           )}
           {firstIssue && onJumpToIssue && (
@@ -120,7 +123,7 @@ export const SaveErrorModal: React.FC<SaveErrorModalProps> = ({
               }}
               className="px-3.5 py-1.5 text-xs font-bold bg-granada text-lienzo hover:bg-granada/85 rounded-lg shadow-xs transition-colors cursor-pointer"
             >
-              Ir al primer error
+              {t('editor', 'goToError')}
             </button>
           )}
           <button
@@ -128,7 +131,7 @@ export const SaveErrorModal: React.FC<SaveErrorModalProps> = ({
             onClick={onClose}
             className="px-3.5 py-1.5 text-xs font-bold bg-carbon/10 text-carbon hover:bg-carbon/20 rounded-lg transition-colors cursor-pointer"
           >
-            Entendido
+            {t('editor', 'understood')}
           </button>
         </div>
       </div>

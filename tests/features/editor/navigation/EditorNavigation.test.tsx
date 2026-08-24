@@ -36,11 +36,11 @@ describe('explorador de recursos', () => {
     expect(filterDisclosure?.open).toBe(false);
     fireEvent.click(screen.getByText('Filtrar resultados'));
     expect(filterDisclosure?.open).toBe(true);
-    expect(screen.getByRole('tab', { name: /Documentos 2/ }).getAttribute('aria-selected')).toBe('true');
+    expect(screen.getByRole('tab', { name: /Documentos.*2/ }).getAttribute('aria-selected')).toBe('true');
     expect(screen.getByRole('button', { name: 'Definición Punto' })).toBeTruthy();
     expect(screen.queryByRole('button', { name: /Solo fuente/ })).toBeNull();
 
-    fireEvent.click(screen.getByRole('tab', { name: /Diagramas 1/ }));
+    fireEvent.click(screen.getByRole('tab', { name: /Diagramas.*1/ }));
     expect(screen.getByRole('button', { name: 'Punto' })).toBeTruthy();
     expect(screen.getByTitle(/Fuente autoritativa/)).toBeTruthy();
   });
@@ -51,9 +51,9 @@ describe('explorador de recursos', () => {
     expect(screen.getByRole('button', { name: 'Teorema de Tales' })).toBeTruthy();
     expect(screen.queryByRole('button', { name: 'Definición Punto' })).toBeNull();
 
-    fireEvent.change(screen.getByLabelText('Estado'), { target: { value: 'available' } });
-    expect(screen.getByText('No hay resultados con estos filtros.')).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: 'Limpiar filtros' }));
+    fireEvent.change(screen.getByLabelText('Diagnóstico'), { target: { value: 'available' } });
+    expect(screen.getByText('No hay elementos que coincidan con los filtros.')).toBeTruthy();
+    fireEvent.click(screen.getAllByRole('button', { name: 'Limpiar filtros' })[0]);
     fireEvent.change(screen.getByLabelText('Cómo se edita'), { target: { value: 'invalid' } });
     expect(screen.getAllByText('Requiere corrección').length).toBeGreaterThanOrEqual(1);
   });
@@ -75,7 +75,7 @@ describe('explorador de recursos', () => {
 
   it('distingue carga, error y catálogo vacío', () => {
     const { rerender, props } = renderNavigation({ isLoading: true, files: [] });
-    expect(screen.getByRole('status', { name: 'Cargando catálogo' })).toBeTruthy();
+    expect(screen.getByRole('status', { name: /Cargando/ })).toBeTruthy();
     rerender(<EditorNavigation {...props} files={[]} isLoading={false} error="Sin conexión" />);
     expect(screen.getByRole('alert').textContent).toContain('Sin conexión');
     rerender(<EditorNavigation {...props} files={[]} isLoading={false} error={null} />);

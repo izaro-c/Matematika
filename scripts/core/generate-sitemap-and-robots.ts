@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { generateContentIndex, type ContentEntry } from './generate-content-index';
+import { generateContentIndex } from './generate-content-index';
 
 const PUBLIC_DIR = path.resolve('./public');
 const DIST_DIR = path.resolve('./dist');

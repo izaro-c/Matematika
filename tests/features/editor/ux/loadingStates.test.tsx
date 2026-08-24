@@ -39,7 +39,7 @@ describe('Editor Loading UX states', () => {
       );
 
       // Should show friendly onboarding empty state without technical jargon
-      expect(screen.getByText('Aún no hay documentos')).toBeDefined();
+      expect(screen.getByText((content) => content.includes('Aún no hay documentos'))).toBeDefined();
       expect(screen.queryByText('Cargando contenido…')).toBeNull();
     });
   });

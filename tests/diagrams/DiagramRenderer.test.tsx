@@ -47,7 +47,7 @@ describe('DiagramRenderer shared runtime', () => {
     expect(board?.querySelector('[aria-label="Controles del viewport"]')).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: 'Acercar' }));
     expect(renderer?.getAttribute('data-diagram-viewport-bounds')).not.toBeNull();
-    fireEvent.click(screen.getByRole('button', { name: 'Ajustar automáticamente al contenido visible en todos los pasos' }));
+    fireEvent.click(screen.getByRole('button', { name: /Ajustar.*contenido/ }));
     expect(onViewportChange).not.toHaveBeenCalled();
   });
 
@@ -109,8 +109,8 @@ describe('DiagramRenderer shared runtime', () => {
   });
 
   it('provides accessible, consistently sized viewport and fit buttons with centered icons', () => {
-    render(<DiagramRenderer spec={migrateDiagramSpec(v2Fixture).spec} />);
-    const fitButton = screen.getByRole('button', { name: 'Ajustar automáticamente al contenido visible en todos los pasos' });
+    render(<DiagramRenderer spec={migrateDiagramSpec(v2Fixture).spec} activeStepId="step1" />);
+    const fitButton = screen.getByRole('button', { name: /Ajustar.*contenido/ });
     expect(fitButton).toBeTruthy();
     expect(fitButton.textContent).toContain('⌖');
     expect(fitButton.className).toContain('h-11');
