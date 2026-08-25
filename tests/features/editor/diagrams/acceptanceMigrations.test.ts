@@ -271,6 +271,7 @@ describe('Diagram acceptance migrations', () => {
     const references = [
       ...mdx.matchAll(/<InteractiveElement\b[^>]*\btarget="([^"]+)"/g),
       ...mdx.matchAll(/<ConceptLink\b[^>]*\bhighlightTarget="([^"]+)"/g),
+      ...mdx.matchAll(/<VisualBind\b[^>]*\belement="([^"]+)"/g),
     ].map(match => match[1]);
 
     expect(model.points.filter(point => point.visible).map(point => point.id)).toEqual(['O', 'P']);

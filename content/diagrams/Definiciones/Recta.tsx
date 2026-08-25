@@ -1,162 +1,153 @@
 import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';
 
 /* @matematika-diagram-spec:start */
-export const RectaSpec = createDiagramSpec(
-{
-  "version": 3,
-  "renderer": "matematika-diagram-renderer-v3",
-  "title": "Recta",
-  "componentId": "recta",
-  "category": "Definiciones",
-  "mode": "simulation",
-  "axis": false,
-  "grid": false,
-  "viewport": {
-    "bounds": [
-      -5,
-      4.5,
-      5,
-      -4.5
-    ],
-    "home": [
-      -5,
-      4.5,
-      5,
-      -4.5
-    ],
-    "minZoom": 0.55,
-    "maxZoom": 5,
-    "padding": 0.16
+export const RectaSpec = createDiagramSpec({
+  version: 3,
+  renderer: "matematika-diagram-renderer-v3",
+  title: "Recta",
+  componentId: "recta",
+  category: "Definiciones",
+  mode: "simulation",
+  axis: false,
+  grid: false,
+  viewport: {
+    bounds: [-5, 4.5, 5, -4.5],
+    home: [-5, 4.5, 5, -4.5],
+    minZoom: 0.55,
+    maxZoom: 5,
+    padding: 0.16
   },
-  "layers": [
+  layers: [
     {
-      "id": "geometry",
-      "label": "Geometría",
-      "order": 0,
-      "visible": true,
-      "locked": false
+      id: "geometry",
+      label: "Geometría",
+      order: 0,
+      visible: true,
+      locked: false
     },
     {
-      "id": "annotations",
-      "label": "Lecturas y controles",
-      "order": 1,
-      "visible": true,
-      "locked": false
+      id: "annotations",
+      label: "Lecturas y controles",
+      order: 1,
+      visible: true,
+      locked: false
     }
   ],
-  "groups": [],
-  "objects": [
+  groups: [],
+  objects: [
     {
-      "id": "A",
-      "label": "A",
-      "color": "musgo",
-      "layerId": "geometry",
-      "order": 700,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Mover el punto A",
-        "role": "primary"
+      id: "A",
+      label: "A",
+      color: "musgo",
+      layerId: "geometry",
+      order: 700,
+      visible: true,
+      locked: false,
+      groupIds: [],
+      selection: {
+        selectable: true,
+        ariaLabel: "Mover el punto A",
+        role: "primary"
       },
-      "target": true,
-      "targetId": "pA",
-      "objectType": "point",
-      "definition": {
-        "type": "coordinates",
-        "x": -2.5,
-        "y": -1
+      target: true,
+      targetId: "pA",
+      objectType: "point",
+      definition: {
+        type: "coordinates",
+        x: -2.5,
+        y: -1
       },
-      "mobility": {
-        "type": "free"
+      mobility: {
+        type: "free"
       },
-      "appearance": {
-        "size": 7,
-        "labelVisible": true,
-        "highlightSize": 10,
-        "preserveColorOnHighlight": true
+      appearance: {
+        size: 7,
+        labelVisible: true,
+        highlightSize: 10,
+        preserveColorOnHighlight: true
       },
-      "interaction": {
-        "snapToGrid": true,
-        "snapSize": 0.25
+      interaction: {
+        snapToGrid: true,
+        snapSize: 0.25
       }
     },
     {
-      "id": "B",
-      "label": "B",
-      "color": "musgo",
-      "layerId": "geometry",
-      "order": 710,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Mover el punto B",
-        "role": "primary"
+      id: "B",
+      label: "B",
+      color: "musgo",
+      layerId: "geometry",
+      order: 710,
+      visible: true,
+      locked: false,
+      groupIds: [],
+      selection: {
+        selectable: true,
+        ariaLabel: "Mover el punto B",
+        role: "primary"
       },
-      "target": true,
-      "targetId": "pB",
-      "objectType": "point",
-      "definition": {
-        "type": "coordinates",
-        "x": 2,
-        "y": 1.5
+      target: true,
+      targetId: "pB",
+      objectType: "point",
+      definition: {
+        type: "coordinates",
+        x: 2,
+        y: 1.5
       },
-      "mobility": {
-        "type": "free"
+      mobility: {
+        type: "free"
       },
-      "appearance": {
-        "size": 7,
-        "labelVisible": true,
-        "highlightSize": 10,
-        "preserveColorOnHighlight": true
+      appearance: {
+        size: 7,
+        labelVisible: true,
+        highlightSize: 10,
+        preserveColorOnHighlight: true
       },
-      "interaction": {
-        "snapToGrid": true,
-        "snapSize": 0.25
+      interaction: {
+        snapToGrid: true,
+        snapSize: 0.25
       }
     },
     {
-      "id": "line",
-      "label": "Recta l = AB",
-      "color": "musgo",
-      "layerId": "geometry",
-      "order": 720,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Recta l = AB",
-        "role": "secondary"
+      id: "line",
+      label: "Recta l = AB",
+      color: "musgo",
+      layerId: "geometry",
+      order: 720,
+      visible: true,
+      locked: false,
+      groupIds: [],
+      selection: {
+        selectable: true,
+        ariaLabel: "Recta l = AB",
+        role: "secondary"
       },
-      "target": true,
-      "targetId": "lineAB",
-      "objectType": "path",
-      "geometry": {
-        "type": "line",
-        "construction": {
-          "type": "through-points",
-          "points": [
-            "A",
-            "B"
-          ]
+      target: true,
+      targetId: "lineAB",
+      objectType: "path",
+      geometry: {
+        type: "line",
+        construction: {
+          type: "through-points",
+          points: ["A", "B"]
         }
       },
-      "appearance": {
-        "strokeWidth": 3,
-        "highlightStrokeWidth": 3,
-        "preserveColorOnHighlight": true
+      appearance: {
+        strokeWidth: 3,
+        highlightStrokeWidth: 4,
+        preserveColorOnHighlight: true
       }
     }
   ],
-  "relations": [],
-  "steps": [],
-  "note": "Mueve A o B"
-}
-);
+  relations: [],
+  steps: [],
+  note: "Arrastra los puntos A o B para reorientar la recta.",
+  translations: {
+    eu: {
+      title: "Zuzena",
+      note: "Arrastatu A edo B puntuak zuzena birbideratzeko."
+    }
+  }
+});
 /* @matematika-diagram-spec:end */
 
 export const Recta = () => <DiagramRenderer spec={RectaSpec} />;

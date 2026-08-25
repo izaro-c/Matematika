@@ -1,26 +1,21 @@
 export const metadata = {
   "id": "ejercicio-clasificacion-triangulos",
   "type": "ejercicio",
-  "lang": "eu",
-  "branch": "51M",
-  "title": "Hirukiak beren Angeluen Arabera Sailkatzea",
+  "title": "Hirukiak beren angeluen arabera sailkatzea",
   "description": "Barne-angeluen neurriaren arabera hiruki motak sailkatzeko, zenbatzeko eta aztertzeko ariketa interaktiboa.",
-  "relatedTheorem": "teorema-suma-angulos-triangulo",
-  "hasSimulation": false,
-  "difficulty": "básico",
-  "hint": "Gogoratu: 90°-ko angelu bat badu hiruki zuzena da; hiru angeluak 90° baino txikiagoak badira zehitza da; eta 90° baino handiagoa den angelu bat badu kamutsa da."
+  "hasSimulation": false
 };
 
 import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/EjercicioClasificacionTriangulos';
 
-<Capitular letra="H" />irukiak beren angeluen arabera sailkatzea oinarrizko trebezia da kongruentzia eta antzekotasun teoremoak aplikatzeko. Ariketa honetan hiruki ezberdinak beren barne-angeluen arabera sailkatuko dituzu, zenbaketa-matrizea eraikiko duzu eta ezaugarriak mihisean egiaztatuko dituzu.
+<Capitular letra="H" />irukiak beren angeluen arabera sailkatzea oinarrizko trebezia da <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> eta <ConceptLink targetId="semejanza">antzekotasun</ConceptLink> teoremak aplikatzeko. Ariketa honetan hiruki ezberdinak beren barne-angeluen arabera sailkatuko dituzu, zenbaketa-matrizea eraikiko duzu eta ezaugarriak mihisean egiaztatuko dituzu.
 
 <Separador />
 
 <ExerciseStep
   id="p1"
   numero={1}
-  titulo="Barne-Angeluen Araberako Sailkapena"
+  titulo="Barne-angeluen araberako sailkapena"
   questionIds={["p1_q1"]}
 >
   Arrastatu hiruki bakoitza bere kategoria egokira beren angeluen arabera:
@@ -29,19 +24,19 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
     id="p1_q1"
     pregunta="Sailkatu hurrengo hirukiak beren kategoria egokian:"
     buckets={[
-      { id: "rectangulo", title: "Hiruki Zuzena (90°-ko angelu bat)" },
-      { id: "acutangulo", title: "Hiruki Zehitza (3 angelu < 90°)" },
-      { id: "obtusangulo", title: "Hiruki Kamutsa (angelu bat > 90°)" }
+      { id: "rectangulo", title: "Hiruki zuzena (90°-ko angelu bat)" },
+      { id: "acutangulo", title: "Hiruki zorrotza (3 angelu < 90°)" },
+      { id: "obtusangulo", title: "Hiruki kamutsa (angelu bat > 90°)" }
     ]}
     items={[
-      { id: "t1", content: "90^\\circ, 45^\\circ, 45^\\circ", bucketId: "rectangulo" },
-      { id: "t2", content: "60^\\circ, 60^\\circ, 60^\\circ", bucketId: "acutangulo" },
-      { id: "t3", content: "120^\\circ, 30^\\circ, 30^\\circ", bucketId: "obtusangulo" },
-      { id: "t4", content: "3, 4, 5\\text{ (aldeak)}", bucketId: "rectangulo" }
+      { id: "t1", content: "$90^\\circ, 45^\\circ, 45^\\circ$", bucketId: "rectangulo" },
+      { id: "t2", content: "$60^\\circ, 60^\\circ, 60^\\circ$", bucketId: "acutangulo" },
+      { id: "t3", content: "$120^\\circ, 30^\\circ, 30^\\circ$", bucketId: "obtusangulo" },
+      { id: "t4", content: "$3, 4, 5\\text{(aldeak)}$", bucketId: "rectangulo" }
     ]}
   >
     <Clasificador.ErrorComun titulo="Hiruko pitagorikoa edo angelu kamutsak nahastea">
-      Gogoratu Pitagorasen teoremagatik ($3^2 + 4^2 = 5^2$) 3, 4 eta 5 aldeak dituen hirukia zuzena dela. Era berean, nahikoa da 90° baino handiagoa den angelu bakar bat kamutsa izateko.
+      Gogoratu <ConceptLink targetId="teorema-pitagoras" isDependency={false}>Pitagorasen teoremagatik</ConceptLink> ($3^2 + 4^2 = 5^2$) 3, 4 eta 5 aldeak dituen hirukia zuzena dela. Era berean, nahikoa da 90° baino handiagoa den angelu bakar bat kamutsa izateko.
     </Clasificador.ErrorComun>
 
     <Clasificador.Resolucion>
@@ -52,10 +47,12 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
   </Clasificador>
 </ExerciseStep>
 
+<Separador />
+
 <ExerciseStep
   id="p2"
   numero={2}
-  titulo="Sailkapenaren Zenbaketa Matriziala"
+  titulo="Sailkapenaren zenbaketa matriziala"
   questionIds={["p2_q1"]}
   dependeDeQuestions={["p1_q1"]}
 >
@@ -76,10 +73,12 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
   </MatrizInteractiva>
 </ExerciseStep>
 
+<Separador />
+
 <ExerciseStep
   id="p3"
   numero={3}
-  titulo="Egiaztapen Bisuala Mihisean"
+  titulo="Egiaztapen bisuala mihisean"
   questionIds={["p3_q1"]}
   dependeDeQuestions={["p2_q1"]}
 >
@@ -87,9 +86,9 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
 
   <CanvasInteractivo
     id="p3_q1"
-    title="Angelu Zuzenketarako Mihise Interaktiboa"
+    title="Angelu zuzenketarako mihise interaktiboa"
     pregunta="Egin klik mihiseko ikuskapen-botoietan hiruki mota bakoitzaren irekiera egiaztatzeko:"
-    botonTexto="Balioztatu Mihisearen Analisia"
+    botonTexto="Balioztatu mihisearen analisia"
   >
     <EjercicioClasificacionTriangulos />
 

@@ -1,19 +1,28 @@
 export const metadata = {
-  "id": "semejanza",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Semejanza de Triángulos",
-  "description": "Relación entre figuras geométricas que tienen la misma forma, es decir, ángulos correspondientes iguales y lados correspondientes proporcionales.",
-  "statement": "Dos triángulos △ABC y △A'B'C' son semejantes (△ABC ~ △A'B'C') si sus ángulos correspondientes son iguales (∠A=∠A', ∠B=∠B', ∠C=∠C') y sus lados guardan la misma proporción: |AB|/|A'B'| = |BC|/|B'C'| = |CA|/|C'A'|.",
-  "authors": ["tales", "euclides"],
-  "hasSimulation": false
+  id: "semejanza",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Semejanza",
+  description: "Relación de equivalencia geométrica entre figuras que poseen la misma forma, con ángulos correspondientes congruentes y lados homólogos proporcionales.",
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro VI, Definición 1", role: "primary" }
+  ]
 };
 
-<Capitular letra="L" />a **semejanza** de figuras en la geometría euclídea formaliza la noción intuitiva de "misma forma pero diferente escala". 
+<Capitular letra="L" />a <ConceptLink targetId="semejanza">semejanza</ConceptLink> es la relación geométrica que formaliza la equivalencia de forma entre figuras espaciales. En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, dos figuras semejantes difieren únicamente por una escala o homotecia uniforme.
+
+<Definicion title="">
+  Dos <ConceptLink targetId="triangulo" isDependency={true}>triángulos</ConceptLink> $\triangle ABC$ y $\triangle A'B'C'$ son semejantes (denotado $\triangle ABC \sim \triangle A'B'C'$) si sus <ConceptLink targetId="angulo">ángulos</ConceptLink> correspondientes son <ConceptLink targetId="congruencia">congruentes</ConceptLink> y sus lados homólogos son proporcionales a una razón constante $k > 0$:
+  $$
+  \angle A \cong \angle A', \quad \angle B \cong \angle B', \quad \angle C \cong \angle C' \quad \land \quad \frac{|AB|}{|A'B'|} = \frac{|BC|}{|B'C'|} = \frac{|CA|}{|C'A'|} = k
+  $$
+</Definicion>
 
 <Separador />
 
-### Criterios de Semejanza
+### Criterios fundamentales de semejanza
 
-1. **Criterio AA (Ángulo-Ángulo)**: Si dos triángulos tienen dos ángulos correspondientes congruentes, son semejantes.
-2. **Teorema de Tales**: Una recta paralela a uno de los lados de un triángulo determina un triángulo semejante al original (<ConceptLink targetId="teorema-tales">Teorema de Tales</ConceptLink>).
+- **Criterio AA (Ángulo-Ángulo)**: Si dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> tienen dos <ConceptLink targetId="angulo">ángulos</ConceptLink> correspondientes respectivamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>, entonces los triángulos son semejantes.
+- **Criterio LAL (Lado-Ángulo-Lado)**: Si dos lados correspondientes son proporcionales y el ángulo comprendido entre ellos es congruente, los triángulos son semejantes.
+- **Relación con el teorema de Tales**: Toda recta <ConceptLink targetId="paralelas">paralela</ConceptLink> a uno de los lados de un triángulo corta a los otros dos lados determinando un triángulo semejante al original.

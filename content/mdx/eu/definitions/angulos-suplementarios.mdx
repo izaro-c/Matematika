@@ -1,49 +1,39 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "angulos-suplementarios",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Angelu osagarriak (Suplementarioak)",
-  "description": "Dos ángulos son suplementarios si la suma de sus medidas es un ángulo llano (180° o π radianes).",
-  "tags": ["geometria", "angulos", "medida"],
-  "authors": ["hilbert"],
-  "links": ["angulo"],
-  "seeAlso": ["angulo", "perpendicular", "teorema-angulos-opuestos-verticales"],
-  "hasSimulation": false
+  id: "angulos-suplementarios",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Angelu Osagarriak (Suplementarioak)",
+  description: "Beren neurrien batura angelu lau baten edo 180 graduren berdina den bi angeluren arteko erlazioa.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
+  ]
 };
 
-<Capitular letra="D" />os ángulos son **suplementarios** si la suma de sus medidas es igual a un ángulo llano ($180^\circ$ o $\pi$ radianes). Es una de las relaciones angulares fundamentales en <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría plana</ConceptLink>.
+<Capitular letra="B" />i <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> osagarriak edo suplementarioak dira haien irekiera angeluarren baturak zehazki angelu lau bat ($180^\circ$ edo $\pi$ radian) osatzen duenean. Erlazio hau oinarrizkoa da <ConceptLink targetId="perpendicular">ortogonaltasuna</ConceptLink> eta <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> angeluarra aztertzeko.
+
+<Definicion title="">
+  Izan bitez $\alpha$ eta $\beta$ bi angelu koplanar. Suplementarioak direla esaten da baldin eta soilik baldin haien neurrien baturak honako hau betetzen badu:
+  $$
+  \alpha + \beta \cong 180^\circ
+  $$
+</Definicion>
 
 <Separador />
 
-### Definición Formal
+### Angelu osagarri albokideak
 
-Sea $\alpha$ y $\beta$ dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink>. Se dice que son suplementarios si:
-
-<Formula>
-  $$ \alpha + \beta \cong 180^\circ $$
-</Formula>
-
-Equivalentemente, dos ángulos son suplementarios si juntos forman un ángulo llano ($180^\circ$).
+Kasu geometriko estandarra bi angelu albokidek alde komun bat partekatzen dutenean eta beren alde ez-komunak <ConceptLink targetId="recta">zuzen</ConceptLink> beraren gaineko bi erredierari aurkako direnean gertatzen da. Konfigurazio horretan, bi angelu albokideen baturak $180^\circ$ osatzen du ezinbestean.
 
 <Separador />
 
-### Suplementarios Adyacentes
+### Angelu zuzenaren ezaugarritzea
 
-El caso más común es el de dos ángulos adyacentes cuyos lados no comunes son semirrectas opuestas. En esta configuración, los ángulos se apoyan sobre una misma recta y su suma es exactamente $180^\circ$.
-
-Dada una recta $l$ y un punto $O$ sobre ella, las dos semirrectas determinadas por $O$ forman un ángulo llano. Si se traza otra semirrecta desde $O$, ésta divide el ángulo llano en dos ángulos suplementarios.
+<ConceptLink targetId="hilbert">Hilberten</ConceptLink> geometria sintetikoan, angelu zuzena osagarritasunaren bidez definitzen da zuzenean: angelu bat zuzena da baldin eta soilik baldin bere angelu osagarri albokidearekin <ConceptLink targetId="congruencia">kongruentea</ConceptLink> bada ($\alpha \cong \beta \implies \alpha \cong 90^\circ$).
 
 <Separador />
 
-### Relación con Ángulos Rectos
+### Egitura-propietateak
 
-Un caso particular importante: un ángulo recto es aquel que es congruente con su suplementario. Es decir, si $\alpha \cong \beta$ y $\alpha + \beta \cong 180^\circ$, entonces $\alpha \cong \beta \cong 90^\circ$.
-
-<Separador />
-
-### Propiedades
-
-- La relación «ser suplementario de» es simétrica: si $\alpha$ es suplementario de $\beta$, entonces $\beta$ es suplementario de $\alpha$.
-- Si dos ángulos son suplementarios de un mismo tercer ángulo, entonces son congruentes entre sí (por transitividad de la congruencia, <ConceptLink targetId="axioma-congruencia-4" >axioma III-4</ConceptLink>).
-- Los <ConceptLink targetId="teorema-angulos-opuestos-verticales" >ángulos opuestos por el vértice</ConceptLink> son congruentes precisamente porque comparten el mismo suplementario.
+- **Simetria**: Erlazioa simetrikoa da; baldin eta $\alpha$ $\beta$-ren suplementarioa bada, orduan $\beta$ $\alpha$-ren suplementarioa da.
+- **Kongruentzia suplementuen bidez**: Angelu beraren (edo angelu kongruenteen) suplementarioak diren bi angelu beren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira.

@@ -2,47 +2,45 @@ export const metadata = {
   "id": "teorema-triangulo-isosceles",
   "type": "teorema",
   "title": "Teorema del triángulo isósceles",
-  "description": "En un triángulo isósceles, los ángulos opuestos a los lados iguales son también iguales (Pons Asinorum).",
+  "description": "En todo triángulo isósceles, los ángulos opuestos a los lados congruentes son también congruentes entre sí.",
   "statement": "Sea △ABC un triángulo con AB ≅ AC. Entonces ∠B ≅ ∠C.",
   "tags": ["geometria", "triangulos", "congruencia"],
-  "authors": ["euclides"],
+  "authors": ["euclides", "hilbert"],
   "difficulty": "básico",
-  "demos": ["demo-triangulo-isosceles"],
   "hasSimulation": true,
-    "sources": [
-    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 5", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
-  ]
+  "sources": [
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 5 y 6", role: "primary" },
+    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "secondary" }
+  ],
+  "demos": ["demo-triangulo-isosceles"]
 };
 
 import { TrianguloIsosceles } from '@content/diagrams/Teoremas/TrianguloIsosceles';
-
 export const Simulation = TrianguloIsosceles;
 
-<Capitular letra="E" />l <ConceptLink targetId="teorema-triangulo-isosceles" >teorema del triángulo isósceles</ConceptLink>, clásicamente conocido como *Pons Asinorum* (Puente de los Asnos) en los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, establece que si un <ConceptLink targetId="triangulo" >triángulo</ConceptLink> tiene dos <ConceptLink targetId="segmento" >lados</ConceptLink> congruentes (es decir, es <ConceptLink targetId="triangulo" >isósceles</ConceptLink>), entonces los <ConceptLink targetId="angulo" >ángulos</ConceptLink> que se oponen a esos lados también son <ConceptLink targetId="congruencia" >congruentes</ConceptLink>.
+<Capitular letra="E" />l <ConceptLink targetId="teorema">teorema del triángulo isósceles</ConceptLink> —históricamente denominado *Pons Asinorum* en la tradición de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>— constituye el primer teorema fundamental sobre la simetría de las figuras poligonales. Establece que en todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> que posea dos <VisualBind element="segPA" color="canela">lados congruentes</VisualBind> ($|PA| = |PB|$), los <ConceptLink targetId="angulo">ángulos</ConceptLink> opuestos a dichos lados conservan una <ConceptLink targetId="congruencia">congruencia</ConceptLink> exacta entre sí ($\angle A \cong \angle B$).
 
 <Separador />
 
-### Enunciado Formal
+### Enunciado formal
 
-Sea $\triangle ABC$ un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> con <InteractiveElement target="lados-iguales">$\overline{AB} \cong \overline{AC}$</InteractiveElement>. Entonces:
+Sea $\triangle PAB$ un triángulo plano en el que dos de sus lados son congruentes: <VisualBind element="segPA" color="canela">$PA \cong PB$</VisualBind>. Entonces los ángulos en la base son congruentes:
 
 <Formula>
-  $$ \angle B \cong \angle C $$
+  $$ \angle PAB \cong \angle PBA $$
 </Formula>
 
 <Separador />
 
-### Discusión
+### Análisis y fundamentación axiomática
 
-La <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> clásica de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> (Proposición I.5) construye puntos auxiliares sobre las prolongaciones de los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> iguales y aplica el criterio de <ConceptLink targetId="congruencia" >congruencia</ConceptLink> <ConceptLink targetId="axioma-congruencia-5"  isDependency={false}>LAL</ConceptLink> para establecer la igualdad de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> de la base.
+En la axiomatización de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el teorema se demuestra deduciendo la congruencia del triángulo consigo mismo ($\triangle PAB \cong \triangle PBA$) mediante una permutación de vértices bajo el postulado de congruencia LAL.
 
-Equivalentemente, su recíproco también es cierto: si dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> son iguales, los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> opuestos a dichos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> tendrán idéntica <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink>.
+La demostración original de Euclides (Proposición I.5) prolongaba los lados congruentes y utilizaba dos pares de triángulos auxiliares. El teorema pertenece rigurosamente a la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>, ya que no requiere el axioma euclidiano de las paralelas.
 
 <Separador />
 
-### Observaciones
+### Observaciones y reciprocidad
 
-- Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> representa la proposición 5 del Libro I de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> y es la primera aplicación seria y no trivial del <ConceptLink targetId="axioma-congruencia-5"  isDependency={false}>postulado de congruencia LAL</ConceptLink>.
-- En un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> <ConceptLink targetId="triangulo-equilatero" isDependency={false}>equilátero</ConceptLink>, los tres <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> son iguales ($60^\circ$) como consecuencia directa de este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink>.
-- El nombre *Pons Asinorum* alude a la dificultad que presentaba para los estudiantes principiantes, siendo el primer resultado no trivial de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink>.
+- **Recíproco del teorema**: Si en un triángulo $\triangle PAB$ dos ángulos interiores son congruentes ($\angle A \cong \angle B$), los lados opuestos a ellos son congruentes ($PA \cong PB$), convirtiendo al triángulo en isósceles (Proposición I.6 de los Elementos).
+- **Triángulo equilátero**: Como consecuencia inmediata, todo triángulo equilátero es equiángulo (sus tres ángulos miden $60^\circ$).

@@ -1,20 +1,41 @@
 export const metadata = {
-  "id": "triangulo-rectangulo",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Triángulo Rectángulo",
-  "description": "Triángulo que posee un ángulo recto (90°). Los lados que forman el ángulo recto se denominan catetos y el lado opuesto es la hipotenusa.",
-  "statement": "Un triángulo △ABC es rectángulo en C si el ángulo interior en C es un ángulo recto (m(∠C) = 90°). El lado c = |AB| es la hipotenusa y a = |BC|, b = |CA| son los catetos.",
-  "authors": ["euclides", "hilbert"],
-  "hasSimulation": false
+  id: "triangulo-rectangulo",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Triángulo Rectángulo",
+  description: "Triángulo que posee un ángulo interior recto (90 grados). Sus lados comprendidos son los catetos y el lado opuesto es la hipotenusa.",
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 21", role: "primary" }
+  ]
 };
 
-<Capitular letra="U" />n **triángulo rectángulo** es aquel que contiene un <ConceptLink targetId="perpendicular">ángulo recto</ConceptLink> (de $90^\circ$ o $\pi/2$ radianes). Es la figura geométrica central sobre la que se articula el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> y la trigonometría clásica.
+<Capitular letra="U" />n <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> es un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> que cuenta con un <ConceptLink targetId="angulo" isDependency={true}>ángulo interior recto</ConceptLink> ($90^\circ$ o $\frac{\pi}{2}$ radianes). Representa el <ConceptLink targetId="poligono">polígono</ConceptLink> sobre el cual se sustenta el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> y las funciones trigonométricas.
+
+<Definicion title="">
+  Un triángulo $\triangle ABC$ es rectángulo en el vértice $C$ si y solo si el ángulo interior en $C$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con un ángulo recto:
+  $$
+  \angle C \cong 90^\circ
+  $$
+  El lado $c = AB$ opuesto al ángulo recto es la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink>, y los lados $a = BC$ y $b = CA$ son los <ConceptLink targetId="cateto">catetos</ConceptLink>.
+</Definicion>
 
 <Separador />
 
-### Elementos Característicos
+### Elementos constitutivos y característicos
 
-- **Hipotenusa**: Es el lado opuesto al ángulo recto. Es estrictamente el lado de mayor longitud del triángulo.
-- **Catetos**: Son los dos lados adyacentes que forman el ángulo recto.
-- **Ángulos Agudos Complementarios**: Los otros dos ángulos interiores suman exactamente $90^\circ$ por el <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de ángulos de un triángulo</ConceptLink>.
+- **<ConceptLink targetId="hipotenusa">Hipotenusa</ConceptLink>**: Lado opuesto al ángulo recto. Constituye estrictamente el lado de mayor longitud del triángulo.
+- **<ConceptLink targetId="cateto">Catetos</ConceptLink>**: Par de lados <ConceptLink targetId="perpendicular">perpendiculares</ConceptLink> entre sí que forman y delimitan el ángulo recto.
+- **Ángulos agudos complementarios**: Los dos ángulos restantes son agudos y su suma equivale a $90^\circ$ ($\alpha + \beta = 90^\circ$).
+
+<Separador />
+
+### Relación métrica fundamental
+
+<Formula>
+  $$
+  a^2 + b^2 = c^2
+  $$
+</Formula>
+
+En todo triángulo rectángulo plano en la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, la suma de los cuadrados de las longitudes de los catetos equivale exactamente al cuadrado de la longitud de la hipotenusa.

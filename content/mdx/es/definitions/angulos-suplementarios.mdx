@@ -1,48 +1,39 @@
 export const metadata = {
-  "id": "angulos-suplementarios",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Ángulos Suplementarios",
-  "description": "Dos ángulos son suplementarios si la suma de sus medidas es un ángulo llano (180° o π radianes).",
-  "tags": ["geometria", "angulos", "medida"],
-  "authors": ["hilbert"],
-  "links": ["angulo"],
-  "seeAlso": ["angulo", "perpendicular", "teorema-angulos-opuestos-verticales"],
-  "hasSimulation": false
+  id: "angulos-suplementarios",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Ángulos Suplementarios",
+  description: "Par de ángulos cuya suma de medidas equivale a un ángulo llano o 180 grados.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+  ]
 };
 
-<Capitular letra="D" />os ángulos son **suplementarios** si la suma de sus medidas es igual a un ángulo llano ($180^\circ$ o $\pi$ radianes). Es una de las relaciones angulares fundamentales en <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría plana</ConceptLink>.
+<Capitular letra="D" />os <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> son suplementarios cuando la adición de sus aberturas angulares equivale exactamente a un ángulo llano ($180^\circ$ o $\pi$ radianes). Esta relación constituye una herramienta fundamental para estudiar la <ConceptLink targetId="perpendicular">ortogonalidad</ConceptLink> y la <ConceptLink targetId="congruencia">congruencia</ConceptLink> angular.
+
+<Definicion title="">
+  Sean $\alpha$ y $\beta$ dos ángulos coplanares. Se definen como suplementarios si y solo si la suma de sus medidas angulares satisface:
+  $$
+  \alpha + \beta \cong 180^\circ
+  $$
+</Definicion>
 
 <Separador />
 
-### Definición Formal
+### Ángulos suplementarios adyacentes
 
-Sea $\alpha$ y $\beta$ dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink>. Se dice que son suplementarios si:
-
-<Formula>
-  $$ \alpha + \beta \cong 180^\circ $$
-</Formula>
-
-Equivalentemente, dos ángulos son suplementarios si juntos forman un ángulo llano ($180^\circ$).
+El caso geométrico estándar se presenta cuando dos ángulos adyacentes comparten un lado común y sus lados no comunes constituyen dos semirrectas opuestas sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>. En tal configuración, el par de ángulos adyacentes suma necesariamente $180^\circ$.
 
 <Separador />
 
-### Suplementarios Adyacentes
+### Caracterización del ángulo recto
 
-El caso más común es el de dos ángulos adyacentes cuyos lados no comunes son semirrectas opuestas. En esta configuración, los ángulos se apoyan sobre una misma recta y su suma es exactamente $180^\circ$.
-
-Dada una recta $l$ y un punto $O$ sobre ella, las dos semirrectas determinadas por $O$ forman un ángulo llano. Si se traza otra semirrecta desde $O$, ésta divide el ángulo llano en dos ángulos suplementarios.
+En la geometría sintética de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, el ángulo recto se define directamente a través de la suplementariedad: un ángulo es recto si y solo si es <ConceptLink targetId="congruencia">congruente</ConceptLink> con su propio ángulo suplementario adyacente ($\alpha \cong \beta \implies \alpha \cong 90^\circ$).
 
 <Separador />
 
-### Relación con Ángulos Rectos
+### Propiedades estructurales
 
-Un caso particular importante: un ángulo recto es aquel que es congruente con su suplementario. Es decir, si $\alpha \cong \beta$ y $\alpha + \beta \cong 180^\circ$, entonces $\alpha \cong \beta \cong 90^\circ$.
-
-<Separador />
-
-### Propiedades
-
-- La relación «ser suplementario de» es simétrica: si $\alpha$ es suplementario de $\beta$, entonces $\beta$ es suplementario de $\alpha$.
-- Si dos ángulos son suplementarios de un mismo tercer ángulo, entonces son congruentes entre sí (por transitividad de la congruencia, <ConceptLink targetId="axioma-congruencia-4" >axioma III-4</ConceptLink>).
-- Los <ConceptLink targetId="teorema-angulos-opuestos-verticales" >ángulos opuestos por el vértice</ConceptLink> son congruentes precisamente porque comparten el mismo suplementario.
+- **Simetría**: La relación es simétrica; si $\alpha$ es suplementario de $\beta$, entonces $\beta$ es suplementario de $\alpha$.
+- **Congruencia por suplementos**: Dos ángulos suplementarios del mismo ángulo (o de ángulos congruentes) son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí.

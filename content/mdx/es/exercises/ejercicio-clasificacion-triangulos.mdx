@@ -1,25 +1,21 @@
 export const metadata = {
   "id": "ejercicio-clasificacion-triangulos",
   "type": "ejercicio",
-  "branch": "51M",
-  "title": "Clasificación de Triángulos por sus Ángulos",
+  "title": "Clasificación de triángulos por sus ángulos",
   "description": "Ejercicio interactivo de clasificación, recuento matricial y análisis visual de triángulos según la medida de sus ángulos internos.",
-  "relatedTheorem": "teorema-suma-angulos-triangulo",
-  "hasSimulation": false,
-  "difficulty": "básico",
-  "hint": "Recuerda: si un triángulo tiene un ángulo de 90° es rectángulo; si todos sus ángulos son menores de 90° es acutángulo; y si tiene un ángulo mayor de 90° es obtusángulo."
+  "hasSimulation": false
 };
 
 import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/EjercicioClasificacionTriangulos';
 
-<Capitular letra="C" />lasificar figuras geométricas según sus propiedades angulares es una habilidad fundamental para aplicar teoremas de congruencia y semejanzas. En este ejercicio clasificarás diferentes triángulos según sus ángulos internos, construirás su matriz de recuento y verificarás las propiedades en el lienzo.
+<Capitular letra="C" />lasificar figuras geométricas según sus propiedades angulares es una habilidad fundamental para aplicar teoremas de <ConceptLink targetId="congruencia">congruencia</ConceptLink> y <ConceptLink targetId="semejanza">semejanzas</ConceptLink>. En este ejercicio clasificarás diferentes triángulos según sus ángulos internos, construirás su matriz de recuento y verificarás las propiedades en el lienzo.
 
 <Separador />
 
 <ExerciseStep
   id="p1"
   numero={1}
-  titulo="Clasificación por Ángulos Internos"
+  titulo="Clasificación por ángulos internos"
   questionIds={["p1_q1"]}
 >
   Arrastra cada triángulo a la categoría correspondiente según sus ángulos:
@@ -28,9 +24,9 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
     id="p1_q1"
     pregunta="Clasifica los siguientes triángulos en su categoría correspondiente:"
     buckets={[
-      { id: "rectangulo", title: "Triángulo Rectángulo (un ángulo de 90°)" },
-      { id: "acutangulo", title: "Triángulo Acutángulo (3 ángulos < 90°)" },
-      { id: "obtusangulo", title: "Triángulo Obtusángulo (un ángulo > 90°)" }
+      { id: "rectangulo", title: "Triángulo rectángulo (un ángulo de 90°)" },
+      { id: "acutangulo", title: "Triángulo acutángulo (3 ángulos < 90°)" },
+      { id: "obtusangulo", title: "Triángulo obtusángulo (un ángulo > 90°)" }
     ]}
     items={[
       { id: "t1", content: "$90^\\circ, 45^\\circ, 45^\\circ$", bucketId: "rectangulo" },
@@ -40,7 +36,7 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
     ]}
   >
     <Clasificador.ErrorComun titulo="Confundir la terna pitagórica o los ángulos obtusos">
-      Recuerda que por el teorema de Pitágoras ($3^2 + 4^2 = 5^2$), los lados 3, 4 y 5 forman un triángulo rectángulo. Asimismo, basta con un solo ángulo mayor de 90° para que sea obtusángulo.
+      Recuerda que por el <ConceptLink targetId="teorema-pitagoras" isDependency={false}>teorema de Pitágoras</ConceptLink> ($3^2 + 4^2 = 5^2$), los lados 3, 4 y 5 forman un triángulo rectángulo. Asimismo, basta con un solo ángulo mayor de 90° para que sea obtusángulo.
     </Clasificador.ErrorComun>
 
     <Clasificador.Resolucion>
@@ -51,10 +47,12 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
   </Clasificador>
 </ExerciseStep>
 
+<Separador />
+
 <ExerciseStep
   id="p2"
   numero={2}
-  titulo="Recuento Matricial de la Clasificación"
+  titulo="Recuento matricial de la clasificación"
   questionIds={["p2_q1"]}
   dependeDeQuestions={["p1_q1"]}
 >
@@ -75,10 +73,12 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
   </MatrizInteractiva>
 </ExerciseStep>
 
+<Separador />
+
 <ExerciseStep
   id="p3"
   numero={3}
-  titulo="Verificación Visual en el Lienzo"
+  titulo="Verificación visual en el lienzo"
   questionIds={["p3_q1"]}
   dependeDeQuestions={["p2_q1"]}
 >
@@ -86,9 +86,9 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
 
   <CanvasInteractivo
     id="p3_q1"
-    title="Lienzo de Comprobación Angular"
+    title="Lienzo de comprobación angular"
     pregunta="Interactúa con los botones de inspección angular en el lienzo para verificar la apertura de cada tipo de triángulo:"
-    botonTexto="Validar Análisis del Lienzo"
+    botonTexto="Validar análisis del lienzo"
   >
     <EjercicioClasificacionTriangulos />
 

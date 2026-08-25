@@ -1,81 +1,68 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "sistema-absoluto",
-  "type": "sistema-axiomatico",
-  "title": "Geometría Absoluta",
-  "description": "Geometría que no depende del quinto postulado: incidencia, orden, congruencia y continuidad. También conocida como geometría neutral. Todo teorema demostrable en geometría absoluta lo es tanto en la euclídea como en la hiperbólica.",
-  "axiomas": [
-    "axioma-incidencia-1",
-    "axioma-incidencia-2",
-    "axioma-incidencia-3",
-    "axioma-incidencia-4",
-    "axioma-incidencia-5",
-    "axioma-incidencia-6",
-    "axioma-incidencia-7",
-    "axioma-incidencia-8",
-    "axioma-orden-1",
-    "axioma-orden-2",
-    "axioma-orden-3",
-    "axioma-orden-4",
-    "axioma-congruencia-1",
-    "axioma-congruencia-2",
-    "axioma-congruencia-3",
-    "axioma-congruencia-4",
-    "axioma-congruencia-5",
-    "axioma-arquimedes",
-    "axioma-completitud"
+  id: "sistema-absoluto",
+  lang: "eu",
+  type: "sistema-axiomatico",
+  title: "Geometria Absolutua",
+  description: "Hilberten 19 axiomek (intzidentzia, ordena, kongruentzia eta jarraitutasuna) osatutako egitura axiomatiko neutroa, paraleloen postulatua suposatu gabe.",
+  axiomas: [
+    "axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3", "axioma-incidencia-4",
+    "axioma-incidencia-5", "axioma-incidencia-6", "axioma-incidencia-7", "axioma-incidencia-8",
+    "axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4",
+    "axioma-congruencia-1", "axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4", "axioma-congruencia-5",
+    "axioma-arquimedes", "axioma-completitud"
   ],
-  "mathematicians": ["hilbert"],
-  "tags": ["geometria", "absoluta", "neutral", "fundamentos"]
+  sources: [
+    { title: "Appendix. Scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "§1", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1-§6", role: "primary" }
+  ]
 };
 
-<Capitular letra="L" />a <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>, también denominada <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría neutral</ConceptLink>, es la estructura axiomática conformada por los <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>axiomas de incidencia</ConceptLink>, orden, <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> y continuidad, excluyendo explícitamente cualquier <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> sobre <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>. Todo <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> demostrado en este marco conserva su validez tanto en la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclidiana</ConceptLink> como en la <ConceptLink targetId="sistema-hiperbolico" isDependency={false}>hiperbólica</ConceptLink>.
+<Capitular letra="G" />eometria <ConceptLink targetId="sistema-absoluto">absolutua</ConceptLink> (edo <ConceptLink targetId="geometria">geometria</ConceptLink> neutrala) geometria klasiko eta ez-euklidearren komuna den nukleo deduktiboa da. Pertenentzia, espazio-antolaketa, irudien rigidetasuna eta osotasun topologikoa biltzen ditu, <ConceptLink targetId="recta">zuzen</ConceptLink> <ConceptLink targetId="paralelas">paraleloen</ConceptLink> existentziari edo bakartasunari buruzko hipotesirik suposatu gabe.
+
+<Definicion title="">
+  Sistema <ConceptLink targetId="axioma">axiomatiko</ConceptLink> absoluto bat $(\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I}, \mathcal{B}, \cong)$ egitura bat da, <ConceptLink targetId="hilbert">Hilberten</ConceptLink> <ConceptLink targetId="sistema-incidencia" isDependency={true}>intzidentzia-axiomak</ConceptLink> (I.1-I.8), <ConceptLink targetId="axioma-orden-1" isDependency={true}>ordena-axiomak</ConceptLink> (II.1-II.4), <ConceptLink targetId="congruencia" isDependency={true}>kongruentzia-axiomak</ConceptLink> (III.1-III.5) eta <ConceptLink targetId="axioma-arquimedes" isDependency={true}>jarraitutasun-axiomak</ConceptLink> (V.1-V.2) betetzen dituena. Sistema honetan eratorritako <ConceptLink targetId="teorema">teorema</ConceptLink> guztiak baliozkoak dira berez bai <ConceptLink targetId="sistema-euclidiano">geometria euklidearrean</ConceptLink> bai <ConceptLink targetId="sistema-hiperbolico">hiperbolikoan</ConceptLink>.
+</Definicion>
 
 <Separador />
 
-### Contexto Histórico
+### Testuinguru historikoa eta oinarritzea
 
-Durante más de dos milenios, los matemáticos intentaron demostrar el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> a partir de los demás <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink>, sin éxito. En el siglo XIX, <ConceptLink targetId="lobachevski" isDependency={false}>Lobachevski</ConceptLink>, <ConceptLink targetId="bolyai" isDependency={false}>Bolyai</ConceptLink> y Gauss demostraron independientemente que el postulado de las paralelas es independiente de los demás. Esto reveló que existe una <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> "neutra" —la absoluta— que no toma partido sobre las paralelas, y de la cual tanto la euclidiana como la hiperbólica son extensiones.
-
-<ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> formalizó esta estructura en *Grundlagen der Geometrie* (1899), estableciendo el marco axiomático moderno que usamos hoy.
+Bi mila urte baino gehiagotan <ConceptLink targetId="axioma-paralelas-euclides">paraleloen postulatua</ConceptLink> oinarrizko axiometatik deduzitzen saiatu ziren matematikariak. XIX. mendean, <ConceptLink targetId="lobachevski">Nikolai Lobachevskik</ConceptLink>, <ConceptLink targetId="bolyai">János Bolyaik</ConceptLink> eta Carl Friedrich Gaussek postulatuz horren independentzia logikoa frogatu zuten. <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> <ConceptLink targetId="sistema-absoluto">geometria absolutua</ConceptLink> behin betiko formalizatu zuen 1899an, <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axioma</ConceptLink> gehitu edo ukatzean espazio geometrikoa adarretan banatzen duen oinarri neutro eta rigurosoa ezarriz.
 
 <Separador />
 
-### Axiomas
+### Egitura axiomatikoa
 
-La <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> consta de 19 axiomas, agrupados en cuatro grupos:
+Geometria absolutuak 19 oinarrizko axioma ditu, lau multzotan banatuta:
 
-**Grupo I — <ConceptLink targetId="incidencia" isDependency={false}>Incidencia</ConceptLink>** (<ConceptLink targetId="axioma-incidencia-1"  isDependency={false}>I-1</ConceptLink> al <ConceptLink targetId="axioma-incidencia-8"  isDependency={false}>I-8</ConceptLink>): relaciones de pertenencia entre <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, rectas y <ConceptLink targetId="plano" isDependency={false}>planos</ConceptLink>.
-
-**Grupo II — Orden** (<ConceptLink targetId="axioma-orden-1"  isDependency={false}>II-1</ConceptLink> al <ConceptLink targetId="axioma-orden-4"  isDependency={false}>II-4</ConceptLink>): relación de intermediación entre puntos sobre una recta, incluyendo el axioma de Pasch.
-
-**Grupo III — Congruencia** (<ConceptLink targetId="axioma-congruencia-1"  isDependency={false}>III-1</ConceptLink> al <ConceptLink targetId="axioma-congruencia-5"  isDependency={false}>III-5</ConceptLink>): relaciones de congruencia entre <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> y <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink>, incluyendo el criterio SAS.
-
-**Grupo IV — Continuidad** (<ConceptLink targetId="axioma-arquimedes"  isDependency={false}>V-1</ConceptLink> y <ConceptLink targetId="axioma-completitud"  isDependency={false}>V-2</ConceptLink>): <ConceptLink targetId={["axioma-arquimedes", "axioma", "arquimedes"]} isDependency={false}>axioma de Arquímedes</ConceptLink> y <ConceptLink targetId={["axioma-completitud", "axioma"]} isDependency={false}>axioma de completitud</ConceptLink>.
+- **<ConceptLink targetId="sistema-incidencia" isDependency={true}>I. Intzidentzia-axiomak</ConceptLink>** (I.1etik I.8ra): <ConceptLink targetId="punto">Puntu</ConceptLink>, <ConceptLink targetId="recta">zuzen</ConceptLink> eta <ConceptLink targetId="plano">planoen</ConceptLink> arteko jatorrizko erlazioak zehazten dituzte.
+- **<ConceptLink targetId="axioma-orden-1" isDependency={true}>II. Ordena-axiomak</ConceptLink>** (II.1etik II.4ra): Zuzen baten gaineko <ConceptLink targetId="estar-entre">tartean egon</ConceptLink> erlazio hirutarra gobernatzen dute, <ConceptLink targetId="axioma-orden-4">Paschen axioma</ConceptLink> barne.
+- **<ConceptLink targetId="congruencia" isDependency={true}>III. Kongruentzia-axiomak</ConceptLink>** (III.1etik III.5era): <ConceptLink targetId="segmento">Zuzenkien</ConceptLink> eta <ConceptLink targetId="angulo">angeluen</ConceptLink> baliokidetza nahiz <ConceptLink targetId="triangulo">triangeluen</ConceptLink> SAS kongruentzia-kriterioa formalizatzen dituzte.
+- **<ConceptLink targetId="axioma-arquimedes" isDependency={true}>IV. Jarraitutasun-axiomak</ConceptLink>** (V.1 eta V.2): <ConceptLink targetId="axioma-arquimedes">Arkimedesen axioma</ConceptLink> eta Hilberten <ConceptLink targetId="axioma-completitud">osotasun-axioma</ConceptLink> biltzen dituzte, <ConceptLink targetId="numero-real">zuzen errealaren</ConceptLink> jarraitutasuna bermatuz.
 
 <Separador />
 
-### Modelos
+### Oinarrizko propietateak
 
-El modelo estándar es el <ConceptLink targetId="modelo-cartesiano" isDependency={false}>espacio cartesiano</ConceptLink> $\mathbb{R}^3$ con la métrica euclídea restringida a los axiomas absolutos. La <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink> (<ConceptLink targetId={["modelo-poincare", "plano"]}>disco de Poincaré</ConceptLink>, semiplano de Lobachevski) también satisface todos estos axiomas.
+Geometria absolutuen esparruan garrantzi handiko teoreamak frogatzen dira:
+
+<Formula>
+  $$
+  \sum_{i=1}^{3} \alpha_i \leq 180^\circ
+  $$
+</Formula>
+
+- **Saccheri-Legendre teorema**: Edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barne-angeluen batura $180^\circ$ baino txikiagoa edo berdina da.
+- **Kongruentzia-kriterioak**: ALAn (SAS), ALA (ASA) eta LLL (SSS) teoremek beren balioari eusten diote paraleloen postulatuaren beharrik gabe.
+- **Perpendikularren existentzia**: Zuzen batetik kanpoko puntu bat emanda, gutxienez zuzen <ConceptLink targetId="perpendicular">perpendikular</ConceptLink> bat existitzen da puntu horretatik emandako zuzenera.
 
 <Separador />
 
-### Propiedades
+### Sistema geometriken konparazio-koadroa
 
-La <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> es **consistente**: tiene modelos (cartesiano, hiperbólico). Es **independiente** del <ConceptLink targetId={["axioma-paralelas-euclides", "axioma", "paralelas"]} isDependency={false}>axioma de las paralelas</ConceptLink>: ni el postulado ni su negación pueden demostrarse de los demás axiomas. Contiene los teoremas clásicos que no dependen del <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink>, como los cuatro primeros libros de los *Elementos* de Euclides.
-
-En <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>, la suma de los ángulos de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es siempre $\leq 180^\circ$. La igualdad solo se cumple si se asume el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink>.
-
-<Separador />
-
-### Comparación con otros sistemas
-
-| Sistema | Axioma de paralelas | Suma de ángulos | Modelos |
+| Sistema | Paraleloen postulatua | Triangeluaren angeluen batura | Eredu-espazioa |
 |---|---|---|---|
-| Incidencia | No incluye | Libre | Tres puntos, Fano, cartesiano |
-| **Absoluto** | **No decide** | **$\leq 180^\circ$** | Cartesiano, Poincaré |
-| Euclidiano | Una paralela | $= 180^\circ$ | Cartesiano |
-| Hiperbólico | Infinitas paralelas | $< 180^\circ$ | Poincaré, semiplano |
-
-La <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> es el **mínimo común denominador**: todo teorema válido en absoluta es válido en ambas geometrías. Añadir el <ConceptLink targetId={["axioma-paralelas-euclides", "axioma", "paralelas"]} isDependency={false}>axioma de las paralelas</ConceptLink> produce la euclidiana; añadir su negación produce la hiperbólica.
+| <ConceptLink targetId="sistema-incidencia">Intzidentzia</ConceptLink> | Zehaztugabea | Zehaztugabea | Fanoren planoa, $\mathbb{R}^3$ |
+| **<ConceptLink targetId="sistema-absoluto">Absolutua</ConceptLink>** | **Neutroa** | $\leq 180^\circ$ | Kartesiarra, Poincaré |
+| <ConceptLink targetId="sistema-euclidiano">Euklidearra</ConceptLink> | Paralelo bakarra | $= 180^\circ$ | $\mathbb{R}^2$ plano kartesiarra |
+| <ConceptLink targetId="sistema-hiperbolico">Hiperbolikoa</ConceptLink> | Infinitu paralelo | $< 180^\circ$ | Poincaréren diskoa |

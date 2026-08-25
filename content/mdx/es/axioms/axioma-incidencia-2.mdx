@@ -1,43 +1,35 @@
 export const metadata = {
-  "id": "axioma-incidencia-2",
-  "type": "axioma",
-  "title": "Axioma I-2 (Incidencia)",
-  "description": "Toda recta contiene al menos dos puntos distintos.",
-  "statement": "Para toda recta l, existen al menos dos puntos distintos A y B tales que A ∈ l y B ∈ l.",
-  "authors": ["hilbert"],
-  "axiomSystem": "sistema-absoluto",
-  "sources": [
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  id: "axioma-incidencia-2",
+  lang: "es",
+  type: "axioma",
+  title: "Axioma I.2 (Existencia de Puntos en la Recta)",
+  description: "Toda recta contiene al menos dos puntos distintos que inciden en ella.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
   ],
-  "hasSimulation": true,
-  "links": ["punto", "recta", "incidencia"]
+  hasSimulation: true
 };
 
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="T" />oda <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> contiene al menos dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos. Este <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> actúa como complemento del primer <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> de <ConceptLink targetId="incidencia" isDependency={false}>incidencia</ConceptLink>, garantizando que las rectas no son objetos geométricos vacíos ni "degenerados" de un solo punto.
+<Capitular letra="E" />l segundo <ConceptLink targetId="axioma-incidencia-2">axioma de incidencia</ConceptLink> postula el requisito mínimo de contenido <ConceptLink targetId="punto">puntual</ConceptLink> para cualquier línea <ConceptLink targetId="recta">recta</ConceptLink>. Garantiza que no existen rectas vacías o degeneradas que alberguen menos de dos elementos.
+
+<Definicion title="">
+  Para toda <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$, existen al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B \in \mathcal{P}$ tales que $A$ y $B$ inciden en $l$:
+  $$
+  \forall l \in \mathcal{L} \implies \exists A, B \in \mathcal{P} \ (A \neq B \land A \in l \land B \in l)
+  $$
+</Definicion>
 
 <Separador />
 
-### Enunciado Formal
+### Representación visual e interacción
 
-<Formula>
-  $$ \forall l \; \exists A, B \; (A \neq B \land A \in l \land B \in l). $$
-</Formula>
+En la simulación se observa la recta <VisualBind element="lineAB" color="carbon">$l$</VisualBind> sobre la cual se garantizan y ubican los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind>. Esta estructura asegura la existencia de un trazado unidimensional no trivial.
 
 <Separador />
 
-### Discusión
+### Significado axiomático
 
-Mientras que el <ConceptLink targetId="axioma-incidencia-1"  isDependency={false}>axioma I-1</ConceptLink> asegura que un par de puntos determina una recta, este axioma I-2 establece el camino inverso: si observas cualquier <InteractiveElement target="lineAB" color="carbon">recta l</InteractiveElement>, tienes la certeza de que existen sobre ella al menos <InteractiveElement target="pA" color="terracota">dos</InteractiveElement> <InteractiveElement target="pB" color="terracota">puntos</InteractiveElement> que la componen. 
-
-Resulta interesante observar la austeridad del formalismo de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>. Este postulado no exige que la recta posea infinitos puntos. En nuestra concepción tradicional de la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclidiana</ConceptLink>, sabemos por intuición que una recta es continua e infinita. Sin embargo, para la estructura fundacional, basta con exigir un mínimo existencial de dos puntos.
-
-<Separador />
-
-### Observaciones
-
-- Si intentásemos edificar una <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> sin este axioma, podríamos encontrarnos con "rectas fantasma" que no contienen puntos, o rectas puntuales de <ConceptLink targetId="dimension" isDependency={false}>dimensión</ConceptLink> cero.
-- Gracias a este postulado, la recta es formalmente un objeto de <ConceptLink targetId="cardinalidad" isDependency={false}>cardinalidad</ConceptLink> mayor o igual a dos dentro de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>. Más adelante, los <ConceptLink targetId={["axioma-orden-1", "axioma"]} isDependency={false}>axiomas de orden</ConceptLink> se encargarán de garantizar que entre cada par de puntos de la recta existe otro punto, dotando a la línea de infinitud.
+Mientras que el <ConceptLink targetId="axioma-incidencia-1" isDependency={false}>axioma I.1</ConceptLink> establece la <ConceptLink targetId="recta">recta</ConceptLink> a partir de dos <ConceptLink targetId="punto">puntos</ConceptLink>, el axioma I.2 garantiza la dirección opuesta: toda recta posee una cardinalidad no vacía de al menos dos puntos. Esta propiedad básica fundamenta los posteriores desarrollos de la relación de <ConceptLink targetId="axioma-orden-1">orden</ConceptLink> sobre la recta.

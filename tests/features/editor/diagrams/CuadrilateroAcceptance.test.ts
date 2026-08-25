@@ -60,6 +60,7 @@ describe('Cuadrilatero visual classifier', () => {
     const references = [
       ...mdx.matchAll(/<InteractiveElement\b[^>]*\btarget="([^"]+)"/g),
       ...mdx.matchAll(/<ConceptLink\b[^>]*\bhighlightTarget="([^"]+)"/g),
+      ...mdx.matchAll(/<VisualBind\b[^>]*\belement="([^"]+)"/g),
     ].map(match => match[1]);
     expect(references.length).toBeGreaterThan(0);
     references.forEach(target => expect(publicTargets.has(target), `${pagePath}: target ${target}`).toBe(true));

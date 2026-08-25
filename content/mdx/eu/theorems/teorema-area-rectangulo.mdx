@@ -1,47 +1,43 @@
 export const metadata = {
-  "lang": "eu",
   "id": "teorema-area-rectangulo",
   "type": "teorema",
-  "title": "Área del Rectángulo",
-  "description": "El contenido de un rectángulo es el producto de su base por su altura. Teorema fundamental de la teoría de áreas de Hilbert, que requiere el axioma de Arquímedes para su demostración.",
-  "statement": "Sea R un rectángulo de base b y altura h. Entonces Cont(R) = b · h.",
+  "title": "Laukizuzenaren azalera",
+  "description": "Laukizuzen baten azalera bere oinarriaren eta altueraren biderkaduraren berdina da. Arkimedesen axioma behar duen azaleraren teoriaren ardatz-teorema.",
+  "statement": "Bedi R b oinarria eta h altuera dituen laukizuzena. Orduan Azalera(R) = b · h.",
   "tags": ["geometria", "areas", "rectangulo"],
   "authors": ["hilbert", "euclides"],
   "difficulty": "intermedio",
-  "demos": ["demo-area-rectangulo"],
   "hasSimulation": false,
-  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
+  "sources": [
+    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §20", role: "primary" },
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 35", role: "secondary" }
+  ]
 };
 
-<Capitular letra="E" />l <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de un <ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink> es el producto de su base por su altura. A diferencia de la <ConceptLink targetId="teorema-area-invariancia"  isDependency={false}>invariancia</ConceptLink> y la <ConceptLink targetId="teorema-area-aditividad"  isDependency={false}>aditividad</ConceptLink>, que son consecuencias casi inmediatas de la definición de contenido, este teorema requiere el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> y constituye el resultado central de la teoría de <ConceptLink targetId="contenido" isDependency={false}>equidescomponibilidad</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>.
+<Capitular letra="L" /><ConceptLink targetId="rectangulo">Laukizuzen</ConceptLink> baten <ConceptLink targetId="area">azalera</ConceptLink> bere oinarriaren eta altueraren luzeren biderkaduraren berdina da. <ConceptLink targetId="teorema-area-rectangulo">Laukizuzenaren azaleraren teoremak</ConceptLink> —gainazalen inbariantzaz eta gehitutasunaz bestalde, zeinak <ConceptLink targetId="poligono">poligonoaren</ConceptLink> oinarrizko kontzeptutik eratortzen baitira— <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Arkimedesen axioma</ConceptLink> behar du tamaina ez-neurgarriak hartzeko, <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> azaleraren teoriaren ardatz nagusia izanez.
 
 <Separador />
 
-### Enunciado Formal
+### Formulatze formala
+
+Bedi $R$ $b$ oinarria eta $h$ altuera dituen <ConceptLink targetId="rectangulo">laukizuzena</ConceptLink>. Orduan:
 
 <Formula>
-  $$ \text{Cont}(\text{Rect}(b, h)) = b \cdot h $$
+  $$ \text{Azalera}(R) = b \cdot h $$
 </Formula>
 
 <Separador />
 
-### Esquema de la Demostración
+### Eskema eta raketa deduktiboa
 
-1. **Caso de lados conmensurables**: Si $b$ y $h$ son múltiplos enteros de una unidad común $u$, el rectángulo se descompone en $n \times m$ cuadrados de lado $u$. Por aditividad, $\text{Cont} = (n \cdot u)(m \cdot u) = b \cdot h$.
+Frogapena bi urratsetan banatzen da dimentsioen neurgarritasunaren arabera:
 
-2. **Caso de lados inconmensurables**: Si $b$ y $h$ no tienen medida común, se usan aproximaciones por exceso y por defecto con rectángulos de lados racionales. El <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> garantiza que estas aproximaciones convergen al valor $b \cdot h$.
-
-<Separador />
-
-### Consecuencias
-
-Del área del rectángulo y la <ConceptLink targetId="teorema-area-aditividad" >aditividad</ConceptLink> se deducen todas las demás fórmulas de áreas:
-- **Área del triángulo**: $\text{Cont}(\triangle) = \frac{b \cdot h}{2}$ (<ConceptLink targetId="teorema-area-triangulo" >teorema del área del triángulo</ConceptLink>)
-- **Área del paralelogramo**: $b \cdot h$
-- **Teorema de Pitágoras**: las demostraciones de <ConceptLink targetId="demo-pitagoras-euclides" isDependency={false}>Euclides</ConceptLink> y por <ConceptLink targetId="demo-pitagoras-areas" isDependency={false}>áreas</ConceptLink> usan este teorema como base
+- **Magnitudo neurgarriak**: $b$ oinarria eta $h$ altuera $u$ unitate komun baten multiplo osoak badira, laukizuzena zehatz-mehatz zatitzen da $u^2$ azalerako $n \times m$ karratu unitarioz osatutako sare batean. <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren gehitutasunaren</ConceptLink> bidez, azalera osoa $(n \cdot u)(m \cdot u) = b \cdot h$ izatea lortzen da.
+- **Magnitudo ez-neurgarriak**: $b$ eta $h$-k neurri komunik ez badute, alde rrazionalak dituzten laukizuzenen bidez gutxiegizko eta gehiegizko hurbilketak egiten dira. <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Arkimedesen axiomak</ConceptLink> azalera $b \cdot h$ balio zehatzera konbergitzea bermatzen du.
 
 <Separador />
 
-### Observaciones
+### Oharrak eta aplikazioak
 
-Este teorema es el análogo en el sistema de Hilbert a la Proposición I.35 de los *Elementos* de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> («los paralelogramos sobre la misma base y entre las mismas paralelas son iguales»). La diferencia fundamental es que Euclides usaba la noción común de «cosas que coinciden son iguales», mientras que Hilbert demuestra rigurosamente la fórmula $b \cdot h$ a partir de la equidescomponibilidad y el axioma de Arquímedes.
+- Laukizuzenaren azaleratik abiatuta deduzitzen dira <ConceptLink targetId="paralelogramo">paralelogramoaren</ConceptLink> eta <ConceptLink targetId="teorema-area-triangulo">triangeluaren</ConceptLink> azalera-formulak ($\text{Azalera} = \frac{1}{2} b \cdot h$).
+- <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> eta <ConceptLink targetId="teorema-tales">Talesen teorema</ConceptLink> frogatzeko beharrezko euskarri analitikoa eskaintzen du.

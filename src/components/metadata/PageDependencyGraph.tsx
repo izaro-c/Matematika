@@ -36,9 +36,9 @@ function resolveGroup(id: string, lang: string): string {
   const thm = db.getTheorem(id, lang);
   if (thm)                    return thm.type || 'teorema';
   if (db.getDefinition(id, lang))   return 'definicion';
-  if (db.axioms.get(id))            return 'axioma';
-  if (db.models.get(id))            return 'modelo';
-  if (db.demos.get(id))             return 'demostracion';
+  if (db.getAxiom(id, lang))        return 'axioma';
+  if (db.getModel(id, lang))        return 'modelo';
+  if (db.getDemo(id, lang))         return 'demostracion';
   if (db.getMathematicianById(id, lang)) return 'matematico';
   if (getGlossaryDictionary(lang)[id])   return 'glosario';
   return 'definicion';
@@ -48,10 +48,10 @@ function resolveTitle(id: string, lang: string): string {
   return (
     db.getTheorem(id, lang)?.title ||
     db.getDefinition(id, lang)?.title ||
-    db.axioms.get(id)?.title ||
-    db.models.get(id)?.title ||
+    db.getAxiom(id, lang)?.title ||
+    db.getModel(id, lang)?.title ||
     db.getMathematicianById(id, lang)?.name ||
-    db.demos.get(id)?.title ||
+    db.getDemo(id, lang)?.title ||
     getGlossaryDictionary(lang)[id]?.title ||
     id
   );

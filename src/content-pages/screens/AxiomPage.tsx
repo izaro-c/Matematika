@@ -18,7 +18,7 @@ import { useI18n } from '@/i18n';
  */
 export function AxiomPage() {
   const { id } = useParams();
-  const { lang, getLocalizedPath, t } = useI18n();
+  const { lang, getLocalizedPath, t, currentLanguage } = useI18n();
   const slug = id || '';
   const axiom = slug ? db.getAxiom(slug, lang) : undefined;
   const isFallback = slug ? db.isFallback(slug, lang) : false;
@@ -28,13 +28,15 @@ export function AxiomPage() {
   useEffect(() => {
     if (axiom) {
       setMetadata({
+        id: axiom.id,
         title: axiom.title,
-        type: 'Axioma',
+        type: currentLanguage.dictionary.metadata.types['axioma'] || 'Axioma',
         tags: axiom.tags || [],
+        description: axiom.description,
       });
     }
     return () => setMetadata(null);
-  }, [axiom, setMetadata]);
+  }, [axiom, setMetadata, currentLanguage]);
 
   if (!axiom) {
     return (

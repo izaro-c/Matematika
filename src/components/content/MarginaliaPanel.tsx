@@ -77,14 +77,14 @@ function resolveTermFromDb(activeTerm: string, lang: string = 'es'): TermData | 
   const theorem = db.getTheorem(activeTerm, lang);
   const definition = db.getDefinition(activeTerm, lang);
   const bio = db.getMathematicianById(activeTerm, lang);
-  const method = db.methods.get(activeTerm);
-  const example = db.examples.get(activeTerm);
-  const exercise = db.exercises.get(activeTerm);
-  const useCase = db.usecases.get(activeTerm);
-  const axiom = db.axioms.get(activeTerm);
-  const system = db.getAxiomaticSystem(activeTerm);
-  const model = db.models.get(activeTerm);
-  const demo = db.demos.get(activeTerm);
+  const method = db.getMethod(activeTerm, lang);
+  const example = db.getExample(activeTerm, lang);
+  const exercise = db.getExercise(activeTerm, lang);
+  const useCase = db.getUseCase(activeTerm, lang);
+  const axiom = db.getAxiom(activeTerm, lang);
+  const system = db.getAxiomaticSystem(activeTerm, lang);
+  const model = db.getModel(activeTerm, lang);
+  const demo = db.getDemo(activeTerm, lang);
 
   const entity = theorem || definition || bio || method || example || exercise || useCase || axiom || system || model || demo;
   if (!entity) return null;

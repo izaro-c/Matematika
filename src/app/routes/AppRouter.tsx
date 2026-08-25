@@ -123,6 +123,7 @@ const LocalizedContentRouteDispatcher: React.FC = () => {
     case 'rama': {
       const taxonomy = db.getBranchTaxonomy(id, activeLang);
       itemTitle = taxonomy.name || taxonomy.id;
+      itemDescription = t('hero', 'tagline');
       break;
     }
     case 'bio': {
@@ -235,21 +236,21 @@ const TwoSegmentRouteDispatcher: React.FC = () => {
       case 'historia':
         return (
           <>
-            <SeoHead title={t('timeline', 'title')} type="website" />
+            <SeoHead title={t('timeline', 'title')} description={t('timeline', 'eyebrow')} type="website" />
             <HistoryTimeline />
           </>
         );
       case 'grafo':
         return (
           <>
-            <SeoHead title={t('graph', 'logicExplorer')} type="website" />
+            <SeoHead title={t('graph', 'logicExplorer')} description={t('metadata', 'connectionNetworkSubtitle')} type="website" />
             <GraphPage />
           </>
         );
       case 'axiomas':
         return (
           <>
-            <SeoHead title={t('graph', 'axiomaticDependencies')} type="website" />
+            <SeoHead title={t('graph', 'axiomaticDependencies')} description={t('metadata', 'connectionNetworkSubtitle')} type="website" />
             <AxiomGraphPage />
           </>
         );
@@ -300,7 +301,7 @@ const SingleSegmentRouteDispatcher: React.FC = () => {
   if (isSupportedLanguage(raw)) {
     return (
       <>
-        <SeoHead title={t('notFound', 'siteTitle')} />
+        <SeoHead title={t('notFound', 'siteTitle')} description={t('hero', 'tagline')} />
         <HomePage />
       </>
     );
@@ -343,7 +344,7 @@ export const AppRouter = () => {
 
         {/* HOME PRINCIPAL */}
         <Route path="/">
-          <SeoHead title={t('notFound', 'siteTitle')} />
+          <SeoHead title={t('notFound', 'siteTitle')} description={t('hero', 'tagline')} />
           <HomePage />
         </Route>
 

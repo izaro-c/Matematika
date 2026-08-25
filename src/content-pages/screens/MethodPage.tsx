@@ -14,7 +14,7 @@ import { useI18n } from '@/i18n';
 /** Página canónica para procedimientos matemáticos reutilizables. */
 export const MethodPage = () => {
   const { id = '' } = useParams();
-  const { lang, t } = useI18n();
+  const { lang, t, currentLanguage } = useI18n();
   const method = db.getMethod(id, lang);
   const isFallback = id ? db.isFallback(id, lang) : false;
   const availableLangs = id ? db.getAvailableLanguages(id) : ['es'];
@@ -25,13 +25,13 @@ export const MethodPage = () => {
       setMetadata({
         id: method.id,
         title: method.title,
-        type: 'Método',
+        type: currentLanguage.dictionary.metadata.types['metodo'] || 'Método',
         tags: method.tags ?? [],
         description: method.description,
       });
     }
     return () => setMetadata(null);
-  }, [method, setMetadata]);
+  }, [method, setMetadata, currentLanguage]);
 
   if (!method) {
     return (

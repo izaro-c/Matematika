@@ -108,6 +108,7 @@ describe('catálogo seguro del editor', () => {
       'content/diagrams/Definiciones/Bisectriz.tsx',
       'content/diagrams/Definiciones/Circunferencia.tsx',
       'content/diagrams/Definiciones/Cuadrilatero.tsx',
+      'content/diagrams/Definiciones/EstarEntre.tsx',
       'content/diagrams/Definiciones/Mediana.tsx',
       'content/diagrams/Definiciones/Mediatriz.tsx',
       'content/diagrams/Definiciones/Paralelas.tsx',

@@ -2,80 +2,59 @@ export const metadata = {
   "id": "metodo-directo",
   "type": "metodo",
   "subtype": "demostracion",
-  "title": "Método Directo",
+  "title": "Método directo",
   "description": "La estrategia fundamental de demostración: encadenar implicaciones lógicas desde la hipótesis hasta la tesis mediante inferencias válidas.",
-  "tags": ["logica", "metodos", "demostracion"],
-  "authors": [],
-  "links": ["teorema-pitagoras", "teorema-congruencia-ala", "teorema-suma-angulos-triangulo"],
-  "seeAlso": ["metodo-contradiccion", "metodo-contraposicion"],
-  "hasSimulation": true,
-  "difficulty": "intermedio"
+  "hasSimulation": true
 };
 
 import { DirectoSimulation } from "@content/diagrams/Metodos/DirectoSimulation";
 export const Simulation = DirectoSimulation;
 
-<Capitular letra="E" />l <ConceptLink targetId="demostracion" isDependency={false}>método</ConceptLink> directo — también llamado *demostración directa* o *prueba por implicación directa* — es la forma más natural y primitiva de razonamiento matemático. Su esencia es simple: se asume que una proposición $P$ (la **hipótesis**) es verdadera, y mediante una secuencia de implicaciones lógicas válidas se concluye que $Q$ (la **tesis**) también lo es.
+<Capitular letra="E" />l <ConceptLink targetId="metodo-directo" isDependency={false}>método directo</ConceptLink> — también denominado *demostración directa* o *prueba por implicación* — constituye la forma primaria y más transparente de deducción matemática. Su estructura presupone la veracidad de una proposición inicial $P$ (la **<ConceptLink targetId="hipotesis">hipótesis</ConceptLink>**) y, a través de una cadena finita de inferencias lógicas válidas, deriva necesariamente la veracidad de la proposición final $Q$ (la **<ConceptLink targetId="tesis">tesis</ConceptLink>**).
 
 <Separador />
 
-### Estructura Lógica
+### Estructura lógica
 
-El argumento fluye en una única dirección, sin desvíos ni rodeos:
+El argumento se desarrolla mediante la concatenación secuencial de proposiciones intermedias:
 
-$$ P \implies P_1 \implies P_2 \implies \dots \implies P_n \implies Q $$
+<Formula>
+  $$ P \implies P_1 \implies P_2 \implies \dots \implies P_n \implies Q $$
+</Formula>
 
-Cada paso intermedio $P_i$ es una afirmación que se deduce de las anteriores combinando:
+Cada paso deductivo $P_i$ en la secuencia se fundamenta rigurosamente en la combinación de:
 
-- Los <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink> del sistema formal en el que se trabaja.
-- <ConceptLink targetId="teorema" isDependency={false}>Teoremas</ConceptLink> ya demostrados.
-- Definiciones establecidas.
-- Reglas de inferencia lógica (como *modus ponens*).
-
-<Separador />
-
-### El Esquema General
-
-En notación lógica, el método directo se resume así:
-
-1. **Hipótesis**: Sea $P$ verdadero.
-2. **Paso $i$**: De $P_{i-1}$ y los axiomas/teoremas conocidos, se infiere $P_i$.
-3. **Conclusión**: La cadena termina en $Q$, por lo tanto $P \implies Q$.
-
-En la práctica, las demostraciones directas suelen comenzar con frases como *«Supongamos $P$»*, *«Sea $x$ tal que...»* o *«Por definición...»*, y avanzan con conectores del tipo *«entonces»*, *«por lo tanto»*, *«en consecuencia»* y *«así pues»*.
+- Los <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink> del <ConceptLink targetId="sistema-axiomatico">sistema formal</ConceptLink> adoptado.
+- Los <ConceptLink targetId="teorema" isDependency={false}>teoremas</ConceptLink> previamente demostrados.
+- Las definiciones formales de los objetos involucrados.
+- Las reglas universales de inferencia lógica (*modus ponens*).
 
 <Separador />
 
-### Ejemplos Clásicos
+### Ejemplos clásicos
 
-La gran mayoría de demostraciones en geometría euclidiana emplean el método directo. Entre los ejemplos más representativos en esta base se encuentran:
+- **<ConceptLink targetId="teorema-congruencia-ala" isDependency={false}>Teorema ALA de congruencia</ConceptLink>**: A partir de dos <ConceptLink targetId="angulo">ángulos</ConceptLink> y el lado comprendido dados, se deduce la <ConceptLink targetId="congruencia">congruencia</ConceptLink> completa del <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> mediante superposición formal y unicidad de la construcción.
 
-- **<ConceptLink targetId="teorema-congruencia-ala" >Teorema ALA</ConceptLink>**: Dados dos ángulos y el lado comprendido de un triángulo, el tercer vértice queda determinado de forma única. La demostración toma los elementos dados y los superpone paso a paso.
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={false}>Suma de ángulos de un triángulo</ConceptLink>**: Se traza una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> <ConceptLink targetId="paralelismo">paralela</ConceptLink> a la base por el vértice opuesto y se aplican las relaciones de <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>ángulos alternos internos</ConceptLink> para deducir directamente que la suma angular es $180^\circ$.
 
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo" >Suma de ángulos del triángulo</ConceptLink>**: Se traza una paralela a la base y se comparan ángulos alternos internos para deducir directamente que la suma es $180^\circ$.
-
-- **<ConceptLink targetId="teorema-pitagoras" >Teorema de Pitágoras</ConceptLink>** (demostración por áreas): Se construyen cuadrados sobre los catetos y la hipotenusa, y mediante descomposición de figuras se prueba que $a^2 + b^2 = c^2$.
+- **<ConceptLink targetId="teorema-pitagoras" isDependency={false}>Teorema de Pitágoras</ConceptLink>**: Mediante la descomposición geométrica de <ConceptLink targetId="area">áreas</ConceptLink> sobre los <ConceptLink targetId="cateto">catetos</ConceptLink> y la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> de un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink>, se establece directamente la identidad algebraica $a^2 + b^2 = c^2$.
 
 <Separador />
 
-### Cuándo Usarlo
+### Cuándo usarlo
 
-El método directo es la primera opción a intentar. Es especialmente adecuado cuando:
+El método directo representa el abordaje de primera elección en la práctica matemática. Es idóneo cuando:
 
-- La hipótesis proporciona información concreta que se puede manipular algebraicamente.
-- Existe una cadena clara de teoremas previos que conectan $P$ con $Q$.
-- La estructura de $P$ y $Q$ es de tipo «si... entonces...» o «para todo...».
+- La hipótesis ofrece relaciones algebraicas o geométricas explícitas fácilmente manipulables.
+- Existe una trayectoria deductiva clara en el grafo de dependencias que conecta la hipótesis con la tesis.
+- El enunciado a probar presenta una estructura condicional directa de la forma $\forall x, (P(x) \implies Q(x))$.
 
-Cuando la conexión directa no es evidente, conviene explorar métodos indirectos como la <ConceptLink targetId="metodo-contradiccion" isDependency={false}>contradicción</ConceptLink> o la <ConceptLink targetId="metodo-contraposicion" isDependency={false}>contraposición</ConceptLink>.
+Cuando no existe un camino deductivo aparente, resulta conveniente recurrir a métodos indirectos como la <ConceptLink targetId="metodo-contradiccion" isDependency={false}>contradicción</ConceptLink>.
 
 <Separador />
 
-### Fortalezas y Debilidades
+### Fortalezas y debilidades
 
 <Nota>
-**Fortaleza**: Es el método más constructivo y transparente. El lector puede seguir cada paso y convencerse por sí mismo.
-
-**Debilidad**: Requiere que exista un camino deductivo visible desde $P$ hasta $Q$. Cuando la conexión es remota o no hay teoremas intermedios aplicables, el método directo puede resultar impracticable.
+  **Transparencia deductiva**: El método directo proporciona una demostración constructiva donde la validez de cada paso intermedio es inmediatamente verificable. Su limitación principal radica en su dependencia de la existencia de un camino deductivo evidente entre la hipótesis y la tesis.
 </Nota>
-
-

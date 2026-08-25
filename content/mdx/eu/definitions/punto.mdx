@@ -1,40 +1,58 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "punto",
-  "type": "definicion",
-  "subtype": "primitivo",
-  "title": "Puntua",
-  "description": "Concepto primitivo de la geometría que carece de dimensión, área o volumen, representando una posición exacta en el espacio. Su naturaleza matemática emerge estrictamente de las relaciones axiomáticas de incidencia e intermediación.",
-  "authors": ["hilbert", "euclides"],
-  "hasSimulation": true
+  id: "punto",
+  lang: "eu",
+  type: "definicion",
+  subtype: "primitivo",
+  title: "Puntua",
+  description: "Dimentsiorik gabeko geometria-entitate primitiboa, espazioan posizio zehatz bat ezartzen duena. Bere izaera matematikoa zuzenekin eta planoekin dituen erlazio axiomatikoek zehaztua da soilik.",
+  statement: "Puntua $\\mathcal{P}$ multzo abstraktuko oinarrizko elementu zatiezina da. Dimentsiorik gabea da eta geometriaren oinarri estrukturala osatzen du.",
+  domain: "geometria",
+  requires: [],
+  authors: ["hilbert", "euclides"],
+  hasSimulation: true,
+  difficulty: "básico",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" },
+    { title: "Elementuak", author: "Euclides", locator: "I. Liburua, 1. Definizioa", role: "secondary" }
+  ],
+  demos: ["punto"]
 };
 
 import { Punto } from '@content/diagrams/Definiciones/Punto';
 export const Simulation = Punto;
 
-<Capitular letra="E" />l punto es el concepto más básico de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>. Representa una posición exacta en el <ConceptLink targetId="espacio" isDependency={false}>espacio</ConceptLink>, sin tamaño, <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> ni <ConceptLink targetId="volumen" isDependency={false}>volumen</ConceptLink>. Al ser un **concepto primitivo**, no tiene una definición estricta; su significado se deduce de las reglas (<ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink>) que lo conectan con otros elementos.
+<Capitular letra="G" /><ConceptLink targetId="geometria">eometriaren</ConceptLink> berriztatze axiomatikoan, puntua gainerako espazio-objektuak eraikitzeko lehen entitatea da. <ConceptLink targetId="concepto-primitivo">**Kontzeptu primitiboa**</ConceptLink> denez, ez du barne-definizio analitikorik entitate sinpleagoen bidez; bere izaera matematikoa <ConceptLink targetId="sistema-axiomatico">sistema axiomatikoak</ConceptLink> ezarritako <ConceptLink targetId="axiomas-incidencia">intzidentzia-</ConceptLink>, <ConceptLink targetId="axiomas-orden">ordena-</ConceptLink> eta <ConceptLink targetId="axiomas-congruencia">kongruentzia-erlazioen</ConceptLink> bidez eratzen da.
+
+<Definicion title="">
+  Puntua $\mathcal{P}$ <ConceptLink targetId="conjunto">multzo</ConceptLink> abstraktuko oinarrizko elementu zatiezina da. Ez du <ConceptLink targetId="dimension">dimentsiorik</ConceptLink>, <ConceptLink targetId="longitud">luzerarik</ConceptLink>, <ConceptLink targetId="area">azalerarik</ConceptLink> ez eta <ConceptLink targetId="volumen">bolumenik</ConceptLink>; <ConceptLink targetId="espacio-geometrico">espazio geometrikoan</ConceptLink> posizio puru bat besterik ez du adierazten.
+</Definicion>
 
 <Separador />
 
-### Enunciado Informal
+### Errepresentazio bisuala
 
-Un punto carece por completo de <ConceptLink targetId="dimension" isDependency={false}>dimensión</ConceptLink>. Se denota convencionalmente con letras mayúsculas ($A, B, P, Q$) y se dibuja como una marca pequeña, como el punto <InteractiveElement target="pPoint" color="musgo">P</InteractiveElement> en el diagrama interactivo.
-
-<Capitular letra="E" />l punto es el primer **concepto primitivo** de la geometría de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>. Al ser primitivo, no tiene una definición analítica ni se construye a partir de otras entidades más básicas. No tiene <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink>, ni área, ni volumen; representa únicamente una posición exacta en el espacio abstracto. Su comportamiento y su relación geométrica con la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> y el <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> se define exclusivamente a través de los axiomas.
+Simulazio interaktiboan, puntua posizio-marka baten bidez irudikatzen da, <VisualBind element="pPoint" color="musgo">$P$</VisualBind> letra larriz adierazita. Grafikoki tamaina ikusgarri bat izan arren, ikuspegi geometriko formaletik ez du magnituderik eta ez du azalerarik betetzen <ConceptLink targetId="plano">planoan</ConceptLink>.
 
 <Separador />
 
-### Definición Axiomática
+### Hilberten sistema axiomatikoan duen eginkizuna
 
-En la formalización de Hilbert, el punto es uno de los tres conceptos básicos, junto a la recta y el plano. Su comportamiento está dictado por los axiomas:
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> *Grundlagen der Geometrie* (1899) lanean, puntua definitu gabeko lehen kontzeptu-sistema da ($\mathcal{P}$), <ConceptLink targetId="recta">zuzenarekin</ConceptLink> ($\mathcal{L}$) eta <ConceptLink targetId="plano">planoarekin</ConceptLink> ($\Pi$) koordinatua. Bere propietate formalak hiru axioma-multzo nagusiren bidez egituratzen dira:
 
-- **<ConceptLink targetId="incidencia" isDependency={false}>Incidencia</ConceptLink>**: Dos puntos distintos definen exactamente una recta (<ConceptLink targetId="axioma-incidencia-1" >I-1</ConceptLink>). Existen al menos tres puntos que no están en la misma recta (<ConceptLink targetId="axioma-incidencia-3" >I-3</ConceptLink>).
-- **Orden**: Tres puntos sobre una recta pueden ordenarse usando la relación de "estar entre" (<ConceptLink targetId={["axioma-orden-1", "axioma"]}>axiomas de orden</ConceptLink>).
-- **<ConceptLink targetId="congruencia" isDependency={false}>Congruencia</ConceptLink>**: Dos puntos forman un <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink>, cuya longitud se puede comparar con otros usando los <ConceptLink targetId={["congruencia", "axioma"]}>axiomas de congruencia</ConceptLink>.
+- **<ConceptLink targetId="axiomas-incidencia">Intzidentzia-axiomak (I. multzoa)</ConceptLink>**: Bi puntu desberdinek zuzen bakar bat zehazten dute (<ConceptLink targetId="axioma-incidencia-1">I.1 axioma</ConceptLink>). Halaber, zuzen bakoitzak gutxienez bi puntu ditu (<ConceptLink targetId="axioma-incidencia-2">I.2 axioma</ConceptLink>), eta planoan gutxienez hiru puntu ez-<ConceptLink targetId="colinealidad">lerrokide</ConceptLink> daude (<ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink>).
+- **<ConceptLink targetId="axiomas-orden">Ordena-axiomak (II. multzoa)</ConceptLink>**: Zuzen berean dauden hiru punturen arteko kokapen erlatiboa <ConceptLink targetId="estar-entre">tartean egon</ConceptLink> erlazio primitiboaren bidez egituratzen da ($A * B * C$).
+- **<ConceptLink targetId="axiomas-congruencia">Kongruentzia-axiomak (III. multzoa)</ConceptLink>**: Puntu-bikoteek <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> mugatzen dituzte, eta haien arteko <ConceptLink targetId="relacion-equivalencia">baliokidetza zurruna</ConceptLink> kongruentzia-axiomen bidez formalizatzen da ($AB \cong CD$).
 
 <Separador />
 
-### Observaciones
+### Ereduak eta adierazpen aljebraikoak
 
-- Los puntos no tienen propiedades físicas reales. Son identidades puramente lógicas.
-- En la <ConceptLink targetId="geometria-analitica" isDependency={false}>geometría analítica</ConceptLink>, como en el <ConceptLink targetId="modelo-cartesiano" isDependency={false}>plano cartesiano</ConceptLink>, un punto se define de forma algebraica mediante <ConceptLink targetId="coordenadas" isDependency={false}>coordenadas</ConceptLink>, por ejemplo, usando una pareja de <ConceptLink targetId="numeros-reales" isDependency={false}>números reales</ConceptLink> $(x, y)$.
+<Cita author="Euclides (k.a. 300 inguru)">
+  «Puntua zatirik ez duena da.»
+</Cita>
+
+<ConceptLink targetId="geometria-sintetica">Geometria sintetikoak</ConceptLink> puntuak aztertu gabeko oinarrizko elementu gisa tratatzen dituen bitartean, matematikako beste eredu batzuek aljebraikoki formalizatzen dituzte:
+
+- **<ConceptLink targetId="geometria-analitica">Geometria Analitikoa</ConceptLink> (<ConceptLink targetId="modelo-cartesiano">$\mathbb{R}^2$ Plano Kartesiarra</ConceptLink>)**: Puntua aljebraikoki <ConceptLink targetId="numero-real">zenbaki errealen</ConceptLink> <ConceptLink targetId="par-ordenado">bikote ordenatu</ConceptLink> batekin identifikatzen da: $(x, y) \in \mathbb{R}^2$.
+- **<ConceptLink targetId="topologia">Multzo-Topologia</ConceptLink>**: Puntuak $(X, \tau)$ <ConceptLink targetId="espacio-topologico">espazio topologiko</ConceptLink> abstraktu baten banakako elementuak dira.
+- **<ConceptLink targetId="geometria-afina">Geometria Afina</ConceptLink>**: <ConceptLink targetId="espacio-afin">Espazio afina</ConceptLink> puntu-multzo bat da, non azpiko <ConceptLink targetId="espacio-vectorial">espazio bektorial</ConceptLink> batek modu libre eta iragankorrean <ConceptLink targetId="accion-grupo">eragiten</ConceptLink> duen.

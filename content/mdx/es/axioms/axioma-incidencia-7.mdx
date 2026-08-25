@@ -1,44 +1,35 @@
 export const metadata = {
-  "id": "axioma-incidencia-7",
-  "type": "axioma",
-  "title": "Axioma I-7 (Incidencia)",
-  "description": "Si dos planos se intersecan, su intersección es una recta.",
-  "statement": "Dados dos planos distintos π y σ con π ∩ σ ≠ ∅, entonces π ∩ σ es una recta.",
-  "authors": ["hilbert"],
-  "axiomSystem": "sistema-absoluto",
-  "sources": [
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  id: "axioma-incidencia-7",
+  lang: "es",
+  type: "axioma",
+  title: "Axioma I.7 (Intersección de Planos)",
+  description: "Si dos planos distintos se intersecan, su intersección es exactamente una recta.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
   ],
-  "hasSimulation": true,
-  "links": ["punto", "recta", "plano", "incidencia"]
+  hasSimulation: true
 };
 
 import { Incidence7 } from '@content/diagrams/Axiomas/Incidence7';
 export const Simulation = Incidence7;
 
-<Capitular letra="S" />i dos <ConceptLink targetId="plano" isDependency={false}>planos</ConceptLink> distintos se cortan, su choque produce siempre una única <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> establece la única configuración legal en la que dos <ConceptLink targetId="superficie" isDependency={false}>superficies</ConceptLink> infinitas pueden cruzarse dentro de nuestro <ConceptLink targetId="espacio-tridimensional" isDependency={false}>espacio tridimensional</ConceptLink>.
+<Capitular letra="E" />l séptimo <ConceptLink targetId="axioma-incidencia-7">axioma de incidencia</ConceptLink> rige la <ConceptLink targetId="interseccion">intersección</ConceptLink> entre superficies bidimensionales en el espacio. Garantiza que cuando dos <ConceptLink targetId="plano">planos</ConceptLink> se cortan, su conjunto común constituye exactamente una <ConceptLink targetId="recta">recta</ConceptLink>.
 
-<Separador />
-
-### Enunciado Formal
-
-<Formula>
+<Definicion title="">
+  Dados dos <ConceptLink targetId="plano">planos</ConceptLink> distintos $\alpha, \beta \in \mathcal{E}$ tales que su <ConceptLink targetId="interseccion">intersección</ConceptLink> no es vacía ($\alpha \cap \beta \neq \emptyset$), la intersección $\alpha \cap \beta$ es una <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$:
   $$
-  \forall \pi, \sigma \ (\pi \neq \sigma \land \pi \cap \sigma \neq \emptyset) \implies \pi \cap \sigma \text{ es una recta } l
+  \forall \alpha, \beta \in \mathcal{E} \ (\alpha \neq \beta \land \alpha \cap \beta \neq \emptyset \implies \exists l \in \mathcal{L} \ (l = \alpha \cap \beta))
   $$
-</Formula>
+</Definicion>
 
 <Separador />
 
-### Discusión
+### Representación visual e interacción
 
-En la <ConceptLink targetId="geometria-espacial" isDependency={false}>geometría del espacio</ConceptLink>, dos planos independientes solo pueden convivir de tres maneras: o son <ConceptLink targetId="paralelas" isDependency={false}>paralelos</ConceptLink> (no se tocan en el infinito), o coinciden perfectamente, o se intersecan cortándose mutuamente. Este <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> describe este último caso: cuando el <InteractiveElement target="plano-pi" color="terracota">plano π</InteractiveElement> y el <InteractiveElement target="plano-sigma" color="ocre">plano σ</InteractiveElement> se cruzan, el pliegue resultante jamás será un solo <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> o un surco curvo caprichoso, sino una <InteractiveElement target="recta-l" color="carbon">recta infinita y perfecta</InteractiveElement>.
-
-La <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> lógica de que su intersección no puede ser otra cosa que una recta se apoya en los axiomas anteriores: si dos planos comparten al menos dos puntos en común (suponiendo que su intersección no sea un único punto), por el <ConceptLink targetId="axioma-incidencia-6"  isDependency={false}>axioma I-6</ConceptLink> la recta entera que pasa por esos dos puntos debe estar incrustada en ambos planos a la vez, y por el <ConceptLink targetId="axioma-incidencia-1"  isDependency={false}>axioma I-1</ConceptLink> esa es la única recta posible que pueden compartir.
+En la simulación interactiva se aprecian los planos secantes <VisualBind element="plano-pi" color="terracota">$\alpha$</VisualBind> y <VisualBind element="plano-sigma" color="ocre">$\beta$</VisualBind>. Su pliegue de intersección define de forma unívoca la recta común <VisualBind element="recta-l" color="carbon">$l$</VisualBind>.
 
 <Separador />
 
-### Observaciones
+### Rigidez del espacio tridimensional
 
-- Si saltamos a las dimensiones exóticas de la topología superior (espacios de cuatro o más <ConceptLink targetId="dimension" isDependency={false}>dimensiones</ConceptLink>), las reglas de la física cambian y dos planos sí podrían cruzarse en un único y solitario punto, como dos líneas que se cruzan en el papel. Por lo tanto, el axioma I-7 es una firma genética exclusiva que ancla y define la rigidez topológica de nuestro espacio tridimensional.
+Este postulado caracteriza la dimensión del espacio tridimensional. Impide que dos <ConceptLink targetId="plano">planos</ConceptLink> se corten en un único <ConceptLink targetId="punto">punto</ConceptLink> aislado o en una región de área positiva, obligando a que la intersección sea unidimensional y continua.

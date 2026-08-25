@@ -1,61 +1,64 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "sistema-euclidiano",
-  "type": "sistema-axiomatico",
-  "title": "Geometría Euclídea",
-  "description": "Geometría clásica del plano y el espacio tridimensional, basada en los axiomas de incidencia, orden, congruencia, continuidad y el quinto postulado de Euclides.",
-  "axiomas": [
-    "axioma-incidencia-1",
-    "axioma-incidencia-2",
-    "axioma-incidencia-3",
-    "axioma-incidencia-4",
-    "axioma-incidencia-5",
-    "axioma-incidencia-6",
-    "axioma-incidencia-7",
-    "axioma-incidencia-8",
-    "axioma-orden-1",
-    "axioma-orden-2",
-    "axioma-orden-3",
-    "axioma-orden-4",
-    "axioma-congruencia-1",
-    "axioma-congruencia-2",
-    "axioma-congruencia-3",
-    "axioma-congruencia-4",
-    "axioma-congruencia-5",
-    "axioma-arquimedes",
-    "axioma-completitud",
-    "axioma-paralelas-euclides"
+  id: "sistema-euclidiano",
+  lang: "eu",
+  type: "sistema-axiomatico",
+  title: "Geometria Euklidearra",
+  description: "Plano eta espazioko geometria klasikoko sistema axiomatikoa, paraleloen bakartasun-axioma geometria absolutuko 19 axiomei uztean datzana.",
+  axiomas: [
+    "axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3", "axioma-incidencia-4",
+    "axioma-incidencia-5", "axioma-incidencia-6", "axioma-incidencia-7", "axioma-incidencia-8",
+    "axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4",
+    "axioma-congruencia-1", "axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4", "axioma-congruencia-5",
+    "axioma-arquimedes", "axioma-completitud", "axioma-paralelas-euclides"
   ],
-  "models": [],
-  "mathematicians": ["euclides", "hilbert"],
-  "tags": ["geometria", "euclidiana", "clasica", "fundamentos"]
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "I. Liburua, 5. Postulatua", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §6", role: "primary" }
+  ]
 };
 
-<Capitular letra="L" />
-a <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> es la teoría axiomática que incorpora el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> a los cimientos de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>. Matemáticamente, modela el espacio <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> intuitivo y ha servido como paradigma del espacio físico a lo largo de más de dos milenios.
+<Capitular letra="G" />eometria <ConceptLink targetId="sistema-euclidiano">euklidearra</ConceptLink> Playfair-<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides">paraleloen postulatua</ConceptLink> <ConceptLink targetId="sistema-absoluto" isDependency={true}>geometria absolutuaren</ConceptLink> egiturari gehitzearen ondoriozko eraikuntza matematiko formala da. Kurbatura nulua duen espazio <ConceptLink targetId="plano">lau</ConceptLink> intuitiboa modelatzen du eta <ConceptLink targetId="geometria">geometria</ConceptLink> metriko klasikoaren paradigma osatzen du.
+
+<Definicion title="">
+  Sistema <ConceptLink targetId="axioma">axiomatiko</ConceptLink> euklidearra $(\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I}, \mathcal{B}, \cong, \mathcal{P}_V)$ tupla bat da, <ConceptLink targetId="hilbert">Hilberten</ConceptLink> 19 <ConceptLink targetId="sistema-absoluto" isDependency={true}>axioma absolutuek</ConceptLink> eta <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Playfairren axiomak</ConceptLink> osatua: $l$ <ConceptLink targetId="recta">zuzen</ConceptLink> bat eta $P \notin l$ <ConceptLink targetId="punto">puntu</ConceptLink> bat emanda, $P$-tik igarotzen den $m$ zuzen bakarra existitzen da zeinarentzat $m \cap l = \emptyset$ den.
+</Definicion>
 
 <Separador />
 
-### <ConceptLink targetId="axioma" isDependency={false}>Axiomas</ConceptLink>
+### Paraleloen postulatu bereizgarria
 
-La <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> comprende los 19 axiomas de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> más el <ConceptLink targetId={["axioma-paralelas-euclides", "axioma", "paralelas"]} isDependency={false}>axioma de las paralelas</ConceptLink> de Euclides:
+Sistema euklidearraren elementu bereizgarria paraleloen bakartasun-hipotesia da:
 
-<ConceptLink targetId="axioma-paralelas-euclides"  isDependency={false}>Axioma V (Paralelas)</ConceptLink>: Por un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> exterior a una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> pasa exactamente una recta <ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink> a la dada.
+- **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>IV.1 Playfairren axioma (paraleloaren bakartasuna)</ConceptLink>**: Emandako <ConceptLink targetId="recta">zuzen</ConceptLink> batekiko kanpoko <ConceptLink targetId="punto">puntu</ConceptLink> batetik zuzen <ConceptLink targetId="paralelas">paralelo</ConceptLink> bakar bat igarotzen da.
 
-Este axioma, también conocido como el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink>, es el que distingue la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> de las geometrías no euclídeas. Es equivalente a afirmar que la suma de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es $180^\circ$.
-
-<Separador />
-
-### Modelos
-
-- **Espacio cartesiano** $\mathbb{R}^n$ con la métrica euclídea: el modelo estándar.
-- **Plano euclídeo** $\mathbb{R}^2$: el modelo bidimensional clásico.
-- **Plano complejo** $\mathbb{C}$: isomorfo al plano euclídeo mediante la identificación $\mathbb{C} \cong \mathbb{R}^2$.
+<Formula>
+  $$
+  \forall l \in \mathcal{L}, \forall P \notin l \implies \exists! m \in \mathcal{L} \ (P \in m \land m \cap l = \emptyset)
+  $$
+</Formula>
 
 <Separador />
 
-### Propiedades
+### Ereduak eta adierazpenak
 
-La <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> es **consistente** (relativamente a la teoría de los números reales). Es **categórica**: todo modelo que satisface los axiomas es isomórficamente equivalente al espacio $\mathbb{R}^3$. Esta propiedad es consecuencia directa del <ConceptLink targetId={["axioma-completitud", "axioma"]} isDependency={false}>axioma de completitud</ConceptLink>, el cual garantiza que toda recta euclídea es biyectiva con $\mathbb{R}$.
+Sistema euklidearrak oinarrizko errealizazio analitiko eta jarraituak onartzen ditu:
 
-El <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink> es **independiente** de los demás axiomas: existen geometrías (hiperbólica, elíptica) que satisfacen todos los axiomas excepto el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink>, demostrando que no puede deducirse de los anteriores.
+- **<ConceptLink targetId="modelo-cartesiano">Plano kartesiarra</ConceptLink> <ConceptLink targetId="numero-real">$\mathbb{R}^2$</ConceptLink>**: $d(A,B) = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$ <ConceptLink targetId="distancia">metrika euklidear</ConceptLink> kanonikoaz hornitutako bi dimentsioko espazioa.
+- **<ConceptLink targetId="numero-real">$\mathbb{R}^3$</ConceptLink> espazio bektoriala**: Biderketa eskalar estandarraz hornitutako hiru dimentsioko eredua.
+- **$\mathbb{C}$ plano konplexua**: $(x,y) \mapsto x + iy$ identifikazioaren bidez plano kartesiar errealarekin isomorfoa den egitura aljebraikoa.
+
+<Separador />
+
+### Egitura-propietateak eta ezaugarri metamatematikoak
+
+Sistema euklidearrak <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-<ConceptLink targetId="teorema">teorema</ConceptLink> eta propietate aljebraiko nagusiak erakusten ditu:
+
+<Formula>
+  $$
+  \sum_{i=1}^{3} \alpha_i = 180^\circ
+  $$
+</Formula>
+
+- **Angeluen batura inbariantea**: Edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura zehazki $180^\circ$ ($\pi$ radian) da.
+- **<ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>**: Edozein <ConceptLink targetId="triangulo-rectangulo">triangelu zuzenetan</ConceptLink>, <ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink> karratua <ConceptLink targetId="cateto">katetoen</ConceptLink> karratuen baturaren berdina da.
+- **Kategorikotasuna**: Hiru dimentsioko sistema euklidearra betetzen duen eredu jarraitu edozein $\mathbb{R}^3$ espazio kartesiarrarekin isomorfoa da.

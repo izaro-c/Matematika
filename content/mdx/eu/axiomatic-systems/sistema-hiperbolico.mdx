@@ -1,69 +1,64 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "sistema-hiperbolico",
-  "type": "sistema-axiomatico",
-  "title": "Geometría Hiperbólica",
-  "description": "Geometría no euclídea que satisface todos los axiomas de la geometría absoluta pero reemplaza el quinto postulado de Euclides por su negación: por un punto exterior a una recta pasan infinitas paralelas.",
-  "axiomas": [
-    "axioma-incidencia-1",
-    "axioma-incidencia-2",
-    "axioma-incidencia-3",
-    "axioma-incidencia-4",
-    "axioma-incidencia-5",
-    "axioma-incidencia-6",
-    "axioma-incidencia-7",
-    "axioma-incidencia-8",
-    "axioma-orden-1",
-    "axioma-orden-2",
-    "axioma-orden-3",
-    "axioma-orden-4",
-    "axioma-congruencia-1",
-    "axioma-congruencia-2",
-    "axioma-congruencia-3",
-    "axioma-congruencia-4",
-    "axioma-congruencia-5",
-    "axioma-arquimedes",
-    "axioma-completitud",
-    "axioma-paralelas-hiperbolico"
+  id: "sistema-hiperbolico",
+  lang: "eu",
+  type: "sistema-axiomatico",
+  title: "Geometria Hiperbolikoa",
+  description: "Kurbatura gaussiar negatibo konstanteko geometria ez-euklidearra, paraleloen axioma euklidearra Lobachevski-Bolyairren postulatuaz ordezkatzen duena.",
+  axiomas: [
+    "axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3", "axioma-incidencia-4",
+    "axioma-incidencia-5", "axioma-incidencia-6", "axioma-incidencia-7", "axioma-incidencia-8",
+    "axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4",
+    "axioma-congruencia-1", "axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4", "axioma-congruencia-5",
+    "axioma-arquimedes", "axioma-completitud", "axioma-paralelas-hiperbolico"
   ],
-  "models": [],
-  "mathematicians": ["lobachevski", "bolyai", "hilbert"],
-  "tags": ["geometria", "hiperbolica", "no-euclidiana", "fundamentos"]
+  sources: [
+    { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolai Lobachevski", locator: "§1-§10", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §6", role: "secondary" }
+  ]
 };
 
-<Capitular letra="L" />
-a <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink> es la teoría geométrica no euclídea que surge al reemplazar el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> por el <ConceptLink targetId="axioma-paralelas-hiperbolico"  isDependency={false}>axioma de Lobachevski</ConceptLink>: por un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> exterior a una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> pasan infinitas rectas <ConceptLink targetId="coplanares" isDependency={false}>coplanares</ConceptLink> que no la intersecan. Esta estructura matemática fue descubierta independientemente por <ConceptLink targetId="lobachevski" isDependency={false}>Lobachevski</ConceptLink> (1829) y <ConceptLink targetId="bolyai" isDependency={false}>Bolyai</ConceptLink> (1832).
+<Capitular letra="G" />eometria <ConceptLink targetId="sistema-hiperbolico">hiperbolikoa</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides">paraleloen postulatua</ConceptLink> <ConceptLink targetId="lobachevski">Nikolai Lobachevskik</ConceptLink> eta <ConceptLink targetId="bolyai">János Bolyaik</ConceptLink> modu independentean formulatutako hiperbolicitate-hipotesiaz ordezkatzean sortutako teoria geometriko ez-euklidearra da. Kurbatura negatibo konstanteko espazioak deskribatzen ditu, non espazio <ConceptLink targetId="sistema-euclidiano">euklidearraren</ConceptLink> rigidetasuna metrika hiperboliko dibergente bategatik ordezkatzen den.
+
+<Definicion title="">
+  Sistema <ConceptLink targetId="axioma">axiomatiko</ConceptLink> hiperbolikoa $(\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I}, \mathcal{B}, \cong, \mathcal{P}_H)$ tupla bat da, <ConceptLink targetId="sistema-absoluto" isDependency={true}>geometria absolutuko 19 axiomek</ConceptLink> eta <ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>axioma hiperbolikoak</ConceptLink> osatua: $l$ <ConceptLink targetId="recta">zuzen</ConceptLink> bat eta $P \notin l$ <ConceptLink targetId="punto">puntu</ConceptLink> bat emanda, $P$-tik igarotzen diren eta $l$ ebakitzen ez duten gutxienez bi $m, n$ zuzen desberdin existitzen dira.
+</Definicion>
 
 <Separador />
 
-### <ConceptLink targetId="axioma" isDependency={false}>Axiomas</ConceptLink>
+### Paraleloen postulatua hiperbolikoa
 
-La <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink> comprende los 19 axiomas de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> más el axioma hiperbólico de las <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>:
+Espazio hiperbolikoaren ezaugarri bereizgarriak zuzen dibergenteen aniztasuna postulatzeari deritzo:
 
-Axioma V' (Paralela Hiperbólica): Por un punto exterior a una recta pasan al menos dos rectas paralelas a la dada.
+- **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>IV.1 Lobachevski-Bolyairen axioma (paraleloen aniztasuna)</ConceptLink>**: Emandako <ConceptLink targetId="recta">zuzen</ConceptLink> batekiko kanpoko <ConceptLink targetId="punto">puntu</ConceptLink> batetik hura <ConceptLink targetId="interseccion">ebakitzen</ConceptLink> ez duten bi zuzen koplanar desberdin gutxienez igarotzen dira.
 
-De este axioma se sigue que pasan infinitas paralelas. En <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink>, la suma de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es siempre **menor** que $180^\circ$, y el <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> del triángulo es proporcional a su defecto angular $\delta = 180^\circ - (\alpha + \beta + \gamma)$.
-
-<Separador />
-
-### Modelos
-
-La <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink> no puede realizarse en el <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> euclídeo estándar, pero admite varios modelos dentro de $\mathbb{R}^n$ o $\mathbb{C}$:
-
-- **<ConceptLink targetId={["modelo-poincare", "plano"]}>Disco de Poincaré</ConceptLink>**: el interior del círculo unitario $\{z \in \mathbb{C} : |z| < 1\}$ con métrica hiperbólica. Las rectas son arcos de círculo ortogonales al borde.
-- **Semiplano de Poincaré**: $\{z \in \mathbb{C} : \Im(z) > 0\}$ con métrica $ds^2 = (dx^2 + dy^2)/y^2$.
-- **Modelo de Klein-Beltrami**: el interior de un círculo con rectas como cuerdas.
-- **Modelo del hiperboloide**: $\{x \in \mathbb{R}^{2,1} : \langle x, x \rangle = -1\}$ con la métrica de Minkowski.
+<Formula>
+  $$
+  \forall l \in \mathcal{L}, \forall P \notin l \implies \exists m, n \in \mathcal{L} \ (m \neq n \land P \in m \cap n \land m \cap l = \emptyset \land n \cap l = \emptyset)
+  $$
+</Formula>
 
 <Separador />
 
-### Propiedades
+### Eredu geometrikozko jarraituak
 
-La <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink> es **consistente** (relativamente a la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink>, mediante los modelos de Poincaré). Su descubrimiento en el siglo XIX demostró la independencia del <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink> y transformó nuestra comprensión de la naturaleza del espacio matemático.
+Plano euklidearrak plano hiperboliko osoa desformationik gabe barne har ezin duenez (kurbatura negatibo konstanteko gainazalei buruzko <ConceptLink targetId="hilbert">Hilberten</ConceptLink> <ConceptLink targetId="teorema">teorema</ConceptLink>), geometria hiperbolikoa eredu konforme edo proiektiboen bidez adierazten da:
 
-En <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink>:
-- La suma de ángulos de un triángulo es $< 180^\circ$ y variable.
-- Triángulos con los mismos ángulos son <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> (no hay semejanza sin congruencia).
-- Existe un radio máximo para círculos inscritos.
-- La <ConceptLink targetId="circunferencia" isDependency={false}>circunferencia</ConceptLink> de un círculo de radio $r$ es $2\pi \sinh(r)$.
-- El área de un triángulo está acotada por $\pi$.
+- **<ConceptLink targetId="modelo-poincare">Poincaréren diskoa</ConceptLink>**: $\{z \in \mathbb{C} : |z| < 1\}$ unitate-diskoaren barnealdea, non zuzenak ertzalderarekiko ortogonalak diren zirkulu-arkuak diren.
+- **Poincaréren goi-erdiplanoa**: $\{z \in \mathbb{C} : \Im(z) > 0\}$ eremua $ds^2 = \frac{dx^2 + dy^2}{y^2}$ metrikaz hornitua.
+- **Klein-Beltramiren eredua**: Unitate-diskoaren barnealdea non zuzen hiperbolikoak zuzenki euklidearrekin bat datozen.
+
+<Separador />
+
+### Propietateak eta akats angeluarrak
+
+Espazio hiperbolikoan alderatze nabarmenak gertatzen dira geometria klasikoarekin alderatuta:
+
+<Formula>
+  $$
+  \text{Azalera}(\Delta) = k^2 \left( \pi - (\alpha + \beta + \gamma) \right) = k^2 \cdot \delta(\Delta)
+  $$
+</Formula>
+
+- **Defektu angeluarra**: Edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $180^\circ$ baino zorrozki txikiagoa da. $\delta(\Delta) = \pi - (\alpha + \beta + \gamma)$ akats angeluarra triangeluaren azalerarekiko proportzionala da.
+- **Antzekotasun ez-trivialik eza**: Barne-angelu berdinak dituzten bi triangelu <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira derrigorrez; ez dago tamaina desberdineko irudi <ConceptLink targetId="semejanza">antzekorik</ConceptLink>.
+- **Hazkunde esponentziala**: $r$ erradioko <ConceptLink targetId="circunferencia">zirkunferentziaren</ConceptLink> <ConceptLink targetId="distancia">luzera</ConceptLink> $2\pi \sinh(r)$ da, era esponentzialean haziz.

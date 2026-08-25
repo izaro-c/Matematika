@@ -1,55 +1,35 @@
 export const metadata = {
-  "id": "axioma-congruencia-5",
-  "type": "axioma",
-  "title": "Axioma III-5 (SAS / LAL)",
-  "description": "Si dos lados y el ángulo comprendido de un triángulo son congruentes a los de otro triángulo, entonces ambos triángulos son congruentes.",
-  "statement": "Dados los triángulos ABC y A'B'C', si AB ≅ A'B', AC ≅ A'C' y ∠BAC ≅ ∠B'A'C', entonces los triángulos son congruentes: todas las partes correspondientes son congruentes.",
-  "tags": ["geometria", "congruencia", "triangulos", "geometria-absoluta"],
-  "authors": ["hilbert"],
-  "axiomSystem": "sistema-absoluto",
-  "sources": [
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  id: "axioma-congruencia-5",
+  lang: "es",
+  type: "axioma",
+  title: "Axioma III.5 (Criterio LAL de Congruencia)",
+  description: "Si dos lados y el ángulo comprendido de un triángulo son respectivamente congruentes a los de otro triángulo, los triángulos son congruentes.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
   ],
-  "hasSimulation": true,
-  "links": ["punto", "congruencia"]
+  hasSimulation: true
 };
 
 import { SAS } from '@content/diagrams/Axiomas/SAS';
 export const Simulation = SAS;
 
-<Capitular letra="S" />
-i dos <InteractiveElement target="sides" color="ocre"><ConceptLink targetId="segmento" isDependency={false}>lados</ConceptLink></InteractiveElement> y el <InteractiveElement target="angles" color="terracota"><ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> comprendido</InteractiveElement> entre ellos de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> son respectivamente <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> a los de un segundo triángulo, entonces ambos triángulos son <InteractiveElement target="all" color="pavo">globalmente congruentes</InteractiveElement>. Este poderoso <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> constituye el célebre criterio LAL (Lado-Ángulo-Lado).
+<Capitular letra="E" />l quinto <ConceptLink targetId="axioma-congruencia-5">axioma de congruencia</ConceptLink>, correspondiente al criterio Lado-Ángulo-Lado (LAL), conecta la equivalencia de <ConceptLink targetId="segmento">segmentos</ConceptLink> y <ConceptLink targetId="angulo">ángulos</ConceptLink> para establecer la <ConceptLink targetId="congruencia">congruencia</ConceptLink> global entre <ConceptLink targetId="triangulo">triángulos</ConceptLink>.
 
-<Separador />
-
-### Enunciado Formal
-
-<Formula>
+<Definicion title="">
+  Dados dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> $\triangle ABC$ y $\triangle A'B'C'$, si se verifica que $AB \cong A'B'$, $AC \cong A'C'$ y $\angle BAC \cong \angle B'A'C'$, entonces los triángulos son <ConceptLink targetId="congruencia">congruentes</ConceptLink> ($\triangle ABC \cong \triangle A'B'C'$):
   $$
-  \begin{cases}
-    \overline{AB} \cong \overline{A'B'} \\
-    \land \\
-    \overline{AC} \cong \overline{A'C'} \\
-    \land \\
-    \angle BAC \cong \angle B'A'C'
-  \end{cases}
-  \implies \triangle ABC \cong \triangle A'B'C'
+  (AB \cong A'B') \land (AC \cong A'C') \land (\angle BAC \cong \angle B'A'C') \implies \triangle ABC \cong \triangle A'B'C'
   $$
-</Formula>
+</Definicion>
 
 <Separador />
 
-### Discusión
+### Representación visual e interacción
 
-El <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> SAS (Side-Angle-Side) es el quinto y último axioma de congruencia, y posiblemente el más potente. Establece que, para determinar la congruencia de dos triángulos, no es necesario verificar todos los seis pares de partes correspondientes (tres lados y tres ángulos); basta con verificar dos lados y el ángulo entre ellos.
-
-La posición de este axioma en la teoría es peculiar: en la presentación de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, SAS era una <ConceptLink targetId="teorema" isDependency={false}>proposición</ConceptLink> (el <ConceptLink targetId="teorema-lal" isDependency={false}>teorema I-4</ConceptLink> de los *Elementos*), pero su "<ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink>" dependía de <ConceptLink targetId="superposicion" isDependency={false}>superponer</ConceptLink> figuras, un método no riguroso. <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>, al <ConceptLink targetId="sistema-axiomatico" isDependency={false}>axiomatizar</ConceptLink> la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>, reconoció que SAS no puede demostrarse a partir de los axiomas anteriores y debe postularse como axioma.
-
-Los otros criterios de congruencia (<ConceptLink targetId="teorema-congruencia-ala"  isDependency={false}>ALA</ConceptLink>, <ConceptLink targetId="teorema-congruencia-lll"  isDependency={false}>LLL</ConceptLink>, <ConceptLink targetId="teorema-congruencia-lla" isDependency={false}>LLA</ConceptLink>) se demuestran como teoremas a partir de SAS y los demás axiomas.
+En la simulación interactiva se destacan los dos <VisualBind element="sides" color="ocre">lados homólogos congruentes</VisualBind> $AB \cong A'B'$ y $AC \cong A'C'$, junto con el <VisualBind element="angles" color="terracota">ángulo comprendido congruente</VisualBind> $\angle BAC \cong \angle B'A'C'$. El cumplimiento de estas tres condiciones impone la <VisualBind element="all" color="pavo">congruencia total</VisualBind> entre ambas figuras.
 
 <Separador />
 
-### Observaciones
+### Trascendencia formal
 
-SAS es un axioma exclusivo de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>. En geometrías no euclídeas, SAS sigue siendo válido porque no depende del <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink>. Sin embargo, en <ConceptLink targetId="espacio-metrico" isDependency={false}>espacios métricos</ConceptLink> más generales, la noción de congruencia debe definirse de otra manera y SAS puede no cumplirse.
+<ConceptLink targetId="hilbert">Hilbert</ConceptLink> independizó el criterio LAL convirtiéndolo en un axioma básico, superando el método no axiomático de superposición de <ConceptLink targetId="euclides">Euclides</ConceptLink>. A partir del axioma III.5 se deducen deductivamente los restantes criterios de <ConceptLink targetId="congruencia">congruencia</ConceptLink> (ALA y LLL).

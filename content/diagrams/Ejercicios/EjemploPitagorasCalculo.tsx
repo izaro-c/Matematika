@@ -1,197 +1,379 @@
-import { useMathStore } from '@/lib/page-context/MathStoreContext';
-import { useStepBinding } from '@/components/ui/StepBinding';
-import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
-import { DiagramTitle } from '@/components/ui/DiagramOverlay';
-import {
-  projectSquareVertices,
-  createSquareGrid
-} from '@/diagrams/jsxgraph/MathUtils';
-import {
-  createPoint,
-  createSegment,
-  createPolygon,
-  createRightAngle
-} from '@/diagrams/jsxgraph/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';
 
-/**
- * EjemploPitagorasCalculo — Diagrama interactivo del ejemplo de cálculo de hipotenusa.
- *
- * Muestra el triángulo rectángulo de terna (5, 12, 13) y proyecta los cuadrados
- * de las áreas correspondientes.
- * Utiliza el componente estándar MathBoard, la factoría MathFactory, DiagramTitle y utilidades geométricas.
- */
-export const EjemploPitagorasCalculo = () => {
-  // Suscripción a los hovers/clicks del MDX mediante MathStore
-  const mathHighlight = useMathStore((state) => state.variables['highlight']);
-  const { activeStep } = useStepBinding();
-
-  const highlight = mathHighlight || activeStep;
-  const isHighlight = (id: string) =>
-    Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
-
-  const getSideFactor = () => {
-    const showSquares = activeStep === 'calculo' || activeStep === 'resolucion' || activeStep === 'terna';
-    return showSquares ? -1.5 : 1.5;
-  };
-
-  return (
-    <MathBoard
-      boundingbox={[-7, 19, 21, -14]}
-      axis={false}
-      grid={false}
-      onInit={(board, els, theme) => {
-        // Vértices del triángulo rectángulo (5, 12, 13)
-        els.C = createPoint(board, [0, 0], { name: 'C', size: 4.5, fixed: true, label: { visible: false } }, theme);
-        els.A = createPoint(board, [0, 5], { name: 'A', size: 4.5, fixed: true, label: { visible: false } }, theme);
-        els.B = createPoint(board, [12, 0], { name: 'B', size: 4.5, fixed: true, label: { visible: false } }, theme);
-
-        // Segmentos del triángulo
-        els.segCA = createSegment(board, [els.C, els.A], { strokeWidth: 2 }, theme);
-        els.segBC = createSegment(board, [els.B, els.C], { strokeWidth: 2 }, theme);
-        els.segAB = createSegment(board, [els.A, els.B], { strokeWidth: 2 }, theme);
-
-        els.poly = createPolygon(board, [els.A, els.B, els.C], { fillOpacity: 0.04 }, theme);
-
-        // Ángulo recto en C
-        els.rightAng = createRightAngle(board, [els.B, els.C, els.A], { radius: 0.6, fillOpacity: 0.25 }, theme);
-
-        // Proyección de cuadrados
-        els.ptsCA = projectSquareVertices(board, els.C, els.A, els.B);
-        els.ptsBC = projectSquareVertices(board, els.B, els.C, els.A);
-        els.ptsAB = projectSquareVertices(board, els.A, els.B, els.C);
-
-        // Polígonos de los cuadrados
-        els.sqCA = createPolygon(board, els.ptsCA, { fillColor: theme.canela }, theme);
-        els.sqBC = createPolygon(board, els.ptsBC, { fillColor: theme.terracota }, theme);
-        els.sqAB = createPolygon(board, els.ptsAB, { fillColor: theme.mora }, theme);
-
-        // Cuadrículas internas unitarias
-        els.gridCA = createSquareGrid(board, els.ptsCA, 5, theme);
-        els.gridBC = createSquareGrid(board, els.ptsBC, 12, theme);
-        els.gridAB = createSquareGrid(board, els.ptsAB, 13, theme);
-
-        // Posicionamiento dinámico de las etiquetas de longitud
-        const createLabel = (p: any, q: any, initialText: string, t: number) => {
-          const mx = () => p.X() + t * (q.X() - p.X());
-          const my = () => p.Y() + t * (q.Y() - p.Y());
-          const dx = () => q.X() - p.X();
-          const dy = () => q.Y() - p.Y();
-          const nl = () => Math.hypot(dx(), dy()) || 1;
-          const off = 0.7;
-          return board.create('text', [
-            () => mx() - dy() / nl() * off * getSideFactor(),
-            () => my() + dx() / nl() * off * getSideFactor(),
-            initialText
-          ], {
-            fixed: true, fontSize: 16, cssClass: 'font-serif font-bold',
-            anchorX: 'middle', anchorY: 'middle', color: theme.carbon
-          });
-        };
-
-        els.labA = createLabel(els.C, els.A, 'a', 0.65);
-        els.labB = createLabel(els.B, els.C, 'b', 0.25);
-        els.labC = createLabel(els.A, els.B, 'c', 0.25);
-
-        // Textos de las áreas
-        els.textAreaA = board.create('text', [-2.5, 2.5, 'a² = 5² = 25'], {
-          fixed: true, fontSize: 13, cssClass: 'font-serif italic font-bold',
-          anchorX: 'middle', anchorY: 'middle', color: theme.canela, visible: false
-        });
-        els.textAreaB = board.create('text', [6, -6, 'b² = 12² = 144'], {
-          fixed: true, fontSize: 13, cssClass: 'font-serif italic font-bold',
-          anchorX: 'middle', anchorY: 'middle', color: theme.terracota, visible: false
-        });
-
-        const getHypotenuseCenter = (idx: number) => {
-          const sum = els.ptsAB[0].coords.usrCoords[idx] +
-                      els.ptsAB[1].coords.usrCoords[idx] +
-                      els.ptsAB[2].coords.usrCoords[idx] +
-                      els.ptsAB[3].coords.usrCoords[idx];
-          return sum / 4;
-        };
-
-        els.textAreaC = board.create('text', [
-          () => getHypotenuseCenter(1),
-          () => getHypotenuseCenter(2),
-          'c² = 169'
-        ], {
-          fixed: true, fontSize: 13, cssClass: 'font-serif italic font-bold',
-          anchorX: 'middle', anchorY: 'middle', color: theme.mora, visible: false
-        });
-      }}
-      onUpdate={(_board, els, theme, _isStep, _isHL) => {
-        // 1. Estados de visibilidad y progresión didáctica
-        const showSquares = activeStep === 'calculo' || activeStep === 'resolucion' || activeStep === 'terna';
-
-        // 2. Actualizar dinámicamente los textos de los lados
-        if (activeStep === 'datos' || activeStep === 'calculo') {
-          els.labA.setText('a = 5');
-          els.labB.setText('b = 12');
-          els.labC.setText('c = ?');
-        } else if (activeStep === 'resolucion' || activeStep === 'terna') {
-          els.labA.setText('a = 5');
-          els.labB.setText('b = 12');
-          els.labC.setText('c = 13');
-        } else {
-          els.labA.setText('a');
-          els.labB.setText('b');
-          els.labC.setText('c');
+/* @matematika-diagram-spec:start */
+export const EjemploPitagorasCalculoSpec = createDiagramSpec(
+{
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
+  "title": "Cálculo de la hipotenusa (Terna 5, 12, 13)",
+  "componentId": "ejemplo-pitagoras-calculo",
+  "category": "Ejercicios",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "showLabels": true,
+  "viewport": {
+    "bounds": [-7, 19, 21, -14],
+    "home": [-7, 19, 21, -14],
+    "minZoom": 0.2,
+    "maxZoom": 10,
+    "padding": 0.16
+  },
+  "layers": [
+    { "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false },
+    { "id": "annotations", "label": "Anotaciones", "order": 1, "visible": true, "locked": false }
+  ],
+  "groups": [],
+  "objects": [
+    {
+      "id": "pC",
+      "label": "C",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 30,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Vértice C (Ángulo recto)", "role": "primary" },
+      "target": true,
+      "targetId": "pC",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 0, "y": 0 },
+      "mobility": { "type": "fixed" },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 31,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Vértice A", "role": "primary" },
+      "target": true,
+      "targetId": "pA",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 0, "y": 5 },
+      "mobility": { "type": "fixed" },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 32,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Vértice B", "role": "primary" },
+      "target": true,
+      "targetId": "pB",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 12, "y": 0 },
+      "mobility": { "type": "fixed" },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "segCA",
+      "label": "Cateto a = 5",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Cateto a de longitud 5", "role": "primary" },
+      "target": true,
+      "targetId": "segCA",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": ["pC", "pA"]
+      },
+      "appearance": { "strokeWidth": 3, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "segBC",
+      "label": "Cateto b = 12",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 11,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Cateto b de longitud 12", "role": "primary" },
+      "target": true,
+      "targetId": "segBC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": ["pB", "pC"]
+      },
+      "appearance": { "strokeWidth": 3, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "segAB",
+      "label": "Hipotenusa c = 13",
+      "color": "mora",
+      "layerId": "geometry",
+      "order": 12,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Hipotenusa c de longitud 13", "role": "primary" },
+      "target": true,
+      "targetId": "segAB",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": ["pA", "pB"]
+      },
+      "appearance": { "strokeWidth": 3, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "polyABC",
+      "label": "Triángulo (5, 12, 13)",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 5,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Triángulo rectángulo 5-12-13", "role": "primary" },
+      "target": true,
+      "targetId": "polyABC",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pA", "pB", "pC"]
+      },
+      "appearance": { "fillOpacity": 0.08, "strokeWidth": 1, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "rightAng",
+      "label": "Ángulo recto",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 15,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Ángulo recto en C", "role": "secondary" },
+      "target": true,
+      "targetId": "rightAng",
+      "objectType": "angle",
+      "points": ["pB", "pC", "pA"],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": { "radius": 0.6, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pA_sq",
+      "label": "A1",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 40,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": { "selectable": false, "ariaLabel": "Vértice auxiliar del cuadrado a²", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": -5, "y": 5 },
+      "mobility": { "type": "fixed" }
+    },
+    {
+      "id": "pC_sq",
+      "label": "C1",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 41,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": { "selectable": false, "ariaLabel": "Vértice auxiliar del cuadrado a²", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": -5, "y": 0 },
+      "mobility": { "type": "fixed" }
+    },
+    {
+      "id": "sqCA",
+      "label": "Cuadrado a² = 25",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 6,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Cuadrado proyectado de área a² = 25", "role": "secondary" },
+      "target": true,
+      "targetId": "sqCA",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pC", "pA", "pA_sq", "pC_sq"]
+      },
+      "appearance": { "fillOpacity": 0.15, "strokeWidth": 1.5, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pC_sq2",
+      "label": "C2",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 42,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": { "selectable": false, "ariaLabel": "Vértice auxiliar del cuadrado b²", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 0, "y": -12 },
+      "mobility": { "type": "fixed" }
+    },
+    {
+      "id": "pB_sq2",
+      "label": "B2",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 43,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": { "selectable": false, "ariaLabel": "Vértice auxiliar del cuadrado b²", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 12, "y": -12 },
+      "mobility": { "type": "fixed" }
+    },
+    {
+      "id": "sqBC",
+      "label": "Cuadrado b² = 144",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 7,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Cuadrado proyectado de área b² = 144", "role": "secondary" },
+      "target": true,
+      "targetId": "sqBC",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pB", "pC", "pC_sq2", "pB_sq2"]
+      },
+      "appearance": { "fillOpacity": 0.15, "strokeWidth": 1.5, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pB_sq3",
+      "label": "B3",
+      "color": "mora",
+      "layerId": "geometry",
+      "order": 44,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": { "selectable": false, "ariaLabel": "Vértice auxiliar del cuadrado c²", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 17, "y": 12 },
+      "mobility": { "type": "fixed" }
+    },
+    {
+      "id": "pA_sq3",
+      "label": "A3",
+      "color": "mora",
+      "layerId": "geometry",
+      "order": 45,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": { "selectable": false, "ariaLabel": "Vértice auxiliar del cuadrado c²", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 5, "y": 17 },
+      "mobility": { "type": "fixed" }
+    },
+    {
+      "id": "sqAB",
+      "label": "Cuadrado c² = 169",
+      "color": "mora",
+      "layerId": "geometry",
+      "order": 8,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Cuadrado proyectado de área c² = 169", "role": "secondary" },
+      "target": true,
+      "targetId": "sqAB",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pA", "pB", "pB_sq3", "pA_sq3"]
+      },
+      "appearance": { "fillOpacity": 0.15, "strokeWidth": 1.5, "preserveColorOnHighlight": true }
+    }
+  ],
+  "relations": [],
+  "steps": [
+    {
+      "id": "datos",
+      "label": "Datos del problema (a = 5, b = 12)",
+      "description": "Dado un triángulo rectángulo con catetos a = 5 y b = 12, se busca hallar la hipotenusa c.",
+      "visibleTargets": ["segCA", "segBC", "segAB"],
+      "durationMs": 1000
+    },
+    {
+      "id": "calculo",
+      "label": "Cálculo de áreas (a² + b² = c²)",
+      "description": "Se calculan las áreas a² = 25 y b² = 144. Su suma a² + b² = 169 da el área c².",
+      "visibleTargets": ["sqCA", "sqBC", "sqAB"],
+      "durationMs": 1000
+    },
+    {
+      "id": "resolucion",
+      "label": "Resolución: c = √169 = 13",
+      "description": "Extrayendo la raíz cuadrada del área c² = 169 obtenemos que la hipotenusa mide c = 13.",
+      "visibleTargets": ["segAB", "sqAB"],
+      "durationMs": 1000
+    },
+    {
+      "id": "terna",
+      "label": "Terna pitagórica (5, 12, 13)",
+      "description": "Los tres números enteros (5, 12, 13) forman una terna pitagórica exacta.",
+      "visibleTargets": ["polyABC", "sqCA", "sqBC", "sqAB"],
+      "durationMs": 1000
+    }
+  ],
+  "note": "Destaca cada cuadrado o lado para examinar la terna pitagórica (5, 12, 13).",
+  "translations": {
+    "eu": {
+      "title": "Hipotenusaren kalkulua (5, 12, 13 hirukotea)",
+      "note": "Nabarmendu karratu edo alde bakoitza (5, 12, 13) hirukote pitagorikoa aztertzeko.",
+      "steps": {
+        "datos": {
+          "label": "Ariketaren datuak (a = 5, b = 12)",
+          "description": "a = 5 eta b = 12 katetoak dituen triangelu angeluzuzenean c hipotenusa kalkulatu nahi da."
+        },
+        "calculo": {
+          "label": "Azaleren kalkulua (a² + b² = c²)",
+          "description": "a² = 25 eta b² = 144 azalerak kalkulatzen dira. Haien batura a² + b² = 169 c² azalera da."
+        },
+        "resolucion": {
+          "label": "Ebazpena: c = √169 = 13",
+          "description": "c² = 169 azaleraren erro karratua eginez hipotenusak c = 13 neurtzen duela lortzen da."
         }
+      }
+    }
+  }
+}
+);
+/* @matematika-diagram-spec:end */
 
-        els.labA.setAttribute({ visible: true, color: theme.canela });
-        els.labB.setAttribute({ visible: true, color: theme.terracota });
-        els.labC.setAttribute({ visible: true, color: theme.mora });
-
-        // 3. Modulación de visibilidad de los cuadrados auxiliares
-        const updateSquareElement = (name: string, visible: boolean, color: string, isHighlighted: boolean) => {
-          els[`sq${name}`].setAttribute({ visible, fillColor: color, fillOpacity: isHighlighted ? 0.28 : 0.08 });
-          els[`sq${name}`].borders.forEach((b: any) => {
-            b.setAttribute({ visible, strokeColor: color, strokeWidth: isHighlighted ? 3 : 1.25, strokeOpacity: isHighlighted ? 1.0 : 0.4 });
-          });
-          els[`grid${name}`].forEach((seg: any) => {
-            seg.setAttribute({ visible, strokeColor: color, strokeOpacity: isHighlighted ? 0.4 : 0.25 });
-          });
-        };
-
-        updateSquareElement('CA', showSquares, theme.canela, isHighlight('sqCA'));
-        updateSquareElement('BC', showSquares, theme.terracota, isHighlight('sqBC'));
-        updateSquareElement('AB', showSquares, theme.mora, isHighlight('sqAB'));
-
-        // 4. Textos de las áreas
-        els.textAreaA.setAttribute({ visible: showSquares, color: theme.canela });
-        els.textAreaB.setAttribute({ visible: showSquares, color: theme.terracota });
-        els.textAreaC.setAttribute({ visible: showSquares, color: theme.mora });
-
-        if (activeStep === 'calculo') {
-          els.textAreaC.setText('c² = 169');
-        } else {
-          els.textAreaC.setText('c² = 13² = 169');
-        }
-
-        // 5. Vértices del triángulo (hover individual)
-        els.C.setAttribute({ size: isHighlight('C') ? 8.5 : 4.5, fillColor: theme.carbon, strokeColor: theme.carbon });
-        els.A.setAttribute({ size: isHighlight('A') ? 8.5 : 4.5, fillColor: theme.carbon, strokeColor: theme.carbon });
-        els.B.setAttribute({ size: isHighlight('B') ? 8.5 : 4.5, fillColor: theme.carbon, strokeColor: theme.carbon });
-
-        // 6. Líneas del triángulo
-        const isHighlightSegCA = isHighlight('segCA');
-        const isHighlightSegBC = isHighlight('segBC');
-        const isHighlightSegAB = isHighlight('segAB');
-        const isHighlightPoly = isHighlight('poly');
-
-        els.segCA.setAttribute({ strokeColor: theme.canela, strokeWidth: isHighlightSegCA ? 4.5 : (activeStep ? 3.5 : 2) });
-        els.segBC.setAttribute({ strokeColor: theme.terracota, strokeWidth: isHighlightSegBC ? 4.5 : (activeStep ? 3.5 : 2) });
-        els.segAB.setAttribute({ strokeColor: theme.mora, strokeWidth: isHighlightSegAB ? 4.5 : (activeStep ? 3.5 : 2) });
-
-        els.poly.setAttribute({ fillColor: theme.carbon, fillOpacity: isHighlightPoly ? 0.15 : 0.04 });
-
-        const isHighlightRightAng = isHighlight('rightAng');
-        els.rightAng.setAttribute({ fillOpacity: isHighlightRightAng ? 0.55 : 0.25, strokeWidth: isHighlightRightAng ? 2.5 : 1 });
-      }}
-    >
-      <DiagramTitle>
-        Triángulo y Cuadrados de Áreas (5, 12, 13)
-      </DiagramTitle>
-    </MathBoard>
-  );
-};
+export const EjemploPitagorasCalculo = () => (
+  <DiagramRenderer spec={EjemploPitagorasCalculoSpec} />
+);

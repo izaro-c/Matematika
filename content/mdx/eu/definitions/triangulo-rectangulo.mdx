@@ -1,21 +1,41 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "triangulo-rectangulo",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Hiruki Zuzena",
-  "description": "Triángulo que posee un ángulo recto (90°). Los lados que forman el ángulo recto se denominan catetos y el lado opuesto es la hipotenusa.",
-  "statement": "Un triángulo △ABC es rectángulo en C si el ángulo interior en C es un ángulo recto (m(∠C) = 90°). El lado c = |AB| es la hipotenusa y a = |BC|, b = |CA| son los catetos.",
-  "authors": ["euclides", "hilbert"],
-  "hasSimulation": false
+  id: "triangulo-rectangulo",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Hiruki Zuzena (Triangelu Angeluzuzena)",
+  description: "Barne-angelu zuzen bat (90 gradu) duen triangelua. Alde mugatzaileak katetoak dira eta aurkako aldea hipotenusa.",
+  sources: [
+    { title: "Elementuak", author: "Euclides", locator: "I. Liburua, 21. Definizioa", role: "primary" }
+  ]
 };
 
-<Capitular letra="U" />n **triángulo rectángulo** es aquel que contiene un <ConceptLink targetId="perpendicular">ángulo recto</ConceptLink> (de $90^\circ$ o $\pi/2$ radianes). Es la figura geométrica central sobre la que se articula el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> y la trigonometría clásica.
+<Capitular letra="T" />riangelu <ConceptLink targetId="triangulo-rectangulo">angeluzuzena</ConceptLink> <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> bat da <ConceptLink targetId="angulo" isDependency={true}>barne-angelu</ConceptLink> bat zehazki angelu zuzen baten berdina ($90^\circ$ edo $\frac{\pi}{2}$ radian) duena. <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> eta funtzio trigonometrikoak oinarritzen dituen <ConceptLink targetId="poligono">poligonoa</ConceptLink> da.
+
+<Definicion title="">
+  $\triangle ABC$ triangelu bat $C$ erpinean angeluzuzena da baldin eta soilik baldin $C$-ko barne-angelua angelu zuzen batekin <ConceptLink targetId="congruencia">kongruentea</ConceptLink> bada:
+  $$
+  \angle C \cong 90^\circ
+  $$
+  Angelu zuzenaren aurkako $c = AB$ aldea <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> da, eta $a = BC$ zein $b = CA$ aldeak <ConceptLink targetId="cateto">katetoak</ConceptLink> dira.
+</Definicion>
 
 <Separador />
 
-### Elementos Característicos
+### Osagaiak eta ezaugarriak
 
-- **Hipotenusa**: Es el lado opuesto al ángulo recto. Es estrictamente el lado de mayor longitud del triángulo.
-- **Catetos**: Son los dos lados adyacentes que forman el ángulo recto.
-- **Ángulos Agudos Complementarios**: Los otros dos ángulos interiores suman exactamente $90^\circ$ por el <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de ángulos de un triángulo</ConceptLink>.
+- **<ConceptLink targetId="hipotenusa">Hipotenusa</ConceptLink>**: Angelu zuzenaren aurkako aldea. Triangeluaren luzera handieneko aldea da zorrozki.
+- **<ConceptLink targetId="cateto">Katetoak</ConceptLink>**: Beren artean <ConceptLink targetId="perpendicular">perpendikularrak</ConceptLink> diren eta angelu zuzena osatzen duten bi aldeak.
+- **Angelu zorrotz osagarriak**: Gainerako bi angeluak zorrotzak dira eta haien batura $90^\circ$ da ($\alpha + \beta = 90^\circ$).
+
+<Separador />
+
+### Oinarrizko erlazio metrikoa
+
+<Formula>
+  $$
+  a^2 + b^2 = c^2
+  $$
+</Formula>
+
+<ConceptLink targetId="sistema-euclidiano">Geometria euklidearreko</ConceptLink> edozein triangelu angeluzuzen lautotan, katetoen luzeren karratuen batura hipotenusaren luzeraren karratuaren berdina da zehazki.

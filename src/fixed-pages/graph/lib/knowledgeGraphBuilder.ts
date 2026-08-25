@@ -17,7 +17,7 @@ export interface GraphLink {
   target: string | GraphNode;
 }
 
-export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLink[] } {
+export function buildKnowledgeGraphData(lang: string = 'es'): { nodes: GraphNode[]; links: GraphLink[] } {
   const nodes: GraphNode[] = [];
   const links: GraphLink[] = [];
 
@@ -61,7 +61,8 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
   };
 
   // Axiomas
-  db.axioms.forEach((ax, slug) => {
+  db.getAllAxioms(lang).forEach((ax) => {
+    const slug = ax.slug || ax.id;
     nodes.push({ id: slug, name: ax.title, group: 'axioma', val: 10 });
     const branchNode = resolveItemBranch(ax);
     if (branchNode) links.push({ source: slug, target: branchNode });
@@ -70,7 +71,8 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
   });
 
   // Definiciones
-  db.definitions.forEach((def, slug) => {
+  db.getAllDefinitions(lang).forEach((def) => {
+    const slug = def.slug || def.id;
     nodes.push({ id: slug, name: def.title, group: 'definition', val: 8 });
     const branchNode = resolveItemBranch(def);
     if (branchNode) links.push({ source: slug, target: branchNode });
@@ -79,7 +81,8 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
   });
 
   // Teoremas
-  db.theorems.forEach((thm, slug) => {
+  db.getAllTheorems(lang).forEach((thm) => {
+    const slug = thm.slug || thm.id;
     nodes.push({ id: slug, name: thm.title, group: thm.type || 'theorem', val: 10 });
     const branchNode = resolveItemBranch(thm);
     if (branchNode) links.push({ source: slug, target: branchNode });
@@ -93,7 +96,8 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
   });
 
   // Sistemas axiomáticos
-  db.axiomaticSystems.forEach((sys, slug) => {
+  db.getAllAxiomaticSystems(lang).forEach((sys) => {
+    const slug = sys.slug || sys.id;
     nodes.push({ id: slug, name: sys.title, group: 'modelo', val: 10 });
     const branchNode = resolveItemBranch(sys);
     if (branchNode) links.push({ source: slug, target: branchNode });
@@ -102,7 +106,8 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
   });
 
   // Modelos
-  db.models.forEach((model, slug) => {
+  db.getAllModels(lang).forEach((model) => {
+    const slug = model.slug || model.id;
     nodes.push({ id: slug, name: model.title, group: 'modelo', val: 7 });
     if (model.satisfies) {
       if (Array.isArray(model.satisfies)) {
@@ -119,7 +124,7 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
   });
 
   // Conexiones desde demostraciones hacia su parentTheorem (sin nodos demo)
-  db.getAllDemos().forEach(demo => {
+  db.getAllDemos(lang).forEach(demo => {
     if (!demo.parentTheorem) return;
     if (demo.dependencias) demo.dependencias.forEach(dep => links.push({ source: dep, target: demo.parentTheorem! }));
     if (demo.lemmas) demo.lemmas.forEach(lem => links.push({ source: lem, target: demo.parentTheorem! }));
@@ -128,33 +133,34 @@ export function buildKnowledgeGraphData(): { nodes: GraphNode[]; links: GraphLin
   });
 
   // Matemáticos
-  db.mathematicians.forEach((math, slug) => {
+  db.getAllMathematicians(lang).forEach((math) => {
+    const slug = math.slug || math.id;
     nodes.push({ id: slug, name: math.name, group: 'mathematician', val: 6 });
   });
 
   // Enlaces desde sistemas que mencionan matemáticos
-  db.axiomaticSystems.forEach(sys => {
+  db.getAllAxiomaticSystems(lang).forEach(sys => {
     if (sys.authors) {
       sys.authors.forEach((mId: string) => {
         links.push({ source: mId, target: sys.id });
       });
     }
   });
-  db.axioms.forEach(ax => {
+  db.getAllAxioms(lang).forEach(ax => {
     if (ax.authors) {
       ax.authors.forEach(aId => {
         links.push({ source: aId, target: ax.id });
       });
     }
   });
-  db.theorems.forEach(thm => {
+  db.getAllTheorems(lang).forEach(thm => {
     if (thm.authors) {
       thm.authors.forEach(aId => {
         links.push({ source: aId, target: thm.id });
       });
     }
   });
-  db.definitions.forEach(def => {
+  db.getAllDefinitions(lang).forEach(def => {
     if (def.authors) {
       def.authors.forEach(aId => {
         links.push({ source: aId, target: def.id });

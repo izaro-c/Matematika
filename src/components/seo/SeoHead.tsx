@@ -67,13 +67,16 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
   noindex = false,
 }) => {
   const [location] = useLocation();
-  const { lang } = useI18n();
+  const { lang, t } = useI18n();
 
   // Detectar automáticamente si estamos en la ruta de editor
   const isEditorRoute = noindex || location === '/editor' || location.startsWith('/editor/') || /\/[a-z]{2}(-[A-Z]{2})?\/editor(\/|$)/.test(location);
 
-  const fullTitle = title ? `${title} | Matematika` : DEFAULT_SITE_TITLE;
-  const metaDescription = description || DEFAULT_DESCRIPTION;
+  const defaultSiteTitle = t('notFound', 'siteTitle') || DEFAULT_SITE_TITLE;
+  const defaultDescription = t('hero', 'tagline') || DEFAULT_DESCRIPTION;
+
+  const fullTitle = title ? `${title} | Matematika` : defaultSiteTitle;
+  const metaDescription = description || defaultDescription;
   const canonicalUrl = getAbsoluteUrl(location);
   const socialImageUrl = image
     ? (image.startsWith('http') ? image : getAbsoluteUrl(image))

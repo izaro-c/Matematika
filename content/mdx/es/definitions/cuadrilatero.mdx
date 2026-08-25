@@ -1,66 +1,53 @@
 export const metadata = {
-  "id": "cuadrilatero",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Cuadrilátero",
-  "description": "Un cuadrilátero es un polígono de cuatro lados y cuatro vértices sin tres puntos colineales y sin lados que se crucen.",
-  "tags": ["geometria", "poligonos"],
-  "authors": ["euclides"],
-  "links": ["punto", "segmento", "angulo"],
-  "seeAlso": ["paralelogramo"],
-  "hasSimulation": true
+  id: "cuadrilatero",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Cuadrilátero",
+  description: "Polígono plano de cuatro lados y cuatro vértices acotado por cuatro segmentos de recta coplanares que se intersecan únicamente en sus extremos.",
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 19", role: "primary" }
+  ]
 };
 
 import { Cuadrilatero } from '@content/diagrams/Definiciones/Cuadrilatero';
-
 export const Simulation = Cuadrilatero;
 
-<Capitular letra="U" />n <ConceptLink targetId="cuadrilatero" isDependency={false} highlightTarget="poligono" highlightColor="canela">cuadrilátero</ConceptLink> es un <ConceptLink targetId="poligono" isDependency={false}>polígono</ConceptLink> de cuatro <ConceptLink targetId="lado" isDependency={false} highlightTarget="lados" highlightColor="carbon">lados</ConceptLink> y cuatro <ConceptLink targetId="vertice" isDependency={false} highlightTarget="vertices" highlightColor="terracota">vértices</ConceptLink>. Formalmente, un cuadrilátero simple $ABCD$ es la unión de cuatro <ConceptLink targetId="segmento" isDependency={false}>segmentos de recta</ConceptLink> <ConceptLink targetId="coplanares" isDependency={false}>coplanares</ConceptLink> $\overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}$ que forman un contorno cerrado sin que los <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> se crucen salvo en sus <ConceptLink targetId="vertice" isDependency={false} highlightTarget="vertices" highlightColor="terracota">extremos</ConceptLink>, y donde no hay tres <ConceptLink targetId="vertice" isDependency={false} highlightTarget="vertices" highlightColor="terracota">vértices</ConceptLink> <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink>.
+<Capitular letra="U" />n <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> es un <ConceptLink targetId="poligono">polígono</ConceptLink> cerrado compuesto por cuatro lados y cuatro vértices coplanares. Constituye la estructura poligonal básica de cuatro vértices en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
-En el diagrama se mueven los <InteractiveElement target="vertices-moviles" color="terracota">vértices C y D</InteractiveElement>. El <InteractiveElement target="clasificacion" color="musgo">panel de clasificación</InteractiveElement> identifica la clase más específica y las guías magnéticas permiten alcanzarla sin añadir construcciones visibles. Las marcas de <InteractiveElement target="paralelismo" color="pavo">paralelismo</InteractiveElement>, <InteractiveElement target="lados-iguales" color="ocre">igualdad de lados</InteractiveElement> y <InteractiveElement target="angulos-rectos" color="ocre">ángulo recto</InteractiveElement> aparecen únicamente cuando justifican la clasificación.
+<Definicion title="">
+  Un cuadrilátero simple $ABCD$ es el conjunto plano formado por la unión de cuatro <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> de <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $AB, BC, CD, DA$ que no se cruzan salvo en sus extremos y donde no existen tres vértices <ConceptLink targetId="colinealidad">colineales</ConceptLink>:
+  $$
+  ABCD = AB \cup BC \cup CD \cup DA
+  $$
+</Definicion>
 
 <Separador />
 
-### Propiedades angulares
+### Representación visual e interacción
 
-Los cuatro <ConceptLink targetId="angulo" isDependency={false} highlightTarget="angulos" highlightColor="ocre">ángulos interiores</ConceptLink> de cualquier cuadrilátero simple en la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink> suman invariablemente $360^\circ$ ($2\pi$ radianes):
+En la simulación interactiva se aprecian los vértices desplazables <VisualBind element="vertices-moviles" color="terracota">$C$ y $D$</VisualBind>. Las relaciones de <VisualBind element="paralelismo" color="pavo">paralelismo</VisualBind>, <VisualBind element="lados-iguales" color="ocre">igualdad de lados</VisualBind> y <VisualBind element="angulos-rectos" color="musgo">ángulos rectos</VisualBind> permiten identificar dinámicamente las distintas familias poligonales.
+
+<Separador />
+
+### Propiedades angulares e interiores
 
 <Formula>
-  $$ \alpha + \beta + \gamma + \delta = 360^\circ $$
+  $$
+  \sum_{i=1}^{4} \theta_i = 360^\circ
+  $$
 </Formula>
 
-Esta propiedad generaliza el <ConceptLink targetId="teorema-suma-angulos-triangulo" >teorema de la suma de ángulos de un triángulo</ConceptLink> ($180^\circ$) y se demuestra trazando una <ConceptLink targetId="diagonal" isDependency={false} highlightTarget="diagonales" highlightColor="mora">diagonal</ConceptLink> que descompone el <ConceptLink targetId="cuadrilatero" isDependency={false} highlightTarget="poligono" highlightColor="canela">cuadrilátero</ConceptLink> en dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>.
+- **Suma angular interior**: En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, los cuatro <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de todo cuadrilátero simple suman invariablemente $360^\circ$ ($2\pi$ radianes).
+- **Descomposición en triángulos**: Todo cuadrilátero convexo admite una partición en dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> mediante cualquiera de sus dos diagonales.
 
 <Separador />
 
-### Clasificación
+### Clasificación jerárquica
 
-Al igual que los <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>, los <ConceptLink targetId="cuadrilatero" isDependency={false}>cuadriláteros</ConceptLink> se clasifican mediante el <ConceptLink targetId="paralelismo" isDependency={false} highlightTarget="paralelismo" highlightColor="pavo">paralelismo</ConceptLink>, la <ConceptLink targetId="congruencia" isDependency={false} highlightTarget="lados-iguales" highlightColor="ocre">congruencia de lados</ConceptLink> y la medida de sus <ConceptLink targetId="angulo" isDependency={false} highlightTarget="angulos" highlightColor="ocre">ángulos</ConceptLink>. El <InteractiveElement target="clasificacion" color="musgo">clasificador</InteractiveElement> aplica la siguiente jerarquía de menor a mayor especificidad:
-
-| Clase | Lados paralelos | Lados congruentes | Ángulos |
-|---|---|---|---|
-| **<ConceptLink targetId="trapezoide" isDependency={false} highlightTarget="clasificacion" highlightColor="musgo">Trapezoide</ConceptLink>** | Ninguno | — | — |
-| **<ConceptLink targetId="trapecio" isDependency={false} highlightTarget="paralelismo" highlightColor="pavo">Trapecio</ConceptLink>** | Un par | — | — |
-| **<ConceptLink targetId="cometa" isDependency={false} highlightTarget="lados-iguales" highlightColor="ocre">Cometa</ConceptLink>** | Ninguno | Dos pares consecutivos | — |
-| **<ConceptLink targetId="paralelogramo" isDependency={false} highlightTarget="paralelismo" highlightColor="pavo">Paralelogramo</ConceptLink>** | Ambos pares | Lados opuestos congruentes | Opuestos congruentes |
-| **<ConceptLink targetId="rombo" isDependency={false} highlightTarget="lados-iguales" highlightColor="ocre">Rombo</ConceptLink>** | Ambos pares | Los cuatro congruentes | Opuestos congruentes |
-| **<ConceptLink targetId="rectangulo" isDependency={false} highlightTarget="angulos-rectos" highlightColor="ocre">Rectángulo</ConceptLink>** | Ambos pares | Lados opuestos congruentes | Los cuatro rectos |
-| **<ConceptLink targetId="cuadrado" isDependency={false} highlightTarget="clasificacion" highlightColor="musgo">Cuadrado</ConceptLink>** | Ambos pares | <ConceptLink targetId="congruencia" isDependency={false} highlightTarget="lados-iguales" highlightColor="ocre">Los cuatro congruentes</ConceptLink> | <ConceptLink targetId="angulo-recto" isDependency={false} highlightTarget="angulos-rectos" highlightColor="ocre">Los cuatro rectos</ConceptLink> |
-
-<Nota>
-La clasificación es **jerárquica**: todo <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> es también <ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink>, <ConceptLink targetId="rombo" isDependency={false}>rombo</ConceptLink> y <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramo</ConceptLink>. Análogamente, todo <ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink> y todo <ConceptLink targetId="rombo" isDependency={false}>rombo</ConceptLink> es un <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramo</ConceptLink>.
-</Nota>
-
-<Separador />
-
-### Convexidad
-
-Un <ConceptLink targetId="cuadrilatero" isDependency={false}>cuadrilátero</ConceptLink> se denomina <ConceptLink targetId="convexidad" isDependency={false} highlightTarget="poligono" highlightColor="canela">convexo</ConceptLink> si todos sus <ConceptLink targetId="angulo" isDependency={false} highlightTarget="angulos" highlightColor="ocre">ángulos interiores</ConceptLink> miden menos de $180^\circ$ y cada <ConceptLink targetId="diagonal" isDependency={false} highlightTarget="diagonales" highlightColor="mora">diagonal</ConceptLink> queda enteramente en el interior de la figura. Es <ConceptLink targetId="concavidad" isDependency={false}>cóncavo</ConceptLink> si alguno de sus <ConceptLink targetId="angulo" isDependency={false} highlightTarget="angulos" highlightColor="ocre">ángulos interiores</ConceptLink> supera los $180^\circ$. El clasificador interactivo conserva un contorno <ConceptLink targetId="convexidad" isDependency={false}>convexo</ConceptLink> para comparar las subclases sin auto-intersecciones.
-
-<Separador />
-
-### Observaciones
-
-- La <ConceptLink targetId="diagonal" isDependency={false} highlightTarget="diagonales" highlightColor="mora">diagonal</ConceptLink> de un <ConceptLink targetId="cuadrilatero" isDependency={false}>cuadrilátero</ConceptLink> es el <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> que une dos <ConceptLink targetId="vertice" isDependency={false} highlightTarget="vertices" highlightColor="terracota">vértices</ConceptLink> no consecutivos. Todo <ConceptLink targetId="cuadrilatero" isDependency={false}>cuadrilátero</ConceptLink> tiene exactamente dos <ConceptLink targetId="diagonal" isDependency={false} highlightTarget="diagonales" highlightColor="mora">diagonales</ConceptLink>.
-- Las condiciones de existencia de un cuadrilátero simple (no <ConceptLink targetId="colineal" isDependency={false}>colinealidad</ConceptLink> y no intersección de lados) son análogas a las de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>.
-- En <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink>, los cuadriláteros que poseen una <ConceptLink targetId="circunferencia" isDependency={false}>circunferencia</ConceptLink> inscrita se denominan <ConceptLink targetId="cuadrilatero-tangencial" isDependency={false}>tangenciales</ConceptLink>, y los que poseen una <ConceptLink targetId="circunferencia" isDependency={false}>circunferencia</ConceptLink> circunscrita se denominan <ConceptLink targetId="cuadrilatero-ciclico" isDependency={false}>cíclicos</ConceptLink>.
+| Clase de cuadrilátero | Condición de <ConceptLink targetId="paralelas">paralelismo</ConceptLink> | Condición de <ConceptLink targetId="congruencia">congruencia</ConceptLink> |
+|---|---|---|
+| Trapezoide | Sin lados opuestos paralelos | Sin restricciones de congruencia |
+| Trapecio | Un par de lados opuestos paralelos | Sin restricciones |
+| <ConceptLink targetId="paralelogramo">Paralelogramo</ConceptLink> | Dos pares de lados opuestos paralelos | Lados opuestos congruentes |
+| <ConceptLink targetId="cuadrado">Cuadrado</ConceptLink> | Dos pares de lados opuestos paralelos | Cuatro lados congruentes y cuatro ángulos rectos |

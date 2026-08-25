@@ -167,7 +167,7 @@ export function ContentLayout({
       const steps = proofSteps();
       if (steps.length === 0) return;
 
-      const activationLine = window.innerHeight * 0.35;
+      const activationLine = window.innerHeight * 0.5; // Línea de activación a la mitad de la ventana
 
       const firstStepTop = steps[0].getBoundingClientRect().top;
       const lastStepBottom = steps[steps.length - 1].getBoundingClientRect().bottom;

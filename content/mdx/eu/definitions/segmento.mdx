@@ -1,58 +1,49 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "segmento",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Segmentua",
-  "description": "Dados dos puntos A y B, el segmento AB es el conjunto de puntos de la recta AB que están entre A y B, incluyendo los extremos. Es la noción fundamental para la congruencia y la medida.",
-  "tags": ["geometria", "orden", "congruencia"],
-  "authors": ["hilbert"],
-  "links": ["punto", "estar-entre"],
-  "seeAlso": ["semirrecta", "axioma-orden-3", "axioma-orden-4", "axioma-congruencia-2"],
-  "hasSimulation": true
+  id: "segmento",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Zuzenkia",
+  description: "Bi mutur-puntuk mugatutako zuzen baten azpimultzo konektatu eta mugatua. Kongruentzia eta neurri geometrikoa definitzeko oinarrizko elementua da.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §3", role: "primary" }
+  ]
 };
 
 import { Segmento } from '@content/diagrams/Definiciones/Segmento';
 export const Simulation = Segmento;
 
-<Capitular letra="U" />n segmento es la porción de una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> comprendida entre dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, llamados extremos. A diferencia de la recta, el segmento tiene <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> finita y es la unidad básica para las relaciones de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink>.
+<Capitular letra="Z" />uzena infinituarekin alderatuta, <ConceptLink targetId="segmento">zuzenkia</ConceptLink> <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bereko bi <ConceptLink targetId="punto" isDependency={true}>punturik</ConceptLink> mugatutako dimentsio bakarreko irudi geometrikoa da. Hedapen mugatua du eta <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> nahiz <ConceptLink targetId="distancia">metrika</ConceptLink> erlazioak oinarritzen ditu.
+
+<Definicion title="">
+  $l$ zuzen baten gaineko bi $A$ eta $B$ puntu desberdin emanda, $AB$ zuzenkia $A$-k, $B$-k eta <ConceptLink targetId="estar-entre" isDependency={true}>$A * X * B$ bitartekotasun-erlazioa</ConceptLink> betetzen duten $X \in l$ puntu guztiek osatutako <ConceptLink targetId="conjunto">multzoa</ConceptLink> da:
+  $$
+  AB = \{X \in l \mid A * X * B\} \cup \{A, B\}
+  $$
+</Definicion>
 
 <Separador />
 
-### Enunciado Formal
+### Representazio bisuala eta interakzioa
 
-Dados dos puntos <InteractiveElement target="pA" color="musgo">$A$</InteractiveElement> y <InteractiveElement target="pB" color="musgo">$B$</InteractiveElement> sobre una <InteractiveElement target="lineL" color="carbon">recta $l$</InteractiveElement>, el <InteractiveElement target="segmentAB" color="musgo">segmento $AB$</InteractiveElement> es el conjunto de puntos:
-
-<Formula>
-  $$ AB = \{X \in l \mid A * X * B \lor X = A \lor X = B \} $$
-</Formula>
-
-donde $A * X * B$ denota que el punto $X$ incide entre $A$ y $B$ en el sentido de la relación primitiva del <ConceptLink targetId="axioma-orden-1" >axioma II-1</ConceptLink>.
+Simulazio interaktiboan <VisualBind element="segmentAB" color="musgo">$AB$</VisualBind> zuzenkia ikusten da <VisualBind element="lineL" color="carbon">$l$</VisualBind> zuzenaren gainean, <VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pB" color="musgo">$B$</VisualBind> mutur-puntuek zehaztuta. Edozein mutur aldatzean, barne-puntuen multzoa dinamikoki egokitzen da <ConceptLink targetId="estar-entre" isDependency={true}>tartean egon</ConceptLink> erlazioaren arabera.
 
 <Separador />
 
-### Definición Axiomática
+### Oinarritze axiomatikoa
 
-El segmento se construye a partir de la relación de intermediación:
+Zuzenkiaren kontzeptua <ConceptLink targetId="hilbert">Hilberten</ConceptLink> <ConceptLink targetId="axioma-orden-1">ordena-axiomen</ConceptLink> II. taldetik sortzen da formalki:
 
-- **Existencia**: El segmento $AB$ existe como subconjunto de la recta. La existencia de los puntos que lo componen está garantizada por los <ConceptLink targetId={["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"]}>axiomas de incidencia</ConceptLink> que establecen la existencia de la recta, y los <ConceptLink targetId={["axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4"]}>axiomas de orden</ConceptLink> (ej. II-2) que garantizan la existencia de puntos intermedios entre $A$ y $B$.
-- **Densidad**: La propiedad de contener infinitos puntos no es una definición fundamental, sino un teorema derivado (Teorema de Densidad). En modelos geométricos que no asumen la totalidad de los <ConceptLink targetId={["axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4"]}>axiomas de orden</ConceptLink> de Hilbert (como las geometrías finitas), un segmento puede tener un número finito de puntos.
-- **Congruencia**: los segmentos pueden ser congruentes entre sí (<ConceptLink targetId="axioma-congruencia-1">III-1</ConceptLink>). Dado un segmento $AB$ y un punto $A'$ sobre una recta $l'$, existe un único punto $B'$ sobre cada <ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink> de $l'$ tal que $AB \cong A'B'$ (III-1).
-- **Suma**: si $A * B * C$, entonces $AB + BC = AC$ (<ConceptLink targetId="axioma-congruencia-3">III-3</ConceptLink>).
+- **Existentzia**: Barne-puntuen existentzia <ConceptLink targetId="axioma-orden-2" isDependency={true}>II.2 axiomak</ConceptLink> bermatzen du.
+- **Zuzenkien kongruentzia**: Zuzenkiek baliokidetza-erlazio geometrikoak onartzen dituzte, <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axiomak</ConceptLink> araututa.
+- **Gehigarritasuna**: Baldin eta $B$ $A$ eta $C$-ren artean badago ($A * B * C$), $AB$ eta $BC$ zuzenkien albokotasuna $AC$ zuzenkiaren baliokidea da <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>III.3 axiomaren</ConceptLink> bidez.
 
 <Separador />
 
-### Notación
+### Notazio formala eta hitzarmenak
 
-| Notación | Significado |
+| Notazioa | Esanahi matematikoa |
 |---|---|
-| $AB$ | Segmento con extremos $A$ y $B$ |
-| $\overline{AB}$ | Notación alternativa |
-| $\cong$ | Relación de congruencia entre segmentos |
-| $\vert AB \vert$ | Longitud del segmento |
-
-<Separador />
-
-### Observaciones
-
-En <ConceptLink targetId={["sistema-absoluto", "geometria"]} isDependency={false}>geometría absoluta</ConceptLink>, el segmento es un concepto definido a partir de la relación primitiva "estar entre". No requiere la noción de distancia numérica, aunque en el <ConceptLink targetId="modelo-cartesiano" isDependency={false}>modelo cartesiano</ConceptLink> la longitud del segmento $AB$ se calcula como $\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}$.
+| $AB$ | $A$ eta $B$ muturreko zuzenkia |
+| $AB \cong A'B'$ | Bi zuzenkiren arteko <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> geometrikoa |
+| $|AB|$ | Zuzenkiaren <ConceptLink targetId="distancia">luzera</ConceptLink> edo neurri eskalarra |

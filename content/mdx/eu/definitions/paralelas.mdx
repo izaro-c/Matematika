@@ -1,39 +1,36 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "paralelas",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Paralelas",
-  "description": "Dos rectas en un mismo plano son paralelas si no comparten ningún punto (no se intersecan).",
-  "tags": ["geometria", "rectas"],
-  "authors": ["euclides"],
-  "links": ["recta", "plano", "punto"],
-  "seeAlso": ["axioma-paralelas-euclides", "axioma-paralelas-hiperbolico"],
-  "hasSimulation": true
+  id: "paralelas",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Zuzen Paraleloak",
+  description: "Plano beran egonda ebakidura-puntu komun bat bera ere ez duten bi zuzenen arteko erlazioa.",
+  sources: [
+    { title: "Elementuak", author: "Euclides", locator: "I. Liburua, 23. Definizioa", role: "primary" }
+  ]
 };
 
 import { Paralelas } from '@content/diagrams/Definiciones/Paralelas';
-
 export const Simulation = Paralelas;
 
-<Capitular letra="D" />os <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> se denominan paralelas si están contenidas en un mismo <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> y no comparten ningún <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>. Es una relación fundamental para clasificar los sistemas axiomáticos geométricos.
+<Capitular letra="B" />i <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> paraleloak dira <ConceptLink targetId="plano">plano</ConceptLink> beran daudenean eta <ConceptLink targetId="punto">puntu</ConceptLink> komun bat bera ere partekatzen ez dutenean. Sistema axiomatiko geometrikoak sailkatzeko oinarrizko posizio-erlazioa osatzen dute.
+
+<Definicion title="">
+  Bi $l$ eta $m$ zuzen koplanar emanda, paraleloak direla esaten da ($l \parallel m$ notazioaz) baldin eta soilik baldin haien <ConceptLink targetId="interseccion">ebakidura</ConceptLink> <ConceptLink targetId="conjunto">multzo hutsa</ConceptLink> bada:
+  $$
+  l \parallel m \iff l \cap m = \emptyset
+  $$
+</Definicion>
 
 <Separador />
 
-### Enunciado Formal
+### Representazio bisuala eta interakzioa
 
-Dadas dos rectas coplanarias <InteractiveElement target="recta-base" color="musgo">$l$</InteractiveElement> y <InteractiveElement target="recta-paralela" color="musgo">$m$</InteractiveElement>, decimos que son paralelas (denotado $l \parallel m$) si su <ConceptLink targetId="interseccion" isDependency={false}>intersección</ConceptLink> es el <ConceptLink targetId="conjunto-vacio" isDependency={false}>conjunto vacío</ConceptLink>:
-
-<Formula>
-  $$ l \parallel m \iff l \cap m = \emptyset $$
-</Formula>
+Simulazio interaktiboan <VisualBind element="recta-base" color="musgo">$l$</VisualBind> oinarri-zuzena eta kanpoko <VisualBind element="punto-p" color="terracota">$P$</VisualBind> <ConceptLink targetId="punto">puntutik</ConceptLink> igarotzen den <VisualBind element="recta-paralela" color="musgo">$m$</VisualBind> zuzen paraleloa ikusten dira. Puntu hori mugitzean zuzen paraleloa berregituratzen da ebakidurarik ezaren baldintza gordez.
 
 <Separador />
 
-### Existencia: El Quinto Postulado
+### Jokabidea sistema axiomatikoetan
 
-La existencia de rectas paralelas no es inherente a la definición, sino que depende de los axiomas del sistema. En la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>, el <ConceptLink targetId="axioma-paralelas-euclides">quinto postulado</ConceptLink> de Euclides establece que, dada una <InteractiveElement target="recta-base" color="musgo">recta base $l$</InteractiveElement> y un <InteractiveElement target="punto-p" color="mora">punto $P$</InteractiveElement> exterior a ella, existe una **única** <InteractiveElement target="recta-paralela" color="musgo">recta $m$ que pasa por $P$ y es paralela a $l$</InteractiveElement>.
-
-En sistemas no euclidianos:
-- En <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>, existen infinitas rectas que pasan por $P$ y no intersecan a $l$.
-- En <ConceptLink targetId="sistema-eliptico">geometría elíptica</ConceptLink>, no existen líneas paralelas (toda recta interseca a cualquier otra).
+- **<ConceptLink targetId="sistema-euclidiano">Geometria euklidearra</ConceptLink>**: Emandako zuzen batekiko kanpoko puntu batetik zuzen paralelo bakarra igarotzen da (<ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>Playfairren axioma</ConceptLink>).
+- **<ConceptLink targetId="sistema-hiperbolico">Geometria hiperbolikoa</ConceptLink>**: Emandako zuzen batekiko kanpoko puntu batetik infinitu zuzen koplanar igarotzen dira hura ebakitzen ez dutenak (<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={false}>Lobachevskiren axioma</ConceptLink>).

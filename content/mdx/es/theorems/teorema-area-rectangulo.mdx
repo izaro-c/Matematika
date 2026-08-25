@@ -1,46 +1,43 @@
 export const metadata = {
   "id": "teorema-area-rectangulo",
   "type": "teorema",
-  "title": "Área del Rectángulo",
-  "description": "El contenido de un rectángulo es el producto de su base por su altura. Teorema fundamental de la teoría de áreas de Hilbert, que requiere el axioma de Arquímedes para su demostración.",
-  "statement": "Sea R un rectángulo de base b y altura h. Entonces Cont(R) = b · h.",
+  "title": "Área del rectángulo",
+  "description": "El área de un rectángulo es igual al producto de su base por su altura. Teorema central de la teoría de áreas que requiere el axioma de Arquímedes.",
+  "statement": "Sea R un rectángulo de base b y altura h. Entonces Área(R) = b · h.",
   "tags": ["geometria", "areas", "rectangulo"],
   "authors": ["hilbert", "euclides"],
   "difficulty": "intermedio",
-  "demos": ["demo-area-rectangulo"],
   "hasSimulation": false,
-  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
+  "sources": [
+    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §20", role: "primary" },
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 35", role: "secondary" }
+  ]
 };
 
-<Capitular letra="E" />l <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de un <ConceptLink targetId="rectangulo" isDependency={false}>rectángulo</ConceptLink> es el producto de su base por su altura. A diferencia de la <ConceptLink targetId="teorema-area-invariancia"  isDependency={false}>invariancia</ConceptLink> y la <ConceptLink targetId="teorema-area-aditividad"  isDependency={false}>aditividad</ConceptLink>, que son consecuencias casi inmediatas de la definición de contenido, este teorema requiere el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> y constituye el resultado central de la teoría de <ConceptLink targetId="contenido" isDependency={false}>equidescomponibilidad</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>.
+<Capitular letra="E" />l <ConceptLink targetId="area">área</ConceptLink> de un <ConceptLink targetId="rectangulo">rectángulo</ConceptLink> equivale al producto de la longitud de su base por la de su altura. El <ConceptLink targetId="teorema-area-rectangulo">teorema del área del rectángulo</ConceptLink> —diferente de la invariancia y la aditividad de superficies, que se derivan de la noción fundamental de <ConceptLink targetId="poligono">polígono</ConceptLink>— precisa del <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> para abarcar magnitudes inconmensurables, constituyendo la piedra angular de la teoría de áreas de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>.
 
 <Separador />
 
-### Enunciado Formal
+### Enunciado formal
+
+Sea $R$ un <ConceptLink targetId="rectangulo">rectángulo</ConceptLink> de dimensiones lineales $b$ (base) y $h$ (altura). Entonces:
 
 <Formula>
-  $$ \text{Cont}(\text{Rect}(b, h)) = b \cdot h $$
+  $$ \text{Área}(R) = b \cdot h $$
 </Formula>
 
 <Separador />
 
-### Esquema de la Demostración
+### Esquema y estructura deductiva
 
-1. **Caso de lados conmensurables**: Si $b$ y $h$ son múltiplos enteros de una unidad común $u$, el rectángulo se descompone en $n \times m$ cuadrados de lado $u$. Por aditividad, $\text{Cont} = (n \cdot u)(m \cdot u) = b \cdot h$.
+La demostración se divide en dos etapas según la conmensurabilidad de las dimensiones:
 
-2. **Caso de lados inconmensurables**: Si $b$ y $h$ no tienen medida común, se usan aproximaciones por exceso y por defecto con rectángulos de lados racionales. El <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> garantiza que estas aproximaciones convergen al valor $b \cdot h$.
-
-<Separador />
-
-### Consecuencias
-
-Del área del rectángulo y la <ConceptLink targetId="teorema-area-aditividad" >aditividad</ConceptLink> se deducen todas las demás fórmulas de áreas:
-- **Área del triángulo**: $\text{Cont}(\triangle) = \frac{b \cdot h}{2}$ (<ConceptLink targetId="teorema-area-triangulo" >teorema del área del triángulo</ConceptLink>)
-- **Área del paralelogramo**: $b \cdot h$
-- **Teorema de Pitágoras**: las demostraciones de <ConceptLink targetId="demo-pitagoras-euclides" isDependency={false}>Euclides</ConceptLink> y por <ConceptLink targetId="demo-pitagoras-areas" isDependency={false}>áreas</ConceptLink> usan este teorema como base
+- **Magnitudes conmensurables**: Si la base $b$ y la altura $h$ son múltiplos enteros de una unidad común $u$, el rectángulo se subdivide de forma exacta en una cuadrícula de $n \times m$ cuadrados unitarios de área $u^2$. Por <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>aditividad del área</ConceptLink>, el área total resulta $(n \cdot u)(m \cdot u) = b \cdot h$.
+- **Magnitudes inconmensurables**: Si $b$ y $h$ no poseen una medida común, se efectúa un encuadramiento mediante aproximaciones por defecto y por exceso empleando rectángulos de lados racionales. El <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> garantiza la convergencia del área al valor exacto $b \cdot h$.
 
 <Separador />
 
-### Observaciones
+### Observaciones y aplicaciones
 
-Este teorema es el análogo en el sistema de Hilbert a la Proposición I.35 de los *Elementos* de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> («los paralelogramos sobre la misma base y entre las mismas paralelas son iguales»). La diferencia fundamental es que Euclides usaba la noción común de «cosas que coinciden son iguales», mientras que Hilbert demuestra rigurosamente la fórmula $b \cdot h$ a partir de la equidescomponibilidad y el axioma de Arquímedes.
+- A partir del área del rectángulo se deducen las fórmulas de área para el <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> y para el <ConceptLink targetId="teorema-area-triangulo">triángulo</ConceptLink> ($\text{Área} = \frac{1}{2} b \cdot h$).
+- Proporciona el soporte analítico necesario para la demostración del <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> y el <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink>.

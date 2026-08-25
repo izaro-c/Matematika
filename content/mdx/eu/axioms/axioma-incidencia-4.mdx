@@ -1,55 +1,35 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "axioma-incidencia-4",
-  "type": "axioma",
-  "title": "Axioma I-4 (Incidencia)",
-  "description": "Por tres puntos no colineales pasa exactamente un único plano.",
-  "statement": "Dados tres puntos A, B, C no colineales, existe un único plano π que los contiene.",
-  "authors": ["hilbert"],
-  "axiomSystem": "sistema-absoluto",
-  "sources": [
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  id: "axioma-incidencia-4",
+  lang: "eu",
+  type: "axioma",
+  title: "I.4 Axioma (Planoaren Existentzia eta Bakartasuna)",
+  description: "Zuzen beran ez dauden hiru puntutarako, plano bakarra existitzen da hiru puntuak barne hartzen dituena.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
   ],
-  "hasSimulation": true,
-  "links": ["punto", "plano", "incidencia"]
+  hasSimulation: true
 };
 
 import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 
-<Capitular letra="P" />or tres <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> que no son <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink> pasa siempre exactamente un único <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink>. Este cuarto <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> hace por las <ConceptLink targetId="superficie" isDependency={false}>superficies</ConceptLink> lo mismo que el <ConceptLink targetId="axioma-incidencia-1" >axioma I-1</ConceptLink> hace por las líneas, definiendo la base sólida para estructurar el <ConceptLink targetId="espacio-tridimensional" isDependency={false}>espacio tridimensional</ConceptLink>.
+<Capitular letra="L" />augarren intzidentzia-<ConceptLink targetId="axioma-incidencia-4">axiomak</ConceptLink> bakartasunaren zehaztapen-printzipioa transferitzen du dimentsio bakarreko espaziotik bi dimentsiokora. <ConceptLink targetId="colinealidad">Lerrokide</ConceptLink> ez diren hiru <ConceptLink targetId="punto">puntuk</ConceptLink> <ConceptLink targetId="plano">plano</ConceptLink> bakar bat finkatzen dutela ezartzen du.
 
-<Separador />
-
-### Enunciado Formal
-
-<Formula>
+<Definicion title="">
+  <ConceptLink targetId="recta">Zuzen</ConceptLink> beran ez dauden hiru $A, B, C \in \mathcal{P}$ <ConceptLink targetId="punto">puntu</ConceptLink> emanda, $\alpha \in \mathcal{E}$ <ConceptLink targetId="plano">plano</ConceptLink> bakarra existitzen da non $A, B, C$ $\alpha$-n intzidentzialak diren:
   $$
-  \begin{aligned}
-  &\forall A, B, C \text{ (no colineales)} \implies \\
-  &\exists! \pi \ (A, B, C \in \pi)
-  \end{aligned}
+  \forall A, B, C \text{ (ez-lerrokideak)} \implies \exists! \alpha \in \mathcal{E} \ (A \in \alpha \land B \in \alpha \land C \in \alpha)
   $$
-</Formula>
-
-<Nota>
-  El plano único determinado por estos tres puntos se denota comúnmente como $\pi(A,B,C)$ o simplemente utilizando paréntesis $(ABC)$.
-</Nota>
+</Definicion>
 
 <Separador />
 
-### Discusión
+### Representazio bisuala eta interakzioa
 
-Así como dos puntos determinan unívocamente una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>, se necesitan exactamente <InteractiveElement target="pA" color="terracota">tres</InteractiveElement> <InteractiveElement target="pB" color="terracota">puntos</InteractiveElement> <InteractiveElement target="pC" color="terracota">no alineados</InteractiveElement> para fijar de forma única un <InteractiveElement target="polygonABC" color="canela">plano bidimensional</InteractiveElement>.
-
-La condición de que sean *no colineales* es el requisito fundamental: si los tres puntos estuvieran alineados sobre la misma recta, existirían infinitos planos rotando alrededor de ellos (como las páginas de un libro girando sobre su lomo), y perderíamos la propiedad de la unicidad.
-
-Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> formaliza al plano como un objeto geométrico abstracto por derecho propio, ubicándolo en la base del universo <ConceptLink targetId="euclides" isDependency={false}>euclidiano</ConceptLink> junto con el punto y la recta.
+Simulazio interaktiboan, lerrokideak ez diren <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> erpinek <VisualBind element="polygonABC" color="carbon">$\alpha(ABC)$</VisualBind> espazio-planoa zehazten dute modu bakarrean.
 
 <Separador />
 
-### Observaciones
+### Esanahi espaziala
 
-- Los axiomas del I-4 en adelante (que involucran planos y dimensiones adicionales) no se aplican cuando nos restringimos estrictamente al estudio de la <ConceptLink targetId="geometria-plana" isDependency={false}>geometría plana en 2D</ConceptLink>, ya que en ella se asume por defecto la existencia de un único plano universal.
-- Su utilidad es clave al estudiar la <ConceptLink targetId="geometria-espacial" isDependency={false}>geometría espacial o tridimensional</ConceptLink>. En ella, el axioma I-4 nos permite interceptar, inclinar y definir diferentes superficies, constituyendo el soporte estructural de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> del espacio.
+<ConceptLink targetId="colinealidad">Ez-lerrokidetasunaren</ConceptLink> baldintza bakartasunaren eskakizuna da: hiru <ConceptLink targetId="punto">puntuak</ConceptLink> <ConceptLink targetId="recta">zuzen</ConceptLink> beraren gainean kokatuta baleude, infinitu <ConceptLink targetId="plano">plano</ConceptLink> egongo lirateke haiek barne hartzen dituztenak. Postulatu honek planoaren kontzeptua finkatzen du hiru dimentsioko geometrian.

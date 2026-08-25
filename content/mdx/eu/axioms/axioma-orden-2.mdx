@@ -1,45 +1,35 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "axioma-orden-2",
-  "type": "axioma",
-  "title": "Axioma II-2 (Orden)",
-  "description": "Dados dos puntos distintos A y C, existe al menos un punto B sobre la recta AC que está entre A y C.",
-  "statement": "Para cualquier par de puntos distintos A y C, existe al menos un punto B tal que A * B * C.",
-  "authors": ["hilbert"],
-  "axiomSystem": "sistema-absoluto",
-  "sources": [
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  id: "axioma-orden-2",
+  lang: "eu",
+  type: "axioma",
+  title: "II.2 Axioma (Tarteko Puntuen Existentzia)",
+  description: "Bi A eta C puntu desberdin emanda, gutxienez B puntu bat existitzen da AC zuzenean A eta C-ren artean dagoena.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §3", role: "primary" }
   ],
-  "hasSimulation": true,
-  "links": ["punto", "estar-entre"]
+  hasSimulation: true
 };
 
 import { Order2 } from '@content/diagrams/Axiomas/Order2';
 export const Simulation = Order2;
 
-<Capitular letra="D" />ados dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos, siempre existe al menos un punto intermedio entre ellos. Este <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> garantiza la densidad topológica de la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>: entre dos posiciones cualesquiera siempre podemos encontrar una tercera.
+<Capitular letra="B" />igarren ordena-<ConceptLink targetId="axioma-orden-2">axiomak</ConceptLink> zuzen geometrikoaren gaineko dentsitate lineala bermatzen du. Bi posizio desberdinen artean beti tarteko puntu bat aurki daitekeela ezartzen du.
 
-<Separador />
-
-### Enunciado Formal
-
-<Formula>
+<Definicion title="">
+  Edozein bi $A, C \in \mathcal{P}$ puntu desberdinetarako, gutxienez $B \in \mathcal{P}$ puntu bat existitzen da non $B$ $A$ eta $C$-ren artean kokatzen den:
   $$
   \forall A, C \ (A \neq C) \implies \exists B \ (A * B * C)
   $$
-</Formula>
+</Definicion>
 
 <Separador />
 
-### Discusión
+### Representazio bisuala eta interakzioa
 
-Mientras que el <ConceptLink targetId="axioma-orden-1"  isDependency={false}>axioma II-1</ConceptLink> regulaba cómo funcionaba la idea de "estar en medio", el <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> II-2 decreta matemáticamente que esta situación es siempre posible. Toma dos puntos cualquiera (<InteractiveElement target="pA" color="terracota">A</InteractiveElement> y <InteractiveElement target="pC" color="terracota">C</InteractiveElement>); el axioma te promete que siempre habrá un punto <InteractiveElement target="pB" color="ocre">B</InteractiveElement> viviendo exactamente entre ellos.
-
-Al aplicar esta regla infinitas veces (encontrando un punto entre A y B, y luego otro entre ese y A, y así eternamente), descubrimos que la recta no es una sucesión discreta de puntos saltando como píxeles, sino una amalgama continua.
+Simulazio interaktiboan <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> mutur-puntuak ikusten dira, $A * B * C$ erlazioak ezarritako <VisualBind element="pB" color="ocre">$B$</VisualBind> tarteko puntuarekin batera.
 
 <Separador />
 
-### Observaciones
+### Dentsitatea eta jarraitutasuna
 
-- Aunque este axioma garantiza que hay infinidad de puntos atrapados entre dos extremos, no asegura que la recta esté "llena" sin agujeros (por ejemplo, el conjunto de los <ConceptLink targetId="numeros-racionales" isDependency={false}>números racionales</ConceptLink> cumple esto perfectamente pero sigue teniendo agujeros). Para tapar esos agujeros se necesitarán los <ConceptLink targetId="axiomas-continuidad" isDependency={false}>axiomas de continuidad</ConceptLink>.
+Postulatu honen behin eta berrizko aplikazioak zuzenki bakoitzak barne-puntu infinituak dituela frogatzen du. Zuzen geometrikoak egitura trinkoa duela bermatzen du, posizio-multzo diskretu bat izatea ekidinez.

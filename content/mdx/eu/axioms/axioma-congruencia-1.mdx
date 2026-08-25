@@ -1,51 +1,35 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "axioma-congruencia-1",
-  "type": "axioma",
-  "title": "Axioma III-1 (Congruencia)",
-  "description": "Dado un segmento AB y una semirrecta con origen en C, existe un único punto D sobre la semirrecta tal que AB es congruente con CD.",
-  "statement": "Si AB es un segmento y r una semirrecta con origen C, entonces existe un único punto D ∈ r tal que AB ≅ CD.",
-  "tags": ["geometria", "congruencia", "geometria-absoluta"],
-  "authors": ["hilbert"],
-  "axiomSystem": "sistema-absoluto",
-  "sources": [
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  id: "axioma-congruencia-1",
+  lang: "eu",
+  type: "axioma",
+  title: "III.1 Axioma (Zuzenkiak Garraiatzea)",
+  description: "AB zuzenki bat eta C jatorria duen erruzuzen bat emanda, erruzuzenean D puntu bakarra existitzen da non AB eta CD kongruenteak diren.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §5", role: "primary" }
   ],
-  "hasSimulation": true,
-  "links": ["punto", "recta", "congruencia"]
+  hasSimulation: true
 };
 
 import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
 export const Simulation = Congruence1;
 
-<Capitular letra="D" />
-ado un <InteractiveElement target="AB" color="ocre"><ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> $AB$</InteractiveElement> y una <InteractiveElement target="r" color="pavo"><ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink> $r$</InteractiveElement>, existe un único <InteractiveElement target="pD" color="terracota"><ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> $D$</InteractiveElement> sobre dicha semirrecta que determina un <InteractiveElement target="CD" color="terracota">segmento $CD$</InteractiveElement> <ConceptLink targetId="congruencia" isDependency={false}>congruente</ConceptLink> al original. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> formaliza el transporte <ConceptLink targetId="isometria" isDependency={false}>isométrico</ConceptLink> de distancias, operación clásica realizada en la antigüedad mediante el uso del <ConceptLink targetId="compas" isDependency={false}>compás</ConceptLink>.
+<Capitular letra="K" />ongruentziarako lehen <ConceptLink targetId="axioma-congruencia-1">axiomak</ConceptLink> magnitude metrikoak espazioan garraiatzeko aukera formalizatzen du. Edozein <ConceptLink targetId="segmento">zuzenki</ConceptLink> emandako erruzuzen baten jatorritik abiatuta modu bakarrean garraia daitekeela bermatzen du.
+
+<Definicion title="">
+  $AB$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> bat eta $C$ <ConceptLink targetId="punto">puntuan</ConceptLink> jatorria duen $r$ erruzuzen bat emanda, $r$ erruzuzenean $D$ puntu bakarra existitzen da non $AB$ zuzenkia $CD$ zuzenkiarekin <ConceptLink targetId="congruencia">kongruentea</ConceptLink> den:
+  $$
+  \forall AB, \forall r_C \implies \exists! D \in r_C \ (AB \cong CD)
+  $$
+</Definicion>
 
 <Separador />
 
-### Enunciado Formal
+### Representazio bisuala eta interakzioa
 
-<Formula>
-  $$ \forall A, B, C \; \forall r_{C} \; \exists! D \in r_{C} : \overline{AB} \cong \overline{CD} $$
-</Formula>
-
-<Nota>
-  $r_{C}$ denota una semirrecta con origen en $C$. La relación $\cong$ indica congruencia geométrica.
-</Nota>
+Simulazio interaktiboan jatorrizko <VisualBind element="AB" color="ocre">$AB$</VisualBind> zuzenkia eta <VisualBind element="pD" color="terracota">$C$</VisualBind> jatorria duen <VisualBind element="r" color="pavo">$r$</VisualBind> helburu-erruzuzena ikusten dira. Garraitutako <VisualBind element="pD" color="terracota">$D$</VisualBind> puntuak <VisualBind element="CD" color="terracota">$CD$</VisualBind> zuzenkia zehazten du baliokidetza rigidoa gordez.
 
 <Separador />
 
-### Discusión
+### Esanahia sistema axiomatikoan
 
-Este axioma establece la noción primitiva de congruencia de segmentos. La congruencia no se define en términos de <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> numérica (que aún no existe en la teoría), sino como una relación primitiva que satisface estos axiomas.
-
-La <ConceptLink targetId="unicidad" isDependency={false}>unicidad</ConceptLink> es esencial: asegura que la operación de transportar un segmento sobre una semirrecta está bien definida y produce un resultado único. Esto es análogo a la unicidad de la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> por dos puntos (<ConceptLink targetId="axioma-incidencia-1"  isDependency={false}>axioma I-1</ConceptLink>).
-
-Nótese que la semirrecta proporciona tanto el origen $C$ como una <ConceptLink targetId="direccion" isDependency={false}>dirección</ConceptLink>: el punto $D$ debe estar sobre la semirrecta, no simplemente sobre la recta que la contiene. Esto elimina la ambigüedad de elegir entre dos posibles puntos (uno a cada lado de $C$).
-
-<Separador />
-
-### Observaciones
-
-Este axioma corresponde a la primera noción común de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> ("cosas iguales a una misma cosa son iguales entre sí") y al <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> 3 de Euclides (transportar un segmento). En la <ConceptLink targetId="sistema-axiomatico" isDependency={false}>axiomática</ConceptLink> moderna, permite definir la comparación de segmentos: AB < CD si AB ≅ CE para algún punto E entre C y D.
+Postulatu honek <ConceptLink targetId="segmento">zuzenkien</ConceptLink> arteko <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> oinarrizko nosioa finkatzen du zenbaki-neurketa jarraituetara jo gabe. Luzeraren kontserbazioa bermatzen du translazio-eragiketa rigidoetan.

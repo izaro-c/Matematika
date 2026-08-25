@@ -169,8 +169,8 @@ export const CodexLayout: React.FC<CodexLayoutProps> = ({
       const firstStepTop = steps[0]?.getBoundingClientRect().top ?? 0;
       const isMobile = window.innerWidth < 1024;
       const activationLine = isMobile && hasDiagram && isDiagramExpanded
-        ? window.innerHeight * 0.46
-        : window.innerHeight * 0.35;
+        ? window.innerHeight * 0.6
+        : window.innerHeight * 0.5;
 
       if (firstStepTop > activationLine) {
         // Scroll está en el enunciado

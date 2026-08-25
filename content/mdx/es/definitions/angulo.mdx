@@ -1,54 +1,51 @@
 export const metadata = {
-  "id": "angulo",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Ángulo",
-  "description": "Dadas dos semirrectas con el mismo origen, el ángulo es la figura formada por ambas. La congruencia de ángulos es una relación primitiva definida por los axiomas de congruencia.",
-  "tags": ["geometria", "congruencia", "medida"],
-  "authors": ["hilbert"],
-  "links": ["punto", "semirrecta"],
-  "seeAlso": ["segmento"],
-  "hasSimulation": true
+  id: "angulo",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Ángulo",
+  description: "Figura geométrica formada por dos semirrectas no colineales que comparten un mismo punto de origen denominado vértice.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" },
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 8", role: "secondary" }
+  ]
 };
 
 import { Angulo } from '@content/diagrams/Definiciones/Angulo';
 export const Simulation = Angulo;
 
-<Capitular letra="E" />
-l ángulo es la figura formada por dos <ConceptLink targetId="semirrecta" isDependency={false}>semirrectas</ConceptLink> que comparten el mismo origen (vértice). Es uno de los conceptos centrales de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>, fundamental para la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink>, la semejanza y la trigonometría.
+<Capitular letra="E" />l <ConceptLink targetId="angulo">ángulo</ConceptLink> es la configuración espacial delimitada por dos semirrectas coplanares que convergen en un único origen común. Constituye uno de los conceptos fundamentales para estructurar la <ConceptLink targetId="congruencia">congruencia</ConceptLink>, la <ConceptLink targetId="semejanza">semejanza</ConceptLink> y la trigonometría.
+
+<Definicion title="">
+  Dadas dos semirrectas $OA^{\rightarrow}$ y $OB^{\rightarrow}$ que inciden sobre el mismo origen $O$ y no yacen en una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink>, el ángulo $\angle AOB$ es el par no ordenado formado por ambas semirrectas:
+  $$
+  \angle AOB = \{OA^{\rightarrow}, OB^{\rightarrow}\}
+  $$
+  El <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $O$ es el vértice del ángulo y las semirrectas $OA^{\rightarrow}$ y $OB^{\rightarrow}$ son sus lados.
+</Definicion>
 
 <Separador />
 
-### Enunciado Formal
+### Representación visual e interacción
 
-Dadas dos <ConceptLink targetId="semirrecta" isDependency={false}>semirrectas</ConceptLink> <InteractiveElement target="rayOA" color="terracota">$OA^{\rightarrow}$</InteractiveElement> y <InteractiveElement target="rayOB" color="terracota">$OB^{\rightarrow}$</InteractiveElement> con el mismo origen $O$, el ángulo $\angle AOB$ es la figura formada por la unión de ambas. El <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> <InteractiveElement target="pO" color="mora">$O$</InteractiveElement> se denomina vértice y las semirrectas constituyen los lados del ángulo. El <InteractiveElement target="angleArc" color="terracota">arco</InteractiveElement> interior denota su abertura.
-
-<Formula>
-  $$ \angle AOB = \{OA^{\rightarrow}, OB^{\rightarrow}\} $$
-</Formula>
+En la simulación interactiva se observa la semirrecta <VisualBind element="rayOA" color="terracota">$OA^{\rightarrow}$</VisualBind> y la semirrecta <VisualBind element="rayOB" color="terracota">$OB^{\rightarrow}$</VisualBind> con el vértice común <VisualBind element="pO" color="pavo">$O$</VisualBind>. El arco interior <VisualBind element="angleArc" color="musgo">$\angle AOB$</VisualBind> denota su abertura angular relativa en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Separador />
 
-### Definición Axiomática
+### Fundamentación axiomática en Hilbert
 
-En el sistema de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>, la congruencia de ángulos se define axiomáticamente:
+En la axiomatización de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, la igualdad y medida de ángulos se estructura mediante los <ConceptLink targetId="congruencia">axiomas de congruencia</ConceptLink>:
 
-- **Transporte**: dado un ángulo $\angle AOB$ y una semirrecta $O'A'^{\rightarrow}$, existe una única semirrecta $O'B'^{\rightarrow}$ a cada lado de $O'A'^{\rightarrow}$ tal que $\angle AOB \cong \angle A'O'B'$ (<ConceptLink targetId="axioma-congruencia-4" >III-4</ConceptLink>).
-- **Criterio SAS**: si dos lados y el ángulo comprendido son congruentes, los <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> son congruentes (<ConceptLink targetId="axioma-congruencia-5" >III-5</ConceptLink>).
+- **Transporte de ángulos**: Dado un ángulo $\angle AOB$ y una semirrecta $O'A'^{\rightarrow}$, existe una única semirrecta $O'B'^{\rightarrow}$ a cada lado del plano tal que $\angle AOB \cong \angle A'O'B'$ (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma III.4</ConceptLink>).
+- **Criterio SAS**: La congruencia de dos lados y el ángulo comprendido garantiza la congruencia total de los <ConceptLink targetId="triangulo">triángulos</ConceptLink> (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axioma III.5</ConceptLink>).
 
 <Separador />
 
-### Clasificación
+### Clasificación métrica
 
-| Tipo | Descripción | Medida | Radianes |
+| Tipo | Definición geométrica | Medida angular ($\text{grados}$) | Medida ($\text{radianes}$) |
 |---|---|---|---|
-| Agudo | Menor que un recto | $< 90^\circ$ | $< \frac{\pi}{2}$ |
-| Recto | Igual a su suplementario | $90^\circ$ | $\frac{\pi}{2}$ |
-| Obtuso | Mayor que un recto | $> 90^\circ$ | $> \frac{\pi}{2}$ |
-| Llano | Los lados son semirrectas opuestas | $180^\circ$ | $\pi$ |
-
-<Separador />
-
-### Observaciones
-
-En <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, un ángulo recto es aquel congruente con su suplementario. El <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>quinto postulado</ConceptLink> establece que si una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> al cortar a otras dos forma ángulos internos menores que un recto, las rectas se cortan. En <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>, los ángulos de un triángulo suman menos de $180^\circ$; en <ConceptLink targetId="sistema-eliptico">geometría elíptica</ConceptLink>, más de $180^\circ$.
+| Agudo | Menor que un ángulo recto | $\theta < 90^\circ$ | $\theta < \frac{\pi}{2}$ |
+| Recto | Congruente con su adyacente <ConceptLink targetId="angulos-suplementarios">suplementario</ConceptLink> | $\theta = 90^\circ$ | $\theta = \frac{\pi}{2}$ |
+| Obtuso | Mayor que un ángulo recto | $90^\circ < \theta < 180^\circ$ | $\frac{\pi}{2} < \theta < \pi$ |
+| Llano | Formado por dos semirrectas opuestas | $\theta = 180^\circ$ | $\theta = \pi$ |

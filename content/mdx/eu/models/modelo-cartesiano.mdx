@@ -1,61 +1,49 @@
 export const metadata = {
-  "lang": "eu",
   "id": "modelo-cartesiano",
   "type": "modelo",
-  "title": "Plano Cartesiano",
-  "description": "El modelo analítico estándar para la geometría euclídea bidimensional, utilizando pares ordenados de números reales.",
+  "title": "Plano kartesiarra",
+  "description": "Bi dimentsioko geometria eukliderako modelo analitiko estandarra, zenbaki errealen bikote ordenatuak erabiliz.",
   "satisfies": ["sistema-euclidiano", "sistema-absoluto"],
-  "axioms_verified": [
-    "axioma-incidencia-1",
-    "axioma-incidencia-2",
-    "axioma-incidencia-3",
-    "axioma-orden-1",
-    "axioma-orden-2",
-    "axioma-orden-3",
-    "axioma-orden-4",
-    "axioma-congruencia-1",
-    "axioma-congruencia-2",
-    "axioma-congruencia-3",
-    "axioma-congruencia-4",
-    "axioma-congruencia-5",
-    "axioma-arquimedes",
-    "axioma-completitud",
-    "axioma-paralelas-euclides"
-  ],
-  "tags": ["geometria", "modelo", "euclidiana", "analitica"],
-  "hasDiagram": true,
-  "dependencias": ["axioma-paralelas-euclides"]
+  "hasSimulation": true
 };
 
 import { ModeloCartesiano } from '@content/diagrams/Models/ModeloCartesiano';
 export const Diagram = ModeloCartesiano;
 
-<Capitular letra="E" />
-l <ConceptLink targetId="modelo-cartesiano" isDependency={false}>Plano Cartesiano</ConceptLink> $\mathbb{R}^2$ constituye el <ConceptLink targetId="modelo" isDependency={false}>modelo</ConceptLink> analítico canónico para la <ConceptLink targetId={["sistema-euclidiano", "geometria-euclidiana"]}>geometría euclídea</ConceptLink>. Al establecer una <ConceptLink targetId="biyeccion" isDependency={false}>biyección</ConceptLink> rigurosa entre las variedades geométricas y los pares ordenados formados por <ConceptLink targetId="numero-real" isDependency={false}>números reales</ConceptLink>, propulsó la completa algebrización de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría</ConceptLink>, un logro monumental cristalizado analíticamente durante el siglo XVII por <ConceptLink targetId="descartes" isDependency={false}>Descartes</ConceptLink> y <ConceptLink targetId="fermat" isDependency={false}>Fermat</ConceptLink>.
+<Capitular letra="P" />lano kartesiarra, $\mathbb{R}^2$, <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometria euklidearrerako</ConceptLink> <ConceptLink targetId="modelo-cartesiano" isDependency={false}>modelo</ConceptLink> analitiko kanonikoa da. Varietate geometrikoen eta zenbaki errealen bikote ordenatuen arteko bijekzio zorrotza ezarriz, geometriaren aljebraizazio osoa bultzatu zuen, XVII. mendean René Descartesek eta Pierre de Fermatek analitikoki kristalizatutako lorpen monumentala.
 
 <Separador />
 
-### Definición del Modelo
+### Moduluaren definizioa
 
-En este <ConceptLink targetId="modelo" isDependency={false}>modelo</ConceptLink> analítico, los elementos geométricos primitivos se definen algebraicamente mediante la <ConceptLink targetId="teoria-de-conjuntos" isDependency={false}>teoría de conjuntos</ConceptLink> y el cuerpo de los <ConceptLink targetId="numero-real" isDependency={false}>números reales</ConceptLink> $\mathbb{R}$:
+Modelo analitiko honetan, oinarrizko elementu geometrikoak aljebraikoki definitzen dira multzo-teoriaren eta $\mathbb{R}$ <ConceptLink targetId="numero-real" isDependency={false}>zenbaki errealen</ConceptLink> gorputzaren bidez:
 
-- **<ConceptLink targetId="punto" isDependency={false}>Puntos</ConceptLink>**: Son <ConceptLink targetId="par-ordenado" isDependency={false}>pares ordenados</ConceptLink> $(x, y) \in \mathbb{R}^2$. Por ejemplo, <InteractiveElement target="A" color="terracota">$A$</InteractiveElement>, <InteractiveElement target="B" color="terracota">$B$</InteractiveElement> y <InteractiveElement target="P" color="ocre">$P$</InteractiveElement> son puntos del plano que pueden desplazarse libremente.
-- **<ConceptLink targetId="recta" isDependency={false}>Rectas</ConceptLink>**: Son los <ConceptLink targetId="conjunto" isDependency={false}>conjuntos</ConceptLink> de <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> $(x, y)$ que satisfacen una <ConceptLink targetId="ecuacion-lineal" isDependency={false}>ecuación lineal</ConceptLink> de la forma $ax + by + c = 0$, donde $a, b \in \mathbb{R}$ no son simultáneamente nulos. La <InteractiveElement target="lineAB" color="musgo">recta $l$</InteractiveElement> pasa por <InteractiveElement target="A" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="B" color="terracota">$B$</InteractiveElement>; la <InteractiveElement target="parallelP" color="canela">recta $l'$</InteractiveElement> es paralela a $l$ y pasa por <InteractiveElement target="P" color="ocre">$P$</InteractiveElement>.
-- **<ConceptLink targetId="incidencia" isDependency={false}>Incidencia</ConceptLink>**: Un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> pertenece a una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> si sus <ConceptLink targetId="coordenada" isDependency={false}>coordenadas</ConceptLink> satisfacen la <ConceptLink targetId="ecuacion" isDependency={false}>ecuación</ConceptLink> de dicha <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>.
-- **<ConceptLink targetId="distancia" isDependency={false}>Distancia</ConceptLink>**: Dados dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> <InteractiveElement target="A" color="terracota">$A$</InteractiveElement> y <InteractiveElement target="B" color="terracota">$B$</InteractiveElement>, la <InteractiveElement target="distAB" color="mora">distancia euclídea $d(A, B)$</InteractiveElement> se calcula como $d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}$.
-- **<ConceptLink targetId="orden" isDependency={false}>Orden</ConceptLink>**: Un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> $B$ está *entre* $A$ y $C$ si y solo si $d(A, B) + d(B, C) = d(A, C)$.
+- **<ConceptLink targetId="punto" isDependency={false}>Puntuak</ConceptLink>**: $(x, y) \in \mathbb{R}^2$ bikote ordenatuak dira. Adibidez, <VisualBind element="A" color="terracota">$A$</VisualBind>, <VisualBind element="B" color="terracota">$B$</VisualBind> eta <VisualBind element="P" color="ocre">$P$</VisualBind> puntuek planoko elementuak adierazten dituzte.
+- **<ConceptLink targetId="recta" isDependency={false}>Zuzenak</ConceptLink>**: $ax + by + c = 0$ formako <ConceptLink targetId="ecuacion-lineal" isDependency={false}>ekuazio lineala</ConceptLink> betetzen duten puntu-multzoak dira, non $a, b \in \mathbb{R}$ ez diren batera nulua. <VisualBind element="lineAB" color="musgo">$l$ zuzena</VisualBind> $A$ eta $B$ puntuetatik igarotzen da, eta <VisualBind element="parallelP" color="pavo">$l'$ zuzena</VisualBind> $l$-rekiko paraleloa da eta $P$ puntua dauka.
+- **<ConceptLink targetId="incidencia">Inzidentzia</ConceptLink>**: Puntu bat zuzen baten barnean dago baldin eta soilik haren koordenatuek zuzen horren ekuazioa betetzen badute.
+- **Distantzia**: $A$ eta $B$ bi puntu emanda, <VisualBind element="distAB" color="carbon">$d(A, B)$ <ConceptLink targetId="distancia">distantzia euklideoa</ConceptLink></VisualBind> honrela kalkulatzen da:
+
+<Formula>
+  $$ d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2} $$
+</Formula>
+
+- **Ordena**: $B$ puntua $A$ eta $C$-ren <ConceptLink targetId="estar-entre">*artean*</ConceptLink> dago baldin eta soilik $d(A, B) + d(B, C) = d(A, C)$ bada.
 
 <Separador />
 
-### Verificación de Axiomas
+### Axiomen egiaztapena
 
-El <ConceptLink targetId="modelo-cartesiano" isDependency={false}>plano cartesiano</ConceptLink> satisface todos los <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink> de la <ConceptLink targetId={["sistema-euclidiano", "geometria-euclidiana"]}>geometría euclídea</ConceptLink>:
+Plano kartesiarrak osorik betetzen du Hilbertek geometria eukliderrarako proposatutako sistema axiomatikoa:
 
-1. **<ConceptLink targetId={["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"]} isDependency={false}>Axiomas de Incidencia</ConceptLink>**: Dados dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos, existe una única <ConceptLink targetId="ecuacion-lineal" isDependency={false}>ecuación lineal</ConceptLink> que ambos satisfacen (salvo <ConceptLink targetId="proporcionalidad" isDependency={false}>proporcionalidad</ConceptLink>).
-2. **<ConceptLink targetId={["axioma-congruencia-1", "axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4", "axioma-congruencia-5"]} isDependency={false}>Axiomas de Congruencia</ConceptLink>**: Se verifican a través de la invariancia de la <ConceptLink targetId="distancia" isDependency={false}>métrica euclídea</ConceptLink> ante <ConceptLink targetId="isometria" isDependency={false}>isometrías</ConceptLink> afines.
-3. **<ConceptLink targetId={["axioma-arquimedes", "axioma-completitud"]} isDependency={false}>Axiomas de Continuidad</ConceptLink>**: Se heredan de la completitud de $\mathbb{R}$ (<ConceptLink targetId="axioma-del-supremo" isDependency={false}>axioma del supremo</ConceptLink>).
-4. **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>Axioma de las Paralelas</ConceptLink>**: Dada la <InteractiveElement target="lineAB" color="musgo">recta $l$</InteractiveElement> y el <InteractiveElement target="P" color="ocre">punto $P$</InteractiveElement> exterior, existe una **única** <InteractiveElement target="parallelP" color="canela">recta $l'$ paralela</InteractiveElement> que pasa por él (rectas con igual pendiente).
+- **<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>Inzidentzia-axiomak</ConceptLink>**: Bi puntu desberdin emanda, biek betetzen duten ekuazio lineal bakarra dago (proportzionaltasuna izan ezik).
+- **<ConceptLink targetId="axioma-congruencia-1" isDependency={false}>Kongruentzia-axiomak</ConceptLink>**: Isometria afin eta transformazio rigiduen aurrean metrika euklideoaren inbariantzaren bidez egiaztatzen dira.
+- **Jarraitutasun-axiomak**: $\mathbb{R}$ zenbaki errealen gorputzaren osotasun topologikotik zuzenean oinordetzen dira.
+- **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>Paraleloen axioma</ConceptLink>**: $l$ zuzen bat eta kanpoko $P$ puntu bat emanda, $P$ dakarren $l'$ <ConceptLink targetId="paralelismo">zuzen paralelo</ConceptLink> bakarra existitzen da (malda aljebraiko bera duten zuzenak).
+
+<Separador />
+
+### Egiturazko koherentzia
 
 <Nota>
-  La <ConceptLink targetId="consistencia" isDependency={false}>consistencia</ConceptLink> de la <ConceptLink targetId={["sistema-euclidiano", "geometria-euclidiana"]}>geometría euclídea</ConceptLink> se reduce, gracias a este <ConceptLink targetId="modelo" isDependency={false}>modelo</ConceptLink>, a la <ConceptLink targetId="consistencia" isDependency={false}>consistencia</ConceptLink> del <ConceptLink targetId="analisis-real" isDependency={false}>análisis real</ConceptLink> y la <ConceptLink targetId="teoria-de-conjuntos" isDependency={false}>teoría de conjuntos</ConceptLink> axiomática.
+  **Koherentzia-bermea**: Bi dimentsioko geometria euklidearraren koherentzia logikoa, modelo kartesiarraren bidez, analisi errealaren eta multzo-teoria axiomatikoaren koherentziara murrizten da.
 </Nota>

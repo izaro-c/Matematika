@@ -1,87 +1,209 @@
-import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
-import {
-  createPoint, createLine, createGlider
-} from '@/diagrams/jsxgraph/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';
 
-export const DemoDosRectasUnPunto = () => {
-  return (
-    <MathBoard
-      boundingbox={[-5, 5, 5, -5]}
-      onInit={(board: any, els: any, theme: any) => {
-        // Punto central de intersección
-        els.P = createPoint(board, [0, 0], { name: 'P', size: 5, showInfobox: false }, theme);
-
-        // Punto para definir la recta l
-        els.A = createPoint(board, [-3, -1], { name: '', size: 0, visible: false, fixed: true }, theme);
-
-        els.rectaL = createLine(board, [els.P, els.A], {
-          name: 'l', withLabel: true, label: { position: 'lft', offset: [15, 15] }, strokeWidth: 2.5
-        }, theme);
-
-        // Punto Q sobre la recta l (ahora visible por defecto)
-        els.Q = createGlider(board, [3, 1, els.rectaL], {
-          name: 'Q', size: 5, strokeColor: theme.terracota, fillColor: theme.terracota, showInfobox: false, visible: true, label: { strokeColor: theme.terracota }
-        }, theme);
-
-        // Transformación de rotación para la recta m
-        // Se inicializa con un ángulo que luego se animará
-        els.angleVar = board.create('slider', [[-4, -4], [2, -4], [0, 0.5, 0.5]], { visible: false });
-
-        els.tRot = board.create('transform', [() => els.angleVar.Value(), els.P], { type: 'rotate' });
-        els.B = board.create('point', [els.A, els.tRot], { visible: false });
-
-        els.rectaM = createLine(board, [els.P, els.B], {
-          name: 'm', strokeColor: theme.terracota, strokeWidth: 2.5, withLabel: true, label: { position: 'lft', offset: [15, -15], strokeColor: theme.terracota }
-        }, theme);
-      }}
-      onUpdate={(_board, els, _theme, isStep, isHL) => {
-        const s1 = isStep('step1');
-        const s2 = isStep('step2');
-        const s3 = isStep('step3');
-        const s4 = isStep('step4');
-
-        const hlL = isHL('rectaL');
-        const hlM = isHL('rectaM');
-        const hlP = isHL('puntoP');
-        const hlQ = isHL('puntoQ');
-        const hlRectas = isHL('rectas');
-
-        const anyH = hlL || hlM || hlP || hlQ || hlRectas;
-
-        // Base Opacity Logic
-        const getOp = (hovered: boolean, activeInStep: boolean) => {
-          if (hovered) return 1;
-          if (anyH) return 0.2;
-          return activeInStep ? 1 : 0.2;
-        };
-
-        const getWidth = (hovered: boolean) => hovered ? 4 : 2.5;
-
-        const stepActL = s1 || s2 || s3 || s4;
-        els.rectaL.setAttribute({ strokeOpacity: getOp(hlL || hlRectas, stepActL), strokeWidth: getWidth(hlL || hlRectas) });
-        if (els.rectaL.label) els.rectaL.label.setAttribute({ strokeOpacity: getOp(hlL || hlRectas, stepActL) });
-
-        const stepActM = s1 || s2 || s3 || s4;
-        els.rectaM.setAttribute({ strokeOpacity: getOp(hlM || hlRectas, stepActM), strokeWidth: getWidth(hlM || hlRectas) });
-        if (els.rectaM.label) els.rectaM.label.setAttribute({ strokeOpacity: getOp(hlM || hlRectas, stepActM) });
-
-        const stepActP = s1 || s2 || s3 || s4;
-        els.P.setAttribute({ fillOpacity: getOp(hlP, stepActP), strokeOpacity: getOp(hlP, stepActP) });
-        if (els.P.label) els.P.label.setAttribute({ strokeOpacity: getOp(hlP, stepActP) });
-
-        const stepActQ = s1 || s2 || s3 || s4;
-        els.Q.setAttribute({ fillOpacity: getOp(hlQ, stepActQ), strokeOpacity: getOp(hlQ, stepActQ) });
-        if (els.Q.label) els.Q.label.setAttribute({ strokeOpacity: getOp(hlQ, stepActQ) });
-
-        // Lógica de colapso de la recta m sobre l
-        if (s3 || s4) {
-          // Valor 0 corresponde a x=-4 en el slider
-          els.angleVar.moveTo([-4, -4], 500);
-        } else {
-          // Valor 0.5 corresponde a x=2 en el slider
-          els.angleVar.moveTo([2, -4], 500);
+/* @matematika-diagram-spec:start */
+export const DemoDosRectasUnPuntoSpec = createDiagramSpec(
+{
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
+  "title": "Dos rectas y un punto",
+  "componentId": "demo-dos-rectas-un-punto",
+  "category": "Demos",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "showLabels": true,
+  "viewport": {
+    "bounds": [-5, 5, 5, -5],
+    "home": [-5, 5, 5, -5],
+    "minZoom": 0.2,
+    "maxZoom": 10,
+    "padding": 0.16
+  },
+  "layers": [
+    { "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false },
+    { "id": "annotations", "label": "Anotaciones", "order": 1, "visible": true, "locked": false }
+  ],
+  "groups": [],
+  "objects": [
+    {
+      "id": "pP",
+      "label": "P",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 30,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto P", "role": "primary" },
+      "target": true,
+      "targetId": "pP",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 0, "y": 0 },
+      "mobility": { "type": "free" },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 10,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": { "selectable": false, "ariaLabel": "Punto A", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": -3, "y": -1 },
+      "mobility": { "type": "fixed" }
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 11,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": { "selectable": false, "ariaLabel": "Punto B", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 3, "y": -1 },
+      "mobility": { "type": "fixed" }
+    },
+    {
+      "id": "rectaL",
+      "label": "l",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 5,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Recta l", "role": "primary" },
+      "target": true,
+      "targetId": "rectaL",
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": ["pP", "pA"]
         }
-      }}
-    />
-  );
-};
+      },
+      "appearance": { "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pQ",
+      "label": "Q",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 31,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto Q", "role": "primary" },
+      "target": true,
+      "targetId": "pQ",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 3, "y": 1 },
+      "mobility": { "type": "on-support", "support": "rectaL" },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "rectaM",
+      "label": "m",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 6,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Recta m", "role": "primary" },
+      "target": true,
+      "targetId": "rectaM",
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": ["pP", "pB"]
+        }
+      },
+      "appearance": { "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+    }
+  ],
+  "relations": [],
+  "steps": [
+    {
+      "id": "step1",
+      "label": "Intersección en P",
+      "description": "Dos rectas distintas l y m se cortan exactamente en un único punto P.",
+      "visibleTargets": ["pP", "rectaL", "rectaM"],
+      "durationMs": 1000,
+      "objectStates": {
+        "pP": { "visible": true, "emphasis": "primary" },
+        "rectaL": { "visible": true },
+        "rectaM": { "visible": true },
+        "pQ": { "visible": true }
+      }
+    },
+    {
+      "id": "step2",
+      "label": "Punto Q en l",
+      "description": "Tomamos un segundo punto Q perteneniente a la recta l.",
+      "visibleTargets": ["pP", "pQ", "rectaL", "rectaM"],
+      "durationMs": 1000,
+      "objectStates": {
+        "pP": { "visible": true },
+        "pQ": { "visible": true, "emphasis": "primary" },
+        "rectaL": { "visible": true },
+        "rectaM": { "visible": true }
+      }
+    },
+    {
+      "id": "step3",
+      "label": "Giro de la recta m",
+      "description": "Si la recta m gira hasta contener también a Q...",
+      "visibleTargets": ["pP", "pQ", "rectaL", "rectaM"],
+      "durationMs": 1000
+    },
+    {
+      "id": "step4",
+      "label": "Coincidencia de rectas",
+      "description": "Si dos rectas tienen dos puntos distintos en común (P y Q), ambas rectas deben coincidir.",
+      "visibleTargets": ["pP", "pQ", "rectaL", "rectaM"],
+      "durationMs": 1000
+    }
+  ],
+  "note": "Haz clic en las rectas o los puntos para destacarlos.",
+  "translations": {
+    "eu": {
+      "title": "Bi zuzen eta puntu bat",
+      "note": "Egin klik zuzenetan edo puntuetan nabarmentzeko.",
+      "steps": {
+        "step1": {
+          "label": "Ebakidura P-n",
+          "description": "Bi l eta m zuzen desberdinek puntu bakarrean ebakitzen dute elkar: P puntuan."
+        },
+        "step2": {
+          "label": "Q puntua l zuzenean",
+          "description": "l zuzeneko Q bigarren puntu bat hartzen dugu."
+        },
+        "step3": {
+          "label": "m zuzenaren biraketa",
+          "description": "m zuzenak Q puntua ere baduelakoan biratzen badu..."
+        },
+        "step4": {
+          "label": "Zuzenen kointzidentzia",
+          "description": "Bi zuzenek bi puntu desberdin komunean badituzte (P eta Q), bi zuzenek bat egin behar dute."
+        }
+      }
+    }
+  }
+}
+);
+/* @matematika-diagram-spec:end */
+
+export const DemoDosRectasUnPunto = () => <DiagramRenderer spec={DemoDosRectasUnPuntoSpec} />;

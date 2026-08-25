@@ -1,52 +1,50 @@
 export const metadata = {
-  "id": "triangulo",
-  "type": "definicion",
-  "subtype": "nominal",
-  "branch": "51M",
-  "title": "Triángulo",
-  "description": "Figura geométrica formada por tres segmentos (lados) que unen tres puntos no colineales (vértices).",
-  "statement": "Un triángulo △ABC es la unión de tres segmentos AB, BC y CA donde A, B y C son puntos no colineales.",
-  "tags": ["geometria", "poligono", "basico"],
-  "authors": ["euclides"],
-  "links": ["punto", "segmento"],
-  "seeAlso": ["teorema-congruencia-ala", "teorema-congruencia-lll", "teorema-suma-angulos-triangulo"],
-  "hasSimulation": true
+  id: "triangulo",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Triángulo",
+  description: "Polígono plano fundamental determinado por la unión de los tres segmentos que conectan tres puntos no colineales.",
+  branch: "51M",
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 19", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+  ]
 };
 
 import { Triangulo } from '@content/diagrams/Definiciones/Triangulo';
 export const Simulation = Triangulo;
 
-<Capitular letra="U" />n triángulo es el <ConceptLink targetId="poligono" isDependency={false}>polígono</ConceptLink> más simple y la base de la trigonometría. Está constituido por tres <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> no <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink> y los tres <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> que los conectan.
+<Capitular letra="E" />l <ConceptLink targetId="triangulo">triángulo</ConceptLink> es el <ConceptLink targetId="poligono">polígono</ConceptLink> elemental sobre el cual reposan la trigonometría y la teoría de <ConceptLink targetId="congruencia">congruencias</ConceptLink> geométricas. Formado por tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, encierra una región convexa acotada en el <ConceptLink targetId="plano">plano</ConceptLink>.
+
+<Definicion title="">
+  Dados tres puntos no colineales $A, B, C \in \mathcal{P}$, el triángulo $\triangle ABC$ es el conjunto plano definido por la unión de los tres <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> de <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> que conectan dichos vértices:
+  $$
+  \triangle ABC = AB \cup BC \cup CA
+  $$
+</Definicion>
 
 <Separador />
 
-### Enunciado Formal
+### Representación visual e interacción
 
-Dados tres <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> no colineales <InteractiveElement target="vertice-a" color="musgo">$A$</InteractiveElement>, <InteractiveElement target="vertice-b" color="musgo">$B$</InteractiveElement> y <InteractiveElement target="vertice-c" color="musgo">$C$</InteractiveElement>, el <InteractiveElement target="triangulo" color="musgo">triángulo $\triangle ABC$</InteractiveElement> es la unión de los segmentos correspondientes:
-
-<Formula>
-  $$ \triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA} $$
-</Formula>
-
-Los puntos $A$, $B$, $C$ se denominan vértices, y los segmentos <InteractiveElement target="lado-ab" color="musgo">$\overline{AB}$</InteractiveElement>, <InteractiveElement target="lado-bc" color="musgo">$\overline{BC}$</InteractiveElement>, <InteractiveElement target="lado-ca" color="musgo">$\overline{CA}$</InteractiveElement> son los lados. El triángulo encierra una región del <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> y define tres <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> interiores.
+En la simulación interactiva se muestra el triángulo <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind>, delimitado por los vértices <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> y <VisualBind element="vertice-c" color="musgo">$C$</VisualBind>, y sus lados <VisualBind element="lado-ab" color="pavo">$AB$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$BC$</VisualBind> y <VisualBind element="lado-ca" color="ocre">$CA$</VisualBind>. La manipulación de cualquier vértice recalcula dinámicamente las longitudes de los lados y los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores.
 
 <Separador />
 
-### Clasificación
+### Clasificación métrica y angular
 
-Los triángulos se clasifican por sus lados y por sus ángulos:
+Los triángulos se clasifican atendiendo a la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de sus lados y a la medida de sus ángulos interiores:
 
-| Por lados | Descripción | Por ángulos | Descripción |
+| Clasificación por lados | Propiedad geométrica | Clasificación por ángulos | Propiedad angular |
 |---|---|---|---|
-| Equilátero | 3 lados <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> | Acutángulo | 3 ángulos agudos |
-| Isósceles | 2 lados congruentes | Rectángulo | 1 ángulo recto |
-| Escaleno | 0 lados congruentes | Obtusángulo | 1 ángulo obtuso |
+| Equilátero | Tres lados congruentes ($AB \cong BC \cong CA$) | Acutángulo | Tres ángulos interiores agudos |
+| Isósceles | Al menos dos lados congruentes | <ConceptLink targetId="triangulo-rectangulo">Rectángulo</ConceptLink> | Un ángulo interior recto |
+| Escaleno | Ningún par de lados congruentes | Obtusángulo | Un ángulo interior obtuso |
 
 <Separador />
 
-### Observaciones
+### Propiedades en los sistemas axiomáticos
 
-- La condición de **no colinealidad** es esencial: si $A$, $B$, $C$ están en una misma <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>, no se forma un triángulo (la región encerrada es vacía).
-- Los triángulos son la base de la congruencia (<RefLink targetId="teorema-congruencia-ala">ALA</RefLink>, <RefLink targetId="teorema-congruencia-lll">LLL</RefLink>) y de la semejanza.
-- En <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, la suma de los ángulos interiores es $180^\circ$. En <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>, es estrictamente menor.
-- <RefLink targetId="teorema-suma-angulos-triangulo">Teorema de la suma de ángulos</RefLink>: el resultado sobre la suma de ángulos depende del <ConceptLink targetId={["axioma-paralelas-euclides", "axioma-paralelas-hiperbolico"]} isDependency={false}>axioma de las paralelas</ConceptLink>.
+- **Suma angular**: En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, la suma de los tres ángulos interiores es exactamente igual a $180^\circ$. En la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>, dicha suma es menor a $180^\circ$.
+- **Criterios de congruencia**: La rigidez estructural del triángulo permite determinar la congruencia total mediante los teoremas LAL, ALA y LLL.

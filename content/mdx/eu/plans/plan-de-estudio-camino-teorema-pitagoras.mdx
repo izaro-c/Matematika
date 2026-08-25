@@ -1,10 +1,9 @@
 export const metadata = {
-  "lang": "eu",
   "id": "camino-teorema-pitagoras",
   "type": "plan-de-estudio",
-  "title": "Pitagorasen Teoremarako Bidea",
-  "subtitle": "Ruta Axiomática y Geométrica",
-  "description": "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
+  "title": "Pitagorasen teoremarako bidea",
+  "subtitle": "Bide axiomatiko eta geometrikoa",
+  "description": "Geometria euklidearraren metrika-erlaziorik ospetsuenaren atzean dagoen zorroztasun logikoa eta edertasun bisuala esploratu, oinarrizko definizioetatik satelite bidezko geolokalizazioraino.",
   "requiredNodes": [
     "punto",
     "estar-entre",
@@ -22,155 +21,133 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="C" />onstruir una verdad matemática de forma rigurosa exige trazar un camino
-impecable de justificaciones. El teorema de Pitágoras no es una coincidencia
-mágica; es la consecuencia directa de una red de nociones primitivas, axiomas y
-teoremas interconectados.
+<Capitular letra="E" />gia matematiko bat zorroztasunez eraikitzeak justifikazio-bide akatsgabe bat trazatzea eskatzen du. <ConceptLink targetId="teorema-pitagoras" isDependency={false}>Pitagorasen teorema</ConceptLink> ez da ezusteko bat; espazio euklidearrean elkarri lotutako oinarrizko nocioen, axiomen eta teoremen sare baten ondorio beharrezkoa da.
 
-Este plan de estudio te guiará paso a paso por las cinco etapas lógicas
-indispensables para reconstruir, comprender y aplicar esta verdad eterna.
+Ikasketa-plan honek urratsez urratseko bost etapa logikoetan zehar gidatuko zaitu, betiko egia hau berregiteko, ulertzeko eta aplikatzeko.
 
 <Separador />
 
-## Fase 1: Los Bloques Fundacionales
+### 1. fasea: Oinarrizko blokeak
 
-Antes de poder demostrar nada sobre figuras o áreas, debemos definir las entidades
-primitivas que habitan nuestro espacio y las relaciones de orden que las gobiernan.
-En la geometría moderna de Hilbert, el concepto más básico es el **punto** y la relación
-espacial fundamental es el orden o **estar entre**.
+Irudiei edo mehatxuei buruz ezer frogatu aurretik, espazioko objektu primitiboak eta ordena-erlazioak definitu behar ditugu. Hilberten geometria axiomatikoan, oinarrizko kontzeptu primitiboa <ConceptLink targetId="punto" isDependency={false}>puntua</ConceptLink> da eta ordenako espazio-erlazioa <ConceptLink targetId="estar-entre" isDependency={false}>artean egotea</ConceptLink> da.
 
 <StudyTask
   id="punto"
   type="definicion"
-  title="El Punto"
+  title="Puntua"
 />
 
 <StudyTask
   id="estar-entre"
   type="definicion"
-  title="La Relación de Orden (Estar Entre)"
+  title="Ordena-erlazioa (artean egotea)"
 />
 
 <Separador />
 
-## Fase 2: Construcción de Figuras y Congruencia
+### 2. fasea: Irudien eraikuntza eta kongruentzia
 
-Al conectar tres puntos no colineales mediante segmentos obtenemos la figura
-geométrica más simple del plano: el **triángulo**. Para comparar triángulos entre
-sí sin recurrir a la noción informal de "mover figuras con las manos", requerimos los
-axiomas de **congruencia**. El axioma de congruencia **SAS** (Lado-Ángulo-Lado) es el pilar
-que nos permite justificar que dos triángulos son copias idénticas. Su primera gran
-aplicación rigurosa es demostrar que en un triángulo isósceles, los ángulos de la base son iguales.
+<ConceptLink targetId="colinealidad">Kolinealak ez</ConceptLink> diren hiru puntu segmentuen bidez lotzean, planoko lehen mailako irudi geometrikoa lortzen dugu: <ConceptLink targetId="triangulo" isDependency={false}>triangelua</ConceptLink>. Triangeluak beren artean alderatzeko intuizio ez-formalera jo gabe, <ConceptLink targetId="axioma-congruencia-5" isDependency={false}>kongruentzia-axiomak</ConceptLink> aplikatzen ditugu (SAS/LAL). Haien lehen aplikazio nagusia triangelu isoszelearen teorema da.
 
 <StudyTask
   id="triangulo"
   type="definicion"
-  title="El Triángulo"
+  title="Triangelua"
 />
 
 <StudyTask
   id="axioma-congruencia-5"
   type="axioma"
-  title="Axioma de Congruencia III-5 (SAS / LAL)"
+  title="III-5 kongruentzia-axioma (SAS / LAL)"
 />
 
 <StudyTask
   id="teorema-triangulo-isosceles"
   type="teorema"
-  title="Teorema del Triángulo Isósceles (Pons Asinorum)"
+  title="Triangelu isoszelearen teorema (Pons Asinorum)"
 />
 
 <StudyPlanCheckpoint
   id="checkpoint-pitagoras-congruencia"
-  explanation="El teorema del triángulo isósceles se demuestra duplicando mentalmente el triángulo e igualando sus lados y el ángulo comprendido (SAS). Esto genera una congruencia que fuerza a los ángulos correspondientes de la base a ser iguales."
+  explanation="Triangelu isoszelearen teorema Aldea-Angelua-Aldea (SAS/LAL) irizpidearen bidezko kongruentzia batekin frogatzen da, zeinak dagozkion oinarriko angeluak kongruenteak izatea dakarren."
 >
   <Pregunta
     id="checkpoint-pitagoras-congruencia"
-    question="¿Qué criterio de congruencia nos permite demostrar formalmente que los ángulos basales de un triángulo isósceles son iguales?"
+    question="Zein kongruentzia-irizpidek ahalbidetzen digu triangelu isoszele baten oinarriko angeluak berdinak direla formalki frogatzea?"
     options={[
-      "Ángulo-Lado-Ángulo (ALA)",
-      "Lado-Ángulo-Lado (LAL / SAS)",
-      "Lado-Lado-Lado (LLL)",
-      "Ángulo-Ángulo-Lado (AAL)"
+      "Angelua-Aldea-Angelua (ALA)",
+      "Aldea-Angelua-Aldea (LAL / SAS)",
+      "Aldea-Aldea-Aldea (LLL)",
+      "Angelua-Angelua-Aldea (AAL)"
     ]}
-    correct="Lado-Ángulo-Lado (LAL / SAS)"
+    correct="Aldea-Angelua-Aldea (LAL / SAS)"
   />
 </StudyPlanCheckpoint>
 
 <Separador />
 
-## Fase 3: Paralelismo y la Suma de Ángulos
+### 3. fasea: Paralelismoa eta angeluen batura
 
-El teorema de Pitágoras es exclusivo de la **geometría euclídea plana**; no es válido en
-superficies curvas. Esto se debe a que depende críticamente del **Quinto Postulado de Euclides**
-(Axioma de las paralelas). Sin este axioma, es imposible demostrar que la suma de los ángulos
-internos de cualquier triángulo en el plano es exactamente 180° (dos ángulos rectos).
+Pitagorasen teorema geometria euklidear planoari bakarrik dagokio. Hau Euclidesen <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>bosgarren postulatuaren</ConceptLink> mende dagoelako gertatzen da. Axioma hori gabe ezinezkoa da triangelu baten barne-angeluen batura zehazki $180^\circ$ dela frogatzea.
 
 <StudyTask
   id="axioma-paralelas-euclides"
   type="axioma"
-  title="El Quinto Postulado (Axioma de Paralelas)"
+  title="Bosgarren postulatua (paraleloen axioma)"
 />
 
 <StudyTask
   id="teorema-suma-angulos-triangulo"
   type="teorema"
-  title="Teorema de la Suma de Ángulos de un Triángulo"
+  title="Triangelu baten angeluen baturaren teorema"
 />
 
 <StudyPlanCheckpoint
   id="checkpoint-pitagoras-paralelas"
-  explanation="Para demostrar que la suma de ángulos es 180°, trazamos una recta paralela a la base por el vértice opuesto. Esto requiere el Quinto Postulado para asegurar que los ángulos alternos internos sumen un ángulo llano."
+  explanation="Angeluen batura 180° dela frogatzeko, aurkako erpinetik oinarriarekiko zuzen paralelo bat marrazten da. Honek Bosgarren Postulatua behar du barneko angelu alternoen berdintasuna bermatzen duelako."
 >
   <Emparejar
     id="checkpoint-pitagoras-paralelas"
-    pregunta="Relaciona cada propiedad geométrica con su fundamento clave en la Fase 3:"
+    pregunta="Lotu propietate geometriko bakoitza 3. faseko oinarrizko fundamentuarekin:"
     pairs={[
-      { left: "Suma de ángulos (180°)", right: "Quinto Postulado de las Paralelas" },
-      { left: "Ángulos alternos internos", right: "Línea paralela auxiliar por el vértice" }
+      { left: "Angeluen batura (180°)", right: "Paraleloen Bosgarren Postulatua" },
+      { left: "Barneko angelu alternoak", right: "Erpinetik igarotzen den laguntza-zuzen paraleloa" }
     ]}
   />
 </StudyPlanCheckpoint>
 
 <Separador />
 
-## Fase 4: Proporcionalidad y Semejanza
+### 4. fasea: Proportzionaltasuna eta antzekotasuna
 
-Con una suma de ángulos fija en 180°, surge la noción de **semejanza**: figuras con la misma
-forma pero diferente escala. El **Teorema de Tales** establece la proporcionalidad de los lados
-de triángulos semejantes, lo cual es la herramienta matemática que permite calcular longitudes
-mediante razones y proporciones algebraicas.
+Angeluen batura $180^\circ$-an finkatuta, <ConceptLink targetId="semejanza">antzekotasun</ConceptLink> geometrikoa sortzen da. <ConceptLink targetId="teorema-tales" isDependency={false}>Talesen teoremak</ConceptLink> aldeen proportzionaltasuna ezartzen du antzeko triangeluetan, ratioekin aljebraikoki jarduteko tresna eskainiz.
 
 <StudyTask
   id="teorema-tales"
   type="teorema"
-  title="El Teorema de Tales sobre Semejanza"
+  title="Talesen teorema antzekotasunaz"
 />
 
 <Separador />
 
-## Fase 5: El Teorema de Pitágoras y su Aplicación
+### 5. fasea: Pitagorasen teorema eta haren aplikazioa
 
-Finalmente, reuniendo la congruencia, el paralelismo euclidiano y la semejanza, demostramos
-la relación fundamental $a^2 + b^2 = c^2$. Consolidaremos esta verdad teórica aplicándola
-a un cálculo concreto y comprendiendo cómo se utiliza en el algoritmo de **trilateración GPS**
-para geolocalizar tu dispositivo en el plano terrestre.
+Kongruentzia, paralelismoa eta antzekotasuna bilduz, $a^2 + b^2 = c^2$ oinarrizko erlazioa frogatzen dugu. Emaitza teoriko hau kalkulu-ariketan eta <ConceptLink targetId="caso-gps-trilateracion" isDependency={false}>GPSaren erabilera-kasuan</ConceptLink> sendotuko dugu.
 
 <StudyTask
   id="teorema-pitagoras"
   type="teorema"
-  title="El Teorema de Pitágoras"
+  title="Pitagorasen teorema"
 />
 
 <StudyTask
   id="ejercicio-pitagoras-cateto"
   type="ejercicio"
-  title="Ejercicio: Cálculo del Cateto Faltante"
+  title="Ariketa: falta den katetoaren kalkulua"
 />
 
 <StudyTask
   id="caso-gps-trilateracion"
   type="caso"
-  title="Caso de Uso: Trilateración y GPS"
+  title="Erabilera-kasua: trilaterazioa eta GPSa"
 />
-

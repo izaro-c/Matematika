@@ -1,130 +1,383 @@
-import { useMathStore } from '@/lib/page-context/MathStoreContext';
-import { useStepBinding } from '@/components/ui/StepBinding';
-import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
-import {
-  createPoint, createLine, createSegment, createGlider, createPolygon
-} from '@/diagrams/jsxgraph/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';
 
+/* @matematika-diagram-spec:start */
+export const DemoTalesSpec = createDiagramSpec(
+{
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
+  "title": "Teorema de Tales",
+  "componentId": "demo-tales",
+  "category": "Demos",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "showLabels": true,
+  "viewport": {
+    "bounds": [-5, 5, 5, -5],
+    "home": [-5, 5, 5, -5],
+    "minZoom": 0.2,
+    "maxZoom": 10,
+    "padding": 0.16
+  },
+  "layers": [
+    { "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false },
+    { "id": "annotations", "label": "Anotaciones", "order": 1, "visible": true, "locked": false }
+  ],
+  "groups": [],
+  "objects": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 30,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto A", "role": "primary" },
+      "target": true,
+      "targetId": "pA",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": -3, "y": -2 },
+      "mobility": { "type": "free" },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 31,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto B", "role": "primary" },
+      "target": true,
+      "targetId": "pB",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 3, "y": -2 },
+      "mobility": { "type": "free" },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pC",
+      "label": "C",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 32,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto C", "role": "primary" },
+      "target": true,
+      "targetId": "pC",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 4, "y": 3 },
+      "mobility": { "type": "free" },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "segAB",
+      "label": "Segmento AB",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Lado AB", "role": "secondary" },
+      "target": true,
+      "targetId": "segAB",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": ["pA", "pB"]
+      },
+      "appearance": { "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "segBC",
+      "label": "Segmento BC",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 11,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Lado BC", "role": "secondary" },
+      "target": true,
+      "targetId": "segBC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": ["pB", "pC"]
+      },
+      "appearance": { "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "segCA",
+      "label": "Segmento CA",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 12,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Lado CA", "role": "secondary" },
+      "target": true,
+      "targetId": "segCA",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": ["pC", "pA"]
+      },
+      "appearance": { "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "polyABC",
+      "label": "Triángulo ABC",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 5,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Triángulo ABC", "role": "primary" },
+      "target": true,
+      "targetId": "polyABC",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pA", "pB", "pC"]
+      },
+      "appearance": { "fillOpacity": 0.06, "strokeWidth": 1, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pD",
+      "label": "D",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 33,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto D sobre AB", "role": "primary" },
+      "target": true,
+      "targetId": "pD",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": -1, "y": -2 },
+      "mobility": { "type": "on-support", "support": "segAB" },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pE",
+      "label": "E",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 34,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto E sobre CA", "role": "primary" },
+      "target": true,
+      "targetId": "pE",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": -0.67, "y": -0.33 },
+      "mobility": { "type": "on-support", "support": "segCA" },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "segDE",
+      "label": "Segmento DE (Paralelo)",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 15,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Segmento DE paralelo a BC", "role": "primary" },
+      "target": true,
+      "targetId": "segDE",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": ["pD", "pE"]
+      },
+      "appearance": { "dashed": true, "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "polyADE",
+      "label": "Triángulo ADE",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 6,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Triángulo ADE", "role": "secondary" },
+      "target": true,
+      "targetId": "polyADE",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pA", "pD", "pE"]
+      },
+      "appearance": { "fillOpacity": 0.15, "strokeWidth": 1, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "polyBDE",
+      "label": "Triángulo BDE",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 7,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Triángulo BDE", "role": "secondary" },
+      "target": true,
+      "targetId": "polyBDE",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pB", "pD", "pE"]
+      },
+      "appearance": { "fillOpacity": 0.15, "strokeWidth": 1, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "polyCDE",
+      "label": "Triángulo CDE",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 8,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Triángulo CDE", "role": "secondary" },
+      "target": true,
+      "targetId": "polyCDE",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pC", "pD", "pE"]
+      },
+      "appearance": { "fillOpacity": 0.15, "strokeWidth": 1, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pH1",
+      "label": "H1",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 35,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": { "selectable": false, "ariaLabel": "H1", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": -0.67, "y": -2 },
+      "mobility": { "type": "fixed" }
+    },
+    {
+      "id": "segH1",
+      "label": "Altura h1",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 16,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Altura desde E a AB", "role": "secondary" },
+      "target": true,
+      "targetId": "segH1",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": ["pE", "pH1"]
+      },
+      "appearance": { "dashed": true, "strokeWidth": 2, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pH2",
+      "label": "H2",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 36,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": { "selectable": false, "ariaLabel": "H2", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": -1.77, "y": -0.89 },
+      "mobility": { "type": "fixed" }
+    },
+    {
+      "id": "segH2",
+      "label": "Altura h2",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 17,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Altura desde D a AC", "role": "secondary" },
+      "target": true,
+      "targetId": "segH2",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": ["pD", "pH2"]
+      },
+      "appearance": { "dashed": true, "strokeWidth": 2, "preserveColorOnHighlight": true }
+    }
+  ],
+  "relations": [],
+  "steps": [
+    {
+      "id": "step1",
+      "label": "Triángulo ABC y paralela DE",
+      "description": "Dada una recta DE paralela al lado BC que corta a los lados AB y AC.",
+      "visibleTargets": ["polyABC", "segDE"],
+      "durationMs": 1000
+    },
+    {
+      "id": "step2",
+      "label": "Triángulos sobre la base DE",
+      "description": "Los triángulos BDE y CDE comparten la misma base DE y tienen la misma altura por estar entre rectas paralelas.",
+      "visibleTargets": ["polyBDE", "polyCDE", "segDE"],
+      "durationMs": 1000
+    },
+    {
+      "id": "step3",
+      "label": "Razón de áreas y proporcionalidad",
+      "description": "Comparando las áreas de los triángulos ADE, BDE y CDE se obtiene la razón AD/DB = AE/EC.",
+      "visibleTargets": ["polyADE", "segH1", "segH2"],
+      "durationMs": 1000
+    }
+  ],
+  "note": "Desliza el punto D a lo largo del lado AB para cambiar la posición de la recta paralela.",
+  "translations": {
+    "eu": {
+      "title": "Talesen teorema",
+      "note": "Irristatu D puntua AB aldean zehar zuzen paraleloaren posizioa aldatzeko.",
+      "steps": {
+        "step1": {
+          "label": "ABC triangelua eta DE paraleloa",
+          "description": "BC aldeari paraleloa zaion DE zuzenak AB eta AC aldeak ebakitzen ditu."
+        },
+        "step2": {
+          "label": "DE oinarriaren gaineko triangeluak",
+          "description": "BDE eta CDE triangeluek DE oinarri bera dute eta altuera bera dute zuzen paraleloen artean egoteagatik."
+        },
+        "step3": {
+          "label": "Azaleren arrazoia eta proportzionaltasuna",
+          "description": "ADE, BDE eta CDE triangeluen azalerak konparatuz AD/DB = AE/EC proportzioa lortzen da."
+        }
+      }
+    }
+  }
+}
+);
+/* @matematika-diagram-spec:end */
 
-
-
-
-
-export const DemoTales = () => {
-
-
-
-  const mathHL = useMathStore(s => s.variables?.['highlight']);
-  const { activeStep } = useStepBinding();
-  const highlight = mathHL || activeStep;
-  const isHL = (id: string) => Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
-  void highlight;
-  void isHL;
-
-  const onInit = (board: any, els: any, theme: any) => {
-      void board; void els; void theme;
-      const C_PRIM = theme.carbon;
-    const C_ACC  = theme.terracota;
-    const C_PAR  = theme.canela;
-    const C_H    = theme.ocre;
-
-    const A = createPoint(board, [-3, -2], { name: 'A', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
-    const B = createPoint(board, [3, -2], { name: 'B', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
-    const C = createPoint(board, [4, 3], { name: 'C', size: 5, fillColor: C_PRIM, strokeColor: C_PRIM, showInfobox: false, snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5 }, theme);
-
-    createSegment(board, [A, B], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
-    createSegment(board, [B, C], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
-    createSegment(board, [C, A], { strokeColor: C_PRIM, strokeWidth: 2.5 }, theme);
-    const polyABC = createPolygon(board, [A, B, C], { fillColor: C_PRIM, fillOpacity: 0.06, borders: { visible: false }, vertices: { visible: false } }, theme);
-
-    const segAB = createSegment(board, [A, B], { visible: false }, theme);
-    const D = createGlider(board, [-1, -2, segAB], { name: 'D', size: 4, fillColor: C_ACC, strokeColor: C_ACC, showInfobox: false }, theme);
-
-    const lineBC = createLine(board, [B, C], { visible: false }, theme);
-    const lineCA = createLine(board, [C, A], { visible: false }, theme);
-    const parDE = board.create('parallel', [lineBC, D], { visible: false });
-    const E = board.create('intersection', [parDE, lineCA, 0], { name: 'E', size: 4, fillColor: C_ACC, strokeColor: C_ACC, showInfobox: false });
-
-    const segDE = createSegment(board, [D, E], { strokeColor: C_PAR, strokeWidth: 2.5, dash: 2 }, theme);
-    createSegment(board, [B, E], { strokeColor: C_PRIM, strokeWidth: 1, dash: 1, visible: false }, theme);
-    createSegment(board, [C, D], { strokeColor: C_PRIM, strokeWidth: 1, dash: 1, visible: false }, theme);
-
-    const polyADE = createPolygon(board, [A, D, E], { fillColor: C_H, fillOpacity: 0, borders: { visible: false }, vertices: { visible: false } }, theme);
-    const polyBDE = createPolygon(board, [B, D, E], { fillColor: C_H, fillOpacity: 0, borders: { visible: false }, vertices: { visible: false } }, theme);
-    const polyCDE = createPolygon(board, [C, D, E], { fillColor: C_H, fillOpacity: 0, borders: { visible: false }, vertices: { visible: false } }, theme);
-
-    const lineAB = createLine(board, [A, B], { visible: false }, theme);
-    const H1 = board.create('intersection', [lineAB, board.create('perpendicular', [lineAB, E], { visible: false }), 0], { visible: false });
-    const segH1 = createSegment(board, [E, H1], { strokeColor: C_H, strokeWidth: 2, dash: 2, visible: false }, theme);
-
-    const H2 = board.create('intersection', [lineCA, board.create('perpendicular', [lineCA, D], { visible: false }), 0], { visible: false });
-    const segH2 = createSegment(board, [D, H2], { strokeColor: C_H, strokeWidth: 2, dash: 2, visible: false }, theme);
-
-
-
-
-
-    const obs = new MutationObserver(() => { if (board) {   } });
-    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-      // Registrar elementos para interactividad y auditoría
-      els.A = A;
-        els.B = B;
-        els.C = C;
-        els.D = D;
-        els.E = E;
-        els.polyABC = polyABC;
-        els.polyADE = polyADE;
-        els.polyBDE = polyBDE;
-        els.polyCDE = polyCDE;
-        els.segDE = segDE;
-        els.segH1 = segH1;
-        els.segH2 = segH2;
-    };;
-
-  const onUpdate = (board: any, els: any, theme: any, isStep: any, isHL: any) => {
-      const isHighlight = isHL;
-      void board; void els; void theme; void isStep; void isHL; void isHighlight;
-      const { A, B, C, D, E, polyABC, polyADE, polyBDE, polyCDE, segDE, segH1, segH2 } = els;
-      if (!els.board) return;
-
-
-    const hTri = isHL('triangulo-abc');
-    const hDE = isHL('recta-de');
-    const hADE = isHL('triangulo-ade');
-    const hBDE = isHL('triangulo-bde');
-    const hCDE = isHL('triangulo-cde');
-    const hH1 = isHL('altura-h1');
-    const hH2 = isHL('altura-h2');
-    const hProp = isHL('proporcion');
-    const anyH = hTri || hDE || hADE || hBDE || hCDE || hH1 || hH2 || hProp;
-    const showAll = !anyH;
-
-    const op = (t: any) => t || showAll ? 1 : 0.12;
-
-    polyABC.setAttribute({ fillOpacity: hTri ? 0.18 : 0.06 });
-    segDE.setAttribute({ strokeOpacity: op(hDE || showAll), strokeWidth: hDE ? 3.5 : 2.5 });
-
-    polyADE.setAttribute({ fillOpacity: hADE ? 0.15 : 0, borders: { visible: false } });
-    polyBDE.setAttribute({ fillOpacity: hBDE ? 0.15 : 0, borders: { visible: false } });
-    polyCDE.setAttribute({ fillOpacity: hCDE ? 0.15 : 0, borders: { visible: false } });
-
-    segH1.setAttribute({ visible: hH1 || showAll, strokeOpacity: hH1 ? 1 : 0.4 });
-    segH2.setAttribute({ visible: hH2 || showAll, strokeOpacity: hH2 ? 1 : 0.4 });
-
-    [A, B, C].forEach((p: any) => p.setAttribute({ strokeOpacity: op(showAll), fillOpacity: op(showAll) }));
-    [D, E].forEach((p: any) => p.setAttribute({ strokeOpacity: op(hDE||hADE||hBDE||hCDE||showAll), fillOpacity: op(hDE||hADE||hBDE||hCDE||showAll), size: hADE||hBDE||hCDE ? 6 : 4 }));
-    };;
-
-  return (
-    <MathBoard
-      boundingbox={[-5, 5, 5, -5]}
-      axis={false}
-      grid={false}
-      onInit={onInit}
-      onUpdate={onUpdate}
-    >
-
-    </MathBoard>
-  );
-};
+export const DemoTales = () => <DiagramRenderer spec={DemoTalesSpec} />;

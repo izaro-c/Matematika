@@ -1,57 +1,49 @@
 export const metadata = {
-  "id": "segmento",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Segmento",
-  "description": "Dados dos puntos A y B, el segmento AB es el conjunto de puntos de la recta AB que están entre A y B, incluyendo los extremos. Es la noción fundamental para la congruencia y la medida.",
-  "tags": ["geometria", "orden", "congruencia"],
-  "authors": ["hilbert"],
-  "links": ["punto", "estar-entre"],
-  "seeAlso": ["semirrecta", "axioma-orden-3", "axioma-orden-4", "axioma-congruencia-2"],
-  "hasSimulation": true
+  id: "segmento",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Segmento",
+  description: "Subconjunto conexo y acotado de una recta delimitado por dos puntos extremos. Constituye el elemento básico para definir la congruencia y la medida geométrica.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
+  ]
 };
 
 import { Segmento } from '@content/diagrams/Definiciones/Segmento';
 export const Simulation = Segmento;
 
-<Capitular letra="U" />n segmento es la porción de una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> comprendida entre dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, llamados extremos. A diferencia de la recta, el segmento tiene <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink> finita y es la unidad básica para las relaciones de <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink>.
+<Capitular letra="E" />l <ConceptLink targetId="segmento">segmento</ConceptLink> es la figura geométrica unidimensional delimitada por dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> pertenecientes a una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink>. A diferencia de la recta infinita, posee extensión acotada y fundamenta las relaciones de <ConceptLink targetId="congruencia">congruencia</ConceptLink> y <ConceptLink targetId="distancia">métrica</ConceptLink>.
+
+<Definicion title="">
+  Dados dos puntos distintos $A$ y $B$ sobre una recta $l$, el segmento $AB$ es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> formado por $A$, $B$ y todos los puntos $X \in l$ tales que se satisface la relación de intermediación <ConceptLink targetId="estar-entre" isDependency={true}>$A * X * B$</ConceptLink>:
+  $$
+  AB = \{X \in l \mid A * X * B\} \cup \{A, B\}
+  $$
+</Definicion>
 
 <Separador />
 
-### Enunciado Formal
+### Representación visual e interacción
 
-Dados dos puntos <InteractiveElement target="pA" color="musgo">$A$</InteractiveElement> y <InteractiveElement target="pB" color="musgo">$B$</InteractiveElement> sobre una <InteractiveElement target="lineL" color="carbon">recta $l$</InteractiveElement>, el <InteractiveElement target="segmentAB" color="musgo">segmento $AB$</InteractiveElement> es el conjunto de puntos:
-
-<Formula>
-  $$ AB = \{X \in l \mid A * X * B \lor X = A \lor X = B \} $$
-</Formula>
-
-donde $A * X * B$ denota que el punto $X$ incide entre $A$ y $B$ en el sentido de la relación primitiva del <ConceptLink targetId="axioma-orden-1" >axioma II-1</ConceptLink>.
+En la simulación interactiva se muestra el segmento <VisualBind element="segmentAB" color="musgo">$AB$</VisualBind> sobre la recta <VisualBind element="lineL" color="carbon">$l$</VisualBind>, determinado por el punto extremo <VisualBind element="pA" color="musgo">$A$</VisualBind> y el punto extremo <VisualBind element="pB" color="musgo">$B$</VisualBind>. Al desplazar cualquiera de sus extremos, el conjunto de puntos interiores se ajusta dinámicamente según la relación de intermediación <ConceptLink targetId="estar-entre" isDependency={true}>estar entre</ConceptLink>.
 
 <Separador />
 
-### Definición Axiomática
+### Fundamentación axiomática
 
-El segmento se construye a partir de la relación de intermediación:
+El concepto de segmento emerge formalmente a partir del grupo II de <ConceptLink targetId="axioma-orden-1">axiomas de orden</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>:
 
-- **Existencia**: El segmento $AB$ existe como subconjunto de la recta. La existencia de los puntos que lo componen está garantizada por los <ConceptLink targetId={["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"]}>axiomas de incidencia</ConceptLink> que establecen la existencia de la recta, y los <ConceptLink targetId={["axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4"]}>axiomas de orden</ConceptLink> (ej. II-2) que garantizan la existencia de puntos intermedios entre $A$ y $B$.
-- **Densidad**: La propiedad de contener infinitos puntos no es una definición fundamental, sino un teorema derivado (Teorema de Densidad). En modelos geométricos que no asumen la totalidad de los <ConceptLink targetId={["axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4"]}>axiomas de orden</ConceptLink> de Hilbert (como las geometrías finitas), un segmento puede tener un número finito de puntos.
-- **Congruencia**: los segmentos pueden ser congruentes entre sí (<ConceptLink targetId="axioma-congruencia-1">III-1</ConceptLink>). Dado un segmento $AB$ y un punto $A'$ sobre una recta $l'$, existe un único punto $B'$ sobre cada <ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink> de $l'$ tal que $AB \cong A'B'$ (III-1).
-- **Suma**: si $A * B * C$, entonces $AB + BC = AC$ (<ConceptLink targetId="axioma-congruencia-3">III-3</ConceptLink>).
+- **Existencia**: La existencia de los puntos interiores queda garantizada por el <ConceptLink targetId="axioma-orden-2" isDependency={true}>axioma II.2</ConceptLink>.
+- **Congruencia de segmentos**: Los segmentos admiten relaciones de equivalencia geométrica moduladas por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axioma III.1</ConceptLink> (traslación rígida).
+- **Aditividad**: Si $B$ está entre $A$ y $C$ ($A * B * C$), la yuxtaposición de los segmentos $AB$ y $BC$ equivale al segmento $AC$ mediante el <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>axioma III.3</ConceptLink>.
 
 <Separador />
 
-### Notación
+### Notación formal y convenios
 
-| Notación | Significado |
+| Notación | Significado matemático |
 |---|---|
-| $AB$ | Segmento con extremos $A$ y $B$ |
-| $\overline{AB}$ | Notación alternativa |
-| $\cong$ | Relación de congruencia entre segmentos |
-| $\vert AB \vert$ | Longitud del segmento |
-
-<Separador />
-
-### Observaciones
-
-En <ConceptLink targetId={["sistema-absoluto", "geometria"]} isDependency={false}>geometría absoluta</ConceptLink>, el segmento es un concepto definido a partir de la relación primitiva "estar entre". No requiere la noción de distancia numérica, aunque en el <ConceptLink targetId="modelo-cartesiano" isDependency={false}>modelo cartesiano</ConceptLink> la longitud del segmento $AB$ se calcula como $\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}$.
+| $AB$ | Segmento de recta de extremos $A$ y $B$ |
+| $AB \cong A'B'$ | <ConceptLink targetId="congruencia">Congruencia</ConceptLink> geométrica entre dos segmentos |
+| $|AB|$ | <ConceptLink targetId="distancia">Longitud</ConceptLink> o medida escalar del segmento |
