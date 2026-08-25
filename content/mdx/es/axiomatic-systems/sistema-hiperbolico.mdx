@@ -1,68 +1,64 @@
 export const metadata = {
-  "id": "sistema-hiperbolico",
-  "type": "sistema-axiomatico",
-  "title": "Geometría Hiperbólica",
-  "description": "Geometría no euclídea que satisface todos los axiomas de la geometría absoluta pero reemplaza el quinto postulado de Euclides por su negación: por un punto exterior a una recta pasan infinitas paralelas.",
-  "axiomas": [
-    "axioma-incidencia-1",
-    "axioma-incidencia-2",
-    "axioma-incidencia-3",
-    "axioma-incidencia-4",
-    "axioma-incidencia-5",
-    "axioma-incidencia-6",
-    "axioma-incidencia-7",
-    "axioma-incidencia-8",
-    "axioma-orden-1",
-    "axioma-orden-2",
-    "axioma-orden-3",
-    "axioma-orden-4",
-    "axioma-congruencia-1",
-    "axioma-congruencia-2",
-    "axioma-congruencia-3",
-    "axioma-congruencia-4",
-    "axioma-congruencia-5",
-    "axioma-arquimedes",
-    "axioma-completitud",
-    "axioma-paralelas-hiperbolico"
+  id: "sistema-hiperbolico",
+  lang: "es",
+  type: "sistema-axiomatico",
+  title: "Geometría Hiperbólica",
+  description: "Geometría no euclídea de curvatura gaussiana constante negativa que sustituye el axioma euclidiano de las paralelas por el postulado de Lobachevski-Bolyai.",
+  axiomas: [
+    "axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3", "axioma-incidencia-4",
+    "axioma-incidencia-5", "axioma-incidencia-6", "axioma-incidencia-7", "axioma-incidencia-8",
+    "axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4",
+    "axioma-congruencia-1", "axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4", "axioma-congruencia-5",
+    "axioma-arquimedes", "axioma-completitud", "axioma-paralelas-hiperbolico"
   ],
-  "models": [],
-  "mathematicians": ["lobachevski", "bolyai", "hilbert"],
-  "tags": ["geometria", "hiperbolica", "no-euclidiana", "fundamentos"]
+  sources: [
+    { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolai Lobachevski", locator: "§1-§10", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "secondary" }
+  ]
 };
 
-<Capitular letra="L" />
-a <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink> es la teoría geométrica no euclídea que surge al reemplazar el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> por el <ConceptLink targetId="axioma-paralelas-hiperbolico"  isDependency={false}>axioma de Lobachevski</ConceptLink>: por un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> exterior a una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> pasan infinitas rectas <ConceptLink targetId="coplanares" isDependency={false}>coplanares</ConceptLink> que no la intersecan. Esta estructura matemática fue descubierta independientemente por <ConceptLink targetId="lobachevski" isDependency={false}>Lobachevski</ConceptLink> (1829) y <ConceptLink targetId="bolyai" isDependency={false}>Bolyai</ConceptLink> (1832).
+<Capitular letra="L" />a <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> es la teoría geométrica no euclídea originada al reemplazar el <ConceptLink targetId="axioma-paralelas-euclides">postulado euclidiano de las paralelas</ConceptLink> por la hipótesis de hiperbolicidad formulada independientemente por <ConceptLink targetId="lobachevski">Nikolai Lobachevski</ConceptLink> y <ConceptLink targetId="bolyai">János Bolyai</ConceptLink>. Describe espacios de curvatura constante negativa en los cuales la rigidez del espacio <ConceptLink targetId="sistema-euclidiano">euclidiano</ConceptLink> se reemplaza por una métrica hiperbólica divergente.
+
+<Definicion title="">
+  El sistema <ConceptLink targetId="axioma">axiomático</ConceptLink> hiperbólico es la tupla $(\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I}, \mathcal{B}, \cong, \mathcal{P}_H)$ compuesta por los 19 <ConceptLink targetId="sistema-absoluto" isDependency={true}>axiomas de la geometría absoluta</ConceptLink> junto con el <ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>axioma hiperbólico</ConceptLink>: dada una <ConceptLink targetId="recta">recta</ConceptLink> $l$ y un <ConceptLink targetId="punto">punto</ConceptLink> $P \notin l$, existen al menos dos rectas distintas $m, n$ que pasan por $P$ y no intersecan a $l$.
+</Definicion>
 
 <Separador />
 
-### <ConceptLink targetId="axioma" isDependency={false}>Axiomas</ConceptLink>
+### Postulado hiperbólico de las paralelas
 
-La <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink> comprende los 19 axiomas de la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> más el axioma hiperbólico de las <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>:
+La propiedad distintiva del espacio hiperbólico postula la multiplicidad de rectas disjuntas:
 
-Axioma V' (Paralela Hiperbólica): Por un punto exterior a una recta pasan al menos dos rectas paralelas a la dada.
+- **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>IV.1 axioma de Lobachevski-Bolyai (multiplicidad de paralelas)</ConceptLink>**: Por un <ConceptLink targetId="punto">punto</ConceptLink> exterior a una <ConceptLink targetId="recta">recta</ConceptLink> dada pasan al menos dos rectas coplanares distintas que no la <ConceptLink targetId="interseccion">intersecan</ConceptLink>.
 
-De este axioma se sigue que pasan infinitas paralelas. En <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink>, la suma de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es siempre **menor** que $180^\circ$, y el <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> del triángulo es proporcional a su defecto angular $\delta = 180^\circ - (\alpha + \beta + \gamma)$.
-
-<Separador />
-
-### Modelos
-
-La <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink> no puede realizarse en el <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> euclídeo estándar, pero admite varios modelos dentro de $\mathbb{R}^n$ o $\mathbb{C}$:
-
-- **<ConceptLink targetId={["modelo-poincare", "plano"]}>Disco de Poincaré</ConceptLink>**: el interior del círculo unitario $\{z \in \mathbb{C} : |z| < 1\}$ con métrica hiperbólica. Las rectas son arcos de círculo ortogonales al borde.
-- **Semiplano de Poincaré**: $\{z \in \mathbb{C} : \Im(z) > 0\}$ con métrica $ds^2 = (dx^2 + dy^2)/y^2$.
-- **Modelo de Klein-Beltrami**: el interior de un círculo con rectas como cuerdas.
-- **Modelo del hiperboloide**: $\{x \in \mathbb{R}^{2,1} : \langle x, x \rangle = -1\}$ con la métrica de Minkowski.
+<Formula>
+  $$
+  \forall l \in \mathcal{L}, \forall P \notin l \implies \exists m, n \in \mathcal{L} \ (m \neq n \land P \in m \cap n \land m \cap l = \emptyset \land n \cap l = \emptyset)
+  $$
+</Formula>
 
 <Separador />
 
-### Propiedades
+### Modelos geométricos continuos
 
-La <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink> es **consistente** (relativamente a la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink>, mediante los modelos de Poincaré). Su descubrimiento en el siglo XIX demostró la independencia del <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink> y transformó nuestra comprensión de la naturaleza del espacio matemático.
+Debido a que el plano euclidiano no puede albergar la totalidad del plano hiperbólico sin distorsión (<ConceptLink targetId="teorema">teorema</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> sobre superficies de curvatura negativa constante), la geometría hiperbólica se representa mediante modelos conforme o proyectivos:
 
-En <ConceptLink targetId={["sistema-hiperbolico", "geometria"]}>geometría hiperbólica</ConceptLink>:
-- La suma de ángulos de un triángulo es $< 180^\circ$ y variable.
-- Triángulos con los mismos ángulos son <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> (no hay semejanza sin congruencia).
-- Existe un radio máximo para círculos inscritos.
-- La <ConceptLink targetId="circunferencia" isDependency={false}>circunferencia</ConceptLink> de un círculo de radio $r$ es $2\pi \sinh(r)$.
-- El área de un triángulo está acotada por $\pi$.
+- **<ConceptLink targetId="modelo-poincare">Disco de Poincaré</ConceptLink>**: Interior del disco unidad $\{z \in \mathbb{C} : |z| < 1\}$ donde las rectas son arcos circulares ortogonales a la frontera.
+- **Semiplano superior de Poincaré**: Región $\{z \in \mathbb{C} : \Im(z) > 0\}$ dotada de la métrica $ds^2 = \frac{dx^2 + dy^2}{y^2}$.
+- **Modelo de Klein-Beltrami**: Interior del disco unidad donde las rectas hiperbólicas coinciden con segmentos euclidianos rectilíneos.
+
+<Separador />
+
+### Propiedades y defectos angulares
+
+En el espacio hiperbólico se producen marcadas divergencias respecto a la geometría clásica:
+
+<Formula>
+  $$
+  \text{Área}(\Delta) = k^2 \left( \pi - (\alpha + \beta + \gamma) \right) = k^2 \cdot \delta(\Delta)
+  $$
+</Formula>
+
+- **Defecto angular**: La suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> es strictly menor que $180^\circ$. El defecto angular $\delta(\Delta) = \pi - (\alpha + \beta + \gamma)$ es proporcional al área del triángulo.
+- **Ausencia de semejanzas no triviales**: Dos triángulos con los mismos ángulos interiores son necesariamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>; no existen figuras <ConceptLink targetId="semejanza">semejantes</ConceptLink> de distinto tamaño.
+- **Crecimiento exponencial**: La <ConceptLink targetId="distancia">longitud</ConceptLink> de la <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> de radio $r$ viene dada por $2\pi \sinh(r)$, creciendo de forma exponencial.

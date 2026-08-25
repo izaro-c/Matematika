@@ -1,45 +1,38 @@
 export const metadata = {
-  "id": "axioma-incidencia-6",
-  "type": "axioma",
-  "title": "Axioma I-6 (Incidencia)",
-  "description": "Si dos puntos de una recta pertenecen a un plano, entonces toda la recta está contenida en dicho plano.",
-  "statement": "Si A y B son puntos de una recta l, y A, B ∈ π, entonces l ⊂ π.",
-  "authors": ["hilbert"],
-  "axiomSystem": "sistema-absoluto",
-  "sources": [
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  id: "axioma-incidencia-6",
+  lang: "es",
+  type: "axioma",
+  title: "Axioma I.6 (Incidencia de Recta en Plano)",
+  description: "Si dos puntos de una recta inciden en un plano, entonces todos los puntos de la recta inciden en dicho plano.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
   ],
-  "hasSimulation": true,
-  "links": ["punto", "recta", "plano", "incidencia"]
+  hasSimulation: true
 };
 
 import { Incidence6 } from '@content/diagrams/Axiomas/Incidence6';
 export const Simulation = Incidence6;
 
-<Capitular letra="S" />i dos <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos de una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> están contenidos en un <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink>, entonces toda la recta está incrustada en dicho plano. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> gobierna la relación de cerradura topológica entre líneas y <ConceptLink targetId="superficie" isDependency={false}>superficies</ConceptLink> en el <ConceptLink targetId="espacio" isDependency={false}>espacio</ConceptLink>.
+<Capitular letra="E" />l sexto <ConceptLink targetId="axioma-incidencia-6">axioma de incidencia</ConceptLink> formaliza la contención de <ConceptLink targetId="recta">rectas</ConceptLink> en superficies <ConceptLink targetId="plano">planas</ConceptLink>. Establece que si dos <ConceptLink targetId="punto">puntos</ConceptLink> de una recta pertenecen a un plano, la recta entera queda incrustada en dicho plano.
 
-<Separador />
-
-### Enunciado Formal
-
-<Formula>
+<Definicion title="">
+  Para toda <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$ y todo <ConceptLink targetId="plano">plano</ConceptLink> $\alpha \in \mathcal{E}$, si existen dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B \in l$ tales que $A \in \alpha$ y $B \in \alpha$, entonces la recta $l$ está contenida en $\alpha$:
   $$
-  \forall l, \pi \ ( \exists A, B \in l \cap \pi \land A \neq B ) \implies l \subset \pi
+  \forall l \in \mathcal{L}, \forall \alpha \in \mathcal{E} \ ( \exists A, B \in l \ (A \neq B \land A \in \alpha \land B \in \alpha) \implies l \subseteq \alpha )
   $$
-</Formula>
+</Definicion>
 
 <Separador />
 
-### Discusión
+### Representación visual e interacción
 
-Este <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> establece que la relación de <ConceptLink targetId="incidencia" isDependency={false}>incidencia</ConceptLink> entre rectas y planos es de naturaleza "cerrada": si una <InteractiveElement target="recta" color="carbon">recta</InteractiveElement> comparte apenas <InteractiveElement target="pA" color="terracota">dos</InteractiveElement> <InteractiveElement target="pB" color="terracota">puntos</InteractiveElement> con un <InteractiveElement target="plano" color="canela">plano</InteractiveElement>, cae atrapada entera dentro de él. Intuitivamente, una recta recta no puede "atravesar" curviéndose un plano compartiendo solo un trozo; o está completamente pegada en él, o lo pincha en un único punto, o vuela <ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink> sin tocarlo.
-
-Nótese que el <ConceptLink targetId="axioma-incidencia-1"  isDependency={false}>axioma I-1</ConceptLink> es vital aquí: como dos puntos siempre determinan una y solo una recta, si anclas esos dos puntos en el plano, toda la recta tensada entre ellos no tiene más remedio que descansar en el plano entero.
+En la simulación interactiva se observa la recta <VisualBind element="recta" color="carbon">$l$</VisualBind> incidiendo en el plano <VisualBind element="plano" color="musgo">$\alpha$</VisualBind> a través de los puntos fijados <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind>.
 
 <Separador />
 
-### Observaciones
+### Clasificación de posiciones relativas
 
-- Este comportamiento es exclusivo y característico de la <ConceptLink targetId="geometria-espacial" isDependency={false}>geometría tridimensional</ConceptLink>. En la <ConceptLink targetId="geometria-plana" isDependency={false}>geometría plana</ConceptLink> estricta, todas las rectas viven en el único plano del universo, por lo que la regla se cumple por defecto trivialmente.
-- En el espacio 3D, gracias a este axioma podemos clasificar las posiciones relativas exactas: recta contenida (comparte dos puntos), recta <ConceptLink targetId="rectas-secantes" isDependency={false}>secante</ConceptLink> (comparte un solo punto) o recta paralela (cero puntos en común).
+Este postulado permite clasificar las posiciones relativas entre <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink> en el espacio tridimensional:
+- **Recta contenida**: La recta comparte al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> con el plano ($l \subseteq \alpha$).
+- **Recta secante**: La recta interseca al plano en un único punto.
+- **Recta <ConceptLink targetId="paralelas">paralela</ConceptLink>**: La recta no posee puntos de <ConceptLink targetId="interseccion">intersección</ConceptLink> con el plano ($l \cap \alpha = \emptyset$).

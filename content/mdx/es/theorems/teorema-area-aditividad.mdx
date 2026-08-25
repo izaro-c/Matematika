@@ -1,35 +1,41 @@
 export const metadata = {
   "id": "teorema-area-aditividad",
   "type": "teorema",
-  "title": "Aditividad del Contenido",
-  "description": "Si un polígono se descompone en polígonos con interiores disjuntos, su contenido es la suma de los contenidos de las partes. Teorema derivado de la definición de equidescomponibilidad de Hilbert.",
-  "statement": "Sea P un polígono y P₁, P₂ una descomposición de P con interiores disjuntos. Entonces Cont(P) = Cont(P₁) + Cont(P₂).",
+  "title": "Aditividad de la medida de área",
+  "description": "Si un polígono se descompone en polígonos con interiores disjuntos, su área total equivale a la suma de las áreas de sus partes.",
+  "statement": "Sea P un polígono y P₁, P₂ una descomposición de P con interiores disjuntos. Entonces Área(P) = Área(P₁) + Área(P₂).",
   "tags": ["geometria", "areas"],
   "authors": ["hilbert"],
   "difficulty": "básico",
-  "demos": ["demo-area-aditividad"],
   "hasSimulation": false,
-  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
+  "sources": [
+    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §18-21", role: "primary" }
+  ]
 };
 
-<Capitular letra="L" />a definición de <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> asigna a cada polígono la suma de los contenidos de los triángulos de cualquiera de sus triangulaciones. Este teorema demuestra que dicha definición es **compatible con la operación geométrica de unión**: si un polígono se descompone en partes con interiores disjuntos, el contenido del todo es la suma de los contenidos de las partes.
+<Capitular letra="L" />a teoría del <ConceptLink targetId="area">área</ConceptLink> desarrollada por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> asigna a cada <ConceptLink targetId="poligono">polígono</ConceptLink> un valor numérico mediante el concepto de contenido o medida. El <ConceptLink targetId="teorema-area-aditividad">teorema de aditividad del área</ConceptLink> demuestra que la asignación de área es compatible con la partición geométrica: al escindir un polígono en regiones con interiores disjuntos, la medida del todo es exactamente igual a la suma de las medidas de las partes.
 
 <Separador />
 
-### Enunciado Formal
+### Enunciado formal
+
+Sea $P$ un <ConceptLink targetId="poligono">polígono</ConceptLink> escindido en dos polígonos $P_1$ y $P_2$ tales que sus interiores son disjuntos ($P_1^\circ \cap P_2^\circ = \emptyset$) y su unión constituye $P = P_1 \cup P_2$. Entonces:
 
 <Formula>
-  $$ P = P_1 \cup P_2,\quad P_1^\circ \cap P_2^\circ = \emptyset \implies \text{Cont}(P) = \text{Cont}(P_1) + \text{Cont}(P_2) $$
+  $$ \text{Área}(P) = \text{Área}(P_1) + \text{Área}(P_2) $$
 </Formula>
 
 <Separador />
 
-### Demostración (esbozo)
+### Análisis y demostración deductiva
 
-Por definición, el <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de un polígono triangulado es la suma de los contenidos de sus triángulos. Si $P$ se descompone en $P_1$ y $P_2$, por el <ConceptLink targetId="teorema-triangulacion-poligono" isDependency={true}>teorema de triangulación</ConceptLink> podemos triangular $P_1$ y $P_2$. La unión de ambas triangulaciones produce una triangulación de $P$ (los interiores disjuntos garantizan que los triángulos no se solapan). Por el <ConceptLink targetId="teorema-invariancia-triangulacion" >teorema de independencia de la triangulación</ConceptLink>, el contenido de $P$ no depende de la triangulación elegida, y la igualdad $\text{Cont}(P) = \text{Cont}(P_1) + \text{Cont}(P_2)$ es válida para cualquier triangulación.
+Por definición en la teoría de Hilbert, el <ConceptLink targetId="area">área</ConceptLink> de un <ConceptLink targetId="poligono">polígono</ConceptLink> se calcula como la suma de las áreas de los <ConceptLink targetId="triangulo">triángulos</ConceptLink> que componen una <ConceptLink targetId="triangulacion">triangulación</ConceptLink> dada.
+
+Si $P$ se descompone en $P_1$ y $P_2$, al elegir triangulaciones para $P_1$ y $P_2$, la yuxtaposición de ambas produce una triangulación válida para $P$, dado que los interiores no se solapan. La independencia del área respecto a la triangulación elegida garantiza que el valor aditivo es invariante y único.
 
 <Separador />
 
-### Observaciones
+### Observaciones y consecuencias
 
-La aditividad se extiende por <ConceptLink targetId="metodo-induccion" isDependency={false}>inducción</ConceptLink> a cualquier número finito de partes. Es la propiedad que permite sumar las áreas de los cuadrados sobre los catetos en la demostración del <ConceptLink targetId="teorema-pitagoras"  isDependency={false}>Teorema de Pitágoras</ConceptLink> por equidescomposición.
+- Por inducción matemática, la propiedad se extiende a cualquier partición finita $P = \bigcup_{k=1}^n P_k$ con interiores disjuntos a pares.
+- Constituye la base lógica para la demostración del <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> mediante descomposición de áreas y para el cálculo de áreas poligonales generales.

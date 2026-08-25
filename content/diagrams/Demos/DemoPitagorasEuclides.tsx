@@ -1,345 +1,451 @@
-import { MathBoard } from '@/diagrams/jsxgraph/MathBoard';
-import {
-  createGlider,
-  createLine,
-  createPoint,
-  createPolygon,
-  createRightAngleMarker,
-  createSegment,
-} from '@/diagrams/jsxgraph/MathFactory';
+import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';
 
-export const DemoPitagorasEuclides = () => {
-  const onInit = (board: any, els: any, theme: any) => {
-    const axisX = createLine(board, [
-      createPoint(board, [0, 0], { visible: false, target: false }, theme),
-      createPoint(board, [1, 0], { visible: false, target: false }, theme),
-    ], { visible: false, target: false }, theme);
-    const axisY = createLine(board, [
-      createPoint(board, [0, 0], { visible: false, target: false }, theme),
-      createPoint(board, [0, 1], { visible: false, target: false }, theme),
-    ], { visible: false, target: false }, theme);
-
-    const C = createPoint(board, [0, 0], {
-      name: 'C',
-      fixed: true,
-      size: 4,
-      fillColor: theme.carbon,
-      strokeColor: theme.carbon,
-    }, theme);
-    const A = createGlider(board, [0, 4, axisY], {
-      name: 'A',
-      size: 5,
-      fillColor: theme.carbon,
-      strokeColor: theme.carbon,
-    }, theme);
-    const B = createGlider(board, [5, 0, axisX], {
-      name: 'B',
-      size: 5,
-      fillColor: theme.carbon,
-      strokeColor: theme.carbon,
-    }, theme);
-
-    A.on('drag', () => {
-      if (A.Y() < 1) A.moveTo([0, 1], 0);
-    });
-    B.on('drag', () => {
-      if (B.X() < 1) B.moveTo([1, 0], 0);
-    });
-
-    const polyABC = createPolygon(board, [C, B, A], {
-      fillOpacity: 0.1,
-      borders: { strokeWidth: 3 },
-      vertices: { visible: false },
-    }, theme);
-    polyABC.borders[0].setAttribute({
-      strokeColor: theme.terracota,
-      name: 'a',
-      withLabel: true,
-      label: { strokeColor: theme.terracota, fontSize: 18, offset: [10, -15] },
-    });
-    polyABC.borders[1].setAttribute({
-      strokeColor: theme.mora,
-      name: 'c',
-      withLabel: true,
-      label: { strokeColor: theme.mora, fontSize: 18, offset: [15, 15] },
-    });
-    polyABC.borders[2].setAttribute({
-      strokeColor: theme.canela,
-      name: 'b',
-      withLabel: true,
-      label: { strokeColor: theme.canela, fontSize: 18, offset: [-20, 10] },
-    });
-    const rightAngle = createRightAngleMarker(board, [B, C, A], {}, theme);
-
-    const K = createPoint(board, [() => -A.Y(), () => A.Y()], {
-      name: 'K',
-      visible: false,
-      size: 3,
-      fillColor: theme.carbon,
-      strokeColor: theme.carbon,
-    }, theme);
-    const H = createPoint(board, [() => -A.Y(), 0], { name: 'H', visible: false, target: false }, theme);
-    const sqB = createPolygon(board, [C, A, K, H], {
-      fillColor: theme.canela,
-      fillOpacity: 0.2,
-      borders: { strokeColor: theme.canela, strokeWidth: 2 },
-      vertices: { visible: false },
-    }, theme);
-
-    const F = createPoint(board, [() => B.X(), () => -B.X()], {
-      name: 'F',
-      visible: false,
-      size: 3,
-      fillColor: theme.carbon,
-      strokeColor: theme.carbon,
-    }, theme);
-    const G = createPoint(board, [0, () => -B.X()], { name: 'G', visible: false, target: false }, theme);
-    const sqA = createPolygon(board, [C, B, F, G], {
-      fillColor: theme.terracota,
-      fillOpacity: 0.2,
-      borders: { strokeColor: theme.terracota, strokeWidth: 2 },
-      vertices: { visible: false },
-    }, theme);
-
-    const E = createPoint(board, [() => B.X() + A.Y(), () => B.X()], {
-      name: 'E',
-      visible: false,
-      size: 3,
-      fillColor: theme.carbon,
-      strokeColor: theme.carbon,
-    }, theme);
-    const D = createPoint(board, [() => A.Y(), () => A.Y() + B.X()], {
-      name: 'D',
-      visible: false,
-      size: 3,
-      fillColor: theme.carbon,
-      strokeColor: theme.carbon,
-    }, theme);
-    const sqC = createPolygon(board, [A, B, E, D], {
-      fillColor: theme.mora,
-      fillOpacity: 0.2,
-      borders: { strokeColor: theme.mora, strokeWidth: 2 },
-      vertices: { visible: false },
-    }, theme);
-
-    const lineAB = createLine(board, [A, B], { visible: false, target: false }, theme);
-    const altC = board.create('perpendicular', [lineAB, C], { visible: false });
-    const lineDE = createLine(board, [D, E], { visible: false, target: false }, theme);
-    const L = board.create('intersection', [altC, lineAB, 0], { name: 'L', visible: false });
-    const M = board.create('intersection', [altC, lineDE, 0], { name: 'M', visible: false });
-    const altSegment = createSegment(board, [C, M], {
-      strokeColor: theme.carbon,
-      strokeWidth: 2,
-      dash: 2,
-    }, theme);
-
-    const rectADML = createPolygon(board, [A, D, M, L], {
-      fillColor: theme.canela,
-      fillOpacity: 0,
-      borders: { strokeColor: theme.canela, strokeWidth: 2, visible: false },
-      vertices: { visible: false },
-    }, theme);
-    const rectBEML = createPolygon(board, [B, E, M, L], {
-      fillColor: theme.terracota,
-      fillOpacity: 0,
-      borders: { strokeColor: theme.terracota, strokeWidth: 2, visible: false },
-      vertices: { visible: false },
-    }, theme);
-
-    const lineCD = createSegment(board, [C, D], { strokeColor: theme.carbon, strokeWidth: 2, dash: 1, visible: false }, theme);
-    const lineKB = createSegment(board, [K, B], { strokeColor: theme.carbon, strokeWidth: 2, dash: 1, visible: false }, theme);
-    const lineCE = createSegment(board, [C, E], { strokeColor: theme.carbon, strokeWidth: 2, dash: 1, visible: false }, theme);
-    const lineAF = createSegment(board, [A, F], { strokeColor: theme.carbon, strokeWidth: 2, dash: 1, visible: false }, theme);
-
-    const triACD = createPolygon(board, [A, C, D], {
-      fillColor: theme.canela,
-      fillOpacity: 0,
-      borders: { strokeWidth: 0 },
-      vertices: { visible: false },
-    }, theme);
-    const triAKB = createPolygon(board, [A, K, B], {
-      fillColor: theme.canela,
-      fillOpacity: 0,
-      borders: { strokeWidth: 0 },
-      vertices: { visible: false },
-    }, theme);
-    const triBCE = createPolygon(board, [B, C, E], {
-      fillColor: theme.terracota,
-      fillOpacity: 0,
-      borders: { strokeWidth: 0 },
-      vertices: { visible: false },
-    }, theme);
-    const triABF = createPolygon(board, [A, B, F], {
-      fillColor: theme.terracota,
-      fillOpacity: 0,
-      borders: { strokeWidth: 0 },
-      vertices: { visible: false },
-    }, theme);
-
-    Object.assign(els, {
-      axisX,
-      axisY,
-      A,
-      B,
-      C,
-      D,
-      E,
-      F,
-      G,
-      H,
-      K,
-      L,
-      M,
-      polyABC,
-      rightAngle,
-      sqA,
-      sqB,
-      sqC,
-      lineAB,
-      lineDE,
-      altC,
-      altSegment,
-      rectADML,
-      rectBEML,
-      lineCD,
-      lineKB,
-      lineCE,
-      lineAF,
-      triACD,
-      triAKB,
-      triBCE,
-      triABF,
-    });
-  };
-
-  const onUpdate = (_board: any, els: any, _theme: any, isStep: any, isHL: any) => {
-    els.polyABC.setAttribute({ fillOpacity: 0.1 });
-    els.polyABC.borders.forEach((border: any) => border.setAttribute({ strokeWidth: 3 }));
-    els.sqA.setAttribute({ fillOpacity: 0, borders: { strokeWidth: 1, strokeOpacity: 0.2 } });
-    els.sqB.setAttribute({ fillOpacity: 0, borders: { strokeWidth: 1, strokeOpacity: 0.2 } });
-    els.sqC.setAttribute({ fillOpacity: 0, borders: { strokeWidth: 1, strokeOpacity: 0.2 } });
-    els.altSegment.setAttribute({ visible: false, strokeWidth: 2 });
-
-    [els.rectADML, els.rectBEML].forEach((rect: any) => {
-      rect.setAttribute({ fillOpacity: 0 });
-      rect.borders.forEach((border: any) => border.setAttribute({ visible: false, strokeWidth: 2 }));
-    });
-    [els.lineCD, els.lineKB, els.lineCE, els.lineAF].forEach((line: any) => line.setAttribute({ visible: false, strokeWidth: 2 }));
-    [els.triACD, els.triAKB, els.triBCE, els.triABF].forEach((triangle: any) => triangle.setAttribute({ fillOpacity: 0 }));
-    [els.D, els.K, els.E, els.F].forEach((point: any) => point.setAttribute({ visible: false }));
-
-    if (isStep('triangulo')) els.polyABC.setAttribute({ fillOpacity: 0.2 });
-
-    const showSquares = ['cuadrados', 'altura', 'triangulos-izq', 'areas-izq', 'triangulos-der', 'areas-der', 'cuadrados-final'].some(isStep);
-    if (showSquares) {
-      els.sqA.setAttribute({ fillOpacity: 0.1, borders: { strokeWidth: 2, strokeOpacity: 1 } });
-      els.sqB.setAttribute({ fillOpacity: 0.1, borders: { strokeWidth: 2, strokeOpacity: 1 } });
-      els.sqC.setAttribute({ fillOpacity: 0.1, borders: { strokeWidth: 2, strokeOpacity: 1 } });
+/* @matematika-diagram-spec:start */
+export const DemoPitagorasEuclidesSpec = createDiagramSpec(
+{
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
+  "title": "Teorema de Pitágoras: Demostración de Euclides",
+  "componentId": "demo-pitagoras-euclides",
+  "category": "Demos",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "showLabels": true,
+  "viewport": {
+    "bounds": [-8, 12, 13, -8],
+    "home": [-8, 12, 13, -8],
+    "minZoom": 0.2,
+    "maxZoom": 10,
+    "padding": 0.16
+  },
+  "layers": [
+    { "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false },
+    { "id": "annotations", "label": "Anotaciones", "order": 1, "visible": true, "locked": false }
+  ],
+  "groups": [],
+  "objects": [
+    {
+      "id": "pC",
+      "label": "C",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 30,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto C (Ángulo recto)", "role": "primary" },
+      "target": true,
+      "targetId": "pC",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 0, "y": 0 },
+      "mobility": { "type": "fixed" },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 31,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto A", "role": "primary" },
+      "target": true,
+      "targetId": "pA",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 0, "y": 4 },
+      "mobility": { "type": "axis-y", "coordinate": 4 },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 32,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto B", "role": "primary" },
+      "target": true,
+      "targetId": "pB",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 5, "y": 0 },
+      "mobility": { "type": "axis-x", "coordinate": 5 },
+      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "polyABC",
+      "label": "Triángulo ABC",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 5,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Triángulo rectángulo principal ABC", "role": "primary" },
+      "target": true,
+      "targetId": "polyABC",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pC", "pB", "pA"]
+      },
+      "appearance": { "fillOpacity": 0.1, "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "rightAngle",
+      "label": "Ángulo recto",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Ángulo recto en C", "role": "secondary" },
+      "target": true,
+      "targetId": "rightAngle",
+      "objectType": "angle",
+      "points": ["pB", "pC", "pA"],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": { "radius": 0.8, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pK",
+      "label": "K",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 33,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto K", "role": "secondary" },
+      "target": true,
+      "targetId": "pK",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": -4, "y": 4 },
+      "mobility": { "type": "fixed" },
+      "appearance": { "size": 5, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pH",
+      "label": "H",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 34,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": { "selectable": false, "ariaLabel": "Punto H", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": -4, "y": 0 },
+      "mobility": { "type": "fixed" }
+    },
+    {
+      "id": "sqB",
+      "label": "Cuadrado b²",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 6,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Cuadrado construido sobre el cateto b", "role": "primary" },
+      "target": true,
+      "targetId": "sqB",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pC", "pA", "pK", "pH"]
+      },
+      "appearance": { "fillOpacity": 0.15, "strokeWidth": 2, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pF",
+      "label": "F",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 35,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto F", "role": "secondary" },
+      "target": true,
+      "targetId": "pF",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 5, "y": -5 },
+      "mobility": { "type": "fixed" },
+      "appearance": { "size": 5, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pG",
+      "label": "G",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 36,
+      "visible": false,
+      "locked": true,
+      "groupIds": [],
+      "selection": { "selectable": false, "ariaLabel": "Punto G", "role": "construction" },
+      "target": false,
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 0, "y": -5 },
+      "mobility": { "type": "fixed" }
+    },
+    {
+      "id": "sqA",
+      "label": "Cuadrado a²",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 7,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Cuadrado construido sobre el cateto a", "role": "primary" },
+      "target": true,
+      "targetId": "sqA",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pC", "pB", "pF", "pG"]
+      },
+      "appearance": { "fillOpacity": 0.15, "strokeWidth": 2, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pD",
+      "label": "D",
+      "color": "mora",
+      "layerId": "geometry",
+      "order": 37,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto D", "role": "secondary" },
+      "target": true,
+      "targetId": "pD",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 4, "y": 9 },
+      "mobility": { "type": "fixed" },
+      "appearance": { "size": 5, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pE",
+      "label": "E",
+      "color": "mora",
+      "layerId": "geometry",
+      "order": 38,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto E", "role": "secondary" },
+      "target": true,
+      "targetId": "pE",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 9, "y": 5 },
+      "mobility": { "type": "fixed" },
+      "appearance": { "size": 5, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "sqC",
+      "label": "Cuadrado c²",
+      "color": "mora",
+      "layerId": "geometry",
+      "order": 8,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Cuadrado construido sobre la hipotenusa c", "role": "primary" },
+      "target": true,
+      "targetId": "sqC",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pA", "pB", "pE", "pD"]
+      },
+      "appearance": { "fillOpacity": 0.15, "strokeWidth": 2, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pL",
+      "label": "L",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 39,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto L (Pie de la altura)", "role": "construction" },
+      "target": true,
+      "targetId": "pL",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 1.95, "y": 2.44 },
+      "mobility": { "type": "fixed" },
+      "appearance": { "size": 4, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "pM",
+      "label": "M",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 40,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Punto M", "role": "construction" },
+      "target": true,
+      "targetId": "pM",
+      "objectType": "point",
+      "definition": { "type": "coordinates", "x": 5.85, "y": 7.32 },
+      "mobility": { "type": "fixed" },
+      "appearance": { "size": 4, "labelVisible": true, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "altSegment",
+      "label": "Segmento CM (Altura)",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 12,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Segmento de la altura prolongado", "role": "secondary" },
+      "target": true,
+      "targetId": "altSegment",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": ["pC", "pM"]
+      },
+      "appearance": { "dashed": true, "strokeWidth": 2, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "rectADML",
+      "label": "Rectángulo ADML",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 13,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Rectángulo ADML (Equivalente a b²)", "role": "primary" },
+      "target": true,
+      "targetId": "rectADML",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pA", "pD", "pM", "pL"]
+      },
+      "appearance": { "fillOpacity": 0.2, "strokeWidth": 2, "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "rectBEML",
+      "label": "Rectángulo BEML",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 14,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Rectángulo BEML (Equivalente a a²)", "role": "primary" },
+      "target": true,
+      "targetId": "rectBEML",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": ["pB", "pE", "pM", "pL"]
+      },
+      "appearance": { "fillOpacity": 0.2, "strokeWidth": 2, "preserveColorOnHighlight": true }
     }
-    if (isStep('cuadrados')) {
-      els.sqA.setAttribute({ fillOpacity: 0.2 });
-      els.sqB.setAttribute({ fillOpacity: 0.2 });
-      els.sqC.setAttribute({ fillOpacity: 0.2 });
+  ],
+  "relations": [],
+  "steps": [
+    {
+      "id": "triangulo",
+      "label": "Triángulo rectángulo base",
+      "description": "Partimos de un triángulo rectángulo ABC con ángulo recto en C.",
+      "visibleTargets": ["polyABC", "pC", "pA", "pB"],
+      "durationMs": 1000
+    },
+    {
+      "id": "cuadrados",
+      "label": "Construcción de los tres cuadrados",
+      "description": "Se construyen cuadrados sobre los catetos (a² y b²) y sobre la hipotenusa (c²).",
+      "visibleTargets": ["sqA", "sqB", "sqC"],
+      "durationMs": 1000
+    },
+    {
+      "id": "altura",
+      "label": "Trazado de la altura",
+      "description": "La recta perpendicular a la hipotenusa que pasa por C divide el cuadrado c² en dos rectángulos.",
+      "visibleTargets": ["altSegment", "rectADML", "rectBEML"],
+      "durationMs": 1000
+    },
+    {
+      "id": "triangulos-izq",
+      "label": "Congruencia izquierda (ACD ≅ AKB)",
+      "description": "Los triángulos ACD y AKB son congruentes por el criterio LAL, teniendo igual área.",
+      "visibleTargets": ["sqB", "rectADML"],
+      "durationMs": 1000
+    },
+    {
+      "id": "areas-izq",
+      "label": "Igualdad de área: Cuadrado b² = Rectángulo ADML",
+      "description": "El área del triángulo AKB es la mitad del cuadrado b², y el área de ACD es la mitad del rectángulo ADML.",
+      "visibleTargets": ["sqB", "rectADML"],
+      "durationMs": 1000
+    },
+    {
+      "id": "triangulos-der",
+      "label": "Congruencia derecha (BCE ≅ ABF)",
+      "description": "De forma análoga, los triángulos BCE y ABF son congruentes por LAL.",
+      "visibleTargets": ["sqA", "rectBEML"],
+      "durationMs": 1000
+    },
+    {
+      "id": "areas-der",
+      "label": "Igualdad de área: Cuadrado a² = Rectángulo BEML",
+      "description": "El cuadrado a² tiene la misma área que el rectángulo BEML.",
+      "visibleTargets": ["sqA", "rectBEML"],
+      "durationMs": 1000
+    },
+    {
+      "id": "cuadrados-final",
+      "label": "Conclusión: a² + b² = c²",
+      "description": "Sumando ambas áreas, el cuadrado sobre la hipotenusa c² es la suma de los cuadrados sobre los catetos a² + b².",
+      "visibleTargets": ["sqA", "sqB", "sqC", "rectADML", "rectBEML"],
+      "durationMs": 1000
     }
-    if (['altura', 'triangulos-izq', 'areas-izq', 'triangulos-der', 'areas-der', 'cuadrados-final'].some(isStep)) {
-      els.altSegment.setAttribute({ visible: true });
+  ],
+  "note": "Interactúa con los pasos para recorrer la demostración del libro I (Proposición 47) de los Elementos de Euclides.",
+  "translations": {
+    "eu": {
+      "title": "Pitagorasen teorema: Euklidesen frogapena",
+      "note": "Interaktuatu urratsekin Euklidesen Elementuen I. liburuko (47. proposizioa) frogapena ikusteko.",
+      "steps": {
+        "triangulo": {
+          "label": "Oinarrizko triangelu angeluzuzena",
+          "description": "C-n kulunka zuzena duen ABC triangelu angeluzuzenetik abiatzen gara."
+        },
+        "cuadrados": {
+          "label": "Hiru karratuen eraikuntza",
+          "description": "Karratuak eraikitzen dira katetoen (a² eta b²) eta hipotenusaren (c²) gainean."
+        },
+        "altura": {
+          "label": "Altueraren lerroa",
+          "description": "C-tik igarotzen den hipotenusarekiko zutak c² karratua bi angeluzuzenetan banatzen du."
+        },
+        "cuadrados-final": {
+          "label": "Ondorioa: a² + b² = c²",
+          "description": "Bi azalerak batuz, hipotenusaren gaineko karratua katetoen gaineko karratuen batura da."
+        }
+      }
     }
-    if (isStep('altura')) {
-      els.rectADML.borders.forEach((border: any) => border.setAttribute({ visible: true }));
-      els.rectBEML.borders.forEach((border: any) => border.setAttribute({ visible: true }));
-      els.sqC.setAttribute({ fillOpacity: 0 });
-    }
-    if (isStep('triangulos-izq')) {
-      els.lineCD.setAttribute({ visible: true });
-      els.lineKB.setAttribute({ visible: true });
-      els.triACD.setAttribute({ fillOpacity: 0.3 });
-      els.triAKB.setAttribute({ fillOpacity: 0.3 });
-      els.sqB.setAttribute({ fillOpacity: 0.2 });
-      els.sqC.setAttribute({ fillOpacity: 0.2 });
-      els.D.setAttribute({ visible: true });
-      els.K.setAttribute({ visible: true });
-    }
-    if (isStep('areas-izq')) {
-      els.sqB.setAttribute({ fillOpacity: 0.4 });
-      els.rectADML.setAttribute({ fillOpacity: 0.4 });
-      els.rectADML.borders.forEach((border: any) => border.setAttribute({ visible: true, strokeWidth: 2 }));
-    }
-    if (isStep('triangulos-der')) {
-      els.lineCE.setAttribute({ visible: true });
-      els.lineAF.setAttribute({ visible: true });
-      els.triBCE.setAttribute({ fillOpacity: 0.3 });
-      els.triABF.setAttribute({ fillOpacity: 0.3 });
-      els.sqA.setAttribute({ fillOpacity: 0.2 });
-      els.sqC.setAttribute({ fillOpacity: 0.2 });
-      els.E.setAttribute({ visible: true });
-      els.F.setAttribute({ visible: true });
-    }
-    if (isStep('areas-der')) {
-      els.sqA.setAttribute({ fillOpacity: 0.4 });
-      els.rectBEML.setAttribute({ fillOpacity: 0.4 });
-      els.rectBEML.borders.forEach((border: any) => border.setAttribute({ visible: true, strokeWidth: 2 }));
-    }
-    if (isStep('cuadrados-final')) {
-      els.sqA.setAttribute({ fillOpacity: 0.5 });
-      els.sqB.setAttribute({ fillOpacity: 0.5 });
-      els.rectADML.setAttribute({ fillOpacity: 0.5 });
-      els.rectBEML.setAttribute({ fillOpacity: 0.5 });
-      els.rectADML.borders.forEach((border: any) => border.setAttribute({ visible: true, strokeWidth: 3 }));
-      els.rectBEML.borders.forEach((border: any) => border.setAttribute({ visible: true, strokeWidth: 3 }));
-      els.sqC.setAttribute({ fillOpacity: 0 });
-    }
+  }
+}
+);
+/* @matematika-diagram-spec:end */
 
-    if (isHL('triangulo-base')) {
-      els.polyABC.setAttribute({ fillOpacity: 0.5 });
-      els.polyABC.borders.forEach((border: any) => border.setAttribute({ strokeWidth: 6 }));
-    }
-    if (isHL('cateto-a')) els.polyABC.borders[0].setAttribute({ strokeWidth: 6 });
-    if (isHL('cateto-b')) els.polyABC.borders[2].setAttribute({ strokeWidth: 6 });
-    if (isHL('hipotenusa-c')) els.polyABC.borders[1].setAttribute({ strokeWidth: 6 });
-    if (isHL('cuadrado-a')) els.sqA.setAttribute({ fillOpacity: 0.5, borders: { strokeWidth: 4 } });
-    if (isHL('cuadrado-b')) els.sqB.setAttribute({ fillOpacity: 0.5, borders: { strokeWidth: 4 } });
-    if (isHL('cuadrado-c')) els.sqC.setAttribute({ fillOpacity: 0.5, borders: { strokeWidth: 4 } });
-    if (isHL('recta-altura')) els.altSegment.setAttribute({ visible: true, strokeWidth: 5 });
-    if (isHL('rectangulos-hipotenusa')) {
-      els.rectADML.borders.forEach((border: any) => border.setAttribute({ visible: true, strokeWidth: 4 }));
-      els.rectBEML.borders.forEach((border: any) => border.setAttribute({ visible: true, strokeWidth: 4 }));
-    }
-    if (isHL('triangulo-acd')) {
-      els.triACD.setAttribute({ fillOpacity: 0.7 });
-      els.lineCD.setAttribute({ visible: true, strokeWidth: 4 });
-      els.D.setAttribute({ visible: true });
-    }
-    if (isHL('triangulo-akb')) {
-      els.triAKB.setAttribute({ fillOpacity: 0.7 });
-      els.lineKB.setAttribute({ visible: true, strokeWidth: 4 });
-      els.K.setAttribute({ visible: true });
-    }
-    if (isHL('rectangulo-izq')) {
-      els.rectADML.setAttribute({ fillOpacity: 0.7 });
-      els.rectADML.borders.forEach((border: any) => border.setAttribute({ visible: true, strokeWidth: 5 }));
-    }
-    if (isHL('triangulo-bce')) {
-      els.triBCE.setAttribute({ fillOpacity: 0.7 });
-      els.lineCE.setAttribute({ visible: true, strokeWidth: 4 });
-      els.E.setAttribute({ visible: true });
-    }
-    if (isHL('triangulo-abf')) {
-      els.triABF.setAttribute({ fillOpacity: 0.7 });
-      els.lineAF.setAttribute({ visible: true, strokeWidth: 4 });
-      els.F.setAttribute({ visible: true });
-    }
-    if (isHL('rectangulo-der')) {
-      els.rectBEML.setAttribute({ fillOpacity: 0.7 });
-      els.rectBEML.borders.forEach((border: any) => border.setAttribute({ visible: true, strokeWidth: 5 }));
-    }
-  };
-
-  return (
-    <MathBoard
-      boundingbox={[-8, 12, 13, -8]}
-      className="relative min-h-[560px] w-full overflow-hidden"
-      onInit={onInit}
-      onUpdate={onUpdate}
-    />
-  );
-};
+export const DemoPitagorasEuclides = () => <DiagramRenderer spec={DemoPitagorasEuclidesSpec} />;

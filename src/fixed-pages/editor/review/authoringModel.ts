@@ -148,7 +148,8 @@ export function buildAuthoringIntegrityReport(input: AuthoringIntegrityInput): E
 
   if (currentId) {
     const currentPath = normalizedContentPath(input.currentFile ?? '');
-    const currentLang = typeof input.metadata.lang === 'string' ? input.metadata.lang : 'es';
+    const pathLang = input.currentFile ? (/\b(eu|es)\b/.exec(normalizedContentPath(input.currentFile))?.[1]) : undefined;
+    const currentLang = typeof input.metadata.lang === 'string' ? input.metadata.lang : (pathLang || 'es');
     const duplicates = entries.filter(entry => {
       const entryLang = entry.lang || (entry.metadata?.lang as string) || 'es';
       return entry.id === currentId && entryLang === currentLang && normalizedContentPath(entry.filePath) !== currentPath;
@@ -176,7 +177,7 @@ export function buildAuthoringIntegrityReport(input: AuthoringIntegrityInput): E
   });
 
   const knownDiagramTargets = new Set(input.diagramTargets.flatMap(target => [target.id, target.qualifiedId].filter(Boolean) as string[]));
-  const diagramRefs = [...input.source.matchAll(/\b(?:target|highlightTarget)\s*=\s*"([^"]+)"/g)];
+  const diagramRefs = [...input.source.matchAll(/\b(?:target|highlightTarget|element)\s*=\s*"([^"]+)"/g)];
   for (const match of diagramRefs) {
     const target = match[1];
     if (input.diagramTargets.length > 0 && !knownDiagramTargets.has(target) && !/^step\d+$/i.test(target) && target !== 'initial') {

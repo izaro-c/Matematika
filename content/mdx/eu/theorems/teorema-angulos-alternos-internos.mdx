@@ -1,35 +1,34 @@
 export const metadata = {
-  "lang": "eu",
   "id": "teorema-angulos-alternos-internos",
   "type": "teorema",
-  "title": "Teorema de los ángulos alternos internos",
-  "description": "Dos rectas cortadas por una transversal son paralelas si y solo si los ángulos alternos internos son congruentes. La ida pertenece a la geometría absoluta; la vuelta requiere el axioma euclidiano de las paralelas.",
-  "statement": "Sean l y m dos rectas cortadas por una transversal t en los puntos A y B respectivamente. Los ángulos alternos internos son congruentes sii l ∥ m. La dirección ⇐ requiere el axioma euclidiano de las paralelas.",
+  "title": "Barne-angelu alternoen teorema",
+  "description": "Transbertsal batek ebakitako bi zuzen paraleloak dira barne-angelu alternoak kongruenteak badira eta soilik badira. Zuzeneko norabidea geometria absolutuari dagokio; alderantzizkoak paraleloen axioma euklidestarra behar du.",
+  "statement": "Bedi l eta m transbertsal batek ebakitako bi zuzen. Barne-angelu alternoak kongruenteak dira l ∥ m bada eta soilik bada.",
   "tags": ["geometria", "angulos", "paralelas"],
   "authors": ["euclides"],
   "difficulty": "básico",
   "hasSimulation": false,
   "demos": ["demo-angulos-alternos-internos"],
-  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
+  "sources": [
+    { "title": "Elementos", "author": "Euclides", "locator": "Libro I, Proposiciones 27 y 29", "role": "primary" }
+  ]
 };
 
-<Capitular letra="E" />ste <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> —que abarca las Proposiciones I.27 e I.29 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>— es el puente fundamental entre la noción de <ConceptLink targetId="paralelas" isDependency={false}>paralelismo</ConceptLink> y la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink>. Establece que dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> cortadas por una <ConceptLink targetId="transversal" isDependency={false}>transversal</ConceptLink> son paralelas si y solo si los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> alternos internos son congruentes.
-
-La dirección de ida («ángulos congruentes ⇒ rectas paralelas») pertenece a la <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>: se demuestra por <ConceptLink targetId="contradiccion" isDependency={false}>reducción al absurdo</ConceptLink> usando el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>. La vuelta («rectas paralelas ⇒ ángulos congruentes») requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>, que garantiza la unicidad de la paralela por un punto exterior.
+<Capitular letra="B" />arne-angelu alternoen <ConceptLink targetId="teorema-angulos-alternos-internos">teoremak</ConceptLink> —<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.27 eta I.29 proposizioei dagokiena— funtsezko lotura ezartzen du <ConceptLink targetId="recta">zuzenen</ConceptLink> <ConceptLink targetId="paralelismo">paralelotasunaren</ConceptLink> eta <ConceptLink targetId="angulo">angeluen</ConceptLink> <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> artean. <ConceptLink targetId="interseccion">Ebakidurarik</ConceptLink> ezaren baldintza geometrikoaren eta <ConceptLink targetId="transversal">transbertsal</ConceptLink> baten gaineko posizio alternoetan dauden angeluen irekidura-berdintasunaren arteko baliokidetasuna ezartzen du.
 
 <Separador />
 
-### Enunciado Formal
+### Formulatze formala
 
-Sean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> y $t$ una <ConceptLink targetId="recta" isDependency={false}>transversal</ConceptLink> que las corta en $A \in l$ y $B \in m$. Sean $\alpha$ y $\beta$ dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> alternos internos formados por $t$ con $l$ y $m$.
+Bedi $l$ eta $m$ bi <ConceptLink targetId="recta">zuzen</ConceptLink> koplanar eta $t$ horiek $A \in l$ eta $B \in m$ <ConceptLink targetId="punto">puntuetan</ConceptLink> ebatzen dituen <ConceptLink targetId="transversal">transbertsal</ConceptLink> bat. Izan bedi $\alpha$ eta $\beta$ zuzen horiek eta $t$ transbertsalak zehaztutako bi <ConceptLink targetId="angulos-alternos-internos">barne-angelu alterno</ConceptLink>.
 
-**Parte 1** (<ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink>):
+**1. zatia** (<ConceptLink targetId="geometria-absoluta">geometria absolutua</ConceptLink>):
 
 <Formula>
   $$ \alpha \cong \beta \implies l \parallel m $$
 </Formula>
 
-**Parte 2** (requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>):
+**2. zatia** (<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioma euklidestarra</ConceptLink> behar du):
 
 <Formula>
   $$ l \parallel m \implies \alpha \cong \beta $$
@@ -37,16 +36,15 @@ Sean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</Co
 
 <Separador />
 
-### Discusión
+### Analisia eta desglosa deduktiboa
 
-Este teorema es la bisagra lógica que conecta la <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink> con la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink>. Sin él, resultados como el <ConceptLink targetId="teorema-suma-angulos-triangulo"  isDependency={false}>teorema de la suma de ángulos del triángulo</ConceptLink> ($\alpha+\beta+\gamma = 180^\circ$), el <ConceptLink targetId="teorema-tales"  isDependency={false}>teorema de Tales</ConceptLink> y el <ConceptLink targetId="teorema-pitagoras"  isDependency={false}>teorema de Pitágoras</ConceptLink> serían indemostrables.
+1. zatiaren frogapenak ez du paralelo euklidestarren existentziarik ez eta bakartasunik ere aurresuposatzen; soilik <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink> oinarritzen da, <ConceptLink targetId="reduccion-al-absurdo">absurdora murriztearen</ConceptLink> bidez eta <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>kanpo-angeluaren teorema</ConceptLink> erabiliz.
 
-La Parte 1 (absoluta) es elegantísima: la hipótesis de que las rectas se cortan fuerza la existencia de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> cuyo <ConceptLink targetId="teorema-angulo-externo"  isDependency={false}>ángulo externo</ConceptLink> igualaría a uno remoto, contradiciendo el <ConceptLink targetId="teorema-angulo-externo"  isDependency={false}>teorema del ángulo externo</ConceptLink>.
+Aitzitik, 2. zatiak nahitaezkoa du <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen postulatu euklidestarra</ConceptLink>. Geometria ez-euklidestarretan, adibidez <ConceptLink targetId="geometria-hiperbolica">geometria hiperbolikoan</ConceptLink>, 1. zatiak baliozkoa izaten jarraitzen du, baina 2. zatia ez da orokorrean betetzen.
 
 <Separador />
 
-### Observaciones
+### Oharrak eta ondorioak
 
-- La Parte 1 es válida en <ConceptLink targetId="geometria-absoluta" isDependency={false}>geometría absoluta</ConceptLink> (euclidiana e hiperbólica). En <ConceptLink targetId="geometria-hiperbolica" isDependency={false}>geometría hiperbólica</ConceptLink>, no se cumple la Parte 2: existen rectas paralelas cuyos ángulos alternos internos no son congruentes (son las paralelas no-asintóticas de <ConceptLink targetId="lobachevski" isDependency={false}>Lobachevski</ConceptLink>).
-- El teorema es equivalente al <ConceptLink targetId="axioma-paralelas-euclides"  isDependency={false}>axioma euclidiano de las paralelas</ConceptLink>: ambos se implican mutuamente. Adoptar uno u otro como axioma es una cuestión de preferencia en la organización deductiva.
-- La Parte 2 también implica la igualdad de los <ConceptLink targetId="angulos-correspondientes" isDependency={false}>ángulos correspondientes</ConceptLink> y la suplementariedad de los <ConceptLink targetId="angulos-colaterales" isDependency={false}>ángulos colaterales internos</ConceptLink>.
+- Emaitza honek <ConceptLink targetId="angulos-correspondientes">angelu kidekoen</ConceptLink> kongruentzia eta barne-angelu albokoen osagarritasuna deduzitzea ahalbidetzen du.
+- <ConceptLink targetId="teorema-suma-angulos-triangulo">Triangelu baten angeluen batura teoremaren</ConceptLink> eta <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremaren</ConceptLink> euskarri deduktiboa da.

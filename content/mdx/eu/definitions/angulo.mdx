@@ -1,55 +1,51 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "angulo",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Angelua",
-  "description": "Dadas dos semirrectas con el mismo origen, el ángulo es la figura formada por ambas. La congruencia de ángulos es una relación primitiva definida por los axiomas de congruencia.",
-  "tags": ["geometria", "congruencia", "medida"],
-  "authors": ["hilbert"],
-  "links": ["punto", "semirrecta"],
-  "seeAlso": ["segmento"],
-  "hasSimulation": true
+  id: "angulo",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Angelua",
+  description: "Erpin deritzon jatorri-puntu bera partekatzen duten bi erredierari ez-lerrokidek osatutako irudi geometrikoa.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" },
+    { title: "Elementuak", author: "Euclides", locator: "I. Liburua, 8. Definizioa", role: "secondary" }
+  ]
 };
 
 import { Angulo } from '@content/diagrams/Definiciones/Angulo';
 export const Simulation = Angulo;
 
-<Capitular letra="E" />
-l ángulo es la figura formada por dos <ConceptLink targetId="semirrecta" isDependency={false}>semirrectas</ConceptLink> que comparten el mismo origen (vértice). Es uno de los conceptos centrales de la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>, fundamental para la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink>, la semejanza y la trigonometría.
+<Capitular letra="A" />ngelua jatorri komunean konbergitzen duten bi erredierari koplanarrek mugatutako konfigurazio espaziala da. <ConceptLink targetId="congruencia">Kongruentzia</ConceptLink>, <ConceptLink targetId="semejanza">antzekotasuna</ConceptLink> eta trigonometria egituratzeko oinarrizko <ConceptLink targetId="angulo">angelu</ConceptLink> kontzeptua da.
+
+<Definicion title="">
+  $O$ jatorri bera duten eta <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> berean ez dauden bi $OA^{\rightarrow}$ eta $OB^{\rightarrow}$ erredierari emanda, $\angle AOB$ angelua bi erredierariek osatutako par ordenatu gabea da:
+  $$
+  \angle AOB = \{OA^{\rightarrow}, OB^{\rightarrow}\}
+  $$
+  $O$ <ConceptLink targetId="punto" isDependency={true}>puntua</ConceptLink> angeluaren erpina da eta $OA^{\rightarrow}$ zein $OB^{\rightarrow}$ bere aldeak dira.
+</Definicion>
 
 <Separador />
 
-### Enunciado Formal
+### Representazio bisuala eta interakzioa
 
-Dadas dos <ConceptLink targetId="semirrecta" isDependency={false}>semirrectas</ConceptLink> <InteractiveElement target="rayOA" color="terracota">$OA^{\rightarrow}$</InteractiveElement> y <InteractiveElement target="rayOB" color="terracota">$OB^{\rightarrow}$</InteractiveElement> con el mismo origen $O$, el ángulo $\angle AOB$ es la figura formada por la unión de ambas. El <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> <InteractiveElement target="pO" color="mora">$O$</InteractiveElement> se denomina vértice y las semirrectas constituyen los lados del ángulo. El <InteractiveElement target="angleArc" color="terracota">arco</InteractiveElement> interior denota su abertura.
-
-<Formula>
-  $$ \angle AOB = \{OA^{\rightarrow}, OB^{\rightarrow}\} $$
-</Formula>
+Simulazio interaktiboan <VisualBind element="rayOA" color="terracota">$OA^{\rightarrow}$</VisualBind> eta <VisualBind element="rayOB" color="terracota">$OB^{\rightarrow}$</VisualBind> erredierariak ikusten dira <VisualBind element="pO" color="pavo">$O$</VisualBind> erpin komunarekin. Barneko <VisualBind element="angleArc" color="musgo">$\angle AOB$</VisualBind> arkuak bere irekiera angeluar erlatiboa adierazten du <ConceptLink targetId="plano">planoan</ConceptLink>.
 
 <Separador />
 
-### Definición Axiomática
+### Hilberten oinarritze axiomatikoa
 
-En el sistema de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>, la congruencia de ángulos se define axiomáticamente:
+<ConceptLink targetId="hilbert">Hilberten</ConceptLink> axiomatizazioan, angeluen berdintasuna eta neurria <ConceptLink targetId="congruencia">kongruentzia-axiomen</ConceptLink> bidez egituratzen da:
 
-- **Transporte**: dado un ángulo $\angle AOB$ y una semirrecta $O'A'^{\rightarrow}$, existe una única semirrecta $O'B'^{\rightarrow}$ a cada lado de $O'A'^{\rightarrow}$ tal que $\angle AOB \cong \angle A'O'B'$ (<ConceptLink targetId="axioma-congruencia-4" >III-4</ConceptLink>).
-- **Criterio SAS**: si dos lados y el ángulo comprendido son congruentes, los <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> son congruentes (<ConceptLink targetId="axioma-congruencia-5" >III-5</ConceptLink>).
+- **Angeluen garraioa**: $\angle AOB$ angelu bat eta $O'A'^{\rightarrow}$ erredierari bat emanda, $O'B'^{\rightarrow}$ erredierari bakarra existitzen da planoaren alde bakoitzean non $\angle AOB \cong \angle A'O'B'$ betetzen den (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axioma</ConceptLink>).
+- **SAS kriterioa**: Bi alderen eta bien arteko angeluaren kongruentziak <ConceptLink targetId="triangulo">triangeluen</ConceptLink> kongruentzia osoa bermatzen du (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 axioma</ConceptLink>).
 
 <Separador />
 
-### Clasificación
+### Sailkapen metrikoa
 
-| Tipo | Descripción | Medida | Radianes |
+| Mota | Definizio geometrikoa | Angelu-neurria ($\text{graduak}$) | Neurria ($\text{radianak}$) |
 |---|---|---|---|
-| Agudo | Menor que un recto | $< 90^\circ$ | $< \frac{\pi}{2}$ |
-| Recto | Igual a su suplementario | $90^\circ$ | $\frac{\pi}{2}$ |
-| Obtuso | Mayor que un recto | $> 90^\circ$ | $> \frac{\pi}{2}$ |
-| Llano | Los lados son semirrectas opuestas | $180^\circ$ | $\pi$ |
-
-<Separador />
-
-### Observaciones
-
-En <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, un ángulo recto es aquel congruente con su suplementario. El <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>quinto postulado</ConceptLink> establece que si una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> al cortar a otras dos forma ángulos internos menores que un recto, las rectas se cortan. En <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>, los ángulos de un triángulo suman menos de $180^\circ$; en <ConceptLink targetId="sistema-eliptico">geometría elíptica</ConceptLink>, más de $180^\circ$.
+| Zorrotza | Angelu zuzen bat baino txikiagoa | $\theta < 90^\circ$ | $\theta < \frac{\pi}{2}$ |
+| Zuzena | Bere <ConceptLink targetId="angulos-suplementarios">osagarri</ConceptLink> adyazentearekin kongruentea | $\theta = 90^\circ$ | $\theta = \frac{\pi}{2}$ |
+| Kamutsa | Angelu zuzen bat baino handiagoa | $90^\circ < \theta < 180^\circ$ | $\frac{\pi}{2} < \theta < \pi$ |
+| Laua | Bi erredierari aurkakoek osatua | $\theta = 180^\circ$ | $\theta = \pi$ |

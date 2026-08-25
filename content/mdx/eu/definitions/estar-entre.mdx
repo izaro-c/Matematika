@@ -1,35 +1,58 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "estar-entre",
-  "type": "definicion",
-  "subtype": "primitivo",
-  "title": "Tartean Egon (Tartekotasuna)",
-  "description": "Relación primitiva de orden entre tres puntos colineales. No se define; su comportamiento queda determinado por los axiomas de orden (Grupo II de Hilbert).",
-  "statement": "La relación A * B * C (léase «B está entre A y C») es una relación ternaria primitiva sobre puntos colineales.",
-  "tags": ["geometria", "orden", "fundamentos"],
-  "authors": ["hilbert"],
-  "hasSimulation": false
+  id: "estar-entre",
+  lang: "eu",
+  type: "definicion",
+  subtype: "primitivo",
+  title: "Tartean Egon (Bitartekotasuna)",
+  description: "Hiru puntu lerrokideren arteko oinarrizko ordena-erlazioa, zuzen bateko puntuen ordena eta planoaren banaketa ezartzen dituena.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §3", role: "primary" },
+    { title: "Euclidean and Non-Euclidean Geometries", author: "Marvin Jay Greenberg", locator: "3. Kapitulua", role: "secondary" }
+  ],
+  hasSimulation: true,
 };
 
-<Capitular letra="L" />a relación **«estar entre»** (o intermediación), denotada $A * B * C$, es la segunda relación primitiva del sistema de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>. Establece un orden lineal sobre los <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> de cada <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>.
+import { EstarEntre } from '@content/diagrams/Definiciones/EstarEntre';
+export const Simulation = EstarEntre;
+
+<Capitular letra="H" /><ConceptLink targetId="hilbert">ilbertek</ConceptLink> (1899) garatutako berriztatze axiomatikoan, bitartekotasun-erlazioa edo "tartean egon" (<VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pB" color="ocre">$B$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind>) <ConceptLink targetId="geometria">geometriaren</ConceptLink> bigarren oinarrizko erlazio primitiboa da. <ConceptLink targetId="recta">Zuzen</ConceptLink> baten gaineko <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="axioma-orden-1">ordena</ConceptLink> lineala formalizatzen du neurketa metrikoetatik edo <ConceptLink targetId="coordenadas">koordenatu analitikoetatik</ConceptLink> independenteki.
+
+<Definicion title="">
+  <VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pB" color="ocre">$B$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind> adierazpenak $\mathcal{P}$ puntuen <ConceptLink targetId="conjunto">multzoaren</ConceptLink> gaineko <ConceptLink targetId="relacion-ternaria">erlazio hirutar</ConceptLink> primitibo bat definitzen du. Bere baliozkotasun formala ez da <ConceptLink targetId="distancia">distantzietatik</ConceptLink> deduzitzen, Hilberten <ConceptLink targetId="axioma-orden-1">ordena-axiomen</ConceptLink> II. taldea osatzen duten lau postulatuak betetzetik baizik.
+</Definicion>
 
 <Separador />
 
-### Naturaleza Primitiva
+### Bitartekotasunaren irudikapen lineala
 
-«Estar entre» no se define. Su significado emerge exclusivamente de los <ConceptLink targetId={["axioma-orden-1","axioma-orden-2","axioma-orden-3","axioma-orden-4"]} >cuatro axiomas de orden</ConceptLink> (Grupo II: II-1 a II-4). La notación $A * B * C$ afirma una propiedad topológica primitiva que permite distinguir un <ConceptLink targetId="segmento" isDependency={false}>segmento</ConceptLink> de una <ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink>, definir el interior de un <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink>, y formular el crucial <ConceptLink targetId="axioma-orden-4" >axioma de Pasch</ConceptLink>.
-
-<Separador />
-
-### Axiomas que la Gobiernan
-
-- **II-1**: Si $A * B * C$, entonces $A$, $B$, $C$ son puntos distintos de una misma recta, y también $C * B * A$.
-- **II-2**: Dados $A$ y $C$, existe $B$ tal que $A * C * B$ (extensión).
-- **II-3**: De tres puntos colineales, exactamente uno está entre los otros dos.
-- **II-4 (Pasch)**: Si una recta entra en un triángulo por un lado, debe salir por otro.
+Simulazioan <VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pC" color="musgo">$C$</VisualBind> puntuek zehaztutako <VisualBind element="lineAC" color="carbon">$r$</VisualBind> zuzena bistaratzen da. Hirugarren <VisualBind element="pB" color="ocre">$B$</VisualBind> puntua bien arteko barne-bidean kokatzean, <VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pB" color="ocre">$B$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind> erlazio formala egiaztatzen da. Puntu honek zuzena banatzen du <VisualBind element="segAB" color="pavo">$AB$</VisualBind> eta <VisualBind element="segBC" color="terracota">$BC$</VisualBind> <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> eratuz.
 
 <Separador />
 
-### Observaciones
+### Hilberten ordena-axiomak
 
-En <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink>, la intermediación es independiente del <ConceptLink targetId="axioma-paralelas-euclides"  isDependency={false}>postulado de las paralelas</ConceptLink>. Es la base de la topología unidimensional sobre cada recta y, a través del axioma de Pasch, de la topología bidimensional del plano.
+Zuzenaren gaineko ordena linealaren egitura lau axioma independentek zehazten dute:
+
+
+- **<ConceptLink targetId="axioma-orden-1">II.1 axioma (simetria eta bereizketa)</ConceptLink>**: Baldin eta <VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pB" color="ocre">$B$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind> bada, <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, <VisualBind element="pC" color="musgo">$C$</VisualBind> zuzen bereko hiru puntu desberdin dira, $A * B * C \iff C * B * A$ simetria betez.
+
+<StepSection step="step-extension">
+- **<ConceptLink targetId="axioma-orden-2">II.2 axioma (zuzenaren hedapena)</ConceptLink>**: Edozein bi <VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pC" color="musgo">$C$</VisualBind> puntu desberdinetarako, gutxienez <VisualBind element="pD" color="pavo">$D$</VisualBind> puntu bat existitzen da zuzen berean non <VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind>$*$<VisualBind element="pD" color="pavo">$D$</VisualBind> betetzen den.
+</StepSection>
+- **<ConceptLink targetId="axioma-orden-3">II.3 axioma (esklusibotasuna eta trikotomia)</ConceptLink>**: Zuzen bereko hiru puntu desberdinetatik, bat eta bakarra dago beste bien artean.
+<Formula title="II.3 Trikotomia">
+$$(A * B * C) \oplus (B * A * C) \oplus (A * C * B)$$
+</Formula>
+
+- **<ConceptLink targetId="axioma-orden-4">II.4 axioma (Paschen axioma)</ConceptLink>**: <ConceptLink targetId="triangulo">Triangelu</ConceptLink> baten alde bat ebakitzen duen zuzen koplanar batek beste bi aldeetako bat ebakitzen du nahitaez.
+
+
+<Separador />
+
+### Oinarri historiko eta epistemologikoa
+
+<Cita author="David Hilbert (1899, Townsend itzulpena, 1902)">
+  «Talde honetako axiomek "tartean" hitzak adierazten duen ideia definitzen dute.»
+</Cita>
+
+<ConceptLink targetId="euclides">Euklidesen</ConceptLink> *Elementuak* lanean, ordena-propietateak marrazkien bidez suposatzen ziren inplizituki. XIX. mendearen amaieran, <ConceptLink targetId="pasch">Moritz Paschek</ConceptLink> eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> bitartekotasuna <ConceptLink targetId="sistema-absoluto">geometria absolutuko</ConceptLink> talde axiomatiko independente gisa formalizatzearen behar epistemologikoa frogatu zuten.

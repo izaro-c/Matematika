@@ -2,73 +2,69 @@ export const metadata = {
   "id": "demo-angulos-opuestos-verticales",
   "type": "demostracion",
   "title": "Demostración: Ángulos opuestos por el vértice",
-  "description": "Prueba directa usando axiomas de congruencia de ángulos y resta de congruentes.",
+  "description": "Demostración directa basada en el carácter suplementario de los ángulos adyacentes y el axioma de sustracción de ángulos congruentes.",
   "parentTheorem": "teorema-angulos-opuestos-verticales",
   "proofMethod": "metodo-directo",
   "authors": ["euclides"],
   "tags": ["geometria", "congruencia"],
   "layout": "split",
-    "sources": [
-    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 15", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
-  ],
-  "stepTacticMap": { "1": [], "2": [], "3": [], "4": [], "5": [] }
+  "sources": [
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 15", role: "primary" }
+  ]
 };
 
 import { DemoAngulosOpuestos } from '@content/diagrams/Demos/DemoAngulosOpuestos';
 
 <DemonstrationSection diagram={<DemoAngulosOpuestos />}>
 
-<Capitular letra="S" />ean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> que se cortan en $O$. Entonces los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> <InteractiveElement target="alpha">opuestos por el vértice</InteractiveElement> son <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>:
-
-<Formula>
-  $$ \alpha \cong \alpha', \qquad \beta \cong \beta' $$
-</Formula>
+<Capitular letra="S" />ean <VisualBind element="lineL" color="carbon">$l$</VisualBind> y <VisualBind element="lineM" color="carbon">$m$</VisualBind> dos <ConceptLink targetId="recta">rectas</ConceptLink> que se <ConceptLink targetId="interseccion">intersecan</ConceptLink> en el <ConceptLink targetId="punto">punto</ConceptLink> $O$. Se demuestra el <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>teorema de los ángulos opuestos por el vértice</ConceptLink>: los <ConceptLink targetId="angulos-opuestos-por-el-vertice">ángulos opuestos por el vértice</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí.
 
 <Separador />
 
-<ProofStep number={1} title="Ángulos adyacentes suman un llano" target="supp12">
-Por hipótesis, <InteractiveElement target="lineL" color="carbon">$l$</InteractiveElement> y <InteractiveElement target="lineM" color="carbon">$m$</InteractiveElement> son rectas secantes. Los ángulos <InteractiveElement target="angle1" color="terracota">$\angle 1$</InteractiveElement> y <InteractiveElement target="angle2" color="canela">$\angle 2$</InteractiveElement> comparten un lado y juntos forman la recta <InteractiveElement target="lineL" color="carbon">$l$</InteractiveElement>. Por la definición de <ConceptLink targetId="angulos-suplementarios" isDependency={false}>ángulos suplementarios</ConceptLink>:
+### Demostración paso a paso
 
-$$ \angle 1 + \angle 2 \cong 180^\circ $$
+<ProofStep number={1} title="Ángulos adyacentes sobre la recta l" target="supp12">
+Las <ConceptLink targetId="recta">rectas secantes</ConceptLink> <VisualBind element="lineL" color="carbon">$l$</VisualBind> y <VisualBind element="lineM" color="carbon">$m$</VisualBind> determinan <ConceptLink targetId="angulos-adyacentes">ángulos adyacentes</ConceptLink>. Los <ConceptLink targetId="angulo">ángulos</ConceptLink> <VisualBind element="angle1" color="terracota">$\angle 1$</VisualBind> y <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> forman un <ConceptLink targetId="angulo-llano">ángulo llano</ConceptLink> sobre la <ConceptLink targetId="recta">recta</ConceptLink> $l$:
+
+<Formula>
+  $$ \angle 1 + \angle 2 \cong 180^\circ $$
+</Formula>
 </ProofStep>
 
-<ProofStep number={2} title="Segundo par de adyacentes" target="supp23">
-Por el mismo razonamiento del paso 1 aplicado a la recta <InteractiveElement target="lineM" color="carbon">$m$</InteractiveElement>, los ángulos <InteractiveElement target="angle2" color="canela">$\angle 2$</InteractiveElement> y <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> son <ConceptLink targetId="angulos-suplementarios" >suplementarios</ConceptLink>:
+<ProofStep number={2} title="Ángulos adyacentes sobre la recta m" target="supp23">
+De forma análoga, los <ConceptLink targetId="angulo">ángulos</ConceptLink> <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> y <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> son <ConceptLink targetId="angulos-suplementarios">suplementarios</ConceptLink> sobre la <ConceptLink targetId="recta">recta</ConceptLink> $m$:
 
-$$ \angle 2 + \angle 3 \cong 180^\circ $$
+<Formula>
+  $$ \angle 2 + \angle 3 \cong 180^\circ $$
+</Formula>
 </ProofStep>
 
-<ProofStep number={3} title="Transitividad" target="angle2">
-Por el paso 1 y el paso 2, ambas sumas son congruentes a $180^\circ$. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axioma de transitividad de la congruencia angular</ConceptLink>, aplicado a <InteractiveElement target="angle1" color="terracota">$\angle 1 + \angle 2$</InteractiveElement> y <InteractiveElement target="angle3" color="canela">$\angle 2 + \angle 3$</InteractiveElement>:
+<ProofStep number={3} title="Igualdad de sumas angulares" target="angle2">
+Puesto que ambas sumas equivalen a dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink> ($180^\circ$), por la propiedad transitiva de la <ConceptLink targetId="congruencia">congruencia</ConceptLink> se concluye la igualdad de las composiciones:
 
 <Formula>
   $$ \angle 1 + \angle 2 \cong \angle 2 + \angle 3 $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} title="Resta de ángulo común" target="congruence13">
-Por el <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>axioma de resta de ángulos congruentes</ConceptLink>, cancelamos el ángulo común <InteractiveElement target="angle2" color="canela">$\angle 2$</InteractiveElement> de ambos lados de la congruencia:
+<ProofStep number={4} title="Sustracción del ángulo común" target="congruence13">
+Sustrayendo el <ConceptLink targetId="angulo">ángulo</ConceptLink> común <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> de ambos miembros por los <ConceptLink targetId="axiomas-congruencia" isDependency={true}>axiomas de congruencia</ConceptLink>, obtenemos la <ConceptLink targetId="congruencia">congruencia</ConceptLink> del primer par:
 
 <Formula>
   $$ \angle 1 \cong \angle 3 $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} title="Conclusión para el otro par" target="angle4">
-Por el mismo argumento de los pasos 1 a 4 aplicado a los ángulos adyacentes <InteractiveElement target="angle3" color="terracota">$\angle 3$</InteractiveElement> y <InteractiveElement target="angle4" color="canela">$\angle 4$</InteractiveElement> sobre la recta <InteractiveElement target="lineL" color="carbon">$l$</InteractiveElement>, se demuestra que <InteractiveElement target="angle2" color="canela">$\angle 2$</InteractiveElement> $\cong$ <InteractiveElement target="angle4" color="canela">$\angle 4$</InteractiveElement>.
+<ProofStep number={5} title="Demostración para el par complementario" target="angle4">
+Aplicando un razonamiento idéntico al par formado por <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> y <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind>, se concluye que <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> $\cong$ <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind>.
 </ProofStep>
 
 <Separador />
 
-### Análisis
-
-La demostración es una aplicación del principio algebraico: si $a + b = c$ y $b + d = c$, entonces $a = d$. En <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink>, este principio se sustituye por los <ConceptLink targetId="axioma-congruencia-3" isDependency={true} isDependency={false}>axiomas de congruencia</ConceptLink>: la suma y resta de ángulos congruentes preserva la congruencia.
+### Análisis deductivo
 
 <Nota>
-  <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> demostró este resultado en la Proposición I.15 de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> usando el mismo argumento. Su formulación hablaba de "dos ángulos rectos" donde nosotros decimos "ángulo llano".
+  Proposición I.15 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. Esta demostración pertenece a la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>, pues prescinde del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>.
 </Nota>
-
-Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> no requiere el <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> de las <ConceptLink targetId="paralelas" isDependency={false}>paralelas</ConceptLink>: es válido en <ConceptLink targetId="sistema-absoluto" isDependency={false}>geometría absoluta</ConceptLink> (euclidiana e hiperbólica).
 
 </DemonstrationSection>

@@ -1,49 +1,46 @@
 export const metadata = {
-  "lang": "eu",
   "id": "teorema-triangulo-isosceles",
   "type": "teorema",
-  "title": "Teorema del triángulo isósceles",
-  "description": "En un triángulo isósceles, los ángulos opuestos a los lados iguales son también iguales (Pons Asinorum).",
-  "statement": "Sea △ABC un triángulo con AB ≅ AC. Entonces ∠B ≅ ∠C.",
+  "title": "Triangelu isoszelearen teorema",
+  "description": "Edozein triangelu isoszeletan, alde kongruenteen aurkako angeluak kongruenteak dira beren artean.",
+  "statement": "Bedi △ABC AB ≅ AC duen triangelu bat. Orduan ∠B ≅ ∠C.",
   "tags": ["geometria", "triangulos", "congruencia"],
-  "authors": ["euclides"],
+  "authors": ["euclides", "hilbert"],
   "difficulty": "básico",
-  "demos": ["demo-triangulo-isosceles"],
   "hasSimulation": true,
-    "sources": [
-    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 5", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
-  ]
+  "sources": [
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 5 y 6", role: "primary" },
+    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "secondary" }
+  ],
+  "demos": ["demo-triangulo-isosceles"]
 };
 
 import { TrianguloIsosceles } from '@content/diagrams/Teoremas/TrianguloIsosceles';
-
 export const Simulation = TrianguloIsosceles;
 
-<Capitular letra="E" />l <ConceptLink targetId="teorema-triangulo-isosceles" >teorema del triángulo isósceles</ConceptLink>, clásicamente conocido como *Pons Asinorum* (Puente de los Asnos) en los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, establece que si un <ConceptLink targetId="triangulo" >triángulo</ConceptLink> tiene dos <ConceptLink targetId="segmento" >lados</ConceptLink> congruentes (es decir, es <ConceptLink targetId="triangulo" >isósceles</ConceptLink>), entonces los <ConceptLink targetId="angulo" >ángulos</ConceptLink> que se oponen a esos lados también son <ConceptLink targetId="congruencia" >congruentes</ConceptLink>.
+<Capitular letra="T" />riangelu isoszelearen <ConceptLink targetId="teorema">teoremak</ConceptLink> —historikoki *Pons Asinorum* deitua <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> tradizioan— irudi poligonalen simetriari buruzko lehenbiziko funtsezko teorema osatzen du. Bi <VisualBind element="segPA" color="canela">alde kongruente</VisualBind> ($|PA| = |PB|$) dituen edozein <ConceptLink targetId="triangulo">triangelutan</ConceptLink>, alde horien aurkako <ConceptLink targetId="angulo">angeluek</ConceptLink> <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> zehatza gordetzen dutela beren artean ($\angle A \cong \angle B$) ezartzen du.
 
 <Separador />
 
-### Enunciado Formal
+### Formulatze formala
 
-Sea $\triangle ABC$ un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> con <InteractiveElement target="lados-iguales">$\overline{AB} \cong \overline{AC}$</InteractiveElement>. Entonces:
+Bedi $\triangle PAB$ bi alde kongruente dituen triangelu lau bat: <VisualBind element="segPA" color="canela">$PA \cong PB$</VisualBind>. Orduan oinarriko angeluak kongruenteak dira:
 
 <Formula>
-  $$ \angle B \cong \angle C $$
+  $$ \angle PAB \cong \angle PBA $$
 </Formula>
 
 <Separador />
 
-### Discusión
+### Analisia eta fundamentazio axiomatikoa
 
-La <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> clásica de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> (Proposición I.5) construye puntos auxiliares sobre las prolongaciones de los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> iguales y aplica el criterio de <ConceptLink targetId="congruencia" >congruencia</ConceptLink> <ConceptLink targetId="axioma-congruencia-5"  isDependency={false}>LAL</ConceptLink> para establecer la igualdad de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> de la base.
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> axiomatizazioan, teorema hau triangeluak bere buruarekin duen kongruentzia eratorriz frogatzen da ($\triangle PAB \cong \triangle PBA$), LAL kongruentzia postulatuaren pean erpinen permutazio bat eginez.
 
-Equivalentemente, su recíproco también es cierto: si dos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> son iguales, los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> opuestos a dichos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> tendrán idéntica <ConceptLink targetId="longitud" isDependency={false}>longitud</ConceptLink>.
+Euklidesen jatorrizko frogapenak (I.5 proposizioa) alde kongruenteak luzatzen zituen eta triangelu laguntzaileen bi bikote erabiltzen zituen. Teorema hau zorrozki dagokio <ConceptLink targetId="geometria-absoluta">geometria absolutuari</ConceptLink>, ez baitu paraleloen axioma euklidestarraren premiarik.
 
 <Separador />
 
-### Observaciones
+### Oharrak eta alderantzizkoa
 
-- Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> representa la proposición 5 del Libro I de los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> y es la primera aplicación seria y no trivial del <ConceptLink targetId="axioma-congruencia-5"  isDependency={false}>postulado de congruencia LAL</ConceptLink>.
-- En un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> <ConceptLink targetId="triangulo-equilatero" isDependency={false}>equilátero</ConceptLink>, los tres <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> son iguales ($60^\circ$) como consecuencia directa de este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink>.
-- El nombre *Pons Asinorum* alude a la dificultad que presentaba para los estudiantes principiantes, siendo el primer resultado no trivial de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink>.
+- **Teoremaren alderantzizkoa**: $\triangle PAB$ triangelu batean bi barne-angelu kongruenteak badira ($\angle A \cong \angle B$), haien aurkako aldeak ere kongruenteak dira ($PA \cong PB$), triangelua isoszele bihurtuz (<ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.6 proposizioa).
+- **Triangelu ekitateroa**: Zuzeneko ondorio gisa, triangelu ekitatero guztiak equiangeluarrak dira (haien hiru angeluek $60^\circ$ dituzte).

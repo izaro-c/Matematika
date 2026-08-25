@@ -1,35 +1,88 @@
 export const metadata = {
-  "id": "congruencia",
-  "type": "definicion",
-  "subtype": "primitivo",
-  "title": "Congruencia",
-  "description": "Relación primitiva de equivalencia métrica entre segmentos y entre ángulos. No se define; su comportamiento queda determinado por los axiomas de congruencia (Grupo III de Hilbert).",
-  "statement": "La congruencia es una relación de equivalencia primitiva entre segmentos (denotada AB ≅ CD) y entre ángulos (denotada ∠(h,k) ≅ ∠(h',k')).",
-  "tags": ["geometria", "congruencia", "fundamentos"],
-  "authors": ["hilbert"],
-  "hasSimulation": false
+  id: "congruencia",
+  lang: "es",
+  type: "definicion",
+  subtype: "primitivo",
+  title: "Congruencia",
+  description: "Relación primitiva de equivalencia geométrica entre segmentos y ángulos, determinada por los axiomas del grupo III de Hilbert.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4-§6", role: "primary" }
+  ],
 };
 
-<Capitular letra="L" />a **congruencia** es la tercera relación primitiva del sistema de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>. Permite comparar <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> y <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> sin necesidad de recurrir a una <ConceptLink targetId="longitud" isDependency={false}>medida numérica</ConceptLink>.
+import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
+import { Congruence2 } from '@content/diagrams/Axiomas/Congruence2';
+import { Congruence3 } from '@content/diagrams/Axiomas/Congruence3';
+import { Congruence4 } from '@content/diagrams/Axiomas/Congruence4';
+import { SAS } from '@content/diagrams/Axiomas/SAS';
+
+<Capitular letra="L" />a congruencia es la relación primitiva fundamental que formaliza la noción de igualdad de forma y tamaño entre figuras geométricas. Permite comparar la extensión de <ConceptLink targetId="segmento">segmentos</ConceptLink> y <ConceptLink targetId="angulo">ángulos</ConceptLink>, sin suponer la existencia previa de una medida numérica o de una <ConceptLink targetId="distancia">función de distancia</ConceptLink>.
+
+<Definicion title="">
+  La congruencia es una relación binaria primitiva definida sobre el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de segmentos (con notación $AB \cong CD$) y sobre el conjunto de ángulos (con notación $\angle A \cong \angle B$). En ambos casos, el comportamiento formal de la relación no se postula de antemano, sino que queda determinado por completo por los cinco axiomas del grupo III de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> (III.1 a III.5).
+</Definicion>
+
+<Nota>
+  La noción de congruencia puede extenderse más allá de segmentos y ángulos a cualquier <ConceptLink targetId="poligono">figura poligonal</ConceptLink>, como los <ConceptLink targetId="triangulo">triángulos</ConceptLink>: dos triángulos son congruentes si, y solo si, sus lados y ángulos correspondientes son congruentes uno a uno. El **<ConceptLink targetId="axioma-congruencia-5">axioma III.5 (LAL)</ConceptLink>** es el ejemplo más relevante de ello, pues demuestra que basta con verificar tres de esas seis condiciones (dos lados y el ángulo comprendido entre ellos).
+</Nota>
 
 <Separador />
 
-### Naturaleza Primitiva
+### Naturaleza primitiva y formalización
 
-La congruencia no se define en términos de distancia o medida. Es una relación primitiva que satisface los <ConceptLink targetId={["axioma-congruencia-1","axioma-congruencia-2","axioma-congruencia-3","axioma-congruencia-4","axioma-congruencia-5"]} >cinco axiomas de congruencia</ConceptLink> (Grupo III: III-1 a III-5). La notación $AB \cong CD$ se lee «el segmento $AB$ es congruente con el segmento $CD$».
-
-<Separador />
-
-### Axiomas que la Gobiernan
-
-- **III-1 (Transporte de segmentos)**: Dado un segmento $AB$ y una semirrecta desde $C$, existe un único $D$ sobre ella tal que $AB \cong CD$.
-- **III-2**: La congruencia de segmentos es transitiva.
-- **III-3 (Adición de segmentos)**: Si $A * B * C$, $A' * B' * C'$, $AB \cong A'B'$ y $BC \cong B'C'$, entonces $AC \cong A'C'$.
-- **III-4 (Transporte de ángulos)**: Dado un ángulo y una semirrecta, existe un único ángulo congruente a cada lado.
-- **III-5 (LAL)**: Criterio Lado-Ángulo-Lado para congruencia de <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>.
+En la geometría sintética desarrollada por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, la congruencia no se define analíticamente a través de <ConceptLink targetId="distancia">distancias métricas</ConceptLink>. Es un concepto indefinido, sobre el cual se postulan las condiciones mínimas de rigidez espacial.
 
 <Separador />
 
-### Observaciones
+### Los axiomas de congruencia del grupo III de Hilbert
 
-La congruencia es una relación de equivalencia (reflexiva, simétrica y transitiva). En modelos numéricos como el <ConceptLink targetId="modelo-cartesiano" isDependency={false}>cartesiano</ConceptLink>, la congruencia de segmentos equivale a la igualdad de longitudes, y la de ángulos a la igualdad de medidas angulares. Pero esta interpretación es externa a la teoría axiomática: internamente, la congruencia solo significa lo que los axiomas III-1 a III-5 establecen.
+**<ConceptLink targetId="axioma-congruencia-1">Axioma III.1 (transporte de segmentos)</ConceptLink>**: Dado un segmento <VisualBind element="AB" color="ocre">$AB$</VisualBind> y una <VisualBind element="r" color="pavo">semirrecta</VisualBind> de origen <VisualBind element="pC" color="terracota">$C$</VisualBind>, existe un único punto <VisualBind element="pD" color="terracota">$B'$</VisualBind> sobre dicha semirrecta tal que se cumple $AB \cong CB'$.
+
+<div className="h-[360px] my-6">
+  <Congruence1 />
+</div>
+
+**<ConceptLink targetId="axioma-congruencia-2">Axioma III.2 (transitividad de la congruencia de segmentos)</ConceptLink>**: Si <VisualBind element="segAB" color="ocre">$AB \cong CD$</VisualBind> y <VisualBind element="segEF" color="terracota">$AB \cong EF$</VisualBind>, entonces $CD \cong EF$.
+
+<div className="h-[360px] my-6">
+  <Congruence2 />
+</div>
+
+**<ConceptLink targetId="axioma-congruencia-3">Axioma III.3 (adición de segmentos)</ConceptLink>**: Si <ConceptLink targetId="estar-entre">$A * B * C$</ConceptLink> y $A' * B' * C'$, siendo <VisualBind element="segAB" color="ocre">$AB \cong A'B'$</VisualBind> y <VisualBind element="segBC" color="terracota">$BC \cong B'C'$</VisualBind>, entonces <VisualBind element="segAC" color="pavo">$AC \cong A'C'$</VisualBind>.
+
+<div className="h-[360px] my-6">
+  <Congruence3 />
+</div>
+
+**<ConceptLink targetId="axioma-congruencia-4">Axioma III.4 (transporte de ángulos)</ConceptLink>**: Dado un ángulo <VisualBind element="nonReflexAngleAOB" color="terracota">$\angle AOB$</VisualBind> y una semirrecta <VisualBind element="rayOOAA" color="ocre">$O'A'$</VisualBind>, existe una única semirrecta a cada lado del plano tal que se cumple <VisualBind element="nonReflexAngleAAOOBB" color="pavo">$\angle AOB \cong \angle A'O'B'$</VisualBind>.
+
+<div className="h-[360px] my-6">
+  <Congruence4 />
+</div>
+
+**<ConceptLink targetId="axioma-congruencia-5">Axioma III.5 (criterio LAL de congruencia)</ConceptLink>**: Si dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> tienen dos <VisualBind element="sides" color="ocre">lados</VisualBind> y el <VisualBind element="angles" color="pavo">ángulo</VisualBind> comprendido entre ellos congruentes entre sí, entonces los ángulos correspondientes restantes también son congruentes.
+
+<Formula title="Criterio LAL (III.5)">
+$$AB \cong A'B', \quad AC \cong A'C', \quad \angle A \cong \angle A' \;\implies\; \triangle ABC \cong \triangle A'B'C'$$
+</Formula>
+
+<div className="h-[360px] my-6">
+  <SAS />
+</div>
+
+<Separador />
+
+### Propiedades metamatemáticas
+
+- **Estructura de equivalencia**: La congruencia cumple las propiedades reflexiva, simétrica y transitiva.
+- **Fundamento de la métrica**: En la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>, la congruencia de segmentos coincide biyectivamente con la igualdad de sus longitudes reales.
+
+<Separador />
+
+### Fundamento histórico y epistemológico
+
+<Cita author="David Hilbert (1899, trad. Townsend, 1902)">
+  «Los axiomas de este grupo definen la idea de congruencia o desplazamiento.»
+</Cita>
+
+En los *Elementos* de <ConceptLink targetId="euclides">Euclides</ConceptLink>, la congruencia se demostraba implícitamente mediante la superposición física de las figuras. <ConceptLink targetId="hilbert">Hilbert</ConceptLink> descartó ese criterio y restableció la congruencia como relación axiomática primitiva, haciendo la geometría completamente independiente de una noción de movimiento.

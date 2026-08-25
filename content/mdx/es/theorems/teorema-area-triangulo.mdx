@@ -1,48 +1,37 @@
 export const metadata = {
   "id": "teorema-area-triangulo",
   "type": "teorema",
-  "title": "Área del Triángulo",
-  "description": "El área de un triángulo es la mitad del producto de la longitud de un lado por la altura correspondiente. En el sistema de medida de áreas, dos triángulos con igual base e igual altura tienen áreas iguales.",
-  "statement": "Sea △ABC un triángulo y sea h la altura correspondiente al lado AB (base). El área de △ABC es (|AB| · h) / 2.",
+  "title": "Área del triángulo",
+  "description": "El área de un triángulo equivale a la mitad del producto de la longitud de una base por su altura correspondiente.",
+  "statement": "Sea △ABC un triángulo de base b = |AB| y altura h correspondiente a C. El área de △ABC es (b · h) / 2.",
   "tags": ["geometria", "triangulos", "areas"],
-  "authors": ["euclides"],
+  "authors": ["euclides", "hilbert"],
   "difficulty": "básico",
-  "demos": ["demo-area-triangulo"],
   "hasSimulation": false,
-    "sources": [
-    {
-      "title": "The Thirteen Books of Euclid's Elements",
-      "author": "Euclid / Thomas L. Heath",
-      "locator": "Book I, Propositions 35, 41",
-      "role": "primary"
-    },
-    {
-      "title": "Foundations of Geometry",
-      "author": "David Hilbert",
-      "locator": "Chapter IV, theory of area",
-      "role": "secondary"
-    }
+  "sources": [
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 35 y 41", role: "primary" },
+    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §19", role: "secondary" }
   ]
 };
 
-<Capitular letra="E" />l <ConceptLink targetId="contenido" isDependency={false}>contenido</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es la mitad del producto de su base por su altura. Es el primer resultado que conecta la definición de <ConceptLink targetId="contenido" isDependency={false}>equidescomponibilidad</ConceptLink> de <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink> con una fórmula explícita, y constituye la base de toda la geometría métrica plana.
+<Capitular letra="E" />l <ConceptLink targetId="area">área</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> equivale a la mitad del producto de la longitud de cualquiera de sus bases por la <ConceptLink targetId="altura">altura</ConceptLink> relativa a ella. El <ConceptLink targetId="teorema-area-triangulo">teorema del área del triángulo</ConceptLink> proporciona la fórmula analítica fundamental que conecta la teoría axiomática del área de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> con el cálculo geométrico clásico de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>.
 
 <Separador />
 
-### Enunciado Formal
+### Enunciado formal
 
-Dado un triángulo $\triangle ABC$, sea $h$ la <ConceptLink targetId="altura" isDependency={false}>altura</ConceptLink> correspondiente al lado $AB$ (la <ConceptLink targetId="perpendicular" isDependency={false}>perpendicular</ConceptLink> desde $C$ a la recta $AB$). El área de $\triangle ABC$ es:
+Dado un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$, sea $b = |AB|$ la longitud de la base y $h$ la <ConceptLink targetId="altura">altura</ConceptLink> correspondiente (la distancia <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> desde el <ConceptLink targetId="vertice">vértice</ConceptLink> $C$ a la <ConceptLink targetId="recta">recta</ConceptLink> $AB$). El área del triángulo viene dada por:
 
 <Formula>
-  $$ C(\triangle ABC) = \frac{|AB| \cdot h}{2} $$
+  $$ \text{Área}(\triangle ABC) = \frac{b \cdot h}{2} $$
 </Formula>
 
-Equivalentemente, dos triángulos con igual base e igual altura tienen la misma área, independientemente de su forma.
+Como consecuencia directa, dos triángulos que comparten la misma longitud de base y la misma altura poseen áreas idénticas, con independencia de su morfología o sesgo angular.
 
 <Separador />
 
-### Consecuencias
+### Observaciones y consecuencias
 
-- **Área del paralelogramo**: Todo <ConceptLink targetId="paralelogramo" isDependency={false}>paralelogramo</ConceptLink> se descompone en dos triángulos congruentes mediante una diagonal. Por tanto, su área es base × altura.
-- **Área del trapecio**: Se descompone en dos triángulos de igual altura, dando la fórmula $(B + b) \cdot h / 2$.
-- **Teorema de Pitágoras por áreas**: La demostración de <ConceptLink targetId="demo-pitagoras-euclides" isDependency={false}>Euclides</ConceptLink> usa este teorema repetidamente para igualar áreas de rectángulos y cuadrados.
+- **Área del paralelogramo**: Al dividir un <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> mediante una de sus diagonales en dos triángulos <ConceptLink targetId="congruencia">congruentes</ConceptLink>, se obtiene de inmediato la fórmula $\text{Área} = b \cdot h$.
+- **Aditividad y polígonos**: Permite calcular el área de cualquier <ConceptLink targetId="poligono">polígono</ConceptLink> plano mediante su descomposición en un número finito de triángulos disjuntos por <ConceptLink targetId="teorema-area-aditividad">aditividad del área</ConceptLink>.
+- **Teorema de Pitágoras**: Constituye el pilar deductivo en la demostración del molino de viento de Euclides para igualar las áreas de los <ConceptLink targetId="rectangulo">rectángulos</ConceptLink> y los cuadrados sobre los <ConceptLink targetId="cateto">catetos</ConceptLink> en el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>.

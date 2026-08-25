@@ -1,46 +1,37 @@
 export const metadata = {
-  "id": "axioma-paralelas-euclides",
-  "type": "axioma",
-  "title": "Axioma de las Paralelas (Euclides)",
-  "description": "Por un punto exterior a una recta pasa exactamente una recta paralela a la dada.",
-  "statement": "Dada una recta l y un punto P no perteneciente a l, existe una única recta m que pasa por P y es paralela a l.",
-  "tags": ["geometria", "paralelas", "geometria-euclidiana"],
-  "authors": ["euclides", "hilbert"],
-  "alternativeGroup": "postulado-paralelas",
-  "hasSimulation": true,
-  "links": ["punto", "recta", "incidencia"]
+  id: "axioma-paralelas-euclides",
+  lang: "es",
+  type: "axioma",
+  title: "Axioma de las Paralelas de Euclides",
+  description: "Dada una recta y un punto exterior a ella, existe una única recta paralela a la dada que pasa por dicho punto.",
+  alternativeGroup: "postulado-paralelas",
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Postulado 5", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "primary" }
+  ],
+  hasSimulation: true
 };
 
 import { EuclidParallel } from '@content/diagrams/Axiomas/EuclidParallel';
 export const Simulation = EuclidParallel;
 
-<Capitular letra="P" />
-or un <InteractiveElement target="pP" color="terracota"><ConceptLink targetId="punto" isDependency={false} highlightTarget="pA" highlightColor="ocre">punto</ConceptLink></InteractiveElement> exterior a una <ConceptLink targetId="recta" isDependency={false} highlightTarget="lineBC" highlightColor="pavo">recta</ConceptLink> pasa exactamente una <InteractiveElement target="parBCP" color="ocre">recta <ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink></InteractiveElement>. Este es el célebre <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]}>quinto postulado</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, el <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> que distingue la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink> de las no euclídeas.
+<Capitular letra="E" />l <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>, en la formulación de Playfair, caracteriza la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink> plana frente a las geometrías no euclidianas.
+
+<Definicion title="">
+  Dada una <ConceptLink targetId="recta">recta</ConceptLink> $l$ y un <ConceptLink targetId="punto">punto</ConceptLink> $P$ no perteneciente a $l$, existe una única recta $m$ tal que $P$ incide en $m$ y $m$ es <ConceptLink targetId="paralelas">paralela</ConceptLink> a $l$:
+  $$
+  \forall l \in \mathcal{L}, \forall P \notin l \implies \exists! m \in \mathcal{L} \ (P \in m \land m \parallel l)
+  $$
+</Definicion>
 
 <Separador />
 
-### Enunciado Formal
+### Representación visual e interacción
 
-<Formula>
-  $$ \forall l \; \forall P \notin l \; \exists! m : P \in m \land m \cap l = \emptyset. $$
-</Formula>
-
-<Nota>
-  Dos rectas son paralelas si están en el mismo <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> y no se intersectan: $l \parallel m \iff l \subset \pi \land m \subset \pi \land l \cap m = \emptyset$.
-</Nota>
+En la simulación interactiva se observa la recta dada <VisualBind element="lineBC" color="pavo">$l$</VisualBind> y el punto exterior <VisualBind element="pP" color="terracota">$P$</VisualBind>. La construcción determina de forma única la recta paralela <VisualBind element="parBCP" color="ocre">$m$</VisualBind> que pasa por $P$ sin cortar a $l$.
 
 <Separador />
 
-### Discusión
+### Significado en los sistemas axiomáticos
 
-Este axioma es el más famoso y controvertido de la historia de las matemáticas. Durante más de dos milenios, los matemáticos intentaron demostrarlo a partir de los demás axiomas de Euclides, sin éxito. Finalmente, en el siglo XIX, Lobachevski, Bolyai y Riemann demostraron de forma independiente que el <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink> es independiente de los demás, dando origen a las geometrías no euclídeas.
-
-El enunciado que usamos aquí ("por un punto exterior pasa una única paralela") es la formulación de Playfair (1795), equivalente al <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink> original de Euclides. La equivalencia no es trivial y requiere <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink>, pero hoy es la formulación estándar.
-
-Junto con los <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>axiomas de incidencia</ConceptLink>, orden, <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> y continuidad, este axioma define la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>**geometría euclídea**</ConceptLink>. Si en lugar de este axioma se adopta su negación, se obtienen geometrías no euclídeas.
-
-<Separador />
-
-### Observaciones
-
-El <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink> tiene muchas formulaciones equivalentes: la suma de los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> es 180°, el <ConceptLink targetId={["teorema-pitagoras", "teorema", "pitagoras"]} isDependency={false}>teorema de Pitágoras</ConceptLink>, la existencia de rectángulos, el <ConceptLink targetId={["teorema-tales", "teorema", "tales"]} isDependency={false}>teorema de Tales</ConceptLink>, entre otras. Cualquiera de ellas puede adoptarse como axioma en lugar de esta. En la <ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink> (sin <ConceptLink targetId={["axioma-paralelas-euclides", "postulado", "paralelas"]} isDependency={false}>quinto postulado</ConceptLink>), la suma de ángulos de un triángulo es siempre $\leq 180^\circ$.
+Este postulado postula la curvatura nula del espacio euclidiano. Es lógicamente independiente de los axiomas de incidencia, orden y congruencia; su adopción o negación determina la bifurcación entre la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, <ConceptLink targetId="sistema-hiperbolico">hiperbólica</ConceptLink> y elíptica.

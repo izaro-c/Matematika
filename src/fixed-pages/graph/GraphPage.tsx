@@ -16,6 +16,7 @@ import { GraphLegend } from '@/fixed-pages/graph/ui/components/GraphLegend';
 import { GraphSearch } from '@/fixed-pages/graph/ui/components/GraphSearch';
 import { getKnowledgeGraphContentType } from '@/fixed-pages/graph/lib/graphUtils';
 import { useThemeColors } from '@/lib/theme/useThemeColors';
+import { useI18n } from '@/i18n';
 
 type KnowledgeGraphNode = NodeObject<GraphNode>;
 type KnowledgeGraphLink = LinkObject<GraphNode, GraphLink>;
@@ -39,6 +40,7 @@ type LinkForce = {
  */
 export const GraphPage: React.FC = () => {
   const [, setLocation] = useLocation();
+  const { lang } = useI18n();
   const { openTerm } = useGlossaryStore();
   const theme = useThemeColors();
   const graphRef = useRef<KnowledgeGraphRef | undefined>(undefined);
@@ -48,7 +50,7 @@ export const GraphPage: React.FC = () => {
   } as React.CSSProperties;
 
   // Extraer datos del ContentStore usando jerarquía MSC2020 definida
-  const graphData: GraphData<GraphNode, GraphLink> = useMemo(() => buildKnowledgeGraphData(), []);
+  const graphData: GraphData<GraphNode, GraphLink> = useMemo(() => buildKnowledgeGraphData(lang), [lang]);
 
   const [hoverNode, setHoverNode] = useState<KnowledgeGraphNode | null>(null);
   const [highlightNodes, setHighlightNodes] = useState(new Set<KnowledgeGraphNode>());

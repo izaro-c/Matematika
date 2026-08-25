@@ -2,15 +2,14 @@ export const metadata = {
   "id": "teorema-angulos-opuestos-verticales",
   "type": "teorema",
   "title": "Teorema de los ángulos opuestos por el vértice",
-  "description": "Cuando dos rectas se cortan, los ángulos opuestos por el vértice son congruentes entre sí.",
-  "statement": "Sean l y m dos rectas que se cortan en el punto O. Si α y β son ángulos opuestos por el vértice, entonces α ≅ β.",
+  "description": "Cuando dos rectas se intersecan en un punto, los pares de ángulos opuestos por el vértice son congruentes entre sí.",
+  "statement": "Sean l y m dos rectas que se cortan en O. Si α y α' son ángulos opuestos por el vértice, entonces α ≅ α'.",
   "tags": ["geometria", "congruencia", "geometria-absoluta"],
   "authors": ["euclides"],
   "difficulty": "básico",
   "hasSimulation": true,
-    "sources": [
-    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 15", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  "sources": [
+    { "title": "Elementos", "author": "Euclides", "locator": "Libro I, Proposición 15", "role": "primary" }
   ],
   "demos": ["demo-angulos-opuestos-verticales"]
 };
@@ -18,21 +17,22 @@ export const metadata = {
 import { AngulosOpuestos } from '@content/diagrams/Teoremas/AngulosOpuestos';
 export const Simulation = AngulosOpuestos;
 
-<Capitular letra="C" />
-uando dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> se intersecan en un único <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>, determinan cuatro regiones angulares. Aquellos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> ubicados en semiplanos alternos —separados por el vértice de intersección— se denominan **opuestos por el vértice**. Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink>, consignado en los <ConceptLink targetId="euclides" isDependency={false}>Elementos de Euclides</ConceptLink>, demuestra que tales pares angulares conservan siempre una <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> estricta: <InteractiveElement target="alpha">$\alpha \cong \alpha'$</InteractiveElement> y <InteractiveElement target="beta">$\beta \cong \beta'$</InteractiveElement>.
+<Capitular letra="C" />uando dos <ConceptLink targetId="recta">rectas</ConceptLink> se intersecan en un <ConceptLink targetId="punto">punto</ConceptLink>, determinan cuatro regiones angulares. Los pares de <ConceptLink targetId="angulo">ángulos</ConceptLink> ubicados en posiciones opuestas respecto al <ConceptLink targetId="vertice">vértice</ConceptLink> común se denominan <ConceptLink targetId="angulos-opuestos-por-el-vertice">opuestos por el vértice</ConceptLink>. El <ConceptLink targetId="teorema-angulos-opuestos-verticales">teorema de los ángulos opuestos por el vértice</ConceptLink> —Proposición I.15 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>— demuestra que ambos ángulos conservan una <ConceptLink targetId="congruencia">congruencia</ConceptLink> estricta: <VisualBind element="alpha" color="terracota">$\alpha \cong \alpha'$</VisualBind> y <VisualBind element="beta" color="pavo">$\beta \cong \beta'$</VisualBind>.
 
 <Separador />
 
-### Enunciado Formal
+### Enunciado formal
 
-Sean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> que se cortan en $O$. Entonces los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> <InteractiveElement target="alpha">opuestos por el vértice</InteractiveElement> son <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>:
+Sean $l$ y $m$ dos <ConceptLink targetId="recta">rectas</ConceptLink> coplanares que se <ConceptLink targetId="interseccion">intersecan</ConceptLink> en un punto $O$. Si $\alpha$ y $\alpha'$ son <ConceptLink targetId="angulos-opuestos-por-el-vertice">ángulos opuestos por el vértice</ConceptLink>, entonces:
 
 <Formula>
-  $$ \alpha \cong \alpha', \qquad \beta \cong \beta' $$
+  $$ \alpha \cong \alpha' \qquad \text{y} \qquad \beta \cong \beta' $$
 </Formula>
 
 <Separador />
 
-### Discusión
+### Análisis y demostración deductiva
 
-Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> es uno de los primeros resultados no triviales de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría</ConceptLink>. Su <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> no requiere el <ConceptLink targetId="axioma-paralelas-euclides"  isDependency={false}>axioma de las paralelas</ConceptLink>, por lo que pertenece a la <ConceptLink targetId={["sistema-absoluto", "geometria-absoluta"]} isDependency={false}>geometría absoluta</ConceptLink>. El argumento es simple: los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> adyacentes suman $180^\circ$, y restando el <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> común se obtiene la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de los opuestos.
+Este resultado pertenece a la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>, dado que su demostración no requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink>.
+
+El argumento deductivo se basa en el carácter suplementario de los <ConceptLink targetId="angulos-adyacentes">ángulos adyacentes</ConceptLink> sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>: el par <VisualBind element="supp12" color="terracota">$(\alpha, \beta)$</VisualBind> y el par <VisualBind element="supp23" color="pavo">$(\beta, \alpha')$</VisualBind> suman cada uno dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink> ($180^\circ$). Sustrayendo el ángulo común <VisualBind element="angle2" color="carbon">$\beta$</VisualBind>, se deduce de forma inmediata la congruencia <VisualBind element="congruence13" color="terracota">$\alpha \cong \alpha'$</VisualBind>.

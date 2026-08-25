@@ -1,58 +1,55 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "sistema-incidencia",
-  "type": "sistema-axiomatico",
-  "title": "Intzidentzia Sistema",
-  "description": "Sistema axiomático que define las relaciones básicas de pertenencia entre puntos, rectas y planos. Es la estructura más débil de la geometía —solo postula cómo se relacionan estos objetos primitivos sin nociones de orden, congruencia o medida.",
-  "axiomas": [
-    "axioma-incidencia-1",
-    "axioma-incidencia-2",
-    "axioma-incidencia-3",
-    "axioma-incidencia-4",
-    "axioma-incidencia-5",
-    "axioma-incidencia-6",
-    "axioma-incidencia-7",
-    "axioma-incidencia-8"
+  id: "sistema-incidencia",
+  lang: "eu",
+  type: "sistema-axiomatico",
+  title: "Intzidentzia Sistema",
+  description: "Ordena, kongruentzia edo neurriaren nozioak barne hartu gabe, puntu, zuzen eta planoen arteko jatorrizko pertenentzia-erlazioak gobernatzen dituen geometriako oinarrizko egitura axiomatikoa.",
+  axiomas: [
+    "axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3", "axioma-incidencia-4",
+    "axioma-incidencia-5", "axioma-incidencia-6", "axioma-incidencia-7", "axioma-incidencia-8"
   ],
-  "mathematicians": ["hilbert"],
-  "models": ["modelo-tres-puntos"],
-  "tags": ["geometria", "incidencia", "fundamentos"]
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1-§2", role: "primary" }
+  ]
 };
 
-<Capitular letra="E" />
-l <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>sistema de incidencia</ConceptLink> es la estructura axiomática fundamental que define las relaciones primitivas de pertenencia entre <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink>, <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> y <ConceptLink targetId="plano" isDependency={false}>planos</ConceptLink>. Constituye la base topológica sobre la cual se erige toda la <ConceptLink targetId="geometria" isDependency={false}>geometría</ConceptLink> formal.
+<Capitular letra="I" />ntzidentzia-<ConceptLink targetId="sistema-incidencia">sistema</ConceptLink> <ConceptLink targetId="geometria">geometria</ConceptLink> formalaren lehen bloke deduktiboa da. Definitu gabeko oinarrizko elementuen (<ConceptLink targetId="punto">puntu</ConceptLink>, <ConceptLink targetId="recta">zuzen</ConceptLink> eta <ConceptLink targetId="plano">plano</ConceptLink>) arteko jatorrizko pertenentzia- eta lotura-arauak ezartzen ditu, zeinen gainean eraikitzen baitira <ConceptLink targetId="axioma-orden-1">ordena</ConceptLink>, <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> eta <ConceptLink targetId="distancia">metrika</ConceptLink> nosio konplexuagoak.
+
+<Definicion title="">
+  Intzidentzia-sistema bat $(\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I})$ tupla abstraktu bat da, non $\mathcal{P}$ puntuen <ConceptLink targetId="conjunto">multzoa</ConceptLink>, $\mathcal{L}$ zuzenen multzoa, $\mathcal{E}$ planoen multzoa eta $\mathcal{I} \subseteq (\mathcal{P} \times \mathcal{L}) \cup (\mathcal{P} \times \mathcal{E}) \cup (\mathcal{L} \times \mathcal{E})$ intzidentzia-<ConceptLink targetId="relacion-ternaria">erlazio hirutarra</ConceptLink> diren, <ConceptLink targetId="hilbert">Hilberten</ConceptLink> zortzi <ConceptLink targetId="axioma">axiomak</ConceptLink> (I.1etik I.8ra) betetzen dituela.
+</Definicion>
 
 <Separador />
 
-### <ConceptLink targetId="axioma" isDependency={false}>Axiomas</ConceptLink>
+### Intzidentzia-axiomak
 
-El <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>sistema de incidencia</ConceptLink> consta de ocho axiomas que establecen:
+Struktura axiomatiko hau intzidentzia-geometria lau bihurtzen da (I.1-I.3) eta hiru dimentsiotako espaziora hedatzen da (I.4-I.8):
 
-- <ConceptLink targetId="axioma-incidencia-1"  isDependency={false}>I-1</ConceptLink>: Dos puntos determinan una única recta.
-- <ConceptLink targetId="axioma-incidencia-2"  isDependency={false}>I-2</ConceptLink>: Toda recta contiene al menos dos puntos.
-- <ConceptLink targetId="axioma-incidencia-3"  isDependency={false}>I-3</ConceptLink>: Existen tres puntos no <ConceptLink targetId="colineal" isDependency={false}>colineales</ConceptLink>.
-- <ConceptLink targetId="axioma-incidencia-4"  isDependency={false}>I-4</ConceptLink>: Tres puntos no colineales determinan un único plano.
-- <ConceptLink targetId="axioma-incidencia-5"  isDependency={false}>I-5</ConceptLink>: Todo plano contiene al menos tres puntos no colineales.
-- <ConceptLink targetId="axioma-incidencia-6"  isDependency={false}>I-6</ConceptLink>: Si dos puntos de una recta están en un plano, la recta entera está en el plano.
-- <ConceptLink targetId="axioma-incidencia-7"  isDependency={false}>I-7</ConceptLink>: Dos planos se intersectan en una recta.
-- <ConceptLink targetId="axioma-incidencia-8"  isDependency={false}>I-8</ConceptLink>: Existen cuatro puntos no <ConceptLink targetId="coplanares" isDependency={false}>coplanares</ConceptLink>.
-
-Estos axiomas definen la estructura tridimensional del espacio: los primeros tres gobiernan la relación punto-recta, los siguientes tres la relación recta-plano, y los últimos dos la relación entre planos.
+- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>I.1 axioma (zuzenaren existentzia eta bakartasuna)</ConceptLink>**: Edozein bi $A, B \in \mathcal{P}$ puntu desberdinetarako, $l \in \mathcal{L}$ zuzen bakarra dago zeinetan $A$ eta $B$ intzidentzialak diren.
+- **<ConceptLink targetId="axioma-incidencia-2" isDependency={true}>I.2 axioma (puntuen existentzia zuzenean)</ConceptLink>**: $l \in \mathcal{L}$ zuzen bakoitzak gutxienez bere baitan intzidentzialak diren bi puntu desberdin ditu.
+- **<ConceptLink targetId="axioma-incidencia-3" isDependency={true}>I.3 axioma (puntu ez-lerrokideen existentzia)</ConceptLink>**: Gutxienez hiru puntu daude $\mathcal{P}$ multzoan zuzen beraren gainean intzidentzialak ez direnak.
+- **<ConceptLink targetId="axioma-incidencia-4" isDependency={true}>I.4 axioma (planoaren existentzia eta bakartasuna)</ConceptLink>**: Zuzen beran ez dauden hiru puntutarako, $\alpha \in \mathcal{E}$ plano bakarra dago hiru puntuak barne hartzen dituena.
+- **<ConceptLink targetId="axioma-incidencia-5" isDependency={true}>I.5 axioma (puntuen existentzia planoan)</ConceptLink>**: $\alpha \in \mathcal{E}$ plano bakoitzak gutxienez <ConceptLink targetId="colinealidad">lerrokideak</ConceptLink> ez diren hiru puntu ditu.
+- **<ConceptLink targetId="axioma-incidencia-6" isDependency={true}>I.6 axioma (zuzenaren intzidentzia planoan)</ConceptLink>**: $l$ zuzen baten bi puntu desberdin $\alpha$ plano batean intzidentzialak badira, orduan $l$-ko puntu guztiak $\alpha$-n intzidentzialak dira.
+- **<ConceptLink targetId="axioma-incidencia-7" isDependency={true}>I.7 axioma (planoen ebakidura)</ConceptLink>**: Bi $\alpha, \beta \in \mathcal{E}$ plano desberdinek puntu komuna badute, gutxienez beste puntu komun bat dute eta haien <ConceptLink targetId="interseccion">ebakidura</ConceptLink> zuzen bat da.
+- **<ConceptLink targetId="axioma-incidencia-8" isDependency={true}>I.8 axioma (puntu ez-koplanarren existentzia)</ConceptLink>**: Gutxienez lau puntu daude $\mathcal{P}$ multzoan plano beraren gainean intzidentzialak ez direnak.
 
 <Separador />
 
-### Modelos
+### Eredu adierazgarriak
 
-El <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>sistema de incidencia</ConceptLink> es satisfecho por numerosas estructuras. Las más simples son:
+Intzidentzia-sistemaren baliotasuna eta johantasun formala eredu zehatzen bidez egiaztatzen da:
 
-- **Modelo de 3 puntos**: tres puntos no colineales con las rectas que determinan. Satisface I-1, I-2, I-3.
-- **<ConceptLink targetId={["modelo-fano", "plano"]}>Plano de Fano</ConceptLink>**: el <ConceptLink targetId={["plano-proyectivo", "plano"]}>plano proyectivo</ConceptLink> de orden 2, con 7 puntos y 7 rectas. Satisface todos los <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>axiomas de incidencia</ConceptLink> plana.
-- **Espacio cartesiano** $\mathbb{R}^3$: el modelo estándar de la <ConceptLink targetId={["sistema-euclidiano", "geometria", "euclides"]}>geometría euclídea</ConceptLink>.
+- **<ConceptLink targetId="modelo-tres-puntos">Hiru puntuko eredua</ConceptLink>**: Egitura lau minimala da. I.1, I.2 eta I.3 axiomak betetzen ditu espazio finituan.
+- **<ConceptLink targetId="modelo-fano">Fanoren planoa</ConceptLink>**: 7 puntu eta 7 zuzen dituen geometria proiektibo finitua. Intzidentzia lauaren axiomak betetzen ditu konfigurazio konbinatorioetan.
+- **<ConceptLink targetId="modelo-cartesiano">Kartesiar espazioa</ConceptLink> <ConceptLink targetId="numero-real">$\mathbb{R}^3$</ConceptLink>**: Geometria euklidear klasikoaren eredu kanoniko jarraitua.
 
 <Separador />
 
-### Propiedades
+### Egitura-propietateak
 
-El <ConceptLink targetId={["sistema-incidencia", "axioma", "incidencia"]}>sistema de incidencia</ConceptLink> es **consistente**: existe un modelo (el espacio cartesiano) que lo satisface. Es **independiente**: ningún axioma puede deducirse lógicamente de los demás. No es **completo**: multitud de geometrías divergentes satisfacen estos axiomas (<ConceptLink targetId={["sistema-absoluto", "geometria"]}>geometría absoluta</ConceptLink>, euclídea, hiperbólica).
+Intzidentzia-sistemak ezaugarri metamatematiko nagusiak ditu:
 
-Los axiomas I-1 a I-3 definen la geometría plana de <ConceptLink targetId="incidencia" isDependency={false}>incidencia</ConceptLink>. Los axiomas I-4 a I-8 extienden la teoría al espacio tridimensional.
+- **Konzistentzia**: $\mathbb{R}^3$ eredu kartesiarraren existentziak frogatzen du ezinezkoa dela sistema honen barruan kontraargumentu logikorik eratorzea.
+- **Independentzia**: Zortzi axiometatik bat bera ere ezin da gainerakoetatik deduzitu.
+- **Osagabetasuna**: Sistema hau nahita zehaztugabea da ordena eta distantzia nosioei dagokienez, <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> gauzatze metriko desberdinak ahalbidetuz.

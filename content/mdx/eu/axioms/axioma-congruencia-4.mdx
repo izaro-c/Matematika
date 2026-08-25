@@ -1,51 +1,35 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "axioma-congruencia-4",
-  "type": "axioma",
-  "title": "Axioma III-4 (Congruencia)",
-  "description": "Dado un ángulo y una semirrecta, existe un único ángulo congruente sobre un lado dado de la semirrecta.",
-  "statement": "Dado un ángulo ∠(h,k) y una semirrecta h' sobre una recta l, existe una única semirrecta k' en un lado dado de l tal que ∠(h,k) ≅ ∠(h',k').",
-  "tags": ["geometria", "congruencia", "geometria-absoluta"],
-  "authors": ["hilbert"],
-  "axiomSystem": "sistema-absoluto",
-  "sources": [
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  id: "axioma-congruencia-4",
+  lang: "eu",
+  type: "axioma",
+  title: "III.4 Axioma (Angeluak Garraiatzea)",
+  description: "Angelu bat eta finkatutako semiplano bateko erruzuzen bat emanda, emandako angeluarekin kongruentea den angelu bat osatzen duen erruzuzen bakarra existitzen da.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §5", role: "primary" }
   ],
-  "hasSimulation": true,
-  "links": ["punto", "recta", "estar-entre", "congruencia"]
+  hasSimulation: true
 };
 
 import { Congruence4 } from '@content/diagrams/Axiomas/Congruence4';
 export const Simulation = Congruence4;
 
-<Capitular letra="D" />
-ado un <InteractiveElement target="angulo-original" color="terracota"><ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink></InteractiveElement> y una <InteractiveElement target="rayo-h_prime" color="canela"><ConceptLink targetId="semirrecta" isDependency={false}>semirrecta</ConceptLink></InteractiveElement>, existe un único <InteractiveElement target="angulo-clonado" color="canela">ángulo <ConceptLink targetId="congruencia" isDependency={false}>congruente</ConceptLink></InteractiveElement> (determinado por una <InteractiveElement target="rayo-k_prime" color="canela">semirrecta</InteractiveElement>) sobre un <ConceptLink targetId="semiplano" isDependency={false}>semiplano</ConceptLink> determinado respecto a dicha semirrecta. Este <ConceptLink targetId="axioma" isDependency={false}>axioma</ConceptLink> extiende formalmente la noción primitiva de congruencia desde los <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> hacia los ángulos.
+<Capitular letra="L" />augarren kongruentzia-<ConceptLink targetId="axioma-congruencia-4">axiomak</ConceptLink> garraio rigidoa <ConceptLink targetId="angulo">angeluen</ConceptLink> esparrura zabaltzen du. Edozein angeluren irekiera finkatutako semiplano batean dagoen oinarri-erruzuzen baten gainean garraiatzea ahalbidetzen du.
+
+<Definicion title="">
+  $\angle(h, k)$ <ConceptLink targetId="angulo">angelu</ConceptLink> bat eta <ConceptLink targetId="plano">plano</ConceptLink> batean dagoen $h'$ erruzuzen bat emanda, $h'$-ren <ConceptLink targetId="recta">zuzen</ConceptLink> eusleak zehaztutako semiplano bakoitzean jatorri bera duen $k'$ erruzuzen bakarra existitzen da non $\angle(h, k)$ angelua $\angle(h', k')$ angeluarekin <ConceptLink targetId="congruencia">kongruentea</ConceptLink> den:
+  $$
+  \forall \angle(h, k), \forall h', \forall H^+_{h'} \implies \exists! k' \subseteq H^+_{h'} \ (\angle(h, k) \cong \angle(h', k'))
+  $$
+</Definicion>
 
 <Separador />
 
-### Enunciado Formal
+### Representazio bisuala eta interakzioa
 
-<Formula>
-  $$ \forall \angle(h,k) \; \forall h' \; \exists! k' : \angle(h,k) \cong \angle(h',k') $$
-</Formula>
-
-<Nota>
-  Un lado dado significa que la semirrecta k' debe estar en el semiplano elegido respecto de la <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> que contiene a h'.
-</Nota>
+Simulazio interaktiboan jatorrizko <VisualBind element="angulo-original" color="terracota">$\angle(h,k)$ angelua</VisualBind> eta <VisualBind element="rayo-h_prime" color="carbon">$h'$</VisualBind> oinarri-erruzuzena behatzen dira. <VisualBind element="rayo-k_prime" color="musgo">$k'$</VisualBind> erruzuzenak <VisualBind element="angulo-clonado" color="musgo">$\angle(h',k')$ angelu kongruentea</VisualBind> eraikitzen du erreferentziako semiplanoaren barnean.
 
 <Separador />
 
-### Discusión
+### Bakartasuna semiplanoan
 
-Así como el <ConceptLink targetId="axioma-congruencia-1"  isDependency={false}>axioma III-1</ConceptLink> permite transportar segmentos sobre una semirrecta, el axioma III-4 permite transportar ángulos sobre una semirrecta. La unicidad y la elección del lado (semiplano) son esenciales para que la construcción esté bien definida.
-
-La congruencia de ángulos constituye una relación primitiva, irreductible en esta etapa a nociones numéricas de <ConceptLink targetId="medida-angular" isDependency={false}>medida angular</ConceptLink>. Al igual que con los segmentos, sus propiedades operativas se imponen axiomáticamente, para <ConceptLink targetId="demostracion" isDependency={false}>demostrar</ConceptLink> posteriormente que son isomorfas a la igualdad de medidas reales.
-
-El "lado dado" elimina la ambigüedad de construir el ángulo hacia un lado o hacia el otro de la semirrecta $h'$. Sin esta elección, habría dos ángulos congruentes posibles (simétricos respecto a $h'$).
-
-<Separador />
-
-### Observaciones
-
-Este axioma corresponde al <ConceptLink targetId="postulado" isDependency={false}>postulado</ConceptLink> 4 de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> ("todos los <ConceptLink targetId="angulo-recto" isDependency={false}>ángulos rectos</ConceptLink> son iguales") y al postulado de transportar ángulos que Euclides usa implícitamente en sus construcciones. Es fundamental para la construcción de <ConceptLink targetId="figura-geometrica" isDependency={false}>figuras congruentes</ConceptLink> y para la demostración de los criterios de congruencia de <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>.
+Postulatu honek angeluak bikoiztean dagoen anbiguotasuna ezabatzen du eraikuntza semiplano bakar batera mugatuz. Angelu-neurria edo baliokidetza translazio eta biraketa rigidoen pean mantentzen dela bermatzen du.

@@ -1,31 +1,26 @@
 export const metadata = {
   "id": "ejercicio-pitagoras-cateto",
   "type": "ejercicio",
-  "lang": "eu",
-  "branch": "51M",
   "title": "Kateto baten kalkulua triangelu angeluzuzenean",
   "description": "Pitagorasen teoremaren aplikazioa kateto ezezagun baten luzera zehazteko, hipotenusa eta beste katetoa jakinda.",
-  "relatedTheorem": "teorema-pitagoras",
-  "hasSimulation": true,
-  "difficulty": "básico",
-  "hint": "Pitagorasen teoremak hiru aldeen karratuak erlazionatzen ditu: a² + b² = c². Kateto bat bakantzeko, kendu kateto ezagunaren karratua hipotenusaren karratuari: a² = c² - b²."
+  "branch": "51M",
+  "hasSimulation": true
 };
 
 import { EjercicioPitagorasCateto } from '@content/diagrams/Ejercicios/EjercicioPitagorasCateto';
-
 export const Simulation = EjercicioPitagorasCateto;
 
-<Capitular letra="I" />zan bedi $\triangle ABC$ <ConceptLink targetId="triangulo-rectangulo" isDependency={false} highlightTarget="poly" highlightColor="mora">triangelu angeluzuzena</ConceptLink>, <InteractiveElement target="C" color="carbon">$C$ erpinean</InteractiveElement> <ConceptLink targetId="angulo-recto" isDependency={false} highlightTarget="rightAng" highlightColor="pavo">angelu zuzena</ConceptLink> duena. Jakina da <ConceptLink targetId="hipotenusa" isDependency={false} highlightTarget="segAB" highlightColor="ocre">hipotenusak</ConceptLink> $c = |AB| = 10$ unitate neurtzen dituela eta <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segBC" highlightColor="terracota">kateto horizontalak</ConceptLink> $b = |BC| = 8$ unitate. <ConceptLink targetId="cateto" isDependency={false} highlightTarget="segCA" highlightColor="canela">Kateto bertikalaren</ConceptLink> ($a = |CA|$) luzera zehatza kalkulatzea eskatzen da.
+<Capitular letra="E" />mandako <VisualBind element="poly" color="carbon">$\triangle ABC$</VisualBind> <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triangelu angeluzuzenean</ConceptLink>, <VisualBind element="C" color="carbon">$C$ erpinean</VisualBind> <ConceptLink targetId="angulo-recto" isDependency={false}>angelu zuzena</ConceptLink> duena, jakina da <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusak</ConceptLink> $c = |AB| = 10$ unitate neurtzen dituela (<VisualBind element="segAB" color="ocre">$c$ hipotenusa</VisualBind>) eta <ConceptLink targetId="cateto" isDependency={false}>kateto horizontalak</ConceptLink> $b = |BC| = 8$ unitate (<VisualBind element="segBC" color="terracota">$b$ katetoa</VisualBind>). <VisualBind element="segCA" color="musgo">$a$ kateto bertikalaren</VisualBind> ($a = |CA|$) luzera zehatza kalkulatzea eskatzen da.
 
 <Separador />
 
 <ExerciseStep
   id="p1"
   numero={1}
-  titulo="Ekuazioaren Planteamendua"
+  titulo="Ekuazioaren planteamendua"
   questionIds={["p1_q1"]}
 >
-  Identifikatu Pitagorasen teorema planteatzeko formulazio algebraiko egokia datu ezagunen arabera:
+  Identifikatu <ConceptLink targetId="teorema-pitagoras" isDependency={false}>Pitagorasen teorema</ConceptLink> planteatzeko formulazio aljebraiko egokia datu ezagunen arabera:
 
   <Pregunta
     id="p1_q1"
@@ -43,7 +38,10 @@ export const Simulation = EjercicioPitagorasCateto;
 
     <Pregunta.Resolucion>
       Triangelu honetan betetzen den oinarrizko ekuazioa $a^2 + b^2 = c^2$ da. Datu ezagunak ordezkatuz:
-      $$ a^2 + 8^2 = 10^2 $$
+      
+      <Formula>
+        $$ a^2 + 8^2 = 10^2 $$
+      </Formula>
     </Pregunta.Resolucion>
   </Pregunta>
 
@@ -52,10 +50,12 @@ export const Simulation = EjercicioPitagorasCateto;
   </Apoyo>
 </ExerciseStep>
 
+<Separador />
+
 <ExerciseStep
   id="p2"
   numero={2}
-  titulo="Azaleren Korrespondentzia Geometrikoa"
+  titulo="Azaleren korrespondentzia geometrikoa"
   questionIds={["p2_q1"]}
   dependeDeQuestions={["p1_q1"]}
 >
@@ -76,15 +76,20 @@ export const Simulation = EjercicioPitagorasCateto;
 
     <Emparejar.Resolucion>
       Hiru karratu laguntzaileen azalerak hauek dira:
-      $$ c^2 = 10^2 = 100, \quad b^2 = 8^2 = 64, \quad a^2 = 100 - 64 = 36 $$
+      
+      <Formula>
+        $$ c^2 = 10^2 = 100, \quad b^2 = 8^2 = 64, \quad a^2 = 100 - 64 = 36 $$
+      </Formula>
     </Emparejar.Resolucion>
   </Emparejar>
 </ExerciseStep>
 
+<Separador />
+
 <ExerciseStep
   id="p3"
   numero={3}
-  titulo="Dedukzio Aljebraikoaren Sekuentzia"
+  titulo="Dedukzio aljebraikoaren sekuentzia"
   questionIds={["p3_q1"]}
   dependeDeQuestions={["p2_q1"]}
 >
@@ -106,18 +111,20 @@ export const Simulation = EjercicioPitagorasCateto;
 
     <Ordenacion.Resolucion>
       Dedukzio-ordena zuzena hauxe da:
-      1. Planteamendua: $a^2 + 8^2 = 10^2$
-      2. Potentziak: $a^2 + 64 = 100$
-      3. Bakantzea: $a^2 = 100 - 64 = 36$
-      4. Erro karratua: $a = \sqrt{36} = 6$
+      - Planteamendua: $a^2 + 8^2 = 10^2$
+      - Potentziak: $a^2 + 64 = 100$
+      - Bakantzea: $a^2 = 100 - 64 = 36$
+      - Erro karratua: $a = \sqrt{36} = 6$
     </Ordenacion.Resolucion>
   </Ordenacion>
 </ExerciseStep>
 
+<Separador />
+
 <ExerciseStep
   id="p4"
   numero={4}
-  titulo="Katetoaren Azken Kalkulua"
+  titulo="Katetoaren azken kalkulua"
   questionIds={["p4_q1"]}
   dependeDeQuestions={["p3_q1"]}
 >
@@ -130,7 +137,7 @@ export const Simulation = EjercicioPitagorasCateto;
     pista="Zein zenbaki erreal positibo karratura eramanda ematen du 36?"
   >
     <Hueco.ErrorComun titulo="Emaitza negatiboa kontuan hartzea">
-      Aljebraikoki $(-6)^2 = 36$ izan arren, geometria euklidearrean distantzia bat beti da hertsiki zenbaki positiboa ($a > 0$).
+      Aljebraikoki $(-6)^2 = 36$ izan arren, <ConceptLink targetId="geometria-euclidiana">geometria euklidearrean</ConceptLink> distantzia bat beti da hertsiki zenbaki positiboa ($a > 0$).
     </Hueco.ErrorComun>
 
     <Hueco.Resolucion>

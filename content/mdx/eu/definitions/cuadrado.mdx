@@ -1,20 +1,39 @@
 export const metadata = {
-  "lang": "eu",
-  "id": "cuadrado",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Karratua",
-  "description": "Polígono regular de cuatro lados iguales y cuatro ángulos rectos (90°).",
-  "statement": "Un cuadrilátero ABCD es un cuadrado si sus cuatro lados son congruentes (|AB|=|BC|=|CD|=|DA|) y sus cuatro ángulos son congruentes y rectos.",
-  "authors": ["euclides", "hilbert"],
-  "hasSimulation": false
+  id: "cuadrado",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Karratua",
+  description: "Lau alde kongruente eta lau angelu zuzen dituen poligono erregular ekilateroa eta ekiakulua.",
+  sources: [
+    { title: "Elementuak", author: "Euclides", locator: "I. Liburua, 22. Definizioa", role: "primary" }
+  ]
 };
 
-<Capitular letra="E" />l **cuadrado** es el cuadrilátero regular por excelencia. Posee cuatro <ConceptLink targetId="segmento">lados de igual longitud</ConceptLink> y cuatro <ConceptLink targetId="perpendicular">ángulos rectos</ConceptLink>. 
+<Capitular letra="K" />arratua lau aldetako <ConceptLink targetId="poligono">poligono</ConceptLink> erregular nagusia da. Erronboaren eta lauzgilearen propietate metrikoak uztartzen ditu, <ConceptLink targetId="cuadrilatero">plano-koadrilateroen</ConceptLink> familiaren barruan simetria gehieneko irudia osatuz.
+
+<Definicion title="">
+  $ABCD$ <ConceptLink targetId="cuadrilatero" isDependency={true}>koadrilatero</ConceptLink> bat <ConceptLink targetId="cuadrado">karratua</ConceptLink> da baldin eta soilik baldin bere lau aldeak beren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira eta bere lau <ConceptLink targetId="angulo">barne-angeluak</ConceptLink> zuzenak badira:
+  $$
+  AB \cong BC \cong CD \cong DA \quad \land \quad \angle A \cong \angle B \cong \angle C \cong \angle D \cong 90^\circ
+  $$
+</Definicion>
 
 <Separador />
 
-### Propiedades Fundamentales
+### Oinarrizko propietateak
 
-- **Área**: El área de un cuadrado de lado $l$ viene dada por $A = l^2$. Esta propiedad es la base de la demostración geométrica del <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>.
-- **Simetría y Diagonales**: Las diagonales son perpendiculares, de igual longitud ($d = l\sqrt{2}$) y se bisecan mutuamente.
+- **Diagonal ortogonalak eta kongruenteak**: Bere bi diagonalek zehazki luzera bera dute ($d = l\sqrt{2}$), beren erdialdeko puntuetan ebakitzen dute elkar eta beren artean <ConceptLink targetId="perpendicular">perpendikularrak</ConceptLink> dira.
+- **Simetria-ardatzak**: Lau simetria-ardatz ditu (aldeen bi erdibitzaile eta bi diagonalak).
+
+<Separador />
+
+### Erlazio metrikoa eta azalera
+
+<Formula>
+  $$
+  \text{Azalera}(ABCD) = l^2
+  $$
+</Formula>
+
+$l$ aldeko karratu baten <ConceptLink targetId="teoria-medida-area">azalera</ConceptLink> bere luzera linealaren karratuaren berdina da. Bi dimentsioko erlazio hau <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremaren</ConceptLink> froga geometriko tradizionaletan erabilitako oinarria da.

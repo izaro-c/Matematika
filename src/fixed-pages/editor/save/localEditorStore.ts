@@ -50,6 +50,16 @@ const rawMdxFiles = {
     import: 'default',
     eager: true,
   }) as Record<string, unknown>),
+  ...(import.meta.glob('../../../../docs/content/**/*.{md,mdx}', {
+    query: '?raw',
+    import: 'default',
+    eager: true,
+  }) as Record<string, unknown>),
+  ...(import.meta.glob('/docs/content/**/*.{md,mdx}', {
+    query: '?raw',
+    import: 'default',
+    eager: true,
+  }) as Record<string, unknown>),
 };
 
 const rawDiagramFiles = {
@@ -72,6 +82,8 @@ function normalizePath(globPath: string): string {
   const normalized = globPath.replace(/\\/g, '/');
   const mdxIdx = normalized.indexOf('content/mdx/');
   if (mdxIdx >= 0) return normalized.slice(mdxIdx);
+  const docsIdx = normalized.indexOf('docs/content/');
+  if (docsIdx >= 0) return normalized.slice(docsIdx);
   const diagIdx = normalized.indexOf('content/diagrams/');
   if (diagIdx >= 0) return normalized.slice(diagIdx);
   return normalized.replace(/^\/+/, '');

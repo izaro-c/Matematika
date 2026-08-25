@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
+import { renderHook } from '@testing-library/react';
 import { db } from '@/data/content';
-import { getLanguage, isSupportedLanguage, SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, localizePath } from '@/i18n';
+import { getLanguage, isSupportedLanguage, SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, localizePath, useI18n } from '@/i18n';
 import { localizeDiagramSpec } from '@/diagrams';
 
 describe('i18n system', () => {
@@ -42,18 +43,23 @@ describe('i18n system', () => {
     expect(langs).toContain('eu');
     expect(db.isFallback('teorema-pitagoras', 'eu')).toBe(false);
 
-    // Definition triangulo exists in both
+    // Definition triangulo and punto exist in both with Basque titles and descriptions
     const defEu = db.getDefinition('triangulo', 'eu');
     expect(defEu).toBeDefined();
     expect(defEu?.title).toBe('Triangelua');
 
-    // Untranslated theorem falls back to default Spanish
+    const puntoEu = db.getDefinition('punto', 'eu');
+    expect(puntoEu).toBeDefined();
+    expect(puntoEu?.title).toBe('Puntua');
+    expect(puntoEu?.description).toContain('Dimentsiorik gabeko');
+
+    // Theorem exists in both Basque and Spanish
     const otherThm = db.getTheorem('teorema-tales', 'eu');
     expect(otherThm).toBeDefined();
-    expect(db.isFallback('teorema-tales', 'eu')).toBe(true);
+    expect(db.isFallback('teorema-tales', 'eu')).toBe(false);
     const talesLangs = db.getAvailableLanguages('teorema-tales');
     expect(talesLangs).toContain('es');
-    expect(talesLangs).not.toContain('eu');
+    expect(talesLangs).toContain('eu');
   });
 
   it('translates and normalizes paths correctly across languages', () => {
@@ -135,6 +141,22 @@ describe('i18n system', () => {
     expect(eu.dictionary.metadata.difficulties.basico).toBe('Oinarrizkoa');
     expect(eu.dictionary.metadata.difficulties.intermedio).toBe('Tartekoa');
     expect(eu.dictionary.metadata.difficulties.avanzado).toBe('Aurreratua');
+  });
+
+  it('interpolates translation parameters correctly globally across ES and EU', () => {
+    const { result } = renderHook(() => useI18n());
+    const t = result.current.t;
+
+    // Direct object with count
+    expect(t('editor', 'itemCount', { count: 5 })).toBe('5 elementos');
+    // Dot-separated key path
+    expect(t('editor.itemCount', { count: 5 })).toBe('5 elementos');
+    // Fallback when filtered/total are passed instead of count (e.g. EditorLandingView)
+    expect(t('editor', 'itemCount', { filtered: 3, total: 10 })).toBe('10 elementos');
+    // Primitive number passed directly as parameter
+    expect(t('editor', 'itemCount', 5)).toBe('5 elementos');
+    // Multiple placeholders with fallback matching (e.g. ExercisePage)
+    expect(t('exercise', 'correctCount', { count: 10 })).toBe('Correctas: 10 de 10');
   });
 });
 

@@ -1,19 +1,39 @@
 export const metadata = {
-  "id": "cuadrado",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Cuadrado",
-  "description": "Polígono regular de cuatro lados iguales y cuatro ángulos rectos (90°).",
-  "statement": "Un cuadrilátero ABCD es un cuadrado si sus cuatro lados son congruentes (|AB|=|BC|=|CD|=|DA|) y sus cuatro ángulos son congruentes y rectos.",
-  "authors": ["euclides", "hilbert"],
-  "hasSimulation": false
+  id: "cuadrado",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Cuadrado",
+  description: "Polígono regular equilátero y equiángulo de cuatro lados congruentes y cuatro ángulos rectos.",
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 22", role: "primary" }
+  ]
 };
 
-<Capitular letra="E" />l **cuadrado** es el cuadrilátero regular por excelencia. Posee cuatro <ConceptLink targetId="segmento">lados de igual longitud</ConceptLink> y cuatro <ConceptLink targetId="perpendicular">ángulos rectos</ConceptLink>. 
+<Capitular letra="E" />l <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> es el <ConceptLink targetId="poligono">polígono</ConceptLink> regular de cuatro lados por excelencia. Combina las propiedades métricas del rombo y del rectángulo, constituyendo la figura de máxima simetría dentro de la familia de los <ConceptLink targetId="cuadrilatero">cuadriláteros</ConceptLink> planos.
+
+<Definicion title="">
+  Un <ConceptLink targetId="cuadrilatero" isDependency={true}>cuadrilátero</ConceptLink> $ABCD$ es un cuadrado si y solo si sus cuatro lados son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí y sus cuatro <ConceptLink targetId="angulo">ángulos interiores son rectos</ConceptLink>:
+  $$
+  AB \cong BC \cong CD \cong DA \quad \land \quad \angle A \cong \angle B \cong \angle C \cong \angle D \cong 90^\circ
+  $$
+</Definicion>
 
 <Separador />
 
-### Propiedades Fundamentales
+### Propiedades fundamentales
 
-- **Área**: El área de un cuadrado de lado $l$ viene dada por $A = l^2$. Esta propiedad es la base de la demostración geométrica del <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>.
-- **Simetría y Diagonales**: Las diagonales son perpendiculares, de igual longitud ($d = l\sqrt{2}$) y se bisecan mutuamente.
+- **Diagonales ortogonales y congruentes**: Sus dos diagonales poseen exactamente la misma longitud ($d = l\sqrt{2}$), se cortan en sus puntos medios y son <ConceptLink targetId="perpendicular">perpendiculares</ConceptLink> entre sí.
+- **Ejes de simetría**: Posee cuatro ejes de simetría (dos mediatrices de sus lados y dos diagonales).
+
+<Separador />
+
+### Relación métrica y área
+
+<Formula>
+  $$
+  \text{Área}(ABCD) = l^2
+  $$
+</Formula>
+
+El <ConceptLink targetId="teoria-medida-area">área</ConceptLink> de un cuadrado de lado $l$ equivale al cuadrado de su longitud lineal. Esta relación bidimensional constituye la base geométrica tradicional empleada en las demostraciones del <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>.

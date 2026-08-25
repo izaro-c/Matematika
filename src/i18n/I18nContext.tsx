@@ -32,10 +32,35 @@ function resolveNestedValue(dict: Record<string, unknown>, keys: string[]): stri
 }
 
 function interpolateParams(text: string, params?: TranslationParams): string {
-  if (!params) return text;
-  return Object.entries(params).reduce((acc, [key, val]) => {
-    return acc.replace(new RegExp(`\\{${key}\\}`, 'g'), String(val ?? ''));
-  }, text);
+  if (!params || typeof text !== 'string') return text;
+
+  return text.replace(/\{(\s*[\w.-]+\s*)\}/g, (match, rawKey) => {
+    const key = rawKey.trim();
+    if (key in params && params[key] !== undefined && params[key] !== null) {
+      return String(params[key]);
+    }
+    if (key === 'count') {
+      const fallback = params.count ?? params.total ?? params.filtered ?? params.value ?? params.items ?? params.length;
+      if (fallback !== undefined && fallback !== null) return String(fallback);
+    }
+    if (key === 'total') {
+      const fallback = params.total ?? params.count ?? params.value;
+      if (fallback !== undefined && fallback !== null) return String(fallback);
+    }
+    if (key === 'correct') {
+      const fallback = params.correct ?? params.count ?? params.value;
+      if (fallback !== undefined && fallback !== null) return String(fallback);
+    }
+    if (key === 'filtered') {
+      const fallback = params.filtered ?? params.count ?? params.value;
+      if (fallback !== undefined && fallback !== null) return String(fallback);
+    }
+    if (key === 'value') {
+      const fallback = params.value ?? params.count ?? params.total;
+      if (fallback !== undefined && fallback !== null) return String(fallback);
+    }
+    return match;
+  });
 }
 
 function resolveTranslation(
@@ -46,20 +71,29 @@ function resolveTranslation(
   if (args.length === 0) return '';
 
   let params: TranslationParams | undefined;
-  let keys: string[];
+  let keyArgs: any[];
 
   const lastArg = args[args.length - 1];
   if (lastArg !== null && typeof lastArg === 'object' && !Array.isArray(lastArg)) {
     params = lastArg;
-    keys = args.slice(0, -1).map(String);
+    keyArgs = args.slice(0, -1);
+  } else if (
+    args.length > 1 &&
+    (typeof lastArg === 'number' || typeof lastArg === 'string')
+  ) {
+    const candidateKeys = args.slice(0, -1).flatMap(arg => String(arg).split('.')).filter(Boolean);
+    const candidateText = resolveNestedValue(currentDict, candidateKeys) ?? resolveNestedValue(defaultDict, candidateKeys);
+    if (candidateText !== undefined) {
+      params = { count: lastArg, total: lastArg, value: lastArg };
+      keyArgs = args.slice(0, -1);
+    } else {
+      keyArgs = args;
+    }
   } else {
-    keys = args.map(String);
+    keyArgs = args;
   }
 
-  if (keys.length === 1 && keys[0].includes('.')) {
-    keys = keys[0].split('.');
-  }
-
+  const keys = keyArgs.flatMap(arg => String(arg).split('.')).filter(Boolean);
   const rawText = resolveNestedValue(currentDict, keys) ?? resolveNestedValue(defaultDict, keys) ?? keys.join('.');
   return interpolateParams(rawText, params);
 }

@@ -2,51 +2,50 @@ export const metadata = {
   "id": "teorema-tales",
   "type": "teorema",
   "title": "Teorema de Tales",
-  "description": "Si una recta paralela a uno de los lados de un triángulo corta a los otros dos lados, entonces los segmentos que determina en ellos son proporcionales.",
+  "description": "Si una recta paralela a uno de los lados de un triángulo corta a los otros dos lados, determina en ellos segmentos proporcionales.",
   "statement": "Sea △ABC un triángulo y D ∈ AB, E ∈ AC tales que DE ∥ BC. Entonces AD/DB = AE/EC.",
   "tags": ["geometria", "proporcionalidad", "paralelas"],
-  "authors": ["tales"],
+  "authors": ["tales", "euclides"],
   "difficulty": "intermedio",
-  "demos": ["demo-tales"],
   "hasSimulation": true,
-  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
+  "sources": [
+    { "title": "Elementos", author: "Euclides", locator: "Libro VI, Proposición 2", role: "primary" }
+  ],
+  "demos": ["demo-tales"]
 };
 
 import { Tales } from '@content/diagrams/Teoremas/Tales';
-
 export const Simulation = Tales;
 
-<Capitular letra="E" />l <ConceptLink targetId={["teorema-tales", "teorema"]}>teorema de Tales</ConceptLink> es una piedra angular de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría</ConceptLink> y la noción de <ConceptLink targetId="semejanza" isDependency={false}>semejanza</ConceptLink>. Establece que si una <InteractiveElement target="recta-de"><ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> <ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink></InteractiveElement> a uno de los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> de un <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> $\triangle ABC$</InteractiveElement> corta a los otros dos <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink>, entonces los <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> que determina en ellos son <ConceptLink targetId="proporcionalidad" isDependency={false}>proporcionales</ConceptLink>.
+<Capitular letra="E" />l <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink> constituye la piedra angular de la teoría de la <ConceptLink targetId="semejanza">semejanza</ConceptLink> y la <ConceptLink targetId="proporcionalidad">proporcionalidad geométrica</ConceptLink>. Establece que si una <VisualBind element="segDE" color="musgo"><ConceptLink targetId="paralelismo">recta paralela</ConceptLink></VisualBind> a uno de los lados de un <VisualBind element="polygonABC" color="canela"><ConceptLink targetId="triangulo">triángulo $\triangle ABC$</ConceptLink></VisualBind> interseca a los otros dos lados en los puntos $D$ y $E$, los <ConceptLink targetId="segmento">segmentos</ConceptLink> resultantes sobre dichos lados mantienen una razón de proporcionalidad idéntica.
 
 <Separador />
 
-### Enunciado Formal
+### Enunciado formal
 
-Sea <InteractiveElement target="triangulo-abc">$\triangle ABC$</InteractiveElement> un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> y sean <InteractiveElement target="segmento-ad">$D \in \overline{AB}$</InteractiveElement>, <InteractiveElement target="segmento-ae">$E \in \overline{AC}$</InteractiveElement> tales que <InteractiveElement target="recta-de">$DE \parallel BC$</InteractiveElement>. Entonces:
+Sea $\triangle ABC$ un <ConceptLink targetId="triangulo">triángulo</ConceptLink> plano y sean $D \in \overline{AB}$ y $E \in \overline{AC}$ dos puntos tales que el segmento <VisualBind element="segDE" color="musgo">$DE$</VisualBind> es <ConceptLink targetId="paralelismo">paralelo</ConceptLink> al lado <VisualBind element="lineBC" color="pavo">$BC$</VisualBind> ($DE \parallel BC$). Entonces:
 
 <Formula>
-  $$ \frac{\overline{AD}}{\overline{DB}} = \frac{\overline{AE}}{\overline{EC}} $$
+  $$ \frac{|AD|}{|DB|} = \frac{|AE|}{|EC|} $$
 </Formula>
 
-Equivalentemente, el <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> $\triangle ADE$ es <ConceptLink targetId="semejanza" isDependency={false}>semejante</ConceptLink> a $\triangle ABC$:
+De forma equivalente, el triángulo parcial $\triangle ADE$ es <ConceptLink targetId="semejanza">semejante</ConceptLink> al triángulo original $\triangle ABC$ ($\triangle ADE \sim \triangle ABC$), preservando las razones entre lados homólogos:
 
 <Formula>
-  $$ \triangle ADE \sim \triangle ABC $$
+  $$ \frac{|AD|}{|AB|} = \frac{|AE|}{|AC|} = \frac{|DE|}{|BC|} $$
 </Formula>
 
 <Separador />
 
-### Discusión
+### Análisis y fundamentación axiomática
 
-Una formulación equivalente y muy práctica: si trazamos una <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink> <InteractiveElement target="recta-de"><ConceptLink targetId="paralelas" isDependency={false}>paralela</ConceptLink></InteractiveElement> a uno de los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> de un <InteractiveElement target="triangulo-abc"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink></InteractiveElement> que interseca a los otros dos, entonces divide a esos <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> en <ConceptLink targetId="segmento" isDependency={false}>segmentos</ConceptLink> <InteractiveElement target="proporcion"><ConceptLink targetId="proporcionalidad" isDependency={false}>proporcionales</ConceptLink></InteractiveElement>, originando un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> <ConceptLink targetId="semejanza" isDependency={false}>semejante</ConceptLink> al original.
+El teorema de Tales presupone el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>, siendo exclusivo de la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink> plana.
 
-El <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> es la base de la <ConceptLink targetId="semejanza" isDependency={false}>semejanza de triángulos</ConceptLink>: dos <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink> son <ConceptLink targetId="semejanza" isDependency={false}>semejantes</ConceptLink> si tienen <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>, y sus <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> correspondientes son <ConceptLink targetId="proporcionalidad" isDependency={false}>proporcionales</ConceptLink>. Esto es fundamental para la <ConceptLink targetId="trigonometria" isDependency={false}>trigonometría</ConceptLink> y para la definición de <ConceptLink targetId="razon-trigonometrica" isDependency={false}>funciones trigonométricas</ConceptLink>.
+Su demostración clásica (Proposición VI.2 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>) emplea la comparación de las <ConceptLink targetId="area">áreas</ConceptLink> de los triángulos $\triangle ADE$, $\triangle BDE$ y $\triangle CDE$. Dado que $\triangle BDE$ y $\triangle CDE$ comparten la misma base $DE$ y están comprendidos entre las mismas paralelas $DE \parallel BC$, sus áreas son iguales.
 
 <Separador />
 
-### Observaciones
+### Observaciones y reciprocidad
 
-- El <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las paralelas</ConceptLink>: es propio de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclidiana</ConceptLink>.
-- Atribuido a <ConceptLink targetId="tales" isDependency={false}>Tales de Mileto</ConceptLink> (siglo VI a.C.), quien supuestamente lo usó para medir la altura de las pirámides egipcias mediante las sombras proyectadas.
-- El <ConceptLink targetId="teorema-pitagoras"  isDependency={false}>teorema de Pitágoras</ConceptLink> puede demostrarse usando el <ConceptLink targetId="teorema-tales"  isDependency={false}>teorema de Tales</ConceptLink>, y ambos son equivalentes al <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las paralelas</ConceptLink>.
-- La recíproca también es cierta: si $AD/DB = AE/EC$, entonces $DE \parallel BC$.
+- **Recíproco del teorema**: Si los puntos $D \in \overline{AB}$ y $E \in \overline{AC}$ dividen a los lados en segmentos proporcionales tales que $|AD|/|DB| = |AE|/|EC|$, entonces la recta que une $D$ y $E$ es necesariamente paralela a $BC$.
+- **Transversales paralelas**: El teorema se generaliza al corte de dos rectas <ConceptLink targetId="transversal">transversales</ConceptLink> por un haz de tres o más rectas paralelas en el plano.

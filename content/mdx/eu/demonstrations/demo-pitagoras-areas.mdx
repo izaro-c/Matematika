@@ -1,65 +1,62 @@
 export const metadata = {
-  "lang": "eu",
   "id": "demo-pitagoras-areas",
   "type": "demostracion",
-  "title": "Froga: Pitagorasen Teorema (Azaleren Baliokidetza)",
-  "description": "Una demostración formal basada en la teoría de la medida de área de Hilbert y la invariancia bajo el grupo de isometrías.",
-  "tags": ["geometria", "areas", "diseccion", "hilbert"],
-  "authors": ["euclides", "pitagoras"],
+  "title": "Frogapena: Pitagorasen teorema (Azaleren baliokidetza)",
+  "description": "Gainazalen deskonposizioan eta isometriapean azaleraren kontserbazioan oinarritutako frogapen formala.",
   "parentTheorem": "teorema-pitagoras",
   "proofMethod": "metodo-directo",
+  "authors": ["euclides", "pitagoras", "hilbert"],
+  "tags": ["geometria", "areas", "diseccion", "hilbert"],
   "layout": "split",
-  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
+  "sources": [
+    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV", role: "primary" }
+  ]
 };
 
 import { DemoPitagorasAreas } from "@content/diagrams/Demos/DemoPitagorasAreas";
 
 <DemonstrationSection diagram={<DemoPitagorasAreas />}>
 
-<Capitular letra="S" />ea $\triangle ABC$ un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink> con <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>recto</ConceptLink> en $C$. Sean $a = |BC|$ y $b = |CA|$ los <ConceptLink targetId="cateto" isDependency={false}>catetos</ConceptLink>, y $c = |AB|$ la <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink> (el <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> opuesto al <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>recto</ConceptLink>). Entonces:
-
-<Formula>
-  $$ a^2 + b^2 = c^2 $$
-</Formula>
-
-Equivalente en términos de <ConceptLink targetId="area" isDependency={false}>áreas</ConceptLink>: el <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> del <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> construido sobre la <InteractiveElement target="cuadrado-c" color="ocre">hipotenusa</InteractiveElement> equivale a la suma de las <ConceptLink targetId="area" isDependency={false}>áreas</ConceptLink> de los <ConceptLink targetId="cuadrado" isDependency={false}>cuadrados</ConceptLink> construidos sobre los <InteractiveElement target="cuadrado-a" color="canela">cateto $a$</InteractiveElement> y <InteractiveElement target="cuadrado-b" color="terracota">cateto $b$</InteractiveElement>.
+<Capitular letra="B" />edi $\triangle ABC$ $a$ eta $b$ <ConceptLink targetId="cateto">katetoak</ConceptLink> eta $c$ <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> dituen <ConceptLink targetId="triangulo-rectangulo">triangelu zuzen</ConceptLink> bat. <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pitagorasen teoremaren</ConceptLink> $a^2 + b^2 = c^2$ erlazioa frogatzen da <ConceptLink targetId="poligono">poligonoen</ConceptLink> deskonposizioan eta berriro antolatzean <ConceptLink targetId="area">azalera</ConceptLink> kontserbatzen delako bidez.
 
 <Separador />
 
-  <ProofStep number={1} target="paso1" title="Hipótesis y Construcción">
-    Por hipótesis, se da un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink> cuyos <InteractiveElement target="segmento-a" color="terracota">catetos miden $a$</InteractiveElement> y <InteractiveElement target="segmento-b" color="canela">$b$</InteractiveElement>, y cuya <InteractiveElement target="segmento-c" color="mora">hipotenusa mide $c$</InteractiveElement>.
-    Por el <ConceptLink targetId="teorema-construccion-cuadrado" isDependency={false}>teorema de construcción de polígonos</ConceptLink>, construimos un <InteractiveElement target="cuadrado-exterior" color="carbon"><ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> exterior</InteractiveElement> cuyo lado es la suma de los catetos ($a + b$).
+<ProofStep number={1} target="paso1" title="Hipotesia eta edukiontziaren eraikuntza">
+<VisualBind element="segmento-a" color="terracota">$a$</VisualBind> eta <VisualBind element="segmento-b" color="pavo">$b$</VisualBind> <ConceptLink targetId="cateto">katetoak</ConceptLink> eta <VisualBind element="segmento-c" color="ocre">$c$</VisualBind> <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> dituen <ConceptLink targetId="triangulo-rectangulo">triangelu zuzena</ConceptLink> emanda, $a + b$ aldeko <VisualBind element="cuadrado-exterior" color="carbon"><ConceptLink targetId="cuadrado">kanpo-karratu bat</ConceptLink></VisualBind> eraikitzen dugu. <ConceptLink targetId="poligono">Poligono</ConceptLink> edukiontzi honen <ConceptLink targetId="area">azalera</ConceptLink> osoa $(a+b)^2$ da.
+</ProofStep>
 
-    Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>teoría de la medida de área de Hilbert</ConceptLink>, el área de este cuadrado contenedor es $(a+b)^2$.
-  </ProofStep>
+<ProofStep number={2} target="paso2" title="Lehen antolaketa: lau triangelu eta barne-karratua">
+Jatorrizko <ConceptLink targetId="triangulo">triangeluaren</ConceptLink> <VisualBind element="triangulos" color="pavo">lau kopia</VisualBind> jartzen ditugu <ConceptLink targetId="cuadrado">karratu</ConceptLink> edukiontziaren ertzetan. Beren azalerren batura $4 \cdot \frac{ab}{2} = 2ab$ da. Estali gabeko barne-eskualdeak $c$ aldeko karratu bat osatzen du, $c^2$ azalerakoa. <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren gehitutasunaren</ConceptLink> bidez:
 
-  <ProofStep number={2} target="paso2" title="Primera Configuración">
-    Disponemos cuatro copias del <InteractiveElement target="triangulos" color="canela"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> original</InteractiveElement> en los vértices del cuadrado exterior.
-    Por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5 (Congruencia LAL)</ConceptLink>, las cuatro copias son <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink> a la hipótesis; su área total es $4 \cdot \frac{ab}{2} = 2ab$.
+<Formula>
+  $$ \text{Azalera}_{\text{osoa}} = 2ab + c^2 $$
+</Formula>
+</ProofStep>
 
-    La región central está delimitada por las cuatro hipotenusas de longitud $c$. Por el <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={true}>teorema de la suma de ángulos del triángulo</ConceptLink>, los ángulos agudos del triángulo rectángulo suman $90^\circ$. Por tanto, cada ángulo del cuadrilátero central mide $180^\circ - 90^\circ = 90^\circ$. Por la definición de <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink>, el cuadrilátero —con sus cuatro ángulos rectos y sus cuatro lados iguales a $c$— es un cuadrado de área $c^2$.
+<ProofStep number={3} target="paso3" title="Eraldaketa isometrikoa translazio bidez">
+Edukiontziaren barnean <VisualBind element="triangulos" color="pavo">lau triangeluak</VisualBind> berriro antolatzen ditugu $a \times b$ dimentsioko bi <ConceptLink targetId="rectangulo">laukizuzen</ConceptLink> osatuz. Mugimendu rigidotan azalera kontserbatzen denez, lau triangeluek hartutako gainazala $2ab$ balioan mantentzen da.
+</ProofStep>
 
-    Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>propiedad aditiva del área</ConceptLink>:
-    <Formula>$$ \text{Área}_{exterior} = 2ab + c^2 $$</Formula>
-  </ProofStep>
+<ProofStep number={4} target="paso4" title="Bigarren antolaketa eta berdintza algebraikoa">
+Konfigurazio berri honetan, edukiontziaren estali gabeko zatia <VisualBind element="area-a" color="terracota">$a^2$ azalerako karratu batean</VisualBind> eta <VisualBind element="area-b" color="pavo">$b^2$ azalerako karratu batean</VisualBind> zatitzen da zehazki:
 
-  <ProofStep number={3} target="paso3" title="Transformación Isométrica">
-    > **Usa el control deslizante** bajo el diagrama para reorganizar los triángulos.
+<Formula>
+  $$ \text{Azalera}_{\text{osoa}} = 2ab + a^2 + b^2 $$
+</Formula>
 
-    Aplicamos una <ConceptLink targetId="isometria" isDependency={false}>isometría</ConceptLink> (traslación en el plano) a los <InteractiveElement target="triangulos" color="canela">cuatro triángulos</InteractiveElement> para agruparlos en dos rectángulos de lados $a$ y $b$.
-    Por los <ConceptLink targetId="axiomas-isometria" isDependency={false}>axiomas del movimiento rígido</ConceptLink>, el desplazamiento preserva la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> y el área total, que se mantiene en $2ab$.
-  </ProofStep>
+$(a+b)^2$ azalera osoaren bi adierazpenak berdinduz:
 
-  <ProofStep number={4} target="paso4" title="Segunda Configuración y Equivalencia">
-    En esta nueva disposición, la porción no recubierta se particiona en un <InteractiveElement target="area-a" color="terracota">cuadrado de lado $a$</InteractiveElement> y un <InteractiveElement target="area-b" color="canela">cuadrado de lado $b$</InteractiveElement>.
-    Por la <ConceptLink targetId="teoria-medida-area" isDependency={false}>propiedad aditiva del área</ConceptLink>:
-    <Formula>$$ \text{Área}_{exterior} = 2ab + a^2 + b^2 $$</Formula>
+<Formula>
+  $$ 2ab + c^2 = 2ab + a^2 + b^2 \implies c^2 = a^2 + b^2 $$
+</Formula>
+</ProofStep>
 
-    Por el paso 2 y el paso 4, ambas expresiones igualan $(a+b)^2$. Por el <ConceptLink targetId="propiedad-transitiva-igualdad" isDependency={false}>axioma transitivo de la igualdad</ConceptLink>:
-    <Formula>$$ 2ab + c^2 = 2ab + a^2 + b^2 $$</Formula>
+<Separador />
 
-    Por la <ConceptLink targetId="axioma-cancelacion-suma" isDependency={false}>propiedad de cancelación de la suma</ConceptLink>, restamos $2ab$ en ambos miembros:
-    <Formula>$$ c^2 = a^2 + b^2 $$</Formula>
-   
-  </ProofStep>
+### Analisia eta ondorioa
+
+<Nota>
+  Frogapen honek Zhoubi Suanjing teoremaren eta <ConceptLink targetId="hilbert">Hilberten</ConceptLink> berdindeskonposagarritasunaren teoriaren adibidea ematen du: <ConceptLink targetId="poligono">poligono</ConceptLink> baten <ConceptLink targetId="area">azalera</ConceptLink> inbariantea da translazio eta zatiketa desjuntuen pean.
+</Nota>
+
 </DemonstrationSection>

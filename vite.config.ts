@@ -9,13 +9,17 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 import remarkMath from 'remark-math'
 import remarkGfm from 'remark-gfm'
 
-import rehypeKatex from 'rehype-katex'
-
+import rehypeKatex from 'rehype-katex';
 import { visualizer } from 'rollup-plugin-visualizer';
+import { createJiti } from 'jiti';
+
+const jiti = createJiti(import.meta.url);
+const { viteEditorApiPlugin } = jiti('./scripts/editor/viteEditorApiPlugin.ts') as typeof import('./scripts/editor/viteEditorApiPlugin');
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    viteEditorApiPlugin(),
     {
       enforce: 'pre',
       ...mdx({
@@ -50,7 +54,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks(id) {
+        manualChunks(id: string) {
           if (id.includes('contentIndex.json') || id.includes('contentCoverage.json')) {
             return 'content-index-data';
           }

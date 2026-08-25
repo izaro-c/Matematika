@@ -1,38 +1,36 @@
 export const metadata = {
-  "id": "paralelas",
-  "type": "definicion",
-  "subtype": "nominal",
-  "title": "Paralelas",
-  "description": "Dos rectas en un mismo plano son paralelas si no comparten ningún punto (no se intersecan).",
-  "tags": ["geometria", "rectas"],
-  "authors": ["euclides"],
-  "links": ["recta", "plano", "punto"],
-  "seeAlso": ["axioma-paralelas-euclides", "axioma-paralelas-hiperbolico"],
-  "hasSimulation": true
+  id: "paralelas",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Rectas Paralelas",
+  description: "Relación entre dos rectas coplanares que no poseen ningún punto de intersección común.",
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 23", role: "primary" }
+  ]
 };
 
 import { Paralelas } from '@content/diagrams/Definiciones/Paralelas';
-
 export const Simulation = Paralelas;
 
-<Capitular letra="D" />os <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> se denominan paralelas si están contenidas en un mismo <ConceptLink targetId="plano" isDependency={false}>plano</ConceptLink> y no comparten ningún <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>. Es una relación fundamental para clasificar los sistemas axiomáticos geométricos.
+<Capitular letra="D" />os <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> son paralelas cuando están contenidas en un mismo <ConceptLink targetId="plano">plano</ConceptLink> y no comparten ningún <ConceptLink targetId="punto">punto</ConceptLink> de <ConceptLink targetId="interseccion">intersección</ConceptLink>. Constituye la relación posicional primaria para clasificar los sistemas axiomáticos geométricos.
+
+<Definicion title="">
+  Dadas dos rectas coplanares $l$ y $m$, se definen como paralelas (denotado $l \parallel m$) si y solo si su <ConceptLink targetId="interseccion">intersección</ConceptLink> es el <ConceptLink targetId="conjunto">conjunto vacío</ConceptLink>:
+  $$
+  l \parallel m \iff l \cap m = \emptyset
+  $$
+</Definicion>
 
 <Separador />
 
-### Enunciado Formal
+### Representación visual e interacción
 
-Dadas dos rectas coplanarias <InteractiveElement target="recta-base" color="musgo">$l$</InteractiveElement> y <InteractiveElement target="recta-paralela" color="musgo">$m$</InteractiveElement>, decimos que son paralelas (denotado $l \parallel m$) si su <ConceptLink targetId="interseccion" isDependency={false}>intersección</ConceptLink> es el <ConceptLink targetId="conjunto-vacio" isDependency={false}>conjunto vacío</ConceptLink>:
-
-<Formula>
-  $$ l \parallel m \iff l \cap m = \emptyset $$
-</Formula>
+En la simulación interactiva se observa la recta base <VisualBind element="recta-base" color="musgo">$l$</VisualBind> y la recta paralela <VisualBind element="recta-paralela" color="musgo">$m$</VisualBind> trazada a través del <ConceptLink targetId="punto">punto</ConceptLink> exterior <VisualBind element="punto-p" color="terracota">$P$</VisualBind>. El desplazamiento de dicho punto reconfigura la recta paralela preservando la condición de no intersección.
 
 <Separador />
 
-### Existencia: El Quinto Postulado
+### Comportamiento en los sistemas axiomáticos
 
-La existencia de rectas paralelas no es inherente a la definición, sino que depende de los axiomas del sistema. En la <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink>, el <ConceptLink targetId="axioma-paralelas-euclides">quinto postulado</ConceptLink> de Euclides establece que, dada una <InteractiveElement target="recta-base" color="musgo">recta base $l$</InteractiveElement> y un <InteractiveElement target="punto-p" color="mora">punto $P$</InteractiveElement> exterior a ella, existe una **única** <InteractiveElement target="recta-paralela" color="musgo">recta $m$ que pasa por $P$ y es paralela a $l$</InteractiveElement>.
-
-En sistemas no euclidianos:
-- En <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>, existen infinitas rectas que pasan por $P$ y no intersecan a $l$.
-- En <ConceptLink targetId="sistema-eliptico">geometría elíptica</ConceptLink>, no existen líneas paralelas (toda recta interseca a cualquier otra).
+- **<ConceptLink targetId="sistema-euclidiano">Geometría euclidiana</ConceptLink>**: Por un punto exterior a una recta dada pasa exactamente una recta paralela (<ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de Playfair</ConceptLink>).
+- **<ConceptLink targetId="sistema-hiperbolico">Geometría hiperbólica</ConceptLink>**: Por un punto exterior a una recta dada pasan infinitas rectas coplanares que no la intersecan (<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={false}>axioma de Lobachevski</ConceptLink>).

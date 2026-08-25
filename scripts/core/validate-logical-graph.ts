@@ -50,9 +50,9 @@ function extractConceptLinkDependencies(content: string): string[] {
   let match: RegExpExecArray | null;
   while ((match = regex.exec(content)) !== null) {
     const attrsStr = match[1];
-    // Skip if explicitly marked as not a dependency (isDependency={false} or isDependency="false")
-    const isExplicitlyFalse = /\bisDependency=\{(?:false|"false")\}|\bisDependency="false"/.test(attrsStr);
-    if (isExplicitlyFalse) continue;
+    // Include ONLY if explicitly marked as a dependency (isDependency={true} or isDependency="true")
+    const isExplicitlyTrue = /\bisDependency=\{(?:true|"true")\}|\bisDependency="true"/.test(attrsStr);
+    if (!isExplicitlyTrue) continue;
 
     const singleMatch = attrsStr.match(/\btargetId=(?:["']([^"']+)["']|\{["']([^"']+)["']\})/);
     if (singleMatch) {

@@ -1,17 +1,15 @@
 export const metadata = {
-  "lang": "eu",
   "id": "teorema-angulos-opuestos-verticales",
   "type": "teorema",
-  "title": "Teorema de los ángulos opuestos por el vértice",
-  "description": "Cuando dos rectas se cortan, los ángulos opuestos por el vértice son congruentes entre sí.",
-  "statement": "Sean l y m dos rectas que se cortan en el punto O. Si α y β son ángulos opuestos por el vértice, entonces α ≅ β.",
+  "title": "Apinamuko angelu aurrekoen teorema",
+  "description": "Bi zuzenek puntu batean elkar ebakitzen dutenean, erpinez aurkako angelu bikoteak elkarren artean kongruenteak dira.",
+  "statement": "Bedi l eta m O puntuan elkar ebakitzen duten bi zuzen. α eta α' erpinez aurkako angeluak badira, orduan α ≅ α'.",
   "tags": ["geometria", "congruencia", "geometria-absoluta"],
   "authors": ["euclides"],
   "difficulty": "básico",
   "hasSimulation": true,
-    "sources": [
-    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 15", "role": "primary" },
-    { "title": "Euclidean and Non-Euclidean Geometries", "author": "Marvin Jay Greenberg", "role": "secondary" }
+  "sources": [
+    { "title": "Elementos", "author": "Euclides", "locator": "Libro I, Proposición 15", "role": "primary" }
   ],
   "demos": ["demo-angulos-opuestos-verticales"]
 };
@@ -19,21 +17,22 @@ export const metadata = {
 import { AngulosOpuestos } from '@content/diagrams/Teoremas/AngulosOpuestos';
 export const Simulation = AngulosOpuestos;
 
-<Capitular letra="C" />
-uando dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> se intersecan en un único <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>, determinan cuatro regiones angulares. Aquellos <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> ubicados en semiplanos alternos —separados por el vértice de intersección— se denominan **opuestos por el vértice**. Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink>, consignado en los <ConceptLink targetId="euclides" isDependency={false}>Elementos de Euclides</ConceptLink>, demuestra que tales pares angulares conservan siempre una <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> estricta: <InteractiveElement target="alpha">$\alpha \cong \alpha'$</InteractiveElement> y <InteractiveElement target="beta">$\beta \cong \beta'$</InteractiveElement>.
+<Capitular letra="B" />i <ConceptLink targetId="recta">zuzenek</ConceptLink> <ConceptLink targetId="punto">puntu</ConceptLink> batean elkar ebakitzen dutenean, lau eremu angeluar zehazten dituzte. Erpin komunarekiko aurkako posizioetan dauden <ConceptLink targetId="angulo">angelu</ConceptLink> bikoteei <ConceptLink targetId="angulos-opuestos-por-el-vertice">erpinez aurkako angelu</ConceptLink> deritze. <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.15 proposizioko <ConceptLink targetId="teorema-angulos-opuestos-verticales">teoremak</ConceptLink> frogatzen du bi angelu horiek <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> zorrotza gordetzen dutela: <VisualBind element="alpha" color="terracota">$\alpha \cong \alpha'$</VisualBind> eta <VisualBind element="beta" color="pavo">$\beta \cong \beta'$</VisualBind>.
 
 <Separador />
 
-### Enunciado Formal
+### Formulatze formala
 
-Sean $l$ y $m$ dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> que se cortan en $O$. Entonces los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> <InteractiveElement target="alpha">opuestos por el vértice</InteractiveElement> son <ConceptLink targetId="congruencia" isDependency={false}>congruentes</ConceptLink>:
+Bedi $l$ eta $m$ $O$ puntu batean <ConceptLink targetId="interseccion">elkar ebakitzen</ConceptLink> duten bi <ConceptLink targetId="recta">zuzen</ConceptLink> koplanar. $\alpha$ eta $\alpha'$ <ConceptLink targetId="angulos-opuestos-por-el-vertice">erpinez aurkako angeluak</ConceptLink> badira, orduan:
 
 <Formula>
-  $$ \alpha \cong \alpha', \qquad \beta \cong \beta' $$
+  $$ \alpha \cong \alpha' \qquad \text{eta} \qquad \beta \cong \beta' $$
 </Formula>
 
 <Separador />
 
-### Discusión
+### Analisia eta frogapen deduktiboa
 
-Este <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> es uno de los primeros resultados no triviales de la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría</ConceptLink>. Su <ConceptLink targetId="demostracion" isDependency={false}>demostración</ConceptLink> no requiere el <ConceptLink targetId="axioma-paralelas-euclides"  isDependency={false}>axioma de las paralelas</ConceptLink>, por lo que pertenece a la <ConceptLink targetId={["sistema-absoluto", "geometria-absoluta"]} isDependency={false}>geometría absoluta</ConceptLink>. El argumento es simple: los <ConceptLink targetId="angulo" isDependency={false}>ángulos</ConceptLink> adyacentes suman $180^\circ$, y restando el <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> común se obtiene la <ConceptLink targetId="congruencia" isDependency={false}>congruencia</ConceptLink> de los opuestos.
+Emaitza hau <ConceptLink targetId="geometria-absoluta">geometria absolutuari</ConceptLink> dagokio, haren frogapenak ez baitu <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioma</ConceptLink> behar.
+
+Argumentu deduktiboa <ConceptLink targetId="recta">zuzen</ConceptLink> beraren gaineko <ConceptLink targetId="angulos-adyacentes">angelu albokoen</ConceptLink> izaera osagarrian oinarritzen da: <VisualBind element="supp12" color="terracota">$(\alpha, \beta)$</VisualBind> bikoteak eta <VisualBind element="supp23" color="pavo">$(\beta, \alpha')$</VisualBind> bikoteak bi <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> ($180^\circ$) batzen dituzte bakoitzak. <VisualBind element="angle2" color="carbon">$\beta$</VisualBind> angelu komuna kenduz, berehala deduzitzen da <VisualBind element="congruence13" color="terracota">$\alpha \cong \alpha'$</VisualBind> kongruentzia.

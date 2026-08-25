@@ -1,51 +1,49 @@
 export const metadata = {
   "id": "teorema-pitagoras",
   "type": "teorema",
-  "branch": "51M",
   "title": "Teorema de Pitágoras",
-  "description": "En un triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos.",
+  "description": "En todo triángulo rectángulo, el área del cuadrado construido sobre la hipotenusa es igual a la suma de las áreas de los cuadrados construidos sobre los catetos.",
   "statement": "Sea △ABC un triángulo rectángulo con ángulo recto en C. Si a = |BC|, b = |CA| y c = |AB| (hipotenusa), entonces a² + b² = c².",
+  "branch": "51M",
   "tags": ["geometria", "triangulos", "areas"],
-  "authors": ["euclides", "pitagoras"],
+  "authors": ["pitagoras", "euclides", "hilbert"],
   "difficulty": "básico",
-  "demos": ["demo-pitagoras-euclides", "demo-pitagoras-areas"],
-  "examples": ["ejemplo-pitagoras-calculo"],
-  "exercises": ["ejercicio-pitagoras-cateto"],
   "hasSimulation": true,
-  "sources": [{ "title": "Pending Formalization", "author": "Matematika", "role": "primary" }]
+  "demos": ["demo-pitagoras-euclides", "demo-pitagoras-areas"],
+  "sources": [
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 47 y 48", role: "primary" },
+    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §21", role: "secondary" }
+  ]
 };
 
 import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras';
-
 export const Simulation = Pitagoras;
 
-<Capitular letra="E" />l <ConceptLink targetId={["teorema-pitagoras", "teorema"]}>teorema de Pitágoras</ConceptLink> es la <ConceptLink targetId="relacion-metrica" isDependency={false}>relación métrica</ConceptLink> más universal de la <ConceptLink targetId={["sistema-euclidiano", "geometria-euclidiana"]}>geometría euclidiana</ConceptLink> plana. Establece un vínculo inquebrantable entre los <ConceptLink targetId="lado" isDependency={false}>lados</ConceptLink> de un <InteractiveElement target="triangulo"><ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink></InteractiveElement> que posee un <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>recto</ConceptLink>.
+<Capitular letra="E" />l <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> constituye la relación métrica fundamental de la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink> plana. Establece un vínculo cuantitativo exacto entre los <ConceptLink targetId="cateto">catetos</ConceptLink> y la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> de un <VisualBind element="triangulo" color="carbon"><ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink></VisualBind>, asociando la longitud lineal de los <ConceptLink targetId="segmento">segmentos</ConceptLink> con el <ConceptLink targetId="area">área</ConceptLink> de las superficies cuadradas construidas sobre ellos.
 
 <Separador />
 
-### Enunciado Formal
+### Enunciado formal
 
-Sea $\triangle ABC$ un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink> con <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>recto</ConceptLink> en $C$. Sean $a = |BC|$ y $b = |CA|$ los <ConceptLink targetId="cateto" isDependency={false}>catetos</ConceptLink>, y $c = |AB|$ la <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink> (el <ConceptLink targetId="lado" isDependency={false}>lado</ConceptLink> opuesto al <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> <ConceptLink targetId="angulo" isDependency={false}>recto</ConceptLink>). Entonces:
+Sea $\triangle ABC$ un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> con <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> en el <ConceptLink targetId="vertice">vértice</ConceptLink> $C$. Sean $a = |BC|$ y $b = |CA|$ las longitudes de los <ConceptLink targetId="cateto">catetos</ConceptLink>, y $c = |AB|$ la longitud de la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink>. Entonces:
 
 <Formula>
   $$ a^2 + b^2 = c^2 $$
 </Formula>
 
-Equivalente en términos de <ConceptLink targetId="area" isDependency={false}>áreas</ConceptLink>: el <ConceptLink targetId="area" isDependency={false}>área</ConceptLink> del <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> construido sobre la <InteractiveElement target="cuadrado-c" color="ocre">hipotenusa</InteractiveElement> equivale a la suma de las <ConceptLink targetId="area" isDependency={false}>áreas</ConceptLink> de los <ConceptLink targetId="cuadrado" isDependency={false}>cuadrados</ConceptLink> construidos sobre los <InteractiveElement target="cuadrado-a" color="canela">cateto $a$</InteractiveElement> y <InteractiveElement target="cuadrado-b" color="terracota">cateto $b$</InteractiveElement>.
+En términos de magnitudes de superficie, el <ConceptLink targetId="area">área</ConceptLink> del <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">cuadrado sobre la hipotenusa</ConceptLink></VisualBind> $c^2$ equivale estrictamente a la suma del área del <VisualBind element="cuadrado-a" color="pavo">cuadrado sobre el cateto $a$</VisualBind> ($a^2$) y el área del <VisualBind element="cuadrado-b" color="terracota">cuadrado sobre el cateto $b$</VisualBind> ($b^2$).
 
 <Separador />
 
-### Discusión
+### Análisis y fundamentación axiomática
 
-El <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> no solo versa sobre <ConceptLink targetId="longitud" isDependency={false}>longitudes</ConceptLink>, sino sobre **<ConceptLink targetId="area" isDependency={false}>áreas</ConceptLink>**. Originalmente, <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> lo demostró probando que el <ConceptLink targetId="cuadrado" isDependency={false}>cuadrado</ConceptLink> sobre la <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusa</ConceptLink> contiene exactamente las <ConceptLink targetId="area" isDependency={false}>áreas</ConceptLink> de los <ConceptLink targetId="cuadrado" isDependency={false}>cuadrados</ConceptLink> sobre los <ConceptLink targetId="cateto" isDependency={false}>catetos</ConceptLink>, mediante cizalladura de <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>.
+La validez del teorema de Pitágoras caracteriza a la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink>: su demostración requiere de forma indispensable el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink>.
 
-El resultado es exclusivo de la <ConceptLink targetId={["sistema-euclidiano", "geometria-euclidiana"]}>geometría euclidiana</ConceptLink>: depende del <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las paralelas</ConceptLink>. En <ConceptLink targetId={["sistema-hiperbolico", "geometria-hiperbolica"]}>geometría hiperbólica</ConceptLink>, la relación se reemplaza por una <ConceptLink targetId="desigualdad" isDependency={false}>desigualdad</ConceptLink> estricta ($a^2 + b^2 < c^2$).
+En la axiomatización de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, la igualdad se demuestra mediante la teoría de la equidescomponibilidad de <ConceptLink targetId="poligono">polígonos</ConceptLink>. En geometrías no euclidianas, la relación métrica varía: en <ConceptLink targetId="geometria-hiperbolica">geometría hiperbólica</ConceptLink> se cumple la desigualdad estricta $a^2 + b^2 < c^2$ (en términos de lados o funciones hiperbólicas $\cosh c = \cosh a \cosh b$).
 
 <Separador />
 
-### Observaciones
+### Observaciones y reciprocidad
 
-- El <ConceptLink targetId="teorema" isDependency={false}>teorema</ConceptLink> admite múltiples <ConceptLink targetId="demostracion" isDependency={false}>demostraciones</ConceptLink>: algebraica, geométrica, por <ConceptLink targetId="metodo-contradiccion" isDependency={false}>reducción al absurdo</ConceptLink>, mediante <ConceptLink targetId="semejanza" isDependency={false}>semejanza</ConceptLink> de <ConceptLink targetId="triangulo" isDependency={false}>triángulos</ConceptLink>. La más célebre es la del «molino de viento» de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink> (<RefLink targetId="demo-pitagoras-euclides">demostración de Euclides</RefLink>).
-- La <ConceptLink targetId="reciproca" isDependency={false}>recíproca</ConceptLink> también es cierta: si $a^2 + b^2 = c^2$ en un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>, entonces el <ConceptLink targetId="angulo" isDependency={false}>ángulo</ConceptLink> opuesto a $c$ es <ConceptLink targetId="angulo" isDependency={false}>recto</ConceptLink>.
-- El <ConceptLink targetId="teorema-tales"  isDependency={false}>teorema de Tales</ConceptLink> puede demostrarse usando <ConceptLink targetId="teorema-pitagoras"  isDependency={false}>Pitágoras</ConceptLink>, y ambos son equivalentes al <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>axioma de las paralelas</ConceptLink>.
-- Atribuido tradicionalmente a <ConceptLink targetId="pitagoras" isDependency={false}>Pitágoras</ConceptLink> (siglo VI a.C.), aunque los babilonios y egipcios conocían casos particulares mil años antes.
+- **Recíproco del teorema**: Si en un triángulo $\triangle ABC$ las longitudes de sus lados satisfacen $a^2 + b^2 = c^2$, entonces el ángulo opuesto al lado $c$ es necesariamente un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> (Proposición I.48 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>).
+- **Demostraciones clásicas**: Admite diversas construcciones deductivas, destacando la demostración por descomposición en <ConceptLink targetId="rectangulo">rectángulos</ConceptLink> (molino de viento de Euclides) y la demostración por <ConceptLink targetId="semejanza">semejanza de triángulos</ConceptLink>.

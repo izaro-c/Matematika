@@ -1,54 +1,43 @@
 export const metadata = {
-  "id": "teoria-medida-area",
-  "type": "definicion",
-  "subtype": "fundamentada",
-  "title": "Teoría de la Medida de Áreas",
-  "description": "Visión panorámica de la teoría del contenido de Hilbert: equidescomponibilidad, triangulación, y los teoremas fundamentales que permiten calcular áreas de figuras planas.",
-  "tags": ["geometria", "areas", "medida"],
-  "authors": ["hilbert"],
-  "links": ["contenido"],
-  "seeAlso": ["teorema-pitagoras", "paralelogramo"],
-  "hasSimulation": false
+  id: "teoria-medida-area",
+  lang: "es",
+  type: "definicion",
+  subtype: "fundamentada",
+  title: "Teoría de la Medida de Áreas",
+  description: "Construcción formal de la teoría del contenido de Hilbert basada en la equidescomponibilidad poligonal sin apelar a la medida real continua.",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §17-§21", role: "primary" }
+  ]
 };
 
-<Capitular letra="E" />n los <ConceptLink targetId="elementos" isDependency={false}>Elementos</ConceptLink> de <ConceptLink targetId="euclides" isDependency={false}>Euclides</ConceptLink>, la noción de área se basaba en «nociones comunes» intuitivas. <ConceptLink targetId="hilbert" isDependency={false}>Hilbert</ConceptLink>, en sus *Grundlagen der Geometrie* (1899), reemplazó estas nociones por una construcción rigurosa en dos niveles:
+<Capitular letra="E" />n la fundamentación axiomática moderna, la <ConceptLink targetId="teoria-medida-area">teoría de la medida de áreas</ConceptLink> reemplaza las nociones intuitivas de <ConceptLink targetId="euclides">Euclides</ConceptLink> por una construcción rigurosa basada en la equidescomponibilidad de <ConceptLink targetId="poligono">polígonos</ConceptLink> planos.
 
-1. Una **definición** puramente geométrica: la <ConceptLink targetId="contenido" isDependency={false}>equidescomponibilidad</ConceptLink>.
-2. Una cadena de **teoremas** que permiten pasar de la definición a las fórmulas de área.
-
-<Separador />
-
-### Definición
-
-La noción central es el <ConceptLink targetId="contenido" isDependency={false}>**contenido**</ConceptLink> (*Flächeninhalt*): dos polígonos tienen igual contenido si pueden descomponerse en triángulos congruentes por parejas. Esta definición no requiere números reales; es puramente geométrica.
-
-Para que la definición sea válida, se necesitan dos resultados previos:
-
-- <ConceptLink targetId="teorema-triangulacion-poligono" >**Existencia de triangulación**</ConceptLink>: todo polígono simple admite una triangulación (depende del <ConceptLink targetId="axioma-orden-4" >axioma de Pasch</ConceptLink>).
-- <ConceptLink targetId="teorema-invariancia-triangulacion" >**Independencia de la triangulación**</ConceptLink>: el contenido no depende de la triangulación elegida.
+<Definicion title="">
+  Dos <ConceptLink targetId="poligono">polígonos</ConceptLink> planos $P$ y $Q$ se definen como equivalentes en contenido si pueden descomponerse en un número finito de piezas triangulares respectivamente <ConceptLink targetId="congruencia">congruentes</ConceptLink> por parejas:
+  $$
+  P = \bigcup_{i=1}^n T_i, \quad Q = \bigcup_{i=1}^n T'_i \quad \text{con } T_i \cong T'_i \quad (\forall i \in \{1, \dots, n\})
+  $$
+</Definicion>
 
 <Separador />
 
-### Teoremas Fundamentales
+### Fundamentos de la teoría del contenido
 
-A partir de la definición de contenido y de los 19 <ConceptLink targetId={["axioma-incidencia-1", "axioma"]} >axiomas de Hilbert</ConceptLink>, se demuestran tres propiedades:
+La formalización axiomática del área comprende dos etapas principales:
 
-1. <ConceptLink targetId="teorema-area-invariancia" >**Invariancia por congruencia**</ConceptLink> — Figuras congruentes tienen igual contenido.
-2. <ConceptLink targetId="teorema-area-aditividad" >**Aditividad**</ConceptLink> — El contenido de una unión disjunta es la suma.
-3. <ConceptLink targetId="teorema-area-rectangulo" >**Área del rectángulo**</ConceptLink> — $\text{Cont}(\text{rectángulo}) = b \cdot h$ (requiere <ConceptLink targetId="axioma-arquimedes" >Arquímedes</ConceptLink>).
-
-<Separador />
-
-### Consecuencias
-
-Del área del rectángulo y la aditividad se deducen todas las demás fórmulas:
-
-- <ConceptLink targetId="teorema-area-triangulo" >**Área del triángulo**</ConceptLink>: $\frac{b \cdot h}{2}$, por ser la mitad de un rectángulo.
-- **Área del paralelogramo**: $b \cdot h$, por descomposición en dos triángulos congruentes.
-- <ConceptLink targetId="teorema-pitagoras" >**Teorema de Pitágoras**</ConceptLink>: las demostraciones de <ConceptLink targetId="demo-pitagoras-euclides" isDependency={false}>Euclides</ConceptLink> y por <ConceptLink targetId="demo-pitagoras-areas" isDependency={false}>áreas</ConceptLink> usan equidescomposición.
+- **Definición sintética de contenido**: La equivalencia por descomposición finita no requiere apelar a los <ConceptLink targetId="numero-real">números reales</ConceptLink>.
+- **Teoremas de la teoría del contenido**: Permiten deducir las expresiones numéricas de área a partir de los principios de <ConceptLink targetId="congruencia">congruencia</ConceptLink> y aditividad.
 
 <Separador />
 
-### Diferencia con la Teoría de la Medida Moderna
+### Teoremas de contenido y fórmulas métricas
 
-La teoría de Hilbert es puramente geométrica y finitista: solo permite un número finito de piezas triangulares. La teoría de la medida de Lebesgue (análisis matemático) extiende esto a conjuntos mucho más generales, pero requiere herramientas del <ConceptLink targetId="calculo" isDependency={false}>cálculo</ConceptLink> que no están disponibles en la geometría sintética elemental.
+- **Invariancia por congruencia**: Dos figuras <ConceptLink targetId="congruencia">congruentes</ConceptLink> poseen exactamente el mismo contenido.
+- **Aditividad escalar**: El contenido de la unión disjunta de dos <ConceptLink targetId="poligono">polígonos</ConceptLink> equivale a la suma de sus contenidos individuales.
+- **Área del rectángulo**: La medida del área de un rectángulo viene dada por el producto de su base por su altura.
+
+<Separador />
+
+### Consecuencias deductivas
+
+A partir del área del rectángulo se deducen las fórmulas generales para el <ConceptLink targetId="triangulo">triángulo</ConceptLink> ($\frac{b \cdot h}{2}$) y el <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> ($b \cdot h$), proporcionando el sustento lógico para el desarrollo del <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>.
