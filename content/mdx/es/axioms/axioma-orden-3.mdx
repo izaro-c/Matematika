@@ -2,23 +2,24 @@ export const metadata = {
   id: "axioma-orden-3",
   lang: "es",
   type: "axioma",
-  title: "Axioma II.3 (Unicidad de la Intermediación Colineal)",
-  description: "Dados tres puntos distintos sobre una recta, exactamente uno de ellos está entre los otros dos.",
+  title: "Axioma II.3 (Tricotomía del orden lineal)",
+  description: "De tres puntos distintos pertenecientes a una misma recta, uno y solo uno de ellos está entre los otros dos.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Order3 } from '@content/diagrams/Axiomas/Order3';
 export const Simulation = Order3;
 
-<Capitular letra="E" />l tercer <ConceptLink targetId="axioma-orden-3">axioma de orden</ConceptLink> impone la tricotomía posicional estricta sobre la recta. Establece que de cualquier terna de puntos colineales distintos, uno y solo uno ocupa la posición intermedia.
+<Capitular letra="D" />e tres <ConceptLink targetId="punto">puntos</ConceptLink> distintos situados sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>, el tercer <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="orden">orden</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece la ley de tricotomía: exactamente uno y solo uno de dichos puntos se encuentra entre los otros dos.
 
-<Definicion title="">
-  Si $A, B, C \in \mathcal{P}$ son tres puntos distintos contenidos en una misma recta, se cumple exactamente una de las siguientes relaciones ternarias de orden:
+<Definicion title="Enunciado formal">
+  Para cualesquiera tres <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B, C \in l$ pertenecientes a la misma <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$, se verifica exactamente una de las siguientes tres relaciones de entreidad de forma exclusiva:
   $$
-  (A * B * C) \quad \veebar \quad (A * C * B) \quad \veebar \quad (B * A * C)
+  \forall A, B, C \in l \ (A \neq B \land B \neq C \land A \neq C) \implies (A\text{-}B\text{-}C \veebar B\text{-}C\text{-}A \veebar C\text{-}A\text{-}B)
   $$
 </Definicion>
 
@@ -26,10 +27,18 @@ export const Simulation = Order3;
 
 ### Representación visual e interacción
 
-En la simulación interactiva se ordenan sobre la recta <VisualBind element="line" color="carbon">$l$</VisualBind> los tres puntos colineales <VisualBind element="p1" color="terracota">$A$</VisualBind>, <VisualBind element="p2" color="terracota">$B$</VisualBind> y <VisualBind element="p3" color="terracota">$C$</VisualBind>. La alternancia dinámica del arrastre confirma que en todo instante existe un único elemento central.
+En la simulación interactiva, se presentan tres puntos colineales <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind>. Al desplazar alternadamente los puntos sobre la recta soporte, el indicador de entreidad resalta en todo momento de manera unívoca cuál de los tres puntos ocupa la posición intermedia.
 
 <Separador />
 
-### Geometría lineal no circular
+### Significado geométrico y alcance
 
-Este axioma garantiza que la recta no posee topología cerrada o circular. Asegura que la ordenación sobre la línea es lineal y abierta, permitiendo definir formalmente los conceptos de segmento y semirrecta.
+Este axioma garantiza que el orden lineal es total y no ambiguo. Impide configuraciones paradójicas donde dos puntos distintos pudieran ser simultáneamente intermedios respecto a la misma pareja en la <ConceptLink targetId="geometria-absoluta">geometria absoluta</ConceptLink>.
+
+<Separador />
+
+### Propiedades
+
+- **Exclusividad estricta:** No pueden darse dos relaciones de entreidad simultáneas entre los mismos tres puntos.
+- **Exhaustividad lineal:** En toda terna colineal de puntos distintos existe de forma obligatoria una posición intermedia.
+- **Coordenadas implícitas:** Induce una estructura de ordenamiento lineal consistente con la recta real $\mathbb{R}$.

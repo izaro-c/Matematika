@@ -1,0 +1,36 @@
+export const metadata = {
+  id: "axioma-congruencia-5",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom III.5 (SAS Congruence Criterion)",
+  description: "If two triangles have two sides and the included angle respectively congruent, then their remaining corresponding angles are also congruent.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+  ]
+};
+
+import { SAS } from '@content/diagrams/Axiomas/SAS';
+export const Simulation = SAS;
+
+<Capitular letra="T" />he fifth <ConceptLink targetId="congruencia">congruence</ConceptLink> axiom of <ConceptLink targetId="hilbert">Hilbert</ConceptLink> (classically known as the Side-Angle-Side or SAS criterion) establishes the primary link between <ConceptLink targetId="segmento">segment</ConceptLink> congruence and <ConceptLink targetId="angulo">angle</ConceptLink> congruence. It guarantees the rigid superposition of <ConceptLink targetId="triangulo">triangles</ConceptLink> in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+
+<Definicion title="">
+  Let $\triangle ABC$ and $\triangle A'B'C'$ be two <ConceptLink targetId="triangulo">triangles</ConceptLink>. If segment $\overline{AB} \cong \overline{A'B'}$, segment $\overline{AC} \cong \overline{A'C'}$, and the included angle $\angle BAC \cong \angle B'A'C'$, then the remaining corresponding angles are also <ConceptLink targetId="congruencia">congruent</ConceptLink>:
+  $$
+  (\overline{AB} \cong \overline{A'B'}) \land (\overline{AC} \cong \overline{A'C'}) \land (\angle BAC \cong \angle B'A'C') \implies (\angle ABC \cong \angle A'B'C') \land (\angle ACB \cong \angle A'C'B')
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation
+
+Fixing congruent sides <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> and <VisualBind element="AC" color="pavo">$\overline{AC}$</VisualBind> along with their included angle <VisualBind element="angA" color="terracota">$\angle BAC$</VisualBind> uniquely fixes the shape and orientation of the triangle, compelling total figure congruence.
+
+<Separador />
+
+### Axiomatic significance
+
+Unlike Euclid, who attempted to "prove" superposition via unaxiommatized motion, Hilbert postulated SAS as a foundational axiom. From this single principle, all other congruence criteria (ASA, SSS) and theorems regarding the <ConceptLink targetId="triangulo-isosceles">isosceles triangle</ConceptLink> are rigorously derived.

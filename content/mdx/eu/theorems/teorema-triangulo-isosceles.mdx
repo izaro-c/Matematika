@@ -1,46 +1,46 @@
 export const metadata = {
-  "id": "teorema-triangulo-isosceles",
-  "type": "teorema",
-  "title": "Triangelu isoszelearen teorema",
-  "description": "Edozein triangelu isoszeletan, alde kongruenteen aurkako angeluak kongruenteak dira beren artean.",
-  "statement": "Bedi △ABC AB ≅ AC duen triangelu bat. Orduan ∠B ≅ ∠C.",
-  "tags": ["geometria", "triangulos", "congruencia"],
-  "authors": ["euclides", "hilbert"],
-  "difficulty": "básico",
-  "hasSimulation": true,
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 5 y 6", role: "primary" },
-    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "secondary" }
-  ],
-  "demos": ["demo-triangulo-isosceles"]
+  id: "teorema-triangulo-isosceles",
+  type: "teorema",
+  title: "Triangelu isoszelearen teorema",
+  description: "Edozein triangelu isoszeletan, alde kongruenteei aurrez aurre dauden angeluak beren artean kongruenteak dira.",
+  statement: "AB ≅ AC betetzen duen △ABC triangelu batan, ezinbestean ∠ABC ≅ ∠ACB betetzen da.",
+  branch: "51M",
+  hasSimulation: true,
+  authors: ["tales", "euclides"],
+  demos: ["demo-triangulo-isosceles"],
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 5 y 6", role: "primary" }
+  ]
 };
 
 import { TrianguloIsosceles } from '@content/diagrams/Teoremas/TrianguloIsosceles';
 export const Simulation = TrianguloIsosceles;
 
-<Capitular letra="T" />riangelu isoszelearen <ConceptLink targetId="teorema">teoremak</ConceptLink> —historikoki *Pons Asinorum* deitua <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> tradizioan— irudi poligonalen simetriari buruzko lehenbiziko funtsezko teorema osatzen du. Bi <VisualBind element="segPA" color="canela">alde kongruente</VisualBind> ($|PA| = |PB|$) dituen edozein <ConceptLink targetId="triangulo">triangelutan</ConceptLink>, alde horien aurkako <ConceptLink targetId="angulo">angeluek</ConceptLink> <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> zehatza gordetzen dutela beren artean ($\angle A \cong \angle B$) ezartzen du.
+<Capitular letra="T" />riangelu isoszelearen teoremak, <ConceptLink targetId="euclides">Euklidesen</ConceptLink> Elementuetan *Pons Asinorum* izenez ezagutzen denak, bi <ConceptLink targetId="lado">alde</ConceptLink> berdin dituzten <ConceptLink targetId="triangulo">triangeluen</ConceptLink> simetria angeluar nagusia ezartzen du plano euklidetarrean.
 
 <Separador />
 
-### Formulatze formala
+### Enuntziatu formala
 
-Bedi $\triangle PAB$ bi alde kongruente dituen triangelu lau bat: <VisualBind element="segPA" color="canela">$PA \cong PB$</VisualBind>. Orduan oinarriko angeluak kongruenteak dira:
+Bitzak $\triangle ABC$ <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo">triangelu</ConceptLink></VisualBind> bat, zeinetan <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind> eta <VisualBind element="lado-ac" color="terracota">$\overline{AC}$</VisualBind> aldeak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> baitira ($\overline{AB} \cong \overline{AC}$). Ezinbestean betetzen da <VisualBind element="angulos-base" color="ocre">oinarriko</VisualBind> $\angle ABC$ eta $\angle ACB$ angeluak beren artean kongruenteak direla:
 
 <Formula>
-  $$ \angle PAB \cong \angle PBA $$
+  $$ \overline{AB} \cong \overline{AC} \quad \Longrightarrow \quad \angle ABC \cong \angle ACB $$
 </Formula>
 
-<Separador />
-
-### Analisia eta fundamentazio axiomatikoa
-
-<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> axiomatizazioan, teorema hau triangeluak bere buruarekin duen kongruentzia eratorriz frogatzen da ($\triangle PAB \cong \triangle PBA$), LAL kongruentzia postulatuaren pean erpinen permutazio bat eginez.
-
-Euklidesen jatorrizko frogapenak (I.5 proposizioa) alde kongruenteak luzatzen zituen eta triangelu laguntzaileen bi bikote erabiltzen zituen. Teorema hau zorrozki dagokio <ConceptLink targetId="geometria-absoluta">geometria absolutuari</ConceptLink>, ez baitu paraleloen axioma euklidestarraren premiarik.
+Beste modura esanda, triangelu isoszele orotan, alde kongruenteei aurrez aurre dauden angeluak nahitaez kongruenteak dira.
 
 <Separador />
 
-### Oharrak eta alderantzizkoa
+### Froga eta oinarritze axiomatikoa
 
-- **Teoremaren alderantzizkoa**: $\triangle PAB$ triangelu batean bi barne-angelu kongruenteak badira ($\angle A \cong \angle B$), haien aurkako aldeak ere kongruenteak dira ($PA \cong PB$), triangelua isoszele bihurtuz (<ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.6 proposizioa).
-- **Triangelu ekitateroa**: Zuzeneko ondorio gisa, triangelu ekitatero guztiak equiangeluarrak dira (haien hiru angeluek $60^\circ$ dituzte).
+Teorema honek hainbat frogabide klasiko ditu:
+- **Papusen froga**: $\triangle ABC$ triangeluaren eta bere buruaren islapen den $\triangle ACB$ triangeluaren arteko korrespondentzia aztertzen du. $\overline{AB} \cong \overline{AC}$, $\angle BAC \cong \angle CAB$ eta $\overline{AC} \cong \overline{AB}$ direnez, AL-A irizpideaz $\triangle ABC \cong \triangle ACB$ lortzen da, eta ondorioz $\angle ABC \cong \angle ACB$.
+- **Erditzaile bidezko froga**: $A$ erpineko barne-angeluaren <ConceptLink targetId="bisectriz">erditzailea</ConceptLink> marraztean, jatorrizko triangelua bi triangelu kongruentetan banatzen da.
+
+<Separador />
+
+### Alderantzizkoa eta korolario bidezko ondorioak
+
+- **Alderantzizko teorema**: $\triangle ABC$ triangelu batean $\angle ABC$ eta $\angle ACB$ angeluak kongruenteak badira, orduan aurrez aurreko aldeak ere nahitaez kongruenteak dira ($\overline{AB} \cong \overline{AC}$).
+- **Triangelu aldeberdinaren korolarioa**: Triangelu bat <ConceptLink targetId="triangulo-equilatero">aldeberdina</ConceptLink> da baldin eta soilik baldin angeluberdina bada (bere hiru barne-angeluek $60^\circ$ neurtzen dute).

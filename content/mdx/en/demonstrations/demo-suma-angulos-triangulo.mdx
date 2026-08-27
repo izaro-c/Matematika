@@ -1,0 +1,73 @@
+export const metadata = {
+  "id": "demo-suma-angulos-triangulo",
+  "type": "demostracion",
+  "title": "Proof: Sum of Angles of a Triangle",
+  "description": "Classic Euclidean proof constructing a parallel line through the opposite vertex and applying alternate interior angle congruence.",
+  "parentTheorem": "teorema-suma-angulos-triangulo",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "triangulos", "angulos"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elements", author: "Euclid", locator: "Book I, Proposition 32", role: "primary" }
+  ]
+};
+
+import { DemoSumaAngulos } from "@content/diagrams/Demos/DemoSumaAngulos";
+
+<DemonstrationSection diagram={<DemoSumaAngulos />}>
+
+<Capitular letra="F" />or any planar <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ with interior <ConceptLink targetId="angulo">angles</ConceptLink> $\alpha = \angle A$, $\beta = \angle B$, and $\gamma = \angle C$, the <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={true}>triangle angle sum theorem</ConceptLink> is formally demonstrated. The proof establishes that the sum of the interior angle measures is equal to a <ConceptLink targetId="angulos-suplementarios">straight angle</ConceptLink> ($180^\circ$).
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} target="triangulo" title="Configuration of the base triangle">
+Let <VisualBind element="triangulo" color="carbon">$\triangle ABC$</VisualBind> be a triangle with its three interior angles designated by <VisualBind element="angulo-a" color="terracota">$\alpha$</VisualBind> at <ConceptLink targetId="vertice">vertex</ConceptLink> $A$, <VisualBind element="angulo-b" color="pavo">$\beta$</VisualBind> at vertex $B$, and <VisualBind element="angulo-c" color="ocre">$\gamma$</VisualBind> at vertex $C$.
+</ProofStep>
+
+<ProofStep number={2} target="paralela" title="Construction of the parallel line through the opposite vertex">
+By <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euclid's parallel postulate</ConceptLink>, there exists a unique <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="paralela" color="carbon"><ConceptLink targetId="paralelas">parallel</ConceptLink></VisualBind> to the base segment <VisualBind element="base-ab" color="carbon">$\overline{AB}$</VisualBind> passing through the opposite vertex <VisualBind element="vertice-c" color="carbon">$C$</VisualBind>.
+</ProofStep>
+
+<ProofStep number={3} target={["alterno-a", "transversal-ac", "angulo-a"]} title="Congruence of the first pair of alternate interior angles">
+Taking the line containing side $AC$ as a transversal secant line, the <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>alternate interior angles theorem</ConceptLink> guarantees the <ConceptLink targetId="congruencia">congruence</ConceptLink> between interior angle <VisualBind element="angulo-a" color="terracota">$\alpha$</VisualBind> and upper alternate angle <VisualBind element="alterno-a" color="terracota">$\alpha'$</VisualBind> at $C$:
+
+<Formula>
+  $$ \alpha \cong \alpha' $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} target={["alterno-b", "transversal-bc", "angulo-b"]} title="Congruence of the second pair of alternate interior angles">
+Analogously, taking line $BC$ as a transversal line, interior angle <VisualBind element="angulo-b" color="pavo">$\beta$</VisualBind> is congruent to upper alternate angle <VisualBind element="alterno-b" color="pavo">$\beta'$</VisualBind> at $C$:
+
+<Formula>
+  $$ \beta \cong \beta' $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={5} target={["angulo-llano", "angulo-c", "alterno-a", "alterno-b"]} title="Composition of the straight angle and conclusion">
+The three consecutive angles <VisualBind element="alterno-a" color="terracota">$\alpha'$</VisualBind>, <VisualBind element="angulo-c" color="ocre">$\gamma$</VisualBind>, and <VisualBind element="alterno-b" color="pavo">$\beta'$</VisualBind> lie adjacently on the parallel line through $C$, forming a <VisualBind element="angulo-llano" color="carbon"><ConceptLink targetId="angulos-suplementarios">straight angle</ConceptLink></VisualBind> with a total measure of $180^\circ$:
+
+<Formula>
+  $$ \alpha' + \gamma + \beta' = 180^\circ $$
+</Formula>
+
+Substituting $\alpha'$ with $\alpha$ and $\beta'$ with $\beta$ yields:
+
+<Formula>
+  $$ \alpha + \beta + \gamma = 180^\circ $$
+</Formula>
+</ProofStep>
+
+<Separador />
+
+### Deductive analysis
+
+<Nota>
+  Book I, Proposition 32 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>. This proof strictly relies on the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>. In <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>, the sum of angles is strictly less than $180^\circ$.
+</Nota>
+
+</DemonstrationSection>

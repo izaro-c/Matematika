@@ -2,23 +2,24 @@ export const metadata = {
   id: "axioma-incidencia-6",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.6 (Incidencia de Recta en Plano)",
-  description: "Si dos puntos de una recta inciden en un plano, entonces todos los puntos de la recta inciden en dicho plano.",
+  title: "Axioma I.6 (Intersección de dos planos)",
+  description: "Si dos planos distintos tienen un punto común, entonces contienen al menos otro punto común y se intersecan en una recta.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Incidence6 } from '@content/diagrams/Axiomas/Incidence6';
 export const Simulation = Incidence6;
 
-<Capitular letra="E" />l sexto <ConceptLink targetId="axioma-incidencia-6">axioma de incidencia</ConceptLink> formaliza la contención de <ConceptLink targetId="recta">rectas</ConceptLink> en superficies <ConceptLink targetId="plano">planas</ConceptLink>. Establece que si dos <ConceptLink targetId="punto">puntos</ConceptLink> de una recta pertenecen a un plano, la recta entera queda incrustada en dicho plano.
+<Capitular letra="S" />i dos <ConceptLink targetId="plano">planos</ConceptLink> distintos comparten un <ConceptLink targetId="punto">punto</ConceptLink> en el <ConceptLink targetId="espacio">espacio</ConceptLink>, el sexto <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece que necesariamente poseen al menos un segundo punto común, intersecándose a lo largo de una <ConceptLink targetId="recta">recta</ConceptLink> completa.
 
-<Definicion title="">
-  Para toda <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$ y todo <ConceptLink targetId="plano">plano</ConceptLink> $\alpha \in \mathcal{E}$, si existen dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B \in l$ tales que $A \in \alpha$ y $B \in \alpha$, entonces la recta $l$ está contenida en $\alpha$:
+<Definicion title="Enunciado formal">
+  Si dos <ConceptLink targetId="plano">planos</ConceptLink> distintos $\mathcal{P}_1, \mathcal{P}_2 \in \mathcal{F}$ ($\mathcal{P}_1 \neq \mathcal{P}_2$) comparten un <ConceptLink targetId="punto">punto</ConceptLink> $A \in \mathcal{P}_1 \cap \mathcal{P}_2$, entonces existe al menos otro punto $B \in \mathcal{P}_1 \cap \mathcal{P}_2$ con $B \neq A$, y su intersección exacta es una <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$:
   $$
-  \forall l \in \mathcal{L}, \forall \alpha \in \mathcal{E} \ ( \exists A, B \in l \ (A \neq B \land A \in \alpha \land B \in \alpha) \implies l \subseteq \alpha )
+  \forall \mathcal{P}_1, \mathcal{P}_2 \in \mathcal{F} \ \bigl((\mathcal{P}_1 \neq \mathcal{P}_2 \land A \in \mathcal{P}_1 \cap \mathcal{P}_2) \implies \exists B \in \mathcal{P}_1 \cap \mathcal{P}_2 \ (B \neq A) \land \exists l \in \mathcal{L} \ (l = \mathcal{P}_1 \cap \mathcal{P}_2)\bigr)
   $$
 </Definicion>
 
@@ -26,13 +27,18 @@ export const Simulation = Incidence6;
 
 ### Representación visual e interacción
 
-En la simulación interactiva se observa la recta <VisualBind element="recta" color="carbon">$l$</VisualBind> incidiendo en el plano <VisualBind element="plano" color="musgo">$\alpha$</VisualBind> a través de los puntos fijados <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind>.
+En la simulación tridimensional, los planos <VisualBind element="plane1" color="marino">$\mathcal{P}_1$</VisualBind> y <VisualBind element="plane2" color="terracota">$\mathcal{P}_2$</VisualBind> se intersectan. Al ajustar la inclinación de cualquiera de ellos manteniendo un punto común, la recta intersección <VisualBind element="lineInt" color="carbon">$l$</VisualBind> se manifiesta de forma continua como la traza común de ambos planos.
 
 <Separador />
 
-### Clasificación de posiciones relativas
+### Significado geométrico y alcance
 
-Este postulado permite clasificar las posiciones relativas entre <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink> en el espacio tridimensional:
-- **Recta contenida**: La recta comparte al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> con el plano ($l \subseteq \alpha$).
-- **Recta secante**: La recta interseca al plano en un único punto.
-- **Recta <ConceptLink targetId="paralelas">paralela</ConceptLink>**: La recta no posee puntos de <ConceptLink targetId="interseccion">intersección</ConceptLink> con el plano ($l \cap \alpha = \emptyset$).
+Garantiza la consistencia dimensional del espacio tridimensional: dos planos no pueden tocarse tangencialmente en un único punto aislado. Toda intersección no vacía entre planos distintos genera necesariamente una traza lineal unidimensional.
+
+<Separador />
+
+### Propiedades
+
+- **Continuidad de intersección:** Prohíbe contactos puntuales aislados entre planos distintos.
+- **Formación de ángulos diedros:** Constituye la base para definir <ConceptLink targetId="angulo">ángulos</ConceptLink> diedros y la separación del espacio.
+- **Dualidad lineal:** Muestra la relación dual entre la reunión de puntos no colineales y la intersección de planos.

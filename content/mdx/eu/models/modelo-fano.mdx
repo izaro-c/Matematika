@@ -1,58 +1,46 @@
 export const metadata = {
-  "id": "modelo-fano",
-  "type": "modelo",
-  "title": "Fanoren planoa",
-  "description": "Plano proiektibo finitu txikiena, 7 puntuz eta 7 zuzenez osatua. Inzidentzia-geometrian ereduzko modeloa.",
-  "satisfies": ["sistema-incidencia"],
-  "hasSimulation": true
+  id: "modelo-fano",
+  lang: "eu",
+  type: "modelo",
+  title: "Fanoren planoa",
+  description: "7 puntuz eta 7 zuzenez osatutako plano proiektibo finitu minimala, non zuzen bakoitzak zehazki 3 puntu baitauzka.",
+  branch: "51M",
+  satisfies: ["sistema-incidencia"],
+  axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
+  hasSimulation: true
 };
 
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
 export const Simulation = ModeloFano;
 
-<Capitular letra="F" />anoren planoa, <ConceptLink targetId="modelo-fano" isDependency={false}>modelo proiektibo finitu</ConceptLink> eta diskretuaren arketipoa da, zehazki 7 puntuk eta 7 zuzenek osatutako plano-egitura bat gauzatuz. Gino Fano matematikariaren izena darama, <ConceptLink targetId="geometria-finita">geometria finituen</ConceptLink> azterketa formalean aitzindaria izandakoa.
+<Capitular letra="F" />anoren planoa —$PG(2, 2)$ gisa denotatua formalki— plano proiektibo finitu txikiena da. Egitura diskretu honetan, <ConceptLink targetId="punto">puntuaren</ConceptLink> eta <ConceptLink targetId="recta">zuzenaren</ConceptLink> oinarrizko nosioek simetria konbinatorio zorrotza betetzen dute, dualtasun proiektiboaren printzipioa erabat egiaztatuz.
 
 <Separador />
 
-### Moduluaren definizioa
+### Ereduaren definizioa
 
-Modeloa esplizituki definitzen da haren elementu-multzo primitiboak eta haien arteko kide-erlazioa zerrendatuz:
+Ereduaren unibertsoa 7 puntuko multzo batek $\mathcal{P} = \{P_1, P_2, P_3, P_4, P_5, P_6, P_7\}$ eta 7 zuzeneko multzo batek $\mathcal{L} = \{l_1, l_2, l_3, l_4, l_5, l_6, l_7\}$ osatzen dute:
 
-- **Puntuak (7)**: $P = \{$<VisualBind element="p1" color="terracota">$1$</VisualBind>, <VisualBind element="p2" color="terracota">$2$</VisualBind>, <VisualBind element="p3" color="terracota">$3$</VisualBind>, <VisualBind element="p4" color="terracota">$4$</VisualBind>, <VisualBind element="p5" color="terracota">$5$</VisualBind>, <VisualBind element="p6" color="terracota">$6$</VisualBind>, <VisualBind element="p7" color="musgo">$7$</VisualBind>$\}$
-- **Zuzenak (7)**: $L = \{$<VisualBind element="l1" color="carbon">$l_1$</VisualBind>, <VisualBind element="l2" color="carbon">$l_2$</VisualBind>, <VisualBind element="l3" color="carbon">$l_3$</VisualBind>, <VisualBind element="l4" color="carbon">$l_4$</VisualBind>, <VisualBind element="l5" color="carbon">$l_5$</VisualBind>, <VisualBind element="l6" color="carbon">$l_6$</VisualBind>, <VisualBind element="l7" color="musgo">$l_7$</VisualBind>$\}$
-- **<ConceptLink targetId="incidencia">Inzidentzia</ConceptLink>**: Zuzen bakoitza zehazki hiru punturen azpimultzo bat da:
-  - <VisualBind element="l1" color="carbon">$l_1 = \{1, 6, 2\}$</VisualBind>
-  - <VisualBind element="l2" color="carbon">$l_2 = \{2, 4, 3\}$</VisualBind>
-  - <VisualBind element="l3" color="carbon">$l_3 = \{3, 5, 1\}$</VisualBind>
-  - <VisualBind element="l4" color="carbon">$l_4 = \{1, 7, 4\}$</VisualBind>
-  - <VisualBind element="l5" color="carbon">$l_5 = \{2, 7, 5\}$</VisualBind>
-  - <VisualBind element="l6" color="carbon">$l_6 = \{3, 7, 6\}$</VisualBind>
-  - <VisualBind element="l7" color="musgo">$l_7 = \{6, 4, 5\}$</VisualBind>
+- Kanpoko triangeluaren zuzenak <VisualBind element="l1" color="pavo">$l_1 = \{P_1, P_2, P_3\}$</VisualBind>, <VisualBind element="l2" color="terracota">$l_2 = \{P_3, P_4, P_5\}$</VisualBind> eta <VisualBind element="l3" color="musgo">$l_3 = \{P_5, P_6, P_1\}$</VisualBind> dira.
+- Erdiko zuzen edo erdiko-lerroak <VisualBind element="l4" color="ocre">$l_4 = \{P_1, P_4, P_7\}$</VisualBind>, <VisualBind element="l5" color="pavo">$l_5 = \{P_3, P_6, P_7\}$</VisualBind> eta <VisualBind element="l6" color="terracota">$l_6 = \{P_5, P_2, P_7\}$</VisualBind> dira.
+- Barneko zuzen zirkularra <VisualBind element="l7" color="carbon">$l_7 = \{P_2, P_4, P_6\}$</VisualBind> da.
 
-<Formula>
-  $$
-  \begin{cases}
-    |P| = 7 \\
-    |L| = 7
-  \end{cases}
-  $$
-</Formula>
+Zuzen bakoitzak zehazki 3 puntu dauzka eta puntu bakoitzetik zehazki 3 zuzen igarotzen dira. <ConceptLink targetId="incidencia">Intzidentzia</ConceptLink> multzo-pertenentzia bidez definitzen da.
 
 <Separador />
 
-### Axiomen egiaztapena
+### Propietateen eta axiomen egiaztapena
 
-Fanoren planoak plano proiektibo finitu baten oinarrizko axiomak betetzen ditu:
+Fanoren planoak intzidentzia-geometria proiektiboaren oinarrizko axiomak betetzen ditu <ConceptLink targetId="sistema-incidencia">intzidentzia-sisteman</ConceptLink>:
 
-- **<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>I-1 axioma</ConceptLink>**: <ConceptLink targetId="punto" isDependency={false}>Puntu</ConceptLink> desberdinen bikote orok <ConceptLink targetId="recta" isDependency={false}>zuzen</ConceptLink> bakarra zehazten du.
-- **<ConceptLink targetId="axioma-incidencia-2" isDependency={false}>I-2 axioma</ConceptLink>**: Zuzen bakoitzak gutxienez bi puntu ditu (Fanon zehazki hiru ditu).
-- **<ConceptLink targetId="axioma-incidencia-3" isDependency={false}>I-3 axioma</ConceptLink>**: <ConceptLink targetId="colinealidad">Kolinealak ez</ConceptLink> diren hiru puntu existitzen dira (adibidez, $1$, $2$ eta $3$ puntuak).
-- **Ebakidura proiektiboa**: Zuzen desberdinen bikote orok zehazki puntu bakarrean ebakitzen du bere burua. Ondorioz, egitura honetan ez dago <ConceptLink targetId="paralelismo">zuzen paralelorik</ConceptLink>.
+- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>Zuzenaren bakartasuna</ConceptLink>**: Edozein bi puntu desberdinetarako $P_i, P_j \in \mathcal{P}$, zehazki zuzen bakarra dago $l_k \in \mathcal{L}$ non $\{P_i, P_j\} \subset l_k$.
+- **Ebakitze unibertsala**: Edozein bi zuzen desberdinek $l_a, l_b \in \mathcal{L}$ puntu bakar batean ebakitzen dute elkar nahitaez.
+- **Paraleloen eza**: Ebakitze unibertsalaren ondorioz, ereduan ez dago <ConceptLink targetId="paralelismo">paralelismorik</ConceptLink>.
+- **Globalki ez-<ConceptLink targetId="colinealidad">kolinealak</ConceptLink> direnak**: Badira gutxienez hiru puntu zuzen berean ez daudenak.
 
 <Separador />
 
-### Inplikazio epistemologikoak
+### Propietateak
 
-<Nota>
-  **Ordena-axiomen independentzia**: Fanoren planoak erakusten du inzidentzia-axiomek ez dutela espazioaren infinitutasuna ezta ordena-erlazio topologiko baten existentzia ere inplikatzen («<ConceptLink targetId="estar-entre">artean egotea</ConceptLink>»), <ConceptLink targetId="axioma-orden-1">ordena-axiomek</ConceptLink> egitura finituetan sistematikoki huts egiten baitute.
-</Nota>
+- **Simetria proiektiboa $PG(2, 2)$**: Bi elementuko $\mathbb{F}_2$ gorputz finituaren gaineko plano proiektibo gisa eraikitzen da aljebraikoki.
+- **Dualtasun osoa**: Puntu kopurua eta zuzen kopurua bera da ($N = 7$), eta egitura aldatu gabe mantentzen da puntu eta zuzen kontzeptuak elkarrekin trukatzean.

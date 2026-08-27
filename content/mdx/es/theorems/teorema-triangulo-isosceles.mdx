@@ -1,46 +1,46 @@
 export const metadata = {
-  "id": "teorema-triangulo-isosceles",
-  "type": "teorema",
-  "title": "Teorema del triángulo isósceles",
-  "description": "En todo triángulo isósceles, los ángulos opuestos a los lados congruentes son también congruentes entre sí.",
-  "statement": "Sea △ABC un triángulo con AB ≅ AC. Entonces ∠B ≅ ∠C.",
-  "tags": ["geometria", "triangulos", "congruencia"],
-  "authors": ["euclides", "hilbert"],
-  "difficulty": "básico",
-  "hasSimulation": true,
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 5 y 6", role: "primary" },
-    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "secondary" }
-  ],
-  "demos": ["demo-triangulo-isosceles"]
+  id: "teorema-triangulo-isosceles",
+  type: "teorema",
+  title: "Teorema del triángulo isósceles",
+  description: "En todo triángulo isósceles, los ángulos opuestos a los lados congruentes son congruentes entre sí.",
+  statement: "Dado un triángulo △ABC con AB ≅ AC, se cumple de forma necesaria que ∠ABC ≅ ∠ACB.",
+  branch: "51M",
+  hasSimulation: true,
+  authors: ["tales", "euclides"],
+  demos: ["demo-triangulo-isosceles"],
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 5 y 6", role: "primary" }
+  ]
 };
 
 import { TrianguloIsosceles } from '@content/diagrams/Teoremas/TrianguloIsosceles';
 export const Simulation = TrianguloIsosceles;
 
-<Capitular letra="E" />l <ConceptLink targetId="teorema">teorema del triángulo isósceles</ConceptLink> —históricamente denominado *Pons Asinorum* en la tradición de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>— constituye el primer teorema fundamental sobre la simetría de las figuras poligonales. Establece que en todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> que posea dos <VisualBind element="segPA" color="canela">lados congruentes</VisualBind> ($|PA| = |PB|$), los <ConceptLink targetId="angulo">ángulos</ConceptLink> opuestos a dichos lados conservan una <ConceptLink targetId="congruencia">congruencia</ConceptLink> exacta entre sí ($\angle A \cong \angle B$).
+<Capitular letra="E" />l teorema del triángulo isósceles, conocido históricamente en los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> como el *Pons Asinorum* (puente de los asnos), establece la simetría angular fundamental que caracteriza a los <ConceptLink targetId="triangulo">triángulos</ConceptLink> con dos <ConceptLink targetId="lado">lados</ConceptLink> de igual medida en el <ConceptLink targetId="plano">plano</ConceptLink> euclidiano.
 
 <Separador />
 
 ### Enunciado formal
 
-Sea $\triangle PAB$ un triángulo plano en el que dos de sus lados son congruentes: <VisualBind element="segPA" color="canela">$PA \cong PB$</VisualBind>. Entonces los ángulos en la base son congruentes:
+Sea $\triangle ABC$ un <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo">triángulo</ConceptLink></VisualBind> tal que sus lados <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind> y <VisualBind element="lado-ac" color="terracota">$\overline{AC}$</VisualBind> son <ConceptLink targetId="congruencia">congruentes</ConceptLink> ($\overline{AB} \cong \overline{AC}$). Se verifica de manera indispensable que los <VisualBind element="angulos-base" color="ocre">ángulos de la base</VisualBind> $\angle ABC$ y $\angle ACB$ son congruentes:
 
 <Formula>
-  $$ \angle PAB \cong \angle PBA $$
+  $$ \overline{AB} \cong \overline{AC} \quad \Longrightarrow \quad \angle ABC \cong \angle ACB $$
 </Formula>
 
-<Separador />
-
-### Análisis y fundamentación axiomática
-
-En la axiomatización de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el teorema se demuestra deduciendo la congruencia del triángulo consigo mismo ($\triangle PAB \cong \triangle PBA$) mediante una permutación de vértices bajo el postulado de congruencia LAL.
-
-La demostración original de Euclides (Proposición I.5) prolongaba los lados congruentes y utilizaba dos pares de triángulos auxiliares. El teorema pertenece rigurosamente a la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>, ya que no requiere el axioma euclidiano de las paralelas.
+Es decir, en todo triángulo isósceles, a lados congruentes se oponen ángulos rigurosamente congruentes.
 
 <Separador />
 
-### Observaciones y reciprocidad
+### Demostración y fundamentación axiomática
 
-- **Recíproco del teorema**: Si en un triángulo $\triangle PAB$ dos ángulos interiores son congruentes ($\angle A \cong \angle B$), los lados opuestos a ellos son congruentes ($PA \cong PB$), convirtiendo al triángulo en isósceles (Proposición I.6 de los Elementos).
-- **Triángulo equilátero**: Como consecuencia inmediata, todo triángulo equilátero es equiángulo (sus tres ángulos miden $60^\circ$).
+El teorema admite múltiples vías deductivas clásicas:
+- **Demostración de Pappus**: Considera la correspondencia entre el triángulo $\triangle ABC$ y el triángulo reflejado $\triangle ACB$. Dado que $\overline{AB} \cong \overline{AC}$, $\angle BAC \cong \angle CAB$ y $\overline{AC} \cong \overline{AB}$, por el criterio de congruencia LAL (Lado-Ángulo-Lado) se deduce $\triangle ABC \cong \triangle ACB$, implicando directamente $\angle ABC \cong \angle ACB$.
+- **Demostración de la bisectriz**: Trazando la <ConceptLink targetId="bisectriz">bisectriz</ConceptLink> del ángulo en el vértice $A$, esta divide al triángulo original en dos triángulos congruentes.
+
+<Separador />
+
+### Carácter recíproco y corolario equilátero
+
+- **Teorema recíproco**: Si en un triángulo $\triangle ABC$ los ángulos $\angle ABC$ y $\angle ACB$ son congruentes, entonces los lados opuestos son necesariamente congruentes ($\overline{AB} \cong \overline{AC}$).
+- **Corolario del triángulo equilátero**: Un triángulo es <ConceptLink targetId="triangulo-equilatero">equilátero</ConceptLink> si y solo si es equiángulo (sus tres ángulos interiores miden exactamente $60^\circ$).

@@ -1,0 +1,47 @@
+export const metadata = {
+  id: "derivada",
+  lang: "en",
+  type: "definicion",
+  subtype: "analitico",
+  title: "Derivative",
+  description: "Measure of the instantaneous rate of change of a mathematical function with respect to its independent variable, defined as the limit of the difference quotient.",
+  branch: "26A",
+  hasSimulation: true,
+  sources: [
+    { title: "Philosophiae Naturalis Principia Mathematica", author: "Isaac Newton", locator: "Book I", role: "primary" },
+    { title: "Nova Methodus pro Maximis et Minimis", author: "Gottfried Wilhelm Leibniz", locator: "Acta Eruditorum", role: "primary" },
+    { title: "Cours d'Analyse de l'École Royale Polytechnique", author: "Augustin-Louis Cauchy", locator: "Chapter 6", role: "primary" }
+  ]
+};
+
+<Capitular letra="T" />he derivative is the core concept of <ConceptLink targetId="calculo-diferencial">differential calculus</ConceptLink> quantifying the <ConceptLink targetId="tasa-cambio-instantanea">instantaneous rate of change</ConceptLink> of a <ConceptLink targetId="funcion-real">real-valued function</ConceptLink> with respect to its <ConceptLink targetId="variable-independiente">independent variable</ConceptLink>. Geometrically, it represents the <ConceptLink targetId="pendiente">slope</ConceptLink> of the <ConceptLink targetId="recta-tangente">tangent line</ConceptLink> to the <ConceptLink targetId="grafica-funcion">function's graph</ConceptLink> at a given point.
+
+<Definicion title="">
+  Given a function $f: I \to \mathbb{R}$ defined on an <ConceptLink targetId="intervalo-abierto">open interval</ConceptLink> $I \subset \mathbb{R}$ and a point $x_0 \in I$, the derivative of $f$ at $x_0$, denoted by $f'(x_0)$, is defined as the <ConceptLink targetId="limite" isDependency={true}>limit</ConceptLink> of the <ConceptLink targetId="cociente-incremental">difference quotient</ConceptLink> as the increment $h$ approaches zero:
+  $$
+  f'(x_0) = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}
+  $$
+  If this limit exists and is finite, the function $f$ is said to be <ConceptLink targetId="diferenciabilidad">differentiable</ConceptLink> at $x_0$.
+</Definicion>
+
+<Separador />
+
+### Historical notations and conventions
+
+Throughout the development of mathematical analysis, several standard notations for the derivative of a function $y = f(x)$ have been established:
+
+| Notation | Mathematical expression | Context / Creator |
+|---|---|---|
+| Lagrange | $f'(x), f''(x), \dots, f^{(n)}(x)$ | Standard calculus and <ConceptLink targetId="analisis-real">real analysis</ConceptLink> |
+| Leibniz | $\frac{df}{dx}, \frac{d^2f}{dx^2}, \dots, \frac{d^n f}{dx^n}$ | Infinitesimal calculus and <ConceptLink targetId="ecuaciones-diferenciales">differential equations</ConceptLink> |
+| Newton | $\dot{y}, \ddot{y}$ | <ConceptLink targetId="mecanica-clasica">Classical mechanics</ConceptLink> and time derivatives |
+| Euler | $D f, D^2 f, \dots, D^n f$ | <ConceptLink targetId="operador-diferencial">Linear differential operators</ConceptLink> |
+
+<Separador />
+
+### Properties
+
+- **<ConceptLink targetId="teorema-derivabilidad-implica-continuidad">Differentiability and continuity</ConceptLink>**: If a function is differentiable at a point, it is necessarily <ConceptLink targetId="continuidad">continuous</ConceptLink> at that point.
+- **<ConceptLink targetId="teorema-linealidad-derivada">Linearity of derivative operator</ConceptLink>**: The differential operator preserves linear combinations: $(\alpha f + \beta g)' = \alpha f' + \beta g'$.
+- **<ConceptLink targetId="teorema-regla-producto">Leibniz product rule</ConceptLink>**: Differentiation rule for the product of two differentiable functions: $(f \cdot g)' = f'g + fg'$.
+- **<ConceptLink targetId="teorema-regla-cadena">Chain rule</ConceptLink>**: Differentiation of the <ConceptLink targetId="composicion-funciones">composition of functions</ConceptLink>: $(f \circ g)'(x) = f'(g(x)) \cdot g'(x)$.

@@ -1,0 +1,47 @@
+export const metadata = {
+  id: "grupo",
+  lang: "es",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Grupo",
+  description: "Estructura algebraica fundamental formada por un conjunto equipado con una operación binaria que satisface asociatividad, elemento neutro e inverso.",
+  branch: "20",
+  hasSimulation: false,
+  sources: [
+    { title: "Traité des substitutions et des équations algébriques", author: "Camille Jordan", locator: "Livre I", role: "primary" },
+    { title: "Algebra", author: "Serge Lang", locator: "Capítulo I, §1", role: "primary" }
+  ]
+};
+
+<Capitular letra="U" />n grupo es la <ConceptLink targetId="estructura-algebraica">estructura algebraica</ConceptLink> elemental que formaliza la simetría y la transformación en matemáticas. Consiste en un <ConceptLink targetId="conjunto">conjunto</ConceptLink> dotado de una <ConceptLink targetId="operacion-binaria">operación binaria</ConceptLink> interna que satisface cuatro axiomas algebraicos fundamentales.
+
+<Definicion title="">
+  Un grupo $(G, \cdot)$ es un par ordenado formado por un <ConceptLink targetId="conjunto-no-vacio">conjunto no vacío</ConceptLink> $G$ y una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> $\cdot: G \times G \to G$ que satisface los siguientes axiomas:
+
+  1. **<ConceptLink targetId="propiedad-clausura">Clausura</ConceptLink>**: $\forall a, b \in G$, $a \cdot b \in G$.
+  2. **<ConceptLink targetId="asociatividad">Asociatividad</ConceptLink>**: $\forall a, b, c \in G$, $(a \cdot b) \cdot c = a \cdot (b \cdot c)$.
+  3. **<ConceptLink targetId="elemento-neutro">Elemento neutro</ConceptLink>**: $\exists e \in G$ tal que $\forall a \in G$, $a \cdot e = e \cdot a = a$.
+  4. **<ConceptLink targetId="elemento-inverso">Elemento inverso</ConceptLink>**: $\forall a \in G$, $\exists a^{-1} \in G$ tal que $a \cdot a^{-1} = a^{-1} \cdot a = e$.
+</Definicion>
+
+<Separador />
+
+### Clasificación estructural de grupos
+
+Los grupos se clasifican atendiendo a la conmutatividad de su <ConceptLink targetId="operacion-binaria">operación</ConceptLink> y al <ConceptLink targetId="cardinalidad">cardinal</ConceptLink> de su conjunto:
+
+| Tipo de grupo | Condición algebraica | Ejemplo representativo |
+|---|---|---|
+| <ConceptLink targetId="grupo-abeliano">Abeliano (Conmutativo)</ConceptLink> | $\forall a, b \in G$, $a \cdot b = b \cdot a$ | <ConceptLink targetId="conjunto-enteros">Enteros</ConceptLink> $(\mathbb{Z}, +)$ bajo la suma |
+| <ConceptLink targetId="grupo-no-abeliano">No abeliano</ConceptLink> | $\exists a, b \in G$ tal que $a \cdot b \neq b \cdot a$ | <ConceptLink targetId="matriz-invertible">Matrices invertibles</ConceptLink> $(\text{GL}_n(\mathbb{R}), \cdot)$ con $n \ge 2$ |
+| <ConceptLink targetId="grupo-finito">Finito</ConceptLink> | El cardinal $\lvert G \rvert$ es un entero natural | <ConceptLink targetId="grupo-simetria">Grupo de simetrías</ConceptLink> $D_3$ de un triángulo |
+| <ConceptLink targetId="grupo-infinito">Infinito</ConceptLink> | El cardinal $\lvert G \rvert$ es infinito | <ConceptLink targetId="conjunto-reales">Reales no nulos</ConceptLink> $(\mathbb{R} \setminus \{0\}, \cdot)$ |
+
+<Separador />
+
+### Propiedades
+
+- **<ConceptLink targetId="teorema-unicidad-elemento-neutro">Unicidad del elemento neutro</ConceptLink>**: El elemento neutro $e \in G$ de todo grupo es único.
+- **<ConceptLink targetId="teorema-unicidad-elemento-inverso">Unicidad del elemento inverso</ConceptLink>**: Para cada elemento $a \in G$, su elemento inverso $a^{-1}$ es único.
+- **<ConceptLink targetId="teorema-leyes-cancelacion-grupo">Leyes de cancelación</ConceptLink>**: Todo grupo satisface las leyes de cancelación por la izquierda ($a \cdot b = a \cdot c \implies b = c$) y por la derecha.
+- **<ConceptLink targetId="teorema-inverso-producto-grupo">Inverso de un producto</ConceptLink>**: Para cualesquiera elementos de un grupo, $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$.

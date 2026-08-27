@@ -1,58 +1,45 @@
 export const metadata = {
-  "id": "modelo-tres-puntos",
-  "type": "modelo",
-  "title": "Hiru puntuko modeloa",
-  "description": "Inzidentzia-geometriako modelorik bakunena: kolinealak ez diren hiru puntu, bikoteka lotzen dituzten hiru zuzenekin.",
-  "satisfies": "sistema-incidencia",
-  "hasSimulation": true
+  id: "modelo-tres-puntos",
+  lang: "eu",
+  type: "modelo",
+  title: "Hiru puntuko eredua",
+  description: "Hiru puntuk eta hiru zuzenek osatutako egitura geometriko finitua, intzidentzia-axioma nagusiak betetzen dituena.",
+  branch: "51M",
+  satisfies: ["sistema-incidencia"],
+  axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
+  hasSimulation: true
 };
 
 import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
 export const Simulation = ModeloTresPuntos;
 
-<Capitular letra="H" />iru puntuko <ConceptLink targetId="modelo-tres-puntos" isDependency={false}>modeloa</ConceptLink> plano-geometriarako Hilberten <ConceptLink targetId="axioma-incidencia-1" isDependency={false}>inzidentzia-axiomak</ConceptLink> betetzen dituen egitura minimala da. <ConceptLink targetId="colinealidad" isDependency={false}>Kolinealak ez</ConceptLink> diren hiru puntuz eta hiru zuzenez bakarrik osatuta dagoenez, inzidentziaren oinarrizko sistema axiomatikoaren koherentzia erlatiboa frogatzen du analitikoki.
+<Capitular letra="H" />iru puntuko eredua <ConceptLink targetId="plano">planoan</ConceptLink> <ConceptLink targetId="incidencia">intzidentzia-axiomak</ConceptLink> betetzen dituen egitura geometriko diskretu sinpleena da. Unibertso finitu honek hiru <ConceptLink targetId="punto">puntu</ConceptLink> eta hiru <ConceptLink targetId="recta">zuzen</ConceptLink> besterik ez ditu, pertenentzia-arau nagusiak egiaztatzeko adibide zehatz bat eskainiz, <ConceptLink targetId="orden">ordenaren</ConceptLink> nahiz <ConceptLink targetId="distancia">distantziaren</ConceptLink> nocioetan oinarritu gabe.
 
 <Separador />
 
-### Moduluaren definizioa
+### Ereduaren definizioa
 
-Modelo diskretu honen unibertsoa honako elementu hauek osatzen dute:
+Bizan $\mathcal{P} = \{A, B, C\}$ jatorrizko puntuen multzoa eta bizan $\mathcal{L} = \{l_1, l_2, l_3\}$ zuzenen multzoa. Intzidentzia-erlazioa $\mathcal{I} \subset \mathcal{P} \times \mathcal{L}$ bikoteen pertenentziaren bidez definitzen da esplizituki:
 
-- **Puntuak**: $\mathcal{P} = \{$<VisualBind element="A" color="terracota">$A$</VisualBind>, <VisualBind element="B" color="terracota">$B$</VisualBind>, <VisualBind element="C" color="terracota">$C$</VisualBind>$\}$ — hiru puntu desberdineko multzoa.
-- **Zuzenak**: $\mathcal{R} = \{$<VisualBind element="rAB" color="carbon">$r_{AB}$</VisualBind>, <VisualBind element="rBC" color="carbon">$r_{BC}$</VisualBind>, <VisualBind element="rCA" color="carbon">$r_{CA}$</VisualBind>$\}$ — puntu-bikoteak zehazten dituzten hiru zuzen.
-- **Planoa**: <VisualBind element="plano" color="musgo">$\Pi$</VisualBind> $= \{A, B, C, r_{AB}, r_{BC}, r_{CA}\}$ — bi dimentsioko espazio osoa.
+- <VisualBind element="l1" color="pavo">$l_1 = \{A, B\}$</VisualBind> zuzenak <VisualBind element="A" color="musgo">$A$</VisualBind> eta <VisualBind element="B" color="musgo">$B$</VisualBind> puntu biak dauzka.
+- <VisualBind element="l2" color="terracota">$l_2 = \{B, C\}$</VisualBind> zuzenak <VisualBind element="B" color="musgo">$B$</VisualBind> eta <VisualBind element="C" color="musgo">$C$</VisualBind> puntu biak dauzka.
+- <VisualBind element="l3" color="ocre">$l_3 = \{C, A\}$</VisualBind> zuzenak <VisualBind element="C" color="musgo">$C$</VisualBind> eta <VisualBind element="A" color="musgo">$A$</VisualBind> puntu biak dauzka.
 
-<ConceptLink targetId="incidencia" isDependency={false}>Inzidentzia-erlazioak</ConceptLink> ezartzen du $P$ puntu bat $r$ zuzen batean inzidente dela baldin eta soilik $P \in r$ bada.
-
-<Formula>
-  $$
-  \begin{cases}
-    \mathcal{P} = \{A, B, C\} \\
-    \mathcal{R} = \{r_{AB}, r_{BC}, r_{CA}\}
-  \end{cases}
-  $$
-</Formula>
+Eredu honetan, zuzen bakoitza $\mathcal{P}$ multzoaren bi elementuko azpimultzo ez-hutsa da nahitaez.
 
 <Separador />
 
 ### Axiomen egiaztapena
 
-- **I-1 axioma**: Bi puntu desberdin emanda, bietan inzidente den zuzen bakarra existitzen da. Eraikuntzaz, bikote bakoitzak zuzen bakarra zehazten du ($A, B \in r_{AB}$).
-- **I-2 axioma**: Zuzen bakoitza gutxienez bi puntutan da inzidente. Modelo honetan, zuzen bakoitzak zehazki bi puntu ditu.
-- **I-3 axioma**: Kolinealak ez diren hiru puntu existitzen dira. Ez dago hiru $A, B, C$ puntuak batera dituen zuzenik.
+Hiru puntuko ereduak zorrozki betetzen ditu intzidentzia-sistema lauaren oinarrizko axiomak <ConceptLink targetId="sistema-incidencia">intzidentzia-sisteman</ConceptLink>:
+
+- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>I.1 Axioma (zuzenaren bakartasuna)</ConceptLink>**: $\mathcal{P}$ multzoko edozein bi puntu desberdinetarako, biak batera daukatzan zuzen bakarra dago $\mathcal{L}$ multzoan.
+- **<ConceptLink targetId="axioma-incidencia-2" isDependency={true}>I.2 Axioma (puntuen existentzia zuzenean)</ConceptLink>**: $l_i \in \mathcal{L}$ zuzen bakoitzak gutxienez bi puntu desberdin dauzka.
+- **<ConceptLink targetId="axioma-incidencia-3" isDependency={true}>I.3 Axioma (kolinealtasun eza)</ConceptLink>**: Badago hiru puntuko multzo bat $\{A, B, C\}$, zuzen berean ez daudenak (ez-<ConceptLink targetId="colinealidad">kolinealak</ConceptLink>).
 
 <Separador />
 
-### Ordena- eta kongruentzia-axiomen independentzia
+### Propietateak
 
-- **Ordena-axiomen hutsegitea**: Zuzen bakoitzak zehazki bi puntu dituenez, «<ConceptLink targetId="estar-entre" isDependency={false}>artean egotea</ConceptLink>» erlazio bitarra ezin da modu ez-tribialean definitu. Bereziki, <ConceptLink targetId="axioma-pasch" isDependency={false}>Paschen axioma</ConceptLink> ez da betetzen.
-- **Kongruentzia-axiomen hutsegitea**: Bitarteko punturik ez dagoenez, ezin dira segmentuak edo angeluak moduan garraiatu.
-- **Paralelismoaren hutsegitea**: Zuzen desberdinen bikote orok zehazki puntu bakarrean ebakitzen du bere burua; beraz, ez dago <ConceptLink targetId="paralelismo" isDependency={false}>zuzen paralelorik</ConceptLink>.
-
-<Separador />
-
-### Ondorio epistemologikoa
-
-<Nota>
-  **Minimaltasun axiomatikoa**: Hiru puntuko modeloak behin betiko frogatzen du planoko inzidentzia-axiomen koherentzia logikoa, eta erakusten du <ConceptLink targetId="axioma-orden-1" isDependency={false}>ordena-</ConceptLink>, <ConceptLink targetId="congruencia" isDependency={false}>kongruentzia-</ConceptLink> eta jarraitutasun-axiomak independenteak direla eta ezin direla inzidentzia-egitura hutsetik deduzitu.
-</Nota>
+- **Finitutasuna eta minimaltasuna**: I.1, I.2 eta I.3 axiomak betetzen dituen eredurik txikiena da.
+- **Paraleloen eza**: Eredu honetan ez dago ebakitzen ez den zuzen parerik; edozein bi zuzenek puntu bakar batean ebakitzen dute elkar, beraz ez da betetzen <ConceptLink targetId="paralelismo">paralelismoaren</ConceptLink> nosio euklidesarra.

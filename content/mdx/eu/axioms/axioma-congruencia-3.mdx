@@ -2,34 +2,35 @@ export const metadata = {
   id: "axioma-congruencia-3",
   lang: "eu",
   type: "axioma",
-  title: "III.3 Axioma (Zuzenki Kongruenteen Batuketa)",
-  description: "Zuzenkien kongruentzia gordetzen da zuzenaren gaineko batuketa-eragiketaren pean.",
+  title: "III.3 Axioma (Zuzenkien Batura)",
+  description: "Lerrokatutako bi zuzenki elkarren segidakoak beste bi zuzenki elkarren segidakorekin kongruenteak badira hurrenez hurren, beren muturrekin osatutako batura-zuzenkiak ere kongruenteak dira.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §5", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+  ]
 };
 
 import { Congruence3 } from '@content/diagrams/Axiomas/Congruence3';
 export const Simulation = Congruence3;
 
-<Capitular letra="H" />irugarren kongruentzia-<ConceptLink targetId="axioma-congruencia-3">axiomak</ConceptLink> <ConceptLink targetId="segmento">zuzenki</ConceptLink> albokideen batuketaren eta baliokidetza rigidoaren erlazioaren arteko bateragarritasun metrikoa bermatzen du.
+<Capitular letra="H" />ilberten hirugarren <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-axiomak magnitudoen garraioaren aditibitatea formalizatzen du <ConceptLink targetId="recta">zuzen</ConceptLink> baten gainean. Axioma honek ezartzen du <ConceptLink targetId="segmento">zuzenki</ConceptLink> kongruenteen katenazioak lortzen den zuzenki batuaren kongruentzia gordetzen duela <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
 
 <Definicion title="">
-  Izan bitez $A, B, C$ hiru <ConceptLink targetId="punto">puntu</ConceptLink> <ConceptLink targetId="colinealidad">lerrokide</ConceptLink> <ConceptLink targetId="estar-entre" isDependency={true}>$A * B * C$</ConceptLink> delarik, eta izan bitez $A', B', C'$ hiru puntu lerrokide $A' * B' * C'$ delarik. Baldin eta $AB \cong A'B'$ eta $BC \cong B'C'$ badira, orduan $AC$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> konposatua $A'C'$-rekin <ConceptLink targetId="congruencia">kongruentea</ConceptLink> da:
+  Izan bitez $A, B, C$ hiru <ConceptLink targetId="punto">puntu</ConceptLink> zuzen batean, $B$ puntua $A$ eta $C$ puntuen <ConceptLink targetId="orden">artean</ConceptLink> dagoelarik, eta izan bitez $A', B', C'$ hiru puntu beste zuzen batean, $B'$ puntua $A'$ eta $C'$ puntuen artean dagoelarik. $\overline{AB} \cong \overline{A'B'}$ eta $\overline{BC} \cong \overline{B'C'}$ badira, orduan $\overline{AC}$ zuzenki batura eta $\overline{A'C'}$ zuzenkia <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira:
   $$
-  (A * B * C) \land (A' * B' * C') \land (AB \cong A'B') \land (BC \cong B'C') \implies AC \cong A'C'
+  (A\text{-}B\text{-}C) \land (A'\text{-}B'\text{-}C') \land (\overline{AB} \cong \overline{A'B'}) \land (\overline{BC} \cong \overline{B'C'}) \implies \overline{AC} \cong \overline{A'C'}
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Irudikapen bisuala
 
-Simulazio interaktiboan <VisualBind element="AB" color="ocre">$AB$</VisualBind> eta <VisualBind element="BC" color="terracota">$BC$</VisualBind> zuzenki albokideak behatzen dira <VisualBind element="AC" color="pavo">$AC$</VisualBind> zuzenki osoa osatuz. Batuketak kongruentzia zehatza mantentzen du garraitutako konposizio homologoarekin.
+Hasierako <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> zuzenkia eta viroan dagoen <VisualBind element="BC" color="pavo">$\overline{BC}$</VisualBind> zuzenkia zuzenaren gainean lotuz, lortzen den <VisualBind element="AC" color="terracota">$\overline{AC}$</VisualBind> batura-zuzenkiak korrespondentzia zurrun zehatza mantentzen du eraldatutako zuzenki kongruenteen katenazioarekin.
 
 <Separador />
 
-### Gehigarritasun metrikoa
+### Garrantzi axiomatikoa
 
-Postulatu honek geometria sintetikoan <ConceptLink targetId="segmento">zuzenkien</ConceptLink> batuketa eta luzeren gehigarritasuna modu formalean definitzea ahalbidetzen du, magnitude geometrikoen egitura algebraikoa oinarrituz.
+Postulatu honek <ConceptLink targetId="segmento">zuzenkien</ConceptLink> baliokidetza-klaseen arteko batuketa-eragiketa sintetikoki definitzea ahalbidetzen du. <ConceptLink targetId="orden">Ordena</ConceptLink>-axiomekin batera, espazioaren egitura metriko aditiboa ezartzen du zenbaki errealen gorputzaren menpekotasunik gabe.

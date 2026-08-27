@@ -1,0 +1,40 @@
+export const metadata = {
+  id: "sistema-absoluto",
+  lang: "en",
+  type: "sistema-axiomatico",
+  title: "Absolute geometry system",
+  description: "Axiomatic system established by János Bolyai uniting incidence, order, congruence, and continuity axioms without assuming any parallel axiom.",
+  branch: "51M",
+  axiomas: ["axioma-incidencia-1", "axioma-orden-1", "axioma-congruencia-1"]
+};
+
+<Capitular letra="T" />he absolute geometry system —also known as *neutral geometry*— encompasses the common axiomatic core shared by both Euclidean geometry and hyperbolic geometry. Formulated independently by János Bolyai and Nikolai Lobachevsky, it gathers the complete collection of Hilbert's incidence, order, congruence, and continuity principles while deliberately omitting any parallel postulate.
+
+<Separador />
+
+### Constituent axiom groups
+
+Absolute geometry unifies four fundamental groups of Hilbert's axiomatic system:
+
+1. **<ConceptLink targetId="sistema-incidencia">Incidence axioms (I.1 to I.8)</ConceptLink>**: Govern containment relations between <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>.
+2. **Order axioms (II.1 to II.4)**: Establish the ternary <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation on a line and ground the concepts of half-plane and convex region.
+3. **Congruence axioms (III.1 to III.5)**: Define geometric rigidity for equality of line segments and <ConceptLink targetId="angulo">angles</ConceptLink>, including the SAS triangle <ConceptLink targetId="congruencia">congruence</ConceptLink> criterion.
+4. **Continuity axioms (IV.1 to IV.2)**: Include Archimedes' axiom and line completeness, linking synthetic space directly to <ConceptLink targetId="numero-real">real numbers</ConceptLink>.
+
+<Separador />
+
+### Theorems valid in absolute geometry
+
+All theorems proved within the absolute system are automatically valid in both <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink> and <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>:
+
+- **<ConceptLink targetId="teorema-triangulo-isosceles">Isosceles triangle theorem</ConceptLink>**: Angles opposite to congruent sides in a <ConceptLink targetId="triangulo">triangle</ConceptLink> are congruent.
+- **Exterior angle theorem**: The exterior angle of any triangle is strictly greater than either non-adjacent interior angle.
+- **<ConceptLink targetId="teorema-congruencia-ala">ASA and SSS congruence criteria</ConceptLink>**: Uniquely determine triangles through three corresponding elements.
+- **Existence of parallel lines**: Through a point not on a given line passes *at least* one <ConceptLink targetId="paralelismo">parallel line</ConceptLink> (proven by construction using the common perpendicular).
+
+<Separador />
+
+### Metamathematical properties
+
+- **Parallel neutrality**: By not fixing the number of parallel lines, it leaves open whether the angle sum of a triangle equals $180^\circ$ or is strictly less.
+- **Subjacent to models**: Both the <ConceptLink targetId="modelo-cartesiano">Cartesian model</ConceptLink> and the <ConceptLink targetId="modelo-poincare">Poincaré disk model</ConceptLink> serve as fully valid models of absolute geometry.

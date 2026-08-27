@@ -1,0 +1,42 @@
+export const metadata = {
+  id: "metodo-contradiccion",
+  lang: "en",
+  type: "metodo",
+  subtype: "demostracion",
+  title: "Proof by contradiction",
+  description: "Indirect proof technique assuming the negation of the thesis to derive an unsustainable logical contradiction.",
+  branch: "51M",
+  hasSimulation: true
+};
+
+import { ContradictionSimulation } from '@content/diagrams/Metodos/ContradictionSimulation';
+export const Simulation = ContradictionSimulation;
+
+<Capitular letra="P" />roof by contradiction —historically referred to as *reductio ad absurdum*— is the principal indirect proof strategy in mathematics. Grounded in the law of excluded middle and the principle of non-contradiction, it demonstrates that if assuming the negation of the <ConceptLink targetId="tesis">thesis</ConceptLink> leads to an absurdity $R \land \neg R$, then the original thesis must necessarily be true.
+
+<Separador />
+
+### Logical structure
+
+To prove the conditional proposition $P \implies Q$, the reasoning proceeds by absurd hypothesis:
+
+1. The truth of the <ConceptLink targetId="hipotesis">hypothesis</ConceptLink> $P$ and the negation of the thesis $\neg Q$ are jointly assumed as premises.
+2. Rigorous deductive steps are executed starting from the conjunction $P \land \neg Q$.
+3. A formal contradiction of the form $R \land \neg R$ is derived, where $R$ is a known <ConceptLink targetId="axioma">axiom</ConceptLink>, a previously established <ConceptLink targetId="teorema">theorem</ConceptLink>, or a proposition constructed during the argument.
+4. By the law of non-contradiction, $\neg Q$ is rejected, proving that $Q$ is true:
+   $$ (P \land \neg Q \implies \bot) \implies (P \implies Q) $$
+
+<Separador />
+
+### Classic examples in geometry and number theory
+
+- **Irrationality of $\sqrt{2}$**: Assuming $\sqrt{2}$ is a <ConceptLink targetId="numero-real">real number</ConceptLink> that can be expressed as an irreducible fraction $p/q$, algebraic steps demonstrate that both $p$ and $q$ must be even, directly contradicting the irreducibility of the fraction.
+- **Infinitude of <ConceptLink targetId="numero-natural">prime numbers</ConceptLink>**: Assuming there are only finitely many primes $p_1, p_2, \dots, p_n$, the constructed integer $N = (p_1 p_2 \dots p_n) + 1$ leads to a contradiction since it cannot be divided by any prime in the list.
+- **Uniqueness of the <ConceptLink targetId="paralelismo">parallel line</ConceptLink>**: In <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>, assuming the existence of two distinct lines parallel to a given line passing through the same point directly contradicts the <ConceptLink targetId="axioma-paralelas-euclides">fifth postulate</ConceptLink>.
+
+<Separador />
+
+### Properties
+
+- **Indirect power**: Establishes proofs for statements where the <ConceptLink targetId="metodo-directo">direct method</ConceptLink> is unfeasible due to a lack of explicit constructive relations.
+- **Non-constructivity**: Proves the truth of a mathematical statement without explicitly constructing the underlying geometric or numerical object.

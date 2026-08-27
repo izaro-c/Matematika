@@ -1,0 +1,79 @@
+export const metadata = {
+  "id": "demo-pitagoras-euclides",
+  "type": "demostracion",
+  "title": "Proof: Pythagorean Theorem (Euclid's Method)",
+  "description": "Classic Euclidean proof dividing the hypotenuse square into two rectangles congruent in area to the cathetus squares.",
+  "parentTheorem": "teorema-pitagoras",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["euclides", "hilbert"],
+  "tags": ["geometria", "triangulos", "areas", "hilbert"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elements", author: "Euclid", locator: "Book I, Proposition 47", role: "primary" }
+  ]
+};
+
+import { DemoPitagorasEuclides } from "@content/diagrams/Demos/DemoPitagorasEuclides";
+
+<DemonstrationSection diagram={<DemoPitagorasEuclides />}>
+
+<Capitular letra="G" />iven a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> $\triangle ABC$ with a <ConceptLink targetId="angulo-recto">right angle</ConceptLink> at <ConceptLink targetId="vertice">vertex</ConceptLink> $C$, the <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pythagorean theorem</ConceptLink> is formally demonstrated. The proof establishes that the <ConceptLink targetId="area">area</ConceptLink> of the <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">square constructed on the hypotenuse</ConceptLink></VisualBind> is equal to the sum of the areas of the <VisualBind element="cuadrado-a" color="pavo">square on cathetus $a$</VisualBind> and the <VisualBind element="cuadrado-b" color="terracota">square on cathetus $b$</VisualBind>.
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} target="triangulo" title="Configuration of the base right triangle">
+Let <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> be a right triangle with the right angle positioned at vertex $C$. The <ConceptLink targetId="cateto">catheti</ConceptLink> are denoted by <VisualBind element="cateto-a" color="pavo">$a = \overline{BC}$</VisualBind> and <VisualBind element="cateto-b" color="terracota">$b = \overline{CA}$</VisualBind>, and the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> by <VisualBind element="hipotenusa-c" color="ocre">$c = \overline{AB}$</VisualBind>.
+</ProofStep>
+
+<ProofStep number={2} target="cuadrados" title="Construction of the three exterior squares">
+On each of the three sides of $\triangle ABC$, three squares exterior to the polygon are constructed: the <VisualBind element="cuadrado-b" color="terracota">square on $b$</VisualBind> with area $b^2$, the <VisualBind element="cuadrado-a" color="pavo">square on $a$</VisualBind> with area $a^2$, and the <VisualBind element="cuadrado-c" color="ocre">square on the hypotenuse</VisualBind> with area $c^2$.
+</ProofStep>
+
+<ProofStep number={3} target="altura" title="Division of the hypotenuse square by the altitude">
+From the right vertex $C$, the <VisualBind element="recta-altura" color="carbon"><ConceptLink targetId="perpendicular">perpendicular line</ConceptLink></VisualBind> to the hypotenuse $\overline{AB}$ is drawn. Extended through the square on the hypotenuse, this line partitions it into two polygons: the <VisualBind element="rectangulo-izq" color="terracota"><ConceptLink targetId="rectangulo">left rectangle</ConceptLink></VisualBind> $R_L$ and the <VisualBind element="rectangulo-der" color="pavo"><ConceptLink targetId="rectangulo">right rectangle</ConceptLink></VisualBind> $R_R$.
+</ProofStep>
+
+<ProofStep number={4} target="triangulos-izq" title="Construction and congruence of the left triangles">
+Auxiliary <ConceptLink targetId="segmento">segments</ConceptLink> are drawn to form triangle <VisualBind element="triangulo-acd" color="terracota">$\triangle ACD$</VisualBind> and triangle <VisualBind element="triangulo-akb" color="terracota">$\triangle AKB$</VisualBind>. Applying <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>congruence axioms</ConceptLink> under the SAS (Side-Angle-Side) criterion yields <ConceptLink targetId="congruencia">congruence</ConceptLink>:
+
+<Formula>
+  $$ \triangle ACD \cong \triangle AKB $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={5} target="areas-izq" title="Area equivalence between the left triangle and rectangle">
+Triangle $\triangle ACD$ shares a base with the <VisualBind element="rectangulo-izq" color="terracota">left rectangle</ConceptLink> $R_L$, so its area is exactly half of the area of $R_L$. Likewise, triangle $\triangle AKB$ shares a base with the <VisualBind element="cuadrado-b" color="terracota">square on $b$</VisualBind>, having an area equal to half of $b^2$. From the triangle congruence, it is deduced that:
+
+<Formula>
+  $$ \text{Area}(R_L) = b^2 $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={6} target="areas-der" title="Area equivalence for the right rectangle">
+Through a strictly symmetrical argument applied to the right sector using auxiliary triangles <VisualBind element="triangulo-bce" color="pavo">$\triangle BCE$</VisualBind> and <VisualBind element="triangulo-abf" color="pavo">$\triangle ABF$</VisualBind>, it is proven that the <VisualBind element="rectangulo-der" color="pavo">right rectangle</ConceptLink> $R_R$ has an area identical to $a^2$:
+
+<Formula>
+  $$ \text{Area}(R_R) = a^2 $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={7} target="cuadrados-final" title="Area addition and formal conclusion">
+By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>, the total area of the <VisualBind element="cuadrado-c" color="ocre">square on the hypotenuse</VisualBind> is the sum of its two constituent rectangles $R_L$ and $R_R$:
+
+<Formula>
+  $$ a^2 + b^2 = c^2 $$
+</Formula>
+</ProofStep>
+
+<Separador />
+
+### Deductive analysis
+
+<Nota>
+  Book I, Proposition 47 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>. This reasoning requires the <ConceptLink targetId="sistema-euclidiano">Euclidean axiomatic system</ConceptLink> and formalizes the decomposition within Hilbert's framework.
+</Nota>
+
+</DemonstrationSection>

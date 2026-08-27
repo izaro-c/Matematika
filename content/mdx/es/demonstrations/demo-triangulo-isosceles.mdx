@@ -1,15 +1,16 @@
 export const metadata = {
   "id": "demo-triangulo-isosceles",
   "type": "demostracion",
-  "title": "Demostración: Teorema del triángulo isósceles (Pons Asinorum)",
-  "description": "Demostración por simetría de Pappus deduciendo la congruencia del triángulo consigo mismo tras la permutación de vértices.",
+  "title": "Demostración: Teorema del triángulo isósceles",
+  "description": "Demostración elegante de Pappus mediante la autocongruencia de un triángulo isósceles con sus lados correspondientes invertidos.",
   "parentTheorem": "teorema-triangulo-isosceles",
+  "branch": "51M",
   "proofMethod": "metodo-directo",
-  "authors": ["euclides", "hilbert"],
-  "tags": ["geometria", "congruencia", "triangulos"],
+  "authors": ["euclides"],
+  "tags": ["geometria", "triangulos", "congruencia"],
   "layout": "split",
   "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 5", role: "primary" }
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 5 (Versión refinada de Pappus)", role: "primary" }
   ]
 };
 
@@ -17,47 +18,51 @@ import { DemoTrianguloIsosceles } from "@content/diagrams/Demos/DemoTrianguloIso
 
 <DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
 
-<Capitular letra="S" />ea <VisualBind element="triangulo-abc" color="carbon">$\triangle ABC$</VisualBind> un <ConceptLink targetId="triangulo">triángulo</ConceptLink> que satisface la congruencia de lados <VisualBind element="lados-iguales" color="terracota">$\overline{AB} \cong \overline{AC}$</VisualBind>. Se demuestra que los ángulos de la base son congruentes: $\angle B \cong \angle C$.
+<Capitular letra="D" />ado un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$ que posee dos lados <ConceptLink targetId="congruencia">congruentes</ConceptLink>, se demuestra el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>teorema del triángulo isósceles</ConceptLink>. La demostración establece que los <ConceptLink targetId="angulo">ángulos</ConceptLink> opuestos a dichos lados congruentes (los ángulos de la base) son congruentes entre sí.
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} title="Definición del triángulo isósceles" target={["triangulo-abc", "lado-ab", "lado-ac"]}>
-Por hipótesis, el triángulo <VisualBind element="triangulo-abc" color="carbon">$\triangle ABC$</VisualBind> cuenta con dos lados congruentes: <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> $\cong$ <VisualBind element="lado-ac" color="terracota">$\overline{AC}$</VisualBind>.
+<ProofStep number={1} target="triangulo-base" title="Hipótesis del triángulo isósceles">
+Sea el triángulo <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> con lados <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> y <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> de igual longitud:
+
+<Formula>
+  $$ \overline{AB} \cong \overline{AC} $$
+</Formula>
 </ProofStep>
 
-<ProofStep number={2} title="Permutación de vértices y comparación" target={["triangulo-permutado"]}>
-Consideramos una correspondencia del triángulo consigo mismo invirtiendo el orden de los vértices de la base: comparamos <VisualBind element="triangulo-abc" color="carbon">$\triangle ABC$</VisualBind> con <VisualBind element="triangulo-permutado" color="carbon">$\triangle ACB$</VisualBind>.
-
-En esta correspondencia:
-- $AB$ se corresponde con $AC$ (congruentes por hipótesis).
-- $AC$ se corresponde con $AB$ (congruentes por identidad).
-- El ángulo comprendido $\angle BAC$ coincide con el ángulo $\angle CAB$.
+<ProofStep number={2} target="correspondencia" title="Establecimiento de la autocorrespondencia de vértices">
+Se considera el propio triángulo $\triangle ABC$ y una segunda copia con los vértices de la base invertidos: $\triangle ACB$. La correspondencia entre vértices viene dada por $(A, B, C) \leftrightarrow (A, C, B)$.
 </ProofStep>
 
-<ProofStep number={3} title="Congruencia por el criterio LAL" target={["lal"]}>
-Puesto que dos lados y el ángulo comprendido de $\triangle ABC$ son congruentes con sus homólogos en $\triangle ACB$, por el postulado de congruencia <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink> se concluye:
+<ProofStep number={3} target="criterio-lal" title="Verificación del criterio de congruencia LAL">
+Comparamos los elementos correspondientes de $\triangle ABC$ y $\triangle ACB$:
+1. El lado <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> es congruente con el lado <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> por hipótesis.
+2. El <ConceptLink targetId="angulo">ángulo</ConceptLink> comprendido <VisualBind element="angulo-a" color="carbon">$\angle BAC$</VisualBind> es idéntico a sí mismo ($\angle CAB$).
+3. El lado <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> es congruente con el lado <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> por hipótesis.
+
+Por los <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axiomas de congruencia LAL</ConceptLink> (Lado-Ángulo-Lado), se deduce la <ConceptLink targetId="congruencia">congruencia de triángulos</ConceptLink>:
 
 <Formula>
   $$ \triangle ABC \cong \triangle ACB $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} title="Igualdad de los ángulos de la base" target={["angulo-b", "angulo-c"]}>
-Por definición de congruencia de triángulos, los ángulos homólogos correspondientes son congruentes. El ángulo <VisualBind element="angulo-b" color="pavo">$\angle B$</VisualBind> en $\triangle ABC$ se corresponde con el ángulo <VisualBind element="angulo-c" color="pavo">$\angle C$</VisualBind> en $\triangle ACB$, por lo que:
+<ProofStep number={4} target="conclusion" title="Igualdad de los ángulos de la base">
+Dado que ambos triángulos son congruentes, sus partes homólogas son congruentes. En particular, los ángulos opuestos a los lados de igual longitud en la correspondencia son idénticos: el ángulo en el <ConceptLink targetId="vertice">vértice</ConceptLink> $B$ (<VisualBind element="angulo-b" color="terracota">$\angle ABC$</VisualBind>) es congruente con el ángulo en el vértice $C$ (<VisualBind element="angulo-c" color="pavo">$\angle ACB$</VisualBind>):
 
 <Formula>
-  $$ \angle B \cong \angle C $$
+  $$ \angle ABC \cong \angle ACB $$
 </Formula>
 </ProofStep>
 
 <Separador />
 
-### Análisis
+### Análisis deductivo
 
 <Nota>
-  Demostración por simetría atribuida a Pappus de Alejandría (siglo IV d.C.). Evita las construcciones auxiliares de la Proposición I.5 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de Euclides, perteneciendo plenamente a la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
+  Proposición I.5 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>, conocida históricamente como el *Pons Asinorum*. Esta versión ultra-concisa sin construcciones auxiliares se debe a Pappus de Alejandría y pertenece a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

@@ -1,0 +1,38 @@
+export const metadata = {
+  id: "sistema-euclidiano",
+  lang: "en",
+  type: "sistema-axiomatico",
+  title: "Euclidean axiomatic system",
+  description: "The canonical axiomatic framework for standard plane geometry, composed of absolute geometry and Playfair's parallel axiom.",
+  branch: "51M",
+  axiomas: ["axioma-paralelas-euclides"]
+};
+
+<Capitular letra="T" />he Euclidean axiomatic system represents the classical formal framework for plane geometry. It is obtained by incorporating the fifth parallel postulate (in Playfair's equivalent formulation) into <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, establishing zero curvature for the plane and defining scale rigidity for geometric figures.
+
+<Separador />
+
+### Axiomatic constitution
+
+The Euclidean system integrates the complete set of Hilbert's principles:
+
+1. **Foundation of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>**: Gathers all axioms of <ConceptLink targetId="sistema-incidencia">incidence</ConceptLink> (I.1-I.8), <ConceptLink targetId="orden">order</ConceptLink> (II.1-II.4), <ConceptLink targetId="congruencia">congruence</ConceptLink> (III.1-III.5), and continuity (IV.1-IV.2).
+2. **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euclidean parallel axiom (V.1)</ConceptLink>**: Given a <ConceptLink targetId="recta">line</ConceptLink> $l$ and a <ConceptLink targetId="punto">point</ConceptLink> $P \notin l$ in a <ConceptLink targetId="plano">plane</ConceptLink>, there exists at most one line $l'$ containing $P$ that does not intersect $l$:
+   $$ \forall l \in \mathcal{L}, \forall P \notin l, \exists! l' \in \mathcal{L} \text{ such that } P \in l' \land l \cap l' = \emptyset $$
+
+<Separador />
+
+### Fundamental theorems of the system
+
+The presence of the parallel axiom triggers characteristic metric consequences:
+
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Constant angle sum</ConceptLink>**: The sum of interior <ConceptLink targetId="angulo">angles</ConceptLink> in any <ConceptLink targetId="triangulo">triangle</ConceptLink> is strictly equal to $180^\circ$.
+- **<ConceptLink targetId="teorema-tales">Thales' theorem and similarity</ConceptLink>**: Parallel lines cut by transversals determine proportional segments, enabling the existence of similar figures of different sizes without angular distortion.
+- **<ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>**: In every <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink>, the area of the square erected on the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> equals the sum of the areas of the squares on the <ConceptLink targetId="cateto">legs</ConceptLink> ($a^2 + b^2 = c^2$).
+
+<Separador />
+
+### Representative model and consistency
+
+- **<ConceptLink targetId="modelo-cartesiano">Cartesian model $\mathbb{R}^2$</ConceptLink>**: Serves as the canonical analytic model of Euclidean geometry.
+- **Relative consistency**: The logical consistency of the Euclidean system is equivalent to that of the <ConceptLink targetId="numero-real">real number</ConceptLink> field and Zermelo-Fraenkel set theory.

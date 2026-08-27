@@ -2,35 +2,36 @@ export const metadata = {
   id: "axioma-arquimedes",
   lang: "es",
   type: "axioma",
-  title: "Axioma V.1 (Axioma de Arquímedes)",
-  description: "Dados dos segmentos cualesquiera, existe un múltiplo entero del menor que supera en longitud al mayor.",
+  title: "Axioma de Arquímedes",
+  description: "Dado un segmento cualquiera AB y un segmento CD, existe un número natural n tal que la repetición de n segmentos CD concatenados supera en longitud al segmento AB.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Sobre la esfera y el cilindro", author: "Arquímedes", locator: "Libro I, Asunción 5", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §8", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §7", role: "primary" }
+  ]
 };
 
 import { AxiomaArquimedes } from '@content/diagrams/Axiomas/AxiomaArquimedes';
 export const Simulation = AxiomaArquimedes;
 
-<Capitular letra="E" />l primer axioma del grupo de continuidad, el <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink>, establece que no existen magnitudes geométricas infinitesimales o infinitamente grandes en relación con otras.
+<Capitular letra="E" />l axioma de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink> constituye el primer postulado de <ConceptLink targetId="continuidad">continuidad</ConceptLink> (Axioma IV.1 de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>). Excluye la existencia de elementos infinitamente grandes o infinitesimales en la geometría métrica.
 
 <Definicion title="">
-  Para cualquier par de <ConceptLink targetId="segmento">segmentos</ConceptLink> $AB$ y $CD$, existe un número entero positivo $n \in \mathbb{N}^+$ tal que la suma de $n$ copias consecutivas de $AB$ supera al segmento $CD$:
+  Sean $\overline{AB}$ y $\overline{CD}$ dos <ConceptLink targetId="segmento">segmentos</ConceptLink> arbitrarios. Existe un entero positivo $n \in \mathbb{N}^+$ tal que, al construir sobre la semirrecta $AB$ una cadena de $n$ segmentos congruentes a $\overline{CD}$ concatenados $(A = A_0, A_1, A_2, \dots, A_n)$, el punto $B$ se encuentra entre $A$ y $A_n$:
   $$
-  \forall AB, CD \implies \exists n \in \mathbb{N}^+ \ (n \cdot AB > CD)
+  \forall \overline{AB}, \overline{CD} \implies \exists n \in \mathbb{N}^+ \ (n \cdot \overline{CD} > \overline{AB})
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Representación visual
 
-En la simulación interactiva se presentan los dos segmentos <VisualBind element="dosSegmentos" color="ocre">$AB$ y $CD$</VisualBind>. Al iterar la adición de <VisualBind element="copiasAB" color="terracota">$n$ copias congruentes</VisualBind> de $AB$, la concatenación supera la longitud de $CD$.
+Dado el segmento objetivo <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> y el segmento unidad <VisualBind element="CD" color="pavo">$\overline{CD}$</VisualBind>, la iteración del transporte del módulo unidad <VisualBind element="An" color="terracota">$A_n$</VisualBind> supera eventualmente la longitud del segmento objetivo para un número finito de pasos.
 
 <Separador />
 
-### Medida y propiedad arquimediana
+### Significado axiomático
 
-Este axioma conecta la geometría sintética con la estructura de los <ConceptLink targetId="numero-real">números reales</ConceptLink>. Garantiza que cualquier <ConceptLink targetId="segmento">segmento</ConceptLink> puede ser utilizado como unidad de medida para medir otro segmento mediante un número finito de pasos.
+Este postulado garantiza que no existen magnitudes incomparables ni segmentos infinitésimos no nulos. Es indispensable para la teoría de proporciones y la medición de áreas y volúmenes, permitiendo la aproximación por agotamiento en la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink>.

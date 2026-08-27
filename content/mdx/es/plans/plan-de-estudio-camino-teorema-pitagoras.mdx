@@ -1,10 +1,11 @@
 export const metadata = {
-  "id": "camino-teorema-pitagoras",
-  "type": "plan-de-estudio",
-  "title": "El camino hacia el teorema de Pitágoras",
-  "subtitle": "Ruta axiomática y geométrica",
-  "description": "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
-  "requiredNodes": [
+  id: "camino-teorema-pitagoras",
+  type: "plan-de-estudio",
+  title: "El camino hacia el teorema de Pitágoras",
+  subtitle: "Ruta axiomática y geométrica",
+  description: "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
+  branch: "51M",
+  requiredNodes: [
     "punto",
     "estar-entre",
     "triangulo",
@@ -21,7 +22,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="C" />onstruir una verdad matemática de forma rigurosa exige trazar una trayectoria impecable de justificaciones. El <ConceptLink targetId="teorema-pitagoras" isDependency={false}>teorema de Pitágoras</ConceptLink> es la consecuencia necesaria de una red estructurada de nociones primitivas, axiomas y teoremas interconectados en el espacio euclidiano.
+<Capitular letra="C" />onstruir una verdad matemática de forma rigurosa exige trazar una trayectoria impecable de justificaciones. El <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> es la consecuencia necesaria de una red estructurada de nociones primitivas, axiomas y teoremas interconectados en el espacio euclidiano.
 
 Este plan de estudio te guiará paso a paso por las cinco etapas lógicas indispensables para reconstruir, comprender y aplicar esta verdad fundamental.
 
@@ -29,7 +30,7 @@ Este plan de estudio te guiará paso a paso por las cinco etapas lógicas indisp
 
 ### Fase 1: Los bloques fundacionales
 
-Antes de demostrar propiedades sobre figuras o áreas, debemos definir los objetos primitivos y las relaciones de orden que gobiernan el espacio. En la geometría axiomática de Hilbert, el concepto primitivo básico es el <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink> y la relación espacial de orden es <ConceptLink targetId="estar-entre" isDependency={false}>estar entre</ConceptLink>.
+Antes de demostrar propiedades sobre figuras o áreas, debemos definir los objetos primitivos y las relaciones de orden que gobiernan el espacio. En la geometría axiomática de Hilbert, el concepto primitivo básico es el <ConceptLink targetId="punto">punto</ConceptLink> y la relación espacial de orden es <ConceptLink targetId="estar-entre">estar entre</ConceptLink>.
 
 <StudyTask
   id="punto"
@@ -47,7 +48,7 @@ Antes de demostrar propiedades sobre figuras o áreas, debemos definir los objet
 
 ### Fase 2: Construcción de figuras y congruencia
 
-Al conectar tres puntos <ConceptLink targetId="colinealidad">no colineales</ConceptLink> mediante segmentos obtenemos la figura geométrica primaria del plano: el <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink>. Para comparar triángulos entre sí sin recurrir a la intuición informal, aplicamos los axiomas de <ConceptLink targetId="axioma-congruencia-5" isDependency={false}>congruencia</ConceptLink> (SAS/LAL). Su primera gran aplicación demostrativa es el teorema del triángulo isósceles.
+Al conectar tres puntos <ConceptLink targetId="colinealidad">no colineales</ConceptLink> mediante segmentos obtenemos la figura geométrica primaria del plano: el <ConceptLink targetId="triangulo">triángulo</ConceptLink>. Para comparar triángulos entre sí sin recurrir a la intuición informal, aplicamos los axiomas de <ConceptLink targetId="axioma-congruencia-5">congruencia</ConceptLink> (SAS/LAL). Su primera gran aplicación demostrativa es el teorema del triángulo isósceles.
 
 <StudyTask
   id="triangulo"
@@ -88,7 +89,7 @@ Al conectar tres puntos <ConceptLink targetId="colinealidad">no colineales</Conc
 
 ### Fase 3: Paralelismo y suma de ángulos
 
-El teorema de Pitágoras es exclusivo de la geometría euclídea plana. Esto se debe a que depende del <ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>quinto postulado de Euclides</ConceptLink>. Sin este axioma es imposible demostrar que la suma de los ángulos internos de un triángulo es exactamente $180^\circ$.
+El teorema de Pitágoras es exclusivo de la geometría euclídea plana. Esto se debe a que depende del <ConceptLink targetId="axioma-paralelas-euclides">quinto postulado de Euclides</ConceptLink>. Sin este axioma es imposible demostrar que la suma de los ángulos internos de un triángulo es exactamente $180^\circ$.
 
 <StudyTask
   id="axioma-paralelas-euclides"
@@ -120,7 +121,7 @@ El teorema de Pitágoras es exclusivo de la geometría euclídea plana. Esto se 
 
 ### Fase 4: Proporcionalidad y semejanza
 
-Con una suma de ángulos fija en $180^\circ$, surge la noción de <ConceptLink targetId="semejanza">semejanza</ConceptLink> geométrica. El <ConceptLink targetId="teorema-tales" isDependency={false}>teorema de Tales</ConceptLink> establece la proporcionalidad de los lados en triángulos semejantes, proporcionando la herramienta algebraica para operar con razones.
+Con una suma de ángulos fija en $180^\circ$, surge la noción de <ConceptLink targetId="semejanza">semejanza</ConceptLink> geométrica. El <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink> establece la proporcionalidad de los lados en triángulos semejantes, proporcionando la herramienta algebraica para operar con razones.
 
 <StudyTask
   id="teorema-tales"
@@ -132,7 +133,7 @@ Con una suma de ángulos fija en $180^\circ$, surge la noción de <ConceptLink t
 
 ### Fase 5: El teorema de Pitágoras y su aplicación
 
-Reuniendo congruencia, paralelismo y semejanza, demostramos la relación fundamental $a^2 + b^2 = c^2$. Consolidaremos este resultado teóricos en el ejercicio de cálculo y en el <ConceptLink targetId="caso-gps-trilateracion" isDependency={false}>caso de uso del GPS</ConceptLink>.
+Reuniendo congruencia, paralelismo y semejanza, demostramos la relación fundamental $a^2 + b^2 = c^2$. Consolidaremos este resultado teóricos en el ejercicio de cálculo y en el <ConceptLink targetId="caso-gps-trilateracion">caso de uso del GPS</ConceptLink>.
 
 <StudyTask
   id="teorema-pitagoras"

@@ -3,23 +3,24 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma II.4 (Axioma de Pasch)",
-  description: "Si una recta coplanar corta a un lado de un triángulo sin pasar por sus vértices, entonces interseca a uno de los otros dos lados.",
+  description: "Dada una recta en el plano de un triángulo que no pasa por ninguno de sus vértices, si interseca a un lado, debe intersecar a uno de los otros dos lados.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Vorlesungen über neuere Geometrie", author: "Moritz Pasch", locator: "§2", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" },
+    { title: "Vorlesungen über neuere Geometrie", author: "Moritz Pasch", locator: "§2", role: "secondary" }
+  ]
 };
 
 import { Pasch } from '@content/diagrams/Axiomas/Pasch';
 export const Simulation = Pasch;
 
-<Capitular letra="E" />l cuarto <ConceptLink targetId="axioma-orden-4">axioma de orden</ConceptLink>, conocido como el axioma de Pasch, constituye el pilar fundamental de la topología del plano. Garantiza la continuidad de las líneas y la división estricta de las regiones planas.
+<Capitular letra="E" />l cuarto <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="orden">orden</ConceptLink>, formulado por <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink> e integrado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, extiende la noción de entreidad del plano lineal al plano bidimensional. Establece que si una <ConceptLink targetId="recta">recta</ConceptLink> entra en el interior de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> atravesando uno de sus lados sin pasar por sus vértices, necesariamente debe salir atravesando uno de los otros dos lados.
 
-<Definicion title="">
-  Dado un triángulo $\triangle ABC$ y una recta $l$ coplanar que no incide en ninguno de sus vértices ($A, B, C \notin l$), si $l$ interseca al segmento $AB$ en un punto $P$ tal que $A * P * B$, entonces $l$ interseca al segmento $AC$ o al segmento $BC$:
+<Definicion title="Enunciado formal">
+  Dados tres <ConceptLink targetId="punto">puntos</ConceptLink> no colineales $A, B, C$ y una <ConceptLink targetId="recta">recta</ConceptLink> $l$ contenida en su plano soporte que no pasa por ninguno de los vértices $A, B, C$: si $l$ interseca al interior del <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$, entonces $l$ interseca al segmento $\overline{AC}$ o al segmento $\overline{BC}$:
   $$
-  l \cap AB = \{P\} \ \land \ (A * P * B) \implies (l \cap AC \neq \emptyset) \ \veebar \ (l \cap BC \neq \emptyset)
+  \forall A, B, C \text{ no colineales}, \ \forall l \subset \mathcal{P}_{ABC} \ \bigl((A,B,C \notin l \land l \cap \overline{AB} \neq \emptyset) \implies (l \cap \overline{AC} \neq \emptyset \veebar l \cap \overline{BC} \neq \emptyset)\bigr)
   $$
 </Definicion>
 
@@ -27,10 +28,18 @@ export const Simulation = Pasch;
 
 ### Representación visual e interacción
 
-En la simulación interactiva se observa el triángulo <VisualBind element="triangle" color="terracota">$\triangle ABC$</VisualBind> atravesado por la recta secante <VisualBind element="lineL" color="carbon">$l$</VisualBind>. Tras intersecar el lado $AB$ en el punto <VisualBind element="pP" color="ocre">$P$</VisualBind>, la recta emerge cortando el lado $BC$ en el punto <VisualBind element="pQ" color="ocre">$Q$</VisualBind>.
+En la simulación interactiva, la recta secante <VisualBind element="lineL" color="terracota">$l$</VisualBind> atraviesa el lado <VisualBind element="sideAB" color="carbon">$\overline{AB}$</VisualBind> del triángulo de vértices $A, B, C$. Al desplazar o rotar la recta secante sin tocar los vértices, se observa visualmente cómo la línea se ve forzada a cortar de forma exclusiva o bien el lado <VisualBind element="sideAC" color="marino">$\overline{AC}$</VisualBind> o el lado <VisualBind element="sideBC" color="marino">$\overline{BC}$</VisualBind>.
 
 <Separador />
 
-### Consecuencias topológicas
+### Significado geométrico y alcance
 
-El axioma de Pasch permite demostrar el teorema de separación del plano: toda recta divide al plano en dos semiplanos convexos disjuntos. Esta propiedad formaliza la distinción rigurosa entre el interior y el exterior de una figura cerrada.
+El axioma de Pasch es crucial para demostrar que una recta divide al plano en dos regiones conexas o semoplanos (teorema de separación del plano). Sin este axioma, Euclides cometió lagunas lógicas al asumir implícitamente que ciertas rectas e intersecciones geométricas existían dentro de las figuras.
+
+<Separador />
+
+### Propiedades
+
+- **Separación planar:** Permite demostrar que toda recta $l$ en un plano lo divide en dos semoplanos <ConceptLink targetId="convexo">convexos</ConceptLink> disjuntos.
+- **Topología del plano:** Fundamenta la noción intuitiva de "interior" y "exterior" de figuras cerradas como el <ConceptLink targetId="triangulo">triángulo</ConceptLink> y polígonos.
+- **Independencia del axioma de paralelas:** Es independiente del axioma de las paralelas, siendo plenamente válido en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.

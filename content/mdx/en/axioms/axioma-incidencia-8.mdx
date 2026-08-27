@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "axioma-incidencia-8",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom I.8 (Existence of Non-coplanar Points)",
+  description: "There exist at least four points in space that do not lie in the same plane.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+  ]
+};
+
+import { Incidence8 } from '@content/diagrams/Axiomas/Incidence8';
+export const Simulation = Incidence8;
+
+<Capitular letra="T" />he eighth and final <ConceptLink targetId="incidencia">incidence axiom</ConceptLink> formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> asserts the existence of at least four non-coplanar <ConceptLink targetId="punto">points</ConceptLink>. This postulate breaks planar limitation and establishes genuine three-dimensionality in geometric <ConceptLink targetId="espacio">space</ConceptLink>.
+
+<Definicion title="Formal statement">
+  There exist at least four <ConceptLink targetId="punto">points</ConceptLink> $A, B, C, D \in \mathcal{S}$ such that no <ConceptLink targetId="plano">plane</ConceptLink> $\mathcal{P} \in \mathcal{F}$ contains all four simultaneously:
+  $$
+  \exists A, B, C, D \in \mathcal{S} \ \forall \mathcal{P} \in \mathcal{F} \ \neg\bigl(A \in \mathcal{P} \land B \in \mathcal{P} \land C \in \mathcal{P} \land D \in \mathcal{P}\bigr)
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation and interaction
+
+In the three-dimensional simulation, four points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind>, and <VisualBind element="pD" color="terracota">$D$</VisualBind> define a tetrahedron. Constructing the plane spanned by any triad leaves the fourth point visibly outside that plane.
+
+<Separador />
+
+### Geometric significance and scope
+
+Prevents the geometric universe from collapsing into a single flat surface. By requiring four non-coplanar points, spatial dimension is fixed at three or higher ($n \ge 3$), permitting polyhedra and volumes within <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+
+<Separador />
+
+### Properties
+
+- **Guaranteed 3-dimensionality:** Ensures that geometric space possesses at least three independent spatial dimensions.
+- **Tetrahedron existence:** Enables defining the tetrahedron as the primitive three-dimensional spatial body.
+- **Closure of Group I:** Completes the system of incidence axioms required to structure points, lines, and planes in 3D.

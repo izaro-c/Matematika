@@ -1,58 +1,46 @@
 export const metadata = {
-  "id": "modelo-fano",
-  "type": "modelo",
-  "title": "Plano de Fano",
-  "description": "El plano proyectivo finito más pequeño posible, consistente de 7 puntos y 7 rectas. Un modelo clave en geometría de incidencia.",
-  "satisfies": ["sistema-incidencia"],
-  "hasSimulation": true
+  id: "modelo-fano",
+  lang: "es",
+  type: "modelo",
+  title: "Plano de Fano",
+  description: "El plano proyectivo finito minimalista formado por 7 puntos y 7 rectas donde cada recta contiene exactamente 3 puntos.",
+  branch: "51M",
+  satisfies: ["sistema-incidencia"],
+  axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
+  hasSimulation: true
 };
 
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
 export const Simulation = ModeloFano;
 
-<Capitular letra="E" />l <ConceptLink targetId="modelo-fano" isDependency={false}>plano de Fano</ConceptLink> constituye el arquetipo de modelo proyectivo finito y discreto, instanciando un espacio plano conformado por exactamente 7 puntos e intersecado por 7 rectas. Recibe su nombre del matemático Gino Fano, pionero en el estudio formal de las <ConceptLink targetId="geometria-finita">geometrías finitas</ConceptLink>.
+<Capitular letra="E" />l plano de Fano —denotado formalmente como $PG(2, 2)$— constituye el modelo plano proyectivo finito más pequeño posible. En esta estructura discreta, las nociones primitivas de <ConceptLink targetId="punto">punto</ConceptLink> y <ConceptLink targetId="recta">recta</ConceptLink> obedecen una simetría combinatoria perfecta donde el principio de dualidad proyectiva se cumple de manera absoluta.
 
 <Separador />
 
 ### Definición del modelo
 
-El modelo se define explícitamente enumerando sus conjuntos primitivos de elementos y su relación de pertenencia:
+El universo del modelo consta de un conjunto de 7 puntos $\mathcal{P} = \{P_1, P_2, P_3, P_4, P_5, P_6, P_7\}$ y un conjunto de 7 rectas $\mathcal{L} = \{l_1, l_2, l_3, l_4, l_5, l_6, l_7\}$ definidas como subconjuntos tridireccionales de $\mathcal{P}$:
 
-- **Puntos (7)**: $P = \{$<VisualBind element="p1" color="terracota">$1$</VisualBind>, <VisualBind element="p2" color="terracota">$2$</VisualBind>, <VisualBind element="p3" color="terracota">$3$</VisualBind>, <VisualBind element="p4" color="terracota">$4$</VisualBind>, <VisualBind element="p5" color="terracota">$5$</VisualBind>, <VisualBind element="p6" color="terracota">$6$</VisualBind>, <VisualBind element="p7" color="musgo">$7$</VisualBind>$\}$
-- **Rectas (7)**: $L = \{$<VisualBind element="l1" color="carbon">$l_1$</VisualBind>, <VisualBind element="l2" color="carbon">$l_2$</VisualBind>, <VisualBind element="l3" color="carbon">$l_3$</VisualBind>, <VisualBind element="l4" color="carbon">$l_4$</VisualBind>, <VisualBind element="l5" color="carbon">$l_5$</VisualBind>, <VisualBind element="l6" color="carbon">$l_6$</VisualBind>, <VisualBind element="l7" color="musgo">$l_7$</VisualBind>$\}$
-- **<ConceptLink targetId="incidencia">Incidencia</ConceptLink>**: Cada recta es un subconjunto de exactamente tres puntos:
-  - <VisualBind element="l1" color="carbon">$l_1 = \{1, 6, 2\}$</VisualBind>
-  - <VisualBind element="l2" color="carbon">$l_2 = \{2, 4, 3\}$</VisualBind>
-  - <VisualBind element="l3" color="carbon">$l_3 = \{3, 5, 1\}$</VisualBind>
-  - <VisualBind element="l4" color="carbon">$l_4 = \{1, 7, 4\}$</VisualBind>
-  - <VisualBind element="l5" color="carbon">$l_5 = \{2, 7, 5\}$</VisualBind>
-  - <VisualBind element="l6" color="carbon">$l_6 = \{3, 7, 6\}$</VisualBind>
-  - <VisualBind element="l7" color="musgo">$l_7 = \{6, 4, 5\}$</VisualBind>
+- Las rectas del triángulo exterior son <VisualBind element="l1" color="pavo">$l_1 = \{P_1, P_2, P_3\}$</VisualBind>, <VisualBind element="l2" color="terracota">$l_2 = \{P_3, P_4, P_5\}$</VisualBind> y <VisualBind element="l3" color="musgo">$l_3 = \{P_5, P_6, P_1\}$</VisualBind>.
+- Las medianas son <VisualBind element="l4" color="ocre">$l_4 = \{P_1, P_4, P_7\}$</VisualBind>, <VisualBind element="l5" color="pavo">$l_5 = \{P_3, P_6, P_7\}$</VisualBind> y <VisualBind element="l6" color="terracota">$l_6 = \{P_5, P_2, P_7\}$</VisualBind>.
+- La recta circular interior es <VisualBind element="l7" color="carbon">$l_7 = \{P_2, P_4, P_6\}$</VisualBind>.
 
-<Formula>
-  $$
-  \begin{cases}
-    |P| = 7 \\
-    |L| = 7
-  \end{cases}
-  $$
-</Formula>
+Cada recta contiene exactamente 3 puntos y por cada punto pasan exactamente 3 rectas. La <ConceptLink targetId="incidencia">incidencia</ConceptLink> se define por pertenencia directa de conjuntos.
 
 <Separador />
 
-### Verificación de axiomas
+### Verificación de propiedades y axiomas
 
-El plano de Fano satisface los axiomas fundamentales de un plano proyectivo finito:
+El plano de Fano verifica rigurosamente los axiomas fundamentales de la geometría de incidencia proyectiva:
 
-- **<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>Axioma I-1</ConceptLink>**: Todo par de <ConceptLink targetId="punto" isDependency={false}>puntos</ConceptLink> distintos determina una única <ConceptLink targetId="recta" isDependency={false}>recta</ConceptLink>.
-- **<ConceptLink targetId="axioma-incidencia-2" isDependency={false}>Axioma I-2</ConceptLink>**: Toda recta contiene al menos dos puntos (en Fano contiene exactamente tres).
-- **<ConceptLink targetId="axioma-incidencia-3" isDependency={false}>Axioma I-3</ConceptLink>**: Existen tres puntos <ConceptLink targetId="colinealidad">no colineales</ConceptLink> (por ejemplo, los puntos $1$, $2$ y $3$).
-- **Intersección proyectiva**: Todo par de rectas distintas se interseca en exactamente un punto. En consecuencia, no existen <ConceptLink targetId="paralelismo">rectas paralelas</ConceptLink> en esta estructura.
+- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>Unicidad de recta</ConceptLink>**: Para cualesquiera dos puntos distintos $P_i, P_j \in \mathcal{P}$, existe exactamente una recta $l_k \in \mathcal{L}$ tal que $\{P_i, P_j\} \subset l_k$.
+- **Intersección universal**: Cualesquiera dos rectas distintas $l_a, l_b \in \mathcal{L}$ se intersecan en exactamente un punto.
+- **Ausencia de paralelas**: Como consecuencia directa de la intersección universal, en este modelo no existe el <ConceptLink targetId="paralelismo">paralelismo</ConceptLink>.
+- **No <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> global**: Existen al menos tres puntos que no pertenecen a una misma recta.
 
 <Separador />
 
-### Implicaciones epistemológicas
+### Propiedades
 
-<Nota>
-  **Independencia de los axiomas de orden**: El plano de Fano demuestra que los axiomas de incidencia no implican la infinitud del espacio ni la existencia de una relación de orden topológico («<ConceptLink targetId="estar-entre">estar entre</ConceptLink>»), pues los <ConceptLink targetId="axioma-orden-1">axiomas de orden</ConceptLink> fallan sistemáticamente sobre estructuras finitas.
-</Nota>
+- **Simetría proyectiva $PG(2, 2)$**: Se puede construir algebraicamente como el plano proyectivo sobre el cuerpo finito de dos elementos $\mathbb{F}_2$.
+- **Dualidad perfecta**: El número de puntos es igual al número de rectas ($N = 7$), y la estructura permanece invariable si se intercambian los roles de puntos y rectas.

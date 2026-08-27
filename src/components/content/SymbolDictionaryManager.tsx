@@ -74,6 +74,8 @@ export const SymbolDictionaryManager = () => {
 
       katexInlines.forEach((inlineRoot) => {
         if (inlineRoot.classList.contains('formula-interactive-processed')) return;
+        if (inlineRoot.closest('a, .page-accent-link, [data-target-id], button, [role="button"]')) return;
+
         inlineRoot.classList.add('formula-interactive-processed', 'cursor-pointer', 'hover:bg-carbon/5', 'transition-colors', 'rounded-sm', 'px-[2px]');
         inlineRoot.setAttribute('title', t('marginalia', 'clickToAnalyzeExpression'));
 

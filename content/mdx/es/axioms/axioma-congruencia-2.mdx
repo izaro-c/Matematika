@@ -2,34 +2,38 @@ export const metadata = {
   id: "axioma-congruencia-2",
   lang: "es",
   type: "axioma",
-  title: "Axioma III.2 (Transitividad de la Congruencia de Segmentos)",
-  description: "La congruencia entre segmentos es una relación transitiva.",
+  title: "Axioma III.2 (Transitividad de Segmentos)",
+  description: "Si dos segmentos son congruentes a un mismo tercer segmento, entonces son congruentes entre sí; además, todo segmento es congruente consigo mismo.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Congruence2 } from '@content/diagrams/Axiomas/Congruence2';
 export const Simulation = Congruence2;
 
-<Capitular letra="E" />l segundo <ConceptLink targetId="axioma-congruencia-2">axioma de congruencia</ConceptLink> otorga el carácter de transitividad a la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink>. Permite transferir la equivalencia espacial a través de elementos intermediarios.
+<Capitular letra="E" />l segundo axioma de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> establece la propiedad relacional de equivalencia para la congruencia de <ConceptLink targetId="segmento">segmentos</ConceptLink>. Garantiza que la congruencia de segmentos constituye una relación simétrica y transitiva en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
 
 <Definicion title="">
-  Dados tres <ConceptLink targetId="segmento">segmentos</ConceptLink> $AB$, $CD$ y $EF$, si $AB$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con $CD$ y $AB$ es congruente con $EF$, entonces $CD$ es congruente con $EF$:
+  Si un <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con el segmento $\overline{EF}$ y el segmento $\overline{CD}$ también es congruente con $\overline{EF}$, entonces $\overline{AB}$ es congruente con $\overline{CD}$. Asimismo, todo segmento es congruente consigo mismo:
   $$
-  (AB \cong CD) \land (AB \cong EF) \implies CD \cong EF
+  (\overline{AB} \cong \overline{EF}) \land (\overline{CD} \cong \overline{EF}) \implies (\overline{AB} \cong \overline{CD})
+  $$
+  $$
+  \forall \overline{AB} \implies \overline{AB} \cong \overline{AB}
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Representación visual
 
-En la simulación interactiva se presentan los tres segmentos comparados: <VisualBind element="ABCD" color="ocre">$AB \cong CD$</VisualBind> y <VisualBind element="ABEF" color="terracota">$AB \cong EF$</VisualBind>. La transitividad deduce de forma inmediata la congruencia mutua <VisualBind element="CDEF" color="musgo">$CD \cong EF$</VisualBind>.
+Al comparar el segmento de referencia <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> con los segmentos <VisualBind element="CD" color="pavo">$\overline{CD}$</VisualBind> y <VisualBind element="EF" color="terracota">$\overline{EF}$</VisualBind>, se verifica empíricamente que la congruencia compartida hacia $\overline{EF}$ transmite invariablemente la igualdad de longitud entre $\overline{AB}$ y $\overline{CD}$.
 
 <Separador />
 
-### Estructura de equivalencia
+### Significado axiomático
 
-La transitividad, junto con la reflexividad y la simetría derivadas, convierte la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> en una relación de equivalencia formal. Esta propiedad permite agrupar los segmentos en clases de equivalencia, sentando las bases abstractas de la noción de longitud.
+Gracias a este postulado, la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> induce una partición en clases de equivalencia sobre el conjunto de todos los <ConceptLink targetId="segmento">segmentos</ConceptLink> del <ConceptLink targetId="plano">plano</ConceptLink>. Cada clase representa una magnitud abstracta de longitud sin necesidad de fijar previamente una unidad de medida numérica.

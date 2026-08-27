@@ -2,23 +2,24 @@ export const metadata = {
   id: "axioma-orden-1",
   lang: "es",
   type: "axioma",
-  title: "Axioma II.1 (Simetría y Distinción en el Orden)",
-  description: "Si un punto B está entre A y C, entonces A, B y C son puntos colineales distintos y B está entre C y A.",
+  title: "Axioma II.1 (Simetría y colinealidad de la entreidad)",
+  description: "Si B está entre A y C, entonces A, B y C son tres puntos distintos de una misma recta y B también está entre C y A.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Order1 } from '@content/diagrams/Axiomas/Order1';
 export const Simulation = Order1;
 
-<Capitular letra="E" />l primer <ConceptLink targetId="axioma-orden-1">axioma de orden</ConceptLink> de Hilbert establece las condiciones de pertenencia y simetría de la relación ternaria primitiva <ConceptLink targetId="estar-entre">estar entre</ConceptLink>.
+<Capitular letra="E" />l primer <ConceptLink targetId="axioma">axioma</ConceptLink> del grupo de <ConceptLink targetId="orden">orden</ConceptLink> (entreidad) formulado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece la naturaleza simétrica y la colinealidad intrínseca de la relación ternaria "estar entre". Si un <ConceptLink targetId="punto">punto</ConceptLink> $B$ yace entre $A$ y $C$, los tres puntos pertenecen a la misma <ConceptLink targetId="recta">recta</ConceptLink> y son mutuamente distintos.
 
-<Definicion title="">
-  Si $A * B * C$, entonces $A, B, C$ son tres puntos distintos sobre una misma recta y se satisface la simetría $C * B * A$:
+<Definicion title="Enunciado formal">
+  Si un <ConceptLink targetId="punto">punto</ConceptLink> $B$ está entre $A$ y $C$ (notado $A\text{-}B\text{-}C$), entonces $A, B, C$ son tres puntos distintos sobre una misma <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$, y $B$ también está entre $C$ y $A$ ($C\text{-}B\text{-}A$):
   $$
-  A * B * C \implies (A, B, C \text{ colineales distintos}) \land (C * B * A)
+  A\text{-}B\text{-}C \implies \bigl(A \neq B \land B \neq C \land A \neq C \land \exists l \in \mathcal{L} \ (A,B,C \in l) \land C\text{-}B\text{-}A\bigr)
   $$
 </Definicion>
 
@@ -26,10 +27,18 @@ export const Simulation = Order1;
 
 ### Representación visual e interacción
 
-En la simulación interactiva se muestra la alineación sobre la recta <VisualBind element="line" color="carbon">$l$</VisualBind> del punto <VisualBind element="pA" color="terracota">$A$</VisualBind>, el punto intermedio <VisualBind element="pB" color="terracota">$B$</VisualBind> y el punto <VisualBind element="pC" color="terracota">$C$</VisualBind>. La simetría $A * B * C \iff C * B * A$ garantiza la independencia de la orientación del trazo.
+En la simulación interactiva, los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> se disponen linealmente. El elemento central $B$ satisface la relación $A\text{-}B\text{-}C$, y al invertir la lectura geométrica de derecha a izquierda se verifica la equivalencia simétrica $C\text{-}B\text{-}A$.
 
 <Separador />
 
-### Fundamento formal del orden
+### Significado geométrico y alcance
 
-Este axioma garantiza la distinción entre los tres puntos de la relación ternaria e impone la colinealidad estricta. Establece que la intermediación no depende del sentido de lectura de la recta.
+Formaliza la relación primitiva de ordenación unidimensional sin depender de conceptos analíticos como coordenadas reales o distancias numéricas. Garantiza la independencia de orientación espacial en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
+
+<Separador />
+
+### Propiedades
+
+- **Simetría intrínseca:** La relación $A\text{-}B\text{-}C$ es estrictamente equivalente a $C\text{-}B\text{-}A$.
+- **Colinealidad obligatoria:** La entreidad solo es válida entre ternas pertenecientes a la misma recta soporte.
+- **Distinción triple:** Excluye coincidencias $A = B$, $B = C$ o $A = C$ bajo la relación de entreidad.

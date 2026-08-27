@@ -1,0 +1,46 @@
+export const metadata = {
+  id: "estar-entre",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Betweenness",
+  description: "A primitive ternary relation of linear order specifying point intermediation among collinears.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, Axiomas del Grupo II", role: "primary" }
+  ]
+};
+
+import { EstarEntre } from '@content/diagrams/Definiciones/EstarEntre';
+export const Simulation = EstarEntre;
+
+<Capitular letra="T" />he betweenness relation, denoted as being between, is a primitive ternary relation in the axiomatic foundations of <ConceptLink targetId="geometria-absoluta">synthetic geometry</ConceptLink> formalized by David Hilbert. It equips <ConceptLink targetId="recta">lines</ConceptLink> with a dense linear order structure without relying prematurely on real numbers or metric <ConceptLink targetId="distancia">distance</ConceptLink>.
+
+<Definicion title="">
+  Let <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="musgo">$C$</VisualBind> be three distinct collinear <ConceptLink targetId="punto">points</ConceptLink> on a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineAC" color="carbon">$r$</VisualBind>. The point $B$ is said to be between $A$ and $C$ (written $A * B * C$) if it satisfies Hilbert's axioms of order. Metrically, this is equivalent to the additivity of the lengths of <ConceptLink targetId="segmento">segments</ConceptLink> <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind> and <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind> relative to <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind>:
+  $$
+  A * B * C \iff d(A, B) + d(B, C) = d(A, C)
+  $$
+  where $A, B, C$ are pairwise distinct.
+</Definicion>
+
+<Separador />
+
+### Hilbert's Group II axioms (order and betweenness)
+
+Order on a line is formally grounded in the following betweenness axioms:
+
+| Order axiom | Formal statement | Geometric meaning |
+|---|---|---|
+| II.1: Symmetry | $A * B * C \implies C * B * A$ | Intermediation is independent of direction |
+| II.2: Extension | $\forall A \neq C, \exists D : A * C * D$ | Every line extends infinitely |
+| II.3: Exclusivity | Given $A,B,C \in r$, one and only one is between the other two | Strict total ordering along the line |
+
+<Separador />
+
+### Properties
+
+- **<ConceptLink targetId="segmento">Interior segment definition</ConceptLink>**: The set of points $P$ satisfying $A * P * B$ forms the open segment $(AB)$.
+- **<ConceptLink targetId="teorema-pasch">Pasch's axiom</ConceptLink>**: A line intersecting one side of a <ConceptLink targetId="triangulo">triangle</ConceptLink> must intersect one of the other two sides or pass through a vertex.
+- **<ConceptLink targetId="semirrecta">Line separation</ConceptLink>**: Any point $O$ on a line divides all other points of the line into two disjoint <ConceptLink targetId="semirrecta">rays</ConceptLink> (semilines).

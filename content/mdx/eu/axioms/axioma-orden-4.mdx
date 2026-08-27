@@ -2,35 +2,44 @@ export const metadata = {
   id: "axioma-orden-4",
   lang: "eu",
   type: "axioma",
-  title: "II.4 Axioma (Paschen Axioma)",
-  description: "Plano bereko zuzen batek triangelu baten alde bat ebakitzen badu bere erpinetatik igaro gabe, orduan beste bi aldeetako bat ere ebakitzen du.",
+  title: "II.4 Axioma (Pasch-en axioma)",
+  description: "Triangelu baten planoan dagoen zuzen batek haren errenkadetatik igaro gabe alde bat ebakitzen badu, orduan beste bi aldeetako bat ere ebakiko du.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Vorlesungen über neuere Geometrie", author: "Moritz Pasch", locator: "§2", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §3", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §3", role: "primary" },
+    { title: "Vorlesungen über neuere Geometrie", author: "Moritz Pasch", locator: "§2", role: "secondary" }
+  ]
 };
 
 import { Pasch } from '@content/diagrams/Axiomas/Pasch';
 export const Simulation = Pasch;
 
-<Capitular letra="L" />augarren ordena-<ConceptLink targetId="axioma-orden-4">axiomak</ConceptLink>, Paschen axioma gisa ezagunak, planoaren topologiaren oinarrizko zutabea osatzen du. Lerroen jarraitutasuna eta plano-eremuen banaketa zorrotza bermatzen ditu.
+<Capitular letra="M" />oritz Pasch-ek formulatutako eta <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-ek bereganatutako lau garren <ConceptLink targetId="orden">ordena-axioma</ConceptLink> honek artekotasun-nosioa lerro bakarretik bi dimentsioko planora hedatzen du. Ezartzen du <ConceptLink targetId="zuzen">zuzen</ConceptLink> bat <ConceptLink targetId="triangulo">triangelu</ConceptLink> baten barnean sartzen bada alde bat ebakiz haren errenkadetatik igaro gabe, nahitaez beste bi aldeetako bat ebakiz irten behar duela.
 
-<Definicion title="">
-  $\triangle ABC$ triangelu bat eta haren erpinetatik igarotzen ez den $l$ zuzen koplanar bat emanda ($A, B, C \notin l$), baldin eta $l$-k $AB$ zuzenki-aldea ebakitzen badu $A * P * B$ den $P$ puntu batean, orduan $l$-k $AC$ zuzenkia edo $BC$ zuzenkia ebakitzen du:
+<Definicion title="Enuntziatu formala">
+  Zuzen berean ez dauden hiru $A, B, C$ <ConceptLink targetId="punto">puntu</ConceptLink> eta haien plano euskarrian dagoen $l$ <ConceptLink targetId="zuzen">zuzen</ConceptLink> bat emanda ($A, B, C$ errenkadetatik igarotzen ez dena): $l$ zuzenak $\overline{AB}$ <ConceptLink targetId="segmento">zuzenkiaren</ConceptLink> barnea ebakitzen badu, orduan $l$ zuzenak $\overline{AC}$ zuzenkia edo $\overline{BC}$ zuzenkia ebakitzen du:
   $$
-  l \cap AB = \{P\} \ \land \ (A * P * B) \implies (l \cap AC \neq \emptyset) \ \veebar \ (l \cap BC \neq \emptyset)
+  \forall A, B, C \text{ ez-kolinealak}, \ \forall l \subset \mathcal{P}_{ABC} \ \bigl((A,B,C \notin l \land l \cap \overline{AB} \neq \emptyset) \implies (l \cap \overline{AC} \neq \emptyset \veebar l \cap \overline{BC} \neq \emptyset)\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan <VisualBind element="triangle" color="terracota">$\triangle ABC$</VisualBind> triangelua behatzen da <VisualBind element="lineL" color="carbon">$l$</VisualBind> zuzen ebakitzaileak zeharkatuta. $AB$ aldea <VisualBind element="pP" color="ocre">$P$</VisualBind> puntuan ebaki ondoren, zuzena $BC$ aldea <VisualBind element="pQ" color="ocre">$Q$</VisualBind> puntuan ebakiz azaleratzen da.
+Simulazio interaktiboan, <VisualBind element="lineL" color="terracota">$l$</VisualBind> zuzen ebakitzaileak $A, B, C$ triangeluaren <VisualBind element="sideAB" color="carbon">$\overline{AB}$</VisualBind> aldea zeharkatzen du. Zuzen ebakitzailea mugitu edo biratzean errenkadak ukitu gabe, ikusten da lerroak era esklusiboan zeharkatu behar duela <VisualBind element="sideAC" color="marino">$\overline{AC}$</VisualBind> aldea edo <VisualBind element="sideBC" color="marino">$\overline{BC}$</VisualBind> aldea.
 
 <Separador />
 
-### Ondorio topologikoak
+### Esanahi geometrikoa eta esparrua
 
-Paschen axiomak planoaren banaketaren teorema frogatzea ahalbidetzen du: edozein zuzenek bi semiplano konvexu ez-juntatutan banatzen du planoa. Propietate honek irudi itxi baten barnealdearen eta kanpoaldearen arteko bereizketa rigurosoa formalizatzen du.
+Pasch-en axioma oso garrantzitsua da zuzen batek planoa bi eremu konektatutan (erdiplanoetan) banatzen duela frogatzeko (planoaren banaketa-teorema). Axioma hau gabe, Euklidesek hutsune logikoak egin zituen zenbait zuzen eta ebakidura geometriko figura barnean zeudela inplizituki suposatuz.
+
+<Separador />
+
+### Propietateak
+
+- **Planoaren banaketa:** Plano bateko edozein $l$ zuzenek planoa bi erdiplano <ConceptLink targetId="konbexu">konbexu</ConceptLink> disjuntutan banatzen duela frogatzea ahalbidetzen du.
+- **Planoaren topologia:** <ConceptLink targetId="triangulo">Triangelu</ConceptLink> eta poligono moduko figura itxien "barnealde" eta "kanpoalde" nosioak oinarritzen ditu.
+- **Paraleloen axiomarekiko independentzia:** Zuzen paraleloen axiomarekiko independentea da, erabat baliozkoa izanda <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.

@@ -2,34 +2,43 @@ export const metadata = {
   id: "axioma-incidencia-3",
   lang: "eu",
   type: "axioma",
-  title: "I.3 Axioma (Puntu Ez-lerrokideen Existentzia)",
-  description: "Gutxienez hiru puntu daude espazioan zuzen beraren gainean intzidentzialak ez direnak.",
+  title: "I.3 Axioma (Zuzen berean ez dauden puntuen existentzia)",
+  description: "Zuzen berean ez dauden gutxienez hiru puntu existitzen dira espazioan.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+  ]
 };
 
 import { Incidence3 } from '@content/diagrams/Axiomas/Incidence3';
 export const Simulation = Incidence3;
 
-<Capitular letra="H" />irugarren intzidentzia-<ConceptLink targetId="axioma-incidencia-3">axiomak</ConceptLink> unibertso geometrikoaren gutxieneko bi dimentsioko izaera bermatzen du. <ConceptLink targetId="recta">Zuzen</ConceptLink> beraren gainean ez dauden gutxienez hiru <ConceptLink targetId="punto">punturen</ConceptLink> existentzia postulatzen du era existentzialean.
+<Capitular letra="Z" />uzen berean ez dauden gutxienez hiru <ConceptLink targetId="punto">puntu</ConceptLink> daudela ezartzen du <ConceptLink targetId="hilbert">Hilbert</ConceptLink>-en hirugarren <ConceptLink targetId="intzidentzia">intzidentzia-axioma</ConceptLink> honek. Postulatu honek espazio geometriakarren dimentsio-bakarreko izaera hautesten du, sistema <ConceptLink targetId="zuzen">zuzen</ConceptLink> bakar batera mugatzen ez dela bermatuz nahitaez.
 
-<Definicion title="">
-  Gutxienez hiru $A, B, C \in \mathcal{P}$ <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira non $l \in \mathcal{L}$ <ConceptLink targetId="recta">zuzen</ConceptLink> batek ere ez dituen hiruak aldi berean barne hartzen:
+<Definicion title="Enuntziatu formala">
+  Gutxienez hiru $A, B, C \in \mathcal{S}$ <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira non inongo $l \in \mathcal{L}$ <ConceptLink targetId="zuzen">zuzenek</ConceptLink> ez dituen hiruak aldi berean barne hartzen:
   $$
-  \exists A, B, C \in \mathcal{P} \ (\forall l \in \mathcal{L} \implies \neg (A \in l \land B \in l \land C \in l))
+  \exists A, B, C \in \mathcal{S} \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntuak lerrokide ez den konfigurazioan kokatuta agertzen dira, plano geometriko ez-degeneratu baten irekiera behartuz.
+Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntuek lerrokatu gabeko konfigurazio bat osatzen dute. Bi puntutatik igarotzen den zuzen bat marrazten denean, hirugarren puntua zuzen euskarri horretatik kanpo geratzen da argi eta garbi.
 
 <Separador />
 
-### Ondorio estrukturalak
+### Esanahi geometrikoa eta esparrua
 
-Postulatu hau <ConceptLink targetId="hilbert">Hilberten</ConceptLink> sistemako lehen axioma existenzial hutsa da. Geometria dimentsio bakarreko <ConceptLink targetId="recta">zuzen</ConceptLink> bakar batera kolapsatzea ekiditen du, <ConceptLink targetId="triangulo">triangeluaren</ConceptLink> eta geometria <ConceptLink targetId="plano">lauaren</ConceptLink> definizioa ahalbidetuz.
+Lerrokatu gabeko gutxienez hiru puntu daudela postulatzeari esker, geometriari gutxieneko bi dimentsioko zabalera planarra ematen zaio. Axioma hau gabe, zuzen bakar batek bete ditzake aurreko axioma guztiak, espazioa dimentsio bakar batera eraitsiz.
+
+<Separador />
+
+### Propietateak
+
+- **Gutxieneko anizkoiztasuna:** Espazioak bi dimentsio edo gehiago dituela bermatzen du.
+- **Triangeluen eraketa:** Lerrokatu gabeko $A, B, C$ errenkaden bidez <ConceptLink targetId="triangulo">triangeluaren</ConceptLink> kontzeptu primitiboa definitzea ahalbidetzen du.
+- **Independentzia lineala:** Posizio-independentziaren nosioa ezartzen du <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.

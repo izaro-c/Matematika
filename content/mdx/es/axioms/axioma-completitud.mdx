@@ -2,35 +2,36 @@ export const metadata = {
   id: "axioma-completitud",
   lang: "es",
   type: "axioma",
-  title: "Axioma V.2 (Axioma de Completitud)",
-  description: "El sistema de elementos de la geometría es maximal y no admite extensión manteniendo la validez de los axiomas previos.",
+  title: "Axioma de Completitud de Dedekind",
+  description: "Si todos los puntos de una recta se dividen en dos clases no vacías tales que ningún punto de la primera está entre dos de la segunda, existe un único punto que produce dicha partición.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "§3", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §8", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §7", role: "primary" }
+  ]
 };
 
 import { AxiomaDedekind } from '@content/diagrams/Axiomas/AxiomaDedekind';
 export const Simulation = AxiomaDedekind;
 
-<Capitular letra="E" />l segundo axioma de continuidad, el <ConceptLink targetId="axioma-completitud">axioma de completitud</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> (o cortadura de <ConceptLink targetId="dedekind">Dedekind</ConceptLink>), garantiza la integridad continua del espacio geométrico impidiendo la existencia de huecos topológicos.
+<Capitular letra="E" />l axioma de completitud de <ConceptLink targetId="dedekind">Dedekind</ConceptLink> representa el postulado supremo de <ConceptLink targetId="continuidad">continuidad</ConceptLink> en la geometría lineal. Garantiza la ausencia de "huecos" o discontinuidades en la <ConceptLink targetId="recta">recta</ConceptLink> geométrica.
 
 <Definicion title="">
-  Si los <ConceptLink targetId="punto">puntos</ConceptLink> de una <ConceptLink targetId="recta">recta</ConceptLink> $l$ se dividen en dos subconjuntos no vacíos disjuntos $L$ y $R$ tales que ningún punto de $L$ está a la derecha de un punto de $R$, existe un único punto $P \in l$ que produce la cortadura:
+  Si los puntos de una <ConceptLink targetId="recta">recta</ConceptLink> $l$ se dividen en dos subconjuntos no vacíos $S_1$ y $S_2$ tales que ningún punto de $S_1$ se encuentra entre dos puntos de $S_2$ y ningún punto de $S_2$ está entre dos de $S_1$, entonces existe un único <ConceptLink targetId="punto">punto</ConceptLink> $O \in l$ que determina dicha partición:
   $$
-  (L \cap R = \emptyset) \land (L \cup R = l) \land (\forall X \in L, \forall Y \in R \implies X < Y) \implies \exists! P \in l \ (P = \sup(L) \lor P = \inf(R))
+  \forall (S_1, S_2) \text{ partición en } l \implies \exists! O \in l \ (\forall P \in S_1 \setminus \{O\}, \forall Q \in S_2 \setminus \{O\} \implies P \text{-} O \text{-} Q)
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Representación visual
 
-En la simulación interactiva se observa la partición continua de la recta en los conjuntos <VisualBind element="L" color="musgo">$L$</VisualBind> y <VisualBind element="R" color="pavo">$R$</VisualBind>. La cortadura determina de forma unívoca el punto frontera <VisualBind element="P" color="terracota">$P$</VisualBind>.
+Al dividir la recta continua en las dos secciones disjuntas <VisualBind element="S1" color="ocre">$S_1$</VisualBind> y <VisualBind element="S2" color="pavo">$S_2$</VisualBind>, el punto límite <VisualBind element="pO" color="terracota">$O$</VisualBind> actúa como la frontera o corte exacto que cierra la continuidad geométrica de la recta.
 
 <Separador />
 
-### Maximalidad y el continuo geométrico
+### Significado en los sistemas axiomáticos
 
-Este postulado garantiza que el sistema de elementos geométricos sobre la <ConceptLink targetId="recta">recta</ConceptLink> es isomorfo al cuerpo continuo de los <ConceptLink targetId="numero-real">números reales $\mathbb{R}$</ConceptLink>. Sella cualquier discontinuidad vacía, asegurando que toda secuencia acotada converja a un punto bien definido.
+Este axioma asegura el isomorfismo entre la recta geométrica sintética y el cuerpo ordenado y completo de los números reales $\mathbb{R}$. Permite garantizar la intersección de circunferencias y rectas cuando la distancia relativa lo requiere, fundamentando el cálculo infinitesimal y la geometría analítica.

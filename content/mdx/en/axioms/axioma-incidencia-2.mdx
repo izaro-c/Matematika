@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "axioma-incidencia-2",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom I.2 (Existence of Points on a Line)",
+  description: "Every line contains at least two distinct points in space.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+  ]
+};
+
+import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
+export const Simulation = Incidence2;
+
+<Capitular letra="E" />very <ConceptLink targetId="recta">line</ConceptLink> contains a minimum of two distinct <ConceptLink targetId="punto">points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, as stipulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s second <ConceptLink targetId="incidencia">incidence axiom</ConceptLink>. This condition prevents the occurrence of degenerate single-point lines within the geometric system.
+
+<Definicion title="Formal statement">
+  For every <ConceptLink targetId="recta">line</ConceptLink> $l \in \mathcal{L}$, there exist at least two distinct <ConceptLink targetId="punto">points</ConceptLink> $A, B \in \mathcal{S}$ belonging to $l$:
+  $$
+  \forall l \in \mathcal{L}, \ \exists A, B \in \mathcal{S} \ \bigl(A \in l \land B \in l \land A \neq B\bigr)
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation and interaction
+
+In the interactive diagram, line <VisualBind element="line" color="carbon">$l$</VisualBind> contains points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind>. The interaction illustrates that on any given line, at least two independent point locations $A \neq B$ can always be identified.
+
+<Separador />
+
+### Geometric significance and scope
+
+This axiom ensures that lines are not isolated point-like entities, but structures possessing multiple distinguishable positions. Combined with Axiom I.1, it guarantees a foundational linear framework.
+
+<Separador />
+
+### Properties
+
+- **Non-degeneracy:** Excludes empty lines or lines comprising a single point.
+- **Multitude foundation:** Provides the starting point to prove that every line contains infinitely many points once <ConceptLink targetId="orden">order axioms</ConceptLink> are introduced.
+- **Segment viability:** Permits the formation of a non-trivial <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$.

@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "teorema-area-rectangulo",
+  type: "teorema",
+  title: "Area of a Rectangle Theorem",
+  description: "The area of any rectangular region is equal to the product of the length of its base and the length of its height.",
+  statement: "Given a rectangle R with base of length b and height of length h, it holds strictly that Area(R) = b · h.",
+  branch: "51M",
+  hasSimulation: false,
+  authors: ["euclides"],
+  demos: [],
+  sources: [
+    { title: "Elements", author: "Euclides", locator: "Book I, Proposition 35", role: "primary" }
+  ]
+};
+
+<Capitular letra="T" />he area of a rectangle theorem provides the fundamental multiplicative formula for <ConceptLink targetId="teoria-medida-area">surface area measurement</ConceptLink> in Euclidean <ConceptLink targetId="plano">plane geometry</ConceptLink>. It serves as the canonical benchmark from which area formulas for all other polygonal figures are derived.
+
+<Separador />
+
+### Formal statement
+
+Let $R$ be a <ConceptLink targetId="rectangulo">rectangle</ConceptLink> in the Euclidean plane $\mathcal{P}$ whose adjacent <ConceptLink targetId="perpendicular">orthogonal sides</ConceptLink> have lengths $b = \overline{AB}$ (base length) and $h = \overline{AD}$ (height length). The <ConceptLink targetId="area">area</ConceptLink> measure of the rectangular region $R$ strictly satisfies:
+
+<Formula>
+  $$ \text{Area}(R) = b \cdot h $$
+</Formula>
+
+That is, the area of a rectangular region equals the arithmetic product of the linear measures of its two orthogonal dimensions.
+
+<Separador />
+
+### Proof and extension from rationals to real numbers
+
+The rigorous proof is built in three stages using the <ConceptLink targetId="teorema-area-aditividad">area additivity theorem</ConceptLink>:
+1. **Unit standard**: The area of the <ConceptLink targetId="cuadrado">unit square</ConceptLink> ($b=1, h=1$) is defined by convention to be $1$.
+2. **Rational dimensions**: If $b = \frac{p}{q}$ and $h = \frac{m}{n}$ with $p, q, m, n \in \mathbb{N}$, the rectangle is partitioned into $p \cdot m$ sub-squares of side length $\frac{1}{q \cdot n}$. The additive sum of their areas proves that $\text{Area}(R) = \frac{p \cdot m}{q \cdot n} = b \cdot h$.
+3. **Real dimensions**: By the completeness of the real numbers and the <ConceptLink targetId="axioma-arquimedes">Archimedean property</ConceptLink>, the result extends continuously to irrational or incommensurable lengths.
+
+<Separador />
+
+### Role in geometric area theory
+
+- **Foundation for parallelograms**: Every <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink> is equidecomposable with a rectangle sharing the same base and height.
+- **Foundation for triangles**: A rectangle is bisected along its diagonal into two <ConceptLink targetId="congruencia">congruent</ConceptLink> triangles, establishing that the <ConceptLink targetId="teorema-area-triangulo">area of a triangle</ConceptLink> is $\frac{1}{2} b \cdot h$.

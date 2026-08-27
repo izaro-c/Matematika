@@ -1,0 +1,47 @@
+export const metadata = {
+  id: "grupo",
+  lang: "eu",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Taldea",
+  description: "Asoziatibitatea, elementu neutroa eta alderantzizkoa betetzen dituen eragiketa bitar batez hornitutako multzoak osatutako oinarrizko egitura aljebraikoa.",
+  branch: "20",
+  hasSimulation: false,
+  sources: [
+    { title: "Traité des substitutions et des équations algébriques", author: "Camille Jordan", locator: "Livre I", role: "primary" },
+    { title: "Algebra", author: "Serge Lang", locator: "I. Kapitulua, §1", role: "primary" }
+  ]
+};
+
+<Capitular letra="T" />aldea simetria eta eraldaketaren kontzeptuak formalizatzen dituen oinarrizko <ConceptLink targetId="estructura-algebraica">egitura aljebraikoa</ConceptLink> da. Barne-<ConceptLink targetId="operacion-binaria">eragiketa bitar</ConceptLink> batez hornitutako <ConceptLink targetId="conjunto">multzo</ConceptLink> batez osatuta dago, lau axioma aljebraiko oinarrizko betetzen dituena.
+
+<Definicion title="">
+  $(G, \cdot)$ taldea $G$ <ConceptLink targetId="conjunto-no-vacio">multzo ez-huts</ConceptLink> batez eta $\cdot: G \times G \to G$ <ConceptLink targetId="operacion-binaria" isDependency={true}>eragiketa bitar</ConceptLink> batez osatutako bikote ordenatua da, honako lau axioma hauek betetzen dituena:
+
+  1. **<ConceptLink targetId="propiedad-clausura">Itxitura</ConceptLink>**: $\forall a, b \in G$, $a \cdot b \in G$.
+  2. **<ConceptLink targetId="asociatividad">Asoziatibitatea</ConceptLink>**: $\forall a, b, c \in G$, $(a \cdot b) \cdot c = a \cdot (b \cdot c)$.
+  3. **<ConceptLink targetId="elemento-neutro">Elementu neutroa</ConceptLink>**: $\exists e \in G$ non $\forall a \in G$, $a \cdot e = e \cdot a = a$.
+  4. **<ConceptLink targetId="elemento-inverso">Alderantzizko elementua</ConceptLink>**: $\forall a \in G$, $\exists a^{-1} \in G$ non $a \cdot a^{-1} = a^{-1} \cdot a = e$.
+</Definicion>
+
+<Separador />
+
+### Taldeen egitura-sailkapena
+
+Taldeak beren <ConceptLink targetId="operacion-binaria">eragiketaren</ConceptLink> trukakortasunaren eta beren azpiko multzoaren <ConceptLink targetId="cardinalidad">kardinalaren</ConceptLink> arabera sailkatzen dira:
+
+| Talde mota | Baldintza aljebraikoa | Adibide adierazgarria |
+|---|---|---|
+| <ConceptLink targetId="grupo-abeliano">Abeliarra (Trukakorra)</ConceptLink> | $\forall a, b \in G$, $a \cdot b = b \cdot a$ | <ConceptLink targetId="conjunto-enteros">Zenbaki osoak</ConceptLink> $(\mathbb{Z}, +)$ batuketarekin |
+| <ConceptLink targetId="grupo-no-abeliano">Ez-abeliarra</ConceptLink> | $\exists a, b \in G$ non $a \cdot b \neq b \cdot a$ | <ConceptLink targetId="matriz-invertible">Matrize alderantzizgarriak</ConceptLink> $(\text{GL}_n(\mathbb{R}), \cdot)$ $n \ge 2$ denean |
+| <ConceptLink targetId="grupo-finito">Finitua</ConceptLink> | $\lvert G \rvert$ kardinala zenbaki naturala da | Triangelu baten <ConceptLink targetId="grupo-simetria">simetria-taldea</ConceptLink> $D_3$ |
+| <ConceptLink targetId="grupo-infinito">Infinitua</ConceptLink> | $\lvert G \rvert$ kardinala infinitua da | <ConceptLink targetId="conjunto-reales">Zero ez diren errealak</ConceptLink> $(\mathbb{R} \setminus \{0\}, \cdot)$ |
+
+<Separador />
+
+### Propietateak
+
+- **<ConceptLink targetId="teorema-unicidad-elemento-neutro">Elementu neutroaren bakartasuna</ConceptLink>**: Talde baten $e \in G$ elementu neutroa bakarra da.
+- **<ConceptLink targetId="teorema-unicidad-elemento-inverso">Alderantzizko elementuaren bakartasuna</ConceptLink>**: $a \in G$ elementu bakoitzaren $a^{-1}$ alderantzizkoa bakarra da.
+- **<ConceptLink targetId="teorema-leyes-cancelacion-grupo">Ezeztatze-legeak</ConceptLink>**: Talde orotan betetzen dira ezker zein eskuin ezeztatze-legeak ($a \cdot b = a \cdot c \implies b = c$).
+- **<ConceptLink targetId="teorema-inverso-producto-grupo">Produktuaren alderantzizkoa</ConceptLink>**: Edozein bi elementutarako, $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$.

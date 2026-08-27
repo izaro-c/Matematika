@@ -1,0 +1,55 @@
+export const metadata = {
+  id: "caso-gps-trilateracion",
+  lang: "en",
+  type: "caso-de-uso",
+  title: "Satellite positioning (GPS) and trilateration",
+  description: "Application of Euclidean distances and the Pythagorean theorem for accurate three-dimensional localization of terrestrial receivers.",
+  branch: "51M",
+  concept: "teorema-pitagoras",
+  hasSimulation: true
+};
+
+import { GpsTrilateracion } from '@content/diagrams/CasosUso/GpsTrilateracion';
+export const Simulation = GpsTrilateracion;
+
+<Capitular letra="G" />lobal Positioning System (GPS) technology is one of the most prominent practical applications of Cartesian analytic geometry and the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>. This geometric procedure, known as trilateration, determines the exact coordinates of a receiver by measuring signal propagation times from multiple reference satellites.
+
+<Separador />
+
+### Measurement principle and the distance equation
+
+The receiver <VisualBind element="R" color="carbon">$R(x, y)$</VisualBind> determines its position in the <ConceptLink targetId="modelo-cartesiano">Cartesian plane</ConceptLink> by calculating the direct <ConceptLink targetId="distancia">Euclidean distance</ConceptLink> to each satellite $S_i$. For satellite <VisualBind element="s1" color="pavo">$S_1(x_1, y_1)$</VisualBind> at distance $d_1$, coordinate differences along the axes form the <ConceptLink targetId="cateto">legs</ConceptLink> of a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink>:
+
+- Horizontal leg: <VisualBind element="catH1" color="pavo">$\Delta x = |x - x_1|$</VisualBind>.
+- Vertical leg: <VisualBind element="catV1" color="pavo">$\Delta y = |y - y_1|$</VisualBind>.
+- <ConceptLink targetId="hipotenusa">Hypotenuse</ConceptLink>: Direct physical distance <VisualBind element="rad1" color="pavo">$d_1$</VisualBind>.
+
+Applying the Euclidean metric yields the quadratic equation of the signal <ConceptLink targetId="circunferencia">circle</ConceptLink> centered at $S_1$:
+
+<Formula>
+  $$ d_1^2 = (x - x_1)^2 + (y - y_1)^2 $$
+</Formula>
+
+<Separador />
+
+### Circle intersection and system solution
+
+To uniquely determine the receiver's unknown coordinates $(x, y)$, a system of quadratic equations from multiple satellites is solved:
+
+- **One satellite ($S_1$)**: Defines a <VisualBind element="circ1" color="pavo">circle</ConceptLink> of candidate receiver locations of radius $d_1$.
+- **Two satellites ($S_1$ and $S_2$)**: Combining signal from satellite <VisualBind element="s2" color="ocre">$S_2(x_2, y_2)$</VisualBind> adds a <VisualBind element="circ2" color="ocre">second circle</VisualBind> of radius <VisualBind element="rad2" color="ocre">$d_2$</VisualBind>:
+  <Formula>
+    $$ d_2^2 = (x - x_2)^2 + (y - y_2)^2 $$
+  </Formula>
+  Intersecting both circles narrows candidate locations down to exactly two points in the plane.
+- **Three satellites ($S_1$, $S_2$, and $S_3$)**: Incorporating satellite <VisualBind element="s3" color="musgo">$S_3(x_3, y_3)$</VisualBind> adds the third quadratic equation of radius <VisualBind element="rad3" color="musgo">$d_3$</VisualBind>:
+  <Formula>
+    $$ d_3^2 = (x - x_3)^2 + (y - y_3)^2 $$
+  </Formula>
+  The simultaneous intersection of all three circles eliminates geometric ambiguity, pinpointing the exact coordinates of receiver <VisualBind element="R" color="carbon">$R(x, y)$</VisualBind>.
+
+<Separador />
+
+### Three-dimensional extension and clock correction
+
+On the real terrestrial surface $\mathbb{R}^3$, intersecting spheres requires a fourth satellite $S_4$ to correct receiver clock bias against satellite atomic time, solving a $4 \times 4$ system using 3D Euclidean metrics.

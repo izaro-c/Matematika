@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "axioma-incidencia-7",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom I.7 (Existence of Non-collinear Points in a Plane)",
+  description: "In every plane there exist at least three non-collinear points.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+  ]
+};
+
+import { Incidence7 } from '@content/diagrams/Axiomas/Incidence7';
+export const Simulation = Incidence7;
+
+<Capitular letra="I" />n every <ConceptLink targetId="plano">plane</ConceptLink> of <ConceptLink targetId="espacio">space</ConceptLink>, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s seventh <ConceptLink targetId="incidencia">incidence axiom</ConceptLink> guarantees the presence of at least three non-collinear <ConceptLink targetId="punto">points</ConceptLink>. This postulate ensures that no plane degenerates or collapses into a single <ConceptLink targetId="recta">line</ConceptLink>.
+
+<Definicion title="Formal statement">
+  For every <ConceptLink targetId="plano">plane</ConceptLink> $\mathcal{P} \in \mathcal{F}$, there exist at least three <ConceptLink targetId="punto">points</ConceptLink> $A, B, C \in \mathcal{P}$ such that no <ConceptLink targetId="recta">line</ConceptLink> $l \in \mathcal{L}$ contains all three simultaneously:
+  $$
+  \forall \mathcal{P} \in \mathcal{F}, \ \exists A, B, C \in \mathcal{P} \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation and interaction
+
+In the interactive simulation, three points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> reside within plane <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind>. It is verified that a line constructed through any two leaves the third point demonstrably outside linear alignment on the surface.
+
+<Separador />
+
+### Geometric significance and scope
+
+This axiom guarantees the intrinsic bidimensionality of every plane. It prevents the existence of degenerate planes composed solely of a single line or point pair, ensuring rich planar geometric structures.
+
+<Separador />
+
+### Properties
+
+- **Planar non-degeneracy:** Prohibits any plane from being one-dimensional.
+- **Triangles in every plane:** Permits the construction of <ConceptLink targetId="triangulo">triangles</ConceptLink> within any plane of space.
+- **Sub-plane structures:** Facilitates plane division via lines and induces planar <ConceptLink targetId="orden">order</ConceptLink> properties.

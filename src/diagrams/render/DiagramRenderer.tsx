@@ -273,7 +273,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
   const hasCustomRadius = borderRadius !== undefined;
   const roundedClass = hasCustomRadius ? '' : 'rounded-[20px]';
   const isCompactMode = Boolean(className?.includes('!min-h-0'));
-  const minHeightClass = isCompactMode ? '!min-h-0 min-h-0' : 'min-h-[360px]';
+  const minHeightClass = isCompactMode ? '!min-h-0 min-h-0' : 'min-h-[200px]';
 
   return (
     <div
@@ -309,7 +309,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         safeArea={safeArea}
         viewportSafeArea={viewportSafeArea}
         ariaLabel={`${spec.title}. Diagrama matemático interactivo.`}
-        className={`relative h-full w-full overflow-hidden ${roundedClass} font-diagram ${className?.includes('!min-h-0') ? '!min-h-0' : 'min-h-[360px]'}`}
+        className={`relative h-full w-full overflow-hidden ${roundedClass} font-diagram ${className?.includes('!min-h-0') ? '!min-h-0' : 'min-h-[200px]'}`}
         onBoundingBoxChange={(next) => {
           if (next.some((value, index) => Math.abs(value - bounds[index]) > 1e-7)) commitCamera(next);
         }}

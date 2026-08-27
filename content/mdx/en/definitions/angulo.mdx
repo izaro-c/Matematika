@@ -1,0 +1,49 @@
+export const metadata = {
+  id: "angulo",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Angle",
+  description: "A region of the plane bounded by two rays sharing a common origin called vertex.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 8 y 9", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+  ]
+};
+
+import { Angulo } from '@content/diagrams/Definiciones/Angulo';
+export const Simulation = Angulo;
+
+<Capitular letra="A" />n angle is the geometric figure formed by the union of two <ConceptLink targetId="semirrecta">rays</ConceptLink> sharing a common endpoint called the <ConceptLink targetId="vertice">vertex</ConceptLink>. It serves as the core concept for measuring directional deviation and laying the foundations of <ConceptLink targetId="trigonometria">trigonometry</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+
+<Definicion title="">
+  Given two rays <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> and <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> with a common origin at point <VisualBind element="pO" color="carbon">$O$</VisualBind>, the angle <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> is the planar figure formed by the <ConceptLink targetId="union-conjuntos">union</ConceptLink> of both rays:
+  $$
+  \angle AOB = \overrightarrow{OA} \cup \overrightarrow{OB}
+  $$
+  Its angular measure $\alpha = \text{m}(\angle AOB)$ in <ConceptLink targetId="radian">radians</ConceptLink> or sexagesimal degrees assigns a real scalar value in the interval $[0, 2\pi)$.
+</Definicion>
+
+<Separador />
+
+### Angle classification by measure
+
+Angles are classified according to the numerical interval containing their angular measure $\alpha$:
+
+| Angle type | Measure range in radians | Measure range in degrees |
+|---|---|---|
+| <ConceptLink targetId="angulo-agudo">Acute</ConceptLink> | $0 < \alpha < \frac{\pi}{2}$ | $0^\circ < \alpha < 90^\circ$ |
+| <ConceptLink targetId="angulo-recto">Right</ConceptLink> | $\alpha = \frac{\pi}{2}$ | $\alpha = 90^\circ$ |
+| <ConceptLink targetId="angulo-obtuso">Obtuse</ConceptLink> | $\frac{\pi}{2} < \alpha < \pi$ | $90^\circ < \alpha < 180^\circ$ |
+| <ConceptLink targetId="angulo-llano">Straight</ConceptLink> | $\alpha = \pi$ | $\alpha = 180^\circ$ |
+| Reflex | $\pi < \alpha < 2\pi$ | $180^\circ < \alpha < 360^\circ$ |
+
+<Separador />
+
+### Properties
+
+- **<ConceptLink targetId="bisectriz">Bisector existence</ConceptLink>**: Every non-zero angle possesses a unique <ConceptLink targetId="bisectriz">angle bisector</ConceptLink> dividing it into two congruent angles.
+- **<ConceptLink targetId="angulos-suplementarios">Angular additivity</ConceptLink>**: If a ray $\overrightarrow{OC}$ lies in the interior of $\angle AOB$, then $\text{m}(\angle AOC) + \text{m}(\angle COB) = \text{m}(\angle AOB)$.
+- **<ConceptLink targetId="congruencia">Congruence criterion</ConceptLink>**: Two angles are congruent ($\angle AOB \cong \angle CDE$) if and only if their angular measures are equal.

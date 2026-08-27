@@ -2,34 +2,35 @@ export const metadata = {
   id: "axioma-congruencia-3",
   lang: "es",
   type: "axioma",
-  title: "Axioma III.3 (Adición de Segmentos Congruentes)",
-  description: "La congruencia de segmentos se preserva bajo la operación de adición sobre la recta.",
+  title: "Axioma III.3 (Adición de Segmentos)",
+  description: "Si dos segmentos yuxtapuestos alineados son respectivamente congruentes con otros dos segmentos yuxtapuestos, las sumas formadas por sus extremos son congruentes.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Congruence3 } from '@content/diagrams/Axiomas/Congruence3';
 export const Simulation = Congruence3;
 
-<Capitular letra="E" />l tercer <ConceptLink targetId="axioma-congruencia-3">axioma de congruencia</ConceptLink> garantiza la compatibilidad métrica entre la adición de <ConceptLink targetId="segmento">segmentos</ConceptLink> contiguos y la relación de equivalencia rígida.
+<Capitular letra="E" />l tercer axioma de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> formaliza la aditividad del transporte de magnitudes sobre una <ConceptLink targetId="recta">recta</ConceptLink>. Establece que la concatenación de <ConceptLink targetId="segmento">segmentos</ConceptLink> congruentes preserva la congruencia del segmento resultante en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
 
 <Definicion title="">
-  Sean $A, B, C$ tres <ConceptLink targetId="punto">puntos</ConceptLink> <ConceptLink targetId="colinealidad">colineales</ConceptLink> con <ConceptLink targetId="estar-entre" isDependency={true}>$A * B * C$</ConceptLink> y sean $A', B', C'$ tres puntos colineales con $A' * B' * C'$. Si $AB \cong A'B'$ y $BC \cong B'C'$, entonces el <ConceptLink targetId="segmento">segmento</ConceptLink> compuesto $AC$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con $A'C'$:
+  Sean $A, B, C$ tres <ConceptLink targetId="punto">puntos</ConceptLink> sobre una recta tal que $B$ está <ConceptLink targetId="orden">entre</ConceptLink> $A$ y $C$, y sean $A', B', C'$ tres puntos sobre otra recta tal que $B'$ está entre $A'$ y $C'$. Si $\overline{AB} \cong \overline{A'B'}$ y $\overline{BC} \cong \overline{B'C'}$, entonces el segmento suma $\overline{AC}$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con $\overline{A'C'}$:
   $$
-  (A * B * C) \land (A' * B' * C') \land (AB \cong A'B') \land (BC \cong B'C') \implies AC \cong A'C'
+  (A\text{-}B\text{-}C) \land (A'\text{-}B'\text{-}C') \land (\overline{AB} \cong \overline{A'B'}) \land (\overline{BC} \cong \overline{B'C'}) \implies \overline{AC} \cong \overline{A'C'}
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Representación visual
 
-En la simulación interactiva se aprecian los segmentos adyacentes <VisualBind element="AB" color="ocre">$AB$</VisualBind> y <VisualBind element="BC" color="terracota">$BC$</VisualBind> formando la totalidad del segmento <VisualBind element="AC" color="pavo">$AC$</VisualBind>. La adición mantiene la congruencia exacta con la composición homóloga transportada.
+Al yuxtaponer el segmento inicial <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> con el segmento adyacente <VisualBind element="BC" color="pavo">$\overline{BC}$</VisualBind> sobre la recta dada, la suma resultante <VisualBind element="AC" color="terracota">$\overline{AC}$</VisualBind> mantiene una correspondencia rígida exacta con la concatenación de sus segmentos congruentes transformados.
 
 <Separador />
 
-### Aditividad métrica
+### Significado axiomático
 
-Este postulado permite definir formalmente la suma de <ConceptLink targetId="segmento">segmentos</ConceptLink> y la aditividad de longitudes en la geometría sintética, sustentando la estructura algebraica de las magnitudes geométricas.
+Este postulado permite definir sintéticamente la operación de adición entre clases de equivalencia de <ConceptLink targetId="segmento">segmentos</ConceptLink>. Junto con los axiomas de <ConceptLink targetId="orden">orden</ConceptLink>, fundamenta la estructura métrica aditiva del espacio sin depender del cuerpo de los números reales.

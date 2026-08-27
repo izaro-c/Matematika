@@ -1,0 +1,45 @@
+export const metadata = {
+  id: "modelo-tres-puntos",
+  lang: "en",
+  type: "modelo",
+  title: "Three-point model",
+  description: "Minimalist finite geometric structure consisting of three points and three lines that satisfies the fundamental axioms of incidence.",
+  branch: "51M",
+  satisfies: ["sistema-incidencia"],
+  axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
+  hasSimulation: true
+};
+
+import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
+export const Simulation = ModeloTresPuntos;
+
+<Capitular letra="T" />he three-point model represents the simplest discrete geometric structure capable of satisfying the <ConceptLink targetId="incidencia">incidence</ConceptLink> axioms in the <ConceptLink targetId="plano">plane</ConceptLink>. This finite universe consists of exactly three <ConceptLink targetId="punto">points</ConceptLink> and three <ConceptLink targetId="recta">lines</ConceptLink>, providing a concrete example where primary containment rules hold without relying on <ConceptLink targetId="orden">order</ConceptLink> or <ConceptLink targetId="distancia">distance</ConceptLink>.
+
+<Separador />
+
+### Model definition
+
+Let $\mathcal{P} = \{A, B, C\}$ be the set of primitive points and let $\mathcal{L} = \{l_1, l_2, l_3\}$ be the set of lines. The incidence relation $\mathcal{I} \subset \mathcal{P} \times \mathcal{L}$ is explicitly defined by set membership:
+
+- Line <VisualBind element="l1" color="pavo">$l_1 = \{A, B\}$</VisualBind> contains points <VisualBind element="A" color="musgo">$A$</VisualBind> and <VisualBind element="B" color="musgo">$B$</VisualBind>.
+- Line <VisualBind element="l2" color="terracota">$l_2 = \{B, C\}$</VisualBind> contains points <VisualBind element="B" color="musgo">$B$</VisualBind> and <VisualBind element="C" color="musgo">$C$</VisualBind>.
+- Line <VisualBind element="l3" color="ocre">$l_3 = \{C, A\}$</VisualBind> contains points <VisualBind element="C" color="musgo">$C$</VisualBind> and <VisualBind element="A" color="musgo">$A$</VisualBind>.
+
+In this model, every line is precisely a non-empty two-element subset of $\mathcal{P}$.
+
+<Separador />
+
+### Axiom verification
+
+The three-point model strictly satisfies the basic axioms of the plane <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>:
+
+- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>Axiom I.1 (Uniqueness of line)</ConceptLink>**: For any pair of distinct points in $\mathcal{P}$, there exists a unique line in $\mathcal{L}$ containing both points.
+- **<ConceptLink targetId="axioma-incidencia-2" isDependency={true}>Axiom I.2 (Existence of points on a line)</ConceptLink>**: Every line $l_i \in \mathcal{L}$ contains at least two distinct points.
+- **<ConceptLink targetId="axioma-incidencia-3" isDependency={true}>Axiom I.3 (Non-collinearity)</ConceptLink>**: There exists a set of three points $\{A, B, C\}$ that do not lie on the same line (non-<ConceptLink targetId="colinealidad">collinear</ConceptLink>).
+
+<Separador />
+
+### Properties
+
+- **Finiteness and minimality**: It is the smallest possible planar model satisfying axioms I.1, I.2, and I.3.
+- **Absence of parallel lines**: In this model there are no non-intersecting lines; any two lines intersect in exactly one point, thus failing to satisfy the Euclidean concept of <ConceptLink targetId="paralelismo">parallelism</ConceptLink>.

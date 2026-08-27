@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "axioma-orden-3",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom II.3 (Tricotomy of Line Order)",
+  description: "Of any three distinct points lying on a line, one and only one lies between the other two.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
+  ]
+};
+
+import { Order3 } from '@content/diagrams/Axiomas/Order3';
+export const Simulation = Order3;
+
+<Capitular letra="O" />f any three distinct <ConceptLink targetId="punto">points</ConceptLink> lying on the same <ConceptLink targetId="recta">line</ConceptLink>, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s third <ConceptLink targetId="orden">order axiom</ConceptLink> establishes the law of tricotomy: exactly one and only one of those points lies between the other two.
+
+<Definicion title="Formal statement">
+  For any three distinct <ConceptLink targetId="punto">points</ConceptLink> $A, B, C \in l$ belonging to line $l \in \mathcal{L}$, exactly one of the following three betweenness relations holds exclusively:
+  $$
+  \forall A, B, C \in l \ (A \neq B \land B \neq C \land A \neq C) \implies (A\text{-}B\text{-}C \veebar B\text{-}C\text{-}A \veebar C\text{-}A\text{-}B)
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation and interaction
+
+In the interactive simulation, three collinear points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> are presented. Dragging the points along the line constantly highlights which point uniquely occupies the intermediate position.
+
+<Separador />
+
+### Geometric significance and scope
+
+This axiom guarantees that linear order is total and unambiguous. It excludes paradoxical configurations where two distinct points could simultaneously lie between the same pair in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+
+<Separador />
+
+### Properties
+
+- **Strict exclusivity:** Two betweenness relations cannot hold simultaneously among the same three points.
+- **Linear completeness:** In every collinear triad of distinct points, an intermediate position necessarily exists.
+- **Implicit coordinates:** Induces a linear ordering structure fully compatible with the real line $\mathbb{R}$.

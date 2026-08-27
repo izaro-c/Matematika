@@ -1,0 +1,39 @@
+export const metadata = {
+  id: "axioma-congruencia-2",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom III.2 (Transitivity of Segments)",
+  description: "If two segments are congruent to a third segment, then they are congruent to each other; furthermore, every segment is congruent to itself.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+  ]
+};
+
+import { Congruence2 } from '@content/diagrams/Axiomas/Congruence2';
+export const Simulation = Congruence2;
+
+<Capitular letra="T" />he second <ConceptLink targetId="congruencia">congruence</ConceptLink> axiom of <ConceptLink targetId="hilbert">Hilbert</ConceptLink> specifies the equivalence relation properties for <ConceptLink targetId="segmento">segment</ConceptLink> congruence. It ensures that segment congruence forms a symmetric and transitive relation in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+
+<Definicion title="">
+  If a <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ is <ConceptLink targetId="congruencia">congruent</ConceptLink> to segment $\overline{EF}$ and segment $\overline{CD}$ is also congruent to $\overline{EF}$, then $\overline{AB}$ is congruent to $\overline{CD}$. Furthermore, every segment is congruent to itself:
+  $$
+  (\overline{AB} \cong \overline{EF}) \land (\overline{CD} \cong \overline{EF}) \implies (\overline{AB} \cong \overline{CD})
+  $$
+  $$
+  \forall \overline{AB} \implies \overline{AB} \cong \overline{AB}
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation
+
+Comparing the reference segment <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> with segments <VisualBind element="CD" color="pavo">$\overline{CD}$</VisualBind> and <VisualBind element="EF" color="terracota">$\overline{EF}$</VisualBind> visually demonstrates that shared congruence with $\overline{EF}$ invariably transmits equality of length between $\overline{AB}$ and $\overline{CD}$.
+
+<Separador />
+
+### Axiomatic significance
+
+Thanks to this postulate, the <ConceptLink targetId="congruencia">congruence</ConceptLink> relation partitions the set of all <ConceptLink targetId="segmento">segments</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink> into equivalence classes. Each class represents an abstract length magnitude without requiring a pre-established numerical measurement scale.

@@ -278,6 +278,18 @@ const NON_CONTENT_CATEGORY_LABELS_EU: Record<string, { singular: string; plural:
   triangulos: { singular: 'Hirukia', plural: 'Hirukiak' },
 };
 
+const NON_CONTENT_CATEGORY_LABELS_EN: Record<string, { singular: string; plural: string }> = {
+  geometria: { singular: 'Geometry', plural: 'Geometry' },
+  geometry: { singular: 'Geometry', plural: 'Geometry' },
+  algebra: { singular: 'Algebra', plural: 'Algebra' },
+  calculo: { singular: 'Calculus', plural: 'Calculus' },
+  calculus: { singular: 'Calculus', plural: 'Calculus' },
+  logica: { singular: 'Logic', plural: 'Logic' },
+  logic: { singular: 'Logic', plural: 'Logic' },
+  general: { singular: 'General', plural: 'General' },
+  triangulos: { singular: 'Triangle', plural: 'Triangles' },
+};
+
 const CONTENT_TYPE_LABELS_EU: Record<string, { singular: string; plural: string }> = {
   axioma: { singular: 'Axioma', plural: 'Axiomak' },
   'sistema-axiomatico': { singular: 'Sistema axiomatikoa', plural: 'Sistema axiomatikoak' },
@@ -296,6 +308,26 @@ const CONTENT_TYPE_LABELS_EU: Record<string, { singular: string; plural: string 
   'plan-de-estudio': { singular: 'Ikasketa-plana', plural: 'Ikasketa-planak' },
   glosario: { singular: 'Glosarioa', plural: 'Glosarioa' },
   msc2020: { singular: 'MSC2020 sailkapena', plural: 'MSC2020 sailkapena' },
+};
+
+const CONTENT_TYPE_LABELS_EN: Record<string, { singular: string; plural: string }> = {
+  axioma: { singular: 'Axiom', plural: 'Axioms' },
+  'sistema-axiomatico': { singular: 'Axiomatic system', plural: 'Axiomatic systems' },
+  concepto: { singular: 'Concept', plural: 'Concepts' },
+  definicion: { singular: 'Definition', plural: 'Definitions' },
+  lema: { singular: 'Lemma', plural: 'Lemmas' },
+  teorema: { singular: 'Theorem', plural: 'Theorems' },
+  corolario: { singular: 'Corollary', plural: 'Corollaries' },
+  demostracion: { singular: 'Proof', plural: 'Proofs' },
+  ejemplo: { singular: 'Example', plural: 'Examples' },
+  ejercicio: { singular: 'Exercise', plural: 'Exercises' },
+  'caso-de-uso': { singular: 'Use case', plural: 'Use cases' },
+  matematico: { singular: 'Mathematician', plural: 'Mathematicians' },
+  metodo: { singular: 'Method', plural: 'Methods' },
+  modelo: { singular: 'Model', plural: 'Models' },
+  'plan-de-estudio': { singular: 'Study plan', plural: 'Study plans' },
+  glosario: { singular: 'Glossary', plural: 'Glossaries' },
+  msc2020: { singular: 'MSC2020 classification', plural: 'MSC2020 classification' },
 };
 
 export const CONTENT_TYPE_LABELS_SINGULAR: Record<string, string> = {
@@ -319,6 +351,7 @@ export const CONTENT_TYPE_LABELS_PLURAL: Record<string, string> = {
 export function getContentTypeLabel(rawKey?: string | null, form: 'singular' | 'plural' = 'singular', lang?: string): string {
   if (typeof rawKey !== 'string' || !rawKey.trim()) {
     if (lang === 'eu') return form === 'plural' ? 'Teoremak' : 'Teorema';
+    if (lang === 'en') return form === 'plural' ? 'Theorems' : 'Theorem';
     return form === 'plural' ? 'Teoremas' : 'Teorema';
   }
   const cleanKey = rawKey.startsWith('diagram-') ? rawKey.slice('diagram-'.length) : rawKey;
@@ -328,6 +361,11 @@ export function getContentTypeLabel(rawKey?: string | null, form: 'singular' | '
   if (lang === 'eu') {
     const euEntry = CONTENT_TYPE_LABELS_EU[canonical] || CONTENT_TYPE_LABELS_EU[normalized] || NON_CONTENT_CATEGORY_LABELS_EU[canonical] || NON_CONTENT_CATEGORY_LABELS_EU[normalized];
     if (euEntry) return form === 'plural' ? euEntry.plural : euEntry.singular;
+  }
+
+  if (lang === 'en') {
+    const enEntry = CONTENT_TYPE_LABELS_EN[canonical] || CONTENT_TYPE_LABELS_EN[normalized] || NON_CONTENT_CATEGORY_LABELS_EN[canonical] || NON_CONTENT_CATEGORY_LABELS_EN[normalized];
+    if (enEntry) return form === 'plural' ? enEntry.plural : enEntry.singular;
   }
 
   const dict = form === 'plural' ? CONTENT_TYPE_LABELS_PLURAL : CONTENT_TYPE_LABELS_SINGULAR;

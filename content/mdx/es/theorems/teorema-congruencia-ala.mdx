@@ -1,51 +1,52 @@
 export const metadata = {
-  "id": "teorema-congruencia-ala",
-  "type": "teorema",
-  "title": "Teorema de congruencia ALA",
-  "description": "Si dos triángulos comparten un lado congruente y los dos ángulos adyacentes a dicho lado son congruentes, entonces los triángulos son congruentes.",
-  "statement": "Sean △ABC y △A'B'C' tales que AB ≅ A'B', ∠A ≅ ∠A' y ∠B ≅ ∠B'. Entonces △ABC ≅ △A'B'C'.",
-  "tags": ["geometria", "congruencia", "geometria-absoluta", "triangulos"],
-  "authors": ["euclides", "hilbert"],
-  "difficulty": "intermedio",
-  "hasSimulation": true,
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 26", role: "primary" },
-    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "secondary" }
+  id: "teorema-congruencia-ala",
+  type: "teorema",
+  title: "Teorema de congruencia Ángulo-Lado-Ángulo (ALA)",
+  description: "Si dos triángulos tienen respectivamente congruentes dos ángulos y el lado comprendido entre ellos, entonces ambos triángulos son congruentes.",
+  statement: "Dados dos triángulos △ABC y △A'B'C', si ∠CAB ≅ ∠C'A'B', ∠ABC ≅ ∠A'B'C' y el lado comprendido AB ≅ A'B', entonces △ABC ≅ △A'B'C'.",
+  branch: "51M",
+  hasSimulation: true,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-existencia-bisectriz"],
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 26", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "secondary" }
   ]
 };
 
 import { CongruenciaALA } from '@content/diagrams/Teoremas/CongruenciaALA';
 export const Simulation = CongruenciaALA;
 
-<Capitular letra="E" />l <ConceptLink targetId="teorema-congruencia-ala">teorema de congruencia ALA</ConceptLink> (Ángulo-Lado-Ángulo) dictamina que dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> resultan <VisualBind element="globalmente-congruentes" color="terracota">globalmente congruentes</VisualBind> cuando poseen un <VisualBind element="lado-ab" color="terracota">lado recíprocamente congruente</VisualBind> y los dos <ConceptLink targetId="angulo">ángulos</ConceptLink> adyacentes a dicho lado son respectivamente congruentes (<VisualBind element="angulo-a" color="ocre">$\angle A \cong \angle A'$</VisualBind> y <VisualBind element="angulo-b" color="ocre">$\angle B \cong \angle B'$</VisualBind>). A diferencia del postulado LAL, el teorema ALA se deduce en el marco axiomático de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> a partir del <ConceptLink targetId="axioma-transporte-segmento" isDependency={true}>axioma de transporte de segmentos</ConceptLink> y el <ConceptLink targetId="axioma-transporte-angulo" isDependency={true}>axioma de transporte de ángulos</ConceptLink>.
+<Capitular letra="E" />l teorema de congruencia Ángulo-Lado-Ángulo (ALA) establece uno de los criterios fundamentales para determinar la rigidez e igualdad métrica entre dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> en la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>. Garantiza que fijar un <ConceptLink targetId="segmento">segmento</ConceptLink> y las inclinaciones de las dos rectas que parten de sus extremos determina de forma única la geometría del triángulo.
 
 <Separador />
 
 ### Enunciado formal
 
-Sean los triángulos $\triangle ABC$ y $\triangle A'B'C'$ tales que satisfacen las siguientes condiciones de hipótesis:
+Sean $\triangle ABC$ y $\triangle A'B'C'$ dos <VisualBind element="triangulos" color="musgo"><ConceptLink targetId="triangulo">triángulos</ConceptLink></VisualBind> en el plano euclidiano. Supóngase que se verifican las siguientes relaciones de <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
+1. El lado comprendido es congruente: $\overline{AB} \cong \overline{A'B'}$.
+2. Los ángulos adyacentes al segmento son respectivamente congruentes: $\angle CAB \cong \angle C'A'B'$ y $\angle ABC \cong \angle A'B'C'$.
 
-- <VisualBind element="lado-ab" color="terracota">$AB \cong A'B'$</VisualBind>
-- <VisualBind element="angulo-a" color="ocre">$\angle A \cong \angle A'$</VisualBind>
-- <VisualBind element="angulo-b" color="ocre">$\angle B \cong \angle B'$</VisualBind>
-
-Entonces se concluye la <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre ambos polígonos:
+Entonces, se satisface de forma indispensable la <ConceptLink targetId="congruencia">congruencia</ConceptLink> global entre ambos triángulos:
 
 <Formula>
   $$ \triangle ABC \cong \triangle A'B'C' $$
 </Formula>
 
-<Separador />
-
-### Análisis y demostración deductiva
-
-El teorema ALA se demuestra mediante el método de transporte: se supone por contradicción que uno de los lados restantes (por ejemplo $AC$) no es congruente a su correspondiente $A'C'$.
-
-Al transportar la longitud $|AC|$ sobre la rayada $A'C'$ para obtener un punto $C''$, el <ConceptLink targetId="axioma-congruencia-lal" isDependency={true}>axioma LAL</ConceptLink> fuerza la congruencia $\triangle ABC \cong \triangle A'B'C''$. De ello se derivaría $\angle A'B'C'' \cong \angle B$, lo que contradice la unicidad en el <ConceptLink targetId="axioma-transporte-angulo" isDependency={true}>axioma de transporte de ángulos</ConceptLink> respecto a $\angle A'B'C'$. Por consiguiente, $C'' = C'$ y la congruencia global queda establecida.
+Como consecuencia, todos sus lados homólogos y sus terceros ángulos resultan ser respectivamente congruentes: $\overline{BC} \cong \overline{B'C'}$, $\overline{CA} \cong \overline{C'A'}$ y $\angle BCA \cong \angle B'C'A'$.
 
 <Separador />
 
-### Observaciones y consecuencias
+### Demostración y fundamentación axiomática
 
-- En los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>, este resultado corresponde a la Proposición I.26.
-- Pertenece rigurosamente a la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>, pues su validez no depende del <ConceptLink targetId="axioma-paralelas-euclides">axioma euclidiano de las paralelas</ConceptLink>.
+En la axiomatización de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el criterio LAL (Lado-Ángulo-Lado) se asume como <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axioma de congruencia</ConceptLink>, mientras que el criterio ALA se demuestra rigurosamente mediante el método de reducción al absurdo:
+- Si $\overline{AC}$ no fuera congruente a $\overline{A'C'}$, existiría un punto $D$ en el rayo de la recta tal que $\overline{AD} \cong \overline{A'C'}$.
+- Por el axioma LAL, se tendría $\triangle ABD \cong \triangle A'B'C'$, lo que implicaría $\angle ABD \cong \angle A'B'C'$.
+- Esto contradiría el axioma de transporte de ángulos al tener dos ángulos distintos congruentes al mismo ángulo de referencia.
+
+<Separador />
+
+### Aplicaciones y criterios derivados
+
+- **Triangulación métrica**: Es la base teórica de la geodesia y levantamiento topográfico para determinar distancias inalcanzables mediante la medición de una base conocida y dos ángulos de elevación/azimut.
+- **Criterio LAA (Lado-Ángulo-Ángulo)**: Combinado con el <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de los ángulos de un triángulo</ConceptLink>, el criterio se extiende a cualquier par de ángulos y un lado no comprendido.

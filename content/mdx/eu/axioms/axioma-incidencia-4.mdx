@@ -2,34 +2,43 @@ export const metadata = {
   id: "axioma-incidencia-4",
   lang: "eu",
   type: "axioma",
-  title: "I.4 Axioma (Planoaren Existentzia eta Bakartasuna)",
-  description: "Zuzen beran ez dauden hiru puntutarako, plano bakarra existitzen da hiru puntuak barne hartzen dituena.",
+  title: "I.4 Axioma (Planoaren existentzia eta bakartasuna)",
+  description: "Zuzen berean ez dauden espazioko hiru puntu emanda, hiruak barne hartzen dituen plano bakar bat existitzen da.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+  ]
 };
 
 import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 
-<Capitular letra="L" />augarren intzidentzia-<ConceptLink targetId="axioma-incidencia-4">axiomak</ConceptLink> bakartasunaren zehaztapen-printzipioa transferitzen du dimentsio bakarreko espaziotik bi dimentsiokora. <ConceptLink targetId="colinealidad">Lerrokide</ConceptLink> ez diren hiru <ConceptLink targetId="punto">puntuk</ConceptLink> <ConceptLink targetId="plano">plano</ConceptLink> bakar bat finkatzen dutela ezartzen du.
+<Capitular letra="Z" />uzen berean ez dauden espazioko hiru <ConceptLink targetId="punto">puntu</ConceptLink> edozein emanda, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-en laugarren <ConceptLink targetId="intzidentzia">intzidentzia-axioma</ConceptLink> honek hiruak barne hartzen dituen <ConceptLink targetId="plano">plano</ConceptLink> baten existentzia eta bakartasuna bermatzen ditu nahitaez. Halaber, plano bakoitzak gutxienez puntu bat duela ezartzen da.
 
-<Definicion title="">
-  <ConceptLink targetId="recta">Zuzen</ConceptLink> beran ez dauden hiru $A, B, C \in \mathcal{P}$ <ConceptLink targetId="punto">puntu</ConceptLink> emanda, $\alpha \in \mathcal{E}$ <ConceptLink targetId="plano">plano</ConceptLink> bakarra existitzen da non $A, B, C$ $\alpha$-n intzidentzialak diren:
+<Definicion title="Enuntziatu formala">
+  Zuzen berean ez dauden hiru $A, B, C \in \mathcal{S}$ <ConceptLink targetId="punto">puntu</ConceptLink> emanda, hiruak barne hartzen dituen $\mathcal{P} \in \mathcal{F}$ <ConceptLink targetId="plano">plano</ConceptLink> bakar bat existitzen da:
   $$
-  \forall A, B, C \text{ (ez-lerrokideak)} \implies \exists! \alpha \in \mathcal{E} \ (A \in \alpha \land B \in \alpha \land C \in \alpha)
+  \forall A, B, C \in \mathcal{S} \ \Bigl(\neg\exists l \in \mathcal{L} \ (A,B,C \in l) \implies \exists! \mathcal{P} \in \mathcal{F} \ (A \in \mathcal{P} \land B \in \mathcal{P} \land C \in \mathcal{P})\Bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan, lerrokideak ez diren <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> erpinek <VisualBind element="polygonABC" color="carbon">$\alpha(ABC)$</VisualBind> espazio-planoa zehazten dute modu bakarrean.
+Hiru dimentsioko simulazioan, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> hiru puntuek era bakarrean zehazten dute <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind> planoa. Puntu horietako edozein aldatzean (beste bierekin lerrokatu gabe), planoa dinamikoki kulunkatzen da kidekotza hirukoitza gordez.
 
 <Separador />
 
-### Esanahi espaziala
+### Esanahi geometrikoa eta esparrua
 
-<ConceptLink targetId="colinealidad">Ez-lerrokidetasunaren</ConceptLink> baldintza bakartasunaren eskakizuna da: hiru <ConceptLink targetId="punto">puntuak</ConceptLink> <ConceptLink targetId="recta">zuzen</ConceptLink> beraren gainean kokatuta baleude, infinitu <ConceptLink targetId="plano">plano</ConceptLink> egongo lirateke haiek barne hartzen dituztenak. Postulatu honek planoaren kontzeptua finkatzen du hiru dimentsioko geometrian.
+Postulatu honek planoa definitzen du hiru puntu lerrokatu gabek sortutako oinarrizko bi dimentsioko hedapena dela esanez. Bermatzen du hiru puntu ez-kolineal ezin direla era anbiguoan egon, baizik eta azalera lau ondo zehaztua finkatzen dutela <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
+
+<Separador />
+
+### Propietateak
+
+- **Planoaren zehazpena:** Lerrokatu gabeko hiru puntuek era bakarrean finkatzen dute bi dimentsioko orientazioa.
+- **3D espazioaren oinarria:** Ezinbestekoa da espazio euklidear zein ez-euklidearraren hiru dimentsioko egitura eraikitzeko.
+- **Triangeluaren euskarria:** Edozein <ConceptLink targetId="triangulo">triangeluk</ConceptLink> plano euskarri bakar bat du.

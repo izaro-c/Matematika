@@ -2,8 +2,9 @@ export const metadata = {
   "id": "demo-suma-angulos-triangulo",
   "type": "demostracion",
   "title": "Demostración: Suma de los ángulos de un triángulo",
-  "description": "Demostración euclidiana clásica mediante el trazado de una recta paralela por el vértice opuesto y la propiedad de los ángulos alternos internos.",
+  "description": "Demostración euclidiana clásica mediante el trazado de una recta paralela a la base por el vértice opuesto y la congruencia de ángulos alternos internos.",
   "parentTheorem": "teorema-suma-angulos-triangulo",
+  "branch": "51M",
   "proofMethod": "metodo-directo",
   "authors": ["euclides"],
   "tags": ["geometria", "triangulos", "angulos"],
@@ -17,44 +18,44 @@ import { DemoSumaAngulos } from "@content/diagrams/Demos/DemoSumaAngulos";
 
 <DemonstrationSection diagram={<DemoSumaAngulos />}>
 
-<Capitular letra="D" />ado un <ConceptLink targetId="triangulo">triángulo</ConceptLink> plano $\triangle ABC$ con <ConceptLink targetId="angulo">ángulos interiores</ConceptLink> $\alpha = \angle A$, $\beta = \angle B$ y $\gamma = \angle C$, se demuestra el <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={true}>teorema de la suma de los ángulos de un triángulo</ConceptLink>: la suma de sus tres ángulos interiores equivale a dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink> ($180^\circ$).
+<Capitular letra="D" />ado un <ConceptLink targetId="triangulo">triángulo</ConceptLink> plano $\triangle ABC$ con <ConceptLink targetId="angulo">ángulos interiores</ConceptLink> $\alpha = \angle A$, $\beta = \angle B$ y $\gamma = \angle C$, se demuestra formalmente el <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={true}>teorema de la suma de los ángulos de un triángulo</ConceptLink>. La demostración establece que la suma de las medidas de los tres ángulos interiores es idéntica a la medida de un <ConceptLink targetId="angulos-suplementarios">ángulo llano</ConceptLink> ($180^\circ$).
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} target="triangulo" title="El triángulo base">
-Sea el triángulo <VisualBind element="triangulo" color="carbon">$\triangle ABC$</VisualBind> con ángulos interiores <VisualBind element="angulo-a" color="terracota">$\alpha$</VisualBind>, <VisualBind element="angulo-b" color="pavo">$\beta$</VisualBind> y <VisualBind element="angulo-c" color="ocre">$\gamma$</VisualBind>.
+<ProofStep number={1} target="triangulo" title="Configuración del triángulo base">
+Sea el triángulo <VisualBind element="triangulo" color="carbon">$\triangle ABC$</VisualBind> con sus tres ángulos interiores designados por <VisualBind element="angulo-a" color="terracota">$\alpha$</VisualBind> en el <ConceptLink targetId="vertice">vértice</ConceptLink> $A$, <VisualBind element="angulo-b" color="pavo">$\beta$</VisualBind> en el vértice $B$, y <VisualBind element="angulo-c" color="ocre">$\gamma$</VisualBind> en el vértice $C$.
 </ProofStep>
 
-<ProofStep number={2} target="paralela" title="Construcción de la recta paralela">
-Por el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>, por el <ConceptLink targetId="vertice">vértice</ConceptLink> <VisualBind element="vertice-c" color="carbon">$C$</VisualBind> trazamos la única <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="paralela" color="carbon"><ConceptLink targetId="paralelismo">paralela</ConceptLink></VisualBind> a la base <VisualBind element="base-ab" color="carbon">$AB$</VisualBind>.
+<ProofStep number={2} target="paralela" title="Trazado de la recta paralela por el vértice opuesto">
+Por el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas de Euclides</ConceptLink>, existe una única <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="paralela" color="carbon"><ConceptLink targetId="paralelas">paralela</ConceptLink></VisualBind> al segmento de la base <VisualBind element="base-ab" color="carbon">$\overline{AB}$</VisualBind> que pasa por el vértice opuesto <VisualBind element="vertice-c" color="carbon">$C$</VisualBind>.
 </ProofStep>
 
-<ProofStep number={3} target={["alterno-a", "transversal-ac", "angulo-a"]} title="Primer par de ángulos alternos internos">
-Considerando la recta $AC$ como <VisualBind element="transversal-ac" color="terracota"><ConceptLink targetId="transversal">transversal</ConceptLink></VisualBind> que corta a las paralelas, por el <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>teorema de los ángulos alternos internos</ConceptLink> se deduce que el ángulo interior <VisualBind element="angulo-a" color="terracota">$\alpha$</VisualBind> es <ConceptLink targetId="congruencia">congruente</ConceptLink> con el <ConceptLink targetId="angulos-alternos-internos">ángulo alterno</ConceptLink> <VisualBind element="alterno-a" color="terracota">$\alpha'$</VisualBind> en $C$:
+<ProofStep number={3} target={["alterno-a", "transversal-ac", "angulo-a"]} title="Congruencia del primer par de ángulos alternos internos">
+Considerando la recta que contiene al lado $AC$ como secante <VisualBind element="transversal-ac" color="terracota">transversal</VisualBind> que corta a las paralelas, el <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>teorema de los ángulos alternos internos</ConceptLink> garantiza la <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre el ángulo interior <VisualBind element="angulo-a" color="terracota">$\alpha$</VisualBind> y el ángulo alterno superior <VisualBind element="alterno-a" color="terracota">$\alpha'$</VisualBind> en $C$:
 
 <Formula>
   $$ \alpha \cong \alpha' $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} target={["alterno-b", "transversal-bc", "angulo-b"]} title="Segundo par de ángulos alternos internos">
-Análogamente, tomando la recta $BC$ como <VisualBind element="transversal-bc" color="pavo">transversal</VisualBind>, el ángulo interior <VisualBind element="angulo-b" color="pavo">$\beta$</VisualBind> es congruente con el ángulo alterno <VisualBind element="alterno-b" color="pavo">$\beta'$</VisualBind> en $C$:
+<ProofStep number={4} target={["alterno-b", "transversal-bc", "angulo-b"]} title="Congruencia del segundo par de ángulos alternos internos">
+De modo análogo, tomando la recta del lado $BC$ como <VisualBind element="transversal-bc" color="pavo">transversal</VisualBind>, el ángulo interior <VisualBind element="angulo-b" color="pavo">$\beta$</VisualBind> es congruente con el ángulo alterno superior <VisualBind element="alterno-b" color="pavo">$\beta'$</VisualBind> en $C$:
 
 <Formula>
   $$ \beta \cong \beta' $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} target={["angulo-llano", "angulo-c", "alterno-a", "alterno-b"]} title="Composición del ángulo llano y conclusión">
-Los ángulos <VisualBind element="alterno-a" color="terracota">$\alpha'$</VisualBind>, <VisualBind element="angulo-c" color="ocre">$\gamma$</VisualBind> y <VisualBind element="alterno-b" color="pavo">$\beta'$</VisualBind> son <ConceptLink targetId="angulos-adyacentes">adyacentes</ConceptLink> sobre la recta paralela trazada por $C$, formando un <VisualBind element="angulo-llano" color="carbon"><ConceptLink targetId="angulo-llano">ángulo llano</ConceptLink></VisualBind>:
+<ProofStep number={5} target={["angulo-llano", "angulo-c", "alterno-a", "alterno-b"]} title="Composición del ángulo llano y conclusión formal">
+Los tres ángulos consecutivos <VisualBind element="alterno-a" color="terracota">$\alpha'$</VisualBind>, <VisualBind element="angulo-c" color="ocre">$\gamma$</VisualBind> y <VisualBind element="alterno-b" color="pavo">$\beta'$</VisualBind> se disponen de manera adyacente sobre la recta paralela que pasa por $C$, componiendo un <VisualBind element="angulo-llano" color="carbon"><ConceptLink targetId="angulos-suplementarios">ángulo llano</ConceptLink></VisualBind> cuya suma de medidas es $180^\circ$:
 
 <Formula>
   $$ \alpha' + \gamma + \beta' = 180^\circ $$
 </Formula>
 
-Sustituyendo $\alpha'$ por $\alpha$ y $\beta'$ por $\beta$:
+Sustituyendo $\alpha'$ por $\alpha$ y $\beta'$ por $\beta$ en virtud de las congruencias obtenidas:
 
 <Formula>
   $$ \alpha + \beta + \gamma = 180^\circ $$
@@ -63,10 +64,10 @@ Sustituyendo $\alpha'$ por $\alpha$ y $\beta'$ por $\beta$:
 
 <Separador />
 
-### Análisis y validez geométrica
+### Análisis deductivo
 
 <Nota>
-  Proposición I.32 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. Esta demostración requiere de forma estricta el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>. En <ConceptLink targetId="geometria-hiperbolica">geometría hiperbólica</ConceptLink> la suma es estrictamente menor a $180^\circ$, mientras que en geometría elíptica es estrictamente mayor.
+  Proposición I.32 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. Esta demostración depende de forma irreductible del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>. En <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>, la suma de los ángulos es estrictamente menor a $180^\circ$.
 </Nota>
 
 </DemonstrationSection>

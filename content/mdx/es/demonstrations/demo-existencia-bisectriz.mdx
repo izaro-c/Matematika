@@ -2,9 +2,10 @@ export const metadata = {
   "id": "demo-existencia-bisectriz",
   "type": "demostracion",
   "title": "Demostración: Existencia y unicidad de la bisectriz",
-  "description": "Prueba constructiva mediante el lema del punto medio y el criterio de congruencia LLL en el sistema axiomático de Hilbert.",
-  "parentTheorem": "teorema-existencia-bisectriz",
-  "proofMethod": "metodo-constructivo",
+  "description": "Demostración constructiva formal de la existencia y unicidad de la bisectriz de un ángulo mediante congruencia de triángulos y transporte de segmentos.",
+  "parentTheorem": "teorema-congruencia-ala",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
   "authors": ["euclides", "hilbert"],
   "tags": ["geometria", "angulos", "bisectriz"],
   "layout": "split",
@@ -17,42 +18,50 @@ import { DemoExistenciaBisectriz } from "@content/diagrams/Demos/DemoExistenciaB
 
 <DemonstrationSection diagram={<DemoExistenciaBisectriz />}>
 
-<Capitular letra="S" />ean <VisualBind element="angulo-aob" color="carbon">$\angle AOB$</VisualBind> un <ConceptLink targetId="angulo">ángulo</ConceptLink> con vértice en <VisualBind element="vertice-o" color="carbon">$O$</VisualBind>. Se demuestra la existencia y unicidad de una semirrecta interior $\overrightarrow{OM}$ que divide al ángulo en dos partes congruentes.
+<Capitular letra="D" />ado un <ConceptLink targetId="angulo">ángulo</ConceptLink> <VisualBind element="angulo-aob" color="carbon">$\angle AOB$</VisualBind> con <ConceptLink targetId="vertice">vértice</ConceptLink> en <VisualBind element="vertice-o" color="carbon">$O$</VisualBind>, se demuestra la existencia y unicidad de una semirrecta interior $\overrightarrow{OM}$ que divide al ángulo en dos partes <ConceptLink targetId="congruencia">congruentes</ConceptLink>, fundamentándose en la teoría de <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>congruencia de triángulos</ConceptLink>.
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} title="Puntos equidistantes sobre los lados" target={["angulo-aob", "punto-c", "punto-d"]}>
-Sobre el lado $\overrightarrow{OA}$, fijamos un punto <VisualBind element="punto-c" color="terracota">$C$</VisualBind> distinto de $O$. Por el axioma de transporte de segmentos, construimos sobre $\overrightarrow{OB}$ un punto <VisualBind element="punto-d" color="pavo">$D$</VisualBind> tal que $OC \cong OD$.
+<ProofStep number={1} target={["angulo-aob", "punto-c", "punto-d"]} title="Transporte de segmentos sobre los lados del ángulo">
+Sobre el rayo del lado $OA$, fijamos un <ConceptLink targetId="punto">punto</ConceptLink> <VisualBind element="punto-c" color="terracota">$C$</VisualBind> distinto de $O$. Por los axiomas de transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink>, construimos sobre el rayo del lado $OB$ un punto <VisualBind element="punto-d" color="pavo">$D$</VisualBind> tal que las distancias desde el origen sean congruentes:
+
+<Formula>
+  $$ \overline{OC} \cong \overline{OD} $$
+</Formula>
 </ProofStep>
 
-<ProofStep number={2} title="Segmento auxiliar y punto medio" target={["segmento-cd", "punto-m"]}>
-Trazamos el segmento <VisualBind element="segmento-cd" color="ocre">$\overline{CD}$</VisualBind>. Por el <ConceptLink targetId="lema-punto-medio" isDependency={true}>lema del punto medio</ConceptLink>, existe un único punto medio <VisualBind element="punto-m" color="carbon">$M$</VisualBind> sobre $\overline{CD}$ tal que $CM \cong DM$.
+<ProofStep number={2} target={["segmento-cd", "punto-m"]} title="Segmento auxiliar y punto medio">
+Trazamos el segmento <VisualBind element="segmento-cd" color="ocre">$\overline{CD}$</VisualBind>. Por los axiomas de orden e incidencia, existe un único punto medio <VisualBind element="punto-m" color="carbon">$M$</VisualBind> sobre el segmento $\overline{CD}$ tal que se satisface la equidistancia:
+
+<Formula>
+  $$ \overline{CM} \cong \overline{DM} $$
+</Formula>
 </ProofStep>
 
-<ProofStep number={3} title="Congruencia por LLL" target={["triangulo-ocm", "triangulo-odm"]}>
-Consideremos los triángulos <VisualBind element="triangulo-ocm" color="terracota">$\triangle OCM$</VisualBind> y <VisualBind element="triangulo-odm" color="pavo">$\triangle ODM$</VisualBind>. Dado que $OC \cong OD$, $CM \cong DM$ y el lado $OM$ es común, por el <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>criterio LLL</ConceptLink> se concluye:
+<ProofStep number={3} target={["triangulo-ocm", "triangulo-odm"]} title="Congruencia de triángulos auxiliares por LLL">
+Consideramos los triángulos <VisualBind element="triangulo-ocm" color="terracota">$\triangle OCM$</VisualBind> y <VisualBind element="triangulo-odm" color="pavo">$\triangle ODM$</VisualBind>. Dado que $\overline{OC} \cong \overline{OD}$, $\overline{CM} \cong \overline{DM}$ y el lado $\overline{OM}$ es compartido por ambos polígonos, aplicando los <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axiomas de congruencia</ConceptLink> bajo el criterio LLL (Lado-Lado-Lado) derivado de los criterios fundamentales de <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>congruencia</ConceptLink>, se concluye:
 
 <Formula>
   $$ \triangle OCM \cong \triangle ODM $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} title="Igualdad angular y existencia" target={["angulo-com", "angulo-dom"]}>
-De la congruencia de triángulos se deduce la igualdad de los ángulos homólogos opuestos a los lados congruentes: <VisualBind element="angulo-com" color="terracota">$\angle COM$</VisualBind> $\cong$ <VisualBind element="angulo-dom" color="pavo">$\angle DOM$</VisualBind>. Por consiguiente, la semirrecta $\overrightarrow{OM}$ es la bisectriz del ángulo $\angle AOB$.
+<ProofStep number={4} target={["angulo-com", "angulo-dom"]} title="Igualdad de los ángulos interiores y existencia">
+De la congruencia de los triángulos se deduce la congruencia de sus ángulos homólogos correspondientes: <VisualBind element="angulo-com" color="terracota">$\angle COM$</VisualBind> $\cong$ <VisualBind element="angulo-dom" color="pavo">$\angle DOM$</VisualBind>. Por consiguiente, la semirrecta $\overrightarrow{OM}$ es una bisectriz válida del ángulo $\angle AOB$.
 </ProofStep>
 
-<ProofStep number={5} title="Demostración de unicidad" target={["bisectriz-unica"]}>
-Si existiera otra bisectriz $\overrightarrow{OM'}$, formaría un ángulo idéntico con $\overrightarrow{OA}$. Por el axioma de unicidad en el transporte angular, las semirrectas $\overrightarrow{OM'}$ y $\overrightarrow{OM}$ deben coincidir. La <VisualBind element="bisectriz-unica" color="carbon">bisectriz es única</VisualBind>.
+<ProofStep number={5} target={["bisectriz-unica"]} title="Demostración de unicidad">
+Si existiera otra semirrecta bisectriz $\overrightarrow{OM'}$, formaría un ángulo idéntico con el rayo $OA$. Por los axiomas de unicidad en el transporte de ángulos sobre un mismo semiplano, las semirrectas $\overrightarrow{OM'}$ y $\overrightarrow{OM}$ deben coincidir. La <VisualBind element="bisectriz-unica" color="carbon">bisectriz es única</VisualBind>.
 </ProofStep>
 
 <Separador />
 
-### Análisis estructural
+### Análisis deductivo
 
 <Nota>
-  A diferencia de la construcción euclidiana clásica (Proposición I.9 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink>), que requiere trazar arcos de circunferencia, esta demostración sigue el enfoque estricto de Hilbert basándose linealmente en el lema del punto medio.
+  Proposición I.9 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. En el sistema axiomático de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, esta construcción demuestra que la división bisectriz es una propiedad universal derivada de los <ConceptLink targetId="axioma-congruencia-1">axiomas de congruencia</ConceptLink> y el <ConceptLink targetId="sistema-absoluto">sistema absoluto</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

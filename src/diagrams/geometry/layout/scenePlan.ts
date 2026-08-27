@@ -113,11 +113,52 @@ export function createScenePlan(input: DiagramSpecV2 | DiagramSpecV3, state: Dia
   const groups = new Map(spec.groups.map(group => [group.id, group]));
   const visualRanks = buildSceneItemVisualRanks(spec);
 
+  const memberToGroups = new Map<string, Set<any>>();
+  spec.groups.forEach(group => {
+    group.memberIds?.forEach(memberId => {
+      const set = memberToGroups.get(memberId) ?? new Set();
+      set.add(group);
+      memberToGroups.set(memberId, set);
+    });
+  });
+
+  const isTargetHighlighted = (targetId: string | undefined) => {
+    if (!targetId) return false;
+    if (highlighted.has(targetId)) return true;
+    if (spec.componentId) {
+      if (highlighted.has(`${spec.componentId}:${targetId}`)) return true;
+      if (highlighted.has(`${spec.componentId.toLowerCase()}:${targetId}`)) return true;
+    }
+    for (const h of highlighted) {
+      if (typeof h === 'string' && (h === targetId || h.endsWith(`:${targetId}`))) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const isTargetSelected = (targetId: string | undefined) => {
+    if (!targetId) return false;
+    if (selected.has(targetId)) return true;
+    if (spec.componentId) {
+      if (selected.has(`${spec.componentId}:${targetId}`)) return true;
+      if (selected.has(`${spec.componentId.toLowerCase()}:${targetId}`)) return true;
+    }
+    for (const s of selected) {
+      if (typeof s === 'string' && (s === targetId || s.endsWith(`:${targetId}`))) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   return [...spec.points, ...spec.elements, ...spec.sliders]
     .map(item => {
       const objectState = objectStates[item.id];
       const layer = layers.get(item.layerId);
-      const itemGroups = item.groupIds.map(id => groups.get(id)).filter(Boolean);
+      const directGroups = item.groupIds.map(id => groups.get(id)).filter(Boolean);
+      const indirectGroups = Array.from(memberToGroups.get(item.id) ?? []);
+      const itemGroups = Array.from(new Set([...directGroups, ...indirectGroups]));
       const visible = layer?.visible !== false
         && itemGroups.every(group => group?.visible !== false)
         && (objectState?.visible ?? (item.visible && (!stepTargets || stepTargets.has(item.id))));
@@ -125,15 +166,15 @@ export function createScenePlan(input: DiagramSpecV2 | DiagramSpecV3, state: Dia
       const fixedPoint = 'constraint' in item && (item.fixed || item.constraint === 'fixed' || item.constraint === 'derived');
       const locked = !interactive || fixedPoint || item.locked || layer?.locked === true || itemGroups.some(group => group?.locked === true);
       const layerOrder = layer?.order ?? 0;
-      const highlightedByGroup = itemGroups.some(group => group?.selection.highlightable !== false && highlighted.has(group?.id ?? ''));
-      const selectedByGroup = itemGroups.some(group => group?.selection.highlightable !== false && selected.has(group?.id ?? ''));
+      const highlightedByGroup = itemGroups.some(group => group?.selection.highlightable !== false && (isTargetHighlighted(group?.id) || isTargetHighlighted(group?.targetId)));
+      const selectedByGroup = itemGroups.some(group => group?.selection.highlightable !== false && (isTargetSelected(group?.id) || isTargetSelected(group?.targetId)));
       const appearance = resolveStepSceneAppearance(item, objectState);
       return {
         item,
         visible,
         locked,
-        highlighted: highlighted.has(item.id) || highlightedByGroup,
-        selected: selected.has(item.id) || selectedByGroup,
+        highlighted: isTargetHighlighted(item.id) || isTargetHighlighted(item.targetId) || highlightedByGroup,
+        selected: isTargetSelected(item.id) || isTargetSelected(item.targetId) || selectedByGroup,
         stepEmphasis: objectState?.emphasis ?? 'none',
         stepEmphasisColor: objectState?.emphasisColor,
         color: appearance.color,

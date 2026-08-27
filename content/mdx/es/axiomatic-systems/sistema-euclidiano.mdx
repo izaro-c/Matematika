@@ -2,63 +2,37 @@ export const metadata = {
   id: "sistema-euclidiano",
   lang: "es",
   type: "sistema-axiomatico",
-  title: "Geometría Euclídea",
-  description: "Sistema axiomático clásico de la geometría plana y espacial que incorpora el axioma de unicidad de las paralelas a los 19 axiomas de la geometría absoluta.",
-  axiomas: [
-    "axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3", "axioma-incidencia-4",
-    "axioma-incidencia-5", "axioma-incidencia-6", "axioma-incidencia-7", "axioma-incidencia-8",
-    "axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4",
-    "axioma-congruencia-1", "axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4", "axioma-congruencia-5",
-    "axioma-arquimedes", "axioma-completitud", "axioma-paralelas-euclides"
-  ],
-  sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Postulado 5", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "primary" }
-  ]
+  title: "Sistema axiomático euclidiano",
+  description: "La estructura axiomática canónica de la geometría plana estándar, formada por la geometría absoluta y el axioma de paralelas de Playfair.",
+  branch: "51M",
+  axiomas: ["axioma-paralelas-euclides"]
 };
 
-<Capitular letra="L" />a <ConceptLink targetId="sistema-euclidiano">geometría euclídea</ConceptLink> es la construcción matemática formal que resulta de añadir el <ConceptLink targetId="axioma-paralelas-euclides">postulado de las paralelas</ConceptLink> de Playfair-<ConceptLink targetId="euclides">Euclides</ConceptLink> a la estructura de la <ConceptLink targetId="sistema-absoluto" isDependency={true}>geometría absoluta</ConceptLink>. Modela el espacio <ConceptLink targetId="plano">plano</ConceptLink> nulo de curvatura cero y constituye el paradigma de la <ConceptLink targetId="geometria">geometría</ConceptLink> métrica clásica.
-
-<Definicion title="">
-  El sistema <ConceptLink targetId="axioma">axiomático</ConceptLink> euclidiano es la tupla $(\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I}, \mathcal{B}, \cong, \mathcal{P}_V)$ integrada por los 19 <ConceptLink targetId="sistema-absoluto" isDependency={true}>axiomas absolutos</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> junto con el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de Playfair</ConceptLink>: dada una <ConceptLink targetId="recta">recta</ConceptLink> $l$ y un <ConceptLink targetId="punto">punto</ConceptLink> $P \notin l$, existe una única recta $m$ que pasa por $P$ tal que $m \cap l = \emptyset$.
-</Definicion>
+<Capitular letra="E" />l sistema axiomático euclidiano representa el marco formal clásico de la geometría plana. Se obtiene al incorporar el quinto postulado de las paralelas (en la formulación equivalente de Playfair) a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, fijando la curvatura nula del plano y la escala de las figuras geométricas.
 
 <Separador />
 
-### Postulado característico de las paralelas
+### Constitución axiomática
 
-El elemento diferencial del sistema euclidiano es la hipótesis de unicidad de paralelas:
+El sistema euclidiano integra la totalidad de los principios hilbertianos:
 
-- **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>IV.1 axioma de Playfair (unicidad de la paralela)</ConceptLink>**: Por un <ConceptLink targetId="punto">punto</ConceptLink> exterior a una <ConceptLink targetId="recta">recta</ConceptLink> dada pasa exactamente una recta <ConceptLink targetId="paralelas">paralela</ConceptLink> a ella.
-
-<Formula>
-  $$
-  \forall l \in \mathcal{L}, \forall P \notin l \implies \exists! m \in \mathcal{L} \ (P \in m \land m \cap l = \emptyset)
-  $$
-</Formula>
+1. **Base de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>**: Reúne todos los axiomas de <ConceptLink targetId="sistema-incidencia">incidencia</ConceptLink> (I.1-I.8), <ConceptLink targetId="orden">orden</ConceptLink> (II.1-II.4), <ConceptLink targetId="congruencia">congruencia</ConceptLink> (III.1-III.5) y continuidad (IV.1-IV.2).
+2. **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axioma de las paralelas de Euclides (V.1)</ConceptLink>**: Dada una <ConceptLink targetId="recta">recta</ConceptLink> $l$ y un <ConceptLink targetId="punto">punto</ConceptLink> exterior $P \notin l$ en un <ConceptLink targetId="plano">plano</ConceptLink>, existe a lo sumo una recta $l'$ que contiene a $P$ y no interseca a $l$:
+   $$ \forall l \in \mathcal{L}, \forall P \notin l, \exists! l' \in \mathcal{L} \text{ tal que } P \in l' \land l \cap l' = \emptyset $$
 
 <Separador />
 
-### Modelos y representaciones
+### Teoremas fundamentales del sistema
 
-El sistema euclidiano admite realizaciones analíticas y continuas fundamentales:
+La presencia del axioma de las paralelas desencadena resultados métricos característicos:
 
-- **<ConceptLink targetId="modelo-cartesiano">Plano cartesiano</ConceptLink> <ConceptLink targetId="numero-real">$\mathbb{R}^2$</ConceptLink>**: Espacio bidimensional dotado de la <ConceptLink targetId="distancia">métrica euclídea</ConceptLink> canónica $d(A,B) = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$.
-- **Espacio vectorial <ConceptLink targetId="numero-real">$\mathbb{R}^3$</ConceptLink>**: Modelo tridimensional dotado del producto escalar estándar.
-- **Plano complejo $\mathbb{C}$**: Estructura algebraica isomorfa al plano cartesiano real mediante la identificación $(x,y) \mapsto x + iy$.
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Suma angular invariable</ConceptLink>**: La suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de cualquier <ConceptLink targetId="triangulo">triángulo</ConceptLink> es exactamente igual a $180^\circ$.
+- **<ConceptLink targetId="teorema-tales">Teorema de Tales y semejanza</ConceptLink>**: Las rectas paralelas cortadas por transversales determinan segmentos proporcionales, haciendo posible la existencia de figuras semejantes de distinto tamaño sin variación angular.
+- **<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>**: En todo <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink>, el área del cuadrado construido sobre la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> es igual a la suma de las áreas de los cuadrados sobre los <ConceptLink targetId="cateto">catetos</ConceptLink> ($a^2 + b^2 = c^2$).
 
 <Separador />
 
-### Propiedades estructurales y metamatemáticas
+### Modelo representativo y consistencia
 
-El sistema euclidiano exhibe importantes <ConceptLink targetId="teorema">teoremas</ConceptLink> de <ConceptLink targetId="congruencia">congruencia</ConceptLink> y propiedades algebraicas:
-
-<Formula>
-  $$
-  \sum_{i=1}^{3} \alpha_i = 180^\circ
-  $$
-</Formula>
-
-- **Suma angular invariante**: La suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> es exactamente $180^\circ$ ($\pi$ radianes).
-- **<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>**: En todo <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink>, el cuadrado de la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> equivale a la suma de los cuadrados de los <ConceptLink targetId="cateto">catetos</ConceptLink>.
-- **Categoricidad**: Todo modelo continuo que satisface el sistema euclidiano tridimensional es isomorfo al espacio cartesiano $\mathbb{R}^3$.
+- **<ConceptLink targetId="modelo-cartesiano">Modelo cartesiano $\mathbb{R}^2$</ConceptLink>**: Constituye el modelo analítico canónico del sistema euclidiano.
+- **Consistencia relativa**: La consistencia del sistema euclidiano equivale a la consistencia del cuerpo de los <ConceptLink targetId="numero-real">números reales</ConceptLink> y de la teoría de conjuntos de Zermelo-Fraenkel.

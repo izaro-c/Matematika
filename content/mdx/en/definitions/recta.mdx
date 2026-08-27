@@ -1,0 +1,47 @@
+export const metadata = {
+  id: "recta",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Line",
+  description: "A continuous, infinite, one-dimensional geometric object extending in both directions without curvature.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 2 y 4", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+  ]
+};
+
+import { Recta } from '@content/diagrams/Definiciones/Recta';
+export const Simulation = Recta;
+
+<Capitular letra="A" /> line is a one-dimensional geometric figure consisting of a continuous, infinite set of collinear <ConceptLink targetId="punto">points</ConceptLink>. In <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>, it forms a fundamental primitive concept alongside the <ConceptLink targetId="punto">point</ConceptLink> and the <ConceptLink targetId="plano">plane</ConceptLink>.
+
+<Definicion title="">
+  Given two distinct points <VisualBind element="A" color="musgo">$A$</VisualBind> and <VisualBind element="B" color="musgo">$B$</VisualBind> in an affine or Euclidean space $\mathcal{E}$, the line <VisualBind element="line" color="musgo">$\ell = \overleftrightarrow{AB}$</VisualBind> is the one-dimensional continuous set of points uniquely determined by the affine combinations of $A$ and $B$:
+  $$
+  \ell = \{ P \in \mathcal{E} \mid P = (1 - t)A + tB, \, t \in \mathbb{R} \}
+  $$
+  In <ConceptLink targetId="geometria-analitica">analytic geometry</ConceptLink> over $\mathbb{R}^2$, it is expressed by the implicit equation $Ax + By + C = 0$, with $(A, B) \neq (0, 0)$.
+</Definicion>
+
+<Separador />
+
+### Equation forms in the Cartesian plane
+
+The algebraic expression of a line takes several equivalent forms depending on the known geometric parameters:
+
+| Algebraic form | Mathematical equation | Representative parameters |
+|---|---|---|
+| Vectorial | $\vec{r}(t) = \vec{p}_0 + t\vec{v}$ | Base point $\vec{p}_0$, direction vector $\vec{v}$ |
+| Slope-intercept | $y = mx + b$ | Slope $m$, y-intercept $b$ |
+| Symmetric | $\frac{x - x_0}{v_x} = \frac{y - y_0}{v_y}$ | Direction vector components $(v_x, v_y)$ |
+
+<Separador />
+
+### Properties
+
+- **<ConceptLink targetId="incidencia">Uniqueness axiom</ConceptLink>**: Two distinct <ConceptLink targetId="punto">points</ConceptLink> lie on one and only one line in Euclidean space.
+- **<ConceptLink targetId="estar-entre">Continuity and infinity</ConceptLink>**: It extends boundlessly without endpoints and possesses the cardinality of the continuum ($\text{card}(\ell) = \lvert \mathbb{R} \rvert$).
+- **<ConceptLink targetId="geodesica">Euclidean geodesic</ConceptLink>**: The path along a line represents the shortest <ConceptLink targetId="distancia">distance</ConceptLink> between any two of its points.

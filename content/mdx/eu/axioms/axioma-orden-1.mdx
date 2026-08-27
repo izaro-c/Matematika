@@ -2,34 +2,43 @@ export const metadata = {
   id: "axioma-orden-1",
   lang: "eu",
   type: "axioma",
-  title: "II.1 Axioma (Ordenearen Simetria eta Bereizketa)",
-  description: "B puntua A eta C-ren artean badago, A, B eta C zuzen bereko puntu desberdinak dira eta B C eta A-ren artean dago.",
+  title: "II.1 Axioma (Artekotasunaren simetria eta kolinealtasuna)",
+  description: "B puntua A eta C artean badago, A, B eta C zuzen bereko hiru puntu desberdin dira eta B puntua C eta A artean ere badago.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §3", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §3", role: "primary" }
+  ]
 };
 
 import { Order1 } from '@content/diagrams/Axiomas/Order1';
 export const Simulation = Order1;
 
-<Capitular letra="H" />ilberten ordena-erlaziorako lehen <ConceptLink targetId="axioma-orden-1">axiomak</ConceptLink> <ConceptLink targetId="estar-entre">tartean egon</ConceptLink> jatorrizko erlazio hirutarraren pertenentzia eta simetria baldintzak ezartzen ditu.
+<Capitular letra="O" />rdena-taldeko (artekotasuneko) lehen <ConceptLink targetId="axioma">axioma</ConceptLink> honek, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-ek formulatuak, "artean egote" erlazio hirutarraren izaera simetrikoa eta barne-kolinealtasuna ezartzen ditu. $B$ <ConceptLink targetId="punto">puntua</ConceptLink> $A$ eta $C$ artean badago, hiru puntuak <ConceptLink targetId="zuzen">zuzen</ConceptLink> berean daude eta elkarrekiko desberdinak dira nahitaez.
 
-<Definicion title="">
-  Baldin eta $A * B * C$ bada, orduan $A, B, C$ zuzen bereko hiru puntu desberdin dira eta $C * B * A$ simetria betetzen da:
+<Definicion title="Enuntziatu formala">
+  $B$ <ConceptLink targetId="punto">puntua</ConceptLink> $A$ eta $C$ artean badago ($A\text{-}B\text{-}C$ notazioaz), orduan $A, B, C$ <ConceptLink targetId="zuzen">zuzen</ConceptLink> bereko hiru puntu desberdin dira, eta $B$ puntua $C$ eta $A$ artean ere badago ($C\text{-}B\text{-}A$):
   $$
-  A * B * C \implies (A, B, C \text{ lerrokide desberdinak}) \land (C * B * A)
+  A\text{-}B\text{-}C \implies \bigl(A \neq B \land B \neq C \land A \neq C \land \exists l \in \mathcal{L} \ (A,B,C \in l) \land C\text{-}B\text{-}A\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan <VisualBind element="line" color="carbon">$l$</VisualBind> zuzenaren gaineko <VisualBind element="pA" color="terracota">$A$</VisualBind> puntuaren, erdiko <VisualBind element="pB" color="terracota">$B$</VisualBind> puntuaren eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntuaren lerrokatzea ikusten da. $A * B * C \iff C * B * A$ simetriak ibilbidearen norabidearen independentzia bermatzen du.
+Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntuak lerrokatuta daude. Erdiko $B$ elementuak $A\text{-}B\text{-}C$ erlazioa betetzen du, eta irakurketa geometrikoa eskuinetik ezkerrera alderantzikatzean $C\text{-}B\text{-}A$ baliokidetasun simetrikoa egiaztatzen da.
 
 <Separador />
 
-### Ordenaren oinarri formala
+### Esanahi geometrikoa eta esparrua
 
-Axioma honek erlazio hirutarreko hiru puntuen arteko bereizketa bermatzen du eta lerrokidetasun zorrotza ezartzen du. Bitartekotasuna zuzenaren irakurketa-norabidearen mende ez dagoela ezartzen du.
+Dimentsio bakarreko antolaketa-erlazio primitiboa formalizatzen du, koordenatu errealen edo distantzia zenbakizkoen mende egon gabe. Orientazio espazialaren independentzia bermatzen du <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
+
+<Separador />
+
+### Propietateak
+
+- **Barne-simetria:** $A\text{-}B\text{-}C$ erlazioa eta $C\text{-}B\text{-}A$ erabat baliokideak dira.
+- **Nahitaezko kolinealtasuna:** Artekotasuna zuzen euskarri bereko hirukoteetan bakarrik da baliozkoa.
+- **Bereizketa hirukoitza:** $A = B$, $B = C$ edo $A = C$ kasuak baztertzen ditu artekotasun-erlazioan.

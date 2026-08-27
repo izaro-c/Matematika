@@ -1,71 +1,56 @@
 {
   "topologicalOrder": [
     "axioma-incidencia-1",
-    "axioma-incidencia-2",
-    "axioma-incidencia-3",
-    "axioma-incidencia-4",
-    "axioma-incidencia-5",
-    "axioma-incidencia-6",
-    "axioma-incidencia-7",
-    "axioma-incidencia-8",
     "axioma-orden-1",
-    "axioma-orden-2",
-    "axioma-orden-3",
-    "axioma-orden-4",
     "axioma-congruencia-1",
-    "axioma-congruencia-2",
-    "estar-entre",
-    "axioma-congruencia-3",
-    "axioma-congruencia-4",
-    "axioma-congruencia-5",
-    "axioma-arquimedes",
-    "axioma-completitud",
-    "sistema-incidencia",
-    "congruencia",
     "sistema-absoluto",
     "axioma-paralelas-euclides",
     "sistema-euclidiano",
     "axioma-paralelas-hiperbolico",
     "sistema-hiperbolico",
-    "recta",
-    "punto",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "sistema-incidencia",
+    "axioma-arquimedes",
+    "axioma-completitud",
+    "axioma-congruencia-2",
+    "axioma-congruencia-3",
+    "axioma-congruencia-4",
+    "axioma-congruencia-5",
+    "axioma-incidencia-4",
+    "axioma-incidencia-5",
+    "axioma-incidencia-6",
+    "axioma-incidencia-7",
+    "axioma-incidencia-8",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-4",
     "angulo",
-    "angulos-suplementarios",
     "circunferencia",
-    "segmento",
+    "congruencia",
     "cuadrilatero",
-    "cuadrado",
+    "derivada",
+    "estar-entre",
+    "grupo",
     "paralelas",
     "paralelogramo",
     "perpendicular",
-    "triangulo",
+    "punto",
+    "recta",
+    "segmento",
     "semejanza",
-    "teoria-medida-area",
-    "triangulo-rectangulo",
+    "triangulo",
     "demo-angulos-alternos-internos",
     "demo-angulos-opuestos-verticales",
     "demo-existencia-bisectriz",
+    "teorema-area-triangulo",
     "teorema-area-aditividad",
     "demo-pitagoras-areas",
     "demo-pitagoras-euclides",
     "teorema-angulos-alternos-internos",
     "demo-suma-angulos-triangulo",
-    "teorema-area-triangulo",
     "demo-tales",
     "demo-triangulo-isosceles",
-    "teorema-pitagoras",
-    "ejemplo-pitagoras-calculo",
-    "ejercicio-clasificacion-triangulos",
-    "ejercicio-pitagoras-cateto",
-    "arquimedes",
-    "bolyai",
-    "dedekind",
-    "euclides",
-    "hilbert",
-    "lobachevski",
-    "pasch",
-    "pitagoras",
-    "tales",
     "metodo-contradiccion",
     "metodo-directo",
     "metodo-induccion",
@@ -77,288 +62,240 @@
     "teorema-angulos-opuestos-verticales",
     "teorema-area-rectangulo",
     "teorema-congruencia-ala",
+    "teorema-pitagoras",
     "teorema-suma-angulos-triangulo",
     "teorema-tales",
     "teorema-triangulo-isosceles",
-    "caso-gps-trilateracion"
+    "caso-gps-trilateracion",
+    "angulos-suplementarios",
+    "cuadrado",
+    "teoria-medida-area",
+    "triangulo-rectangulo",
+    "ejemplo-pitagoras-calculo",
+    "ejercicio-clasificacion-triangulos",
+    "ejercicio-pitagoras-cateto",
+    "arquimedes",
+    "bolyai",
+    "dedekind",
+    "euclides",
+    "hilbert",
+    "lobachevski",
+    "pasch",
+    "pitagoras",
+    "tales"
   ],
   "nodes": {
     "sistema-absoluto": {
       "id": "sistema-absoluto",
       "type": "sistema-axiomatico",
-      "title": "Geometria Absolutua",
-      "description": "Hilberten 19 axiomek (intzidentzia, ordena, kongruentzia eta jarraitutasuna) osatutako egitura axiomatiko neutroa, paraleloen postulatua suposatu gabe.",
+      "title": "Geometria absolutuaren sistema",
+      "description": "János Bolyai-k eratutako egitura axiomatikoa, intzidentzia, ordena, kongruentzia eta jarraitutasun axioma guztiak biltzen dituena paraleloen axiomarik suposatu gabe.",
       "proofs": [],
       "directDependencies": [
         "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
         "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud",
-        "sistema-incidencia",
-        "congruencia"
+        "axioma-congruencia-1"
       ]
     },
     "sistema-euclidiano": {
       "id": "sistema-euclidiano",
       "type": "sistema-axiomatico",
-      "title": "Geometria Euklidearra",
-      "description": "Plano eta espazioko geometria klasikoko sistema axiomatikoa, paraleloen bakartasun-axioma geometria absolutuko 19 axiomei uztean datzana.",
+      "title": "Sistema axiomatiko euklidesarra",
+      "description": "Plano-geometria estandarraren egitura axiomatiko kanonikoa, geometria absolutuaz eta Playfair-en paraleloen axiomaz osatua.",
       "proofs": [],
       "directDependencies": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
-        "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud",
-        "axioma-paralelas-euclides",
-        "sistema-absoluto"
+        "axioma-paralelas-euclides"
       ]
     },
     "sistema-hiperbolico": {
       "id": "sistema-hiperbolico",
       "type": "sistema-axiomatico",
-      "title": "Geometria Hiperbolikoa",
-      "description": "Kurbatura gaussiar negatibo konstanteko geometria ez-euklidearra, paraleloen axioma euklidearra Lobachevski-Bolyairren postulatuaz ordezkatzen duena.",
+      "title": "Geometria hiperbolikoaren sistema",
+      "description": "Lobachevski eta Gauss-en egitura axiomatikoa, geometria absolutuaz eta paralelo hiperboliko anizkoitzen axiomaz osatua.",
       "proofs": [],
       "directDependencies": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
-        "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud",
-        "axioma-paralelas-hiperbolico",
-        "sistema-absoluto"
+        "axioma-paralelas-hiperbolico"
       ]
     },
     "sistema-incidencia": {
       "id": "sistema-incidencia",
       "type": "sistema-axiomatico",
-      "title": "Intzidentzia Sistema",
-      "description": "Ordena, kongruentzia edo neurriaren nozioak barne hartu gabe, puntu, zuzen eta planoen arteko jatorrizko pertenentzia-erlazioak gobernatzen dituen geometriako oinarrizko egitura axiomatikoa.",
+      "title": "Intzidentzia-sistema",
+      "description": "Puntu, zuzen eta planoen arteko pertenentzia-erlazio formalak arautzen dituen oinarrizko sistema axiomatikoa.",
       "proofs": [],
       "directDependencies": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8"
+        "axioma-incidencia-3"
       ]
     },
     "axioma-arquimedes": {
       "id": "axioma-arquimedes",
       "type": "axioma",
-      "title": "V.1 Axioma (Arkimedesen Axioma)",
-      "description": "Edozein bi zuzenki emanda, txikienaren multiplo oso bat existitzen da luzeran handiena gainditzen duena.",
+      "title": "Arkimedesen Axioma",
+      "description": "Edozein AB zuzenki eta CD zuzenki emanda, n zenbaki natural bat existitzen da n bider katenatutako CD zuzenkiak AB zuzenkiaren luzera gainditzeko moduan.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-completitud": {
       "id": "axioma-completitud",
       "type": "axioma",
-      "title": "V.2 Axioma (Osotasun Axioma)",
-      "description": "Geometriako elementuen sistema maximoa da eta ez du luzapenik onartzen aurreko axiomen baliozkotasuna mantenduz.",
+      "title": "Dedekinden Osotasun Axioma",
+      "description": "Zuzen bateko puntu guztiak bi klase ez-hutsetan banatzen badira, lehenengo klaseko punturik bigarren klaseko bi punturen artean ez dagoelarik, banaketa hori sortzen duen puntu bakar bat existitzen da.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-congruencia-1": {
       "id": "axioma-congruencia-1",
       "type": "axioma",
-      "title": "III.1 Axioma (Zuzenkiak Garraiatzea)",
-      "description": "AB zuzenki bat eta C jatorria duen erruzuzen bat emanda, erruzuzenean D puntu bakarra existitzen da non AB eta CD kongruenteak diren.",
+      "title": "III.1 Axioma (Zuzenkien Garraioa)",
+      "description": "AB zuzenki bat eta C jatorria duen zuzenerdi bat emanda, zuzenerdi horretan D puntu bakar bat existitzen da AB eta CD zuzenkiak kongruenteak izateko moduan.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-congruencia-2": {
       "id": "axioma-congruencia-2",
       "type": "axioma",
-      "title": "III.2 Axioma (Zuzenkien Kongruentziaren Transitibitatea)",
-      "description": "Zuzenkien arteko kongruentzia erlazio transitiboa da.",
+      "title": "III.2 Axioma (Zuzenkien Transitibitatea)",
+      "description": "Bi zuzenki hirugarren zuzenki berdin bati kongruenteak bazaizkio, beren artean ere kongruenteak dira; gainera, zuzenki oro bere buruarekiko kongruentea da.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-congruencia-3": {
       "id": "axioma-congruencia-3",
       "type": "axioma",
-      "title": "III.3 Axioma (Zuzenki Kongruenteen Batuketa)",
-      "description": "Zuzenkien kongruentzia gordetzen da zuzenaren gaineko batuketa-eragiketaren pean.",
+      "title": "III.3 Axioma (Zuzenkien Batura)",
+      "description": "Lerrokatutako bi zuzenki elkarren segidakoak beste bi zuzenki elkarren segidakorekin kongruenteak badira hurrenez hurren, beren muturrekin osatutako batura-zuzenkiak ere kongruenteak dira.",
       "proofs": [],
-      "directDependencies": [
-        "estar-entre"
-      ]
+      "directDependencies": []
     },
     "axioma-congruencia-4": {
       "id": "axioma-congruencia-4",
       "type": "axioma",
-      "title": "III.4 Axioma (Angeluak Garraiatzea)",
-      "description": "Angelu bat eta finkatutako semiplano bateko erruzuzen bat emanda, emandako angeluarekin kongruentea den angelu bat osatzen duen erruzuzen bakarra existitzen da.",
+      "title": "III.4 Axioma (Anguluen Garraioa)",
+      "description": "Angulu bat, zuzenerdi bat eta hura muga duen erdiplano bat emanda, angelu emandakoarekin kongruentea den angelu bakar bat existitzen da zuzenerdiaren jatorrian vertezea duena.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-congruencia-5": {
       "id": "axioma-congruencia-5",
       "type": "axioma",
-      "title": "III.5 Axioma (Kongruentziaren ALA Kriterioa)",
-      "description": "Triangelu baten bi alde eta beren arteko angelua beste triangelu baten homologoekin kongruenteak badira, triangeluak kongruenteak dira.",
+      "title": "III.5 Axioma (LAL Kongruentzia Kriterioa)",
+      "description": "Bi triangeluk bi alde eta bien artean bildutako angelua hurrenez hurren kongruenteak badituzte, orduan gainerako angeluak ere kongruenteak dira.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-incidencia-1": {
       "id": "axioma-incidencia-1",
       "type": "axioma",
-      "title": "I.1 Axioma (Zuzenaren Existentzia eta Bakartasuna)",
-      "description": "Espazioko bi puntu desberdinetatik zuzen zehatz bat eta bakarra igarotzen da.",
+      "title": "I.1 Axioma (Zuzenaren existentzia eta bakartasuna)",
+      "description": "Espazioko bi puntu desberdin emanda, biak barne hartzen dituen zuzen bakar bat existitzen da.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-incidencia-2": {
       "id": "axioma-incidencia-2",
       "type": "axioma",
-      "title": "I.2 Axioma (Zuzeneko Puntuen Existentzia)",
-      "description": "Zuzen bakoitzak gutxienez bere baitan intzidentzialak diren bi puntu desberdin ditu.",
+      "title": "I.2 Axioma (Zuzeneko puntuen existentzia)",
+      "description": "Zuzen bakoitzak gutxienez espazioko bi puntu desberdin ditu.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-incidencia-3": {
       "id": "axioma-incidencia-3",
       "type": "axioma",
-      "title": "I.3 Axioma (Puntu Ez-lerrokideen Existentzia)",
-      "description": "Gutxienez hiru puntu daude espazioan zuzen beraren gainean intzidentzialak ez direnak.",
+      "title": "I.3 Axioma (Zuzen berean ez dauden puntuen existentzia)",
+      "description": "Zuzen berean ez dauden gutxienez hiru puntu existitzen dira espazioan.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-incidencia-4": {
       "id": "axioma-incidencia-4",
       "type": "axioma",
-      "title": "I.4 Axioma (Planoaren Existentzia eta Bakartasuna)",
-      "description": "Zuzen beran ez dauden hiru puntutarako, plano bakarra existitzen da hiru puntuak barne hartzen dituena.",
+      "title": "I.4 Axioma (Planoaren existentzia eta bakartasuna)",
+      "description": "Zuzen berean ez dauden espazioko hiru puntu emanda, hiruak barne hartzen dituen plano bakar bat existitzen da.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-incidencia-5": {
       "id": "axioma-incidencia-5",
       "type": "axioma",
-      "title": "I.5 Axioma (Planoan Puntuen Existentzia)",
-      "description": "Plano bakoitzak gutxienez bere baitan lerrokide ez diren hiru puntu ditu.",
+      "title": "I.5 Axioma (Zuzenaren inklusioa planoan)",
+      "description": "Zuzen bateko bi puntu desberdin plano baten barnean badaude, zuzen osoa plano horren barnean dago.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-incidencia-6": {
       "id": "axioma-incidencia-6",
       "type": "axioma",
-      "title": "I.6 Axioma (Zuzenaren Intzidentzia Planoan)",
-      "description": "Zuzen baten bi puntu plano batean intzidentzialak badira, orduan zuzeneko puntu guztiak plano horretan intzidentzialak dira.",
+      "title": "I.6 Axioma (Bi planoren ebakidura)",
+      "description": "Bi plano desberdinek puntu komun bat badute, gutxienez beste puntu komun bat dute eta zuzen batean ebakitzen dute elkar.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-incidencia-7": {
       "id": "axioma-incidencia-7",
       "type": "axioma",
-      "title": "I.7 Axioma (Planoen Ebakidura)",
-      "description": "Bi plano desberdinek elkar ebakitzen badute, haien ebakidura zuzen zehatz bat da.",
+      "title": "I.7 Axioma (Zuzen berean ez dauden puntuen existentzia planoan)",
+      "description": "Plano bakoitzean zuzen berean ez dauden gutxienez hiru puntu existitzen dira.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-incidencia-8": {
       "id": "axioma-incidencia-8",
       "type": "axioma",
-      "title": "I.8 Axioma (Puntu Ez-koplanarren Existentzia)",
-      "description": "Gutxienez lau puntu daude espazioan plano beraren gainean intzidentzialak ez direnak.",
+      "title": "I.8 Axioma (Plano berean ez dauden puntuen existentzia)",
+      "description": "Plano berean ez dauden gutxienez lau puntu existitzen dira espazioan.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-orden-1": {
       "id": "axioma-orden-1",
       "type": "axioma",
-      "title": "II.1 Axioma (Ordenearen Simetria eta Bereizketa)",
-      "description": "B puntua A eta C-ren artean badago, A, B eta C zuzen bereko puntu desberdinak dira eta B C eta A-ren artean dago.",
+      "title": "II.1 Axioma (Artekotasunaren simetria eta kolinealtasuna)",
+      "description": "B puntua A eta C artean badago, A, B eta C zuzen bereko hiru puntu desberdin dira eta B puntua C eta A artean ere badago.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-orden-2": {
       "id": "axioma-orden-2",
       "type": "axioma",
-      "title": "II.2 Axioma (Tarteko Puntuen Existentzia)",
-      "description": "Bi A eta C puntu desberdin emanda, gutxienez B puntu bat existitzen da AC zuzenean A eta C-ren artean dagoena.",
+      "title": "II.2 Axioma (Segmentuaren luzapena)",
+      "description": "Bi A eta C puntu desberdin emanda, gutxienez B puntu bat existitzen da zuzenean, C puntua A eta B artean egonik.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-orden-3": {
       "id": "axioma-orden-3",
       "type": "axioma",
-      "title": "II.3 Axioma (Bitartekotasun Lerrokidearen Bakartasuna)",
-      "description": "Zuzen baten gaineko hiru puntu desberdin emanda, horietako zehazki batek kokatzen da beste bien artean.",
+      "title": "II.3 Axioma (Zuzen-ordenaren trikotomia)",
+      "description": "Zuzen bereko hiru puntu desberdinetatik, bakar bat eta soilik bat dago beste bien artean.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-orden-4": {
       "id": "axioma-orden-4",
       "type": "axioma",
-      "title": "II.4 Axioma (Paschen Axioma)",
-      "description": "Plano bereko zuzen batek triangelu baten alde bat ebakitzen badu bere erpinetatik igaro gabe, orduan beste bi aldeetako bat ere ebakitzen du.",
+      "title": "II.4 Axioma (Pasch-en axioma)",
+      "description": "Triangelu baten planoan dagoen zuzen batek haren errenkadetatik igaro gabe alde bat ebakitzen badu, orduan beste bi aldeetako bat ere ebakiko du.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-paralelas-euclides": {
       "id": "axioma-paralelas-euclides",
       "type": "axioma",
-      "alternativeGroup": "postulado-paralelas",
-      "title": "Euklidesen Paraleloen Axioma",
-      "description": "Zuzen bat eta berarekiko kanpoko puntu bat emanda, puntu horretatik igarotzen den eta emandako zuzenarekiko paraleloa den zuzen bakarra existitzen da.",
+      "alternativeGroup": "paralelismo",
+      "title": "Euklidesen Paraleleoen Axioma",
+      "description": "Zuzen bat eta kanpoko puntu bat emanda, puntu horretatik igarotzen den eta emandako zuzenarekiko paraleloa den zuzen bakar bat existitzen da.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-paralelas-hiperbolico": {
       "id": "axioma-paralelas-hiperbolico",
       "type": "axioma",
-      "alternativeGroup": "postulado-paralelas",
-      "title": "Lobachevski-Bolyairen Paraleloen Axioma",
-      "description": "Zuzen bat eta berarekiko kanpoko puntu bat emanda, puntu horretatik igarotzen diren eta emandako zuzenarekiko paraleloak diren gutxienez bi zuzen desberdin existitzen dira.",
+      "alternativeGroup": "paralelismo",
+      "title": "Paraleleo Hiperbolikoen Axioma",
+      "description": "Zuzen bat eta kanpoko puntu bat emanda, gutxienez bi zuzen desberdin existitzen dira puntu horretatik igarotzen direnak eta emandako zuzena ebakitzen ez dutenak.",
       "proofs": [],
       "directDependencies": []
     },
@@ -367,14 +304,434 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Angelua",
-      "description": "Erpin deritzon jatorri-puntu bera partekatzen duten bi erredierari ez-lerrokidek osatutako irudi geometrikoa.",
+      "description": "Erpin izeneko jatorri bera partekatzen duten bi zuzenerdik mugatutako planoaren eskualdea.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "circunferencia": {
+      "id": "circunferencia",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Zirkunferentzia",
+      "description": "Zentro deritzon puntu finko batetik distantzia berera dauden planoko puntu guztien leku geometrikoa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "congruencia": {
+      "id": "congruencia",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Kongruentzia geometrikoa",
+      "description": "Distantziak eta angeluak gordetzen dituen isometria baten bidez gainjar daitezkeen irudi geometrikoen arteko ekibalentzia-erlazioa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "cuadrilatero": {
+      "id": "cuadrilatero",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Koadrilateroa",
+      "description": "Lau erpin ez-lerrokide lotzen dituzten lau zuzenkiz osatutako lau aldeboko plano-poligonoa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "derivada": {
+      "id": "derivada",
+      "type": "definicion",
+      "subtype": "analitico",
+      "title": "Deribatua",
+      "description": "Funtzio matematiko baten berehalako aldaketa-tasaren neurria bere aldagai independentearekiko, gehikuntza-kozientearen mugaren bidez definitua.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "estar-entre": {
+      "id": "estar-entre",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Tartean egon",
+      "description": "Hiru puntu lerrokideren arteko bitartekotasuna zehazten duen orden linealeko oinarrizko erlazio hirutarra.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "grupo": {
+      "id": "grupo",
+      "type": "definicion",
+      "subtype": "algebraico",
+      "title": "Taldea",
+      "description": "Asoziatibitatea, elementu neutroa eta alderantzizkoa betetzen dituen eragiketa bitar batez hornitutako multzoak osatutako oinarrizko egitura aljebraikoa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "paralelas": {
+      "id": "paralelas",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Zuzen paraleloak",
+      "description": "Puntu komunik ez duten edo guztiz bat datozen plano bereko bi zuzenen arteko erlazio geometrikoa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "paralelogramo": {
+      "id": "paralelogramo",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Paralelogramoa",
+      "description": "Bi aurkako alde-pareak binaka paraleloak dituen koadrilatero konbexua.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "perpendicular": {
+      "id": "perpendicular",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Zuzen elkarzutak",
+      "description": "Lau barne-angelu zuzen kongruente osatuz elkar ebakitzen duten bi zuzenen arteko erlazio geometrikoa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "punto": {
+      "id": "punto",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Puntua",
+      "description": "Zati gabeko eta dimentsiorik gabeko oinarrizko elementu geometrikoa, espazioan kokapen zehatz bat definitzen duena.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "recta": {
+      "id": "recta",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Zuzena",
+      "description": "Mugagabe luzatzen den norabide bakarreko dimentsio bakarreko objektu geometriko jarraitua.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "segmento": {
+      "id": "segmento",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Zuzenki",
+      "description": "Bi puntu muga (muturrak) barne hartzen dituen zuzen baten zati mugatua.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "semejanza": {
+      "id": "semejanza",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Antzekotasun geometrikoa",
+      "description": "Irudien forma babesten duen eta distantzien arteko proportzionaltasun-erlazioa konstante mantentzen duen ekibalentzia-erlazioa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "triangulo": {
+      "id": "triangulo",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Triangelua",
+      "description": "Hiru puntu ez-lerrokide lotzen dituzten hiru zuzenkien batasunak zehaztutako oinarrizko plano-poligonoa.",
       "proofs": [],
       "directDependencies": [
-        "recta",
-        "punto",
-        "axioma-congruencia-4",
+        "segmento"
+      ]
+    },
+    "demo-angulos-alternos-internos": {
+      "id": "demo-angulos-alternos-internos",
+      "type": "demostracion",
+      "title": "Froga: Barne-angelu alternoen teorema",
+      "description": "Barne-angelu alternoen berdintasunaren bidezko paralelo-kriterioaren absurdoaren bidezko froga.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-angulos-opuestos-verticales": {
+      "id": "demo-angulos-opuestos-verticales",
+      "type": "demostracion",
+      "title": "Froga: Erpinez aurkako angeluak",
+      "description": "Zuzen baten gaineko angelu albokideen osagarritasunean eta kongruentzien kenketan oinarritutako froga zuzena.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-existencia-bisectriz": {
+      "id": "demo-existencia-bisectriz",
+      "type": "demostracion",
+      "title": "Froga: Bisektorearen existentzia eta bakartasuna",
+      "description": "Angelu baten bisektorearen existentziaren eta bakartasunaren froga eraikitzaile formala, triangeluen kongruentziaren eta zuzenkien garraioaren bidez.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-pitagoras-areas": {
+      "id": "demo-pitagoras-areas",
+      "type": "demostracion",
+      "title": "Froga: Pitagorasen teorema (Azaleraren zateketaren metodoa)",
+      "description": "(a+b) aldebakarreko karratu baten azalera lau triangelu angeluzuzen eta barneko karratu batean zatituz egindako aljebra eta geometria froga.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-pitagoras-euclides": {
+      "id": "demo-pitagoras-euclides",
+      "type": "demostracion",
+      "title": "Froga: Pitagorasen teorema (Euklidesen metodoa)",
+      "description": "Euklidesen froga klasikoa, hipotenusaren gaineko karratua katetoen karratuen azalera berdineko bi laukizuzenetan zatituz.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-suma-angulos-triangulo": {
+      "id": "demo-suma-angulos-triangulo",
+      "type": "demostracion",
+      "title": "Froga: Triangelu baten angeluen batura",
+      "description": "Euklidesen froga klasikoa, kontrako bertizetik oinarriarekiko zuzen paralelo bat marraztuz eta barne-angelu alternoen kongruentzia erabiliz.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-tales": {
+      "id": "demo-tales",
+      "type": "demostracion",
+      "title": "Froga: Talesen teorema",
+      "description": "Hiru edo gehiago zuzen paralelok bi ebakitzaileetan zehaztutako zuzenkien arteko proportzionaltasunaren froga zuzena.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "demo-triangulo-isosceles": {
+      "id": "demo-triangulo-isosceles",
+      "type": "demostracion",
+      "title": "Froga: Triangelu isoszelearen teorema",
+      "description": "Pappus-en froga dotorea, triangelu isoszele baten autokongruentzia erabiliz bere oinarriko angeluen berdintasuna frogatzeko.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "metodo-contradiccion": {
+      "id": "metodo-contradiccion",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Aurkakotasun-metodoa",
+      "description": "Ezeztapenezko zeharkako metodoa: tesia faltsua dela suposatuz kontraesan logiko bat deduzitzen da.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "metodo-directo": {
+      "id": "metodo-directo",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Zuzeneko metodoa",
+      "description": "Hipotesitik tesira inferentzia baliozkoak kencatuz garatzen den dedukzio-estrategia oinarrizkoa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "metodo-induccion": {
+      "id": "metodo-induccion",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Indukzio matematikoaren metodoa",
+      "description": "Zenbaki naturalei buruzko proposizio parametrizatuak frogatzeko dedukzio-teknika, induizio osoaren printzipioan oinarritua.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "modelo-cartesiano": {
+      "id": "modelo-cartesiano",
+      "type": "modelo",
+      "title": "Plano kartesiarra",
+      "description": "Zenbaki errealen bikote ordenatuetan oinarritutako geometria euklidesar bi dimentsionalaren eredu analitiko kanonikoa.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "axioma-paralelas-euclides"
+      ]
+    },
+    "modelo-fano": {
+      "id": "modelo-fano",
+      "type": "modelo",
+      "title": "Fanoren planoa",
+      "description": "7 puntuz eta 7 zuzenez osatutako plano proiektibo finitu minimala, non zuzen bakoitzak zehazki 3 puntu baitauzka.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ]
+    },
+    "modelo-poincare": {
+      "id": "modelo-poincare",
+      "type": "modelo",
+      "title": "Poincareren diskoa",
+      "description": "Bi dimentsioko geometria hiperbolikoaren eredu konformea, zenbaki errealen plano ez-osoko disko batasunaren barruan.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "axioma-paralelas-hiperbolico"
+      ]
+    },
+    "modelo-tres-puntos": {
+      "id": "modelo-tres-puntos",
+      "type": "modelo",
+      "title": "Hiru puntuko eredua",
+      "description": "Hiru puntuk eta hiru zuzenek osatutako egitura geometriko finitua, intzidentzia-axioma nagusiak betetzen dituena.",
+      "proofs": [],
+      "directDependencies": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ]
+    },
+    "camino-teorema-pitagoras": {
+      "id": "camino-teorema-pitagoras",
+      "type": "plan-de-estudio",
+      "title": "Pitagorasen teoremara bidea",
+      "description": "Ezagutu geometria euklidesarreko erlazio metriko ospetsuenaren atzean dagoen rigoera logikoa eta edertasun bisuala, oinarrizko definizioetatik satelite bidezko kokapeneraino.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "teorema-angulos-alternos-internos": {
+      "id": "teorema-angulos-alternos-internos",
+      "type": "teorema",
+      "title": "Barne-angelu alternoen teorema",
+      "description": "Bi zuzen paralelo zuzen ebakitzaile batek ebakitzen dituenean, lortutako barne-angelu alternoak beren artean kongruenteak dira.",
+      "proofs": [
+        {
+          "id": "demo-angulos-alternos-internos",
+          "dependencies": []
+        }
+      ],
+      "directDependencies": [
+        "axioma-paralelas-euclides"
+      ]
+    },
+    "teorema-angulos-opuestos-verticales": {
+      "id": "teorema-angulos-opuestos-verticales",
+      "type": "teorema",
+      "title": "Erpinez aurkako angeluen teorema",
+      "description": "Bi zuzen ebakitzaile puntu batean elkartzen direnean, sortutako erpinez aurkako angelu bikoteak beren artean kongruenteak dira.",
+      "proofs": [
+        {
+          "id": "demo-angulos-opuestos-verticales",
+          "dependencies": [
+            "axioma-congruencia-4"
+          ]
+        }
+      ],
+      "directDependencies": []
+    },
+    "teorema-area-aditividad": {
+      "id": "teorema-area-aditividad",
+      "type": "teorema",
+      "title": "Azaleraren aditibotasun-teorema",
+      "description": "Plano-eremu poligonal bat barnealdetan elkarren artean disjuntuak diren azpieremu poligonal kopuru finitu batean banatzen denean, azalera osoa zatian azaleraren batura da.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "teorema-area-rectangulo": {
+      "id": "teorema-area-rectangulo",
+      "type": "teorema",
+      "title": "Laukizuzenaren azaleraren teorema",
+      "description": "Edozein laukizuzen-eremuren azalera bere oinarriaren luzeraren eta bere altueraren luzeraren arteko biderkadura eskalarraren berdina da.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "teorema-area-triangulo": {
+      "id": "teorema-area-triangulo",
+      "type": "teorema",
+      "title": "Triangeluaren azaleraren teorema",
+      "description": "Edozein triangelu-eremuren azalera bere oinarrien baten luzeraren eta dagokion altueraren biderkadurgaren erdiaren berdina da.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "teorema-congruencia-ala": {
+      "id": "teorema-congruencia-ala",
+      "type": "teorema",
+      "title": "Angelu-Alde-Angelu (ALA) kongruentzia teorema",
+      "description": "Bi triangeluk hurrenez hurren bi angelu eta euren arteko aldea kongruenteak badituzte, orduan bi triangeluak kongruenteak dira.",
+      "proofs": [
+        {
+          "id": "demo-existencia-bisectriz",
+          "dependencies": [
+            "axioma-congruencia-1"
+          ]
+        }
+      ],
+      "directDependencies": [
         "axioma-congruencia-5"
       ]
+    },
+    "teorema-pitagoras": {
+      "id": "teorema-pitagoras",
+      "type": "teorema",
+      "title": "Pitagorasen teorema",
+      "description": "Edozein triangelu angeluzuzenetan, hipotenusaren gainean eraikitako karratuaren azalera katetoen gainean eraikitako karratuen azaleran batura berdina da.",
+      "proofs": [
+        {
+          "id": "demo-pitagoras-areas",
+          "dependencies": [
+            "teorema-area-triangulo",
+            "teorema-area-aditividad"
+          ]
+        },
+        {
+          "id": "demo-pitagoras-euclides",
+          "dependencies": [
+            "axioma-congruencia-1",
+            "teorema-area-aditividad"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "axioma-paralelas-euclides"
+      ]
+    },
+    "teorema-suma-angulos-triangulo": {
+      "id": "teorema-suma-angulos-triangulo",
+      "type": "teorema",
+      "title": "Triangelu baten barne-angeluen baturaren teorema",
+      "description": "Geometria euklidetarrean, edozein triangeluren barne-angeluen neurrien batura bi angelu zuzenen (180° edo π rad) berdina da.",
+      "proofs": [
+        {
+          "id": "demo-suma-angulos-triangulo",
+          "dependencies": [
+            "axioma-paralelas-euclides",
+            "teorema-angulos-alternos-internos"
+          ]
+        }
+      ],
+      "directDependencies": [
+        "axioma-paralelas-euclides"
+      ]
+    },
+    "teorema-tales": {
+      "id": "teorema-tales",
+      "type": "teorema",
+      "title": "Talesen teorema",
+      "description": "Bi zuzen ebakitzaile zuzen paraleloen familia batek ebakitzen dituenean, ebakitzaile batean mugatutako zuzenkiak beste ebakitzaileko beren dagokien zuzenkiekiko proportzionalak dira.",
+      "proofs": [
+        {
+          "id": "demo-tales",
+          "dependencies": [
+            "teorema-area-triangulo"
+          ]
+        }
+      ],
+      "directDependencies": []
+    },
+    "teorema-triangulo-isosceles": {
+      "id": "teorema-triangulo-isosceles",
+      "type": "teorema",
+      "title": "Triangelu isoszelearen teorema",
+      "description": "Edozein triangelu isoszeletan, alde kongruenteei aurrez aurre dauden angeluak beren artean kongruenteak dira.",
+      "proofs": [
+        {
+          "id": "demo-triangulo-isosceles",
+          "dependencies": [
+            "axioma-congruencia-1"
+          ]
+        }
+      ],
+      "directDependencies": []
+    },
+    "caso-gps-trilateracion": {
+      "id": "caso-gps-trilateracion",
+      "type": "caso-de-uso",
+      "title": "Satelite bidezko kokapena (GPS) eta trilaterazioa",
+      "description": "Distantzia euklidesarren eta Pitagorasen teoremaren aplikazioa lurreko hartzaileen hiru dimentsioko kokapen zehatzerako.",
+      "proofs": [],
+      "directDependencies": []
     },
     "angulos-suplementarios": {
       "id": "angulos-suplementarios",
@@ -387,24 +744,6 @@
         "angulo"
       ]
     },
-    "circunferencia": {
-      "id": "circunferencia",
-      "type": "definicion",
-      "subtype": "fundamentada",
-      "title": "Zirkunferentzia",
-      "description": "Zentro deritzon puntu finko batetik distantzia berera dauden plano baten puntuen leku geometrikoa.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "congruencia": {
-      "id": "congruencia",
-      "type": "definicion",
-      "subtype": "primitivo",
-      "title": "Kongruentzia",
-      "description": "Zuzenkien eta angeluen arteko baliokidetza geometrikozko jatorrizko erlazioa, Hilberten III. taldeko axiomek zehaztutakoa.",
-      "proofs": [],
-      "directDependencies": []
-    },
     "cuadrado": {
       "id": "cuadrado",
       "type": "definicion",
@@ -414,105 +753,6 @@
       "proofs": [],
       "directDependencies": [
         "cuadrilatero"
-      ]
-    },
-    "cuadrilatero": {
-      "id": "cuadrilatero",
-      "type": "definicion",
-      "subtype": "nominal",
-      "title": "Lauhitza (Koadrilateroa)",
-      "description": "Lau alde eta lau erpin dituen plano-poligonoa, beren muturretan soilik ebakitzen diren lau zuzenki koplanarrez mugatua.",
-      "proofs": [],
-      "directDependencies": [
-        "segmento"
-      ]
-    },
-    "estar-entre": {
-      "id": "estar-entre",
-      "type": "definicion",
-      "subtype": "primitivo",
-      "title": "Tartean Egon (Bitartekotasuna)",
-      "description": "Hiru puntu lerrokideren arteko oinarrizko ordena-erlazioa, zuzen bateko puntuen ordena eta planoaren banaketa ezartzen dituena.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "paralelas": {
-      "id": "paralelas",
-      "type": "definicion",
-      "subtype": "nominal",
-      "title": "Zuzen Paraleloak",
-      "description": "Plano beran egonda ebakidura-puntu komun bat bera ere ez duten bi zuzenen arteko erlazioa.",
-      "proofs": [],
-      "directDependencies": [
-        "recta"
-      ]
-    },
-    "paralelogramo": {
-      "id": "paralelogramo",
-      "type": "definicion",
-      "subtype": "fundamentada",
-      "title": "Paralelogramoa",
-      "description": "Bi aurkako alde pareak paraleloki kokatuta dituen koadrilatero konhexua.",
-      "proofs": [],
-      "directDependencies": [
-        "cuadrilatero",
-        "paralelas"
-      ]
-    },
-    "perpendicular": {
-      "id": "perpendicular",
-      "type": "definicion",
-      "subtype": "nominal",
-      "title": "Perpendikulartasuna",
-      "description": "Lau barne-angelu kongruente edo zuzen osatuz elkar ebakitzen duten bi zuzen ebakitzaileen arteko erlazioa.",
-      "proofs": [],
-      "directDependencies": [
-        "recta"
-      ]
-    },
-    "punto": {
-      "id": "punto",
-      "type": "definicion",
-      "subtype": "primitivo",
-      "title": "Puntua",
-      "description": "Dimentsiorik gabeko geometria-entitate primitiboa, espazioan posizio zehatz bat ezartzen duena. Bere izaera matematikoa zuzenekin eta planoekin dituen erlazio axiomatikoek zehaztua da soilik.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "recta": {
-      "id": "recta",
-      "type": "definicion",
-      "subtype": "primitivo",
-      "title": "Zuzena",
-      "description": "Dimentsio bakarreko geometria-entitate infinitu primitiboa. Bere izaera matematikoa intzidentzia-, ordena- eta jarraitutasun-erlazio axiomatikoek zehazten dute.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "segmento": {
-      "id": "segmento",
-      "type": "definicion",
-      "subtype": "nominal",
-      "title": "Zuzenkia",
-      "description": "Bi mutur-puntuk mugatutako zuzen baten azpimultzo konektatu eta mugatua. Kongruentzia eta neurri geometrikoa definitzeko oinarrizko elementua da.",
-      "proofs": [],
-      "directDependencies": [
-        "recta",
-        "punto",
-        "estar-entre",
-        "axioma-orden-2",
-        "axioma-congruencia-1",
-        "axioma-congruencia-3"
-      ]
-    },
-    "semejanza": {
-      "id": "semejanza",
-      "type": "definicion",
-      "subtype": "nominal",
-      "title": "Antzekotasuna",
-      "description": "Forma bera duten irudien arteko baliokidetza geometrikozko erlazioa, korrespondienteak diren angeluak kongruenteak eta alde homologoak proportzionalak direlarik.",
-      "proofs": [],
-      "directDependencies": [
-        "triangulo"
       ]
     },
     "teoria-medida-area": {
@@ -535,81 +775,6 @@
         "triangulo",
         "angulo"
       ]
-    },
-    "triangulo": {
-      "id": "triangulo",
-      "type": "definicion",
-      "subtype": "nominal",
-      "title": "Triangelua",
-      "description": "Hiru puntu ez-lerrokide lotzen dituzten hiru zuzenkien batasunak zehaztutako oinarrizko plano-poligonoa.",
-      "proofs": [],
-      "directDependencies": [
-        "segmento"
-      ]
-    },
-    "demo-angulos-alternos-internos": {
-      "id": "demo-angulos-alternos-internos",
-      "type": "demostracion",
-      "title": "Frogapena: Barne-angelu alternoen teorema",
-      "description": "Frogapena bi zatitan: zuzena (absolutua) absurdora murriztuz kanpo-angeluaren teorema erabiliz; alderantzizkoa (euklidestarra) paraleloaren bakartasuna erabiliz.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "demo-angulos-opuestos-verticales": {
-      "id": "demo-angulos-opuestos-verticales",
-      "type": "demostracion",
-      "title": "Frogapena: Erpinez aurkako angeluen teorema",
-      "description": "Zuzeneko frogapena alboko angeluen osagarritasunean eta angelu kongruenteen kenketa-axioman oinarrituta.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "demo-existencia-bisectriz": {
-      "id": "demo-existencia-bisectriz",
-      "type": "demostracion",
-      "title": "Frogapena: Erdibitzailearen existentzia eta bakartasuna",
-      "description": "Eraikuntza-frogapena erdiko puntuaren lema eta LLL kongruentzia kiterioa erabiliz Hilberten sistema axiomatikoan.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "demo-pitagoras-areas": {
-      "id": "demo-pitagoras-areas",
-      "type": "demostracion",
-      "title": "Frogapena: Pitagorasen teorema (Azaleren baliokidetza)",
-      "description": "Gainazalen deskonposizioan eta isometriapean azaleraren kontserbazioan oinarritutako frogapen formala.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "demo-pitagoras-euclides": {
-      "id": "demo-pitagoras-euclides",
-      "type": "demostracion",
-      "title": "Frogapena: Pitagorasen teorema (Haize-errota)",
-      "description": "Euklidesen frogapen klasikoa triangeluen zizailatze eta kongruentzia bidez, Hilberten sisteman formalizatua.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "demo-suma-angulos-triangulo": {
-      "id": "demo-suma-angulos-triangulo",
-      "type": "demostracion",
-      "title": "Frogapena: Hiruki baten angeluen batura",
-      "description": "Frogapen euklidestar klasikoa aurkako erpinetik zuzen paralelo bat marraztuz eta barne-angelu alternoen propietateaz baliatuz.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "demo-tales": {
-      "id": "demo-tales",
-      "type": "demostracion",
-      "title": "Frogapena: Talesen teorema",
-      "description": "Frogapen geometrikoa altuera bera duten triangeluen azalerren arteko proportzioaz baliatuz.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "demo-triangulo-isosceles": {
-      "id": "demo-triangulo-isosceles",
-      "type": "demostracion",
-      "title": "Frogapena: Triangelu isoszelearen teorema (Pons Asinorum)",
-      "description": "Pappus-en simetria-frogapena, erpinak permutatu ondoren triangeluak bere buruarekin duen kongruentzia eratorriz.",
-      "proofs": [],
-      "directDependencies": []
     },
     "ejemplo-pitagoras-calculo": {
       "id": "ejemplo-pitagoras-calculo",
@@ -706,226 +871,6 @@
       "type": "matematico",
       "title": "Tales Miletokoa",
       "description": "Greziar filosofo eta matematikaria, lehen egiazko matematikari gisa eta Greziako Zazpi Jakintsuetako bat gisa hartua.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "metodo-contradiccion": {
-      "id": "metodo-contradiccion",
-      "type": "metodo",
-      "subtype": "demostracion",
-      "title": "Ezeztapen bidezko frogapena",
-      "description": "Esaera bat egiazkoa dela frogatzea, haren ezeztapenak ezintasun logiko batera daramala erakutsiz. Absurdura bideratzea bezala ere ezaguna.",
-      "proofs": [],
-      "directDependencies": [
-        "axioma-incidencia-1"
-      ]
-    },
-    "metodo-directo": {
-      "id": "metodo-directo",
-      "type": "metodo",
-      "subtype": "demostracion",
-      "title": "Zuzeneko metodoa",
-      "description": "Demonstratzeko oinarrizko estrategia: hipotesitik tesira inplikazio logikoak kateatzea inferentzia baliozkoen bidez.",
-      "proofs": [],
-      "directDependencies": [
-        "teorema-angulos-alternos-internos"
-      ]
-    },
-    "metodo-induccion": {
-      "id": "metodo-induccion",
-      "type": "metodo",
-      "subtype": "demostracion",
-      "title": "Indukzio matematikoa",
-      "description": "Indukzioaren printzipioa: propietate bat zenbaki natural guztietarako balio duela frogatzea oinarrizko kasua eta urrats induktiboa frogatuz.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "modelo-cartesiano": {
-      "id": "modelo-cartesiano",
-      "type": "modelo",
-      "title": "Plano kartesiarra",
-      "description": "Bi dimentsioko geometria eukliderako modelo analitiko estandarra, zenbaki errealen bikote ordenatuak erabiliz.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "modelo-fano": {
-      "id": "modelo-fano",
-      "type": "modelo",
-      "title": "Fanoren planoa",
-      "description": "Plano proiektibo finitu txikiena, 7 puntuz eta 7 zuzenez osatua. Inzidentzia-geometrian ereduzko modeloa.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "modelo-poincare": {
-      "id": "modelo-poincare",
-      "type": "modelo",
-      "title": "Poincaréren diskoa",
-      "description": "Plano hiperbolikoaren modelo konforma, espazioa zirkulu unitario baten barnealdetzat eta zuzenak muga-zirkulua ortogonaliki ebakitzen duten arkutzat hartzen dituena.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "modelo-tres-puntos": {
-      "id": "modelo-tres-puntos",
-      "type": "modelo",
-      "title": "Hiru puntuko modeloa",
-      "description": "Inzidentzia-geometriako modelorik bakunena: kolinealak ez diren hiru puntu, bikoteka lotzen dituzten hiru zuzenekin.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "camino-teorema-pitagoras": {
-      "id": "camino-teorema-pitagoras",
-      "type": "plan-de-estudio",
-      "title": "Pitagorasen teoremarako bidea",
-      "description": "Geometria euklidearraren metrika-erlaziorik ospetsuenaren atzean dagoen zorroztasun logikoa eta edertasun bisuala esploratu, oinarrizko definizioetatik satelite bidezko geolokalizazioraino.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "teorema-angulos-alternos-internos": {
-      "id": "teorema-angulos-alternos-internos",
-      "type": "teorema",
-      "title": "Barne-angelu alternoen teorema",
-      "description": "Transbertsal batek ebakitako bi zuzen paraleloak dira barne-angelu alternoak kongruenteak badira eta soilik badira. Zuzeneko norabidea geometria absolutuari dagokio; alderantzizkoak paraleloen axioma euklidestarra behar du.",
-      "proofs": [
-        {
-          "id": "demo-angulos-alternos-internos",
-          "dependencies": [
-            "axioma-paralelas-euclides"
-          ]
-        }
-      ],
-      "directDependencies": [
-        "axioma-paralelas-euclides"
-      ]
-    },
-    "teorema-angulos-opuestos-verticales": {
-      "id": "teorema-angulos-opuestos-verticales",
-      "type": "teorema",
-      "title": "Apinamuko angelu aurrekoen teorema",
-      "description": "Bi zuzenek puntu batean elkar ebakitzen dutenean, erpinez aurkako angelu bikoteak elkarren artean kongruenteak dira.",
-      "proofs": [
-        {
-          "id": "demo-angulos-opuestos-verticales",
-          "dependencies": []
-        }
-      ],
-      "directDependencies": [
-        "axioma-paralelas-euclides"
-      ]
-    },
-    "teorema-area-aditividad": {
-      "id": "teorema-area-aditividad",
-      "type": "teorema",
-      "title": "Azaleraren neurriaren gehitutasuna",
-      "description": "Poligono bat barnealde desjuntuak dituzten poligonotan descomposatzen bada, haren azalera osoa zatikien azalerren baturaren berdina da.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "teorema-area-rectangulo": {
-      "id": "teorema-area-rectangulo",
-      "type": "teorema",
-      "title": "Laukizuzenaren azalera",
-      "description": "Laukizuzen baten azalera bere oinarriaren eta altueraren biderkaduraren berdina da. Arkimedesen axioma behar duen azaleraren teoriaren ardatz-teorema.",
-      "proofs": [],
-      "directDependencies": [
-        "axioma-arquimedes",
-        "teorema-area-aditividad"
-      ]
-    },
-    "teorema-area-triangulo": {
-      "id": "teorema-area-triangulo",
-      "type": "teorema",
-      "title": "Triangeluaren azalera",
-      "description": "Triangelu baten azalera haren edozein oinarriren luzeraren eta dagokion altueraren biderkaduraren erdiena da.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "teorema-congruencia-ala": {
-      "id": "teorema-congruencia-ala",
-      "type": "teorema",
-      "title": "ALA kongruentzia teorema",
-      "description": "Bi triangeluk alde kongruente bat eta alde horren alboko bi angeluak kongruenteak badituzte, orduan triangelu biak kongruenteak dira.",
-      "proofs": [],
-      "directDependencies": []
-    },
-    "teorema-pitagoras": {
-      "id": "teorema-pitagoras",
-      "type": "teorema",
-      "title": "Pitagorasen teorema",
-      "description": "Edozein triangelu angeluzuzenetan, hipotenusaren gainean eraikitako karratuaren azalera katetoen gainean eraikitako karratuen azalerren baturaren berdina da.",
-      "proofs": [
-        {
-          "id": "demo-pitagoras-areas",
-          "dependencies": [
-            "teorema-area-aditividad"
-          ]
-        },
-        {
-          "id": "demo-pitagoras-euclides",
-          "dependencies": [
-            "teorema-area-aditividad"
-          ]
-        }
-      ],
-      "directDependencies": [
-        "axioma-paralelas-euclides"
-      ]
-    },
-    "teorema-suma-angulos-triangulo": {
-      "id": "teorema-suma-angulos-triangulo",
-      "type": "teorema",
-      "title": "Triangelu baten angeluen baturaren teorema",
-      "description": "Geometria euklidestarreko triangelu ororen barne-angeluen batura konstantea da eta beti bi angelu zuzenen (180 gradu) berdina da.",
-      "proofs": [
-        {
-          "id": "demo-suma-angulos-triangulo",
-          "dependencies": [
-            "axioma-paralelas-euclides",
-            "teorema-angulos-alternos-internos"
-          ]
-        }
-      ],
-      "directDependencies": [
-        "axioma-paralelas-euclides",
-        "teorema-angulos-alternos-internos"
-      ]
-    },
-    "teorema-tales": {
-      "id": "teorema-tales",
-      "type": "teorema",
-      "title": "Talesen teorema",
-      "description": "Triangelu baten aldeen batekiko zuzen paralelo batek beste bi aldeak ebakitzen baditu, haietan segmentu proportzionalak zehazten ditu.",
-      "proofs": [
-        {
-          "id": "demo-tales",
-          "dependencies": [
-            "teorema-area-triangulo"
-          ]
-        }
-      ],
-      "directDependencies": [
-        "axioma-paralelas-euclides"
-      ]
-    },
-    "teorema-triangulo-isosceles": {
-      "id": "teorema-triangulo-isosceles",
-      "type": "teorema",
-      "title": "Triangelu isoszelearen teorema",
-      "description": "Edozein triangelu isoszeletan, alde kongruenteen aurkako angeluak kongruenteak dira beren artean.",
-      "proofs": [
-        {
-          "id": "demo-triangulo-isosceles",
-          "dependencies": [
-            "axioma-congruencia-5"
-          ]
-        }
-      ],
-      "directDependencies": []
-    },
-    "caso-gps-trilateracion": {
-      "id": "caso-gps-trilateracion",
-      "type": "caso-de-uso",
-      "title": "Satelite bidezko kokapena (GPS) eta trilaterazioa",
-      "description": "Pitagorasen teoremaren eta distantzia euklidearren kalkuluaren aplikazioa hargailu baten posizio zehatza hiru erreferentzia-puntutatik abiatuta zehazteko.",
       "proofs": [],
       "directDependencies": []
     }

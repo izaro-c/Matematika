@@ -2,58 +2,46 @@ export const metadata = {
   id: "recta",
   lang: "eu",
   type: "definicion",
-  subtype: "primitivo",
+  subtype: "nominal",
   title: "Zuzena",
-  description: "Dimentsio bakarreko geometria-entitate infinitu primitiboa. Bere izaera matematikoa intzidentzia-, ordena- eta jarraitutasun-erlazio axiomatikoek zehazten dute.",
-  statement: "Zuzena $\\mathcal{L}$ sistemako elementu primitiboa da geometria sintetikoan, ordena linealez hornitutako puntu-multzo jarraitu eta mugarik gabe gisa identifikatua.",
-  domain: "geometria",
-  requires: ["punto"],
-  authors: ["hilbert", "euclides"],
+  description: "Mugagabe luzatzen den norabide bakarreko dimentsio bakarreko objektu geometriko jarraitua.",
+  branch: "51M",
   hasSimulation: true,
-  difficulty: "básico",
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1-§3", role: "primary" },
-    { title: "Elementuak", author: "Euclides", locator: "I. Liburua, 2. eta 4. Definizioak", role: "secondary" }
-  ],
-  demos: ["recta"]
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 2 y 4", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+  ]
 };
 
 import { Recta } from '@content/diagrams/Definiciones/Recta';
 export const Simulation = Recta;
 
-<Capitular letra="G" /><ConceptLink targetId="geometria">eometriaren</ConceptLink> berriztatze axiomatikoan, zuzena oinarrizko bigarren <ConceptLink targetId="concepto-primitivo">kontzeptu primitiboa</ConceptLink> da, <ConceptLink targetId="punto">puntuarekin</ConceptLink> eta <ConceptLink targetId="plano">planoarekin</ConceptLink> batera. Geometria sintetiko hutsean aldez aurretiko barne-definizio analitikorik ez duenez, bere egitura-propietateak <ConceptLink targetId="sistema-axiomatico">sistema axiomatikoak</ConceptLink> $\mathcal{L}$ zuzenen <ConceptLink targetId="conjunto">multzoaren</ConceptLink> gainean ezarritako erlazio formaletatik sortzen dira.
+<Capitular letra="Z" />uzena norabide berean lerrokatutako <ConceptLink targetId="punto">puntu</ConceptLink> kopuru amaigabe batez osatutako dimentsio bakarreko figura geometrikoa da. <ConceptLink targetId="geometria-euclidiana">Geometria planoan</ConceptLink>, <ConceptLink targetId="punto">puntuarekin</ConceptLink> eta <ConceptLink targetId="plano">planoarekin</ConceptLink> batera oinarrizko kontzeptu primitiboa da.
 
 <Definicion title="">
-  Zuzena <ConceptLink targetId="espacio-geometrico">espazio geometrikoan</ConceptLink> dagoen <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="dimension">dimentsio</ConceptLink> bakarreko <ConceptLink targetId="conjunto">multzo</ConceptLink> jarraitu, homogeneo eta infinitua da. Ez du zabalerarik ez <ConceptLink targetId="area">azalerarik</ConceptLink>, eta bi noranzkoetan mugarik gabe hedatzen da.
+  $\mathcal{E}$ espazio afin edo euclidiar bateko <VisualBind element="A" color="musgo">$A$</VisualBind> eta <VisualBind element="B" color="musgo">$B$</VisualBind> bi puntu desberdin emanda, <VisualBind element="line" color="musgo">$\ell = \overleftrightarrow{AB}$</VisualBind> zuzena $A$ eta $B$-ren konbinazio afinak ezinbestean zehaztutako puntuen dimentsio bakarreko multzo jarraitua da:
+  $$
+  \ell = \{ P \in \mathcal{E} \mid P = (1 - t)A + tB, \, t \in \mathbb{R} \}
+  $$
+  $\mathbb{R}^2$ gaineko <ConceptLink targetId="geometria-analitica">geometria analitikoan</ConceptLink>, $Ax + By + C = 0$ ekuazio inplizituaren bidez adierazten da, $(A, B) \neq (0, 0)$ izanik.
 </Definicion>
 
 <Separador />
 
-### Zehaztapena eta interakzio lineala
+### Ekuazio-formak plano kartesiarrean
 
-Simulazio interaktiboan, <VisualBind element="lineAB" color="musgo">$l$ zuzena</VisualBind> modu bakarrean zehazten da <VisualBind element="pA" color="musgo">$A$ puntuaren</VisualBind> eta <VisualBind element="pB" color="musgo">$B$ puntuaren</VisualBind> bitartez igarotzean. Bi puntu horietako edozein planoan zehar mugitzean, zuzenaren espazio-norabidea birkalkulatzen da, bi puntu desberdinek lerro infinitu bakarra finkatzen dutela erakutsiz.
+Zuzen baten adierazpen aljebraikoak hainbat forma baliokide hartzen ditu ezagunak diren parametro geometrikoen arabera:
 
-<Separador />
-
-### Hilberten sistema axiomatikoan duen eginkizuna
-
-<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> *Grundlagen der Geometrie* (1899) lanean, zuzena ($l\in\mathcal{L}$) hiru axioma-multzo nagusiren bidez egituratzen da:
-
-- **<ConceptLink targetId="axiomas-incidencia">Intzidentzia-axiomak (I. multzoa)</ConceptLink>**: Bi puntu desberdinek zuzen bakar bat zehazten dute (<ConceptLink targetId="axioma-incidencia-1">I.1 axioma</ConceptLink>), eta zuzen bakoitzean gutxienez bi puntu desberdin daude (<ConceptLink targetId="axioma-incidencia-2">I.2 axioma</ConceptLink>).
-- **<ConceptLink targetId="axiomas-orden">Ordena-axiomak (II. multzoa)</ConceptLink>**: Zuzen bateko puntuek <ConceptLink targetId="estar-entre">tartean egon</ConceptLink> erlazio hirutarra betetzen dute ($A * B * C$), muga-punturik gabeko ordena lineal dentso eta infinitua bermatuz (<ConceptLink targetId="axioma-orden-2">II.2 axioma</ConceptLink>).
-- **<ConceptLink targetId="axiomas-continuidad">Jarraitutasun-axiomak (V. multzoa)</ConceptLink>**: <ConceptLink targetId="axioma-arquimedes">Arkimedesen axiomak</ConceptLink> eta <ConceptLink targetId="axioma-completitud">Osotasun-axiomak</ConceptLink> bermatzen dute zuzen geometrikoak etenik ez duela, <ConceptLink targetId="numero-real">zenbaki errealen $\mathbb{R}$</ConceptLink> gorputzarekiko <ConceptLink targetId="isomorfismo">isomorfismo estruktural</ConceptLink> osoa ezarriz.
+| Forma aljebraikoa | Ekuazio matematikoa | Parametro adierazgarriak |
+|---|---|---|
+| Bektoriala | $\vec{r}(t) = \vec{p}_0 + t\vec{v}$ | Igarotze-puntua $\vec{p}_0$, bektore zuzentzailea $\vec{v}$ |
+| Esplizitua | $y = mx + b$ | Malda $m$, jatorriko ordenatua $b$ |
+| Jarraitua | $\frac{x - x_0}{v_x} = \frac{y - y_0}{v_y}$ | Bektore zuzentzailearen osagaiak $(v_x, v_y)$ |
 
 <Separador />
 
-### Ereduak eta adierazpen aljebraikoak
+### Propietateak
 
-<Cita author="Euclides (k.a. 300 inguru)">
-  «Lerro zuzena bere gaineko puntuekiko modu berdinean datzan lerroa da.»
-</Cita>
-
-Zuzenaren adierazpen formala aldatu egiten da kontsideratutako eredu matematikoaren arabera:
-
-- **<ConceptLink targetId="geometria-analitica">Geometria Analitikoa</ConceptLink> (<ConceptLink targetId="modelo-cartesiano">$\mathbb{R}^2$ Plano Kartesiarra</ConceptLink>)**: Zuzena <ConceptLink targetId="ecuacion-lineal">ekuazio lineal</ConceptLink> baten soluzio-multzoaren bidez adierazten da: $ax + by + c = 0$.
-- **<ConceptLink targetId="espacio-afin">Geometria Afina</ConceptLink>**: Zuzena 1 dimentsioko azpivarietate afin bat da, $L = \{ P_0 + \lambda \vec{v} \mid \lambda \in \mathbb{R} \}$ eran idatzia.
-- **<ConceptLink targetId="geometria-diferencial">Geometria Diferentziala</ConceptLink>**: Zuzenak kurba <ConceptLink targetId="geodesica">geodesikoaren</ConceptLink> kontzeptua orokortzen du, puntuen arteko <ConceptLink targetId="distancia">distantzia</ConceptLink> lokala minimizatuz.
-- **<ConceptLink targetId="geometria-hiperbolica">Geometria Hiperbolikoa</ConceptLink> (<ConceptLink targetId="disco-poincare">Poincaréren Diskoa</ConceptLink>)**: Zuzenak diametro euklidear gisa edo mugarekiko ortogonalak diren <ConceptLink targetId="circunferencia">zirkunferentzia-arku</ConceptLink> gisa gauzatzen dira.
+- **<ConceptLink targetId="incidencia">Existentzia eta bakartasun axioma</ConceptLink>**: Bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetatik zuzen bat eta bakarra igarotzen da espazio euclidiarrean.
+- **<ConceptLink targetId="estar-entre">Jarraitutasuna eta amaigabetasuna</ConceptLink>**: Ez du muturrik eta <ConceptLink targetId="potencia-continuo">kontinuoaren potentzia</ConceptLink> du ($\text{card}(\ell) = \lvert \mathbb{R} \rvert$).
+- **<ConceptLink targetId="geodesica">Geodesiko euclidiarra</ConceptLink>**: Zuzen baten gaineko ibilbideak bere edozein punturen arteko gutxieneko <ConceptLink targetId="distancia">distantzia</ConceptLink> adierazten du.

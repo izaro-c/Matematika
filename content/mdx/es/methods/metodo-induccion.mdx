@@ -1,68 +1,47 @@
 export const metadata = {
-  "id": "metodo-induccion",
-  "type": "metodo",
-  "subtype": "demostracion",
-  "title": "Inducción matemática",
-  "description": "El principio de inducción: probar que una propiedad vale para todos los números naturales demostrando el caso base y el paso inductivo.",
-  "hasSimulation": true
+  id: "metodo-induccion",
+  lang: "es",
+  type: "metodo",
+  subtype: "demostracion",
+  title: "Método de inducción matemática",
+  description: "Técnica de demostración para proposiciones parametrizadas sobre los números naturales basada en el principio de inducción completa.",
+  branch: "51M",
+  hasSimulation: true
 };
 
-import { InduccionSimulation } from "@content/diagrams/Metodos/InduccionSimulation";
+import { InduccionSimulation } from '@content/diagrams/Metodos/InduccionSimulation';
 export const Simulation = InduccionSimulation;
 
-<Capitular letra="L" />a **inducción matemática** es el método por excelencia para demostrar proposiciones parametrizadas sobre el conjunto de los <ConceptLink targetId="numero-natural">números naturales</ConceptLink> $\mathbb{N}$. A diferencia de la inducción empírica propia de las ciencias naturales, la inducción matemática constituye un procedimiento deductivo estrictamente riguroso: garantiza la validez universal de una propiedad verificando un estado inicial y la propagación hereditaria paso a paso.
+<Capitular letra="E" />l método de inducción matemática es la técnica deductiva fundamental para demostrar proposiciones $P(n)$ cuya validez se extiende sobre la totalidad de los <ConceptLink targetId="numero-natural">números naturales</ConceptLink> $\mathbb{N}$. Se apoya directamente en la estructura deductiva de los <ConceptLink targetId="axioma-peano">axiomas de Peano</ConceptLink>, garantizando la validez universal mediante una base inicial y un paso de propagación hereditaria.
 
 <Separador />
 
-### El principio de inducción
+### Estructura formal
 
-Dada una propiedad $P(n)$ definida para todo $n \in \mathbb{N}$, el principio de inducción matemática se formula formalmente mediante el <ConceptLink targetId="axioma-peano" isDependency={true}>axioma de Peano</ConceptLink>:
+Para verificar la validez de $\forall n \in \mathbb{N}, P(n)$, la demostración requiere completar rigurosamente dos etapas consecutivas:
+
+1. **Paso base**: Se demuestra que la propiedad es verdadera para el elemento inicial $n_0$ (típicamente $n_0 = 0$ o $n_0 = 1$):
+   $$ P(n_0) \text{ es verdadero} $$
+2. **Paso inductivo**: Se asume formalmente la veracidad de la proposición para un entero arbitrario $k \ge n_0$ (la **<ConceptLink targetId="hipotesis">hipótesis inductiva</ConceptLink>** $P(k)$) y se demuestra que de ella se deduce necesariamente la validez para el sucesor $k+1$ (la **<ConceptLink targetId="tesis">tesis inductiva</ConceptLink>** $P(k+1)$):
+   $$ \forall k \ge n_0, (P(k) \implies P(k+1)) $$
+
+Al verificar ambos pasos, el principio del buen ordenamiento en $\mathbb{N}$ concluye la validez universal:
 
 <Formula>
-  $$ \Big(P(1) \land \big(\forall k \in \mathbb{N},\ P(k) \implies P(k+1)\big)\Big) \implies \big(\forall n \in \mathbb{N},\ P(n)\big) $$
+  $$ (P(n_0) \land \forall k \ge n_0 (P(k) \implies P(k+1))) \implies \forall n \ge n_0 P(n) $$
 </Formula>
-
-<Separador />
-
-### Estructura de la demostración inductiva
-
-Toda demostración por inducción consta de dos fases deductivas independientes:
-
-- **Caso base**: Se verifica explícitamente que la propiedad es verdadera para el primer elemento del dominio, $P(1)$ (o $P(0)$ según la convención adoptada). Este paso constituye el anclaje inicial.
-- **Paso inductivo**: Se asume la veracidad de $P(k)$ para un elemento arbitrario $k \in \mathbb{N}$ (**<ConceptLink targetId="hipotesis">hipótesis de inducción</ConceptLink>**) y se demuestra rigurosamente que dicha suposición implica la veracidad de $P(k+1)$.
-
-Una vez concluidas ambas etapas, el principio garantiza la validez universal de $P(n)$ para todo orden natural $n$.
-
-<Separador />
-
-### Variantes
-
-- **Inducción fuerte o completa**: En el paso inductivo se asume como hipótesis la veracidad simultánea de $P(1), P(2), \dots, P(k)$ para deducir $P(k+1)$.
-- **Inducción transfinita**: Extensión del método a conjuntos bien ordenados arbitrarios mediante ordinales transfinitos.
-- **Inducción con múltiples casos base**: Necesaria en recuentos o relaciones de recurrencia de orden superior (por ejemplo, en la sucesión de Fibonacci).
 
 <Separador />
 
 ### Ejemplos clásicos
 
-- **Suma de los primeros $n$ naturales**: Se prueba la identidad $\sum_{i=1}^n i = \frac{n(n+1)}{2}$. El caso base $P(1)$ resulta en $1 = \frac{1 \cdot 2}{2}$, y el paso inductivo suma $(k+1)$ a ambos miembros de la hipótesis de inducción.
-- **Desigualdad de Bernoulli**: Se demuestra que $(1+x)^n \geq 1 + nx$ para todo $x \geq -1$ y todo $n \in \mathbb{N}$.
-- **Cardinelidad del conjunto potencia**: Se verifica que todo conjunto finito de $n$ elementos posee exactamente $2^n$ subconjuntos.
+- **Suma de los primeros $n$ naturales**: Demostrar que $\sum_{i=1}^n i = \frac{n(n+1)}{2}$. El paso base verifica $1 = \frac{1(2)}{2}$, mientras que el paso inductivo añade $(k+1)$ a ambos lados de la hipótesis inductiva para concluir la fórmula en $k+1$.
+- **Número de diagonales de un polígono**: Para un <ConceptLink targetId="poligono">polígono</ConceptLink> de $n$ vértices, el número de diagonales es $D(n) = \frac{n(n-3)}{2}$ para todo $n \ge 3$.
+- **Desigualdad de Bernoulli**: Para todo $x > -1$ y $n \in \mathbb{N}$, se verifica $(1+x)^n \ge 1 + nx$.
 
 <Separador />
 
-### Cuándo usarlo
+### Variantes y propiedades
 
-La inducción es la estrategia idónea para:
-
-- Identidades algebraicas, sumatorias y productos indexados por números naturales.
-- Propiedades estructurales en estructuras discretas recursivas (árboles, grafos finitos, fórmulas de la lógica proposicional).
-- Desigualdades numéricas dependientes de un parámetro entero $n$.
-
-<Separador />
-
-### Fortalezas y debilidades
-
-<Nota>
-  **Fundamentación discreta**: La inducción matemática permite dominar dominios infinitos numerables mediante dos comprobaciones finitas. Sin embargo, su alcance está estrictamente acotado al ámbito discreto, resultando inaplicable para dominios continuos como los <ConceptLink targetId="numero-real">números reales</ConceptLink> $\mathbb{R}$.
-</Nota>
+- **Inducción fuerte (completa)**: La hipótesis inductiva presupone la veracidad de $P(m)$ para todos los enteros $n_0 \le m \le k$ para deducir $P(k+1)$.
+- **Paso base múltiple**: Esencial cuando la recurrencia del sistema requiere dos o más valores iniciales independientes (ej. la secuencia de Fibonacci).

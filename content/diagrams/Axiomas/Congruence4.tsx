@@ -44,7 +44,64 @@ export const Congruence4Spec = createDiagramSpec(
       "locked": false
     }
   ],
-  "groups": [],
+  "groups": [
+    {
+      "id": "group1",
+      "label": "Ángulo AOB",
+      "memberIds": [
+        "pO",
+        "pA",
+        "pB",
+        "rayOA",
+        "rayOB",
+        "nonReflexAngleAOB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "angleAOB"
+    },
+    {
+      "id": "group2",
+      "label": "Ángulo A'O'B'",
+      "memberIds": [
+        "pOO",
+        "pAA",
+        "pBB",
+        "rayOOAA",
+        "rayOOBB",
+        "nonReflexAngleAAOOBB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "angleAOBPrime"
+    },
+    {
+      "id": "group3",
+      "label": "Ángulos Congruentes",
+      "memberIds": [
+        "nonReflexAngleAOB",
+        "nonReflexAngleAAOOBB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "angles"
+    }
+  ],
   "objects": [
     {
       "id": "pA",
@@ -252,7 +309,7 @@ export const Congruence4Spec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": false,
-        "highlightable": false,
+        "highlightable": true,
         "ariaLabel": "Semirrecta",
         "role": "secondary"
       },
@@ -281,7 +338,7 @@ export const Congruence4Spec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": false,
-        "highlightable": false,
+        "highlightable": true,
         "ariaLabel": "Semirrecta",
         "role": "secondary"
       },
@@ -308,7 +365,7 @@ export const Congruence4Spec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": false,
-        "highlightable": false,
+        "highlightable": true,
         "ariaLabel": "Semirrecta",
         "role": "secondary"
       },
@@ -338,7 +395,7 @@ export const Congruence4Spec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": false,
-        "highlightable": false,
+        "highlightable": true,
         "ariaLabel": "Semirrecta",
         "role": "secondary"
       },

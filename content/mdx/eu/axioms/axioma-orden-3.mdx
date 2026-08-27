@@ -2,34 +2,43 @@ export const metadata = {
   id: "axioma-orden-3",
   lang: "eu",
   type: "axioma",
-  title: "II.3 Axioma (Bitartekotasun Lerrokidearen Bakartasuna)",
-  description: "Zuzen baten gaineko hiru puntu desberdin emanda, horietako zehazki batek kokatzen da beste bien artean.",
+  title: "II.3 Axioma (Zuzen-ordenaren trikotomia)",
+  description: "Zuzen bereko hiru puntu desberdinetatik, bakar bat eta soilik bat dago beste bien artean.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §3", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §3", role: "primary" }
+  ]
 };
 
 import { Order3 } from '@content/diagrams/Axiomas/Order3';
 export const Simulation = Order3;
 
-<Capitular letra="H" />irugarren ordena-<ConceptLink targetId="axioma-orden-3">axiomak</ConceptLink> trikotomia posizional zorrotza ezartzen du zuzenaren gainean. Lerrokide desberdinak diren hiru puntuko terna bakoitzean zehazki batek eta bakarrak hartzen duela tarteko posizioa ezartzen du.
+<Capitular letra="Z" />uzen bereko hiru <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetatik, trikotomia-legea ezartzen du <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-en hirugarren <ConceptLink targetId="orden">ordena-axioma</ConceptLink> honek: zehatz-mehatz puntu bat eta soilik bat dago beste bien artean.
 
-<Definicion title="">
-  Baldin eta $A, B, C \in \mathcal{P}$ zuzen berean dauden hiru puntu desberdin badira, honako ordena-erlazio hirutar hauetako zehazki bat betetzen da:
+<Definicion title="Enuntziatu formala">
+  $l \in \mathcal{L}$ <ConceptLink targetId="zuzen">zuzen</ConceptLink> bereko edozein hiru $A, B, C \in l$ <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako, ondorengo hiru artekotasun-harremanetatik zehatz-mehatz bat betetzen da era esklusiboan:
   $$
-  (A * B * C) \quad \veebar \quad (A * C * B) \quad \veebar \quad (B * A * C)
+  \forall A, B, C \in l \ (A \neq B \land B \neq C \land A \neq C) \implies (A\text{-}B\text{-}C \veebar B\text{-}C\text{-}A \veebar C\text{-}A\text{-}B)
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan <VisualBind element="line" color="carbon">$l$</VisualBind> zuzenaren gainean <VisualBind element="p1" color="terracota">$A$</VisualBind>, <VisualBind element="p2" color="terracota">$B$</VisualBind> eta <VisualBind element="p3" color="terracota">$C$</VisualBind> hiru puntu lerrokideak antolatzen dira. Dragatzearen alternantzia dinamikoak une oro erdiko elementu bakarra dagoela berresten du.
+Simulazio interaktiboan, hiru puntu kolineal aurkezten dira: <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind>. Puntuak zuzen euskarriaren gainean txandaka mugitzean, artekotasun-adierazleak une oro era bakarrean nabarmentzen du hiru puntu horietatik zeinek hartzen duen tarteko posizioa.
 
 <Separador />
 
-### Geometria lineal ez-zirkularra
+### Esanahi geometrikoa eta esparrua
 
-Axioma honek zuzenak topologia itxi edo zirkularrik ez duela bermatzen du. Zuzenaren gaineko ordenazioa lineala eta irekia dela bermatzen du, zuzenki eta erruzuzen kontzeptuak modu formalean definitzea ahalbidetuz.
+Axioma honek bermatzen du lerro-ordena osoa dela eta anbiguotasunik gabea dela. Bi puntu desberdin bikote beraren arteko tarteko izan daitezkeen konfigurazio paradoxikoak ekiditen ditu <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
+
+<Separador />
+
+### Propietateak
+
+- **Esklusibotasun zorrotza:** Ezin dira bi artekotasun-erlazio aldi berean gertatu hiru puntu berberen artean.
+- **Bete-beteko izaera:** Puntu desberdinen hirukote kolineal orotan nahitaez tarteko posizio bat dago.
+- **Implizitutako koordenatuak:** $\mathbb{R}$ zuzen errealarekin bat datorren lerro-ordenamenduko egitura bultzatzen du.

@@ -33,8 +33,8 @@ export function resolveJustification(
     const num = parseInt(stepMatch[1], 10);
     return {
       id: cleanId,
-      title: lang === 'eu' ? `${num}. urratsa` : `Paso ${num}`,
-      badge: lang === 'eu' ? 'URRATSA' : 'PASO',
+      title: lang === 'eu' ? `${num}. urratsa` : (lang === 'en' ? `Step ${num}` : `Paso ${num}`),
+      badge: lang === 'eu' ? 'URRATSA' : (lang === 'en' ? 'STEP' : 'PASO'),
       badgeColor: 'var(--theme-canela)',
       isStepLink: true,
       stepNumber: num,
@@ -136,8 +136,8 @@ export function resolveJustification(
   if (/^hip[oó]tesis$/i.test(cleanId) || /^hypothesis$/i.test(cleanId)) {
     return {
       id: cleanId,
-      title: lang === 'eu' ? 'Hipotesia' : 'Hipótesis',
-      badge: lang === 'eu' ? 'HIPOTESIA' : 'HIPÓTESIS',
+      title: lang === 'eu' ? 'Hipotesia' : (lang === 'en' ? 'Hypothesis' : 'Hipótesis'),
+      badge: lang === 'eu' ? 'HIPOTESIA' : (lang === 'en' ? 'HYPOTHESIS' : 'HIPÓTESIS'),
       badgeColor: 'var(--theme-carbon)',
     };
   }
@@ -156,20 +156,20 @@ export function resolveJustification(
     const entry = dict[dictKey];
     const cat = entry.category?.toLowerCase() || '';
 
-    let badge = lang === 'eu' ? 'GLOSARIOA' : 'GLOSARIO';
+    let badge = lang === 'eu' ? 'GLOSARIOA' : (lang === 'en' ? 'GLOSSARY' : 'GLOSARIO');
     let badgeColor = 'var(--theme-ocre)';
 
-    if (cat.includes('lóg') || cat.includes('logik')) {
-      badge = lang === 'eu' ? 'LOGIKA' : 'LÓGICA';
+    if (cat.includes('lóg') || cat.includes('logik') || cat.includes('logic')) {
+      badge = lang === 'eu' ? 'LOGIKA' : (lang === 'en' ? 'LOGIC' : 'LÓGICA');
       badgeColor = 'var(--theme-mora)';
-    } else if (cat.includes('álg') || cat.includes('aljeb')) {
-      badge = lang === 'eu' ? 'ALJEBRA' : 'ÁLGEBRA';
+    } else if (cat.includes('álg') || cat.includes('aljeb') || cat.includes('algeb')) {
+      badge = lang === 'eu' ? 'ALJEBRA' : (lang === 'en' ? 'ALGEBRA' : 'ÁLGEBRA');
       badgeColor = 'var(--theme-pavo)';
     } else if (cat.includes('geom')) {
-      badge = lang === 'eu' ? 'GEOMETRIA' : 'GEOMETRÍA';
+      badge = lang === 'eu' ? 'GEOMETRIA' : (lang === 'en' ? 'GEOMETRY' : 'GEOMETRÍA');
       badgeColor = 'var(--theme-musgo)';
     } else if (cat.includes('fundament') || cat.includes('oinarri') || cat.includes('concep') || cat.includes('kontzep')) {
-      badge = lang === 'eu' ? 'KONTZEPTUA' : 'CONCEPTO';
+      badge = lang === 'eu' ? 'KONTZEPTUA' : (lang === 'en' ? 'CONCEPT' : 'CONCEPTO');
       badgeColor = 'var(--theme-canela)';
     }
 
@@ -192,7 +192,7 @@ export function resolveJustification(
   return {
     id: cleanId,
     title: humanized,
-    badge: lang === 'eu' ? 'ARAUA' : 'REGLA',
+    badge: lang === 'eu' ? 'ARAUA' : (lang === 'en' ? 'RULE' : 'REGLA'),
     badgeColor: 'var(--theme-carbon)',
   };
 }

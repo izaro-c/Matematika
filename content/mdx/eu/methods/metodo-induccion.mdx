@@ -1,68 +1,47 @@
 export const metadata = {
-  "id": "metodo-induccion",
-  "type": "metodo",
-  "subtype": "demostracion",
-  "title": "Indukzio matematikoa",
-  "description": "Indukzioaren printzipioa: propietate bat zenbaki natural guztietarako balio duela frogatzea oinarrizko kasua eta urrats induktiboa frogatuz.",
-  "hasSimulation": true
+  id: "metodo-induccion",
+  lang: "eu",
+  type: "metodo",
+  subtype: "demostracion",
+  title: "Indukzio matematikoaren metodoa",
+  description: "Zenbaki naturalei buruzko proposizio parametrizatuak frogatzeko dedukzio-teknika, induizio osoaren printzipioan oinarritua.",
+  branch: "51M",
+  hasSimulation: true
 };
 
-import { InduccionSimulation } from "@content/diagrams/Metodos/InduccionSimulation";
+import { InduccionSimulation } from '@content/diagrams/Metodos/InduccionSimulation';
 export const Simulation = InduccionSimulation;
 
-<Capitular letra="I" />ndukzio matematikoa** $\mathbb{N}$ <ConceptLink targetId="numero-natural">zenbaki naturalen</ConceptLink> multzoaren gainean parametrizatutako proposizioak frogatzeko metodo nagusia da. Zientzia naturalen berezko indukzio enpirikoak ez bezala, indukzio matematikoak prozedura deduktibo zorrotza osatzen du: propietate baten unibertsaltasuna bermatzen du hasierako egoera bat eta urratsez urratseko hedapen oinordetua egiaztatuz.
+<Capitular letra="I" />ndukzio matematikoaren metodoa <ConceptLink targetId="numero-natural">zenbaki naturalen</ConceptLink> $\mathbb{N}$ multzo osoan hedaturiko $P(n)$ proposizioak frogatzeko oinarrizko dedukzio-teknika da. <ConceptLink targetId="axioma-peano">Peanoren axiomen</ConceptLink> egitura deduktiboan oinarritzen da zuzenean, baliotasun unibertsala bermatuz hasierako oinarri baten eta hedapen-urrats baten bidez.
 
 <Separador />
 
-### Indukzioaren printzipioa
+### Egitura formala
 
-Edozein $n \in \mathbb{N}$ zenbakitarako definitutako $P(n)$ propietate baterako, indukzio matematikoaren printzipioa formalizatzen da <ConceptLink targetId="axioma-peano" isDependency={true}>Peanoren axiomaren</ConceptLink> bidez:
+$\forall n \in \mathbb{N}, P(n)$ proposizioaren baliotasuna egiaztatzeko, frogak bi urrats jarraian osatzea kencatzen du zorrozki:
+
+1. **Oinarrizko urratsa**: Propietatea hasierako $n_0$ elementurako egiazkoa dela frogatzen da (normalean $n_0 = 0$ edo $n_0 = 1$):
+   $$ P(n_0) \text{ egiazkoa da} $$
+2. **Urrats induktiboa**: $k \ge n_0$ osoko arbitrarrio baterako proposizioaren egiazkotasuna onartzen da formalki (<ConceptLink targetId="hipotesis">hipotesi induktiboa</ConceptLink> $P(k)$), eta hortik ondorengo $k+1$ elementurako egiazkotasuna ezinbestean deduzitzen dela frogatzen da (<ConceptLink targetId="tesis">tesi induktiboa</ConceptLink> $P(k+1)$):
+   $$ \forall k \ge n_0, (P(k) \implies P(k+1)) $$
+
+Bi urratsak egiaztatzean, $\mathbb{N}$ multzoko ondo ordenatzearen printzipioak baliotasun unibertsala ondorioztatzen du:
 
 <Formula>
-  $$ \Big(P(1) \land \big(\forall k \in \mathbb{N},\ P(k) \implies P(k+1)\big)\Big) \implies \big(\forall n \in \mathbb{N},\ P(n)\big) $$
+  $$ (P(n_0) \land \forall k \ge n_0 (P(k) \implies P(k+1))) \implies \forall n \ge n_0 P(n) $$
 </Formula>
-
-<Separador />
-
-### Frogapen induktiboaren egitura
-
-Indukzio bidezko frogapen orok bi fase deduktibo independente ditu:
-
-- **Oinarrizko kasua**: Esplizituki egiaztatzen da propietatea egiazkoa dela domeinuko lehen elementurako, $P(1)$ (edo $P(0)$ hartutako konbentzioaren arabera). Urrats honek hasierako ainguraketa osatzen du.
-- **Urrats induktiboa**: Arbitrarioa den $k \in \mathbb{N}$ elementu baterako $P(k)$ egiazkoa dela suposatzen da (**<ConceptLink targetId="hipotesis">indukzio-hipotesia</ConceptLink>**) eta suposizio horrek $P(k+1)$ egiazkoa izatea dakarrela frogatzen da zorroztasunez.
-
-Bi faseak amaitutakoan, printzipioak $P(n)$ propietatearen baliozkotasun unibertsala bermatzen du $n$ natural guztietarako.
-
-<Separador />
-
-### Varianteak
-
-- **Indukzio sendoa edo osoa**: Urrats induktiboan $P(1), P(2), \dots, P(k)$ batera hartzen dira hipotesi gisa $P(k+1)$ deduzitzeko.
-- **Indukzio transfinitua**: Metodoaren hedapena ondo ordenatutako multzo arbitrarioetara ordinal transfinituen bidez.
-- **Oinarrizko kasu anitzeko indukzioa**: Beharrezkoa orden altuagoko errekurrentzia-erlazioetan (adibidez, Fibonacciren segida).
 
 <Separador />
 
 ### Adibide klasikoak
 
-- **Lehen $n$ naturalen batura**: $\sum_{i=1}^n i = \frac{n(n+1)}{2}$ identitatea frogatzen da. Oinarrizko kasuak $1 = \frac{1 \cdot 2}{2}$ ematen du, eta urrats induktiboak $(k+1)$ batzen dio indukzio-hipotesiaren bi kideei.
-- **Bernoulliren desberdintza**: $(1+x)^n \geq 1 + nx$ dela frogatzen da $x \geq -1$ eta $n \in \mathbb{N}$ guztietarako.
-- **Potentzia-multzoaren kardinaltasuna**: $n$ elementuko multzo finitu orok zehazki $2^n$ azpimultzo dituela egiaztatzen da.
+- **Lehen $n$ zenbaki naturalen batura**: $\sum_{i=1}^n i = \frac{n(n+1)}{2}$ dela frogatzea. Oinarrizko urratsak $1 = \frac{1(2)}{2}$ egiaztatzen du, eta urrats induktiboak $(k+1)$ gehitzen dio bi aldetatik hipotesi induktiboari $k+1$ kasuko formula lortzeko.
+- **Poligono baten diagonal kopurua**: $n$ vertezeko <ConceptLink targetId="poligono">poligono</ConceptLink> baterako, diagonal kopurua $D(n) = \frac{n(n-3)}{2}$ da $n \ge 3$ guztietarako.
+- **Bernoulliren desberdintza**: Edozein $x > -1$ eta $n \in \mathbb{N}$ hartuta, $(1+x)^n \ge 1 + nx$ betetzen da.
 
 <Separador />
 
-### Noiz erabili
+### Aldaerak eta propietateak
 
-Indukzioa estrategia egokia da kasu hauetan:
-
-- Zenbaki naturalei lotutako identitate aljebraikoak, batugarriak eta biderkagaiak.
-- Egitura diskretu errekurtsiboetako egitura-propietateak (zuhaitzak, grafo finituak, logika proposizionaleko formulak).
-- $n$ parametro oso baten menpeko desberdintza numerikoak.
-
-<Separador />
-
-### Indarguneak eta ahuleziak
-
-<Nota>
-  **Oinarri diskretua**: Indukzio matematikoak multzo infinitu zenbakarriak menderatzea ahalbidetzen du bi egiaztapen finitugatik. Hala ere, haren eremua eremuko diskretura mugatuta dago, eremu jarraituetan (adibidez, <ConceptLink targetId="numero-real">$\mathbb{R}$ zenbaki errealetan</ConceptLink>) aplikatu ezina izanik.
-</Nota>
+- **Indukzio sendoa (osoa)**: Hipotesi induktiboak $P(m)$ egiazkotasuna onartzen du $n_0 \le m \le k$ osoko guztietarako $P(k+1)$ deduzitu ahal izateko.
+- **Oinarrizko urrats anizkoitza**: Sistemaren errekurrentziak bi hasierako balio independente edo gehiago behar dituenean aplikatzen da (adibidez Fibonacci-ren sekuentzian).

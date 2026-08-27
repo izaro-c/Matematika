@@ -2,23 +2,24 @@ export const metadata = {
   id: "axioma-incidencia-1",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.1 (Existencia y Unicidad de Recta)",
-  description: "Por dos puntos distintos del espacio pasa exactamente una recta.",
+  title: "Axioma I.1 (Existencia y unicidad de la recta)",
+  description: "Dados dos puntos distintos del espacio, existe exactamente una recta a la que ambos pertenecen.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="E" />l primer <ConceptLink targetId="axioma-incidencia-1">axioma de incidencia</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> establece la relación de pertenencia elemental entre <ConceptLink targetId="punto">puntos</ConceptLink> y <ConceptLink targetId="recta">rectas</ConceptLink>. Garantiza que dos posiciones distintas en el espacio determinan de forma unívoca una única línea recta.
+<Capitular letra="D" />ados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos cualesquiera del <ConceptLink targetId="espacio">espacio</ConceptLink>, el primer <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> formulado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> garantiza la existencia y la unicidad de una <ConceptLink targetId="recta">recta</ConceptLink> que pasa por ambos. Este postulado constituye el pilar fundamental para definir la conexión lineal en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
 
-<Definicion title="">
-  Dados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B \in \mathcal{P}$ con $A \neq B$, existe una única <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$ tal que $A$ incide en $l$ y $B$ incide en $l$:
+<Definicion title="Enunciado formal">
+  Dados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B \in \mathcal{S}$ con $A \neq B$, existe una única <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$ tal que $A$ y $B$ inciden en $l$:
   $$
-  \forall A, B \ (A \neq B) \implies \exists! l \ (A \in l \land B \in l)
+  \forall A, B \in \mathcal{S} \ \bigl(A \neq B \implies \exists! l \in \mathcal{L} \ (A \in l \land B \in l)\bigr)
   $$
 </Definicion>
 
@@ -26,10 +27,18 @@ export const Simulation = Incidence1;
 
 ### Representación visual e interacción
 
-En la simulación interactiva, los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> determinan unívocamente la recta soporte <VisualBind element="lineAB" color="carbon">$l$</VisualBind>. Al desplazar cualquiera de los puntos, la recta se reorienta dinámicamente preservando la pertenencia estricta de ambos elementos.
+En la simulación interactiva, los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> determinan de forma unívoca la recta soporte <VisualBind element="lineAB" color="carbon">$l$</VisualBind>. Al desplazar libremente cualquiera de los dos puntos en el plano, la posición y orientación de la recta se recalculan instantáneamente manteniendo la condición estricta de pertenencia dual.
 
 <Separador />
 
 ### Significado geométrico y alcance
 
-Este postulado condicional asegura la unicidad del trazo rectilíneo. Pertenece al cuerpo de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, conservando su validez tanto en la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink> como en la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>.
+Este axioma establece que dos puntos determinan una dirección y una trayectoria rectilínea de forma exclusiva. Impide la presencia de líneas paralelas múltiples o curvas redundantes que conecten los mismos dos puntos primitivos sin la intervención de axiomas adicionales.
+
+<Separador />
+
+### Propiedades
+
+- **Unicidad del trazo:** Dos puntos distintos no pueden pertenecer simultáneamente a dos rectas distintas.
+- **Independencia del sistema:** Conserva su validez tanto en la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink> como en las geometrías no euclidianas.
+- **Fundamento de interconexión:** Permite definir el <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$ como subconjunto continuo de la recta soporte.

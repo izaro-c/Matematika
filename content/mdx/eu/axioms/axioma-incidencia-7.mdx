@@ -2,34 +2,43 @@ export const metadata = {
   id: "axioma-incidencia-7",
   lang: "eu",
   type: "axioma",
-  title: "I.7 Axioma (Planoen Ebakidura)",
-  description: "Bi plano desberdinek elkar ebakitzen badute, haien ebakidura zuzen zehatz bat da.",
+  title: "I.7 Axioma (Zuzen berean ez dauden puntuen existentzia planoan)",
+  description: "Plano bakoitzean zuzen berean ez dauden gutxienez hiru puntu existitzen dira.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+  ]
 };
 
 import { Incidence7 } from '@content/diagrams/Axiomas/Incidence7';
 export const Simulation = Incidence7;
 
-<Capitular letra="Z" />azpigarren intzidentzia-<ConceptLink targetId="axioma-incidencia-7">axiomak</ConceptLink> espazioko bi dimentsioko gainazalen arteko <ConceptLink targetId="interseccion">ebakidura</ConceptLink> arautzen du. Bi <ConceptLink targetId="plano">planok</ConceptLink> elkar ebakitzen dutenean, beren multzo komuna zehazki <ConceptLink targetId="recta">zuzen</ConceptLink> bat dela bermatzen du.
+<Capitular letra="E" />dozein <ConceptLink targetId="plano">planoan</ConceptLink> zuzen berean ez dauden gutxienez hiru <ConceptLink targetId="punto">puntu</ConceptLink> daudela bermatzen du <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-en zazpigarren <ConceptLink targetId="intzidentzia">intzidentzia-axioma</ConceptLink> honek. Postulatu honek plano bat bera ere ez dela <ConceptLink targetId="zuzen">zuzen</ConceptLink> bakar batera beheratzen bermatzen du nahitaez.
 
-<Definicion title="">
-  Bi $\alpha, \beta \in \mathcal{E}$ <ConceptLink targetId="plano">plano</ConceptLink> desberdin emanda haien <ConceptLink targetId="interseccion">ebakidura</ConceptLink> hutsa ez delarik ($\alpha \cap \beta \neq \emptyset$), $\alpha \cap \beta$ ebakidura $l \in \mathcal{L}$ <ConceptLink targetId="recta">zuzen</ConceptLink> bat da:
+<Definicion title="Enuntziatu formala">
+  Edozein $\mathcal{P} \in \mathcal{F}$ <ConceptLink targetId="plano">planotarako</ConceptLink>, gutxienez hiru $A, B, C \in \mathcal{P}$ <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira non inongo $l \in \mathcal{L}$ <ConceptLink targetId="zuzen">zuzenek</ConceptLink> ez dituen hiruak aldi berean barne hartzen:
   $$
-  \forall \alpha, \beta \in \mathcal{E} \ (\alpha \neq \beta \land \alpha \cap \beta \neq \emptyset \implies \exists l \in \mathcal{L} \ (l = \alpha \cap \beta))
+  \forall \mathcal{P} \in \mathcal{F}, \ \exists A, B, C \in \mathcal{P} \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan <VisualBind element="plano-pi" color="terracota">$\alpha$</VisualBind> eta <VisualBind element="plano-sigma" color="ocre">$\beta$</VisualBind> plano ebakitzaileak ikusten dira. Haien ebakidura-jokabideak <VisualBind element="recta-l" color="carbon">$l$</VisualBind> zuzen komuna zehazten du modu bakarrean.
+Simulazio interaktiboan, <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind> planoaren barnean hiru puntu daude: <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind>. Edozein bi puntutatik pasatzen den zuzena marraztean, hirugarren puntua zuzen euskarritik kanpo geratzen dela egiaztatzen da.
 
 <Separador />
 
-### Hiru dimentsioko espazioaren rigidetasuna
+### Esanahi geometrikoa eta esparrua
 
-Postulatu honek hiru dimentsioko espazioaren dimentsionalitatea ezaugarritzen du. Bi <ConceptLink targetId="plano">planok</ConceptLink> <ConceptLink targetId="punto">puntu</ConceptLink> isolatu bakar batean edo azaleradun eremu batean elkar ebakitzea ekiditen du, ebakidura dimentsio bakarrekoa eta jarraitua izatea behartuz.
+Axioma honek plano bakoitzaren barneko bi dimentsioko izaera intrintsekoa bermatzen du. Zuzen bakar batez edo puntu pare batez osatutako plano degeneratuak ekiditen ditu, azalera planar guztien aberastasun geometrikoa ziurtatuz.
+
+<Separador />
+
+### Propietateak
+
+- **Planoaren ez-degenerazioa:** Plano bat dimentsio bakarrekoa izatea debekatzen du.
+- **Triangeluen existentzia plano bakoitzean:** Espazioko edozein planoan <ConceptLink targetId="triangulo">triangeluak</ConceptLink> eraikitzea ahalbidetzen du.
+- **Eremu planarrak:** Planoa zuzenen bidez zatitzea errazten du eta planarren <ConceptLink targetId="orden">ordena-propietatea</ConceptLink> eragiten du.

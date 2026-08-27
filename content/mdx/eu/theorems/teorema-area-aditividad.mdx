@@ -1,41 +1,50 @@
 export const metadata = {
-  "id": "teorema-area-aditividad",
-  "type": "teorema",
-  "title": "Azaleraren neurriaren gehitutasuna",
-  "description": "Poligono bat barnealde desjuntuak dituzten poligonotan descomposatzen bada, haren azalera osoa zatikien azalerren baturaren berdina da.",
-  "statement": "Bedi P poligono bat eta P₁, P₂ barnealde desjuntuak dituen P-ren deskonposizio bat. Orduan Azalera(P) = Azalera(P₁) + Azalera(P₂).",
-  "tags": ["geometria", "areas"],
-  "authors": ["hilbert"],
-  "difficulty": "básico",
-  "hasSimulation": false,
-  "sources": [
-    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §18-21", role: "primary" }
+  id: "teorema-area-aditividad",
+  type: "teorema",
+  title: "Azaleraren aditibotasun-teorema",
+  description: "Plano-eremu poligonal bat barnealdetan elkarren artean disjuntuak diren azpieremu poligonal kopuru finitu batean banatzen denean, azalera osoa zatian azaleraren batura da.",
+  statement: "R eremua barnealdetan disjuntuak diren R1, R2, ..., Rn eremu poligonalen bilkura badira, orduan Azalera(R) = ∑ Azalera(Ri) betetzen da.",
+  branch: "51M",
+  hasSimulation: false,
+  authors: ["euclides", "hilbert"],
+  demos: [],
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §19", role: "primary" }
   ]
 };
 
-<Capitular letra="D" /><ConceptLink targetId="hilbert">avid Hilbertek</ConceptLink> garatutako <ConceptLink targetId="area">azaleraren</ConceptLink> teoriak balio numeriko bat esleitzen dio <ConceptLink targetId="poligono">poligono</ConceptLink> bakoitzari. Azaleraren gehitutasunaren <ConceptLink targetId="teorema-area-aditividad">teoremak</ConceptLink> erakusten du azalera-esleipena bateragarria dela zatiketa geometrikoarekin: poligono bat barnealde desjuntuak dituzten eskualdetan zatitzean, osoaren neurria zatikien neurrien batura zorrotza da.
+<Capitular letra="A" />zaleraren aditibotasun-teoremak <ConceptLink targetId="geometria-euclidiana">geometria euklidetarrean</ConceptLink> <ConceptLink targetId="teoria-medida-area">azaleraren neurri-teoriaren</ConceptLink> oinarrizko zutabea osatzen du. Eremu <ConceptLink targetId="poligono">poligonalei</ConceptLink> esleitutako azalera-funtzioa partizioen aurrean neurri finituki aditiboa eta aldaezina dela bermatzen du.
 
 <Separador />
 
-### Formulatze formala
+### Enuntziatu formala
 
-Bedi $P$ <ConceptLink targetId="poligono">poligono</ConceptLink> bat, $P_1$ eta $P_2$ bi poligonotan zatitua, haien barnealdeak desjuntuak direlarik ($P_1^\circ \cap P_2^\circ = \emptyset$) eta haien batasuna $P = P_1 \cup P_2$ izanik. Orduan:
+Bitzak $R \subset \mathcal{P}$ plano-eremu poligonal bat. Demagun $R$ eremua kopuru finitu bateko $R_1, R_2, \dots, R_n$ eremu poligonalen <ConceptLink targetId="union-conjuntos">bilkura</ConceptLink> dela:
+
+$$ R = \bigcup_{i=1}^n R_i $$
+
+non edozein $i \neq j$ paretsutarako beren barneak disjuntuak baitira ($\text{Int}(R_i) \cap \text{Int}(R_j) = \emptyset$). Azaleraren $\mu$ neurri-funtzioaren propietate aditiboa ezinbestean betetzen da:
 
 <Formula>
-  $$ \text{Azalera}(P) = \text{Azalera}(P_1) + \text{Azalera}(P_2) $$
+  $$ \text{Azalera}(R) = \sum_{i=1}^n \text{Azalera}(R_i) $$
 </Formula>
 
-<Separador />
-
-### Analisia eta frogapen deduktiboa
-
-Hilberten teorian, <ConceptLink targetId="poligono">poligono</ConceptLink> baten <ConceptLink targetId="area">azalera</ConceptLink> haren <ConceptLink targetId="triangulacion">triangeluatze</ConceptLink> bat osatzen duten <ConceptLink targetId="triangulo">triangeluen</ConceptLink> azalerren batura gisa definitzen da.
-
-$P$ poligonoa $P_1$ eta $P_2$ zatitan banatzen bada, $P_1$ eta $P_2$-rentzat triangeluatzeak aukeratzean, bien jartzeak $P$-rentzat baliozko triangeluatze bat sortzen du, barnealdeak ez baitira gainazaltzen. Azalerak aukeratutako triangeluatzearekiko duen independentziak ziurtatzen du balio gehitzailea inbariantea eta bakarra dela.
+Beste modura esanda, azalera osoaren neurria osagai diren azpieremu bakoitzaren azaleraren neurri eskalarren baturaren berdina da.
 
 <Separador />
 
-### Oharrak eta ondorioak
+### Oinarritze axiomatikoa eta azpi-deskonposizioa
 
-- Indukzio matematikoaren bidez, propietate hau bikoteka barnealde desjuntuak dituen edozein $P = \bigcup_{k=1}^n P_k$ zatiketa finitutara hedatzen da.
-- <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> azalerren deskonposizio bidez frogatzeko eta poligono orokorren azalerak kalkulatzeko oinarri logikoa da.
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> formalizazioan, azaleraren kontzeptua kalkulu infinitesimalaren beharrik gabe eraikitzen da, deskonposagarritasunaren kontzeptuaren bidez:
+- Bi $P$ eta $Q$ poligono **deskonposagarriak** direla esaten da beren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> diren triangelu kopuru finitu beretan banatu daitezkeenean.
+- Aditivitate teoremagatik, bi poligono deskonposagarriek nahitaez azalera bera dute ($\text{Azalera}(P) = \text{Azalera}(Q)$).
+- Bolyai-Gerwien teoremak ezartzen du plano euklidetarrean azalera bera duten edozein bi poligono beti direla beren artean deskonposagarriak.
+
+<Separador />
+
+### Invariantzia eta normalizazioa
+
+Azalera neurri-funtzioak hiru axioma nagusi betetzen ditu:
+1. **Positibotasuna**: $\text{Azalera}(R) > 0$ eremu ez-hutsetarako.
+2. **Kongruentzia bidezko invariantzia**: $R_1 \cong R_2$ bada, orduan $\text{Azalera}(R_1) = \text{Azalera}(R_2)$.
+3. **Aditivitate finitua**: $\text{Azalera}(R_1 \cup R_2) = \text{Azalera}(R_1) + \text{Azalera}(R_2)$ barnealdean disjuntuak diren eremuetarako.

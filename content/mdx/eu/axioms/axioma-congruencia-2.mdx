@@ -2,34 +2,38 @@ export const metadata = {
   id: "axioma-congruencia-2",
   lang: "eu",
   type: "axioma",
-  title: "III.2 Axioma (Zuzenkien Kongruentziaren Transitibitatea)",
-  description: "Zuzenkien arteko kongruentzia erlazio transitiboa da.",
+  title: "III.2 Axioma (Zuzenkien Transitibitatea)",
+  description: "Bi zuzenki hirugarren zuzenki berdin bati kongruenteak bazaizkio, beren artean ere kongruenteak dira; gainera, zuzenki oro bere buruarekiko kongruentea da.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §5", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+  ]
 };
 
 import { Congruence2 } from '@content/diagrams/Axiomas/Congruence2';
 export const Simulation = Congruence2;
 
-<Capitular letra="B" />igarren kongruentzia-<ConceptLink targetId="axioma-congruencia-2">axiomak</ConceptLink> izaera transitiboa ematen dio <ConceptLink targetId="segmento">zuzenkien</ConceptLink> arteko <ConceptLink targetId="congruencia">kongruentzia-erlazioari</ConceptLink>. Espazio-baliokidetza bitarteko elementuen bidez transferitzea ahalbidetzen du.
+<Capitular letra="H" />ilberten bigarren <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-axiomak baliokidetza-erlazioaren propietateak ezartzen ditu <ConceptLink targetId="segmento">zuzenkien</ConceptLink> kongruentziarako. Axioma honek ziurtatzen du zuzenkien arteko kongruentzia erlazio simetriko eta transitiboa dela <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
 
 <Definicion title="">
-  Hiru $AB$, $CD$ eta $EF$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> emanda, baldin eta $AB$ eta $CD$ <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira eta $AB$ eta $EF$ kongruenteak badira, orduan $CD$ eta $EF$ kongruenteak dira:
+  $\overline{AB}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> bat $\overline{EF}$ zuzenkiarekin <ConceptLink targetId="congruencia">kongruentea</ConceptLink> bada eta $\overline{CD}$ zuzenkia ere $\overline{EF}$ zuzenkiarekin kongruentea bada, orduan $\overline{AB}$ zuzenkia eta $\overline{CD}$ zuzenkia kongruenteak dira beren artean. Era berean, zuzenki edozein bere buruarekiko kongruentea da:
   $$
-  (AB \cong CD) \land (AB \cong EF) \implies CD \cong EF
+  (\overline{AB} \cong \overline{EF}) \land (\overline{CD} \cong \overline{EF}) \implies (\overline{AB} \cong \overline{CD})
+  $$
+  $$
+  \forall \overline{AB} \implies \overline{AB} \cong \overline{AB}
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Irudikapen bisuala
 
-Simulazio interaktiboan konparatutako hiru zuzenkiak agertzen dira: <VisualBind element="ABCD" color="ocre">$AB \cong CD$</VisualBind> eta <VisualBind element="ABEF" color="terracota">$AB \cong EF$</VisualBind>. Transitibitateak <VisualBind element="CDEF" color="musgo">$CD \cong EF$</VisualBind> elkarrekiko kongruentzia deduzitzen du berehala.
+Erreferentziako <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> zuzenkia <VisualBind element="CD" color="pavo">$\overline{CD}$</VisualBind> eta <VisualBind element="EF" color="terracota">$\overline{EF}$</VisualBind> zuzenkiekin konparatuz, esperimentalki egiaztatzen da $\overline{EF}$ zuzenkiarekiko kongruentzia partekatuak bakartasun osoz transmititzen duela luzera-berdintasuna $\overline{AB}$ eta $\overline{CD}$ zuzenkien artean.
 
 <Separador />
 
-### Baliokidetza-egitura
+### Garrantzi axiomatikoa
 
-Transitibitateak, eratorritako erreflexibitatearekin eta simetriarekin batera, <ConceptLink targetId="segmento">zuzenkien</ConceptLink> <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> baliokidetza-erlazio formal bihurtzen du. Propietate honek zuzenkiak baliokidetza-klasatan multzokatzea ahalbidetzen du, luzeraren nosio abstraktuaren oinarriak ezarriz.
+Postulatu honi esker, <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-erlazioak baliokidetza-klaseen partizio bat sortzen du <ConceptLink targetId="plano">planoko</ConceptLink> <ConceptLink targetId="segmento">zuzenki</ConceptLink> guztien multzoan. Klase bakoitzak luzera-magnitudo abstraktu bat ordezkatzen du aldez aurretik neurri-unitate zenbakizkorik finkatu gabe.

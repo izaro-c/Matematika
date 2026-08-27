@@ -1,0 +1,47 @@
+export const metadata = {
+  id: "metodo-induccion",
+  lang: "en",
+  type: "metodo",
+  subtype: "demostracion",
+  title: "Mathematical induction method",
+  description: "Deductive proof technique for statements parametrized over natural numbers based on the principle of complete induction.",
+  branch: "51M",
+  hasSimulation: true
+};
+
+import { InduccionSimulation } from '@content/diagrams/Metodos/InduccionSimulation';
+export const Simulation = InduccionSimulation;
+
+<Capitular letra="M" />athematical induction is the fundamental deductive proof technique for establishing propositions $P(n)$ whose validity extends over all <ConceptLink targetId="numero-natural">natural numbers</ConceptLink> $\mathbb{N}$. Grounded directly in the deductive framework of <ConceptLink targetId="axioma-peano">Peano's axioms</ConceptLink>, it guarantees universal truth via a base case and an inductive propagation step.
+
+<Separador />
+
+### Formal structure
+
+To verify the universal validity $\forall n \in \mathbb{N}, P(n)$, the proof requires completing two consecutive steps:
+
+1. **Base step**: The statement is shown to be true for the initial element $n_0$ (typically $n_0 = 0$ or $n_0 = 1$):
+   $$ P(n_0) \text{ is true} $$
+2. **Inductive step**: The truth of the proposition is assumed for an arbitrary integer $k \ge n_0$ (the **<ConceptLink targetId="hipotesis">inductive hypothesis</ConceptLink>** $P(k)$), and it is proven that the truth for the successor $k+1$ necessarily follows (the **<ConceptLink targetId="tesis">inductive thesis</ConceptLink>** $P(k+1)$):
+   $$ \forall k \ge n_0, (P(k) \implies P(k+1)) $$
+
+Upon completing both steps, the well-ordering principle of $\mathbb{N}$ implies universal validity:
+
+<Formula>
+  $$ (P(n_0) \land \forall k \ge n_0 (P(k) \implies P(k+1))) \implies \forall n \ge n_0 P(n) $$
+</Formula>
+
+<Separador />
+
+### Classic examples
+
+- **Sum of the first $n$ natural numbers**: Proving $\sum_{i=1}^n i = \frac{n(n+1)}{2}$. The base step verifies $1 = \frac{1(2)}{2}$, while the inductive step adds $(k+1)$ to both sides of the inductive hypothesis to derive the formula for $k+1$.
+- **Number of diagonals of a polygon**: For a <ConceptLink targetId="poligono">polygon</ConceptLink> with $n$ vertices, the number of diagonals is $D(n) = \frac{n(n-3)}{2}$ for all $n \ge 3$.
+- **Bernoulli's inequality**: For all $x > -1$ and $n \in \mathbb{N}$, the inequality $(1+x)^n \ge 1 + nx$ holds.
+
+<Separador />
+
+### Variants and properties
+
+- **Strong (complete) induction**: The inductive hypothesis assumes the truth of $P(m)$ for all integers $n_0 \le m \le k$ to deduce $P(k+1)$.
+- **Multiple base cases**: Necessary when system recurrences depend on two or more independent initial values (e.g. the Fibonacci sequence).

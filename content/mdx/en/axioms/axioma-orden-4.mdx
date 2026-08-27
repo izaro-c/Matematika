@@ -1,0 +1,45 @@
+export const metadata = {
+  id: "axioma-orden-4",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom II.4 (Pasch's Axiom)",
+  description: "Given a line in the plane of a triangle not passing through any vertex: if it intersects one side, it must intersect one of the other two sides.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" },
+    { title: "Vorlesungen über neuere Geometrie", author: "Moritz Pasch", locator: "§2", role: "secondary" }
+  ]
+};
+
+import { Pasch } from '@content/diagrams/Axiomas/Pasch';
+export const Simulation = Pasch;
+
+<Capitular letra="F" />ormulated by <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink> and integrated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, the fourth <ConceptLink targetId="orden">order axiom</ConceptLink> extends the notion of betweenness from a single line to the two-dimensional plane. It states that if a <ConceptLink targetId="recta">line</ConceptLink> enters the interior of a <ConceptLink targetId="triangulo">triangle</ConceptLink> by intersecting one of its sides without passing through any of its vertices, it must exit by intersecting one of the other two sides.
+
+<Definicion title="Formal statement">
+  Given three non-collinear <ConceptLink targetId="punto">points</ConceptLink> $A, B, C$ and a <ConceptLink targetId="recta">line</ConceptLink> $l$ in their supporting plane not passing through any vertex $A, B, C$: if $l$ intersects the interior of <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$, then $l$ intersects either segment $\overline{AC}$ or segment $\overline{BC}$:
+  $$
+  \forall A, B, C \text{ non-collinear}, \ \forall l \subset \mathcal{P}_{ABC} \ \bigl((A,B,C \notin l \land l \cap \overline{AB} \neq \emptyset) \implies (l \cap \overline{AC} \neq \emptyset \veebar l \cap \overline{BC} \neq \emptyset)\bigr)
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation and interaction
+
+In the interactive simulation, intersecting line <VisualBind element="lineL" color="terracota">$l$</VisualBind> cuts through side <VisualBind element="sideAB" color="carbon">$\overline{AB}$</VisualBind> of triangle $ABC$. Moving or rotating the intersecting line without touching any vertex demonstrates that the line is forced to cut exclusively through either side <VisualBind element="sideAC" color="marino">$\overline{AC}$</VisualBind> or side <VisualBind element="sideBC" color="marino">$\overline{BC}$</VisualBind>.
+
+<Separador />
+
+### Geometric significance and scope
+
+Pasch's axiom is indispensable for proving that a line divides a plane into two connected regions or half-planes (the plane separation theorem). Without this postulate, Euclid made logical omissions by implicitly assuming that certain lines and intersections existed inside figures.
+
+<Separador />
+
+### Properties
+
+- **Plane separation:** Enables proving that any line $l$ in a plane partitions it into two disjoint <ConceptLink targetId="convexo">convex</ConceptLink> half-planes.
+- **Planar topology:** Establishes the intuitive notion of "interior" and "exterior" for closed figures like <ConceptLink targetId="triangulo">triangles</ConceptLink> and polygons.
+- **Parallel axiom independence:** Independent of the parallel postulate, remaining fully valid within <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.

@@ -1,0 +1,154 @@
+export const metadata = {
+  id: "camino-teorema-pitagoras",
+  type: "plan-de-estudio",
+  title: "The path to the Pythagorean theorem",
+  subtitle: "Axiomatic and geometric route",
+  description: "Explore the logical rigor and visual elegance behind the most celebrated metric relation in Euclidean geometry, from elementary definitions to satellite positioning.",
+  branch: "51M",
+  requiredNodes: [
+    "punto",
+    "estar-entre",
+    "triangulo",
+    "axioma-congruencia-5",
+    "teorema-triangulo-isosceles",
+    "checkpoint-pitagoras-congruencia",
+    "axioma-paralelas-euclides",
+    "teorema-suma-angulos-triangulo",
+    "checkpoint-pitagoras-paralelas",
+    "teorema-tales",
+    "teorema-pitagoras",
+    "ejercicio-pitagoras-cateto",
+    "caso-gps-trilateracion"
+  ]
+};
+
+<Capitular letra="B" />uilding mathematical truth rigorously requires mapping an impeccable sequence of justifications. The <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink> is the necessary consequence of a structured web of primitive notions, axioms, and interconnected theorems in Euclidean space.
+
+This study plan guides you step by step through the five indispensable logical stages to reconstruct, understand, and apply this fundamental truth.
+
+<Separador />
+
+### Stage 1: The foundational building blocks
+
+Before proving properties about figures or areas, we must define the primitive objects and order relations that govern space. In Hilbert's axiomatic geometry, the basic primitive object is the <ConceptLink targetId="punto">point</ConceptLink> and the spatial order relation is <ConceptLink targetId="estar-entre">betweenness</ConceptLink>.
+
+<StudyTask
+  id="punto"
+  type="definicion"
+  title="The point"
+/>
+
+<StudyTask
+  id="estar-entre"
+  type="definicion"
+  title="The order relation (betweenness)"
+/>
+
+<Separador />
+
+### Stage 2: Constructing figures and congruence
+
+Connecting three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points via segments yields the primary geometric figure of the plane: the <ConceptLink targetId="triangulo">triangle</ConceptLink>. To compare triangles without relying on informal intuition, we apply the axioms of <ConceptLink targetId="axioma-congruencia-5">congruence</ConceptLink> (SAS). Their first major demonstrative application is the isosceles triangle theorem.
+
+<StudyTask
+  id="triangulo"
+  type="definicion"
+  title="The triangle"
+/>
+
+<StudyTask
+  id="axioma-congruencia-5"
+  type="axioma"
+  title="Congruence Axiom III-5 (SAS)"
+/>
+
+<StudyTask
+  id="teorema-triangulo-isosceles"
+  type="teorema"
+  title="Isosceles triangle theorem (Pons Asinorum)"
+/>
+
+<StudyPlanCheckpoint
+  id="checkpoint-pitagoras-congruencia"
+  explanation="The isosceles triangle theorem is proved via congruence using the Side-Angle-Side (SAS) criterion, which forces corresponding base angles to be congruent."
+>
+  <Pregunta
+    id="checkpoint-pitagoras-congruencia"
+    question="Which congruence criterion allows us to formally prove that base angles of an isosceles triangle are equal?"
+    options={[
+      "Angle-Side-Angle (ASA)",
+      "Side-Angle-Side (SAS)",
+      "Side-Side-Side (SSS)",
+      "Angle-Angle-Side (AAS)"
+    ]}
+    correct="Side-Angle-Side (SAS)"
+  />
+</StudyPlanCheckpoint>
+
+<Separador />
+
+### Stage 3: Parallelism and angle sum
+
+The Pythagorean theorem is exclusive to plane Euclidean geometry. This is because it depends fundamentally on <ConceptLink targetId="axioma-paralelas-euclides">Euclid's fifth postulate</ConceptLink>. Without this axiom, it is impossible to prove that the interior angles of a triangle sum to exactly $180^\circ$.
+
+<StudyTask
+  id="axioma-paralelas-euclides"
+  type="axioma"
+  title="The fifth postulate (parallel axiom)"
+/>
+
+<StudyTask
+  id="teorema-suma-angulos-triangulo"
+  type="teorema"
+  title="Triangle angle sum theorem"
+/>
+
+<StudyPlanCheckpoint
+  id="checkpoint-pitagoras-paralelas"
+  explanation="To prove that the angle sum is 180°, an auxiliary line parallel to the base is drawn through the opposite vertex. This requires the Fifth Postulate to ensure the equality of alternate interior angles."
+>
+  <Emparejar
+    id="checkpoint-pitagoras-paralelas"
+    pregunta="Match each geometric property with its key foundation in Stage 3:"
+    pairs={[
+      { left: "Angle sum (180°)", right: "Fifth Parallel Postulate" },
+      { left: "Alternate interior angles", right: "Auxiliary parallel line through the vertex" }
+    ]}
+  />
+</StudyPlanCheckpoint>
+
+<Separador />
+
+### Stage 4: Proportionality and similarity
+
+With an angle sum fixed at $180^\circ$, the concept of geometric <ConceptLink targetId="semejanza">similarity</ConceptLink> arises. <ConceptLink targetId="teorema-tales">Thales' theorem</ConceptLink> establishes the proportionality of sides in similar triangles, providing the algebraic machinery to operate with ratios.
+
+<StudyTask
+  id="teorema-tales"
+  type="teorema"
+  title="Thales' theorem on similarity"
+/>
+
+<Separador />
+
+### Stage 5: The Pythagorean theorem and its application
+
+Combining congruence, parallelism, and similarity, we demonstrate the fundamental identity $a^2 + b^2 = c^2$. We consolidate these theoretical results in the computational exercise and the <ConceptLink targetId="caso-gps-trilateracion">GPS use case</ConceptLink>.
+
+<StudyTask
+  id="teorema-pitagoras"
+  type="teorema"
+  title="The Pythagorean theorem"
+/>
+
+<StudyTask
+  id="ejercicio-pitagoras-cateto"
+  type="ejercicio"
+  title="Exercise: calculating the missing leg"
+/>
+
+<StudyTask
+  id="caso-gps-trilateracion"
+  type="caso"
+  title="Use case: trilateration and GPS"
+/>

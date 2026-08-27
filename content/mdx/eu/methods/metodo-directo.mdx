@@ -1,60 +1,47 @@
 export const metadata = {
-  "id": "metodo-directo",
-  "type": "metodo",
-  "subtype": "demostracion",
-  "title": "Zuzeneko metodoa",
-  "description": "Demonstratzeko oinarrizko estrategia: hipotesitik tesira inplikazio logikoak kateatzea inferentzia baliozkoen bidez.",
-  "hasSimulation": true
+  id: "metodo-directo",
+  lang: "eu",
+  type: "metodo",
+  subtype: "demostracion",
+  title: "Zuzeneko metodoa",
+  description: "Hipotesitik tesira inferentzia baliozkoak kencatuz garatzen den dedukzio-estrategia oinarrizkoa.",
+  branch: "51M",
+  hasSimulation: true
 };
 
-import { DirectoSimulation } from "@content/diagrams/Metodos/DirectoSimulation";
+import { DirectoSimulation } from '@content/diagrams/Metodos/DirectoSimulation';
 export const Simulation = DirectoSimulation;
 
-<Capitular letra="Z" />uzeneko metodoa — *zuzeneko frogapena* edo *inplikazio bidezko frogapena* ere deitua — dedukzio matematikoaren lehen mailako biderik gardena da. Haren egiturak hasierako $P$ proposizio baten egiazkotasuna suposatzen du (**<ConceptLink targetId="hipotesis">hipotesia</ConceptLink>**) eta, inferentzia logiko baliozkoen kate finitu baten bidez, $Q$ azken proposizioaren egiazkotasuna deduzitzen du nekerik gabe (**<ConceptLink targetId="tesis">tesia</ConceptLink>**).
+<Capitular letra="Z" />uzeneko metodoa $P \implies Q$ baldintzazko proposizio baten baliotasuna frogatzeko matematikako oinarrizko dedukzio-estrategia da. Prozedura honek $P$ <ConceptLink targetId="hipotesis">hipotesiaren</ConceptLink> egiazkotasuna onartzen du formalki eta inferentzia logiko zorrotzen sekuentzia finitu bat eraikitzen du, $Q$ <ConceptLink targetId="tesis">tesiaren</ConceptLink> egiazkotasuna ezinbestean ondorioztatu arte.
 
 <Separador />
 
 ### Egitura logikoa
 
-Argudioa bitarteko proposizioen sekuentzialki kateatuz garatzen da:
+Argumentu deduktiboak tarteko proposizioak kateatzen ditu *modus ponens* inferentzia-araularen bidez:
 
 <Formula>
   $$ P \implies P_1 \implies P_2 \implies \dots \implies P_n \implies Q $$
 </Formula>
 
-Sekuentziako $P_i$ urrats deduktibo bakoitza zorroztasunez oinarritzen da hauetako elementuetan:
+Dedukzio-katearen urrats bakoitza soilik honako hauetan oinarrituz justifikatzen da:
 
-- Hartutako <ConceptLink targetId="sistema-axiomatico">sistema formalaren</ConceptLink> <ConceptLink targetId="axioma" isDependency={false}>axiomak</ConceptLink>.
-- Aurretik frogatutako <ConceptLink targetId="teorema" isDependency={false}>teoremak</ConceptLink>.
+- Dagokion <ConceptLink targetId="sistema-axiomatico">sistema formaleko</ConceptLink> <ConceptLink targetId="axioma">axiomak</ConceptLink>.
+- Aurretik frogatutako <ConceptLink targetId="teorema">teoremak</ConceptLink> edo lemak.
 - Parte hartzen duten objektuen definizio formalak.
-- Inferentzia logikoaren arau unibertsalak (*modus ponens*).
+- Logika proposizionalaren eta predikatu-logikaren arau unibertsalak.
 
 <Separador />
 
-### Adibide klasikoak
+### Adibide nabarmenak
 
-- **<ConceptLink targetId="teorema-congruencia-ala" isDependency={false}>Kongruentziaren ALA teorema</ConceptLink>**: Emandako bi <ConceptLink targetId="angulo">angelu</ConceptLink> eta aldameneko aldetik abiatuta, <ConceptLink targetId="triangulo" isDependency={false}>triangeluaren</ConceptLink> <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> osoa deduzitzen da gainezarpen formalaren eta eraikuntzaren bakartasunaren bidez.
-
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={false}>Triangelu baten angeluen batura</ConceptLink>**: Aurkako erpinetik oinarriarekiko <ConceptLink targetId="recta" isDependency={false}>zuzen</ConceptLink> <ConceptLink targetId="paralelismo">paralelo</ConceptLink> bat marrazten da eta <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>barneko angelu alternoen</ConceptLink> arteko erlazioak aplikatzen dira angeluen batura $180^\circ$ dela zuzenean deduzitzeko.
-
-- **<ConceptLink targetId="teorema-pitagoras" isDependency={false}>Pitagorasen teorema</ConceptLink>**: <ConceptLink targetId="triangulo-rectangulo">Triangelu angeluzuzenen</ConceptLink> <ConceptLink targetId="cateto">katetoen</ConceptLink> eta <ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink> gaineko <ConceptLink targetId="area">azalerak</ConceptLink> geometrikoki deskonposatuz, $a^2 + b^2 = c^2$ identitate aljebraikoa zuzenean ezartzen da.
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Triangelu baten angeluen batura</ConceptLink>**: <ConceptLink targetId="triangulo">Triangeluaren</ConceptLink> definiziotik eta <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomatik</ConceptLink> abiatuta, aurkako <ConceptLink targetId="vertice">vertezetik</ConceptLink> oinarriarekiko <ConceptLink targetId="paralelismo">zuzen paralelo</ConceptLink> bat marrazten da, haren barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $180^\circ$ dela zuzenean ondorioztatzeko.
+- **<ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>**: <ConceptLink targetId="triangulo-rectangulo">Triangelu angeluzuzen</ConceptLink> baten <ConceptLink targetId="cateto">katetoen</ConceptLink> eta <ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink> gaineko karratuen <ConceptLink targetId="area">azaleraren</ConceptLink> dekonposizio geometrikoaren bidez, $a^2 + b^2 = c^2$ berdintza aljebraikoa zuzenean deduzitzen da.
 
 <Separador />
 
-### Noiz erabili
+### Propietateak eta aplikazioa
 
-Zuzeneko metodoa lehen aukerako ikuspegia da praktika matematikoan. Egokia da kasu hauetan:
-
-- Hipotesiak erraz kudeatzeko moduko erlazio aljebraiko edo geometrikoi esplizituak eskaintzen dituenean.
-- Hipotesia tesiarekin lotzen duen mendetasun-grafoan dedukzio-bide garbi bat dagoenean.
-- Frogatu beharreko enuntziatuak $\forall x, (P(x) \implies Q(x))$ formako zuzeneko baldintzazko egitura duenean.
-
-Bide deduktibo agerikorik ez dagoenean, erabilgarria da zeharbidezko metodoetara jotzea, hala nola <ConceptLink targetId="metodo-contradiccion" isDependency={false}>ezeztapen bidezko metodora</ConceptLink>.
-
-<Separador />
-
-### Indarguneak eta ahuleziak
-
-<Nota>
-  **Gardentasun deduktiboa**: Zuzeneko metodoak frogapen eraikitzailea eskaintzen du, non bitarteko urrats bakoitzaren baliozkotasuna berehala egiazta daitekeen. Haren muga nagusia hipotesiaren eta tesiaren arteko bide deduktibo ageriko baten menpekotasunean datza.
-</Nota>
+- **Eraikitzailetasuna**: Hasierako baldintza eta azken ondorioa lotzen dituen ibilbide esplizitua eskaintzen du.
+- **Gardentasun deduktiboa**: Tarteko proposizio bakoitza banaka egiaztagarria da.
+- **Aplikazio-eremua**: Aukerako bidea da hipotesiak erlazio esplizituak eskaintzen dituen bakoitzean, <ConceptLink targetId="metodo-contradiccion">aurkakotasun-metodoaren</ConceptLink> hipotesi lagungarririk gabe.

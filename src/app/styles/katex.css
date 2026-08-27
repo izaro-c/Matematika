@@ -9,4 +9,11 @@
   max-width: 100%;
 }
 
+.page-accent-link .katex,
+.page-accent-link--pending .katex,
+a .katex {
+  color: inherit !important;
+  cursor: pointer;
+}
+
 /* Materialidad de tinta en lectura: reglas completas en paper-and-ink.css */

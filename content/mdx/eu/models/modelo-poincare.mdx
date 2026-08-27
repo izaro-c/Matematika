@@ -1,47 +1,50 @@
 export const metadata = {
-  "id": "modelo-poincare",
-  "type": "modelo",
-  "title": "Poincaréren diskoa",
-  "description": "Plano hiperbolikoaren modelo konforma, espazioa zirkulu unitario baten barnealdetzat eta zuzenak muga-zirkulua ortogonaliki ebakitzen duten arkutzat hartzen dituena.",
-  "satisfies": ["sistema-hiperbolico", "sistema-absoluto"],
-  "hasSimulation": true
+  id: "modelo-poincare",
+  lang: "eu",
+  type: "modelo",
+  title: "Poincareren diskoa",
+  description: "Bi dimentsioko geometria hiperbolikoaren eredu konformea, zenbaki errealen plano ez-osoko disko batasunaren barruan.",
+  branch: "51M",
+  satisfies: ["sistema-hiperbolico", "sistema-absoluto"],
+  axioms_verified: ["axioma-incidencia-1", "axioma-paralelas-hiperbolico"],
+  hasSimulation: true
 };
 
 import { ModeloPoincare } from '@content/diagrams/Models/ModeloPoincare';
-export const Diagram = ModeloPoincare;
+export const Simulation = ModeloPoincare;
 
-<Capitular letra="P" />oincaréren diskoa bi dimentsioko <ConceptLink targetId="geometria-hiperbolica">geometria hiperbolikorako</ConceptLink> <ConceptLink targetId="modelo-poincare" isDependency={false}>modelo analitiko</ConceptLink> bat da. Haren oinarrizko propietate geometrikoa bere izaera konforma da: ebakitzen diren arkuen arteko tokiko neurri angeluar euklideoa kontservatzen du. Henri Poincaré matematikariak aurkeztu zuen 1882an.
+<Capitular letra="P" />oincareren $\mathbb{D}^2$ diskoa bi dimentsioko <ConceptLink targetId="geometria-hiperbolica">geometria hiperbolikoaren</ConceptLink> eredu konforme kanonikoa da. Geometria ez-euklidesarraren koherentzia erlatiboa frogatzen du analisiaren aurrean, zuzen hiperbolikoak disko irekiaren ertzerarekiko zirkunferentzia-arku ortogonal gisa irudikatuz.
 
 <Separador />
 
-### Moduluaren definizioa
+### Ereduaren definizioa
 
-Modeloa $\mathbb{C}$ zenbaki konplexuen planoan eraikitzen da, puntu, zuzen eta metrikaren kontzeptu primitiboak berriro definituz:
+Eredu honetako puntuen espazioa <ConceptLink targetId="numero-real">zenbaki errealen</ConceptLink> <ConceptLink targetId="plano">planoaren</ConceptLink> $\mathbb{R}^2$ disko irekia da:
 
-- **<ConceptLink targetId="punto" isDependency={false}>Puntuak</ConceptLink>**: $\mathbb{D} = \{z \in \mathbb{C} : |z| < 1\}$ <VisualBind element="frontera" color="carbon">disko unitario irekiaren</VisualBind> barruko puntuak dira. $|z|=1$ muga («absolutua») ez da espazio hiperbolikoaren parte.
-- **<ConceptLink targetId="recta" isDependency={false}>Zuzen hiperbolikoak</ConceptLink>**: $|z|=1$ muga ortogonalki ($90^\circ$) ebakitzen duten zirkunferentzia euklideoaren arkuak dira, hala nola <VisualBind element="geodesica-principal" color="terracota">$l$ zuzena</VisualBind>. Diskoaren diametroak ere zuzen hiperbolikoak dira.
-- **Metrika hiperbolikoa**: $\mathbb{D}$ barruko $z, w$ bi punturen arteko distantzia Poincaréren luzera-elementuaren bidez kalkulatzen da:
+$$
+\mathbb{D}^2 = \{(x, y) \in \mathbb{R}^2 \mid x^2 + y^2 < 1\}
+$$
 
-<Formula>
-  $$ ds = \frac{2|dz|}{1 - |z|^2} $$
-</Formula>
+Elementu geometrikoak honela interpretatzen dira:
 
-- **Angeluak**: Proiekzioaren izaera konforma dela eta, bi zuzen hiperbolikoren arteko <ConceptLink targetId="angulo">angelu hiperbolikoak</ConceptLink> zehazki bat egiten du ebakidura-puntuan haien bektore tangenteek osatutako angelu euklideoarekin.
+- **<ConceptLink targetId="punto">Puntu hiperbolikoak</ConceptLink>**: <VisualBind element="disk" color="carbon">$\mathbb{D}^2$</VisualBind> diskoaren barneko puntu guztiak dira. Ertzeko puntuak $\partial \mathbb{D}^2$ (muga-zirkulua) puntu idealak dira eta ez dira espazio hiperbolikokoak.
+- **<ConceptLink targetId="recta">Zuzen hiperbolikoak</ConceptLink>**: $\partial \mathbb{D}^2$ mugarekiko <VisualBind element="hyperbolicLine" color="terracota">ortogonalak diren zirkunferentzia-arkuek</VisualBind> edo jatorritik igarotzen diren diametroek $\mathbb{D}^2$ barruan osatzen dituzten mozketa-lerroak dira.
+- **Metrika eta <ConceptLink targetId="distancia">distantzia</ConceptLink>**: Bi $z_1, z_2 \in \mathbb{D}^2$ puntutarako, luzera riemanniar konformea $ds^2 = 4 \frac{dx^2 + dy^2}{(1 - (x^2 + y^2))^2}$ da.
+- **<ConceptLink targetId="angulo">Angeluak</ConceptLink>**: Eredua konformea da; alegia, bi zuzen hiperbolikoren arteko angelu hiperbolikoa ebakitze-puntuko ukieinek osatzen duten angelu euklidesarrarekin bat dator erabat.
 
 <Separador />
 
 ### Axiomen egiaztapena
 
-Poincaréren diskoak Hilberten <ConceptLink targetId="geometria-absoluta">geometria absolutuko</ConceptLink> axioma guztiak betetzen ditu eta paraleloen axioma euklidea axioma hiperbolikoaz ordezkatzen du:
+Poincareren diskoak <ConceptLink targetId="geometria-absoluta">geometria absolutuko</ConceptLink> axioma guztiak betetzen ditu, bosgarren postulatuaren ukatze esplizituarekin batera:
 
-- **<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>I-1 axioma</ConceptLink>**: Bi puntu desberdinetatik mugarekiko ortogonala den arku bakarra igarotzen da.
-- **Jarraitutasuna eta ordena**: Metrika hiperbolikoak infiniturantz joera du $|z| \to 1$ mugara hurbiltzean, zortasunez bermatuz zuzen hiperbolikoak infinituki luzeak eta topologikoki osoak direla.
-- **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={false}>Paraleloen axioma hiperbolikoa</ConceptLink>**: <VisualBind element="geodesica-principal" color="terracota">$l$ zuzen</VisualBind> bat eta kanpoko <VisualBind element="P" color="terracota">$P$ puntu</VisualBind> bat emanda, $P$-tik igarotzen diren eta diskoaren barruan $l$ ebakitzen ez duten **infinitu** zuzen existitzen dira: <VisualBind element="limite1" color="ocre">muga-paraleloak</VisualBind> eta <VisualBind element="ultra1" color="pavo">ultraparaleloak</VisualBind> nabarmentzen dira.
+- **<ConceptLink targetId="incidencia">Intzidentzia</ConceptLink>- eta <ConceptLink targetId="orden">orden</ConceptLink>-axiomak**: $\mathbb{D}^2$ barneko edozein bi puntu desberdinetarako $A, B$, mugarekiko ortogonala den arku edo diametro bakarra igarotzen da bietatik.
+- **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>Zuzen paralelo hiperbolikoen axioma</ConceptLink>**: Edozein <VisualBind element="hyperbolicLine" color="terracota">$l$</VisualBind> zuzen hiperboliko eta kanpoko <VisualBind element="externalPoint" color="musgo">$P \in \mathbb{D}^2 \setminus l$</VisualBind> puntu emanda, $P$ puntutik igarotzen diren eta $l$ zuzena ebakitzen ez duten infinitu zuzen hiperboliko paralelo daude.
 
 <Separador />
 
-### Garrantzi historikoa
+### Propietateak
 
-<Nota>
-  **Ekokonsistentziaren frogapena**: Poincaréren diskoaren modeloak behin betiko frogatu zuen geometria hiperbolikoa geometria euklideoa bezain koherentea dela, Euclidesen bosgarren postulatuaren independentzia logikoaren milurteko arazoa ebatziz.
-</Nota>
+- **Konformaltasuna**: Tokiko angelu euklidesarrak gordetzen ditu, irudien forma zuzenean ikustea ahalbidetuz.
+- **Angelu-akatsa**: Edozein <ConceptLink targetId="triangulo">triangelu</ConceptLink> hiperbolikoren barne-angeluen batura $180^\circ$ baino zorrozki txikiagoa da nahitaez, angelu-defektua triangeluaren <ConceptLink targetId="area">azalerarekiko</ConceptLink> proportzionala izanda.
+- **Möbius-en eraldaketekiko inbariantza**: Isometria hiperbolikoak disko batasuna gordetzen duten aljebra konplexuko eraldaketen bidez adierazten dira.

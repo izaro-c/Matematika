@@ -1,0 +1,36 @@
+export const metadata = {
+  id: "axioma-congruencia-1",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom III.1 (Segment Transport)",
+  description: "Given a segment AB and a ray with origin at C, there exists a unique point D on the ray such that segment AB is congruent to segment CD.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+  ]
+};
+
+import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
+export const Simulation = Congruence1;
+
+<Capitular letra="T" />he first <ConceptLink targetId="congruencia">congruence</ConceptLink> axiom of <ConceptLink targetId="hilbert">Hilbert</ConceptLink> formalizes the possibility of transferring rigid length magnitudes in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>. This postulate guarantees that any given <ConceptLink targetId="segmento">segment</ConceptLink> can be uniquely laid off from the origin of a given <ConceptLink targetId="semirrecta">ray</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+
+<Definicion title="">
+  Given a <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ and a <ConceptLink targetId="semirrecta">ray</ConceptLink> $r$ originating at <ConceptLink targetId="punto">point</ConceptLink> $C$, there exists a unique point $D$ belonging to $r$ such that segment $\overline{AB}$ is <ConceptLink targetId="congruencia">congruent</ConceptLink> to segment $\overline{CD}$:
+  $$
+  \forall \overline{AB}, \forall r_C \implies \exists! D \in r_C \ (\overline{AB} \cong \overline{CD})
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation
+
+Fixing the original segment <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> onto the target ray <VisualBind element="r" color="pavo">$r$</VisualBind> with origin at <VisualBind element="pD" color="terracota">$C$</VisualBind> uniquely determines the position of point <VisualBind element="pD" color="terracota">$D$</VisualBind>, yielding segment <VisualBind element="CD" color="terracota">$\overline{CD}$</VisualBind> with identical rigid length.
+
+<Separador />
+
+### Axiomatic significance
+
+This axiom establishes the primitive notion of geometric rigidity without relying on a prior real-valued <ConceptLink targetId="distancia">distance</ConceptLink> function. It enables the synthetic definition of segment comparison and metric equality within the <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink>.

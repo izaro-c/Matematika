@@ -2,23 +2,24 @@ export const metadata = {
   id: "axioma-orden-2",
   lang: "es",
   type: "axioma",
-  title: "Axioma II.2 (Existencia de Puntos Intermedios)",
-  description: "Dados dos puntos distintos A y C, existe al menos un punto B sobre la recta AC tal que B está entre A y C.",
+  title: "Axioma II.2 (Extensión del segmento)",
+  description: "Dados dos puntos distintos A y C, existe al menos un punto B en su recta soporte tal que C está entre A y B.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Order2 } from '@content/diagrams/Axiomas/Order2';
 export const Simulation = Order2;
 
-<Capitular letra="E" />l segundo <ConceptLink targetId="axioma-orden-2">axioma de orden</ConceptLink> garantiza la densidad lineal sobre la recta geométrica. Establece que entre dos posiciones distintas siempre es posible encontrar un punto intermedio.
+<Capitular letra="D" />ados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A$ y $C$, el segundo <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="orden">orden</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece la existencia de al menos un punto $B$ sobre la misma <ConceptLink targetId="recta">recta</ConceptLink> tal que $C$ queda situado entre $A$ y $B$. Este postulado asegura la infinitud de la recta y la posibilidad indefinida de extender cualquier <ConceptLink targetId="segmento">segmento</ConceptLink>.
 
-<Definicion title="">
-  Para cualquier par de puntos distintos $A, C \in \mathcal{P}$, existe al menos un punto $B \in \mathcal{P}$ tal que $B$ se ubica entre $A$ y $C$:
+<Definicion title="Enunciado formal">
+  Para todo par de <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, C \in \mathcal{S}$ con $A \neq C$, existe al menos un punto $B \in \mathcal{S}$ perteneciente a la recta soporte $\overleftrightarrow{AC}$ tal que $C$ se encuentra entre $A$ y $B$:
   $$
-  \forall A, C \ (A \neq C) \implies \exists B \ (A * B * C)
+  \forall A, C \in \mathcal{S} \ \bigl(A \neq C \implies \exists B \in \overleftrightarrow{AC} \ (A\text{-}C\text{-}B)\bigr)
   $$
 </Definicion>
 
@@ -26,10 +27,18 @@ export const Simulation = Order2;
 
 ### Representación visual e interacción
 
-En la simulación interactiva se presentan los puntos extremos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind>, junto con el punto intermedio <VisualBind element="pB" color="ocre">$B$</VisualBind> cuya existencia viene impuesta por la relación $A * B * C$.
+En la simulación interactiva, a partir de los puntos iniciales <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pC" color="carbon">$C$</VisualBind>, se extiende la línea hasta ubicar el punto <VisualBind element="pB" color="terracota">$B$</VisualBind> tal que $A\text{-}C\text{-}B$. Al desplazar el extremo $C$, el punto $B$ mantiene dinámicamente su posición exterior respetando la entreidad de $C$.
 
 <Separador />
 
-### Densidad y continuidad
+### Significado geométrico y alcance
 
-La aplicación reiterada de este postulado demuestra que todo segmento contiene infinitos puntos interiores. Garantiza que la recta geométrica posee una estructura densa, impidiendo que sea un conjunto discreto de posiciones.
+Evita que las rectas o segmentos se "cierren" formando anillos finitos (como circunferencias) o tengan barreras terminales infranqueables. Impone la ilimitación longitudinal de las líneas en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
+
+<Separador />
+
+### Propiedades
+
+- **Infinitud de la recta:** Garantiza la presencia de infinitos puntos sobre cualquier recta dada.
+- **Extensión indefinida:** Asegura que cualquier <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AC}$ puede prolongarse más allá de cualquiera de sus extremos.
+- **Sin límites finitos:** Prohíbe que el espacio lineal posea bordes terminales o contornos cerrados de longitud finita.

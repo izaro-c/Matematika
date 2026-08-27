@@ -1,0 +1,50 @@
+export const metadata = {
+  id: "modelo-poincare",
+  lang: "en",
+  type: "modelo",
+  title: "Poincaré disk model",
+  description: "Conformal model for two-dimensional hyperbolic geometry inside the open unit disk of the complex plane.",
+  branch: "51M",
+  satisfies: ["sistema-hiperbolico", "sistema-absoluto"],
+  axioms_verified: ["axioma-incidencia-1", "axioma-paralelas-hiperbolico"],
+  hasSimulation: true
+};
+
+import { ModeloPoincare } from '@content/diagrams/Models/ModeloPoincare';
+export const Simulation = ModeloPoincare;
+
+<Capitular letra="T" />he Poincaré disk model $\mathbb{D}^2$ is the canonical conformal representation of two-dimensional <ConceptLink targetId="geometria-hiperbolica">hyperbolic geometry</ConceptLink>. It proves the relative consistency of non-Euclidean geometry with respect to real analysis by representing hyperbolic lines as circular arcs orthogonal to the boundary of the open disk.
+
+<Separador />
+
+### Model definition
+
+The point space of this model is the open unit disk in the <ConceptLink targetId="numero-real">real</ConceptLink> <ConceptLink targetId="plano">plane</ConceptLink> $\mathbb{R}^2$:
+
+$$
+\mathbb{D}^2 = \{(x, y) \in \mathbb{R}^2 \mid x^2 + y^2 < 1\}
+$$
+
+The geometric primitives are interpreted as follows:
+
+- **<ConceptLink targetId="punto">Hyperbolic points</ConceptLink>**: All interior points of the disk <VisualBind element="disk" color="carbon">$\mathbb{D}^2$</VisualBind>. Points on the boundary $\partial \mathbb{D}^2$ (the unit circle) are called ideal points or horizons and do not belong to the hyperbolic space.
+- **<ConceptLink targetId="recta">Hyperbolic lines</ConceptLink>**: The intersections with $\mathbb{D}^2$ of <VisualBind element="hyperbolicLine" color="terracota">circular arcs orthogonal</VisualBind> to the boundary $\partial \mathbb{D}^2$, or diameters of the disk passing through the origin.
+- **Metric and <ConceptLink targetId="distancia">distance</ConceptLink>**: For two points $z_1, z_2 \in \mathbb{D}^2$, the conformal Riemannian line element is $ds^2 = 4 \frac{dx^2 + dy^2}{(1 - (x^2 + y^2))^2}$.
+- **<ConceptLink targetId="angulo">Angles</ConceptLink>**: The model is conformal, meaning that hyperbolic angles between two hyperbolic lines coincide exactly with Euclidean angles formed by their tangent vectors at the point of intersection.
+
+<Separador />
+
+### Axiom verification
+
+The Poincaré disk verifies all axioms of <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink> together with the explicit negation of the fifth postulant:
+
+- **<ConceptLink targetId="incidencia">Incidence</ConceptLink> and <ConceptLink targetId="orden">order</ConceptLink> axioms**: For any two distinct interior points $A, B \in \mathbb{D}^2$, there exists a unique circular arc or diameter orthogonal to the boundary passing through both.
+- **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>Hyperbolic parallel axiom</ConceptLink>**: Given a hyperbolic line <VisualBind element="hyperbolicLine" color="terracota">$l$</VisualBind> and an external point <VisualBind element="externalPoint" color="musgo">$P \in \mathbb{D}^2 \setminus l$</VisualBind>, there exist infinitely many parallel hyperbolic lines passing through $P$ that do not intersect $l$.
+
+<Separador />
+
+### Properties
+
+- **Conformality**: Preserves local Euclidean angles, enabling intuitive visual inspection of shapes.
+- **Angular defect**: The sum of interior angles in any hyperbolic <ConceptLink targetId="triangulo">triangle</ConceptLink> is strictly less than $180^\circ$, with the defect directly proportional to the surface <ConceptLink targetId="area">area</ConceptLink>.
+- **Invariance under Möbius transformations**: Hyperbolic isometries are represented by complex linear fractional transformations preserving the unit disk.

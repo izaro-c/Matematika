@@ -3,34 +3,45 @@ export const metadata = {
   lang: "eu",
   type: "definicion",
   subtype: "nominal",
-  title: "Zuzen Paraleloak",
-  description: "Plano beran egonda ebakidura-puntu komun bat bera ere ez duten bi zuzenen arteko erlazioa.",
+  title: "Zuzen paraleloak",
+  description: "Puntu komunik ez duten edo guztiz bat datozen plano bereko bi zuzenen arteko erlazio geometrikoa.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euclides", locator: "I. Liburua, 23. Definizioa", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "I. Liburua, 23. Definizioa eta 5. Postulatua", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §5", role: "primary" }
   ]
 };
 
 import { Paralelas } from '@content/diagrams/Definiciones/Paralelas';
 export const Simulation = Paralelas;
 
-<Capitular letra="B" />i <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> paraleloak dira <ConceptLink targetId="plano">plano</ConceptLink> beran daudenean eta <ConceptLink targetId="punto">puntu</ConceptLink> komun bat bera ere partekatzen ez dutenean. Sistema axiomatiko geometrikoak sailkatzeko oinarrizko posizio-erlazioa osatzen dute.
+<Capitular letra="G" />eometria lauan, bi <ConceptLink targetId="recta">zuzen</ConceptLink> koplanar paraleloak direla esaten da <ConceptLink targetId="punto">puntu</ConceptLink> komunik ez dutenean edo guztiz bat datozenean. Paralelotasunak <ConceptLink targetId="relacion-equivalencia">ekibalentzia-erlazio</ConceptLink> oinarrizkoa osatzen du <ConceptLink targetId="plano">planoan</ConceptLink> eta Euklidesen V. <ConceptLink targetId="axioma-paralelas-euclides">postulatuaren</ConceptLink> egitura finkatzen du.
 
 <Definicion title="">
-  Bi $l$ eta $m$ zuzen koplanar emanda, paraleloak direla esaten da ($l \parallel m$ notazioaz) baldin eta soilik baldin haien <ConceptLink targetId="interseccion">ebakidura</ConceptLink> <ConceptLink targetId="conjunto">multzo hutsa</ConceptLink> bada:
+  $\mathcal{P}$ plano batean dauden bi <VisualBind element="recta-r" color="musgo">$L_1$</VisualBind> eta <VisualBind element="recta-s" color="pavo">$L_2$</VisualBind> zuzen emanda, $L_1$ eta $L_2$ paraleloak direla esaten da, $L_1 \parallel L_2$ ikurraz adierazita, plano berean daudenean eta haien <ConceptLink targetId="interseccion">ebakidura</ConceptLink> <ConceptLink targetId="conjunto-vacio">multzo hutsa</ConceptLink> denean edo nahitaez bat datozenean:
   $$
-  l \parallel m \iff l \cap m = \emptyset
+  L_1 \parallel L_2 \iff (L_1 \subset \mathcal{P} \land L_2 \subset \mathcal{P}) \land (L_1 = L_2 \lor L_1 \cap L_2 = \emptyset)
   $$
+  $L_1 \neq L_2$ denean, $P \in L_1$ igarotze-puntutik $L_2$ zuzenerainoko $d(P, L_2) = \inf_{Q \in L_2} \|P - Q\|$ distantzia eskalarra konstante mantentzen da $L_2$ zuzen euslerekin.
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Ezaugarriak esparru geometriko ezberdinetan
 
-Simulazio interaktiboan <VisualBind element="recta-base" color="musgo">$l$</VisualBind> oinarri-zuzena eta kanpoko <VisualBind element="punto-p" color="terracota">$P$</VisualBind> <ConceptLink targetId="punto">puntutik</ConceptLink> igarotzen den <VisualBind element="recta-paralela" color="musgo">$m$</VisualBind> zuzen paraleloa ikusten dira. Puntu hori mugitzean zuzen paraleloa berregituratzen da ebakidurarik ezaren baldintza gordez.
+Zuzen paraleloen existentzia eta bakartasuna aldatu egiten dira konsideratutako sistemaren <ConceptLink targetId="incidencia">intzidentzia</ConceptLink>-axiomen arabera:
+
+| Geometria | Paralelotasun-axioma | Paraleloen kopurua kanpoko puntu batetik |
+|---|---|---|
+| <ConceptLink targetId="geometria-euclidiana">Geometria euklidearra</ConceptLink> | V. Postulatua / Playfairren axioma | Zuzen paralelo bakarra dago <ConceptLink targetId="unicidad">zorrozki</ConceptLink> |
+| <ConceptLink targetId="sistema-hiperbolico">Geometria hiperbolikoa</ConceptLink> | Bolyai-Lobachevskyren axioma | <ConceptLink targetId="infinito">Mugagabe</ConceptLink> zuzen paralelo daude |
+| Geometria eliptikoa | Riemannen axioma | Ez dago <ConceptLink targetId="conjunto-vacio">batere</ConceptLink> zuzen paralelorik |
 
 <Separador />
 
-### Jokabidea sistema axiomatikoetan
+### Propietateak
 
-- **<ConceptLink targetId="sistema-euclidiano">Geometria euklidearra</ConceptLink>**: Emandako zuzen batekiko kanpoko puntu batetik zuzen paralelo bakarra igarotzen da (<ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>Playfairren axioma</ConceptLink>).
-- **<ConceptLink targetId="sistema-hiperbolico">Geometria hiperbolikoa</ConceptLink>**: Emandako zuzen batekiko kanpoko puntu batetik infinitu zuzen koplanar igarotzen dira hura ebakitzen ez dutenak (<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={false}>Lobachevskiren axioma</ConceptLink>).
+- **<ConceptLink targetId="relacion-equivalencia">Ekibalentzia-erlazioa</ConceptLink>**: Plano bereko zuzenen arteko paralelotasunak erreflexibotasuna ($L_1 \parallel L_1$), simetria ($L_1 \parallel L_2 \implies L_2 \parallel L_1$) eta igarotortasuna ($L_1 \parallel L_2 \land L_2 \parallel L_3 \implies L_1 \parallel L_3$) betetzen ditu.
+- **Zuzenen distantziakidetasuna**: Bi zuzen paralelo ezberdinen $L_1 \neq L_2$ arteko distantzia gutxienekoa konstante gelditzen da beren eremu osoan.
+- **Angeluak zuzen ebakitzailearekin**: Zuzen ebakitzaile batek bi zuzen paralelo ebakitzean sortutako barne-angelu alternoak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira nahitaez (<ConceptLink targetId="teorema-angulos-alternos-internos">Angelu alterno barnekoen teorema</ConceptLink>).

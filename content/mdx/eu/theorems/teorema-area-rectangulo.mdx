@@ -1,43 +1,44 @@
 export const metadata = {
-  "id": "teorema-area-rectangulo",
-  "type": "teorema",
-  "title": "Laukizuzenaren azalera",
-  "description": "Laukizuzen baten azalera bere oinarriaren eta altueraren biderkaduraren berdina da. Arkimedesen axioma behar duen azaleraren teoriaren ardatz-teorema.",
-  "statement": "Bedi R b oinarria eta h altuera dituen laukizuzena. Orduan Azalera(R) = b · h.",
-  "tags": ["geometria", "areas", "rectangulo"],
-  "authors": ["hilbert", "euclides"],
-  "difficulty": "intermedio",
-  "hasSimulation": false,
-  "sources": [
-    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §20", role: "primary" },
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 35", role: "secondary" }
+  id: "teorema-area-rectangulo",
+  type: "teorema",
+  title: "Laukizuzenaren azaleraren teorema",
+  description: "Edozein laukizuzen-eremuren azalera bere oinarriaren luzeraren eta bere altueraren luzeraren arteko biderkadura eskalarraren berdina da.",
+  statement: "b luzerako oinarria eta h luzerako altuera dituen R laukizuzen batan, ezinbestean Azalera(R) = b · h betetzen da.",
+  branch: "51M",
+  hasSimulation: false,
+  authors: ["euclides"],
+  demos: [],
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 35", role: "primary" }
   ]
 };
 
-<Capitular letra="L" /><ConceptLink targetId="rectangulo">Laukizuzen</ConceptLink> baten <ConceptLink targetId="area">azalera</ConceptLink> bere oinarriaren eta altueraren luzeren biderkaduraren berdina da. <ConceptLink targetId="teorema-area-rectangulo">Laukizuzenaren azaleraren teoremak</ConceptLink> —gainazalen inbariantzaz eta gehitutasunaz bestalde, zeinak <ConceptLink targetId="poligono">poligonoaren</ConceptLink> oinarrizko kontzeptutik eratortzen baitira— <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Arkimedesen axioma</ConceptLink> behar du tamaina ez-neurgarriak hartzeko, <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> azaleraren teoriaren ardatz nagusia izanez.
+<Capitular letra="L" />aukizuzenaren azaleraren teoremak plano euklidetarreko <ConceptLink targetId="teoria-medida-area">azaleren neurketarako</ConceptLink> oinarrizko formula biderkatzailea ematen du. Gainerako irudi poligonal guztien azalera-formulak deduzitzeko erreferentzia nagusia da.
 
 <Separador />
 
-### Formulatze formala
+### Enuntziatu formala
 
-Bedi $R$ $b$ oinarria eta $h$ altuera dituen <ConceptLink targetId="rectangulo">laukizuzena</ConceptLink>. Orduan:
+Bitzak $R$ <ConceptLink targetId="rectangulo">laukizuzena</ConceptLink> $\mathcal{P}$ plano euklidetarrean, zeinen <ConceptLink targetId="perpendicular">ondoko alde orthogonalen</ConceptLink> neurriak $b = \overline{AB}$ (oinarriaren luzera) eta $h = \overline{AD}$ (altueraren luzera) baitira. $R$ eremu laukizuzenaren <ConceptLink targetId="area">azaleraren</ConceptLink> neurriak zorrotz betetzen du honako erlazio hau:
 
 <Formula>
   $$ \text{Azalera}(R) = b \cdot h $$
 </Formula>
 
-<Separador />
-
-### Eskema eta raketa deduktiboa
-
-Frogapena bi urratsetan banatzen da dimentsioen neurgarritasunaren arabera:
-
-- **Magnitudo neurgarriak**: $b$ oinarria eta $h$ altuera $u$ unitate komun baten multiplo osoak badira, laukizuzena zehatz-mehatz zatitzen da $u^2$ azalerako $n \times m$ karratu unitarioz osatutako sare batean. <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren gehitutasunaren</ConceptLink> bidez, azalera osoa $(n \cdot u)(m \cdot u) = b \cdot h$ izatea lortzen da.
-- **Magnitudo ez-neurgarriak**: $b$ eta $h$-k neurri komunik ez badute, alde rrazionalak dituzten laukizuzenen bidez gutxiegizko eta gehiegizko hurbilketak egiten dira. <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Arkimedesen axiomak</ConceptLink> azalera $b \cdot h$ balio zehatzera konbergitzea bermatzen du.
+Beste modura esanda, eremu laukizuzen baten azalera bere bi dimentsio ortogonalen neurri linealen biderkadura aritmetikoaren berdina da.
 
 <Separador />
 
-### Oharrak eta aplikazioak
+### Froga eta zenbaki rasionaletatik errealetarako igarotzea
 
-- Laukizuzenaren azaleratik abiatuta deduzitzen dira <ConceptLink targetId="paralelogramo">paralelogramoaren</ConceptLink> eta <ConceptLink targetId="teorema-area-triangulo">triangeluaren</ConceptLink> azalera-formulak ($\text{Azalera} = \frac{1}{2} b \cdot h$).
-- <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> eta <ConceptLink targetId="teorema-tales">Talesen teorema</ConceptLink> frogatzeko beharrezko euskarri analitikoa eskaintzen du.
+Eraikuntza zorrotza hiru urratsetan egiten da <ConceptLink targetId="teorema-area-aditividad">azaleraren aditivitate teoremaren</ConceptLink> bidez:
+1. **Patroi unitarioa**: <ConceptLink targetId="cuadrado">Karratu unitarioaren</ConceptLink> azalera ($b=1, h=1$) hitzarmenez $1$ dela definitzen da.
+2. **Dimentsio rasionalak**: $b = \frac{p}{q}$ eta $h = \frac{m}{n}$ direnean ($p, q, m, n \in \mathbb{N}$ izanda), laukizuzena $\frac{1}{q \cdot n}$ aldeko $p \cdot m$ azpikarratutan banatzen da. Azaleren baturak $\text{Azalera}(R) = \frac{p \cdot m}{q \cdot n} = b \cdot h$ dela frogatzen du.
+3. **Dimentsio errealak**: Jarraitutasunaren propietatearen eta <ConceptLink targetId="axioma-arquimedes">Arkimedesen axiomaren</ConceptLink> bidez, emaitza neurrezinezko edo irrazionalak diren luzeretara hedatzen da.
+
+<Separador />
+
+### Ardatz geometrikoa
+
+- **Paralelogramoaren formularen oinarria**: Edozein <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> oinarri eta altuera bera dituen laukizuzen batekin deskonposagarria da.
+- **Triangeluaren formularen oinarria**: Laukizuzen bat bere diagonalaz bi triangelu <ConceptLink targetId="congruencia">kongruentetan</ConceptLink> banatzen denez, <ConceptLink targetId="teorema-area-triangulo">triangeluaren azalera</ConceptLink> $\frac{1}{2} b \cdot h$ dela ziurtatzen da.

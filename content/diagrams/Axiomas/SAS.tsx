@@ -425,7 +425,7 @@ export const SASSpec = createDiagramSpec(
       ],
       "selection": {
         "selectable": true,
-        "highlightable": false,
+        "highlightable": true,
         "ariaLabel": "Segmento",
         "role": "secondary"
       },

@@ -1,0 +1,71 @@
+export const metadata = {
+  "id": "demo-pitagoras-areas",
+  "type": "demostracion",
+  "title": "Proof: Pythagorean Theorem (Area Dissection Method)",
+  "description": "Algebraic and geometric proof dissecting the area of an outer square of side (a+b) into four right triangles and an inner square.",
+  "parentTheorem": "teorema-pitagoras",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["pitagoras"],
+  "tags": ["geometria", "triangulos", "areas", "algebra"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elements", author: "Euclid", locator: "Book I, Proposition 47 (Alternative dissection proof)", role: "primary" }
+  ]
+};
+
+import { DemoPitagorasAreas } from "@content/diagrams/Demos/DemoPitagorasAreas";
+
+<DemonstrationSection diagram={<DemoPitagorasAreas />}>
+
+<Capitular letra="F" />or a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> with <ConceptLink targetId="cateto">catheti</ConceptLink> $a, b$ and <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> $c$, the <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pythagorean theorem</ConceptLink> is demonstrated by dissecting the surface of an <VisualBind element="cuadrado-exterior" color="carbon"><ConceptLink targetId="cuadrado">outer square</ConceptLink></VisualBind> of side length $(a+b)$.
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} target="cuadrado-exterior" title="Construction of the bounding square">
+A <ConceptLink targetId="cuadrado">square</ConceptLink> of side length $(a+b)$ is constructed. The total surface <ConceptLink targetId="area">area</ConceptLink> of this <VisualBind element="cuadrado-exterior" color="carbon">outer square</VisualBind> is given by algebraic expansion:
+
+<Formula>
+  $$ \text{Total Area} = (a+b)^2 = a^2 + 2ab + b^2 $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={2} target="triangulos" title="Arrangement of the four right triangles">
+At each of the four corners of the outer square, a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> with catheti <VisualBind element="cateto-a" color="pavo">$a$</VisualBind> and <VisualBind element="cateto-b" color="terracota">$b$</VisualBind> is positioned. By the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>, the combined area of the four <VisualBind element="triangulos" color="pavo">congruent triangles</VisualBind> is:
+
+<Formula>
+  $$ 4 \times \left( \frac{1}{2} a b \right) = 2ab $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={3} target="cuadrado-interior" title="Characterization of the central quadrilateral">
+The four hypotenuses form the boundary of a <VisualBind element="cuadrado-interior" color="ocre">central quadrilateral</VisualBind> of side length $c$. Since the sum of <ConceptLink targetId="angulo">adjacent angles</ConceptLink> at each interior boundary vertex is $180^\circ$, and the two acute angles of the right triangle sum to $90^\circ$, the interior angle of the central quadrilateral must equal $90^\circ$. Hence, it is an <VisualBind element="cuadrado-interior" color="ocre">inner square</VisualBind> of area $c^2$.
+</ProofStep>
+
+<ProofStep number={4} target="aditividad" title="Application of the area additivity principle">
+By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>, the area of the outer square equals the sum of the inner square area and the areas of the four triangles:
+
+<Formula>
+  $$ (a+b)^2 = c^2 + 4 \cdot \left( \frac{1}{2} a b \right) $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={5} target="conclusion" title="Algebraic simplification">
+Expanding the left-hand side expression and subtracting the term $2ab$ present on both sides:
+
+<Formula>
+  $$ a^2 + 2ab + b^2 = c^2 + 2ab \implies a^2 + b^2 = c^2 $$
+</Formula>
+</ProofStep>
+
+<Separador />
+
+### Deductive analysis
+
+<Nota>
+  Proof by visual and algebraic dissection historically attributed to Pythagorean and Indian traditions (Bhaskara). It relies on the invariance of <ConceptLink targetId="area">area</ConceptLink> under isometric transformations and <ConceptLink targetId="teoria-medida-area">measure theory of area</ConceptLink>.
+</Nota>
+
+</DemonstrationSection>

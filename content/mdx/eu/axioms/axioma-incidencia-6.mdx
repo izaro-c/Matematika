@@ -2,37 +2,43 @@ export const metadata = {
   id: "axioma-incidencia-6",
   lang: "eu",
   type: "axioma",
-  title: "I.6 Axioma (Zuzenaren Intzidentzia Planoan)",
-  description: "Zuzen baten bi puntu plano batean intzidentzialak badira, orduan zuzeneko puntu guztiak plano horretan intzidentzialak dira.",
+  title: "I.6 Axioma (Bi planoren ebakidura)",
+  description: "Bi plano desberdinek puntu komun bat badute, gutxienez beste puntu komun bat dute eta zuzen batean ebakitzen dute elkar.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+  ]
 };
 
 import { Incidence6 } from '@content/diagrams/Axiomas/Incidence6';
 export const Simulation = Incidence6;
 
-<Capitular letra="S" />eigaren intzidentzia-<ConceptLink targetId="axioma-incidencia-6">axiomak</ConceptLink> <ConceptLink targetId="recta">zuzenen</ConceptLink> barneratzea formalizatzen du gainazal <ConceptLink targetId="plano">planoetan</ConceptLink>. Zuzen baten bi <ConceptLink targetId="punto">puntu</ConceptLink> plano batekoak badira, zuzen osoa plano horren barnean geratzen dela ezartzen du.
+<Capitular letra="B" />i <ConceptLink targetId="plano">plano</ConceptLink> desberdinek espazioan <ConceptLink targetId="punto">puntu</ConceptLink> bat partekatzen badute, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-en seigarren <ConceptLink targetId="intzidentzia">intzidentzia-axioma</ConceptLink> honek gutxienez bigarren puntu komun bat dutela ezartzen du nahitaez, haien ebakidura <ConceptLink targetId="zuzen">zuzen</ConceptLink> oso bat izanda.
 
-<Definicion title="">
-  Edozein $l \in \mathcal{L}$ <ConceptLink targetId="recta">zuzenetarako</ConceptLink> eta edozein $\alpha \in \mathcal{E}$ <ConceptLink targetId="plano">planotarako</ConceptLink>, baldin eta bi $A, B \in l$ <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen badira non $A \in \alpha$ eta $B \in \alpha$ diren, orduan $l$ zuzena $\alpha$-ren barnean dago:
+<Definicion title="Enuntziatu formala">
+  Bi $\mathcal{P}_1, \mathcal{P}_2 \in \mathcal{F}$ <ConceptLink targetId="plano">plano</ConceptLink> desberdinek ($\mathcal{P}_1 \neq \mathcal{P}_2$) $A \in \mathcal{P}_1 \cap \mathcal{P}_2$ <ConceptLink targetId="punto">puntu</ConceptLink> komun bat badute, orduan gutxienez beste $B \in \mathcal{P}_1 \cap \mathcal{P}_2$ puntu bat existitzen da ($B \neq A$), eta haien ebakidura zehatza $l \in \mathcal{L}$ <ConceptLink targetId="zuzen">zuzena</ConceptLink> da:
   $$
-  \forall l \in \mathcal{L}, \forall \alpha \in \mathcal{E} \ ( \exists A, B \in l \ (A \neq B \land A \in \alpha \land B \in \alpha) \implies l \subseteq \alpha )
+  \forall \mathcal{P}_1, \mathcal{P}_2 \in \mathcal{F} \ \bigl((\mathcal{P}_1 \neq \mathcal{P}_2 \land A \in \mathcal{P}_1 \cap \mathcal{P}_2) \implies \exists B \in \mathcal{P}_1 \cap \mathcal{P}_2 \ (B \neq A) \land \exists l \in \mathcal{L} \ (l = \mathcal{P}_1 \cap \mathcal{P}_2)\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan <VisualBind element="recta" color="carbon">$l$</VisualBind> zuzena <VisualBind element="plano" color="musgo">$\alpha$</VisualBind> planoan intzidentziala dela behatzen da, finkatutako <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntuen bidez.
+Hiru dimentsioko simulazioan, <VisualBind element="plane1" color="marino">$\mathcal{P}_1$</VisualBind> eta <VisualBind element="plane2" color="terracota">$\mathcal{P}_2$</VisualBind> planoek elkar ebakitzen dute. Edozein planoren okurdura egokitzean puntu komuna mantenduz, ebakidura-zuzena <VisualBind element="lineInt" color="carbon">$l$</VisualBind> bi planoen spazia komun gisa agertzen da etengabe.
 
 <Separador />
 
-### Posizio erlatiboen sailkapena
+### Esanahi geometrikoa eta esparrua
 
-Postulatu honek hiru dimentsioko espazioan <ConceptLink targetId="recta">zuzen</ConceptLink> eta <ConceptLink targetId="plano">planoen</ConceptLink> arteko posizio erlatiboak sailkatzea ahalbidetzen du:
-- **Zuzen barneratua**: Zuzenak gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> partekatzen ditu planoarekin ($l \subseteq \alpha$).
-- **Zuzen ebakitzailea**: Zuzenak puntu bakar batean ebakitzen du planoa.
-- **Zuzen <ConceptLink targetId="paralelas">paraleloa</ConceptLink>**: Zuzenak ez du <ConceptLink targetId="interseccion">ebakidura-punturik</ConceptLink> planoarekin ($l \cap \alpha = \emptyset$).
+Hiru dimentsioko espazioaren dimentsio-koherentzia bermatzen du: bi plano ezin dira ukitu puntu isolatu bakar batean. Plano desberdinen arteko ebakidura ez-huts orok nahitaez dimentsio bakarreko spazia lineala sortzen du.
+
+<Separador />
+
+### Propietateak
+
+- **Ebakiduraren jarraitutasuna:** Plano desberdinen arteko puntu isolatuko ukipenak debekatzen ditu.
+- **Angelu diedroak:** Angelu diedroak eta espazioaren banaketa definitzeko oinarria osatzen du.
+- **Dualtasun lineala:** Zuzen berean ez dauden puntuen elkarketa eta planoen ebakiduraren arteko harremana erakusten du.

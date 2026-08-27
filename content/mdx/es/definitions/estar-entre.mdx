@@ -2,53 +2,45 @@ export const metadata = {
   id: "estar-entre",
   lang: "es",
   type: "definicion",
-  subtype: "primitivo",
-  title: "Estar Entre (Intermediación)",
-  description: "Relación de orden básica entre tres puntos colineales, que establece el orden de los puntos de una recta y la división del plano.",
-  sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" },
-    { title: "Euclidean and Non-Euclidean Geometries", author: "Marvin Jay Greenberg", locator: "Capítulo 3", role: "secondary" }
-  ],
+  subtype: "nominal",
+  title: "Estar entre",
+  description: "Relación ternaria primitiva de orden lineal que establece la intermediación entre tres puntos colineales.",
+  branch: "51M",
   hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, Axiomas del Grupo II", role: "primary" }
+  ]
 };
 
 import { EstarEntre } from '@content/diagrams/Definiciones/EstarEntre';
 export const Simulation = EstarEntre;
 
-<Capitular letra="E" />n la renovación axiomática desarrollada por <ConceptLink targetId="hilbert">Hilbert</ConceptLink> (1899), la relación de intermediación o "estar entre" (<VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pB" color="ocre">$B$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind>) es la segunda relación primitiva fundamental de la <ConceptLink targetId="geometria">geometría</ConceptLink>. Formaliza el <ConceptLink targetId="axioma-orden-1">orden</ConceptLink> lineal de los <ConceptLink targetId="punto">puntos</ConceptLink> sobre una <ConceptLink targetId="recta">recta</ConceptLink>, de forma independiente a las medidas métricas o a las <ConceptLink targetId="coordenadas">coordenadas analíticas</ConceptLink>.
+<Capitular letra="L" />a relación de intermediación, denotada funcionalmente como estar entre, es una relación ternaria primitiva en los cimientos axiomáticos de la <ConceptLink targetId="geometria-absoluta">geometría sintética</ConceptLink> formalizada por David Hilbert. Permite dotar a las <ConceptLink targetId="recta">rectas</ConceptLink> de una estructura de orden lineal denso sin recurrir prematuramente a los números reales ni a la <ConceptLink targetId="distancia">distancia métrica</ConceptLink>.
 
 <Definicion title="">
-  La expresión <VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pB" color="ocre">$B$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind> define una <ConceptLink targetId="relacion-ternaria">relación ternaria</ConceptLink> primitiva sobre el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de puntos $\mathcal{P}$. Su validez formal no se deduce de las <ConceptLink targetId="distancia">distancias</ConceptLink>, sino del cumplimiento de los cuatro postulados que componen el grupo II de los <ConceptLink targetId="axioma-orden-1">axiomas de orden</ConceptLink> de Hilbert.
+  Sean <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="musgo">$C$</VisualBind> tres <ConceptLink targetId="punto">puntos</ConceptLink> colineales distintos en una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineAC" color="carbon">$r$</VisualBind>. Se dice que $B$ está entre $A$ y $C$ (denotado $A * B * C$) si satisface los axiomas de orden de Hilbert. Métricamente, equivale a la aditividad de las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind> y <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind> respecto al <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind>:
+  $$
+  A * B * C \iff d(A, B) + d(B, C) = d(A, C)
+  $$
+  donde $A, B, C$ son mutuamente distintos.
 </Definicion>
 
 <Separador />
 
-### Representación lineal de la intermediación
+### Axiomas del grupo II de Hilbert (orden e intermediación)
 
-En la simulación se muestra la recta <VisualBind element="lineAC" color="carbon">$r$</VisualBind> determinada por los puntos <VisualBind element="pA" color="musgo">$A$</VisualBind> y <VisualBind element="pC" color="musgo">$C$</VisualBind>. Al situar un tercer punto <VisualBind element="pB" color="ocre">$B$</VisualBind> en el trayecto interior entre ambos, se verifica la relación formal <VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pB" color="ocre">$B$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind>. Este punto divide la recta formando los <ConceptLink targetId="segmento">segmentos</ConceptLink> <VisualBind element="segAB" color="pavo">$AB$</VisualBind> y <VisualBind element="segBC" color="terracota">$BC$</VisualBind>.
+La ordenación sobre una recta se fundamenta formalmente en los siguientes axiomas de intermediación:
 
-<Separador />
-
-### Los axiomas de orden de Hilbert
-
-La estructura del orden lineal sobre la recta viene determinada por cuatro axiomas independientes:
-
-- **<ConceptLink targetId="axioma-orden-1">Axioma II.1 (simetría y distinción)</ConceptLink>**: Si <VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pB" color="ocre">$B$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind>, entonces <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, <VisualBind element="pC" color="musgo">$C$</VisualBind> son tres puntos distintos de la misma recta, cumpliéndose la simetría $A * B * C \iff C * B * A$.
-<StepSection step="step-extension">
-- **<ConceptLink targetId="axioma-orden-2">Axioma II.2 (extensión de la recta)</ConceptLink>**: Para cualesquiera dos puntos distintos <VisualBind element="pA" color="musgo">$A$</VisualBind> y <VisualBind element="pC" color="musgo">$C$</VisualBind>, existe al menos un punto <VisualBind element="pD" color="pavo">$D$</VisualBind> sobre la misma recta tal que se cumple <VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind>$*$<VisualBind element="pD" color="pavo">$D$</VisualBind>.
-</StepSection>
-- **<ConceptLink targetId="axioma-orden-3">Axioma II.3 (exclusividad y tricotomía)</ConceptLink>**: De tres puntos distintos de una misma recta, hay uno y solo uno situado entre los otros dos.
-<Formula title="Tricotomía (II.3)">
-$$(A * B * C) \oplus (B * A * C) \oplus (A * C * B)$$
-</Formula>
-- **<ConceptLink targetId="axioma-orden-4">Axioma II.4 (axioma de Pasch)</ConceptLink>**: Una recta coplanaria que corta uno de los lados de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> corta necesariamente uno de los otros dos lados.
+| Axioma de orden | Enunciado formal | Significado geométrico |
+|---|---|---|
+| II.1: Simetría | $A * B * C \implies C * B * A$ | La intermediación es independiente de la orientación |
+| II.2: Extensión | $\forall A \neq C, \exists D : A * C * D$ | Toda recta se extiende indefinidamente |
+| II.3: Exclusividad | Dados $A,B,C \in r$, uno y solo uno está entre los otros dos | Ordenamiento total estricto sobre la recta |
 
 <Separador />
 
-### Fundamento histórico y epistemológico
+### Propiedades
 
-<Cita author="David Hilbert (1899, trad. Townsend, 1902)">
-  «Los axiomas de este grupo definen la idea expresada por la palabra "entre".»
-</Cita>
-
-En los *Elementos* de <ConceptLink targetId="euclides">Euclides</ConceptLink>, las propiedades de orden se suponían implícitamente a través de los dibujos. A finales del siglo XIX, <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink> y <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> demostraron la necesidad epistemológica de formalizar la intermediación como un grupo axiomático independiente dentro de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+- **<ConceptLink targetId="segmento">Definición de segmento interior</ConceptLink>**: El conjunto de puntos $P$ tales que $A * P * B$ constituye el segmento abierto $(AB)$.
+- **<ConceptLink targetId="teorema-pasch">Axioma de Pasch</ConceptLink>**: Una recta que corta a un lado de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> debe cortar a uno de los otros dos lados o pasar por un vértice.
+- **<ConceptLink targetId="semirrecta">Separación de la recta</ConceptLink>**: Un punto $O$ sobre una recta divide a los demás puntos de la recta en dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> disjuntas.

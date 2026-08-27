@@ -16,7 +16,7 @@ import {
 import { contentLoaders } from './loaders';
 import contentIndex from './contentIndex.json';
 import { buildBranchTaxonomy, getItemsByBranch } from './msc2020';
-import { DEFAULT_LANGUAGE } from '@/i18n';
+import { DEFAULT_LANGUAGE, localizePath } from '@/i18n';
 import type {
   Mathematician,
   Theorem,
@@ -483,11 +483,13 @@ export class ContentStore {
         ? tagsOrBranch[0]
         : undefined;
 
+    const activeLang = lang || DEFAULT_LANGUAGE.code;
+
     if (branchKey) {
-      const taxonomy = this.getBranchTaxonomy(branchKey, lang);
+      const taxonomy = this.getBranchTaxonomy(branchKey, activeLang);
       return [
-        ...taxonomy.breadcrumbs.map(b => ({ name: b.name, href: `/rama/${b.slug}` })),
-        { name: taxonomy.name || taxonomy.id, href: `/rama/${taxonomy.slug}` },
+        ...taxonomy.breadcrumbs.map(b => ({ name: b.name, href: localizePath(`/rama/${b.slug}`, activeLang) })),
+        { name: taxonomy.name || taxonomy.id, href: localizePath(`/rama/${taxonomy.slug}`, activeLang) },
       ];
     }
     return fallback ? [fallback] : [];

@@ -1,41 +1,50 @@
 export const metadata = {
-  "id": "teorema-area-aditividad",
-  "type": "teorema",
-  "title": "Aditividad de la medida de área",
-  "description": "Si un polígono se descompone en polígonos con interiores disjuntos, su área total equivale a la suma de las áreas de sus partes.",
-  "statement": "Sea P un polígono y P₁, P₂ una descomposición de P con interiores disjuntos. Entonces Área(P) = Área(P₁) + Área(P₂).",
-  "tags": ["geometria", "areas"],
-  "authors": ["hilbert"],
-  "difficulty": "básico",
-  "hasSimulation": false,
-  "sources": [
-    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §18-21", role: "primary" }
+  id: "teorema-area-aditividad",
+  type: "teorema",
+  title: "Teorema de aditividad del área",
+  description: "Si una región poligonal plana se descompone en un número finito de subregiones poligonales disjuntas en sus interiores, el área de la región total es igual a la suma de las áreas de sus partes.",
+  statement: "Si R es la unión de n regiones poligonales R1, R2, ..., Rn disjuntas dos a dos en sus interiores, entonces Área(R) = ∑ Área(Ri).",
+  branch: "51M",
+  hasSimulation: false,
+  authors: ["euclides", "hilbert"],
+  demos: [],
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §19", role: "primary" }
   ]
 };
 
-<Capitular letra="L" />a teoría del <ConceptLink targetId="area">área</ConceptLink> desarrollada por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> asigna a cada <ConceptLink targetId="poligono">polígono</ConceptLink> un valor numérico mediante el concepto de contenido o medida. El <ConceptLink targetId="teorema-area-aditividad">teorema de aditividad del área</ConceptLink> demuestra que la asignación de área es compatible con la partición geométrica: al escindir un polígono en regiones con interiores disjuntos, la medida del todo es exactamente igual a la suma de las medidas de las partes.
+<Capitular letra="E" />l teorema de aditividad del <ConceptLink targetId="area">área</ConceptLink> constituye el pilar fundamental de la teoría de la <ConceptLink targetId="teoria-medida-area">medición de superficies</ConceptLink> en la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>. Garantiza que la función de medida de área asignada a regiones <ConceptLink targetId="poligono">poligonales</ConceptLink> es una medida finitamente aditiva invariantiva frente a particiones.
 
 <Separador />
 
 ### Enunciado formal
 
-Sea $P$ un <ConceptLink targetId="poligono">polígono</ConceptLink> escindido en dos polígonos $P_1$ y $P_2$ tales que sus interiores son disjuntos ($P_1^\circ \cap P_2^\circ = \emptyset$) y su unión constituye $P = P_1 \cup P_2$. Entonces:
+Sea $R \subset \mathcal{P}$ una <ConceptLink targetId="region-convexa">región poligonal</ConceptLink> plana. Supóngase que $R$ es la <ConceptLink targetId="union-conjuntos">unión</ConceptLink> de un número finito de regiones poligonales $R_1, R_2, \dots, R_n$:
+
+$$ R = \bigcup_{i=1}^n R_i $$
+
+tales que para todo par $i \neq j$, el interior de $R_i$ e interior de $R_j$ son disjuntos ($\text{Int}(R_i) \cap \text{Int}(R_j) = \emptyset$). Se verifica rigurosamente la propiedad aditiva de la función de medida de área $\mu$:
 
 <Formula>
-  $$ \text{Área}(P) = \text{Área}(P_1) + \text{Área}(P_2) $$
+  $$ \text{Área}(R) = \sum_{i=1}^n \text{Área}(R_i) $$
 </Formula>
 
-<Separador />
-
-### Análisis y demostración deductiva
-
-Por definición en la teoría de Hilbert, el <ConceptLink targetId="area">área</ConceptLink> de un <ConceptLink targetId="poligono">polígono</ConceptLink> se calcula como la suma de las áreas de los <ConceptLink targetId="triangulo">triángulos</ConceptLink> que componen una <ConceptLink targetId="triangulacion">triangulación</ConceptLink> dada.
-
-Si $P$ se descompone en $P_1$ y $P_2$, al elegir triangulaciones para $P_1$ y $P_2$, la yuxtaposición de ambas produce una triangulación válida para $P$, dado que los interiores no se solapan. La independencia del área respecto a la triangulación elegida garantiza que el valor aditivo es invariante y único.
+Es decir, la medida de la superficie total equivale a la suma escalar de las medidas de las áreas de cada subregión constituyente.
 
 <Separador />
 
-### Observaciones y consecuencias
+### Fundamentación axiomática y equidescomposición
 
-- Por inducción matemática, la propiedad se extiende a cualquier partición finita $P = \bigcup_{k=1}^n P_k$ con interiores disjuntos a pares.
-- Constituye la base lógica para la demostración del <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> mediante descomposición de áreas y para el cálculo de áreas poligonales generales.
+En la formalización de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el concepto de área se construye para evitar el uso del cálculo infinitesimal mediante la noción de equidescomponibilidad:
+- Dos polígonos $P$ y $Q$ se dicen **equidescomponibles** si pueden dividirse en el mismo número finito de triángulos respectivamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>.
+- Por el teorema de aditividad, dos polígonos equidescomponibles poseen necesariamente la misma área ($\text{Área}(P) = \text{Área}(Q)$).
+- El teorema de Bolyai-Gerwien establece que en el plano euclidiano, dos polígonos cualesquiera con la misma área son siempre equidescomponibles.
+
+<Separador />
+
+### Invariancia y normalización
+
+La función de medida de área satisface tres axiomas fundamentales:
+1. **Positividad**: $\text{Área}(R) > 0$ para toda región no vacía.
+2. **Invariancia por congruencia**: Si $R_1 \cong R_2$, entonces $\text{Área}(R_1) = \text{Área}(R_2)$.
+3. **Aditividad finita**: $\text{Área}(R_1 \cup R_2) = \text{Área}(R_1) + \text{Área}(R_2)$ para regiones disjuntas en el interior.

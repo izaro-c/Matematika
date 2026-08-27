@@ -1,15 +1,16 @@
 export const metadata = {
   "id": "demo-suma-angulos-triangulo",
   "type": "demostracion",
-  "title": "Frogapena: Hiruki baten angeluen batura",
-  "description": "Frogapen euklidestar klasikoa aurkako erpinetik zuzen paralelo bat marraztuz eta barne-angelu alternoen propietateaz baliatuz.",
+  "title": "Froga: Triangelu baten angeluen batura",
+  "description": "Euklidesen froga klasikoa, kontrako bertizetik oinarriarekiko zuzen paralelo bat marraztuz eta barne-angelu alternoen kongruentzia erabiliz.",
   "parentTheorem": "teorema-suma-angulos-triangulo",
+  "branch": "51M",
   "proofMethod": "metodo-directo",
   "authors": ["euclides"],
   "tags": ["geometria", "triangulos", "angulos"],
   "layout": "split",
   "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 32", role: "primary" }
+    { "title": "Elementuak", author: "Euclides", locator: "I. Liburukia, 32. Proposizioa", role: "primary" }
   ]
 };
 
@@ -17,44 +18,44 @@ import { DemoSumaAngulos } from "@content/diagrams/Demos/DemoSumaAngulos";
 
 <DemonstrationSection diagram={<DemoSumaAngulos />}>
 
-<Capitular letra="B" />edi $\triangle ABC$ <ConceptLink targetId="triangulo">triangelu</ConceptLink> lau bat, $\alpha = \angle A$, $\beta = \angle B$ eta $\gamma = \angle C$ barne-<ConceptLink targetId="angulo">angeluekin</ConceptLink>. <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={true}>Triangelu baten angeluen baturaren teorema</ConceptLink> frogatzen da: bere hiru barne-angeluen batura bi <ConceptLink targetId="angulo-recto">angelu zuzenen</ConceptLink> ($180^\circ$) berdina dela.
+<Capitular letra="E" />manik barne-angeluak $\alpha = \angle A$, $\beta = \angle B$ eta $\gamma = \angle C$ dituen $\triangle ABC$ <ConceptLink targetId="triangulo">triangelu</ConceptLink> laua, <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={true}>triangelu baten angeluen baturaren teorema</ConceptLink> formalzki frogatzen da. Frogapen honek ezartzen du hiru barne-angeluen neurrien batura <ConceptLink targetId="angulos-suplementarios">angelu lau baten</ConceptLink> ($180^\circ$) neurriaren berbera dela.
 
 <Separador />
 
-### Frogapena urratsez urrats
+### Urratsez urratseko froga
 
-<ProofStep number={1} target="triangulo" title="Hasierako triangelua">
-Bedi <VisualBind element="triangulo" color="carbon">$\triangle ABC$</VisualBind> triangelua, <VisualBind element="angulo-a" color="terracota">$\alpha$</VisualBind>, <VisualBind element="angulo-b" color="pavo">$\beta$</VisualBind> eta <VisualBind element="angulo-c" color="ocre">$\gamma$</VisualBind> barne-angeluekin.
+<ProofStep number={1} target="triangulo" title="Oinarrizko triangeluaren konfigurazioa">
+Bedi <VisualBind element="triangulo" color="carbon">$\triangle ABC$</VisualBind> triangelua, non bere hiru barne-angeluak honela adierazten diren: <VisualBind element="angulo-a" color="terracota">$\alpha$</VisualBind> $A$ <ConceptLink targetId="vertice">bertizean</ConceptLink>, <VisualBind element="angulo-b" color="pavo">$\beta$</VisualBind> $B$ bertizean eta <VisualBind element="angulo-c" color="ocre">$\gamma$</VisualBind> $C$ bertizean.
 </ProofStep>
 
-<ProofStep number={2} target="paralela" title="Zuzen paraleloaren eraikuntza">
-<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Paraleloen axioma euklidestarraren</ConceptLink> bidez, <VisualBind element="vertice-c" color="carbon">$C$</VisualBind> <ConceptLink targetId="vertice">erpinetik</ConceptLink> <VisualBind element="base-ab" color="carbon">$AB$</VisualBind> oinarriarekiko <VisualBind element="paralela" color="carbon"><ConceptLink targetId="paralelismo">zuzen paralelo</ConceptLink></VisualBind> bakarra marrazten dugu.
+<ProofStep number={2} target="paralela" title="Kontrako bertizetik zuzen paraleloa marraztea">
+<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euklidesen paraleloen axiomari</ConceptLink> jarraituz, kontrako <VisualBind element="vertice-c" color="carbon">$C$</VisualBind> bertizetik pasatzen den eta <VisualBind element="base-ab" color="carbon">$\overline{AB}$</VisualBind> oinarriarekiko <VisualBind element="paralela" color="carbon"><ConceptLink targetId="paralelas">paraleloa den</ConceptLink></VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bakarra marrazten da.
 </ProofStep>
 
-<ProofStep number={3} target={["alterno-a", "transversal-ac", "angulo-a"]} title="Lehen barne-angelu alterno bikotea">
-$AC$ zuzena paraleloak ebakitzen dituen <VisualBind element="transversal-ac" color="terracota"><ConceptLink targetId="transversal">transbertsal gisa</ConceptLink></VisualBind> hartuz, <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>barne-angelu alternoen teoremaren</ConceptLink> bidez <VisualBind element="angulo-a" color="terracota">$\alpha$</VisualBind> barne-angelua eta $C$-ko <VisualBind element="alterno-a" color="terracota">$\alpha'$</VisualBind> <ConceptLink targetId="angulos-alternos-internos">alternoa</ConceptLink> <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> direla ondorioztatzen da:
+<ProofStep number={3} target={["alterno-a", "transversal-ac", "angulo-a"]} title="Lehenengo barne-angelu alternoen bikotearen kongruentzia">
+$AC$ aldea duen zuzena ebakitzaile moduan hartuz, <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>barne-angelu alternoen teoremak</ConceptLink> <VisualBind element="angulo-a" color="terracota">$\alpha$</VisualBind> barne-angeluaren eta $C$ bertizeko goi-goiko <VisualBind element="alterno-a" color="terracota">$\alpha'$</VisualBind> angelu alternoaren arteko <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> bermatzen du:
 
 <Formula>
   $$ \alpha \cong \alpha' $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} target={["alterno-b", "transversal-bc", "angulo-b"]} title="Bigarren barne-angelu alterno bikotea">
-Modu berean, $BC$ zuzena <VisualBind element="transversal-bc" color="pavo">transbertsal gisa</VisualBind> hartuz, <VisualBind element="angulo-b" color="pavo">$\beta$</VisualBind> barne-angelua eta $C$-ko <VisualBind element="alterno-b" color="pavo">$\beta'$</VisualBind> alternoa kongruenteak dira:
+<ProofStep number={4} target={["alterno-b", "transversal-bc", "angulo-b"]} title="Bigarren barne-angelu alternoen bikotearen kongruentzia">
+Bide beretik, $BC$ aldearen zuzena ebakitzaile moduan hartuz, <VisualBind element="angulo-b" color="pavo">$\beta$</VisualBind> barne-angelua $C$ bertizeko goi-goiko <VisualBind element="alterno-b" color="pavo">$\beta'$</VisualBind> angelu alternoarekin kongruentea da:
 
 <Formula>
   $$ \beta \cong \beta' $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} target={["angulo-llano", "angulo-c", "alterno-a", "alterno-b"]} title="Angelu lautuaren osaera eta ondorioa">
-<VisualBind element="alterno-a" color="terracota">$\alpha'$</VisualBind>, <VisualBind element="angulo-c" color="ocre">$\gamma$</VisualBind> eta <VisualBind element="alterno-b" color="pavo">$\beta'$</VisualBind> angeluak <ConceptLink targetId="angulos-adyacentes">albokoak</ConceptLink> dira $C$-tik igarotzen den zuzen paraleloaren gainean, <VisualBind element="angulo-llano" color="carbon"><ConceptLink targetId="angulo-llano">angelu lautua</ConceptLink></VisualBind> osatuz:
+<ProofStep number={5} target={["angulo-llano", "angulo-c", "alterno-a", "alterno-b"]} title="Angelu lauaren osaketa eta amaierako ondorioa">
+Hiru angelu jarraituak —<VisualBind element="alterno-a" color="terracota">$\alpha'$</VisualBind>, <VisualBind element="angulo-c" color="ocre">$\gamma$</VisualBind> eta <VisualBind element="alterno-b" color="pavo">$\beta'$</VisualBind>— $C$-tik pasatzen den zuzen paraleloaren gainean elkarren ondoan kokatzen dira, <VisualBind element="angulo-llano" color="carbon"><ConceptLink targetId="angulos-suplementarios">angelu lau bat</ConceptLink></VisualBind> osatuz:
 
 <Formula>
   $$ \alpha' + \gamma + \beta' = 180^\circ $$
 </Formula>
 
-$\alpha'$ $\alpha$-gatik eta $\beta'$ $\beta$-gatik ordezkatuz:
+Lortutako kongruentziak erabiliz $\alpha'$ ordez $\alpha$ eta $\beta'$ ordez $\beta$ jarriz:
 
 <Formula>
   $$ \alpha + \beta + \gamma = 180^\circ $$
@@ -63,10 +64,10 @@ $\alpha'$ $\alpha$-gatik eta $\beta'$ $\beta$-gatik ordezkatuz:
 
 <Separador />
 
-### Analisia eta baliozkotasun geometrikoa
+### Dedukzio-analisia
 
 <Nota>
-  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.32 proposizioa. Frogapen honek zorrozki behar du <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axioma</ConceptLink>. <ConceptLink targetId="geometria-hiperbolica">Geometria hiperbolikoan</ConceptLink> batura $180^\circ$ baino txikiagoa da, eta geometria eliptikoan berriz handiagoa.
+  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.32 Proposizioa. Frogapen hau <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> mende dago erabat. <ConceptLink targetId="sistema-hiperbolico">Geometria hiperbolikoan</ConceptLink> angeluen batura $180^\circ$ baino zorrozki txikiagoa da.
 </Nota>
 
 </DemonstrationSection>

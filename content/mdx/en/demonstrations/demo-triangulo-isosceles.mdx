@@ -1,0 +1,68 @@
+export const metadata = {
+  "id": "demo-triangulo-isosceles",
+  "type": "demostracion",
+  "title": "Proof: Isosceles Triangle Theorem",
+  "description": "Elegant proof by Pappus using the self-congruence of an isosceles triangle with reversed corresponding base vertices.",
+  "parentTheorem": "teorema-triangulo-isosceles",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "triangulos", "congruencia"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elements", author: "Euclid", locator: "Book I, Proposition 5 (Refined Pappus version)", role: "primary" }
+  ]
+};
+
+import { DemoTrianguloIsosceles } from "@content/diagrams/Demos/DemoTrianguloIsosceles";
+
+<DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
+
+<Capitular letra="F" />or any <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ possessing two <ConceptLink targetId="congruencia">congruent</ConceptLink> sides, the <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>isosceles triangle theorem</ConceptLink> is demonstrated. The proof establishes that the <ConceptLink targetId="angulo">angles</ConceptLink> opposite to those congruent sides (the base angles) are congruent to each other.
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} target="triangulo-base" title="Isosceles triangle hypothesis">
+Let <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> be a triangle with sides <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> and <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> of equal length:
+
+<Formula>
+  $$ \overline{AB} \cong \overline{AC} $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={2} target="correspondencia" title="Establishment of vertex self-correspondence">
+Consider triangle $\triangle ABC$ and a second copy with reversed base vertices: $\triangle ACB$. The correspondence between vertices is given by $(A, B, C) \leftrightarrow (A, C, B)$.
+</ProofStep>
+
+<ProofStep number={3} target="criterio-lal" title="Verification of the SAS congruence criterion">
+Comparing corresponding elements of $\triangle ABC$ and $\triangle ACB$:
+1. Side <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> is congruent to side <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> by hypothesis.
+2. Included <ConceptLink targetId="angulo">angle</ConceptLink> <VisualBind element="angulo-a" color="carbon">$\angle BAC$</VisualBind> is identical to itself ($\angle CAB$).
+3. Side <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> is congruent to side <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> by hypothesis.
+
+By <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>SAS congruence axioms</ConceptLink> (Side-Angle-Side), <ConceptLink targetId="congruencia">triangle congruence</ConceptLink> is deduced:
+
+<Formula>
+  $$ \triangle ABC \cong \triangle ACB $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} target="conclusion" title="Equality of base angles">
+Since both triangles are congruent, their corresponding parts are congruent. In particular, angles opposite equal sides in the correspondence are identical: the angle at <ConceptLink targetId="vertice">vertex</ConceptLink> $B$ (<VisualBind element="angulo-b" color="terracota">$\angle ABC$</VisualBind>) is congruent to the angle at vertex $C$ (<VisualBind element="angulo-c" color="pavo">$\angle ACB$</VisualBind>):
+
+<Formula>
+  $$ \angle ABC \cong \angle ACB $$
+</Formula>
+</ProofStep>
+
+<Separador />
+
+### Deductive analysis
+
+<Nota>
+  Book I, Proposition 5 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, historically known as the *Pons Asinorum*. This concise version without auxiliary lines is due to Pappus of Alexandria and lies within <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+</Nota>
+
+</DemonstrationSection>

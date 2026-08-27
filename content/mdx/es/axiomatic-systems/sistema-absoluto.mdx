@@ -2,67 +2,39 @@ export const metadata = {
   id: "sistema-absoluto",
   lang: "es",
   type: "sistema-axiomatico",
-  title: "Geometría Absoluta",
-  description: "Sistema axiomático neutro compuesto por los 19 axiomas de Hilbert (incidencia, orden, congruencia y continuidad) sin asumir el postulado de las paralelas.",
-  axiomas: [
-    "axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3", "axioma-incidencia-4",
-    "axioma-incidencia-5", "axioma-incidencia-6", "axioma-incidencia-7", "axioma-incidencia-8",
-    "axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4",
-    "axioma-congruencia-1", "axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4", "axioma-congruencia-5",
-    "axioma-arquimedes", "axioma-completitud"
-  ],
-  sources: [
-    { title: "Appendix. Scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "§1", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1-§6", role: "primary" }
-  ]
+  title: "Sistema de geometría absoluta",
+  description: "Estructura axiomática fundada por János Bolyai que reúne la totalidad de axiomas de incidencia, orden, congruencia y continuidad sin presuponer ningún axioma de paralelas.",
+  branch: "51M",
+  axiomas: ["axioma-incidencia-1", "axioma-orden-1", "axioma-congruencia-1"]
 };
 
-<Capitular letra="L" />a <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> (o <ConceptLink targetId="geometria">geometría</ConceptLink> neutral) es el núcleo deductivo común a las geometrías clásica y no euclidianas. Agrupa los principios fundamentales de pertenencia, disposición espacial, rigidez de figuras y completitud topológica, sin asumir ninguna hipótesis respecto a la existencia o unicidad de <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink>.
-
-<Definicion title="">
-  Un sistema <ConceptLink targetId="axioma">axiomático</ConceptLink> absoluto es una estructura ($\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I}, \mathcal{B}, \cong$) que satisface los <ConceptLink targetId="sistema-incidencia" isDependency={true}>axiomas de incidencia</ConceptLink> (I.1-I.8), los <ConceptLink targetId="axioma-orden-1" isDependency={true}>axiomas de orden</ConceptLink> (II.1-II.4), los <ConceptLink targetId="congruencia" isDependency={true}>axiomas de congruencia</ConceptLink> (III.1-III.5) y los <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axiomas de continuidad</ConceptLink> (V.1-V.2) de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>. Todo <ConceptLink targetId="teorema">teorema</ConceptLink> deducido en este sistema resulta intrínsecamente válido tanto en la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink> como en la <ConceptLink targetId="sistema-hiperbolico">hiperbólica</ConceptLink>.
-</Definicion>
+<Capitular letra="E" />l sistema de geometría absoluta —denominado también *geometría neutral*— comprende el núcleo axiomático común compartido tanto por la geometría euclídea como por la geometría hiperbólica. Formulado independientemente por János Bolyai y Nikolái Lobachevski, abarca la totalidad de los principios de incidencia, orden, congruencia y continuidad de Hilbert, omitiendo de forma deliberada el postulado de las paralelas.
 
 <Separador />
 
-### Contexto histórico y fundamentación
+### Grupos axiomáticos constitutivos
 
-Durante más de dos milenios se intentó deducir el <ConceptLink targetId="axioma-paralelas-euclides">postulado de las paralelas</ConceptLink> a partir de los axiomas más elementales. En el siglo XIX, <ConceptLink targetId="lobachevski">Nikolai Lobachevski</ConceptLink>, <ConceptLink targetId="bolyai">János Bolyai</ConceptLink> y Carl Friedrich Gauss demostraron la independencia lógica de dicho postulado. <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> formalizó definitivamente la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> en 1899, estableciendo una base neutra rigurosa sobre la cual la adición o negación del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink> bifurca el espacio geométrico.
+La geometría absoluta unifica cuatro grupos fundamentales del cuerpo axiomático hilbertiano:
 
-<Separador />
-
-### Estructura axiomática
-
-La geometría absoluta comprende 19 axiomas fundamentales distribuidos en cuatro cuerpos constitutivos:
-
-- **<ConceptLink targetId="sistema-incidencia" isDependency={true}>I. Axiomas de incidencia</ConceptLink>** (I.1 a I.8): Determinan las relaciones primitivas entre <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>.
-- **<ConceptLink targetId="axioma-orden-1" isDependency={true}>II. Axiomas de orden</ConceptLink>** (II.1 a II.4): Rigen la relación ternaria de intermediación <ConceptLink targetId="estar-entre">estar entre</ConceptLink> sobre una recta, incluyendo el <ConceptLink targetId="axioma-orden-4">axioma de Pasch</ConceptLink>.
-- **<ConceptLink targetId="congruencia" isDependency={true}>III. Axiomas de congruencia</ConceptLink>** (III.1 a III.5): Formalizan la equivalencia de <ConceptLink targetId="segmento">segmentos</ConceptLink> y <ConceptLink targetId="angulo">ángulos</ConceptLink>, así como el criterio de congruencia de <ConceptLink targetId="triangulo">triángulos</ConceptLink> SAS.
-- **<ConceptLink targetId="axioma-arquimedes" isDependency={true}>IV. Axiomas de continuidad</ConceptLink>** (V.1 y V.2): Comprenden el <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink> y el <ConceptLink targetId="axioma-completitud">axioma de completitud</ConceptLink> de Hilbert, garantizando la continuidad de la <ConceptLink targetId="numero-real">recta real</ConceptLink>.
+1. **<ConceptLink targetId="sistema-incidencia">Axiomas de incidencia (I.1 a I.8)</ConceptLink>**: Rigen la relación binaria entre <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>.
+2. **Axiomas de orden (II.1 a II.4)**: Establecen la relación ternaria <ConceptLink targetId="estar-entre">estar entre</ConceptLink> en una recta y fundamentan la noción de <ConceptLink targetId="erdiplano">semiplano</ConceptLink> y región convexa.
+3. **Axiomas de congruencia (III.1 a III.5)**: Definen la rigidez geométrica para la igualdad de <ConceptLink targetId="zuzenki">segmentos</ConceptLink> y <ConceptLink targetId="angulo">ángulos</ConceptLink>, incluyendo el criterio de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de triángulos LAL.
+4. **Axiomas de continuidad (IV.1 a IV.2)**: Incluyen el axioma de Arquímedes y la completitud lineal, conectando el espacio sintético con los <ConceptLink targetId="numero-real">números reales</ConceptLink>.
 
 <Separador />
 
-### Propiedades fundamentales
+### Teoremas válidos en geometría absoluta
 
-En el marco de la geometría absoluta se demuestran teoremas de amplia relevancia geométrica:
+Todos los teoremas demostrados en el sistema absoluto son automáticamente válidos tanto en la <ConceptLink targetId="geometria-euclidiana">geometría euclídea</ConceptLink> como en la <ConceptLink targetId="geometria-hiperbolica">geometría hiperbólica</ConceptLink>:
 
-<Formula>
-  $$
-  \sum_{i=1}^{3} \alpha_i \leq 180^\circ
-  $$
-</Formula>
-
-- **Teorema de Saccheri-Legendre**: La suma de los ángulos interiores de todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> es menor o igual a $180^\circ$.
-- **Criterios de congruencia**: Los teoremas LAL (SAS), ALA (ASA) y LLL (SSS) se sostienen sin requerir el postulado de las paralelas.
-- **Existencia de perpendiculares**: Dado un punto fuera de una recta, existe al menos una recta <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> trazada desde dicho punto a la recta dada.
+- **<ConceptLink targetId="teorema-triangulo-isosceles">Teorema del triángulo isósceles</ConceptLink>**: Los ángulos opuestos a lados congruentes en un <ConceptLink targetId="triangulo">triángulo</ConceptLink> son congruentes.
+- **Teorema del ángulo exterior**: El ángulo exterior de cualquier triángulo es estrictamente mayor que cualquiera de los dos ángulos interiores no adyacentes.
+- **<ConceptLink targetId="teorema-congruencia-ala">Criterios de congruencia ALA y LLL</ConceptLink>**: La determinación unívoca de triángulos mediante tres elementos correspondientes.
+- **Existencia de paralelas**: Por un punto exterior a una recta pasa *al menos* una recta <ConceptLink targetId="paralelismo">paralela</ConceptLink> (demostrado por construcción con la perpendicular común).
 
 <Separador />
 
-### Cuadro comparativo de sistemas geométricos
+### Propiedades metamatematica
 
-| Sistema | Postulado de paralelas | Suma angular del triángulo | Espacio modelo |
-|---|---|---|---|
-| <ConceptLink targetId="sistema-incidencia">Incidencia</ConceptLink> | No especificado | Indeterminado | Plano de Fano, $\mathbb{R}^3$ |
-| **<ConceptLink targetId="sistema-absoluto">Absoluto</ConceptLink>** | **Neutro** | $\leq 180^\circ$ | Cartesiano, Poincaré |
-| <ConceptLink targetId="sistema-euclidiano">Euclidiano</ConceptLink> | Paralela única | $= 180^\circ$ | Plano cartesiano $\mathbb{R}^2$ |
-| <ConceptLink targetId="sistema-hiperbolico">Hiperbólico</ConceptLink> | Infinitas paralelas | $< 180^\circ$ | Disco de Poincaré |
+- **Neutralidad del paralelismo**: Al no fijar el número de paralelas, no determina si la suma de los ángulos de un triángulo es igual a $180^\circ$ o estrictamente menor.
+- **Subyacencia a modelos**: Tanto el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink> como el <ConceptLink targetId="modelo-poincare">disco de Poincaré</ConceptLink> son modelos plenamente válidos de la geometría absoluta.
