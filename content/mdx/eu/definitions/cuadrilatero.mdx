@@ -3,51 +3,45 @@ export const metadata = {
   lang: "eu",
   type: "definicion",
   subtype: "nominal",
-  title: "Lauhitza (Koadrilateroa)",
-  description: "Lau alde eta lau erpin dituen plano-poligonoa, beren muturretan soilik ebakitzen diren lau zuzenki koplanarrez mugatua.",
+  title: "Koadrilateroa",
+  description: "Lau erpin ez-lerrokide lotzen dituzten lau zuzenkiz osatutako lau aldeboko plano-poligonoa.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euclides", locator: "I. Liburua, 19. Definizioa", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "I. Liburua, 22. Definizioa", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
   ]
 };
 
 import { Cuadrilatero } from '@content/diagrams/Definiciones/Cuadrilatero';
 export const Simulation = Cuadrilatero;
 
-<Capitular letra="L" />auhitza edo <ConceptLink targetId="cuadrilatero">koadrilateroa</ConceptLink> lau alde eta lau erpin koplanar dituen <ConceptLink targetId="poligono">poligono</ConceptLink> ixtea da. <ConceptLink targetId="plano">Planoan</ConceptLink> lau erpin dituen oinarrizko egitura poligonala osatzen du.
+<Capitular letra="K" />oadrilateroa lau <ConceptLink targetId="lado">aldeko</ConceptLink> <ConceptLink targetId="poligono">poligonoa</ConceptLink> da <ConceptLink targetId="geometria-euclidiana">geometria lauan</ConceptLink>, elkarren segidako lau <ConceptLink targetId="segmento">zuzenkiz</ConceptLink> osatua. Oinarrizko plano-irudia da <ConceptLink targetId="congruencia">kongruentzien</ConceptLink> azterketan eta <ConceptLink targetId="plano">planoan</ConceptLink> azaleraren <ConceptLink targetId="teoria-medida-area">neurri-teoriako</ConceptLink> zein azaleraren <ConceptLink targetId="teorema-area-aditividad">aditivitatezko</ConceptLink> deskonposaketetan.
 
 <Definicion title="">
-  $ABCD$ koadrilatero sinple bat bere muturretan izan ezik elkar ebakitzen ez duten lau $AB, BC, CD, DA$ <ConceptLink targetId="segmento" isDependency={true}>zuzenkien</ConceptLink> batasunak osatutako plano-multzoa da, hiru erpin <ConceptLink targetId="colinealidad">lerrokide</ConceptLink> ez daudela:
+  $\mathcal{P}$ plano bateko lau <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind>, <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> eta <VisualBind element="vertice-d" color="musgo">$D$</VisualBind> puntu koplanar emanda, non hiruna puntu ez diren <ConceptLink targetId="colinealidad">lerrokideak</ConceptLink> eta zuzenkiak muturretan bakarrik ebakitzen diren, <VisualBind element="cuadrilatero" color="musgo">$ABCD$</VisualBind> koadrilateroa lau <ConceptLink targetId="segmento">zuzenki jarraituen</ConceptLink> <ConceptLink targetId="union-conjuntos">batasunak</ConceptLink> zehaztutako irudi plana da:
   $$
-  ABCD = AB \cup BC \cup CD \cup DA
+  ABCD = \overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}
   $$
+  $A, B, C, D$ puntuak <ConceptLink targetId="vertice">erpinak</ConceptLink> dira, $\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$ zuzenkiak aldeak dira, eta $\overline{AC}, \overline{BD}$ zuzenkiak <ConceptLink targetId="diagonal">diagonalak</ConceptLink> dira.
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Egitura-sailkapena
 
-Simulazio interaktiboan <VisualBind element="vertices-moviles" color="terracota">$C$ eta $D$</VisualBind> erpin aldategarriak hautematen dira. <VisualBind element="paralelismo" color="pavo">Paralelismo</VisualBind>, <VisualBind element="lados-iguales" color="ocre">aldeen berdintasun</VisualBind> eta <VisualBind element="angulos-rectos" color="musgo">angelu zuzenen</VisualBind> erlazioei esker, familia poligonal ezberdinak identifikatzen dira dinamikoki.
+Koadrilatero planoak beren konbexutasun-propietateen eta aurkako aldeen arteko <ConceptLink targetId="paralelas">paralelotasun-erlazioen</ConceptLink> arabera sailkatzen dira:
 
-<Separador />
-
-### Barne-propietateak eta angeluarrak
-
-<Formula>
-  $$
-  \sum_{i=1}^{4} \theta_i = 360^\circ
-  $$
-</Formula>
-
-- **Barne-angeluen batura**: <ConceptLink targetId="sistema-euclidiano">Geometria euklidearrean</ConceptLink>, koadrilatero sinple baten lau barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $360^\circ$ ($2\pi$ radian) da ezinbestean.
-- **Partizioa triangelutan**: Edozein koadrilatero konhexuk bi <ConceptLink targetId="triangulo">triangelutan</ConceptLink> banatzea onartzen du bere bi diagonaletako baten bidez.
-
-<Separador />
-
-### Hierarkia-sailkapena
-
-| Koadrilatero mota | <ConceptLink targetId="paralelas">Paralelismo</ConceptLink> baldintza | <ConceptLink targetId="congruencia">Kongruentzia</ConceptLink> baldintza |
+| Mota | Ezaugarri geometrikoa | Azpiklase nagusiak |
 |---|---|---|
-| Trapezoidala | Aurkako alderik paralelo gabe | Kongruentzia murrizketarik gabe |
-| Trapezioa | Aurkako alde pare bat paralelo | Murrizketarik gabe |
-| <ConceptLink targetId="paralelogramo">Paralelogramoa</ConceptLink> | Bi aurkako alde pare paralelo | Aurkako aldeak kongruenteak |
-| <ConceptLink targetId="cuadrado">Karratua</ConceptLink> | Bi aurkako alde pare paralelo | Lau aldeak kongruenteak eta lau angelu zuzen |
+| <ConceptLink targetId="region-convexa">Konbexua</ConceptLink> | Bi diagonalek barneko puntu batean ebakitzen dute elkar | <ConceptLink targetId="paralelogramo">Paralelogramoa</ConceptLink>, Trapezioa, Trapezoidea |
+| Konkaboa | Diagonal bat guztiz kanpoaldean gelditzen da | Dardo-koadrilateroa |
+| <ConceptLink targetId="paralelogramo">Paralelogramoa</ConceptLink> | Bi aurkako alde-pareak paraleloak dira ($\overline{AB} \parallel \overline{CD} \land \overline{BC} \parallel \overline{DA}$) | Zuzena, Erronboa, <ConceptLink targetId="cuadrado">Karratua</ConceptLink> |
+
+<Separador />
+
+### Propietateak
+
+- **Barne-angeluen batura**: Edozein koadrilatero konbexuren lau barne-angeluen batura beti da $360^\circ$ ($2\pi\text{ rad}$) nahitaez.
+- **Triangelu-deskonposaketa**: Koadrilatero konbexu orok diagonal baten bidez bi <ConceptLink targetId="triangulo">triangelutan</ConceptLink> banatzeko aukera ematen du, ertzean salbu disjuntuak direnak.
+- **Azaleraren aditivitatea**: Koadrilatero konbexu baten azalera-neurriak <ConceptLink targetId="teorema-area-aditividad">aditivitate</ConceptLink> zorrotza betetzen du: $\mu(ABCD) = \mu(\triangle ABC) + \mu(\triangle ACD)$.

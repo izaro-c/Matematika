@@ -1,15 +1,16 @@
 export const metadata = {
   "id": "demo-tales",
   "type": "demostracion",
-  "title": "Frogapena: Talesen teorema",
-  "description": "Frogapen geometrikoa altuera bera duten triangeluen azalerren arteko proportzioaz baliatuz.",
+  "title": "Froga: Talesen teorema",
+  "description": "Hiru edo gehiago zuzen paralelok bi ebakitzaileetan zehaztutako zuzenkien arteko proportzionaltasunaren froga zuzena.",
   "parentTheorem": "teorema-tales",
+  "branch": "51M",
   "proofMethod": "metodo-directo",
-  "authors": ["euclides"],
-  "tags": ["geometria", "proporcionalidad"],
+  "authors": ["tales", "euclides"],
+  "tags": ["geometria", "proporcionalidad", "semejanza", "rectas"],
   "layout": "split",
   "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro VI, Proposición 2", role: "primary" }
+    { "title": "Elementuak", author: "Euclides", locator: "VI. Liburukia, 2. Proposizioa", role: "primary" }
   ]
 };
 
@@ -17,62 +18,50 @@ import { DemoTales } from "@content/diagrams/Demos/DemoTales";
 
 <DemonstrationSection diagram={<DemoTales />}>
 
-<Capitular letra="B" />edi <VisualBind element="triangulo-abc" color="carbon">$\triangle ABC$</VisualBind> <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat eta <VisualBind element="recta-de" color="terracota">$DE$</VisualBind> $BC$ oinarriarekiko <ConceptLink targetId="recta">zuzen</ConceptLink> <ConceptLink targetId="paralelismo">paralelo</ConceptLink> bat, $AB$ eta $AC$ aldeak $D$ eta $E$ puntuetan ebakitzen dituena hurrenez hurren. <ConceptLink targetId="teorema-tales" isDependency={true}>Talesen teorema</ConceptLink> frogatzen da: zehaztutako <ConceptLink targetId="segmento">segmentuen</ConceptLink> arteko <ConceptLink targetId="proporcionalidad">proportzionaltasuna</ConceptLink>:
-
-<Formula>
-  $$ \frac{AD}{DB} = \frac{AE}{EC} $$
-</Formula>
+<Capitular letra="E" />manik bi <ConceptLink targetId="recta">zuzen ebakitzailek</ConceptLink> $u$ eta $v$ ebakitzen dituzten hiru <VisualBind element="paralelas" color="carbon"><ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink></VisualBind> $r, s, t$, <ConceptLink targetId="teorema-tales" isDependency={true}>Talesen teorema</ConceptLink> frogatzen da. Frogapenak erakusten du lehenengo $u$ ebakitzailean muga daitezkeen <ConceptLink targetId="segmento">zuzenkien</ConceptLink> luzeren arteko kozientea bigarren $v$ ebakitzaileko zuzenki homologoen koziente berbera dela.
 
 <Separador />
 
-### Frogapena urratsez urrats
+### Urratsez urratseko froga
 
-<ProofStep number={1} target={["triangulo-abc", "recta-de"]} title="Hasierako kokatzea eta paraleloa">
-<VisualBind element="triangulo-abc" color="carbon">$\triangle ABC$</VisualBind> triangelua emanda, <VisualBind element="recta-de" color="terracota">$DE \parallel BC$</VisualBind> zuzena marrazten dugu $D \in AB$ eta $E \in AC$ izanik.
+<ProofStep number={1} target="paralelas" title="Zuzen paraleloen eta ebakitzaileen konfigurazioa">
+Bedi hiru zuzen paralelo <VisualBind element="recta-r" color="carbon">$r$</VisualBind>, <VisualBind element="recta-s" color="carbon">$s$</VisualBind> eta <VisualBind element="recta-t" color="carbon">$t$</VisualBind>. Lehenengo <VisualBind element="transversal-u" color="terracota">$u$</VisualBind> ebakitzaileak $A, B, C$ puntuetan ebakitzen ditu zuzen paraleloak, <VisualBind element="segmento-ab" color="terracota">$\overline{AB}$</VisualBind> eta <VisualBind element="segmento-bc" color="terracota">$\overline{BC}$</VisualBind> zuzenkiak zehaztuz. Bigarren <VisualBind element="transversal-v" color="pavo">$v$</VisualBind> ebakitzaileak $A', B', C'$ puntuetan ebakitzen ditu, <VisualBind element="segmento-a1b1" color="pavo">$\overline{A'B'}$</VisualBind> eta <VisualBind element="segmento-b1c1" color="pavo">$\overline{B'C'}$</VisualBind> zuzenkiak sortuz.
 </ProofStep>
 
-<ProofStep number={2} target={["triangulo-ade", "triangulo-bde"]} title="Triangelu laguntzaileen eraikuntza">
-$BE$ eta $CD$ segmentuak marrazten ditugu. Bedi <VisualBind element="triangulo-ade" color="pavo">$\triangle ADE$</VisualBind> eta <VisualBind element="triangulo-bde" color="musgo">$\triangle BDE$</VisualBind> triangeluak.
-</ProofStep>
-
-<ProofStep number={3} target={["altura-h1"]} title="Azalera-proportzioa lehen katetoarekiko">
-$\triangle ADE$ eta $\triangle BDE$ triangeluek $AD$ eta $DB$ oinarriak zuzen beraren gainean dituztenez eta $E$ erpina partekatzen dutenez, beren <VisualBind element="altura-h1" color="ocre"><ConceptLink targetId="altura">$h_1$ altuera</ConceptLink></VisualBind> bera da. Beraz, <ConceptLink targetId="area">azalerren</ConceptLink> arteko proportzioa oinarrien arteko proportzioaren berdina da:
+<ProofStep number={2} target="triangulos-u" title="Azalera-kozienteak lehenengo ebakitzailean">
+Laguntza-zuzenkiak marrazten dira: $\overline{AB'}$ eta $\overline{CB'}$. $\triangle ABB'$ eta $\triangle BCB'$ triangeluek altuera bera dute $B'$ <ConceptLink targetId="vertice">bertizetik</ConceptLink>. <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Triangeluaren azaleraren teoremari</ConceptLink> jarraituz, haien <ConceptLink targetId="area">azalerren</ConceptLink> arteko kozientea $u$ zuzenaren gaineko oinarrien arteko kozientearen proportzionala da:
 
 <Formula>
-  $$ \frac{\text{Azalera}(\triangle ADE)}{\text{Azalera}(\triangle BDE)} = \frac{AD}{DB} $$
+  $$ \frac{\text{Azalera}(\triangle ABB')}{\text{Azalera}(\triangle BCB')} = \frac{\overline{AB}}{\overline{BC}} $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} target={["triangulo-ade", "triangulo-cde", "altura-h2"]} title="Azalera-proportzioa bigarren katetoarekiko">
-Era berean, <VisualBind element="triangulo-ade" color="pavo">$\triangle ADE$</VisualBind> eta <VisualBind element="triangulo-cde" color="terracota">$\triangle CDE$</VisualBind> triangeluetarako, $AE$ eta $EC$ oinarriak $AC$ zuzenaren gainean izanik eta $D$ erpina partekatuz, <VisualBind element="altura-h2" color="ocre">$h_2$ altuera</VisualBind> bera dute:
+<ProofStep number={3} target="triangulos-v" title="Azalera-kozienteak bigarren ebakitzailean">
+Bide beretik, $B$ bertizetik altuera bera duten $\triangle A'BB'$ eta $\triangle B'C'B$ triangeluak kontuan hartuz, $v$ zuzenaren gaineko azalerren arteko kozientea honela geratzen da:
 
 <Formula>
-  $$ \frac{\text{Azalera}(\triangle ADE)}{\text{Azalera}(\triangle CDE)} = \frac{AE}{EC} $$
+  $$ \frac{\text{Azalera}(\triangle A'BB')}{\text{Azalera}(\triangle B'C'B)} = \frac{\overline{A'B'}}{\overline{B'C'}} $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} target={["triangulo-bde", "triangulo-cde", "recta-de"]} title="Azalerren berdintasuna zuzen paraleloen artean">
-<VisualBind element="triangulo-bde" color="musgo">$\triangle BDE$</VisualBind> eta <VisualBind element="triangulo-cde" color="terracota">$\triangle CDE$</VisualBind> triangeluek $DE$ oinarria partekatzen dute eta beren aurkako $B$ eta $C$ erpinak $BC \parallel DE$ zuzenaren gainean daude. <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Triangeluaren azaleraren teoremaren</ConceptLink> bidez, bi triangeluek azalera bera dute:
-
-<Formula>
-  $$ \text{Azalera}(\triangle BDE) = \text{Azalera}(\triangle CDE) $$
-</Formula>
+<ProofStep number={4} target="igualdad-alturas" title="Azalera-baliokidetasuna zuzen paraleloen artean">
+$\triangle ABB'$ eta $\triangle A'BB'$ triangeluek oinarri bera dute $\overline{BB'}$ eta $r$ zein $s$ zuzen paraleloen artean daude kokatuta. Zuzen paraleloen arteko altuera bera dutenez, haien azalerak berdin-berdinak dira. Era berean, $\text{Azalera}(\triangle BCB') = \text{Azalera}(\triangle B'C'B)$.
 </ProofStep>
 
-<ProofStep number={6} target={["proporcion"]} title="Proportzionaltasunaren ondorioa">
-Bi azalera-proportzioak berdinduz zenbakitzaile bera eta izendatzaile berdinak dituztelako, <VisualBind element="proporcion" color="carbon">Talesen proportzionaltasun-erlazioa</VisualBind> lortzen dugu:
+<ProofStep number={5} target="conclusion" title="Proportzioen berdintasuna">
+Azaleren kozienteak berdinduz $r, s, t$ zuzen paraleloen arteko triangeluen arteko baliokidetasunari esker, <ConceptLink targetId="semejanza">antzekotasun-proportzioa</ConceptLink> ondorioztatzen da:
 
 <Formula>
-  $$ \frac{AD}{DB} = \frac{AE}{EC} $$
+  $$ \frac{\overline{AB}}{\overline{BC}} = \frac{\overline{A'B'}}{\overline{B'C'}} $$
 </Formula>
 </ProofStep>
 
 <Separador />
 
-### Analisia
+### Dedukzio-analisia
 
 <Nota>
-  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko VI.2 proposizioa. <ConceptLink targetId="semejanza">Antzekotasunen</ConceptLink> teoriaren eta arrazoi trigonometrikoen oinarri nagusia da.
+  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko VI.2 Proposizioa, tradizioz <ConceptLink targetId="tales">Tales Miletokoari</ConceptLink> egotzita. Proportzionaltasun-teoriaren eta <ConceptLink targetId="semejanza">triangeluen antzekotasunaren</ConceptLink> oinarri nagusia da <ConceptLink targetId="sistema-euclidiano">sistema euklidotarrean</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

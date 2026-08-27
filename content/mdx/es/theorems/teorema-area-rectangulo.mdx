@@ -1,43 +1,44 @@
 export const metadata = {
-  "id": "teorema-area-rectangulo",
-  "type": "teorema",
-  "title": "Área del rectángulo",
-  "description": "El área de un rectángulo es igual al producto de su base por su altura. Teorema central de la teoría de áreas que requiere el axioma de Arquímedes.",
-  "statement": "Sea R un rectángulo de base b y altura h. Entonces Área(R) = b · h.",
-  "tags": ["geometria", "areas", "rectangulo"],
-  "authors": ["hilbert", "euclides"],
-  "difficulty": "intermedio",
-  "hasSimulation": false,
-  "sources": [
-    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §20", role: "primary" },
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 35", role: "secondary" }
+  id: "teorema-area-rectangulo",
+  type: "teorema",
+  title: "Teorema del área del rectángulo",
+  description: "El área de cualquier región rectangular es igual al producto escalar de la longitud de su base por la longitud de su altura.",
+  statement: "Dado un rectángulo R con base de longitud b y altura de longitud h, se satisface de forma única que Área(R) = b · h.",
+  branch: "51M",
+  hasSimulation: false,
+  authors: ["euclides"],
+  demos: [],
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 35", role: "primary" }
   ]
 };
 
-<Capitular letra="E" />l <ConceptLink targetId="area">área</ConceptLink> de un <ConceptLink targetId="rectangulo">rectángulo</ConceptLink> equivale al producto de la longitud de su base por la de su altura. El <ConceptLink targetId="teorema-area-rectangulo">teorema del área del rectángulo</ConceptLink> —diferente de la invariancia y la aditividad de superficies, que se derivan de la noción fundamental de <ConceptLink targetId="poligono">polígono</ConceptLink>— precisa del <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> para abarcar magnitudes inconmensurables, constituyendo la piedra angular de la teoría de áreas de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>.
+<Capitular letra="E" />l teorema del área del <ConceptLink targetId="rectangulo">rectángulo</ConceptLink> proporciona la fórmula multiplicativa básica de la <ConceptLink targetId="teoria-medida-area">medida de áreas</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink> euclidiano. Constituye la norma de referencia a partir de la cual se deducen las fórmulas de área para todas las demás figuras poligonales.
 
 <Separador />
 
 ### Enunciado formal
 
-Sea $R$ un <ConceptLink targetId="rectangulo">rectángulo</ConceptLink> de dimensiones lineales $b$ (base) y $h$ (altura). Entonces:
+Sea $R$ un <ConceptLink targetId="rectangulo">rectángulo</ConceptLink> en el plano euclidiano $\mathcal{P}$ cuyos <ConceptLink targetId="perpendicular">lados adyacentes</ConceptLink> miden $b = \overline{AB}$ (longitud de la base) y $h = \overline{AD}$ (longitud de la altura). La medida del <ConceptLink targetId="area">área</ConceptLink> de la región rectangular $R$ satisface estrictamente la relación:
 
 <Formula>
   $$ \text{Área}(R) = b \cdot h $$
 </Formula>
 
-<Separador />
-
-### Esquema y estructura deductiva
-
-La demostración se divide en dos etapas según la conmensurabilidad de las dimensiones:
-
-- **Magnitudes conmensurables**: Si la base $b$ y la altura $h$ son múltiplos enteros de una unidad común $u$, el rectángulo se subdivide de forma exacta en una cuadrícula de $n \times m$ cuadrados unitarios de área $u^2$. Por <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>aditividad del área</ConceptLink>, el área total resulta $(n \cdot u)(m \cdot u) = b \cdot h$.
-- **Magnitudes inconmensurables**: Si $b$ y $h$ no poseen una medida común, se efectúa un encuadramiento mediante aproximaciones por defecto y por exceso empleando rectángulos de lados racionales. El <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> garantiza la convergencia del área al valor exacto $b \cdot h$.
+Es decir, el área de una región rectangular equivale al producto aritmético de las medidas lineales de sus dos dimensiones ortogonales.
 
 <Separador />
 
-### Observaciones y aplicaciones
+### Demostración y paso de racionales a reales
 
-- A partir del área del rectángulo se deducen las fórmulas de área para el <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> y para el <ConceptLink targetId="teorema-area-triangulo">triángulo</ConceptLink> ($\text{Área} = \frac{1}{2} b \cdot h$).
-- Proporciona el soporte analítico necesario para la demostración del <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> y el <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink>.
+La fundamentación rigurosa se construye en tres fases mediante el <ConceptLink targetId="teorema-area-aditividad">teorema de aditividad del área</ConceptLink>:
+1. **Unidad patrón**: El área del <ConceptLink targetId="cuadrado">cuadrado unitario</ConceptLink> ($b=1, h=1$) se define por convención como $1$.
+2. **Dimensiones racionales**: Si $b = \frac{p}{q}$ y $h = \frac{m}{n}$ con $p, q, m, n \in \mathbb{N}$, se divide el rectángulo en $p \cdot m$ subcuadrados de lado $\frac{1}{q \cdot n}$. La suma aditiva de sus áreas demuestra que $\text{Área}(R) = \frac{p \cdot m}{q \cdot n} = b \cdot h$.
+3. **Dimensiones reales**: Mediante la propiedad de continuidad y el <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink>, el resultado se extiende a longitudes inconmensurables o irracionales.
+
+<Separador />
+
+### Importancia como pivote geométrico
+
+- **Base de la fórmula del paralelogramo**: Todo <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> es equidescomponible con un rectángulo de igual base y altura.
+- **Base de la fórmula del triángulo**: Un rectángulo se divide por su diagonal en dos triángulos <ConceptLink targetId="congruencia">congruentes</ConceptLink>, fundamentando que el <ConceptLink targetId="teorema-area-triangulo">área del triángulo</ConceptLink> sea $\frac{1}{2} b \cdot h$.

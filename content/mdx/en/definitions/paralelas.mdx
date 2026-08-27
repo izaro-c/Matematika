@@ -1,0 +1,47 @@
+export const metadata = {
+  id: "paralelas",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Parallel lines",
+  description: "Geometric relationship between two coplanar lines that do not intersect at any point or coincide completely.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Definition 23 and Postulate 5", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §5", role: "primary" }
+  ]
+};
+
+import { Paralelas } from '@content/diagrams/Definiciones/Paralelas';
+export const Simulation = Paralelas;
+
+<Capitular letra="I" />n planar geometry, two coplanar <ConceptLink targetId="recta">lines</ConceptLink> are called parallel when they share no common <ConceptLink targetId="punto">point</ConceptLink> or coincide entirely. Parallelism forms a fundamental <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink> and establishes the core of Euclid's Fifth <ConceptLink targetId="axioma-paralelas-euclides">Postulate</ConceptLink>.
+
+<Definicion title="">
+  Given two one-dimensional subsets <VisualBind element="recta-r" color="musgo">$L_1$</VisualBind> and <VisualBind element="recta-s" color="pavo">$L_2$</VisualBind> representing lines in a plane $\mathcal{P}$, $L_1$ and $L_2$ are defined to be parallel, denoted $L_1 \parallel L_2$, if and only if they lie in the same plane $\mathcal{P}$ and their <ConceptLink targetId="interseccion">intersection</ConceptLink> is the <ConceptLink targetId="conjunto-vacio">empty set</ConceptLink> or they are identical:
+  $$
+  L_1 \parallel L_2 \iff (L_1 \subset \mathcal{P} \land L_2 \subset \mathcal{P}) \land (L_1 = L_2 \lor L_1 \cap L_2 = \emptyset)
+  $$
+  When $L_1 \neq L_2$, the scalar distance $d(P, L_2) = \inf_{Q \in L_2} \|P - Q\|$ from any point $P \in L_1$ to line $L_2$ is constant.
+</Definicion>
+
+<Separador />
+
+### Characterization in distinct geometric frameworks
+
+The existence and uniqueness of parallel lines vary according to the <ConceptLink targetId="incidencia">incidence</ConceptLink> axioms of the geometric system considered:
+
+| Geometry | Parallelism axiom | Number of parallels through an external point |
+|---|---|---|
+| <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink> | Fifth Postulate / Playfair's Axiom | Exactly <ConceptLink targetId="unicidad">one</ConceptLink> parallel line exists |
+| <ConceptLink targetId="sistema-hiperbolico">Hyperbolic geometry</ConceptLink> | Bolyai-Lobachevsky Axiom | <ConceptLink targetId="infinito">Infinitely</ConceptLink> many parallel lines exist |
+| Elliptic geometry | Riemann's Axiom | No parallel lines exist (<ConceptLink targetId="conjunto-vacio">empty set</ConceptLink>) |
+
+<Separador />
+
+### Properties
+
+- **<ConceptLink targetId="relacion-equivalencia">Equivalence relation</ConceptLink>**: Parallelism among coplanar lines is reflexive ($L_1 \parallel L_1$), symmetric ($L_1 \parallel L_2 \implies L_2 \parallel L_1$), and transitive ($L_1 \parallel L_2 \land L_2 \parallel L_3 \implies L_1 \parallel L_3$).
+- **Equidistance of lines**: The minimum distance between two distinct parallel lines $L_1 \neq L_2$ remains invariant across their entire domain.
+- **Angles with a transversal**: A transversal secant line intersecting two parallel lines yields <ConceptLink targetId="congruencia">congruent</ConceptLink> pairs of <ConceptLink targetId="teorema-angulos-alternos-internos">alternate interior angles</ConceptLink>.

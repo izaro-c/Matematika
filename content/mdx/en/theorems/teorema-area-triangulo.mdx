@@ -1,0 +1,46 @@
+export const metadata = {
+  id: "teorema-area-triangulo",
+  type: "teorema",
+  title: "Area of a Triangle Theorem",
+  description: "The area of any triangular region is equal to half the product of the length of one of its bases and the corresponding altitude.",
+  statement: "Given a triangle △ABC with base of length b and relative altitude h, it holds strictly that Area(△ABC) = (1/2) · b · h.",
+  branch: "51M",
+  hasSimulation: false,
+  authors: ["euclides"],
+  demos: [],
+  sources: [
+    { title: "Elements", author: "Euclides", locator: "Book I, Proposition 41", role: "primary" }
+  ]
+};
+
+<Capitular letra="T" />he area of a triangle theorem determines the surface measure of the fundamental polygonal figure in Euclidean <ConceptLink targetId="plano">plane geometry</ConceptLink>. It establishes that the surface capacity enclosed by three segments depends exclusively on the linear measure of one base and its perpendicular distance to the opposite vertex.
+
+<Separador />
+
+### Formal statement
+
+Let $\triangle ABC$ be a <ConceptLink targetId="triangulo">triangle</ConceptLink> in the Euclidean plane $\mathcal{P}$. Let $b = \overline{AB}$ be the length of one of its sides chosen as a base, and let $h$ be the length of the <ConceptLink targetId="perpendicular">perpendicular altitude</ConceptLink> drawn from the opposite vertex $C$ to the supporting line of side $\overline{AB}$. The <ConceptLink targetId="area">area</ConceptLink> measure of triangle $\triangle ABC$ satisfies:
+
+<Formula>
+  $$ \text{Area}(\triangle ABC) = \frac{1}{2} b \cdot h $$
+</Formula>
+
+That is, the area of any triangle strictly equals half the product of its base and corresponding relative altitude.
+
+<Separador />
+
+### Proof and equidecomposition
+
+The Classical Euclidean proof completes the triangle into a <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink>:
+1. Construct through $C$ a line <ConceptLink targetId="paralelas">parallel</ConceptLink> to $\overline{AB}$, and through $B$ a line parallel to $\overline{AC}$, intersecting at point $D$.
+2. The quadrilateral $ABDC$ is a <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink> sharing base $b$ and height $h$.
+3. Diagonal $\overline{BC}$ bisects the parallelogram into two <ConceptLink targetId="congruencia">congruent</ConceptLink> triangles: $\triangle ABC \cong \triangle DCB$.
+4. By the <ConceptLink targetId="teorema-area-aditividad">area additivity theorem</ConceptLink>, $\text{Area}(ABDC) = \text{Area}(\triangle ABC) + \text{Area}(\triangle DCB) = 2 \cdot \text{Area}(\triangle ABC)$.
+5. Since $\text{Area}(ABDC) = b \cdot h$ by the <ConceptLink targetId="teorema-area-rectangulo">area of a rectangle theorem</ConceptLink>, it follows that $\text{Area}(\triangle ABC) = \frac{1}{2} b \cdot h$.
+
+<Separador />
+
+### Equivalent area formulas
+
+- **Heron's formula**: Given a triangle with side lengths $a, b, c$ and semiperimeter $s = \frac{a+b+c}{2}$, its area equals $\sqrt{s(s-a)(s-b)(s-c)}$.
+- **Trigonometric formula**: In terms of two side lengths and the included angle, $\text{Area} = \frac{1}{2} a b \sin(\gamma)$.

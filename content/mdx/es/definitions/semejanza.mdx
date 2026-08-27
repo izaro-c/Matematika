@@ -3,26 +3,42 @@ export const metadata = {
   lang: "es",
   type: "definicion",
   subtype: "nominal",
-  title: "Semejanza",
-  description: "Relación de equivalencia geométrica entre figuras que poseen la misma forma, con ángulos correspondientes congruentes y lados homólogos proporcionales.",
+  title: "Semejanza geométrica",
+  description: "Relación de equivalencia entre figuras geométricas conservando la forma y manteniendo constante la razón de proporcionalidad entre distancias.",
+  branch: "51M",
+  hasSimulation: false,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro VI, Definición 1", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro VI, Definición 1", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §20", role: "primary" }
   ]
 };
 
-<Capitular letra="L" />a <ConceptLink targetId="semejanza">semejanza</ConceptLink> es la relación geométrica que formaliza la equivalencia de forma entre figuras espaciales. En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, dos figuras semejantes difieren únicamente por una escala o homotecia uniforme.
+<Capitular letra="L" />a semejanza geométrica es una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink> entre figuras del <ConceptLink targetId="plano">plano</ConceptLink> o del espacio que conservan idéntica forma geométrica pero pueden diferir en su escala global. Dos figuras son semejantes cuando existe una transformación de semejanza (composición de una <ConceptLink targetId="congruencia">isometría</ConceptLink> y una homotecia) que preserva la proporcionalidad de las distancias entre todos sus <ConceptLink targetId="punto">puntos</ConceptLink> e iguala sus <ConceptLink targetId="angulo">ángulos</ConceptLink>.
 
 <Definicion title="">
-  Dos <ConceptLink targetId="triangulo" isDependency={true}>triángulos</ConceptLink> $\triangle ABC$ y $\triangle A'B'C'$ son semejantes (denotado $\triangle ABC \sim \triangle A'B'C'$) si sus <ConceptLink targetId="angulo">ángulos</ConceptLink> correspondientes son <ConceptLink targetId="congruencia">congruentes</ConceptLink> y sus lados homólogos son proporcionales a una razón constante $k > 0$:
+  Sean $F_1, F_2 \subset \mathcal{E}$ dos subconjuntos de puntos en un espacio métrico euclidiano $\mathcal{E}$. Se dice que $F_1$ y $F_2$ son semejantes, denotado por $F_1 \sim F_2$, si y solo si existe una constante de escala o razón de semejanza $k > 0$ y una función biyectiva $g: \mathcal{E} \to \mathcal{E}$ tal que $g(F_1) = F_2$ satisfaciendo que para todo par de puntos $A, B \in \mathcal{E}$:
   $$
-  \angle A \cong \angle A', \quad \angle B \cong \angle B', \quad \angle C \cong \angle C' \quad \land \quad \frac{|AB|}{|A'B'|} = \frac{|BC|}{|B'C'|} = \frac{|CA|}{|C'A'|} = k
+  F_1 \sim F_2 \iff \exists k > 0, \exists g: \mathcal{E} \to \mathcal{E} \text{ t.q. } g(F_1) = F_2 \land \forall A, B \in \mathcal{E}, \|g(B) - g(A)\| = k \cdot \|B - A\|
   $$
+  El escalar $k$ representa la constante de proporcionalidad o <ConceptLink targetId="teorema-tales">razón de semejanza</ConceptLink> entre las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> correspondientes.
 </Definicion>
 
 <Separador />
 
-### Criterios fundamentales de semejanza
+### Criterios de semejanza de triángulos
 
-- **Criterio AA (Ángulo-Ángulo)**: Si dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> tienen dos <ConceptLink targetId="angulo">ángulos</ConceptLink> correspondientes respectivamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>, entonces los triángulos son semejantes.
-- **Criterio LAL (Lado-Ángulo-Lado)**: Si dos lados correspondientes son proporcionales y el ángulo comprendido entre ellos es congruente, los triángulos son semejantes.
-- **Relación con el teorema de Tales**: Toda recta <ConceptLink targetId="paralelas">paralela</ConceptLink> a uno de los lados de un triángulo corta a los otros dos lados determinando un triángulo semejante al original.
+En la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>, la semejanza entre dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> se establece mediante las siguientes condiciones equivalentes:
+
+| Criterio | Formulación del criterio | Condición de proporcionalidad u homología |
+|---|---|---|
+| AA | Ángulo-Ángulo | Dos pares de ángulos correspondientes son <ConceptLink targetId="congruencia">congruentes</ConceptLink> |
+| LAL | Lado-Ángulo-Lado | Un ángulo congruente y la razón de los lados adyacentes constante |
+| LLL | Lado-Lado-Lado | El <ConceptLink targetId="koziente">cociente</ConceptLink> de los tres pares de lados es igual a $k$ |
+
+<Separador />
+
+### Propiedades
+
+- **<ConceptLink targetId="relacion-equivalencia">Relación de equivalencia</ConceptLink>**: La semejanza es reflexiva ($F_1 \sim F_1$), simétrica ($F_1 \sim F_2 \implies F_2 \sim F_1$) y transitiva ($F_1 \sim F_2 \land F_2 \sim F_3 \implies F_1 \sim F_3$).
+- **Relación con la congruencia**: Toda pareja de figuras congruentes $F_1 \cong F_2$ constituye un caso particular de semejanza con razón de escala $k = 1$.
+- **Escalado de áreas**: Si dos figuras bidimensionales son semejantes con razón de escala $k$, la razón entre sus medidas de área satisface $\mu(F_2) = k^2 \cdot \mu(F_1)$.

@@ -3,34 +3,45 @@ export const metadata = {
   lang: "es",
   type: "definicion",
   subtype: "nominal",
-  title: "Perpendicularidad",
-  description: "Relación entre dos rectas secantes que se intersecan formando cuatro ángulos interiores congruentes o rectos.",
+  title: "Rectas perpendiculares",
+  description: "Relación geométrica entre dos rectas secantes que se cortan formando cuatro ángulos rectos congruentes.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 10", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 10", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
   ]
 };
 
 import { Perpendicular } from '@content/diagrams/Definiciones/Perpendicular';
 export const Simulation = Perpendicular;
 
-<Capitular letra="L" />a <ConceptLink targetId="perpendicular">perpendicularidad</ConceptLink> es la relación posicional ortogonal establecida entre dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> secantes coplanares. Ocurre cuando su intersección divide el <ConceptLink targetId="plano">plano</ConceptLink> envolvente en cuatro <ConceptLink targetId="angulo">ángulos</ConceptLink> <ConceptLink targetId="congruencia">congruentes</ConceptLink>.
+<Capitular letra="D" />os <ConceptLink targetId="recta">rectas</ConceptLink> secantes en el <ConceptLink targetId="plano">plano</ConceptLink> se denominan perpendiculares si la <ConceptLink targetId="interseccion">intersección</ConceptLink> entre ellas divide al espacio angular circundante en cuatro <ConceptLink targetId="angulo">ángulos</ConceptLink> iguales. La perpendicularidad constituye la noción fundamental de ortogonalidad en la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink> y fundamenta los sistemas de coordenadas cartesianas.
 
 <Definicion title="">
-  Dos rectas secantes $l_1$ y $l_2$ son perpendiculares (denotado $l_1 \perp l_2$) si y solo si forman cuatro ángulos adyacentes <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí:
+  Dadas dos rectas secantes <VisualBind element="recta-r" color="musgo">$L_1$</VisualBind> y <VisualBind element="recta-s" color="pavo">$L_2$</VisualBind> en un plano $\mathcal{P}$ que se intersecan en un único <ConceptLink targetId="punto">punto</ConceptLink> $P = L_1 \cap L_2$, se dice que $L_1$ y $L_2$ son perpendiculares, denotado por $L_1 \perp L_2$, si y solo si los cuatro ángulos adyacentes determinados por su intersección son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí, siendo cada uno un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> de amplitud $90^\circ$ ($\frac{\pi}{2}\text{ rad}$):
   $$
-  l_1 \perp l_2 \iff \theta_1 \cong \theta_2 \cong \theta_3 \cong \theta_4 \cong 90^\circ
+  L_1 \perp L_2 \iff (L_1 \cap L_2 = \{P\}) \land \forall i \in \{1,2,3,4\}, \mu(\theta_i) = \frac{\pi}{2}
   $$
+  En términos vectoriales, si $\vec{u}$ y $\vec{v}$ son vectores directores no nulos de $L_1$ y $L_2$, se cumple $\vec{u} \cdot \vec{v} = 0$.
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Criterios y representaciones geométricas
 
-En la simulación interactiva se aprecian las rectas secantes <VisualBind element="recta" color="musgo">$l_1$</VisualBind> y <VisualBind element="perpendicular" color="musgo">$l_2$</VisualBind>. Los indicadores de <VisualBind element="angulos-rectos" color="terracota">ángulos rectos</VisualBind> confirman la ortogonalidad angular exacta en el punto de corte.
+La condición de perpendicularidad admite múltiples formulaciones analíticas y sintéticas según el sistema formal utilizado:
+
+| Dominio | Condición sintética o analítica | Expresión formal |
+|---|---|---|
+| Geometría vectorial | Producto escalar nulo | $\vec{u} \cdot \vec{v} = 0$ |
+| Geometría analítica | Pendientes recíprocas y opuestas | $m_1 \cdot m_2 = -1$ |
+| Geometría sintética | Igualdad de ángulos adyacentes suplementarios | $\alpha \cong \beta \land \mu(\alpha + \beta) = \pi$ |
 
 <Separador />
 
-### Propiedades geométricas
+### Propiedades
 
-- **Existencia y unicidad**: Dado un <ConceptLink targetId="punto">punto</ConceptLink> $P$ y una recta $l$ en un plano, existe una única recta perpendicular a $l$ que incide en $P$.
-- **Relación con el paralelismo**: En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, dos rectas distintas perpendiculares a una misma tercera recta son <ConceptLink targetId="paralelas">paralelas</ConceptLink> entre sí ($l_1 \perp m \land l_2 \perp m \implies l_1 \parallel l_2$).
+- **Existencia y unicidad**: Dado un punto $P$ y una recta $L$, existe una <ConceptLink targetId="unicidad">única</ConceptLink> recta que pasa por $P$ y es perpendicular a $L$.
+- **Relación con el paralelismo**: Dos rectas perpendiculares a una tercera recta común son <ConceptLink targetId="paralelas">paralelas</ConceptLink> entre sí ($L_1 \perp L_3 \land L_2 \perp L_3 \implies L_1 \parallel L_2$).
+- **Simetría no reflexiva**: La relación de perpendicularidad es simétrica ($L_1 \perp L_2 \implies L_2 \perp L_1$), pero no reflexiva ni transitiva.

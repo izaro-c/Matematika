@@ -1,49 +1,45 @@
 export const metadata = {
-  "id": "modelo-cartesiano",
-  "type": "modelo",
-  "title": "Plano cartesiano",
-  "description": "El modelo analítico estándar para la geometría euclídea bidimensional, utilizando pares ordenados de números reales.",
-  "satisfies": ["sistema-euclidiano", "sistema-absoluto"],
-  "hasSimulation": true
+  id: "modelo-cartesiano",
+  lang: "es",
+  type: "modelo",
+  title: "Plano cartesiano",
+  description: "El modelo analítico canónico para la geometría euclídea bidimensional basado en pares ordenados de números reales.",
+  branch: "51M",
+  satisfies: ["sistema-euclidiano", "sistema-absoluto"],
+  axioms_verified: ["axioma-incidencia-1", "axioma-paralelas-euclides"],
+  hasSimulation: true
 };
 
 import { ModeloCartesiano } from '@content/diagrams/Models/ModeloCartesiano';
-export const Diagram = ModeloCartesiano;
+export const Simulation = ModeloCartesiano;
 
-<Capitular letra="E" />l plano cartesiano $\mathbb{R}^2$ constituye el <ConceptLink targetId="modelo-cartesiano" isDependency={false}>modelo</ConceptLink> analítico canónico para la <ConceptLink targetId="geometria-euclidiana" isDependency={false}>geometría euclídea</ConceptLink>. Al establecer una biyección rigurosa entre las variedades geométricas y los pares ordenados formados por números reales, propulsó la completa algebrización de la geometría, un logro monumental cristalizado analíticamente durante el siglo XVII por René Descartes y Pierre de Fermat.
+<Capitular letra="E" />l plano cartesiano $\mathbb{R}^2$ constituye el modelo analítico estándar para la <ConceptLink targetId="geometria-euclidiana">geometría euclídea</ConceptLink> bidimensional. Al traducir rigurosamente los objetos geométricos a estructuras algebraicas de pares ordenados sobre el cuerpo de los <ConceptLink targetId="numero-real">números reales</ConceptLink>, fundamenta la consistencia de la geometría sintética en el análisis matemático.
 
 <Separador />
 
 ### Definición del modelo
 
-En este modelo analítico, los elementos geométricos primitivos se definen algebraicamente mediante la teoría de conjuntos y el cuerpo de los <ConceptLink targetId="numero-real" isDependency={false}>números reales</ConceptLink> $\mathbb{R}$:
+En el espacio bidimensional $\mathbb{R}^2 = \{(x, y) \mid x, y \in \mathbb{R}\}$, los elementos sintéticos de la geometría se interpretan mediante la teoría de conjuntos y el álgebra lineal:
 
-- **<ConceptLink targetId="punto" isDependency={false}>Puntos</ConceptLink>**: Son pares ordenados $(x, y) \in \mathbb{R}^2$. Por ejemplo, los puntos <VisualBind element="A" color="terracota">$A$</VisualBind>, <VisualBind element="B" color="terracota">$B$</VisualBind> y <VisualBind element="P" color="ocre">$P$</VisualBind> representan elementos del plano.
-- **<ConceptLink targetId="recta" isDependency={false}>Rectas</ConceptLink>**: Son conjuntos de puntos $(x, y)$ que satisfacen una <ConceptLink targetId="ecuacion-lineal" isDependency={false}>ecuación lineal</ConceptLink> de la forma $ax + by + c = 0$, donde $a, b \in \mathbb{R}$ no son simultáneamente nulos. La <VisualBind element="lineAB" color="musgo">recta $l$</VisualBind> pasa por $A$ y $B$, mientras que la <VisualBind element="parallelP" color="pavo">recta $l'$</VisualBind> es paralela a $l$ y contiene al punto $P$.
-- **<ConceptLink targetId="incidencia">Incidencia</ConceptLink>**: Un punto pertenece a una recta si y solo si sus coordenadas satisfacen la ecuación de dicha recta.
-- **Distancia**: Dados dos puntos $A$ y $B$, la <VisualBind element="distAB" color="carbon"><ConceptLink targetId="distancia">distancia euclídea</ConceptLink> $d(A, B)$</VisualBind> viene dada por:
-
-<Formula>
+- **<ConceptLink targetId="punto">Puntos</ConceptLink>**: Son elementos individuales <VisualBind element="A" color="terracota">$A(x_A, y_A)$</VisualBind>, <VisualBind element="B" color="musgo">$B(x_B, y_B)$</VisualBind> y <VisualBind element="P" color="ocre">$P(x_P, y_P)$</VisualBind> en $\mathbb{R}^2$.
+- **<ConceptLink targetId="recta">Rectas</ConceptLink>**: Son conjuntos de puntos que satisfacen una ecuación lineal de la forma $ax + by + c = 0$, con $(a, b) \neq (0, 0)$. La <VisualBind element="lineAB" color="musgo">recta $l$</VisualBind> contiene a los puntos $A$ y $B$, mientras que la <VisualBind element="parallelP" color="pavo">recta paralela $l'$</VisualBind> pasa por $P$.
+- **<ConceptLink targetId="incidencia">Incidencia</ConceptLink>**: Un punto $A$ incide en una recta $l$ si sus coordenadas satisfacen la ecuación lineal de $l$.
+- **<ConceptLink targetId="distancia">Distancia euclídea</ConceptLink>**: Para cualesquiera dos puntos $A$ y $B$, la métrica euclídea viene dada por la fórmula pitagórica:
   $$ d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2} $$
-</Formula>
-
-- **Orden**: Un punto $B$ está <ConceptLink targetId="estar-entre">*entre*</ConceptLink> $A$ y $C$ si y solo si $d(A, B) + d(B, C) = d(A, C)$.
 
 <Separador />
 
 ### Verificación de axiomas
 
-El plano cartesiano satisface de manera completa el sistema axiomático de Hilbert para la geometría euclídea:
+El plano cartesiano satisface la totalidad del <ConceptLink targetId="sistema-euclidiano">sistema axiomático euclidiano</ConceptLink>:
 
-- **<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>Axiomas de incidencia</ConceptLink>**: Dados dos puntos distintos, existe una única ecuación lineal que ambos satisfacen (salvo proporcionalidad).
-- **<ConceptLink targetId="axioma-congruencia-1" isDependency={false}>Axiomas de congruencia</ConceptLink>**: Se verifican mediante la invariancia de la métrica euclídea ante isometrías afines y transformaciones rígidas.
-- **Axiomas de continuidad**: Se heredan directamente de la completitud topológica del cuerpo de los números reales $\mathbb{R}$.
-- **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={false}>Axioma de las paralelas</ConceptLink>**: Dada una recta $l$ y un punto exterior $P$, existe una única <ConceptLink targetId="paralelismo">recta paralela</ConceptLink> $l'$ que contiene a $P$ (rectas con igual pendiente algebraica).
+- **Axiomas de <ConceptLink targetId="incidencia">incidencia</ConceptLink>**: Dados dos puntos distintos $A$ y $B$, existe una única ecuación lineal (salvo factor escalar) que ambos satisfacen.
+- **Axiomas de <ConceptLink targetId="orden">orden</ConceptLink>**: La relación <ConceptLink targetId="estar-entre">estar entre</ConceptLink> se verifica métricamente mediante la igualdad $d(A, B) + d(B, C) = d(A, C)$.
+- **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axioma de las paralelas de Euclides</ConceptLink>**: Dada una recta $l$ y un punto exterior $P \notin l$, existe una única <ConceptLink targetId="paralelismo">recta paralela</ConceptLink> $l'$ que contiene a $P$ (rectas con idéntica pendiente $m = -a/b$).
 
 <Separador />
 
-### Consistencia estructural
+### Propiedades
 
-<Nota>
-  **Garantía de consistencia**: La consistencia lógica de la geometría euclídea bidimensional queda reducida, mediante el modelo cartesiano, a la consistencia del análisis real y de la teoría axiomática de conjuntos.
-</Nota>
+- **Completitud y continuidad**: Hereda la completitud topológica del cuerpo continuo $\mathbb{R}$.
+- **Invariancia isométrica**: Las traslaciones, rotaciones y reflexiones preservan la métrica $d(A, B)$ y la estructura de <ConceptLink targetId="congruencia">congruencia</ConceptLink>.

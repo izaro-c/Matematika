@@ -2,34 +2,36 @@ export const metadata = {
   id: "axioma-congruencia-4",
   lang: "eu",
   type: "axioma",
-  title: "III.4 Axioma (Angeluak Garraiatzea)",
-  description: "Angelu bat eta finkatutako semiplano bateko erruzuzen bat emanda, emandako angeluarekin kongruentea den angelu bat osatzen duen erruzuzen bakarra existitzen da.",
+  title: "III.4 Axioma (Anguluen Garraioa)",
+  description: "Angulu bat, zuzenerdi bat eta hura muga duen erdiplano bat emanda, angelu emandakoarekin kongruentea den angelu bakar bat existitzen da zuzenerdiaren jatorrian vertezea duena.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §5", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+  ]
 };
 
 import { Congruence4 } from '@content/diagrams/Axiomas/Congruence4';
 export const Simulation = Congruence4;
 
-<Capitular letra="L" />augarren kongruentzia-<ConceptLink targetId="axioma-congruencia-4">axiomak</ConceptLink> garraio rigidoa <ConceptLink targetId="angulo">angeluen</ConceptLink> esparrura zabaltzen du. Edozein angeluren irekiera finkatutako semiplano batean dagoen oinarri-erruzuzen baten gainean garraiatzea ahalbidetzen du.
+<Capitular letra="H" />ilberten laugarren <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-axiomak angelu-irekierekiko garraioa ezartzen du <ConceptLink targetId="plano">planoan</ConceptLink>. Axioma honek ziurtatzen du edozein <ConceptLink targetId="angulo">angelu</ConceptLink> modu bakarrean garraia daitekeela emandako erdiplano batera, erreferentziako <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> batetik abiatuta.
 
 <Definicion title="">
-  $\angle(h, k)$ <ConceptLink targetId="angulo">angelu</ConceptLink> bat eta <ConceptLink targetId="plano">plano</ConceptLink> batean dagoen $h'$ erruzuzen bat emanda, $h'$-ren <ConceptLink targetId="recta">zuzen</ConceptLink> eusleak zehaztutako semiplano bakoitzean jatorri bera duen $k'$ erruzuzen bakarra existitzen da non $\angle(h, k)$ angelua $\angle(h', k')$ angeluarekin <ConceptLink targetId="congruencia">kongruentea</ConceptLink> den:
+  $\angle (h, k)$ <ConceptLink targetId="angulo">angelu</ConceptLink> bat, $a'$ zuzenean dagoen $h'$ <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> bat eta $a'$ zuzenak mugatutako $H'$ erdiplano bat emanda, $H'$ semiplanoan $k'$ zuzenerdi bakar bat existitzen da $h'$ zuzenerdiaren jatorri bera duena, non $\angle (h, k)$ angelua eta $\angle (h', k')$ angelua <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> baitira:
   $$
-  \forall \angle(h, k), \forall h', \forall H^+_{h'} \implies \exists! k' \subseteq H^+_{h'} \ (\angle(h, k) \cong \angle(h', k'))
+  \forall \angle (h, k), \forall h' \subset a', \forall H' \implies \exists! k' \subset H' \ (\angle (h, k) \cong \angle (h', k'))
   $$
+  Gainera, angelu oro bere buruarekiko kongruentea da: $\angle (h, k) \cong \angle (h, k)$.
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Irudikapen bisuala
 
-Simulazio interaktiboan jatorrizko <VisualBind element="angulo-original" color="terracota">$\angle(h,k)$ angelua</VisualBind> eta <VisualBind element="rayo-h_prime" color="carbon">$h'$</VisualBind> oinarri-erruzuzena behatzen dira. <VisualBind element="rayo-k_prime" color="musgo">$k'$</VisualBind> erruzuzenak <VisualBind element="angulo-clonado" color="musgo">$\angle(h',k')$ angelu kongruentea</VisualBind> eraikitzen du erreferentziako semiplanoaren barnean.
+Jatorrizko <VisualBind element="h" color="ocre">$h$</VisualBind>-<VisualBind element="k" color="ocre">$k$</VisualBind> anguluaren irekiera finkatuz, eta helburuko semiplanoan oinarriko <VisualBind element="hP" color="pavo">$h'$</VisualBind> zuzenerdia ezarriz, eraikitako <VisualBind element="kP" color="terracota">$k'$</VisualBind> zuzenerdiak garraitutako angelua mugatzen du amlituderik aldatu gabe.
 
 <Separador />
 
-### Bakartasuna semiplanoan
+### Garrantzi axiomatikoa
 
-Postulatu honek angeluak bikoiztean dagoen anbiguotasuna ezabatzen du eraikuntza semiplano bakar batera mugatuz. Angelu-neurria edo baliokidetza translazio eta biraketa rigidoen pean mantentzen dela bermatzen du.
+Axioma honek <ConceptLink targetId="segmento">zuzenkien</ConceptLink> garraioaren antzeko propietatea eskaintzen du anguluentzat. Anguluen irekierak modu sintetikoan konparatzea ahalbidetzen du sexagesimal-neurririk edo funtzio trigonometrikorik gabe <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.

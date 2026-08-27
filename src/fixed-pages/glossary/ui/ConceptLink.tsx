@@ -38,6 +38,32 @@ const COLOR_MAP: Record<string, string> = {
   'musgo': 'var(--theme-musgo)',
 };
 
+const resolveTargetHref = (id: string, lang: string): string => {
+  const theorem = db.getTheorem(id, lang);
+  if (theorem) return `/teorema/${theorem.slug}`;
+  const definition = db.getDefinition(id, lang);
+  if (definition) return `/definicion/${definition.slug}`;
+  const axiom = db.getAxiom(id, lang);
+  if (axiom) return `/axioma/${axiom.slug}`;
+  const bio = db.getMathematicianById(id, lang);
+  if (bio) return `/bio/${bio.slug}`;
+  const method = db.getMethod(id, lang);
+  if (method) return `/metodo/${method.slug}`;
+  const example = db.getExample(id, lang);
+  if (example) return `/ejemplo/${example.slug}`;
+  const exercise = db.getExercise(id, lang);
+  if (exercise) return `/ejercicio/${exercise.slug}`;
+  const useCase = db.getUseCase(id, lang);
+  if (useCase) return `/caso/${useCase.slug}`;
+  const system = db.getAxiomaticSystem(id, lang);
+  if (system) return `/sistema/${system.slug}`;
+  const model = db.getModel(id, lang);
+  if (model) return `/modelo/${model.slug}`;
+  const demo = db.getDemo(id, lang);
+  if (demo) return `/demo/${demo.slug}`;
+  return `/definicion/${id}`;
+};
+
 export const ConceptLink: React.FC<ConceptLinkProps> = ({
   targetId,
   children,
@@ -96,8 +122,11 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
     );
   }
 
+  const targetHref = resolveTargetHref(targetIds[0], lang);
+
   return (
-    <span
+    <Link
+      href={getLocalizedPath(targetHref)}
       onClick={() => {
         openTerm(targetIds);
         handleClickHighlight();
@@ -115,6 +144,6 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
     >
       {children}
       {isRead && <span className="ml-[2px] text-canela opacity-80" style={{ fontSize: '0.85em' }}>✓</span>}
-    </span>
+    </Link>
   );
 };

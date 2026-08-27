@@ -4,50 +4,44 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Cuadrilátero",
-  description: "Polígono plano de cuatro lados y cuatro vértices acotado por cuatro segmentos de recta coplanares que se intersecan únicamente en sus extremos.",
+  description: "Polígono plano de cuatro lados formado por la unión de cuatro segmentos que unen cuatro puntos coplanares no tres de ellos colineales.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 19", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 22", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
   ]
 };
 
 import { Cuadrilatero } from '@content/diagrams/Definiciones/Cuadrilatero';
 export const Simulation = Cuadrilatero;
 
-<Capitular letra="U" />n <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> es un <ConceptLink targetId="poligono">polígono</ConceptLink> cerrado compuesto por cuatro lados y cuatro vértices coplanares. Constituye la estructura poligonal básica de cuatro vértices en el <ConceptLink targetId="plano">plano</ConceptLink>.
+<Capitular letra="U" />n cuadrilátero es un <ConceptLink targetId="poligono">polígono</ConceptLink> de cuatro <ConceptLink targetId="lado">lados</ConceptLink> en la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink> delimitado por la <ConceptLink targetId="union-conjuntos">unión</ConceptLink> de cuatro <ConceptLink targetId="segmento">segmentos</ConceptLink> de <ConceptLink targetId="recta">recta</ConceptLink> consecutivos. Constituye una de las figuras poligonales fundamentales en el estudio de las <ConceptLink targetId="congruencia">congruencias</ConceptLink> y de las descomposiciones de <ConceptLink targetId="teoria-medida-area">área</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Definicion title="">
-  Un cuadrilátero simple $ABCD$ es el conjunto plano formado por la unión de cuatro <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> de <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $AB, BC, CD, DA$ que no se cruzan salvo en sus extremos y donde no existen tres vértices <ConceptLink targetId="colinealidad">colineales</ConceptLink>:
+  Dados cuatro puntos coplanares <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind>, <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> y <VisualBind element="vertice-d" color="musgo">$D$</VisualBind> pertenecientes a un plano $\mathcal{P}$, tales que ningunos tres de ellos son <ConceptLink targetId="colinealidad">colineales</ConceptLink> y los segmentos no se intersecan salvo en sus extremos, el cuadrilátero <VisualBind element="cuadrilatero" color="musgo">$ABCD$</VisualBind> es la figura definida por:
   $$
-  ABCD = AB \cup BC \cup CD \cup DA
+  ABCD = \overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}
   $$
+  Los puntos $A, B, C, D$ son los <ConceptLink targetId="vertice">vértices</ConceptLink>, los segmentos $\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$ son los lados, y los segmentos $\overline{AC}, \overline{BD}$ son las <ConceptLink targetId="diagonal">diagonales</ConceptLink>.
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Clasificación estructural
 
-En la simulación interactiva se aprecian los vértices desplazables <VisualBind element="vertices-moviles" color="terracota">$C$ y $D$</VisualBind>. Las relaciones de <VisualBind element="paralelismo" color="pavo">paralelismo</VisualBind>, <VisualBind element="lados-iguales" color="ocre">igualdad de lados</VisualBind> y <VisualBind element="angulos-rectos" color="musgo">ángulos rectos</VisualBind> permiten identificar dinámicamente las distintas familias poligonales.
+Los cuadriláteros planos se clasifican según sus propiedades de convexidad y las relaciones de <ConceptLink targetId="paralelas">paralelismo</ConceptLink> entre sus lados opuestos:
 
-<Separador />
-
-### Propiedades angulares e interiores
-
-<Formula>
-  $$
-  \sum_{i=1}^{4} \theta_i = 360^\circ
-  $$
-</Formula>
-
-- **Suma angular interior**: En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, los cuatro <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de todo cuadrilátero simple suman invariablemente $360^\circ$ ($2\pi$ radianes).
-- **Descomposición en triángulos**: Todo cuadrilátero convexo admite una partición en dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> mediante cualquiera de sus dos diagonales.
-
-<Separador />
-
-### Clasificación jerárquica
-
-| Clase de cuadrilátero | Condición de <ConceptLink targetId="paralelas">paralelismo</ConceptLink> | Condición de <ConceptLink targetId="congruencia">congruencia</ConceptLink> |
+| Tipo | Condición geométrica característica | Subclases principales |
 |---|---|---|
-| Trapezoide | Sin lados opuestos paralelos | Sin restricciones de congruencia |
-| Trapecio | Un par de lados opuestos paralelos | Sin restricciones |
-| <ConceptLink targetId="paralelogramo">Paralelogramo</ConceptLink> | Dos pares de lados opuestos paralelos | Lados opuestos congruentes |
-| <ConceptLink targetId="cuadrado">Cuadrado</ConceptLink> | Dos pares de lados opuestos paralelos | Cuatro lados congruentes y cuatro ángulos rectos |
+| <ConceptLink targetId="region-convexa">Convexo</ConceptLink> | Las dos diagonales se cortan en un punto interior | <ConceptLink targetId="paralelogramo">Paralelogramo</ConceptLink>, Trapecio, Trapezoide |
+| Concavo | Una diagonal queda contenida completamente en el exterior | Cuadrilátero en dardo o punta de flecha |
+| <ConceptLink targetId="paralelogramo">Paralelogramo</ConceptLink> | Dos pares de lados opuestos son paralelos ($\overline{AB} \parallel \overline{CD} \land \overline{BC} \parallel \overline{DA}$) | Rectángulo, Rombo, <ConceptLink targetId="cuadrado">Cuadrado</ConceptLink> |
+
+<Separador />
+
+### Propiedades
+
+- **Suma de ángulos interiores**: La suma de los cuatro ángulos interiores de todo cuadrilátero convexo es siempre igual a $360^\circ$ ($2\pi\text{ rad}$).
+- **Descomposición triangular**: Todo cuadrilátero convexo puede dividirse mediante una diagonal en dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> disjuntos salvo en la frontera.
+- **Aditividad del área**: La medida de superficie de un cuadrilátero convexo satisface <ConceptLink targetId="teorema-area-aditividad">aditividad</ConceptLink> estricta $\mu(ABCD) = \mu(\triangle ABC) + \mu(\triangle ACD)$.

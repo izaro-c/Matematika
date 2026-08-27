@@ -2,57 +2,46 @@ export const metadata = {
   id: "punto",
   lang: "es",
   type: "definicion",
-  subtype: "primitivo",
+  subtype: "nominal",
   title: "Punto",
-  description: "Entidad geométrica primitiva adimensional que determina una posición pura en el espacio. Su naturaleza matemática queda definida unívocamente por los axiomas de incidencia, orden y congruencia.",
-  statement: "El punto es el elemento primitivo e indivisible del conjunto abstracto $\\mathcal{P}$. Carece de dimensiones y constituye la base estructural de la geometría.",
-  domain: "geometria",
-  requires: [],
-  authors: ["hilbert", "euclides"],
+  description: "Elemento geométrico primitivo indivisible y sin dimensión que especifica una ubicación exacta en el espacio.",
+  branch: "51M",
   hasSimulation: true,
-  difficulty: "básico",
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" },
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 1", role: "secondary" }
-  ],
-  demos: ["punto"]
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 1", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+  ]
 };
 
 import { Punto } from '@content/diagrams/Definiciones/Punto';
 export const Simulation = Punto;
 
-<Capitular letra="E" />n la fundamentación axiomática moderna de la <ConceptLink targetId="geometria">geometría</ConceptLink>, el punto es la entidad básica a partir de la cual se articulan todos los demás objetos del espacio. Al ser un <ConceptLink targetId="concepto-primitivo">**concepto primitivo**</ConceptLink>, carece de una definición constructiva en términos de entidades más elementales; su naturaleza matemática no emana de propiedades intrínsecas o materiales, sino de las relaciones formales que el <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> impone entre el conjunto de puntos, el de las <ConceptLink targetId="recta">rectas</ConceptLink> y el de los <ConceptLink targetId="plano">planos</ConceptLink>.
+<Capitular letra="E" />l punto es el elemento primario e indivisible de la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink> y de los <ConceptLink targetId="espacio-topologico">espacios topológicos</ConceptLink>. Al carecer de extensión, área o volumen, actúa como la unidad constitutiva básica a partir de la cual se definen la <ConceptLink targetId="recta">recta</ConceptLink>, el <ConceptLink targetId="plano">plano</ConceptLink> y las figuras geométricas de dimensiones superiores.
 
 <Definicion title="">
-  Un punto es un elemento individual e indivisible del <ConceptLink targetId="conjunto">conjunto</ConceptLink> abstracto $\mathcal{P}$. Carece de <ConceptLink targetId="dimension">dimensión</ConceptLink>, <ConceptLink targetId="longitud">longitud</ConceptLink>, <ConceptLink targetId="area">área</ConceptLink> o <ConceptLink targetId="volumen">volumen</ConceptLink>; en el marco del <ConceptLink targetId="espacio-geometrico">espacio geométrico</ConceptLink>, representa una posición pura sin extensión.
+  En la formulación axiomática de la <ConceptLink targetId="incidencia">geometría de incidencia</ConceptLink>, un punto <VisualBind element="P" color="musgo">$P$</VisualBind> se define como un elemento primitivo sin partes perteneciente a un espacio geométrico $\mathcal{E}$. En la <ConceptLink targetId="geometria-analitica">geometría analítica</ConceptLink> sobre $\mathbb{R}^n$, un punto se identifica unívocamente con una $n$-tupla de <ConceptLink targetId="sistema-coordenadas">coordenadas reales</ConceptLink>:
+  $$
+  P = (x_1, x_2, \dots, x_n) \in \mathbb{R}^n
+  $$
+  donde su <ConceptLink targetId="dimension-hausdorff">dimensión topológica</ConceptLink> es estrictamente cero ($\text{dim}(P) = 0$).
 </Definicion>
 
 <Separador />
 
-### Representación visual
+### Representación en distintos marcos geométricos
 
-En la construcción interactiva, el punto se representa gráficamente mediante una marca discreta identificada con la variable <VisualBind element="pPoint" color="musgo">$P$</VisualBind>. Aunque visualmente deba ocupar un área finita en la pantalla para permitir su manipulación física, desde el punto de vista del rigor matemático formal carece de extensión o masa en el <ConceptLink targetId="plano">plano</ConceptLink>.
+La caracterización formal del punto varía según la estructura axiomática o algebraica adoptada:
 
-<Separador />
-
-### El punto en el sistema axiomático de Hilbert
-
-En *Grundlagen der Geometrie* (1899), <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece los puntos como el primer sistema de objetos no definidos ($\mathcal{P}$), coordinado con las <ConceptLink targetId="recta">rectas</ConceptLink> ($\mathcal{L}$) y los <ConceptLink targetId="plano">planos</ConceptLink> ($\Pi$). Sus propiedades estructurales se generan a través de los tres primeros grupos de axiomas:
-
-- **<ConceptLink targetId="axiomas-incidencia">Axiomas de Incidencia (Grupo I)</ConceptLink>**: Dos puntos distintos determinan una única recta (<ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>). Toda recta contiene al menos dos puntos distintos (<ConceptLink targetId="axioma-incidencia-2">Axioma I.2</ConceptLink>), y en todo plano existen al menos tres puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink> (<ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink>).
-- **<ConceptLink targetId="axiomas-orden">Axiomas de Orden (Grupo II)</ConceptLink>**: Rigen las posiciones relativas de ternas de puntos sobre una misma recta mediante la relación primitiva <ConceptLink targetId="estar-entre">estar entre</ConceptLink> ($A * B * C$).
-- **<ConceptLink targetId="axiomas-congruencia">Axiomas de Congruencia (Grupo III)</ConceptLink>**: Los pares de puntos determinan <ConceptLink targetId="segmento">segmentos</ConceptLink>, cuya equivalencia rígida queda formalizada como una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink> geométrica ($AB \cong CD$).
+| Marco geométrico | Representación matemática | Dimensión |
+|---|---|---|
+| Euclidiano o axiomático | Elemento primitivo indivisible ($P \in \mathcal{E}$) | $0$ |
+| Cartesiano ($\mathbb{R}^2$ o $\mathbb{R}^3$) | Vector de posición $(x, y)$ o $(x, y, z)$ | $0$ |
+| Teoría de conjuntos | Elemento individual de un espacio abstracto $S$ | $0$ |
 
 <Separador />
 
-### Modelos y realizaciones algebraicas
+### Propiedades
 
-<Cita author="Euclides (c. 300 a.C.)">
-  «Punto es lo que no tiene partes.»
-</Cita>
-
-Mientras que la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> trata a los puntos como entes primitivos sujetos únicamente a axiomas, los diversos modelos analíticos los formalizan como estructuras algebraicas:
-
-- **<ConceptLink targetId="geometria-analitica">Geometría Analítica</ConceptLink> (<ConceptLink targetId="modelo-cartesiano">Plano Cartesiano $\mathbb{R}^2$</ConceptLink>)**: Un punto se identifica rigurosamente con un <ConceptLink targetId="par-ordenado">par ordenado</ConceptLink> de <ConceptLink targetId="numero-real">números reales</ConceptLink>: $(x, y) \in \mathbb{R}^2$.
-- **<ConceptLink targetId="topologia">Topología General</ConceptLink>**: Los puntos constituyen los elementos aislados del conjunto subyacente de un <ConceptLink targetId="espacio-topologico">espacio topológico</ConceptLink> $(X, \tau)$.
-- **<ConceptLink targetId="geometria-afina">Geometría Afín</ConceptLink>**: Un <ConceptLink targetId="espacio-afin">espacio afín</ConceptLink> se concibe como un conjunto de puntos sobre el que un <ConceptLink targetId="espacio-vectorial">espacio vectorial</ConceptLink> actúa de manera libre y transitiva (<ConceptLink targetId="accion-grupo">acción de grupo</ConceptLink>).
+- **<ConceptLink targetId="incidencia">Incidencia y pertenencia</ConceptLink>**: Dos puntos distintos determinan una única <ConceptLink targetId="recta">recta</ConceptLink> que pasa por ambos.
+- **<ConceptLink targetId="dimension-hausdorff">Ausencia de dimensión</ConceptLink>**: Posee medida de Lebesgue nula ($\mu(\{P\}) = 0$) y carece de extensión espacial.
+- **<ConceptLink targetId="distancia">Métrica y distancia</ConceptLink>**: La distancia entre dos puntos satisface $d(P, Q) = 0 \iff P = Q$, cumpliendo el axioma de identidad de la <ConceptLink targetId="espacio-metrico">métrica</ConceptLink>.

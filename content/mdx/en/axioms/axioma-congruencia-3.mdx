@@ -1,0 +1,36 @@
+export const metadata = {
+  id: "axioma-congruencia-3",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom III.3 (Segment Addition)",
+  description: "If two adjacent aligned segments are respectively congruent to two other adjacent aligned segments, the total segments formed by their endpoints are congruent.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+  ]
+};
+
+import { Congruence3 } from '@content/diagrams/Axiomas/Congruence3';
+export const Simulation = Congruence3;
+
+<Capitular letra="T" />he third <ConceptLink targetId="congruencia">congruence</ConceptLink> axiom of <ConceptLink targetId="hilbert">Hilbert</ConceptLink> formalizes the additivity of segment layout along a <ConceptLink targetId="recta">line</ConceptLink>. It asserts that concatenating congruent <ConceptLink targetId="segmento">segments</ConceptLink> preserves the overall congruence of the combined sum in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+
+<Definicion title="">
+  Let $A, B, C$ be three <ConceptLink targetId="punto">points</ConceptLink> on a line such that $B$ is <ConceptLink targetId="orden">between</ConceptLink> $A$ and $C$, and let $A', B', C'$ be three points on another line such that $B'$ is between $A'$ and $C'$. If $\overline{AB} \cong \overline{A'B'}$ and $\overline{BC} \cong \overline{B'C'}$, then the composite sum segment $\overline{AC}$ is <ConceptLink targetId="congruencia">congruent</ConceptLink> to $\overline{A'C'}$:
+  $$
+  (A\text{-}B\text{-}C) \land (A'\text{-}B'\text{-}C') \land (\overline{AB} \cong \overline{A'B'}) \land (\overline{BC} \cong \overline{B'C'}) \implies \overline{AC} \cong \overline{A'C'}
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation
+
+Juxtaposing the initial segment <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> with the adjacent segment <VisualBind element="BC" color="pavo">$\overline{BC}$</VisualBind> along the given line yields a sum segment <VisualBind element="AC" color="terracota">$\overline{AC}$</VisualBind> that maintains exact rigid correspondence with the concatenation of their transformed congruent parts.
+
+<Separador />
+
+### Axiomatic significance
+
+This postulate permits the synthetic definition of addition on equivalence classes of <ConceptLink targetId="segmento">segments</ConceptLink>. Together with the axioms of <ConceptLink targetId="orden">order</ConceptLink>, it grounds the additive metric structure of geometric space independently of real numbers.

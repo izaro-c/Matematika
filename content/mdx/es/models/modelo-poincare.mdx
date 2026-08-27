@@ -1,47 +1,50 @@
 export const metadata = {
-  "id": "modelo-poincare",
-  "type": "modelo",
-  "title": "Disco de Poincaré",
-  "description": "El modelo conforme del plano hiperbólico que representa el espacio como el interior de un círculo unitario y las rectas como arcos ortogonales a la frontera.",
-  "satisfies": ["sistema-hiperbolico", "sistema-absoluto"],
-  "hasSimulation": true
+  id: "modelo-poincare",
+  lang: "es",
+  type: "modelo",
+  title: "Disco de Poincaré",
+  description: "Modelo conformal para la geometría hiperbólica bidimensional dentro del disco unidad en el plano complejo.",
+  branch: "51M",
+  satisfies: ["sistema-hiperbolico", "sistema-absoluto"],
+  axioms_verified: ["axioma-incidencia-1", "axioma-paralelas-hiperbolico"],
+  hasSimulation: true
 };
 
 import { ModeloPoincare } from '@content/diagrams/Models/ModeloPoincare';
-export const Diagram = ModeloPoincare;
+export const Simulation = ModeloPoincare;
 
-<Capitular letra="E" />l <ConceptLink targetId="modelo-poincare" isDependency={false}>disco de Poincaré</ConceptLink> representa un modelo analítico para la <ConceptLink targetId="geometria-hiperbolica">geometría hiperbólica</ConceptLink> bidimensional. Su propiedad geométrica fundamental es su naturaleza conforme: preserva la medida angular local euclídea entre arcos intersecantes. Fue introducido por el matemático Henri Poincaré en 1882.
+<Capitular letra="E" />l disco de Poincaré $\mathbb{D}^2$ es el modelo conforme canónico de la <ConceptLink targetId="geometria-hiperbolica">geometría hiperbólica</ConceptLink> bidimensional. Demuestra la consistencia relativa de la geometría no euclídea respecto al análisis real al representar las rectas hiperbólicas como arcos circulares ortogonales a la frontera del disco abierto.
 
 <Separador />
 
 ### Definición del modelo
 
-El modelo se construye en el plano complejo $\mathbb{C}$, redefiniendo los conceptos primitivos de punto, recta y métrica:
+El espacio de puntos de este modelo es el disco abierto del <ConceptLink targetId="plano">plano en la geometría</ConceptLink> <ConceptLink targetId="numero-real">real</ConceptLink> $\mathbb{R}^2$:
 
-- **<ConceptLink targetId="punto" isDependency={false}>Puntos</ConceptLink>**: Puntos del interior del <VisualBind element="frontera" color="carbon">disco unitario abierto</VisualBind> $\mathbb{D} = \{z \in \mathbb{C} : |z| < 1\}$. La frontera $|z|=1$ (el «absoluto») no pertenece al espacio hiperbólico.
-- **<ConceptLink targetId="recta" isDependency={false}>Rectas hiperbólicas</ConceptLink>**: Arcos de circunferencia euclídea que cortan ortogonalmente ($90^\circ$) a la frontera $|z|=1$, como la <VisualBind element="geodesica-principal" color="terracota">recta $l$</VisualBind>. Los diámetros del disco son también rectas hiperbólicas.
-- **Métrica hiperbólica**: La distancia entre dos puntos $z, w \in \mathbb{D}$ se calcula mediante el elemento de longitud de Poincaré:
+$$
+\mathbb{D}^2 = \{(x, y) \in \mathbb{R}^2 \mid x^2 + y^2 < 1\}
+$$
 
-<Formula>
-  $$ ds = \frac{2|dz|}{1 - |z|^2} $$
-</Formula>
+Los elementos geométricos se interpretan de la siguiente manera:
 
-- **Ángulos**: Debido al carácter conforme de la proyección, el <ConceptLink targetId="angulo">ángulo hiperbólico</ConceptLink> entre dos rectas coincide exactamente con el ángulo euclídeo formado por sus vectores tangentes en el punto de intersección.
+- **<ConceptLink targetId="punto">Puntos hiperbólicos</ConceptLink>**: Son los puntos interiores del disco <VisualBind element="disk" color="carbon">$\mathbb{D}^2$</VisualBind>. Los puntos en la frontera $\partial \mathbb{D}^2$ (el círculo unidad) se denominan puntos ideales u horizontes y no pertenecen al espacio hiperbólico.
+- **<ConceptLink targetId="recta">Rectas hiperbólicas</ConceptLink>**: Son las intersecciones con $\mathbb{D}^2$ de <VisualBind element="hyperbolicLine" color="terracota">circunferencias ortogonales</VisualBind> a la frontera $\partial \mathbb{D}^2$, o los diámetros del disco que pasan por el origen.
+- **Métrica y <ConceptLink targetId="distancia">distancia</ConceptLink>**: Para dos puntos $z_1, z_2 \in \mathbb{D}^2$, el elemento de longitud riemanniana conforme es $ds^2 = 4 \frac{dx^2 + dy^2}{(1 - (x^2 + y^2))^2}$.
+- **<ConceptLink targetId="angulo">Ángulos</ConceptLink>**: El modelo es conforme, lo que significa que los ángulos hiperbólicos entre dos rectas hiperbólicas son exactamente iguales a los ángulos euclídeos formados por sus tangentes en el punto de intersección.
 
 <Separador />
 
 ### Verificación de axiomas
 
-El disco de Poincaré satisface todos los axiomas de la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink> de Hilbert y reemplaza el axioma euclidiano de las paralelas por el axioma hiperbólico:
+El disco de Poincaré verifica todos los axiomas de la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink> junto con la negación explícita del quinto postulado:
 
-- **<ConceptLink targetId="axioma-incidencia-1" isDependency={false}>Axioma I-1</ConceptLink>**: Por dos puntos distintos pasa un único arco ortogonal a la frontera.
-- **Continuidad y orden**: La métrica hiperbólica diverge hacia infinito al aproximarse a la frontera $|z| \to 1$, lo que garantiza que las rectas hiperbólicas son infinitamente largas y topológicamente completas.
-- **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={false}>Axioma de las paralelas hiperbólico</ConceptLink>**: Dada una <VisualBind element="geodesica-principal" color="terracota">recta $l$</VisualBind> y un <VisualBind element="P" color="terracota">punto exterior $P$</VisualBind>, existen **infinitas** rectas que pasan por $P$ y no intersecan a $l$ en el interior del disco: destacan las <VisualBind element="limite1" color="ocre">paralelas límite</VisualBind> y las <VisualBind element="ultra1" color="pavo">ultraparalelas</VisualBind>.
+- **Axiomas de <ConceptLink targetId="incidencia">incidencia</ConceptLink> y <ConceptLink targetId="orden">orden</ConceptLink>**: Dados dos puntos interiores distintos $A, B \in \mathbb{D}^2$, existe un único arco circular o diámetro ortogonal a la frontera que pasa por ambos.
+- **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>Axioma de las paralelas hiperbólicas</ConceptLink>**: Dada una recta hiperbólica <VisualBind element="hyperbolicLine" color="terracota">$l$</VisualBind> y un punto exterior <VisualBind element="externalPoint" color="musgo">$P \in \mathbb{D}^2 \setminus l$</VisualBind>, existen infinitas rectas hiperbólicas paralelas a $l$ que pasan por $P$ y no intersecan a $l$.
 
 <Separador />
 
-### Importancia histórica
+### Propiedades
 
-<Nota>
-  **Demostración de equiconsistencia**: El modelo del disco de Poincaré demostró definitivamente que la geometría hiperbólica es tan consistente como la propia geometría euclídea, resolviendo el problema milenario de la independencia lógica del quinto postulado de Euclides.
-</Nota>
+- **Conformidad**: Preserva los ángulos locales euclídeos, lo que permite visualizar directamente la forma de las figuras.
+- **Defecto angular**: La suma de los ángulos interiores de cualquier <ConceptLink targetId="triangulo">triángulo</ConceptLink> hiperbólico es estrictamente menor que $180^\circ$, siendo el defecto angular proporcional al <ConceptLink targetId="area">área</ConceptLink> de la superficie.
+- **Invariancia ante transformaciones de Möbius**: Las isometrías hiperbólicas se representan mediante transformaciones afines complejas que preservan el disco unidad.

@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "axioma-incidencia-4",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom I.4 (Existence and Uniqueness of a Plane)",
+  description: "Given three non-collinear points in space, there exists exactly one plane containing all three.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+  ]
+};
+
+import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
+export const Simulation = Incidence4;
+
+<Capitular letra="G" />iven any three non-collinear <ConceptLink targetId="punto">points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s fourth <ConceptLink targetId="incidencia">incidence axiom</ConceptLink> asserts the existence and uniqueness of a <ConceptLink targetId="plano">plane</ConceptLink> containing all three. Additionally, every plane is specified to contain at least one point.
+
+<Definicion title="Formal statement">
+  Given three non-collinear <ConceptLink targetId="punto">points</ConceptLink> $A, B, C \in \mathcal{S}$, there exists a unique <ConceptLink targetId="plano">plane</ConceptLink> $\mathcal{P} \in \mathcal{F}$ such that $A, B, C \in \mathcal{P}$:
+  $$
+  \forall A, B, C \in \mathcal{S} \ \Bigl(\neg\exists l \in \mathcal{L} \ (A,B,C \in l) \implies \exists! \mathcal{P} \in \mathcal{F} \ (A \in \mathcal{P} \land B \in \mathcal{P} \land C \in \mathcal{P})\Bigr)
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation and interaction
+
+In the three-dimensional simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> uniquely define plane <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind>. Dragging any point without creating collinearity dynamically pivots the plane while preserving triple membership.
+
+<Separador />
+
+### Geometric significance and scope
+
+This postulate defines a plane as the primitive two-dimensional extension spanned by a non-collinear triad. It guarantees that three non-aligned points fix a unique flat surface within <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+
+<Separador />
+
+### Properties
+
+- **Planar determination:** Three non-aligned points uniquely establish bidimensional spatial orientation.
+- **3D foundation:** Essential for constructing three-dimensional Euclidean and non-Euclidean space structures.
+- **Triangle support:** Every <ConceptLink targetId="triangulo">triangle</ConceptLink> lies on a unique supporting plane.

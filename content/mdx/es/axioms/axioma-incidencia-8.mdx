@@ -2,23 +2,24 @@ export const metadata = {
   id: "axioma-incidencia-8",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.8 (Existencia de Puntos no Coplanares)",
-  description: "Existen al menos cuatro puntos en el espacio que no están contenidos en un mismo plano.",
+  title: "Axioma I.8 (Existencia de puntos no coplanares)",
+  description: "Existen al menos cuatro puntos en el espacio que no están situados sobre el mismo plano.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Incidence8 } from '@content/diagrams/Axiomas/Incidence8';
 export const Simulation = Incidence8;
 
-<Capitular letra="E" />l octavo y último <ConceptLink targetId="axioma-incidencia-8">axioma de incidencia</ConceptLink> postula la tridimensionalidad mínima del espacio geométrico. Garantiza la existencia de al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> que no yacen sobre una misma superficie <ConceptLink targetId="plano">plana</ConceptLink>.
+<Capitular letra="E" />l octavo y último <ConceptLink targetId="axioma">axioma</ConceptLink> del grupo de <ConceptLink targetId="incidencia">incidencia</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> afirma la existencia de al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> no coplanares. Este postulado rompe la restricción plana y consolida la tridimensionalidad genuina del <ConceptLink targetId="espacio">espacio</ConceptLink>.
 
-<Definicion title="">
-  Existen al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> $A, B, C, D \in \mathcal{P}$ tales que ningún <ConceptLink targetId="plano">plano</ConceptLink> $\alpha \in \mathcal{E}$ contiene a los cuatro simultáneamente:
+<Definicion title="Enunciado formal">
+  Existen al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> $A, B, C, D \in \mathcal{S}$ tales que ningún <ConceptLink targetId="plano">plano</ConceptLink> $\mathcal{P} \in \mathcal{F}$ los contiene a los cuatro simultáneamente:
   $$
-  \exists A, B, C, D \in \mathcal{P} \ (\forall \alpha \in \mathcal{E} \implies \neg (A \in \alpha \land B \in \alpha \land C \in \alpha \land D \in \alpha))
+  \exists A, B, C, D \in \mathcal{S} \ \forall \mathcal{P} \in \mathcal{F} \ \neg\bigl(A \in \mathcal{P} \land B \in \mathcal{P} \land C \in \mathcal{P} \land D \in \mathcal{P}\bigr)
   $$
 </Definicion>
 
@@ -26,10 +27,18 @@ export const Simulation = Incidence8;
 
 ### Representación visual e interacción
 
-En la simulación interactiva se presentan los puntos base <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> sobre el plano <VisualBind element="plano-pi" color="musgo">$\alpha$</VisualBind>, junto con un cuarto punto <VisualBind element="pD" color="carbon">$D$</VisualBind> situado fuera de dicho plano, formando los vértices de un tetraedro tridimensional.
+En la simulación tridimensional, los cuatro puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> y <VisualBind element="pD" color="terracota">$D$</VisualBind> definen un tetraedro. Al trazar el plano soporte de tres cualesquiera de ellos, el cuarto punto sobresale visiblemente fuera de dicho plano.
 
 <Separador />
 
-### Culminación del grupo de incidencia
+### Significado geométrico y alcance
 
-Este postulado cierra el primer grupo axiomático de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>. Garantiza que el universo geométrico posee al menos tres dimensiones espaciales independientes.
+Evita que el universo geométrico se reduzca a una sola superficie plana. Al exigir cuatro puntos no coplanares, fija la dimensión del espacio en al menos tres ($n \ge 3$), permitiendo la existencia de poliedros y volúmenes en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
+
+<Separador />
+
+### Propiedades
+
+- **Tridimensionalidad garantizada:** Asegura que el espacio geométrico posee al menos tres dimensiones libres.
+- **Existencia del tetraedro:** Permite definir el tetraedro como el cuerpo geométrico tridimensional primitivo.
+- **Cierre del grupo I:** Completa los axiomas de incidencia requeridos para estructurar puntos, rectas y planos en 3D.

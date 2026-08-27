@@ -3,33 +3,35 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma III.4 (Transporte de Ángulos)",
-  description: "Dado un ángulo y una semirrecta en un semiplano fijado, existe una única semirrecta que forma un ángulo congruente al dado.",
+  description: "Dado un ángulo, una semirrecta dada y un semiplano determinado por ella, existe un único ángulo congruente al dado con vértice en el origen de la semirrecta.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Congruence4 } from '@content/diagrams/Axiomas/Congruence4';
 export const Simulation = Congruence4;
 
-<Capitular letra="E" />l cuarto <ConceptLink targetId="axioma-congruencia-4">axioma de congruencia</ConceptLink> extiende la traslación rígida al ámbito angular. Permite transportar la abertura de cualquier <ConceptLink targetId="angulo">ángulo</ConceptLink> sobre una semirrecta base contenida en un semiplano prefijado.
+<Capitular letra="E" />l cuarto axioma de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> establece la posibilidad de trasladar aberturas angulares en el <ConceptLink targetId="plano">plano</ConceptLink>. Garantiza que cualquier <ConceptLink targetId="angulo">ángulo</ConceptLink> puede transportarse de forma unívoca a un semiplano dado a partir de una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> de referencia.
 
 <Definicion title="">
-  Dado un <ConceptLink targetId="angulo">ángulo</ConceptLink> $\angle(h, k)$ y una semirrecta $h'$ sobre un plano, en cada semiplano determinado por la <ConceptLink targetId="recta">recta</ConceptLink> soporte de $h'$ existe una única semirrecta $k'$ con el mismo origen tal que el ángulo $\angle(h, k)$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con $\angle(h', k')$:
+  Dado un <ConceptLink targetId="angulo">ángulo</ConceptLink> $\angle (h, k)$, una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $h'$ contenida en la recta $a'$, y un semiplano $H'$ delimitado por $a'$, existe una única semirrecta $k'$ contenida en $H'$ con origen en el mismo punto que $h'$ tal que el ángulo $\angle (h, k)$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con $\angle (h', k')$:
   $$
-  \forall \angle(h, k), \forall h', \forall H^+_{h'} \implies \exists! k' \subseteq H^+_{h'} \ (\angle(h, k) \cong \angle(h', k'))
+  \forall \angle (h, k), \forall h' \subset a', \forall H' \implies \exists! k' \subset H' \ (\angle (h, k) \cong \angle (h', k'))
   $$
+  Además, todo ángulo es congruente consigo mismo: $\angle (h, k) \cong \angle (h, k)$.
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Representación visual
 
-En la simulación interactiva se observa el <VisualBind element="angulo-original" color="terracota">ángulo original $\angle(h,k)$</VisualBind> y la semirrecta base <VisualBind element="rayo-h_prime" color="carbon">$h'$</VisualBind>. La semirrecta <VisualBind element="rayo-k_prime" color="musgo">$k'$</VisualBind> construye el <VisualBind element="angulo-clonado" color="musgo">ángulo congruente $\angle(h',k')$</VisualBind> dentro del semiplano de referencia.
+Dada la abertura del ángulo de origen <VisualBind element="h" color="ocre">$h$</VisualBind>-<VisualBind element="k" color="ocre">$k$</VisualBind>, al fijar la semirrecta base <VisualBind element="hP" color="pavo">$h'$</VisualBind> en el semiplano destino, la semirrecta construida <VisualBind element="kP" color="terracota">$k'$</VisualBind> delimita el ángulo transportado conservando con exactitud la amplitud angular.
 
 <Separador />
 
-### Unicidad en el semiplano
+### Significado axiomático
 
-Este postulado elimina la ambigüedad en la duplicación angular al restringir la construcción a un único semiplano. Garantiza que la medida o equivalencia angular se preserva bajo traslaciones y rotaciones rígidas.
+Este axioma proporciona el análogo angular al transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink>. Permite comparar aberturas angulares sintéticamente sin requerir la medida sexagesimal ni funciones trigonométricas en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.

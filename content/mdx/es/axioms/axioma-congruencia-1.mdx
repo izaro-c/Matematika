@@ -3,33 +3,34 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma III.1 (Transporte de Segmentos)",
-  description: "Dado un segmento AB y una semirrecta con origen en C, existe un único punto D sobre la semirrecta tal que AB es congruente con CD.",
+  description: "Dado un segmento AB y una semirrecta con origen en C, existe un único punto D sobre la semirrecta tal que el segmento AB es congruente con el segmento CD.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
 export const Simulation = Congruence1;
 
-<Capitular letra="E" />l primer <ConceptLink targetId="axioma-congruencia-1">axioma de congruencia</ConceptLink> formaliza la posibilidad de trasladar magnitudes métricas en el espacio. Garantiza que cualquier <ConceptLink targetId="segmento">segmento</ConceptLink> puede ser transportado de forma unívoca a partir del origen de una semirrecta dada.
+<Capitular letra="E" />l primer axioma de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> formaliza la posibilidad de trasladar magnitudes de longitud en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>. Este postulado garantiza que cualquier <ConceptLink targetId="segmento">segmento</ConceptLink> dado puede ser copiado de forma unívoca a partir del origen de una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> dada en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Definicion title="">
-  Dado un <ConceptLink targetId="segmento">segmento</ConceptLink> $AB$ y una semirrecta $r$ con origen en el <ConceptLink targetId="punto">punto</ConceptLink> $C$, existe un único punto $D$ contenido en $r$ tal que el segmento $AB$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con el segmento $CD$:
+  Dado un <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$ y una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $r$ con origen en el <ConceptLink targetId="punto">punto</ConceptLink> $C$, existe un único punto $D$ perteneciente a $r$ tal que el segmento $\overline{AB}$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con el segmento $\overline{CD}$:
   $$
-  \forall AB, \forall r_C \implies \exists! D \in r_C \ (AB \cong CD)
+  \forall \overline{AB}, \forall r_C \implies \exists! D \in r_C \ (\overline{AB} \cong \overline{CD})
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Representación visual
 
-En la simulación interactiva se muestra el segmento original <VisualBind element="AB" color="ocre">$AB$</VisualBind> y la semirrecta destino <VisualBind element="r" color="pavo">$r$</VisualBind> con origen en <VisualBind element="pD" color="terracota">$C$</VisualBind>. El punto transportado <VisualBind element="pD" color="terracota">$D$</VisualBind> define el segmento <VisualBind element="CD" color="terracota">$CD$</VisualBind> preservando la equivalencia rígida.
+La fijación del segmento original <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> sobre la semirrecta destino <VisualBind element="r" color="pavo">$r$</VisualBind> con origen en <VisualBind element="pD" color="terracota">$C$</VisualBind> determina de forma unívoca la posición del punto <VisualBind element="pD" color="terracota">$D$</VisualBind>, construyendo el segmento <VisualBind element="CD" color="terracota">$\overline{CD}$</VisualBind> con idéntica longitud rígida.
 
 <Separador />
 
-### Significado en el sistema axiomático
+### Significado axiomático
 
-Este postulado fundamenta la noción primitiva de <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre <ConceptLink targetId="segmento">segmentos</ConceptLink> sin apelar a mediciones numéricas continuas. Garantiza la conservación de la longitud en operaciones de traslación rígida.
+Este axioma establece la noción primitiva de rigidez geométrica sin apelar a la existencia previa de una función de <ConceptLink targetId="distancia">distancia</ConceptLink> real ni a números reales. Permite definir la comparación de longitudes y la noción de igualdad métrica entre <ConceptLink targetId="segmento">segmentos</ConceptLink> de forma sintética dentro del <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink>.

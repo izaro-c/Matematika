@@ -1,0 +1,39 @@
+export const metadata = {
+  id: "sistema-hiperbolico",
+  lang: "en",
+  type: "sistema-axiomatico",
+  title: "Hyperbolic geometry system",
+  description: "The axiomatic system of Lobachevsky and Gauss based on absolute geometry and the hyperbolic parallel axiom.",
+  branch: "51M",
+  axiomas: ["axioma-paralelas-hiperbolico"]
+};
+
+<Capitular letra="T" />he hyperbolic geometry system —formulated independently by Nikolai Lobachevsky and János Bolyai— constitutes the first non-Euclidean geometry formally discovered. It is obtained by replacing the Euclidean parallel postulate with the hyperbolic parallel axiom within the framework of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, introducing a metric of constant negative Gaussian curvature.
+
+<Separador />
+
+### Axiomatic structure
+
+The hyperbolic system integrates the full abstract formal framework:
+
+1. **Foundation of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>**: Incorporates all axioms of <ConceptLink targetId="sistema-incidencia">incidence</ConceptLink>, <ConceptLink targetId="orden">order</ConceptLink>, <ConceptLink targetId="congruencia">congruence</ConceptLink>, and continuity.
+2. **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>Hyperbolic parallel axiom</ConceptLink>**: Given a <ConceptLink targetId="recta">line</ConceptLink> $l$ and an external <ConceptLink targetId="punto">point</ConceptLink> $P \notin l$ in a <ConceptLink targetId="plano">plane</ConceptLink>, there exist at least two distinct lines $l_1, l_2$ containing $P$ that do not intersect $l$:
+   $$ \forall l \in \mathcal{L}, \forall P \notin l, \exists l_1, l_2 \in \mathcal{L} \text{ such that } l_1 \neq l_2, P \in l_1 \cap l_2 \land l_1 \cap l = \emptyset \land l_2 \cap l = \emptyset $$
+
+<Separador />
+
+### Characteristic theorems
+
+The negative curvature metric fundamentally alters spatial metric and triangular properties:
+
+- **Angular defect**: The sum of interior <ConceptLink targetId="angulo">angles</ConceptLink> in any hyperbolic <ConceptLink targetId="triangulo">triangle</ConceptLink> is strictly less than $180^\circ$:
+  $$ \sum_{i=1}^3 \alpha_i < 180^\circ $$
+- **Proportionality of <ConceptLink targetId="area">area</ConceptLink>**: The area $\text{Area}(\triangle)$ of a triangle is directly proportional to its angular defect $\delta(\triangle) = \pi - (\alpha + \beta + \gamma)$.
+- **Non-existence of rectangles and non-congruent similarities**: There exist no quadrilaterals with four right angles. Two triangles sharing identical corresponding angles are necessarily congruent (AAA criterion).
+
+<Separador />
+
+### Models and consistency
+
+- **<ConceptLink targetId="modelo-poincare">Poincaré disk $\mathbb{D}^2$</ConceptLink>**: Canonical conformal model where hyperbolic lines are circular arcs orthogonal to the boundary.
+- **Relative consistency**: The existence of analytic conformal models in the complex plane reduces the logical consistency of hyperbolic geometry to standard real analysis.

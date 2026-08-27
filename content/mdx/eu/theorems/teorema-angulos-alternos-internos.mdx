@@ -1,50 +1,45 @@
 export const metadata = {
-  "id": "teorema-angulos-alternos-internos",
-  "type": "teorema",
-  "title": "Barne-angelu alternoen teorema",
-  "description": "Transbertsal batek ebakitako bi zuzen paraleloak dira barne-angelu alternoak kongruenteak badira eta soilik badira. Zuzeneko norabidea geometria absolutuari dagokio; alderantzizkoak paraleloen axioma euklidestarra behar du.",
-  "statement": "Bedi l eta m transbertsal batek ebakitako bi zuzen. Barne-angelu alternoak kongruenteak dira l ∥ m bada eta soilik bada.",
-  "tags": ["geometria", "angulos", "paralelas"],
-  "authors": ["euclides"],
-  "difficulty": "básico",
-  "hasSimulation": false,
-  "demos": ["demo-angulos-alternos-internos"],
-  "sources": [
-    { "title": "Elementos", "author": "Euclides", "locator": "Libro I, Proposiciones 27 y 29", "role": "primary" }
+  id: "teorema-angulos-alternos-internos",
+  type: "teorema",
+  title: "Barne-angelu alternoen teorema",
+  description: "Bi zuzen paralelo zuzen ebakitzaile batek ebakitzen dituenean, lortutako barne-angelu alternoak beren artean kongruenteak dira.",
+  statement: "r eta s bi zuzen paralelo t ebakitzaile batez ebakitzean, edozein α eta α' barne-angelu alterno bikotek α ≅ α' betetzen du.",
+  branch: "51M",
+  hasSimulation: false,
+  authors: ["euclides"],
+  demos: ["demo-angulos-alternos-internos"],
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 27 y 29", role: "primary" }
   ]
 };
 
-<Capitular letra="B" />arne-angelu alternoen <ConceptLink targetId="teorema-angulos-alternos-internos">teoremak</ConceptLink> —<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.27 eta I.29 proposizioei dagokiena— funtsezko lotura ezartzen du <ConceptLink targetId="recta">zuzenen</ConceptLink> <ConceptLink targetId="paralelismo">paralelotasunaren</ConceptLink> eta <ConceptLink targetId="angulo">angeluen</ConceptLink> <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> artean. <ConceptLink targetId="interseccion">Ebakidurarik</ConceptLink> ezaren baldintza geometrikoaren eta <ConceptLink targetId="transversal">transbertsal</ConceptLink> baten gaineko posizio alternoetan dauden angeluen irekidura-berdintasunaren arteko baliokidetasuna ezartzen du.
+<Capitular letra="B" />arne-angelu alternoen teoremak baliokidetasun metrikoa ezartzen du plano euklidetarrean bi <ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink> ebakitzen dituen <ConceptLink targetId="recta">zuzen ebakitzaile</ConceptLink> baten albo kontrajarrietan dauden <ConceptLink targetId="angulo">angeluen</ConceptLink> artean.
 
 <Separador />
 
-### Formulatze formala
+### Enuntziatu formala
 
-Bedi $l$ eta $m$ bi <ConceptLink targetId="recta">zuzen</ConceptLink> koplanar eta $t$ horiek $A \in l$ eta $B \in m$ <ConceptLink targetId="punto">puntuetan</ConceptLink> ebatzen dituen <ConceptLink targetId="transversal">transbertsal</ConceptLink> bat. Izan bedi $\alpha$ eta $\beta$ zuzen horiek eta $t$ transbertsalak zehaztutako bi <ConceptLink targetId="angulos-alternos-internos">barne-angelu alterno</ConceptLink>.
-
-**1. zatia** (<ConceptLink targetId="geometria-absoluta">geometria absolutua</ConceptLink>):
+Bitzak $r$ eta $s$ bi <ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink> $\mathcal{P}$ planoan ($r \parallel s$), eta izan bedi $t$ biak $A$ eta $B$ puntuetan ebakitzen dituen <ConceptLink targetId="recta">zuzen ebakitzailea</ConceptLink>. Izan bitez $\alpha$ eta $\alpha'$ $r$ eta $s$ paraleloen artean dauden eta $t$ ebakitzailearekiko erdi-plano kontrajarrietan kokatutako bi angelu. Ezinbestean betetzen da honako <ConceptLink targetId="congruencia">kongruentzia-erlazio</ConceptLink> hau:
 
 <Formula>
-  $$ \alpha \cong \beta \implies l \parallel m $$
+  $$ \alpha \cong \alpha' $$
 </Formula>
 
-**2. zatia** (<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioma euklidestarra</ConceptLink> behar du):
-
-<Formula>
-  $$ l \parallel m \implies \alpha \cong \beta $$
-</Formula>
+Beste modura esanda, bi barne-angelu alternoen neurri angeluarra zorrotz berdina da: $|\alpha| = |\alpha'|$.
 
 <Separador />
 
-### Analisia eta desglosa deduktiboa
+### Azterketa axiomatikoa eta alderantzizkoa
 
-1. zatiaren frogapenak ez du paralelo euklidestarren existentziarik ez eta bakartasunik ere aurresuposatzen; soilik <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink> oinarritzen da, <ConceptLink targetId="reduccion-al-absurdo">absurdora murriztearen</ConceptLink> bidez eta <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>kanpo-angeluaren teorema</ConceptLink> erabiliz.
-
-Aitzitik, 2. zatiak nahitaezkoa du <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen postulatu euklidestarra</ConceptLink>. Geometria ez-euklidestarretan, adibidez <ConceptLink targetId="geometria-hiperbolica">geometria hiperbolikoan</ConceptLink>, 1. zatiak baliozkoa izaten jarraitzen du, baina 2. zatia ez da orokorrean betetzen.
+Euklidesek bi Proposizio nagusitan egituratzen du ebakitzaile batek sortutako angeluen portaera:
+- **I.27 Proposizioa (Alderantzizko absolutua)**: Zuzen ebakitzaile batek ebakitako bi zuzen koplanares barne-angelu alterno kongruenteak osatzen badituzte, orduan bi zuzenak <ConceptLink targetId="paralelas">paraleloak</ConceptLink> dira. Emaitza hau geometria absolutuarena da eta ez du bosgarren postulaturik behar.
+- **I.29 Proposizioa (Zuzen euklidetarra)**: Bi zuzen <ConceptLink targetId="paralelas">paraleloak</ConceptLink> badira, barne-angelu alternoen kongruentziak nahitaez <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioma</ConceptLink> eskatzen du.
 
 <Separador />
 
-### Oharrak eta ondorioak
+### Eratorritako angelu erlazioak
 
-- Emaitza honek <ConceptLink targetId="angulos-correspondientes">angelu kidekoen</ConceptLink> kongruentzia eta barne-angelu albokoen osagarritasuna deduzitzea ahalbidetzen du.
-- <ConceptLink targetId="teorema-suma-angulos-triangulo">Triangelu baten angeluen batura teoremaren</ConceptLink> eta <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremaren</ConceptLink> euskarri deduktiboa da.
+Bi zuzen paralelo $t$ ebakitzaile batez ebakitzean:
+- **Angelu kidekoak**: Kongruenteak dira ($\alpha \cong \beta$).
+- **Kanpo-angelu alternoak**: Kongruenteak dira ($\gamma \cong \gamma'$).
+- **Barne-angelu konjugatuak**: <ConceptLink targetId="angulos-suplementarios">Suplementarioak</ConceptLink> dira ($\alpha + \beta' = 180^\circ$).

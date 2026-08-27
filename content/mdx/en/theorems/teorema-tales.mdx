@@ -1,0 +1,45 @@
+export const metadata = {
+  id: "teorema-tales",
+  type: "teorema",
+  title: "Thales's Theorem",
+  description: "If two secant lines are intersected by a set of parallel lines, the segments cut off on one secant are proportional to the corresponding segments cut off on the other.",
+  statement: "Let r and r' be two secants intersected by three parallel lines L1, L2, L3 at points A, B, C and A', B', C' respectively. Then AB / BC = A'B' / B'C'.",
+  branch: "51M",
+  hasSimulation: true,
+  authors: ["tales", "euclides"],
+  demos: ["demo-tales"],
+  sources: [
+    { title: "Elements", author: "Euclides", locator: "Book VI, Proposition 2", role: "primary" }
+  ]
+};
+
+import { Tales } from '@content/diagrams/Teoremas/Tales';
+export const Simulation = Tales;
+
+<Capitular letra="T" />hales's intercept theorem forms the foundation of geometric <ConceptLink targetId="semejanza">similarity</ConceptLink> and <ConceptLink targetId="proporcionalidad">proportionality</ConceptLink> in the Euclidean <ConceptLink targetId="plano">plane</ConceptLink>. It states that intersecting a system of <ConceptLink targetId="paralelas">parallel lines</ConceptLink> with two <ConceptLink targetId="recta">secant lines</ConceptLink> invariantly preserves the ratio between the lengths of the intercepted <ConceptLink targetId="segmento">segments</ConceptLink>.
+
+<Separador />
+
+### Formal statement
+
+Let $r$ and $r'$ be two <ConceptLink targetId="recta">secant lines</ConceptLink> in plane $\mathcal{P}$. Let $L_1, L_2, L_3$ be three <VisualBind element="rectas-paralelas" color="musgo"><ConceptLink targetId="paralelas">parallel lines</ConceptLink></VisualBind> intersecting line $r$ at points <VisualBind element="punto-a" color="pavo">$A$</VisualBind>, <VisualBind element="punto-b" color="terracota">$B$</VisualBind>, $C$ and line $r'$ at points <VisualBind element="punto-a-primo" color="pavo">$A'$</VisualBind>, <VisualBind element="punto-b-primo" color="terracota">$B'$</VisualBind>, $C'$ respectively. The proportional ratio holds necessarily:
+
+<Formula>
+  $$ \frac{|\overline{AB}|}{|\overline{BC}|} = \frac{|\overline{A'B'}|}{|\overline{B'C'}|} \quad \Longleftrightarrow \quad \frac{|\overline{AB}|}{|\overline{A'B'}|} = \frac{|\overline{BC}|}{|\overline{B'C'}|} $$
+</Formula>
+
+Equivalently, the ratio of the lengths of any two segments on line $r$ is identical to the ratio of the lengths of their corresponding homologous segments on line $r'$.
+
+<Separador />
+
+### Triangle corollary
+
+In any <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$, if a line $r$ is drawn <ConceptLink targetId="paralelas">parallel</ConceptLink> to side $\overline{BC}$ intersecting sides $\overline{AB}$ and $\overline{AC}$ at points $D$ and $E$ respectively, it follows that:
+- The segments formed on the sides are proportional: $\frac{\overline{AD}}{\overline{DB}} = \frac{\overline{AE}}{\overline{EC}}$.
+- The newly formed triangle $\triangle ADE$ is <ConceptLink targetId="semejanza">similar</ConceptLink> to the original triangle $\triangle ABC$.
+
+<Separador />
+
+### Proof and axiomatic foundations
+
+The classical Euclidean proof relies on calculating the <ConceptLink targetId="area">areas</ConceptLink> of triangles sharing the same base or altitude. In modern axiomatic geometry, the <ConceptLink targetId="axioma-arquimedes">Archimedean property</ConceptLink> and the completeness of the real numbers are required to validate the theorem for both rational and irrational ratios.

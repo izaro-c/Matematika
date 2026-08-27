@@ -2,63 +2,38 @@ export const metadata = {
   id: "sistema-hiperbolico",
   lang: "eu",
   type: "sistema-axiomatico",
-  title: "Geometria Hiperbolikoa",
-  description: "Kurbatura gaussiar negatibo konstanteko geometria ez-euklidearra, paraleloen axioma euklidearra Lobachevski-Bolyairren postulatuaz ordezkatzen duena.",
-  axiomas: [
-    "axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3", "axioma-incidencia-4",
-    "axioma-incidencia-5", "axioma-incidencia-6", "axioma-incidencia-7", "axioma-incidencia-8",
-    "axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4",
-    "axioma-congruencia-1", "axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4", "axioma-congruencia-5",
-    "axioma-arquimedes", "axioma-completitud", "axioma-paralelas-hiperbolico"
-  ],
-  sources: [
-    { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolai Lobachevski", locator: "§1-§10", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §6", role: "secondary" }
-  ]
+  title: "Geometria hiperbolikoaren sistema",
+  description: "Lobachevski eta Gauss-en egitura axiomatikoa, geometria absolutuaz eta paralelo hiperboliko anizkoitzen axiomaz osatua.",
+  branch: "51M",
+  axiomas: ["axioma-paralelas-hiperbolico"]
 };
 
-<Capitular letra="G" />eometria <ConceptLink targetId="sistema-hiperbolico">hiperbolikoa</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides">paraleloen postulatua</ConceptLink> <ConceptLink targetId="lobachevski">Nikolai Lobachevskik</ConceptLink> eta <ConceptLink targetId="bolyai">János Bolyaik</ConceptLink> modu independentean formulatutako hiperbolicitate-hipotesiaz ordezkatzean sortutako teoria geometriko ez-euklidearra da. Kurbatura negatibo konstanteko espazioak deskribatzen ditu, non espazio <ConceptLink targetId="sistema-euclidiano">euklidearraren</ConceptLink> rigidetasuna metrika hiperboliko dibergente bategatik ordezkatzen den.
-
-<Definicion title="">
-  Sistema <ConceptLink targetId="axioma">axiomatiko</ConceptLink> hiperbolikoa $(\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I}, \mathcal{B}, \cong, \mathcal{P}_H)$ tupla bat da, <ConceptLink targetId="sistema-absoluto" isDependency={true}>geometria absolutuko 19 axiomek</ConceptLink> eta <ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>axioma hiperbolikoak</ConceptLink> osatua: $l$ <ConceptLink targetId="recta">zuzen</ConceptLink> bat eta $P \notin l$ <ConceptLink targetId="punto">puntu</ConceptLink> bat emanda, $P$-tik igarotzen diren eta $l$ ebakitzen ez duten gutxienez bi $m, n$ zuzen desberdin existitzen dira.
-</Definicion>
+<Capitular letra="G" />eometria hiperbolikoaren sistemak —Nikolái Lobachevski-k eta János Bolyai-k modu independentean eratua— formalki aurkitutako lehen geometria ez-euklidesarra osatzen du. <ConceptLink targetId="sistema-absoluto">Geometria absolutuaren</ConceptLink> esparruan bosgarren postulatu euklidesarra paralelo hiperbolikoen axiomaz ordezkatzean lortzen da, zakurtasun gaussiar negatibo konstanteko metrika bat sartuz.
 
 <Separador />
 
-### Paraleloen postulatua hiperbolikoa
+### Egitura axiomatikoa
 
-Espazio hiperbolikoaren ezaugarri bereizgarriak zuzen dibergenteen aniztasuna postulatzeari deritzo:
+Sistema hiperbolikoak gorputz formal abstraktu osoa biltzen du:
 
-- **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>IV.1 Lobachevski-Bolyairen axioma (paraleloen aniztasuna)</ConceptLink>**: Emandako <ConceptLink targetId="recta">zuzen</ConceptLink> batekiko kanpoko <ConceptLink targetId="punto">puntu</ConceptLink> batetik hura <ConceptLink targetId="interseccion">ebakitzen</ConceptLink> ez duten bi zuzen koplanar desberdin gutxienez igarotzen dira.
-
-<Formula>
-  $$
-  \forall l \in \mathcal{L}, \forall P \notin l \implies \exists m, n \in \mathcal{L} \ (m \neq n \land P \in m \cap n \land m \cap l = \emptyset \land n \cap l = \emptyset)
-  $$
-</Formula>
+1. **<ConceptLink targetId="sistema-absoluto">Geometria absolutuaren</ConceptLink> oinarria**: <ConceptLink targetId="sistema-incidencia">Intzidentzia</ConceptLink>, <ConceptLink targetId="orden">ordena</ConceptLink>, <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> eta jarraitutasun axioma guztiak barne hartzen ditu.
+2. **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>Paralelo hiperbolikoen axioma</ConceptLink>**: <ConceptLink targetId="plano">Plano</ConceptLink> batean $l$ <ConceptLink targetId="recta">zuzen</ConceptLink> bat eta kanpoko $P \notin l$ <ConceptLink targetId="punto">puntu</ConceptLink> bat emanda, gutxienez bi $l_1, l_2$ zuzen desberdin daude $P$ puntua daukatenak eta $l$ ebakitzen ez dutenak:
+   $$ \forall l \in \mathcal{L}, \forall P \notin l, \exists l_1, l_2 \in \mathcal{L} \text{ non } l_1 \neq l_2, P \in l_1 \cap l_2 \land l_1 \cap l = \emptyset \land l_2 \cap l = \emptyset $$
 
 <Separador />
 
-### Eredu geometrikozko jarraituak
+### Teorema bereizgarriak
 
-Plano euklidearrak plano hiperboliko osoa desformationik gabe barne har ezin duenez (kurbatura negatibo konstanteko gainazalei buruzko <ConceptLink targetId="hilbert">Hilberten</ConceptLink> <ConceptLink targetId="teorema">teorema</ConceptLink>), geometria hiperbolikoa eredu konforme edo proiektiboen bidez adierazten da:
+Zakurtasun negatiboko metrikak aldatu egiten ditu espazioaren propietate metriko eta triangeluarrak:
 
-- **<ConceptLink targetId="modelo-poincare">Poincaréren diskoa</ConceptLink>**: $\{z \in \mathbb{C} : |z| < 1\}$ unitate-diskoaren barnealdea, non zuzenak ertzalderarekiko ortogonalak diren zirkulu-arkuak diren.
-- **Poincaréren goi-erdiplanoa**: $\{z \in \mathbb{C} : \Im(z) > 0\}$ eremua $ds^2 = \frac{dx^2 + dy^2}{y^2}$ metrikaz hornitua.
-- **Klein-Beltramiren eredua**: Unitate-diskoaren barnealdea non zuzen hiperbolikoak zuzenki euklidearrekin bat datozen.
+- **Angelu-akatsa**: Edozein <ConceptLink targetId="triangulo">triangelu</ConceptLink> hiperbolikoren barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $180^\circ$ baino zorrozki txikiagoa da nahitaez:
+  $$ \sum_{i=1}^3 \alpha_i < 180^\circ $$
+- **<ConceptLink targetId="area">Azaleraren</ConceptLink> proportzionaltasuna**: Triangelu baten $\text{Azalera}(\triangle)$ azalera zuzenean proportzionala zaio haren $\delta(\triangle) = \pi - (\alpha + \beta + \gamma)$ angelu-akatsari.
+- **Lau angeluzuzenen eta antzekotasun ez-kongruenteen eza**: Ez dago lau angelu zuzen dituen koadrilaterorik. Barne-angelu korrespondenteak kongruenteak dituzten bi triangelu kongruenteak dira ezinbestean (AAA irizpidea).
 
 <Separador />
 
-### Propietateak eta akats angeluarrak
+### Ereduak eta koherentzia
 
-Espazio hiperbolikoan alderatze nabarmenak gertatzen dira geometria klasikoarekin alderatuta:
-
-<Formula>
-  $$
-  \text{Azalera}(\Delta) = k^2 \left( \pi - (\alpha + \beta + \gamma) \right) = k^2 \cdot \delta(\Delta)
-  $$
-</Formula>
-
-- **Defektu angeluarra**: Edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $180^\circ$ baino zorrozki txikiagoa da. $\delta(\Delta) = \pi - (\alpha + \beta + \gamma)$ akats angeluarra triangeluaren azalerarekiko proportzionala da.
-- **Antzekotasun ez-trivialik eza**: Barne-angelu berdinak dituzten bi triangelu <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira derrigorrez; ez dago tamaina desberdineko irudi <ConceptLink targetId="semejanza">antzekorik</ConceptLink>.
-- **Hazkunde esponentziala**: $r$ erradioko <ConceptLink targetId="circunferencia">zirkunferentziaren</ConceptLink> <ConceptLink targetId="distancia">luzera</ConceptLink> $2\pi \sinh(r)$ da, era esponentzialean haziz.
+- **<ConceptLink targetId="modelo-poincare">Poincareren diskoa $\mathbb{D}^2$</ConceptLink>**: Eredu konforme kanonikoa, non zuzenak mugarekiko arku ortogonalak baitira.
+- **Koherentzia erlatiboa**: Plano konplexuan eredu analitiko konformeak izateak geometria hiperbolikoaren koherentzia analisi erreal estandarrera murrizten du.

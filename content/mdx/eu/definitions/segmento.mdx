@@ -3,47 +3,45 @@ export const metadata = {
   lang: "eu",
   type: "definicion",
   subtype: "nominal",
-  title: "Zuzenkia",
-  description: "Bi mutur-puntuk mugatutako zuzen baten azpimultzo konektatu eta mugatua. Kongruentzia eta neurri geometrikoa definitzeko oinarrizko elementua da.",
+  title: "Zuzenki",
+  description: "Bi puntu muga (muturrak) barne hartzen dituen zuzen baten zati mugatua.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §3", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Nociones Comunes", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
   ]
 };
 
 import { Segmento } from '@content/diagrams/Definiciones/Segmento';
 export const Simulation = Segmento;
 
-<Capitular letra="Z" />uzena infinituarekin alderatuta, <ConceptLink targetId="segmento">zuzenkia</ConceptLink> <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bereko bi <ConceptLink targetId="punto" isDependency={true}>punturik</ConceptLink> mugatutako dimentsio bakarreko irudi geometrikoa da. Hedapen mugatua du eta <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> nahiz <ConceptLink targetId="distancia">metrika</ConceptLink> erlazioak oinarritzen ditu.
+<Capitular letra="Z" />uzenkia bi <ConceptLink targetId="punto">puntu</ConceptLink> muturren artean mugatutako <ConceptLink targetId="recta">zuzen</ConceptLink> baten azpimultzo mugatu eta konektatua da. Zuzen amaigabeak ez bezala, <ConceptLink targetId="distancia">luzera metriko</ConceptLink> zehatza du eta <ConceptLink targetId="poligono">poligonoak</ConceptLink> zein <ConceptLink targetId="triangulo">triangeluak</ConceptLink> eraikitzeko oinarrizko entitate geometrikoa da.
 
 <Definicion title="">
-  $l$ zuzen baten gaineko bi $A$ eta $B$ puntu desberdin emanda, $AB$ zuzenkia $A$-k, $B$-k eta <ConceptLink targetId="estar-entre" isDependency={true}>$A * X * B$ bitartekotasun-erlazioa</ConceptLink> betetzen duten $X \in l$ puntu guztiek osatutako <ConceptLink targetId="conjunto">multzoa</ConceptLink> da:
+  <VisualBind element="carrier" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen eusle</ConceptLink> bateko <VisualBind element="A" color="musgo">$A$</VisualBind> eta <VisualBind element="B" color="musgo">$B$</VisualBind> bi puntu emanda, <VisualBind element="segment" color="musgo">$\overline{AB}$</VisualBind> zuzenki itxia $A$, $B$ eta $A$ eta $B$-ren <ConceptLink targetId="estar-entre">tartean</ConceptLink> dauden $P$ puntu guztien multzoa da:
   $$
-  AB = \{X \in l \mid A * X * B\} \cup \{A, B\}
+  \overline{AB} = \{ P \in \ell \mid P = (1 - t)A + tB, \, t \in [0, 1] \}
   $$
+  $d(A, B) = \|B - A\|$ distantzia eskalarrak <VisualBind element="length" color="mora">zuzenkiaren luzera</VisualBind> zehazten du.
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Zuzenkien tipologia beren mugen eta kokapenaren arabera
 
-Simulazio interaktiboan <VisualBind element="segmentAB" color="musgo">$AB$</VisualBind> zuzenkia ikusten da <VisualBind element="lineL" color="carbon">$l$</VisualBind> zuzenaren gainean, <VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pB" color="musgo">$B$</VisualBind> mutur-puntuek zehaztuta. Edozein mutur aldatzean, barne-puntuen multzoa dinamikoki egokitzen da <ConceptLink targetId="estar-entre" isDependency={true}>tartean egon</ConceptLink> erlazioaren arabera.
+Zuzenkiak beren muturren inklusioaren edo beren elkarrekiko kokapenaren arabera sailkatzen dira formalki:
 
-<Separador />
-
-### Oinarritze axiomatikoa
-
-Zuzenkiaren kontzeptua <ConceptLink targetId="hilbert">Hilberten</ConceptLink> <ConceptLink targetId="axioma-orden-1">ordena-axiomen</ConceptLink> II. taldetik sortzen da formalki:
-
-- **Existentzia**: Barne-puntuen existentzia <ConceptLink targetId="axioma-orden-2" isDependency={true}>II.2 axiomak</ConceptLink> bermatzen du.
-- **Zuzenkien kongruentzia**: Zuzenkiek baliokidetza-erlazio geometrikoak onartzen dituzte, <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axiomak</ConceptLink> araututa.
-- **Gehigarritasuna**: Baldin eta $B$ $A$ eta $C$-ren artean badago ($A * B * C$), $AB$ eta $BC$ zuzenkien albokotasuna $AC$ zuzenkiaren baliokidea da <ConceptLink targetId="axioma-congruencia-3" isDependency={true}>III.3 axiomaren</ConceptLink> bidez.
+| Izendapena | Multzo-definizioa | Ezaugarri geometrikoa |
+|---|---|---|
+| Zuzenki itxia $\overline{AB}$ | $\{ P \in \ell \mid t \in [0, 1] \}$ | Bi $A$ eta $B$ muturrak barne hartzen ditu |
+| Zuzenki irekia $(AB)$ | $\{ P \in \ell \mid t \in (0, 1) \}$ | Bi $A$ eta $B$ muturrak kanpoan uzten ditu |
+| Zuzenki jarraituak | $\overline{AB} \cap \overline{BC} = \{B\}$ | $B$ mutur-puntu bakarra partekatzen dute |
 
 <Separador />
 
-### Notazio formala eta hitzarmenak
+### Propietateak
 
-| Notazioa | Esanahi matematikoa |
-|---|---|
-| $AB$ | $A$ eta $B$ muturreko zuzenkia |
-| $AB \cong A'B'$ | Bi zuzenkiren arteko <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> geometrikoa |
-| $|AB|$ | Zuzenkiaren <ConceptLink targetId="distancia">luzera</ConceptLink> edo neurri eskalarra |
+- **<ConceptLink targetId="congruencia">Garraioa eta kongruentzia</ConceptLink>**: Bi zuzenki kongruenteak dira ($\overline{AB} \cong \overline{CD}$) luzera metriko bera badute soilik.
+- **<ConceptLink targetId="region-convexa">Ganbiltasuna</ConceptLink>**: Zuzenki guztiak multzo zorrotz konektatuak eta <ConceptLink targetId="region-convexa">ganbilak</ConceptLink> dira $\mathbb{R}^n$-n.
+- **<ConceptLink targetId="punto-medio">Erdiko puntuaren existentzia</ConceptLink>**: $M \in \overline{AB}$ puntu bakarra existitzen da non $\overline{AM} \cong \overline{MB}$ betetzen den.

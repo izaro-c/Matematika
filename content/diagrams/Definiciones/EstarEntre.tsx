@@ -101,7 +101,7 @@ export const EstarEntreSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 2.7,
+        "x": 3.5,
         "y": 0.89
       },
       "mobility": {
@@ -136,8 +136,8 @@ export const EstarEntreSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -0.10999999999999988,
-        "y": 0
+        "x": 0,
+        "y": 0.013721423405848698
       },
       "mobility": {
         "type": "on-support",
@@ -392,54 +392,6 @@ export const EstarEntreSpec = createDiagramSpec(
         },
         "segCD": {
           "visible": false
-        }
-      }
-    },
-    {
-      "id": "step-extension",
-      "label": "Axioma II-2: Extensión",
-      "description": "Dados dos puntos cualesquiera A y C, siempre existe al menos un punto D tal que A * C * D.",
-      "visibleTargets": [
-        "pA",
-        "pC",
-        "pD",
-        "lineAC",
-        "segAC",
-        "segCD"
-      ],
-      "durationMs": 1200,
-      "objectStates": {
-        "pA": {
-          "visible": true,
-          "emphasis": "none"
-        },
-        "pB": {
-          "visible": false
-        },
-        "pC": {
-          "visible": true,
-          "emphasis": "primary"
-        },
-        "pD": {
-          "visible": true,
-          "emphasis": "primary"
-        },
-        "lineAC": {
-          "visible": true
-        },
-        "segAB": {
-          "visible": false
-        },
-        "segBC": {
-          "visible": false
-        },
-        "segAC": {
-          "visible": true,
-          "emphasis": "none"
-        },
-        "segCD": {
-          "visible": true,
-          "emphasis": "primary"
         }
       }
     }

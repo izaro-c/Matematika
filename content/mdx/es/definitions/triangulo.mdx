@@ -4,8 +4,9 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Triángulo",
-  description: "Polígono plano fundamental determinado por la unión de los tres segmentos que conectan tres puntos no colineales.",
+  description: "Polígono plano fundamental formado por la unión de los tres segmentos de recta que unen tres puntos no colineales.",
   branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 19", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
@@ -15,36 +16,32 @@ export const metadata = {
 import { Triangulo } from '@content/diagrams/Definiciones/Triangulo';
 export const Simulation = Triangulo;
 
-<Capitular letra="E" />l <ConceptLink targetId="triangulo">triángulo</ConceptLink> es el <ConceptLink targetId="poligono">polígono</ConceptLink> elemental sobre el cual reposan la trigonometría y la teoría de <ConceptLink targetId="congruencia">congruencias</ConceptLink> geométricas. Formado por tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, encierra una región convexa acotada en el <ConceptLink targetId="plano">plano</ConceptLink>.
+<Capitular letra="E" />l triángulo es el <ConceptLink targetId="poligono">polígono</ConceptLink> más simple en la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink> y constituye la base estructural de la <ConceptLink targetId="trigonometria">trigonometría</ConceptLink> y de las <ConceptLink targetId="congruencia">congruencias</ConceptLink>. Formado al conectar tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, delimita una <ConceptLink targetId="region-convexa">región convexa</ConceptLink> acotada en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Definicion title="">
-  Dados tres puntos no colineales $A, B, C \in \mathcal{P}$, el triángulo $\triangle ABC$ es el conjunto plano definido por la unión de los tres <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> de <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> que conectan dichos vértices:
+  Dados tres puntos no colineales <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> y <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> pertenecientes a un plano $\mathcal{P}$, el triángulo <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> es la figura plana definida por la <ConceptLink targetId="union-conjuntos">unión</ConceptLink> de los tres <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> de <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> y <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
   $$
-  \triangle ABC = AB \cup BC \cup CA
+  \triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}
   $$
+  Los puntos $A, B, C$ son los <ConceptLink targetId="vertice">vértices</ConceptLink> y los segmentos $\overline{AB}, \overline{BC}, \overline{CA}$ son los <ConceptLink targetId="lado">lados</ConceptLink> del triángulo.
 </Definicion>
-
-<Separador />
-
-### Representación visual e interacción
-
-En la simulación interactiva se muestra el triángulo <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind>, delimitado por los vértices <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> y <VisualBind element="vertice-c" color="musgo">$C$</VisualBind>, y sus lados <VisualBind element="lado-ab" color="pavo">$AB$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$BC$</VisualBind> y <VisualBind element="lado-ca" color="ocre">$CA$</VisualBind>. La manipulación de cualquier vértice recalcula dinámicamente las longitudes de los lados y los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores.
 
 <Separador />
 
 ### Clasificación métrica y angular
 
-Los triángulos se clasifican atendiendo a la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de sus lados y a la medida de sus ángulos interiores:
+La caracterización métrica de los triángulos atiende a las relaciones de <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre sus <ConceptLink targetId="lado">lados</ConceptLink> y a la amplitud de sus <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores:
 
-| Clasificación por lados | Propiedad geométrica | Clasificación por ángulos | Propiedad angular |
+| Clasificación por lados | Condición geométrica | Clasificación por ángulos | Condición angular |
 |---|---|---|---|
-| Equilátero | Tres lados congruentes ($AB \cong BC \cong CA$) | Acutángulo | Tres ángulos interiores agudos |
-| Isósceles | Al menos dos lados congruentes | <ConceptLink targetId="triangulo-rectangulo">Rectángulo</ConceptLink> | Un ángulo interior recto |
-| Escaleno | Ningún par de lados congruentes | Obtusángulo | Un ángulo interior obtuso |
+| <ConceptLink targetId="triangulo-equilatero">Equilátero</ConceptLink> | Tres lados congruentes ($\overline{AB} \cong \overline{BC} \cong \overline{CA}$) | <ConceptLink targetId="triangulo-acutangulo">Acutángulo</ConceptLink> | Tres ángulos <ConceptLink targetId="angulo-agudo">agudos</ConceptLink> |
+| <ConceptLink targetId="triangulo-isosceles">Isósceles</ConceptLink> | Al menos dos lados congruentes | <ConceptLink targetId="triangulo-rectangulo">Rectángulo</ConceptLink> | Un ángulo <ConceptLink targetId="angulo-recto">recto</ConceptLink> |
+| <ConceptLink targetId="triangulo-escaleno">Escaleno</ConceptLink> | Ningún par de lados congruentes | <ConceptLink targetId="triangulo-obtusangulo">Obtusángulo</ConceptLink> | Un ángulo <ConceptLink targetId="angulo-obtuso">obtuso</ConceptLink> |
 
 <Separador />
 
-### Propiedades en los sistemas axiomáticos
+### Propiedades
 
-- **Suma angular**: En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, la suma de los tres ángulos interiores es exactamente igual a $180^\circ$. En la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>, dicha suma es menor a $180^\circ$.
-- **Criterios de congruencia**: La rigidez estructural del triángulo permite determinar la congruencia total mediante los teoremas LAL, ALA y LLL.
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Suma angular</ConceptLink>**: En la geometría euclidiana, la suma de los tres ángulos interiores de cualquier triángulo es siempre igual a $180^\circ$.
+- **<ConceptLink targetId="teorema-desigualdad-triangular">Desigualdad triangular</ConceptLink>**: La longitud de cada lado es estrictamente menor que la suma de las longitudes de los otros dos lados.
+- **<ConceptLink targetId="teorema-congruencia-ala">Criterios de congruencia</ConceptLink>**: La rigidez estructural del triángulo permite determinar su igualdad mediante los criterios LAL, ALA y LLL.

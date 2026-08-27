@@ -1,49 +1,55 @@
 export const metadata = {
-  "id": "caso-gps-trilateracion",
-  "type": "caso-de-uso",
-  "title": "Localización por satélite (GPS) y trilateración",
-  "description": "Aplicación del teorema de Pitágoras y el cálculo de distancias euclídeas para determinar la posición exacta de un receptor a partir de tres puntos de referencia.",
-  "hasSimulation": true
+  id: "caso-gps-trilateracion",
+  lang: "es",
+  type: "caso-de-uso",
+  title: "Localización por satélite (GPS) y trilateración",
+  description: "Aplicación de las distancias euclídeas y el teorema de Pitágoras para la localización tridimensional exacta de receptores terrestres.",
+  branch: "51M",
+  concept: "teorema-pitagoras",
+  hasSimulation: true
 };
 
 import { GpsTrilateracion } from '@content/diagrams/CasosUso/GpsTrilateracion';
 export const Simulation = GpsTrilateracion;
 
-<Capitular letra="L" />a tecnología de geolocalización por satélite (GPS) fundamenta su funcionamiento en la <ConceptLink targetId="modelo-cartesiano">geometría analítica cartesiana</ConceptLink> y en la aplicación directa del <ConceptLink targetId="teorema-pitagoras" isDependency={false}>teorema de Pitágoras</ConceptLink>. Este procedimiento geométrico para calcular las coordenadas exactas de un receptor espacial se denomina trilateración.
+<Capitular letra="L" />a tecnología de posicionamiento global por satélite (GPS) constituye una de las aplicaciones prácticas más extendidas de la geometría analítica cartesiana y del <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>. Este procedimiento geométrico, denominado trilateración, determina las coordenadas absolutas de un receptor midiendo el tiempo de propagación de señales electromagnéticas desde múltiples satélites de referencia.
 
 <Separador />
 
-### El principio de medición y la ecuación del satélite
+### El principio de medición y la ecuación de la distancia
 
-Cuando un dispositivo receptor calcula su posición, mide las <ConceptLink targetId="distancia">distancias euclídeas</ConceptLink> relativas a múltiples satélites de referencia con coordenadas fijas conocidas. El <VisualBind element="R" color="carbon">receptor $R(x, y)$</VisualBind> determina la distancia $d_i$ a cada satélite midiendo el tiempo de propagación de las señales electromagnéticas.
+El receptor <VisualBind element="R" color="carbon">$R(x, y)$</VisualBind> calcula su posición en el <ConceptLink targetId="modelo-cartesiano">plano cartesiano</ConceptLink> determinando la <ConceptLink targetId="distancia">distancia euclídea</ConceptLink> directa a cada satélite $S_i$. Para un satélite <VisualBind element="s1" color="pavo">$S_1(x_1, y_1)$</VisualBind> con distancia medida $d_1$, la proyección de los desplazamientos en los ejes forma los <ConceptLink targetId="cateto">catetos</ConceptLink> de un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink>:
 
-Si se toma el <VisualBind element="s1" color="pavo">Satélite 1 ($S_1$)</VisualBind> situado en la coordenada fija $(2, 8)$, la <VisualBind element="rad1" color="pavo">distancia física directa $d_1$</VisualBind> actúa como la hipotenusa de un <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triángulo rectángulo</ConceptLink> en el plano cartesiano. Proyectando las diferencias de coordenadas en los ejes:
+- Cateto horizontal: <VisualBind element="catH1" color="pavo">$\Delta x = |x - x_1|$</VisualBind>.
+- Cateto vertical: <VisualBind element="catV1" color="pavo">$\Delta y = |y - y_1|$</VisualBind>.
+- <ConceptLink targetId="hipotenusa">Hipotenusa</ConceptLink>: La distancia física directa <VisualBind element="rad1" color="pavo">$d_1$</VisualBind>.
 
-- El cateto horizontal representa el desplazamiento en abscisas: <VisualBind element="catH1" color="pavo">$\Delta x = |x - 2|$</VisualBind>.
-- El cateto vertical representa el desplazamiento en ordenadas: <VisualBind element="catV1" color="pavo">$\Delta y = |y - 8|$</VisualBind>.
-
-Al aplicar el teorema de Pitágoras sobre el triángulo rectángulo del satélite $S_1$, se obtiene la ecuación cuadrática de la distancia:
+Al aplicar la métrica euclídea, se establece la ecuación cuadrática de la <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> de señal centrada en $S_1$:
 
 <Formula>
-  $$ d_1^2 = (x - 2)^2 + (y - 8)^2 $$
+  $$ d_1^2 = (x - x_1)^2 + (y - y_1)^2 $$
 </Formula>
-
-El conjunto de todos los puntos del plano $(x, y)$ que satisfacen esta distancia exacta $d_1$ forma una <VisualBind element="circ1" color="pavo"><ConceptLink targetId="circunferencia">circunferencia</ConceptLink> de señal de $S_1$</VisualBind> centrada en el satélite.
 
 <Separador />
 
-### Resolución mediante sistemas de ecuaciones
+### Intersección de circunferencias y resolución
 
-Para despejar de forma unívoca las coordenadas incógnitas $(x, y)$, se requiere la intersección simultánea de las señales de tres satélites mediante un sistema de ecuaciones cuadráticas:
+Para determinar unívocamente las coordenadas incógnitas del receptor $(x, y)$, se resuelve un sistema cuadrático formado por múltiples satélites:
 
-- **Un satélite ($S_1$)**: Define la primera ecuación cuadrática. Sus soluciones continuas corresponden a la <VisualBind element="circ1" color="pavo">circunferencia de $S_1$</VisualBind>.
-- **Dos satélites ($S_1$ y $S_2$)**: Al incorporar la señal del <VisualBind element="s2" color="ocre">Satélite 2 $S_2(-4, 2)$</VisualBind> con <VisualBind element="rad2" color="ocre">distancia $d_2$</VisualBind>, se añade la segunda ecuación:
+- **Un satélite ($S_1$)**: Determina una <VisualBind element="circ1" color="pavo">circunferencia</VisualBind> continua de posibles ubicaciones con radio $d_1$.
+- **Dos satélites ($S_1$ y $S_2$)**: La señal combinada con el satélite <VisualBind element="s2" color="ocre">$S_2(x_2, y_2)$</VisualBind> añade la <VisualBind element="circ2" color="ocre">segunda circunferencia</VisualBind> con radio <VisualBind element="rad2" color="ocre">$d_2$</VisualBind>:
   <Formula>
-    $$ d_2^2 = (x + 4)^2 + (y - 2)^2 $$
+    $$ d_2^2 = (x - x_2)^2 + (y - y_2)^2 $$
   </Formula>
-  Las soluciones comunes corresponden a los puntos de intersección entre la primera curva y la <VisualBind element="circ2" color="ocre">circunferencia de $S_2$</VisualBind>, reduciendo las posibilidades a exactamente dos puntos candidatos.
-- **Tres satélites ($S_1$, $S_2$ y $S_3$)**: Al integrar el <VisualBind element="s3" color="musgo">Satélite 3 $S_3(6, -2)$</VisualBind> con <VisualBind element="rad3" color="musgo">distancia $d_3$</VisualBind>, se establece la tercera ecuación:
+  La intersección de ambas circunferencias reduce las opciones a exactamente dos puntos candidatos en el plano.
+- **Tres satélites ($S_1$, $S_2$ y $S_3$)**: La incorporación del satélite <VisualBind element="s3" color="musgo">$S_3(x_3, y_3)$</VisualBind> añade la tercera ecuación cuadrática con radio <VisualBind element="rad3" color="musgo">$d_3$</VisualBind>:
   <Formula>
-    $$ d_3^2 = (x - 6)^2 + (y + 2)^2 $$
+    $$ d_3^2 = (x - x_3)^2 + (y - y_3)^2 $$
   </Formula>
-  La intersección simultánea de las tres circunferencias elimina la ambigüedad, determinando la coordenada única del <VisualBind element="R" color="carbon">receptor $R$</VisualBind> en el plano cartesiano.
+  La intersección simultánea de las tres circunferencias elimina la ambigüedad, identificando las coordenadas exactas del receptor <VisualBind element="R" color="carbon">$R(x, y)$</VisualBind>.
+
+<Separador />
+
+### Extensión tridimensional y corrección temporal
+
+En la superficie terrestre real $\mathbb{R}^3$, la intersección de esferas requiere un cuarto satélite $S_4$ para corregir el desvío del reloj del receptor respecto al tiempo atómico satelital, resolviendo el sistema $4 \times 4$ mediante la métrica euclídea tridimensional.

@@ -2,14 +2,15 @@ export const metadata = {
   "id": "demo-angulos-alternos-internos",
   "type": "demostracion",
   "title": "Demostración: Teorema de los ángulos alternos internos",
-  "description": "Prueba en dos partes: la ida (absoluta) por reducción al absurdo usando el teorema del ángulo externo; la vuelta (euclidiana) usando la unicidad de la paralela.",
+  "description": "Demostración por reducción al absurdo del criterio de paralelismo mediante la igualdad de ángulos alternos internos.",
   "parentTheorem": "teorema-angulos-alternos-internos",
-  "proofMethod": "metodo-directo",
+  "branch": "51M",
+  "proofMethod": "metodo-contradiccion",
   "authors": ["euclides"],
-  "tags": ["geometria", "angulos", "paralelas"],
+  "tags": ["geometria", "paralelas", "angulos"],
   "layout": "split",
   "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 27 y 29", role: "primary" }
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 27", role: "primary" }
   ]
 };
 
@@ -17,54 +18,46 @@ import { DemoAngulosAlternosInternos } from "@content/diagrams/Demos/DemoAngulos
 
 <DemonstrationSection diagram={<DemoAngulosAlternosInternos />}>
 
-<Capitular letra="S" />ean <VisualBind element="recta-l" color="carbon">$l$</VisualBind> y <VisualBind element="recta-m" color="carbon">$m$</VisualBind> dos <ConceptLink targetId="recta">rectas</ConceptLink> y <VisualBind element="transversal-t" color="canela">$t$</VisualBind> una <ConceptLink targetId="transversal">transversal</ConceptLink> que las interseca en los <ConceptLink targetId="punto">puntos</ConceptLink> $A \in l$ y $B \in m$. La demostración del <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>teorema de los ángulos alternos internos</ConceptLink> se articula en dos partes independientes: la implicación directa (válida en <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>) y la implicación recíproca (característica de la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink>).
+<Capitular letra="D" />adas dos <ConceptLink targetId="recta">rectas</ConceptLink> coplanares $l$ y $m$ cortadas por una secante transversal $t$, se demuestra el <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>teorema de los ángulos alternos internos</ConceptLink>. La demostración prueba por <ConceptLink targetId="metodo-contradiccion" isDependency={true}>reducción al absurdo</ConceptLink> que si los ángulos alternos internos son <ConceptLink targetId="congruencia">congruentes</ConceptLink>, las rectas son <ConceptLink targetId="paralelas">paralelas</ConceptLink>.
 
 <Separador />
 
-### Parte 1: Ángulos congruentes implican rectas paralelas (geometría absoluta)
+### Demostración paso a paso
 
-<ProofStep number={1} title="Disposición de la figura" target={["recta-l", "recta-m", "transversal-t"]}>
-Sean <VisualBind element="recta-l" color="carbon">$l$</VisualBind> y <VisualBind element="recta-m" color="carbon">$m$</VisualBind> dos <ConceptLink targetId="recta">rectas</ConceptLink> cortadas por la <ConceptLink targetId="transversal">transversal</ConceptLink> <VisualBind element="transversal-t" color="canela">$t$</VisualBind> en los <ConceptLink targetId="punto">puntos</ConceptLink> $A \in l$ y $B \in m$. Por hipótesis, los <ConceptLink targetId="angulos-alternos-internos">ángulos alternos internos</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink>:
+<ProofStep number={1} target="config" title="Hipótesis de partida">
+Consideramos dos rectas coplanares <VisualBind element="lineL" color="carbon">$l$</VisualBind> y <VisualBind element="lineM" color="carbon">$m$</VisualBind> intersecadas por la secante transversal <VisualBind element="lineT" color="carbon">$t$</VisualBind> en los puntos $A$ y $B$. Se asume como hipótesis que los <ConceptLink targetId="angulo">ángulos</ConceptLink> alternos internos <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> y <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> son congruentes:
 
 <Formula>
-  $$ \angle 1 \cong \angle 2 $$
+  $$ \alpha \cong \beta $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} title="Suposición de intersección" target={["punto-p", "triangulo-abp"]}>
-Supongamos, por <ConceptLink targetId="reduccion-al-absurdo">reducción al absurdo</ConceptLink>, que $l$ y $m$ no son <ConceptLink targetId="paralelismo">paralelas</ConceptLink>. Entonces se <ConceptLink targetId="interseccion">intersecan</ConceptLink> en algún <ConceptLink targetId="punto">punto</ConceptLink> <VisualBind element="punto-p" color="terracota">$P$</VisualBind>, formando el <ConceptLink targetId="triangulo">triángulo</ConceptLink> <VisualBind element="triangulo-abp" color="carbon">$\triangle ABP$</VisualBind>.
+<ProofStep number={2} target="absurdo" title="Hipótesis de contradicción">
+Para demostrar que $l$ y $m$ son paralelas, supongamos por el <ConceptLink targetId="metodo-contradiccion" isDependency={true}>método de contradicción</ConceptLink> que las rectas $l$ y $m$ no son paralelas. Por consiguiente, se intersecan en algún punto <VisualBind element="pointP" color="ocre">$P$</VisualBind> del plano.
 </ProofStep>
 
-<ProofStep number={3} title="Contradicción con el ángulo externo" target={["angulo-externo", "angulo-remoto"]}>
-Consideremos el <VisualBind element="angulo-externo" color="terracota"><ConceptLink targetId="angulo-externo">ángulo externo</ConceptLink></VisualBind> del <ConceptLink targetId="triangulo">triángulo</ConceptLink> en el <ConceptLink targetId="vertice">vértice</ConceptLink> $A$. Por el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>, la medida del <ConceptLink targetId="angulo-externo">ángulo externo</ConceptLink> es estrictamente mayor que la del <VisualBind element="angulo-remoto" color="canela">ángulo interior no adyacente</VisualBind> en $B$. Sin embargo, la hipótesis $\angle 1 \cong \angle 2$ fuerza la igualdad entre ambas medidas, lo que constituye una contradicción lógica.
+<ProofStep number={3} target="triangulo" title="Construcción del triángulo imaginario">
+La intersección en $P$ genera un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABP$ formado por los vértices $A, B, P$. En este triángulo, el ángulo <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> en el vértice $A$ constituye un ángulo exterior respecto al lado $AP$, mientras que <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> en el vértice $B$ es un ángulo interior no adyacente.
 </ProofStep>
 
-<ProofStep number={4} title="Conclusión de paralelismo" target={["recta-l", "recta-m"]}>
-La contradicción demuestra la imposibilidad de <ConceptLink targetId="interseccion">intersección</ConceptLink> entre las <ConceptLink targetId="recta">rectas</ConceptLink>. Por tanto, las rectas <VisualBind element="recta-l" color="carbon">$l$</VisualBind> y <VisualBind element="recta-m" color="carbon">$m$</VisualBind> son <ConceptLink targetId="paralelismo">paralelas</ConceptLink>:
+<ProofStep number={4} target="desigualdad" title="Aplicación del teorema del ángulo exterior">
+Por el teorema del ángulo exterior en <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, todo ángulo exterior de un triángulo es estrictamente mayor que cualquiera de los ángulos interiores no adyacentes. Aplicado a $\triangle ABP$:
 
 <Formula>
-  $$ l \parallel m $$
+  $$ \alpha > \beta $$
 </Formula>
 </ProofStep>
 
-<Separador />
-
-### Parte 2: Rectas paralelas implican ángulos congruentes (geometría euclidiana)
-
-<ProofStep number={5} title="Construcción de la paralela auxiliar" target={["recta-n"]}>
-Sean ahora $l \parallel m$ cortadas por $t$. Por el <ConceptLink targetId="axioma-transporte-angulo" isDependency={true}>axioma de transporte de ángulos</ConceptLink>, trazamos por $A$ una <ConceptLink targetId="recta">recta</ConceptLink> auxiliar <VisualBind element="recta-n" color="terracota">$n$</VisualBind> que forme con $t$ un <ConceptLink targetId="angulos-alternos-internos">ángulo alterno interno</ConceptLink> <ConceptLink targetId="congruencia">congruente</ConceptLink> al <ConceptLink targetId="angulo">ángulo</ConceptLink> en $B$.
-</ProofStep>
-
-<ProofStep number={6} title="Unicidad de la paralela" target={["recta-l", "recta-n"]}>
-Por la Parte 1, la <ConceptLink targetId="recta">recta</ConceptLink> $n$ es <ConceptLink targetId="paralelismo">paralela</ConceptLink> a $m$. Por el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>, por el <ConceptLink targetId="punto">punto</ConceptLink> $A$ pasa una única recta paralela a $m$. En consecuencia, la recta <VisualBind element="recta-l" color="carbon">$l$</VisualBind> coincide con <VisualBind element="recta-n" color="terracota">$n$</VisualBind> ($l = n$), quedando demostrada la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de los <ConceptLink targetId="angulos-alternos-internos">ángulos alternos internos</ConceptLink> originales.
+<ProofStep number={5} target="conclusion" title="Contradicción y conclusión formal">
+La desigualdad $\alpha > \beta$ contradice directamente la hipótesis de partida $\alpha \cong \beta$. Puesto que la suposición de intersección conduce a una contradicción lógica, las rectas $l$ y $m$ no pueden encontrarse en ningún punto y son necesariamente <ConceptLink targetId="paralelas">paralelas</ConceptLink> ($l \parallel m$).
 </ProofStep>
 
 <Separador />
 
-### Análisis estructural
+### Análisis deductivo
 
 <Nota>
-  En los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink>, <ConceptLink targetId="euclides">Euclides</ConceptLink> demuestra la Parte 1 en la Proposición I.27 sin recurrir al quinto postulado. La Parte 2 (Proposición I.29) constituye el primer uso efectivo del <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>postulado de las paralelas</ConceptLink> en la obra.
+  Proposición I.27 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. Esta demostración no recurre al <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>, por lo que es válida en toda la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

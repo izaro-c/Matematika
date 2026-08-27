@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "axioma-orden-2",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom II.2 (Extension of a Segment)",
+  description: "Given two distinct points A and C, there exists at least one point B on the line such that C lies between A and B.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
+  ]
+};
+
+import { Order2 } from '@content/diagrams/Axiomas/Order2';
+export const Simulation = Order2;
+
+<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto">points</ConceptLink> $A$ and $C$, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s second <ConceptLink targetId="orden">order axiom</ConceptLink> asserts the existence of at least one point $B$ on their supporting <ConceptLink targetId="recta">line</ConceptLink> such that $C$ lies between $A$ and $B$. This postulate establishes the infinitude of lines and the indefinite extendability of any <ConceptLink targetId="segmento">segment</ConceptLink>.
+
+<Definicion title="Formal statement">
+  For every pair of distinct <ConceptLink targetId="punto">points</ConceptLink> $A, C \in \mathcal{S}$ with $A \neq C$, there exists at least one point $B \in \mathcal{S}$ on line $\overleftrightarrow{AC}$ such that $C$ lies between $A$ and $B$:
+  $$
+  \forall A, C \in \mathcal{S} \ \bigl(A \neq C \implies \exists B \in \overleftrightarrow{AC} \ (A\text{-}C\text{-}B)\bigr)
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation and interaction
+
+In the interactive simulation, starting from initial points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pC" color="carbon">$C$</VisualBind>, the line extends to position point <VisualBind element="pB" color="terracota">$B$</VisualBind> such that $A\text{-}C\text{-}B$. Dragging endpoint $C$ dynamically maintains point $B$'s external position respecting the betweenness of $C$.
+
+<Separador />
+
+### Geometric significance and scope
+
+Prevents lines or segments from "closing" into finite loops (like circles) or having impenetrable terminal barriers. Enforces the unbounded longitudinal nature of lines in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+
+<Separador />
+
+### Properties
+
+- **Line infinitude:** Guarantees the presence of infinitely many points on any line.
+- **Indefinite extension:** Ensures that any <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AC}$ can be extended past either of its endpoints.
+- **No finite boundaries:** Prohibits linear space from having terminal edges or closed finite-length loops.

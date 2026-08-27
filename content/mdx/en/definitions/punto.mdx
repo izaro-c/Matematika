@@ -1,0 +1,47 @@
+export const metadata = {
+  id: "punto",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Point",
+  description: "A fundamental, indivisible zero-dimensional geometric primitive specifying an exact position in space.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 1", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+  ]
+};
+
+import { Punto } from '@content/diagrams/Definiciones/Punto';
+export const Simulation = Punto;
+
+<Capitular letra="A" /> point is the fundamental, indivisible primitive element of <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink> and <ConceptLink targetId="espacio-topologico">topological spaces</ConceptLink>. Lacking length, area, or volume, it serves as the essential constituent unit from which the <ConceptLink targetId="recta">line</ConceptLink>, the <ConceptLink targetId="plano">plane</ConceptLink>, and higher-dimensional geometric figures are defined.
+
+<Definicion title="">
+  In the axiomatic formulation of <ConceptLink targetId="incidencia">incidence geometry</ConceptLink>, a point <VisualBind element="P" color="musgo">$P$</VisualBind> is defined as an indivisible primitive element belonging to a geometric space $\mathcal{E}$. In <ConceptLink targetId="geometria-analitica">analytic geometry</ConceptLink> over $\mathbb{R}^n$, a point is uniquely identified with an $n$-tuple of real <ConceptLink targetId="sistema-coordenadas">coordinates</ConceptLink>:
+  $$
+  P = (x_1, x_2, \dots, x_n) \in \mathbb{R}^n
+  $$
+  where its topological and metric dimension is strictly zero ($\text{dim}(P) = 0$).
+</Definicion>
+
+<Separador />
+
+### Representation across geometric frameworks
+
+The formal characterization of a point varies according to the adopted axiomatic or algebraic framework:
+
+| Geometric framework | Mathematical representation | Dimension |
+|---|---|---|
+| Euclidean or axiomatic | Indivisible primitive element ($P \in \mathcal{E}$) | $0$ |
+| Cartesian ($\mathbb{R}^2$ or $\mathbb{R}^3$) | Position vector $(x, y)$ or $(x, y, z)$ | $0$ |
+| Set theory | Individual element of an abstract point set $S$ | $0$ |
+
+<Separador />
+
+### Properties
+
+- **<ConceptLink targetId="incidencia">Incidence and containment</ConceptLink>**: Two distinct points uniquely determine a single <ConceptLink targetId="recta">line</ConceptLink> passing through both.
+- **<ConceptLink targetId="dimension-hausdorff">Zero dimensionality</ConceptLink>**: Possesses a Lebesgue measure of zero ($\mu(\{P\}) = 0$) and has no spatial extent.
+- **<ConceptLink targetId="distancia">Metric identity</ConceptLink>**: The distance between two points satisfies $d(P, Q) = 0 \iff P = Q$, fulfilling the identity axiom of a <ConceptLink targetId="espacio-metrico">metric space</ConceptLink>.

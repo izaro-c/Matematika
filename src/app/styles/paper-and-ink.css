@@ -96,6 +96,11 @@
   color: var(--ink-text);
 }
 
+.ac-ink-scope .page-accent-link .katex,
+.ac-ink-scope .page-accent-link--pending .katex {
+  color: inherit !important;
+}
+
 .ac-ink-scope .text-carbon {
   color: var(--ink-text);
 }

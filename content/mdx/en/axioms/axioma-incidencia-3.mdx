@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "axioma-incidencia-3",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom I.3 (Existence of Non-collinear Points)",
+  description: "There exist at least three points in space that do not lie on the same line.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+  ]
+};
+
+import { Incidence3 } from '@content/diagrams/Axiomas/Incidence3';
+export const Simulation = Incidence3;
+
+<Capitular letra="T" />here exist at least three <ConceptLink targetId="punto">points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink> that are not collinear, according to <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s third <ConceptLink targetId="incidencia">incidence axiom</ConceptLink>. This postulate breaks the one-dimensional collapse of the geometric system, ensuring that geometry does not reduce to a single <ConceptLink targetId="recta">line</ConceptLink>.
+
+<Definicion title="Formal statement">
+  There exist at least three <ConceptLink targetId="punto">points</ConceptLink> $A, B, C \in \mathcal{S}$ such that no <ConceptLink targetId="recta">line</ConceptLink> $l \in \mathcal{L}$ contains all three simultaneously:
+  $$
+  \exists A, B, C \in \mathcal{S} \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation and interaction
+
+In the interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> form a non-collinear configuration. Constructing a line through any pair leaves the third point demonstrably outside the line.
+
+<Separador />
+
+### Geometric significance and scope
+
+By asserting the existence of at least three non-aligned points, geometry is forced to possess a minimum dimension of two (a plane). Without this axiom, a single line would satisfy all preceding axioms, reducing space to one dimension.
+
+<Separador />
+
+### Properties
+
+- **Minimum multidimensionality:** Guarantees that space has bidimensional extension or higher.
+- **Triangle formation:** Enables the primitive definition of a <ConceptLink targetId="triangulo">triangle</ConceptLink> via non-collinear vertices $A, B, C$.
+- **Positional independence:** Establishes positional linear independence within <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.

@@ -1,0 +1,47 @@
+export const metadata = {
+  id: "cuadrilatero",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Quadrilateral",
+  description: "Four-sided planar polygon formed by the union of four consecutive line segments joining four coplanar points no three collinear.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Definition 22", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+  ]
+};
+
+import { Cuadrilatero } from '@content/diagrams/Definiciones/Cuadrilatero';
+export const Simulation = Cuadrilatero;
+
+<Capitular letra="A" /> quadrilateral is a four-sided <ConceptLink targetId="poligono">polygon</ConceptLink> in planar <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink> bounded by the <ConceptLink targetId="union-conjuntos">union</ConceptLink> of four consecutive line <ConceptLink targetId="segmento">segments</ConceptLink>. It serves as a foundational polygonal figure in the study of <ConceptLink targetId="congruencia">congruence</ConceptLink> and <ConceptLink targetId="teoria-medida-area">area measure decompositions</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+
+<Definicion title="">
+  Given four coplanar points <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind>, <VisualBind element="vertice-c" color="musgo">$C$</VisualBind>, and <VisualBind element="vertice-d" color="musgo">$D$</VisualBind> in a plane $\mathcal{P}$, such that no three are <ConceptLink targetId="colinealidad">collinear</ConceptLink> and the line segments intersect only at their endpoints, the quadrilateral <VisualBind element="cuadrilatero" color="musgo">$ABCD$</VisualBind> is defined by:
+  $$
+  ABCD = \overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}
+  $$
+  Points $A, B, C, D$ are called <ConceptLink targetId="vertice">vertices</ConceptLink>, segments $\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$ are the <ConceptLink targetId="lado">sides</ConceptLink>, and segments $\overline{AC}, \overline{BD}$ are the <ConceptLink targetId="diagonal">diagonals</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+### Structural classification
+
+Planar quadrilaterals are classified based on convexity properties and <ConceptLink targetId="paralelas">parallelism</ConceptLink> relationships between opposite sides:
+
+| Type | Characteristic geometric condition | Main subclasses |
+|---|---|---|
+| <ConceptLink targetId="region-convexa">Convex</ConceptLink> | Both diagonals intersect at an interior point | <ConceptLink targetId="paralelogramo">Parallelogram</ConceptLink>, Trapezoid, Trapezium |
+| Concave | One diagonal lies entirely in the exterior region | Dart / Arrowhead quadrilateral |
+| <ConceptLink targetId="paralelogramo">Parallelogram</ConceptLink> | Both pairs of opposite sides are parallel ($\overline{AB} \parallel \overline{CD} \land \overline{BC} \parallel \overline{DA}$) | Rectangle, Rhombus, <ConceptLink targetId="cuadrado">Square</ConceptLink> |
+
+<Separador />
+
+### Properties
+
+- **Interior angle sum**: The sum of the four interior angles of any convex quadrilateral is always equal to $360^\circ$ ($2\pi\text{ rad}$).
+- **Triangular decomposition**: Any convex quadrilateral can be partitioned by a diagonal into two <ConceptLink targetId="triangulo">triangles</ConceptLink> disjoint except along their common boundary.
+- **Area additivity**: The surface measure of a convex quadrilateral satisfies strict <ConceptLink targetId="teorema-area-aditividad">additivity</ConceptLink>: $\mu(ABCD) = \mu(\triangle ABC) + \mu(\triangle ACD)$.

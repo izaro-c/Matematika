@@ -2,35 +2,36 @@ export const metadata = {
   id: "axioma-completitud",
   lang: "eu",
   type: "axioma",
-  title: "V.2 Axioma (Osotasun Axioma)",
-  description: "Geometriako elementuen sistema maximoa da eta ez du luzapenik onartzen aurreko axiomen baliozkotasuna mantenduz.",
+  title: "Dedekinden Osotasun Axioma",
+  description: "Zuzen bateko puntu guztiak bi klase ez-hutsetan banatzen badira, lehenengo klaseko punturik bigarren klaseko bi punturen artean ez dagoelarik, banaketa hori sortzen duen puntu bakar bat existitzen da.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "§3", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §8", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §7", role: "primary" }
+  ]
 };
 
 import { AxiomaDedekind } from '@content/diagrams/Axiomas/AxiomaDedekind';
 export const Simulation = AxiomaDedekind;
 
-<Capitular letra="J" />arraitutasunaren bigarren axiomak, <ConceptLink targetId="hilbert">Hilberten</ConceptLink> <ConceptLink targetId="axioma-completitud">osotasun axiomak</ConceptLink> (edo <ConceptLink targetId="dedekind">Dedekinden</ConceptLink> ebakidurak), espazio geometrikoaren osotasun jarraitua bermatzen du zulo topologikoen existentzia ekidinez.
+<Capitular letra="D" />edekinden osotasun-axioma <ConceptLink targetId="continuidad">jarraitutasunaren</ConceptLink> gorengo postulatu gisa ezartzen da geometria linealean. <ConceptLink targetId="recta">Zuzen</ConceptLink> geometrikoan "zilorik" edo etenik ez dagoela bermatzen du.
 
 <Definicion title="">
-  $l$ <ConceptLink targetId="recta">zuzen</ConceptLink> bateko <ConceptLink targetId="punto">puntuak</ConceptLink> ez-juntatutako bi $L$ eta $R$ azpimultzo ez-hutzetan banatzen badira non $L$-ko punturik ez dagoen $R$-ko puntu baten eskuinean, ebakidura sortzen duen $P \in l$ puntu bakarra existitzen da:
+  $l$ <ConceptLink targetId="recta">zuzen</ConceptLink> bateko puntu guztiak bi $S_1$ eta $S_2$ azpimultzo ez-hutsetan banatzen badira, $S_1$-eko punturik $S_2$-ko bi punturen artean ez dagoelarik eta $S_2$-ko punturik $S_1$-eko bi punturen artean ez dagoelarik, orduan banaketa hori zehazten duen $O \in l$ <ConceptLink targetId="punto">puntu</ConceptLink> bakar bat existitzen da:
   $$
-  (L \cap R = \emptyset) \land (L \cup R = l) \land (\forall X \in L, \forall Y \in R \implies X < Y) \implies \exists! P \in l \ (P = \sup(L) \lor P = \inf(R))
+  \forall (S_1, S_2) \text{ partizioa } l\text{-n} \implies \exists! O \in l \ (\forall P \in S_1 \setminus \{O\}, \forall Q \in S_2 \setminus \{O\} \implies P \text{-} O \text{-} Q)
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Irudikapen bisuala
 
-Simulazio interaktiboan zuzenaren zatiketa jarraitua ikusten da <VisualBind element="L" color="musgo">$L$</VisualBind> eta <VisualBind element="R" color="pavo">$R$</VisualBind> multzoetan. Ebakidurak modu bakarrean zehazten du <VisualBind element="P" color="terracota">$P$</VisualBind> muga-puntua.
+Zuzen jarraitua <VisualBind element="S1" color="ocre">$S_1$</VisualBind> eta <VisualBind element="S2" color="pavo">$S_2$</VisualBind> bi sekzio disjuntutan banatzean, <VisualBind element="pO" color="terracota">$O$</VisualBind> muga-puntuak zuzenaren jarraitutasun geometrikoa ixteko ebaki zehatz gisa jarduten du.
 
 <Separador />
 
-### Maximalitatea eta jarraitu geometrikoa
+### Garrantzi axiomatikoa
 
-Postulatu honek <ConceptLink targetId="recta">zuzenaren</ConceptLink> gaineko elementu geometrikoen sistema <ConceptLink targetId="numero-real">$\mathbb{R}$ zenbaki errealen</ConceptLink> gorputz jarraituarekin isomorfoa dela bermatzen du. Edozein etenaldi hutsi ateak meharzten dizkio, sekuentzia mugatu oro bene-benetan zehaztutako puntu batera konbergitzen dela bermatuz.
+Axioma honek zuzen geometriko sintetikoaren eta $\mathbb{R}$ zenbaki errealen gorputz ordenatu eta osoaren arteko isomorfismoa bermatzen du. Zirkunferentzien eta zuzenkien arteko ebakitze-puntuak existitzen direla ziurtatzen du distantzia erlatiboak hala eskatzen duenean, kalkulu infinitesimalaren zein geometria analitikoaren oinarriak finkatuz.

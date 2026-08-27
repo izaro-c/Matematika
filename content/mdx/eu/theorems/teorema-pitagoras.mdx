@@ -1,49 +1,47 @@
 export const metadata = {
-  "id": "teorema-pitagoras",
-  "type": "teorema",
-  "title": "Pitagorasen teorema",
-  "description": "Edozein triangelu angeluzuzenetan, hipotenusaren gainean eraikitako karratuaren azalera katetoen gainean eraikitako karratuen azalerren baturaren berdina da.",
-  "statement": "Bedi △ABC triangelu angeluzuzena, C erpinean angelu zuzena duena. a = |BC|, b = |CA| eta c = |AB| (hipotenusa) badira, orduan a² + b² = c².",
-  "branch": "51M",
-  "tags": ["geometria", "triangulos", "areas"],
-  "authors": ["pitagoras", "euclides", "hilbert"],
-  "difficulty": "básico",
-  "hasSimulation": true,
-  "demos": ["demo-pitagoras-euclides", "demo-pitagoras-areas"],
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 47 y 48", role: "primary" },
-    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §21", role: "secondary" }
+  id: "teorema-pitagoras",
+  type: "teorema",
+  title: "Pitagorasen teorema",
+  description: "Edozein triangelu angeluzuzenetan, hipotenusaren gainean eraikitako karratuaren azalera katetoen gainean eraikitako karratuen azaleran batura berdina da.",
+  statement: "C erpinean angelu zuzena duen △ABC triangelu angeluzuzen orotan, katetoen karratuen batura hipotenusaren karratuaren berdina da: a² + b² = c².",
+  branch: "51M",
+  hasSimulation: true,
+  authors: ["pitagoras", "euclides", "hilbert"],
+  demos: ["demo-pitagoras-euclides", "demo-pitagoras-areas"],
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 47 y 48", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §21", role: "secondary" }
   ]
 };
 
 import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras';
 export const Simulation = Pitagoras;
 
-<Capitular letra="P" /><ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremak</ConceptLink> zehaztasunezko erlazio metriko nagusia da plano euklidestarreko <ConceptLink targetId="geometria-euclidiana">geometrian</ConceptLink>. Lotura kuantitatibo zehatza ezartzen du <VisualBind element="triangulo" color="carbon"><ConceptLink targetId="triangulo-rectangulo">triangelu zuzen</ConceptLink></VisualBind> baten <ConceptLink targetId="cateto">katetoen</ConceptLink> eta <ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink> artean, <ConceptLink targetId="segmento">segmentuen</ConceptLink> luzera lineala beren gainean eraikitako <ConceptLink targetId="area">azaler</ConceptLink> karratuekin lotuz.
+<Capitular letra="P" />lanoko <ConceptLink targetId="geometria-euclidiana">geometria euklidetarrean</ConceptLink>, <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink></VisualBind> baten <ConceptLink targetId="lado">aldeen</ConceptLink> arteko erlazio metrikoak <ConceptLink targetId="segmento">zuzenki</ConceptLink> lotzen ditu aldeen luzera linealak eta horien gainean marraztutako <ConceptLink targetId="cuadrado">karratuen</ConceptLink> <ConceptLink targetId="area">azalerak</ConceptLink>.
 
 <Separador />
 
-### Formulatze formala
+### Enuntziatu formala
 
-Bedi $\triangle ABC$ <ConceptLink targetId="triangulo-rectangulo">triangelu zuzen</ConceptLink> bat, $C$ <ConceptLink targetId="vertice">erpinean</ConceptLink> <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> duela. Izan bedi $a = |BC|$ eta $b = |CA|$ <ConceptLink targetId="cateto">katetoen</ConceptLink> luzerak, eta $c = |AB|$ <ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink> luzera. Orduan:
+Bitzak plano euklidetarrean $C$ <ConceptLink targetId="vertice">erpinean</ConceptLink> <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> duen $\triangle ABC$ <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzena</ConceptLink>. Izan bitez $a = |\overline{BC}|$ eta $b = |\overline{CA}|$ <VisualBind element="cateto-a" color="pavo"><ConceptLink targetId="cateto">katetoen</ConceptLink></VisualBind> neurri metrikoak, eta $c = |\overline{AB}|$ <VisualBind element="hipotenusa" color="terracota"><ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink></VisualBind> neurri metrikoa. Ezinbestean betetzen da honako berdintza hau:
 
 <Formula>
   $$ a^2 + b^2 = c^2 $$
 </Formula>
 
-Gainazal-magnitudoen arabera, <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">hipotenusaren gaineko karratuaren</ConceptLink></VisualBind> $c^2$ <ConceptLink targetId="area">azalera</ConceptLink> <VisualBind element="cuadrado-a" color="pavo">$a$ katetoaren gaineko karratuaren</VisualBind> ($a^2$) eta <VisualBind element="cuadrado-b" color="terracota">$b$ katetoaren gaineko karratuaren</VisualBind> ($b^2$) azalerren baturaren berdina da zorrotz.
+Azalera poligonalen neurriari dagokionez, hipotenusaren gaineko <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">karratuaren</ConceptLink></VisualBind> $c^2$ azalera eta $a$ zein $b$ katetoen gaineko $a^2$ eta $b^2$ karratuen azaleraren batura nahitaez berdinak dira.
 
 <Separador />
 
-### Analisia eta fundamentazio axiomatikoa
+### Azterketa eta oinarritze axiomatikoa
 
-Pitagorasen teoremaren baliozkotasunak <ConceptLink targetId="geometria-euclidiana">geometria euklidestarra</ConceptLink> karakterizatzen du: haren frogapenak nahitaezkoa du <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioma</ConceptLink>.
+Erlazio metriko honen froga nahitaez <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioman</ConceptLink> oinarritzen da. <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> garatutako eraikuntza formalean, emaitza hau plano deskonposagarritasunaren teoriatik eta azalera-neurri aditiboaren propietateetatik deduzitzen da.
 
-<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> axiomatizazioan, berdintza hau <ConceptLink targetId="poligono">poligonoen</ConceptLink> berdindeskonposagarritasunaren teoriaren bidez frogatzen da. Geometria ez-euklidestarretan, erlazio metrikoa aldatu egiten da: <ConceptLink targetId="geometria-hiperbolica">geometria hiperbolikoan</ConceptLink> $a^2 + b^2 < c^2$ nekuakera zorrotza betetzen da.
+Geometria ez-euklidetarretan (geometria hiperbolikoan edo esferikoan esaterako), karratuen baturaren erlazio aljebraikoa ez da zuzenean mantentzen, funtzio trigonometriko hiperbolikoak edo esferikoak erabili behar direlarik.
 
 <Separador />
 
-### Oharrak eta alderantzizkoa
+### Propietateak eta alderantzizkoa
 
-- **Teoremaren alderantzizkoa**: $\triangle ABC$ triangelu batean alde desberdinen luzerek $a^2 + b^2 = c^2$ betetzen badute, orduan $c$ aldearen aurkako angelua nahitaez <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> da (<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.48 proposizioa).
-- **Frogapen klasikoak**: Eraikuntza deduktibo ugari onartzen ditu, nabarmentzekoak direlarik <ConceptLink targetId="rectangulo">laukizuzenen</ConceptLink> bidezko deskonposizio frogapena (Euklidesen haize-errota) eta triangeluen <ConceptLink targetId="semejanza">antzekotasun</ConceptLink> bidezkoa.
+- **Izaera alderantzizkoa**: $\triangle ABC$ triangelu baten aldeen luzerek $a^2 + b^2 = c^2$ berdintza betetzen badute, orduan $\overline{AB}$ aldeari aurrez aurre dagon angelua nahitaez <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> da.
+- **Antzekotasun bidezko froga**: Hipotenusarekiko altuera marraztean, jatorrizko triangelua bi triangelu <ConceptLink targetId="semejanza">antzekoetan</ConceptLink> banatzen da, $a^2 = c \cdot p$ eta $b^2 = c \cdot q$ proportzioak lortuz.

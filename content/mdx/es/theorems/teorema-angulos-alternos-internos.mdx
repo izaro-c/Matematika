@@ -1,50 +1,45 @@
 export const metadata = {
-  "id": "teorema-angulos-alternos-internos",
-  "type": "teorema",
-  "title": "Teorema de los ángulos alternos internos",
-  "description": "Dos rectas cortadas por una transversal son paralelas si y solo si los ángulos alternos internos son congruentes. La dirección directa pertenece a la geometría absoluta; la recíproca requiere el axioma euclidiano de las paralelas.",
-  "statement": "Sean l y m dos rectas cortadas por una transversal t. Los ángulos alternos internos son congruentes si y solo si l ∥ m.",
-  "tags": ["geometria", "angulos", "paralelas"],
-  "authors": ["euclides"],
-  "difficulty": "básico",
-  "hasSimulation": false,
-  "demos": ["demo-angulos-alternos-internos"],
-  "sources": [
-    { "title": "Elementos", "author": "Euclides", "locator": "Libro I, Proposiciones 27 y 29", "role": "primary" }
+  id: "teorema-angulos-alternos-internos",
+  type: "teorema",
+  title: "Teorema de los ángulos alternos internos",
+  description: "Si dos rectas paralelas en el plano son cortadas por una recta transversal, los ángulos alternos internos resultantes son respectivamente congruentes.",
+  statement: "Dadas dos rectas paralelas r y s cortadas por una transversal t, todo par de ángulos alternos internos α y α' satisface α ≅ α'.",
+  branch: "51M",
+  hasSimulation: false,
+  authors: ["euclides"],
+  demos: ["demo-angulos-alternos-internos"],
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 27 y 29", role: "primary" }
   ]
 };
 
-<Capitular letra="E" />l <ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink> —correspondiente a las Proposiciones I.27 e I.29 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>— constituye el nexo fundamental entre el <ConceptLink targetId="paralelismo">paralelismo</ConceptLink> de <ConceptLink targetId="recta">rectas</ConceptLink> y la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="angulo">ángulos</ConceptLink>. Establece la equivalencia entre la condición geométrica de no <ConceptLink targetId="interseccion">intersección</ConceptLink> y la igualdad de las aberturas angulares en posiciones alternas respecto a una <ConceptLink targetId="transversal">transversal</ConceptLink>.
+<Capitular letra="E" />l teorema de los ángulos alternos internos establece la equivalencia métrica entre los <ConceptLink targetId="angulo">ángulos</ConceptLink> situados en lados opuestos de una <ConceptLink targetId="recta">recta secante</ConceptLink> o transversal que intersecta a dos <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink> euclidiano.
 
 <Separador />
 
 ### Enunciado formal
 
-Sean $l$ y $m$ dos <ConceptLink targetId="recta">rectas</ConceptLink> coplanares y $t$ una <ConceptLink targetId="transversal">transversal</ConceptLink> que las interseca en los <ConceptLink targetId="punto">puntos</ConceptLink> $A \in l$ y $B \in m$. Sean $\alpha$ y $\beta$ dos <ConceptLink targetId="angulos-alternos-internos">ángulos alternos internos</ConceptLink> determinados por $t$ sobre $l$ y $m$.
-
-**Parte 1** (<ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>):
+Sean $r$ y $s$ dos <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> en el plano $\mathcal{P}$ ($r \parallel s$), y sea $t$ una recta <ConceptLink targetId="recta">transversal</ConceptLink> secante a ambas en los puntos $A$ y $B$ respectivamente. Sean $\alpha$ y $\alpha'$ dos ángulos comprendidos entre las paralelas $r$ y $s$, y situados en semiplanos opuestos respecto de la transversal $t$. Se satisface la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
 
 <Formula>
-  $$ \alpha \cong \beta \implies l \parallel m $$
+  $$ \alpha \cong \alpha' $$
 </Formula>
 
-**Parte 2** (requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma euclidiano de las paralelas</ConceptLink>):
-
-<Formula>
-  $$ l \parallel m \implies \alpha \cong \beta $$
-</Formula>
+Es decir, la amplitud angular de ambos ángulos alternos internos es estrictamente idéntica: $|\alpha| = |\alpha'|$.
 
 <Separador />
 
-### Análisis y desglose deductivo
+### Análisis axiomático y reciprocidad
 
-La demostración de la Parte 1 no presupone la existencia ni unicidad de paralelas euclidianas; se fundamenta exclusivamente en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink> mediante <ConceptLink targetId="reduccion-al-absurdo">reducción al absurdo</ConceptLink> empleando el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>.
-
-Por el contrario, la Parte 2 requiere de forma indispensable el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>postulado de las paralelas</ConceptLink>. En geometrías no euclidianas, como la <ConceptLink targetId="geometria-hiperbolica">geometría hiperbólica</ConceptLink>, la Parte 1 mantiene su validez pero la Parte 2 no se cumple en general.
+Euclides estructura el comportamiento de los ángulos formados por una transversal en dos Proposiciones cardinales:
+- **Proposición I.27 (Carácter recíproco absoluto)**: Si dos rectas coplanares cortadas por una transversal forman ángulos alternos internos congruentes, entonces las dos rectas son <ConceptLink targetId="paralelas">paralelas</ConceptLink>. Este resultado es independiente del quinto postulado y pertenece a la geometría absoluta.
+- **Proposición I.29 (Directo euclidiano)**: Si dos rectas son <ConceptLink targetId="paralelas">paralelas</ConceptLink>, la congruencia de los ángulos alternos internos requiere indispensablemente el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas de Euclides</ConceptLink>.
 
 <Separador />
 
-### Observaciones y consecuencias
+### Relaciones angulares derivadas
 
-- El resultado permite deducir la congruencia de los <ConceptLink targetId="angulos-correspondientes">ángulos correspondientes</ConceptLink> y la suplementariedad de los ángulos colaterales internos.
-- Constituye el sustento deductivo para el <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de ángulos de un triángulo</ConceptLink> y el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>.
+Dadas dos rectas paralelas cortadas por una transversal $t$:
+- **Ángulos correspondientes**: Son congruentes ($\alpha \cong \beta$).
+- **Ángulos alternos externos**: Son congruentes ($\gamma \cong \gamma'$).
+- **Ángulos conjugados internos**: Son <ConceptLink targetId="angulos-suplementarios">suplementarios</ConceptLink> ($\alpha + \beta' = 180^\circ$).

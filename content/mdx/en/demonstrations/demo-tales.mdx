@@ -1,0 +1,67 @@
+export const metadata = {
+  "id": "demo-tales",
+  "type": "demostracion",
+  "title": "Proof: Thales's Theorem",
+  "description": "Direct proof of the proportionality of segments determined by three or more parallel lines intersected by two transversals.",
+  "parentTheorem": "teorema-tales",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["tales", "euclides"],
+  "tags": ["geometria", "proporcionalidad", "semejanza", "rectas"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elements", author: "Euclid", locator: "Book VI, Proposition 2", role: "primary" }
+  ]
+};
+
+import { DemoTales } from "@content/diagrams/Demos/DemoTales";
+
+<DemonstrationSection diagram={<DemoTales />}>
+
+<Capitular letra="G" />iven three <VisualBind element="paralelas" color="carbon"><ConceptLink targetId="paralelas">parallel lines</ConceptLink></VisualBind> $r, s, t$ intersected by two transversal <ConceptLink targetId="recta">lines</ConceptLink> $u$ and $v$, <ConceptLink targetId="teorema-tales" isDependency={true}>Thales's theorem</ConceptLink> is demonstrated. The proof establishes that the ratio of segment lengths determined on the first transversal $u$ is identical to the ratio of corresponding segments on the second transversal $v$.
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} target="paralelas" title="Configuration of parallel and transversal lines">
+Let $r, s, t$ be three parallel lines denoted by <VisualBind element="recta-r" color="carbon">$r$</VisualBind>, <VisualBind element="recta-s" color="carbon">$s$</VisualBind>, and <VisualBind element="recta-t" color="carbon">$t$</VisualBind>. Transversal <VisualBind element="transversal-u" color="terracota">$u$</VisualBind> intersects the parallel lines at points $A, B, C$, marking <ConceptLink targetId="segmento">segments</ConceptLink> <VisualBind element="segmento-ab" color="terracota">$\overline{AB}$</VisualBind> and <VisualBind element="segmento-bc" color="terracota">$\overline{BC}$</VisualBind>. Transversal <VisualBind element="transversal-v" color="pavo">$v$</VisualBind> intersects them at $A', B', C'$, marking <VisualBind element="segmento-a1b1" color="pavo">$\overline{A'B'}$</VisualBind> and <VisualBind element="segmento-b1c1" color="pavo">$\overline{B'C'}$</VisualBind>.
+</ProofStep>
+
+<ProofStep number={2} target="triangulos-u" title="Area ratios on the first transversal">
+Auxiliary segments $\overline{AB'}$ and $\overline{CB'}$ are constructed. Triangles $\triangle ABB'$ and $\triangle BCB'$ share a height from <ConceptLink targetId="vertice">vertex</ConceptLink> $B'$. By the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>, the ratio of their <ConceptLink targetId="area">areas</ConceptLink> is proportional to the ratio of their bases on line $u$:
+
+<Formula>
+  $$ \frac{\text{Area}(\triangle ABB')}{\text{Area}(\triangle BCB')} = \frac{\overline{AB}}{\overline{BC}} $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={3} target="triangulos-v" title="Area ratios on the second transversal">
+Analogously, considering triangles $\triangle A'BB'$ and $\triangle B'C'B$ sharing a height from vertex $B$, the ratio between their areas on line $v$ is given by:
+
+<Formula>
+  $$ \frac{\text{Area}(\triangle A'BB')}{\text{Area}(\triangle B'C'B)} = \frac{\overline{A'B'}}{\overline{B'C'}} $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} target="igualdad-alturas" title="Area equivalence between parallel lines">
+Triangles $\triangle ABB'$ and $\triangle A'BB'$ share the base $\overline{BB'}$ and lie bounded between parallel lines $r$ and $s$. Sharing the same height between parallel lines, their areas are identical. Similarly, $\text{Area}(\triangle BCB') = \text{Area}(\triangle B'C'B)$.
+</ProofStep>
+
+<ProofStep number={5} target="conclusion" title="Equality of proportions">
+Equating the area ratios due to the equivalence between triangles bounded by parallel lines $r, s, t$, the proportion of <ConceptLink targetId="semejanza">similarity</ConceptLink> is deduced:
+
+<Formula>
+  $$ \frac{\overline{AB}}{\overline{BC}} = \frac{\overline{A'B'}}{\overline{B'C'}} $$
+</Formula>
+</ProofStep>
+
+<Separador />
+
+### Deductive analysis
+
+<Nota>
+  Book VI, Proposition 2 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, traditionally attributed to <ConceptLink targetId="tales">Thales of Miletus</ConceptLink>. It provides the foundation for proportionality and <ConceptLink targetId="semejanza">triangle similarity</ConceptLink> in the <ConceptLink targetId="sistema-euclidiano">Euclidean axiomatic framework</ConceptLink>.
+</Nota>
+
+</DemonstrationSection>

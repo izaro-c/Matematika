@@ -2,23 +2,24 @@ export const metadata = {
   id: "axioma-incidencia-3",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.3 (Existencia de Puntos no Colineales)",
-  description: "Existen al menos tres puntos en el espacio que no son colineales.",
+  title: "Axioma I.3 (Existencia de puntos no colineales)",
+  description: "Existen al menos tres puntos en el espacio que no están situados sobre la misma recta.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Incidence3 } from '@content/diagrams/Axiomas/Incidence3';
 export const Simulation = Incidence3;
 
-<Capitular letra="E" />l tercer <ConceptLink targetId="axioma-incidencia-3">axioma de incidencia</ConceptLink> garantiza la bidimensionalidad mínima del universo geométrico. Postula de forma existencial la presencia de al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> que no yacen sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>.
+<Capitular letra="E" />l tercer <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> establece la existencia de al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> que no son colineales. Este postulado rompe la unidimensionalidad del espacio geométrico, garantizando que el sistema no se reduce a una única <ConceptLink targetId="recta">recta</ConceptLink>.
 
-<Definicion title="">
-  Existen al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> $A, B, C \in \mathcal{P}$ tales que ninguna <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$ contiene simultáneamente a los tres:
+<Definicion title="Enunciado formal">
+  Existen al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> $A, B, C \in \mathcal{S}$ tales que ninguna <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$ los contiene a los tres simultáneamente:
   $$
-  \exists A, B, C \in \mathcal{P} \ (\forall l \in \mathcal{L} \implies \neg (A \in l \land B \in l \land C \in l))
+  \exists A, B, C \in \mathcal{S} \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
   $$
 </Definicion>
 
@@ -26,10 +27,18 @@ export const Simulation = Incidence3;
 
 ### Representación visual e interacción
 
-En la simulación interactiva se presentan los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> dispuestos de manera no colineal, forzando la apertura de un plano geométrico no degenerado.
+En la simulación interactiva, los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> forman una configuración no colineal. Al intentar trazar una recta por dos de ellos, el tercer punto queda de forma manifiesta fuera de dicha recta soporte.
 
 <Separador />
 
-### Implicaciones estructurales
+### Significado geométrico y alcance
 
-Este postulado es el primer axioma puramente existencial del sistema de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>. Evita que la geometría colapse en una única <ConceptLink targetId="recta">recta</ConceptLink> unidimensional, permitiendo la definición del <ConceptLink targetId="triangulo">triángulo</ConceptLink> y de la geometría <ConceptLink targetId="plano">plana</ConceptLink>.
+Al postular la existencia de al menos tres puntos no alineados, se fuerza a la geometría a tener una dimensión mínima de dos (plano). Sin este axioma, una única recta satisfaría todos los axiomas anteriores, colapsando el espacio a una sola dimensión.
+
+<Separador />
+
+### Propiedades
+
+- **Multidimensionalidad mínima:** Garantiza que el espacio posee una extensión bidimensional o superior.
+- **Formación de triángulos:** Permite definir el concepto primitivo de <ConceptLink targetId="triangulo">triángulo</ConceptLink> como el conjunto de vértices $A, B, C$ no colineales.
+- **Independencia lineal:** Establece la noción de independencia posicional en <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.

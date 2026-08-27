@@ -2,63 +2,37 @@ export const metadata = {
   id: "sistema-euclidiano",
   lang: "eu",
   type: "sistema-axiomatico",
-  title: "Geometria Euklidearra",
-  description: "Plano eta espazioko geometria klasikoko sistema axiomatikoa, paraleloen bakartasun-axioma geometria absolutuko 19 axiomei uztean datzana.",
-  axiomas: [
-    "axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3", "axioma-incidencia-4",
-    "axioma-incidencia-5", "axioma-incidencia-6", "axioma-incidencia-7", "axioma-incidencia-8",
-    "axioma-orden-1", "axioma-orden-2", "axioma-orden-3", "axioma-orden-4",
-    "axioma-congruencia-1", "axioma-congruencia-2", "axioma-congruencia-3", "axioma-congruencia-4", "axioma-congruencia-5",
-    "axioma-arquimedes", "axioma-completitud", "axioma-paralelas-euclides"
-  ],
-  sources: [
-    { title: "Elementos", author: "Euclides", locator: "I. Liburua, 5. Postulatua", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §6", role: "primary" }
-  ]
+  title: "Sistema axiomatiko euklidesarra",
+  description: "Plano-geometria estandarraren egitura axiomatiko kanonikoa, geometria absolutuaz eta Playfair-en paraleloen axiomaz osatua.",
+  branch: "51M",
+  axiomas: ["axioma-paralelas-euclides"]
 };
 
-<Capitular letra="G" />eometria <ConceptLink targetId="sistema-euclidiano">euklidearra</ConceptLink> Playfair-<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides">paraleloen postulatua</ConceptLink> <ConceptLink targetId="sistema-absoluto" isDependency={true}>geometria absolutuaren</ConceptLink> egiturari gehitzearen ondoriozko eraikuntza matematiko formala da. Kurbatura nulua duen espazio <ConceptLink targetId="plano">lau</ConceptLink> intuitiboa modelatzen du eta <ConceptLink targetId="geometria">geometria</ConceptLink> metriko klasikoaren paradigma osatzen du.
-
-<Definicion title="">
-  Sistema <ConceptLink targetId="axioma">axiomatiko</ConceptLink> euklidearra $(\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I}, \mathcal{B}, \cong, \mathcal{P}_V)$ tupla bat da, <ConceptLink targetId="hilbert">Hilberten</ConceptLink> 19 <ConceptLink targetId="sistema-absoluto" isDependency={true}>axioma absolutuek</ConceptLink> eta <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Playfairren axiomak</ConceptLink> osatua: $l$ <ConceptLink targetId="recta">zuzen</ConceptLink> bat eta $P \notin l$ <ConceptLink targetId="punto">puntu</ConceptLink> bat emanda, $P$-tik igarotzen den $m$ zuzen bakarra existitzen da zeinarentzat $m \cap l = \emptyset$ den.
-</Definicion>
+<Capitular letra="S" />istema axiomatiko euklidesarrak plano-geometriaren esparru formal klasikoa adierazten du. <ConceptLink targetId="sistema-absoluto">Geometria absolutuari</ConceptLink> paraleloen bosgarren postulatu bera (Playfair-en formulazio baliokidean) gehitzean lortzen da, planoaren zakurtasun nulua eta figura geometrikoen eskala finkatuz.
 
 <Separador />
 
-### Paraleloen postulatu bereizgarria
+### Konstituzio axiomatikoa
 
-Sistema euklidearraren elementu bereizgarria paraleloen bakartasun-hipotesia da:
+Sistema euklidesarrak Hilberten printzipio guztiak biltzen ditu:
 
-- **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>IV.1 Playfairren axioma (paraleloaren bakartasuna)</ConceptLink>**: Emandako <ConceptLink targetId="recta">zuzen</ConceptLink> batekiko kanpoko <ConceptLink targetId="punto">puntu</ConceptLink> batetik zuzen <ConceptLink targetId="paralelas">paralelo</ConceptLink> bakar bat igarotzen da.
-
-<Formula>
-  $$
-  \forall l \in \mathcal{L}, \forall P \notin l \implies \exists! m \in \mathcal{L} \ (P \in m \land m \cap l = \emptyset)
-  $$
-</Formula>
+1. **<ConceptLink targetId="sistema-absoluto">Geometria absolutuaren</ConceptLink> oinarria**: <ConceptLink targetId="sistema-incidencia">Intzidentzia</ConceptLink> (I.1-I.8), <ConceptLink targetId="orden">ordena</ConceptLink> (II.1-II.4), <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> (III.1-III.5) eta jarraitutasun (IV.1-IV.2) axioma guztiak biltzen ditu.
+2. **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euklidesen paraleloen axioma (V.1)</ConceptLink>**: <ConceptLink targetId="plano">Plano</ConceptLink> batean $l$ <ConceptLink targetId="recta">zuzen</ConceptLink> bat eta kanpoko $P \notin l$ <ConceptLink targetId="punto">puntu</ConceptLink> bat emanda, gehienez ere $P$ puntua daukan eta $l$ ebakitzen ez duen $l'$ zuzen bakarra dago:
+   $$ \forall l \in \mathcal{L}, \forall P \notin l, \exists! l' \in \mathcal{L} \text{ non } P \in l' \land l \cap l' = \emptyset $$
 
 <Separador />
 
-### Ereduak eta adierazpenak
+### Sistemako oinarrizko teoremak
 
-Sistema euklidearrak oinarrizko errealizazio analitiko eta jarraituak onartzen ditu:
+Paraleloen axioma egoteak propietate metriko bereizgarriak sortzen ditu:
 
-- **<ConceptLink targetId="modelo-cartesiano">Plano kartesiarra</ConceptLink> <ConceptLink targetId="numero-real">$\mathbb{R}^2$</ConceptLink>**: $d(A,B) = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$ <ConceptLink targetId="distancia">metrika euklidear</ConceptLink> kanonikoaz hornitutako bi dimentsioko espazioa.
-- **<ConceptLink targetId="numero-real">$\mathbb{R}^3$</ConceptLink> espazio bektoriala**: Biderketa eskalar estandarraz hornitutako hiru dimentsioko eredua.
-- **$\mathbb{C}$ plano konplexua**: $(x,y) \mapsto x + iy$ identifikazioaren bidez plano kartesiar errealarekin isomorfoa den egitura aljebraikoa.
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Angelu-batura aldaezina</ConceptLink>**: Edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $180^\circ$ da zehazki.
+- **<ConceptLink targetId="teorema-tales">Talesen teorema eta antzekotasuna</ConceptLink>**: Zeharkako lerroek ebakitako zuzen paraleloek zuzenki proportzionalak zehazten dituzte, angelu-aldaketarik gabeko tamaina desberdineko figura antzekoak existitzea ahalbidetuz.
+- **<ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>**: Edozein <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzenetan</ConceptLink>, <ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink> gaineko karratuaren azalera <ConceptLink targetId="cateto">katetoen</ConceptLink> gaineko karratuen azaleraren batura da ($a^2 + b^2 = c^2$).
 
 <Separador />
 
-### Egitura-propietateak eta ezaugarri metamatematikoak
+### Eredu adierazgarria eta koherentzia
 
-Sistema euklidearrak <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-<ConceptLink targetId="teorema">teorema</ConceptLink> eta propietate aljebraiko nagusiak erakusten ditu:
-
-<Formula>
-  $$
-  \sum_{i=1}^{3} \alpha_i = 180^\circ
-  $$
-</Formula>
-
-- **Angeluen batura inbariantea**: Edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura zehazki $180^\circ$ ($\pi$ radian) da.
-- **<ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>**: Edozein <ConceptLink targetId="triangulo-rectangulo">triangelu zuzenetan</ConceptLink>, <ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink> karratua <ConceptLink targetId="cateto">katetoen</ConceptLink> karratuen baturaren berdina da.
-- **Kategorikotasuna**: Hiru dimentsioko sistema euklidearra betetzen duen eredu jarraitu edozein $\mathbb{R}^3$ espazio kartesiarrarekin isomorfoa da.
+- **<ConceptLink targetId="modelo-cartesiano">Eredu kartesiarra $\mathbb{R}^2$</ConceptLink>**: Sistema euklidesarraren eredu analitiko kanonikoa osatzen du.
+- **Koherentzia erlatiboa**: Sistema euklidesarraren koherentzia <ConceptLink targetId="numero-real">zenbaki errealen</ConceptLink> gorputzaren eta Zermelo-Fraenkel multzo-teoriaren koherentziaren baliokidea da.

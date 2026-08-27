@@ -1,57 +1,42 @@
 export const metadata = {
-  "id": "metodo-contradiccion",
-  "type": "metodo",
-  "subtype": "demostracion",
-  "title": "Demostración por contradicción",
-  "description": "Probar que una afirmación es verdadera mostrando que su negación conduce a una imposibilidad lógica. También conocida como reductio ad absurdum o reducción al absurdo.",
-  "hasSimulation": true
+  id: "metodo-contradiccion",
+  lang: "es",
+  type: "metodo",
+  subtype: "demostracion",
+  title: "Método de contradicción",
+  description: "Técnica indirecta de demostración que supone falsa la tesis para derivar una contradicción lógica insostenible.",
+  branch: "51M",
+  hasSimulation: true
 };
 
-import { ContradictionSimulation } from "@content/diagrams/Metodos/ContradictionSimulation";
+import { ContradictionSimulation } from '@content/diagrams/Metodos/ContradictionSimulation';
 export const Simulation = ContradictionSimulation;
 
-<Capitular letra="L" />a demostración por contradicción — conocida históricamente como *reductio ad absurdum* o reducción al absurdo — es una de las herramientas analíticas más poderosas del arsenal matemático. En lugar de probar directamente que $P$ implica $Q$, se adopta una estrategia indirecta: se supone que la conclusión es falsa ($\neg Q$) y se muestra que esta suposición, combinada con los hechos conocidos, conduce inevitablemente a una contradicción lógica.
+<Capitular letra="E" />l método de contradicción —denominado clásicamente *reductio ad absurdum*— es la principal estrategia indirecta de prueba matemática. Se fundamenta en el principio lógico del tercero excluido y en el principio de no contradicción, demostrando que si la negación de la <ConceptLink targetId="tesis">tesis</ConceptLink> condujese inevitablemente a un absurdo $R \land \neg R$, entonces la tesis original debe ser necesariamente verdadera.
 
 <Separador />
 
 ### Estructura lógica
 
-El argumento se desarrolla a través de tres fases deductivas:
+Para probar la proposición condicional $P \implies Q$, el razonamiento procede mediante la hipótesis absurda:
 
-- **Negación de la tesis**: Se asume $\neg Q$ (la negación de lo que se quiere probar).
-- **Deducción**: Usando la hipótesis $P$, los <ConceptLink targetId="axioma" isDependency={false}>axiomas</ConceptLink> y los <ConceptLink targetId="teorema" isDependency={false}>teoremas</ConceptLink> ya establecidos, se derivan consecuencias de $\neg Q$.
-- **Contradicción**: Se llega a una afirmación imposible — por ejemplo, $1 = 0$, un número es par e impar a la vez, o se viola un axioma fundamental.
-
-Dado que el razonamiento deductivo es válido y las premisas iniciales son verdaderas, la única fuente posible de la inconsistencia es la hipótesis de trabajo $\neg Q$. Por lo tanto, $\neg Q$ debe ser falsa y, en consecuencia, $Q$ es verdadera.
-
-<Formula>
-  $$ \frac{P,\ \neg Q \vdash \bot}{P \implies Q} $$
-</Formula>
+1. Se asume como premisa la veracidad de la <ConceptLink targetId="hipotesis">hipótesis</ConceptLink> $P$ conjuntamente con la negación de la tesis $\neg Q$.
+2. Se efectúa un desarrollo deductivo riguroso a partir de la conjunción $P \land \neg Q$.
+3. Se concluye una contradicción formal de la forma $R \land \neg R$, donde $R$ es un <ConceptLink targetId="axioma">axioma</ConceptLink>, un <ConceptLink targetId="teorema">teorema</ConceptLink> conocido o una proposición construida durante la deducción.
+4. Por el principio de no contradicción, se rechaza la validez de $\neg Q$, demostrando que $Q$ es verdadera:
+   $$ (P \land \neg Q \implies \bot) \implies (P \implies Q) $$
 
 <Separador />
 
-### Ejemplos clásicos
+### Ejemplos en geometría y teoría de números
 
-- **<ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={false}>Intersección única de rectas</ConceptLink>**: Para probar que dos <ConceptLink targetId="recta" isDependency={false}>rectas</ConceptLink> distintas no pueden cortarse en más de un <ConceptLink targetId="punto" isDependency={false}>punto</ConceptLink>, se asume que se intersecan en dos puntos distintos $A$ y $B$. Esto contradice el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>axioma de incidencia I-1</ConceptLink>.
-
-- **<ConceptLink targetId="demo-reciproco-triangulo-isosceles" isDependency={false}>Recíproco del triángulo isósceles</ConceptLink>**: Si dos <ConceptLink targetId="angulo">ángulos</ConceptLink> de un <ConceptLink targetId="triangulo" isDependency={false}>triángulo</ConceptLink> son iguales, los lados opuestos son <ConceptLink targetId="congruencia">congruentes</ConceptLink>. Se supone la desigualdad de los lados y se deriva una contradicción mediante el <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>teorema del ángulo externo</ConceptLink>.
-
-- **<ConceptLink targetId="numero-irracional">Irracionalidad</ConceptLink> de $\sqrt{2}$**: Se supone la representación en fracción irreducible $\sqrt{2} = \frac{p}{q}$. Al elevar al cuadrado se obtiene $p^2 = 2q^2$, lo que implica que tanto $p$ como $q$ son pares, contradiciendo la irreductibilidad de la fracción.
+- **Irracionalidad de $\sqrt{2}$**: Se asume que $\sqrt{2}$ es un <ConceptLink targetId="numero-real">número racional</ConceptLink> expresable como <ConceptLink targetId="koziente">fracción irreducible</ConceptLink> $p/q$. El desarrollo algebraico demuestra que tanto $p$ como $q$ deben ser pares, lo cual contradice directamente la irreductibilidad de la fracción.
+- **Infinitud de los <ConceptLink targetId="numero-natural">números primos</ConceptLink>**: Se supone que existe un número finito de primos $p_1, p_2, \dots, p_n$. Se construye el número $N = (p_1 p_2 \dots p_n) + 1$, el cual genera una contradicción al no ser divisible por ningún primo de la lista.
+- **Unicidad de la <ConceptLink targetId="paralelismo">recta paralela</ConceptLink>**: En la <ConceptLink targetId="geometria-euclidiana">geometría euclídea</ConceptLink>, suponer la existencia de dos rectas distintas paralelas a una dada que pasan por el mismo punto conduce a una contradicción con el <ConceptLink targetId="axioma-paralelas-euclides">quinto postulado</ConceptLink>.
 
 <Separador />
 
-### Cuándo usarlo
+### Propiedades
 
-La contradicción es el método de elección cuando:
-
-- La negación de la conclusión proporciona una estructura algebraica o geométrica más manejable.
-- Se pretende probar una afirmación de inexistencia («no existe objeto tal que...») o de unicidad («a lo sumo un elemento satisface la propiedad»).
-- El argumento directo carece de premisas intermedias evidentes para conectar la hipótesis con la tesis.
-
-<Separador />
-
-### Fortalezas y debilidades
-
-<Nota>
-  **Garantía estructural**: La prueba por contradicción es una herramienta universal de demostración indirecta. Sin embargo, no proporciona un método constructivo para exhibir el objeto matemático, limitándose a certificar la imposibilidad lógica de su negación.
-</Nota>
+- **Potencia indirecta**: Permite demostrar la validez de enunciados donde la deducción por el <ConceptLink targetId="metodo-directo">método directo</ConceptLink> resulta inaccesible por falta de datos explícitos.
+- **No constructividad**: Establece la verdad inevitable de una proposición sin necesidad de exhibir explícitamente el objeto geométrico o numérico involucrado.

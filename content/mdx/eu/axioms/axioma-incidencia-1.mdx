@@ -2,34 +2,43 @@ export const metadata = {
   id: "axioma-incidencia-1",
   lang: "eu",
   type: "axioma",
-  title: "I.1 Axioma (Zuzenaren Existentzia eta Bakartasuna)",
-  description: "Espazioko bi puntu desberdinetatik zuzen zehatz bat eta bakarra igarotzen da.",
+  title: "I.1 Axioma (Zuzenaren existentzia eta bakartasuna)",
+  description: "Espazioko bi puntu desberdin emanda, biak barne hartzen dituen zuzen bakar bat existitzen da.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+  ]
 };
 
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="H" /><ConceptLink targetId="hilbert">ilberten</ConceptLink> lehen intzidentzia-<ConceptLink targetId="axioma-incidencia-1">axiomak</ConceptLink> <ConceptLink targetId="punto">puntu</ConceptLink> eta <ConceptLink targetId="recta">zuzenen</ConceptLink> arteko oinarrizko pertenentzia-erlazioa ezartzen du. Espazioko bi posizio desberdinek zuzen bakar bat zehazten dutela bermatzen du.
+<Capitular letra="E" />spazioko bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin edozein emanda, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-ek formulatutako <ConceptLink targetId="intzidentzia">intzidentzia-axioma</ConceptLink> lehenak bietatik igarotzen den <ConceptLink targetId="zuzen">zuzen</ConceptLink> baten existentzia eta bakartasuna bermatzen ditu nahitaez. Postulatu hau <ConceptLink targetId="geometria-absoluta">geometria absolutuko</ConceptLink> lotura lineala definitzeko oinarri nagusia da.
 
-<Definicion title="">
-  Bi $A, B \in \mathcal{P}$ <ConceptLink targetId="punto">puntu</ConceptLink> desberdin emanda ($A \neq B$), $l \in \mathcal{L}$ <ConceptLink targetId="recta">zuzen</ConceptLink> bakarra existitzen da non $A$ eta $B$ $l$-n intzidentzialak diren:
+<Definicion title="Enuntziatu formala">
+  Bi $A, B \in \mathcal{S}$ <ConceptLink targetId="punto">puntu</ConceptLink> desberdin emanda ($A \neq B$), biak barne hartzen dituen $l \in \mathcal{L}$ <ConceptLink targetId="zuzen">zuzen</ConceptLink> bakar bat existitzen da:
   $$
-  \forall A, B \ (A \neq B) \implies \exists! l \ (A \in l \land B \in l)
+  \forall A, B \in \mathcal{S} \ \bigl(A \neq B \implies \exists! l \in \mathcal{L} \ (A \in l \land B \in l)\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntuek <VisualBind element="lineAB" color="carbon">$l$</VisualBind> zuzen euslea zehazten dute modu bakarrean. Puntuetako edozein aldatzean, zuzena dinamikoki berorientatzen da bi elementuen pertenentzia zorrotza gordez.
+Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntuek era bakarrean zehazten dute <VisualBind element="lineAB" color="carbon">$l$</VisualBind> zuzen euskarria. Planoan bi puntu horietako edozein aske aldatzean, zuzenaren posizioa eta orientazioa berehala berrekalkulatzen dira, kidekotza bikoitzaren baldintza zorrotza mantenduz.
 
 <Separador />
 
 ### Esanahi geometrikoa eta esparrua
 
-Postulatu baldinbidezko honek marra zuzenaren bakartasuna bermatzen du. <ConceptLink targetId="sistema-absoluto">Geometria absolutuaren</ConceptLink> atalari dagokio, bere baliozkotasuna <ConceptLink targetId="sistema-euclidiano">geometria euklidearrean</ConceptLink> zein <ConceptLink targetId="sistema-hiperbolico">hiperbolikoan</ConceptLink> mantenduz.
+Axioma honek ezartzen du bi puntuek norabide bat eta ibilbide zuzen bat zehazten dituztela era esklusiboan. Ezin da egon puntu berdinak lotzen dituzten zuzen paralelo anitzik ezta kurba erredundanterik ere, axioma gehigarririk gabe.
+
+<Separador />
+
+### Propietateak
+
+- **Marrazkiaren bakartasuna:** Bi puntu desberdin ezin dira aldi berean bi zuzen desberdinen barnean egon.
+- **Sistemarekiko independentzia:** Bere baliozkotasuna gordetzen du bai <ConceptLink targetId="geometria-euklidear">geometria euklidearrean</ConceptLink> bai geometria ez-euklidearretan.
+- **Interkonexioaren oinarria:** $\overline{AB}$ <ConceptLink targetId="segmento">zuzenkia</ConceptLink> zuzen euskarriaren azpimultzo jarraitu gisa definitzea ahalbidetzen du.

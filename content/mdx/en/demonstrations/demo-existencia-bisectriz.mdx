@@ -1,0 +1,67 @@
+export const metadata = {
+  "id": "demo-existencia-bisectriz",
+  "type": "demostracion",
+  "title": "Proof: Existence and Uniqueness of the Angle Bisector",
+  "description": "Formal constructive proof of the existence and uniqueness of an angle bisector using triangle congruence and segment transport.",
+  "parentTheorem": "teorema-congruencia-ala",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["euclides", "hilbert"],
+  "tags": ["geometria", "angulos", "bisectriz"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elements", author: "Euclid", locator: "Book I, Proposition 9", role: "primary" }
+  ]
+};
+
+import { DemoExistenciaBisectriz } from "@content/diagrams/Demos/DemoExistenciaBisectriz";
+
+<DemonstrationSection diagram={<DemoExistenciaBisectriz />}>
+
+<Capitular letra="F" />or any <ConceptLink targetId="angulo">angle</ConceptLink> <VisualBind element="angulo-aob" color="carbon">$\angle AOB$</VisualBind> with <ConceptLink targetId="vertice">vertex</ConceptLink> <VisualBind element="vertice-o" color="carbon">$O$</VisualBind>, the existence and uniqueness of an interior ray $\overrightarrow{OM}$ bisecting the angle into two <ConceptLink targetId="congruencia">congruent</ConceptLink> parts is formally demonstrated, grounded in <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>triangle congruence theory</ConceptLink>.
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} target={["angulo-aob", "punto-c", "punto-d"]} title="Segment transport along angle sides">
+On the ray of side $OA$, a <ConceptLink targetId="punto">point</ConceptLink> <VisualBind element="punto-c" color="terracota">$C \neq O$</VisualBind> is fixed. By segment transport axioms, a point <VisualBind element="punto-d" color="pavo">$D$</VisualBind> is constructed on ray $OB$ such that origin distances are congruent:
+
+<Formula>
+  $$ \overline{OC} \cong \overline{OD} $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={2} target={["segmento-cd", "punto-m"]} title="Auxiliary segment and midpoint">
+Auxiliary segment <VisualBind element="segmento-cd" color="ocre">$\overline{CD}$</VisualBind> is constructed. By order and incidence axioms, there exists a unique midpoint <VisualBind element="punto-m" color="carbon">$M$</VisualBind> on segment $\overline{CD}$ satisfying equidistance:
+
+<Formula>
+  $$ \overline{CM} \cong \overline{DM} $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={3} target={["triangulo-ocm", "triangulo-odm"]} title="Auxiliary triangle congruence by SSS">
+Consider triangles <VisualBind element="triangulo-ocm" color="terracota">$\triangle OCM$</VisualBind> and <VisualBind element="triangulo-odm" color="pavo">$\triangle ODM$</VisualBind>. Since $\overline{OC} \cong \overline{OD}$, $\overline{CM} \cong \overline{DM}$, and side $\overline{OM}$ is shared by both polygons, applying <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>congruence axioms</ConceptLink> under the SSS (Side-Side-Side) criterion derived from fundamental <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>congruence theorems</ConceptLink>, it is concluded that:
+
+<Formula>
+  $$ \triangle OCM \cong \triangle ODM $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} target={["angulo-com", "angulo-dom"]} title="Equality of interior angles and existence">
+From triangle congruence, the congruence of corresponding interior angles is deduced: <VisualBind element="angulo-com" color="terracota">$\angle COM$</VisualBind> $\cong$ <VisualBind element="angulo-dom" color="pavo">$\angle DOM$</VisualBind>. Consequently, ray $\overrightarrow{OM}$ is a valid bisector of $\angle AOB$.
+</ProofStep>
+
+<ProofStep number={5} target={["bisectriz-unica"]} title="Proof of uniqueness">
+If another bisecting ray $\overrightarrow{OM'}$ existed, it would form an identical angle measure with ray $OA$. By uniqueness axioms for angle transport on a half-plane, rays $\overrightarrow{OM'}$ and $\overrightarrow{OM}$ must coincide. The <VisualBind element="bisectriz-unica" color="carbon">bisector is unique</VisualBind>.
+</ProofStep>
+
+<Separador />
+
+### Deductive analysis
+
+<Nota>
+  Book I, Proposition 9 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>. In <ConceptLink targetId="hilbert">Hilbert's</ConceptLink> axiomatic system, this construction demonstrates that angle bisecting is a universal property derived from <ConceptLink targetId="axioma-congruencia-1">congruence axioms</ConceptLink> within <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+</Nota>
+
+</DemonstrationSection>

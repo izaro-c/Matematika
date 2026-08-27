@@ -2,50 +2,47 @@ export const metadata = {
   id: "circunferencia",
   lang: "eu",
   type: "definicion",
-  subtype: "fundamentada",
+  subtype: "nominal",
   title: "Zirkunferentzia",
-  description: "Zentro deritzon puntu finko batetik distantzia berera dauden plano baten puntuen leku geometrikoa.",
+  description: "Zentro deritzon puntu finko batetik distantzia berera dauden planoko puntu guztien leku geometrikoa.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euclides", locator: "I. Liburua, 15. Definizioa", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "I. Liburua, 15. Definizioa", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
   ]
 };
 
 import { Circunferencia } from '@content/diagrams/Definiciones/Circunferencia';
 export const Simulation = Circunferencia;
 
-<Capitular letra="Z" />irkunferentzia zentro deritzon <ConceptLink targetId="punto">puntu</ConceptLink> finko batetik distantzia berera dauden <ConceptLink targetId="plano">plano-puntu</ConceptLink> guztiek osatutako kurba ixtea da. Simetria birakariak definitzeko eta <ConceptLink targetId="angulo">angeluak</ConceptLink> neurtzeko oinarrizko irudi geometrikoa da <ConceptLink targetId="circunferencia">zirkunferentzia</ConceptLink>.
+<Capitular letra="Z" />irkunferentzia zentro deritzon <ConceptLink targetId="punto">puntu</ConceptLink> finko batetik distantzia konstante batera dauden <ConceptLink targetId="plano">planoko</ConceptLink> puntu guztien dimentsio bakarreko leku geometrikoa da. Kurba itxi oinarrizkoa da <ConceptLink targetId="geometria-euclidiana">geometria euklidearrean</ConceptLink>, zirkulu edo disko deritzon eremu konbexu mugatua barnean uzten duena.
 
 <Definicion title="">
-  $\pi$ <ConceptLink targetId="plano">plano</ConceptLink> bateko $O$ puntu bat eta $r > 0$ <ConceptLink targetId="numero-real">zenbaki erreal</ConceptLink> bat emanda, $\mathcal{C}(O, r)$ zirkunferentzia $O$-rekiko <ConceptLink targetId="distancia" isDependency={true}>distantzia</ConceptLink> zehazki $r$ duten $P \in \pi$ puntu guztien <ConceptLink targetId="conjunto">multzoa</ConceptLink> da:
+  $\mathcal{P}$ plano bateko <VisualBind element="centro" color="musgo">$O \in \mathcal{P}$</VisualBind> puntu bat eta $r > 0$ eskalar erreal zorrozki positibo bat emanda, $O$ zentrodun eta $r$ erradiodun <VisualBind element="circunferencia" color="musgo">$\mathcal{C}(O, r)$</VisualBind> zirkunferentzia $O$ punturainoko distantzia eskalarra $r$ balioaren berdina duten $P \in \mathcal{P}$ puntu guztien multzo gisa definitzen da:
   $$
-  \mathcal{C}(O, r) = \{P \in \pi \mid d(O, P) = r\}
+  \mathcal{C}(O, r) = \{ P \in \mathcal{P} \mid d(O, P) = r \}
   $$
+  non $d(O, P) = \|P - O\| = r$ den. Zentroa kurbako edozein punturekin lotzen duen $\overline{OP}$ <ConceptLink targetId="segmento">zuzenkiari</ConceptLink> <ConceptLink targetId="radio">erradioa</ConceptLink> deritzo.
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Elementuak eta zuzen elkartuak
 
-Simulazio interaktiboan <VisualBind element="circunferencia" color="terracota">$\mathcal{C}(O, r)$</VisualBind> zirkunferentzia bistaratzen da, <VisualBind element="centro" color="carbon">$O$</VisualBind> zentroarekin. <VisualBind element="radio" color="musgo">$OP$</VisualBind> erradioak zentroa eta <VisualBind element="punto-p" color="terracota">$P$</VisualBind> puntu arbitrarioa lotzen ditu. <VisualBind element="cuerda" color="pavo">$QR$</VisualBind> korda, <VisualBind element="diametro" color="ocre">$DP$</VisualBind> diametroa eta zuzen <VisualBind element="tangente" color="musgo">tangentea</VisualBind> ikus daitezke.
+Zirkunferentziaren geometriarekin lotutako zuzen eta zuzenki nagusiak honakoak dira:
 
-<Separador />
-
-### Ezaugarri nagusiak
-
-- **Zentroa**: <ConceptLink targetId="punto">Puntu</ConceptLink> finkoa $O$, zeinarekiko kurbako puntu guztiek distantzia bera duten.
-- **Erradioa**: Zentroa eta zirkunferentziako edozein $P$ puntu lotzen dituen <ConceptLink targetId="segmento">zuzenkia</ConceptLink>.
-- **Diametroa**: Zentrotik igaroz zirkunferentziako bi puntu lotzen dituen zuzenkia; bere luzera $2r$ da.
-- **Korda**: Zirkunferentziako edozein bi puntu lotzen dituen zuzenkia.
-- **Tangentea**: Zirkunferentzia $T$ puntu bakar batean ebakitzen duen <ConceptLink targetId="recta">zuzen</ConceptLink> koplanarra, $OT$ erradioarekiko <ConceptLink targetId="perpendicular">perpendikularra</ConceptLink> delarik.
+| Elementua | Definizio geometrikoa | Espresioa edo propietatea |
+|---|---|---|
+| Zorda | Zirkunferentziako bi puntu lotzen dituen <ConceptLink targetId="segmento">zuzenkia</ConceptLink> | $\overline{AB} \text{ non } A, B \in \mathcal{C}$ |
+| Diametroa | $O$ zentroa barnean hartzen duen zorda | $d = 2r$ (gehienezko barne-distantzia) |
+| Zuzen ebakitzailea | Zirkunferentzia bi puntutan ebakitzen duen <ConceptLink targetId="recta">zuzena</ConceptLink> | $\lvert L \cap \mathcal{C} \rvert = 2$ |
+| Zuzen ukitzailea | Zirkunferentzia puntu bakar batean ukitzen duen <ConceptLink targetId="recta">zuzena</ConceptLink> | $\lvert L \cap \mathcal{C} \rvert = 1$, erradioarekiko <ConceptLink targetId="perpendicular">elkarzuta</ConceptLink> |
 
 <Separador />
 
-### Ekuazio kartesiarra
+### Propietateak
 
-<Formula>
-  $$
-  (x - h)^2 + (y - k)^2 = r^2
-  $$
-</Formula>
-
-$\mathbb{R}^2$ <ConceptLink targetId="coordenadas">plano kartesiarrean</ConceptLink>, $(h, k)$ zentroa eta $r$ erradioa dituen zirkunferentzia bigarren mailako ekuazio aljebraiko koadratikoaren bidez ezaugarritzen da.
+- **Perimetroaren luzera**: Kurba itxiaren dimentsio bakarreko neurriak $P = 2\pi r$ proportzionaltasun-erlazioa betetzen du nahitaez.
+- **Mugatutako diskoaren azalera**: Barruan geratzen den bi dimentsioko eremu planoaren azalera-neurriak $\mu(D) = \pi r^2$ balioa du.
+- **Simetria jarraitua**: Zirkunferentzia aldaezina da $O$ zentroaren inguruko edozein rotaziopean eta diametro bat <ConceptLink targetId="recta">zuzen eusletzat</ConceptLink> hartzen duen edozein erreflexiopean.

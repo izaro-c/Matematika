@@ -2,11 +2,12 @@ export const metadata = {
   "id": "demo-tales",
   "type": "demostracion",
   "title": "Demostración: Teorema de Tales",
-  "description": "Demostración geométrica mediante la razón de áreas de triángulos de altura común.",
+  "description": "Demostración directa de la proporcionalidad de segmentos determinados por tres o más rectas paralelas al ser cortadas por dos transversales.",
   "parentTheorem": "teorema-tales",
+  "branch": "51M",
   "proofMethod": "metodo-directo",
-  "authors": ["euclides"],
-  "tags": ["geometria", "proporcionalidad"],
+  "authors": ["tales", "euclides"],
+  "tags": ["geometria", "proporcionalidad", "semejanza", "rectas"],
   "layout": "split",
   "sources": [
     { "title": "Elementos", author: "Euclides", locator: "Libro VI, Proposición 2", role: "primary" }
@@ -17,62 +18,50 @@ import { DemoTales } from "@content/diagrams/Demos/DemoTales";
 
 <DemonstrationSection diagram={<DemoTales />}>
 
-<Capitular letra="S" />ea <VisualBind element="triangulo-abc" color="carbon">$\triangle ABC$</VisualBind> un <ConceptLink targetId="triangulo">triángulo</ConceptLink> y sea <VisualBind element="recta-de" color="terracota">$DE$</VisualBind> una <ConceptLink targetId="recta">recta</ConceptLink> <ConceptLink targetId="paralelismo">paralela</ConceptLink> a la base $BC$ que corta a los lados $AB$ y $AC$ en los puntos $D$ y $E$ respectivamente. Se demuestra el <ConceptLink targetId="teorema-tales" isDependency={true}>teorema de Tales</ConceptLink>: la <ConceptLink targetId="proporcionalidad">proporcionalidad</ConceptLink> de los <ConceptLink targetId="segmento">segmentos</ConceptLink> determinados:
-
-<Formula>
-  $$ \frac{AD}{DB} = \frac{AE}{EC} $$
-</Formula>
+<Capitular letra="D" />adas tres <ConceptLink targetId="recta">rectas</ConceptLink> <VisualBind element="paralelas" color="carbon"><ConceptLink targetId="paralelas">paralelas</ConceptLink></VisualBind> $r, s, t$ intersecadas por dos <ConceptLink targetId="recta">rectas secantes</ConceptLink> $u$ y $v$, se demuestra el <ConceptLink targetId="teorema-tales" isDependency={true}>teorema de Tales</ConceptLink>. La demostración prueba que la razón entre las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> determinados sobre la primera transversal $u$ es idéntica a la razón entre los segmentos homólogos sobre la segunda transversal $v$.
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} target={["triangulo-abc", "recta-de"]} title="Disposición inicial y paralela">
-Dado el triángulo <VisualBind element="triangulo-abc" color="carbon">$\triangle ABC$</VisualBind>, trazamos la recta <VisualBind element="recta-de" color="terracota">$DE \parallel BC$</VisualBind> con $D \in AB$ y $E \in AC$.
+<ProofStep number={1} target="paralelas" title="Configuración de paralelas y secantes">
+Consideramos tres rectas paralelas <VisualBind element="recta-r" color="carbon">$r$</VisualBind>, <VisualBind element="recta-s" color="carbon">$s$</VisualBind> y <VisualBind element="recta-t" color="carbon">$t$</VisualBind>. La secante <VisualBind element="transversal-u" color="terracota">$u$</VisualBind> interseca a las paralelas en los puntos $A, B, C$, determinando los segmentos <VisualBind element="segmento-ab" color="terracota">$\overline{AB}$</VisualBind> y <VisualBind element="segmento-bc" color="terracota">$\overline{BC}$</VisualBind>. La secante <VisualBind element="transversal-v" color="pavo">$v$</VisualBind> las interseca en $A', B', C'$, determinando <VisualBind element="segmento-a1b1" color="pavo">$\overline{A'B'}$</VisualBind> y <VisualBind element="segmento-b1c1" color="pavo">$\overline{B'C'}$</VisualBind>.
 </ProofStep>
 
-<ProofStep number={2} target={["triangulo-ade", "triangulo-bde"]} title="Construcción de los triángulos auxiliares">
-Trazamos los segmentos $BE$ y $CD$. Consideremos el triángulo <VisualBind element="triangulo-ade" color="pavo">$\triangle ADE$</VisualBind> y el triángulo <VisualBind element="triangulo-bde" color="musgo">$\triangle BDE$</VisualBind>.
-</ProofStep>
-
-<ProofStep number={3} target={["altura-h1"]} title="Razón de áreas respecto al primer cateto">
-Dado que $\triangle ADE$ y $\triangle BDE$ tienen sus bases $AD$ y $DB$ sobre la misma recta y comparten el vértice $E$, su <VisualBind element="altura-h1" color="ocre"><ConceptLink targetId="altura">altura $h_1$</ConceptLink></VisualBind> es idéntica. Por tanto, la razón de sus <ConceptLink targetId="area">áreas</ConceptLink> es igual a la razón de sus bases:
+<ProofStep number={2} target="triangulos-u" title="Razones de áreas en la primera transversal">
+Trazamos los segmentos auxiliares $\overline{AB'}$ y $\overline{CB'}$. Los triángulos $\triangle ABB'$ y $\triangle BCB'$ comparten la misma altura desde el <ConceptLink targetId="vertice">vértice</ConceptLink> $B'$. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>, la razón de sus <ConceptLink targetId="area">áreas</ConceptLink> es proporcional a la razón de sus bases sobre la recta $u$:
 
 <Formula>
-  $$ \frac{\text{Área}(\triangle ADE)}{\text{Área}(\triangle BDE)} = \frac{AD}{DB} $$
+  $$ \frac{\text{Área}(\triangle ABB')}{\text{Área}(\triangle BCB')} = \frac{\overline{AB}}{\overline{BC}} $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} target={["triangulo-ade", "triangulo-cde", "altura-h2"]} title="Razón de áreas respecto al segundo cateto">
-Análogamente, para <VisualBind element="triangulo-ade" color="pavo">$\triangle ADE$</VisualBind> y <VisualBind element="triangulo-cde" color="terracota">$\triangle CDE$</VisualBind>, con bases $AE$ y $EC$ sobre la recta $AC$ y vértice común $D$, comparten la <VisualBind element="altura-h2" color="ocre">altura $h_2$</VisualBind>:
+<ProofStep number={3} target="triangulos-v" title="Razones de áreas en la segunda transversal">
+De forma análoga, al considerar los triángulos $\triangle A'BB'$ y $\triangle B'C'B$ que comparten altura desde el vértice $B$, la razón entre sus áreas sobre la recta $v$ viene dada por:
 
 <Formula>
-  $$ \frac{\text{Área}(\triangle ADE)}{\text{Área}(\triangle CDE)} = \frac{AE}{EC} $$
+  $$ \frac{\text{Área}(\triangle A'BB')}{\text{Área}(\triangle B'C'B)} = \frac{\overline{A'B'}}{\overline{B'C'}} $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} target={["triangulo-bde", "triangulo-cde", "recta-de"]} title="Igualdad de áreas entre rectas paralelas">
-Los triángulos <VisualBind element="triangulo-bde" color="musgo">$\triangle BDE$</VisualBind> y <VisualBind element="triangulo-cde" color="terracota">$\triangle CDE$</VisualBind> comparten la base $DE$ y sus vértices opuestos $B$ y $C$ yacen sobre la recta $BC \parallel DE$. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>, ambos triángulos tienen áreas idénticas:
-
-<Formula>
-  $$ \text{Área}(\triangle BDE) = \text{Área}(\triangle CDE) $$
-</Formula>
+<ProofStep number={4} target="igualdad-alturas" title="Equivalencia de áreas entre paralelas">
+Los triángulos $\triangle ABB'$ y $\triangle A'BB'$ tienen la misma base $\overline{BB'}$ y están comprendidos entre las paralelas $r$ y $s$. Por tener la misma altura entre paralelas, sus áreas son idénticas. Del mismo modo, $\text{Área}(\triangle BCB') = \text{Área}(\triangle B'C'B)$.
 </ProofStep>
 
-<ProofStep number={6} target={["proporcion"]} title="Conclusión de la proporción">
-Igualando las dos razones de áreas por tener numeradores idénticos y denominadores iguales, obtenemos la relación de <VisualBind element="proporcion" color="carbon">proporcionalidad de Tales</VisualBind>:
+<ProofStep number={5} target="conclusion" title="Igualdad de proporciones">
+Igualando las razones de áreas gracias a la equivalencia entre los triángulos comprendidos entre las paralelas $r, s, t$, se deduce la proporción de <ConceptLink targetId="semejanza">semejanza</ConceptLink>:
 
 <Formula>
-  $$ \frac{AD}{DB} = \frac{AE}{EC} $$
+  $$ \frac{\overline{AB}}{\overline{BC}} = \frac{\overline{A'B'}}{\overline{B'C'}} $$
 </Formula>
 </ProofStep>
 
 <Separador />
 
-### Análisis
+### Análisis deductivo
 
 <Nota>
-  Proposición VI.2 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. Constituye la piedra angular de la teoría de <ConceptLink targetId="semejanza">semejanzas</ConceptLink> y de las razones trigonométricas.
+  Proposición VI.2 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>, tradicionalmente atribuida a <ConceptLink targetId="tales">Tales de Mileto</ConceptLink>. Constituye el pilar fundamental de la teoría de la proporcionalidad y la <ConceptLink targetId="semejanza">semejanza de triángulos</ConceptLink> en el <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

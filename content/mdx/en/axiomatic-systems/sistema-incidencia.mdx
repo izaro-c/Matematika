@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "sistema-incidencia",
+  lang: "en",
+  type: "sistema-axiomatico",
+  title: "Incidence system",
+  description: "Primordial axiomatic structure governing formal containment relations between points, lines, and planes.",
+  branch: "51M",
+  axiomas: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"]
+};
+
+<Capitular letra="T" />he incidence system constitutes the first deductive block of formal axiomatic geometry. It defines the primitive containment rules among undefined geometric primitives (<ConceptLink targetId="punto">point</ConceptLink>, <ConceptLink targetId="recta">line</ConceptLink>, and <ConceptLink targetId="plano">plane</ConceptLink>), abstracting away any metric concepts of <ConceptLink targetId="distancia">distance</ConceptLink>, <ConceptLink targetId="orden">order</ConceptLink>, or <ConceptLink targetId="congruencia">congruence</ConceptLink>.
+
+<Separador />
+
+### Formal structure of the system
+
+An incidence system is formally defined as a tuple $(\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I})$, where $\mathcal{P}$ is the set of points, $\mathcal{L}$ is the set of lines, $\mathcal{E}$ is the set of planes, and $\mathcal{I}$ is the binary <ConceptLink targetId="incidencia">incidence relation</ConceptLink>:
+
+$$
+\mathcal{I} \subseteq (\mathcal{P} \times \mathcal{L}) \cup (\mathcal{P} \times \mathcal{E}) \cup (\mathcal{L} \times \mathcal{E})
+$$
+
+The system governs basic spatial behavior through Hilbert's fundamental incidence axioms (I.1 to I.8):
+
+- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>Axiom I.1 (Uniqueness of line)</ConceptLink>**: For any two distinct points $A, B \in \mathcal{P}$, there exists a unique line $l \in \mathcal{L}$ such that $A \mathcal{I} l$ and $B \mathcal{I} l$.
+- **<ConceptLink targetId="axioma-incidencia-2" isDependency={true}>Axiom I.2 (Existence of points on line)</ConceptLink>**: Every line $l \in \mathcal{L}$ is incident with at least two distinct points in $\mathcal{P}$.
+- **<ConceptLink targetId="axioma-incidencia-3" isDependency={true}>Axiom I.3 (Non-collinearity)</ConceptLink>**: There exist at least three points in $\mathcal{P}$ that are not incident with the same line (non-<ConceptLink targetId="colinealidad">collinear</ConceptLink>).
+
+<Separador />
+
+### Verifying models
+
+The consistency and scope of the incidence system are demonstrated through finite and continuous models:
+
+- **<ConceptLink targetId="modelo-tres-puntos">Three-point model</ConceptLink>**: The minimal planar discrete model satisfying I.1, I.2, and I.3.
+- **<ConceptLink targetId="modelo-fano">Fano plane</ConceptLink>**: A finite projective model of 7 points and 7 lines.
+- **<ConceptLink targetId="modelo-cartesiano">Cartesian model</ConceptLink>**: The continuous analytic space $\mathbb{R}^3$ defined by linear equations.
+
+<Separador />
+
+### Metamathematical properties
+
+- **Independence**: None of the incidence axioms can be derived from the remaining ones.
+- **Metric incompleteness**: The system is deliberately underspecified with respect to distance measures, allowing extension into both <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink> and <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>.

@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "axioma-incidencia-6",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom I.6 (Intersection of Two Planes)",
+  description: "If two distinct planes have a point in common, they contain at least another common point and intersect along a line.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+  ]
+};
+
+import { Incidence6 } from '@content/diagrams/Axiomas/Incidence6';
+export const Simulation = Incidence6;
+
+<Capitular letra="I" />f two distinct <ConceptLink targetId="plano">planes</ConceptLink> share a <ConceptLink targetId="punto">point</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s sixth <ConceptLink targetId="incidencia">incidence axiom</ConceptLink> dictates that they necessarily possess at least a second common point, intersecting along an entire <ConceptLink targetId="recta">line</ConceptLink>.
+
+<Definicion title="Formal statement">
+  If two distinct <ConceptLink targetId="plano">planes</ConceptLink> $\mathcal{P}_1, \mathcal{P}_2 \in \mathcal{F}$ ($\mathcal{P}_1 \neq \mathcal{P}_2$) share a <ConceptLink targetId="punto">point</ConceptLink> $A \in \mathcal{P}_1 \cap \mathcal{P}_2$, then there exists at least another point $B \in \mathcal{P}_1 \cap \mathcal{P}_2$ with $B \neq A$, and their exact intersection is a <ConceptLink targetId="recta">line</ConceptLink> $l \in \mathcal{L}$:
+  $$
+  \forall \mathcal{P}_1, \mathcal{P}_2 \in \mathcal{F} \ \bigl((\mathcal{P}_1 \neq \mathcal{P}_2 \land A \in \mathcal{P}_1 \cap \mathcal{P}_2) \implies \exists B \in \mathcal{P}_1 \cap \mathcal{P}_2 \ (B \neq A) \land \exists l \in \mathcal{L} \ (l = \mathcal{P}_1 \cap \mathcal{P}_2)\bigr)
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation and interaction
+
+In the three-dimensional simulation, planes <VisualBind element="plane1" color="marino">$\mathcal{P}_1$</VisualBind> and <VisualBind element="plane2" color="terracota">$\mathcal{P}_2$</VisualBind> intersect. Adjusting the tilt of either plane while holding a common point fixes the line of intersection <VisualBind element="lineInt" color="carbon">$l$</VisualBind> as the continuous locus shared by both planes.
+
+<Separador />
+
+### Geometric significance and scope
+
+This axiom guarantees dimensional consistency in three-dimensional space: two distinct planes cannot touch tangentially at an isolated point. Any non-empty intersection between distinct planes necessarily yields a one-dimensional linear trace.
+
+<Separador />
+
+### Properties
+
+- **Intersection continuity:** Excludes isolated point contacts between distinct planes.
+- **Dihedral angle foundation:** Serves as the basis for defining dihedral <ConceptLink targetId="angulo">angles</ConceptLink> and spatial separation.
+- **Linear duality:** Demonstrates the dual relationship between joining non-collinear points and intersecting planes.

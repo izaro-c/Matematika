@@ -1,0 +1,63 @@
+export const metadata = {
+  "id": "demo-angulos-alternos-internos",
+  "type": "demostracion",
+  "title": "Proof: Alternate Interior Angles Theorem",
+  "description": "Proof by contradiction establishing the condition for line parallelism via congruent alternate interior angles.",
+  "parentTheorem": "teorema-angulos-alternos-internos",
+  "branch": "51M",
+  "proofMethod": "metodo-contradiccion",
+  "authors": ["euclides"],
+  "tags": ["geometria", "paralelas", "angulos"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elements", author: "Euclid", locator: "Book I, Proposition 27", role: "primary" }
+  ]
+};
+
+import { DemoAngulosAlternosInternos } from "@content/diagrams/Demos/DemoAngulosAlternosInternos";
+
+<DemonstrationSection diagram={<DemoAngulosAlternosInternos />}>
+
+<Capitular letra="G" />iven two coplanar <ConceptLink targetId="recta">lines</ConceptLink> $l$ and $m$ intersected by a secant transversal line $t$, the <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>alternate interior angles theorem</ConceptLink> is demonstrated. The proof establishes by <ConceptLink targetId="metodo-contradiccion" isDependency={true}>proof by contradiction</ConceptLink> that if alternate interior angles are <ConceptLink targetId="congruencia">congruent</ConceptLink>, the lines are <ConceptLink targetId="paralelas">parallel</ConceptLink>.
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} target="config" title="Initial hypothesis">
+Let <VisualBind element="lineL" color="carbon">$l$</VisualBind> and <VisualBind element="lineM" color="carbon">$m$</VisualBind> be two coplanar lines intersected by transversal <VisualBind element="lineT" color="carbon">$t$</VisualBind> at points $A$ and $B$. It is assumed as a hypothesis that alternate interior <ConceptLink targetId="angulo">angles</ConceptLink> <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> and <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> are congruent:
+
+<Formula>
+  $$ \alpha \cong \beta $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={2} target="absurdo" title="Contradiction hypothesis">
+To prove that $l$ and $m$ are parallel, suppose by <ConceptLink targetId="metodo-contradiccion" isDependency={true}>proof by contradiction</ConceptLink> that lines $l$ and $m$ are not parallel. Consequently, they intersect at some point <VisualBind element="pointP" color="ocre">$P$</VisualBind> in the plane.
+</ProofStep>
+
+<ProofStep number={3} target="triangulo" title="Construction of the imaginary triangle">
+The intersection at $P$ creates a <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABP$ with vertices $A, B, P$. In this triangle, angle <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> at vertex $A$ is an exterior angle relative to side $AP$, while <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> at vertex $B$ is a non-adjacent interior angle.
+</ProofStep>
+
+<ProofStep number={4} target="desigualdad" title="Application of the exterior angle theorem">
+By the exterior angle theorem in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, any exterior angle of a triangle is strictly greater than any non-adjacent interior angle. Applied to $\triangle ABP$:
+
+<Formula>
+  $$ \alpha > \beta $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={5} target="conclusion" title="Contradiction and conclusion">
+The inequality $\alpha > \beta$ directly contradicts the initial hypothesis $\alpha \cong \beta$. Since the assumption of intersection yields a logical contradiction, lines $l$ and $m$ cannot meet and are necessarily <ConceptLink targetId="paralelas">parallel</ConceptLink> ($l \parallel m$).
+</ProofStep>
+
+<Separador />
+
+### Deductive analysis
+
+<Nota>
+  Book I, Proposition 27 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>. This proof does not use the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>, making it valid throughout <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+</Nota>
+
+</DemonstrationSection>

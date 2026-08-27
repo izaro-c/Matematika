@@ -2,58 +2,46 @@ export const metadata = {
   id: "recta",
   lang: "es",
   type: "definicion",
-  subtype: "primitivo",
+  subtype: "nominal",
   title: "Recta",
-  description: "Entidad geométrica primitiva unidimensional e infinita. Su comportamiento matemático queda determinado unívocamente por los axiomas de incidencia, orden y continuidad.",
-  statement: "La recta es un elemento primitivo del sistema $\\mathcal{L}$ en la geometría sintética, identificable con un conjunto continuo e ilimitado de puntos dotado de orden lineal.",
-  domain: "geometria",
-  requires: ["punto"],
-  authors: ["hilbert", "euclides"],
+  description: "Objeto geométrico unidimensional continuo e infinito que se extiende en ambas direcciones sin curvatura.",
+  branch: "51M",
   hasSimulation: true,
-  difficulty: "básico",
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1-§3", role: "primary" },
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definiciones 2 y 4", role: "secondary" }
-  ],
-  demos: ["recta"]
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 2 y 4", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+  ]
 };
 
 import { Recta } from '@content/diagrams/Definiciones/Recta';
 export const Simulation = Recta;
 
-<Capitular letra="E" />n la fundamentación formal de la <ConceptLink targetId="geometria">geometría</ConceptLink>, la recta constituye el segundo <ConceptLink targetId="concepto-primitivo">concepto primitivo</ConceptLink>, coordinado conjuntamente con los <ConceptLink targetId="punto">puntos</ConceptLink> y los <ConceptLink targetId="plano">planos</ConceptLink>. Al carecer de una definición analítica previa en la geometría sintética pura, sus propiedades estructurales no proceden de una descripción material o métrica, sino de las relaciones abstractas que el <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> impone sobre el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de rectas $\mathcal{L}$.
+<Capitular letra="L" />a recta es una figura geométrica unidimensional integrada por un conjunto continuo e infinito de <ConceptLink targetId="punto">puntos</ConceptLink> alineados en una misma dirección. En la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>, constituye uno de los conceptos primitivos fundamentales junto con el <ConceptLink targetId="punto">punto</ConceptLink> y el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Definicion title="">
-  Una recta es una variedad unidimensional continua, homogénea e ilimitada en el <ConceptLink targetId="espacio-geometrico">espacio geométrico</ConceptLink>. No posee anchura ni <ConceptLink targetId="area">área</ConceptLink>, contiene una infinidad de <ConceptLink targetId="punto">puntos</ConceptLink> y se extiende indefinidamente en ambos sentidos.
+  Dados dos puntos distintos <VisualBind element="A" color="musgo">$A$</VisualBind> y <VisualBind element="B" color="musgo">$B$</VisualBind> en un espacio afín o euclidiano $\mathcal{E}$, la recta <VisualBind element="line" color="musgo">$\ell = \overleftrightarrow{AB}$</VisualBind> es el conjunto continuo unidimensional de puntos determinado unívocamente por las combinaciones afines de $A$ y $B$:
+  $$
+  \ell = \{ P \in \mathcal{E} \mid P = (1 - t)A + tB, \, t \in \mathbb{R} \}
+  $$
+  En la <ConceptLink targetId="geometria-analitica">geometría analítica</ConceptLink> sobre $\mathbb{R}^2$, se expresa mediante la ecuación implícita $Ax + By + C = 0$, con $(A, B) \neq (0, 0)$.
 </Definicion>
 
 <Separador />
 
-### Determinación e interacción lineal
+### Formas de ecuación en el plano cartesiano
 
-En la construcción interactiva, la <VisualBind element="lineAB" color="musgo">recta $l$</VisualBind> queda determinada de forma única al trazarla a través de los puntos <VisualBind element="pA" color="musgo">punto $A$</VisualBind> y <VisualBind element="pB" color="musgo">punto $B$</VisualBind>. Al desplazar cualquiera de estos dos puntos por el plano, la orientación espacial de la recta se reconfigura de inmediato, reflejando el principio axiomático de que dos puntos distintos fijan una única recta soporte. Todos los puntos incidentes con ella constituyen un <ConceptLink targetId="haz-rectas">haz lineal</ConceptLink> ordenado.
+La expresión algebraica de una recta adopta diversas formas equivalentes según los parámetros geométricos conocidos:
 
-<Separador />
-
-### La recta en el sistema axiomático de Hilbert
-
-En *Grundlagen der Geometrie* (1899), <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> articula la recta ($l\in\mathcal{L}$) mediante tres grupos esenciales de axiomas:
-
-- **<ConceptLink targetId="axiomas-incidencia">Axiomas de incidencia (grupo I)</ConceptLink>**: Dos puntos distintos $A \neq B$ pertenecen a una única recta $l$ (<ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>). Toda recta contiene al menos dos puntos distintos (<ConceptLink targetId="axioma-incidencia-2">Axioma I.2</ConceptLink>), lo que impide que existan rectas vacías o puntuales.
-- **<ConceptLink targetId="axiomas-orden">Axiomas de orden (grupo II)</ConceptLink>**: Los puntos pertenecientes a una recta satisfacen la relación primitiva <ConceptLink targetId="estar-entre">estar entre</ConceptLink> ($A * B * C$), dotando a la recta de un orden lineal denso, sin extremos y sin ramificaciones (<ConceptLink targetId="axioma-orden-2">Axioma II.2</ConceptLink>).
-- **<ConceptLink targetId="axiomas-continuidad">Axiomas de continuidad (grupo V)</ConceptLink>**: Mediante el <ConceptLink targetId="axioma-arquimedes">Axioma de Arquímedes</ConceptLink> y el <ConceptLink targetId="axioma-completitud">Axioma de Completitud lineal</ConceptLink>, se garantiza que la recta geométrica no presenta huecos o discontinuidades, estableciendo un <ConceptLink targetId="isomorfismo">isomorfismo estructural</ConceptLink> completo con el cuerpo de los <ConceptLink targetId="numero-real">números reales</ConceptLink> $\mathbb{R}$.
+| Forma algebraica | Ecuación matemática | Parámetros representativos |
+|---|---|---|
+| Vectorial | $\vec{r}(t) = \vec{p}_0 + t\vec{v}$ | Punto de paso $\vec{p}_0$, vector director $\vec{v}$ |
+| Explícita | $y = mx + b$ | Pendiente $m$, ordenada al origen $b$ |
+| Continua | $\frac{x - x_0}{v_x} = \frac{y - y_0}{v_y}$ | Componentes del vector director $(v_x, v_y)$ |
 
 <Separador />
 
-### Modelos y representaciones analíticas
+### Propiedades
 
-<Cita author="Euclides (c. 300 a.C.)">
-  «Línea recta es la que yace por igual respecto de los puntos que están en ella.»
-</Cita>
-
-La concepción abstracta de la recta adquiere diversas formulaciones formales según el marco matemático adoptado:
-
-- **<ConceptLink targetId="geometria-analitica">Geometría Analítica</ConceptLink> (<ConceptLink targetId="modelo-cartesiano">$\mathbb{R}^2$</ConceptLink>)**: Una recta es el conjunto solución de una <ConceptLink targetId="ecuacion-lineal">ecuación lineal</ConceptLink> de la forma $ax + by + c = 0$ (con $(a, b) \neq (0, 0)$).
-- **<ConceptLink targetId="espacio-afin">Geometría Afín</ConceptLink>**: Una recta es una subvariedad afín de <ConceptLink targetId="dimension">dimensión</ConceptLink> 1, expresada vectorialmente como $L = \{ P_0 + \lambda \vec{v} \mid \lambda \in \mathbb{R} \}$.
-- **<ConceptLink targetId="geometria-diferencial">Geometría Diferencial y Riemanniana</ConceptLink>**: La recta generaliza la noción de curva <ConceptLink targetId="geodesica">geodésica</ConceptLink>, minimizando la <ConceptLink targetId="distancia">distancia</ConceptLink> local entre pares de puntos.
-- **<ConceptLink targetId="geometria-hiperbolica">Geometría Hiperbólica</ConceptLink> (<ConceptLink targetId="disco-poincare">Disco de Poincaré</ConceptLink>)**: Las rectas se modelan analíticamente como diámetros euclidianos o como <ConceptLink targetId="circunferencia">arcos de circunferencia</ConceptLink> que cortan ortogonalmente a la frontera del disco.
+- **<ConceptLink targetId="incidencia">Existencia y unicidad</ConceptLink>**: Por dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos pasa una y solo una recta en el espacio euclidiano.
+- **<ConceptLink targetId="estar-entre">Continuidad e infinitud</ConceptLink>**: Carece de extremos y posee la <ConceptLink targetId="potencia-continuo">potencia del continuo</ConceptLink> ($\text{card}(\ell) = \lvert \mathbb{R} \rvert$).
+- **<ConceptLink targetId="geodesica">Geodésica euclidiana</ConceptLink>**: La trayectoria sobre una recta representa la <ConceptLink targetId="distancia">distancia</ConceptLink> mínima entre cualquiera de sus puntos.

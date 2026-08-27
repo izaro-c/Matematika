@@ -1,51 +1,45 @@
 export const metadata = {
-  "id": "teorema-tales",
-  "type": "teorema",
-  "title": "Talesen teorema",
-  "description": "Triangelu baten aldeen batekiko zuzen paralelo batek beste bi aldeak ebakitzen baditu, haietan segmentu proportzionalak zehazten ditu.",
-  "statement": "Bedi △ABC triangelu bat eta D ∈ AB, E ∈ AC non DE ∥ BC. Orduan AD/DB = AE/EC.",
-  "tags": ["geometria", "proporcionalidad", "paralelas"],
-  "authors": ["tales", "euclides"],
-  "difficulty": "intermedio",
-  "hasSimulation": true,
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro VI, Proposición 2", role: "primary" }
-  ],
-  "demos": ["demo-tales"]
+  id: "teorema-tales",
+  type: "teorema",
+  title: "Talesen teorema",
+  description: "Bi zuzen ebakitzaile zuzen paraleloen familia batek ebakitzen dituenean, ebakitzaile batean mugatutako zuzenkiak beste ebakitzaileko beren dagokien zuzenkiekiko proportzionalak dira.",
+  statement: "Izan bitez r eta r' bi zuzen ebakitzaile L1, L2 eta L3 hiru zuzen paralelok A, B, C eta A', B', C' puntuetan ebakitzen dituztenak. Orduan: AB / BC = A'B' / B'C'.",
+  branch: "51M",
+  hasSimulation: true,
+  authors: ["tales", "euclides"],
+  demos: ["demo-tales"],
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro VI, Proposición 2", role: "primary" }
+  ]
 };
 
 import { Tales } from '@content/diagrams/Teoremas/Tales';
 export const Simulation = Tales;
 
-<Capitular letra="T" /><ConceptLink targetId="teorema-tales">Talesen teoremak</ConceptLink> <ConceptLink targetId="semejanza">antzekotasunaren</ConceptLink> eta <ConceptLink targetId="proporcionalidad">proportzionaltasun geometrikoaren</ConceptLink> teoriaren ardatz nagusia da. Ezartzen du <VisualBind element="polygonABC" color="canela"><ConceptLink targetId="triangulo">$\triangle ABC$ triangelu</ConceptLink></VisualBind> baten aldeen batekiko <VisualBind element="segDE" color="musgo"><ConceptLink targetId="paralelismo">zuzen paralelo</ConceptLink></VisualBind> batek beste bi aldeak $D$ eta $E$ puntuetan ebakitzen baditu, alde horien gainean sortutako <ConceptLink targetId="segmento">segmentuek</ConceptLink> proportzionaltasun-arrazoi bera gordetzen dutela.
+<Capitular letra="T" />alesen teoremak plano euklidetarrek aldeen <ConceptLink targetId="semejanza">antzekotasun</ConceptLink> eta <ConceptLink targetId="proporcionalidad">proportzionaltasun</ConceptLink> teoria oinarritzen du. <ConceptLink targetId="paralelas">Zuzen paraleloen</ConceptLink> sistema batek bi <ConceptLink targetId="recta">zuzen ebakitzaile</ConceptLink> ebakitzean, lortutako <ConceptLink targetId="segmento">zuzenkien</ConceptLink> luzeren arteko erlazioa aldaezin mantentzen dela ezartzen du.
 
 <Separador />
 
-### Formulatze formala
+### Enuntziatu formala
 
-Bedi $\triangle ABC$ <ConceptLink targetId="triangulo">triangelu</ConceptLink> lau bat eta izan bedi $D \in \overline{AB}$ eta $E \in \overline{AC}$ bi puntu non <VisualBind element="segDE" color="musgo">$DE$</VisualBind> segmentua <VisualBind element="lineBC" color="pavo">$BC$</VisualBind> aldearekiko <ConceptLink targetId="paralelismo">paraleloa</ConceptLink> baita ($DE \parallel BC$). Orduan:
+Bitzak $r$ eta $r'$ <ConceptLink targetId="recta">zuzen ebakitzaile</ConceptLink> bi $\mathcal{P}$ planoan. Izan bitez $L_1, L_2, L_3$ euren artean <VisualBind element="rectas-paralelas" color="musgo"><ConceptLink targetId="paralelas">paraleloak diren hiru zuzen</ConceptLink></VisualBind>, zeinek $r$ zuzena <VisualBind element="punto-a" color="pavo">$A$</VisualBind>, <VisualBind element="punto-b" color="terracota">$B$</VisualBind>, $C$ puntuetan eta $r'$ zuzena <VisualBind element="punto-a-primo" color="pavo">$A'$</VisualBind>, <VisualBind element="punto-b-primo" color="terracota">$B'$</VisualBind>, $C'$ puntuetan ebakitzen baitituzte. Proportzio hauek nahitaez betetzen dira:
 
 <Formula>
-  $$ \frac{|AD|}{|DB|} = \frac{|AE|}{|EC|} $$
+  $$ \frac{|\overline{AB}|}{|\overline{BC}|} = \frac{|\overline{A'B'}|}{|\overline{B'C'}|} \quad \Longleftrightarrow \quad \frac{|\overline{AB}|}{|\overline{A'B'}|} = \frac{|\overline{BC}|}{|\overline{B'C'}|} $$
 </Formula>
 
-Modu baliokidean, $\triangle ADE$ triangelu partziala $\triangle ABC$ jatorrizko triangeluaren <ConceptLink targetId="semejanza">antzekoa</ConceptLink> da ($\triangle ADE \sim \triangle ABC$), homologoak diren aldeen arteko proportzioak gordez:
-
-<Formula>
-  $$ \frac{|AD|}{|AB|} = \frac{|AE|}{|AC|} = \frac{|DE|}{|BC|} $$
-</Formula>
+Beste modura esanda, $r$ zuzeneko bi zuzenkiren neurrien arteko kozientea eta $r'$ zuzeneko dagokien zuzenkiren neurrien arteko kozientea berdin-berdinak dira.
 
 <Separador />
 
-### Analisia eta fundamentazio axiomatikoa
+### Triangeluetarako korolarioa
 
-Talesen teoremak <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioma euklidestarra</ConceptLink> aurresuposatzen du, <ConceptLink targetId="geometria-euclidiana">geometria euklidestarreko</ConceptLink> planoarena soilik izanez.
-
-Frogapen klasikoak (<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko VI.2 proposizioa) $\triangle ADE$, $\triangle BDE$ eta $\triangle CDE$ triangeluen <ConceptLink targetId="area">azalerren</ConceptLink> alderaketa erabiltzen du. $\triangle BDE$ eta $\triangle CDE$ triangeluek $DE$ oinarri bera partekatzen dutenez eta $DE \parallel BC$ paraleloen artean daudenez, haien azalerak berdinak dira.
+Edozein $\triangle ABC$ <ConceptLink targetId="triangulo">triangelutan</ConceptLink>, $\overline{BC}$ aldeari <ConceptLink targetId="paralelas">paraleloa</ConceptLink> zaion eta $\overline{AB}$ zein $\overline{AC}$ aldeak $D$ eta $E$ puntuetan ebakitzen dituen $r$ zuzen bat marrazten bada, honako hau deduzitzen da:
+- Aldetan mugatutako zuzenkiak proportzionalak dira: $\frac{\overline{AD}}{\overline{DB}} = \frac{\overline{AE}}{\overline{EC}}$.
+- Lortutako $\triangle ADE$ triangelua eta jatorrizko $\triangle ABC$ triangelua <ConceptLink targetId="semejanza">antzekoak</ConceptLink> dira.
 
 <Separador />
 
-### Oharrak eta alderantzizkoa
+### Froga eta oinarritze axiomatikoa
 
-- **Teoremaren alderantzizkoa**: $D \in \overline{AB}$ eta $E \in \overline{AC}$ puntuek aldeak segmentu proportzionaletan zatitzen badituzte non $|AD|/|DB| = |AE|/|EC|$ den, orduan $D$ eta $E$ lotzen dituen zuzena nahitaez $BC$-rekiko paraleloa da.
-- **Transbertsal paraleloak**: Hiru zuzen paralelo edo gehiagoko multzo batek bi zuzen <ConceptLink targetId="transversal">transbertsal</ConceptLink> ebakitzean aplikatzera orokortzen da teorema hau.
+Demonstratu euklidetarra altuera edo oinarri bera duten triangeluen <ConceptLink targetId="area">azaleren</ConceptLink> kalkuluan oinarritzen da. Gaur egungo axiomatikan, <ConceptLink targetId="axioma-arquimedes">Arkimedesen propietatea</ConceptLink> eta zuzen errealaren jarraitutasuna beharrezkoak dira teorema zenbaki rasional zein irrazionaletan egiaztatzeko.

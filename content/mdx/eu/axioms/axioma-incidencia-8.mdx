@@ -2,34 +2,43 @@ export const metadata = {
   id: "axioma-incidencia-8",
   lang: "eu",
   type: "axioma",
-  title: "I.8 Axioma (Puntu Ez-koplanarren Existentzia)",
-  description: "Gutxienez lau puntu daude espazioan plano beraren gainean intzidentzialak ez direnak.",
+  title: "I.8 Axioma (Plano berean ez dauden puntuen existentzia)",
+  description: "Plano berean ez dauden gutxienez lau puntu existitzen dira espazioan.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+  ]
 };
 
 import { Incidence8 } from '@content/diagrams/Axiomas/Incidence8';
 export const Simulation = Incidence8;
 
-<Capitular letra="Z" />ortzigarren eta azken intzidentzia-<ConceptLink targetId="axioma-incidencia-8">axiomak</ConceptLink> espazio geometrikoaren gutxieneko hiru dimentsioko izaera postulatzen du. <ConceptLink targetId="plano">Plano</ConceptLink> beraren gainean ez dauden gutxienez lau <ConceptLink targetId="punto">punturen</ConceptLink> existentzia bermatzen du.
+<Capitular letra="I" />ntzidentzia-taldeko zortzigarren eta azken <ConceptLink targetId="axioma">axioma</ConceptLink> honek, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-ek formulatuak, plano berean ez dauden gutxienez lau <ConceptLink targetId="punto">puntu</ConceptLink> daudela baieztatzen du. Postulatu honek mugapen planarra hautesten du eta <ConceptLink targetId="espacio">espazioaren</ConceptLink> hiru dimentsioko izaera benetakoa sendotzen du nahitaez.
 
-<Definicion title="">
-  Gutxienez lau $A, B, C, D \in \mathcal{P}$ <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira non $\alpha \in \mathcal{E}$ <ConceptLink targetId="plano">plano</ConceptLink> batek ere ez dituen lauak aldi berean barne hartzen:
+<Definicion title="Enuntziatu formala">
+  Gutxienez lau $A, B, C, D \in \mathcal{S}$ <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira non inongo $\mathcal{P} \in \mathcal{F}$ <ConceptLink targetId="plano">planok</ConceptLink> ez dituen lauak aldi berean barne hartzen:
   $$
-  \exists A, B, C, D \in \mathcal{P} \ (\forall \alpha \in \mathcal{E} \implies \neg (A \in \alpha \land B \in \alpha \land C \in \alpha \land D \in \alpha))
+  \exists A, B, C, D \in \mathcal{S} \ \forall \mathcal{P} \in \mathcal{F} \ \neg\bigl(A \in \mathcal{P} \land B \in \mathcal{P} \land C \in \mathcal{P} \land D \in \mathcal{P}\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> oinarri-puntuak ikusten dira <VisualBind element="plano-pi" color="musgo">$\alpha$</VisualBind> planoaren gainean, plano horretatik kanpo dagoen laugarren <VisualBind element="pD" color="carbon">$D$</VisualBind> puntu batekin batera, tetraedro baten erpinak eratuz.
+Hiru dimentsioko simulazioan, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> eta <VisualBind element="pD" color="terracota">$D$</VisualBind> lau puntuek tetraedro bat zehazten dute. Edozein hiru punturen plano euskarria marraztean, laugarren puntua plano horretatik kanpo geratzen dela nabarmen ikusten da.
 
 <Separador />
 
-### Intzidentzia-multzoaren amaiera
+### Esanahi geometrikoa eta esparrua
 
-Postulatu honek <ConceptLink targetId="hilbert">Hilberten</ConceptLink> lehen multzo axiomatikoa uzten du ixteko. Unibertso geometrikoak gutxienez hiru dimentsio espazial independente dituela bermatzen du.
+Unibertso geometrikoa azalera lau bakar batera ez muga dadin ekiditen du. Plano berean ez dauden lau puntu eskatzean, espazioaren dimentsioa gutxienez hirura finkatzen du ($n \ge 3$), poliedroak eta bolumenak existitzea ahalbidetuz <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
+
+<Separador />
+
+### Propietateak
+
+- **Bermatutako hiru dimentsiotasuna:** Espazio geometrikoak gutxienez hiru dimentsio aske dituela ziurtatzen du.
+- **Tetraedroaren existentzia:** Tetraedroa oinarrizko gorputz geometriko tridimensional gisa definitzea ahalbidetzen du.
+- **I taldearen ixte-axioma:** 3Dko puntu, zuzen eta planoak egituratzeko beharrezkoak diren intzidentzia-axiomei amaiera ematen die.

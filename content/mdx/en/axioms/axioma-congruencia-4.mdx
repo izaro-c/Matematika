@@ -1,0 +1,37 @@
+export const metadata = {
+  id: "axioma-congruencia-4",
+  lang: "en",
+  type: "axioma",
+  title: "Axiom III.4 (Angle Transport)",
+  description: "Given an angle, a ray, and a half-plane bounded by the line containing the ray, there exists a unique angle congruent to the given angle having its vertex at the ray origin.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+  ]
+};
+
+import { Congruence4 } from '@content/diagrams/Axiomas/Congruence4';
+export const Simulation = Congruence4;
+
+<Capitular letra="T" />he fourth <ConceptLink targetId="congruencia">congruence</ConceptLink> axiom of <ConceptLink targetId="hilbert">Hilbert</ConceptLink> permits the transport of angular openings in the <ConceptLink targetId="plano">plane</ConceptLink>. It guarantees that any <ConceptLink targetId="angulo">angle</ConceptLink> can be uniquely laid off into a specified half-plane starting from a reference <ConceptLink targetId="semirrecta">ray</ConceptLink>.
+
+<Definicion title="">
+  Given an <ConceptLink targetId="angulo">angle</ConceptLink> $\angle (h, k)$, a <ConceptLink targetId="semirrecta">ray</ConceptLink> $h'$ on line $a'$, and a half-plane $H'$ bounded by $a'$, there exists a unique ray $k'$ in $H'$ sharing the same vertex as $h'$ such that angle $\angle (h, k)$ is <ConceptLink targetId="congruencia">congruent</ConceptLink> to $\angle (h', k')$:
+  $$
+  \forall \angle (h, k), \forall h' \subset a', \forall H' \implies \exists! k' \subset H' \ (\angle (h, k) \cong \angle (h', k'))
+  $$
+  Furthermore, every angle is congruent to itself: $\angle (h, k) \cong \angle (h, k)$.
+</Definicion>
+
+<Separador />
+
+### Visual representation
+
+Given the initial vertex opening between <VisualBind element="h" color="ocre">$h$</VisualBind> and <VisualBind element="k" color="ocre">$k$</VisualBind>, placing the baseline ray <VisualBind element="hP" color="pavo">$h'$</VisualBind> into the target half-plane yields a unique ray <VisualBind element="kP" color="terracota">$k'$</VisualBind> that preserves exact angular amplitude.
+
+<Separador />
+
+### Axiomatic significance
+
+This axiom acts as the angular counterpart to segment transport. It allows comparing angular openings synthetically without relying on degree measurements or trigonometric functions in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.

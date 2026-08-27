@@ -2,61 +2,62 @@ export const metadata = {
   "id": "demo-angulos-opuestos-verticales",
   "type": "demostracion",
   "title": "Demostración: Ángulos opuestos por el vértice",
-  "description": "Demostración directa basada en el carácter suplementario de los ángulos adyacentes y el axioma de sustracción de ángulos congruentes.",
+  "description": "Demostración directa basada en el carácter suplementario de los ángulos adyacentes sobre una recta y la propiedad de sustracción de congruencias.",
   "parentTheorem": "teorema-angulos-opuestos-verticales",
+  "branch": "51M",
   "proofMethod": "metodo-directo",
   "authors": ["euclides"],
-  "tags": ["geometria", "congruencia"],
+  "tags": ["geometria", "congruencia", "angulos"],
   "layout": "split",
   "sources": [
     { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 15", role: "primary" }
   ]
 };
 
-import { DemoAngulosOpuestos } from '@content/diagrams/Demos/DemoAngulosOpuestos';
+import { DemoAngulosOpuestos } from "@content/diagrams/Demos/DemoAngulosOpuestos";
 
 <DemonstrationSection diagram={<DemoAngulosOpuestos />}>
 
-<Capitular letra="S" />ean <VisualBind element="lineL" color="carbon">$l$</VisualBind> y <VisualBind element="lineM" color="carbon">$m$</VisualBind> dos <ConceptLink targetId="recta">rectas</ConceptLink> que se <ConceptLink targetId="interseccion">intersecan</ConceptLink> en el <ConceptLink targetId="punto">punto</ConceptLink> $O$. Se demuestra el <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>teorema de los ángulos opuestos por el vértice</ConceptLink>: los <ConceptLink targetId="angulos-opuestos-por-el-vertice">ángulos opuestos por el vértice</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí.
+<Capitular letra="S" />ean <VisualBind element="lineL" color="carbon">$l$</VisualBind> y <VisualBind element="lineM" color="carbon">$m$</VisualBind> dos <ConceptLink targetId="recta">rectas</ConceptLink> secantes que se intersecan en un <ConceptLink targetId="punto">punto</ConceptLink> $O$. Se demuestra el <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>teorema de los ángulos opuestos por el vértice</ConceptLink>: cualquier par de ángulos opuestos por el vértice formados por la intersección son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí.
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} title="Ángulos adyacentes sobre la recta l" target="supp12">
-Las <ConceptLink targetId="recta">rectas secantes</ConceptLink> <VisualBind element="lineL" color="carbon">$l$</VisualBind> y <VisualBind element="lineM" color="carbon">$m$</VisualBind> determinan <ConceptLink targetId="angulos-adyacentes">ángulos adyacentes</ConceptLink>. Los <ConceptLink targetId="angulo">ángulos</ConceptLink> <VisualBind element="angle1" color="terracota">$\angle 1$</VisualBind> y <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> forman un <ConceptLink targetId="angulo-llano">ángulo llano</ConceptLink> sobre la <ConceptLink targetId="recta">recta</ConceptLink> $l$:
+<ProofStep number={1} target="supp12" title="Ángulos adyacentes suplementarios sobre la primera recta">
+Las rectas secantes $l$ y $m$ determinan cuatro <ConceptLink targetId="angulo">ángulos</ConceptLink> alrededor del vértice de intersección $O$. Los ángulos <VisualBind element="angle1" color="terracota">$\angle 1$</VisualBind> y <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> se disponen de manera adyacente sobre la recta $l$, formando un <ConceptLink targetId="angulos-suplementarios">ángulo llano</ConceptLink>:
 
 <Formula>
-  $$ \angle 1 + \angle 2 \cong 180^\circ $$
+  $$ m(\angle 1) + m(\angle 2) = 180^\circ $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} title="Ángulos adyacentes sobre la recta m" target="supp23">
-De forma análoga, los <ConceptLink targetId="angulo">ángulos</ConceptLink> <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> y <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> son <ConceptLink targetId="angulos-suplementarios">suplementarios</ConceptLink> sobre la <ConceptLink targetId="recta">recta</ConceptLink> $m$:
+<ProofStep number={2} target="supp23" title="Ángulos adyacentes suplementarios sobre la segunda recta">
+De forma análoga, sobre la recta $m$, los ángulos adyacentes <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> y <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> son <ConceptLink targetId="angulos-suplementarios">suplementarios</ConceptLink>:
 
 <Formula>
-  $$ \angle 2 + \angle 3 \cong 180^\circ $$
+  $$ m(\angle 2) + m(\angle 3) = 180^\circ $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={3} title="Igualdad de sumas angulares" target="angle2">
-Puesto que ambas sumas equivalen a dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink> ($180^\circ$), por la propiedad transitiva de la <ConceptLink targetId="congruencia">congruencia</ConceptLink> se concluye la igualdad de las composiciones:
+<ProofStep number={3} target="angle2" title="Igualdad de las sumas angulares">
+Puesto que ambas sumas angulares equivalen a un ángulo llano ($180^\circ$), por la propiedad de igualdad de amplitudes reales se deduce la equivalencia:
 
 <Formula>
-  $$ \angle 1 + \angle 2 \cong \angle 2 + \angle 3 $$
+  $$ m(\angle 1) + m(\angle 2) = m(\angle 2) + m(\angle 3) $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} title="Sustracción del ángulo común" target="congruence13">
-Sustrayendo el <ConceptLink targetId="angulo">ángulo</ConceptLink> común <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> de ambos miembros por los <ConceptLink targetId="axiomas-congruencia" isDependency={true}>axiomas de congruencia</ConceptLink>, obtenemos la <ConceptLink targetId="congruencia">congruencia</ConceptLink> del primer par:
+<ProofStep number={4} target="congruence13" title="Sustracción del ángulo común">
+Aplicando los <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axiomas de congruencia angular</ConceptLink>, sustrayendo el ángulo común <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> de ambos miembros de la ecuación se obtiene la congruencia del primer par de ángulos opuestos:
 
 <Formula>
   $$ \angle 1 \cong \angle 3 $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} title="Demostración para el par complementario" target="angle4">
-Aplicando un razonamiento idéntico al par formado por <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> y <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind>, se concluye que <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> $\cong$ <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind>.
+<ProofStep number={5} target="angle4" title="Demostración para el par opuesto complementario">
+Un razonamiento idéntico aplicado al par adyacente formado por <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> y <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind> concluye que el segundo par opuesto satisface <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> $\cong$ <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind>.
 </ProofStep>
 
 <Separador />
@@ -64,7 +65,7 @@ Aplicando un razonamiento idéntico al par formado por <VisualBind element="angl
 ### Análisis deductivo
 
 <Nota>
-  Proposición I.15 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. Esta demostración pertenece a la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>, pues prescinde del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>.
+  Proposición I.15 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. Esta demostración se encuadra en el <ConceptLink targetId="sistema-absoluto">sistema axiomático absoluto</ConceptLink>, pues no requiere la hipótesis del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

@@ -2,50 +2,47 @@ export const metadata = {
   id: "circunferencia",
   lang: "es",
   type: "definicion",
-  subtype: "fundamentada",
+  subtype: "nominal",
   title: "Circunferencia",
-  description: "Lugar geométrico de los puntos de un plano situados a una distancia constante de un punto fijo denominado centro.",
+  description: "Lugar geométrico de los puntos del plano que equidistan de un punto fijo denominado centro.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 15", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 15", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
   ]
 };
 
 import { Circunferencia } from '@content/diagrams/Definiciones/Circunferencia';
 export const Simulation = Circunferencia;
 
-<Capitular letra="L" />a <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> es la curva plana cerrada cuyos <ConceptLink targetId="punto">puntos</ConceptLink> equidistan de un punto fijo denominado centro. Constituye la figura geométrica fundamental para definir simetrías rotacionales y medir <ConceptLink targetId="angulo">ángulos</ConceptLink>.
+<Capitular letra="L" />a circunferencia es el lugar geométrico unidimensional de todos los <ConceptLink targetId="punto">puntos</ConceptLink> de un <ConceptLink targetId="plano">plano</ConceptLink> que se encuentran a una distancia constante de un punto fijo denominado centro. Constituye la curva cerrada fundamental en la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>, delimitando la región convexa acotada conocida como disco o círculo.
 
 <Definicion title="">
-  Dado un punto $O$ en un <ConceptLink targetId="plano">plano</ConceptLink> $\pi$ y un <ConceptLink targetId="numero-real">número real</ConceptLink> $r > 0$, la circunferencia $\mathcal{C}(O, r)$ es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de todos los puntos $P \in \pi$ cuya <ConceptLink targetId="distancia" isDependency={true}>distancia</ConceptLink> a $O$ es estrictamente igual a $r$:
+  Dado un punto <VisualBind element="centro" color="musgo">$O \in \mathcal{P}$</VisualBind> en un plano $\mathcal{P}$ y un escalar real estrictamente positivo $r > 0$, la circunferencia <VisualBind element="circunferencia" color="musgo">$\mathcal{C}(O, r)$</VisualBind> de centro $O$ y radio $r$ se define como el conjunto de puntos $P \in \mathcal{P}$ cuya distancia escalar a $O$ es idéntica a $r$:
   $$
-  \mathcal{C}(O, r) = \{P \in \pi \mid d(O, P) = r\}
+  \mathcal{C}(O, r) = \{ P \in \mathcal{P} \mid d(O, P) = r \}
   $$
+  donde $d(O, P) = \|P - O\| = r$. El segmento $\overline{OP}$ que une el centro con cualquier punto de la curva se denomina <ConceptLink targetId="radio">radio</ConceptLink>.
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Elementos y rectas asociadas
 
-En la simulación interactiva se muestra la circunferencia <VisualBind element="circunferencia" color="terracota">$\mathcal{C}(O, r)$</VisualBind> de centro <VisualBind element="centro" color="carbon">$O$</VisualBind>. El radio <VisualBind element="radio" color="musgo">$OP$</VisualBind> une el centro con un punto arbitrario <VisualBind element="punto-p" color="terracota">$P$</VisualBind>. Se pueden visualizar la cuerda <VisualBind element="cuerda" color="pavo">$QR$</VisualBind>, el diámetro <VisualBind element="diametro" color="ocre">$DP$</VisualBind> y la recta <VisualBind element="tangente" color="musgo">tangente</VisualBind>.
+La geometría de la circunferencia involucra diversos elementos lineales y angulares característicos:
 
-<Separador />
-
-### Elementos característicos
-
-- **Centro**: <ConceptLink targetId="punto">Punto</ConceptLink> fijo $O$ respecto al cual se mide la equidistancia de la curva.
-- **Radio**: <ConceptLink targetId="segmento">Segmento</ConceptLink> que une el centro $O$ con cualquier punto $P$ de la circunferencia.
-- **Diámetro**: Segmento que une dos puntos de la circunferencia pasando por su centro; su longitud es $2r$.
-- **Cuerda**: Segmento que une dos puntos cualesquiera pertenecientes a la circunferencia.
-- **Tangente**: <ConceptLink targetId="recta">Recta</ConceptLink> coplanar que interseca a la circunferencia en un único punto $T$, siendo <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> al radio $OT$.
+| Elemento | Definición geométrica | Expresión o propiedad |
+|---|---|---|
+| Cuerda | <ConceptLink targetId="segmento">Segmento</ConceptLink> que une dos puntos de la circunferencia | $\overline{AB} \text{ con } A, B \in \mathcal{C}$ |
+| Diámetro | Cuerda que contiene al centro $O$ | $d = 2r$ (máxima distancia interna) |
+| Recta secante | <ConceptLink targetId="recta">Recta</ConceptLink> que interseca a la circunferencia en dos puntos | $\lvert L \cap \mathcal{C} \rvert = 2$ |
+| Recta tangente | Recta que interseca a la circunferencia en un único punto | $\lvert L \cap \mathcal{C} \rvert = 1$, <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> al radio |
 
 <Separador />
 
-### Ecuación cartesiana
+### Propiedades
 
-<Formula>
-  $$
-  (x - h)^2 + (y - k)^2 = r^2
-  $$
-</Formula>
-
-En el <ConceptLink targetId="coordenadas">plano cartesiano</ConceptLink> $\mathbb{R}^2$, la circunferencia con centro en $(h, k)$ y radio $r$ queda caracterizada mediante la ecuación algebraica cuadrática de segundo grado.
+- **Longitud del perímetro**: La medida unidimensional de la curva cerrada satisface la relación proporcional $P = 2\pi r$.
+- **Área del disco delimitado**: La región plana bidimensional acotada interiormente posee una medida de superficie igual a $\mu(D) = \pi r^2$.
+- **Simetría continua**: La circunferencia es invariante bajo cualquier rotación alrededor de su centro $O$ y bajo cualquier reflexión respecto a un diámetro que actúe como <ConceptLink targetId="recta">recta soporte</ConceptLink>.

@@ -1,57 +1,42 @@
 export const metadata = {
-  "id": "metodo-contradiccion",
-  "type": "metodo",
-  "subtype": "demostracion",
-  "title": "Ezeztapen bidezko frogapena",
-  "description": "Esaera bat egiazkoa dela frogatzea, haren ezeztapenak ezintasun logiko batera daramala erakutsiz. Absurdura bideratzea bezala ere ezaguna.",
-  "hasSimulation": true
+  id: "metodo-contradiccion",
+  lang: "eu",
+  type: "metodo",
+  subtype: "demostracion",
+  title: "Aurkakotasun-metodoa",
+  description: "Ezeztapenezko zeharkako metodoa: tesia faltsua dela suposatuz kontraesan logiko bat deduzitzen da.",
+  branch: "51M",
+  hasSimulation: true
 };
 
-import { ContradictionSimulation } from "@content/diagrams/Metodos/ContradictionSimulation";
+import { ContradictionSimulation } from '@content/diagrams/Metodos/ContradictionSimulation';
 export const Simulation = ContradictionSimulation;
 
-<Capitular letra="E" />zeztapen bidezko frogapena — historikoki *reductio ad absurdum* edo absurdura bideratzea deitua — analitika matematikoko tresna boteretsuenetako bat da. $P$-k $Q$ inplikatzen duela zuzenean frogatu beharrean, zeharbidezko estrategia bat hartzen da: ondorioa gezurrezkoa dela suposatzen da ($\neg Q$) eta suposizio horrek, ezagunak diren gertaerekin konbinatuta, inplizituki kontraesan logiko batera daramala erakusten da.
+<Capitular letra="A" />urkakotasun-metodoa —klasikoki *reductio ad absurdum* deitua— matematikako zeharkako froga-estrategia nagusia da. Hirugarren baztertuaren printzipioan eta ez-kontraesanaren printzipioan oinarritzen da, erakutsiz <ConceptLink targetId="tesis">tesiaren</ConceptLink> ezeztapenak $R \land \neg R$ absurdu batera ezinbestean eramango balu, jatorrizko tesia nahitaez egiazkoa dela.
 
 <Separador />
 
 ### Egitura logikoa
 
-Argudioa hiru fase deduktiboren bidez garatzen da:
+$P \implies Q$ baldintzazko proposizioa frogatzeko, arrazoiketak hipotesi absurduaren bidez jotzen du aurrera:
 
-- **Tesiaren ezeztapena**: $\neg Q$ suposatzen da (frogatu nahi denaren ezeztapena).
-- **Dedukzioa**: $P$ hipotesia, ezarritako <ConceptLink targetId="axioma" isDependency={false}>axiomak</ConceptLink> eta <ConceptLink targetId="teorema" isDependency={false}>teoremak</ConceptLink> erabiliz, $\neg Q$-ren ondorioak deduzitzen dira.
-- **Kontraesana**: Esakizun ezinezko batera iristen da — adibidez, $1 = 0$, zenbaki bat bikoitia eta bakoitia dela batera, edo oinarrizko axioma bat urratzen dela.
-
-Razonamendu deduktiboa baliozkoa denez eta hasierako premisak egiazkoak direnez, inkonsistentziaren iturri bakarra $\neg Q$ lan-hipotesia da. Beraz, $\neg Q$ gezurrezkoa izan behar da eta, ondorioz, $Q$ egiazkoa da.
-
-<Formula>
-  $$ \frac{P,\ \neg Q \vdash \bot}{P \implies Q} $$
-</Formula>
+1. $P$ <ConceptLink targetId="hipotesis">hipotesiaren</ConceptLink> egiazkotasuna eta $\neg Q$ tesiaren ezeztapena onartzen dira batera premisa gisa.
+2. Deduizio-garapen zorrotza egiten da $P \land \neg Q$ konjunctionetik abiatuta.
+3. Formalki $R \land \neg R$ motako kontraesana lortzen da, non $R$ jakina den <ConceptLink targetId="axioma">axioma</ConceptLink> bat, <ConceptLink targetId="teorema">teorema</ConceptLink> bat edo garapenean lortutako proposizio bat den.
+4. Ez-kontraesanaren printzipioz, $\neg Q$ ezeztapena baztertu egiten da, $Q$ egiazkoa dela ezinbestean frogatuz:
+   $$ (P \land \neg Q \implies \bot) \implies (P \implies Q) $$
 
 <Separador />
 
-### Adibide klasikoak
+### Adibideak geometrian eta zenbaki-teorian
 
-- **<ConceptLink targetId="teorema-dos-rectas-un-punto" isDependency={false}>Zuzenen ebakidura bakarra</ConceptLink>**: Bi <ConceptLink targetId="recta" isDependency={false}>zuzen</ConceptLink> desberdin ezin daitezkeela <ConceptLink targetId="punto" isDependency={false}>puntu</ConceptLink> bat baino gehiagotan ebaki frogatzeko, $A$ eta $B$ bi puntutan ebakitzen direla suposatzen da. Honek <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>I-1 inzidentzia-axioma</ConceptLink> urratzen du.
-
-- **<ConceptLink targetId="demo-reciproco-triangulo-isosceles" isDependency={false}>Triangelu isoszelearen alderantzizkoa</ConceptLink>**: <ConceptLink targetId="triangulo" isDependency={false}>Triangelu</ConceptLink> baten bi <ConceptLink targetId="angulo">angelu</ConceptLink> berdinak badira, aurkako aldeak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira. Aldeen desberdintasuna suposatzen da eta kontraesana lortzen da <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>kanpoko angeluaren teoremaren</ConceptLink> bidez.
-
-- **$\sqrt{2}$-ren <ConceptLink targetId="numero-irracional">irrazionaltasuna</ConceptLink>**: $\sqrt{2} = \frac{p}{q}$ zatiki laburtezinean ordezka daitekeela suposatzen da. Karratua eginez $p^2 = 2q^2$ lortzen da, eta honek $p$ zein $q$ bikoitiak direla dakar, zatikiaren laburtezintasunarekin kontraesanean eginez.
+- **$\sqrt{2}$-ren irrazionaltasuna**: Supposatzen da $\sqrt{2}$ <ConceptLink targetId="numero-real">zenbaki erreala</ConceptLink> <ConceptLink targetId="koziente">zatiki laburtezina</ConceptLink> $p/q$ gisa adieraz daitekeela. Garapen aljebraikoak $p$ zein $q$ bikoitiak direla deduzitzen du, zatikiaren laburtezintasunarekin zuzenean kontraesanean sartuz.
+- **Zenbaki lehenen infinitutasuna**: Supposatzen da <ConceptLink targetId="numero-natural">zenbaki lehenen</ConceptLink> kopuru finitua dagoela $p_1, p_2, \dots, p_n$. Eraikitzen den $N = (p_1 p_2 \dots p_n) + 1$ zenbakiak kontraesana sortzen du zerrendako ezein zenbaki lehenez ezin daitekeelako zatitu.
+- **<ConceptLink targetId="paralelismo">Zuzen paraleloaren</ConceptLink> bakartasuna**: <ConceptLink targetId="geometria-euclidiana">Geometria euklidesarrean</ConceptLink>, puntu beretik igarotzen diren eta emandako zuzen batekiko paraleloak diren bi zuzen desberdin daudela suposatzeak kontraesana dakar <ConceptLink targetId="axioma-paralelas-euclides">bosgarren postulatuarekin</ConceptLink>.
 
 <Separador />
 
-### Noiz erabili
+### Propietateak
 
-Ezeztapen bidezko metodoa aukeratzen da kasu hauetan:
-
-- Ondorioaren ezeztapenak egitura aljebraiko edo geometrikoa kudeagarriagoa eskaintzen duenean.
-- Inexistentziari buruzko baieztapen bat («ez da existitzen...») edo bakartasun-baieztapen bat («gehienez elementu batek betetzen du...») frogatu nahi denean.
-- Zuzeneko bideak premisa bitartekari agerikotasunik ez duenean hipotesia tesiarekin lotzeko.
-
-<Separador />
-
-### Indarguneak eta ahuleziak
-
-<Nota>
-  **Bermea egituran**: Ezeztapen bidezko frogapena zeharbidezko frogapen-tresna unibertsala da. Hala ere, ez du metodo eraikitzailerik eskaintzen objektu matematikoa erakusteko, haren ezeztapenaren ezintasun logikoa egiaztatzera mugatuz.
-</Nota>
+- **Indar zeharkakoa**: <ConceptLink targetId="metodo-directo">Zuzeneko metodoaren</ConceptLink> bidez datu esplizituen faltagatik lortezinak diren proposizioak frogatzea ahalbidetzen du.
+- **Ez-eraikitzailetasuna**: Proposizio baten saihestezinezko egiazkotasuna ezartzen du, kasuan kasuko objektu geometriko edo numerikoa esplizituki erakutsi gabe.

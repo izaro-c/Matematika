@@ -4,48 +4,46 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Angelua",
-  description: "Erpin deritzon jatorri-puntu bera partekatzen duten bi erredierari ez-lerrokidek osatutako irudi geometrikoa.",
+  description: "Erpin izeneko jatorri bera partekatzen duten bi zuzenerdik mugatutako planoaren eskualdea.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" },
-    { title: "Elementuak", author: "Euclides", locator: "I. Liburua, 8. Definizioa", role: "secondary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 8 y 9", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
   ]
 };
 
 import { Angulo } from '@content/diagrams/Definiciones/Angulo';
 export const Simulation = Angulo;
 
-<Capitular letra="A" />ngelua jatorri komunean konbergitzen duten bi erredierari koplanarrek mugatutako konfigurazio espaziala da. <ConceptLink targetId="congruencia">Kongruentzia</ConceptLink>, <ConceptLink targetId="semejanza">antzekotasuna</ConceptLink> eta trigonometria egituratzeko oinarrizko <ConceptLink targetId="angulo">angelu</ConceptLink> kontzeptua da.
+<Capitular letra="A" />ngelua jatorri edo <ConceptLink targetId="vertice">erpin</ConceptLink> bera duten bi <ConceptLink targetId="semirrecta">zuzenerdiren</ConceptLink> elkarketak osatutako figura geometrikoa da. Norabideen arteko irekiera neurtzeko eta <ConceptLink targetId="plano">planoan</ConceptLink> <ConceptLink targetId="trigonometria">trigonometria</ConceptLink> ezartzeko oinarrizko kontzeptua da.
 
 <Definicion title="">
-  $O$ jatorri bera duten eta <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> berean ez dauden bi $OA^{\rightarrow}$ eta $OB^{\rightarrow}$ erredierari emanda, $\angle AOB$ angelua bi erredierariek osatutako par ordenatu gabea da:
+  <VisualBind element="pO" color="carbon">$O$</VisualBind> puntuan jatorri bera duten <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> eta <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> bi zuzenerdi emanda, <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> angelua bi zuzenerdien <ConceptLink targetId="union-conjuntos">elkarketak</ConceptLink> osatutako figura planoa da:
   $$
-  \angle AOB = \{OA^{\rightarrow}, OB^{\rightarrow}\}
+  \angle AOB = \overrightarrow{OA} \cup \overrightarrow{OB}
   $$
-  $O$ <ConceptLink targetId="punto" isDependency={true}>puntua</ConceptLink> angeluaren erpina da eta $OA^{\rightarrow}$ zein $OB^{\rightarrow}$ bere aldeak dira.
+  Bere neurtze-amplitudeari $\alpha = \text{m}(\angle AOB)$ <ConceptLink targetId="radian">radianetan</ConceptLink> edo gradu sexagesimaletan $[0, 2\pi)$ tarteko balio eskalar erreala esleitzen zaio.
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Sailkapena neurtze-amplitudearen arabera
 
-Simulazio interaktiboan <VisualBind element="rayOA" color="terracota">$OA^{\rightarrow}$</VisualBind> eta <VisualBind element="rayOB" color="terracota">$OB^{\rightarrow}$</VisualBind> erredierariak ikusten dira <VisualBind element="pO" color="pavo">$O$</VisualBind> erpin komunarekin. Barneko <VisualBind element="angleArc" color="musgo">$\angle AOB$</VisualBind> arkuak bere irekiera angeluar erlatiboa adierazten du <ConceptLink targetId="plano">planoan</ConceptLink>.
+Angeluak beren $\alpha$ neurri-amplitudeari dagokion zenbakizko tartearen arabera sailkatzen dira:
+
+| Angelu mota | Neurri-tartea radianetan | Neurri-tartea graduetan |
+|---|---|---|
+| <ConceptLink targetId="angulo-agudo">Zorrotza</ConceptLink> | $0 < \alpha < \frac{\pi}{2}$ | $0^\circ < \alpha < 90^\circ$ |
+| <ConceptLink targetId="angulo-recto">Zuzena</ConceptLink> | $\alpha = \frac{\pi}{2}$ | $\alpha = 90^\circ$ |
+| <ConceptLink targetId="angulo-obtuso">Kamutsa</ConceptLink> | $\frac{\pi}{2} < \alpha < \pi$ | $90^\circ < \alpha < 180^\circ$ |
+| <ConceptLink targetId="angulo-llano">Laua</ConceptLink> | $\alpha = \pi$ | $\alpha = 180^\circ$ |
+| Konkaboa | $\pi < \alpha < 2\pi$ | $180^\circ < \alpha < 360^\circ$ |
 
 <Separador />
 
-### Hilberten oinarritze axiomatikoa
+### Propietateak
 
-<ConceptLink targetId="hilbert">Hilberten</ConceptLink> axiomatizazioan, angeluen berdintasuna eta neurria <ConceptLink targetId="congruencia">kongruentzia-axiomen</ConceptLink> bidez egituratzen da:
-
-- **Angeluen garraioa**: $\angle AOB$ angelu bat eta $O'A'^{\rightarrow}$ erredierari bat emanda, $O'B'^{\rightarrow}$ erredierari bakarra existitzen da planoaren alde bakoitzean non $\angle AOB \cong \angle A'O'B'$ betetzen den (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axioma</ConceptLink>).
-- **SAS kriterioa**: Bi alderen eta bien arteko angeluaren kongruentziak <ConceptLink targetId="triangulo">triangeluen</ConceptLink> kongruentzia osoa bermatzen du (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 axioma</ConceptLink>).
-
-<Separador />
-
-### Sailkapen metrikoa
-
-| Mota | Definizio geometrikoa | Angelu-neurria ($\text{graduak}$) | Neurria ($\text{radianak}$) |
-|---|---|---|---|
-| Zorrotza | Angelu zuzen bat baino txikiagoa | $\theta < 90^\circ$ | $\theta < \frac{\pi}{2}$ |
-| Zuzena | Bere <ConceptLink targetId="angulos-suplementarios">osagarri</ConceptLink> adyazentearekin kongruentea | $\theta = 90^\circ$ | $\theta = \frac{\pi}{2}$ |
-| Kamutsa | Angelu zuzen bat baino handiagoa | $90^\circ < \theta < 180^\circ$ | $\frac{\pi}{2} < \theta < \pi$ |
-| Laua | Bi erredierari aurkakoek osatua | $\theta = 180^\circ$ | $\theta = \pi$ |
+- **<ConceptLink targetId="bisectriz">Erdibitzailearen existentzia</ConceptLink>**: Angelu ez-nulu bakoitzak <ConceptLink targetId="bisectriz">erdibitzaile</ConceptLink> bakarra du, bi angelu kongruentetan banatzen duena.
+- **<ConceptLink targetId="angulos-suplementarios">Aditivitate angeluarra</ConceptLink>**: $\overrightarrow{OC}$ zuzenerdi bat $\angle AOB$-ren barnean badago, orduan $\text{m}(\angle AOC) + \text{m}(\angle COB) = \text{m}(\angle AOB)$ betetzen da ezinbestean.
+- **<ConceptLink targetId="congruencia">Kongruentzia-irizpidea</ConceptLink>**: Bi angelu kongruenteak dira ($\angle AOB \cong \angle CDE$) beren neurri angeluarrak berdinak badira soilik.

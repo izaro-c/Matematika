@@ -1,0 +1,37 @@
+export const metadata = {
+  id: "axioma-completitud",
+  lang: "en",
+  type: "axioma",
+  title: "Dedekind's Completeness Axiom",
+  description: "If all points of a line are partitioned into two non-empty sets such that no point of the first lies between two points of the second, there exists a unique point producing this partition.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "§3", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §7", role: "primary" }
+  ]
+};
+
+import { AxiomaDedekind } from '@content/diagrams/Axiomas/AxiomaDedekind';
+export const Simulation = AxiomaDedekind;
+
+<Capitular letra="D" />edekind's completeness axiom represents the ultimate postulate of <ConceptLink targetId="continuidad">continuity</ConceptLink> in linear geometry. It guarantees the absence of "gaps" or discontinuities in the geometric <ConceptLink targetId="recta">line</ConceptLink>.
+
+<Definicion title="">
+  If the points of a <ConceptLink targetId="recta">line</ConceptLink> $l$ are partitioned into two non-empty subsets $S_1$ and $S_2$ such that no point of $S_1$ lies between two points of $S_2$ and no point of $S_2$ lies between two of $S_1$, then there exists a unique <ConceptLink targetId="punto">point</ConceptLink> $O \in l$ that determines this partition:
+  $$
+  \forall (S_1, S_2) \text{ partition on } l \implies \exists! O \in l \ (\forall P \in S_1 \setminus \{O\}, \forall Q \in S_2 \setminus \{O\} \implies P \text{-} O \text{-} Q)
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation
+
+Partitioning the continuous line into disjoint sections <VisualBind element="S1" color="ocre">$S_1$</VisualBind> and <VisualBind element="S2" color="pavo">$S_2$</VisualBind> highlights boundary point <VisualBind element="pO" color="terracota">$O$</VisualBind> acting as the exact cut closing linear geometric continuity.
+
+<Separador />
+
+### Axiomatic significance
+
+This axiom establishes an isomorphism between the synthetic geometric line and the complete ordered field of real numbers $\mathbb{R}$. It ensures the existence of intersection points between circles and lines when relative distances mandate it, underpinning infinitesimal calculus and analytic geometry.

@@ -96,6 +96,26 @@ export const Congruence1Spec = createDiagramSpec(
       },
       "target": true,
       "targetId": "r"
+    },
+    {
+      "id": "group4",
+      "label": "Segmentos Congruentes",
+      "memberIds": [
+        "pA",
+        "pB",
+        "segAB",
+        "pC",
+        "pD",
+        "segCD"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruentSegments"
     }
   ],
   "objects": [
@@ -217,7 +237,7 @@ export const Congruence1Spec = createDiagramSpec(
       ],
       "selection": {
         "selectable": true,
-        "highlightable": false,
+        "highlightable": true,
         "ariaLabel": "Punto D",
         "role": "primary"
       },
@@ -289,7 +309,7 @@ export const Congruence1Spec = createDiagramSpec(
       ],
       "selection": {
         "selectable": true,
-        "highlightable": false,
+        "highlightable": true,
         "ariaLabel": "Segmento",
         "role": "secondary"
       },
@@ -322,7 +342,7 @@ export const Congruence1Spec = createDiagramSpec(
       ],
       "selection": {
         "selectable": true,
-        "highlightable": false,
+        "highlightable": true,
         "ariaLabel": "Segmento",
         "role": "secondary"
       },
@@ -382,7 +402,7 @@ export const Congruence1Spec = createDiagramSpec(
       ],
       "selection": {
         "selectable": false,
-        "highlightable": false,
+        "highlightable": true,
         "ariaLabel": "Semirrecta",
         "role": "secondary"
       },

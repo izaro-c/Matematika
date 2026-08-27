@@ -2,35 +2,36 @@ export const metadata = {
   id: "axioma-arquimedes",
   lang: "eu",
   type: "axioma",
-  title: "V.1 Axioma (Arkimedesen Axioma)",
-  description: "Edozein bi zuzenki emanda, txikienaren multiplo oso bat existitzen da luzeran handiena gainditzen duena.",
+  title: "Arkimedesen Axioma",
+  description: "Edozein AB zuzenki eta CD zuzenki emanda, n zenbaki natural bat existitzen da n bider katenatutako CD zuzenkiak AB zuzenkiaren luzera gainditzeko moduan.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Sobre la esfera y el cilindro", author: "Arquímedes", locator: "I. Liburua, 5. Sarrera", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §8", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Sobre la esfera y el cilindro", author: "Arquímedes", locator: "Libro I, Asunción 5", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §7", role: "primary" }
+  ]
 };
 
 import { AxiomaArquimedes } from '@content/diagrams/Axiomas/AxiomaArquimedes';
 export const Simulation = AxiomaArquimedes;
 
-<Capitular letra="J" />arraitutasun-multzoko lehen axiomak, <ConceptLink targetId="axioma-arquimedes">Arkimedesen axiomak</ConceptLink>, magnitude geometriko infinitesimalik edo beste batzuekiko infinituki handirik ez dagoela ezartzen du.
+<Capitular letra="A" />rkimedesen axioma <ConceptLink targetId="continuidad">jarraitutasunaren</ConceptLink> lehenengo postulatu gisa ezartzen da (<ConceptLink targetId="hilbert">Hilberten</ConceptLink> IV.1 axioma). Elementu infinituki handien edo infinitesimalen existentzia kanpoan uzten du geometria metrikoan.
 
 <Definicion title="">
-  Edozein bi $AB$ eta $CD$ <ConceptLink targetId="segmento">zuzenkitarako</ConceptLink>, $n \in \mathbb{N}^+$ zenbaki oso positibo bat existitzen da non $AB$-ren $n$ kopia jarraituren baturak $CD$ zuzenkia gainditzen duen:
+  Izan bitez $\overline{AB}$ eta $\overline{CD}$ bi <ConceptLink targetId="segmento">zuzenki</ConceptLink> arbitrario. $n \in \mathbb{N}^+$ zenbaki oso positibo bat existitzen da, non $AB$ zuzenerdian $\overline{CD}$ zuzenkiarekin kongruenteak diren $n$ zuzenkien katenazioa eraikitzean $(A = A_0, A_1, A_2, \dots, A_n)$, $B$ puntua $A$ eta $A_n$ puntuen artean geratzen baita:
   $$
-  \forall AB, CD \implies \exists n \in \mathbb{N}^+ \ (n \cdot AB > CD)
+  \forall \overline{AB}, \overline{CD} \implies \exists n \in \mathbb{N}^+ \ (n \cdot \overline{CD} > \overline{AB})
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Irudikapen bisuala
 
-Simulazio interaktiboan <VisualBind element="dosSegmentos" color="ocre">$AB$ eta $CD$</VisualBind> bi zuzenkiak bistaratzen dira. $AB$-ren <VisualBind element="copiasAB" color="terracota">$n$ kopia kongruenteen</VisualBind> batuketa iteratzean, kateatzeak $CD$-ren luzera gainditzen du.
+Helburuko <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> zuzenkia eta unitateko <VisualBind element="CD" color="pavo">$\overline{CD}$</VisualBind> zuzenkia emanda, unitate-moduluaren garraioaren iterazioak <VisualBind element="An" color="terracota">$A_n$</VisualBind> helburuko zuzenkiaren luzera nahitaez superatzen du urrats kopuru finitu batean.
 
 <Separador />
 
-### Neurketa eta ezaugarri arkimedarra
+### Garrantzi axiomatikoa
 
-Axioma honek geometria sintetikoa <ConceptLink targetId="numero-real">zenbaki errealen</ConceptLink> egiturarekin lotzen du. Edozein <ConceptLink targetId="segmento">zuzenki</ConceptLink> neurri-unitate gisa erabil daitekeela bermatzen du beste zuzenki bat urrats kopuru finitu baten bidez neurtzeko.
+Postulatu honek magnitudo vertiezinezkoen edo infinitesimal ez-nuluen existentzia ezeztatzen du. Ezinbestekoa da proportzioen teorian eta azalerak zein bolumenak neurtzeko, <ConceptLink targetId="geometria-euclidiana">geometria euklidianoko</ConceptLink> agortze-metodoaren bidezko hurbilpena baimenduz.

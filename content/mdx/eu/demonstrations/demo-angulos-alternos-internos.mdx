@@ -1,15 +1,16 @@
 export const metadata = {
   "id": "demo-angulos-alternos-internos",
   "type": "demostracion",
-  "title": "Frogapena: Barne-angelu alternoen teorema",
-  "description": "Frogapena bi zatitan: zuzena (absolutua) absurdora murriztuz kanpo-angeluaren teorema erabiliz; alderantzizkoa (euklidestarra) paraleloaren bakartasuna erabiliz.",
+  "title": "Froga: Barne-angelu alternoen teorema",
+  "description": "Barne-angelu alternoen berdintasunaren bidezko paralelo-kriterioaren absurdoaren bidezko froga.",
   "parentTheorem": "teorema-angulos-alternos-internos",
-  "proofMethod": "metodo-directo",
+  "branch": "51M",
+  "proofMethod": "metodo-contradiccion",
   "authors": ["euclides"],
-  "tags": ["geometria", "angulos", "paralelas"],
+  "tags": ["geometria", "paralelas", "angulos"],
   "layout": "split",
   "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 27 y 29", role: "primary" }
+    { "title": "Elementuak", author: "Euclides", locator: "I. Liburukia, 27. Proposizioa", role: "primary" }
   ]
 };
 
@@ -17,54 +18,46 @@ import { DemoAngulosAlternosInternos } from "@content/diagrams/Demos/DemoAngulos
 
 <DemonstrationSection diagram={<DemoAngulosAlternosInternos />}>
 
-<Capitular letra="B" />edi <VisualBind element="recta-l" color="carbon">$l$</VisualBind> eta <VisualBind element="recta-m" color="carbon">$m$</VisualBind> bi <ConceptLink targetId="recta">zuzen</ConceptLink> eta <VisualBind element="transversal-t" color="canela">$t$</VisualBind> horiek $A \in l$ eta $B \in m$ <ConceptLink targetId="punto">puntuetan</ConceptLink> ebatzen dituen <ConceptLink targetId="transversal">transbertsal</ConceptLink> bat. <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>Barne-angelu alternoen teoremaren</ConceptLink> frogapena bi zati independentetan antolatzen da: inplikazio zuzena (<ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink> baliozkoa) eta inplikazio alderantzizkoa (<ConceptLink targetId="geometria-euclidiana">geometria euklidestarraren</ConceptLink> ezaugarria).
+<Capitular letra="E" />manik plano bereko bi $l$ eta $m$ <ConceptLink targetId="recta">zuzen</ConceptLink> $t$ ebakitzaile batez ebakita, <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>barne-angelu alternoen teorema</ConceptLink> frogatzen da. Frogapenak <ConceptLink targetId="metodo-contradiccion" isDependency={true}>absurdorainoko murrizketaren bidez</ConceptLink> erakusten du barne-angelu alternoak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira, zuzen biak <ConceptLink targetId="paralelas">paraleloak</ConceptLink> direla.
 
 <Separador />
 
-### 1. zatia: Angelu kongruenteek zuzen paraleloak inplikatzen dituzte (geometria absolutua)
+### Urratsez urratseko froga
 
-<ProofStep number={1} title="Irudiaren antolaketa" target={["recta-l", "recta-m", "transversal-t"]}>
-Bedi <VisualBind element="recta-l" color="carbon">$l$</VisualBind> eta <VisualBind element="recta-m" color="carbon">$m$</VisualBind> bi <ConceptLink targetId="recta">zuzen</ConceptLink>, <VisualBind element="transversal-t" color="canela">$t$</VisualBind> <ConceptLink targetId="transversal">transbertsalak</ConceptLink> $A \in l$ eta $B \in m$ <ConceptLink targetId="punto">puntuetan</ConceptLink> ebakitakoak. Hipotesiz, <ConceptLink targetId="angulos-alternos-internos">barne-angelu alternoak</ConceptLink> <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira:
+<ProofStep number={1} target="config" title="Hasierako hipotesia">
+Bedi plano bereko <VisualBind element="lineL" color="carbon">$l$</VisualBind> eta <VisualBind element="lineM" color="carbon">$m$</VisualBind> bi zuzen, $A$ eta $B$ puntuetan <VisualBind element="lineT" color="carbon">$t$</VisualBind> ebakitzaileak ebakitzen dituenak. Hasierako hipotesi gisa hartzen da <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> eta <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> barne-angelu alternoak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> direla:
 
 <Formula>
-  $$ \angle 1 \cong \angle 2 $$
+  $$ \alpha \cong \beta $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} title="Ebakidura-suposizioa" target={["punto-p", "triangulo-abp"]}>
-Suposatu dezagun, <ConceptLink targetId="reduccion-al-absurdo">absurdora murriztuz</ConceptLink>, $l$ eta $m$ ez direla <ConceptLink targetId="paralelismo">paraleloak</ConceptLink>. Orduan <VisualBind element="punto-p" color="terracota">$P$</VisualBind> <ConceptLink targetId="punto">puntu</ConceptLink> batean <ConceptLink targetId="interseccion">elkar ebakitzen</ConceptLink> dute, <VisualBind element="triangulo-abp" color="carbon">$\triangle ABP$</VisualBind> <ConceptLink targetId="triangulo">triangelua</ConceptLink> sortuz.
+<ProofStep number={2} target="absurdo" title="Ezeztapenezko hipotesia">
+$l$ eta $m$ paraleloak direla frogatzeko, demagun <ConceptLink targetId="metodo-contradiccion" isDependency={true}>absurdorainoko bidetik</ConceptLink> $l$ eta $m$ ez direla paraleloak. Beraz, planoko zenbait <VisualBind element="pointP" color="ocre">$P$</VisualBind> puntutan ebakitzen dute elkar.
 </ProofStep>
 
-<ProofStep number={3} title="Kontraesana kanpo-angeluarekin" target={["angulo-externo", "angulo-remoto"]}>
-Bedi <ConceptLink targetId="triangulo">triangeluaren</ConceptLink> <VisualBind element="angulo-externo" color="terracota"><ConceptLink targetId="angulo-externo">kanpo-angelua</ConceptLink></VisualBind> $A$ <ConceptLink targetId="vertice">erpinean</ConceptLink>. <ConceptLink targetId="teorema-angulo-externo" isDependency={true}>Kanpo-angeluaren teoremaren</ConceptLink> bidez, <ConceptLink targetId="angulo-externo">kanpo-angeluaren</ConceptLink> neurria $B$-ko <VisualBind element="angulo-remoto" color="canela">barne-angelu ez-albokoarena</VisualBind> baino handiagoa da zorrozki. Alabaina, $\angle 1 \cong \angle 2$ hipotesiak bi neurrien arteko berdintasuna behartzen du, eta horrek kontraesan logikoa sortzen du.
+<ProofStep number={3} target="triangulos" title="Irudimenezko triangeluaren eraikuntza">
+$P$ puntuko elkarbaketak $A, B, P$ bertizeek osatutako $\triangle ABP$ <ConceptLink targetId="triangulo">triangelu bat</ConceptLink> sortzen du. Triangelu honetan, $A$ bertizeko <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> angelua kanpo-angelu bat da $AP$ aldearekiko, eta $B$ bertizeko <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> angelua albokoa ez den barne-angelua da.
 </ProofStep>
 
-<ProofStep number={4} title="Paralelotasunaren ondorioa" target={["recta-l", "recta-m"]}>
-Kontraesanak erakusten du <ConceptLink targetId="recta">zuzenen</ConceptLink> arteko <ConceptLink targetId="interseccion">ebakidura</ConceptLink> ezina dela. Beraz, <VisualBind element="recta-l" color="carbon">$l$</VisualBind> eta <VisualBind element="recta-m" color="carbon">$m$</VisualBind> zuzenak <ConceptLink targetId="paralelismo">paraleloak</ConceptLink> dira:
+<ProofStep number={4} target="desigualdad" title="Kanpo-angeluaren teoremaren aplikazioa">
+<ConceptLink targetId="sistema-absoluto">Geometria absolutuko</ConceptLink> kanpo-angeluaren teoremari jarraituz, triangelu baten kanpo-angelua zorrozki handiagoa da albokoa ez den edozein barne-angelu baino. $\triangle ABP$ triangeluari aplikatuz:
 
 <Formula>
-  $$ l \parallel m $$
+  $$ \alpha > \beta $$
 </Formula>
 </ProofStep>
 
-<Separador />
-
-### 2. zatia: Zuzen paraleloek angelu kongruenteak inplikatzen dituzte (geometria euklidestarra)
-
-<ProofStep number={5} title="Zuzen paralelo laguntzailearen eraikuntza" target={["recta-n"]}>
-Izan bedi orain $l \parallel m$ <ConceptLink targetId="recta">zuzenak</ConceptLink> $t$-k ebakita. <ConceptLink targetId="axioma-transporte-angulo" isDependency={true}>Angeluen garraiatze axiomaren</ConceptLink> bidez, $A$-tik igarotzen den <VisualBind element="recta-n" color="terracota">$n$</VisualBind> zuzen laguntzaile bat marrazten dugu, $t$-rekin $B$-ko <ConceptLink targetId="angulo">angeluaren</ConceptLink> <ConceptLink targetId="congruencia">kongruentea</ConceptLink> den <ConceptLink targetId="angulos-alternos-internos">barne-angelu alternoa</ConceptLink> osatuz.
-</ProofStep>
-
-<ProofStep number={6} title="Paraleloaren bakartasuna" target={["recta-l", "recta-n"]}>
-1. zatiaren bidez, $n$ <ConceptLink targetId="recta">zuzena</ConceptLink> $m$-rekiko <ConceptLink targetId="paralelismo">paraleloa</ConceptLink> da. <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Paraleloen axioma euklidestarraren</ConceptLink> bidez, $A$ <ConceptLink targetId="punto">puntutik</ConceptLink> $m$-rekiko paraleloa den zuzen bakarra igarotzen da. Ondorioz, <VisualBind element="recta-l" color="carbon">$l$</VisualBind> zuzena eta <VisualBind element="recta-n" color="terracota">$n$</VisualBind> bat datoz ($l = n$), jatorrizko <ConceptLink targetId="angulos-alternos-internos">barne-angelu alternoen</ConceptLink> <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> frogatuta geratuz.
+<ProofStep number={5} target="conclusion" title="Ezeztapena eta amaierako ondorioa">
+$\alpha > \beta$ desberdintzak zuzenean ezeztatzen du hasierako $\alpha \cong \beta$ hipotesia. Elkarbaketaren suposizioak kontraesan logiko batera eramaten duenez, $l$ eta $m$ zuzenek ezin dute elkar ebakitzeko punturik izan, eta nahitaez <ConceptLink targetId="paralelas">paraleloak</ConceptLink> dira ($l \parallel m$).
 </ProofStep>
 
 <Separador />
 
-### Analisi estrukturala
+### Dedukzio-analisia
 
 <Nota>
-  <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> lanean, <ConceptLink targetId="euclides">Euklidesek</ConceptLink> 1. zatia I.27 proposizioan frogatzen du bosgarren postulatuari heldu gabe. 2. zatiak (I.29 proposizioa) <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen postulatuaren</ConceptLink> lehen erabilera eraginkorra dakar.
+  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.27 Proposizioa. Frogapen honek ez du <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomarik</ConceptLink> erabiltzen, beraz baliogarria da <ConceptLink targetId="sistema-absoluto">geometria absolutu</ConceptLink> osoan.
 </Nota>
 
 </DemonstrationSection>

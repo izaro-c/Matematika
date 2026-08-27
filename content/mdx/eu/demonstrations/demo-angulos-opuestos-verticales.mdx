@@ -1,70 +1,71 @@
 export const metadata = {
   "id": "demo-angulos-opuestos-verticales",
   "type": "demostracion",
-  "title": "Frogapena: Erpinez aurkako angeluen teorema",
-  "description": "Zuzeneko frogapena alboko angeluen osagarritasunean eta angelu kongruenteen kenketa-axioman oinarrituta.",
+  "title": "Froga: Erpinez aurkako angeluak",
+  "description": "Zuzen baten gaineko angelu albokideen osagarritasunean eta kongruentzien kenketan oinarritutako froga zuzena.",
   "parentTheorem": "teorema-angulos-opuestos-verticales",
+  "branch": "51M",
   "proofMethod": "metodo-directo",
   "authors": ["euclides"],
-  "tags": ["geometria", "congruencia"],
+  "tags": ["geometria", "congruencia", "angulos"],
   "layout": "split",
   "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 15", role: "primary" }
+    { "title": "Elementuak", author: "Euclides", locator: "I. Liburukia, 15. Proposizioa", role: "primary" }
   ]
 };
 
-import { DemoAngulosOpuestos } from '@content/diagrams/Demos/DemoAngulosOpuestos';
+import { DemoAngulosOpuestos } from "@content/diagrams/Demos/DemoAngulosOpuestos";
 
 <DemonstrationSection diagram={<DemoAngulosOpuestos />}>
 
-<Capitular letra="B" />edi <VisualBind element="lineL" color="carbon">$l$</VisualBind> eta <VisualBind element="lineM" color="carbon">$m$</VisualBind> $O$ <ConceptLink targetId="punto">puntuan</ConceptLink> <ConceptLink targetId="interseccion">elkar ebakitzen</ConceptLink> duten bi <ConceptLink targetId="recta">zuzen</ConceptLink>. <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>Erpinez aurkako angeluen teorema</ConceptLink> frogatzen da: <ConceptLink targetId="angulos-opuestos-por-el-vertice">erpinez aurkako angeluak</ConceptLink> beren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira.
+<Capitular letra="B" />edi $O$ <ConceptLink targetId="punto">puntuan</ConceptLink> elkar <ConceptLink targetId="recta">ebakitzen duten</ConceptLink> bi <VisualBind element="lineL" color="carbon">$l$</VisualBind> eta <VisualBind element="lineM" color="carbon">$m$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink>. <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>Erpinez aurkako angeluen teorema</ConceptLink> frogatzen da: elkarbaketaz eratutako edozein erpinez aurkako angelu bikote elkarren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira.
 
 <Separador />
 
-### Frogapena urratsez urrats
+### Urratsez urratseko froga
 
-<ProofStep number={1} title="Angelu albokoak l zuzenaren gainean" target="supp12">
-<VisualBind element="lineL" color="carbon">$l$</VisualBind> eta <VisualBind element="lineM" color="carbon">$m$</VisualBind> <ConceptLink targetId="recta">zuzen ebakitzaileek</ConceptLink> <ConceptLink targetId="angulos-adyacentes">angelu albokoak</ConceptLink> zehazten dituzte. <VisualBind element="angle1" color="terracota">$\angle 1$</VisualBind> eta <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> <ConceptLink targetId="angulo">angeluek</ConceptLink> <ConceptLink targetId="angulo-llano">angelu lautua</ConceptLink> osatzen dute $l$ <ConceptLink targetId="recta">zuzenaren</ConceptLink> gainean:
+<ProofStep number={1} target="supp12" title="Angelu ondoko suplementarioak lehenengo zuzenaren gainean">
+$l$ eta $m$ zuzen ebakitzaileek lau <ConceptLink targetId="angulo">angelu</ConceptLink> zehazten dituzte $O$ erpinaren inguruan. <VisualBind element="angle1" color="terracota">$\angle 1$</VisualBind> eta <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> angeluak elkarren ondoan kokatzen dira $l$ zuzenaren gainean, <ConceptLink targetId="angulos-suplementarios">angelu lau bat</ConceptLink> osatuz:
 
 <Formula>
-  $$ \angle 1 + \angle 2 \cong 180^\circ $$
+  $$ m(\angle 1) + m(\angle 2) = 180^\circ $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} title="Bigarren angelu alboko bikotea m zuzenaren gainean" target="supp23">
-Antzeko bidez, <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> eta <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> <ConceptLink targetId="angulo">angeluak</ConceptLink> <ConceptLink targetId="angulos-suplementarios">osagarriak</ConceptLink> dira $m$ <ConceptLink targetId="recta">zuzenaren</ConceptLink> gainean:
+<ProofStep number={2} target="supp23" title="Angelu ondoko suplementarioak bigarren zuzenaren gainean">
+Era berean, $m$ zuzenaren gainean, <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> eta <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> angelu ondokoak <ConceptLink targetId="angulos-suplementarios">suplementarioak</ConceptLink> dira:
 
 <Formula>
-  $$ \angle 2 + \angle 3 \cong 180^\circ $$
+  $$ m(\angle 2) + m(\angle 3) = 180^\circ $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={3} title="Angelu-baturen berdintasuna" target="angle2">
-Bi baturak bi <ConceptLink targetId="angulo-recto">angelu zuzenen</ConceptLink> ($180^\circ$) berdinezkoak direnez, <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> propietate igarotzailearen bidez konposizioen berdintasuna ondorioztatzen da:
+<ProofStep number={3} target="angle2" title="Angelu-baturen arteko berdintasuna">
+Bi angelu-baturak angelu lau baten ($180^\circ$) berdinak direnez, sakonera metrikoen berdintasunaz honako berdintasuna ondorioztatzen da:
 
 <Formula>
-  $$ \angle 1 + \angle 2 \cong \angle 2 + \angle 3 $$
+  $$ m(\angle 1) + m(\angle 2) = m(\angle 2) + m(\angle 3) $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} title="Angelu komunaren kenketa" target="congruence13">
-<VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> <ConceptLink targetId="angulo">angelu</ConceptLink> komuna bi kideetatik kenduz <ConceptLink targetId="axiomas-congruencia" isDependency={true}>kongruentzia axioma</ConceptLink> erabiliz, lehenbiziko bikotearen <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> lortzen dugu:
+<ProofStep number={4} target="congruence13" title="Angelu komuna kentzea">
+<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Angelu-kongruentziaren axiomak</ConceptLink> aplikatuz, bi kideetatik <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> angelu komuna kenduz lehenengo erpinez aurkako angelu bikotearen kongruentzia lortzen da:
 
 <Formula>
   $$ \angle 1 \cong \angle 3 $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} title="Bikote osagarriaren ondorioa" target="angle4">
-<VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> eta <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind> angeluekin osatutako bikoteari arrazoibide berdina aplikatuz, <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> $\cong$ <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind> frogatzen da.
+<ProofStep number={5} target="angle4" title="Bigarren angelu bikoteari aplikatutako froga">
+Arrazoibide bera aplikatuz <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> eta <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind> angeluek osatutako bikoteari, bigarren erpinez aurkako bikoteak <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> $\cong$ <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind> betetzen duela frogatzen da.
 </ProofStep>
 
 <Separador />
 
-### Analisi deduktiboa
+### Dedukzio-analisia
 
 <Nota>
-  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.15 proposizioa. Frogapen hau <ConceptLink targetId="geometria-absoluta">geometria absolutuari</ConceptLink> dagokio, <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomarik</ConceptLink> gabe burutzen baita.
+  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.15 Proposizioa. Arrazoibide hau <ConceptLink targetId="sistema-absoluto">geometria absolutuaren sisteman</ConceptLink> sartzen da, ez baitu <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> hipotesirik behar.
 </Nota>
 
 </DemonstrationSection>

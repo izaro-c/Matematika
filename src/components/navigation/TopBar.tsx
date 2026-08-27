@@ -4,14 +4,16 @@ import { routePath } from '@/lib/routes';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { LanguageToggle } from '@/components/ui/LanguageToggle';
 import { Logo } from '@/components/ui/Logo';
-import { useI18n } from '@/i18n';
+import { useI18n, isSupportedLanguage } from '@/i18n';
 
 export function TopBar() {
   const [location] = useLocation();
   const { toggleSearch } = useNavigationStore();
   const { t, getLocalizedPath } = useI18n();
 
-  const isHome = location === '/' || location === '/es' || location === '/eu' || location === '/es/' || location === '/eu/';
+  const cleanParts = location.split('/').filter(Boolean);
+  const isHome = location === '/' || cleanParts.length === 0 || (cleanParts.length === 1 && isSupportedLanguage(cleanParts[0]));
+
 
   return (
     <header className="fixed top-0 left-0 right-0 z-[60] pointer-events-none flex items-center justify-between px-6 py-6">

@@ -1,6 +1,7 @@
 import type { LanguageConfig, RouteSegmentMap } from './types';
 import { esLanguage } from './languages/es';
 import { euLanguage } from './languages/eu';
+import { enLanguage } from './languages/en';
 
 /**
  * Registro central de idiomas soportados.
@@ -10,6 +11,7 @@ import { euLanguage } from './languages/eu';
 export const SUPPORTED_LANGUAGES: LanguageConfig[] = [
   esLanguage,
   euLanguage,
+  enLanguage,
 ];
 
 export const DEFAULT_LANGUAGE = esLanguage;
@@ -35,15 +37,24 @@ SUPPORTED_LANGUAGES.forEach((lang) => {
 // Aliases comunes adicionales
 SEGMENT_TO_CANONICAL_TYPE['metodos'] = 'metodo';
 SEGMENT_TO_CANONICAL_TYPE['metodoak'] = 'metodo';
+SEGMENT_TO_CANONICAL_TYPE['methods'] = 'metodo';
+SEGMENT_TO_CANONICAL_TYPE['proofs'] = 'demo';
+SEGMENT_TO_CANONICAL_TYPE['theorems'] = 'teorema';
+SEGMENT_TO_CANONICAL_TYPE['definitions'] = 'definicion';
+SEGMENT_TO_CANONICAL_TYPE['exercises'] = 'ejercicio';
+SEGMENT_TO_CANONICAL_TYPE['examples'] = 'ejemplo';
 SEGMENT_TO_CANONICAL_TYPE['sistema-axiomatico'] = 'sistema';
 SEGMENT_TO_CANONICAL_TYPE['sistemas-axiomaticos'] = 'sistema';
 SEGMENT_TO_CANONICAL_TYPE['sistemas'] = 'sistema';
 SEGMENT_TO_CANONICAL_TYPE['caso-de-uso'] = 'caso';
 SEGMENT_TO_CANONICAL_TYPE['casos-de-uso'] = 'caso';
+SEGMENT_TO_CANONICAL_TYPE['use-cases'] = 'caso';
 SEGMENT_TO_CANONICAL_TYPE['casos'] = 'caso';
 SEGMENT_TO_CANONICAL_TYPE['construccion'] = 'construccion';
 SEGMENT_TO_CANONICAL_TYPE['eraikuntzan'] = 'construccion';
+SEGMENT_TO_CANONICAL_TYPE['under-construction'] = 'construccion';
 
 export function getCanonicalSegmentType(segment: string): keyof RouteSegmentMap | undefined {
   return SEGMENT_TO_CANONICAL_TYPE[segment.toLowerCase()];
 }
+

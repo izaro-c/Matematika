@@ -2,57 +2,46 @@ export const metadata = {
   id: "punto",
   lang: "eu",
   type: "definicion",
-  subtype: "primitivo",
+  subtype: "nominal",
   title: "Puntua",
-  description: "Dimentsiorik gabeko geometria-entitate primitiboa, espazioan posizio zehatz bat ezartzen duena. Bere izaera matematikoa zuzenekin eta planoekin dituen erlazio axiomatikoek zehaztua da soilik.",
-  statement: "Puntua $\\mathcal{P}$ multzo abstraktuko oinarrizko elementu zatiezina da. Dimentsiorik gabea da eta geometriaren oinarri estrukturala osatzen du.",
-  domain: "geometria",
-  requires: [],
-  authors: ["hilbert", "euclides"],
+  description: "Zati gabeko eta dimentsiorik gabeko oinarrizko elementu geometrikoa, espazioan kokapen zehatz bat definitzen duena.",
+  branch: "51M",
   hasSimulation: true,
-  difficulty: "básico",
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" },
-    { title: "Elementuak", author: "Euclides", locator: "I. Liburua, 1. Definizioa", role: "secondary" }
-  ],
-  demos: ["punto"]
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 1", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+  ]
 };
 
 import { Punto } from '@content/diagrams/Definiciones/Punto';
 export const Simulation = Punto;
 
-<Capitular letra="G" /><ConceptLink targetId="geometria">eometriaren</ConceptLink> berriztatze axiomatikoan, puntua gainerako espazio-objektuak eraikitzeko lehen entitatea da. <ConceptLink targetId="concepto-primitivo">**Kontzeptu primitiboa**</ConceptLink> denez, ez du barne-definizio analitikorik entitate sinpleagoen bidez; bere izaera matematikoa <ConceptLink targetId="sistema-axiomatico">sistema axiomatikoak</ConceptLink> ezarritako <ConceptLink targetId="axiomas-incidencia">intzidentzia-</ConceptLink>, <ConceptLink targetId="axiomas-orden">ordena-</ConceptLink> eta <ConceptLink targetId="axiomas-congruencia">kongruentzia-erlazioen</ConceptLink> bidez eratzen da.
+<Capitular letra="P" />untua <ConceptLink targetId="geometria-euclidiana">geometria euclidiarraren</ConceptLink> eta <ConceptLink targetId="espacio-topologico">espazio topologikoen</ConceptLink> oinarrizko elementu zatiezina da. Luzerarik, azalerarik edo bolumenik ez duenez, <ConceptLink targetId="recta">zuzena</ConceptLink>, <ConceptLink targetId="plano">planoa</ConceptLink> eta dimentsio altuagoko figura geometriko guztiak eraikitzeko oinarrizko osagaia da.
 
 <Definicion title="">
-  Puntua $\mathcal{P}$ <ConceptLink targetId="conjunto">multzo</ConceptLink> abstraktuko oinarrizko elementu zatiezina da. Ez du <ConceptLink targetId="dimension">dimentsiorik</ConceptLink>, <ConceptLink targetId="longitud">luzerarik</ConceptLink>, <ConceptLink targetId="area">azalerarik</ConceptLink> ez eta <ConceptLink targetId="volumen">bolumenik</ConceptLink>; <ConceptLink targetId="espacio-geometrico">espazio geometrikoan</ConceptLink> posizio puru bat besterik ez du adierazten.
+  <ConceptLink targetId="incidencia">Intzidentzia-geometriaren</ConceptLink> formulazio axiomatikoan, <VisualBind element="P" color="musgo">$P$</VisualBind> puntua $\mathcal{E}$ espazio geometriko bateko oinarrizko elementu zatiezin gisa definitzen da. $\mathbb{R}^n$ gaineko <ConceptLink targetId="geometria-analitica">geometria analitikoan</ConceptLink>, puntua <ConceptLink targetId="sistema-coordenadas">koordenatu errealen</ConceptLink> $n$-kote baten bidez identifikatzen da ezinbestean:
+  $$
+  P = (x_1, x_2, \dots, x_n) \in \mathbb{R}^n
+  $$
+  non bere <ConceptLink targetId="dimension-hausdorff">dimentsio topologikoa</ConceptLink> zorrotz nulua den ($\text{dim}(P) = 0$).
 </Definicion>
 
 <Separador />
 
-### Errepresentazio bisuala
+### Adierazpena esparru geometriko desberdinetan
 
-Simulazio interaktiboan, puntua posizio-marka baten bidez irudikatzen da, <VisualBind element="pPoint" color="musgo">$P$</VisualBind> letra larriz adierazita. Grafikoki tamaina ikusgarri bat izan arren, ikuspegi geometriko formaletik ez du magnituderik eta ez du azalerarik betetzen <ConceptLink targetId="plano">planoan</ConceptLink>.
+Puntuaren karakterizazio formala hautatutako egitura axiomatiko edo aljebraikoaren arabera aldatzen da:
 
-<Separador />
-
-### Hilberten sistema axiomatikoan duen eginkizuna
-
-<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> *Grundlagen der Geometrie* (1899) lanean, puntua definitu gabeko lehen kontzeptu-sistema da ($\mathcal{P}$), <ConceptLink targetId="recta">zuzenarekin</ConceptLink> ($\mathcal{L}$) eta <ConceptLink targetId="plano">planoarekin</ConceptLink> ($\Pi$) koordinatua. Bere propietate formalak hiru axioma-multzo nagusiren bidez egituratzen dira:
-
-- **<ConceptLink targetId="axiomas-incidencia">Intzidentzia-axiomak (I. multzoa)</ConceptLink>**: Bi puntu desberdinek zuzen bakar bat zehazten dute (<ConceptLink targetId="axioma-incidencia-1">I.1 axioma</ConceptLink>). Halaber, zuzen bakoitzak gutxienez bi puntu ditu (<ConceptLink targetId="axioma-incidencia-2">I.2 axioma</ConceptLink>), eta planoan gutxienez hiru puntu ez-<ConceptLink targetId="colinealidad">lerrokide</ConceptLink> daude (<ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink>).
-- **<ConceptLink targetId="axiomas-orden">Ordena-axiomak (II. multzoa)</ConceptLink>**: Zuzen berean dauden hiru punturen arteko kokapen erlatiboa <ConceptLink targetId="estar-entre">tartean egon</ConceptLink> erlazio primitiboaren bidez egituratzen da ($A * B * C$).
-- **<ConceptLink targetId="axiomas-congruencia">Kongruentzia-axiomak (III. multzoa)</ConceptLink>**: Puntu-bikoteek <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> mugatzen dituzte, eta haien arteko <ConceptLink targetId="relacion-equivalencia">baliokidetza zurruna</ConceptLink> kongruentzia-axiomen bidez formalizatzen da ($AB \cong CD$).
+| Esparru geometrikoa | Adierazpen matematikoa | Dimentsioa |
+|---|---|---|
+| Euclidiarra edo axiomatikoa | Oinarrizko elementu zatiezina ($P \in \mathcal{E}$) | $0$ |
+| Kartesiarra ($\mathbb{R}^2$ edo $\mathbb{R}^3$) | Posizio-bektorea $(x, y)$ edo $(x, y, z)$ | $0$ |
+| Multzo-teoria | $S$ espazio abstraktu bateko banakako elementua | $0$ |
 
 <Separador />
 
-### Ereduak eta adierazpen aljebraikoak
+### Propietateak
 
-<Cita author="Euclides (k.a. 300 inguru)">
-  «Puntua zatirik ez duena da.»
-</Cita>
-
-<ConceptLink targetId="geometria-sintetica">Geometria sintetikoak</ConceptLink> puntuak aztertu gabeko oinarrizko elementu gisa tratatzen dituen bitartean, matematikako beste eredu batzuek aljebraikoki formalizatzen dituzte:
-
-- **<ConceptLink targetId="geometria-analitica">Geometria Analitikoa</ConceptLink> (<ConceptLink targetId="modelo-cartesiano">$\mathbb{R}^2$ Plano Kartesiarra</ConceptLink>)**: Puntua aljebraikoki <ConceptLink targetId="numero-real">zenbaki errealen</ConceptLink> <ConceptLink targetId="par-ordenado">bikote ordenatu</ConceptLink> batekin identifikatzen da: $(x, y) \in \mathbb{R}^2$.
-- **<ConceptLink targetId="topologia">Multzo-Topologia</ConceptLink>**: Puntuak $(X, \tau)$ <ConceptLink targetId="espacio-topologico">espazio topologiko</ConceptLink> abstraktu baten banakako elementuak dira.
-- **<ConceptLink targetId="geometria-afina">Geometria Afina</ConceptLink>**: <ConceptLink targetId="espacio-afin">Espazio afina</ConceptLink> puntu-multzo bat da, non azpiko <ConceptLink targetId="espacio-vectorial">espazio bektorial</ConceptLink> batek modu libre eta iragankorrean <ConceptLink targetId="accion-grupo">eragiten</ConceptLink> duen.
+- **<ConceptLink targetId="incidencia">Intzidentzia eta kidetasuna</ConceptLink>**: Bi puntu desberdinek beren artetik igarotzen den <ConceptLink targetId="recta">zuzen</ConceptLink> bakarra zehazten dute.
+- **<ConceptLink targetId="dimension-hausdorff">Dimentsio eza</ConceptLink>**: Lebesgue-ren neurri nulua du ($\mu(\{P\}) = 0$) eta ez du hedadura espazialik.
+- **<ConceptLink targetId="distancia">Metrika eta distantzia</ConceptLink>**: Bi punturen arteko distantziak $d(P, Q) = 0 \iff P = Q$ betetzen du, <ConceptLink targetId="espacio-metrico">metrikaren</ConceptLink> nortasun-axioma betez.

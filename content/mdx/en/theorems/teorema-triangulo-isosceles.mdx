@@ -1,0 +1,46 @@
+export const metadata = {
+  id: "teorema-triangulo-isosceles",
+  type: "teorema",
+  title: "Isosceles Triangle Theorem",
+  description: "In any isosceles triangle, the angles opposite to the congruent sides are congruent to each other.",
+  statement: "Given a triangle △ABC with AB ≅ AC, it holds necessarily that ∠ABC ≅ ∠ACB.",
+  branch: "51M",
+  hasSimulation: true,
+  authors: ["tales", "euclides"],
+  demos: ["demo-triangulo-isosceles"],
+  sources: [
+    { title: "Elements", author: "Euclides", locator: "Book I, Propositions 5 & 6", role: "primary" }
+  ]
+};
+
+import { TrianguloIsosceles } from '@content/diagrams/Teoremas/TrianguloIsosceles';
+export const Simulation = TrianguloIsosceles;
+
+<Capitular letra="T" />he isosceles triangle theorem, historically designated in <ConceptLink targetId="euclides">Euclid's</ConceptLink> Elements as the *Pons Asinorum* (bridge of asses), establishes the fundamental angular symmetry characterizing <ConceptLink targetId="triangulo">triangles</ConceptLink> with two <ConceptLink targetId="lado">sides</ConceptLink> of equal length in the Euclidean <ConceptLink targetId="plano">plane</ConceptLink>.
+
+<Separador />
+
+### Formal statement
+
+Let $\triangle ABC$ be a <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo">triangle</ConceptLink></VisualBind> such that sides <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind> and <VisualBind element="lado-ac" color="terracota">$\overline{AC}$</VisualBind> are <ConceptLink targetId="congruencia">congruent</ConceptLink> ($\overline{AB} \cong \overline{AC}$). The base angles $\angle ABC$ and $\angle ACB$ are necessarily congruent:
+
+<Formula>
+  $$ \overline{AB} \cong \overline{AC} \quad \Longrightarrow \quad \angle ABC \cong \angle ACB $$
+</Formula>
+
+In any isosceles triangle, angles opposite to congruent sides are strictly congruent.
+
+<Separador />
+
+### Proof and axiomatic foundations
+
+The theorem admits several classical proofs:
+- **Pappus's proof**: Considers the self-correspondence between triangle $\triangle ABC$ and its reflected counterpart $\triangle ACB$. Since $\overline{AB} \cong \overline{AC}$, $\angle BAC \cong \angle CAB$, and $\overline{AC} \cong \overline{AB}$, the SAS criterion yields $\triangle ABC \cong \triangle ACB$, directly implying $\angle ABC \cong \angle ACB$.
+- **Bisector proof**: Constructing the internal angle <ConceptLink targetId="bisectriz">bisector</ConceptLink> at vertex $A$ divides the original triangle into two congruent triangles.
+
+<Separador />
+
+### Converse and equilateral corollary
+
+- **Converse theorem**: If in a triangle $\triangle ABC$ angles $\angle ABC$ and $\angle ACB$ are congruent, then the opposite sides are necessarily congruent ($\overline{AB} \cong \overline{AC}$).
+- **Equilateral corollary**: A triangle is <ConceptLink targetId="triangulo-equilatero">equilateral</ConceptLink> if and only if it is equiangular (each interior angle measuring exactly $60^\circ$).

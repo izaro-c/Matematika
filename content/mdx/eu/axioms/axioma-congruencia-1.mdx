@@ -2,34 +2,35 @@ export const metadata = {
   id: "axioma-congruencia-1",
   lang: "eu",
   type: "axioma",
-  title: "III.1 Axioma (Zuzenkiak Garraiatzea)",
-  description: "AB zuzenki bat eta C jatorria duen erruzuzen bat emanda, erruzuzenean D puntu bakarra existitzen da non AB eta CD kongruenteak diren.",
+  title: "III.1 Axioma (Zuzenkien Garraioa)",
+  description: "AB zuzenki bat eta C jatorria duen zuzenerdi bat emanda, zuzenerdi horretan D puntu bakar bat existitzen da AB eta CD zuzenkiak kongruenteak izateko moduan.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §5", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+  ]
 };
 
 import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
 export const Simulation = Congruence1;
 
-<Capitular letra="K" />ongruentziarako lehen <ConceptLink targetId="axioma-congruencia-1">axiomak</ConceptLink> magnitude metrikoak espazioan garraiatzeko aukera formalizatzen du. Edozein <ConceptLink targetId="segmento">zuzenki</ConceptLink> emandako erruzuzen baten jatorritik abiatuta modu bakarrean garraia daitekeela bermatzen du.
+<Capitular letra="H" />ilberten lehenengo <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-axiomak luzera-magnituderik aldatu gabe garraiatzeko aukera formalizatzen du <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>. Postulatu honek ziurtatzen du edozein <ConceptLink targetId="segmento">zuzenki</ConceptLink> emanda, hura modu bakarrean kopia daitekeela emandako <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> baten jatorritik abiatuta <ConceptLink targetId="plano">planoan</ConceptLink>.
 
 <Definicion title="">
-  $AB$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> bat eta $C$ <ConceptLink targetId="punto">puntuan</ConceptLink> jatorria duen $r$ erruzuzen bat emanda, $r$ erruzuzenean $D$ puntu bakarra existitzen da non $AB$ zuzenkia $CD$ zuzenkiarekin <ConceptLink targetId="congruencia">kongruentea</ConceptLink> den:
+  $\overline{AB}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> bat eta $C$ <ConceptLink targetId="punto">puntuan</ConceptLink> jatorria duen $r$ <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> bat emanda, $r$ zuzenerdian $D$ puntu bakar bat existitzen da $\overline{AB}$ zuzenkia eta $\overline{CD}$ zuzenkia <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> izateko moduan:
   $$
-  \forall AB, \forall r_C \implies \exists! D \in r_C \ (AB \cong CD)
+  \forall \overline{AB}, \forall r_C \implies \exists! D \in r_C \ (\overline{AB} \cong \overline{CD})
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Irudikapen bisuala
 
-Simulazio interaktiboan jatorrizko <VisualBind element="AB" color="ocre">$AB$</VisualBind> zuzenkia eta <VisualBind element="pD" color="terracota">$C$</VisualBind> jatorria duen <VisualBind element="r" color="pavo">$r$</VisualBind> helburu-erruzuzena ikusten dira. Garraitutako <VisualBind element="pD" color="terracota">$D$</VisualBind> puntuak <VisualBind element="CD" color="terracota">$CD$</VisualBind> zuzenkia zehazten du baliokidetza rigidoa gordez.
+Jatorrizko <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> zuzenkia finkatuz <VisualBind element="pD" color="terracota">$C$</VisualBind> jatorria duen helburuko <VisualBind element="r" color="pavo">$r$</VisualBind> zuzenerdiaren gainean, <VisualBind element="pD" color="terracota">$D$</VisualBind> puntuaren kokapena modu bakarrean zehazten da, luzera zurrun berdina duen <VisualBind element="CD" color="terracota">$\overline{CD}$</VisualBind> zuzenkia eraikiz.
 
 <Separador />
 
-### Esanahia sistema axiomatikoan
+### Garrantzi axiomatikoa
 
-Postulatu honek <ConceptLink targetId="segmento">zuzenkien</ConceptLink> arteko <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> oinarrizko nosioa finkatzen du zenbaki-neurketa jarraituetara jo gabe. Luzeraren kontserbazioa bermatzen du translazio-eragiketa rigidoetan.
+Axioma honek rigiditate geometriakarren oinarrizko nosioa ezartzen du, aldez aurretik zenbaki errealeko <ConceptLink targetId="distancia">distantzia</ConceptLink>-funtziorik erabili gabe. Luzeren konparazioa eta <ConceptLink targetId="segmento">zuzenkien</ConceptLink> arteko berdintasun metrikoaren kontzeptua modu sintetikoan definitzea ahalbidetzen du <ConceptLink targetId="sistema-axiomatico">sistema axiomatikoaren</ConceptLink> barruan.

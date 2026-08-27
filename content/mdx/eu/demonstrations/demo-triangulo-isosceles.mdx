@@ -1,15 +1,16 @@
 export const metadata = {
   "id": "demo-triangulo-isosceles",
   "type": "demostracion",
-  "title": "Frogapena: Triangelu isoszelearen teorema (Pons Asinorum)",
-  "description": "Pappus-en simetria-frogapena, erpinak permutatu ondoren triangeluak bere buruarekin duen kongruentzia eratorriz.",
+  "title": "Froga: Triangelu isoszelearen teorema",
+  "description": "Pappus-en froga dotorea, triangelu isoszele baten autokongruentzia erabiliz bere oinarriko angeluen berdintasuna frogatzeko.",
   "parentTheorem": "teorema-triangulo-isosceles",
+  "branch": "51M",
   "proofMethod": "metodo-directo",
-  "authors": ["euclides", "hilbert"],
-  "tags": ["geometria", "congruencia", "triangulos"],
+  "authors": ["euclides"],
+  "tags": ["geometria", "triangulos", "congruencia"],
   "layout": "split",
   "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 5", role: "primary" }
+    { "title": "Elementuak", author: "Euclides", locator: "I. Liburukia, 5. Proposizioa (Pappusen bertsio hobetua)", role: "primary" }
   ]
 };
 
@@ -17,47 +18,51 @@ import { DemoTrianguloIsosceles } from "@content/diagrams/Demos/DemoTrianguloIso
 
 <DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
 
-<Capitular letra="B" />edi <VisualBind element="triangulo-abc" color="carbon">$\triangle ABC$</VisualBind> <VisualBind element="lados-iguales" color="terracota">$\overline{AB} \cong \overline{AC}$</VisualBind> aldeen kongruentzia betetzen duen <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat. Oinarriko angeluak kongruenteak direla frogatzen da: $\angle B \cong \angle C$.
+<Capitular letra="B" />i alde <ConceptLink targetId="congruencia">kongruente</ConceptLink> dituen $\triangle ABC$ <ConceptLink targetId="triangulo">triangelu bat</ConceptLink> emanik, <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>triangelu isoszelearen teorema</ConceptLink> frogatzen da. Frogapenak ezartzen du alde kongruente horien aurkako <ConceptLink targetId="angulo">angeluak</ConceptLink> (oinarriko angeluak) elkarren artean kongruenteak direla.
 
 <Separador />
 
-### Frogapena urratsez urrats
+### Urratsez urratseko froga
 
-<ProofStep number={1} title="Triangelu isoszelearen definizioa" target={["triangulo-abc", "lado-ab", "lado-ac"]}>
-Hipotesiz, <VisualBind element="triangulo-abc" color="carbon">$\triangle ABC$</VisualBind> triangeluak bi alde kongruente ditu: <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> $\cong$ <VisualBind element="lado-ac" color="terracota">$\overline{AC}$</VisualBind>.
+<ProofStep number={1} target="triangulo-base" title="Triangelu isoszelearen hipotesia">
+Bedi <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> triangelua, luzera bereko <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> eta <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> aldeak dituena:
+
+<Formula>
+  $$ \overline{AB} \cong \overline{AC} $$
+</Formula>
 </ProofStep>
 
-<ProofStep number={2} title="Erpinen permutazioa eta konparazioa" target={["triangulo-permutado"]}>
-Triangeluak bere buruarekin duen korrespondentzia bat hartzen dugu kontuan oinarriko erpinen ordena alderantzikatuz: <VisualBind element="triangulo-abc" color="carbon">$\triangle ABC$</VisualBind> eta <VisualBind element="triangulo-permutado" color="carbon">$\triangle ACB$</VisualBind> konparatzen ditugu.
-
-Korrespondentzia honetan:
-- $AB$ eta $AC$ bat datoz (kongruenteak hipotesiz).
-- $AC$ eta $AB$ bat datoz (kongruenteak identitatez).
-- Tarteko $\angle BAC$ eta $\angle CAB$ angeluak bat datoz.
+<ProofStep number={2} target="correspondencia" title="Bertizeen autokorrespondentzia zehaztea">
+$\triangle ABC$ triangelua bera eta oinarriko bertizeak alderantzikatuta dituen bigarren kopia bat hartzen dira kontuan: $\triangle ACB$. Bertizeen arteko korrespondentzia honako hau da: $(A, B, C) \leftrightarrow (A, C, B)$.
 </ProofStep>
 
-<ProofStep number={3} title="Kongruentzia LAL irizpideaz" target={["lal"]}>
-$\triangle ABC$-ren bi alde eta tarteko angelua $\triangle ACB$-ko homologoekin kongruenteak direnez, <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>LAL</ConceptLink> kongruentzia postulatuaren bidez honako hau ondorioztatzen da:
+<ProofStep number={3} target="criterio-lal" title="AL-AN-AL kongruentzia-irizpidea egiaztatzea">
+$\triangle ABC$ eta $\triangle ACB$ triangeluen osagai homologoak alderatzen dira:
+1. <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> aldea <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> aldearekin kongruentea da hipotesiaz.
+2. Tarteko <VisualBind element="angulo-a" color="carbon">$\angle BAC$</VisualBind> <ConceptLink targetId="angulo">angelua</ConceptLink> bere buruaren berbera da ($\angle CAB$).
+3. <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> aldea <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> aldearekin kongruentea da hipotesiaz.
+
+<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>AL-AN-AL kongruentzia-axiomen</ConceptLink> bidez, <ConceptLink targetId="congruencia">triangeluen kongruentzia</ConceptLink> deduzitzen da:
 
 <Formula>
   $$ \triangle ABC \cong \triangle ACB $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} title="Oinarriko angeluen berdintasuna" target={["angulo-b", "angulo-c"]}>
-Triangeluen kongruentziaren definizioz, homologo diren angeluak kongruenteak dira. $\triangle ABC$-ko <VisualBind element="angulo-b" color="pavo">$\angle B$</VisualBind> angelua eta $\triangle ACB$-ko <VisualBind element="angulo-c" color="pavo">$\angle C$</VisualBind> angelua bat datozenez:
+<ProofStep number={4} target="conclusion" title="Oinarriko angeluen berdintasuna">
+Bi triangeluak kongruenteak direnez, beren alborik homologoak kongruenteak dira. Zehazki, korrespondentzian luzera bereko aldeen aurkako angeluak berdinak dira: $B$ <ConceptLink targetId="vertice">bertizeko</ConceptLink> angelua (<VisualBind element="angulo-b" color="terracota">$\angle ABC$</VisualBind>) $C$ bertizeko angeluarekin (<VisualBind element="angulo-c" color="pavo">$\angle ACB$</VisualBind>) kongruentea da:
 
 <Formula>
-  $$ \angle B \cong \angle C $$
+  $$ \angle ABC \cong \angle ACB $$
 </Formula>
 </ProofStep>
 
 <Separador />
 
-### Analisia
+### Dedukzio-analisia
 
 <Nota>
-  Pappus Alexandriakoari (K.o. IV. mendea) egoitzatutako simetria bidezko frogapena. Euklidesen <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.5 proposizioko eraikuntza laguntzaileak saihesten ditu, <ConceptLink targetId="geometria-absoluta">geometria absolutuari</ConceptLink> osorik dagokiolarik.
+  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.5 Proposizioa, historikoki *Pons Asinorum* izenez ezaguna. Laguntza-eraikuntzarik gabeko bertsio labur hau Pappus Alexandriakoari zor zaio eta <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> barnean dago.
 </Nota>
 
 </DemonstrationSection>

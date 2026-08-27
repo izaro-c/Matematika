@@ -2,57 +2,45 @@ export const metadata = {
   id: "estar-entre",
   lang: "eu",
   type: "definicion",
-  subtype: "primitivo",
-  title: "Tartean Egon (Bitartekotasuna)",
-  description: "Hiru puntu lerrokideren arteko oinarrizko ordena-erlazioa, zuzen bateko puntuen ordena eta planoaren banaketa ezartzen dituena.",
-  sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §3", role: "primary" },
-    { title: "Euclidean and Non-Euclidean Geometries", author: "Marvin Jay Greenberg", locator: "3. Kapitulua", role: "secondary" }
-  ],
+  subtype: "nominal",
+  title: "Tartean egon",
+  description: "Hiru puntu lerrokideren arteko bitartekotasuna zehazten duen orden linealeko oinarrizko erlazio hirutarra.",
+  branch: "51M",
   hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, Axiomas del Grupo II", role: "primary" }
+  ]
 };
 
 import { EstarEntre } from '@content/diagrams/Definiciones/EstarEntre';
 export const Simulation = EstarEntre;
 
-<Capitular letra="H" /><ConceptLink targetId="hilbert">ilbertek</ConceptLink> (1899) garatutako berriztatze axiomatikoan, bitartekotasun-erlazioa edo "tartean egon" (<VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pB" color="ocre">$B$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind>) <ConceptLink targetId="geometria">geometriaren</ConceptLink> bigarren oinarrizko erlazio primitiboa da. <ConceptLink targetId="recta">Zuzen</ConceptLink> baten gaineko <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="axioma-orden-1">ordena</ConceptLink> lineala formalizatzen du neurketa metrikoetatik edo <ConceptLink targetId="coordenadas">koordenatu analitikoetatik</ConceptLink> independenteki.
+<Capitular letra="B" />itartekotasun-erlazioa (edo tartean egon erlazioa) David Hilbertek formalizatutako <ConceptLink targetId="geometria-absoluta">geometria sintetikoaren</ConceptLink> oinarri axiomatikoetako oinarrizko erlazio hirutarra da. Horri esker, <ConceptLink targetId="recta">zuzenei</ConceptLink> orden lineal dentsuko egitura ematen zaie, zenbaki errealetara edo <ConceptLink targetId="distancia">distantzia metrikora</ConceptLink> goizegi jo gabe.
 
 <Definicion title="">
-  <VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pB" color="ocre">$B$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind> adierazpenak $\mathcal{P}$ puntuen <ConceptLink targetId="conjunto">multzoaren</ConceptLink> gaineko <ConceptLink targetId="relacion-ternaria">erlazio hirutar</ConceptLink> primitibo bat definitzen du. Bere baliozkotasun formala ez da <ConceptLink targetId="distancia">distantzietatik</ConceptLink> deduzitzen, Hilberten <ConceptLink targetId="axioma-orden-1">ordena-axiomen</ConceptLink> II. taldea osatzen duten lau postulatuak betetzetik baizik.
+  Izan bitez <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="musgo">$C$</VisualBind> hiru <ConceptLink targetId="punto">puntu</ConceptLink> lerrokide desberdin <VisualBind element="lineAC" color="carbon">$r$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> batean. $B$ puntua $A$ eta $C$-ren tartean dagoela esaten da ($A * B * C$ idatzita) Hilberten orden-axiomak betetzen baditu. Metrikoki, <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind> eta <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind> <ConceptLink targetId="segmento">zuzenkien</ConceptLink> luzeren aditivitatearen baliokidea da <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind>-rekiko:
+  $$
+  A * B * C \iff d(A, B) + d(B, C) = d(A, C)
+  $$
+  non $A, B, C$ elkarren artean desberdinak diren.
 </Definicion>
 
 <Separador />
 
-### Bitartekotasunaren irudikapen lineala
+### Hilberten II. taldeko axioma-multzoa (ordena eta bitartekotasuna)
 
-Simulazioan <VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pC" color="musgo">$C$</VisualBind> puntuek zehaztutako <VisualBind element="lineAC" color="carbon">$r$</VisualBind> zuzena bistaratzen da. Hirugarren <VisualBind element="pB" color="ocre">$B$</VisualBind> puntua bien arteko barne-bidean kokatzean, <VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pB" color="ocre">$B$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind> erlazio formala egiaztatzen da. Puntu honek zuzena banatzen du <VisualBind element="segAB" color="pavo">$AB$</VisualBind> eta <VisualBind element="segBC" color="terracota">$BC$</VisualBind> <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> eratuz.
+Zuzen baten gaineko ordenamendua bitartekotasun-axioma hauetan oinarritzen da formalki:
 
-<Separador />
-
-### Hilberten ordena-axiomak
-
-Zuzenaren gaineko ordena linealaren egitura lau axioma independentek zehazten dute:
-
-
-- **<ConceptLink targetId="axioma-orden-1">II.1 axioma (simetria eta bereizketa)</ConceptLink>**: Baldin eta <VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pB" color="ocre">$B$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind> bada, <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, <VisualBind element="pC" color="musgo">$C$</VisualBind> zuzen bereko hiru puntu desberdin dira, $A * B * C \iff C * B * A$ simetria betez.
-
-<StepSection step="step-extension">
-- **<ConceptLink targetId="axioma-orden-2">II.2 axioma (zuzenaren hedapena)</ConceptLink>**: Edozein bi <VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pC" color="musgo">$C$</VisualBind> puntu desberdinetarako, gutxienez <VisualBind element="pD" color="pavo">$D$</VisualBind> puntu bat existitzen da zuzen berean non <VisualBind element="pA" color="musgo">$A$</VisualBind>$*$<VisualBind element="pC" color="musgo">$C$</VisualBind>$*$<VisualBind element="pD" color="pavo">$D$</VisualBind> betetzen den.
-</StepSection>
-- **<ConceptLink targetId="axioma-orden-3">II.3 axioma (esklusibotasuna eta trikotomia)</ConceptLink>**: Zuzen bereko hiru puntu desberdinetatik, bat eta bakarra dago beste bien artean.
-<Formula title="II.3 Trikotomia">
-$$(A * B * C) \oplus (B * A * C) \oplus (A * C * B)$$
-</Formula>
-
-- **<ConceptLink targetId="axioma-orden-4">II.4 axioma (Paschen axioma)</ConceptLink>**: <ConceptLink targetId="triangulo">Triangelu</ConceptLink> baten alde bat ebakitzen duen zuzen koplanar batek beste bi aldeetako bat ebakitzen du nahitaez.
-
+| Orden-axioma | Enuntziatu formala | Esanahi geometrikoa |
+|---|---|---|
+| II.1: Simetria | $A * B * C \implies C * B * A$ | Bitartekotasuna norabidearen independentea da |
+| II.2: Luzapena | $\forall A \neq C, \exists D : A * C * D$ | Zuzen bakoitza amaigabe luzatzen da |
+| II.3: Esklusibotasuna | $A,B,C \in r$ emanda, bat eta bakarra dago beste bien tartean | Ordenamendu oso zorrotza zuzenaren gainean |
 
 <Separador />
 
-### Oinarri historiko eta epistemologikoa
+### Propietateak
 
-<Cita author="David Hilbert (1899, Townsend itzulpena, 1902)">
-  «Talde honetako axiomek "tartean" hitzak adierazten duen ideia definitzen dute.»
-</Cita>
-
-<ConceptLink targetId="euclides">Euklidesen</ConceptLink> *Elementuak* lanean, ordena-propietateak marrazkien bidez suposatzen ziren inplizituki. XIX. mendearen amaieran, <ConceptLink targetId="pasch">Moritz Paschek</ConceptLink> eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> bitartekotasuna <ConceptLink targetId="sistema-absoluto">geometria absolutuko</ConceptLink> talde axiomatiko independente gisa formalizatzearen behar epistemologikoa frogatu zuten.
+- **<ConceptLink targetId="segmento">Barne-zuzenkiaren definizioa</ConceptLink>**: $A * P * B$ betetzen duten $P$ puntu guztien multzoak $(AB)$ zuzenki irekia osatzen du.
+- **<ConceptLink targetId="teorema-pasch">Pasch-en axioma</ConceptLink>**: <ConceptLink targetId="triangulo">Triangelu</ConceptLink> baten alde bat ebakitzen duen zuzen batek beste bi aldeetako bat ebaki behar du ezinbestean edo erpin batetik igaro.
+- **<ConceptLink targetId="semirrecta">Zuzenaren banaketa</ConceptLink>**: Zuzen baten gaineko $O$ puntu batek zuzeneko gainerako puntu guztiak bi <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> desjuntutan banatzen ditu.

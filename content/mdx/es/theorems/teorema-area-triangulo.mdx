@@ -1,37 +1,46 @@
 export const metadata = {
-  "id": "teorema-area-triangulo",
-  "type": "teorema",
-  "title": "Área del triángulo",
-  "description": "El área de un triángulo equivale a la mitad del producto de la longitud de una base por su altura correspondiente.",
-  "statement": "Sea △ABC un triángulo de base b = |AB| y altura h correspondiente a C. El área de △ABC es (b · h) / 2.",
-  "tags": ["geometria", "triangulos", "areas"],
-  "authors": ["euclides", "hilbert"],
-  "difficulty": "básico",
-  "hasSimulation": false,
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 35 y 41", role: "primary" },
-    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §19", role: "secondary" }
+  id: "teorema-area-triangulo",
+  type: "teorema",
+  title: "Teorema del área del triángulo",
+  description: "El área de cualquier región triangular es igual a la mitad del producto de la longitud de una de sus bases por la altura correspondiente.",
+  statement: "Dado un triángulo △ABC con base de longitud b y altura relativa h, se cumple estrictamente que Área(△ABC) = (1/2) · b · h.",
+  branch: "51M",
+  hasSimulation: false,
+  authors: ["euclides"],
+  demos: [],
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 41", role: "primary" }
   ]
 };
 
-<Capitular letra="E" />l <ConceptLink targetId="area">área</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> equivale a la mitad del producto de la longitud de cualquiera de sus bases por la <ConceptLink targetId="altura">altura</ConceptLink> relativa a ella. El <ConceptLink targetId="teorema-area-triangulo">teorema del área del triángulo</ConceptLink> proporciona la fórmula analítica fundamental que conecta la teoría axiomática del área de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> con el cálculo geométrico clásico de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>.
+<Capitular letra="E" />l teorema del área del <ConceptLink targetId="triangulo">triángulo</ConceptLink> determina la medida de superficie de la figura poligonal fundamental de la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>. Establece que la capacidad de área encerrada por tres segmentos depende exclusivamente de la magnitud lineal de una base y de su distancia perpendicular al vértice opuesto.
 
 <Separador />
 
 ### Enunciado formal
 
-Dado un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$, sea $b = |AB|$ la longitud de la base y $h$ la <ConceptLink targetId="altura">altura</ConceptLink> correspondiente (la distancia <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> desde el <ConceptLink targetId="vertice">vértice</ConceptLink> $C$ a la <ConceptLink targetId="recta">recta</ConceptLink> $AB$). El área del triángulo viene dada por:
+Sea $\triangle ABC$ un <ConceptLink targetId="triangulo">triángulo</ConceptLink> en el plano euclidiano $\mathcal{P}$. Sea $b = \overline{AB}$ la longitud de uno de sus lados tomado como base, y sea $h$ la longitud de la <ConceptLink targetId="perpendicular">altura perpendicular</ConceptLink> trazada desde el vértice opuesto $C$ a la recta soporte del lado $\overline{AB}$. La medida del <ConceptLink targetId="area">área</ConceptLink> del triángulo $\triangle ABC$ satisface la relación:
 
 <Formula>
-  $$ \text{Área}(\triangle ABC) = \frac{b \cdot h}{2} $$
+  $$ \text{Área}(\triangle ABC) = \frac{1}{2} b \cdot h $$
 </Formula>
 
-Como consecuencia directa, dos triángulos que comparten la misma longitud de base y la misma altura poseen áreas idénticas, con independencia de su morfología o sesgo angular.
+Es decir, el área de todo triángulo equivale rigurosamente a la mitad del producto de su base por su altura relativa.
 
 <Separador />
 
-### Observaciones y consecuencias
+### Demostración y equidescomposición
 
-- **Área del paralelogramo**: Al dividir un <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> mediante una de sus diagonales en dos triángulos <ConceptLink targetId="congruencia">congruentes</ConceptLink>, se obtiene de inmediato la fórmula $\text{Área} = b \cdot h$.
-- **Aditividad y polígonos**: Permite calcular el área de cualquier <ConceptLink targetId="poligono">polígono</ConceptLink> plano mediante su descomposición en un número finito de triángulos disjuntos por <ConceptLink targetId="teorema-area-aditividad">aditividad del área</ConceptLink>.
-- **Teorema de Pitágoras**: Constituye el pilar deductivo en la demostración del molino de viento de Euclides para igualar las áreas de los <ConceptLink targetId="rectangulo">rectángulos</ConceptLink> y los cuadrados sobre los <ConceptLink targetId="cateto">catetos</ConceptLink> en el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>.
+La deducción euclidiana se obtiene completando el triángulo hasta formar un <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink>:
+1. Se traza por $C$ una <ConceptLink targetId="paralelas">recta paralela</ConceptLink> a $\overline{AB}$, y por $B$ una recta paralela a $\overline{AC}$, las cuales se intersectan en un punto $D$.
+2. El cuadrilátero $ABDC$ es un <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> con la misma base $b$ y la misma altura $h$.
+3. La diagonal $\overline{BC}$ divide al paralelogramo en dos triángulos <ConceptLink targetId="congruencia">congruentes</ConceptLink>: $\triangle ABC \cong \triangle DCB$.
+4. Por el <ConceptLink targetId="teorema-area-aditividad">teorema de aditividad del área</ConceptLink>, $\text{Área}(ABDC) = \text{Área}(\triangle ABC) + \text{Área}(\triangle DCB) = 2 \cdot \text{Área}(\triangle ABC)$.
+5. Dado que $\text{Área}(ABDC) = b \cdot h$ por el <ConceptLink targetId="teorema-area-rectangulo">teorema del área del rectángulo</ConceptLink>, se concluye que $\text{Área}(\triangle ABC) = \frac{1}{2} b \cdot h$.
+
+<Separador />
+
+### Fórmulas de área equivalentes
+
+- **Fórmula de Herón**: Dado un triángulo con lados de longitudes $a, b, c$ y semiperímetro $s = \frac{a+b+c}{2}$, su área equivale a $\sqrt{s(s-a)(s-b)(s-c)}$.
+- **Fórmula trigonométrica**: En términos de dos lados y el ángulo comprendido, $\text{Área} = \frac{1}{2} a b \sin(\gamma)$.

@@ -1,49 +1,47 @@
 export const metadata = {
-  "id": "teorema-pitagoras",
-  "type": "teorema",
-  "title": "Teorema de Pitágoras",
-  "description": "En todo triángulo rectángulo, el área del cuadrado construido sobre la hipotenusa es igual a la suma de las áreas de los cuadrados construidos sobre los catetos.",
-  "statement": "Sea △ABC un triángulo rectángulo con ángulo recto en C. Si a = |BC|, b = |CA| y c = |AB| (hipotenusa), entonces a² + b² = c².",
-  "branch": "51M",
-  "tags": ["geometria", "triangulos", "areas"],
-  "authors": ["pitagoras", "euclides", "hilbert"],
-  "difficulty": "básico",
-  "hasSimulation": true,
-  "demos": ["demo-pitagoras-euclides", "demo-pitagoras-areas"],
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 47 y 48", role: "primary" },
-    { "title": "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §21", role: "secondary" }
+  id: "teorema-pitagoras",
+  type: "teorema",
+  title: "Teorema de Pitágoras",
+  description: "En todo triángulo rectángulo, el área del cuadrado construido sobre la hipotenusa es igual a la suma de las áreas de los cuadrados construidos sobre los catetos.",
+  statement: "En todo triángulo rectángulo △ABC con ángulo recto en C, la suma de los cuadrados de los catetos es igual al cuadrado de la hipotenusa: a² + b² = c².",
+  branch: "51M",
+  hasSimulation: true,
+  authors: ["pitagoras", "euclides", "hilbert"],
+  demos: ["demo-pitagoras-euclides", "demo-pitagoras-areas"],
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 47 y 48", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §21", role: "secondary" }
   ]
 };
 
 import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras';
 export const Simulation = Pitagoras;
 
-<Capitular letra="E" />l <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> constituye la relación métrica fundamental de la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink> plana. Establece un vínculo cuantitativo exacto entre los <ConceptLink targetId="cateto">catetos</ConceptLink> y la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> de un <VisualBind element="triangulo" color="carbon"><ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink></VisualBind>, asociando la longitud lineal de los <ConceptLink targetId="segmento">segmentos</ConceptLink> con el <ConceptLink targetId="area">área</ConceptLink> de las superficies cuadradas construidas sobre ellos.
+<Capitular letra="E" />n la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink> plana, la relación métrica entre los <ConceptLink targetId="lado">lados</ConceptLink> de un <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink></VisualBind> vincula directamente las magnitudes lineales de sus <ConceptLink targetId="segmento">segmentos</ConceptLink> con las magnitudes de <ConceptLink targetId="area">área</ConceptLink> de las superficies cuadradas erigidas sobre ellos.
 
 <Separador />
 
 ### Enunciado formal
 
-Sea $\triangle ABC$ un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> con <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> en el <ConceptLink targetId="vertice">vértice</ConceptLink> $C$. Sean $a = |BC|$ y $b = |CA|$ las longitudes de los <ConceptLink targetId="cateto">catetos</ConceptLink>, y $c = |AB|$ la longitud de la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink>. Entonces:
+Sea $\triangle ABC$ un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> en el plano euclidiano con <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> en el <ConceptLink targetId="vertice">vértice</ConceptLink> $C$. Sean $a = |\overline{BC}|$ y $b = |\overline{CA}|$ las magnitudes métricas de los <VisualBind element="cateto-a" color="pavo"><ConceptLink targetId="cateto">catetos</ConceptLink></VisualBind>, y $c = |\overline{AB}|$ la magnitud métrica de la <VisualBind element="hipotenusa" color="terracota"><ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink></VisualBind>. Se satisface de forma necesaria la igualdad de magnitudes:
 
 <Formula>
   $$ a^2 + b^2 = c^2 $$
 </Formula>
 
-En términos de magnitudes de superficie, el <ConceptLink targetId="area">área</ConceptLink> del <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">cuadrado sobre la hipotenusa</ConceptLink></VisualBind> $c^2$ equivale estrictamente a la suma del área del <VisualBind element="cuadrado-a" color="pavo">cuadrado sobre el cateto $a$</VisualBind> ($a^2$) y el área del <VisualBind element="cuadrado-b" color="terracota">cuadrado sobre el cateto $b$</VisualBind> ($b^2$).
+En términos de medida de superficies poligonales, el <ConceptLink targetId="area">área</ConceptLink> del <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">cuadrado</ConceptLink></VisualBind> construido sobre la hipotenusa $c^2$ equivale rigurosamente a la suma del área del cuadrado construido sobre el cateto $a$ ($a^2$) y el área del cuadrado construido sobre el cateto $b$ ($b^2$).
 
 <Separador />
 
 ### Análisis y fundamentación axiomática
 
-La validez del teorema de Pitágoras caracteriza a la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink>: su demostración requiere de forma indispensable el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink>.
+La demostración de esta relación métrica depende indispensablemente del <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. En la formalización rigurosa desarrollada por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el resultado se deduce mediante la teoría de equidescomposición de <ConceptLink targetId="poligono">polígonos</ConceptLink> planos y la existencia de una función de medida de área aditiva.
 
-En la axiomatización de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, la igualdad se demuestra mediante la teoría de la equidescomponibilidad de <ConceptLink targetId="poligono">polígonos</ConceptLink>. En geometrías no euclidianas, la relación métrica varía: en <ConceptLink targetId="geometria-hiperbolica">geometría hiperbólica</ConceptLink> se cumple la desigualdad estricta $a^2 + b^2 < c^2$ (en términos de lados o funciones hiperbólicas $\cosh c = \cosh a \cosh b$).
+En modelos geométricos no euclidianos, como la geometría esférica o hiperbólica, la suma de los cuadrados no se conserva en forma algebraica lineal de magnitudes cuadráticas, requiriendo el uso de funciones trigonométricas hiperbólicas o esféricas.
 
 <Separador />
 
-### Observaciones y reciprocidad
+### Propiedades y recíproco
 
-- **Recíproco del teorema**: Si en un triángulo $\triangle ABC$ las longitudes de sus lados satisfacen $a^2 + b^2 = c^2$, entonces el ángulo opuesto al lado $c$ es necesariamente un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> (Proposición I.48 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>).
-- **Demostraciones clásicas**: Admite diversas construcciones deductivas, destacando la demostración por descomposición en <ConceptLink targetId="rectangulo">rectángulos</ConceptLink> (molino de viento de Euclides) y la demostración por <ConceptLink targetId="semejanza">semejanza de triángulos</ConceptLink>.
+- **Carácter recíproco**: Si las longitudes de los lados de un triángulo $\triangle ABC$ verifican la ecuación $a^2 + b^2 = c^2$, entonces el ángulo opuesto al lado $\overline{AB}$ es necesariamente un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink>.
+- **Demostración por semejanza**: La altura trazada sobre la hipotenusa divide al triángulo original en dos triángulos <ConceptLink targetId="semejanza">semejantes</ConceptLink> entre sí y semejantes al triángulo global, permitiendo deducir las relaciones proporcionales $a^2 = c \cdot p$ y $b^2 = c \cdot q$.

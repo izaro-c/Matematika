@@ -1,0 +1,47 @@
+export const metadata = {
+  id: "grupo",
+  lang: "en",
+  type: "definicion",
+  subtype: "algebraico",
+  title: "Group",
+  description: "Fundamental algebraic structure consisting of a set equipped with a binary operation satisfying associativity, identity, and inverse elements.",
+  branch: "20",
+  hasSimulation: false,
+  sources: [
+    { title: "Traité des substitutions et des équations algébriques", author: "Camille Jordan", locator: "Book I", role: "primary" },
+    { title: "Algebra", author: "Serge Lang", locator: "Chapter I, §1", role: "primary" }
+  ]
+};
+
+<Capitular letra="A" /> group is the elementary <ConceptLink targetId="estructura-algebraica">algebraic structure</ConceptLink> that formalizes symmetry and transformation in mathematics. It consists of a <ConceptLink targetId="conjunto">set</ConceptLink> equipped with an internal <ConceptLink targetId="operacion-binaria">binary operation</ConceptLink> satisfying four fundamental algebraic axioms.
+
+<Definicion title="">
+  A group $(G, \cdot)$ is an ordered pair formed by a <ConceptLink targetId="conjunto-no-vacio">non-empty set</ConceptLink> $G$ and a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> $\cdot: G \times G \to G$ that satisfies the following axioms:
+
+  1. **<ConceptLink targetId="propiedad-clausura">Closure</ConceptLink>**: $\forall a, b \in G$, $a \cdot b \in G$.
+  2. **<ConceptLink targetId="asociatividad">Associativity</ConceptLink>**: $\forall a, b, c \in G$, $(a \cdot b) \cdot c = a \cdot (b \cdot c)$.
+  3. **<ConceptLink targetId="elemento-neutro">Identity element</ConceptLink>**: $\exists e \in G$ such that $\forall a \in G$, $a \cdot e = e \cdot a = a$.
+  4. **<ConceptLink targetId="elemento-inverso">Inverse element</ConceptLink>**: $\forall a \in G$, $\exists a^{-1} \in G$ such that $a \cdot a^{-1} = a^{-1} \cdot a = e$.
+</Definicion>
+
+<Separador />
+
+### Structural classification of groups
+
+Groups are classified according to the commutativity of their <ConceptLink targetId="operacion-binaria">operation</ConceptLink> and the <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> of their underlying set:
+
+| Group type | Algebraic condition | Representative example |
+|---|---|---|
+| <ConceptLink targetId="grupo-abeliano">Abelian (Commutative)</ConceptLink> | $\forall a, b \in G$, $a \cdot b = b \cdot a$ | <ConceptLink targetId="conjunto-enteros">Integers</ConceptLink> $(\mathbb{Z}, +)$ under addition |
+| <ConceptLink targetId="grupo-no-abeliano">Non-Abelian</ConceptLink> | $\exists a, b \in G$ such that $a \cdot b \neq b \cdot a$ | <ConceptLink targetId="matriz-invertible">Invertible matrices</ConceptLink> $(\text{GL}_n(\mathbb{R}), \cdot)$ with $n \ge 2$ |
+| <ConceptLink targetId="grupo-finito">Finite</ConceptLink> | The cardinality $\lvert G \rvert$ is a natural integer | <ConceptLink targetId="grupo-simetria">Symmetry group</ConceptLink> $D_3$ of a triangle |
+| <ConceptLink targetId="grupo-infinito">Infinite</ConceptLink> | The cardinality $\lvert G \rvert$ is infinite | <ConceptLink targetId="conjunto-reales">Non-zero real numbers</ConceptLink> $(\mathbb{R} \setminus \{0\}, \cdot)$ |
+
+<Separador />
+
+### Properties
+
+- **<ConceptLink targetId="teorema-unicidad-elemento-neutro">Uniqueness of identity element</ConceptLink>**: The identity element $e \in G$ of every group is unique.
+- **<ConceptLink targetId="teorema-unicidad-elemento-inverso">Uniqueness of inverse element</ConceptLink>**: For each element $a \in G$, its inverse element $a^{-1}$ is unique.
+- **<ConceptLink targetId="teorema-leyes-cancelacion-grupo">Cancellation laws</ConceptLink>**: Every group satisfies left cancellation ($a \cdot b = a \cdot c \implies b = c$) and right cancellation laws.
+- **<ConceptLink targetId="teorema-inverso-producto-grupo">Inverse of a product</ConceptLink>**: For any elements in a group, $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$.

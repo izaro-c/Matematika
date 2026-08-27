@@ -1,0 +1,47 @@
+export const metadata = {
+  id: "perpendicular",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Perpendicular lines",
+  description: "Geometric relationship between two intersecting lines that cut each other forming four congruent right angles.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Definition 10", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+  ]
+};
+
+import { Perpendicular } from '@content/diagrams/Definiciones/Perpendicular';
+export const Simulation = Perpendicular;
+
+<Capitular letra="T" />wo secant <ConceptLink targetId="recta">lines</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink> are called perpendicular if their <ConceptLink targetId="interseccion">intersection</ConceptLink> divides the surrounding angular space into four equal <ConceptLink targetId="angulo">angles</ConceptLink>. Perpendicularity constitutes the primary concept of orthogonality in <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink> and establishes the basis for Cartesian coordinate systems.
+
+<Definicion title="">
+  Given two secant lines <VisualBind element="recta-r" color="musgo">$L_1$</VisualBind> and <VisualBind element="recta-s" color="pavo">$L_2$</VisualBind> in a plane $\mathcal{P}$ intersecting at a single <ConceptLink targetId="punto">point</ConceptLink> $P = L_1 \cap L_2$, $L_1$ and $L_2$ are defined to be perpendicular, denoted $L_1 \perp L_2$, if and only if the four adjacent angles determined by their intersection are mutually <ConceptLink targetId="congruencia">congruent</ConceptLink>, each being a <ConceptLink targetId="angulo-recto">right angle</ConceptLink> of measure $90^\circ$ ($\frac{\pi}{2}\text{ rad}$):
+  $$
+  L_1 \perp L_2 \iff (L_1 \cap L_2 = \{P\}) \land \forall i \in \{1,2,3,4\}, \mu(\theta_i) = \frac{\pi}{2}
+  $$
+  In vector space, if $\vec{u}$ and $\vec{v}$ are non-zero direction vectors of $L_1$ and $L_2$, then $\vec{u} \cdot \vec{v} = 0$.
+</Definicion>
+
+<Separador />
+
+### Criteria and geometric representations
+
+The condition of perpendicularity admits several synthetic and analytic formulations depending on the underlying formal system:
+
+| Domain | Synthetic or analytic condition | Formal expression |
+|---|---|---|
+| Vector geometry | Zero dot product | $\vec{u} \cdot \vec{v} = 0$ |
+| Analytic geometry | Negative reciprocal slopes | $m_1 \cdot m_2 = -1$ |
+| Synthetic geometry | Equality of supplementary adjacent angles | $\alpha \cong \beta \land \mu(\alpha + \beta) = \pi$ |
+
+<Separador />
+
+### Properties
+
+- **Existence and uniqueness**: Given a point $P$ and a line $L$, there exists a <ConceptLink targetId="unicidad">unique</ConceptLink> line passing through $P$ that is perpendicular to $L$.
+- **Relation to parallelism**: Two lines perpendicular to a common third line are mutually <ConceptLink targetId="paralelas">parallel</ConceptLink> ($L_1 \perp L_3 \land L_2 \perp L_3 \implies L_1 \parallel L_3$).
+- **Non-reflexive symmetry**: The relation of perpendicularity is symmetric ($L_1 \perp L_2 \implies L_2 \perp L_1$), but neither reflexive nor transitive.

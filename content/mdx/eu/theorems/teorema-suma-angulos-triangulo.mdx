@@ -1,46 +1,48 @@
 export const metadata = {
-  "id": "teorema-suma-angulos-triangulo",
-  "type": "teorema",
-  "title": "Triangelu baten angeluen baturaren teorema",
-  "description": "Geometria euklidestarreko triangelu ororen barne-angeluen batura konstantea da eta beti bi angelu zuzenen (180 gradu) berdina da.",
-  "statement": "Bedi △ABC α, β eta γ barne-angeluak dituen triangelu bat. Orduan α + β + γ = 180° = π rad.",
-  "tags": ["geometria", "triangulos", "angulos"],
-  "authors": ["euclides"],
-  "difficulty": "básico",
-  "hasSimulation": true,
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 32", role: "primary" }
-  ],
-  "demos": ["demo-suma-angulos-triangulo"]
+  id: "teorema-suma-angulos-triangulo",
+  type: "teorema",
+  title: "Triangelu baten barne-angeluen baturaren teorema",
+  description: "Geometria euklidetarrean, edozein triangeluren barne-angeluen neurrien batura bi angelu zuzenen (180° edo π rad) berdina da.",
+  statement: "Plano euklidetarreko △ABC triangelu baten barne-angeluak α, β eta γ izanik, α + β + γ = 180° betetzen da.",
+  branch: "51M",
+  hasSimulation: true,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-suma-angulos-triangulo"],
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 32", role: "primary" }
+  ]
 };
 
 import { SumaAngulos } from '@content/diagrams/Teoremas/SumaAngulos';
 export const Simulation = SumaAngulos;
 
-<Capitular letra="T" /><ConceptLink targetId="teorema-suma-angulos-triangulo">Triangelu baten angeluen baturaren teoremak</ConceptLink> —<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.32 proposizioa— <ConceptLink targetId="geometria-euclidiana">geometria lauaren</ConceptLink> emaitzarik ospetsuenetako bat da. Edozein <VisualBind element="triangulo" color="terracota"><ConceptLink targetId="triangulo">triangeluren</ConceptLink></VisualBind> hiru <VisualBind element="angulos" color="terracota">barne-angeluen</VisualBind> zabalerren batura beti bi <ConceptLink targetId="angulo-recto">angelu zuzenen</ConceptLink> ($180^\circ$ edo $\pi$ radian) berdina dela ezartzen du aldaezinki.
+<Capitular letra="T" />riangelu baten barne-angeluen baturaren teorema <ConceptLink targetId="geometria-euclidiana">geometria euklidetarrek</ConceptLink> ezaugarri unibertsal nagusietako bat da. <ConceptLink targetId="plano">Planoaren</ConceptLink> kurbadura nulua zehazten du, edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> hiru <ConceptLink targetId="angulo">angeluen</ConceptLink> sinergia <ConceptLink targetId="angulo-llano">angelu lau</ConceptLink> baten berdina dela finkatuz.
 
 <Separador />
 
-### Formulatze formala
+### Enuntziatu formala
 
-Edozein $\triangle ABC$ <VisualBind element="triangulo" color="terracota">triangeluk</VisualBind> emanda, $\alpha = \angle A$, $\beta = \angle B$ eta $\gamma = \angle C$ barne-<ConceptLink targetId="angulo">angeluekin</ConceptLink>:
+Bitzak $\triangle ABC$ <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo">triangelu</ConceptLink></VisualBind> bat $\mathcal{P}$ plano euklidetarrean. Izan bitez $\alpha = \angle CAB$, $\beta = \angle ABC$ eta $\gamma = \angle BCA$ bere hiru <VisualBind element="angulos-interiores" color="terracota">barne-angeluen</VisualBind> neurri angeluarrak. Honako berdintza hau zorrotz betetzen da:
 
 <Formula>
-  $$ \alpha + \beta + \gamma = 180^\circ = \pi \text{ rad} $$
+  $$ \alpha + \beta + \gamma = 180^\circ \quad (\text{edo } \pi \text{ rad}) $$
 </Formula>
 
-<Separador />
-
-### Analisia eta mendekotasun axiomatikoa
-
-Teorema honek <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioma euklidestarraren</ConceptLink> mendetasun zorrotza du.
-
-Frogapen klasikoak erpin batetik igarotzen den eta aurkako aldearekiko paraleloa den zuzen bat marrazten du: <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>barne-angelu alternoak</ConceptLink> dagozkien barne-angeluekin kongruenteak suertatzen dira, <ConceptLink targetId="angulo-llano">angelu lautua</ConceptLink> ($180^\circ$) berreraikiz. Geometria ez-euklidestarretan batura aldatu egiten da: <ConceptLink targetId="geometria-hiperbolica">geometria hiperbolikoan</ConceptLink> $180^\circ$ baino txikiagoa da zorrozki, eta geometria esferikoan berriz handiagoa.
+Derrigorrez, edozein triangeluren hiru barne-angeluen batura metrikoki bi <ConceptLink targetId="angulo-recto">angelu zuzenen</ConceptLink> berdina da.
 
 <Separador />
 
-### Oharrak eta korolarioak
+### Zuzen paralelo bidezko froga
 
-- **Triangelu zuzena**: <ConceptLink targetId="triangulo-rectangulo">Triangelu zuzen</ConceptLink> batean, bi angelu zorrotzak <ConceptLink targetId="angulo-complementario">osagarriak</ConceptLink> dira ($90^\circ$ batzen dute).
-- **Kanpo-angelua**: Edozein triangeluren <ConceptLink targetId="angulo-externo">kanpo-angelua</ConceptLink> bere albokoak ez diren bi barne-angeluen baturaren berdina da.
-- **Poligonoen batura**: $n$ aldeko edozein <ConceptLink targetId="poligono">poligono</ConceptLink> konvexuren barne-angeluen batura $(n - 2) \cdot 180^\circ$ da.
+Pitagorikoek garatutako eta <ConceptLink targetId="euclides">Euklidesen</ConceptLink> Elementuetan formalizatutako eraikuntza klasikoak $C$ <ConceptLink targetId="vertice">erpinean</ConceptLink> zehar aurkako $\overline{AB}$ aldeari <ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink> bat marrazten du:
+1. Paralelo den $r$ zuzenak eta $\overline{AC}$ zein $\overline{BC}$ aldeek <ConceptLink targetId="teorema-angulos-alternos-internos">barne-angelu alterno</ConceptLink> kongruenteen pareak osatzen dituzte.
+2. $r$ zuzenaren gaineko hiru angelu jarraituek $180^\circ$-ko <ConceptLink targetId="angulo-llano">angelu laua</ConceptLink> osatzen dute.
+3. Angeluen arteko berdintzak ordezkatuz, ezinbestean lortzen da $\alpha + \beta + \gamma = 180^\circ$.
+
+<Separador />
+
+### Bostgarren Postulatuarekin baliokidetasuna
+
+Teorema hau logikoki <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axiomarekin</ConceptLink> baliokidea da:
+- **Geometria hiperbolikoan**: Triangelu baten barne-angeluen batura $180^\circ$ baino zorrozki txikiagoa da ($\alpha + \beta + \gamma < 180^\circ$), triangeluaren <ConceptLink targetId="area">azalerarekiko</ConceptLink> proportzionala den akats angeluarra dagoelarik.
+- **Geometria esferikoan**: Barne-angeluen batura $180^\circ$ baino zorrozki handiagoa da ($\alpha + \beta + \gamma > 180^\circ$), gehiegikeria esferikoa definituz.

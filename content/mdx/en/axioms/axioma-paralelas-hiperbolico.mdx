@@ -1,0 +1,38 @@
+export const metadata = {
+  id: "axioma-paralelas-hiperbolico",
+  lang: "en",
+  type: "axioma",
+  title: "Hyperbolic Parallel Axiom",
+  description: "Given a line and a point not on it, there exist at least two distinct lines passing through the point that do not intersect the given line.",
+  branch: "51M",
+  hasSimulation: true,
+  alternativeGroup: "paralelismo",
+  sources: [
+    { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolai Lobachevsky", locator: "§16", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "primary" }
+  ]
+};
+
+import { HyperbolicParallel } from '@content/diagrams/Axiomas/HyperbolicParallel';
+export const Simulation = HyperbolicParallel;
+
+<Capitular letra="T" />he hyperbolic parallel axiom (or the <ConceptLink targetId="lobachevsky">Lobachevsky</ConceptLink>-Bolyai postulate) replaces Euclid's fifth postulate to establish <ConceptLink targetId="geometria-hiperbolica">hyperbolic geometry</ConceptLink>. It asserts the existence of multiple disjoint <ConceptLink targetId="recta">lines</ConceptLink> passing through a single exterior <ConceptLink targetId="punto">point</ConceptLink>.
+
+<Definicion title="">
+  Given a <ConceptLink targetId="recta">line</ConceptLink> $l$ and a <ConceptLink targetId="punto">point</ConceptLink> $P$ not on $l$, there exist at least two distinct lines $m_1, m_2$ containing $P$ that are <ConceptLink targetId="paralelismo">parallel</ConceptLink> (disjoint) to $l$:
+  $$
+  \forall l \in \mathcal{L}, \forall P \notin l \implies \exists m_1, m_2 \in \mathcal{L} \ (m_1 \neq m_2 \land P \in m_1 \cap m_2 \land m_1 \parallel l \land m_2 \parallel l)
+  $$
+</Definicion>
+
+<Separador />
+
+### Visual representation
+
+Drawing the baseline <VisualBind element="l" color="pavo">$l$</VisualBind> and exterior point <VisualBind element="P" color="terracota">$P$</VisualBind> reveals two limiting boundary lines <VisualBind element="m1" color="ocre">$m_1$</VisualBind> and <VisualBind element="m2" color="verde">$m_2$</VisualBind> that bound an infinite pencil of ultraparallel lines never intersecting $l$.
+
+<Separador />
+
+### Axiomatic significance
+
+Adopting this axiom in place of Euclid's parallel postulate demonstrates the logical independence of the parallel axiom and constructs a consistent geometric system of constant negative Gaussian curvature. In this space, the sum of interior angles of any <ConceptLink targetId="triangulo">triangle</ConceptLink> is strictly less than $\pi$ radians.

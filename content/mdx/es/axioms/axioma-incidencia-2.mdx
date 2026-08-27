@@ -2,23 +2,24 @@ export const metadata = {
   id: "axioma-incidencia-2",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.2 (Existencia de Puntos en la Recta)",
-  description: "Toda recta contiene al menos dos puntos distintos que inciden en ella.",
+  title: "Axioma I.2 (Existencia de puntos en la recta)",
+  description: "Toda recta contiene al menos dos puntos distintos del espacio.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="E" />l segundo <ConceptLink targetId="axioma-incidencia-2">axioma de incidencia</ConceptLink> postula el requisito mínimo de contenido <ConceptLink targetId="punto">puntual</ConceptLink> para cualquier línea <ConceptLink targetId="recta">recta</ConceptLink>. Garantiza que no existen rectas vacías o degeneradas que alberguen menos de dos elementos.
+<Capitular letra="E" />l segundo <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> estipula que cualquier <ConceptLink targetId="recta">recta</ConceptLink> posee una pluralidad mínima de elementos, al albergar no menos de dos <ConceptLink targetId="punto">puntos</ConceptLink> diferenciados. Esta condición previene la existencia de rectas degeneradas compuestas por un único punto.
 
-<Definicion title="">
-  Para toda <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$, existen al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B \in \mathcal{P}$ tales que $A$ y $B$ inciden en $l$:
+<Definicion title="Enunciado formal">
+  Para toda <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$, existen al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B \in \mathcal{S}$ que pertenecen a $l$:
   $$
-  \forall l \in \mathcal{L} \implies \exists A, B \in \mathcal{P} \ (A \neq B \land A \in l \land B \in l)
+  \forall l \in \mathcal{L}, \ \exists A, B \in \mathcal{S} \ \bigl(A \in l \land B \in l \land A \neq B\bigr)
   $$
 </Definicion>
 
@@ -26,10 +27,18 @@ export const Simulation = Incidence2;
 
 ### Representación visual e interacción
 
-En la simulación se observa la recta <VisualBind element="lineAB" color="carbon">$l$</VisualBind> sobre la cual se garantizan y ubican los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind>. Esta estructura asegura la existencia de un trazado unidimensional no trivial.
+En la simulación, la recta <VisualBind element="line" color="carbon">$l$</VisualBind> contiene los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind>. La interacción demuestra que sobre cualquier recta dada siempre se pueden señalar al menos dos posiciones independientes $A \neq B$.
 
 <Separador />
 
-### Significado axiomático
+### Significado geométrico y alcance
 
-Mientras que el <ConceptLink targetId="axioma-incidencia-1" isDependency={false}>axioma I.1</ConceptLink> establece la <ConceptLink targetId="recta">recta</ConceptLink> a partir de dos <ConceptLink targetId="punto">puntos</ConceptLink>, el axioma I.2 garantiza la dirección opuesta: toda recta posee una cardinalidad no vacía de al menos dos puntos. Esta propiedad básica fundamenta los posteriores desarrollos de la relación de <ConceptLink targetId="axioma-orden-1">orden</ConceptLink> sobre la recta.
+Garantiza que las rectas no son objetos puntuales aislados, sino estructuras constituidas por múltiples posiciones geométricamente distinguibles. Junto con el axioma I.1, asegura una relación biunívoca básica de soporte lineal.
+
+<Separador />
+
+### Propiedades
+
+- **No degeneración:** Prohíbe rectas compuestas por un solo punto o vacías.
+- **Multitud elemental:** Sirve de partida para demostrar que toda recta contiene infinitos puntos tras añadir los axiomas de <ConceptLink targetId="orden">orden</ConceptLink>.
+- **Sostenibilidad del segmento:** Permite la formación del <ConceptLink targetId="segmento">segmento</ConceptLink> no trivial $\overline{AB}$.

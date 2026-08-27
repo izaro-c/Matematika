@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "8bd0b9b818cf93ef4e514a6e97cad02f9f1357ea7880b02dd9a64baa23125e70",
+  "corpusHash": "3a91263d38c75ffbbadbabb955a233be3bcadf2a2ad9c708abe213315b0405a7",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -118,6 +118,16 @@
         "blockId": "axioma-congruencia-1:diagram:Congruence1"
       },
       {
+        "contentId": "congruencia",
+        "contentPath": "content/mdx/es/definitions/congruencia.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 2815,
+          "end": 2828
+        },
+        "blockId": "congruencia:diagram:Congruence1"
+      },
+      {
         "contentId": "axioma-congruencia-1",
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-1.mdx",
         "referenceKind": "Simulation",
@@ -126,6 +136,16 @@
           "end": 552
         },
         "blockId": "axioma-congruencia-1:diagram:Congruence1"
+      },
+      {
+        "contentId": "congruencia",
+        "contentPath": "content/mdx/eu/definitions/congruencia.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 2774,
+          "end": 2787
+        },
+        "blockId": "congruencia:diagram:Congruence1"
       }
     ],
     "Congruence2": [
@@ -140,6 +160,16 @@
         "blockId": "axioma-congruencia-2:diagram:Congruence2"
       },
       {
+        "contentId": "congruencia",
+        "contentPath": "content/mdx/es/definitions/congruencia.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 3185,
+          "end": 3198
+        },
+        "blockId": "congruencia:diagram:Congruence2"
+      },
+      {
         "contentId": "axioma-congruencia-2",
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-2.mdx",
         "referenceKind": "Simulation",
@@ -148,6 +178,16 @@
           "end": 492
         },
         "blockId": "axioma-congruencia-2:diagram:Congruence2"
+      },
+      {
+        "contentId": "congruencia",
+        "contentPath": "content/mdx/eu/definitions/congruencia.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 3161,
+          "end": 3174
+        },
+        "blockId": "congruencia:diagram:Congruence2"
       }
     ],
     "Congruence3": [
@@ -162,6 +202,16 @@
         "blockId": "axioma-congruencia-3:diagram:Congruence3"
       },
       {
+        "contentId": "congruencia",
+        "contentPath": "content/mdx/es/definitions/congruencia.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 3696,
+          "end": 3709
+        },
+        "blockId": "congruencia:diagram:Congruence3"
+      },
+      {
         "contentId": "axioma-congruencia-3",
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-3.mdx",
         "referenceKind": "Simulation",
@@ -170,6 +220,16 @@
           "end": 508
         },
         "blockId": "axioma-congruencia-3:diagram:Congruence3"
+      },
+      {
+        "contentId": "congruencia",
+        "contentPath": "content/mdx/eu/definitions/congruencia.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 3690,
+          "end": 3703
+        },
+        "blockId": "congruencia:diagram:Congruence3"
       }
     ],
     "Congruence4": [
@@ -184,6 +244,16 @@
         "blockId": "axioma-congruencia-4:diagram:Congruence4"
       },
       {
+        "contentId": "congruencia",
+        "contentPath": "content/mdx/es/definitions/congruencia.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 4331,
+          "end": 4344
+        },
+        "blockId": "congruencia:diagram:Congruence4"
+      },
+      {
         "contentId": "axioma-congruencia-4",
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-4.mdx",
         "referenceKind": "Simulation",
@@ -192,6 +262,16 @@
           "end": 578
         },
         "blockId": "axioma-congruencia-4:diagram:Congruence4"
+      },
+      {
+        "contentId": "congruencia",
+        "contentPath": "content/mdx/eu/definitions/congruencia.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 4342,
+          "end": 4355
+        },
+        "blockId": "congruencia:diagram:Congruence4"
       }
     ],
     "EuclidParallel": [
@@ -514,6 +594,16 @@
         "blockId": "axioma-congruencia-5:diagram:SAS"
       },
       {
+        "contentId": "congruencia",
+        "contentPath": "content/mdx/es/definitions/congruencia.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 5115,
+          "end": 5120
+        },
+        "blockId": "congruencia:diagram:SAS"
+      },
+      {
         "contentId": "axioma-congruencia-5",
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-5.mdx",
         "referenceKind": "Simulation",
@@ -522,6 +612,16 @@
           "end": 538
         },
         "blockId": "axioma-congruencia-5:diagram:SAS"
+      },
+      {
+        "contentId": "congruencia",
+        "contentPath": "content/mdx/eu/definitions/congruencia.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 5138,
+          "end": 5143
+        },
+        "blockId": "congruencia:diagram:SAS"
       }
     ],
     "GpsTrilateracion": [
@@ -618,8 +718,8 @@
         "contentPath": "content/mdx/es/definitions/estar-entre.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 671,
-          "end": 707
+          "start": 503,
+          "end": 539
         },
         "blockId": "estar-entre:diagram:EstarEntre"
       },
@@ -628,8 +728,8 @@
         "contentPath": "content/mdx/eu/definitions/estar-entre.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 659,
-          "end": 695
+          "start": 470,
+          "end": 506
         },
         "blockId": "estar-entre:diagram:EstarEntre"
       }
@@ -706,8 +806,8 @@
         "contentPath": "content/mdx/es/definitions/punto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 621,
-          "end": 652
+          "start": 487,
+          "end": 518
         },
         "blockId": "punto:diagram:Punto"
       },
@@ -716,8 +816,8 @@
         "contentPath": "content/mdx/eu/definitions/punto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 641,
-          "end": 672
+          "start": 483,
+          "end": 514
         },
         "blockId": "punto:diagram:Punto"
       }
@@ -728,8 +828,8 @@
         "contentPath": "content/mdx/es/definitions/recta.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 601,
-          "end": 632
+          "start": 507,
+          "end": 538
         },
         "blockId": "recta:diagram:Recta"
       },
@@ -738,8 +838,8 @@
         "contentPath": "content/mdx/eu/definitions/recta.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 610,
-          "end": 641
+          "start": 536,
+          "end": 567
         },
         "blockId": "recta:diagram:Recta"
       }

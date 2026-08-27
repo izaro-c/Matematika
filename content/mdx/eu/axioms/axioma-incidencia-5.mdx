@@ -2,34 +2,43 @@ export const metadata = {
   id: "axioma-incidencia-5",
   lang: "eu",
   type: "axioma",
-  title: "I.5 Axioma (Planoan Puntuen Existentzia)",
-  description: "Plano bakoitzak gutxienez bere baitan lerrokide ez diren hiru puntu ditu.",
+  title: "I.5 Axioma (Zuzenaren inklusioa planoan)",
+  description: "Zuzen bateko bi puntu desberdin plano baten barnean badaude, zuzen osoa plano horren barnean dago.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
-  ],
-  hasSimulation: true
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+  ]
 };
 
 import { Incidence5 } from '@content/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
 
-<Capitular letra="B" />ostgarren intzidentzia-<ConceptLink targetId="axioma-incidencia-5">axiomak</ConceptLink> edozein gainazal <ConceptLink targetId="plano">planoren</ConceptLink> hedapen ez-degeneratua bermatzen du. Plano bakoitzak gutxienez <ConceptLink targetId="colinealidad">lerrokideak</ConceptLink> ez diren hiru <ConceptLink targetId="punto">puntuko</ConceptLink> oinarria duela eskatzen du.
+<Capitular letra="Z" />uzen bateko bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin <ConceptLink targetId="plano">plano</ConceptLink> baten barnean badaude, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-en bosgarren <ConceptLink targetId="intzidentzia">intzidentzia-axioma</ConceptLink> honek zuzen osoa plano horren barnean egotea eskatzen du nahitaez. Postulatu honek plano geometrikoaren lauatasuna eta koherentzia egiturala bermatzen ditu.
 
-<Definicion title="">
-  Edozein $\alpha \in \mathcal{E}$ <ConceptLink targetId="plano">planotarako</ConceptLink>, <ConceptLink targetId="colinealidad">lerrokideak</ConceptLink> ez diren gutxienez hiru $A, B, C \in \mathcal{P}$ <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen dira non $A, B, C$ $\alpha$-n intzidentzialak diren:
+<Definicion title="Enuntziatu formala">
+  Edozein $l \in \mathcal{L}$ <ConceptLink targetId="zuzen">zuzen</ConceptLink> eta edozein $\mathcal{P} \in \mathcal{F}$ <ConceptLink targetId="plano">planotarako</ConceptLink>, $l$ zuzeneko bi $A, B \in l$ puntu desberdin ($A \neq B$) $\mathcal{P}$ planoan badaude, orduan $l \subset \mathcal{P}$ da:
   $$
-  \forall \alpha \in \mathcal{E} \implies \exists A, B, C \in \mathcal{P} \ (A \neq B \land B \neq C \land A \neq C \land A, B, C \in \alpha \land \text{ez-lerrokideak})
+  \forall l \in \mathcal{L}, \forall \mathcal{P} \in \mathcal{F} \ \bigl((\exists A, B \in l \ (A \neq B \land A, B \in \mathcal{P})) \implies l \subset \mathcal{P}\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representazio bisuala eta interakzioa
+### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan <VisualBind element="plano" color="carbon">$\alpha$</VisualBind> planoa bistaratzen da <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntuak bere barnean hartuz. Konfigurazio honek planoa zuzen bakar batera kolapsatzea ekiditen du.
+Simulazio interaktiboan, <VisualBind element="line" color="carbon">$l$</VisualBind> zuzenak <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntu desberdinak ditu, biak <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind> planoaren gainean daudela. Puntuak planoan zehar mugitzean, zuzen osoak azaleraren barnean sartuta jarraitzen du etengabe.
 
 <Separador />
 
-### Dualtasun axiomatikoa
+### Esanahi geometrikoa eta esparrua
 
-<ConceptLink targetId="axioma-incidencia-4" isDependency={false}>I.4 axiomak</ConceptLink> <ConceptLink targetId="colinealidad">lerrokide</ConceptLink> ez diren hiru <ConceptLink targetId="punto">puntutatik</ConceptLink> abiatuta <ConceptLink targetId="plano">planoaren</ConceptLink> existentzia frogatzen duen bitartean, I.5 axiomak kontrako erlazioa ezartzen du: emandako edozein planok nekatuek dauka beren baitan lerrokide ez den puntu-oinarri bat.
+Lauatasun zorrotza bermatzen du: plano batek ezin du kurbaturarik edo sakonunerik izan zuzen batek haren bi puntu igaro ditzan bertan erabat murgilduta egon gabe. Dimentsio bakarreko geometria lineala bi dimentsiokoarekin lotzen du.
+
+<Separador />
+
+### Propietateak
+
+- **Kidekotza-kriterioa:** Bi puntu desberdinen kidekotza egiaztatzea nahikoa da zuzenaren inklusio osoa bermatzeko.
+- **Azaleren ebakidura:** Zuzen batek plano bat zehazki bi puntu desberdinetan ebakitzea ekiditen du bertan sartuta egon gabe.
+- **Bitarteko konbexutasuna:** Eremu <ConceptLink targetId="konbexu">konbexuak</ConceptLink> eta erditasunak eraikitzea errazten du.

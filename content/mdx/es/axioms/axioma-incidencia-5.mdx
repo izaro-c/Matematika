@@ -2,23 +2,24 @@ export const metadata = {
   id: "axioma-incidencia-5",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.5 (Existencia de Puntos en el Plano)",
-  description: "Todo plano contiene al menos tres puntos no colineales.",
+  title: "Axioma I.5 (Inclusión de la recta en el plano)",
+  description: "Si dos puntos distintos de una recta pertenecen a un plano, la recta entera está contenida en dicho plano.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Incidence5 } from '@content/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
 
-<Capitular letra="E" />l quinto <ConceptLink targetId="axioma-incidencia-5">axioma de incidencia</ConceptLink> garantiza la extensión no degenerada de toda superficie <ConceptLink targetId="plano">plana</ConceptLink>. Exige que todo plano albergue una base mínima de tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">alineados</ConceptLink>.
+<Capitular letra="S" />i dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos de una <ConceptLink targetId="recta">recta</ConceptLink> pertenecen a un <ConceptLink targetId="plano">plano</ConceptLink>, el quinto <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> formulado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> exige que la totalidad de la recta esté contenida en dicho plano. Este postulado asegura la llaneza y consistencia estructural del plano geométrico.
 
-<Definicion title="">
-  Para todo <ConceptLink targetId="plano">plano</ConceptLink> $\alpha \in \mathcal{E}$, existen al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B, C \in \mathcal{P}$ no <ConceptLink targetId="colinealidad">colineales</ConceptLink> tales que $A, B, C$ inciden en $\alpha$:
+<Definicion title="Enunciado formal">
+  Para toda <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$ y todo <ConceptLink targetId="plano">plano</ConceptLink> $\mathcal{P} \in \mathcal{F}$, si existen dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B \in l$ tal que $A \in \mathcal{P}$ y $B \in \mathcal{P}$, entonces $l \subset \mathcal{P}$:
   $$
-  \forall \alpha \in \mathcal{E} \implies \exists A, B, C \in \mathcal{P} \ (A \neq B \land B \neq C \land A \neq C \land A, B, C \in \alpha \land \text{no colineales})
+  \forall l \in \mathcal{L}, \forall \mathcal{P} \in \mathcal{F} \ \bigl((\exists A, B \in l \ (A \neq B \land A, B \in \mathcal{P})) \implies l \subset \mathcal{P}\bigr)
   $$
 </Definicion>
 
@@ -26,10 +27,18 @@ export const Simulation = Incidence5;
 
 ### Representación visual e interacción
 
-En la simulación interactiva se muestra el plano <VisualBind element="plano" color="carbon">$\alpha$</VisualBind> conteniendo los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind>. Esta configuración evita que el plano colapse en una única recta.
+En la simulación interactiva, la recta <VisualBind element="line" color="carbon">$l$</VisualBind> contiene los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind>, situados ambos sobre el plano <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind>. Al desplazar los puntos a lo largo del plano, la recta completa permanece adosada de forma continua dentro de la superficie planar.
 
 <Separador />
 
-### Dualidad axiomática
+### Significado geométrico y alcance
 
-Mientras que el <ConceptLink targetId="axioma-incidencia-4" isDependency={false}>axioma I.4</ConceptLink> demuestra la existencia del <ConceptLink targetId="plano">plano</ConceptLink> a partir de tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, el axioma I.5 establece la relación recíproca: todo plano dado contiene necesariamente una base no colineal de puntos.
+Garantiza la planitud estricta: un plano no puede ser abombado ni tener hendiduras que permitan a una recta atravesar dos de sus puntos sin estar totalmente sumergida en él. Conecta la geometría lineal unidimensional con la bidimensional.
+
+<Separador />
+
+### Propiedades
+
+- **Criterio de pertenencia planar:** Basta comprobar la pertenencia de dos puntos distintos para asegurar la inclusión completa de la recta.
+- **Intersección de superficies:** Impide que una recta corte a un plano en exactamente dos puntos distintos sin estar contenida en él.
+- **Convexidad subyacente:** Facilita la construcción de conjuntos <ConceptLink targetId="convexo">convexos</ConceptLink> y semoplanos.

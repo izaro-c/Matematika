@@ -2,23 +2,24 @@ export const metadata = {
   id: "axioma-incidencia-4",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.4 (Existencia y Unicidad de Plano)",
-  description: "Dados tres puntos no colineales, existe un único plano que incide sobre ellos.",
+  title: "Axioma I.4 (Existencia y unicidad del plano)",
+  description: "Dados tres puntos no colineales del espacio, existe exactamente un plano al que pertenecen los tres.",
+  branch: "51M",
+  hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
-  ],
-  hasSimulation: true
+  ]
 };
 
 import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 
-<Capitular letra="E" />l cuarto <ConceptLink targetId="axioma-incidencia-4">axioma de incidencia</ConceptLink> transfiere el principio de determinación unívoca del espacio unidimensional al bidimensional. Establece que tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">alineados</ConceptLink> fijan un <ConceptLink targetId="plano">plano</ConceptLink> único.
+<Capitular letra="D" />ados tres <ConceptLink targetId="punto">puntos</ConceptLink> no colineales cualesquiera del <ConceptLink targetId="espacio">espacio</ConceptLink>, el cuarto <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> asegura la existencia y la unicidad de un <ConceptLink targetId="plano">plano</ConceptLink> que los contiene a todos. Además, se establece que todo plano alberga al menos un punto.
 
-<Definicion title="">
-  Dados tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> $A, B, C \in \mathcal{P}$, existe un único <ConceptLink targetId="plano">plano</ConceptLink> $\alpha \in \mathcal{E}$ tal que $A, B, C$ inciden en $\alpha$:
+<Definicion title="Enunciado formal">
+  Dados tres <ConceptLink targetId="punto">puntos</ConceptLink> no colineales $A, B, C \in \mathcal{S}$, existe un único <ConceptLink targetId="plano">plano</ConceptLink> $\mathcal{P} \in \mathcal{F}$ tal que $A, B, C \in \mathcal{P}$:
   $$
-  \forall A, B, C \text{ (no colineales)} \implies \exists! \alpha \in \mathcal{E} \ (A \in \alpha \land B \in \alpha \land C \in \alpha)
+  \forall A, B, C \in \mathcal{S} \ \Bigl(\neg\exists l \in \mathcal{L} \ (A,B,C \in l) \implies \exists! \mathcal{P} \in \mathcal{F} \ (A \in \mathcal{P} \land B \in \mathcal{P} \land C \in \mathcal{P})\Bigr)
   $$
 </Definicion>
 
@@ -26,10 +27,18 @@ export const Simulation = Incidence4;
 
 ### Representación visual e interacción
 
-En la simulación interactiva, los vértices no colineales <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> determinan de forma unívoca el plano espacial <VisualBind element="polygonABC" color="carbon">$\alpha(ABC)$</VisualBind>.
+En la simulación tridimensional, los tres puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> determinan unívocamente el plano <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind>. Al desplazar cualquiera de los puntos sin alinearlo con los otros dos, el plano pivota dinámicamente preservando la pertenencia triple.
 
 <Separador />
 
-### Significado espacial
+### Significado geométrico y alcance
 
-La exigencia de no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> es la condición de unicidad: si tres <ConceptLink targetId="punto">puntos</ConceptLink> estuvieran alineados en una misma <ConceptLink targetId="recta">recta</ConceptLink>, existirían infinitos <ConceptLink targetId="plano">planos</ConceptLink> que los contendrían. Este postulado fija el concepto de plano en la geometría tridimensional.
+Este postulado define el plano como la extensión bidimensional básica engendrada por una terna no colineal. Garantiza que tres puntos no alineados no pueden flotar de forma ambigua, sino que fijan una superficie plana bien determinada en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
+
+<Separador />
+
+### Propiedades
+
+- **Determinación planar:** Tres puntos no alineados fijan la orientación bidimensional de manera unívoca.
+- **Base del espacio 3D:** Es indispensable para construir la estructura tridimensional del espacio euclidiano y no euclidiano.
+- **Sostenibilidad del triángulo:** Todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> posee un único plano soporte.
