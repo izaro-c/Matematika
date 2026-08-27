@@ -33,12 +33,12 @@
     {
       "id": "sistema-absoluto",
       "type": "sistema-axiomatico",
-      "title": "Geometria Absolutua",
+      "title": "Geometria absolutuaren sistema",
       "filePath": "eu/axiomatic-systems/sistema-absoluto.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 2,
+      "sourcesCount": 0,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -46,12 +46,12 @@
     {
       "id": "sistema-euclidiano",
       "type": "sistema-axiomatico",
-      "title": "Geometria Euklidearra",
+      "title": "Sistema axiomatiko euklidesarra",
       "filePath": "eu/axiomatic-systems/sistema-euclidiano.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 2,
+      "sourcesCount": 0,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -59,12 +59,12 @@
     {
       "id": "sistema-hiperbolico",
       "type": "sistema-axiomatico",
-      "title": "Geometria Hiperbolikoa",
+      "title": "Geometria hiperbolikoaren sistema",
       "filePath": "eu/axiomatic-systems/sistema-hiperbolico.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 2,
+      "sourcesCount": 0,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -72,12 +72,12 @@
     {
       "id": "sistema-incidencia",
       "type": "sistema-axiomatico",
-      "title": "Intzidentzia Sistema",
+      "title": "Intzidentzia-sistema",
       "filePath": "eu/axiomatic-systems/sistema-incidencia.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 1,
+      "sourcesCount": 0,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -175,7 +175,7 @@
     {
       "id": "axioma-congruencia-5",
       "type": "axioma",
-      "title": "III.5 Axioma (ALA / LAL Kongruentzia Kriterioa)",
+      "title": "III.5 Axioma (LAL Kongruentzia Kriterioa)",
       "filePath": "eu/axioms/axioma-congruencia-5.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -340,7 +340,7 @@
     {
       "id": "axioma-orden-3",
       "type": "axioma",
-      "title": "II.3 Axioma (Lerro-ordenaren trikotomia)",
+      "title": "II.3 Axioma (Zuzen-ordenaren trikotomia)",
       "filePath": "eu/axioms/axioma-orden-3.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -935,7 +935,7 @@
     {
       "id": "metodo-contradiccion",
       "type": "metodo",
-      "title": "Ezeztapen bidezko frogapena",
+      "title": "Aurkakotasun-metodoa",
       "filePath": "eu/methods/metodo-contradiccion.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -965,7 +965,7 @@
     {
       "id": "metodo-induccion",
       "type": "metodo",
-      "title": "Indukzio matematikoa",
+      "title": "Indukzio matematikoaren metodoa",
       "filePath": "eu/methods/metodo-induccion.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -984,7 +984,7 @@
       "filePath": "eu/models/modelo-cartesiano.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
-        "Diagram"
+        "Simulation"
       ],
       "diagramStatus": "exported",
       "sourcesCount": 0,
@@ -1010,11 +1010,11 @@
     {
       "id": "modelo-poincare",
       "type": "modelo",
-      "title": "Poincaréren diskoa",
+      "title": "Poincareren diskoa",
       "filePath": "eu/models/modelo-poincare.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
-        "Diagram"
+        "Simulation"
       ],
       "diagramStatus": "exported",
       "sourcesCount": 0,
@@ -1025,7 +1025,7 @@
     {
       "id": "modelo-tres-puntos",
       "type": "modelo",
-      "title": "Hiru puntuko modeloa",
+      "title": "Hiru puntuko eredua",
       "filePath": "eu/models/modelo-tres-puntos.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -1040,7 +1040,7 @@
     {
       "id": "camino-teorema-pitagoras",
       "type": "plan-de-estudio",
-      "title": "Pitagorasen teoremarako bidea",
+      "title": "Pitagorasen teoremara bidea",
       "filePath": "eu/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],

@@ -1,4 +1,236 @@
 {
+  "en:sistema-absoluto": {
+    "id": "sistema-absoluto",
+    "slug": "sistema-absoluto",
+    "lang": "en",
+    "filePath": "en/axiomatic-systems/sistema-absoluto.mdx",
+    "contentType": "sistema-axiomatico",
+    "metadata": {
+      "id": "sistema-absoluto",
+      "lang": "en",
+      "type": "sistema-axiomatico",
+      "title": "Absolute geometry system",
+      "description": "Axiomatic system established by János Bolyai uniting incidence, order, congruence, and continuity axioms without assuming any parallel axiom.",
+      "branch": "51M",
+      "axiomas": [
+        "axioma-incidencia-1",
+        "axioma-orden-1",
+        "axioma-congruencia-1"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "sistema-absoluto": {
+    "id": "sistema-absoluto",
+    "slug": "sistema-absoluto",
+    "lang": "es",
+    "filePath": "es/axiomatic-systems/sistema-absoluto.mdx",
+    "contentType": "sistema-axiomatico",
+    "metadata": {
+      "id": "sistema-absoluto",
+      "lang": "es",
+      "type": "sistema-axiomatico",
+      "title": "Sistema de geometría absoluta",
+      "description": "Estructura axiomática fundada por János Bolyai que reúne la totalidad de axiomas de incidencia, orden, congruencia y continuidad sin presuponer ningún axioma de paralelas.",
+      "branch": "51M",
+      "axiomas": [
+        "axioma-incidencia-1",
+        "axioma-orden-1",
+        "axioma-congruencia-1"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:sistema-euclidiano": {
+    "id": "sistema-euclidiano",
+    "slug": "sistema-euclidiano",
+    "lang": "en",
+    "filePath": "en/axiomatic-systems/sistema-euclidiano.mdx",
+    "contentType": "sistema-axiomatico",
+    "metadata": {
+      "id": "sistema-euclidiano",
+      "lang": "en",
+      "type": "sistema-axiomatico",
+      "title": "Euclidean axiomatic system",
+      "description": "The canonical axiomatic framework for standard plane geometry, composed of absolute geometry and Playfair's parallel axiom.",
+      "branch": "51M",
+      "axiomas": [
+        "axioma-paralelas-euclides"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "sistema-euclidiano": {
+    "id": "sistema-euclidiano",
+    "slug": "sistema-euclidiano",
+    "lang": "es",
+    "filePath": "es/axiomatic-systems/sistema-euclidiano.mdx",
+    "contentType": "sistema-axiomatico",
+    "metadata": {
+      "id": "sistema-euclidiano",
+      "lang": "es",
+      "type": "sistema-axiomatico",
+      "title": "Sistema axiomático euclidiano",
+      "description": "La estructura axiomática canónica de la geometría plana estándar, formada por la geometría absoluta y el axioma de paralelas de Playfair.",
+      "branch": "51M",
+      "axiomas": [
+        "axioma-paralelas-euclides"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:sistema-hiperbolico": {
+    "id": "sistema-hiperbolico",
+    "slug": "sistema-hiperbolico",
+    "lang": "en",
+    "filePath": "en/axiomatic-systems/sistema-hiperbolico.mdx",
+    "contentType": "sistema-axiomatico",
+    "metadata": {
+      "id": "sistema-hiperbolico",
+      "lang": "en",
+      "type": "sistema-axiomatico",
+      "title": "Hyperbolic geometry system",
+      "description": "The axiomatic system of Lobachevsky and Gauss based on absolute geometry and the hyperbolic parallel axiom.",
+      "branch": "51M",
+      "axiomas": [
+        "axioma-paralelas-hiperbolico"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "sistema-hiperbolico": {
+    "id": "sistema-hiperbolico",
+    "slug": "sistema-hiperbolico",
+    "lang": "es",
+    "filePath": "es/axiomatic-systems/sistema-hiperbolico.mdx",
+    "contentType": "sistema-axiomatico",
+    "metadata": {
+      "id": "sistema-hiperbolico",
+      "lang": "es",
+      "type": "sistema-axiomatico",
+      "title": "Sistema de geometría hiperbólica",
+      "description": "La estructura axiomática de Lobachevski y Gauss basada en la geometría absoluta y el axioma de múltiples paralelas hiperbólicas.",
+      "branch": "51M",
+      "axiomas": [
+        "axioma-paralelas-hiperbolico"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:sistema-incidencia": {
+    "id": "sistema-incidencia",
+    "slug": "sistema-incidencia",
+    "lang": "en",
+    "filePath": "en/axiomatic-systems/sistema-incidencia.mdx",
+    "contentType": "sistema-axiomatico",
+    "metadata": {
+      "id": "sistema-incidencia",
+      "lang": "en",
+      "type": "sistema-axiomatico",
+      "title": "Incidence system",
+      "description": "Primordial axiomatic structure governing formal containment relations between points, lines, and planes.",
+      "branch": "51M",
+      "axiomas": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "sistema-incidencia": {
+    "id": "sistema-incidencia",
+    "slug": "sistema-incidencia",
+    "lang": "es",
+    "filePath": "es/axiomatic-systems/sistema-incidencia.mdx",
+    "contentType": "sistema-axiomatico",
+    "metadata": {
+      "id": "sistema-incidencia",
+      "lang": "es",
+      "type": "sistema-axiomatico",
+      "title": "Sistema de incidencia",
+      "description": "Estructura axiomática primordial que rige las relaciones formales de pertenencia entre puntos, rectas y planos.",
+      "branch": "51M",
+      "axiomas": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "en:axioma-arquimedes": {
     "id": "axioma-arquimedes",
     "slug": "axioma-arquimedes",
@@ -3437,6 +3669,604 @@
       "eu"
     ]
   },
+  "en:metodo-contradiccion": {
+    "id": "metodo-contradiccion",
+    "slug": "metodo-contradiccion",
+    "lang": "en",
+    "filePath": "en/methods/metodo-contradiccion.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-contradiccion",
+      "lang": "en",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Proof by contradiction",
+      "description": "Indirect proof technique assuming the negation of the thesis to derive an unsustainable logical contradiction.",
+      "branch": "51M",
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "metodo-contradiccion": {
+    "id": "metodo-contradiccion",
+    "slug": "metodo-contradiccion",
+    "lang": "es",
+    "filePath": "es/methods/metodo-contradiccion.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-contradiccion",
+      "lang": "es",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Método de contradicción",
+      "description": "Técnica indirecta de demostración que supone falsa la tesis para derivar una contradicción lógica insostenible.",
+      "branch": "51M",
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:metodo-directo": {
+    "id": "metodo-directo",
+    "slug": "metodo-directo",
+    "lang": "en",
+    "filePath": "en/methods/metodo-directo.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-directo",
+      "lang": "en",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Direct proof method",
+      "description": "Elementary deductive strategy that chains valid inferences from the hypothesis to the thesis.",
+      "branch": "51M",
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "metodo-directo": {
+    "id": "metodo-directo",
+    "slug": "metodo-directo",
+    "lang": "es",
+    "filePath": "es/methods/metodo-directo.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-directo",
+      "lang": "es",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Método directo",
+      "description": "Estrategia deductiva elemental que encadena inferencias válidas desde la hipótesis hasta la tesis.",
+      "branch": "51M",
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:metodo-induccion": {
+    "id": "metodo-induccion",
+    "slug": "metodo-induccion",
+    "lang": "en",
+    "filePath": "en/methods/metodo-induccion.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-induccion",
+      "lang": "en",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Mathematical induction method",
+      "description": "Deductive proof technique for statements parametrized over natural numbers based on the principle of complete induction.",
+      "branch": "51M",
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "metodo-induccion": {
+    "id": "metodo-induccion",
+    "slug": "metodo-induccion",
+    "lang": "es",
+    "filePath": "es/methods/metodo-induccion.mdx",
+    "contentType": "metodo",
+    "metadata": {
+      "id": "metodo-induccion",
+      "lang": "es",
+      "type": "metodo",
+      "subtype": "demostracion",
+      "title": "Método de inducción matemática",
+      "description": "Técnica de demostración para proposiciones parametrizadas sobre los números naturales basada en el principio de inducción completa.",
+      "branch": "51M",
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:modelo-cartesiano": {
+    "id": "modelo-cartesiano",
+    "slug": "modelo-cartesiano",
+    "lang": "en",
+    "filePath": "en/models/modelo-cartesiano.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-cartesiano",
+      "lang": "en",
+      "type": "modelo",
+      "title": "Cartesian plane",
+      "description": "The canonical analytic model for two-dimensional Euclidean geometry based on ordered pairs of real numbers.",
+      "branch": "51M",
+      "satisfies": [
+        "sistema-euclidiano",
+        "sistema-absoluto"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-paralelas-euclides"
+      ],
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "modelo-cartesiano": {
+    "id": "modelo-cartesiano",
+    "slug": "modelo-cartesiano",
+    "lang": "es",
+    "filePath": "es/models/modelo-cartesiano.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-cartesiano",
+      "lang": "es",
+      "type": "modelo",
+      "title": "Plano cartesiano",
+      "description": "El modelo analítico canónico para la geometría euclídea bidimensional basado en pares ordenados de números reales.",
+      "branch": "51M",
+      "satisfies": [
+        "sistema-euclidiano",
+        "sistema-absoluto"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-paralelas-euclides"
+      ],
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:modelo-fano": {
+    "id": "modelo-fano",
+    "slug": "modelo-fano",
+    "lang": "en",
+    "filePath": "en/models/modelo-fano.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-fano",
+      "lang": "en",
+      "type": "modelo",
+      "title": "Fano plane",
+      "description": "The minimal finite projective plane consisting of 7 points and 7 lines where every line contains exactly 3 points.",
+      "branch": "51M",
+      "satisfies": [
+        "sistema-incidencia"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ],
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "modelo-fano": {
+    "id": "modelo-fano",
+    "slug": "modelo-fano",
+    "lang": "es",
+    "filePath": "es/models/modelo-fano.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-fano",
+      "lang": "es",
+      "type": "modelo",
+      "title": "Plano de Fano",
+      "description": "El plano proyectivo finito minimalista formado por 7 puntos y 7 rectas donde cada recta contiene exactamente 3 puntos.",
+      "branch": "51M",
+      "satisfies": [
+        "sistema-incidencia"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ],
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:modelo-poincare": {
+    "id": "modelo-poincare",
+    "slug": "modelo-poincare",
+    "lang": "en",
+    "filePath": "en/models/modelo-poincare.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-poincare",
+      "lang": "en",
+      "type": "modelo",
+      "title": "Poincaré disk model",
+      "description": "Conformal model for two-dimensional hyperbolic geometry inside the open unit disk of the complex plane.",
+      "branch": "51M",
+      "satisfies": [
+        "sistema-hiperbolico",
+        "sistema-absoluto"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-paralelas-hiperbolico"
+      ],
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "modelo-poincare": {
+    "id": "modelo-poincare",
+    "slug": "modelo-poincare",
+    "lang": "es",
+    "filePath": "es/models/modelo-poincare.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-poincare",
+      "lang": "es",
+      "type": "modelo",
+      "title": "Disco de Poincaré",
+      "description": "Modelo conformal para la geometría hiperbólica bidimensional dentro del disco unidad en el plano complejo.",
+      "branch": "51M",
+      "satisfies": [
+        "sistema-hiperbolico",
+        "sistema-absoluto"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-paralelas-hiperbolico"
+      ],
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:modelo-tres-puntos": {
+    "id": "modelo-tres-puntos",
+    "slug": "modelo-tres-puntos",
+    "lang": "en",
+    "filePath": "en/models/modelo-tres-puntos.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-tres-puntos",
+      "lang": "en",
+      "type": "modelo",
+      "title": "Three-point model",
+      "description": "Minimalist finite geometric structure consisting of three points and three lines that satisfies the fundamental axioms of incidence.",
+      "branch": "51M",
+      "satisfies": [
+        "sistema-incidencia"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ],
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "modelo-tres-puntos": {
+    "id": "modelo-tres-puntos",
+    "slug": "modelo-tres-puntos",
+    "lang": "es",
+    "filePath": "es/models/modelo-tres-puntos.mdx",
+    "contentType": "modelo",
+    "metadata": {
+      "id": "modelo-tres-puntos",
+      "lang": "es",
+      "type": "modelo",
+      "title": "Modelo de tres puntos",
+      "description": "Estructura geométrica finita minimalista compuesta por tres puntos y tres rectas que verifica los axiomas fundamentales de incidencia.",
+      "branch": "51M",
+      "satisfies": [
+        "sistema-incidencia"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ],
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:camino-teorema-pitagoras": {
+    "id": "camino-teorema-pitagoras",
+    "slug": "plan-de-estudio-camino-teorema-pitagoras",
+    "lang": "en",
+    "filePath": "en/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
+    "contentType": "plan-de-estudio",
+    "metadata": {
+      "id": "camino-teorema-pitagoras",
+      "type": "plan-de-estudio",
+      "title": "The path to the Pythagorean theorem",
+      "subtitle": "Axiomatic and geometric route",
+      "description": "Explore the logical rigor and visual elegance behind the most celebrated metric relation in Euclidean geometry, from elementary definitions to satellite positioning.",
+      "branch": "51M",
+      "requiredNodes": [
+        "punto",
+        "estar-entre",
+        "triangulo",
+        "axioma-congruencia-5",
+        "teorema-triangulo-isosceles",
+        "checkpoint-pitagoras-congruencia",
+        "axioma-paralelas-euclides",
+        "teorema-suma-angulos-triangulo",
+        "checkpoint-pitagoras-paralelas",
+        "teorema-tales",
+        "teorema-pitagoras",
+        "ejercicio-pitagoras-cateto",
+        "caso-gps-trilateracion"
+      ],
+      "lang": "en",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:plan-de-estudio-camino-teorema-pitagoras": {
+    "id": "camino-teorema-pitagoras",
+    "slug": "plan-de-estudio-camino-teorema-pitagoras",
+    "lang": "en",
+    "filePath": "en/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
+    "contentType": "plan-de-estudio",
+    "metadata": {
+      "id": "camino-teorema-pitagoras",
+      "type": "plan-de-estudio",
+      "title": "The path to the Pythagorean theorem",
+      "subtitle": "Axiomatic and geometric route",
+      "description": "Explore the logical rigor and visual elegance behind the most celebrated metric relation in Euclidean geometry, from elementary definitions to satellite positioning.",
+      "branch": "51M",
+      "requiredNodes": [
+        "punto",
+        "estar-entre",
+        "triangulo",
+        "axioma-congruencia-5",
+        "teorema-triangulo-isosceles",
+        "checkpoint-pitagoras-congruencia",
+        "axioma-paralelas-euclides",
+        "teorema-suma-angulos-triangulo",
+        "checkpoint-pitagoras-paralelas",
+        "teorema-tales",
+        "teorema-pitagoras",
+        "ejercicio-pitagoras-cateto",
+        "caso-gps-trilateracion"
+      ],
+      "lang": "en",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "camino-teorema-pitagoras": {
+    "id": "camino-teorema-pitagoras",
+    "slug": "plan-de-estudio-camino-teorema-pitagoras",
+    "lang": "es",
+    "filePath": "es/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
+    "contentType": "plan-de-estudio",
+    "metadata": {
+      "id": "camino-teorema-pitagoras",
+      "type": "plan-de-estudio",
+      "title": "El camino hacia el teorema de Pitágoras",
+      "subtitle": "Ruta axiomática y geométrica",
+      "description": "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
+      "branch": "51M",
+      "requiredNodes": [
+        "punto",
+        "estar-entre",
+        "triangulo",
+        "axioma-congruencia-5",
+        "teorema-triangulo-isosceles",
+        "checkpoint-pitagoras-congruencia",
+        "axioma-paralelas-euclides",
+        "teorema-suma-angulos-triangulo",
+        "checkpoint-pitagoras-paralelas",
+        "teorema-tales",
+        "teorema-pitagoras",
+        "ejercicio-pitagoras-cateto",
+        "caso-gps-trilateracion"
+      ],
+      "lang": "es",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "plan-de-estudio-camino-teorema-pitagoras": {
+    "id": "camino-teorema-pitagoras",
+    "slug": "plan-de-estudio-camino-teorema-pitagoras",
+    "lang": "es",
+    "filePath": "es/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
+    "contentType": "plan-de-estudio",
+    "metadata": {
+      "id": "camino-teorema-pitagoras",
+      "type": "plan-de-estudio",
+      "title": "El camino hacia el teorema de Pitágoras",
+      "subtitle": "Ruta axiomática y geométrica",
+      "description": "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
+      "branch": "51M",
+      "requiredNodes": [
+        "punto",
+        "estar-entre",
+        "triangulo",
+        "axioma-congruencia-5",
+        "teorema-triangulo-isosceles",
+        "checkpoint-pitagoras-congruencia",
+        "axioma-paralelas-euclides",
+        "teorema-suma-angulos-triangulo",
+        "checkpoint-pitagoras-paralelas",
+        "teorema-tales",
+        "teorema-pitagoras",
+        "ejercicio-pitagoras-cateto",
+        "caso-gps-trilateracion"
+      ],
+      "lang": "es",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "en:teorema-angulos-alternos-internos": {
     "id": "teorema-angulos-alternos-internos",
     "slug": "teorema-angulos-alternos-internos",
@@ -4287,6 +5117,60 @@
       "eu"
     ]
   },
+  "en:caso-gps-trilateracion": {
+    "id": "caso-gps-trilateracion",
+    "slug": "caso-gps-trilateracion",
+    "lang": "en",
+    "filePath": "en/usecases/caso-gps-trilateracion.mdx",
+    "contentType": "caso-de-uso",
+    "metadata": {
+      "id": "caso-gps-trilateracion",
+      "lang": "en",
+      "type": "caso-de-uso",
+      "title": "Satellite positioning (GPS) and trilateration",
+      "description": "Application of Euclidean distances and the Pythagorean theorem for accurate three-dimensional localization of terrestrial receivers.",
+      "branch": "51M",
+      "concept": "teorema-pitagoras",
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "caso-gps-trilateracion": {
+    "id": "caso-gps-trilateracion",
+    "slug": "caso-gps-trilateracion",
+    "lang": "es",
+    "filePath": "es/usecases/caso-gps-trilateracion.mdx",
+    "contentType": "caso-de-uso",
+    "metadata": {
+      "id": "caso-gps-trilateracion",
+      "lang": "es",
+      "type": "caso-de-uso",
+      "title": "Localización por satélite (GPS) y trilateración",
+      "description": "Aplicación de las distancias euclídeas y el teorema de Pitágoras para la localización tridimensional exacta de receptores terrestres.",
+      "branch": "51M",
+      "concept": "teorema-pitagoras",
+      "hasSimulation": true,
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "es:sistema-absoluto": {
     "id": "sistema-absoluto",
     "slug": "sistema-absoluto",
@@ -4297,106 +5181,22 @@
       "id": "sistema-absoluto",
       "lang": "es",
       "type": "sistema-axiomatico",
-      "title": "Geometría Absoluta",
-      "description": "Sistema axiomático neutro compuesto por los 19 axiomas de Hilbert (incidencia, orden, congruencia y continuidad) sin asumir el postulado de las paralelas.",
+      "title": "Sistema de geometría absoluta",
+      "description": "Estructura axiomática fundada por János Bolyai que reúne la totalidad de axiomas de incidencia, orden, congruencia y continuidad sin presuponer ningún axioma de paralelas.",
+      "branch": "51M",
       "axiomas": [
         "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
         "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud"
-      ],
-      "sources": [
-        {
-          "title": "Appendix. Scientiam spatii absolute veram exhibens",
-          "author": "János Bolyai",
-          "locator": "§1",
-          "role": "primary"
-        },
-        {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "Capítulo I, §1-§6",
-          "role": "primary"
-        }
+        "axioma-congruencia-1"
       ],
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "sistema-absoluto": {
-    "id": "sistema-absoluto",
-    "slug": "sistema-absoluto",
-    "lang": "es",
-    "filePath": "es/axiomatic-systems/sistema-absoluto.mdx",
-    "contentType": "sistema-axiomatico",
-    "metadata": {
-      "id": "sistema-absoluto",
-      "lang": "es",
-      "type": "sistema-axiomatico",
-      "title": "Geometría Absoluta",
-      "description": "Sistema axiomático neutro compuesto por los 19 axiomas de Hilbert (incidencia, orden, congruencia y continuidad) sin asumir el postulado de las paralelas.",
-      "axiomas": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
-        "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud"
-      ],
-      "sources": [
-        {
-          "title": "Appendix. Scientiam spatii absolute veram exhibens",
-          "author": "János Bolyai",
-          "locator": "§1",
-          "role": "primary"
-        },
-        {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "Capítulo I, §1-§6",
-          "role": "primary"
-        }
-      ],
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -4411,108 +5211,20 @@
       "id": "sistema-euclidiano",
       "lang": "es",
       "type": "sistema-axiomatico",
-      "title": "Geometría Euclídea",
-      "description": "Sistema axiomático clásico de la geometría plana y espacial que incorpora el axioma de unicidad de las paralelas a los 19 axiomas de la geometría absoluta.",
+      "title": "Sistema axiomático euclidiano",
+      "description": "La estructura axiomática canónica de la geometría plana estándar, formada por la geometría absoluta y el axioma de paralelas de Playfair.",
+      "branch": "51M",
       "axiomas": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
-        "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud",
         "axioma-paralelas-euclides"
       ],
-      "sources": [
-        {
-          "title": "Elementos",
-          "author": "Euclides",
-          "locator": "Libro I, Postulado 5",
-          "role": "primary"
-        },
-        {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "Capítulo I, §6",
-          "role": "primary"
-        }
-      ],
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "sistema-euclidiano": {
-    "id": "sistema-euclidiano",
-    "slug": "sistema-euclidiano",
-    "lang": "es",
-    "filePath": "es/axiomatic-systems/sistema-euclidiano.mdx",
-    "contentType": "sistema-axiomatico",
-    "metadata": {
-      "id": "sistema-euclidiano",
-      "lang": "es",
-      "type": "sistema-axiomatico",
-      "title": "Geometría Euclídea",
-      "description": "Sistema axiomático clásico de la geometría plana y espacial que incorpora el axioma de unicidad de las paralelas a los 19 axiomas de la geometría absoluta.",
-      "axiomas": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
-        "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud",
-        "axioma-paralelas-euclides"
-      ],
-      "sources": [
-        {
-          "title": "Elementos",
-          "author": "Euclides",
-          "locator": "Libro I, Postulado 5",
-          "role": "primary"
-        },
-        {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "Capítulo I, §6",
-          "role": "primary"
-        }
-      ],
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -4527,108 +5239,20 @@
       "id": "sistema-hiperbolico",
       "lang": "es",
       "type": "sistema-axiomatico",
-      "title": "Geometría Hiperbólica",
-      "description": "Geometría no euclídea de curvatura gaussiana constante negativa que sustituye el axioma euclidiano de las paralelas por el postulado de Lobachevski-Bolyai.",
+      "title": "Sistema de geometría hiperbólica",
+      "description": "La estructura axiomática de Lobachevski y Gauss basada en la geometría absoluta y el axioma de múltiples paralelas hiperbólicas.",
+      "branch": "51M",
       "axiomas": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
-        "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud",
         "axioma-paralelas-hiperbolico"
       ],
-      "sources": [
-        {
-          "title": "Geometrische Untersuchungen zur Theorie der Parallellinien",
-          "author": "Nikolai Lobachevski",
-          "locator": "§1-§10",
-          "role": "primary"
-        },
-        {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "Capítulo I, §6",
-          "role": "secondary"
-        }
-      ],
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "sistema-hiperbolico": {
-    "id": "sistema-hiperbolico",
-    "slug": "sistema-hiperbolico",
-    "lang": "es",
-    "filePath": "es/axiomatic-systems/sistema-hiperbolico.mdx",
-    "contentType": "sistema-axiomatico",
-    "metadata": {
-      "id": "sistema-hiperbolico",
-      "lang": "es",
-      "type": "sistema-axiomatico",
-      "title": "Geometría Hiperbólica",
-      "description": "Geometría no euclídea de curvatura gaussiana constante negativa que sustituye el axioma euclidiano de las paralelas por el postulado de Lobachevski-Bolyai.",
-      "axiomas": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
-        "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud",
-        "axioma-paralelas-hiperbolico"
-      ],
-      "sources": [
-        {
-          "title": "Geometrische Untersuchungen zur Theorie der Parallellinien",
-          "author": "Nikolai Lobachevski",
-          "locator": "§1-§10",
-          "role": "primary"
-        },
-        {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "Capítulo I, §6",
-          "role": "secondary"
-        }
-      ],
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -4643,72 +5267,22 @@
       "id": "sistema-incidencia",
       "lang": "es",
       "type": "sistema-axiomatico",
-      "title": "Sistema de Incidencia",
-      "description": "Estructura axiomática fundamental de la geometría que rige las relaciones primitivas de pertenencia entre puntos, rectas y planos sin incorporar nociones de orden, congruencia o medida.",
+      "title": "Sistema de incidencia",
+      "description": "Estructura axiomática primordial que rige las relaciones formales de pertenencia entre puntos, rectas y planos.",
+      "branch": "51M",
       "axiomas": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8"
-      ],
-      "sources": [
-        {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "Capítulo I, §1-§2",
-          "role": "primary"
-        }
+        "axioma-incidencia-3"
       ],
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "sistema-incidencia": {
-    "id": "sistema-incidencia",
-    "slug": "sistema-incidencia",
-    "lang": "es",
-    "filePath": "es/axiomatic-systems/sistema-incidencia.mdx",
-    "contentType": "sistema-axiomatico",
-    "metadata": {
-      "id": "sistema-incidencia",
-      "lang": "es",
-      "type": "sistema-axiomatico",
-      "title": "Sistema de Incidencia",
-      "description": "Estructura axiomática fundamental de la geometría que rige las relaciones primitivas de pertenencia entre puntos, rectas y planos sin incorporar nociones de orden, congruencia o medida.",
-      "axiomas": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8"
-      ],
-      "sources": [
-        {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "Capítulo I, §1-§2",
-          "role": "primary"
-        }
-      ],
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -7248,42 +7822,21 @@
     "contentType": "metodo",
     "metadata": {
       "id": "metodo-contradiccion",
+      "lang": "es",
       "type": "metodo",
       "subtype": "demostracion",
-      "title": "Demostración por contradicción",
-      "description": "Probar que una afirmación es verdadera mostrando que su negación conduce a una imposibilidad lógica. También conocida como reductio ad absurdum o reducción al absurdo.",
+      "title": "Método de contradicción",
+      "description": "Técnica indirecta de demostración que supone falsa la tesis para derivar una contradicción lógica insostenible.",
+      "branch": "51M",
       "hasSimulation": true,
-      "lang": "es",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "metodo-contradiccion": {
-    "id": "metodo-contradiccion",
-    "slug": "metodo-contradiccion",
-    "lang": "es",
-    "filePath": "es/methods/metodo-contradiccion.mdx",
-    "contentType": "metodo",
-    "metadata": {
-      "id": "metodo-contradiccion",
-      "type": "metodo",
-      "subtype": "demostracion",
-      "title": "Demostración por contradicción",
-      "description": "Probar que una afirmación es verdadera mostrando que su negación conduce a una imposibilidad lógica. También conocida como reductio ad absurdum o reducción al absurdo.",
-      "hasSimulation": true,
-      "lang": "es",
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -7296,42 +7849,21 @@
     "contentType": "metodo",
     "metadata": {
       "id": "metodo-directo",
+      "lang": "es",
       "type": "metodo",
       "subtype": "demostracion",
       "title": "Método directo",
-      "description": "La estrategia fundamental de demostración: encadenar implicaciones lógicas desde la hipótesis hasta la tesis mediante inferencias válidas.",
+      "description": "Estrategia deductiva elemental que encadena inferencias válidas desde la hipótesis hasta la tesis.",
+      "branch": "51M",
       "hasSimulation": true,
-      "lang": "es",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "metodo-directo": {
-    "id": "metodo-directo",
-    "slug": "metodo-directo",
-    "lang": "es",
-    "filePath": "es/methods/metodo-directo.mdx",
-    "contentType": "metodo",
-    "metadata": {
-      "id": "metodo-directo",
-      "type": "metodo",
-      "subtype": "demostracion",
-      "title": "Método directo",
-      "description": "La estrategia fundamental de demostración: encadenar implicaciones lógicas desde la hipótesis hasta la tesis mediante inferencias válidas.",
-      "hasSimulation": true,
-      "lang": "es",
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -7344,42 +7876,21 @@
     "contentType": "metodo",
     "metadata": {
       "id": "metodo-induccion",
+      "lang": "es",
       "type": "metodo",
       "subtype": "demostracion",
-      "title": "Inducción matemática",
-      "description": "El principio de inducción: probar que una propiedad vale para todos los números naturales demostrando el caso base y el paso inductivo.",
+      "title": "Método de inducción matemática",
+      "description": "Técnica de demostración para proposiciones parametrizadas sobre los números naturales basada en el principio de inducción completa.",
+      "branch": "51M",
       "hasSimulation": true,
-      "lang": "es",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "metodo-induccion": {
-    "id": "metodo-induccion",
-    "slug": "metodo-induccion",
-    "lang": "es",
-    "filePath": "es/methods/metodo-induccion.mdx",
-    "contentType": "metodo",
-    "metadata": {
-      "id": "metodo-induccion",
-      "type": "metodo",
-      "subtype": "demostracion",
-      "title": "Inducción matemática",
-      "description": "El principio de inducción: probar que una propiedad vale para todos los números naturales demostrando el caso base y el paso inductivo.",
-      "hasSimulation": true,
-      "lang": "es",
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -7392,48 +7903,28 @@
     "contentType": "modelo",
     "metadata": {
       "id": "modelo-cartesiano",
+      "lang": "es",
       "type": "modelo",
       "title": "Plano cartesiano",
-      "description": "El modelo analítico estándar para la geometría euclídea bidimensional, utilizando pares ordenados de números reales.",
+      "description": "El modelo analítico canónico para la geometría euclídea bidimensional basado en pares ordenados de números reales.",
+      "branch": "51M",
       "satisfies": [
         "sistema-euclidiano",
         "sistema-absoluto"
       ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-paralelas-euclides"
+      ],
       "hasSimulation": true,
-      "lang": "es",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "modelo-cartesiano": {
-    "id": "modelo-cartesiano",
-    "slug": "modelo-cartesiano",
-    "lang": "es",
-    "filePath": "es/models/modelo-cartesiano.mdx",
-    "contentType": "modelo",
-    "metadata": {
-      "id": "modelo-cartesiano",
-      "type": "modelo",
-      "title": "Plano cartesiano",
-      "description": "El modelo analítico estándar para la geometría euclídea bidimensional, utilizando pares ordenados de números reales.",
-      "satisfies": [
-        "sistema-euclidiano",
-        "sistema-absoluto"
-      ],
-      "hasSimulation": true,
-      "lang": "es",
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -7446,46 +7937,28 @@
     "contentType": "modelo",
     "metadata": {
       "id": "modelo-fano",
+      "lang": "es",
       "type": "modelo",
       "title": "Plano de Fano",
-      "description": "El plano proyectivo finito más pequeño posible, consistente de 7 puntos y 7 rectas. Un modelo clave en geometría de incidencia.",
+      "description": "El plano proyectivo finito minimalista formado por 7 puntos y 7 rectas donde cada recta contiene exactamente 3 puntos.",
+      "branch": "51M",
       "satisfies": [
         "sistema-incidencia"
       ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ],
       "hasSimulation": true,
-      "lang": "es",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "modelo-fano": {
-    "id": "modelo-fano",
-    "slug": "modelo-fano",
-    "lang": "es",
-    "filePath": "es/models/modelo-fano.mdx",
-    "contentType": "modelo",
-    "metadata": {
-      "id": "modelo-fano",
-      "type": "modelo",
-      "title": "Plano de Fano",
-      "description": "El plano proyectivo finito más pequeño posible, consistente de 7 puntos y 7 rectas. Un modelo clave en geometría de incidencia.",
-      "satisfies": [
-        "sistema-incidencia"
-      ],
-      "hasSimulation": true,
-      "lang": "es",
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -7498,48 +7971,28 @@
     "contentType": "modelo",
     "metadata": {
       "id": "modelo-poincare",
+      "lang": "es",
       "type": "modelo",
       "title": "Disco de Poincaré",
-      "description": "El modelo conforme del plano hiperbólico que representa el espacio como el interior de un círculo unitario y las rectas como arcos ortogonales a la frontera.",
+      "description": "Modelo conformal para la geometría hiperbólica bidimensional dentro del disco unidad en el plano complejo.",
+      "branch": "51M",
       "satisfies": [
         "sistema-hiperbolico",
         "sistema-absoluto"
       ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-paralelas-hiperbolico"
+      ],
       "hasSimulation": true,
-      "lang": "es",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "modelo-poincare": {
-    "id": "modelo-poincare",
-    "slug": "modelo-poincare",
-    "lang": "es",
-    "filePath": "es/models/modelo-poincare.mdx",
-    "contentType": "modelo",
-    "metadata": {
-      "id": "modelo-poincare",
-      "type": "modelo",
-      "title": "Disco de Poincaré",
-      "description": "El modelo conforme del plano hiperbólico que representa el espacio como el interior de un círculo unitario y las rectas como arcos ortogonales a la frontera.",
-      "satisfies": [
-        "sistema-hiperbolico",
-        "sistema-absoluto"
-      ],
-      "hasSimulation": true,
-      "lang": "es",
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -7552,46 +8005,28 @@
     "contentType": "modelo",
     "metadata": {
       "id": "modelo-tres-puntos",
+      "lang": "es",
       "type": "modelo",
       "title": "Modelo de tres puntos",
-      "description": "El modelo más simple de la geometría de incidencia: tres puntos no colineales con tres rectas que los conectan pairwise.",
+      "description": "Estructura geométrica finita minimalista compuesta por tres puntos y tres rectas que verifica los axiomas fundamentales de incidencia.",
+      "branch": "51M",
       "satisfies": [
         "sistema-incidencia"
       ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ],
       "hasSimulation": true,
-      "lang": "es",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "modelo-tres-puntos": {
-    "id": "modelo-tres-puntos",
-    "slug": "modelo-tres-puntos",
-    "lang": "es",
-    "filePath": "es/models/modelo-tres-puntos.mdx",
-    "contentType": "modelo",
-    "metadata": {
-      "id": "modelo-tres-puntos",
-      "type": "modelo",
-      "title": "Modelo de tres puntos",
-      "description": "El modelo más simple de la geometría de incidencia: tres puntos no colineales con tres rectas que los conectan pairwise.",
-      "satisfies": [
-        "sistema-incidencia"
-      ],
-      "hasSimulation": true,
-      "lang": "es",
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -7608,6 +8043,7 @@
       "title": "El camino hacia el teorema de Pitágoras",
       "subtitle": "Ruta axiomática y geométrica",
       "description": "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
+      "branch": "51M",
       "requiredNodes": [
         "punto",
         "estar-entre",
@@ -7625,11 +8061,13 @@
       ],
       "lang": "es",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -7646,6 +8084,7 @@
       "title": "El camino hacia el teorema de Pitágoras",
       "subtitle": "Ruta axiomática y geométrica",
       "description": "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
+      "branch": "51M",
       "requiredNodes": [
         "punto",
         "estar-entre",
@@ -7663,87 +8102,13 @@
       ],
       "lang": "es",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "camino-teorema-pitagoras": {
-    "id": "camino-teorema-pitagoras",
-    "slug": "plan-de-estudio-camino-teorema-pitagoras",
-    "lang": "es",
-    "filePath": "es/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
-    "contentType": "plan-de-estudio",
-    "metadata": {
-      "id": "camino-teorema-pitagoras",
-      "type": "plan-de-estudio",
-      "title": "El camino hacia el teorema de Pitágoras",
-      "subtitle": "Ruta axiomática y geométrica",
-      "description": "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
-      "requiredNodes": [
-        "punto",
-        "estar-entre",
-        "triangulo",
-        "axioma-congruencia-5",
-        "teorema-triangulo-isosceles",
-        "checkpoint-pitagoras-congruencia",
-        "axioma-paralelas-euclides",
-        "teorema-suma-angulos-triangulo",
-        "checkpoint-pitagoras-paralelas",
-        "teorema-tales",
-        "teorema-pitagoras",
-        "ejercicio-pitagoras-cateto",
-        "caso-gps-trilateracion"
-      ],
-      "lang": "es",
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "plan-de-estudio-camino-teorema-pitagoras": {
-    "id": "camino-teorema-pitagoras",
-    "slug": "plan-de-estudio-camino-teorema-pitagoras",
-    "lang": "es",
-    "filePath": "es/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
-    "contentType": "plan-de-estudio",
-    "metadata": {
-      "id": "camino-teorema-pitagoras",
-      "type": "plan-de-estudio",
-      "title": "El camino hacia el teorema de Pitágoras",
-      "subtitle": "Ruta axiomática y geométrica",
-      "description": "Explora el rigor lógico y la belleza visual detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
-      "requiredNodes": [
-        "punto",
-        "estar-entre",
-        "triangulo",
-        "axioma-congruencia-5",
-        "teorema-triangulo-isosceles",
-        "checkpoint-pitagoras-congruencia",
-        "axioma-paralelas-euclides",
-        "teorema-suma-angulos-triangulo",
-        "checkpoint-pitagoras-paralelas",
-        "teorema-tales",
-        "teorema-pitagoras",
-        "ejercicio-pitagoras-cateto",
-        "caso-gps-trilateracion"
-      ],
-      "lang": "es",
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -8181,40 +8546,21 @@
     "contentType": "caso-de-uso",
     "metadata": {
       "id": "caso-gps-trilateracion",
+      "lang": "es",
       "type": "caso-de-uso",
       "title": "Localización por satélite (GPS) y trilateración",
-      "description": "Aplicación del teorema de Pitágoras y el cálculo de distancias euclídeas para determinar la posición exacta de un receptor a partir de tres puntos de referencia.",
+      "description": "Aplicación de las distancias euclídeas y el teorema de Pitágoras para la localización tridimensional exacta de receptores terrestres.",
+      "branch": "51M",
+      "concept": "teorema-pitagoras",
       "hasSimulation": true,
-      "lang": "es",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
-      "es",
-      "eu"
-    ]
-  },
-  "caso-gps-trilateracion": {
-    "id": "caso-gps-trilateracion",
-    "slug": "caso-gps-trilateracion",
-    "lang": "es",
-    "filePath": "es/usecases/caso-gps-trilateracion.mdx",
-    "contentType": "caso-de-uso",
-    "metadata": {
-      "id": "caso-gps-trilateracion",
-      "type": "caso-de-uso",
-      "title": "Localización por satélite (GPS) y trilateración",
-      "description": "Aplicación del teorema de Pitágoras y el cálculo de distancias euclídeas para determinar la posición exacta de un receptor a partir de tres puntos de referencia.",
-      "hasSimulation": true,
-      "lang": "es",
-      "availableLangs": [
-        "es",
-        "eu"
-      ]
-    },
-    "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -8229,49 +8575,22 @@
       "id": "sistema-absoluto",
       "lang": "eu",
       "type": "sistema-axiomatico",
-      "title": "Geometria Absolutua",
-      "description": "Hilberten 19 axiomek (intzidentzia, ordena, kongruentzia eta jarraitutasuna) osatutako egitura axiomatiko neutroa, paraleloen postulatua suposatu gabe.",
+      "title": "Geometria absolutuaren sistema",
+      "description": "János Bolyai-k eratutako egitura axiomatikoa, intzidentzia, ordena, kongruentzia eta jarraitutasun axioma guztiak biltzen dituena paraleloen axiomarik suposatu gabe.",
+      "branch": "51M",
       "axiomas": [
         "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
         "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud"
-      ],
-      "sources": [
-        {
-          "title": "Appendix. Scientiam spatii absolute veram exhibens",
-          "author": "János Bolyai",
-          "locator": "§1",
-          "role": "primary"
-        },
-        {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "I. Kapitulua, §1-§6",
-          "role": "primary"
-        }
+        "axioma-congruencia-1"
       ],
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -8286,50 +8605,20 @@
       "id": "sistema-euclidiano",
       "lang": "eu",
       "type": "sistema-axiomatico",
-      "title": "Geometria Euklidearra",
-      "description": "Plano eta espazioko geometria klasikoko sistema axiomatikoa, paraleloen bakartasun-axioma geometria absolutuko 19 axiomei uztean datzana.",
+      "title": "Sistema axiomatiko euklidesarra",
+      "description": "Plano-geometria estandarraren egitura axiomatiko kanonikoa, geometria absolutuaz eta Playfair-en paraleloen axiomaz osatua.",
+      "branch": "51M",
       "axiomas": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
-        "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud",
         "axioma-paralelas-euclides"
       ],
-      "sources": [
-        {
-          "title": "Elementos",
-          "author": "Euclides",
-          "locator": "I. Liburua, 5. Postulatua",
-          "role": "primary"
-        },
-        {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "I. Kapitulua, §6",
-          "role": "primary"
-        }
-      ],
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -8344,50 +8633,20 @@
       "id": "sistema-hiperbolico",
       "lang": "eu",
       "type": "sistema-axiomatico",
-      "title": "Geometria Hiperbolikoa",
-      "description": "Kurbatura gaussiar negatibo konstanteko geometria ez-euklidearra, paraleloen axioma euklidearra Lobachevski-Bolyairren postulatuaz ordezkatzen duena.",
+      "title": "Geometria hiperbolikoaren sistema",
+      "description": "Lobachevski eta Gauss-en egitura axiomatikoa, geometria absolutuaz eta paralelo hiperboliko anizkoitzen axiomaz osatua.",
+      "branch": "51M",
       "axiomas": [
-        "axioma-incidencia-1",
-        "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8",
-        "axioma-orden-1",
-        "axioma-orden-2",
-        "axioma-orden-3",
-        "axioma-orden-4",
-        "axioma-congruencia-1",
-        "axioma-congruencia-2",
-        "axioma-congruencia-3",
-        "axioma-congruencia-4",
-        "axioma-congruencia-5",
-        "axioma-arquimedes",
-        "axioma-completitud",
         "axioma-paralelas-hiperbolico"
       ],
-      "sources": [
-        {
-          "title": "Geometrische Untersuchungen zur Theorie der Parallellinien",
-          "author": "Nikolai Lobachevski",
-          "locator": "§1-§10",
-          "role": "primary"
-        },
-        {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "I. Kapitulua, §6",
-          "role": "secondary"
-        }
-      ],
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -8402,32 +8661,22 @@
       "id": "sistema-incidencia",
       "lang": "eu",
       "type": "sistema-axiomatico",
-      "title": "Intzidentzia Sistema",
-      "description": "Ordena, kongruentzia edo neurriaren nozioak barne hartu gabe, puntu, zuzen eta planoen arteko jatorrizko pertenentzia-erlazioak gobernatzen dituen geometriako oinarrizko egitura axiomatikoa.",
+      "title": "Intzidentzia-sistema",
+      "description": "Puntu, zuzen eta planoen arteko pertenentzia-erlazio formalak arautzen dituen oinarrizko sistema axiomatikoa.",
+      "branch": "51M",
       "axiomas": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
-        "axioma-incidencia-3",
-        "axioma-incidencia-4",
-        "axioma-incidencia-5",
-        "axioma-incidencia-6",
-        "axioma-incidencia-7",
-        "axioma-incidencia-8"
-      ],
-      "sources": [
-        {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "I. Kapitulua, §1-§2",
-          "role": "primary"
-        }
+        "axioma-incidencia-3"
       ],
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -8625,7 +8874,7 @@
       "lang": "eu",
       "type": "axioma",
       "title": "III.4 Axioma (Anguluen Garraioa)",
-      "description": "Angulu bat, zuzenerdi bat eta hura muga duen semiplano bat emanda, angulu emandakoarekin kongruentea den angulu bakar bat existitzen da zuzenerdiaren jatorrian vertezea duena.",
+      "description": "Angulu bat, zuzenerdi bat eta hura muga duen erdiplano bat emanda, angelu emandakoarekin kongruentea den angelu bakar bat existitzen da zuzenerdiaren jatorrian vertezea duena.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -8658,8 +8907,8 @@
       "id": "axioma-congruencia-5",
       "lang": "eu",
       "type": "axioma",
-      "title": "III.5 Axioma (ALA / LAL Kongruentzia Kriterioa)",
-      "description": "Bi triangeluk bi alde eta bien artean bildutako angulua hurrenez hurren kongruenteak badituzte, orduan gainerako anguluak ere kongruenteak dira.",
+      "title": "III.5 Axioma (LAL Kongruentzia Kriterioa)",
+      "description": "Bi triangeluk bi alde eta bien artean bildutako angelua hurrenez hurren kongruenteak badituzte, orduan gainerako angeluak ere kongruenteak dira.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -9032,7 +9281,7 @@
       "id": "axioma-orden-3",
       "lang": "eu",
       "type": "axioma",
-      "title": "II.3 Axioma (Lerro-ordenaren trikotomia)",
+      "title": "II.3 Axioma (Zuzen-ordenaren trikotomia)",
       "description": "Zuzen bereko hiru puntu desberdinetatik, bakar bat eta soilik bat dago beste bien artean.",
       "branch": "51M",
       "hasSimulation": true,
@@ -10560,18 +10809,21 @@
     "contentType": "metodo",
     "metadata": {
       "id": "metodo-contradiccion",
+      "lang": "eu",
       "type": "metodo",
       "subtype": "demostracion",
-      "title": "Ezeztapen bidezko frogapena",
-      "description": "Esaera bat egiazkoa dela frogatzea, haren ezeztapenak ezintasun logiko batera daramala erakutsiz. Absurdura bideratzea bezala ere ezaguna.",
+      "title": "Aurkakotasun-metodoa",
+      "description": "Ezeztapenezko zeharkako metodoa: tesia faltsua dela suposatuz kontraesan logiko bat deduzitzen da.",
+      "branch": "51M",
       "hasSimulation": true,
-      "lang": "eu",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -10584,18 +10836,21 @@
     "contentType": "metodo",
     "metadata": {
       "id": "metodo-directo",
+      "lang": "eu",
       "type": "metodo",
       "subtype": "demostracion",
       "title": "Zuzeneko metodoa",
-      "description": "Demonstratzeko oinarrizko estrategia: hipotesitik tesira inplikazio logikoak kateatzea inferentzia baliozkoen bidez.",
+      "description": "Hipotesitik tesira inferentzia baliozkoak kencatuz garatzen den dedukzio-estrategia oinarrizkoa.",
+      "branch": "51M",
       "hasSimulation": true,
-      "lang": "eu",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -10608,18 +10863,21 @@
     "contentType": "metodo",
     "metadata": {
       "id": "metodo-induccion",
+      "lang": "eu",
       "type": "metodo",
       "subtype": "demostracion",
-      "title": "Indukzio matematikoa",
-      "description": "Indukzioaren printzipioa: propietate bat zenbaki natural guztietarako balio duela frogatzea oinarrizko kasua eta urrats induktiboa frogatuz.",
+      "title": "Indukzio matematikoaren metodoa",
+      "description": "Zenbaki naturalei buruzko proposizio parametrizatuak frogatzeko dedukzio-teknika, induizio osoaren printzipioan oinarritua.",
+      "branch": "51M",
       "hasSimulation": true,
-      "lang": "eu",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -10632,21 +10890,28 @@
     "contentType": "modelo",
     "metadata": {
       "id": "modelo-cartesiano",
+      "lang": "eu",
       "type": "modelo",
       "title": "Plano kartesiarra",
-      "description": "Bi dimentsioko geometria eukliderako modelo analitiko estandarra, zenbaki errealen bikote ordenatuak erabiliz.",
+      "description": "Zenbaki errealen bikote ordenatuetan oinarritutako geometria euklidesar bi dimentsionalaren eredu analitiko kanonikoa.",
+      "branch": "51M",
       "satisfies": [
         "sistema-euclidiano",
         "sistema-absoluto"
       ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-paralelas-euclides"
+      ],
       "hasSimulation": true,
-      "lang": "eu",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -10659,20 +10924,28 @@
     "contentType": "modelo",
     "metadata": {
       "id": "modelo-fano",
+      "lang": "eu",
       "type": "modelo",
       "title": "Fanoren planoa",
-      "description": "Plano proiektibo finitu txikiena, 7 puntuz eta 7 zuzenez osatua. Inzidentzia-geometrian ereduzko modeloa.",
+      "description": "7 puntuz eta 7 zuzenez osatutako plano proiektibo finitu minimala, non zuzen bakoitzak zehazki 3 puntu baitauzka.",
+      "branch": "51M",
       "satisfies": [
         "sistema-incidencia"
       ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ],
       "hasSimulation": true,
-      "lang": "eu",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -10685,21 +10958,28 @@
     "contentType": "modelo",
     "metadata": {
       "id": "modelo-poincare",
+      "lang": "eu",
       "type": "modelo",
-      "title": "Poincaréren diskoa",
-      "description": "Plano hiperbolikoaren modelo konforma, espazioa zirkulu unitario baten barnealdetzat eta zuzenak muga-zirkulua ortogonaliki ebakitzen duten arkutzat hartzen dituena.",
+      "title": "Poincareren diskoa",
+      "description": "Bi dimentsioko geometria hiperbolikoaren eredu konformea, zenbaki errealen plano ez-osoko disko batasunaren barruan.",
+      "branch": "51M",
       "satisfies": [
         "sistema-hiperbolico",
         "sistema-absoluto"
       ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-paralelas-hiperbolico"
+      ],
       "hasSimulation": true,
-      "lang": "eu",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -10712,18 +10992,28 @@
     "contentType": "modelo",
     "metadata": {
       "id": "modelo-tres-puntos",
-      "type": "modelo",
-      "title": "Hiru puntuko modeloa",
-      "description": "Inzidentzia-geometriako modelorik bakunena: kolinealak ez diren hiru puntu, bikoteka lotzen dituzten hiru zuzenekin.",
-      "satisfies": "sistema-incidencia",
-      "hasSimulation": true,
       "lang": "eu",
+      "type": "modelo",
+      "title": "Hiru puntuko eredua",
+      "description": "Hiru puntuk eta hiru zuzenek osatutako egitura geometriko finitua, intzidentzia-axioma nagusiak betetzen dituena.",
+      "branch": "51M",
+      "satisfies": [
+        "sistema-incidencia"
+      ],
+      "axioms_verified": [
+        "axioma-incidencia-1",
+        "axioma-incidencia-2",
+        "axioma-incidencia-3"
+      ],
+      "hasSimulation": true,
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -10737,9 +11027,10 @@
     "metadata": {
       "id": "camino-teorema-pitagoras",
       "type": "plan-de-estudio",
-      "title": "Pitagorasen teoremarako bidea",
-      "subtitle": "Bide axiomatiko eta geometrikoa",
-      "description": "Geometria euklidearraren metrika-erlaziorik ospetsuenaren atzean dagoen zorroztasun logikoa eta edertasun bisuala esploratu, oinarrizko definizioetatik satelite bidezko geolokalizazioraino.",
+      "title": "Pitagorasen teoremara bidea",
+      "subtitle": "Ibilbide axiomatiko eta geometrikoa",
+      "description": "Ezagutu geometria euklidesarreko erlazio metriko ospetsuenaren atzean dagoen rigoera logikoa eta edertasun bisuala, oinarrizko definizioetatik satelite bidezko kokapeneraino.",
+      "branch": "51M",
       "requiredNodes": [
         "punto",
         "estar-entre",
@@ -10757,11 +11048,13 @@
       ],
       "lang": "eu",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -10775,9 +11068,10 @@
     "metadata": {
       "id": "camino-teorema-pitagoras",
       "type": "plan-de-estudio",
-      "title": "Pitagorasen teoremarako bidea",
-      "subtitle": "Bide axiomatiko eta geometrikoa",
-      "description": "Geometria euklidearraren metrika-erlaziorik ospetsuenaren atzean dagoen zorroztasun logikoa eta edertasun bisuala esploratu, oinarrizko definizioetatik satelite bidezko geolokalizazioraino.",
+      "title": "Pitagorasen teoremara bidea",
+      "subtitle": "Ibilbide axiomatiko eta geometrikoa",
+      "description": "Ezagutu geometria euklidesarreko erlazio metriko ospetsuenaren atzean dagoen rigoera logikoa eta edertasun bisuala, oinarrizko definizioetatik satelite bidezko kokapeneraino.",
+      "branch": "51M",
       "requiredNodes": [
         "punto",
         "estar-entre",
@@ -10795,11 +11089,13 @@
       ],
       "lang": "eu",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
@@ -11237,17 +11533,21 @@
     "contentType": "caso-de-uso",
     "metadata": {
       "id": "caso-gps-trilateracion",
+      "lang": "eu",
       "type": "caso-de-uso",
       "title": "Satelite bidezko kokapena (GPS) eta trilaterazioa",
-      "description": "Pitagorasen teoremaren eta distantzia euklidearren kalkuluaren aplikazioa hargailu baten posizio zehatza hiru erreferentzia-puntutatik abiatuta zehazteko.",
+      "description": "Distantzia euklidesarren eta Pitagorasen teoremaren aplikazioa lurreko hartzaileen hiru dimentsioko kokapen zehatzerako.",
+      "branch": "51M",
+      "concept": "teorema-pitagoras",
       "hasSimulation": true,
-      "lang": "eu",
       "availableLangs": [
+        "en",
         "es",
         "eu"
       ]
     },
     "availableLangs": [
+      "en",
       "es",
       "eu"
     ]
