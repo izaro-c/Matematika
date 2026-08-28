@@ -2,49 +2,47 @@ export const metadata = {
   id: "modelo-poincare",
   lang: "en",
   type: "modelo",
-  title: "Poincaré disk model",
-  description: "Conformal model for two-dimensional hyperbolic geometry inside the open unit disk of the complex plane.",
+  title: "Poincaré Disk",
+  description: "Conformal model for two-dimensional hyperbolic geometry inside the unit disk where lines are circular arcs orthogonal to the boundary.",
   branch: "51M",
   satisfies: ["sistema-hiperbolico", "sistema-absoluto"],
   axioms_verified: ["axioma-incidencia-1", "axioma-paralelas-hiperbolico"],
-  hasSimulation: true
+  hasDiagram: true
 };
 
 import { ModeloPoincare } from '@content/diagrams/Models/ModeloPoincare';
-export const Simulation = ModeloPoincare;
+export const Diagram = ModeloPoincare;
 
-<Capitular letra="T" />he Poincaré disk model $\mathbb{D}^2$ is the canonical conformal representation of two-dimensional <ConceptLink targetId="geometria-hiperbolica">hyperbolic geometry</ConceptLink>. It proves the relative consistency of non-Euclidean geometry with respect to real analysis by representing hyperbolic lines as circular arcs orthogonal to the boundary of the open disk.
-
-<Separador />
-
-### Model definition
-
-The point space of this model is the open unit disk in the <ConceptLink targetId="numero-real">real</ConceptLink> <ConceptLink targetId="plano">plane</ConceptLink> $\mathbb{R}^2$:
-
-$$
-\mathbb{D}^2 = \{(x, y) \in \mathbb{R}^2 \mid x^2 + y^2 < 1\}
-$$
-
-The geometric primitives are interpreted as follows:
-
-- **<ConceptLink targetId="punto">Hyperbolic points</ConceptLink>**: All interior points of the disk <VisualBind element="disk" color="carbon">$\mathbb{D}^2$</VisualBind>. Points on the boundary $\partial \mathbb{D}^2$ (the unit circle) are called ideal points or horizons and do not belong to the hyperbolic space.
-- **<ConceptLink targetId="recta">Hyperbolic lines</ConceptLink>**: The intersections with $\mathbb{D}^2$ of <VisualBind element="hyperbolicLine" color="terracota">circular arcs orthogonal</VisualBind> to the boundary $\partial \mathbb{D}^2$, or diameters of the disk passing through the origin.
-- **Metric and <ConceptLink targetId="distancia">distance</ConceptLink>**: For two points $z_1, z_2 \in \mathbb{D}^2$, the conformal Riemannian line element is $ds^2 = 4 \frac{dx^2 + dy^2}{(1 - (x^2 + y^2))^2}$.
-- **<ConceptLink targetId="angulo">Angles</ConceptLink>**: The model is conformal, meaning that hyperbolic angles between two hyperbolic lines coincide exactly with Euclidean angles formed by their tangent vectors at the point of intersection.
+<Capitular letra="T" />he Poincaré disk model $\mathbb{D}^2$ provides a conformal analytic representation of two-dimensional <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>. By embedding the hyperbolic plane within the open unit disk of the complex plane, it enables a rigorous visualization of the negation of Euclid's parallel postulate while faithfully preserving local Euclidean angles.
 
 <Separador />
 
-### Axiom verification
+### Model Definition
 
-The Poincaré disk verifies all axioms of <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink> together with the explicit negation of the fifth postulant:
+The geometric domain is restricted to the open unit disk $\mathbb{D}^2 = \{(x, y) \in \mathbb{R}^2 \mid x^2 + y^2 < 1\}$:
 
-- **<ConceptLink targetId="incidencia">Incidence</ConceptLink> and <ConceptLink targetId="orden">order</ConceptLink> axioms**: For any two distinct interior points $A, B \in \mathbb{D}^2$, there exists a unique circular arc or diameter orthogonal to the boundary passing through both.
-- **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>Hyperbolic parallel axiom</ConceptLink>**: Given a hyperbolic line <VisualBind element="hyperbolicLine" color="terracota">$l$</VisualBind> and an external point <VisualBind element="externalPoint" color="musgo">$P \in \mathbb{D}^2 \setminus l$</VisualBind>, there exist infinitely many parallel hyperbolic lines passing through $P$ that do not intersect $l$.
+- **<ConceptLink targetId="punto">Points</ConceptLink>**: Points belonging to the interior of the open disk. The <VisualBind element="frontera" color="carbon">boundary circle $\partial \mathbb{D}^2$</VisualBind> represents the absolute horizon (ideal points at infinity).
+- **<ConceptLink targetId="recta">Hyperbolic Lines (Geodesics)</ConceptLink>**: Intersections with $\mathbb{D}^2$ formed by:
+  - Euclidean diameters passing through the center.
+  - Euclidean circular arcs that intersect the <VisualBind element="frontera" color="carbon">boundary circle</VisualBind> strictly <ConceptLink targetId="perpendicular">orthogonally</ConceptLink>, such as the <VisualBind element="geodesica-principal" color="terracota">principal line $l$</VisualBind>.
+- **Conformal Hyperbolic Metric**: The Riemannian line element is defined by the Poincaré tensor:
+  $$ ds = \frac{2\sqrt{dx^2 + dy^2}}{1 - (x^2 + y^2)} $$
+  As a point approaches the boundary circle, its intrinsic metric distance diverges to $+\infty$.
 
 <Separador />
 
-### Properties
+### Verification of Hyperbolic Parallelism
 
-- **Conformality**: Preserves local Euclidean angles, enabling intuitive visual inspection of shapes.
-- **Angular defect**: The sum of interior angles in any hyperbolic <ConceptLink targetId="triangulo">triangle</ConceptLink> is strictly less than $180^\circ$, with the defect directly proportional to the surface <ConceptLink targetId="area">area</ConceptLink>.
-- **Invariance under Möbius transformations**: Hyperbolic isometries are represented by complex linear fractional transformations preserving the unit disk.
+The Poincaré disk satisfies the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic parallel axiom</ConceptLink>:
+
+- Given a <VisualBind element="geodesica-principal" color="terracota">hyperbolic line $l$</VisualBind> and an <VisualBind element="P" color="terracota">external point $P \notin l$</VisualBind>, there exist infinitely many coplanar hyperbolic lines passing through $P$ that do not intersect $l$.
+- **Limiting (Asymptotic) Parallels**: There exist exactly two bounding geodesics, such as the <VisualBind element="limite1" color="ocre">limiting parallel</VisualBind>, which share an ideal boundary point at infinity with $l$.
+- **Ultraparallels (Divergent Lines)**: Any geodesic strictly between the two limiting rays, such as the <VisualBind element="ultra1" color="canela">ultraparallel line</VisualBind>, never intersects $l$ in the disk or at infinity, and admits a unique common perpendicular.
+
+<Separador />
+
+### Geometric Properties
+
+- **Conformality**: The hyperbolic angle between two intersecting geodesics matches the standard Euclidean angle between their tangent vectors.
+- **Angular Defect and Area**: In any <ConceptLink targetId="triangulo">hyperbolic triangle</ConceptLink> with interior angles $\alpha, \beta, \gamma$, the angle sum satisfies $\alpha + \beta + \gamma < \pi$, with its area directly proportional to the angular defect:
+  $$ \text{Area}(\triangle) = \pi - (\alpha + \beta + \gamma) $$

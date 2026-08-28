@@ -1,0 +1,64 @@
+export const metadata = {
+  "id": "demo-area-triangulo",
+  "type": "demostracion",
+  "title": "Demostración: Teorema del área del triángulo",
+  "description": "Demostración geométrica que deduce el área del triángulo como mitad del área del rectángulo circunscrito, usando la congruencia diagonal del rectángulo y la aditividad de áreas.",
+  "parentTheorem": "teorema-area-triangulo",
+  "lang": "es",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "areas", "triangulo", "medida"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elementos", "author": "Euclides", "locator": "Libro I, Proposición 41", "role": "primary" }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="S" />ea $\triangle ABC$ un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> de base $b = |\overline{AB}|$ y altura $h$ (la distancia perpendicular del vértice $C$ a la recta soporte de $\overline{AB}$). La demostración construye un rectángulo auxiliar que duplica el área del triángulo.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} title="Construcción del rectángulo circunscrito">
+Se construye el rectángulo $ABDE$ con base $\overline{AB}$ de longitud $b$ y altura $h$, trazando por $A$ y $B$ las <ConceptLink targetId="perpendicular" isDependency={true}>perpendiculares</ConceptLink> a la recta $AB$ y por $C$ la <ConceptLink targetId="paralelas" isDependency={true}>paralela</ConceptLink> a $AB$. Por el <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>teorema del área del rectángulo</ConceptLink>:
+
+<Formula>
+  $$ \text{Área}(ABDE) = b \cdot h $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={2} title="División por la diagonal AC">
+La diagonal $\overline{AC}$ divide el rectángulo $ABDE$ en dos triángulos. Por el <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>criterio de congruencia ALA</ConceptLink> aplicado a los triángulos $\triangle ABC$ y $\triangle CAE$ (ángulos rectos en $B$ y $E$, lado común $\overline{AC}$, lados $|\overline{AB}| = |\overline{CE}|$), ambos triángulos son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>.
+</ProofStep>
+
+<ProofStep number={3} title="Aplicación de la aditividad de áreas">
+Puesto que los dos triángulos son congruentes, tienen igual área. Por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink>, el área del rectángulo es la suma de las áreas de los dos triángulos:
+
+<Formula>
+  $$ \text{Área}(ABDE) = \text{Área}(\triangle ABC) + \text{Área}(\triangle CAE) = 2 \cdot \text{Área}(\triangle ABC) $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} title="Conclusión">
+Despejando el área del triángulo:
+
+<Formula>
+  $$ \text{Área}(\triangle ABC) = \frac{1}{2} \cdot \text{Área}(ABDE) = \frac{1}{2} \cdot b \cdot h $$
+</Formula>
+
+Esta igualdad es válida para cualquier triángulo, independientemente de que sea acutángulo, rectángulo u obtusángulo, pues en los tres casos se puede inscribir en un rectángulo de igual base y altura.
+</ProofStep>
+
+<Separador />
+
+### Análisis deductivo
+
+<Nota>
+  El caso del triángulo obtusángulo requiere extender el rectángulo fuera de la base, pero el argumento de aditividad y congruencia se mantiene íntegro. La demostración usa únicamente el <ConceptLink targetId="sistema-euclidiano">sistema axiomático euclidiano</ConceptLink>.
+</Nota>
+
+</DemonstrationSection>

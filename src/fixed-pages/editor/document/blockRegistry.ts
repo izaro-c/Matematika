@@ -22,7 +22,7 @@ export interface RegisteredBlockProjection {
   data: Record<string, unknown>;
 }
 
-export const TRANSPARENT_JSX_CONTAINERS = new Set(['DemonstrationSection', 'Demostracion', 'StepSection']);
+export const TRANSPARENT_JSX_CONTAINERS = new Set(['DemonstrationSection', 'Demostracion', 'StepSection', 'SeccionPropiedades', 'PropiedadesGrupo']);
 
 /** JSX flow components with an explicit lossless mutation contract. */
 export const SUPPORTED_JSX_BLOCKS = {
@@ -49,6 +49,7 @@ export const SUPPORTED_JSX_BLOCKS = {
   Pregunta: 'advancedMdx',
   ErrorComun: 'advancedMdx',
   Capitular: 'advancedMdx',
+  PropiedadItem: 'advancedMdx',
 } as const;
 
 /** Parsed syntax that is intentionally source-only, not opaque. */

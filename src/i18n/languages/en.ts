@@ -300,6 +300,13 @@ export const enLanguage: LanguageConfig = {
       seeContent: 'View content',
       modelPrefix: 'Model:',
     },
+    properties: {
+      title: 'Properties',
+      seeTheorem: 'Theorem',
+      seeProof: 'Step-by-step proof',
+      proofInProgress: 'Proof in progress',
+      noProperties: 'No additional properties recorded for this concept.',
+    },
     action: {
       practice: 'Practice',
     },

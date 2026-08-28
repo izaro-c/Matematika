@@ -13,10 +13,10 @@ export const Order3Spec = createDiagramSpec(
   "grid": false,
   "viewport": {
     "bounds": [
-      -5,
-      5,
-      5,
-      -5
+      -2.048,
+      2.048,
+      2.048,
+      -2.048
     ],
     "home": [
       -5,
@@ -56,7 +56,7 @@ export const Order3Spec = createDiagramSpec(
     {
       "id": "pA",
       "label": "A",
-      "color": "terracota",
+      "color": "ocre",
       "layerId": "geometry",
       "order": 6000,
       "visible": true,
@@ -72,7 +72,7 @@ export const Order3Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -2.5,
+        "x": -1.5,
         "y": 0
       },
       "mobility": {
@@ -89,7 +89,7 @@ export const Order3Spec = createDiagramSpec(
     {
       "id": "pB",
       "label": "B",
-      "color": "terracota",
+      "color": "ocre",
       "layerId": "geometry",
       "order": 7000,
       "visible": true,
@@ -105,7 +105,7 @@ export const Order3Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 0,
+        "x": 0.57,
         "y": 0
       },
       "mobility": {
@@ -122,7 +122,7 @@ export const Order3Spec = createDiagramSpec(
     {
       "id": "pC",
       "label": "C",
-      "color": "terracota",
+      "color": "ocre",
       "layerId": "geometry",
       "order": 8000,
       "visible": true,
@@ -154,9 +154,9 @@ export const Order3Spec = createDiagramSpec(
     },
     {
       "id": "pD",
-      "label": "D",
+      "label": "l",
       "color": "carbon",
-      "layerId": "layer3",
+      "layerId": "geometry",
       "order": 3000,
       "visible": true,
       "locked": false,
@@ -171,7 +171,7 @@ export const Order3Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -5,
+        "x": 0,
         "y": 0
       },
       "mobility": {
@@ -179,7 +179,6 @@ export const Order3Spec = createDiagramSpec(
       },
       "appearance": {
         "size": 0,
-        "labelVisible": false,
         "highlightSize": 0,
         "preserveColorOnHighlight": true
       },
@@ -204,23 +203,18 @@ export const Order3Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 5,
+        "x": 1.5,
         "y": 0
       },
       "mobility": {
         "type": "free"
       },
-      "appearance": {
-        "size": 0,
-        "labelVisible": false,
-        "highlightSize": 0,
-        "preserveColorOnHighlight": true
-      },
+      "appearance": {},
       "interaction": {}
     },
     {
       "id": "lineDE",
-      "label": "$l$",
+      "label": "Recta",
       "color": "carbon",
       "layerId": "geometry",
       "order": 5000,
@@ -229,11 +223,11 @@ export const Order3Spec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Recta l",
+        "ariaLabel": "Recta",
         "role": "secondary"
       },
       "target": true,
-      "targetId": "line",
+      "targetId": "lineDE",
       "objectType": "path",
       "geometry": {
         "type": "line",
@@ -246,21 +240,15 @@ export const Order3Spec = createDiagramSpec(
         }
       },
       "appearance": {
-        "strokeWidth": 2.4,
-        "labelVisible": true,
-        "labelOffset": [
-          0,
-          10
-        ],
-        "labelPosition": 0.58,
-        "highlightStrokeWidth": 3,
+        "strokeWidth": 2,
+        "highlightStrokeWidth": 2,
         "preserveColorOnHighlight": true
       }
     }
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra los puntos A, B y C para cambiar su orden sobre la recta"
+  "note": "Arrastra A, B y C"
 }
 );
 /* @matematika-diagram-spec:end */

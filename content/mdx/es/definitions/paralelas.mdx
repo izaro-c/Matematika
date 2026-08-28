@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Rectas paralelas",
-  description: "Relación geométrica entre dos rectas coplanares que no se intersectan en ningún punto o coinciden totalmente.",
+  description: "Relación geométrica entre dos rectas coplanares que no se intersecan en ningún punto o coinciden totalmente.",
   branch: "51M",
   hasSimulation: true,
   sources: [
@@ -16,32 +16,37 @@ export const metadata = {
 import { Paralelas } from '@content/diagrams/Definiciones/Paralelas';
 export const Simulation = Paralelas;
 
-<Capitular letra="E" />n la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>, dos <ConceptLink targetId="recta">rectas</ConceptLink> coplanares se denominan paralelas cuando no comparten ningún <ConceptLink targetId="punto">punto</ConceptLink> en común o coinciden en su totalidad. El paralelismo constituye una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink> fundamental en el <ConceptLink targetId="plano">plano</ConceptLink> y determina la estructura del V <ConceptLink targetId="axioma-paralelas-euclides">postulado de Euclides</ConceptLink>.
+<Capitular letra="E" />n la geometría plana, dos <ConceptLink targetId="recta">rectas</ConceptLink> coplanares se denominan paralelas cuando no comparten ningún punto en común o coinciden en su totalidad. El paralelismo constituye una relación de equivalencia fundamental en el <ConceptLink targetId="plano">plano</ConceptLink> euclídeo y diferencia cualitativamente la geometría euclidiana de las geometrías no euclidianas.
 
 <Definicion title="">
-  Dados dos subconjuntos unidimensionales <VisualBind element="recta-r" color="musgo">$L_1$</VisualBind> y <VisualBind element="recta-s" color="pavo">$L_2$</VisualBind> correspondientes a dos rectas en un plano $\mathcal{P}$, se dice que $L_1$ y $L_2$ son paralelas, denotado por $L_1 \parallel L_2$, si y solo si están contenidas en el mismo plano $\mathcal{P}$ y su <ConceptLink targetId="interseccion">intersección</ConceptLink> es el <ConceptLink targetId="conjunto-vacio">conjunto vacío</ConceptLink> o coinciden idénticamente:
+  Dadas dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> <VisualBind element="recta-base" color="musgo">$L_1$</VisualBind> y <VisualBind element="recta-paralela" color="pavo">$L_2$</VisualBind> contenidas en un mismo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\mathcal{P}$, se dice que $L_1$ y $L_2$ son paralelas (<VisualBind element="paralelas" color="musgo">$L_1 \parallel L_2$</VisualBind>) si y solo si su intersección es vacía o son la misma recta:
   $$
-  L_1 \parallel L_2 \iff (L_1 \subset \mathcal{P} \land L_2 \subset \mathcal{P}) \land (L_1 = L_2 \lor L_1 \cap L_2 = \emptyset)
+  L_1 \parallel L_2 \iff (L_1 \subset \mathcal{P} \land L_2 \subset \mathcal{P}) \land (L_1 \cap L_2 = \emptyset \lor L_1 = L_2)
   $$
-  Si $L_1 \neq L_2$, la distancia escalar $d(P, L_2) = \inf_{Q \in L_2} \|P - Q\|$ entre cualquier punto $P \in L_1$ y la recta $L_2$ es constante.
+  En el plano afín euclidiano, la distancia perpendicular $d(P, L_2) = \inf_{Q \in L_2} \|P - Q\|$ es constante para todo punto $P \in L_1$.
 </Definicion>
 
 <Separador />
 
-### Caracterización en distintos marcos geométricos
+### Paralelismo en distintos sistemas axiomáticos
 
-La existencia y unicidad de rectas paralelas difiere según los axiomas de <ConceptLink targetId="incidencia">incidencia</ConceptLink> del sistema geométrico considerado:
+La unicidad de la recta paralela por un punto exterior caracteriza el modelo geométrico subyacente:
 
-| Geometría | Axioma de paralelismo | Número de paralelas por un punto externo |
+| Sistema geométrico | Postulado de paralelas | Número de paralelas por un punto exterior |
 |---|---|---|
-| <ConceptLink targetId="sistema-euclidiano">Geometría euclidiana</ConceptLink> | V Postulado / Axioma de Playfair | Existe <ConceptLink targetId="unicidad">exactamente una</ConceptLink> recta paralela |
-| <ConceptLink targetId="sistema-hiperbolico">Geometría hiperbólica</ConceptLink> | Axioma de Bolyai-Lobachevsky | Existen <ConceptLink targetId="infinito">infinitas</ConceptLink> rectas paralelas |
-| Geometría elíptica | Axioma de Riemann | No existe <ConceptLink targetId="conjunto-vacio">ninguna</ConceptLink> recta paralela |
+| <ConceptLink targetId="sistema-euclidiano">Geometría euclidiana</ConceptLink> | V Postulado / Axioma de Playfair | Existe exactamente una paralela |
+| <ConceptLink targetId="sistema-hiperbolico">Geometría hiperbólica</ConceptLink> | Axioma de Bolyai-Lobachevsky | Existen infinitas paralelas |
+| Geometría elíptica | Axioma de Riemann | No existe ninguna paralela |
 
 <Separador />
 
-### Propiedades
-
-- **<ConceptLink targetId="relacion-equivalencia">Relación de equivalencia</ConceptLink>**: El paralelismo entre rectas coplanares es reflexivo ($L_1 \parallel L_1$), simétrico ($L_1 \parallel L_2 \implies L_2 \parallel L_1$) y transitivo ($L_1 \parallel L_2 \land L_2 \parallel L_3 \implies L_1 \parallel L_3$).
-- **Equidistancia de rectas**: La distancia mínima entre dos rectas paralelas distintas $L_1 \neq L_2$ permanece invariante en todo punto de su dominio.
-- **Ángulos con una secante**: Una recta transversal que interseca a dos rectas paralelas determina pares de <ConceptLink targetId="teorema-angulos-alternos-internos">ángulos alternos internos</ConceptLink> congruentes.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Equivalencia y ángulos con una secante">
+    <PropiedadItem id="axioma-paralelas-euclides" title="Axioma de Playfair">
+      Por un punto exterior a una recta pasa una única recta paralela a ella.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-angulos-alternos-internos" title="Ángulos alternos internos">
+      Una recta secante a dos rectas paralelas determina ángulos alternos internos congruentes.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

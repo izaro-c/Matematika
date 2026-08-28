@@ -2,45 +2,45 @@ export const metadata = {
   id: "modelo-fano",
   lang: "en",
   type: "modelo",
-  title: "Fano plane",
-  description: "The minimal finite projective plane consisting of 7 points and 7 lines where every line contains exactly 3 points.",
-  branch: "51M",
-  satisfies: ["sistema-incidencia"],
+  title: "Fano Plane",
+  description: "The smallest finite projective plane, composed of exactly 7 points and 7 lines.",
+  branch: "51A",
+  satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
-  hasSimulation: true
+  hasDiagram: true
 };
 
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
-export const Simulation = ModeloFano;
+export const Diagram = ModeloFano;
 
-<Capitular letra="T" />he Fano plane —formally denoted as $PG(2, 2)$— constitutes the smallest possible finite projective plane. In this discrete structure, the primitive concepts of <ConceptLink targetId="punto">point</ConceptLink> and <ConceptLink targetId="recta">line</ConceptLink> satisfy a perfect combinatorial symmetry where projective duality holds unconditionally.
-
-<Separador />
-
-### Model definition
-
-The universe of the model consists of a set of 7 points $\mathcal{P} = \{P_1, P_2, P_3, P_4, P_5, P_6, P_7\}$ and a set of 7 lines $\mathcal{L} = \{l_1, l_2, l_3, l_4, l_5, l_6, l_7\}$ defined as three-element subsets of $\mathcal{P}$:
-
-- The outer triangle lines are <VisualBind element="l1" color="pavo">$l_1 = \{P_1, P_2, P_3\}$</VisualBind>, <VisualBind element="l2" color="terracota">$l_2 = \{P_3, P_4, P_5\}$</VisualBind>, and <VisualBind element="l3" color="musgo">$l_3 = \{P_5, P_6, P_1\}$</VisualBind>.
-- The medians are <VisualBind element="l4" color="ocre">$l_4 = \{P_1, P_4, P_7\}$</VisualBind>, <VisualBind element="l5" color="pavo">$l_5 = \{P_3, P_6, P_7\}$</VisualBind>, and <VisualBind element="l6" color="terracota">$l_6 = \{P_5, P_2, P_7\}$</VisualBind>.
-- The inner circular line is <VisualBind element="l7" color="carbon">$l_7 = \{P_2, P_4, P_6\}$</VisualBind>.
-
-Every line contains exactly 3 points, and through every point pass exactly 3 lines. <ConceptLink targetId="incidencia">Incidence</ConceptLink> is defined by direct set membership.
+<Capitular letra="T" />he Fano plane, denoted algebraically as $\mathrm{PG}(2, 2)$, constitutes the smallest <ConceptLink targetId="sistema-incidencia">finite incidence model</ConceptLink> and finite projective plane. Constructed over the finite field $\mathbb{F}_2 = \{0, 1\}$, it consists of exactly $7$ points and $7$ lines, exhibiting complete combinatorial symmetry where the Euclidean notion of parallelism vanishes entirely.
 
 <Separador />
 
-### Verification of properties and axioms
+### Combinatorial Structure
 
-The Fano plane strictly satisfies the fundamental axioms of projective incidence geometry in the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>:
+The Fano configuration is formally defined using the 3-dimensional vector space $\mathbb{F}_2^3 \setminus \{(0, 0, 0)\}$:
 
-- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>Uniqueness of line</ConceptLink>**: For any two distinct points $P_i, P_j \in \mathcal{P}$, there exists exactly one line $l_k \in \mathcal{L}$ such that $\{P_i, P_j\} \subset l_k$.
-- **Universal intersection**: Any two distinct lines $l_a, l_b \in \mathcal{L}$ intersect in exactly one point.
-- **Absence of parallel lines**: As a consequence of universal intersection, there is no <ConceptLink targetId="paralelismo">parallelism</ConceptLink> in this model.
-- **Global non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink>**: There exist at least three points that do not lie on the same line.
+- **<ConceptLink targetId="punto">Points</ConceptLink>**: The $7$ one-dimensional linear subspaces of $\mathbb{F}_2^3$: <VisualBind element="p1" color="terracota">point $1$</VisualBind>, <VisualBind element="p2" color="terracota">point $2$</VisualBind>, <VisualBind element="p3" color="terracota">point $3$</VisualBind>, <VisualBind element="p4" color="terracota">point $4$</VisualBind>, <VisualBind element="p5" color="terracota">point $5$</VisualBind>, <VisualBind element="p6" color="terracota">point $6$</VisualBind>, and the <VisualBind element="p7" color="musgo">central point $7$</VisualBind>.
+- **<ConceptLink targetId="recta">Lines</ConceptLink>**: The $7$ two-dimensional subspaces (planes), represented by triples of collinear points:
+  - Three outer triangle edges: <VisualBind element="l1" color="carbon">$l_1 = \{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$l_2 = \{2, 3, 5\}$</VisualBind>, and <VisualBind element="l3" color="carbon">$l_3 = \{3, 1, 6\}$</VisualBind>.
+  - Three concurrent medians: <VisualBind element="l4" color="carbon">$l_4 = \{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$l_5 = \{2, 6, 7\}$</VisualBind>, and <VisualBind element="l6" color="carbon">$l_6 = \{3, 4, 7\}$</VisualBind>.
+  - The interior circle (projective non-Euclidean line): <VisualBind element="l7" color="musgo">$l_7 = \{4, 5, 6\}$</VisualBind>.
 
 <Separador />
 
-### Properties
+### Verification of Incidence Axioms
 
-- **Projective symmetry $PG(2, 2)$**: Algebraically constructed as the projective plane over the finite field of two elements $\mathbb{F}_2$.
-- **Perfect duality**: The number of points equals the number of lines ($N = 7$), and the incidence structure is preserved if the roles of points and lines are interchanged.
+The Fano plane satisfies the core axioms of projective geometry and incidence:
+
+- **<ConceptLink targetId="axioma-incidencia-1">Incidence Axiom I-1</ConceptLink>**: Any two distinct points determine a unique line incident with both.
+- **Projective Intersection Axiom**: Any two distinct lines intersect at exactly one point (there are no <ConceptLink targetId="paralelas">parallel lines</ConceptLink>).
+- **Uniform Regularity**: Every line contains exactly $3$ points, and every point is incident with exactly $3$ lines.
+- **Global Non-Collinearity**: There exist four points such that no three are collinear.
+
+<Separador />
+
+### Algebraic Properties
+
+- **Projective Duality**: Swapping the designations of points and lines yields an incidence structure isomorphic to the original plane.
+- **Automorphism Group**: Its symmetry group is the projective special linear group $\mathrm{PGL}(3, 2) \cong \mathrm{PSL}(2, 7)$ of order $168$, fundamental in finite group theory and error-correcting codes.

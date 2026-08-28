@@ -2,46 +2,61 @@ export const metadata = {
   id: "recta",
   lang: "en",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "primitivo",
   title: "Line",
-  description: "A continuous, infinite, one-dimensional geometric object extending in both directions without curvature.",
+  description: "One-dimensional continuous and infinite geometric object extending in both directions without curvature.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 2 y 4", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    { title: "Elements", author: "Euclid", locator: "Book I, Definitions 2 & 4", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
   ]
 };
 
 import { Recta } from '@content/diagrams/Definiciones/Recta';
 export const Simulation = Recta;
 
-<Capitular letra="A" /> line is a one-dimensional geometric figure consisting of a continuous, infinite set of collinear <ConceptLink targetId="punto">points</ConceptLink>. In <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>, it forms a fundamental primitive concept alongside the <ConceptLink targetId="punto">point</ConceptLink> and the <ConceptLink targetId="plano">plane</ConceptLink>.
+<Capitular letra="A" /> line is a continuous one-dimensional geometric entity that extends indefinitely in both directions without curvature. In synthetic geometry, it constitutes an undefined primitive notion that, together with the <ConceptLink targetId="punto">point</ConceptLink> and the <ConceptLink targetId="plano">plane</ConceptLink>, underpins the axiomatic structure of incidence and order.
 
 <Definicion title="">
-  Given two distinct points <VisualBind element="A" color="musgo">$A$</VisualBind> and <VisualBind element="B" color="musgo">$B$</VisualBind> in an affine or Euclidean space $\mathcal{E}$, the line <VisualBind element="line" color="musgo">$\ell = \overleftrightarrow{AB}$</VisualBind> is the one-dimensional continuous set of points uniquely determined by the affine combinations of $A$ and $B$:
+  Given two distinct points <VisualBind element="pA" color="musgo">$A$</VisualBind> and <VisualBind element="pB" color="musgo">$B$</VisualBind> in an affine or Euclidean space $\mathcal{E}$, the line <VisualBind element="lineAB" color="musgo">$\ell = \overleftrightarrow{AB}$</VisualBind> is the one-dimensional continuous set formed by all affine combinations of $A$ and $B$:
   $$
   \ell = \{ P \in \mathcal{E} \mid P = (1 - t)A + tB, \, t \in \mathbb{R} \}
   $$
-  In <ConceptLink targetId="geometria-analitica">analytic geometry</ConceptLink> over $\mathbb{R}^2$, it is expressed by the implicit equation $Ax + By + C = 0$, with $(A, B) \neq (0, 0)$.
 </Definicion>
 
 <Separador />
 
-### Equation forms in the Cartesian plane
+### Synthetic geometry
 
-The algebraic expression of a line takes several equivalent forms depending on the known geometric parameters:
+In Hilbert's formal framework, lines are elements of the second fundamental set governed by the axioms of incidence and order:
+- **Uniqueness of incidence**: Two distinct points determine a unique line.
+- **Linear continuity**: Any point on a line partitions the line into two disjoint <ConceptLink targetId="semirrecta">rays</ConceptLink>.
+- **Betweenness**: The <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation establishes a strict, dense linear order among the points of the line.
 
-| Algebraic form | Mathematical equation | Representative parameters |
-|---|---|---|
-| Vectorial | $\vec{r}(t) = \vec{p}_0 + t\vec{v}$ | Base point $\vec{p}_0$, direction vector $\vec{v}$ |
-| Slope-intercept | $y = mx + b$ | Slope $m$, y-intercept $b$ |
-| Symmetric | $\frac{x - x_0}{v_x} = \frac{y - y_0}{v_y}$ | Direction vector components $(v_x, v_y)$ |
+### Analytic geometry
+
+In the Cartesian plane $\mathbb{R}^2$, a line is represented by its general implicit equation or parametric vector form:
+- **General equation**: $Ax + By + C = 0$, with $(A, B) \neq (0, 0)$.
+- **Vector form**: $\vec{r}(t) = \vec{p}_0 + t\vec{v}$, where $\vec{p}_0$ is an anchor point and $\vec{v} \neq \vec{0}$ is the direction vector.
+- **Slope-intercept form**: $y = mx + b$, where $m$ is the slope and $b$ is the $y$-intercept.
+
+### Topology
+
+Topologically, any Euclidean line equipped with the standard topology is homeomorphic to the real line $\mathbb{R}$. It constitutes a complete, connected, non-compact metric space of topological dimension $1$.
 
 <Separador />
 
-### Properties
-
-- **<ConceptLink targetId="incidencia">Uniqueness axiom</ConceptLink>**: Two distinct <ConceptLink targetId="punto">points</ConceptLink> lie on one and only one line in Euclidean space.
-- **<ConceptLink targetId="estar-entre">Continuity and infinity</ConceptLink>**: It extends boundlessly without endpoints and possesses the cardinality of the continuum ($\text{card}(\ell) = \lvert \mathbb{R} \rvert$).
-- **<ConceptLink targetId="geodesica">Euclidean geodesic</ConceptLink>**: The path along a line represents the shortest <ConceptLink targetId="distancia">distance</ConceptLink> between any two of its points.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Incidence and linear geometry">
+    <PropiedadItem id="axioma-incidencia-1" title="Existence and uniqueness through two points">
+      Given $A \neq B$, there exists a unique line $\ell$ such that $A \in \ell$ and $B \in \ell$.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-2" title="Minimum points per line">
+      Every line contains at least two distinct points.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-orden-2" title="Indefinite extension">
+      Given $A$ and $B$, there exists a point $C$ such that $A * B * C$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -3,12 +3,12 @@ export const metadata = {
   lang: "eu",
   type: "definicion",
   subtype: "nominal",
-  title: "Koadrilateroa",
-  description: "Lau erpin ez-lerrokide lotzen dituzten lau zuzenkiz osatutako lau aldeboko plano-poligonoa.",
+  title: "Laukia",
+  description: "Lau aldeko poligono laua, haietako hiruk lerrokatu gabe dauden plano bereko lau puntu lotzen dituzten lau zuzenkiren elkarketaz osatua.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "I. Liburua, 22. Definizioa", role: "primary" },
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 22. Definizioa", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
   ]
 };
@@ -16,32 +16,37 @@ export const metadata = {
 import { Cuadrilatero } from '@content/diagrams/Definiciones/Cuadrilatero';
 export const Simulation = Cuadrilatero;
 
-<Capitular letra="K" />oadrilateroa lau <ConceptLink targetId="lado">aldeko</ConceptLink> <ConceptLink targetId="poligono">poligonoa</ConceptLink> da <ConceptLink targetId="geometria-euclidiana">geometria lauan</ConceptLink>, elkarren segidako lau <ConceptLink targetId="segmento">zuzenkiz</ConceptLink> osatua. Oinarrizko plano-irudia da <ConceptLink targetId="congruencia">kongruentzien</ConceptLink> azterketan eta <ConceptLink targetId="plano">planoan</ConceptLink> azaleraren <ConceptLink targetId="teoria-medida-area">neurri-teoriako</ConceptLink> zein azaleraren <ConceptLink targetId="teorema-area-aditividad">aditivitatezko</ConceptLink> deskonposaketetan.
+<Capitular letra="L" />aukia geometria lauaren lau aldeko <ConceptLink targetId="poligono">poligonoa</ConceptLink> da, elkarren segidako lau <ConceptLink targetId="segmento">zuzenkiren</ConceptLink> elkarketaz mugatua. <ConceptLink targetId="plano">Planoan</ConceptLink> <ConceptLink targetId="congruencia">kongruentziak</ConceptLink> eta <ConceptLink targetId="teoria-medida-area">azaleraren</ConceptLink> deskonposizioak aztertzeko oinarrizko irudi poligonaletako bat da.
 
 <Definicion title="">
-  $\mathcal{P}$ plano bateko lau <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind>, <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> eta <VisualBind element="vertice-d" color="musgo">$D$</VisualBind> puntu koplanar emanda, non hiruna puntu ez diren <ConceptLink targetId="colinealidad">lerrokideak</ConceptLink> eta zuzenkiak muturretan bakarrik ebakitzen diren, <VisualBind element="cuadrilatero" color="musgo">$ABCD$</VisualBind> koadrilateroa lau <ConceptLink targetId="segmento">zuzenki jarraituen</ConceptLink> <ConceptLink targetId="union-conjuntos">batasunak</ConceptLink> zehaztutako irudi plana da:
+  $\mathcal{P}$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> batean lerrokatu gabeko <VisualBind element="vertices" color="musgo">$A, B, C, D$</VisualBind> lau <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> koplanar emanda, non haien arteko zuzenkiak muturretan soilik ebakitzen diren, <VisualBind element="poligono" color="musgo">$ABCD$</VisualBind> laukia bere lau <ConceptLink targetId="segmento" isDependency={true}>zuzenkien</ConceptLink> (<VisualBind element="lados" color="musgo">$\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$</VisualBind>) elkarketaz definitzen da:
   $$
   ABCD = \overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}
   $$
-  $A, B, C, D$ puntuak <ConceptLink targetId="vertice">erpinak</ConceptLink> dira, $\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$ zuzenkiak aldeak dira, eta $\overline{AC}, \overline{BD}$ zuzenkiak <ConceptLink targetId="diagonal">diagonalak</ConceptLink> dira.
+  $A, B, C, D$ puntuak <ConceptLink targetId="vertice">erpinak</ConceptLink> dira eta <VisualBind element="diagonales" color="musgo">$\overline{AC}, \overline{BD}$</VisualBind> zuzenkiak laukiaren diagonalak dira.
 </Definicion>
 
 <Separador />
 
-### Egitura-sailkapena
+### Egiturazko sailkapena
 
-Koadrilatero planoak beren konbexutasun-propietateen eta aurkako aldeen arteko <ConceptLink targetId="paralelas">paralelotasun-erlazioen</ConceptLink> arabera sailkatzen dira:
+Planoan laukiak haien ganbiltasun-propietateen eta aldeen arteko <ConceptLink targetId="paralelas">paralelotasun-</ConceptLink>erlazioen arabera sailkatzen dira:
 
-| Mota | Ezaugarri geometrikoa | Azpiklase nagusiak |
+| Mota | Ezaugarri geometrikoa | Azpimota nagusiak |
 |---|---|---|
-| <ConceptLink targetId="region-convexa">Konbexua</ConceptLink> | Bi diagonalek barneko puntu batean ebakitzen dute elkar | <ConceptLink targetId="paralelogramo">Paralelogramoa</ConceptLink>, Trapezioa, Trapezoidea |
-| Konkaboa | Diagonal bat guztiz kanpoaldean gelditzen da | Dardo-koadrilateroa |
-| <ConceptLink targetId="paralelogramo">Paralelogramoa</ConceptLink> | Bi aurkako alde-pareak paraleloak dira ($\overline{AB} \parallel \overline{CD} \land \overline{BC} \parallel \overline{DA}$) | Zuzena, Erronboa, <ConceptLink targetId="cuadrado">Karratua</ConceptLink> |
+| Ganbila | Bi diagonalek barneko puntu batean ebakitzen dute elkar | <ConceptLink targetId="paralelogramo">Paralelogramoa</ConceptLink>, Trapezioa, Trapezoidea |
+| Ahurra | Diagonal bat kanpoaldean geratzen da | Gezi-punta itxurako laukia |
+| <ConceptLink targetId="paralelogramo">Paralelogramoa</ConceptLink> | Aurkako aldeak paraleloak ($\overline{AB} \parallel \overline{CD} \land \overline{BC} \parallel \overline{DA}$) | Laukizuzena, Erronboa, <ConceptLink targetId="cuadrado">Karratua</ConceptLink> |
 
 <Separador />
 
-### Propietateak
-
-- **Barne-angeluen batura**: Edozein koadrilatero konbexuren lau barne-angeluen batura beti da $360^\circ$ ($2\pi\text{ rad}$) nahitaez.
-- **Triangelu-deskonposaketa**: Koadrilatero konbexu orok diagonal baten bidez bi <ConceptLink targetId="triangulo">triangelutan</ConceptLink> banatzeko aukera ematen du, ertzean salbu disjuntuak direnak.
-- **Azaleraren aditivitatea**: Koadrilatero konbexu baten azalera-neurriak <ConceptLink targetId="teorema-area-aditividad">aditivitate</ConceptLink> zorrotza betetzen du: $\mu(ABCD) = \mu(\triangle ABC) + \mu(\triangle ACD)$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propietate angeluarrak eta deskonposizioa">
+    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Barne-angeluen batura">
+      Lauki ganbil baten barneko lau angeluen neurrien batura $360^\circ$ ($2\pi\text{ rad}$) da beti.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-aditividad" title="Triangeluen bidezko deskonposizioa">
+      Edozein lauki ganbil diagonal baten bidez bi triangelu disjuntotan deskonposatzen da: $\mu(ABCD) = \mu(\triangle ABC) + \mu(\triangle ACD)$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

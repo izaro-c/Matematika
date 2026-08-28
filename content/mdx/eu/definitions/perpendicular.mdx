@@ -3,12 +3,12 @@ export const metadata = {
   lang: "eu",
   type: "definicion",
   subtype: "nominal",
-  title: "Zuzen elkarzutak",
-  description: "Lau barne-angelu zuzen kongruente osatuz elkar ebakitzen duten bi zuzenen arteko erlazio geometrikoa.",
+  title: "Perpendikulartasuna",
+  description: "Lau angelu zuzen kongruente eratuz elkar ebakitzen duten bi zuzen ebakitzaileren arteko erlazio geometrikoa.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "I. Liburua, 10. Definizioa", role: "primary" },
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 10. Definizioa", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
   ]
 };
@@ -16,32 +16,33 @@ export const metadata = {
 import { Perpendicular } from '@content/diagrams/Definiciones/Perpendicular';
 export const Simulation = Perpendicular;
 
-<Capitular letra="B" />i <ConceptLink targetId="recta">zuzen ebakitzaile</ConceptLink> <ConceptLink targetId="plano">planoan</ConceptLink> elkarzutak direla esaten da haien arteko <ConceptLink targetId="interseccion">ebakidurak</ConceptLink> inguruko angelu-espazioa lau <ConceptLink targetId="angulo">angelu</ConceptLink> berdinetan banatzen duenean. Elkarzutasunak ortogonalitatearen oinarrizko nosioa osatzen du <ConceptLink targetId="geometria-euclidiana">geometria euklidearrean</ConceptLink> eta koordenatu kartesiarren sistemen oinarria finkatzen du.
+<Capitular letra="P" />lano bateko bi <ConceptLink targetId="recta">zuzen</ConceptLink> ebakitzaileri perpendikular deritze haien ebakidurak elkarren artean kongruenteak diren lau <ConceptLink targetId="angulo">angelu</ConceptLink> sortzen dituenean. Geometria euklidearreko ortogonaltasunaren oinarrizko nozioa da, eta koordenatu kartesiarren sistemen zein proiekzio ortogonalen oinarri gisa balio du.
 
 <Definicion title="">
-  $\mathcal{P}$ plano batean $P = L_1 \cap L_2$ <ConceptLink targetId="punto">puntu</ConceptLink> bakarrean elkar ebakitzen duten bi <VisualBind element="recta-r" color="musgo">$L_1$</VisualBind> eta <VisualBind element="recta-s" color="pavo">$L_2$</VisualBind> zuzen ebakitzaile emanda, $L_1$ eta $L_2$ elkarzutak direla esaten da, $L_1 \perp L_2$ ikurraz adierazita, haien ebakidurak zehaztutako ebakidurako lau angeluak beren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira, bakoitza $90^\circ$-ko ($\frac{\pi}{2}\text{ rad}$) <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> izanik nahitaez:
+  $\mathcal{P}$ plano bereko <VisualBind element="lineAB" color="musgo">$L_1$</VisualBind> eta <VisualBind element="perpABP" color="pavo">$L_2$</VisualBind> bi <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> emanda, $P = L_1 \cap L_2$ puntuan elkar ebakitzen dutenak, $L_1$ eta $L_2$ perpendikularrak dira ($L_1 \perp L_2$) baldin eta soilik baldin ebakidurak zehaztutako lau angeluak $\frac{\pi}{2}$ radianeko ($90^\circ$) <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzenak</ConceptLink> badira:
   $$
-  L_1 \perp L_2 \iff (L_1 \cap L_2 = \{P\}) \land \forall i \in \{1,2,3,4\}, \mu(\theta_i) = \frac{\pi}{2}
+  L_1 \perp L_2 \iff \forall i \in \{1, 2, 3, 4\}, \; \theta_i \cong 90^\circ
   $$
-  Vektore-geometrian, $\vec{u}$ eta $\vec{v}$ badira $L_1$ eta $L_2$ zuzen eusleen norabide-vektore ez-nulluak, $\vec{u} \cdot \vec{v} = 0$ betetzen da.
+  Termino bektorialetan, $L_1$ eta $L_2$-ren $\vec{u}, \vec{v}$ bektore zuzentzaile ez-nuluentzat, biderketa eskalar nulua izatearen baliokidea da: $\vec{u} \cdot \vec{v} = 0$.
 </Definicion>
 
 <Separador />
 
-### Kriterioak eta adierazpen geometrikoak
+### Irizpideak eta adierazpen geometrikoak
 
-Elkarzutasun-baldintzak formulazio analitiko eta sintetiko anitz onartzen ditu erabilitako sistema formalaren arabera:
-
-| Eremua | Baldintza sintetikoa edo analitikoa | Adierazpen formala |
-|---|---|---|
-| Vektore-geometria | Biderkadura eskalar nulua | $\vec{u} \cdot \vec{v} = 0$ |
-| Geometria analitikoa | Maldak alderantzizkoak eta aurkakoak | $m_1 \cdot m_2 = -1$ |
-| Geometria sintetikoa | Angelu suplementario ondokoen berdintasuna | $\alpha \cong \beta \land \mu(\alpha + \beta) = \pi$ |
+- **Geometria sintetikoa**: Bi zuzen perpendikularrak dira baldin eta aldameneko angelu gehigarri kongruenteak eratzen badituzte.
+- **Geometria analitikoa**: $\mathbb{R}^2$-n, $m_1, m_2 \in \mathbb{R}$ maldak dituzten bi zuzen perpendikularrak dira baldin eta soilik baldin $m_1 \cdot m_2 = -1$ bada.
+- **Geometria bektoriala**: Dimentsio bakarreko bi azpiespazio afin ortogonalak dira haien bektore zuzentzaileek $\langle \vec{u}, \vec{v} \rangle = 0$ betetzen badute.
 
 <Separador />
 
-### Propietateak
-
-- **Existentzia eta bakartasuna**: $P$ igarotze-puntu bat eta $L$ zuzen bat emanda, $P$-tik igarotzen den eta $L$-rekiko elkarzuta den zuzen <ConceptLink targetId="unicidad">bakarra</ConceptLink> dago zorrozki.
-- **Erlazioa paralelotasunarekin**: Zuzen komun berekiko elkarzutak diren bi zuzen beren artean <ConceptLink targetId="paralelas">paraleloak</ConceptLink> dira nahitaez ($L_1 \perp L_3 \land L_2 \perp L_3 \implies L_1 \parallel L_2$).
-- **Simetria ez-erreflexiboa**: Elkarzutasun-erlazioa simetrikoa da ($L_1 \perp L_2 \implies L_2 \perp L_1$), baina ez da erreflexiboa ezta igarotorra ere.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ortogonaltasuna eta paralelotasuna">
+    <PropiedadItem id="axioma-congruencia-4" title="Perpendikularraren existentzia eta bakartasuna">
+      $P$ puntu bat eta $L$ zuzen bat emanda, $P$-tik igarotzen den eta $L$-rekiko perpendikularra den zuzen bakar bat existitzen da.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-angulos-alternos-internos" title="Perpendikularra paraleloekiko">
+      Bi zuzen paralelotako bati perpendikularra zaion edozein zuzen bestearekiko ere perpendikularra da nahitaez.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

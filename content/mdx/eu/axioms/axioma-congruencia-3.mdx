@@ -2,35 +2,45 @@ export const metadata = {
   id: "axioma-congruencia-3",
   lang: "eu",
   type: "axioma",
-  title: "III.3 Axioma (Zuzenkien Batura)",
-  description: "Lerrokatutako bi zuzenki elkarren segidakoak beste bi zuzenki elkarren segidakorekin kongruenteak badira hurrenez hurren, beren muturrekin osatutako batura-zuzenkiak ere kongruenteak dira.",
+  title: "III.3 axioma (Zuzenkien batuketa eta aditibitatea)",
+  description: "Ondoko zuzenki kongruenteen bikoteak kateatzean, lortutako zuzenki osoak ere kongruenteak dira.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §4", role: "primary" }
   ]
 };
 
 import { Congruence3 } from '@content/diagrams/Axiomas/Congruence3';
 export const Simulation = Congruence3;
 
-<Capitular letra="H" />ilberten hirugarren <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-axiomak magnitudoen garraioaren aditibitatea formalizatzen du <ConceptLink targetId="recta">zuzen</ConceptLink> baten gainean. Axioma honek ezartzen du <ConceptLink targetId="segmento">zuzenki</ConceptLink> kongruenteen katenazioak lortzen den zuzenki batuaren kongruentzia gordetzen duela <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
+<Capitular letra="D" />avid Hilberten hirugarren kongruentzia-axiomak <ConceptLink targetId="segmento">zuzenkien</ConceptLink> kateamendurako adizio-propietatea ezartzen du. Bi zuzenki-pareren osagaiak banan-banan kongruenteak badira, haien baturaren bidez lortutako zuzenki osoak ere <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> dira elkarren artean.
 
-<Definicion title="">
-  Izan bitez $A, B, C$ hiru <ConceptLink targetId="punto">puntu</ConceptLink> zuzen batean, $B$ puntua $A$ eta $C$ puntuen <ConceptLink targetId="orden">artean</ConceptLink> dagoelarik, eta izan bitez $A', B', C'$ hiru puntu beste zuzen batean, $B'$ puntua $A'$ eta $C'$ puntuen artean dagoelarik. $\overline{AB} \cong \overline{A'B'}$ eta $\overline{BC} \cong \overline{B'C'}$ badira, orduan $\overline{AC}$ zuzenki batura eta $\overline{A'C'}$ zuzenkia <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira:
+<Definicion title="Enuntziatu formala">
+  Izan bitez $A, B, C$ zuzen bateko hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> $A\text{-}B\text{-}C$ izanik, eta izan bitez $D, E, F$ beste zuzen bateko hiru puntu $D\text{-}E\text{-}F$ izanik. Baldin eta $\overline{AB} \cong \overline{DE}$ eta $\overline{BC} \cong \overline{EF}$ badira, orduan $\overline{AC} \cong \overline{DF}$ betetzen da:
   $$
-  (A\text{-}B\text{-}C) \land (A'\text{-}B'\text{-}C') \land (\overline{AB} \cong \overline{A'B'}) \land (\overline{BC} \cong \overline{B'C'}) \implies \overline{AC} \cong \overline{A'C'}
+  (A\text{-}B\text{-}C \land D\text{-}E\text{-}F \land \overline{AB} \cong \overline{DE} \land \overline{BC} \cong \overline{EF}) \implies \overline{AC} \cong \overline{DF}
   $$
 </Definicion>
 
 <Separador />
 
-### Irudikapen bisuala
+### Ikus-irudikapena eta elkarrekintza
 
-Hasierako <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> zuzenkia eta viroan dagoen <VisualBind element="BC" color="pavo">$\overline{BC}$</VisualBind> zuzenkia zuzenaren gainean lotuz, lortzen den <VisualBind element="AC" color="terracota">$\overline{AC}$</VisualBind> batura-zuzenkiak korrespondentzia zurrun zehatza mantentzen du eraldatutako zuzenki kongruenteen katenazioarekin.
+Simulazio interaktiboan, <VisualBind element="segAC" color="terracota">$\overline{AC}$</VisualBind> zuzenki konposatuak bere <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> eta <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind> osagaietatik abiatuta eratzen dira. Gaietako edozeinen luzera aldatzean, batuketa sintetikoak zorrotz mantentzen du batura linealaren kongruentzia osoa.
 
 <Separador />
 
-### Garrantzi axiomatikoa
+### Esanahi geometrikoa eta esparrua
 
-Postulatu honek <ConceptLink targetId="segmento">zuzenkien</ConceptLink> baliokidetza-klaseen arteko batuketa-eragiketa sintetikoki definitzea ahalbidetzen du. <ConceptLink targetId="orden">Ordena</ConceptLink>-axiomekin batera, espazioaren egitura metriko aditiboa ezartzen du zenbaki errealen gorputzaren menpekotasunik gabe.
+Axioma honek geometria sintetikoaren barruko luzeren aljebra oinarritzen du. Kongruentzia-klaseen arteko batuketa-eragiketa definitzea ahalbidetzen du ($[\overline{AB}] + [\overline{BC}] = [\overline{AC}]$), luzerei erdi-talde trukakor ordenatuaren egitura emanez <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
+
+<Separador />
+
+### Propietateak
+
+- **Ordenarekiko bateragarritasuna:** Batuketa geometrikoak ordena lineala gordetzen du zorrozki ($\overline{AB} < \overline{CD} \implies \overline{AB} + \overline{EF} < \overline{CD} + \overline{EF}$).
+- **Monotonia zorrotza:** Baturaren luzera handiagoa da zorrozki bere osagaietako edozein baino.
+- **Kenketa geometrikoa:** Zuzenkien arteko kendura definitzeko oinarria da, bata bestearen barruan zorrozki dagoenean.

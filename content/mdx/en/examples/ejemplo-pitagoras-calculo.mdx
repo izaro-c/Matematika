@@ -1,0 +1,86 @@
+export const metadata = {
+  id: "ejemplo-pitagoras-calculo",
+  lang: "en",
+  type: "ejemplo",
+  title: "Calculating the Hypotenuse of a Right Triangle",
+  description: "Application of the Pythagorean theorem to compute the length of the hypotenuse from given leg lengths (5, 12, 13).",
+  branch: "51M",
+  relatedTheorem: "teorema-pitagoras",
+  difficulty: "básico",
+  hasSimulation: true
+};
+
+import { EjemploPitagorasCalculo } from '@content/diagrams/Ejercicios/EjemploPitagorasCalculo';
+export const Simulation = EjemploPitagorasCalculo;
+
+<Capitular letra="L" />et <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> be a <ConceptLink targetId="triangulo-rectangulo">right-angled triangle</ConceptLink> with a <ConceptLink targetId="perpendicular">right angle</ConceptLink> at <VisualBind element="pC" color="carbon">vertex $C$</VisualBind>. The lengths of the perpendicular legs are $a = |\overline{CA}| = 5$ (<VisualBind element="segCA" color="canela">vertical leg $a$</VisualBind>) and $b = |\overline{BC}| = 12$ (<VisualBind element="segBC" color="terracota">horizontal leg $b$</VisualBind>) units respectively. We calculate the exact length of the hypotenuse <VisualBind element="segAB" color="mora">$c = |\overline{AB}|$</VisualBind> and examine the arithmetic of the resulting Pythagorean triple.
+
+<Separador />
+
+### Problem Statement
+
+Determine the exact length of hypotenuse $c$ using the fundamental metric theorem and verify the additive areas of the projected squares.
+
+<Nota>
+  A Pythagorean triple is a set of three positive integers $(a, b, c)$ satisfying the Diophantine equation $a^2 + b^2 = c^2$. When $\gcd(a, b, c) = 1$, the triple is primitive.
+</Nota>
+
+<Separador />
+
+<Solucion label="Step-by-Step Resolution">
+  <Paso numero={1} id="datos" titulo="Initial Data and Hypotheses">
+    The known dimensions of the perpendicular legs are given as:
+    
+    - <VisualBind element="segCA" color="canela">Vertical leg $a$</VisualBind>: $a = 5$
+    - <VisualBind element="segBC" color="terracota">Horizontal leg $b$</VisualBind>: $b = 12$
+    - <VisualBind element="rightAng" color="carbon">Right angle</VisualBind> at vertex $C$: $\angle ACB = 90^\circ$
+    
+    The length of hypotenuse $c$ represents the unknown to be calculated, being the segment opposite to vertex $C$.
+  </Paso>
+
+  <Paso numero={2} id="calculo" titulo="Application of the Pythagorean Theorem">
+    By the <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pythagorean theorem</ConceptLink>, the fundamental metric relation in a right triangle is:
+    
+    <Formula>
+      $$ a^2 + b^2 = c^2 $$
+    </Formula>
+    
+    Substituting the known values:
+    
+    <Formula>
+      $$ 5^2 + 12^2 = c^2 $$
+    </Formula>
+    
+    Geometrically, this equality expresses the additivity of the areas of the squares on the sides: the <VisualBind element="sqCA" color="canela">square of area $a^2 = 25$</VisualBind> plus the <VisualBind element="sqBC" color="terracota">square of area $b^2 = 144$</VisualBind> equals the <VisualBind element="sqAB" color="mora">square of area $c^2$</VisualBind>:
+    
+    <Formula>
+      $$ 25 + 144 = 169 $$
+    </Formula>
+  </Paso>
+
+  <Paso numero={3} id="resolucion" titulo="Algebraic Resolution of the Hypotenuse">
+    Equating the sum of areas with the square of the unknown:
+    
+    <Formula>
+      $$ c^2 = 169 $$
+    </Formula>
+    
+    Taking the positive principal square root on both sides (since a geometric distance satisfies $c > 0$):
+    
+    <Formula>
+      $$ c = \sqrt{169} = 13 $$
+    </Formula>
+    
+    Consequently, the length of the <VisualBind element="segAB" color="mora">hypotenuse $c$</VisualBind> is exactly $13$ units.
+  </Paso>
+
+  <Paso numero={4} id="terna" titulo="Verification of the Pythagorean Triple">
+    The lengths $(5, 12, 13)$ are all positive integers satisfying the Pythagorean relation:
+    
+    <Formula>
+      $$ 5^2 + 12^2 = 25 + 144 = 169 = 13^2 $$
+    </Formula>
+    
+    Because $\gcd(5, 12, 13) = 1$, $(5, 12, 13)$ is a primitive Pythagorean triple.
+  </Paso>
+</Solucion>

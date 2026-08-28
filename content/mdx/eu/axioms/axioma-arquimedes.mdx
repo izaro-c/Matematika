@@ -2,36 +2,46 @@ export const metadata = {
   id: "axioma-arquimedes",
   lang: "eu",
   type: "axioma",
-  title: "Arkimedesen Axioma",
-  description: "Edozein AB zuzenki eta CD zuzenki emanda, n zenbaki natural bat existitzen da n bider katenatutako CD zuzenkiak AB zuzenkiaren luzera gainditzeko moduan.",
+  title: "V.1 axioma (Arkimedesen axioma)",
+  description: "Edozein bi zuzenki emanda, handienaren luzera gainditu daiteke txikienaren kopia kopuru finitu bat jarraian garraiatuz.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "continuidad",
   hasSimulation: true,
   sources: [
-    { title: "Sobre la esfera y el cilindro", author: "Arquímedes", locator: "Libro I, Asunción 5", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §7", role: "primary" }
+    { title: "Esferaz eta zilindroaz", author: "Arquímedes", locator: "5. postulua", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §6", role: "primary" }
   ]
 };
 
 import { AxiomaArquimedes } from '@content/diagrams/Axiomas/AxiomaArquimedes';
 export const Simulation = AxiomaArquimedes;
 
-<Capitular letra="A" />rkimedesen axioma <ConceptLink targetId="continuidad">jarraitutasunaren</ConceptLink> lehenengo postulatu gisa ezartzen da (<ConceptLink targetId="hilbert">Hilberten</ConceptLink> IV.1 axioma). Elementu infinituki handien edo infinitesimalen existentzia kanpoan uzten du geometria metrikoan.
+<Capitular letra="A" />rkimedesen axiomak —<ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> jarraitutasun-taldeko lehen printzipio gisa txertatua— magnitude infinituki txikiak (infinitesimalak) edo infinituki handiak baztertzen ditu geometriatik. Ezarri egiten du edozein distantzia, handia izanik ere, gainditu daitekeela oinarrizko <ConceptLink targetId="segmento">zuzenki</ConceptLink> baten batuketa finitu eta jarraituaren bidez.
 
-<Definicion title="">
-  Izan bitez $\overline{AB}$ eta $\overline{CD}$ bi <ConceptLink targetId="segmento">zuzenki</ConceptLink> arbitrario. $n \in \mathbb{N}^+$ zenbaki oso positibo bat existitzen da, non $AB$ zuzenerdian $\overline{CD}$ zuzenkiarekin kongruenteak diren $n$ zuzenkien katenazioa eraikitzean $(A = A_0, A_1, A_2, \dots, A_n)$, $B$ puntua $A$ eta $A_n$ puntuen artean geratzen baita:
+<Definicion title="Enuntziatu formala">
+  Edozein bi $\overline{AB}$ eta $\overline{CD}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> ez-nulatara, $n \in \mathbb{N}$ zenbaki arrunta existitzen da non $\overrightarrow{CD}$ erdi-zuzenean zehar $C$-tik hasita $\overline{AB}$-ren $n$ kopia jarraian garraiatuz $D$ <ConceptLink targetId="punto" isDependency={true}>puntuaren</ConceptLink> posizioa gainditzen den:
   $$
-  \forall \overline{AB}, \overline{CD} \implies \exists n \in \mathbb{N}^+ \ (n \cdot \overline{CD} > \overline{AB})
+  \forall \overline{AB}, \overline{CD} \ \bigl(A \neq B \land C \neq D \implies \exists n \in \mathbb{N} \ (n \cdot \overline{AB} > \overline{CD})\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Irudikapen bisuala
+### Ikus-irudikapena eta elkarrekintza
 
-Helburuko <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> zuzenkia eta unitateko <VisualBind element="CD" color="pavo">$\overline{CD}$</VisualBind> zuzenkia emanda, unitate-moduluaren garraioaren iterazioak <VisualBind element="An" color="terracota">$A_n$</VisualBind> helburuko zuzenkiaren luzera nahitaez superatzen du urrats kopuru finitu batean.
+Simulazio interaktiboan, <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> oinarrizko zuzenkia eta <VisualBind element="segCD" color="marino">$\overline{CD}$</VisualBind> helburu-zuzenkia alderatzen dira. <VisualBind element="n" color="ocre">$n$</VisualBind> graduatzaile dinamikoaren bidez, <VisualBind element="acumulado" color="terracota">$n \cdot \overline{AB}$</VisualBind> errepikapen jarraituak pilatzen dira <VisualBind element="lineDThreshold" color="marino">$D$</VisualBind> atalase kritikoa gainditu arte; une horretan, helburua gainditu izana <VisualBind element="copiasSuperanCD" color="musgo">berdez</VisualBind> nabarmentzen da <VisualBind element="nMinimo" color="ocre">$n_{\min}$</VisualBind> balio minimalerako.
 
 <Separador />
 
-### Garrantzi axiomatikoa
+### Esanahi geometrikoa eta esparrua
 
-Postulatu honek magnitudo vertiezinezkoen edo infinitesimal ez-nuluen existentzia ezeztatzen du. Ezinbestekoa da proportzioen teorian eta azalerak zein bolumenak neurtzeko, <ConceptLink targetId="geometria-euclidiana">geometria euklidianoko</ConceptLink> agortze-metodoaren bidezko hurbilpena baimenduz.
+Espazioaren arkimedestar izaera bermatzen du: ez dago beste batekiko infinituki txikia den zuzenkirik, ezta pilaketa finitu baten bidez gainditu ezin den hesi geometrikorik ere. Eskala geometriko sintetikoa $\mathbb{R}$ zenbaki errealen gorputzaren ordena arkimedestarrarekin lotzen du <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
+
+<Separador />
+
+### Propietateak
+
+- **Infinitesimalen bazterketa:** Zuzenki ez-nulu bat bera ere ez da infinituki txikia beste batekiko.
+- **Mugakidetasun-printzipioa:** Zuzen baten edozein azpimultzo mugatu luzera finkoko urrats-kopuru finitu batez estali daiteke.
+- **Bateragarritasun metrikoa:** Angeluen neurketa, kurben luzera eta poligonoen azalera muga konbergenteen bidez definitzeko ezinbestekoa da.

@@ -7,19 +7,19 @@ export const metadata = {
   branch: "51M",
   hasSimulation: false,
   authors: ["euclides"],
-  demos: [],
+  demos: ["demo-area-rectangulo"],
   sources: [
     { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 35", role: "primary" }
   ]
 };
 
-<Capitular letra="E" />l teorema del área del <ConceptLink targetId="rectangulo">rectángulo</ConceptLink> proporciona la fórmula multiplicativa básica de la <ConceptLink targetId="teoria-medida-area">medida de áreas</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink> euclidiano. Constituye la norma de referencia a partir de la cual se deducen las fórmulas de área para todas las demás figuras poligonales.
+<Capitular letra="E" />l teorema del área del rectángulo proporciona la fórmula multiplicativa básica de la <ConceptLink targetId="teoria-medida-area">medida de áreas</ConceptLink> en el plano euclidiano. Constituye la norma de referencia a partir de la cual se deducen las fórmulas de área para todas las demás figuras poligonales.
 
 <Separador />
 
 ### Enunciado formal
 
-Sea $R$ un <ConceptLink targetId="rectangulo">rectángulo</ConceptLink> en el plano euclidiano $\mathcal{P}$ cuyos <ConceptLink targetId="perpendicular">lados adyacentes</ConceptLink> miden $b = \overline{AB}$ (longitud de la base) y $h = \overline{AD}$ (longitud de la altura). La medida del <ConceptLink targetId="area">área</ConceptLink> de la región rectangular $R$ satisface estrictamente la relación:
+Sea $R$ un rectángulo en el plano euclidiano $\mathcal{P}$ cuyos <ConceptLink targetId="perpendicular">lados perpendiculares</ConceptLink> miden $b = |\overline{AB}|$ (longitud de la base) y $h = |\overline{AD}|$ (longitud de la altura). La medida del área de la región rectangular $R$ satisface estrictamente la relación:
 
 <Formula>
   $$ \text{Área}(R) = b \cdot h $$
@@ -29,16 +29,16 @@ Es decir, el área de una región rectangular equivale al producto aritmético d
 
 <Separador />
 
-### Demostración y paso de racionales a reales
+### Demostración y fundamentación axiomática
 
-La fundamentación rigurosa se construye en tres fases mediante el <ConceptLink targetId="teorema-area-aditividad">teorema de aditividad del área</ConceptLink>:
-1. **Unidad patrón**: El área del <ConceptLink targetId="cuadrado">cuadrado unitario</ConceptLink> ($b=1, h=1$) se define por convención como $1$.
+La fundamentación rigurosa se construye en tres fases mediante el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink>:
+1. **Unidad patrón**: El área del <ConceptLink targetId="cuadrado">cuadrado unitario</ConceptLink> ($b=1, h=1$) se define axiomáticamente como $1$.
 2. **Dimensiones racionales**: Si $b = \frac{p}{q}$ y $h = \frac{m}{n}$ con $p, q, m, n \in \mathbb{N}$, se divide el rectángulo en $p \cdot m$ subcuadrados de lado $\frac{1}{q \cdot n}$. La suma aditiva de sus áreas demuestra que $\text{Área}(R) = \frac{p \cdot m}{q \cdot n} = b \cdot h$.
-3. **Dimensiones reales**: Mediante la propiedad de continuidad y el <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink>, el resultado se extiende a longitudes inconmensurables o irracionales.
+3. **Dimensiones reales**: Mediante la propiedad de continuidad y el <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink>, el resultado se extiende a longitudes irracionales mediante aproximaciones por defecto y por exceso.
 
 <Separador />
 
 ### Importancia como pivote geométrico
 
 - **Base de la fórmula del paralelogramo**: Todo <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> es equidescomponible con un rectángulo de igual base y altura.
-- **Base de la fórmula del triángulo**: Un rectángulo se divide por su diagonal en dos triángulos <ConceptLink targetId="congruencia">congruentes</ConceptLink>, fundamentando que el <ConceptLink targetId="teorema-area-triangulo">área del triángulo</ConceptLink> sea $\frac{1}{2} b \cdot h$.
+- **Base de la fórmula del triángulo**: Un rectángulo se divide por su diagonal en dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> <ConceptLink targetId="congruencia">congruentes</ConceptLink>, fundamentando que el <ConceptLink targetId="teorema-area-triangulo">área del triángulo</ConceptLink> sea $\frac{1}{2} b \cdot h$.

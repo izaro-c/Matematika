@@ -1,12 +1,12 @@
 {
   "generatedAt": "2026-07-12T14:50:29.392Z",
   "summary": {
-    "total": 83,
+    "total": 88,
     "byType": {
       "sistema-axiomatico": 4,
       "axioma": 21,
-      "definicion": 19,
-      "demostracion": 8,
+      "definicion": 21,
+      "demostracion": 11,
       "ejemplo": 1,
       "ejercicio": 2,
       "matematico": 9,
@@ -17,16 +17,15 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 33,
-      "exported": 49,
-      "declared-missing-export": 1
+      "none": 38,
+      "exported": 50
     },
     "theoremLike": {
       "total": 10,
       "withDeclaredDiagram": 6
     },
     "demonstrations": {
-      "total": 8
+      "total": 11
     }
   },
   "items": [
@@ -38,7 +37,7 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 0,
+      "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -46,12 +45,12 @@
     {
       "id": "sistema-euclidiano",
       "type": "sistema-axiomatico",
-      "title": "Sistema axiomatiko euklidesarra",
+      "title": "Sistema axiomatiko euklidearra",
       "filePath": "eu/axiomatic-systems/sistema-euclidiano.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 0,
+      "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -64,7 +63,7 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 0,
+      "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -77,7 +76,7 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 0,
+      "sourcesCount": 1,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -85,7 +84,7 @@
     {
       "id": "axioma-arquimedes",
       "type": "axioma",
-      "title": "Arkimedesen Axioma",
+      "title": "V.1 axioma (Arkimedesen axioma)",
       "filePath": "eu/axioms/axioma-arquimedes.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -100,7 +99,7 @@
     {
       "id": "axioma-completitud",
       "type": "axioma",
-      "title": "Dedekinden Osotasun Axioma",
+      "title": "V.2 axioma (Zuzen-osotasunaren axioma)",
       "filePath": "eu/axioms/axioma-completitud.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -115,7 +114,7 @@
     {
       "id": "axioma-congruencia-1",
       "type": "axioma",
-      "title": "III.1 Axioma (Zuzenkien Garraioa)",
+      "title": "III.1 axioma (Zuzenkien garraioa)",
       "filePath": "eu/axioms/axioma-congruencia-1.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -130,7 +129,7 @@
     {
       "id": "axioma-congruencia-2",
       "type": "axioma",
-      "title": "III.2 Axioma (Zuzenkien Transitibitatea)",
+      "title": "III.2 axioma (Zuzenkien kongruentziaren iragankortasuna)",
       "filePath": "eu/axioms/axioma-congruencia-2.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -145,7 +144,7 @@
     {
       "id": "axioma-congruencia-3",
       "type": "axioma",
-      "title": "III.3 Axioma (Zuzenkien Batura)",
+      "title": "III.3 axioma (Zuzenkien batuketa eta aditibitatea)",
       "filePath": "eu/axioms/axioma-congruencia-3.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -160,7 +159,7 @@
     {
       "id": "axioma-congruencia-4",
       "type": "axioma",
-      "title": "III.4 Axioma (Anguluen Garraioa)",
+      "title": "III.4 axioma (Angeluen garraioa)",
       "filePath": "eu/axioms/axioma-congruencia-4.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -175,7 +174,7 @@
     {
       "id": "axioma-congruencia-5",
       "type": "axioma",
-      "title": "III.5 Axioma (LAL Kongruentzia Kriterioa)",
+      "title": "III.5 axioma (LAL kongruentzia-irizpidea)",
       "filePath": "eu/axioms/axioma-congruencia-5.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -190,7 +189,7 @@
     {
       "id": "axioma-incidencia-1",
       "type": "axioma",
-      "title": "I.1 Axioma (Zuzenaren existentzia eta bakartasuna)",
+      "title": "I.1 axioma (Zuzenaren existentzia eta bakartasuna)",
       "filePath": "eu/axioms/axioma-incidencia-1.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -205,7 +204,7 @@
     {
       "id": "axioma-incidencia-2",
       "type": "axioma",
-      "title": "I.2 Axioma (Zuzeneko puntuen existentzia)",
+      "title": "I.2 axioma (Puntuen existentzia zuzenean)",
       "filePath": "eu/axioms/axioma-incidencia-2.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -220,7 +219,7 @@
     {
       "id": "axioma-incidencia-3",
       "type": "axioma",
-      "title": "I.3 Axioma (Zuzen berean ez dauden puntuen existentzia)",
+      "title": "I.3 axioma (Hiru puntu ez-kolinealen existentzia)",
       "filePath": "eu/axioms/axioma-incidencia-3.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -235,7 +234,7 @@
     {
       "id": "axioma-incidencia-4",
       "type": "axioma",
-      "title": "I.4 Axioma (Planoaren existentzia eta bakartasuna)",
+      "title": "I.4 axioma (Planoaren existentzia eta bakartasuna)",
       "filePath": "eu/axioms/axioma-incidencia-4.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -250,7 +249,7 @@
     {
       "id": "axioma-incidencia-5",
       "type": "axioma",
-      "title": "I.5 Axioma (Zuzenaren inklusioa planoan)",
+      "title": "I.5 axioma (Planoan puntu ez-kolinealak existitzea)",
       "filePath": "eu/axioms/axioma-incidencia-5.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -265,7 +264,7 @@
     {
       "id": "axioma-incidencia-6",
       "type": "axioma",
-      "title": "I.6 Axioma (Bi planoren ebakidura)",
+      "title": "I.6 axioma (Zuzenaren inklusioa planoan)",
       "filePath": "eu/axioms/axioma-incidencia-6.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -280,7 +279,7 @@
     {
       "id": "axioma-incidencia-7",
       "type": "axioma",
-      "title": "I.7 Axioma (Zuzen berean ez dauden puntuen existentzia planoan)",
+      "title": "I.7 axioma (Bi planoren ebakidura)",
       "filePath": "eu/axioms/axioma-incidencia-7.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -295,7 +294,7 @@
     {
       "id": "axioma-incidencia-8",
       "type": "axioma",
-      "title": "I.8 Axioma (Plano berean ez dauden puntuen existentzia)",
+      "title": "I.8 axioma (Plano berekoak ez diren lau punturen existentzia)",
       "filePath": "eu/axioms/axioma-incidencia-8.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -310,7 +309,7 @@
     {
       "id": "axioma-orden-1",
       "type": "axioma",
-      "title": "II.1 Axioma (Artekotasunaren simetria eta kolinealtasuna)",
+      "title": "II.1 axioma (Tartean egotearen simetria eta kolinealtasuna)",
       "filePath": "eu/axioms/axioma-orden-1.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -325,7 +324,7 @@
     {
       "id": "axioma-orden-2",
       "type": "axioma",
-      "title": "II.2 Axioma (Segmentuaren luzapena)",
+      "title": "II.2 axioma (Zuzenaren hedapen mugagabea)",
       "filePath": "eu/axioms/axioma-orden-2.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -340,7 +339,7 @@
     {
       "id": "axioma-orden-3",
       "type": "axioma",
-      "title": "II.3 Axioma (Zuzen-ordenaren trikotomia)",
+      "title": "II.3 axioma (Tartekotasun linealaren esklusibotasuna)",
       "filePath": "eu/axioms/axioma-orden-3.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -355,7 +354,7 @@
     {
       "id": "axioma-orden-4",
       "type": "axioma",
-      "title": "II.4 Axioma (Pasch-en axioma)",
+      "title": "II.4 axioma (Paschen axioma)",
       "filePath": "eu/axioms/axioma-orden-4.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -370,7 +369,7 @@
     {
       "id": "axioma-paralelas-euclides",
       "type": "axioma",
-      "title": "Euklidesen Paraleleoen Axioma",
+      "title": "Euklidesen paraleloen axioma",
       "filePath": "eu/axioms/axioma-paralelas-euclides.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -385,7 +384,7 @@
     {
       "id": "axioma-paralelas-hiperbolico",
       "type": "axioma",
-      "title": "Paraleleo Hiperbolikoen Axioma",
+      "title": "Paralelo hiperbolikoen axioma",
       "filePath": "eu/axioms/axioma-paralelas-hiperbolico.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -415,12 +414,12 @@
     {
       "id": "angulos-suplementarios",
       "type": "definicion",
-      "title": "Angelu Osagarriak (Suplementarioak)",
+      "title": "Angelu gehigarriak",
       "filePath": "eu/definitions/angulos-suplementarios.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 1,
+      "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -445,11 +444,9 @@
       "type": "definicion",
       "title": "Kongruentzia geometrikoa",
       "filePath": "eu/definitions/congruencia.mdx",
-      "hasDeclaredDiagram": true,
-      "diagramExports": [
-        "Simulation"
-      ],
-      "diagramStatus": "exported",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -463,7 +460,7 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 1,
+      "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -471,7 +468,7 @@
     {
       "id": "cuadrilatero",
       "type": "definicion",
-      "title": "Koadrilateroa",
+      "title": "Laukia",
       "filePath": "eu/definitions/cuadrilatero.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -488,9 +485,9 @@
       "type": "definicion",
       "title": "Deribatua",
       "filePath": "eu/definitions/derivada.mdx",
-      "hasDeclaredDiagram": true,
+      "hasDeclaredDiagram": false,
       "diagramExports": [],
-      "diagramStatus": "declared-missing-export",
+      "diagramStatus": "none",
       "sourcesCount": 3,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -499,7 +496,7 @@
     {
       "id": "estar-entre",
       "type": "definicion",
-      "title": "Tartean egon",
+      "title": "Bitartekotasuna (Artean egotea)",
       "filePath": "eu/definitions/estar-entre.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -557,8 +554,23 @@
     {
       "id": "perpendicular",
       "type": "definicion",
-      "title": "Zuzen elkarzutak",
+      "title": "Perpendikulartasuna",
       "filePath": "eu/definitions/perpendicular.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "plano",
+      "type": "definicion",
+      "title": "Planoa",
+      "filePath": "eu/definitions/plano.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
         "Simulation"
@@ -602,7 +614,7 @@
     {
       "id": "segmento",
       "type": "definicion",
-      "title": "Zuzenki",
+      "title": "Zuzenkia",
       "filePath": "eu/definitions/segmento.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -617,7 +629,7 @@
     {
       "id": "semejanza",
       "type": "definicion",
-      "title": "Antzekotasun geometrikoa",
+      "title": "Antzekotasuna",
       "filePath": "eu/definitions/semejanza.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -628,14 +640,29 @@
       "demos": []
     },
     {
+      "id": "semirrecta",
+      "type": "definicion",
+      "title": "Zuzenerdia",
+      "filePath": "eu/definitions/semirrecta.mdx",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "teoria-medida-area",
       "type": "definicion",
-      "title": "Azaleraren Neurketaren Teoria",
+      "title": "Azalera-neurriaren teoria",
       "filePath": "eu/definitions/teoria-medida-area.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 1,
+      "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -643,12 +670,12 @@
     {
       "id": "triangulo-rectangulo",
       "type": "definicion",
-      "title": "Hiruki Zuzena (Triangelu Angeluzuzena)",
+      "title": "Triangelu angeluzuzena",
       "filePath": "eu/definitions/triangulo-rectangulo.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 1,
+      "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -671,7 +698,7 @@
     {
       "id": "demo-angulos-alternos-internos",
       "type": "demostracion",
-      "title": "Froga: Barne-angelu alternoen teorema",
+      "title": "Frogapena: Barne-angelu alternoen teorema",
       "filePath": "eu/demonstrations/demo-angulos-alternos-internos.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -684,7 +711,7 @@
     {
       "id": "demo-angulos-opuestos-verticales",
       "type": "demostracion",
-      "title": "Froga: Erpinez aurkako angeluak",
+      "title": "Frogapena: Erpinez aurkako angeluak",
       "filePath": "eu/demonstrations/demo-angulos-opuestos-verticales.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -695,9 +722,48 @@
       "demos": []
     },
     {
+      "id": "demo-area-aditividad",
+      "type": "demostracion",
+      "title": "Frogapena: Eremuaren adibidotasunaren teorema",
+      "filePath": "eu/demonstrations/demo-area-aditividad.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 4,
+      "parentTheorem": "teorema-area-aditividad",
+      "demos": []
+    },
+    {
+      "id": "demo-area-rectangulo",
+      "type": "demostracion",
+      "title": "Frogapena: Laukizuzenaren eremuaren teorema",
+      "filePath": "eu/demonstrations/demo-area-rectangulo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 4,
+      "parentTheorem": "teorema-area-rectangulo",
+      "demos": []
+    },
+    {
+      "id": "demo-area-triangulo",
+      "type": "demostracion",
+      "title": "Frogapena: Triangeluaren eremuaren teorema",
+      "filePath": "eu/demonstrations/demo-area-triangulo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 4,
+      "parentTheorem": "teorema-area-triangulo",
+      "demos": []
+    },
+    {
       "id": "demo-existencia-bisectriz",
       "type": "demostracion",
-      "title": "Froga: Bisektorearen existentzia eta bakartasuna",
+      "title": "Frogapena: Bisektorearen existentzia eta bakartasuna",
       "filePath": "eu/demonstrations/demo-existencia-bisectriz.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -710,7 +776,7 @@
     {
       "id": "demo-pitagoras-areas",
       "type": "demostracion",
-      "title": "Froga: Pitagorasen teorema (Azaleraren zateketaren metodoa)",
+      "title": "Frogapena: Pitagorasen teorema (Azaleren bidez)",
       "filePath": "eu/demonstrations/demo-pitagoras-areas.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -723,7 +789,7 @@
     {
       "id": "demo-pitagoras-euclides",
       "type": "demostracion",
-      "title": "Froga: Pitagorasen teorema (Euklidesen metodoa)",
+      "title": "Frogapena: Pitagorasen teorema (Euklidesen metodoa)",
       "filePath": "eu/demonstrations/demo-pitagoras-euclides.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -736,7 +802,7 @@
     {
       "id": "demo-suma-angulos-triangulo",
       "type": "demostracion",
-      "title": "Froga: Triangelu baten angeluen batura",
+      "title": "Frogapena: Triangelu baten angeluen batura",
       "filePath": "eu/demonstrations/demo-suma-angulos-triangulo.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -749,20 +815,20 @@
     {
       "id": "demo-tales",
       "type": "demostracion",
-      "title": "Froga: Talesen teorema",
+      "title": "Frogapena: Talesen teorema",
       "filePath": "eu/demonstrations/demo-tales.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
       "sourcesCount": 1,
-      "proofSteps": 5,
+      "proofSteps": 3,
       "parentTheorem": "teorema-tales",
       "demos": []
     },
     {
       "id": "demo-triangulo-isosceles",
       "type": "demostracion",
-      "title": "Froga: Triangelu isoszelearen teorema",
+      "title": "Frogapena: Triangelu isoszelearen teorema",
       "filePath": "eu/demonstrations/demo-triangulo-isosceles.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -790,7 +856,7 @@
     {
       "id": "ejercicio-clasificacion-triangulos",
       "type": "ejercicio",
-      "title": "Hirukiak beren angeluen arabera sailkatzea",
+      "title": "Triangeluen sailkapena beren angeluen arabera",
       "filePath": "eu/exercises/ejercicio-clasificacion-triangulos.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -883,7 +949,7 @@
     {
       "id": "lobachevski",
       "type": "matematico",
-      "title": "Nikolai Lobachevski",
+      "title": "Nikolai Lobatxevski",
       "filePath": "eu/mathematicians/lobachevski.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -909,7 +975,7 @@
     {
       "id": "pitagoras",
       "type": "matematico",
-      "title": "Pitagoras Samoskoa",
+      "title": "Samosko Pitagoras",
       "filePath": "eu/mathematicians/pitagoras.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -922,7 +988,7 @@
     {
       "id": "tales",
       "type": "matematico",
-      "title": "Tales Miletokoa",
+      "title": "Miletoko Tales",
       "filePath": "eu/mathematicians/tales.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -935,7 +1001,7 @@
     {
       "id": "metodo-contradiccion",
       "type": "metodo",
-      "title": "Aurkakotasun-metodoa",
+      "title": "Kontraesanezko froga",
       "filePath": "eu/methods/metodo-contradiccion.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -950,7 +1016,7 @@
     {
       "id": "metodo-directo",
       "type": "metodo",
-      "title": "Zuzeneko metodoa",
+      "title": "Metodo zuzena",
       "filePath": "eu/methods/metodo-directo.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -965,7 +1031,7 @@
     {
       "id": "metodo-induccion",
       "type": "metodo",
-      "title": "Indukzio matematikoaren metodoa",
+      "title": "Indukzio matematikoa",
       "filePath": "eu/methods/metodo-induccion.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -999,7 +1065,7 @@
       "filePath": "eu/models/modelo-fano.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
-        "Simulation"
+        "Diagram"
       ],
       "diagramStatus": "exported",
       "sourcesCount": 0,
@@ -1014,7 +1080,7 @@
       "filePath": "eu/models/modelo-poincare.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
-        "Simulation"
+        "Diagram"
       ],
       "diagramStatus": "exported",
       "sourcesCount": 0,
@@ -1029,7 +1095,7 @@
       "filePath": "eu/models/modelo-tres-puntos.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
-        "Simulation"
+        "Diagram"
       ],
       "diagramStatus": "exported",
       "sourcesCount": 0,
@@ -1040,7 +1106,7 @@
     {
       "id": "camino-teorema-pitagoras",
       "type": "plan-de-estudio",
-      "title": "Pitagorasen teoremara bidea",
+      "title": "Pitagorasen teoremaren bidea",
       "filePath": "eu/plans/plan-de-estudio-camino-teorema-pitagoras.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -1085,7 +1151,7 @@
     {
       "id": "teorema-area-aditividad",
       "type": "teorema",
-      "title": "Azaleraren aditibotasun-teorema",
+      "title": "Azaleraren aditibitate-teorema",
       "filePath": "eu/theorems/teorema-area-aditividad.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -1093,12 +1159,14 @@
       "sourcesCount": 1,
       "proofSteps": 0,
       "parentTheorem": null,
-      "demos": []
+      "demos": [
+        "demo-area-aditividad"
+      ]
     },
     {
       "id": "teorema-area-rectangulo",
       "type": "teorema",
-      "title": "Laukizuzenaren azaleraren teorema",
+      "title": "Angeluzuzenaren azaleraren teorema",
       "filePath": "eu/theorems/teorema-area-rectangulo.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -1106,7 +1174,9 @@
       "sourcesCount": 1,
       "proofSteps": 0,
       "parentTheorem": null,
-      "demos": []
+      "demos": [
+        "demo-area-rectangulo"
+      ]
     },
     {
       "id": "teorema-area-triangulo",
@@ -1119,12 +1189,14 @@
       "sourcesCount": 1,
       "proofSteps": 0,
       "parentTheorem": null,
-      "demos": []
+      "demos": [
+        "demo-area-triangulo"
+      ]
     },
     {
       "id": "teorema-congruencia-ala",
       "type": "teorema",
-      "title": "Angelu-Alde-Angelu (ALA) kongruentzia teorema",
+      "title": "Angelua-Aldea-Angelua (AnAlAn) kongruentzia-teorema",
       "filePath": "eu/theorems/teorema-congruencia-ala.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -1159,7 +1231,7 @@
     {
       "id": "teorema-suma-angulos-triangulo",
       "type": "teorema",
-      "title": "Triangelu baten barne-angeluen baturaren teorema",
+      "title": "Triangelu baten angeluen baturaren teorema",
       "filePath": "eu/theorems/teorema-suma-angulos-triangulo.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [

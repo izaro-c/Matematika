@@ -1,44 +1,44 @@
 export const metadata = {
   id: "teorema-area-rectangulo",
   type: "teorema",
-  title: "Laukizuzenaren azaleraren teorema",
-  description: "Edozein laukizuzen-eremuren azalera bere oinarriaren luzeraren eta bere altueraren luzeraren arteko biderkadura eskalarraren berdina da.",
-  statement: "b luzerako oinarria eta h luzerako altuera dituen R laukizuzen batan, ezinbestean Azalera(R) = b · h betetzen da.",
+  title: "Angeluzuzenaren azaleraren teorema",
+  description: "Edozein eskualde angeluzuzenen azalera bere oinarriaren luzeraren eta altueraren luzeraren biderkadura da.",
+  statement: "b luzerako oinarria eta h luzerako altuera dituen R angeluzuzen orotan, Azalera(R) = b · h betetzen da modu bakarrean.",
   branch: "51M",
   hasSimulation: false,
   authors: ["euclides"],
-  demos: [],
+  demos: ["demo-area-rectangulo"],
   sources: [
     { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 35", role: "primary" }
   ]
 };
 
-<Capitular letra="L" />aukizuzenaren azaleraren teoremak plano euklidetarreko <ConceptLink targetId="teoria-medida-area">azaleren neurketarako</ConceptLink> oinarrizko formula biderkatzailea ematen du. Gainerako irudi poligonal guztien azalera-formulak deduzitzeko erreferentzia nagusia da.
+<Capitular letra="A" />ngeluzuzenaren azaleraren teoremak plano euklidetarreko <ConceptLink targetId="teoria-medida-area">azalera-neurketaren</ConceptLink> oinarrizko formula biderkatzailea ematen du. Gainerako figura poligonal guztien azalera-formulak deduzitzeko erreferentziazko oinarria da.
 
 <Separador />
 
 ### Enuntziatu formala
 
-Bitzak $R$ <ConceptLink targetId="rectangulo">laukizuzena</ConceptLink> $\mathcal{P}$ plano euklidetarrean, zeinen <ConceptLink targetId="perpendicular">ondoko alde orthogonalen</ConceptLink> neurriak $b = \overline{AB}$ (oinarriaren luzera) eta $h = \overline{AD}$ (altueraren luzera) baitira. $R$ eremu laukizuzenaren <ConceptLink targetId="area">azaleraren</ConceptLink> neurriak zorrotz betetzen du honako erlazio hau:
+Izan bedi $R$ plano euklidetarreko angeluzuzen bat, non bere <ConceptLink targetId="perpendicular">alde elkarzuten</ConceptLink> luzerak $b = |\overline{AB}|$ (oinarria) eta $h = |\overline{AD}|$ (altuera) diren. Eskualde angeluzuzenaren azalerak zorrozki betetzen du erlazio hau:
 
 <Formula>
   $$ \text{Azalera}(R) = b \cdot h $$
 </Formula>
 
-Beste modura esanda, eremu laukizuzen baten azalera bere bi dimentsio ortogonalen neurri linealen biderkadura aritmetikoaren berdina da.
+Hau da, eskualde angeluzuzen baten azalera bere bi dimentsio ortogonalen luzeren biderkadura aritmetikoa da.
 
 <Separador />
 
-### Froga eta zenbaki rasionaletatik errealetarako igarotzea
+### Froga eta oinarritze axiomatikoa
 
-Eraikuntza zorrotza hiru urratsetan egiten da <ConceptLink targetId="teorema-area-aditividad">azaleraren aditivitate teoremaren</ConceptLink> bidez:
-1. **Patroi unitarioa**: <ConceptLink targetId="cuadrado">Karratu unitarioaren</ConceptLink> azalera ($b=1, h=1$) hitzarmenez $1$ dela definitzen da.
-2. **Dimentsio rasionalak**: $b = \frac{p}{q}$ eta $h = \frac{m}{n}$ direnean ($p, q, m, n \in \mathbb{N}$ izanda), laukizuzena $\frac{1}{q \cdot n}$ aldeko $p \cdot m$ azpikarratutan banatzen da. Azaleren baturak $\text{Azalera}(R) = \frac{p \cdot m}{q \cdot n} = b \cdot h$ dela frogatzen du.
-3. **Dimentsio errealak**: Jarraitutasunaren propietatearen eta <ConceptLink targetId="axioma-arquimedes">Arkimedesen axiomaren</ConceptLink> bidez, emaitza neurrezinezko edo irrazionalak diren luzeretara hedatzen da.
+Oinarritze zorrotza hiru fasetan eraikitzen da <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>azaleraren aditibitate-teorema</ConceptLink> erabiliz:
+1. **Unitate eredua**: <ConceptLink targetId="cuadrado">Karratu unitarioaren</ConceptLink> azalera ($b=1, h=1$) axiomaz $1$ gisa definitzen da.
+2. **Dimentsio arrazionalak**: $b = \frac{p}{q}$ eta $h = \frac{m}{n}$ badira ($p, q, m, n \in \mathbb{N}$), angeluzuzena $\frac{1}{q \cdot n}$ aldeko $p \cdot m$ azpi-karratutan banatzen da. Azaleren baturak $\text{Azalera}(R) = \frac{p \cdot m}{q \cdot n} = b \cdot h$ dela frogatzen du.
+3. **Dimentsio errealak**: Jarraitutasun-propietatearen eta <ConceptLink targetId="axioma-arquimedes">Arkimedesen axiomaren</ConceptLink> bidez, emaitza neurtezinak diren luzera irrazionaletara hedatzen da.
 
 <Separador />
 
-### Ardatz geometrikoa
+### Garrantzi geometrikoa
 
-- **Paralelogramoaren formularen oinarria**: Edozein <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> oinarri eta altuera bera dituen laukizuzen batekin deskonposagarria da.
-- **Triangeluaren formularen oinarria**: Laukizuzen bat bere diagonalaz bi triangelu <ConceptLink targetId="congruencia">kongruentetan</ConceptLink> banatzen denez, <ConceptLink targetId="teorema-area-triangulo">triangeluaren azalera</ConceptLink> $\frac{1}{2} b \cdot h$ dela ziurtatzen da.
+- **Paralelogramoaren formularen oinarria**: Edozein <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> oinarri eta altuera bera dituen angeluzuzen batekin batera deskonposagarria da.
+- **Triangeluaren formularen oinarria**: Angeluzuzena bere diagonalak bi <ConceptLink targetId="triangulo">triangelu</ConceptLink> <ConceptLink targetId="congruencia">kongruentetan</ConceptLink> banatzen du; hortik ondorioztatzen da <ConceptLink targetId="teorema-area-triangulo">triangeluaren azalera</ConceptLink> $\frac{1}{2} b \cdot h$ dela.

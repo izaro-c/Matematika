@@ -2,38 +2,46 @@ export const metadata = {
   id: "axioma-congruencia-2",
   lang: "eu",
   type: "axioma",
-  title: "III.2 Axioma (Zuzenkien Transitibitatea)",
-  description: "Bi zuzenki hirugarren zuzenki berdin bati kongruenteak bazaizkio, beren artean ere kongruenteak dira; gainera, zuzenki oro bere buruarekiko kongruentea da.",
+  title: "III.2 axioma (Zuzenkien kongruentziaren iragankortasuna)",
+  description: "Bi zuzenki hirugarren zuzenki berarekin kongruenteak badira, elkarren artean ere kongruenteak dira.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §4", role: "primary" }
   ]
 };
 
 import { Congruence2 } from '@content/diagrams/Axiomas/Congruence2';
 export const Simulation = Congruence2;
 
-<Capitular letra="H" />ilberten bigarren <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-axiomak baliokidetza-erlazioaren propietateak ezartzen ditu <ConceptLink targetId="segmento">zuzenkien</ConceptLink> kongruentziarako. Axioma honek ziurtatzen du zuzenkien arteko kongruentzia erlazio simetriko eta transitiboa dela <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
+<Capitular letra="D" />avid Hilberten bigarren kongruentzia-axiomak baliokidetasun-erlazio formal baten izaera ematen dio <ConceptLink targetId="segmento">zuzenkien</ConceptLink> arteko kongruentziari. Bi $\overline{CD}$ eta $\overline{EF}$ zuzenki $\overline{AB}$ zuzenki berarekin kongruenteak badira, elkarren artean ere <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> dira nahitaez.
 
-<Definicion title="">
-  $\overline{AB}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> bat $\overline{EF}$ zuzenkiarekin <ConceptLink targetId="congruencia">kongruentea</ConceptLink> bada eta $\overline{CD}$ zuzenkia ere $\overline{EF}$ zuzenkiarekin kongruentea bada, orduan $\overline{AB}$ zuzenkia eta $\overline{CD}$ zuzenkia kongruenteak dira beren artean. Era berean, zuzenki edozein bere buruarekiko kongruentea da:
+<Definicion title="Enuntziatu formala">
+  Edozein hiru $\overline{AB}, \overline{CD}, \overline{EF}$ <ConceptLink targetId="segmento">zuzenkitarako</ConceptLink>, $\overline{AB} \cong \overline{CD}$ eta $\overline{AB} \cong \overline{EF}$ badira, orduan $\overline{CD} \cong \overline{EF}$ betetzen da:
   $$
-  (\overline{AB} \cong \overline{EF}) \land (\overline{CD} \cong \overline{EF}) \implies (\overline{AB} \cong \overline{CD})
+  (\overline{AB} \cong \overline{CD} \land \overline{AB} \cong \overline{EF}) \implies \overline{CD} \cong \overline{EF}
   $$
-  $$
-  \forall \overline{AB} \implies \overline{AB} \cong \overline{AB}
-  $$
+  Era berean, edozein zuzenki bere buruarekin kongruentea da: $\overline{AB} \cong \overline{AB}$.
 </Definicion>
 
 <Separador />
 
-### Irudikapen bisuala
+### Ikus-irudikapena eta elkarrekintza
 
-Erreferentziako <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> zuzenkia <VisualBind element="CD" color="pavo">$\overline{CD}$</VisualBind> eta <VisualBind element="EF" color="terracota">$\overline{EF}$</VisualBind> zuzenkiekin konparatuz, esperimentalki egiaztatzen da $\overline{EF}$ zuzenkiarekiko kongruentzia partekatuak bakartasun osoz transmititzen duela luzera-berdintasuna $\overline{AB}$ eta $\overline{CD}$ zuzenkien artean.
+Simulazio interaktiboan, hiru <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> eta <VisualBind element="segEF" color="terracota">$\overline{EF}$</VisualBind> zuzenki independente erakusten dira. <VisualBind element="tickssegAB" color="terracota">$\cong$</VisualBind> kongruentzia-markek ikusiz egiaztatzen dute $\overline{AB}$ zuzenkia $\overline{CD}$ eta $\overline{EF}$-rekin berdintzean berdintza metrikoaren erlazioa zehazki transferitzen dela $\overline{CD}$ eta $\overline{EF}$ artean.
 
 <Separador />
 
-### Garrantzi axiomatikoa
+### Esanahi geometrikoa eta esparrua
 
-Postulatu honi esker, <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-erlazioak baliokidetza-klaseen partizio bat sortzen du <ConceptLink targetId="plano">planoko</ConceptLink> <ConceptLink targetId="segmento">zuzenki</ConceptLink> guztien multzoan. Klase bakoitzak luzera-magnitudo abstraktu bat ordezkatzen du aldez aurretik neurri-unitate zenbakizkorik finkatu gabe.
+Bermatzen du zuzenkien kongruentziak espazioko zuzenki guztien multzoa ondo mugatutako baliokidetasun-klasetan banatzen duela. Baliokidetasun-klase bakoitzak "luzeraren" kontzeptu sintetikoa definitzen du modu abstraktuan <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
+
+<Separador />
+
+### Propietateak
+
+- **Baliokidetasun-erlazioa:** Erreflexibitatea ($\overline{AB} \cong \overline{AB}$), simetria ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) eta iragankortasuna betetzen ditu.
+- **Luzera sintetikoaren definizioa:** $[\overline{AB}]$ baliokidetasun-klase bakoitzak translazio eta isometrien pean aldaezina den luzera-neurri gisa jokatzen du.
+- **Sendotasun metrikoa:** Kateatutako dedukzio geometrikoetan luzera-desbideratze metakorik gertatzea saihesten du.

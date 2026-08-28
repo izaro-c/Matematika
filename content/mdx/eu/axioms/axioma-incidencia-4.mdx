@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-4",
   lang: "eu",
   type: "axioma",
-  title: "I.4 Axioma (Planoaren existentzia eta bakartasuna)",
-  description: "Zuzen berean ez dauden espazioko hiru puntu emanda, hiruak barne hartzen dituen plano bakar bat existitzen da.",
+  title: "I.4 axioma (Planoaren existentzia eta bakartasuna)",
+  description: "Espazioko hiru puntu ez-kolineal emanda, hirurak barnean hartzen dituen plano bakarra existitzen da.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
@@ -14,12 +16,12 @@ export const metadata = {
 import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 
-<Capitular letra="Z" />uzen berean ez dauden espazioko hiru <ConceptLink targetId="punto">puntu</ConceptLink> edozein emanda, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-en laugarren <ConceptLink targetId="intzidentzia">intzidentzia-axioma</ConceptLink> honek hiruak barne hartzen dituen <ConceptLink targetId="plano">plano</ConceptLink> baten existentzia eta bakartasuna bermatzen ditu nahitaez. Halaber, plano bakoitzak gutxienez puntu bat duela ezartzen da.
+<Capitular letra="E" />spazioko lerrokatuta ez dauden edozein hiru <ConceptLink targetId="punto" isDependency={true}>puntutarako</ConceptLink>, <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> laugarren intzidentzia-axiomak hirurak barnean hartzen dituen <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> baten existentzia eta bakartasuna bermatzen ditu. Postulatu honek oinarrizko hedadura bidimentsionala definitzen du <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
 
 <Definicion title="Enuntziatu formala">
-  Zuzen berean ez dauden hiru $A, B, C \in \mathcal{S}$ <ConceptLink targetId="punto">puntu</ConceptLink> emanda, hiruak barne hartzen dituen $\mathcal{P} \in \mathcal{F}$ <ConceptLink targetId="plano">plano</ConceptLink> bakar bat existitzen da:
+  Lerrokatuta ez dauden edozein hiru $A, B, C \in \mathcal{S}$ <ConceptLink targetId="punto" isDependency={true}>puntutarako</ConceptLink>, $A, B, C \in \pi$ betetzen duen $\pi \in \mathcal{E}$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bakarra existitzen da:
   $$
-  \forall A, B, C \in \mathcal{S} \ \Bigl(\neg\exists l \in \mathcal{L} \ (A,B,C \in l) \implies \exists! \mathcal{P} \in \mathcal{F} \ (A \in \mathcal{P} \land B \in \mathcal{P} \land C \in \mathcal{P})\Bigr)
+  \forall A, B, C \in \mathcal{S} \ \Bigl(\neg\exists l \in \mathcal{L} \ (A,B,C \in l) \implies \exists! \pi \in \mathcal{E} \ (A \in \pi \land B \in \pi \land C \in \pi)\Bigr)
   $$
 </Definicion>
 
@@ -27,18 +29,18 @@ export const Simulation = Incidence4;
 
 ### Ikus-irudikapena eta elkarrekintza
 
-Hiru dimentsioko simulazioan, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> hiru puntuek era bakarrean zehazten dute <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind> planoa. Puntu horietako edozein aldatzean (beste bierekin lerrokatu gabe), planoa dinamikoki kulunkatzen da kidekotza hirukoitza gordez.
+Simulazio interaktiboan, <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind> hiru erpinek, <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="carbon">$\overline{BC}$</VisualBind> eta <VisualBind element="segCA" color="carbon">$\overline{CA}$</VisualBind> aldeekin batera, <VisualBind element="polyTriangulo" color="canela">$\triangle ABC$</VisualBind> triangelua mugatzen dute. Puntuak modu ez-lerrokatuan mugitzean, plano euskarriaren azalera modu unibokoan finkatuta geratzen da.
 
 <Separador />
 
 ### Esanahi geometrikoa eta esparrua
 
-Postulatu honek planoa definitzen du hiru puntu lerrokatu gabek sortutako oinarrizko bi dimentsioko hedapena dela esanez. Bermatzen du hiru puntu ez-kolineal ezin direla era anbiguoan egon, baizik eta azalera lau ondo zehaztua finkatzen dutela <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
+Postulatu honek planoa hiru puntu askek sortutako oinarrizko barietate bidimentsional gisa definitzen du. Bermatzen du lerrokatuta ez dauden hiru puntuk ez dutela orientazio planar anitzik onartzen hiru dimentsioko espazioan.
 
 <Separador />
 
 ### Propietateak
 
-- **Planoaren zehazpena:** Lerrokatu gabeko hiru puntuek era bakarrean finkatzen dute bi dimentsioko orientazioa.
-- **3D espazioaren oinarria:** Ezinbestekoa da espazio euklidear zein ez-euklidearraren hiru dimentsioko egitura eraikitzeko.
-- **Triangeluaren euskarria:** Edozein <ConceptLink targetId="triangulo">triangeluk</ConceptLink> plano euskarri bakar bat du.
+- **Determinazio planarra:** Puntu ez-kolinealek plano baten posizioa eta orientazioa zehazten dituzte modu unibokoan.
+- **Triangeluaren euskarria:** Edozein $\triangle ABC$ <ConceptLink targetId="triangulo">triangelu</ConceptLink> ondo zehaztutako plano bakarrean datza.
+- **Dimentsio-trantsizioa:** Dimentsio bakarreko analisi linealetik bi dimentsioko analisi planarretara igarotzeko bide zorrotza ahalbidetzen du.

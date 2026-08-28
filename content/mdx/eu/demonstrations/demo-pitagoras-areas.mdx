@@ -1,8 +1,8 @@
 export const metadata = {
   "id": "demo-pitagoras-areas",
   "type": "demostracion",
-  "title": "Froga: Pitagorasen teorema (Azaleraren zateketaren metodoa)",
-  "description": "(a+b) aldebakarreko karratu baten azalera lau triangelu angeluzuzen eta barneko karratu batean zatituz egindako aljebra eta geometria froga.",
+  "title": "Frogapena: Pitagorasen teorema (Azaleren bidez)",
+  "description": "(a+b) aldeko karratu baten azalera lau triangelu angeluzuzentan eta barne-karratu batean deskonposatuz egindako frogapen aljebraiko eta geometrikoa.",
   "parentTheorem": "teorema-pitagoras",
   "branch": "51M",
   "proofMethod": "metodo-directo",
@@ -10,7 +10,7 @@ export const metadata = {
   "tags": ["geometria", "triangulos", "areas", "algebra"],
   "layout": "split",
   "sources": [
-    { "title": "Elementuak", author: "Euclides", locator: "I. Liburukia, 47. Proposizioa (Zatitze bidezko frogapen alternatiboa)", role: "primary" }
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 47 (Demostración alternativa por descomposición)", role: "primary" }
   ]
 };
 
@@ -18,42 +18,42 @@ import { DemoPitagorasAreas } from "@content/diagrams/Demos/DemoPitagorasAreas";
 
 <DemonstrationSection diagram={<DemoPitagorasAreas />}>
 
-<Capitular letra="A" />rruntki $a, b$ <ConceptLink targetId="cateto">katetoak</ConceptLink> eta $c$ <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> dituen <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzenean</ConceptLink>, <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pitagorasen teorema</ConceptLink> frogatzen da $(a+b)$ aldebakarreko <VisualBind element="cuadrado-exterior" color="carbon"><ConceptLink targetId="cuadrado">kanpoko karratu baten</ConceptLink></VisualBind> azalera berdin zatituz.
+<Capitular letra="a" /> eta $b$ katetoak eta $c$ hipotenusa dituen <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink> batean, <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> frogatzen da $(a+b)$ aldeko <VisualBind element="outerSquare" color="carbon"><ConceptLink targetId="cuadrado">kanpoko karratu</ConceptLink></VisualBind> baten azaleraren deskonposizio baliokidearen bidez.
 
 <Separador />
 
-### Urratsez urratseko froga
+### Froga urratsez urrats
 
-<ProofStep number={1} target="cuadrado-exterior" title="Kanpoko karratuaren eraikuntza">
-$(a+b)$ aldebakarreko <ConceptLink targetId="cuadrado">karratu bat</ConceptLink> eraikitzen da. <VisualBind element="cuadrado-exterior" color="carbon">Kanpoko karratu</VisualBind> honen azalera osoa garapen aljebraiko honen bidez ematen da:
+<ProofStep number={1} target="outerSquare" title="Kanpoko karratuaren eraikuntza">
+$(a+b)$ aldeko kanpoko karratua eraikitzen da. Karratu honen azalera osoa garapen aljebraiko honen bidez ematen da:
 
 <Formula>
   $$ \text{Azalera Osoa} = (a+b)^2 = a^2 + 2ab + b^2 $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} target="triangulos" title="Lau triangelu angeluzuzenen kokatzea">
-Kanpoko karratuaren lau erpinetan <VisualBind element="cateto-a" color="pavo">$a$</VisualBind> eta <VisualBind element="cateto-b" color="terracota">$b$</VisualBind> katetoak dituen <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen bat</ConceptLink> kokatzen da. <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Triangeluaren azaleraren teoremaren</ConceptLink> bidez, lau <VisualBind element="triangulos" color="pavo">triangelu kongruenteen</VisualBind> <ConceptLink targetId="area">azalera</ConceptLink> bateratua honako hau da:
+<ProofStep number={2} target="t1" title="Lau triangelu angeluzuzenen kokapena">
+Kanpoko karratuaren lau erpinetako bakoitzean $a$ eta $b$ katetoko triangelu angeluzuzen bat kokatzen da. <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Triangeluaren azaleraren teoremagatik</ConceptLink>, lau triangelu kongruenteen azalera konbinatua honako hau da:
 
 <Formula>
   $$ 4 \times \left( \frac{1}{2} a b \right) = 2ab $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={3} target="cuadrado-interior" title="Barneko lauki zentrokoaren ezaugarritzea">
-Lau triangeluen hipotenusek $c$ aldebakarreko <VisualBind element="cuadrado-interior" color="ocre">barneko lauki-irudi bat</VisualBind> mugatzen dute. Erpin bakoitzean marraztutako <ConceptLink targetId="angulo">angelu adjacenteen</ConceptLink> batura $180^\circ$ denez, eta triangelu angeluzuzenaren angelu zorrotzen batura $90^\circ$ denez, barneko laukiaren barne-angelua nahitaez $90^\circ$-koa da. Beraz, $c^2$ azalerako <VisualBind element="cuadrado-interior" color="ocre">barneko karratu bat</VisualBind> da.
+<ProofStep number={3} target="emptyC" title="Barne-karratuaren ezaugarritzea">
+Triangeluen lau hipotenusek $c$ aldeko erdiko eskualde bat mugatzen dute. Triangelu bakoitzeko angelu zorrotzen batura $90^\circ$ denez, erdiko laukiaren barne-angelu bakoitza $180^\circ - 90^\circ = 90^\circ$ da. Beraz, $c^2$ azalera duen barne-karratu bat da.
 </ProofStep>
 
-<ProofStep number={4} target="aditividad" title="Azaleraren aditibotasun-printzipioaren aplikazioa">
-<ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren aditibotasun-teoremaren</ConceptLink> bidez, kanpoko karratuaren azalera barneko karratuaren azalera gehi lau triangeluen azalerren batura da:
+<ProofStep number={4} target="emptyA" title="Azaleraren aditibitatearen printzipioa aplikatzea">
+<ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren aditibitate-teoremaren</ConceptLink> arabera, kanpoko karratuaren azalera erdiko barne-karratuaren azaleraren eta lau triangeluen azaleren baturaren berdina da:
 
 <Formula>
   $$ (a+b)^2 = c^2 + 4 \cdot \left( \frac{1}{2} a b \right) $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} target="conclusion" title="Simplifikazio aljebraikoa">
-Ezkerreko atalaren adierazpena garatuz eta bi aldeetan dagoen $2ab$ terminoa sinplifikatuz:
+<ProofStep number={5} target="emptyB" title="Sinplifikazio aljebraikoa eta azken ondorioa">
+Ezkerreko adierazpena garatuz eta bi aldeetan $2ab$ gaia sinplifikatuz:
 
 <Formula>
   $$ a^2 + 2ab + b^2 = c^2 + 2ab \implies a^2 + b^2 = c^2 $$
@@ -62,10 +62,10 @@ Ezkerreko atalaren adierazpena garatuz eta bi aldeetan dagoen $2ab$ terminoa sin
 
 <Separador />
 
-### Dedukzio-analisia
+### Azterketa deduktiboa
 
 <Nota>
-  Ikusizko eta aljebrako zatiketa bidezko froga, historikoki eskola pitagorikoei eta indiarrei (Bhaskara) egotzita. Isometria bidezko <ConceptLink targetId="area">azaleraren</ConceptLink> inbariantzan eta <ConceptLink targetId="teoria-medida-area">azaleren neurriaren teorian</ConceptLink> oinarritzen da.
+  Eskola pitagorikoei eta indiarrei (Bhaskara) egotzitako frogapen bisual eta aljebraikoa. Isometrien peko azaleraren inbariantzian eta <ConceptLink targetId="teoria-medida-area">azalera-neurketaren teorian</ConceptLink> oinarritzen da.
 </Nota>
 
 </DemonstrationSection>

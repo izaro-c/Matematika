@@ -2,8 +2,8 @@ export const metadata = {
   id: "teorema-angulos-opuestos-verticales",
   type: "teorema",
   title: "Erpinez aurkako angeluen teorema",
-  description: "Bi zuzen ebakitzaile puntu batean elkartzen direnean, sortutako erpinez aurkako angelu bikoteak beren artean kongruenteak dira.",
-  statement: "O puntoan ebakitzen diren r eta s bi zuzen ebakitzaile emanik, α eta α' erpinez aurkako angeluak badira, α ≅ α' betetzen da.",
+  description: "Bi zuzen ebakitzailek puntu batean elkar ebakitzen badute, sortutako erpinez aurkako angeluak elkarren artean kongruenteak dira.",
+  statement: "O puntu batean elkar ebakitzen duten r eta s bi zuzen ebakitzaile emanda, α eta α' erpinez aurkako angeluak badira, orduan α ≅ α' betetzen da.",
   branch: "51M",
   hasSimulation: true,
   authors: ["tales", "euclides"],
@@ -16,33 +16,33 @@ export const metadata = {
 import { AngulosOpuestos } from '@content/diagrams/Teoremas/AngulosOpuestos';
 export const Simulation = AngulosOpuestos;
 
-<Capitular letra="E" />rpinez aurkako angeluen teoremak plano euklidetarreko simetria angeluarreko propietate oinarrizkoenetako bat ezartzen du. Bi <ConceptLink targetId="recta">zuzen ebakitzaileren</ConceptLink> arteko ebakidurak neurri metriko berdineko <ConceptLink targetId="angulo">angelu</ConceptLink> bikoteak sortzen dituela bermatzen du.
+<Capitular letra="E" />rpinez aurkako angeluen teoremak plano euklidetarreko simetria angeluarraren oinarrizko ezaugarri zorrotz bat ezartzen du. Egiaztatzen du bi <ConceptLink targetId="recta">zuzen ebakitzaileren</ConceptLink> arteko elkarguneak neurri geometriko bereko <ConceptLink targetId="angulo">angelu</ConceptLink> bikoteak sortzen dituela.
 
 <Separador />
 
 ### Enuntziatu formala
 
-Bitzak $r$ eta $s$ bi <ConceptLink targetId="recta">zuzen ebakitzaile</ConceptLink> $\mathcal{P}$ planoan, zeinek <VisualBind element="punto-interseccion" color="musgo">$O$ puntoan</VisualBind> ebakitzen baitute beren burua. Izan bitez $\alpha$ eta $\alpha'$ zuzenerdien ebakidurak mugatutako <VisualBind element="angulos-opuestos" color="pavo">erpinez aurkako angelu</VisualBind> bikote bat. Ezinbestean betetzen da honako <ConceptLink targetId="congruencia">kongruentzia-erlazio</ConceptLink> hau:
+Izan bitez $r$ eta $s$ planoan $O$ puntuan elkar ebakitzen duten bi <ConceptLink targetId="recta">zuzen ebakitzaile</ConceptLink>. Izan bitez $\alpha$ eta $\alpha'$ erdi-zuzenen ebakidurak sortutako <VisualBind element="angulos-opuestos" color="pavo">erpinez aurkako angeluak</VisualBind>. Nahitaez betetzen da honako <ConceptLink targetId="congruencia">kongruentzia-erlazio</ConceptLink> hau:
 
 <Formula>
   $$ \alpha \cong \alpha' $$
 </Formula>
 
-Metrikoki, bi angeluen neurri angeluarrak zorrotz berdinak dira: $|\alpha| = |\alpha'|$.
+Metrikoki, bi angeluen zabalera errealak berdin-berdinak dira: $|\alpha| = |\alpha'|$.
 
 <Separador />
 
-### Suplementariotasun bidezko froga
+### Froga eta oinarritze axiomatikoa
 
-Dedukzio formala zuzen baten gaineko <ConceptLink targetId="angulos-suplementarios">angelu suplementarioen</ConceptLink> axiomaz baliatzen da:
-1. Izan bedi $\beta$ angelua, $\alpha$ zein $\alpha'$ angeluen alboko komuna.
-2. $r$ zuzen berean egonik, $\alpha$ eta $\beta$ angeluek <ConceptLink targetId="angulo-llano">angelu laua</ConceptLink> osatzen dute, beraz $\alpha + \beta = 180^\circ$.
-3. Era berean, $s$ zuzenaren gainean $\beta$ eta $\alpha'$ angeluek ere angelu laua osatzen dute: $\alpha' + \beta = 180^\circ$.
-4. Bi berdintzei $\beta$ kentuz, $\alpha = 180^\circ - \beta = \alpha'$ lortzen da, kongruentzia frogatuz.
+Dedukzio formala zuzen bereko <ConceptLink targetId="angulos-suplementarios">angelu osagarrien</ConceptLink> (angelu lauen) izaeran eta <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>angelu-garraioaren axiometan</ConceptLink> oinarritzen da:
+1. Izan bedi $\beta$ angelua $\alpha$ eta $\alpha'$ angeluen alboko angelu komuna.
+2. $r$ zuzen berean egonik, $\alpha$ eta $\beta$ angeluek angelu lau bat ($180^\circ$) osatzen dute; beraz, $\alpha + \beta = 180^\circ$.
+3. Era berean, $s$ zuzenean, $\beta$ eta $\alpha'$ angeluek angelu lau bat osatzen dute; beraz, $\alpha' + \beta = 180^\circ$.
+4. Bi berdintzetatik $\beta$ kenduz, $\alpha = 180^\circ - \beta = \alpha'$ lortzen da, eta ondorioz $\alpha \cong \alpha'$.
 
 <Separador />
 
 ### Propietateak eta garrantzia
 
-- **Paralelismoarekiko independentzia**: Erpinez aurkako angeluen kongruentzia geometria absolutuko emaitza da eta ez du <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomarik</ConceptLink> behar.
-- **Invariantzia birakorra**: $O$ ebakitze-puntuaren inguruko $180^\circ$-ko simetria zentralari dagokio.
+- **Paralelotasunarekiko independentzia**: Erpinez aurkako angeluen kongruentzia <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> emaitza da, eta ez du <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> beharrik.
+- **Biraketa-inbariantzia**: $O$ ebakidura-puntuaren inguruko $180^\circ$-ko ($\pi$ radian) erdialdeko simetriari dagokio.

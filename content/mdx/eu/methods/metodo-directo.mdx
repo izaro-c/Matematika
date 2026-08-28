@@ -3,45 +3,46 @@ export const metadata = {
   lang: "eu",
   type: "metodo",
   subtype: "demostracion",
-  title: "Zuzeneko metodoa",
-  description: "Hipotesitik tesira inferentzia baliozkoak kencatuz garatzen den dedukzio-estrategia oinarrizkoa.",
-  branch: "51M",
+  title: "Metodo zuzena",
+  description: "Oinarrizko dedukzio-estrategia, hipotesitik tesira inferentzia baliodunak kateatzen dituena.",
+  branch: "03B",
+  difficulty: "básico",
   hasSimulation: true
 };
 
 import { DirectoSimulation } from '@content/diagrams/Metodos/DirectoSimulation';
 export const Simulation = DirectoSimulation;
 
-<Capitular letra="Z" />uzeneko metodoa $P \implies Q$ baldintzazko proposizio baten baliotasuna frogatzeko matematikako oinarrizko dedukzio-estrategia da. Prozedura honek $P$ <ConceptLink targetId="hipotesis">hipotesiaren</ConceptLink> egiazkotasuna onartzen du formalki eta inferentzia logiko zorrotzen sekuentzia finitu bat eraikitzen du, $Q$ <ConceptLink targetId="tesis">tesiaren</ConceptLink> egiazkotasuna ezinbestean ondorioztatu arte.
+<Capitular letra="M" />etodo zuzena $P \implies Q$ motako inplikazio logikoak frogatzeko funtsezko dedukzio-teknika da. Bere prozedurak $P$ hipotesiaren egiazkotasuna onartzen du abiaburutzat, eta inferentzia logiko baliodunen sekuentzia finitu eta zorrotz bat eraikitzen du, $Q$ tesiaren egiazkotasuna nahitaez ondorioztatu arte.
 
 <Separador />
 
-### Egitura logikoa
+### Egitura logiko formala
 
-Argumentu deduktiboak tarteko proposizioak kateatzen ditu *modus ponens* inferentzia-araularen bidez:
+Arrazoibide deduktiboak proposizioak kateatzen ditu *modus ponens* inferentzia-arau klasikoaren bidez: $A$ proposizioa egiazkoa bada eta $A \implies B$ inplikazioa balioduna bada, orduan $B$ nahitaez egiazkoa da:
 
 <Formula>
   $$ P \implies P_1 \implies P_2 \implies \dots \implies P_n \implies Q $$
 </Formula>
 
-Dedukzio-katearen urrats bakoitza soilik honako hauetan oinarrituz justifikatzen da:
+Kate deduktiboko $P_k \implies P_{k+1}$ urrats bakoitza honako elementu hauetan justifikatzen da soilik:
 
-- Dagokion <ConceptLink targetId="sistema-axiomatico">sistema formaleko</ConceptLink> <ConceptLink targetId="axioma">axiomak</ConceptLink>.
-- Aurretik frogatutako <ConceptLink targetId="teorema">teoremak</ConceptLink> edo lemak.
-- Parte hartzen duten objektuen definizio formalak.
-- Logika proposizionalaren eta predikatu-logikaren arau unibertsalak.
-
-<Separador />
-
-### Adibide nabarmenak
-
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Triangelu baten angeluen batura</ConceptLink>**: <ConceptLink targetId="triangulo">Triangeluaren</ConceptLink> definiziotik eta <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomatik</ConceptLink> abiatuta, aurkako <ConceptLink targetId="vertice">erpinetik</ConceptLink> oinarriarekiko <ConceptLink targetId="paralelismo">zuzen paralelo</ConceptLink> bat marrazten da, haren barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $180^\circ$ dela zuzenean ondorioztatzeko.
-- **<ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>**: <ConceptLink targetId="triangulo-rectangulo">Triangelu angeluzuzen</ConceptLink> baten <ConceptLink targetId="cateto">katetoen</ConceptLink> eta <ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink> gaineko karratuen <ConceptLink targetId="area">azaleraren</ConceptLink> dekonposizio geometrikoaren bidez, $a^2 + b^2 = c^2$ berdintza aljebraikoa zuzenean deduzitzen da.
+- Sistema deduktiboaren oinarrizko axiometan.
+- Aurretik frogatutako teoremak, lemak edo korolarioetan.
+- Egitura matematikoen definizio formaletan.
+- Proposizio- eta predikatu-logikaren arau sintaktikoetan.
 
 <Separador />
 
-### Propietateak eta aplikazioa
+### Aplikazio nagusiak
 
-- **Eraikitzailetasuna**: Hasierako baldintza eta azken ondorioa lotzen dituen ibilbide esplizitua eskaintzen du.
-- **Gardentasun deduktiboa**: Tarteko proposizio bakoitza banaka egiaztagarria da.
-- **Aplikazio-eremua**: Aukerako bidea da hipotesiak erlazio esplizituak eskaintzen dituen bakoitzean, <ConceptLink targetId="metodo-contradiccion">aurkakotasun-metodoaren</ConceptLink> hipotesi lagungarririk gabe.
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Triangeluaren angeluen batura</ConceptLink>**: <ConceptLink targetId="triangulo">Triangeluaren</ConceptLink> definiziotik eta <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomatik</ConceptLink> abiatuta, oinarriarekiko <ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink> bat marrazten da kontrako erpinetik, $\alpha + \beta + \gamma = 180^\circ$ zuzenean ondorioztatuz.
+- **<ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>**: <ConceptLink targetId="triangulo-rectangulo">Triangelu angeluzuzen</ConceptLink> baten gaineko <ConceptLink targetId="semejanza">antzekotasun-erlazioak</ConceptLink> eta azaleren kalkulua erabiliz, $a^2 + b^2 = c^2$ berdintza aljebraikoa zuzenean lortzen da.
+
+<Separador />
+
+### Propietate metodologikoak
+
+- **Eraikigarritasuna**: Hasierako baldintzak azken emaitza bihurtzen dituen ibilbide esplizitu eta errepikagarria eskaintzen du.
+- **Egiaztagarritasun lokala**: Tarteko dedukzio-urrats bakoitza autonomoa da eta banan-banan ikuska daiteke.
+- **Lehentasun epistemologikoa**: Hipotesiak manipulazio zuzenerako erlazio esplizituak eskaintzen dituenean erabiltzen den metodorik gardenena da.

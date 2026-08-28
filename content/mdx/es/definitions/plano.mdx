@@ -1,0 +1,62 @@
+export const metadata = {
+  id: "plano",
+  lang: "es",
+  type: "definicion",
+  subtype: "primitivo",
+  title: "Plano",
+  description: "Superficie geométrica bidimensional continua, ilimitada y perfectamente plana sin curvatura intrínseca.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 5 y 7", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+  ]
+};
+
+import { Plano } from '@content/diagrams/Definiciones/Plano';
+export const Simulation = Plano;
+
+<Capitular letra="E" />l plano es la entidad geométrica bidimensional elemental y continua que se extiende infinitamente en todas las direcciones de su dominio sin presentar curvatura. Constituye una noción primitiva fundamental en los sistemas axiomáticos sintéticos, sirviendo como escenario canónico para la geometría plana y la trigonometría.
+
+<Definicion title="">
+  Dados tres puntos no colineales <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="musgo">$B$</VisualBind> y <VisualBind element="pC" color="musgo">$C$</VisualBind> en un espacio afín o euclidiano $\mathcal{E}$, el plano <VisualBind element="planeMesh" color="musgo">$\mathcal{P}$</VisualBind> determinado por ellos es el conjunto bidimensional generado por todas sus combinaciones afines:
+  $$
+  \mathcal{P} = \{ P \in \mathcal{E} \mid P = \alpha A + \beta B + \gamma C, \, \alpha + \beta + \gamma = 1, \, \alpha, \beta, \gamma \in \mathbb{R} \}
+  $$
+</Definicion>
+
+<Separador />
+
+### Geometría sintética
+
+En el sistema axiomático de Hilbert, los planos constituyen la tercera clase de objetos primitivos regidos por los axiomas de incidencia espacial:
+- **Determinación por tres puntos**: Tres puntos no colineales determinan un único plano.
+- **Inclusión lineal**: Si dos puntos de una <ConceptLink targetId="recta">recta</ConceptLink> pertenecen a un plano, la recta entera está contenida en dicho plano.
+- **Intersección de planos**: Si dos planos distintos tienen un punto común, su intersección es exactamente una <ConceptLink targetId="recta">recta</ConceptLink>.
+- **Separación del plano**: Toda recta contenida en un plano divide a los puntos restantes en dos semiplanos convexos disjuntos.
+
+### Geometría analítica
+
+En el espacio euclidiano tridimensional $\mathbb{R}^3$, un plano se describe algebraicamente mediante:
+- **Ecuación general implícita**: $Ax + By + Cz + D = 0$, con $(A, B, C) \neq (0, 0, 0)$, donde $\vec{n} = (A, B, C)$ es el vector normal ortogonal al plano.
+- **Forma vectorial**: $\vec{r}(u, v) = \vec{p}_0 + u\vec{v}_1 + v\vec{v}_2$, con $\vec{v}_1 \nparallel \vec{v}_2$ y $u, v \in \mathbb{R}$.
+
+### Topología y geometría diferencial
+
+Topológicamente, el plano euclidiano provisto de su topología métrica usual es homeomorfo a $\mathbb{R}^2$. Como variedad diferenciable riemanniana de dimensión 2, posee curvatura de Gauss idénticamente nula ($K = 0$).
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Incidencia y separación espacial">
+    <PropiedadItem id="axioma-incidencia-4" title="Determinación por tres puntos no colineales">
+      Tres puntos no alineados $A, B, C$ determinan un único plano $\mathcal{P}$.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-6" title="Inclusión de la recta">
+      Si $A \in \mathcal{P}$ y $B \in \mathcal{P}$ con $A \neq B$, entonces $\overleftrightarrow{AB} \subset \mathcal{P}$.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-7" title="Intersección de dos planos">
+      Si dos planos comparten un punto, comparten al menos otro punto y se intersecan en una recta.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -3,24 +3,26 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma II.4 (Axioma de Pasch)",
-  description: "Dada una recta en el plano de un triángulo que no pasa por ninguno de sus vértices, si interseca a un lado, debe intersecar a uno de los otros dos lados.",
+  description: "Si una recta coplanar a un triángulo corta a uno de sus lados sin pasar por sus vértices, entonces corta necesariamente a uno de los otros dos lados.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "orden",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" },
-    { title: "Vorlesungen über neuere Geometrie", author: "Moritz Pasch", locator: "§2", role: "secondary" }
+    { title: "Vorlesungen über neuere Geometrie", author: "Moritz Pasch", locator: "1882", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
   ]
 };
 
 import { Pasch } from '@content/diagrams/Axiomas/Pasch';
 export const Simulation = Pasch;
 
-<Capitular letra="E" />l cuarto <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="orden">orden</ConceptLink>, formulado por <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink> e integrado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, extiende la noción de entreidad del plano lineal al plano bidimensional. Establece que si una <ConceptLink targetId="recta">recta</ConceptLink> entra en el interior de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> atravesando uno de sus lados sin pasar por sus vértices, necesariamente debe salir atravesando uno de los otros dos lados.
+<Capitular letra="F" />ormulado originalmente por <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink> e incorporado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> como el cuarto axioma de orden, este postulado llena una de las lagunas deductivas más célebres de los *Elementos* de Euclides. Garantiza que una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> que penetra en el interior de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> a través de uno de sus lados no puede quedar atrapada ni desvanecerse, debiendo cruzar obligatoriamente un segundo lado.
 
 <Definicion title="Enunciado formal">
-  Dados tres <ConceptLink targetId="punto">puntos</ConceptLink> no colineales $A, B, C$ y una <ConceptLink targetId="recta">recta</ConceptLink> $l$ contenida en su plano soporte que no pasa por ninguno de los vértices $A, B, C$: si $l$ interseca al interior del <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$, entonces $l$ interseca al segmento $\overline{AC}$ o al segmento $\overline{BC}$:
+  Sean $A, B, C \in \mathcal{S}$ tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no colineales y sea $l \in \mathcal{L}$ una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> situada en el plano $\pi(ABC)$ que no pasa por ninguno de los vértices ($A, B, C \notin l$). Si $l$ contiene un punto $P$ <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $B$ ($A\text{-}P\text{-}B$, es decir, $l$ interseca al <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$), entonces $l$ contiene un punto $Q$ tal que $A\text{-}Q\text{-}C$ o bien un punto $R$ tal que $B\text{-}R\text{-}C$:
   $$
-  \forall A, B, C \text{ no colineales}, \ \forall l \subset \mathcal{P}_{ABC} \ \bigl((A,B,C \notin l \land l \cap \overline{AB} \neq \emptyset) \implies (l \cap \overline{AC} \neq \emptyset \veebar l \cap \overline{BC} \neq \emptyset)\bigr)
+  (P \in l \land A\text{-}P\text{-}B) \implies \bigl(\exists Q \in l \ (A\text{-}Q\text{-}C) \lor \exists R \in l \ (B\text{-}R\text{-}C)\bigr)
   $$
 </Definicion>
 
@@ -28,18 +30,18 @@ export const Simulation = Pasch;
 
 ### Representación visual e interacción
 
-En la simulación interactiva, la recta secante <VisualBind element="lineL" color="terracota">$l$</VisualBind> atraviesa el lado <VisualBind element="sideAB" color="carbon">$\overline{AB}$</VisualBind> del triángulo de vértices $A, B, C$. Al desplazar o rotar la recta secante sin tocar los vértices, se observa visualmente cómo la línea se ve forzada a cortar de forma exclusiva o bien el lado <VisualBind element="sideAC" color="marino">$\overline{AC}$</VisualBind> o el lado <VisualBind element="sideBC" color="marino">$\overline{BC}$</VisualBind>.
+En la simulación interactiva, el triángulo <VisualBind element="triangle" color="canela">$\triangle ABC$</VisualBind> con vértices <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> es intersecado por la recta móvil <VisualBind element="lineL" color="carbon">$l$</VisualBind>. Al deslizar el punto de entrada <VisualBind element="pP" color="ocre">$P$</VisualBind> sobre el lado $\overline{AB}$, la recta corta de forma continua e ineludible a un segundo lado en el punto <VisualBind element="pQ" color="ocre">$Q$</VisualBind>.
 
 <Separador />
 
 ### Significado geométrico y alcance
 
-El axioma de Pasch es crucial para demostrar que una recta divide al plano en dos regiones conexas o semoplanos (teorema de separación del plano). Sin este axioma, Euclides cometió lagunas lógicas al asumir implícitamente que ciertas rectas e intersecciones geométricas existían dentro de las figuras.
+El axioma de Pasch extiende la ordenación unidimensional a la separación topológica del plano. Permite demostrar rigurosamente el teorema de separación planar de Jordan para polígonos simples y fundamenta la noción de región interior y exterior convexa en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
 
 <Separador />
 
 ### Propiedades
 
-- **Separación planar:** Permite demostrar que toda recta $l$ en un plano lo divide en dos semoplanos <ConceptLink targetId="convexo">convexos</ConceptLink> disjuntos.
-- **Topología del plano:** Fundamenta la noción intuitiva de "interior" y "exterior" de figuras cerradas como el <ConceptLink targetId="triangulo">triángulo</ConceptLink> y polígonos.
-- **Independencia del axioma de paralelas:** Es independiente del axioma de las paralelas, siendo plenamente válido en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
+- **Separación del plano:** Permite demostrar que toda recta $l$ divide al plano $\pi \setminus l$ en dos semiplanos conexos y convexos disjuntos.
+- **Topología planar:** Evita discontinuidades espaciales o "agujeros" donde las líneas pudieran cruzarse sin intersección real.
+- **Rigor en polígonos:** Fundamenta la noción de interior de polígonos y la prueba de teoremas clásicos como el de la barra transversal.

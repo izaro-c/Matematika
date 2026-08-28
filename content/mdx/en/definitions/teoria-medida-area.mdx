@@ -1,0 +1,48 @@
+export const metadata = {
+  id: "teoria-medida-area",
+  lang: "en",
+  type: "definicion",
+  subtype: "fundamentada",
+  title: "Theory of Area Measure",
+  description: "Formal construction of Hilbert's theory of content and area based on polygonal equidecomposability and finite additivity.",
+  branch: "51M",
+  hasSimulation: false,
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Common Notions & Propositions 35-41", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV, §17-§21", role: "primary" }
+  ]
+};
+
+<Capitular letra="I" />n modern axiomatic foundations, the theory of area measure formalizes the two-dimensional quantification of space enclosed by planar geometric figures. Developed rigorously by David Hilbert as a theory of content, it replaces Euclid's intuitive notions through the equidecomposability of planar <ConceptLink targetId="poligono">polygons</ConceptLink> without requiring the analytic apparatus of continuous measure theory.
+
+<Definicion title="">
+  An area measure function $\mu: \mathcal{P}_{\text{pol}} \to \mathbb{R}^+$ on the set $\mathcal{P}_{\text{pol}}$ of all planar <ConceptLink targetId="poligono" isDependency={true}>polygons</ConceptLink> is an assignment satisfying:
+  1. **Positivity**: $\forall P \in \mathcal{P}_{\text{pol}}, \; \mu(P) > 0$.
+  2. **Invariance under congruence**: If $P \cong Q$ under an isometry, then $\mu(P) = \mu(Q)$.
+  3. **Finite additivity**: If $P = P_1 \cup P_2$ with $\text{int}(P_1) \cap \text{int}(P_2) = \emptyset$, then $\mu(P) = \mu(P_1) + \mu(P_2)$.
+  4. **Unit normalization**: If $U$ is a <ConceptLink targetId="cuadrado">square</ConceptLink> of unit side length ($l = 1$), $\mu(U) = 1$.
+</Definicion>
+
+<Separador />
+
+### Equidecomposability and Hilbert's content
+
+In Hilbert's synthetic geometry:
+- **Polygons of equal content**: Two polygons $P$ and $Q$ are equidecomposable if there exist finite partitions $P = \bigcup_{i=1}^n T_i$ and $Q = \bigcup_{i=1}^n T'_i$ such that $T_i \cong T'_i$ for all $i$.
+- **Polygons of equal complement**: Two polygons are equivalent in content if they can be supplemented by congruent polygons to yield equidecomposable figures.
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Fundamental theorems of area">
+    <PropiedadItem id="teorema-area-aditividad" title="Additivity of area">
+      The area of the disjoint union of two polygons equals the sum of their individual areas.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-rectangulo" title="Area of a rectangle">
+      The area of a rectangle with base $b$ and height $h$ is given uniquely by $\mu(R) = b \cdot h$.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-triangulo" title="Area of a triangle">
+      The area of any triangle with base $b$ and height $h$ satisfies $\mu(T) = \frac{b \cdot h}{2}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

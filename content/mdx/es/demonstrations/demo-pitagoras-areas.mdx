@@ -18,42 +18,42 @@ import { DemoPitagorasAreas } from "@content/diagrams/Demos/DemoPitagorasAreas";
 
 <DemonstrationSection diagram={<DemoPitagorasAreas />}>
 
-<Capitular letra="E" />n un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> con <ConceptLink targetId="cateto">catetos</ConceptLink> $a, b$ e <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> $c$, se demuestra el <ConceptLink targetId="teorema-pitagoras" isDependency={true}>teorema de Pitágoras</ConceptLink> mediante la equidescomposición de la superficie de un <VisualBind element="cuadrado-exterior" color="carbon"><ConceptLink targetId="cuadrado">cuadrado exterior</ConceptLink></VisualBind> de lado $(a+b)$.
+<Capitular letra="E" />n un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> con catetos $a, b$ e hipotenusa $c$, se demuestra el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> mediante la equidescomposición de la superficie de un <VisualBind element="outerSquare" color="carbon"><ConceptLink targetId="cuadrado">cuadrado exterior</ConceptLink></VisualBind> de lado $(a+b)$.
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} target="cuadrado-exterior" title="Construcción del cuadrado envolvente">
-Se construye un <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> de lado $(a+b)$. La superficie total de este <VisualBind element="cuadrado-exterior" color="carbon">cuadrado exterior</VisualBind> viene dada por el desarrollo algebraico:
+<ProofStep number={1} target="outerSquare" title="Construcción del cuadrado exterior">
+Se construye un <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> envolvente de lado $(a+b)$. La superficie total de este cuadrado viene dada por el desarrollo algebraico:
 
 <Formula>
   $$ \text{Área Total} = (a+b)^2 = a^2 + 2ab + b^2 $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} target="triangulos" title="Disposición de los cuatro triángulos rectángulos">
-En cada una de las cuatro esquinas del cuadrado exterior se ubica un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> de catetos <VisualBind element="cateto-a" color="pavo">$a$</VisualBind> y <VisualBind element="cateto-b" color="terracota">$b$</VisualBind>. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>, el <ConceptLink targetId="area">área</ConceptLink> combinada de los cuatro <VisualBind element="triangulos" color="pavo">triángulos congruentes</VisualBind> es:
+<ProofStep number={2} target="t1" title="Disposición de los cuatro triángulos rectángulos">
+En cada una de las cuatro esquinas del cuadrado exterior se ubica un triángulo rectángulo de catetos $a$ y $b$. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>, el área combinada de los cuatro triángulos congruentes es:
 
 <Formula>
   $$ 4 \times \left( \frac{1}{2} a b \right) = 2ab $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={3} target="cuadrado-interior" title="Caracterización del cuadrilátero central">
-Las cuatro hipotenusas de los triángulos forman la frontera de una figura <VisualBind element="cuadrado-interior" color="ocre">cuadrangular central</VisualBind> de lado $c$. Puesto que la suma de los <ConceptLink targetId="angulo">ángulos adyacentes</ConceptLink> en cada vértice interior sobre la frontera es $180^\circ$, y los dos ángulos agudos del triángulo suman $90^\circ$, el ángulo interior del cuadrilátero central es necesariamente de $90^\circ$. Por lo tanto, se trata de un <VisualBind element="cuadrado-interior" color="ocre">cuadrado interior</VisualBind> de área $c^2$.
+<ProofStep number={3} target="emptyC" title="Caracterización del cuadrado interior">
+Las cuatro hipotenusas de los triángulos forman la frontera de una región cuadrilátera central de lado $c$. Puesto que los ángulos agudos de cada triángulo suman $90^\circ$, el ángulo interior en cada vértice del cuadrilátero central es $180^\circ - 90^\circ = 90^\circ$. Por tanto, se trata de un cuadrado interior de área $c^2$.
 </ProofStep>
 
-<ProofStep number={4} target="aditividad" title="Aplicación del principio de aditividad de áreas">
-Por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink>, el área del cuadrado exterior equivale a la suma del área del cuadrado interior más las áreas de los cuatro triángulos:
+<ProofStep number={4} target="emptyA" title="Aplicación del principio de aditividad de áreas">
+Por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink>, el área del cuadrado exterior equivale a la suma del área del cuadrado interior central más las áreas de los cuatro triángulos:
 
 <Formula>
   $$ (a+b)^2 = c^2 + 4 \cdot \left( \frac{1}{2} a b \right) $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} target="conclusion" title="Simplificación algebraica">
-Expandiendo la expresión del miembro izquierdo y simplificando el término $2ab$ presente en ambos miembros:
+<ProofStep number={5} target="emptyB" title="Simplificación algebraica y conclusión">
+Expandiendo la expresión del miembro izquierdo y cancelando el término $2ab$ en ambos miembros:
 
 <Formula>
   $$ a^2 + 2ab + b^2 = c^2 + 2ab \implies a^2 + b^2 = c^2 $$
@@ -65,7 +65,7 @@ Expandiendo la expresión del miembro izquierdo y simplificando el término $2ab
 ### Análisis deductivo
 
 <Nota>
-  Demostración por disección visual y algebraica atribuida históricamente a las escuelas pitagóricas e hindúes (Bhaskara). Se basa en la invarianza del <ConceptLink targetId="area">área</ConceptLink> bajo isometrías y la <ConceptLink targetId="teoria-medida-area">teoría de la medida de áreas</ConceptLink>.
+  Demostración por disección visual y algebraica atribuida históricamente a las escuelas pitagóricas e hindúes (Bhaskara). Se basa en la invarianza del área bajo isometrías y la <ConceptLink targetId="teoria-medida-area">teoría de la medida de áreas</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

@@ -18,14 +18,14 @@ import { DemoPitagorasEuclides } from "@content/diagrams/Demos/DemoPitagorasEucl
 
 <DemonstrationSection diagram={<DemoPitagorasEuclides />}>
 
-<Capitular letra="D" />ado un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> $\triangle ABC$ con <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> en el <ConceptLink targetId="vertice">vértice</ConceptLink> $C$, se demuestra formalmente el <ConceptLink targetId="teorema-pitagoras" isDependency={true}>teorema de Pitágoras</ConceptLink>. La demostración establece que el <ConceptLink targetId="area">área</ConceptLink> del <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">cuadrado construido sobre la hipotenusa</ConceptLink></VisualBind> equivale a la suma de las áreas de los <VisualBind element="cuadrado-a" color="pavo">cuadrados sobre el cateto $a$</VisualBind> y el <VisualBind element="cuadrado-b" color="terracota">cateto $b$</VisualBind>.
+<Capitular letra="D" />ado un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> $\triangle ABC$ con ángulo recto en el vértice $C$, se demuestra formalmente el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>. La demostración establece que el área del <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">cuadrado construido sobre la hipotenusa</ConceptLink></VisualBind> equivale a la suma de las áreas de los <VisualBind element="cuadrado-a" color="pavo">cuadrados sobre el cateto $a$</VisualBind> y el <VisualBind element="cuadrado-b" color="terracota">cateto $b$</VisualBind>.
 
 <Separador />
 
 ### Demostración paso a paso
 
 <ProofStep number={1} target="triangulo" title="Configuración del triángulo rectángulo base">
-Sea el triángulo rectángulo <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> con el ángulo recto ubicado en el vértice $C$. Se denominan los <ConceptLink targetId="cateto">catetos</ConceptLink> mediante <VisualBind element="cateto-a" color="pavo">$a = \overline{BC}$</VisualBind> y <VisualBind element="cateto-b" color="terracota">$b = \overline{CA}$</VisualBind>, y la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> mediante <VisualBind element="hipotenusa-c" color="ocre">$c = \overline{AB}$</VisualBind>.
+Sea el triángulo rectángulo <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> con el ángulo recto ubicado en el vértice $C$. Se denominan los catetos mediante <VisualBind element="cateto-a" color="pavo">$a = |\overline{BC}|$</VisualBind> y <VisualBind element="cateto-b" color="terracota">$b = |\overline{CA}|$</VisualBind>, y la hipotenusa mediante <VisualBind element="hipotenusa-c" color="ocre">$c = |\overline{AB}|$</VisualBind>.
 </ProofStep>
 
 <ProofStep number={2} target="cuadrados" title="Construcción de los tres cuadrados exteriores">
@@ -33,11 +33,11 @@ Sobre cada uno de los tres lados del triángulo $\triangle ABC$, se construyen t
 </ProofStep>
 
 <ProofStep number={3} target="altura" title="División del cuadrado de la hipotenusa por la altura">
-Desde el vértice recto $C$, se traza la <VisualBind element="recta-altura" color="carbon"><ConceptLink targetId="perpendicular">recta perpendicular</ConceptLink></VisualBind> a la hipotenusa $\overline{AB}$. Al prolongarse a través del cuadrado sobre la hipotenusa, esta perpendicular lo escinde en dos polígonos: el <VisualBind element="rectangulo-izq" color="terracota"><ConceptLink targetId="rectangulo">rectángulo izquierdo</ConceptLink></VisualBind> $R_L$ y el <VisualBind element="rectangulo-der" color="pavo"><ConceptLink targetId="rectangulo">rectángulo derecho</ConceptLink></VisualBind> $R_R$.
+Desde el vértice recto $C$, se traza la <VisualBind element="recta-altura" color="carbon"><ConceptLink targetId="perpendicular">recta perpendicular</ConceptLink></VisualBind> a la hipotenusa $\overline{AB}$. Al prolongarse a través del cuadrado sobre la hipotenusa, esta perpendicular lo escinde en dos rectángulos: el <VisualBind element="rectangulo-izq" color="terracota">rectángulo izquierdo</VisualBind> $R_L$ ($ADML$) y el <VisualBind element="rectangulo-der" color="pavo">rectángulo derecho</VisualBind> $R_R$ ($BEML$).
 </ProofStep>
 
 <ProofStep number={4} target="triangulos-izq" title="Construcción y congruencia de los triángulos izquierdos">
-Se trazan los <ConceptLink targetId="segmento">segmentos</ConceptLink> auxiliares para definir el triángulo <VisualBind element="triangulo-acd" color="terracota">$\triangle ACD$</VisualBind> y el triángulo <VisualBind element="triangulo-akb" color="terracota">$\triangle AKB$</VisualBind>. Aplicando los <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axiomas de congruencia</ConceptLink> bajo el criterio LAL (Lado-Ángulo-Lado), se obtiene la <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
+Se trazan los <ConceptLink targetId="segmento">segmentos</ConceptLink> auxiliares para definir el triángulo <VisualBind element="triangulo-acd" color="terracota">$\triangle ACD$</VisualBind> y el triángulo <VisualBind element="triangulo-akb" color="terracota">$\triangle AKB$</VisualBind>. Aplicando el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axioma de congruencia LAL</ConceptLink> (Lado-Ángulo-Lado), se obtiene la <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
 
 <Formula>
   $$ \triangle ACD \cong \triangle AKB $$

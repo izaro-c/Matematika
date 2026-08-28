@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-1",
   lang: "eu",
   type: "axioma",
-  title: "I.1 Axioma (Zuzenaren existentzia eta bakartasuna)",
-  description: "Espazioko bi puntu desberdin emanda, biak barne hartzen dituen zuzen bakar bat existitzen da.",
+  title: "I.1 axioma (Zuzenaren existentzia eta bakartasuna)",
+  description: "Espazioko bi puntu desberdin emanda, biak barnean hartzen dituen zuzen bakarra existitzen da.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
@@ -14,10 +16,10 @@ export const metadata = {
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="E" />spazioko bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin edozein emanda, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-ek formulatutako <ConceptLink targetId="intzidentzia">intzidentzia-axioma</ConceptLink> lehenak bietatik igarotzen den <ConceptLink targetId="zuzen">zuzen</ConceptLink> baten existentzia eta bakartasuna bermatzen ditu nahitaez. Postulatu hau <ConceptLink targetId="geometria-absoluta">geometria absolutuko</ConceptLink> lotura lineala definitzeko oinarri nagusia da.
+<Capitular letra="E" />spazioko edozein bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinetarako, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> formulatutako lehen intzidentzia-axiomak bietatik igarotzen den <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> baten existentzia eta bakartasuna bermatzen ditu. Postulatu hau lotura linealaren oinarria da <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
 
 <Definicion title="Enuntziatu formala">
-  Bi $A, B \in \mathcal{S}$ <ConceptLink targetId="punto">puntu</ConceptLink> desberdin emanda ($A \neq B$), biak barne hartzen dituen $l \in \mathcal{L}$ <ConceptLink targetId="zuzen">zuzen</ConceptLink> bakar bat existitzen da:
+  Edozein bi $A, B \in \mathcal{S}$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinetarako ($A \neq B$), $A$ eta $B$ barnean dituen $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bakarra existitzen da:
   $$
   \forall A, B \in \mathcal{S} \ \bigl(A \neq B \implies \exists! l \in \mathcal{L} \ (A \in l \land B \in l)\bigr)
   $$
@@ -27,18 +29,18 @@ export const Simulation = Incidence1;
 
 ### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntuek era bakarrean zehazten dute <VisualBind element="lineAB" color="carbon">$l$</VisualBind> zuzen euskarria. Planoan bi puntu horietako edozein aske aldatzean, zuzenaren posizioa eta orientazioa berehala berrekalkulatzen dira, kidekotza bikoitzaren baldintza zorrotza mantenduz.
+Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntuek modu unibokoan zehazten dute <VisualBind element="lineAB" color="carbon">$l$</VisualBind> zuzen euskarria. Planoan bi puntuetako edozein aske mugitzean, zuzenaren posizioa eta orientazioa berehala birkalkulatzen dira, partaideitza bikoitzaren baldintza zorrotza mantenduz.
 
 <Separador />
 
 ### Esanahi geometrikoa eta esparrua
 
-Axioma honek ezartzen du bi puntuek norabide bat eta ibilbide zuzen bat zehazten dituztela era esklusiboan. Ezin da egon puntu berdinak lotzen dituzten zuzen paralelo anitzik ezta kurba erredundanterik ere, axioma gehigarririk gabe.
+Axioma honek ezartzen du bi puntuk norabide eta ibilbide zuzen bat zehazten dutela modu esklusiboan. Puntu berak lotzen dituzten lerro paralelo anizkoitzak edo bide erredundanteak eragozten ditu axioma gehigarririk gabe.
 
 <Separador />
 
 ### Propietateak
 
-- **Marrazkiaren bakartasuna:** Bi puntu desberdin ezin dira aldi berean bi zuzen desberdinen barnean egon.
-- **Sistemarekiko independentzia:** Bere baliozkotasuna gordetzen du bai <ConceptLink targetId="geometria-euklidear">geometria euklidearrean</ConceptLink> bai geometria ez-euklidearretan.
-- **Interkonexioaren oinarria:** $\overline{AB}$ <ConceptLink targetId="segmento">zuzenkia</ConceptLink> zuzen euskarriaren azpimultzo jarraitu gisa definitzea ahalbidetzen du.
+- **Ibilbidearen bakartasuna:** Bi puntu desberdin ezin dira aldi berean bi zuzen desberdinenak izan.
+- **Sistemarekiko independentzia:** Balio osoa gordetzen du bai <ConceptLink targetId="sistema-euclidiano">geometria euklidearrean</ConceptLink> bai <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoan</ConceptLink>.
+- **Elkarrekiko konexioaren oinarria:** $\overline{AB}$ <ConceptLink targetId="segmento">zuzenkia</ConceptLink> zuzen euskarriaren azpimultzo jarraitu gisa definitzea ahalbidetzen du.

@@ -3,7 +3,7 @@ export const metadata = {
   lang: "es",
   type: "definicion",
   subtype: "nominal",
-  title: "Rectas perpendiculares",
+  title: "Perpendicularidad",
   description: "Relación geométrica entre dos rectas secantes que se cortan formando cuatro ángulos rectos congruentes.",
   branch: "51M",
   hasSimulation: true,
@@ -16,32 +16,33 @@ export const metadata = {
 import { Perpendicular } from '@content/diagrams/Definiciones/Perpendicular';
 export const Simulation = Perpendicular;
 
-<Capitular letra="D" />os <ConceptLink targetId="recta">rectas</ConceptLink> secantes en el <ConceptLink targetId="plano">plano</ConceptLink> se denominan perpendiculares si la <ConceptLink targetId="interseccion">intersección</ConceptLink> entre ellas divide al espacio angular circundante en cuatro <ConceptLink targetId="angulo">ángulos</ConceptLink> iguales. La perpendicularidad constituye la noción fundamental de ortogonalidad en la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink> y fundamenta los sistemas de coordenadas cartesianas.
+<Capitular letra="D" />os <ConceptLink targetId="recta">rectas</ConceptLink> secantes en un <ConceptLink targetId="plano">plano</ConceptLink> se denominan perpendiculares cuando su intersección genera cuatro <ConceptLink targetId="angulo">ángulos</ConceptLink> adyacentes congruentes entre sí. Constituye la noción fundamental de ortogonalidad en la geometría euclídea y sirve como base para los sistemas de coordenadas cartesianas y las proyecciones ortogonales.
 
 <Definicion title="">
-  Dadas dos rectas secantes <VisualBind element="recta-r" color="musgo">$L_1$</VisualBind> y <VisualBind element="recta-s" color="pavo">$L_2$</VisualBind> en un plano $\mathcal{P}$ que se intersecan en un único <ConceptLink targetId="punto">punto</ConceptLink> $P = L_1 \cap L_2$, se dice que $L_1$ y $L_2$ son perpendiculares, denotado por $L_1 \perp L_2$, si y solo si los cuatro ángulos adyacentes determinados por su intersección son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí, siendo cada uno un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> de amplitud $90^\circ$ ($\frac{\pi}{2}\text{ rad}$):
+  Dadas dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> coplanares <VisualBind element="lineAB" color="musgo">$L_1$</VisualBind> y <VisualBind element="perpABP" color="pavo">$L_2$</VisualBind> en un plano $\mathcal{P}$ que se cortan en un punto $P = L_1 \cap L_2$, se dice que $L_1$ y $L_2$ son perpendiculares ($L_1 \perp L_2$) si y solo si los cuatro ángulos determinados por su intersección son <ConceptLink targetId="angulo-recto" isDependency={true}>ángulos rectos</ConceptLink> de medida $\frac{\pi}{2}$ radianes ($90^\circ$):
   $$
-  L_1 \perp L_2 \iff (L_1 \cap L_2 = \{P\}) \land \forall i \in \{1,2,3,4\}, \mu(\theta_i) = \frac{\pi}{2}
+  L_1 \perp L_2 \iff \forall i \in \{1, 2, 3, 4\}, \; \theta_i \cong 90^\circ
   $$
-  En términos vectoriales, si $\vec{u}$ y $\vec{v}$ son vectores directores no nulos de $L_1$ y $L_2$, se cumple $\vec{u} \cdot \vec{v} = 0$.
+  En términos vectoriales, si $\vec{u}$ y $\vec{v}$ son vectores directores no nulos de $L_1$ y $L_2$, equivale al producto escalar nulo $\vec{u} \cdot \vec{v} = 0$.
 </Definicion>
 
 <Separador />
 
 ### Criterios y representaciones geométricas
 
-La condición de perpendicularidad admite múltiples formulaciones analíticas y sintéticas según el sistema formal utilizado:
-
-| Dominio | Condición sintética o analítica | Expresión formal |
-|---|---|---|
-| Geometría vectorial | Producto escalar nulo | $\vec{u} \cdot \vec{v} = 0$ |
-| Geometría analítica | Pendientes recíprocas y opuestas | $m_1 \cdot m_2 = -1$ |
-| Geometría sintética | Igualdad de ángulos adyacentes suplementarios | $\alpha \cong \beta \land \mu(\alpha + \beta) = \pi$ |
+- **Geometría sintética**: Dos rectas son perpendiculares si determinan ángulos adyacentes suplementarios congruentes.
+- **Geometría analítica**: En $\mathbb{R}^2$, dos rectas con pendientes $m_1, m_2 \in \mathbb{R}$ son perpendiculares si y solo si $m_1 \cdot m_2 = -1$.
+- **Geometría vectorial**: Dos subespacios afines unidimensionales son ortogonales si sus vectores directores satisfacen $\langle \vec{u}, \vec{v} \rangle = 0$.
 
 <Separador />
 
-### Propiedades
-
-- **Existencia y unicidad**: Dado un punto $P$ y una recta $L$, existe una <ConceptLink targetId="unicidad">única</ConceptLink> recta que pasa por $P$ y es perpendicular a $L$.
-- **Relación con el paralelismo**: Dos rectas perpendiculares a una tercera recta común son <ConceptLink targetId="paralelas">paralelas</ConceptLink> entre sí ($L_1 \perp L_3 \land L_2 \perp L_3 \implies L_1 \parallel L_2$).
-- **Simetría no reflexiva**: La relación de perpendicularidad es simétrica ($L_1 \perp L_2 \implies L_2 \perp L_1$), pero no reflexiva ni transitiva.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ortogonalidad y paralelismo">
+    <PropiedadItem id="axioma-congruencia-4" title="Existencia y unicidad de la perpendicular">
+      Dado un punto $P$ y una recta $L$, existe una única recta perpendicular a $L$ que pasa por $P$.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-angulos-alternos-internos" title="Perpendicular a paralelas">
+      Toda recta perpendicular a una de dos rectas paralelas es perpendicular a la otra.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

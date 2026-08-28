@@ -1,0 +1,64 @@
+export const metadata = {
+  "id": "demo-area-triangulo",
+  "type": "demostracion",
+  "title": "Proof: Triangle Area Theorem",
+  "description": "Geometric proof that the area of a triangle equals half the area of its circumscribed rectangle, using diagonal congruence and the additivity of area.",
+  "parentTheorem": "teorema-area-triangulo",
+  "lang": "en",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["euclides"],
+  "tags": ["geometry", "areas", "triangle", "measure"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 41", "role": "primary" }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="L" />et $\triangle ABC$ be a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> with base $b = |\overline{AB}|$ and height $h$ (the perpendicular distance from vertex $C$ to the line through $\overline{AB}$). The proof constructs an auxiliary rectangle that contains exactly twice the area of the triangle.
+
+<Separador />
+
+### Proof step by step
+
+<ProofStep number={1} title="Construction of the circumscribed rectangle">
+Construct rectangle $ABDE$ with base $\overline{AB}$ of length $b$ and height $h$, by drawing <ConceptLink targetId="perpendicular" isDependency={true}>perpendiculars</ConceptLink> through $A$ and $B$ and the <ConceptLink targetId="paralelas" isDependency={true}>parallel</ConceptLink> through $C$ to $AB$. By the <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink>:
+
+<Formula>
+  $$ \text{Area}(ABDE) = b \cdot h $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={2} title="Division by diagonal AC">
+Diagonal $\overline{AC}$ divides rectangle $ABDE$ into two triangles. By the <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>AAS congruence criterion</ConceptLink> applied to triangles $\triangle ABC$ and $\triangle CAE$ (right angles at $B$ and $E$, common side $\overline{AC}$, equal sides $|\overline{AB}| = |\overline{CE}|$), both triangles are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>.
+</ProofStep>
+
+<ProofStep number={3} title="Application of area additivity">
+Since the two triangles are congruent, they have equal area. By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>, the area of the rectangle equals the sum of the areas of the two triangles:
+
+<Formula>
+  $$ \text{Area}(ABDE) = \text{Area}(\triangle ABC) + \text{Area}(\triangle CAE) = 2 \cdot \text{Area}(\triangle ABC) $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} title="Conclusion">
+Solving for the triangle's area:
+
+<Formula>
+  $$ \text{Area}(\triangle ABC) = \frac{1}{2} \cdot b \cdot h $$
+</Formula>
+
+This equality holds for any triangle — acute, right, or obtuse — since in all three cases the triangle can be inscribed in a rectangle of equal base and height.
+</ProofStep>
+
+<Separador />
+
+### Deductive analysis
+
+<Nota>
+  For an obtuse triangle, the rectangle must be extended beyond the base, but the congruence and additivity argument remains intact. This proof operates strictly within the <ConceptLink targetId="sistema-euclidiano">Euclidean axiomatic system</ConceptLink>.
+</Nota>
+
+</DemonstrationSection>

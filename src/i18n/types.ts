@@ -295,6 +295,13 @@ export interface TranslationDictionary {
     seeContent: string;
     modelPrefix: string;
   };
+  properties: {
+    title: string;
+    seeTheorem: string;
+    seeProof: string;
+    proofInProgress: string;
+    noProperties: string;
+  };
   action: {
     practice: string;
   };

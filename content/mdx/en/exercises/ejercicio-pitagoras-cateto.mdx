@@ -1,0 +1,147 @@
+export const metadata = {
+  id: "ejercicio-pitagoras-cateto",
+  lang: "en",
+  type: "ejercicio",
+  title: "Calculating a Leg of a Right Triangle",
+  description: "Application of the Pythagorean theorem to solve for and determine the length of an unknown leg from the hypotenuse and the other leg.",
+  branch: "51M",
+  relatedTheorem: "teorema-pitagoras",
+  difficulty: "básico",
+  hint: "The Pythagorean theorem establishes a² + b² = c². To isolate a leg, subtract the square of the known leg from the square of the hypotenuse: a² = c² - b².",
+  hasSimulation: true
+};
+
+import { EjercicioPitagorasCateto } from '@content/diagrams/Ejercicios/EjercicioPitagorasCateto';
+export const Simulation = EjercicioPitagorasCateto;
+
+<Capitular letra="G" />iven a <ConceptLink targetId="triangulo-rectangulo">right-angled triangle</ConceptLink> <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> with a <ConceptLink targetId="perpendicular">right angle</ConceptLink> at <VisualBind element="pC" color="carbon">vertex $C$</VisualBind>, the hypotenuse measures $c = |\overline{AB}| = 10$ units (<VisualBind element="segAB" color="mora">hypotenuse $c$</VisualBind>) and the horizontal leg measures $b = |\overline{BC}| = 8$ units (<VisualBind element="segBC" color="terracota">leg $b$</VisualBind>). Calculate the exact length of the <VisualBind element="segCA" color="canela">vertical leg $a = |\overline{CA}|$</VisualBind>.
+
+<Separador />
+
+<ExerciseStep
+  id="p1"
+  numero={1}
+  titulo="Setting Up the Equation"
+  questionIds={["p1_q1"]}
+>
+  Identify the algebraic formulation that correctly applies the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink> to the given values:
+
+  <Pregunta
+    id="p1_q1"
+    correct="opt_correcta"
+    texto="Which of the following relations correctly states the theorem for this triangle?"
+    opciones={[
+      { value: 'opt_correcta', texto: "$a^2 + 8^2 = 10^2$" },
+      { value: 'opt_suma_catetos', texto: "$a^2 = 10^2 + 8^2$", feedback: "You added the squares as if solving for the hypotenuse. The hypotenuse is already known ($c=10$). To isolate a leg, subtract the squared areas: $a^2 = c^2 - b^2$." },
+      { value: 'opt_hipotenusa_err', texto: "$10^2 + a^2 = 8^2$", feedback: "You added the squared hypotenuse to the unknown leg. The squared hypotenuse must stand alone on one side of the equality: $a^2 + b^2 = c^2$." }
+    ]}
+  >
+    <Pregunta.ErrorComun titulo="Adding the squares instead of subtracting">
+      A common error when solving for a leg is adding the known squared lengths: $a^2 = c^2 + b^2 = 100 + 64 = 164 \implies a \approx 12.8$. In any right triangle, the hypotenuse is strictly the longest side ($c > a$ and $c > b$); a leg can never exceed the hypotenuse.
+    </Pregunta.ErrorComun>
+
+    <Pregunta.Resolucion>
+      By the Pythagorean theorem $a^2 + b^2 = c^2$. Substituting the known quantities $b = 8$ and $c = 10$, we obtain:
+      
+      <Formula>
+        $$ a^2 + 8^2 = 10^2 $$
+      </Formula>
+    </Pregunta.Resolucion>
+  </Pregunta>
+</ExerciseStep>
+
+<Separador />
+
+<ExerciseStep
+  id="p2"
+  numero={2}
+  titulo="Geometric Correspondence of Areas"
+  questionIds={["p2_q1"]}
+  dependeDeQuestions={["p1_q1"]}
+>
+  Match each geometric square with its corresponding area:
+
+  <Emparejar
+    id="p2_q1"
+    pregunta="Pair each square constructed on the triangle's sides with its area value:"
+    pairs={[
+      { left: "Square on hypotenuse $c=10$", right: "$c^2 = 100\\text{ u}^2$" },
+      { left: "Square on leg $b=8$", right: "$b^2 = 64\\text{ u}^2$" },
+      { left: "Area on unknown leg $a$", right: "$a^2 = 100 - 64 = 36\\text{ u}^2$" }
+    ]}
+  >
+    <Emparejar.ErrorComun titulo="Confusing areas with linear lengths">
+      The Pythagorean theorem compares geometric square areas ($a^2, b^2, c^2$), not linear edge lengths ($a, b, c$).
+    </Emparejar.ErrorComun>
+
+    <Emparejar.Resolucion>
+      The areas of the three squares are:
+      
+      <Formula>
+        $$ c^2 = 10^2 = 100, \quad b^2 = 8^2 = 64, \quad a^2 = 100 - 64 = 36 $$
+      </Formula>
+    </Emparejar.Resolucion>
+  </Emparejar>
+</ExerciseStep>
+
+<Separador />
+
+<ExerciseStep
+  id="p3"
+  numero={3}
+  titulo="Algebraic Deduction Sequence"
+  questionIds={["p3_q1"]}
+  dependeDeQuestions={["p2_q1"]}
+>
+  Arrange the algebraic steps in their logical deductive order to solve for the exact length of leg $a$:
+
+  <Ordenacion
+    id="p3_q1"
+    pregunta="Drag the steps to arrange them in the correct deductive order:"
+    pasos={[
+      "$a^2 + 8^2 = 10^2$",
+      "$a^2 + 64 = 100$",
+      "$a^2 = 100 - 64$",
+      "$a = \\sqrt{36} = 6$"
+    ]}
+  >
+    <Ordenacion.ErrorComun titulo="Extracting square root before completing the subtraction">
+      The square root cannot be evaluated term by term ($\sqrt{100 - 64} \neq \sqrt{100} - \sqrt{64} = 10 - 8 = 2$). First compute the difference $100 - 64 = 36$, then extract the root.
+    </Ordenacion.ErrorComun>
+
+    <Ordenacion.Resolucion>
+      The correct deductive order is:
+      - Equation setup: $a^2 + 8^2 = 10^2$
+      - Computing powers: $a^2 + 64 = 100$
+      - Isolating the unknown square: $a^2 = 100 - 64 = 36$
+      - Taking the square root: $a = \sqrt{36} = 6$
+    </Ordenacion.Resolucion>
+  </Ordenacion>
+</ExerciseStep>
+
+<Separador />
+
+<ExerciseStep
+  id="p4"
+  numero={4}
+  titulo="Final Value of the Leg"
+  questionIds={["p4_q1"]}
+  dependeDeQuestions={["p3_q1"]}
+>
+  Enter the final numerical length obtained for vertical leg $a$:
+
+  <Hueco
+    id="p4_q1"
+    pregunta="Calculated length of vertical leg a:"
+    correct="6"
+    pista="Which positive real number squared equals 36?"
+  >
+    <Hueco.ErrorComun titulo="Considering the negative algebraic root">
+      Although $(-6)^2 = 36$, Euclidean geometric distances are strictly positive real numbers ($a > 0$).
+    </Hueco.ErrorComun>
+
+    <Hueco.Resolucion>
+      Taking the positive square root of the isolated area ($a^2 = 36$) yields $a = \sqrt{36} = 6$ units.
+    </Hueco.Resolucion>
+  </Hueco>
+</ExerciseStep>

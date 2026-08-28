@@ -2,46 +2,59 @@ export const metadata = {
   id: "congruencia",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "primitivo",
   title: "Kongruentzia geometrikoa",
-  description: "Distantziak eta angeluak gordetzen dituen isometria baten bidez gainjar daitezkeen irudi geometrikoen arteko ekibalentzia-erlazioa.",
+  description: "Dimentsioak, distantziak eta angelu-irekidurak kontserbatzen dituzten konfigurazio geometrikoa lotzen dituen baliokidetasun- eta zurruntasun-erlazio primitiboa.",
   branch: "51M",
-  hasSimulation: true,
+  hasSimulation: false,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "I. Liburua, 4. Nosio Komuna", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §3 (Kongruentzia-axiomak)", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 4. Nozio Komuna", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §3", role: "primary" }
   ]
 };
 
-import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
-export const Simulation = Congruence1;
-
-<Capitular letra="K" />ongruentzia geometrikoa <ConceptLink targetId="plano">planoko</ConceptLink> edo espazioko bi irudiren arteko <ConceptLink targetId="relacion-equivalencia">ekibalentzia-erlazio</ConceptLink> oinarrizkoa da, forma eta tamaina bera adierazten duena. Bi irudi kongruenteak dira baliokide diren <ConceptLink targetId="transformacion-geometrica">distantzia rigidoko transformazio</ConceptLink> baten bidez (isometria: translazioa, rotazioa edo erreflexioa) batak bestea ordezkatu badezake <ConceptLink targetId="punto">puntu</ConceptLink> guztien arteko distantziak eta <ConceptLink targetId="angulo">angeluen</ConceptLink> zabalerak gordeaz.
+<Capitular letra="K" />ongruentzia geometrikoa geometria sintetikoaren jatorrizko zurruntasun- eta baliokidetasun-erlazioa da, figuren arteko forma- eta neurri-berdintasuna formalki ezartzen duena. Hilberten sistema axiomatikoan, kongruentzia primitiboki postulatzen da bai <ConceptLink targetId="segmento">zuzenkien</ConceptLink> bikoteentzat ($\overline{AB} \cong \overline{CD}$) bai <ConceptLink targetId="angulo">angeluen</ConceptLink> bikoteentzat ($\angle ABC \cong \angle DEF$).
 
 <Definicion title="">
-  Izan bitez $F_1, F_2 \subset \mathcal{E}$ espazio metriko euklidear bateko puntu-multzoak. $F_1$ eta $F_2$ irudiak kongruenteak direla esaten da, <VisualBind element="figura-1" color="musgo">$F_1$</VisualBind> $\cong$ <VisualBind element="figura-2" color="pavo">$F_2$</VisualBind> ikurraz adierazita, $f: \mathcal{E} \to \mathcal{E}$ alderantzizgarri den transformazio bat baldin badago $f(F_1) = F_2$ betetzen duena, zeinak $A, B \in \mathcal{E}$ puntu-pare ororen arteko distantzia metrikoa babesten duen nahitaez:
+  Kongruentzia ($\cong$) $\mathcal{E}$ espazio bateko konfigurazio geometrikoen bikoteen gaineko jatorrizko baliokidetasun-erlazioa da. Geometria euklidear analitikoan, $F_1, F_2 \subset \mathcal{E}$ bi figura kongruenteak dira baldin eta soilik baldin $f: \mathcal{E} \to \mathcal{E}$ isometria bijektibo bat existitzen bada non $f(F_1) = F_2$ den eta espazioko edozein $A, B \in \mathcal{E}$ puntuentzat honakoa betetzen den:
   $$
-  F_1 \cong F_2 \iff \exists f: \mathcal{E} \to \mathcal{E} \text{ non } f(F_1) = F_2 \land \forall A, B \in \mathcal{E}, \|f(B) - f(A)\| = \|B - A\|
+  d(f(A), f(B)) = d(A, B)
   $$
-  $\overline{AB} \cong \overline{CD}$ <ConceptLink targetId="segmento">zuzenkien</ConceptLink> kasuan, horrek beren luzera eskalarren berdintasuna dakar: $d(A, B) = d(C, D)$.
 </Definicion>
 
 <Separador />
 
-### Triangeluen kongruentzia-kriterioak
+### Hilberten kongruentzia-axiomak (III. Taldea)
 
-<ConceptLink targetId="geometria-euclidiana">Geometria euklidearrean</ConceptLink>, <ConceptLink targetId="triangulo">triangeluen</ConceptLink> arteko kongruentzia beren <ConceptLink targetId="lado">alde</ConceptLink> eta <ConceptLink targetId="angulo">angeluei</ConceptLink> buruzko gutxieneko baldintza-multzoen bidez finkatzen da:
+Kongruentzia-erlazioaren portaera III. Taldeko sei axiomek gobernatzen dute:
+- **Zuzenkien garraioa**: $\overline{AB}$ zuzenki bat eta $A'$ jatorria duen zuzenerdi bat emanda, $B'$ puntu bakar bat existitzen da non $\overline{AB} \cong \overline{A'B'}$ den.
+- **Zuzenkien trantsitibitatea**: $\overline{AB} \cong \overline{CD}$ eta $\overline{AB} \cong \overline{EF}$ badira, orduan $\overline{CD} \cong \overline{EF}$.
+- **Zuzenkien batuketa**: $A * B * C$, $A' * B' * C'$, $\overline{AB} \cong \overline{A'B'}$ eta $\overline{BC} \cong \overline{B'C'}$ badira, orduan $\overline{AC} \cong \overline{A'C'}$.
+- **Angeluen garraioa**: $\angle ABC$ angelu bat eta erdiplano bateko erreferentziazko zuzenerdi bat emanda, angelu kongruente bakar bat existitzen da.
+- **AL-A axioma**: Bi triangeluk bi alde eta bien arteko angelua hurrenez hurren kongruenteak badituzte, gainerako angelu homologoak kongruenteak dira.
 
-| Kriterioa | Axioma edo teoremaren izena | Gutxieneko baldintza geometrikoa |
-|---|---|---|
-| LAL | <ConceptLink targetId="axioma-congruencia-5">Aldea-Angelua-Aldea</ConceptLink> | Bi alde eta haien arteko angelua kongruenteak dira |
-| ALA | <ConceptLink targetId="teorema-congruencia-ala">Angelua-Aldea-Angelua</ConceptLink> | Alde bat eta haren bi angelu ondokoak kongruenteak dira |
-| LLL | Aldea-Aldea-Aldea kriterioa | Hiru alde-pareak kongruenteak dira beren artean |
+### Triangeluen kongruentzia-irizpideak
+
+Plano euklidearrean, bi <ConceptLink targetId="triangulo">triangeluren</ConceptLink> arteko kongruentzia globala oinarrizko irizpideen bidez ondorioztatzen da:
+- **AL-A** (Aldea-Angelua-Aldea): Bi alde eta haien arteko angelua kongruenteak.
+- **An-Al-An** (Angelua-Aldea-Angelua): Alde bat eta bere inguruko bi angeluak kongruenteak.
+- **Al-Al-Al** (Aldea-Aldea-Aldea): Hiru alde homologoen bikoteak kongruenteak.
 
 <Separador />
 
-### Propietateak
-
-- **<ConceptLink targetId="relacion-equivalencia">Ekibalentzia-erlazioa</ConceptLink>**: Kongruentzia erreflexiboa da ($F_1 \cong F_1$), simetrikoa ($F_1 \cong F_2 \implies F_2 \cong F_1$) eta igarotorra ($F_1 \cong F_2 \land F_2 \cong F_3 \implies F_1 \cong F_3$).
-- **Neurriaren aldaezintasuna**: Bi irudi plano neurgarri kongruente badira $F_1 \cong F_2$, beren azaleraren neurriek berdintasun zorrotza betetzen dute: $\mu(F_1) = \mu(F_2)$.
-- **Lerrokidetasunaren kontserbazioa**: Isometria orok puntuen <ConceptLink targetId="colinealidad">lerrokidetasuna</ConceptLink> eta <ConceptLink targetId="recta">zuzenen</ConceptLink> egitura babesten ditu.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Kongruentziaren egitura axiomatikoa">
+    <PropiedadItem id="axioma-congruencia-1" title="Zuzenkien garraioa">
+      Emandako zuzenerdi baten gainean zuzenki kongruentearen existentzia eta bakartasuna.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-congruencia-2" title="Zuzenkien trantsitibitatea">
+      Zuzenkien kongruentziak simetria eta trantsitibitate formala betetzen ditu.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-congruencia-4" title="Angeluen garraioa">
+      Erreferentziazko zuzenerdi batekiko angelu kongruentearen existentzia eta bakartasuna.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-congruencia-5" title="Kongruentziaren AL-A axioma">
+      Bi triangelu bi aldetan eta haien arteko angeluan bat badatoz, gainerako elementuetan ere bat datoz.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

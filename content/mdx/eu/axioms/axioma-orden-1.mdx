@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-orden-1",
   lang: "eu",
   type: "axioma",
-  title: "II.1 Axioma (Artekotasunaren simetria eta kolinealtasuna)",
+  title: "II.1 axioma (Tartean egotearen simetria eta kolinealtasuna)",
   description: "B puntua A eta C artean badago, A, B eta C zuzen bereko hiru puntu desberdin dira eta B puntua C eta A artean ere badago.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "orden",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §3", role: "primary" }
@@ -14,10 +16,10 @@ export const metadata = {
 import { Order1 } from '@content/diagrams/Axiomas/Order1';
 export const Simulation = Order1;
 
-<Capitular letra="O" />rdena-taldeko (artekotasuneko) lehen <ConceptLink targetId="axioma">axioma</ConceptLink> honek, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-ek formulatuak, "artean egote" erlazio hirutarraren izaera simetrikoa eta barne-kolinealtasuna ezartzen ditu. $B$ <ConceptLink targetId="punto">puntua</ConceptLink> $A$ eta $C$ artean badago, hiru puntuak <ConceptLink targetId="zuzen">zuzen</ConceptLink> berean daude eta elkarrekiko desberdinak dira nahitaez.
+<Capitular letra="O" />rdena-taldeko lehen axioma honek, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> formulatuak, <ConceptLink targetId="estar-entre" isDependency={true}>tartean egotearen</ConceptLink> erlazio hirutarraren izaera simetrikoa eta barne-kolinealtasuna ezartzen ditu. $B$ <ConceptLink targetId="punto" isDependency={true}>puntua</ConceptLink> $A$ eta $C$ artean badago, hiru puntuak <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> berekoak dira eta elkarrekiko desberdinak dira nahitaez.
 
 <Definicion title="Enuntziatu formala">
-  $B$ <ConceptLink targetId="punto">puntua</ConceptLink> $A$ eta $C$ artean badago ($A\text{-}B\text{-}C$ notazioaz), orduan $A, B, C$ <ConceptLink targetId="zuzen">zuzen</ConceptLink> bereko hiru puntu desberdin dira, eta $B$ puntua $C$ eta $A$ artean ere badago ($C\text{-}B\text{-}A$):
+  $B$ <ConceptLink targetId="punto" isDependency={true}>puntua</ConceptLink> $A$ eta $C$ artean badago ($A\text{-}B\text{-}C$ notazioaz), orduan $A, B, C$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bereko hiru puntu desberdin dira, eta $B$ puntua $C$ eta $A$ artean ere badago ($C\text{-}B\text{-}A$):
   $$
   A\text{-}B\text{-}C \implies \bigl(A \neq B \land B \neq C \land A \neq C \land \exists l \in \mathcal{L} \ (A,B,C \in l) \land C\text{-}B\text{-}A\bigr)
   $$
@@ -27,18 +29,18 @@ export const Simulation = Order1;
 
 ### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntuak lerrokatuta daude. Erdiko $B$ elementuak $A\text{-}B\text{-}C$ erlazioa betetzen du, eta irakurketa geometrikoa eskuinetik ezkerrera alderantzikatzean $C\text{-}B\text{-}A$ baliokidetasun simetrikoa egiaztatzen da.
+Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntuak <VisualBind element="lineDC" color="carbon">$l$</VisualBind> zuzenean kokatuta daude. Erdiko $B$ elementuak $A\text{-}B\text{-}C$ erlazioa betetzen du, eta irakurketa geometrikoa eskuinetik ezkerrera alderantzikatzean $C\text{-}B\text{-}A$ baliokidetasun simetrikoa egiaztatzen da.
 
 <Separador />
 
 ### Esanahi geometrikoa eta esparrua
 
-Dimentsio bakarreko antolaketa-erlazio primitiboa formalizatzen du, koordenatu errealen edo distantzia zenbakizkoen mende egon gabe. Orientazio espazialaren independentzia bermatzen du <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
+Dimentsio bakarreko antolaketa-erlazio primitiboa formalizatzen du, koordenatu errealen edo distantzia metriko zenbakizkoen mende egon gabe. Orientazio espazialaren independentzia bermatzen du <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
 
 <Separador />
 
 ### Propietateak
 
 - **Barne-simetria:** $A\text{-}B\text{-}C$ erlazioa eta $C\text{-}B\text{-}A$ erabat baliokideak dira.
-- **Nahitaezko kolinealtasuna:** Artekotasuna zuzen euskarri bereko hirukoteetan bakarrik da baliozkoa.
-- **Bereizketa hirukoitza:** $A = B$, $B = C$ edo $A = C$ kasuak baztertzen ditu artekotasun-erlazioan.
+- **Nahitaezko kolinealtasuna:** Tartean egotea zuzen euskarri bereko hirukoteetan bakarrik da baliozkoa.
+- **Bereizketa hirukoitza:** $A = B$, $B = C$ edo $A = C$ kasuak erabat baztertzen ditu tartean egotearen erlazioan.

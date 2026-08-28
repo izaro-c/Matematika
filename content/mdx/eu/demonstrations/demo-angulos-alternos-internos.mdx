@@ -1,8 +1,8 @@
 export const metadata = {
   "id": "demo-angulos-alternos-internos",
   "type": "demostracion",
-  "title": "Froga: Barne-angelu alternoen teorema",
-  "description": "Barne-angelu alternoen berdintasunaren bidezko paralelo-kriterioaren absurdoaren bidezko froga.",
+  "title": "Frogapena: Barne-angelu alternoen teorema",
+  "description": "Barne-angelu alternoen berdintasunaren bidezko paralelotasun-irizpidearen absurdora bideratutako frogapena.",
   "parentTheorem": "teorema-angulos-alternos-internos",
   "branch": "51M",
   "proofMethod": "metodo-contradiccion",
@@ -10,7 +10,7 @@ export const metadata = {
   "tags": ["geometria", "paralelas", "angulos"],
   "layout": "split",
   "sources": [
-    { "title": "Elementuak", author: "Euclides", locator: "I. Liburukia, 27. Proposizioa", role: "primary" }
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 27", role: "primary" }
   ]
 };
 
@@ -18,46 +18,46 @@ import { DemoAngulosAlternosInternos } from "@content/diagrams/Demos/DemoAngulos
 
 <DemonstrationSection diagram={<DemoAngulosAlternosInternos />}>
 
-<Capitular letra="E" />manik plano bereko bi $l$ eta $m$ <ConceptLink targetId="recta">zuzen</ConceptLink> $t$ ebakitzaile batez ebakita, <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>barne-angelu alternoen teorema</ConceptLink> frogatzen da. Frogapenak <ConceptLink targetId="metodo-contradiccion" isDependency={true}>absurdorainoko murrizketaren bidez</ConceptLink> erakusten du barne-angelu alternoak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira, zuzen biak <ConceptLink targetId="paralelas">paraleloak</ConceptLink> direla.
+<Capitular letra="I" />zan bitez $t$ ebakitzaileak ebakitako $l$ eta $m$ bi <ConceptLink targetId="recta">zuzen</ConceptLink> koplanar. <ConceptLink targetId="teorema-angulos-alternos-internos">Barne-angelu alternoen teorema</ConceptLink> frogatzen da. Frogapenak <ConceptLink targetId="metodo-contradiccion" isDependency={true}>absurdora bideratuz</ConceptLink> egiaztatzen du barne-angelu alternoak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira, zuzenak nahitaez <ConceptLink targetId="paralelas">paraleloak</ConceptLink> direla.
 
 <Separador />
 
-### Urratsez urratseko froga
+### Froga urratsez urrats
 
 <ProofStep number={1} target="config" title="Hasierako hipotesia">
-Bedi plano bereko <VisualBind element="lineL" color="carbon">$l$</VisualBind> eta <VisualBind element="lineM" color="carbon">$m$</VisualBind> bi zuzen, $A$ eta $B$ puntuetan <VisualBind element="lineT" color="carbon">$t$</VisualBind> ebakitzaileak ebakitzen dituenak. Hasierako hipotesi gisa hartzen da <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> eta <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> barne-angelu alternoak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> direla:
+Izan bitez <VisualBind element="lineL" color="carbon">$l$</VisualBind> eta <VisualBind element="lineM" color="carbon">$m$</VisualBind> bi zuzen koplanar, <VisualBind element="lineT" color="carbon">$t$</VisualBind> zeharkako zuzenak $A$ eta $B$ puntuetan ebakitzen dituenak. Hipotesi gisa onartzen da <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> eta <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> barne-angelu alternoak kongruenteak direla:
 
 <Formula>
   $$ \alpha \cong \beta $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} target="absurdo" title="Ezeztapenezko hipotesia">
-$l$ eta $m$ paraleloak direla frogatzeko, demagun <ConceptLink targetId="metodo-contradiccion" isDependency={true}>absurdorainoko bidetik</ConceptLink> $l$ eta $m$ ez direla paraleloak. Beraz, planoko zenbait <VisualBind element="pointP" color="ocre">$P$</VisualBind> puntutan ebakitzen dute elkar.
+<ProofStep number={2} target="absurdo" title="Kontraesaneko hipotesia">
+$l$ eta $m$ paraleloak direla frogatzeko, demagun <ConceptLink targetId="metodo-contradiccion" isDependency={true}>kontraesan-metodoaren</ConceptLink> bidez $l$ eta $m$ ez direla paraleloak. Ondorioz, planoko <VisualBind element="pointP" color="ocre">$P$</VisualBind> puntu batean elkar ebakitzen dute.
 </ProofStep>
 
-<ProofStep number={3} target="triangulos" title="Irudimenezko triangeluaren eraikuntza">
-$P$ puntuko elkarbaketak $A, B, P$ bertizeek osatutako $\triangle ABP$ <ConceptLink targetId="triangulo">triangelu bat</ConceptLink> sortzen du. Triangelu honetan, $A$ bertizeko <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> angelua kanpo-angelu bat da $AP$ aldearekiko, eta $B$ bertizeko <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> angelua albokoa ez den barne-angelua da.
+<ProofStep number={3} target="triangulo" title="Laguntza-triangeluaren eraikuntza">
+$P$ puntuko ebakidurak $A, B, P$ erpinek osatutako $\triangle ABP$ <ConceptLink targetId="triangulo">triangelua</ConceptLink> sortzen du. Triangelu horretan, $A$ erpineko <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> angelua kanpo-angelua da $\overline{AP}$ aldearekiko, eta $B$ erpineko <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> angelua, berriz, albokoa ez den barne-angelua da.
 </ProofStep>
 
 <ProofStep number={4} target="desigualdad" title="Kanpo-angeluaren teoremaren aplikazioa">
-<ConceptLink targetId="sistema-absoluto">Geometria absolutuko</ConceptLink> kanpo-angeluaren teoremari jarraituz, triangelu baten kanpo-angelua zorrozki handiagoa da albokoa ez den edozein barne-angelu baino. $\triangle ABP$ triangeluari aplikatuz:
+<ConceptLink targetId="sistema-absoluto">Geometria absolutuko</ConceptLink> kanpo-angeluaren teoremaren arabera, triangelu baten edozein kanpo-angelu zorrozki handiagoa da albokoak ez diren barne-angeluak baino. $\triangle ABP$ triangeluari aplikatuz:
 
 <Formula>
   $$ \alpha > \beta $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} target="conclusion" title="Ezeztapena eta amaierako ondorioa">
-$\alpha > \beta$ desberdintzak zuzenean ezeztatzen du hasierako $\alpha \cong \beta$ hipotesia. Elkarbaketaren suposizioak kontraesan logiko batera eramaten duenez, $l$ eta $m$ zuzenek ezin dute elkar ebakitzeko punturik izan, eta nahitaez <ConceptLink targetId="paralelas">paraleloak</ConceptLink> dira ($l \parallel m$).
+<ProofStep number={5} target="conclusion" title="Kontraesana eta ondorio formala">
+$\alpha > \beta$ desberdintzak zuzenean ukatzen du hasierako $\alpha \cong \beta$ hipotesia. Ebakidura onartzeak kontraesan logiko batera eramaten duenez, $l$ eta $m$ zuzenek ezin dute elkar ebaki eta nahitaez <ConceptLink targetId="paralelas">paraleloak</ConceptLink> dira ($l \parallel m$).
 </ProofStep>
 
 <Separador />
 
-### Dedukzio-analisia
+### Azterketa deduktiboa
 
 <Nota>
-  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.27 Proposizioa. Frogapen honek ez du <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomarik</ConceptLink> erabiltzen, beraz baliogarria da <ConceptLink targetId="sistema-absoluto">geometria absolutu</ConceptLink> osoan.
+  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.27 Proposizioa. Frogapen honek ez du <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomarik</ConceptLink> erabiltzen, beraz baliagarria da <ConceptLink targetId="sistema-absoluto">geometria absolutu</ConceptLink> osoan.
 </Nota>
 
 </DemonstrationSection>

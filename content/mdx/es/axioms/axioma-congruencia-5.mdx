@@ -2,35 +2,46 @@ export const metadata = {
   id: "axioma-congruencia-5",
   lang: "es",
   type: "axioma",
-  title: "Axioma III.5 (Criterio LAL de Congruencia)",
-  description: "Si dos triángulos tienen dos lados y el ángulo comprendido respectivamente congruentes, entonces sus ángulos restantes son también congruentes.",
+  title: "Axioma III.5 (Criterio de congruencia LAL)",
+  description: "Si dos triángulos tienen dos lados y el ángulo comprendido respectivamente congruentes, entonces los restantes ángulos correspondientes son congruentes.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
   ]
 };
 
 import { SAS } from '@content/diagrams/Axiomas/SAS';
 export const Simulation = SAS;
 
-<Capitular letra="E" />l quinto axioma de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> (conocido clásicamente como el criterio Lado-Ángulo-Lado o LAL) constituye el nexo fundamental entre la congruencia de <ConceptLink targetId="segmento">segmentos</ConceptLink> y la congruencia de <ConceptLink targetId="angulo">ángulos</ConceptLink>. Garantiza la superposición rígida de <ConceptLink targetId="triangulo">triángulos</ConceptLink> en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
+<Capitular letra="E" />l quinto axioma de congruencia de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> formula rigurosamente el criterio Lado-Ángulo-Lado (LAL) para la <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink> de <ConceptLink targetId="triangulo">triángulos</ConceptLink>. A diferencia del planteamiento de Euclides basado en el movimiento de superposición de figuras, Hilbert postula la rigidez triangular intrínseca como un principio axiomático fundamental.
 
-<Definicion title="">
-  Sean $\triangle ABC$ y $\triangle A'B'C'$ dos <ConceptLink targetId="triangulo">triángulos</ConceptLink>. Si los segmentos $\overline{AB} \cong \overline{A'B'}$, $\overline{AC} \cong \overline{A'C'}$, y el ángulo comprendido $\angle BAC \cong \angle B'A'C'$, entonces los ángulos restantes resultan respectivamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>:
+<Definicion title="Enunciado formal">
+  Sean $\triangle ABC$ y $\triangle A'B'C'$ dos <ConceptLink targetId="triangulo">triángulos</ConceptLink>. Si $\overline{AB} \cong \overline{A'B'}$, $\overline{AC} \cong \overline{A'C'}$ y $\angle BAC \cong \angle B'A'C'$, entonces se verifican las congruencias angulares correspondientes:
   $$
-  (\overline{AB} \cong \overline{A'B'}) \land (\overline{AC} \cong \overline{A'C'}) \land (\angle BAC \cong \angle B'A'C') \implies (\angle ABC \cong \angle A'B'C') \land (\angle ACB \cong \angle A'C'B')
+  (\overline{AB} \cong \overline{A'B'} \land \overline{AC} \cong \overline{A'C'} \land \angle BAC \cong \angle B'A'C') \implies (\angle ABC \cong \angle A'B'C' \land \angle ACB \cong \angle A'C'B')
   $$
+  Consecuentemente, se deduce que los terceros lados son congruentes ($\overline{BC} \cong \overline{B'C'}$) y ambos triángulos son plenamente congruentes ($\triangle ABC \cong \triangle A'B'C'$).
 </Definicion>
 
 <Separador />
 
-### Representación visual
+### Representación visual e interacción
 
-La fijación de los lados congruentes <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> y <VisualBind element="AC" color="pavo">$\overline{AC}$</VisualBind> junto con el ángulo comprendido <VisualBind element="angA" color="terracota">$\angle BAC$</VisualBind> determina unívocamente la forma y posición del triángulo, forzando la congruencia total de la figura.
+En la simulación interactiva, los triángulos <VisualBind element="pA" color="carbon">$\triangle ABC$</VisualBind> y <VisualBind element="pAA" color="carbon">$\triangle A'B'C'$</VisualBind> muestran lados congruentes <VisualBind element="segAB" color="terracota">$\overline{AB} \cong \overline{A'B'}$</VisualBind> y <VisualBind element="segAC" color="terracota">$\overline{AC} \cong \overline{A'C'}$</VisualBind> junto con el ángulo comprendido <VisualBind element="nonReflexAngleBAC" color="ocre">$\angle A \cong \angle A'$</VisualBind>. La correspondencia visual bloquea la forma del segundo triángulo, garantizando la total igualdad métrica.
 
 <Separador />
 
-### Significado axiomático
+### Significado geométrico y alcance
 
-A diferencia de Euclides, que intentaba "demostrar" la superposición mediante un movimiento rígido continuo no definido axiomáticamente, Hilbert postula la congruencia LAL como un axioma fundamental. A partir de este postulado se demuestran los restantes criterios de congruencia (ALA, LLL) y los teoremas del <ConceptLink targetId="triangulo-isosceles">triángulo isósceles</ConceptLink>.
+Este axioma evita las dificultades lógicas del "movimiento rígido" de figuras en el plano abstracto. Proporciona la herramienta deductiva fundamental para demostrar todos los criterios de congruencia posteriores (<ConceptLink targetId="teorema-congruencia-ala">ALA</ConceptLink>, LLL) y el <ConceptLink targetId="teorema-triangulo-isosceles">teorema del triángulo isósceles</ConceptLink> en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+
+<Separador />
+
+### Propiedades
+
+- **Rigidez planar triangular:** Tres elementos independientes determinan unívocamente la totalidad de las magnitudes de un triángulo.
+- **Fundamento deductivo:** Permite deducir los criterios ALA, LAA y LLL sin recurrir a axiomas suplementarios.
+- **Validez universal:** Es plenamente válido tanto en la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink> como en la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>.

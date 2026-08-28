@@ -3,36 +3,69 @@ export const metadata = {
   lang: "en",
   type: "sistema-axiomatico",
   title: "Euclidean axiomatic system",
-  description: "The canonical axiomatic framework for standard plane geometry, composed of absolute geometry and Playfair's parallel axiom.",
+  description: "The canonical axiomatic structure of standard planar geometry, comprising absolute geometry and Playfair's parallel axiom.",
   branch: "51M",
-  axiomas: ["axioma-paralelas-euclides"]
+  axiomas: [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-incidencia-4",
+    "axioma-incidencia-5",
+    "axioma-incidencia-6",
+    "axioma-incidencia-7",
+    "axioma-incidencia-8",
+    "axioma-orden-1",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-4",
+    "axioma-congruencia-1",
+    "axioma-congruencia-2",
+    "axioma-congruencia-3",
+    "axioma-congruencia-4",
+    "axioma-congruencia-5",
+    "axioma-paralelas-euclides",
+    "axioma-arquimedes",
+    "axioma-completitud"
+  ],
+  models: [
+    "modelo-cartesiano"
+  ],
+  authors: ["euclides", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Postulate 5", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §5", role: "primary" }
+  ]
 };
 
-<Capitular letra="T" />he Euclidean axiomatic system represents the classical formal framework for plane geometry. It is obtained by incorporating the fifth parallel postulate (in Playfair's equivalent formulation) into <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, establishing zero curvature for the plane and defining scale rigidity for geometric figures.
+<Capitular letra="T" />he Euclidean axiomatic system constitutes the classical formal framework of ordinary planar and spatial geometry. It is obtained by adjoining <ConceptLink targetId="euclides">Euclid's</ConceptLink> parallel postulate (in Playfair's uniqueness formulation) to the foundational base of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, establishing zero spatial curvature and admitting similar figures at arbitrary scales.
 
 <Separador />
 
 ### Axiomatic constitution
 
-The Euclidean system integrates the complete set of Hilbert's principles:
+The Euclidean system incorporates all Hilbertian axiomatic groups alongside the uniqueness of parallels:
 
-1. **Foundation of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>**: Gathers all axioms of <ConceptLink targetId="sistema-incidencia">incidence</ConceptLink> (I.1-I.8), <ConceptLink targetId="orden">order</ConceptLink> (II.1-II.4), <ConceptLink targetId="congruencia">congruence</ConceptLink> (III.1-III.5), and continuity (IV.1-IV.2).
-2. **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euclidean parallel axiom (V.1)</ConceptLink>**: Given a <ConceptLink targetId="recta">line</ConceptLink> $l$ and a <ConceptLink targetId="punto">point</ConceptLink> $P \notin l$ in a <ConceptLink targetId="plano">plane</ConceptLink>, there exists at most one line $l'$ containing $P$ that does not intersect $l$:
-   $$ \forall l \in \mathcal{L}, \forall P \notin l, \exists! l' \in \mathcal{L} \text{ such that } P \in l' \land l \cap l' = \emptyset $$
+1. **Base of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>**: Gathers all axioms of <ConceptLink targetId="sistema-incidencia">incidence</ConceptLink> (I.1-I.8), <ConceptLink targetId="axioma-orden-1">order</ConceptLink> (II.1-II.4), <ConceptLink targetId="axioma-congruencia-1">congruence</ConceptLink> (III.1-III.5), and continuity (V.1-V.2).
+2. **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euclidean parallel axiom (IV.1 / Playfair)</ConceptLink>**: Given a <ConceptLink targetId="recta">line</ConceptLink> $l$ and a <ConceptLink targetId="punto">point</ConceptLink> $P \notin l$ in a <ConceptLink targetId="plano">plane</ConceptLink> $\mathcal{P}$, there exists exactly one line $l'$ passing through $P$ that does not intersect $l$:
+   $$
+   \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists! l' \in \mathcal{L} \ (P \in l' \land l \cap l' = \emptyset)
+   $$
 
 <Separador />
 
 ### Fundamental theorems of the system
 
-The presence of the parallel axiom triggers characteristic metric consequences:
+The Euclidean parallel axiom unlocks the hallmark theorems of synthetic geometry:
 
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Constant angle sum</ConceptLink>**: The sum of interior <ConceptLink targetId="angulo">angles</ConceptLink> in any <ConceptLink targetId="triangulo">triangle</ConceptLink> is strictly equal to $180^\circ$.
-- **<ConceptLink targetId="teorema-tales">Thales' theorem and similarity</ConceptLink>**: Parallel lines cut by transversals determine proportional segments, enabling the existence of similar figures of different sizes without angular distortion.
-- **<ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>**: In every <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink>, the area of the square erected on the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> equals the sum of the areas of the squares on the <ConceptLink targetId="cateto">legs</ConceptLink> ($a^2 + b^2 = c^2$).
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Constant angle sum</ConceptLink>**: The sum of interior <ConceptLink targetId="angulo">angles</ConceptLink> in any <ConceptLink targetId="triangulo">triangle</ConceptLink> is exactly $180^\circ$ ($\pi\text{ rad}$).
+- **<ConceptLink targetId="teorema-tales">Thales's theorem and similarity</ConceptLink>**: Parallel lines cut by transversals intercept proportional line <ConceptLink targetId="segmento">segments</ConceptLink>, establishing the concept of similar figures of distinct sizes without angular distortion.
+- **<ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>**: In every <ConceptLink targetId="triangulo-rectangulo">right-angled triangle</ConceptLink>, the area of the square on the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> equals the sum of the areas of the squares on the <ConceptLink targetId="cateto">legs</ConceptLink> ($a^2 + b^2 = c^2$).
+- **Existence of parallelograms and rectangles**: Quadrilaterals with four right angles and congruent opposite sides exist.
 
 <Separador />
 
-### Representative model and consistency
+### Canonical model and consistency
 
-- **<ConceptLink targetId="modelo-cartesiano">Cartesian model $\mathbb{R}^2$</ConceptLink>**: Serves as the canonical analytic model of Euclidean geometry.
-- **Relative consistency**: The logical consistency of the Euclidean system is equivalent to that of the <ConceptLink targetId="numero-real">real number</ConceptLink> field and Zermelo-Fraenkel set theory.
+- **<ConceptLink targetId="modelo-cartesiano">Cartesian model $\mathbb{R}^n$</ConceptLink>**: Serves as the canonical analytical model of Euclidean geometry, equipped with the standard inner product $\langle u, v \rangle = \sum u_i v_i$.
+- **Consistency and categoricity**: Hilbert proved that the consistency of the Euclidean axiomatic system is equiconsistent with the arithmetic of the real field $\mathbb{R}$. With the continuity axioms included, the system is categorical in every fixed dimension.

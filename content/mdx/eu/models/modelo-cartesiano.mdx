@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "modelo",
   title: "Plano kartesiarra",
-  description: "Zenbaki errealen bikote ordenatuetan oinarritutako geometria euklidesar bi dimentsionalaren eredu analitiko kanonikoa.",
+  description: "Bi dimentsioko geometria euklidearraren eredu analitiko kanonikoa, zenbaki errealen bikote ordenatuetan oinarritua.",
   branch: "51M",
   satisfies: ["sistema-euclidiano", "sistema-absoluto"],
   axioms_verified: ["axioma-incidencia-1", "axioma-paralelas-euclides"],
@@ -13,33 +13,33 @@ export const metadata = {
 import { ModeloCartesiano } from '@content/diagrams/Models/ModeloCartesiano';
 export const Simulation = ModeloCartesiano;
 
-<Capitular letra="P" />lano kartesiarrak $\mathbb{R}^2$ bi dimentsioko <ConceptLink targetId="geometria-euclidiana">geometria euklidesarraren</ConceptLink> eredu analitiko estandarra osatzen du. Objektu geometrikoak <ConceptLink targetId="numero-real">zenbaki errealen</ConceptLink> gorputzaren gaineko bikote ordenatuen egitura aljebraikoetara zorrozki itzultzean, geometria sintetikoaren koherentzia analisian oinarritzen du.
+<Capitular letra="P" />lano kartesiarra $\mathbb{R}^2$ bi dimentsioko geometria euklidearraren eredu analitiko estandarra da. Elementu geometriko sintetikoak zenbaki errealen $\mathbb{R}$ gorputzeko bikote ordenatuen egitura aljebraikoetara zehaztasunez itzuliz, geometria sintetikoaren trinkotasuna analisi matematikoan eta aritmetikan finkatzen du.
 
 <Separador />
 
 ### Ereduaren definizioa
 
-$\mathbb{R}^2 = \{(x, y) \mid x, y \in \mathbb{R}\}$ bi dimentsioko espazioan, geometriako elementu sintetikoak multzo-teoriaren eta aljebra linealaren bidez interpretatzen dira:
+Bi dimentsioko $\mathbb{R}^2 = \{(x, y) \mid x, y \in \mathbb{R}\}$ espazioan, geometriako oinarrizko elementuak multzo-teoriaren eta aljebra linealaren bidez definitzen dira:
 
-- **<ConceptLink targetId="punto">Puntuak</ConceptLink>**: $\mathbb{R}^2$ espazioko <VisualBind element="A" color="terracota">$A(x_A, y_A)$</VisualBind>, <VisualBind element="B" color="musgo">$B(x_B, y_B)$</VisualBind> eta <VisualBind element="P" color="ocre">$P(x_P, y_P)$</VisualBind> banakako bikoteak dira.
-- **<ConceptLink targetId="recta">Zuzenak</ConceptLink>**: $ax + by + c = 0$ motako ekuazio lineala betetzen duten puntu-multzoak dira, non $(a, b) \neq (0, 0)$ baita. <VisualBind element="lineAB" color="musgo">$l$ zuzenak</VisualBind> $A$ eta $B$ puntu biak dauzka, eta <VisualBind element="parallelP" color="pavo">$l'$ zuzen paraleloa</VisualBind> $P$ puntutik igarotzen da.
-- **<ConceptLink targetId="incidencia">Intzidentzia</ConceptLink>**: $A$ puntu bat $l$ zuzen batean dago baldin eta haren koordenatuek $l$ zuzenaren ekuazio lineala betetzen badute.
-- **<ConceptLink targetId="distancia">Distantzia euklidesarra</ConceptLink>**: Edozein bi $A$ eta $B$ puntutarako, metrika euklidesarra formula pitagorikoaren bidez ematen da:
+- **<ConceptLink targetId="punto">Puntuak</ConceptLink>**: $\mathbb{R}^2$-ko banakako elementuak dira, beren koordenatuen bidez adieraziak: <VisualBind element="A" color="terracota">$A(x_A, y_A)$</VisualBind>, <VisualBind element="B" color="terracota">$B(x_B, y_B)$</VisualBind> eta <VisualBind element="P" color="ocre">$P(x_P, y_P)$</VisualBind>.
+- **<ConceptLink targetId="recta">Zuzenak</ConceptLink>**: $ax + by + c = 0$ motako ekuazio lineala betetzen duten puntuen azpimultzoak dira, non $(a, b) \neq (0, 0)$. <VisualBind element="lineAB" color="musgo">$l$ zuzenak</VisualBind> $A$ eta $B$ puntuak ditu barne, eta <VisualBind element="parallelP" color="canela">$l'$ zuzen paraleloa</VisualBind> $P$ kanpoko puntutik igarotzen da.
+- **Intzidentzia**: $A(x_A, y_A)$ puntua $l: ax + by + c = 0$ zuzenarekiko intzidentea da baldin eta soilik baldin $a x_A + b y_A + c = 0$ bada.
+- **Distantzia euklidearra**: Edozein bi $A$ eta $B$ punturen artean, distantzia euklidearra <ConceptLink targetId="teorema-pitagoras">Pitagorasen</ConceptLink> formulak ematen du:
   $$ d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2} $$
 
 <Separador />
 
 ### Axiomen egiaztapena
 
-Plano kartesiarrak erabat betetzen du <ConceptLink targetId="sistema-euclidiano">sistema axiomatiko euklidesar</ConceptLink> osoa:
+Plano kartesiarrak <ConceptLink targetId="sistema-euclidiano">sistema axiomatiko euklidear</ConceptLink> osoa betetzen du:
 
-- **<ConceptLink targetId="incidencia">Intzidentzia</ConceptLink>-axiomak**: Edozein bi $A$ eta $B$ puntu desberdinetarako, ekuazio lineal bakarra dago biak batera betetzen dutena.
-- **<ConceptLink targetId="orden">Ordena</ConceptLink>-axiomak**: <ConceptLink targetId="estar-entre">Artean egoteko</ConceptLink> erlazioa metrikoki egiaztatzen da $d(A, B) + d(B, C) = d(A, C)$ berdintasunaren bidez.
-- **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euklidesen paraleloen axioma</ConceptLink>**: Edozein $l$ zuzen eta kanpoko $P \notin l$ puntu emanda, $P$ puntua daukan <ConceptLink targetId="paralelismo">zuzen paralelo</ConceptLink> bakarra dago $l'$ ($m = -a/b$ malda aljebraiko berdina duten zuzenak).
+- **<ConceptLink targetId="axioma-incidencia-1">I-1 intzidentzia-axioma</ConceptLink>**: Edozein bi $A(x_A, y_A)$ eta $B(x_B, y_B)$ puntu ezberdinetarako, $\det \begin{pmatrix} x & y & 1 \\ x_A & y_A & 1 \\ x_B & y_B & 1 \end{pmatrix} = 0$ ekuazioak definitutako zuzen bakarra existitzen da.
+- **Ordenaren axiomak**: <ConceptLink targetId="estar-entre">Artean egotearen</ConceptLink> erlazioa ($B$ puntua $A$-ren eta $C$-ren artean dago) modu metrikoan $d(A, B) + d(B, C) = d(A, C)$ berdintzaren bidez egiaztatzen da, $A \neq B \neq C$ izanik.
+- **<ConceptLink targetId="axioma-paralelas-euclides">Euklidesen paraleloen axioma</ConceptLink>**: $l: ax + by + c = 0$ zuzen bat eta bertan ez dagoen $P(x_P, y_P) \notin l$ puntu bat emanda, $P$-tik igarotzen den <ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink> bakar bat existitzen da, $l': ax + by - (ax_P + by_P) = 0$.
 
 <Separador />
 
-### Propietateak
+### Oinarrizko propietateak
 
-- **Baitakotasuna eta jarraitutasuna**: $\mathbb{R}$ gorputz jarraituaren osotasun topologikoa okerpenik gabe jasotzen du.
-- **Isometriarekiko inbariantza**: Translazioek, biraketek eta erreflexioek $d(A, B)$ metrika eta <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-egitura gordetzen dituzte.
+- **Osotasun metrikoa**: $\mathbb{R}$ gorputz errealaren osotasun topologikoa eta ordenaren jarraitutasuna oinordetzen ditu.
+- **Inbariantza isometrikoa**: Isometriek (translazioek, errotazioek eta erreflexioek) distantziak, <ConceptLink targetId="angulo">angeluak</ConceptLink> eta <ConceptLink targetId="triangulo">triangeluen</ConceptLink> arteko <ConceptLink targetId="congruencia">kongruentzia-erlazioak</ConceptLink> kontserbatzen dituzte.

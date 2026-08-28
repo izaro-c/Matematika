@@ -2,8 +2,8 @@ export const metadata = {
   id: "teorema-triangulo-isosceles",
   type: "teorema",
   title: "Triangelu isoszelearen teorema",
-  description: "Edozein triangelu isoszeletan, alde kongruenteei aurrez aurre dauden angeluak beren artean kongruenteak dira.",
-  statement: "AB ≅ AC betetzen duen △ABC triangelu batan, ezinbestean ∠ABC ≅ ∠ACB betetzen da.",
+  description: "Edozein triangelu isoszeletan, alde kongruenteei aurrez aurre dauden angeluak elkarren artean kongruenteak dira.",
+  statement: "AB ≅ AC betetzen duen △ABC triangelu orotan, nahitaez betetzen da ∠ABC ≅ ∠ACB dela.",
   branch: "51M",
   hasSimulation: true,
   authors: ["tales", "euclides"],
@@ -16,31 +16,31 @@ export const metadata = {
 import { TrianguloIsosceles } from '@content/diagrams/Teoremas/TrianguloIsosceles';
 export const Simulation = TrianguloIsosceles;
 
-<Capitular letra="T" />riangelu isoszelearen teoremak, <ConceptLink targetId="euclides">Euklidesen</ConceptLink> Elementuetan *Pons Asinorum* izenez ezagutzen denak, bi <ConceptLink targetId="lado">alde</ConceptLink> berdin dituzten <ConceptLink targetId="triangulo">triangeluen</ConceptLink> simetria angeluar nagusia ezartzen du plano euklidetarrean.
+<Capitular letra="T" />riangelu isoszelearen teoremak, historikoki <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> lanean *Pons Asinorum* (astoen zubia) izenez ezagunak, bi alde berdin dituzten <ConceptLink targetId="triangulo">triangeluen</ConceptLink> oinarrizko simetria angeluarra ezartzen du plano euklidetarrean.
 
 <Separador />
 
 ### Enuntziatu formala
 
-Bitzak $\triangle ABC$ <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo">triangelu</ConceptLink></VisualBind> bat, zeinetan <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind> eta <VisualBind element="lado-ac" color="terracota">$\overline{AC}$</VisualBind> aldeak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> baitira ($\overline{AB} \cong \overline{AC}$). Ezinbestean betetzen da <VisualBind element="angulos-base" color="ocre">oinarriko</VisualBind> $\angle ABC$ eta $\angle ACB$ angeluak beren artean kongruenteak direla:
+Izan bedi $\triangle ABC$ <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo">triangelu</ConceptLink></VisualBind> bat, non <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind> eta <VisualBind element="lado-ac" color="terracota">$\overline{AC}$</VisualBind> aldeak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> diren ($\overline{AB} \cong \overline{AC}$). Nahitaez egiaztatzen da <VisualBind element="angulos-base" color="ocre">oinarriko angeluak</VisualBind> $\angle ABC$ eta $\angle ACB$ kongruenteak direla:
 
 <Formula>
   $$ \overline{AB} \cong \overline{AC} \quad \Longrightarrow \quad \angle ABC \cong \angle ACB $$
 </Formula>
 
-Beste modura esanda, triangelu isoszele orotan, alde kongruenteei aurrez aurre dauden angeluak nahitaez kongruenteak dira.
+Hau da, triangelu isoszele orotan, alde kongruenteei angelu zorrozki kongruenteak kontrajartzen zaizkie.
 
 <Separador />
 
 ### Froga eta oinarritze axiomatikoa
 
-Teorema honek hainbat frogabide klasiko ditu:
-- **Papusen froga**: $\triangle ABC$ triangeluaren eta bere buruaren islapen den $\triangle ACB$ triangeluaren arteko korrespondentzia aztertzen du. $\overline{AB} \cong \overline{AC}$, $\angle BAC \cong \angle CAB$ eta $\overline{AC} \cong \overline{AB}$ direnez, AL-A irizpideaz $\triangle ABC \cong \triangle ACB$ lortzen da, eta ondorioz $\angle ABC \cong \angle ACB$.
-- **Erditzaile bidezko froga**: $A$ erpineko barne-angeluaren <ConceptLink targetId="bisectriz">erditzailea</ConceptLink> marraztean, jatorrizko triangelua bi triangelu kongruentetan banatzen da.
+Teoremak dedukzio bide klasiko anitz onartzen ditu:
+- **Papusen froga**: $\triangle ABC$ triangeluaren eta bere ispilu-kopia den $\triangle ACB$ triangeluaren arteko erlazioa aztertzen du. $\overline{AB} \cong \overline{AC}$, $\angle BAC \cong \angle CAB$ eta $\overline{AC} \cong \overline{AB}$ direnez, <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>AL-A (Aldea-Angelua-Aldea) kongruentzia-irizpidearen</ConceptLink> bidez $\triangle ABC \cong \triangle ACB$ lortzen da, eta zuzenean ondorioztatzen da $\angle ABC \cong \angle ACB$.
+- **Erdibitzailearen bidezko froga**: $A$ erpineko angeluaren <ConceptLink targetId="demo-existencia-bisectriz">bisektorea</ConceptLink> marraztuz, honek jatorrizko triangelua bi triangelu kongruentetan banatzen du.
 
 <Separador />
 
-### Alderantzizkoa eta korolario bidezko ondorioak
+### Alderantzizko teorema eta korolarioak
 
-- **Alderantzizko teorema**: $\triangle ABC$ triangelu batean $\angle ABC$ eta $\angle ACB$ angeluak kongruenteak badira, orduan aurrez aurreko aldeak ere nahitaez kongruenteak dira ($\overline{AB} \cong \overline{AC}$).
-- **Triangelu aldeberdinaren korolarioa**: Triangelu bat <ConceptLink targetId="triangulo-equilatero">aldeberdina</ConceptLink> da baldin eta soilik baldin angeluberdina bada (bere hiru barne-angeluek $60^\circ$ neurtzen dute).
+- **Alderantzizko teorema**: $\triangle ABC$ triangelu batean $\angle ABC$ eta $\angle ACB$ angeluak kongruenteak badira, orduan aurrez aurreko aldeak nahitaez kongruenteak dira ($\overline{AB} \cong \overline{AC}$).
+- **Triangelu aldekidearen korolarioa**: Triangelu bat aldekidea da baldin eta soilik baldin angelukidea bada (bere hiru barne-angeluek $60^\circ$ neurtzen dute).

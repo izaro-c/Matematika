@@ -3,7 +3,7 @@ export const metadata = {
   type: "teorema",
   title: "Teorema de Tales",
   description: "Si dos rectas secantes son cortadas por una familia de rectas paralelas, los segmentos determinados en una de las secantes son proporcionales a los segmentos correspondientes en la otra.",
-  statement: "Sean r y r' dos rectas secantes cortadas por tres rectas paralelas L1, L2 y L3 en los puntos A, B, C y A', B', C' respectivamente. Entonces: AB / BC = A'B' / B'C'.",
+  statement: "Sean r y r' dos rectas secantes cortadas por tres rectas paralelas L1, L2 y L3 en los puntos A, B, C y A', B', C' respectivamente. Entonces: |AB| / |BC| = |A'B'| / |B'C'|.",
   branch: "51M",
   hasSimulation: true,
   authors: ["tales", "euclides"],
@@ -16,7 +16,7 @@ export const metadata = {
 import { Tales } from '@content/diagrams/Teoremas/Tales';
 export const Simulation = Tales;
 
-<Capitular letra="E" />l teorema de Tales fundamenta la teoría de la <ConceptLink targetId="semejanza">semejanza</ConceptLink> geométrica y las <ConceptLink targetId="proporcionalidad">proporciones</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink> euclidiano. Establece que la intersección de un sistema de <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> con dos <ConceptLink targetId="recta">rectas secantes</ConceptLink> conserva de manera invariantiva la razón entre las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> interceptados.
+<Capitular letra="E" />l teorema de Tales fundamenta la teoría de la <ConceptLink targetId="semejanza">semejanza</ConceptLink> geométrica y las proporciones en el plano euclidiano. Establece que la intersección de un sistema de <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> con dos <ConceptLink targetId="recta">rectas secantes</ConceptLink> conserva de manera invariantiva la razón entre las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> interceptados.
 
 <Separador />
 
@@ -28,18 +28,18 @@ Sean $r$ y $r'$ dos <ConceptLink targetId="recta">rectas secantes</ConceptLink> 
   $$ \frac{|\overline{AB}|}{|\overline{BC}|} = \frac{|\overline{A'B'}|}{|\overline{B'C'}|} \quad \Longleftrightarrow \quad \frac{|\overline{AB}|}{|\overline{A'B'}|} = \frac{|\overline{BC}|}{|\overline{B'C'}|} $$
 </Formula>
 
-De forma equivalente, la razón de las medidas de dos segmentos cualesquiera en la recta $r$ es rigurosamente idéntica a la razón de las medidas de sus segmentos homologables sobre la recta $r'$.
+De forma equivalente, la razón de las medidas de dos segmentos cualesquiera en la recta $r$ es rigurosamente idéntica a la razón de las medidas de sus segmentos homólogos sobre la recta $r'$.
 
 <Separador />
 
 ### Corolario para triángulos
 
-En cualquier <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$, si trazamos una recta $r$ <ConceptLink targetId="paralelas">paralela</ConceptLink> al lado $\overline{BC}$ que intersecte a los lados $\overline{AB}$ y $\overline{AC}$ en los puntos $D$ y $E$ respectivamente, se deduce que:
-- Los segmentos determinados en los lados son proporcionales: $\frac{\overline{AD}}{\overline{DB}} = \frac{\overline{AE}}{\overline{EC}}$.
+En cualquier <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$, si trazamos una recta $r$ <ConceptLink targetId="paralelas">paralela</ConceptLink> al lado $\overline{BC}$ que interseca a los lados $\overline{AB}$ y $\overline{AC}$ en los puntos $D$ y $E$ respectivamente, se deduce que:
+- Los segmentos determinados en los lados son proporcionales: $\frac{|\overline{AD}|}{|\overline{DB}|} = \frac{|\overline{AE}|}{|\overline{EC}|}$.
 - El triángulo determinado $\triangle ADE$ es <ConceptLink targetId="semejanza">semejante</ConceptLink> al triángulo original $\triangle ABC$.
 
 <Separador />
 
 ### Demostración y fundamentación axiomática
 
-La demostración euclidiana se apoya en el cálculo de <ConceptLink targetId="area">áreas</ConceptLink> de triángulos con la misma base o la misma altura. En la estructura axiomática moderna, requiere la propiedad de <ConceptLink targetId="axioma-arquimedes">Arquímedes</ConceptLink> y la continuidad de la recta real para garantizar la validez del teorema tanto para razones racionales como irracionales.
+La demostración euclidiana se apoya en el cálculo de <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>áreas de triángulos</ConceptLink> con la misma base o la misma altura comprendidos entre paralelas. En la estructura axiomática moderna, requiere la propiedad de <ConceptLink targetId="axioma-arquimedes">Arquímedes</ConceptLink> y la completitud de la recta real para garantizar la validez del teorema tanto para razones racionales como inconmensurables.

@@ -2,7 +2,7 @@ export const metadata = {
   "id": "demo-triangulo-isosceles",
   "type": "demostracion",
   "title": "Proof: Isosceles Triangle Theorem",
-  "description": "Elegant proof by Pappus using the self-congruence of an isosceles triangle with reversed corresponding base vertices.",
+  "description": "Classical proof based on constructing the angle bisector and establishing triangle congruence via the SAS criterion.",
   "parentTheorem": "teorema-triangulo-isosceles",
   "branch": "51M",
   "proofMethod": "metodo-directo",
@@ -10,7 +10,7 @@ export const metadata = {
   "tags": ["geometria", "triangulos", "congruencia"],
   "layout": "split",
   "sources": [
-    { "title": "Elements", author: "Euclid", locator: "Book I, Proposition 5 (Refined Pappus version)", role: "primary" }
+    { "title": "Elements", author: "Euclides", locator: "Book I, Proposition 5", role: "primary" }
   ]
 };
 
@@ -18,39 +18,43 @@ import { DemoTrianguloIsosceles } from "@content/diagrams/Demos/DemoTrianguloIso
 
 <DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
 
-<Capitular letra="F" />or any <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ possessing two <ConceptLink targetId="congruencia">congruent</ConceptLink> sides, the <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>isosceles triangle theorem</ConceptLink> is demonstrated. The proof establishes that the <ConceptLink targetId="angulo">angles</ConceptLink> opposite to those congruent sides (the base angles) are congruent to each other.
+<Capitular letra="G" />iven a <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ having two <ConceptLink targetId="congruencia">congruent</ConceptLink> sides, the <ConceptLink targetId="teorema-triangulo-isosceles">isosceles triangle theorem</ConceptLink> is demonstrated. The proof establishes that the <ConceptLink targetId="angulo">angles</ConceptLink> opposite those congruent sides (the base angles) are mutually congruent.
 
 <Separador />
 
 ### Step-by-step proof
 
-<ProofStep number={1} target="triangulo-base" title="Isosceles triangle hypothesis">
-Let <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> be a triangle with sides <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> and <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> of equal length:
+<ProofStep number={1} target="step-triangulo" title="Isosceles triangle hypothesis">
+Let $\triangle ABC$ be an isosceles triangle with sides $\overline{AB}$ and $\overline{AC}$ of equal metric length:
 
 <Formula>
   $$ \overline{AB} \cong \overline{AC} $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} target="correspondencia" title="Establishment of vertex self-correspondence">
-Consider triangle $\triangle ABC$ and a second copy with reversed base vertices: $\triangle ACB$. The correspondence between vertices is given by $(A, B, C) \leftrightarrow (A, C, B)$.
-</ProofStep>
-
-<ProofStep number={3} target="criterio-lal" title="Verification of the SAS congruence criterion">
-Comparing corresponding elements of $\triangle ABC$ and $\triangle ACB$:
-1. Side <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> is congruent to side <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> by hypothesis.
-2. Included <ConceptLink targetId="angulo">angle</ConceptLink> <VisualBind element="angulo-a" color="carbon">$\angle BAC$</VisualBind> is identical to itself ($\angle CAB$).
-3. Side <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> is congruent to side <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> by hypothesis.
-
-By <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>SAS congruence axioms</ConceptLink> (Side-Angle-Side), <ConceptLink targetId="congruencia">triangle congruence</ConceptLink> is deduced:
+<ProofStep number={2} target="step-bisectriz" title="Construction of the vertex angle bisector">
+Draw the angle bisector ray from vertex $A$, intersecting the base side $\overline{BC}$ at point $D$. By definition of <ConceptLink targetId="demo-existencia-bisectriz">angle bisector</ConceptLink>, it divides $\angle BAC$ into two congruent angles:
 
 <Formula>
-  $$ \triangle ABC \cong \triangle ACB $$
+  $$ \angle BAD \cong \angle CAD $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} target="conclusion" title="Equality of base angles">
-Since both triangles are congruent, their corresponding parts are congruent. In particular, angles opposite equal sides in the correspondence are identical: the angle at <ConceptLink targetId="vertice">vertex</ConceptLink> $B$ (<VisualBind element="angulo-b" color="terracota">$\angle ABC$</VisualBind>) is congruent to the angle at vertex $C$ (<VisualBind element="angulo-c" color="pavo">$\angle ACB$</VisualBind>):
+<ProofStep number={3} target="step-congruencia" title="Triangle congruence via the SAS criterion">
+Comparing subtriangles $\triangle ABD$ and $\triangle ACD$:
+1. $\overline{AB} \cong \overline{AC}$ by the initial hypothesis.
+2. $\angle BAD \cong \angle CAD$ by construction of the bisector.
+3. The segment $\overline{AD}$ is common to both triangles ($\overline{AD} \cong \overline{AD}$).
+
+By the SAS congruence axiom (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink>), triangle congruence is established:
+
+<Formula>
+  $$ \triangle ABD \cong \triangle ACD $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} target="step-angulos-base" title="Equality of the base angles">
+Since both triangles are congruent, all corresponding homologous elements are congruent. In particular, the angles at the base vertices satisfy:
 
 <Formula>
   $$ \angle ABC \cong \angle ACB $$
@@ -62,7 +66,7 @@ Since both triangles are congruent, their corresponding parts are congruent. In 
 ### Deductive analysis
 
 <Nota>
-  Book I, Proposition 5 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, historically known as the *Pons Asinorum*. This concise version without auxiliary lines is due to Pappus of Alexandria and lies within <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+  Book I, Proposition 5 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, historically known as the *Pons Asinorum*. This proof is valid in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> without reliance on the parallel postulate.
 </Nota>
 
 </DemonstrationSection>

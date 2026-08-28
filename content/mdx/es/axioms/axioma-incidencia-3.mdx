@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-3",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.3 (Existencia de puntos no colineales)",
-  description: "Existen al menos tres puntos en el espacio que no están situados sobre la misma recta.",
+  title: "Axioma I.3 (Existencia de tres puntos no colineales)",
+  description: "Existen al menos tres puntos en el espacio que no pertenecen a una misma recta.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
@@ -14,10 +16,10 @@ export const metadata = {
 import { Incidence3 } from '@content/diagrams/Axiomas/Incidence3';
 export const Simulation = Incidence3;
 
-<Capitular letra="E" />l tercer <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> establece la existencia de al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> que no son colineales. Este postulado rompe la unidimensionalidad del espacio geométrico, garantizando que el sistema no se reduce a una única <ConceptLink targetId="recta">recta</ConceptLink>.
+<Capitular letra="E" />l tercer axioma de incidencia postula la existencia de al menos tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> que no se encuentran alineados sobre una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink>. Este principio garantiza que el universo geométrico posee al menos dos dimensiones, impidiendo el colapso del espacio en una única línea unidimensional.
 
 <Definicion title="Enunciado formal">
-  Existen al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> $A, B, C \in \mathcal{S}$ tales que ninguna <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$ los contiene a los tres simultáneamente:
+  Existen al menos tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> $A, B, C \in \mathcal{S}$ tales que ninguna <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$ los contiene simultáneamente a los tres:
   $$
   \exists A, B, C \in \mathcal{S} \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
   $$
@@ -27,18 +29,18 @@ export const Simulation = Incidence3;
 
 ### Representación visual e interacción
 
-En la simulación interactiva, los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> forman una configuración no colineal. Al intentar trazar una recta por dos de ellos, el tercer punto queda de forma manifiesta fuera de dicha recta soporte.
+En la simulación interactiva, los tres puntos <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> forman un triángulo planar <VisualBind element="polygonABC" color="ocre">$\triangle ABC$</VisualBind>. Al desplazar cualquiera de los vértices, se comprueba que no existe ninguna recta única capaz de absorber los tres puntos simultáneamente mientras permanezcan en configuración no alineada.
 
 <Separador />
 
 ### Significado geométrico y alcance
 
-Al postular la existencia de al menos tres puntos no alineados, se fuerza a la geometría a tener una dimensión mínima de dos (plano). Sin este axioma, una única recta satisfaría todos los axiomas anteriores, colapsando el espacio a una sola dimensión.
+Garantiza la pluridimensionalidad intrínseca de la geometría. Al asegurar la existencia de ternas no colineales, proporciona la base indispensable para definir figuras de área positiva, tales como <ConceptLink targetId="triangulo">triángulos</ConceptLink> y <ConceptLink targetId="poligono">polígonos</ConceptLink> en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
 
 <Separador />
 
 ### Propiedades
 
-- **Multidimensionalidad mínima:** Garantiza que el espacio posee una extensión bidimensional o superior.
-- **Formación de triángulos:** Permite definir el concepto primitivo de <ConceptLink targetId="triangulo">triángulo</ConceptLink> como el conjunto de vértices $A, B, C$ no colineales.
-- **Independencia lineal:** Establece la noción de independencia posicional en <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
+- **Dimensionalidad mínima:** Asegura que la dimensión del espacio geométrico es estrictamente mayor o igual a $2$ ($\dim \ge 2$).
+- **Génesis del plano:** Junto con el axioma I.4, permite fijar la existencia de <ConceptLink targetId="plano" isDependency={true}>planos</ConceptLink> bien determinados.
+- **Independencia afín:** Los tres puntos actúan como base afín libre en dos dimensiones.

@@ -7,23 +7,25 @@ export const metadata = {
   branch: "51M",
   hasSimulation: false,
   authors: ["euclides", "hilbert"],
-  demos: [],
+  demos: ["demo-area-aditividad"],
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §19", role: "primary" }
   ]
 };
 
-<Capitular letra="E" />l teorema de aditividad del <ConceptLink targetId="area">área</ConceptLink> constituye el pilar fundamental de la teoría de la <ConceptLink targetId="teoria-medida-area">medición de superficies</ConceptLink> en la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>. Garantiza que la función de medida de área asignada a regiones <ConceptLink targetId="poligono">poligonales</ConceptLink> es una medida finitamente aditiva invariantiva frente a particiones.
+<Capitular letra="E" />l teorema de aditividad del área constituye el pilar fundamental de la <ConceptLink targetId="teoria-medida-area">medición de superficies</ConceptLink> en la geometría plana. Garantiza que la función de medida de área asignada a regiones poligonales es una medida finitamente aditiva invariantiva frente a particiones.
 
 <Separador />
 
 ### Enunciado formal
 
-Sea $R \subset \mathcal{P}$ una <ConceptLink targetId="region-convexa">región poligonal</ConceptLink> plana. Supóngase que $R$ es la <ConceptLink targetId="union-conjuntos">unión</ConceptLink> de un número finito de regiones poligonales $R_1, R_2, \dots, R_n$:
+Sea $R \subset \mathcal{P}$ una región poligonal plana. Supóngase que $R$ es la unión finita de regiones poligonales $R_1, R_2, \dots, R_n$:
 
-$$ R = \bigcup_{i=1}^n R_i $$
+<Formula>
+  $$ R = \bigcup_{i=1}^n R_i $$
+</Formula>
 
-tales que para todo par $i \neq j$, el interior de $R_i$ e interior de $R_j$ son disjuntos ($\text{Int}(R_i) \cap \text{Int}(R_j) = \emptyset$). Se verifica rigurosamente la propiedad aditiva de la función de medida de área $\mu$:
+tales que para todo par $i \neq j$, el interior de $R_i$ y el interior de $R_j$ son disjuntos ($\text{Int}(R_i) \cap \text{Int}(R_j) = \emptyset$). Se verifica rigurosamente la propiedad aditiva de la función de medida de área:
 
 <Formula>
   $$ \text{Área}(R) = \sum_{i=1}^n \text{Área}(R_i) $$
@@ -44,7 +46,7 @@ En la formalización de <ConceptLink targetId="hilbert">David Hilbert</ConceptLi
 
 ### Invariancia y normalización
 
-La función de medida de área satisface tres axiomas fundamentales:
-1. **Positividad**: $\text{Área}(R) > 0$ para toda región no vacía.
+La función de medida de área satisface tres propiedades fundamentales:
+1. **Positividad**: $\text{Área}(R) > 0$ para toda región poligonal no vacía.
 2. **Invariancia por congruencia**: Si $R_1 \cong R_2$, entonces $\text{Área}(R_1) = \text{Área}(R_2)$.
-3. **Aditividad finita**: $\text{Área}(R_1 \cup R_2) = \text{Área}(R_1) + \text{Área}(R_2)$ para regiones disjuntas en el interior.
+3. **Aditividad finita**: $\text{Área}(R_1 \cup R_2) = \text{Área}(R_1) + \text{Área}(R_2)$ para regiones con interiores disjuntos.

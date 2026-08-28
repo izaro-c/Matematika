@@ -3,24 +3,26 @@ export const metadata = {
   lang: "en",
   type: "axioma",
   title: "Axiom II.4 (Pasch's Axiom)",
-  description: "Given a line in the plane of a triangle not passing through any vertex: if it intersects one side, it must intersect one of the other two sides.",
+  description: "If a line coplanar with a triangle intersects one of its sides without passing through its vertices, it must intersect one of the other two sides.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "orden",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" },
-    { title: "Vorlesungen über neuere Geometrie", author: "Moritz Pasch", locator: "§2", role: "secondary" }
+    { title: "Vorlesungen über neuere Geometrie", author: "Moritz Pasch", locator: "1882", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
   ]
 };
 
 import { Pasch } from '@content/diagrams/Axiomas/Pasch';
 export const Simulation = Pasch;
 
-<Capitular letra="F" />ormulated by <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink> and integrated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, the fourth <ConceptLink targetId="orden">order axiom</ConceptLink> extends the notion of betweenness from a single line to the two-dimensional plane. It states that if a <ConceptLink targetId="recta">line</ConceptLink> enters the interior of a <ConceptLink targetId="triangulo">triangle</ConceptLink> by intersecting one of its sides without passing through any of its vertices, it must exit by intersecting one of the other two sides.
+<Capitular letra="F" />ormulated originally by <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink> and incorporated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> as the fourth axiom of order, this postulate resolves one of the most famous tacit deductive gaps in Euclid's *Elements*. It guarantees that a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> entering the interior of a <ConceptLink targetId="triangulo">triangle</ConceptLink> through one of its sides cannot become trapped or terminate inside, and must inevitably exit through a second side.
 
 <Definicion title="Formal statement">
-  Given three non-collinear <ConceptLink targetId="punto">points</ConceptLink> $A, B, C$ and a <ConceptLink targetId="recta">line</ConceptLink> $l$ in their supporting plane not passing through any vertex $A, B, C$: if $l$ intersects the interior of <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$, then $l$ intersects either segment $\overline{AC}$ or segment $\overline{BC}$:
+  Let $A, B, C \in \mathcal{S}$ be three non-collinear <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>, and let $l \in \mathcal{L}$ be a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> in plane $\pi(ABC)$ passing through none of the vertices ($A, B, C \notin l$). If $l$ contains a point $P$ lying <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $B$ ($A\text{-}P\text{-}B$, so $l$ intersects <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$), then $l$ contains a point $Q$ with $A\text{-}Q\text{-}C$ or a point $R$ with $B\text{-}R\text{-}C$:
   $$
-  \forall A, B, C \text{ non-collinear}, \ \forall l \subset \mathcal{P}_{ABC} \ \bigl((A,B,C \notin l \land l \cap \overline{AB} \neq \emptyset) \implies (l \cap \overline{AC} \neq \emptyset \veebar l \cap \overline{BC} \neq \emptyset)\bigr)
+  (P \in l \land A\text{-}P\text{-}B) \implies \bigl(\exists Q \in l \ (A\text{-}Q\text{-}C) \lor \exists R \in l \ (B\text{-}R\text{-}C)\bigr)
   $$
 </Definicion>
 
@@ -28,18 +30,18 @@ export const Simulation = Pasch;
 
 ### Visual representation and interaction
 
-In the interactive simulation, intersecting line <VisualBind element="lineL" color="terracota">$l$</VisualBind> cuts through side <VisualBind element="sideAB" color="carbon">$\overline{AB}$</VisualBind> of triangle $ABC$. Moving or rotating the intersecting line without touching any vertex demonstrates that the line is forced to cut exclusively through either side <VisualBind element="sideAC" color="marino">$\overline{AC}$</VisualBind> or side <VisualBind element="sideBC" color="marino">$\overline{BC}$</VisualBind>.
+In the interactive simulation, triangle <VisualBind element="triangle" color="canela">$\triangle ABC$</VisualBind> with vertices <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> is crossed by the movable line <VisualBind element="lineL" color="carbon">$l$</VisualBind>. Sliding entry point <VisualBind element="pP" color="ocre">$P$</VisualBind> along side $\overline{AB}$ forces the line to intersect a second side continuously at point <VisualBind element="pQ" color="ocre">$Q$</VisualBind>.
 
 <Separador />
 
 ### Geometric significance and scope
 
-Pasch's axiom is indispensable for proving that a line divides a plane into two connected regions or half-planes (the plane separation theorem). Without this postulate, Euclid made logical omissions by implicitly assuming that certain lines and intersections existed inside figures.
+Pasch's axiom extends one-dimensional linear ordering to planar topological separation. It provides the rigorous foundation for the Jordan curve theorem for simple polygons and establishes the concepts of convex interior and exterior regions in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
 
 <Separador />
 
 ### Properties
 
-- **Plane separation:** Enables proving that any line $l$ in a plane partitions it into two disjoint <ConceptLink targetId="convexo">convex</ConceptLink> half-planes.
-- **Planar topology:** Establishes the intuitive notion of "interior" and "exterior" for closed figures like <ConceptLink targetId="triangulo">triangles</ConceptLink> and polygons.
-- **Parallel axiom independence:** Independent of the parallel postulate, remaining fully valid within <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+- **Plane separation:** Enables proving that every line $l$ separates the plane $\pi \setminus l$ into two disjoint, connected, convex half-planes.
+- **Planar topology:** Precludes geometric discontinuities or "holes" that would allow lines to pass through without genuine intersections.
+- **Polygon rigor:** Underpins the formal definitions of polygon interiors and crossbar theorems.

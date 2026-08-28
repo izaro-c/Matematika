@@ -5,6 +5,8 @@ export const metadata = {
   title: "Axioma II.1 (Simetría y colinealidad de la entreidad)",
   description: "Si B está entre A y C, entonces A, B y C son tres puntos distintos de una misma recta y B también está entre C y A.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "orden",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
@@ -14,10 +16,10 @@ export const metadata = {
 import { Order1 } from '@content/diagrams/Axiomas/Order1';
 export const Simulation = Order1;
 
-<Capitular letra="E" />l primer <ConceptLink targetId="axioma">axioma</ConceptLink> del grupo de <ConceptLink targetId="orden">orden</ConceptLink> (entreidad) formulado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece la naturaleza simétrica y la colinealidad intrínseca de la relación ternaria "estar entre". Si un <ConceptLink targetId="punto">punto</ConceptLink> $B$ yace entre $A$ y $C$, los tres puntos pertenecen a la misma <ConceptLink targetId="recta">recta</ConceptLink> y son mutuamente distintos.
+<Capitular letra="E" />l primer axioma del grupo de orden formulado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece la naturaleza simétrica y la colinealidad intrínseca de la relación ternaria <ConceptLink targetId="estar-entre" isDependency={true}>estar entre</ConceptLink>. Si un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $B$ yace entre $A$ y $C$, los tres puntos pertenecen a la misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> y son mutuamente distintos.
 
 <Definicion title="Enunciado formal">
-  Si un <ConceptLink targetId="punto">punto</ConceptLink> $B$ está entre $A$ y $C$ (notado $A\text{-}B\text{-}C$), entonces $A, B, C$ son tres puntos distintos sobre una misma <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$, y $B$ también está entre $C$ y $A$ ($C\text{-}B\text{-}A$):
+  Si un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $B$ está entre $A$ y $C$ (notado $A\text{-}B\text{-}C$), entonces $A, B, C$ son tres puntos distintos sobre una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$, y $B$ también está entre $C$ y $A$ ($C\text{-}B\text{-}A$):
   $$
   A\text{-}B\text{-}C \implies \bigl(A \neq B \land B \neq C \land A \neq C \land \exists l \in \mathcal{L} \ (A,B,C \in l) \land C\text{-}B\text{-}A\bigr)
   $$
@@ -27,18 +29,18 @@ export const Simulation = Order1;
 
 ### Representación visual e interacción
 
-En la simulación interactiva, los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> se disponen linealmente. El elemento central $B$ satisface la relación $A\text{-}B\text{-}C$, y al invertir la lectura geométrica de derecha a izquierda se verifica la equivalencia simétrica $C\text{-}B\text{-}A$.
+En la simulación interactiva, los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> se disponen linealmente sobre la recta <VisualBind element="lineDC" color="carbon">$l$</VisualBind>. El elemento intermedio $B$ satisface la relación $A\text{-}B\text{-}C$, y al invertir la orientación de lectura geométrica se comprueba la equivalencia simétrica $C\text{-}B\text{-}A$.
 
 <Separador />
 
 ### Significado geométrico y alcance
 
-Formaliza la relación primitiva de ordenación unidimensional sin depender de conceptos analíticos como coordenadas reales o distancias numéricas. Garantiza la independencia de orientación espacial en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
+Formaliza la relación primitiva de ordenación unidimensional sin depender de conceptos métricos analíticos como coordenadas reales o distancias numéricas. Garantiza la independencia de la orientación espacial en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
 
 <Separador />
 
 ### Propiedades
 
 - **Simetría intrínseca:** La relación $A\text{-}B\text{-}C$ es estrictamente equivalente a $C\text{-}B\text{-}A$.
-- **Colinealidad obligatoria:** La entreidad solo es válida entre ternas pertenecientes a la misma recta soporte.
+- **Colinealidad obligatoria:** La entreidad solo es válida entre ternas pertenecientes a una misma recta soporte.
 - **Distinción triple:** Excluye coincidencias $A = B$, $B = C$ o $A = C$ bajo la relación de entreidad.

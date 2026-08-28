@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-3",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.3 (Existence of Non-collinear Points)",
-  description: "There exist at least three points in space that do not lie on the same line.",
+  title: "Axiom I.3 (Existence of Three Non-Collinear Points)",
+  description: "There exist at least three points in space that do not belong to the same line.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
@@ -14,10 +16,10 @@ export const metadata = {
 import { Incidence3 } from '@content/diagrams/Axiomas/Incidence3';
 export const Simulation = Incidence3;
 
-<Capitular letra="T" />here exist at least three <ConceptLink targetId="punto">points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink> that are not collinear, according to <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s third <ConceptLink targetId="incidencia">incidence axiom</ConceptLink>. This postulate breaks the one-dimensional collapse of the geometric system, ensuring that geometry does not reduce to a single <ConceptLink targetId="recta">line</ConceptLink>.
+<Capitular letra="T" />he third incidence axiom postulates the existence of at least three <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> that are not aligned along a single <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>. This principle guarantees that the geometric universe possesses at least two dimensions, preventing the space from collapsing into a one-dimensional line.
 
 <Definicion title="Formal statement">
-  There exist at least three <ConceptLink targetId="punto">points</ConceptLink> $A, B, C \in \mathcal{S}$ such that no <ConceptLink targetId="recta">line</ConceptLink> $l \in \mathcal{L}$ contains all three simultaneously:
+  There exist at least three <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B, C \in \mathcal{S}$ such that no <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$ contains all three simultaneously:
   $$
   \exists A, B, C \in \mathcal{S} \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
   $$
@@ -27,18 +29,18 @@ export const Simulation = Incidence3;
 
 ### Visual representation and interaction
 
-In the interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> form a non-collinear configuration. Constructing a line through any pair leaves the third point demonstrably outside the line.
+In the interactive simulation, three points <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> form a planar triangle <VisualBind element="polygonABC" color="ocre">$\triangle ABC$</VisualBind>. By freely dragging any vertex, one verifies that no single line can contain all three points simultaneously while they remain in a non-collinear configuration.
 
 <Separador />
 
 ### Geometric significance and scope
 
-By asserting the existence of at least three non-aligned points, geometry is forced to possess a minimum dimension of two (a plane). Without this axiom, a single line would satisfy all preceding axioms, reducing space to one dimension.
+This axiom guarantees the multidimensional nature of geometry. By ensuring the existence of non-collinear triads, it provides the essential prerequisite for constructing positive-area figures such as <ConceptLink targetId="triangulo">triangles</ConceptLink> and <ConceptLink targetId="poligono">polygons</ConceptLink> in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
 
 <Separador />
 
 ### Properties
 
-- **Minimum multidimensionality:** Guarantees that space has bidimensional extension or higher.
-- **Triangle formation:** Enables the primitive definition of a <ConceptLink targetId="triangulo">triangle</ConceptLink> via non-collinear vertices $A, B, C$.
-- **Positional independence:** Establishes positional linear independence within <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+- **Minimal dimensionality:** Guarantees that the dimension of the geometric space is strictly at least two ($\dim \ge 2$).
+- **Genesis of the plane:** Together with Axiom I.4, it permits fixing the existence of well-defined geometric <ConceptLink targetId="plano" isDependency={true}>planes</ConceptLink>.
+- **Affine independence:** The three points act as a free affine basis in two dimensions.

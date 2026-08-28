@@ -2,46 +2,67 @@ export const metadata = {
   id: "recta",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "primitivo",
   title: "Recta",
-  description: "Objeto geométrico unidimensional continuo e infinito que se extiende en ambas direcciones sin curvatura.",
+  description: "Concepto geométrico primitivo determinado por los axiomas de incidencia y orden del espacio en el que se inscribe.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 2 y 4", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1–§2", role: "primary" },
+    { title: "Euclidean and Non-Euclidean Geometries", author: "Marvin Jay Greenberg", locator: "Capítulo 2 y 3", role: "secondary" }
   ]
 };
 
 import { Recta } from '@content/diagrams/Definiciones/Recta';
 export const Simulation = Recta;
 
-<Capitular letra="L" />a recta es una figura geométrica unidimensional integrada por un conjunto continuo e infinito de <ConceptLink targetId="punto">puntos</ConceptLink> alineados en una misma dirección. En la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>, constituye uno de los conceptos primitivos fundamentales junto con el <ConceptLink targetId="punto">punto</ConceptLink> y el <ConceptLink targetId="plano">plano</ConceptLink>.
+<Capitular letra="L" />a recta es un <ConceptLink targetId="concepto-primitivo">concepto primitivo</ConceptLink> de la geometría. Esto significa que no se construye a partir de objetos más simples, sino que sus propiedades quedan fijadas por los <ConceptLink targetId="axioma">axiomas</ConceptLink> del sistema geométrico en el que se utiliza.
 
-<Definicion title="">
-  Dados dos puntos distintos <VisualBind element="A" color="musgo">$A$</VisualBind> y <VisualBind element="B" color="musgo">$B$</VisualBind> en un espacio afín o euclidiano $\mathcal{E}$, la recta <VisualBind element="line" color="musgo">$\ell = \overleftrightarrow{AB}$</VisualBind> es el conjunto continuo unidimensional de puntos determinado unívocamente por las combinaciones afines de $A$ y $B$:
+<Definicion title="Estructura de Incidencia">
+  En una <ConceptLink targetId="estructura-de-incidencia">estructura de incidencia</ConceptLink> $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \mathcal{I})$, formada por un conjunto de <ConceptLink targetId="punto">puntos</ConceptLink> $\mathcal{P}$, un conjunto de rectas $\mathcal{L}$ y una relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink> $\mathcal{I}$, una recta es simplemente un elemento:
   $$
-  \ell = \{ P \in \mathcal{E} \mid P = (1 - t)A + tB, \, t \in \mathbb{R} \}
+  \ell \in \mathcal{L}
   $$
-  En la <ConceptLink targetId="geometria-analitica">geometría analítica</ConceptLink> sobre $\mathbb{R}^2$, se expresa mediante la ecuación implícita $Ax + By + C = 0$, con $(A, B) \neq (0, 0)$.
 </Definicion>
 
 <Separador />
 
-### Formas de ecuación en el plano cartesiano
+### Comportamiento axiomático
 
-La expresión algebraica de una recta adopta diversas formas equivalentes según los parámetros geométricos conocidos:
+En la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, las rectas se rigen por relaciones lógicas fundamentales:
 
-| Forma algebraica | Ecuación matemática | Parámetros representativos |
-|---|---|---|
-| Vectorial | $\vec{r}(t) = \vec{p}_0 + t\vec{v}$ | Punto de paso $\vec{p}_0$, vector director $\vec{v}$ |
-| Explícita | $y = mx + b$ | Pendiente $m$, ordenada al origen $b$ |
-| Continua | $\frac{x - x_0}{v_x} = \frac{y - y_0}{v_y}$ | Componentes del vector director $(v_x, v_y)$ |
+- **<ConceptLink targetId="axiomas-de-incidencia">Incidencia</ConceptLink>:** Dos puntos distintos determinan una única recta que pasa por ambos. Toda recta contiene al menos dos puntos.
+- **<ConceptLink targetId="axiomas-de-orden">Orden</ConceptLink>:** En geometrías ordenadas, la relación <ConceptLink targetId="estar-entre">estar entre</ConceptLink> organiza los puntos de la recta en un <ConceptLink targetId="orden-lineal">orden lineal</ConceptLink> continuo y sin extremos.
+- **<ConceptLink targetId="separacion-geometrica">Separación</ConceptLink>:** Un punto cualquiera situado en una recta la divide en dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> disjuntas.
+
+### Representaciones en modelos analíticos
+
+Cuando la geometría se estudia con coordenadas o álgebra, la recta adquiere fórmulas concretas:
+
+- **Ecuación vectorial ($\mathbb{R}^n$):** Se describe a partir de un punto de paso $\vec{p}_0$ y un <ConceptLink targetId="vector-director">vector director</ConceptLink> $\vec{v} \neq \vec{0}$:
+  $$
+  \ell = \{ \vec{p}_0 + t\vec{v} \mid t \in \mathbb{R} \}
+  $$
+- **Ecuación general implícita ($\mathbb{R}^2$):** En el plano cartesiano, es el conjunto de soluciones a una ecuación lineal:
+  $$
+  Ax + By + C = 0 \quad ((A, B) \neq (0, 0))
+  $$
+- **Combinación afín:** Dados dos puntos distintos $A$ y $B$, es la <ConceptLink targetId="variedad-lineal">variedad afín</ConceptLink> que generan:
+  $$
+  \overleftrightarrow{AB} = \{ (1 - t)A + tB \mid t \in \mathbb{R} \}
+  $$
 
 <Separador />
 
-### Propiedades
-
-- **<ConceptLink targetId="incidencia">Existencia y unicidad</ConceptLink>**: Por dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos pasa una y solo una recta en el espacio euclidiano.
-- **<ConceptLink targetId="estar-entre">Continuidad e infinitud</ConceptLink>**: Carece de extremos y posee la <ConceptLink targetId="potencia-continuo">potencia del continuo</ConceptLink> ($\text{card}(\ell) = \lvert \mathbb{R} \rvert$).
-- **<ConceptLink targetId="geodesica">Geodésica euclidiana</ConceptLink>**: La trayectoria sobre una recta representa la <ConceptLink targetId="distancia">distancia</ConceptLink> mínima entre cualquiera de sus puntos.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Teoremas fundamentales">
+    <PropiedadItem id="teorema-interseccion-rectas" title="Intersección de dos rectas">
+      Dos rectas distintas en un mismo plano se cortan como máximo en un punto:
+      $$ \ell_1 \neq \ell_2 \implies |\ell_1 \cap \ell_2| \le 1 $$
+    </PropiedadItem>
+    <PropiedadItem id="teorema-determinacion-plano" title="Determinación de un plano">
+      Una recta y un punto exterior a ella determinan un único <ConceptLink targetId="plano">plano</ConceptLink> que los contiene:
+      $$ \forall \ell \in \mathcal{L}, \; \forall P \notin \ell \implies \exists! \, \pi \text{ tal que } \ell \subset \pi \land P \in \pi $$
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

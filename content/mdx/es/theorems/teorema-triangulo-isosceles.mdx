@@ -16,7 +16,7 @@ export const metadata = {
 import { TrianguloIsosceles } from '@content/diagrams/Teoremas/TrianguloIsosceles';
 export const Simulation = TrianguloIsosceles;
 
-<Capitular letra="E" />l teorema del triángulo isósceles, conocido históricamente en los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> como el *Pons Asinorum* (puente de los asnos), establece la simetría angular fundamental que caracteriza a los <ConceptLink targetId="triangulo">triángulos</ConceptLink> con dos <ConceptLink targetId="lado">lados</ConceptLink> de igual medida en el <ConceptLink targetId="plano">plano</ConceptLink> euclidiano.
+<Capitular letra="E" />l teorema del triángulo isósceles, conocido históricamente en los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> como el *Pons Asinorum* (puente de los asnos), establece la simetría angular fundamental que caracteriza a los <ConceptLink targetId="triangulo">triángulos</ConceptLink> con dos lados de igual medida en el plano euclidiano.
 
 <Separador />
 
@@ -35,12 +35,12 @@ Es decir, en todo triángulo isósceles, a lados congruentes se oponen ángulos 
 ### Demostración y fundamentación axiomática
 
 El teorema admite múltiples vías deductivas clásicas:
-- **Demostración de Pappus**: Considera la correspondencia entre el triángulo $\triangle ABC$ y el triángulo reflejado $\triangle ACB$. Dado que $\overline{AB} \cong \overline{AC}$, $\angle BAC \cong \angle CAB$ y $\overline{AC} \cong \overline{AB}$, por el criterio de congruencia LAL (Lado-Ángulo-Lado) se deduce $\triangle ABC \cong \triangle ACB$, implicando directamente $\angle ABC \cong \angle ACB$.
-- **Demostración de la bisectriz**: Trazando la <ConceptLink targetId="bisectriz">bisectriz</ConceptLink> del ángulo en el vértice $A$, esta divide al triángulo original en dos triángulos congruentes.
+- **Demostración de Pappus**: Considera la correspondencia entre el triángulo $\triangle ABC$ y el triángulo reflejado $\triangle ACB$. Dado que $\overline{AB} \cong \overline{AC}$, $\angle BAC \cong \angle CAB$ y $\overline{AC} \cong \overline{AB}$, por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio de congruencia LAL</ConceptLink> (Lado-Ángulo-Lado) se deduce $\triangle ABC \cong \triangle ACB$, implicando directamente $\angle ABC \cong \angle ACB$.
+- **Demostración de la bisectriz**: Trazando la <ConceptLink targetId="demo-existencia-bisectriz">bisectriz</ConceptLink> del ángulo en el vértice $A$, esta divide al triángulo original en dos triángulos congruentes.
 
 <Separador />
 
 ### Carácter recíproco y corolario equilátero
 
 - **Teorema recíproco**: Si en un triángulo $\triangle ABC$ los ángulos $\angle ABC$ y $\angle ACB$ son congruentes, entonces los lados opuestos son necesariamente congruentes ($\overline{AB} \cong \overline{AC}$).
-- **Corolario del triángulo equilátero**: Un triángulo es <ConceptLink targetId="triangulo-equilatero">equilátero</ConceptLink> si y solo si es equiángulo (sus tres ángulos interiores miden exactamente $60^\circ$).
+- **Corolario del triángulo equilátero**: Un triángulo es equilátero si y solo si es equiángulo (sus tres ángulos interiores miden exactamente $60^\circ$).

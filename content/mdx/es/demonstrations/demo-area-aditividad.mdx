@@ -1,0 +1,72 @@
+export const metadata = {
+  "id": "demo-area-aditividad",
+  "type": "demostracion",
+  "title": "Demostración: Teorema de aditividad del área",
+  "description": "Verificación de que la medida de área satisface los axiomas de Hilbert-Dehn para magnitudes aditivas: la función Área es aditiva sobre descomposiciones en subregiones poligonales interiormente disjuntas.",
+  "parentTheorem": "teorema-area-aditividad",
+  "lang": "es",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["hilbert"],
+  "tags": ["geometria", "areas", "aditividad", "medida"],
+  "layout": "split",
+  "sources": [
+    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "locator": "Capítulo IV, §20", "role": "primary" },
+    { "title": "Über den Rauminhalt", "author": "Max Dehn", "locator": "Mathematische Annalen 55 (1901)", "role": "secondary" }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="E" />l <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink> establece que la función de medida de área sobre polígonos satisface la propiedad de extensión: el área de la reunión de dos regiones interiormente disjuntas iguala la suma de sus áreas individuales.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} title="Definición axiomática de la medida de área">
+Siguiendo a Hilbert, se postula que existe una función $\mu: \mathcal{P} \to \mathbb{R}^+$ definida sobre el conjunto $\mathcal{P}$ de regiones poligonales que satisface:
+- $\mu(\text{cuadrado de lado } 1) = 1$ (normalización).
+- Si dos polígonos $P \cong Q$ son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>, entonces $\mu(P) = \mu(Q)$ (invarianza isométrica).
+- (Aditividad) Si $P = P_1 \cup P_2$ con $P_1 \cap P_2$ de área nula, entonces $\mu(P) = \mu(P_1) + \mu(P_2)$.
+
+La aditividad es un axioma, no un teorema: el teorema afirma que la función $b \cdot h$ para rectángulos y sus derivadas son la única extensión coherente.
+</ProofStep>
+
+<ProofStep number={2} title="Partición de un polígono genérico en triángulos">
+Todo <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> $\triangle$ tiene área bien definida por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>: $\mu(\triangle) = \frac{1}{2} b h$. Todo polígono convexo de $n$ lados admite una triangulación en $n-2$ triángulos interiormente disjuntos. Por inducción sobre $n$:
+
+<Formula>
+  $$ \mu(P) = \sum_{k=1}^{n-2} \mu(\triangle_k) $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={3} title="Independencia de la triangulación">
+Si $P = \bigsqcup_i \triangle_i = \bigsqcup_j \triangle_j'$ son dos triangulaciones distintas del mismo polígono, la superposición de ambas produce una triangulación común de $P$. Como cada triángulo resultante aparece en ambas subdivisiones, la aditividad implica que la suma es la misma para las dos triangulaciones originales:
+
+<Formula>
+  $$ \sum_i \mu(\triangle_i) = \sum_k \mu(\triangle_k^*) = \sum_j \mu(\triangle_j') $$
+</Formula>
+
+donde $\{\triangle_k^*\}$ es la triangulación refinada común.
+</ProofStep>
+
+<ProofStep number={4} title="Aditividad para descomposiciones finitas">
+Sean $R_1, R_2$ dos regiones poligonales con $R_1 \cap R_2$ de área nula (intersección en a lo sumo un segmento o un punto). Tomando triangulaciones compatibles de $R_1$, $R_2$ y $R_1 \cup R_2$, el paso anterior garantiza:
+
+<Formula>
+  $$ \mu(R_1 \cup R_2) = \mu(R_1) + \mu(R_2) $$
+</Formula>
+
+Por inducción, la propiedad se extiende a reuniones finitas arbitrarias.
+</ProofStep>
+
+<Separador />
+
+### Análisis deductivo
+
+<Nota>
+  El resultado es exclusivo de la geometría bidimensional. En tres dimensiones, el teorema de Dehn-Sydler muestra que la aditividad del volumen no es suficiente para resolver la equidescomposición: existen poliedros de igual volumen que no son equidescomponibles, lo que ilustra la profundidad del Tercer Problema de Hilbert.
+</Nota>
+
+</DemonstrationSection>

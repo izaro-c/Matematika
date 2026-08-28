@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Circle",
-  description: "Locus of points in the plane equidistant from a fixed point called the center.",
+  description: "Geometric locus of all planar points equidistant from a fixed center point.",
   branch: "51M",
   hasSimulation: true,
   sources: [
@@ -16,33 +16,41 @@ export const metadata = {
 import { Circunferencia } from '@content/diagrams/Definiciones/Circunferencia';
 export const Simulation = Circunferencia;
 
-<Capitular letra="A" /> circle is the one-dimensional locus of all <ConceptLink targetId="punto">points</ConceptLink> in a <ConceptLink targetId="plano">plane</ConceptLink> that lie at a constant distance from a fixed point called the center. It constitutes the fundamental closed curve in planar <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>, enclosing the bounded convex region known as a disk.
+<Capitular letra="A" /> circle (or circumference) is the one-dimensional geometric locus of all <ConceptLink targetId="punto">points</ConceptLink> in a plane equidistant from a fixed center. It is the fundamental closed curve of planar geometry, bounding the two-dimensional convex region known as a disk or <VisualBind element="circulo" color="pavo">circle</VisualBind>.
 
 <Definicion title="">
-  Given a center point <VisualBind element="centro" color="musgo">$O \in \mathcal{P}$</VisualBind> in a plane $\mathcal{P}$ and a strictly positive real scalar $r > 0$, the circle <VisualBind element="circunferencia" color="musgo">$\mathcal{C}(O, r)$</VisualBind> centered at $O$ with radius $r$ is defined as the set of points $P \in \mathcal{P}$ whose scalar distance to $O$ equals $r$:
+  Given a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> <VisualBind element="centro" color="musgo">$O$</VisualBind> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\mathcal{P}$ and a positive real number $r > 0$, the circle <VisualBind element="circunferencia" color="musgo">$\mathcal{C}(O, r)$</VisualBind> of center $O$ and <VisualBind element="radio" color="pavo">radius</VisualBind> $r$ is the set of points $P \in \mathcal{P}$ whose distance to $O$ is identically $r$:
   $$
   \mathcal{C}(O, r) = \{ P \in \mathcal{P} \mid d(O, P) = r \}
   $$
-  where $d(O, P) = \|P - O\| = r$. The line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{OP}$ connecting the center to any point on the curve is called a <ConceptLink targetId="radio">radius</ConceptLink>.
+  In Cartesian coordinates on $\mathbb{R}^2$ with center at $(x_0, y_0)$:
+  $$
+  (x - x_0)^2 + (y - y_0)^2 = r^2
+  $$
 </Definicion>
 
 <Separador />
 
-### Associated elements and lines
+### Linear elements and associated lines
 
-The geometry of the circle involves several key linear and angular elements:
+The geometry of the circle includes various fundamental linear elements:
 
 | Element | Geometric definition | Expression or property |
 |---|---|---|
-| Chord | Line <ConceptLink targetId="segmento">segment</ConceptLink> joining two points on the circle | $\overline{AB} \text{ with } A, B \in \mathcal{C}$ |
-| Diameter | Chord containing the center $O$ | $d = 2r$ (maximum internal distance) |
-| Secant line | <ConceptLink targetId="recta">Line</ConceptLink> intersecting the circle in two points | $\lvert L \cap \mathcal{C} \rvert = 2$ |
-| Tangent line | Line intersecting the circle in a single point | $\lvert L \cap \mathcal{C} \rvert = 1$, <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> to the radius |
+| <VisualBind element="cuerda" color="ocre">Chord</VisualBind> | Line segment joining two points on the curve | $\overline{AB} \text{ with } A, B \in \mathcal{C}$ |
+| <VisualBind element="diametro" color="terracota">Diameter</VisualBind> | Longest chord passing through the center | $d = 2r$ |
+| <VisualBind element="arco" color="canela">Arc</VisualBind> | Continuous portion of the circle between two points | $\widehat{AB} \subset \mathcal{C}$ |
+| <VisualBind element="tangente" color="mora">Tangent line</VisualBind> | Line intersecting the circle at exactly one point | Orthogonal to the radius at the tangency point |
 
 <Separador />
 
-### Properties
-
-- **Perimeter length**: The one-dimensional measure of the closed curve satisfies the linear relationship $P = 2\pi r$.
-- **Enclosed disk area**: The bounded interior two-dimensional planar region has a surface measure equal to $\mu(D) = \pi r^2$.
-- **Continuous symmetry**: The circle is invariant under any rotation around its center $O$ and under any reflection across a diameter acting as a carrier line.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Metric properties and symmetry">
+    <PropiedadItem id="axioma-arquimedes" title="Perimeter and $\pi$">
+      The perimeter length of the closed curve satisfies $P = 2\pi r$.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-aditividad" title="Disk area">
+      The area of the disk enclosed by the circle is $\mu(D) = \pi r^2$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

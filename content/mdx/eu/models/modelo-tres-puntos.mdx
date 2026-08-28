@@ -3,43 +3,45 @@ export const metadata = {
   lang: "eu",
   type: "modelo",
   title: "Hiru puntuko eredua",
-  description: "Hiru puntuk eta hiru zuzenek osatutako egitura geometriko finitua, intzidentzia-axioma nagusiak betetzen dituena.",
-  branch: "51M",
-  satisfies: ["sistema-incidencia"],
+  description: "Oinarrizko eredu finitua, intzidentziaren oinarrizko axiomen trinkotasuna eta independentzia frogatzen duena.",
+  branch: "51A",
+  satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
-  hasSimulation: true
+  hasDiagram: true
 };
 
 import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
-export const Simulation = ModeloTresPuntos;
+export const Diagram = ModeloTresPuntos;
 
-<Capitular letra="H" />iru puntuko eredua <ConceptLink targetId="plano">planoan</ConceptLink> <ConceptLink targetId="incidencia">intzidentzia-axiomak</ConceptLink> betetzen dituen egitura geometriko diskretu sinpleena da. Unibertso finitu honek hiru <ConceptLink targetId="punto">puntu</ConceptLink> eta hiru <ConceptLink targetId="recta">zuzen</ConceptLink> besterik ez ditu, pertenentzia-arau nagusiak egiaztatzeko adibide zehatz bat eskainiz, <ConceptLink targetId="orden">ordenaren</ConceptLink> nahiz <ConceptLink targetId="distancia">distantziaren</ConceptLink> nozioetan oinarritu gabe.
+<Capitular letra="H" />iru puntuko eredua geometria finituko <ConceptLink targetId="sistema-incidencia">intzidentzia-eredurik</ConceptLink> oinarrizkoena eta txikiena da. Hiru puntuk, hiru zuzenek eta plano bakar batek osatutako unibertso diskretu baten bidez, Hilberten hasierako intzidentzia-axiomen trinkotasun logikoa eta elkarrekiko independentzia egiaztatzeko tresna metamatematiko ezinbestekoa eskaintzen du.
 
 <Separador />
 
 ### Ereduaren definizioa
 
-Bitez $\mathcal{P} = \{A, B, C\}$ jatorrizko puntuen multzoa eta bizan $\mathcal{L} = \{l_1, l_2, l_3\}$ zuzenen multzoa. Intzidentzia-erlazioa $\mathcal{I} \subset \mathcal{P} \times \mathcal{L}$ bikoteen pertenentziaren bidez definitzen da esplizituki:
+Sistema multzo finitu esplizituen bidez definitzen da:
 
-- <VisualBind element="l1" color="pavo">$l_1 = \{A, B\}$</VisualBind> zuzenak <VisualBind element="A" color="musgo">$A$</VisualBind> eta <VisualBind element="B" color="musgo">$B$</VisualBind> puntu biak dauzka.
-- <VisualBind element="l2" color="terracota">$l_2 = \{B, C\}$</VisualBind> zuzenak <VisualBind element="B" color="musgo">$B$</VisualBind> eta <VisualBind element="C" color="musgo">$C$</VisualBind> puntu biak dauzka.
-- <VisualBind element="l3" color="ocre">$l_3 = \{C, A\}$</VisualBind> zuzenak <VisualBind element="C" color="musgo">$C$</VisualBind> eta <VisualBind element="A" color="musgo">$A$</VisualBind> puntu biak dauzka.
-
-Eredu honetan, zuzen bakoitza $\mathcal{P}$ multzoaren bi elementuko azpimultzo ez-hutsa da nahitaez.
-
-<Separador />
-
-### Axiomen egiaztapena
-
-Hiru puntuko ereduak zorrozki betetzen ditu intzidentzia-sistema lauaren oinarrizko axiomak <ConceptLink targetId="sistema-incidencia">intzidentzia-sisteman</ConceptLink>:
-
-- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>I.1 Axioma (zuzenaren bakartasuna)</ConceptLink>**: $\mathcal{P}$ multzoko edozein bi puntu desberdinetarako, biak batera daukatzan zuzen bakarra dago $\mathcal{L}$ multzoan.
-- **<ConceptLink targetId="axioma-incidencia-2" isDependency={true}>I.2 Axioma (puntuen existentzia zuzenean)</ConceptLink>**: $l_i \in \mathcal{L}$ zuzen bakoitzak gutxienez bi puntu desberdin dauzka.
-- **<ConceptLink targetId="axioma-incidencia-3" isDependency={true}>I.3 Axioma (kolinealtasun eza)</ConceptLink>**: Badago hiru puntuko multzo bat $\{A, B, C\}$, zuzen berean ez daudenak (ez-<ConceptLink targetId="colinealidad">kolinealak</ConceptLink>).
+- **<ConceptLink targetId="punto">Puntuen</ConceptLink> multzoa**: Zehazki hiru elementu abstraktuz osatua: <VisualBind element="A" color="terracota">$A$</VisualBind>, <VisualBind element="B" color="terracota">$B$</VisualBind> eta <VisualBind element="C" color="terracota">$C$</VisualBind>.
+- **<ConceptLink targetId="recta">Zuzenen</ConceptLink> multzoa**: Puntu ezberdinen hiru bikote ez-ordenatu:
+  - <VisualBind element="rAB" color="carbon">$r_{AB} = \{A, B\}$</VisualBind>
+  - <VisualBind element="rBC" color="carbon">$r_{BC} = \{B, C\}$</VisualBind>
+  - <VisualBind element="rCA" color="carbon">$r_{CA} = \{C, A\}$</VisualBind>
+- **<VisualBind element="plano" color="musgo">Planoa</VisualBind>**: Multzo osoa $\mathcal{P} = \{A, B, C\}$.
+- **Intzidentzia-erlazioa**: Multzo-teoriako partaide-erlazio estandarra ($\in$). $P$ puntu bat $l$ zuzenarekiko intzidentea da $P \in l$ bada.
 
 <Separador />
 
-### Propietateak
+### Intzidentzia-axiomen egiaztapena
 
-- **Finitutasuna eta minimaltasuna**: I.1, I.2 eta I.3 axiomak betetzen dituen eredurik txikiena da.
-- **Paraleloen eza**: Eredu honetan ez dago ebakitzen ez den zuzen parerik; edozein bi zuzenek puntu bakar batean ebakitzen dute elkar, beraz ez da betetzen <ConceptLink targetId="paralelismo">paralelismoaren</ConceptLink> nosio euklidesarra.
+Ereduak <ConceptLink targetId="sistema-incidencia">intzidentzia-taldeko</ConceptLink> lehen hiru axiomak betetzen ditu:
+
+- **<ConceptLink targetId="axioma-incidencia-1">I-1 axioma</ConceptLink>**: Edozein bi puntu ezberdinetarako (adibidez $A$ eta $B$), biak barne dituen zuzen bakar bat existitzen da ($r_{AB}$).
+- **<ConceptLink targetId="axioma-incidencia-2">I-2 axioma</ConceptLink>**: Zuzen bakoitzak ($r_{AB}, r_{BC}, r_{CA}$) gutxienez bi puntu ezberdin ditu.
+- **<ConceptLink targetId="axioma-incidencia-3">I-3 axioma</ConceptLink>**: Zuzen berean ez dauden gutxienez hiru puntu existitzen dira ($A, B, C$).
+
+<Separador />
+
+### Garrantzi metamatematikoa
+
+- **Trinkotasun-froga**: Eredu finitu konkretu bat eskainiz non enuntziatu guztiak egiazkoak diren, frogatzen da intzidentziaren lehen hiru axiomak ez direla elkarren artean kontraesankorrak.
+- **Paralelotasunaren independentzia**: Eredu honetan, edozein bi zuzenek beti puntu komun bat partekatzen dute ($r_{AB} \cap r_{BC} = \{B\}$); beraz, ez dago <ConceptLink targetId="paralelas">zuzen paraleloric</ConceptLink>. Honek erakusten du paralelotasunaren kontzeptuak beste postulatu independente batzuk behar dituela nahitaez.

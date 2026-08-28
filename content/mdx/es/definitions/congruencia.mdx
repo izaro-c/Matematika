@@ -2,46 +2,59 @@ export const metadata = {
   id: "congruencia",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "primitivo",
   title: "Congruencia geométrica",
-  description: "Relación de equivalencia entre figuras geométricas que pueden superponerse mediante una isometría conservando distancias y ángulos.",
+  description: "Relación primitiva de equivalencia y rigidez entre configuraciones geométricas que conservan dimensiones, distancias y amplitudes angulares.",
   branch: "51M",
-  hasSimulation: true,
+  hasSimulation: false,
   sources: [
     { title: "Elementos", author: "Euclides", locator: "Libro I, Nociones Comunes 4", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3 (Axiomas de congruencia)", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
   ]
 };
 
-import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
-export const Simulation = Congruence1;
-
-<Capitular letra="L" />a congruencia geométrica es la <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink> fundamental entre dos figuras del <ConceptLink targetId="plano">plano</ConceptLink> o del espacio que poseen exactamente la misma forma y tamaño. Dos figuras son congruentes si existe una <ConceptLink targetId="transformacion-geometrica">isometría</ConceptLink> rígida (traslación, rotación o reflexión) que transforma una en la otra conservando todas las distancias entre <ConceptLink targetId="punto">puntos</ConceptLink> y las amplitudes de los <ConceptLink targetId="angulo">ángulos</ConceptLink>.
+<Capitular letra="L" />a congruencia geométrica es la relación primitiva de rigidez y equivalencia en la geometría sintética que formaliza la noción de igualdad de forma y tamaño entre figuras. En el sistema axiomático de Hilbert, la congruencia se postula primitivamente tanto para pares de <ConceptLink targetId="segmento">segmentos</ConceptLink> ($\overline{AB} \cong \overline{CD}$) como para pares de <ConceptLink targetId="angulo">ángulos</ConceptLink> ($\angle ABC \cong \angle DEF$).
 
 <Definicion title="">
-  Sean $F_1, F_2 \subset \mathcal{E}$ dos subconjuntos de puntos de un espacio métrico euclidiano $\mathcal{E}$. Se dice que $F_1$ y $F_2$ son congruentes, denotado por <VisualBind element="figura-1" color="musgo">$F_1$</VisualBind> $\cong$ <VisualBind element="figura-2" color="pavo">$F_2$</VisualBind>, si y solo si existe una transformación biyectiva $f: \mathcal{E} \to \mathcal{E}$ tal que $f(F_1) = F_2$ y que preserva las distancias métricas entre todo par de puntos $A, B \in \mathcal{E}$:
+  La congruencia ($\cong$) es una relación de equivalencia primitiva sobre pares de configuraciones geométricas en un espacio $\mathcal{E}$. En la geometría euclídea analítica, dos figuras $F_1, F_2 \subset \mathcal{E}$ son congruentes si y solo si existe una isometría biyectiva $f: \mathcal{E} \to \mathcal{E}$ tal que $f(F_1) = F_2$ y para todo par de puntos $A, B \in \mathcal{E}$:
   $$
-  F_1 \cong F_2 \iff \exists f: \mathcal{E} \to \mathcal{E} \text{ tal que } f(F_1) = F_2 \land \forall A, B \in \mathcal{E}, \|f(B) - f(A)\| = \|B - A\|
+  d(f(A), f(B)) = d(A, B)
   $$
-  Para <ConceptLink targetId="segmento">segmentos</ConceptLink> $\overline{AB} \cong \overline{CD}$, implica la igualdad de sus longitudes escalares $d(A, B) = d(C, D)$.
 </Definicion>
 
 <Separador />
 
+### Axiomas de congruencia de Hilbert (Grupo III)
+
+El comportamiento de la relación de congruencia se rige por los seis axiomas del Grupo III:
+- **Transporte de segmentos**: Dado un segmento $\overline{AB}$ y un punto $A'$ en una semirrecta con origen en $A'$, existe un único punto $B'$ tal que $\overline{AB} \cong \overline{A'B'}$.
+- **Transitividad de segmentos**: Si $\overline{AB} \cong \overline{CD}$ y $\overline{AB} \cong \overline{EF}$, entonces $\overline{CD} \cong \overline{EF}$.
+- **Adición de segmentos**: Si $A * B * C$, $A' * B' * C'$, $\overline{AB} \cong \overline{A'B'}$ y $\overline{BC} \cong \overline{B'C'}$, entonces $\overline{AC} \cong \overline{A'C'}$.
+- **Transporte de ángulos**: Dado un ángulo $\angle ABC$ y una semirrecta en un semiplano dado, existe un único ángulo congruente.
+- **Criterio LAL**: Si dos triángulos tienen dos lados y el ángulo comprendido respectivamente congruentes, entonces los restantes ángulos correspondientes son congruentes.
+
 ### Criterios de congruencia de triángulos
 
-En la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>, la congruencia de los <ConceptLink targetId="triangulo">triángulos</ConceptLink> queda determinada completamente por conjuntos minimales de condiciones sobre sus <ConceptLink targetId="lado">lados</ConceptLink> y <ConceptLink targetId="angulo">ángulos</ConceptLink>:
-
-| Criterio | Nombre del axioma / teorema | Condición geométrica minimal |
-|---|---|---|
-| LAL | <ConceptLink targetId="axioma-congruencia-5">Lado-Ángulo-Lado</ConceptLink> | Dos lados y el ángulo comprendido entre ellos son congruentes |
-| ALA | <ConceptLink targetId="teorema-congruencia-ala">Ángulo-Lado-Ángulo</ConceptLink> | Un lado y los dos ángulos adyacentes a él son congruentes |
-| LLL | Criterio Lado-Lado-Lado | Los tres pares de lados correspondientes son congruentes |
+En el plano euclidiano, la congruencia global entre dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> se deduce a través de los criterios fundamentales:
+- **LAL** (Lado-Ángulo-Lado): Dos lados y el ángulo comprendido congruentes.
+- **ALA** (Ángulo-Lado-Ángulo): Un lado y los dos ángulos adyacentes congruentes.
+- **LLL** (Lado-Lado-Lado): Los tres pares de lados correspondientes congruentes.
 
 <Separador />
 
-### Propiedades
-
-- **<ConceptLink targetId="relacion-equivalencia">Relación de equivalencia</ConceptLink>**: La congruencia es reflexiva ($F_1 \cong F_1$), simétrica ($F_1 \cong F_2 \implies F_2 \cong F_1$) y transitiva ($F_1 \cong F_2 \land F_2 \cong F_3 \implies F_1 \cong F_3$).
-- **Invarianza de la medida**: Si dos figuras planas medibles son congruentes $F_1 \cong F_2$, sus medidas de área satisfacen la igualdad estricta $\mu(F_1) = \mu(F_2)$.
-- **Conservación de la colinealidad**: Toda isometría preserva la <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> de los puntos y la estructura de las <ConceptLink targetId="recta">rectas</ConceptLink>.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Estructura axiomática de la congruencia">
+    <PropiedadItem id="axioma-congruencia-1" title="Transporte de segmentos">
+      Existencia y unicidad de segmentos congruentes sobre una semirrecta dada.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-congruencia-2" title="Transitividad segmental">
+      La congruencia de segmentos satisface simetría y transitividad formal.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-congruencia-4" title="Transporte de ángulos">
+      Existencia y unicidad del transporte de un ángulo respecto a una semirrecta de referencia.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-congruencia-5" title="Axioma LAL de congruencia">
+      Si dos triángulos coinciden en dos lados y el ángulo comprendido, coinciden en sus restantes elementos.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

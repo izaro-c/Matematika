@@ -2,46 +2,62 @@ export const metadata = {
   id: "punto",
   lang: "en",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "primitivo",
   title: "Point",
-  description: "A fundamental, indivisible zero-dimensional geometric primitive specifying an exact position in space.",
+  description: "Primary and indivisible constituent element of geometric space and fundamental primitive notion in axiomatic systems.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 1", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    { title: "Elements", author: "Euclid", locator: "Book I, Definition 1", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
   ]
 };
 
 import { Punto } from '@content/diagrams/Definiciones/Punto';
 export const Simulation = Punto;
 
-<Capitular letra="A" /> point is the fundamental, indivisible primitive element of <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink> and <ConceptLink targetId="espacio-topologico">topological spaces</ConceptLink>. Lacking length, area, or volume, it serves as the essential constituent unit from which the <ConceptLink targetId="recta">line</ConceptLink>, the <ConceptLink targetId="plano">plane</ConceptLink>, and higher-dimensional geometric figures are defined.
+<Capitular letra="A" /> point is the fundamental and indivisible primitive entity of geometry and topology. As an undefined primitive notion, it possesses no intrinsic spatial dimensions (length, area, or volume) and serves as the structural foundation for defining <ConceptLink targetId="recta">lines</ConceptLink>, <ConceptLink targetId="plano">planes</ConceptLink>, and abstract spaces.
 
 <Definicion title="">
-  In the axiomatic formulation of <ConceptLink targetId="incidencia">incidence geometry</ConceptLink>, a point <VisualBind element="P" color="musgo">$P$</VisualBind> is defined as an indivisible primitive element belonging to a geometric space $\mathcal{E}$. In <ConceptLink targetId="geometria-analitica">analytic geometry</ConceptLink> over $\mathbb{R}^n$, a point is uniquely identified with an $n$-tuple of real <ConceptLink targetId="sistema-coordenadas">coordinates</ConceptLink>:
-  $$
-  P = (x_1, x_2, \dots, x_n) \in \mathbb{R}^n
-  $$
-  where its topological and metric dimension is strictly zero ($\text{dim}(P) = 0$).
+  A point <VisualBind element="pPoint" color="musgo">$P$</VisualBind> is a zero-dimensional primitive geometric entity. In modern axiomatics, points are the elements of the underlying set $\mathcal{S}$ upon which relations of <ConceptLink targetId="incidencia">incidence</ConceptLink>, <ConceptLink targetId="estar-entre">order</ConceptLink>, and <ConceptLink targetId="congruencia">congruence</ConceptLink> operate.
 </Definicion>
 
 <Separador />
 
-### Representation across geometric frameworks
+### Synthetic geometry
 
-The formal characterization of a point varies according to the adopted axiomatic or algebraic framework:
+In Hilbert's axiomatic foundation, a point is an undefined concept whose mathematical properties are entirely characterized by the axioms:
+- **Incidence**: Any two distinct points $A \neq B$ determine a unique <ConceptLink targetId="recta">line</ConceptLink> $\ell$.
+- **Betweenness**: Given three distinct collinear points, exactly one lies between the other two ($A * B * C$).
+- **Existence**: Every line contains at least two distinct points, and there exist at least four non-coplanar points in space.
 
-| Geometric framework | Mathematical representation | Dimension |
-|---|---|---|
-| Euclidean or axiomatic | Indivisible primitive element ($P \in \mathcal{E}$) | $0$ |
-| Cartesian ($\mathbb{R}^2$ or $\mathbb{R}^3$) | Position vector $(x, y)$ or $(x, y, z)$ | $0$ |
-| Set theory | Individual element of an abstract point set $S$ | $0$ |
+### Analytic geometry
+
+In the real affine space $\mathbb{R}^n$, a point $P$ is represented by an ordered $n$-tuple of real numbers:
+$$
+P = (x_1, x_2, \dots, x_n) \in \mathbb{R}^n
+$$
+The metric distance between two points $P = (x_1, \dots, x_n)$ and $Q = (y_1, \dots, y_n)$ is given by the standard Euclidean metric:
+$$
+d(P, Q) = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}
+$$
+
+### Topology and set theory
+
+In a topological space $(X, \tau)$, a point is an element of the underlying set $x \in X$. The singleton $\{x\}$ is closed whenever the space satisfies the $T_1$ separation axiom, and its inductive topological dimension is identically zero ($\text{dim}(\{x\}) = 0$).
 
 <Separador />
 
-### Properties
-
-- **<ConceptLink targetId="incidencia">Incidence and containment</ConceptLink>**: Two distinct points uniquely determine a single <ConceptLink targetId="recta">line</ConceptLink> passing through both.
-- **<ConceptLink targetId="dimension-hausdorff">Zero dimensionality</ConceptLink>**: Possesses a Lebesgue measure of zero ($\mu(\{P\}) = 0$) and has no spatial extent.
-- **<ConceptLink targetId="distancia">Metric identity</ConceptLink>**: The distance between two points satisfies $d(P, Q) = 0 \iff P = Q$, fulfilling the identity axiom of a <ConceptLink targetId="espacio-metrico">metric space</ConceptLink>.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Axiomatic and metric foundations">
+    <PropiedadItem id="axioma-incidencia-1" title="Line determination">
+      Two distinct points $A \neq B$ uniquely determine a line $\ell = \overleftrightarrow{AB}$.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-3" title="Non-collinear points existence">
+      Every line contains at least two points; every plane contains at least three non-collinear points.
+    </PropiedadItem>
+    <PropiedadItem id="distancia-indiscernibles" title="Identity of indiscernibles">
+      In any metric space, $d(P, Q) = 0 \iff P = Q$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -8,7 +8,7 @@ describe('VintageSeal component', () => {
 
   it('renders exercise completed seal with canela theme and animation class', () => {
     render(
-      <I18nProvider>
+      <I18nProvider initialLang="es">
         <VintageSeal type="exercise" animated={true} size="sm" />
       </I18nProvider>
     );
@@ -23,7 +23,7 @@ describe('VintageSeal component', () => {
 
   it('renders concept read seal with terracota theme', () => {
     render(
-      <I18nProvider>
+      <I18nProvider initialLang="es">
         <VintageSeal type="read" />
       </I18nProvider>
     );

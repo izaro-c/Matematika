@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-5",
   lang: "eu",
   type: "axioma",
-  title: "I.5 Axioma (Zuzenaren inklusioa planoan)",
-  description: "Zuzen bateko bi puntu desberdin plano baten barnean badaude, zuzen osoa plano horren barnean dago.",
+  title: "I.5 axioma (Planoan puntu ez-kolinealak existitzea)",
+  description: "Edozein planotan lerrokatuta ez dauden gutxienez hiru puntu existitzen dira.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
@@ -14,12 +16,12 @@ export const metadata = {
 import { Incidence5 } from '@content/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
 
-<Capitular letra="Z" />uzen bateko bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin <ConceptLink targetId="plano">plano</ConceptLink> baten barnean badaude, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-en bosgarren <ConceptLink targetId="intzidentzia">intzidentzia-axioma</ConceptLink> honek zuzen osoa plano horren barnean egotea eskatzen du nahitaez. Postulatu honek plano geometrikoaren lauatasuna eta koherentzia egiturala bermatzen ditu.
+<Capitular letra="E" />spazioko edozein <ConceptLink targetId="plano" isDependency={true}>planotan</ConceptLink>, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> formulatutako bosgarren intzidentzia-axiomak lerrokatuta ez dauden gutxienez hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> daudela bermatzen du. Postulatu honek ziurtatzen du plano bat bera ere ez dela endekatzen edo kolapsatzen <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bakar batean.
 
 <Definicion title="Enuntziatu formala">
-  Edozein $l \in \mathcal{L}$ <ConceptLink targetId="zuzen">zuzen</ConceptLink> eta edozein $\mathcal{P} \in \mathcal{F}$ <ConceptLink targetId="plano">planotarako</ConceptLink>, $l$ zuzeneko bi $A, B \in l$ puntu desberdin ($A \neq B$) $\mathcal{P}$ planoan badaude, orduan $l \subset \mathcal{P}$ da:
+  Edozein $\pi \in \mathcal{E}$ <ConceptLink targetId="plano" isDependency={true}>planotarako</ConceptLink>, $\pi$ planoan dauden gutxienez hiru $A, B, C \in \pi$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> existitzen dira, $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bakar batek ere hirurak batera barnean hartzen ez dituelarik:
   $$
-  \forall l \in \mathcal{L}, \forall \mathcal{P} \in \mathcal{F} \ \bigl((\exists A, B \in l \ (A \neq B \land A, B \in \mathcal{P})) \implies l \subset \mathcal{P}\bigr)
+  \forall \pi \in \mathcal{E}, \ \exists A, B, C \in \pi \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
   $$
 </Definicion>
 
@@ -27,18 +29,18 @@ export const Simulation = Incidence5;
 
 ### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan, <VisualBind element="line" color="carbon">$l$</VisualBind> zuzenak <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntu desberdinak ditu, biak <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind> planoaren gainean daudela. Puntuak planoan zehar mugitzean, zuzen osoak azaleraren barnean sartuta jarraitzen du etengabe.
+Hiru dimentsioko eszena interaktiboan, <VisualBind element="plano" color="canela">$\pi$</VisualBind> planoak bereizitako hiru puntu ditu: <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind>. Bistaratzeak espazioa biratzeko eta hiru puntuek zuzen bakar baten barruan ez dagoen benetako azalera bidimentsionala definitzen dutela egiaztatzeko aukera ematen du.
 
 <Separador />
 
 ### Esanahi geometrikoa eta esparrua
 
-Lauatasun zorrotza bermatzen du: plano batek ezin du kurbaturarik edo sakonunerik izan zuzen batek haren bi puntu igaro ditzan bertan erabat murgilduta egon gabe. Dimentsio bakarreko geometria lineala bi dimentsiokoarekin lotzen du.
+Plano bakoitzaren barne-bidimentsionaltasuna bermatzen du. Ziurtatzen du gainazal lau bakoitzak benetako hedadura duela, egitura geometriko aberatsak, <ConceptLink targetId="triangulo">triangeluak</ConceptLink> eta erdi-planoko zatiketak hartzeko gai dena.
 
 <Separador />
 
 ### Propietateak
 
-- **Kidekotza-kriterioa:** Bi puntu desberdinen kidekotza egiaztatzea nahikoa da zuzenaren inklusio osoa bermatzeko.
-- **Azaleren ebakidura:** Zuzen batek plano bat zehazki bi puntu desberdinetan ebakitzea ekiditen du bertan sartuta egon gabe.
-- **Bitarteko konbexutasuna:** Eremu <ConceptLink targetId="konbexu">konbexuak</ConceptLink> eta erditasunak eraikitzea errazten du.
+- **Plano-endekapenik eza:** Dimentsio bakarreko planoak edo puntu multzo puntualak izatea debekatzen du.
+- **Poligonoen unibertsaltasuna:** Espazioko edozein planotan triangeluak inskribatzea ahalbidetzen du salbuespenik gabe.
+- **Aberastasun afina:** $\pi$ plano bakoitzaren gainean bi dimentsioko koordenatu-sistema askea bermatzen du.

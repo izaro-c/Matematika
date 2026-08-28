@@ -18,7 +18,7 @@ import { DemoAngulosAlternosInternos } from "@content/diagrams/Demos/DemoAngulos
 
 <DemonstrationSection diagram={<DemoAngulosAlternosInternos />}>
 
-<Capitular letra="D" />adas dos <ConceptLink targetId="recta">rectas</ConceptLink> coplanares $l$ y $m$ cortadas por una secante transversal $t$, se demuestra el <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>teorema de los ángulos alternos internos</ConceptLink>. La demostración prueba por <ConceptLink targetId="metodo-contradiccion" isDependency={true}>reducción al absurdo</ConceptLink> que si los ángulos alternos internos son <ConceptLink targetId="congruencia">congruentes</ConceptLink>, las rectas son <ConceptLink targetId="paralelas">paralelas</ConceptLink>.
+<Capitular letra="D" />adas dos <ConceptLink targetId="recta">rectas</ConceptLink> coplanares $l$ y $m$ cortadas por una secante transversal $t$, se demuestra el <ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink>. La demostración prueba por <ConceptLink targetId="metodo-contradiccion" isDependency={true}>reducción al absurdo</ConceptLink> que si los ángulos alternos internos son <ConceptLink targetId="congruencia">congruentes</ConceptLink>, las rectas son necesariamente <ConceptLink targetId="paralelas">paralelas</ConceptLink>.
 
 <Separador />
 
@@ -36,8 +36,8 @@ Consideramos dos rectas coplanares <VisualBind element="lineL" color="carbon">$l
 Para demostrar que $l$ y $m$ son paralelas, supongamos por el <ConceptLink targetId="metodo-contradiccion" isDependency={true}>método de contradicción</ConceptLink> que las rectas $l$ y $m$ no son paralelas. Por consiguiente, se intersecan en algún punto <VisualBind element="pointP" color="ocre">$P$</VisualBind> del plano.
 </ProofStep>
 
-<ProofStep number={3} target="triangulo" title="Construcción del triángulo imaginario">
-La intersección en $P$ genera un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABP$ formado por los vértices $A, B, P$. En este triángulo, el ángulo <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> en el vértice $A$ constituye un ángulo exterior respecto al lado $AP$, mientras que <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> en el vértice $B$ es un ángulo interior no adyacente.
+<ProofStep number={3} target="triangulo" title="Construcción del triángulo auxiliar">
+La intersección en $P$ genera un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABP$ formado por los vértices $A, B, P$. En este triángulo, el ángulo <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> en el vértice $A$ constituye un ángulo exterior respecto al lado $\overline{AP}$, mientras que <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> en el vértice $B$ es un ángulo interior no adyacente.
 </ProofStep>
 
 <ProofStep number={4} target="desigualdad" title="Aplicación del teorema del ángulo exterior">

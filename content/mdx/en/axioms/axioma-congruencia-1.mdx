@@ -3,34 +3,44 @@ export const metadata = {
   lang: "en",
   type: "axioma",
   title: "Axiom III.1 (Segment Transport)",
-  description: "Given a segment AB and a ray with origin at C, there exists a unique point D on the ray such that segment AB is congruent to segment CD.",
+  description: "Given a line segment and a ray with a given origin, there exists a unique point on the ray that determines a segment congruent to the given one.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
   ]
 };
 
 import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
 export const Simulation = Congruence1;
 
-<Capitular letra="T" />he first <ConceptLink targetId="congruencia">congruence</ConceptLink> axiom of <ConceptLink targetId="hilbert">Hilbert</ConceptLink> formalizes the possibility of transferring rigid length magnitudes in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>. This postulate guarantees that any given <ConceptLink targetId="segmento">segment</ConceptLink> can be uniquely laid off from the origin of a given <ConceptLink targetId="semirrecta">ray</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+<Capitular letra="T" />he first congruence axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> formalizes the capacity to transport rigid linear quantities along any given direction in space. Given any line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ and a ray with origin $C$, there exists a unique <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $E$ on that ray defining a segment $\overline{CE}$ <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to $\overline{AB}$.
 
-<Definicion title="">
-  Given a <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ and a <ConceptLink targetId="semirrecta">ray</ConceptLink> $r$ originating at <ConceptLink targetId="punto">point</ConceptLink> $C$, there exists a unique point $D$ belonging to $r$ such that segment $\overline{AB}$ is <ConceptLink targetId="congruencia">congruent</ConceptLink> to segment $\overline{CD}$:
+<Definicion title="Formal statement">
+  Given a line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ and a ray $r = \overrightarrow{CD}$ with origin at <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $C$, there exists a unique point $E \in r$ such that $\overline{AB} \cong \overline{CE}$:
   $$
-  \forall \overline{AB}, \forall r_C \implies \exists! D \in r_C \ (\overline{AB} \cong \overline{CD})
+  \forall \overline{AB}, \forall r = \overrightarrow{CD}, \ \exists! E \in r \ (\overline{AB} \cong \overline{CE})
   $$
 </Definicion>
 
 <Separador />
 
-### Visual representation
+### Visual representation and interaction
 
-Fixing the original segment <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> onto the target ray <VisualBind element="r" color="pavo">$r$</VisualBind> with origin at <VisualBind element="pD" color="terracota">$C$</VisualBind> uniquely determines the position of point <VisualBind element="pD" color="terracota">$D$</VisualBind>, yielding segment <VisualBind element="CD" color="terracota">$\overline{CD}$</VisualBind> with identical rigid length.
+In the interactive simulation, source segment <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> delimited by points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> is transported onto ray <VisualBind element="rayCDir" color="carbon">$r$</VisualBind> emanating from <VisualBind element="pC" color="carbon">$C$</VisualBind>. Virtual circle <VisualBind element="circleCD" color="carbon">$\mathcal{C}(C, AB)$</VisualBind> intersects the ray at the unique point <VisualBind element="pE" color="terracota">$E$</VisualBind>, fixing target segment <VisualBind element="segCD" color="terracota">$\overline{CE}$</VisualBind>.
 
 <Separador />
 
-### Axiomatic significance
+### Geometric significance and scope
 
-This axiom establishes the primitive notion of geometric rigidity without relying on a prior real-valued <ConceptLink targetId="distancia">distance</ConceptLink> function. It enables the synthetic definition of segment comparison and metric equality within the <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink>.
+This postulate provides mathematical rigor to classical compass-and-straightedge constructions, allowing lengths to be transported synthetically without external metric coordinate systems in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+
+<Separador />
+
+### Properties
+
+- **Uniqueness of transport:** On every ray there is exactly one endpoint satisfying the congruence relation.
+- **Symmetric invariance:** Every segment is congruent to itself under endpoint reversal ($\overline{AB} \cong \overline{BA}$).
+- **Synthetic metric foundation:** Enables defining relative length comparisons between segments ($\overline{AB} < \overline{CD}$).

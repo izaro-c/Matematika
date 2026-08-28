@@ -2,35 +2,45 @@ export const metadata = {
   id: "axioma-congruencia-3",
   lang: "en",
   type: "axioma",
-  title: "Axiom III.3 (Segment Addition)",
-  description: "If two adjacent aligned segments are respectively congruent to two other adjacent aligned segments, the total segments formed by their endpoints are congruent.",
+  title: "Axiom III.3 (Additivity of Segment Congruence)",
+  description: "Concatenating pairs of mutually congruent adjacent segments yields congruent total segments.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
   ]
 };
 
 import { Congruence3 } from '@content/diagrams/Axiomas/Congruence3';
 export const Simulation = Congruence3;
 
-<Capitular letra="T" />he third <ConceptLink targetId="congruencia">congruence</ConceptLink> axiom of <ConceptLink targetId="hilbert">Hilbert</ConceptLink> formalizes the additivity of segment layout along a <ConceptLink targetId="recta">line</ConceptLink>. It asserts that concatenating congruent <ConceptLink targetId="segmento">segments</ConceptLink> preserves the overall congruence of the combined sum in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+<Capitular letra="T" />he third congruence axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> introduces the additive property for concatenations of line <ConceptLink targetId="segmento">segments</ConceptLink>. If two pairs of adjacent segments along two lines are pairwise congruent, then the total segments formed by their union are also <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to each other.
 
-<Definicion title="">
-  Let $A, B, C$ be three <ConceptLink targetId="punto">points</ConceptLink> on a line such that $B$ is <ConceptLink targetId="orden">between</ConceptLink> $A$ and $C$, and let $A', B', C'$ be three points on another line such that $B'$ is between $A'$ and $C'$. If $\overline{AB} \cong \overline{A'B'}$ and $\overline{BC} \cong \overline{B'C'}$, then the composite sum segment $\overline{AC}$ is <ConceptLink targetId="congruencia">congruent</ConceptLink> to $\overline{A'C'}$:
+<Definicion title="Formal statement">
+  Let $A, B, C$ be three <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> on a line with $A\text{-}B\text{-}C$, and let $D, E, F$ be three points on another line with $D\text{-}E\text{-}F$. If $\overline{AB} \cong \overline{DE}$ and $\overline{BC} \cong \overline{EF}$, then $\overline{AC} \cong \overline{DF}$:
   $$
-  (A\text{-}B\text{-}C) \land (A'\text{-}B'\text{-}C') \land (\overline{AB} \cong \overline{A'B'}) \land (\overline{BC} \cong \overline{B'C'}) \implies \overline{AC} \cong \overline{A'C'}
+  (A\text{-}B\text{-}C \land D\text{-}E\text{-}F \land \overline{AB} \cong \overline{DE} \land \overline{BC} \cong \overline{EF}) \implies \overline{AC} \cong \overline{DF}
   $$
 </Definicion>
 
 <Separador />
 
-### Visual representation
+### Visual representation and interaction
 
-Juxtaposing the initial segment <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> with the adjacent segment <VisualBind element="BC" color="pavo">$\overline{BC}$</VisualBind> along the given line yields a sum segment <VisualBind element="AC" color="terracota">$\overline{AC}$</VisualBind> that maintains exact rigid correspondence with the concatenation of their transformed congruent parts.
+In the interactive simulation, composite segments <VisualBind element="segAC" color="terracota">$\overline{AC}$</VisualBind> are constructed from components <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> and <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind>. Modifying the length of either summand dynamically preserves the total linear congruence of the combined sum.
 
 <Separador />
 
-### Axiomatic significance
+### Geometric significance and scope
 
-This postulate permits the synthetic definition of addition on equivalence classes of <ConceptLink targetId="segmento">segments</ConceptLink>. Together with the axioms of <ConceptLink targetId="orden">order</ConceptLink>, it grounds the additive metric structure of geometric space independently of real numbers.
+This axiom underpins the algebra of lengths in synthetic geometry. It enables defining the operation of addition on congruence classes $[\overline{AB}] + [\overline{BC}] = [\overline{AC}]$, endowing lengths with the algebraic structure of an ordered commutative semigroup in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+
+<Separador />
+
+### Properties
+
+- **Compatibility with order:** Geometric addition strictly preserves linear ordering ($\overline{AB} < \overline{CD} \implies \overline{AB} + \overline{EF} < \overline{CD} + \overline{EF}$).
+- **Strict monotonicity:** The length of the combined segment is strictly greater than each of its constituent parts.
+- **Basis of subtraction:** Establishes the geometric difference of segments when one is properly contained within another.

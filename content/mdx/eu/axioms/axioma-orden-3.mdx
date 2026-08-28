@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-orden-3",
   lang: "eu",
   type: "axioma",
-  title: "II.3 Axioma (Zuzen-ordenaren trikotomia)",
-  description: "Zuzen bereko hiru puntu desberdinetatik, bakar bat eta soilik bat dago beste bien artean.",
+  title: "II.3 axioma (Tartekotasun linealaren esklusibotasuna)",
+  description: "Zuzen bereko hiru puntu desberdinetatik, gehienez puntu bat dago beste bien artean.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "orden",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §3", role: "primary" }
@@ -14,31 +16,32 @@ export const metadata = {
 import { Order3 } from '@content/diagrams/Axiomas/Order3';
 export const Simulation = Order3;
 
-<Capitular letra="Z" />uzen bereko hiru <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetatik, trikotomia-legea ezartzen du <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-en hirugarren <ConceptLink targetId="orden">ordena-axioma</ConceptLink> honek: zehatz-mehatz puntu bat eta soilik bat dago beste bien artean.
+<Capitular letra="Z" />uzen bereko hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinetatik, <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> ordenako hirugarren axiomak ezartzen du gehienez puntu bat egon daitekeela beste bien <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink>. Baldintza honek eragotzi egiten du zuzen geometrikoaren ordenan konfigurazio zirkularrak edo ziklikoak agertzea.
 
 <Definicion title="Enuntziatu formala">
-  $l \in \mathcal{L}$ <ConceptLink targetId="zuzen">zuzen</ConceptLink> bereko edozein hiru $A, B, C \in l$ <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako, ondorengo hiru artekotasun-harremanetatik zehatz-mehatz bat betetzen da era esklusiboan:
+  $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bereko hiru $A, B, C$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinetarako, ezin da tartekotasun-erlazio bat baino gehiago aldi berean bete:
   $$
-  \forall A, B, C \in l \ (A \neq B \land B \neq C \land A \neq C) \implies (A\text{-}B\text{-}C \veebar B\text{-}C\text{-}A \veebar C\text{-}A\text{-}B)
+  \forall A, B, C \in l \ \bigl(A\text{-}B\text{-}C \implies (\neg B\text{-}A\text{-}C \land \neg A\text{-}C\text{-}B)\bigr)
   $$
+  Gainerako ordena-axiomekin batera, hiru puntuetatik bat eta bakarra dago beste bien artean.
 </Definicion>
 
 <Separador />
 
 ### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan, hiru puntu kolineal aurkezten dira: <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind>. Puntuak zuzen euskarriaren gainean txandaka mugitzean, artekotasun-adierazleak une oro era bakarrean nabarmentzen du hiru puntu horietatik zeinek hartzen duen tarteko posizioa.
+Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntuak <VisualBind element="lineDE" color="carbon">$l$</VisualBind> zuzenean kokatuta daude. Puntuak zuzenean zehar ordenatzean edo arrastatzean, tartekotasun-erlazioa modu esklusiboan aldatzen da, une bakoitzean posizio bakarrak erdiko lekua betetzen duela bermatuz.
 
 <Separador />
 
 ### Esanahi geometrikoa eta esparrua
 
-Axioma honek bermatzen du lerro-ordena osoa dela eta anbiguotasunik gabea dela. Bi puntu desberdin bikote beraren arteko tarteko izan daitezkeen konfigurazio paradoxikoak ekiditen ditu <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
+Zuzen geometrikoen linealtasun zorrotza eta izaera irekia bermatzen ditu. Ordena-erlazioa bere buruaren gainean ixtea saihesten du (zirkunferentzia bateko ordena zikliko proiektiboa bezala), ordena oso eta zorrotzeko egitura ezarriz <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
 
 <Separador />
 
 ### Propietateak
 
-- **Esklusibotasun zorrotza:** Ezin dira bi artekotasun-erlazio aldi berean gertatu hiru puntu berberen artean.
-- **Bete-beteko izaera:** Puntu desberdinen hirukote kolineal orotan nahitaez tarteko posizio bat dago.
-- **Implizitutako koordenatuak:** $\mathbb{R}$ zuzen errealarekin bat datorren lerro-ordenamenduko egitura bultzatzen du.
+- **Elkarrekiko bazterketa:** $A\text{-}B\text{-}C$ egiazkoa izateak automatikoki ezeztatzen ditu $B\text{-}A\text{-}C$ eta $A\text{-}C\text{-}B$.
+- **Ordena lineal osoa:** Zuzen bereko puntuen edozein multzo finitu $A_1\text{-}A_2\text{-}\dots\text{-}A_n$ sekuentzia unibokoan ordenatzea ahalbidetzen du.
+- **Ziklikotasunik eza:** Zuzen sintetikoa bere buruaren gainean topologikoki ixtea debekatzen du infinituko punturik gabe.

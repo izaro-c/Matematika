@@ -16,33 +16,38 @@ export const metadata = {
 import { Paralelogramo } from '@content/diagrams/Definiciones/Paralelogramo';
 export const Simulation = Paralelogramo;
 
-<Capitular letra="U" />n paralelogramo es un <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> convexo en la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink> caracterizado por tener sus dos pares de <ConceptLink targetId="lado">lados</ConceptLink> opuestos discurriendo sobre <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>. Esta figura constituye el modelo de referencia para el cálculo de áreas vectoriales y la definición del producto vectorial en el <ConceptLink targetId="plano">plano</ConceptLink>.
+<Capitular letra="U" />n paralelogramo es un <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> convexo en la geometría plana cuyos pares de lados opuestos discurren sobre <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>. Constituye el modelo geométrico canónico para el cálculo de áreas y la adición vectorial en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Definicion title="">
-  Dado un cuadrilátero convexo <VisualBind element="paralelogramo" color="musgo">$ABCD$</VisualBind> en un plano $\mathcal{P}$, se define como paralelogramo si y solo si los <ConceptLink targetId="segmento">segmentos</ConceptLink> opuestos son recíprocamente paralelos:
+  Dado un <ConceptLink targetId="cuadrilatero" isDependency={true}>cuadrilátero</ConceptLink> convexo <VisualBind element="poligono" color="musgo">$ABCD$</VisualBind> en un plano $\mathcal{P}$, se define como paralelogramo si y solo si sus lados opuestos son <ConceptLink targetId="paralelas" isDependency={true}>paralelos</ConceptLink> dos a dos:
   $$
   ABCD \text{ es paralelogramo} \iff (\overline{AB} \parallel \overline{CD}) \land (\overline{BC} \parallel \overline{DA})
   $$
-  Como consecuencia del postulado de paralelismo y de los axiomas de <ConceptLink targetId="congruencia">congruencia</ConceptLink>, los lados opuestos son congruentes ($\overline{AB} \cong \overline{CD}$ y $\overline{BC} \cong \overline{DA}$).
+  Como consecuencia de los axiomas de congruencia y paralelismo, los lados opuestos son congruentes (<VisualBind element="lados-iguales" color="pavo">$\overline{AB} \cong \overline{CD}$</VisualBind> y $\overline{BC} \cong \overline{DA}$).
 </Definicion>
 
 <Separador />
 
-### Clasificación de subfamilia
+### Clasificación de la subfamilia
 
-Los paralelogramos se subdividen en categorías específicas según la congruencia de sus lados y la medida de sus <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores:
+Los paralelogramos se subdividen según la medida de sus ángulos y la congruencia de sus lados:
 
 | Subfamilia | Condición angular | Condición en los lados |
 |---|---|---|
-| Rectángulo | Cuatro ángulos <ConceptLink targetId="angulo-recto">rectos</ConceptLink> ($\mu = 90^\circ$) | Lados opuestos congruentes dos a dos |
-| Rombo | Ángulos opuestos congruentes | Cuatro lados estrictamente congruentes ($\overline{AB} \cong \overline{BC}$) |
+| Rectángulo | Cuatro <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink> | Lados opuestos congruentes dos a dos |
+| Rombo | <VisualBind element="angulos-opuestos" color="pavo">Ángulos opuestos congruentes</VisualBind> | Cuatro lados estrictamente congruentes |
 | <ConceptLink targetId="cuadrado">Cuadrado</ConceptLink> | Cuatro ángulos rectos | Cuatro lados estrictamente congruentes |
-| Romboide | Ángulos opuestos congruentes no rectos | Lados adyacentes de diferente longitud |
+| Romboide | Ángulos opuestos no rectos | Lados adyacentes de diferente longitud |
 
 <Separador />
 
-### Propiedades
-
-- **Bisecado de diagonales**: Las dos <ConceptLink targetId="diagonal">diagonales</ConceptLink> $\overline{AC}$ y $\overline{BD}$ se intersecan en su punto medio común $M$, cumpliéndose $d(A, M) = d(M, C)$ y $d(B, M) = d(M, D)$.
-- **Congruencia de ángulos opuestos**: Los ángulos opuestos de todo paralelogramo son congruentes entre sí, mientras que los ángulos adyacentes a un mismo lado son suplementarios.
-- **Cálculo del área**: El área encerrada por el paralelogramo viene dada por el producto de la longitud de una base $b = \|\overline{AB}\|$ y su <ConceptLink targetId="perpendicular">altura perpendicular</ConceptLink> correspondiente $h$: $\mu(ABCD) = b \cdot h$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Diagonales y relaciones métricas">
+    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Bisecado de diagonales">
+      Las dos diagonales de todo paralelogramo se intersecan en su punto medio común.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-rectangulo" title="Cálculo del área">
+      El área encerrada viene dada por el producto de la base por su altura perpendicular: $\mu(ABCD) = b \cdot h$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

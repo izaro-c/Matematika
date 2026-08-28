@@ -16,32 +16,44 @@ export const metadata = {
 import { Segmento } from '@content/diagrams/Definiciones/Segmento';
 export const Simulation = Segmento;
 
-<Capitular letra="E" />l segmento de recta es el subconjunto acotado y conexo de una <ConceptLink targetId="recta">recta</ConceptLink> delimitado por dos <ConceptLink targetId="punto">puntos</ConceptLink> llamados extremos. A diferencia de la recta infinita, posee una <ConceptLink targetId="distancia">longitud métrica</ConceptLink> bien definida y constituye la entidad geométrica básica para la construcción de <ConceptLink targetId="poligono">polígonos</ConceptLink> y <ConceptLink targetId="triangulo">triángulos</ConceptLink>.
+<Capitular letra="E" />l segmento de recta es el subconjunto acotado, conexo y convexo de una <ConceptLink targetId="recta">recta</ConceptLink> delimitado por dos <ConceptLink targetId="punto">puntos</ConceptLink> denominados extremos. A diferencia de la recta ilimitada, posee una longitud métrica bien definida y constituye la entidad geométrica básica para la formación de <ConceptLink targetId="poligono">polígonos</ConceptLink> y <ConceptLink targetId="triangulo">triángulos</ConceptLink>.
 
 <Definicion title="">
-  Dados dos puntos <VisualBind element="A" color="musgo">$A$</VisualBind> y <VisualBind element="B" color="musgo">$B$</VisualBind> de una <ConceptLink targetId="recta">recta soporte</ConceptLink> <VisualBind element="carrier" color="carbon">$\ell$</VisualBind>, el segmento cerrado <VisualBind element="segment" color="musgo">$\overline{AB}$</VisualBind> es el conjunto formado por los puntos $A$, $B$ y todos los puntos $P$ que están <ConceptLink targetId="estar-entre">entre</ConceptLink> $A$ y $B$:
+  Dados dos puntos distintos <VisualBind element="pA" color="musgo">$A$</VisualBind> y <VisualBind element="pB" color="musgo">$B$</VisualBind> pertenecientes a una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> <VisualBind element="lineL" color="carbon">$\ell$</VisualBind>, el segmento cerrado <VisualBind element="segmentAB" color="musgo">$\overline{AB}$</VisualBind> es el conjunto constituido por los <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> $A$, $B$ y todos los puntos $P \in \ell$ que se encuentran <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $B$:
   $$
-  \overline{AB} = \{ P \in \ell \mid P = (1 - t)A + tB, \, t \in [0, 1] \}
+  \overline{AB} = \{ P \in \ell \mid P = A \lor P = B \lor A * P * B \}
   $$
-  La distancia escalar $d(A, B) = \|B - A\|$ define la <VisualBind element="length" color="mora">longitud del segmento</VisualBind>.
+  En el espacio vectorial $\mathbb{R}^n$, se expresa como la combinación convexa:
+  $$
+  \overline{AB} = \{ P \in \mathbb{R}^n \mid P = (1 - t)A + tB, \, t \in [0, 1] \}
+  $$
 </Definicion>
 
 <Separador />
 
-### Tipología de segmentos según sus límites y posición
+### Geometría sintética y axiomática
 
-Los segmentos se clasifican formalmente en función de la inclusión de sus extremos o de su disposición relativa:
+En la formulación de Hilbert:
+- **Segmento abierto**: Se define como $(AB) = \{ P \in \ell \mid A * P * B \}$, excluyendo los extremos $A$ y $B$.
+- **Congruencia de segmentos**: La relación primitiva $\overline{AB} \cong \overline{CD}$ asegura la posibilidad de trasladar distancias sin deformación.
+- **Punto medio**: Para todo segmento $\overline{AB}$, existe un único punto interior $M \in (AB)$ tal que $\overline{AM} \cong \overline{MB}$.
 
-| Denominación | Definición conjuntista | Característica geométrica |
-|---|---|---|
-| Segmento cerrado $\overline{AB}$ | $\{ P \in \ell \mid t \in [0, 1] \}$ | Incluye ambos extremos $A$ y $B$ |
-| Segmento abierto $(AB)$ | $\{ P \in \ell \mid t \in (0, 1) \}$ | Excluye ambos extremos $A$ y $B$ |
-| Segmentos consecutivos | $\overline{AB} \cap \overline{BC} = \{B\}$ | Comparten únicamente un punto extremo $B$ |
+### Geometría métrica y analítica
+
+La longitud escalar del segmento equivale a la distancia euclídea entre sus extremos:
+$$
+\|\overline{AB}\| = d(A, B) = \sqrt{\sum_{i=1}^n (b_i - a_i)^2}
+$$
 
 <Separador />
 
-### Propiedades
-
-- **<ConceptLink targetId="congruencia">Transporte y congruencia</ConceptLink>**: Dos segmentos son congruentes ($\overline{AB} \cong \overline{CD}$) si y solo si poseen la misma longitud métrica.
-- **<ConceptLink targetId="region-convexa">Convexidad</ConceptLink>**: Todo segmento de recta es un conjunto estrictamente conexo y convexo en $\mathbb{R}^n$.
-- **<ConceptLink targetId="punto-medio">Existencia de punto medio</ConceptLink>**: Existe un único punto $M \in \overline{AB}$ tal que $\overline{AM} \cong \overline{MB}$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades métricas y estructurales">
+    <PropiedadItem id="axioma-congruencia-1" title="Transporte y congruencia">
+      Todo segmento puede transportarse unívocamente sobre una semirrecta dada conservando su longitud.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-orden-3" title="Convexidad lineal">
+      Todo segmento $\overline{AB}$ es un conjunto convexo en el espacio afín.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

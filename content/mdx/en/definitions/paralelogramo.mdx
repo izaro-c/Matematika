@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Parallelogram",
-  description: "Convex quadrilateral whose opposite pairs of sides are parallel.",
+  description: "Convex quadrilateral with two pairs of opposite sides that are pairwise parallel.",
   branch: "51M",
   hasSimulation: true,
   sources: [
@@ -16,33 +16,38 @@ export const metadata = {
 import { Paralelogramo } from '@content/diagrams/Definiciones/Paralelogramo';
 export const Simulation = Paralelogramo;
 
-<Capitular letra="A" /> parallelogram is a convex <ConceptLink targetId="cuadrilatero">quadrilateral</ConceptLink> in planar <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink> characterized by having both pairs of opposite <ConceptLink targetId="lado">sides</ConceptLink> lying along <ConceptLink targetId="paralelas">parallel lines</ConceptLink>. This figure serves as a benchmark model for computing vector areas and defining the cross product in the <ConceptLink targetId="plano">plane</ConceptLink>.
+<Capitular letra="A" /> parallelogram is a convex <ConceptLink targetId="cuadrilatero">quadrilateral</ConceptLink> in planar Euclidean geometry characterized by having both pairs of opposite sides lying on <ConceptLink targetId="paralelas">parallel lines</ConceptLink>. It serves as the standard geometric model for planar area computations and vector addition in the <ConceptLink targetId="plano">plane</ConceptLink>.
 
 <Definicion title="">
-  Given a convex quadrilateral <VisualBind element="paralelogramo" color="musgo">$ABCD$</VisualBind> in a plane $\mathcal{P}$, it is defined to be a parallelogram if and only if opposite line <ConceptLink targetId="segmento">segments</ConceptLink> are pairwise parallel:
+  Given a convex <ConceptLink targetId="cuadrilatero" isDependency={true}>quadrilateral</ConceptLink> <VisualBind element="poligono" color="musgo">$ABCD$</VisualBind> in a plane $\mathcal{P}$, it is defined as a parallelogram if and only if opposite sides are pairwise <ConceptLink targetId="paralelas" isDependency={true}>parallel</ConceptLink>:
   $$
   ABCD \text{ is a parallelogram} \iff (\overline{AB} \parallel \overline{CD}) \land (\overline{BC} \parallel \overline{DA})
   $$
-  As a consequence of the parallel postulate and <ConceptLink targetId="congruencia">congruence axioms</ConceptLink>, opposite sides are congruent ($\overline{AB} \cong \overline{CD}$ and $\overline{BC} \cong \overline{DA}$).
+  As a consequence of the parallel and congruence axioms, opposite sides are congruent (<VisualBind element="lados-iguales" color="pavo">$\overline{AB} \cong \overline{CD}$</VisualBind> and $\overline{BC} \cong \overline{DA}$).
 </Definicion>
 
 <Separador />
 
 ### Subfamily classification
 
-Parallelograms are partitioned into specific categories based on side congruence and interior <ConceptLink targetId="angulo">angle</ConceptLink> measures:
+Parallelograms are classified based on interior angle measures and side congruence:
 
 | Subfamily | Angular condition | Side condition |
 |---|---|---|
-| Rectangle | Four <ConceptLink targetId="angulo-recto">right angles</ConceptLink> ($\mu = 90^\circ$) | Pairwise congruent opposite sides |
-| Rhombus | Congruent opposite angles | Four strictly congruent sides ($\overline{AB} \cong \overline{BC}$) |
-| <ConceptLink targetId="cuadrado">Square</ConceptLink> | Four right angles | Four strictly congruent sides |
-| Rhomboid | Non-right congruent opposite angles | Unequal adjacent sides |
+| Rectangle | Four <ConceptLink targetId="angulo-recto">right angles</ConceptLink> | Opposite sides pairwise congruent |
+| Rhombus | <VisualBind element="angulos-opuestos" color="pavo">Opposite angles congruent</VisualBind> | All four sides strictly congruent |
+| <ConceptLink targetId="cuadrado">Square</ConceptLink> | Four right angles | All four sides strictly congruent |
+| Rhomboid | Opposite angles non-right | Adjacent sides of unequal length |
 
 <Separador />
 
-### Properties
-
-- **Bisection of diagonals**: The two <ConceptLink targetId="diagonal">diagonals</ConceptLink> $\overline{AC}$ and $\overline{BD}$ intersect at their common midpoint $M$, satisfying $d(A, M) = d(M, C)$ and $d(B, M) = d(M, D)$.
-- **Congruence of opposite angles**: The opposite angles of any parallelogram are mutually congruent, while adjacent angles along any side are supplementary.
-- **Area computation**: The area enclosed by the parallelogram is given by the product of a base length $b = \|\overline{AB}\|$ and its corresponding <ConceptLink targetId="perpendicular">perpendicular height</ConceptLink> $h$: $\mu(ABCD) = b \cdot h$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Diagonals and metric relations">
+    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Bisection of diagonals">
+      The two diagonals of any parallelogram bisect each other at their common midpoint.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-rectangulo" title="Area formula">
+      The enclosed area equals the product of a base and its perpendicular height: $\mu(ABCD) = b \cdot h$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

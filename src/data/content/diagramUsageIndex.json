@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "3a91263d38c75ffbbadbabb955a233be3bcadf2a2ad9c708abe213315b0405a7",
+  "corpusHash": "f3ca69fcf57196f3a180005ec8f7c2675d6a0abe5052150f4bf8e87599ae9dd1",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -32,9 +32,11 @@
     "Paralelas": "content/diagrams/Definiciones/Paralelas.tsx",
     "Paralelogramo": "content/diagrams/Definiciones/Paralelogramo.tsx",
     "Perpendicular": "content/diagrams/Definiciones/Perpendicular.tsx",
+    "Plano": "content/diagrams/Definiciones/Plano.tsx",
     "Punto": "content/diagrams/Definiciones/Punto.tsx",
     "Recta": "content/diagrams/Definiciones/Recta.tsx",
     "Segmento": "content/diagrams/Definiciones/Segmento.tsx",
+    "Semirrecta": "content/diagrams/Definiciones/Semirrecta.tsx",
     "Triangulo": "content/diagrams/Definiciones/Triangulo.tsx",
     "DemoAngulosAlternosInternos": "content/diagrams/Demos/DemoAngulosAlternosInternos.tsx",
     "DemoAngulosOpuestos": "content/diagrams/Demos/DemoAngulosOpuestos.tsx",
@@ -65,11 +67,21 @@
     "AxiomaArquimedes": [
       {
         "contentId": "axioma-arquimedes",
+        "contentPath": "content/mdx/en/axioms/axioma-arquimedes.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 713,
+          "end": 755
+        },
+        "blockId": "axioma-arquimedes:diagram:AxiomaArquimedes"
+      },
+      {
+        "contentId": "axioma-arquimedes",
         "contentPath": "content/mdx/es/axioms/axioma-arquimedes.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 605,
-          "end": 647
+          "start": 728,
+          "end": 770
         },
         "blockId": "axioma-arquimedes:diagram:AxiomaArquimedes"
       },
@@ -78,8 +90,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-arquimedes.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 610,
-          "end": 652
+          "start": 689,
+          "end": 731
         },
         "blockId": "axioma-arquimedes:diagram:AxiomaArquimedes"
       }
@@ -87,11 +99,21 @@
     "AxiomaDedekind": [
       {
         "contentId": "axioma-completitud",
+        "contentPath": "content/mdx/en/axioms/axioma-completitud.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 692,
+          "end": 732
+        },
+        "blockId": "axioma-completitud:diagram:AxiomaDedekind"
+      },
+      {
+        "contentId": "axioma-completitud",
         "contentPath": "content/mdx/es/axioms/axioma-completitud.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 613,
-          "end": 653
+          "start": 708,
+          "end": 748
         },
         "blockId": "axioma-completitud:diagram:AxiomaDedekind"
       },
@@ -100,8 +122,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-completitud.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 602,
-          "end": 642
+          "start": 676,
+          "end": 716
         },
         "blockId": "axioma-completitud:diagram:AxiomaDedekind"
       }
@@ -109,179 +131,149 @@
     "Congruence1": [
       {
         "contentId": "axioma-congruencia-1",
-        "contentPath": "content/mdx/es/axioms/axioma-congruencia-1.mdx",
+        "contentPath": "content/mdx/en/axioms/axioma-congruencia-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 512,
-          "end": 549
+          "start": 600,
+          "end": 637
         },
         "blockId": "axioma-congruencia-1:diagram:Congruence1"
       },
       {
-        "contentId": "congruencia",
-        "contentPath": "content/mdx/es/definitions/congruencia.mdx",
-        "referenceKind": "Component",
+        "contentId": "axioma-congruencia-1",
+        "contentPath": "content/mdx/es/axioms/axioma-congruencia-1.mdx",
+        "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 2815,
-          "end": 2828
+          "start": 607,
+          "end": 644
         },
-        "blockId": "congruencia:diagram:Congruence1"
+        "blockId": "axioma-congruencia-1:diagram:Congruence1"
       },
       {
         "contentId": "axioma-congruencia-1",
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 515,
-          "end": 552
+          "start": 619,
+          "end": 656
         },
         "blockId": "axioma-congruencia-1:diagram:Congruence1"
-      },
-      {
-        "contentId": "congruencia",
-        "contentPath": "content/mdx/eu/definitions/congruencia.mdx",
-        "referenceKind": "Component",
-        "sourceRange": {
-          "start": 2774,
-          "end": 2787
-        },
-        "blockId": "congruencia:diagram:Congruence1"
       }
     ],
     "Congruence2": [
       {
         "contentId": "axioma-congruencia-2",
-        "contentPath": "content/mdx/es/axioms/axioma-congruencia-2.mdx",
+        "contentPath": "content/mdx/en/axioms/axioma-congruencia-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 461,
-          "end": 498
+          "start": 561,
+          "end": 598
         },
         "blockId": "axioma-congruencia-2:diagram:Congruence2"
       },
       {
-        "contentId": "congruencia",
-        "contentPath": "content/mdx/es/definitions/congruencia.mdx",
-        "referenceKind": "Component",
+        "contentId": "axioma-congruencia-2",
+        "contentPath": "content/mdx/es/axioms/axioma-congruencia-2.mdx",
+        "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 3185,
-          "end": 3198
+          "start": 571,
+          "end": 608
         },
-        "blockId": "congruencia:diagram:Congruence2"
+        "blockId": "axioma-congruencia-2:diagram:Congruence2"
       },
       {
         "contentId": "axioma-congruencia-2",
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 455,
-          "end": 492
+          "start": 583,
+          "end": 620
         },
         "blockId": "axioma-congruencia-2:diagram:Congruence2"
-      },
-      {
-        "contentId": "congruencia",
-        "contentPath": "content/mdx/eu/definitions/congruencia.mdx",
-        "referenceKind": "Component",
-        "sourceRange": {
-          "start": 3161,
-          "end": 3174
-        },
-        "blockId": "congruencia:diagram:Congruence2"
       }
     ],
     "Congruence3": [
       {
         "contentId": "axioma-congruencia-3",
-        "contentPath": "content/mdx/es/axioms/axioma-congruencia-3.mdx",
+        "contentPath": "content/mdx/en/axioms/axioma-congruencia-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 475,
-          "end": 512
+          "start": 563,
+          "end": 600
         },
         "blockId": "axioma-congruencia-3:diagram:Congruence3"
       },
       {
-        "contentId": "congruencia",
-        "contentPath": "content/mdx/es/definitions/congruencia.mdx",
-        "referenceKind": "Component",
+        "contentId": "axioma-congruencia-3",
+        "contentPath": "content/mdx/es/axioms/axioma-congruencia-3.mdx",
+        "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 3696,
-          "end": 3709
+          "start": 576,
+          "end": 613
         },
-        "blockId": "congruencia:diagram:Congruence3"
+        "blockId": "axioma-congruencia-3:diagram:Congruence3"
       },
       {
         "contentId": "axioma-congruencia-3",
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 471,
-          "end": 508
+          "start": 573,
+          "end": 610
         },
         "blockId": "axioma-congruencia-3:diagram:Congruence3"
-      },
-      {
-        "contentId": "congruencia",
-        "contentPath": "content/mdx/eu/definitions/congruencia.mdx",
-        "referenceKind": "Component",
-        "sourceRange": {
-          "start": 3690,
-          "end": 3703
-        },
-        "blockId": "congruencia:diagram:Congruence3"
       }
     ],
     "Congruence4": [
       {
         "contentId": "axioma-congruencia-4",
-        "contentPath": "content/mdx/es/axioms/axioma-congruencia-4.mdx",
+        "contentPath": "content/mdx/en/axioms/axioma-congruencia-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 503,
-          "end": 540
+          "start": 594,
+          "end": 631
         },
         "blockId": "axioma-congruencia-4:diagram:Congruence4"
       },
       {
-        "contentId": "congruencia",
-        "contentPath": "content/mdx/es/definitions/congruencia.mdx",
-        "referenceKind": "Component",
+        "contentId": "axioma-congruencia-4",
+        "contentPath": "content/mdx/es/axioms/axioma-congruencia-4.mdx",
+        "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 4331,
-          "end": 4344
+          "start": 609,
+          "end": 646
         },
-        "blockId": "congruencia:diagram:Congruence4"
+        "blockId": "axioma-congruencia-4:diagram:Congruence4"
       },
       {
         "contentId": "axioma-congruencia-4",
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 541,
-          "end": 578
+          "start": 631,
+          "end": 668
         },
         "blockId": "axioma-congruencia-4:diagram:Congruence4"
-      },
-      {
-        "contentId": "congruencia",
-        "contentPath": "content/mdx/eu/definitions/congruencia.mdx",
-        "referenceKind": "Component",
-        "sourceRange": {
-          "start": 4342,
-          "end": 4355
-        },
-        "blockId": "congruencia:diagram:Congruence4"
       }
     ],
     "EuclidParallel": [
       {
         "contentId": "axioma-paralelas-euclides",
+        "contentPath": "content/mdx/en/axioms/axioma-paralelas-euclides.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 677,
+          "end": 717
+        },
+        "blockId": "axioma-paralelas-euclides:diagram:EuclidParallel"
+      },
+      {
+        "contentId": "axioma-paralelas-euclides",
         "contentPath": "content/mdx/es/axioms/axioma-paralelas-euclides.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 641,
-          "end": 681
+          "start": 701,
+          "end": 741
         },
         "blockId": "axioma-paralelas-euclides:diagram:EuclidParallel"
       },
@@ -290,8 +282,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-paralelas-euclides.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 681,
-          "end": 721
+          "start": 689,
+          "end": 729
         },
         "blockId": "axioma-paralelas-euclides:diagram:EuclidParallel"
       }
@@ -299,11 +291,21 @@
     "HyperbolicParallel": [
       {
         "contentId": "axioma-paralelas-hiperbolico",
+        "contentPath": "content/mdx/en/axioms/axioma-paralelas-hiperbolico.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 772,
+          "end": 816
+        },
+        "blockId": "axioma-paralelas-hiperbolico:diagram:HyperbolicParallel"
+      },
+      {
+        "contentId": "axioma-paralelas-hiperbolico",
         "contentPath": "content/mdx/es/axioms/axioma-paralelas-hiperbolico.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 741,
-          "end": 785
+          "start": 785,
+          "end": 829
         },
         "blockId": "axioma-paralelas-hiperbolico:diagram:HyperbolicParallel"
       },
@@ -312,8 +314,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-paralelas-hiperbolico.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 780,
-          "end": 824
+          "start": 791,
+          "end": 835
         },
         "blockId": "axioma-paralelas-hiperbolico:diagram:HyperbolicParallel"
       }
@@ -321,11 +323,21 @@
     "Incidence1": [
       {
         "contentId": "axioma-incidencia-1",
+        "contentPath": "content/mdx/en/axioms/axioma-incidencia-1.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 562,
+          "end": 598
+        },
+        "blockId": "axioma-incidencia-1:diagram:Incidence1"
+      },
+      {
+        "contentId": "axioma-incidencia-1",
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 448,
-          "end": 484
+          "start": 565,
+          "end": 601
         },
         "blockId": "axioma-incidencia-1:diagram:Incidence1"
       },
@@ -334,8 +346,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 470,
-          "end": 506
+          "start": 569,
+          "end": 605
         },
         "blockId": "axioma-incidencia-1:diagram:Incidence1"
       }
@@ -343,11 +355,21 @@
     "Incidence2": [
       {
         "contentId": "axioma-incidencia-2",
+        "contentPath": "content/mdx/en/axioms/axioma-incidencia-2.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 522,
+          "end": 558
+        },
+        "blockId": "axioma-incidencia-2:diagram:Incidence2"
+      },
+      {
+        "contentId": "axioma-incidencia-2",
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 456,
-          "end": 492
+          "start": 531,
+          "end": 567
         },
         "blockId": "axioma-incidencia-2:diagram:Incidence2"
       },
@@ -356,8 +378,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 468,
-          "end": 504
+          "start": 535,
+          "end": 571
         },
         "blockId": "axioma-incidencia-2:diagram:Incidence2"
       }
@@ -365,11 +387,21 @@
     "Incidence3": [
       {
         "contentId": "axioma-incidencia-3",
+        "contentPath": "content/mdx/en/axioms/axioma-incidencia-3.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 553,
+          "end": 589
+        },
+        "blockId": "axioma-incidencia-3:diagram:Incidence3"
+      },
+      {
+        "contentId": "axioma-incidencia-3",
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 453,
-          "end": 489
+          "start": 555,
+          "end": 591
         },
         "blockId": "axioma-incidencia-3:diagram:Incidence3"
       },
@@ -378,8 +410,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 474,
-          "end": 510
+          "start": 548,
+          "end": 584
         },
         "blockId": "axioma-incidencia-3:diagram:Incidence3"
       }
@@ -387,11 +419,21 @@
     "Incidence4": [
       {
         "contentId": "axioma-incidencia-4",
+        "contentPath": "content/mdx/en/axioms/axioma-incidencia-4.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 567,
+          "end": 603
+        },
+        "blockId": "axioma-incidencia-4:diagram:Incidence4"
+      },
+      {
+        "contentId": "axioma-incidencia-4",
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 462,
-          "end": 498
+          "start": 568,
+          "end": 604
         },
         "blockId": "axioma-incidencia-4:diagram:Incidence4"
       },
@@ -400,8 +442,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 496,
-          "end": 532
+          "start": 576,
+          "end": 612
         },
         "blockId": "axioma-incidencia-4:diagram:Incidence4"
       }
@@ -409,11 +451,21 @@
     "Incidence5": [
       {
         "contentId": "axioma-incidencia-5",
+        "contentPath": "content/mdx/en/axioms/axioma-incidencia-5.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 558,
+          "end": 594
+        },
+        "blockId": "axioma-incidencia-5:diagram:Incidence5"
+      },
+      {
+        "contentId": "axioma-incidencia-5",
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-5.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 441,
-          "end": 477
+          "start": 562,
+          "end": 598
         },
         "blockId": "axioma-incidencia-5:diagram:Incidence5"
       },
@@ -422,8 +474,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-5.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 456,
-          "end": 492
+          "start": 553,
+          "end": 589
         },
         "blockId": "axioma-incidencia-5:diagram:Incidence5"
       }
@@ -431,11 +483,21 @@
     "Incidence6": [
       {
         "contentId": "axioma-incidencia-6",
+        "contentPath": "content/mdx/en/axioms/axioma-incidencia-6.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 568,
+          "end": 604
+        },
+        "blockId": "axioma-incidencia-6:diagram:Incidence6"
+      },
+      {
+        "contentId": "axioma-incidencia-6",
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-6.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 491,
-          "end": 527
+          "start": 576,
+          "end": 612
         },
         "blockId": "axioma-incidencia-6:diagram:Incidence6"
       },
@@ -444,8 +506,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-6.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 510,
-          "end": 546
+          "start": 559,
+          "end": 595
         },
         "blockId": "axioma-incidencia-6:diagram:Incidence6"
       }
@@ -453,11 +515,21 @@
     "Incidence7": [
       {
         "contentId": "axioma-incidencia-7",
+        "contentPath": "content/mdx/en/axioms/axioma-incidencia-7.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 541,
+          "end": 577
+        },
+        "blockId": "axioma-incidencia-7:diagram:Incidence7"
+      },
+      {
+        "contentId": "axioma-incidencia-7",
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-7.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 456,
-          "end": 492
+          "start": 557,
+          "end": 593
         },
         "blockId": "axioma-incidencia-7:diagram:Incidence7"
       },
@@ -466,8 +538,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-7.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 454,
-          "end": 490
+          "start": 538,
+          "end": 574
         },
         "blockId": "axioma-incidencia-7:diagram:Incidence7"
       }
@@ -475,11 +547,21 @@
     "Incidence8": [
       {
         "contentId": "axioma-incidencia-8",
+        "contentPath": "content/mdx/en/axioms/axioma-incidencia-8.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 551,
+          "end": 587
+        },
+        "blockId": "axioma-incidencia-8:diagram:Incidence8"
+      },
+      {
+        "contentId": "axioma-incidencia-8",
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-8.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 475,
-          "end": 511
+          "start": 558,
+          "end": 594
         },
         "blockId": "axioma-incidencia-8:diagram:Incidence8"
       },
@@ -488,8 +570,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-8.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 473,
-          "end": 509
+          "start": 557,
+          "end": 593
         },
         "blockId": "axioma-incidencia-8:diagram:Incidence8"
       }
@@ -497,11 +579,21 @@
     "Order1": [
       {
         "contentId": "axioma-orden-1",
+        "contentPath": "content/mdx/en/axioms/axioma-orden-1.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 576,
+          "end": 608
+        },
+        "blockId": "axioma-orden-1:diagram:Order1"
+      },
+      {
+        "contentId": "axioma-orden-1",
         "contentPath": "content/mdx/es/axioms/axioma-orden-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 478,
-          "end": 510
+          "start": 572,
+          "end": 604
         },
         "blockId": "axioma-orden-1:diagram:Order1"
       },
@@ -510,8 +602,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-orden-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 491,
-          "end": 523
+          "start": 586,
+          "end": 618
         },
         "blockId": "axioma-orden-1:diagram:Order1"
       }
@@ -519,11 +611,21 @@
     "Order2": [
       {
         "contentId": "axioma-orden-2",
+        "contentPath": "content/mdx/en/axioms/axioma-orden-2.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 561,
+          "end": 593
+        },
+        "blockId": "axioma-orden-2:diagram:Order2"
+      },
+      {
+        "contentId": "axioma-orden-2",
         "contentPath": "content/mdx/es/axioms/axioma-orden-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 480,
-          "end": 512
+          "start": 546,
+          "end": 578
         },
         "blockId": "axioma-orden-2:diagram:Order2"
       },
@@ -532,8 +634,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-orden-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 481,
-          "end": 513
+          "start": 563,
+          "end": 595
         },
         "blockId": "axioma-orden-2:diagram:Order2"
       }
@@ -541,11 +643,21 @@
     "Order3": [
       {
         "contentId": "axioma-orden-3",
+        "contentPath": "content/mdx/en/axioms/axioma-orden-3.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 528,
+          "end": 560
+        },
+        "blockId": "axioma-orden-3:diagram:Order3"
+      },
+      {
+        "contentId": "axioma-orden-3",
         "contentPath": "content/mdx/es/axioms/axioma-orden-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 475,
-          "end": 507
+          "start": 559,
+          "end": 591
         },
         "blockId": "axioma-orden-3:diagram:Order3"
       },
@@ -554,8 +666,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-orden-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 487,
-          "end": 519
+          "start": 542,
+          "end": 574
         },
         "blockId": "axioma-orden-3:diagram:Order3"
       }
@@ -563,11 +675,21 @@
     "Pasch": [
       {
         "contentId": "axioma-orden-4",
+        "contentPath": "content/mdx/en/axioms/axioma-orden-4.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 683,
+          "end": 714
+        },
+        "blockId": "axioma-orden-4:diagram:Pasch"
+      },
+      {
+        "contentId": "axioma-orden-4",
         "contentPath": "content/mdx/es/axioms/axioma-orden-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 593,
-          "end": 624
+          "start": 690,
+          "end": 721
         },
         "blockId": "axioma-orden-4:diagram:Pasch"
       },
@@ -576,8 +698,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-orden-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 605,
-          "end": 636
+          "start": 682,
+          "end": 713
         },
         "blockId": "axioma-orden-4:diagram:Pasch"
       }
@@ -585,53 +707,53 @@
     "SAS": [
       {
         "contentId": "axioma-congruencia-5",
-        "contentPath": "content/mdx/es/axioms/axioma-congruencia-5.mdx",
+        "contentPath": "content/mdx/en/axioms/axioma-congruencia-5.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 511,
-          "end": 540
+          "start": 580,
+          "end": 609
         },
         "blockId": "axioma-congruencia-5:diagram:SAS"
       },
       {
-        "contentId": "congruencia",
-        "contentPath": "content/mdx/es/definitions/congruencia.mdx",
-        "referenceKind": "Component",
+        "contentId": "axioma-congruencia-5",
+        "contentPath": "content/mdx/es/axioms/axioma-congruencia-5.mdx",
+        "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 5115,
-          "end": 5120
+          "start": 604,
+          "end": 633
         },
-        "blockId": "congruencia:diagram:SAS"
+        "blockId": "axioma-congruencia-5:diagram:SAS"
       },
       {
         "contentId": "axioma-congruencia-5",
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-5.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 509,
-          "end": 538
+          "start": 589,
+          "end": 618
         },
         "blockId": "axioma-congruencia-5:diagram:SAS"
-      },
-      {
-        "contentId": "congruencia",
-        "contentPath": "content/mdx/eu/definitions/congruencia.mdx",
-        "referenceKind": "Component",
-        "sourceRange": {
-          "start": 5138,
-          "end": 5143
-        },
-        "blockId": "congruencia:diagram:SAS"
       }
     ],
     "GpsTrilateracion": [
       {
         "contentId": "caso-gps-trilateracion",
+        "contentPath": "content/mdx/en/usecases/caso-gps-trilateracion.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 503,
+          "end": 545
+        },
+        "blockId": "caso-gps-trilateracion:diagram:GpsTrilateracion"
+      },
+      {
+        "contentId": "caso-gps-trilateracion",
         "contentPath": "content/mdx/es/usecases/caso-gps-trilateracion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 437,
-          "end": 479
+          "start": 514,
+          "end": 556
         },
         "blockId": "caso-gps-trilateracion:diagram:GpsTrilateracion"
       },
@@ -640,8 +762,8 @@
         "contentPath": "content/mdx/eu/usecases/caso-gps-trilateracion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 432,
-          "end": 474
+          "start": 511,
+          "end": 553
         },
         "blockId": "caso-gps-trilateracion:diagram:GpsTrilateracion"
       }
@@ -649,11 +771,21 @@
     "Angulo": [
       {
         "contentId": "angulo",
+        "contentPath": "content/mdx/en/definitions/angulo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 567,
+          "end": 599
+        },
+        "blockId": "angulo:diagram:Angulo"
+      },
+      {
+        "contentId": "angulo",
         "contentPath": "content/mdx/es/definitions/angulo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 553,
-          "end": 585
+          "start": 581,
+          "end": 613
         },
         "blockId": "angulo:diagram:Angulo"
       },
@@ -662,8 +794,8 @@
         "contentPath": "content/mdx/eu/definitions/angulo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 552,
-          "end": 584
+          "start": 597,
+          "end": 629
         },
         "blockId": "angulo:diagram:Angulo"
       }
@@ -671,11 +803,21 @@
     "Circunferencia": [
       {
         "contentId": "circunferencia",
+        "contentPath": "content/mdx/en/definitions/circunferencia.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 568,
+          "end": 608
+        },
+        "blockId": "circunferencia:diagram:Circunferencia"
+      },
+      {
+        "contentId": "circunferencia",
         "contentPath": "content/mdx/es/definitions/circunferencia.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 472,
-          "end": 512
+          "start": 597,
+          "end": 637
         },
         "blockId": "circunferencia:diagram:Circunferencia"
       },
@@ -684,8 +826,8 @@
         "contentPath": "content/mdx/eu/definitions/circunferencia.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 463,
-          "end": 503
+          "start": 609,
+          "end": 649
         },
         "blockId": "circunferencia:diagram:Circunferencia"
       }
@@ -693,11 +835,21 @@
     "Cuadrilatero": [
       {
         "contentId": "cuadrilatero",
+        "contentPath": "content/mdx/en/definitions/cuadrilatero.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 623,
+          "end": 661
+        },
+        "blockId": "cuadrilatero:diagram:Cuadrilatero"
+      },
+      {
+        "contentId": "cuadrilatero",
         "contentPath": "content/mdx/es/definitions/cuadrilatero.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 489,
-          "end": 527
+          "start": 632,
+          "end": 670
         },
         "blockId": "cuadrilatero:diagram:Cuadrilatero"
       },
@@ -706,8 +858,8 @@
         "contentPath": "content/mdx/eu/definitions/cuadrilatero.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 482,
-          "end": 520
+          "start": 636,
+          "end": 674
         },
         "blockId": "cuadrilatero:diagram:Cuadrilatero"
       }
@@ -715,11 +867,21 @@
     "EstarEntre": [
       {
         "contentId": "estar-entre",
+        "contentPath": "content/mdx/en/definitions/estar-entre.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 513,
+          "end": 549
+        },
+        "blockId": "estar-entre:diagram:EstarEntre"
+      },
+      {
+        "contentId": "estar-entre",
         "contentPath": "content/mdx/es/definitions/estar-entre.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 503,
-          "end": 539
+          "start": 517,
+          "end": 553
         },
         "blockId": "estar-entre:diagram:EstarEntre"
       },
@@ -728,8 +890,8 @@
         "contentPath": "content/mdx/eu/definitions/estar-entre.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 470,
-          "end": 506
+          "start": 543,
+          "end": 579
         },
         "blockId": "estar-entre:diagram:EstarEntre"
       }
@@ -737,11 +899,21 @@
     "Paralelas": [
       {
         "contentId": "paralelas",
+        "contentPath": "content/mdx/en/definitions/paralelas.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 601,
+          "end": 636
+        },
+        "blockId": "paralelas:diagram:Paralelas"
+      },
+      {
+        "contentId": "paralelas",
         "contentPath": "content/mdx/es/definitions/paralelas.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 427,
-          "end": 462
+          "start": 615,
+          "end": 650
         },
         "blockId": "paralelas:diagram:Paralelas"
       },
@@ -750,8 +922,8 @@
         "contentPath": "content/mdx/eu/definitions/paralelas.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 436,
-          "end": 471
+          "start": 629,
+          "end": 664
         },
         "blockId": "paralelas:diagram:Paralelas"
       }
@@ -759,11 +931,21 @@
     "Paralelogramo": [
       {
         "contentId": "paralelogramo",
+        "contentPath": "content/mdx/en/definitions/paralelogramo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 579,
+          "end": 618
+        },
+        "blockId": "paralelogramo:diagram:Paralelogramo"
+      },
+      {
+        "contentId": "paralelogramo",
         "contentPath": "content/mdx/es/definitions/paralelogramo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 425,
-          "end": 464
+          "start": 578,
+          "end": 617
         },
         "blockId": "paralelogramo:diagram:Paralelogramo"
       },
@@ -772,8 +954,8 @@
         "contentPath": "content/mdx/eu/definitions/paralelogramo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 434,
-          "end": 473
+          "start": 576,
+          "end": 615
         },
         "blockId": "paralelogramo:diagram:Paralelogramo"
       }
@@ -781,11 +963,21 @@
     "Perpendicular": [
       {
         "contentId": "perpendicular",
+        "contentPath": "content/mdx/en/definitions/perpendicular.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 588,
+          "end": 627
+        },
+        "blockId": "perpendicular:diagram:Perpendicular"
+      },
+      {
+        "contentId": "perpendicular",
         "contentPath": "content/mdx/es/definitions/perpendicular.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 463,
-          "end": 502
+          "start": 609,
+          "end": 648
         },
         "blockId": "perpendicular:diagram:Perpendicular"
       },
@@ -794,20 +986,62 @@
         "contentPath": "content/mdx/eu/definitions/perpendicular.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 467,
-          "end": 506
+          "start": 625,
+          "end": 664
         },
         "blockId": "perpendicular:diagram:Perpendicular"
+      }
+    ],
+    "Plano": [
+      {
+        "contentId": "plano",
+        "contentPath": "content/mdx/en/definitions/plano.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 567,
+          "end": 598
+        },
+        "blockId": "plano:diagram:Plano"
+      },
+      {
+        "contentId": "plano",
+        "contentPath": "content/mdx/es/definitions/plano.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 578,
+          "end": 609
+        },
+        "blockId": "plano:diagram:Plano"
+      },
+      {
+        "contentId": "plano",
+        "contentPath": "content/mdx/eu/definitions/plano.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 582,
+          "end": 613
+        },
+        "blockId": "plano:diagram:Plano"
       }
     ],
     "Punto": [
       {
         "contentId": "punto",
+        "contentPath": "content/mdx/en/definitions/punto.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 583,
+          "end": 614
+        },
+        "blockId": "punto:diagram:Punto"
+      },
+      {
+        "contentId": "punto",
         "contentPath": "content/mdx/es/definitions/punto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 487,
-          "end": 518
+          "start": 598,
+          "end": 629
         },
         "blockId": "punto:diagram:Punto"
       },
@@ -816,8 +1050,8 @@
         "contentPath": "content/mdx/eu/definitions/punto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 483,
-          "end": 514
+          "start": 594,
+          "end": 625
         },
         "blockId": "punto:diagram:Punto"
       }
@@ -825,11 +1059,21 @@
     "Recta": [
       {
         "contentId": "recta",
+        "contentPath": "content/mdx/en/definitions/recta.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 574,
+          "end": 605
+        },
+        "blockId": "recta:diagram:Recta"
+      },
+      {
+        "contentId": "recta",
         "contentPath": "content/mdx/es/definitions/recta.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 507,
-          "end": 538
+          "start": 579,
+          "end": 610
         },
         "blockId": "recta:diagram:Recta"
       },
@@ -838,8 +1082,8 @@
         "contentPath": "content/mdx/eu/definitions/recta.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 536,
-          "end": 567
+          "start": 600,
+          "end": 631
         },
         "blockId": "recta:diagram:Recta"
       }
@@ -847,11 +1091,21 @@
     "Segmento": [
       {
         "contentId": "segmento",
+        "contentPath": "content/mdx/en/definitions/segmento.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 585,
+          "end": 619
+        },
+        "blockId": "segmento:diagram:Segmento"
+      },
+      {
+        "contentId": "segmento",
         "contentPath": "content/mdx/es/definitions/segmento.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 501,
-          "end": 535
+          "start": 562,
+          "end": 596
         },
         "blockId": "segmento:diagram:Segmento"
       },
@@ -860,20 +1114,62 @@
         "contentPath": "content/mdx/eu/definitions/segmento.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 489,
-          "end": 523
+          "start": 588,
+          "end": 622
         },
         "blockId": "segmento:diagram:Segmento"
+      }
+    ],
+    "Semirrecta": [
+      {
+        "contentId": "semirrecta",
+        "contentPath": "content/mdx/en/definitions/semirrecta.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 575,
+          "end": 611
+        },
+        "blockId": "semirrecta:diagram:Semirrecta"
+      },
+      {
+        "contentId": "semirrecta",
+        "contentPath": "content/mdx/es/definitions/semirrecta.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 591,
+          "end": 627
+        },
+        "blockId": "semirrecta:diagram:Semirrecta"
+      },
+      {
+        "contentId": "semirrecta",
+        "contentPath": "content/mdx/eu/definitions/semirrecta.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 599,
+          "end": 635
+        },
+        "blockId": "semirrecta:diagram:Semirrecta"
       }
     ],
     "Triangulo": [
       {
         "contentId": "triangulo",
+        "contentPath": "content/mdx/en/definitions/triangulo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 588,
+          "end": 623
+        },
+        "blockId": "triangulo:diagram:Triangulo"
+      },
+      {
+        "contentId": "triangulo",
         "contentPath": "content/mdx/es/definitions/triangulo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 576,
-          "end": 611
+          "start": 600,
+          "end": 635
         },
         "blockId": "triangulo:diagram:Triangulo"
       },
@@ -882,8 +1178,8 @@
         "contentPath": "content/mdx/eu/definitions/triangulo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 574,
-          "end": 609
+          "start": 602,
+          "end": 637
         },
         "blockId": "triangulo:diagram:Triangulo"
       }
@@ -891,11 +1187,21 @@
     "DemoAngulosAlternosInternos": [
       {
         "contentId": "demo-angulos-alternos-internos",
+        "contentPath": "content/mdx/en/demonstrations/demo-angulos-alternos-internos.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 734,
+          "end": 763
+        },
+        "blockId": "demo-angulos-alternos-internos:diagram:DemoAngulosAlternosInternos"
+      },
+      {
+        "contentId": "demo-angulos-alternos-internos",
         "contentPath": "content/mdx/es/demonstrations/demo-angulos-alternos-internos.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 795,
-          "end": 824
+          "start": 769,
+          "end": 798
         },
         "blockId": "demo-angulos-alternos-internos:diagram:DemoAngulosAlternosInternos"
       },
@@ -904,8 +1210,8 @@
         "contentPath": "content/mdx/eu/demonstrations/demo-angulos-alternos-internos.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 783,
-          "end": 812
+          "start": 747,
+          "end": 776
         },
         "blockId": "demo-angulos-alternos-internos:diagram:DemoAngulosAlternosInternos"
       }
@@ -913,11 +1219,21 @@
     "DemoAngulosOpuestos": [
       {
         "contentId": "demo-angulos-opuestos-verticales",
+        "contentPath": "content/mdx/en/demonstrations/demo-angulos-opuestos-verticales.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 743,
+          "end": 764
+        },
+        "blockId": "demo-angulos-opuestos-verticales:diagram:DemoAngulosOpuestos"
+      },
+      {
+        "contentId": "demo-angulos-opuestos-verticales",
         "contentPath": "content/mdx/es/demonstrations/demo-angulos-opuestos-verticales.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 731,
-          "end": 752
+          "start": 773,
+          "end": 794
         },
         "blockId": "demo-angulos-opuestos-verticales:diagram:DemoAngulosOpuestos"
       },
@@ -926,8 +1242,8 @@
         "contentPath": "content/mdx/eu/demonstrations/demo-angulos-opuestos-verticales.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 700,
-          "end": 721
+          "start": 740,
+          "end": 761
         },
         "blockId": "demo-angulos-opuestos-verticales:diagram:DemoAngulosOpuestos"
       }
@@ -935,11 +1251,21 @@
     "DemoExistenciaBisectriz": [
       {
         "contentId": "demo-existencia-bisectriz",
+        "contentPath": "content/mdx/en/demonstrations/demo-existencia-bisectriz.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 763,
+          "end": 788
+        },
+        "blockId": "demo-existencia-bisectriz:diagram:DemoExistenciaBisectriz"
+      },
+      {
+        "contentId": "demo-existencia-bisectriz",
         "contentPath": "content/mdx/es/demonstrations/demo-existencia-bisectriz.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 744,
-          "end": 769
+          "start": 782,
+          "end": 807
         },
         "blockId": "demo-existencia-bisectriz:diagram:DemoExistenciaBisectriz"
       },
@@ -948,8 +1274,8 @@
         "contentPath": "content/mdx/eu/demonstrations/demo-existencia-bisectriz.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 739,
-          "end": 764
+          "start": 783,
+          "end": 808
         },
         "blockId": "demo-existencia-bisectriz:diagram:DemoExistenciaBisectriz"
       }
@@ -957,11 +1283,21 @@
     "DemoPitagorasAreas": [
       {
         "contentId": "demo-pitagoras-areas",
+        "contentPath": "content/mdx/en/demonstrations/demo-pitagoras-areas.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 767,
+          "end": 787
+        },
+        "blockId": "demo-pitagoras-areas:diagram:DemoPitagorasAreas"
+      },
+      {
+        "contentId": "demo-pitagoras-areas",
         "contentPath": "content/mdx/es/demonstrations/demo-pitagoras-areas.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 747,
-          "end": 767
+          "start": 828,
+          "end": 848
         },
         "blockId": "demo-pitagoras-areas:diagram:DemoPitagorasAreas"
       },
@@ -970,8 +1306,8 @@
         "contentPath": "content/mdx/eu/demonstrations/demo-pitagoras-areas.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 727,
-          "end": 747
+          "start": 801,
+          "end": 821
         },
         "blockId": "demo-pitagoras-areas:diagram:DemoPitagorasAreas"
       }
@@ -979,11 +1315,21 @@
     "DemoPitagorasEuclides": [
       {
         "contentId": "demo-pitagoras-euclides",
+        "contentPath": "content/mdx/en/demonstrations/demo-pitagoras-euclides.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 738,
+          "end": 761
+        },
+        "blockId": "demo-pitagoras-euclides:diagram:DemoPitagorasEuclides"
+      },
+      {
+        "contentId": "demo-pitagoras-euclides",
         "contentPath": "content/mdx/es/demonstrations/demo-pitagoras-euclides.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 741,
-          "end": 764
+          "start": 783,
+          "end": 806
         },
         "blockId": "demo-pitagoras-euclides:diagram:DemoPitagorasEuclides"
       },
@@ -992,8 +1338,8 @@
         "contentPath": "content/mdx/eu/demonstrations/demo-pitagoras-euclides.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 713,
-          "end": 736
+          "start": 760,
+          "end": 783
         },
         "blockId": "demo-pitagoras-euclides:diagram:DemoPitagorasEuclides"
       }
@@ -1001,11 +1347,21 @@
     "DemoSumaAngulos": [
       {
         "contentId": "demo-suma-angulos-triangulo",
+        "contentPath": "content/mdx/en/demonstrations/demo-suma-angulos-triangulo.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 719,
+          "end": 736
+        },
+        "blockId": "demo-suma-angulos-triangulo:diagram:DemoSumaAngulos"
+      },
+      {
+        "contentId": "demo-suma-angulos-triangulo",
         "contentPath": "content/mdx/es/demonstrations/demo-suma-angulos-triangulo.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 739,
-          "end": 756
+          "start": 766,
+          "end": 783
         },
         "blockId": "demo-suma-angulos-triangulo:diagram:DemoSumaAngulos"
       },
@@ -1014,8 +1370,8 @@
         "contentPath": "content/mdx/eu/demonstrations/demo-suma-angulos-triangulo.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 710,
-          "end": 727
+          "start": 754,
+          "end": 771
         },
         "blockId": "demo-suma-angulos-triangulo:diagram:DemoSumaAngulos"
       }
@@ -1023,11 +1379,21 @@
     "DemoTales": [
       {
         "contentId": "demo-tales",
+        "contentPath": "content/mdx/en/demonstrations/demo-tales.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 675,
+          "end": 686
+        },
+        "blockId": "demo-tales:diagram:DemoTales"
+      },
+      {
+        "contentId": "demo-tales",
         "contentPath": "content/mdx/es/demonstrations/demo-tales.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 605,
-          "end": 616
+          "start": 706,
+          "end": 717
         },
         "blockId": "demo-tales:diagram:DemoTales"
       },
@@ -1036,8 +1402,8 @@
         "contentPath": "content/mdx/eu/demonstrations/demo-tales.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 611,
-          "end": 622
+          "start": 686,
+          "end": 697
         },
         "blockId": "demo-tales:diagram:DemoTales"
       }
@@ -1045,11 +1411,21 @@
     "DemoTrianguloIsosceles": [
       {
         "contentId": "demo-triangulo-isosceles",
+        "contentPath": "content/mdx/en/demonstrations/demo-triangulo-isosceles.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 722,
+          "end": 746
+        },
+        "blockId": "demo-triangulo-isosceles:diagram:DemoTrianguloIsosceles"
+      },
+      {
+        "contentId": "demo-triangulo-isosceles",
         "contentPath": "content/mdx/es/demonstrations/demo-triangulo-isosceles.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 750,
-          "end": 774
+          "start": 733,
+          "end": 757
         },
         "blockId": "demo-triangulo-isosceles:diagram:DemoTrianguloIsosceles"
       },
@@ -1058,8 +1434,8 @@
         "contentPath": "content/mdx/eu/demonstrations/demo-triangulo-isosceles.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 736,
-          "end": 760
+          "start": 732,
+          "end": 756
         },
         "blockId": "demo-triangulo-isosceles:diagram:DemoTrianguloIsosceles"
       }
@@ -1067,11 +1443,21 @@
     "EjemploPitagorasCalculo": [
       {
         "contentId": "ejemplo-pitagoras-calculo",
+        "contentPath": "content/mdx/en/examples/ejemplo-pitagoras-calculo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 488,
+          "end": 537
+        },
+        "blockId": "ejemplo-pitagoras-calculo:diagram:EjemploPitagorasCalculo"
+      },
+      {
+        "contentId": "ejemplo-pitagoras-calculo",
         "contentPath": "content/mdx/es/examples/ejemplo-pitagoras-calculo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 441,
-          "end": 490
+          "start": 494,
+          "end": 543
         },
         "blockId": "ejemplo-pitagoras-calculo:diagram:EjemploPitagorasCalculo"
       },
@@ -1080,8 +1466,8 @@
         "contentPath": "content/mdx/eu/examples/ejemplo-pitagoras-calculo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 424,
-          "end": 473
+          "start": 468,
+          "end": 517
         },
         "blockId": "ejemplo-pitagoras-calculo:diagram:EjemploPitagorasCalculo"
       }
@@ -1089,11 +1475,21 @@
     "EjercicioClasificacionTriangulos": [
       {
         "contentId": "ejercicio-clasificacion-triangulos",
+        "contentPath": "content/mdx/en/exercises/ejercicio-clasificacion-triangulos.mdx",
+        "referenceKind": "Component",
+        "sourceRange": {
+          "start": 4281,
+          "end": 4315
+        },
+        "blockId": "ejercicio-clasificacion-triangulos:diagram:EjercicioClasificacionTriangulos"
+      },
+      {
+        "contentId": "ejercicio-clasificacion-triangulos",
         "contentPath": "content/mdx/es/exercises/ejercicio-clasificacion-triangulos.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 4238,
-          "end": 4272
+          "start": 4440,
+          "end": 4474
         },
         "blockId": "ejercicio-clasificacion-triangulos:diagram:EjercicioClasificacionTriangulos"
       },
@@ -1102,8 +1498,8 @@
         "contentPath": "content/mdx/eu/exercises/ejercicio-clasificacion-triangulos.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 4012,
-          "end": 4046
+          "start": 4279,
+          "end": 4313
         },
         "blockId": "ejercicio-clasificacion-triangulos:diagram:EjercicioClasificacionTriangulos"
       }
@@ -1111,11 +1507,21 @@
     "EjercicioPitagorasCateto": [
       {
         "contentId": "ejercicio-pitagoras-cateto",
+        "contentPath": "content/mdx/en/exercises/ejercicio-pitagoras-cateto.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 668,
+          "end": 718
+        },
+        "blockId": "ejercicio-pitagoras-cateto:diagram:EjercicioPitagorasCateto"
+      },
+      {
+        "contentId": "ejercicio-pitagoras-cateto",
         "contentPath": "content/mdx/es/exercises/ejercicio-pitagoras-cateto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 447,
-          "end": 497
+          "start": 689,
+          "end": 739
         },
         "blockId": "ejercicio-pitagoras-cateto:diagram:EjercicioPitagorasCateto"
       },
@@ -1124,8 +1530,8 @@
         "contentPath": "content/mdx/eu/exercises/ejercicio-pitagoras-cateto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 425,
-          "end": 475
+          "start": 667,
+          "end": 717
         },
         "blockId": "ejercicio-pitagoras-cateto:diagram:EjercicioPitagorasCateto"
       }
@@ -1133,11 +1539,21 @@
     "ContradictionSimulation": [
       {
         "contentId": "metodo-contradiccion",
+        "contentPath": "content/mdx/en/methods/metodo-contradiccion.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 485,
+          "end": 534
+        },
+        "blockId": "metodo-contradiccion:diagram:ContradictionSimulation"
+      },
+      {
+        "contentId": "metodo-contradiccion",
         "contentPath": "content/mdx/es/methods/metodo-contradiccion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 461,
-          "end": 510
+          "start": 507,
+          "end": 556
         },
         "blockId": "metodo-contradiccion:diagram:ContradictionSimulation"
       },
@@ -1146,8 +1562,8 @@
         "contentPath": "content/mdx/eu/methods/metodo-contradiccion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 429,
-          "end": 478
+          "start": 482,
+          "end": 531
         },
         "blockId": "metodo-contradiccion:diagram:ContradictionSimulation"
       }
@@ -1155,11 +1571,21 @@
     "DirectoSimulation": [
       {
         "contentId": "metodo-directo",
+        "contentPath": "content/mdx/en/methods/metodo-directo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 397,
+          "end": 440
+        },
+        "blockId": "metodo-directo:diagram:DirectoSimulation"
+      },
+      {
+        "contentId": "metodo-directo",
         "contentPath": "content/mdx/es/methods/metodo-directo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 398,
-          "end": 441
+          "start": 401,
+          "end": 444
         },
         "blockId": "metodo-directo:diagram:DirectoSimulation"
       },
@@ -1168,8 +1594,8 @@
         "contentPath": "content/mdx/eu/methods/metodo-directo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 378,
-          "end": 421
+          "start": 394,
+          "end": 437
         },
         "blockId": "metodo-directo:diagram:DirectoSimulation"
       }
@@ -1177,11 +1603,21 @@
     "InduccionSimulation": [
       {
         "contentId": "metodo-induccion",
+        "contentPath": "content/mdx/en/methods/metodo-induccion.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 448,
+          "end": 493
+        },
+        "blockId": "metodo-induccion:diagram:InduccionSimulation"
+      },
+      {
+        "contentId": "metodo-induccion",
         "contentPath": "content/mdx/es/methods/metodo-induccion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 407,
-          "end": 452
+          "start": 446,
+          "end": 491
         },
         "blockId": "metodo-induccion:diagram:InduccionSimulation"
       },
@@ -1190,8 +1626,8 @@
         "contentPath": "content/mdx/eu/methods/metodo-induccion.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 412,
-          "end": 457
+          "start": 454,
+          "end": 499
         },
         "blockId": "metodo-induccion:diagram:InduccionSimulation"
       }
@@ -1199,21 +1635,31 @@
     "ModeloCartesiano": [
       {
         "contentId": "modelo-cartesiano",
-        "contentPath": "content/mdx/es/models/modelo-cartesiano.mdx",
-        "referenceKind": "Diagram",
+        "contentPath": "content/mdx/en/models/modelo-cartesiano.mdx",
+        "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 408,
-          "end": 447
+          "start": 490,
+          "end": 532
+        },
+        "blockId": "modelo-cartesiano:diagram:ModeloCartesiano"
+      },
+      {
+        "contentId": "modelo-cartesiano",
+        "contentPath": "content/mdx/es/models/modelo-cartesiano.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 498,
+          "end": 540
         },
         "blockId": "modelo-cartesiano:diagram:ModeloCartesiano"
       },
       {
         "contentId": "modelo-cartesiano",
         "contentPath": "content/mdx/eu/models/modelo-cartesiano.mdx",
-        "referenceKind": "Diagram",
+        "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 403,
-          "end": 442
+          "start": 500,
+          "end": 542
         },
         "blockId": "modelo-cartesiano:diagram:ModeloCartesiano"
       }
@@ -1221,21 +1667,31 @@
     "ModeloFano": [
       {
         "contentId": "modelo-fano",
-        "contentPath": "content/mdx/es/models/modelo-fano.mdx",
-        "referenceKind": "Simulation",
+        "contentPath": "content/mdx/en/models/modelo-fano.mdx",
+        "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 378,
-          "end": 414
+          "start": 431,
+          "end": 464
+        },
+        "blockId": "modelo-fano:diagram:ModeloFano"
+      },
+      {
+        "contentId": "modelo-fano",
+        "contentPath": "content/mdx/es/models/modelo-fano.mdx",
+        "referenceKind": "Diagram",
+        "sourceRange": {
+          "start": 441,
+          "end": 474
         },
         "blockId": "modelo-fano:diagram:ModeloFano"
       },
       {
         "contentId": "modelo-fano",
         "contentPath": "content/mdx/eu/models/modelo-fano.mdx",
-        "referenceKind": "Simulation",
+        "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 357,
-          "end": 393
+          "start": 431,
+          "end": 464
         },
         "blockId": "modelo-fano:diagram:ModeloFano"
       }
@@ -1243,11 +1699,21 @@
     "ModeloPoincare": [
       {
         "contentId": "modelo-poincare",
+        "contentPath": "content/mdx/en/models/modelo-poincare.mdx",
+        "referenceKind": "Diagram",
+        "sourceRange": {
+          "start": 510,
+          "end": 547
+        },
+        "blockId": "modelo-poincare:diagram:ModeloPoincare"
+      },
+      {
+        "contentId": "modelo-poincare",
         "contentPath": "content/mdx/es/models/modelo-poincare.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 445,
-          "end": 482
+          "start": 531,
+          "end": 568
         },
         "blockId": "modelo-poincare:diagram:ModeloPoincare"
       },
@@ -1256,8 +1722,8 @@
         "contentPath": "content/mdx/eu/models/modelo-poincare.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 454,
-          "end": 491
+          "start": 536,
+          "end": 573
         },
         "blockId": "modelo-poincare:diagram:ModeloPoincare"
       }
@@ -1265,21 +1731,31 @@
     "ModeloTresPuntos": [
       {
         "contentId": "modelo-tres-puntos",
-        "contentPath": "content/mdx/es/models/modelo-tres-puntos.mdx",
-        "referenceKind": "Simulation",
+        "contentPath": "content/mdx/en/models/modelo-tres-puntos.mdx",
+        "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 398,
-          "end": 440
+          "start": 475,
+          "end": 514
+        },
+        "blockId": "modelo-tres-puntos:diagram:ModeloTresPuntos"
+      },
+      {
+        "contentId": "modelo-tres-puntos",
+        "contentPath": "content/mdx/es/models/modelo-tres-puntos.mdx",
+        "referenceKind": "Diagram",
+        "sourceRange": {
+          "start": 489,
+          "end": 528
         },
         "blockId": "modelo-tres-puntos:diagram:ModeloTresPuntos"
       },
       {
         "contentId": "modelo-tres-puntos",
         "contentPath": "content/mdx/eu/models/modelo-tres-puntos.mdx",
-        "referenceKind": "Simulation",
+        "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 391,
-          "end": 433
+          "start": 489,
+          "end": 528
         },
         "blockId": "modelo-tres-puntos:diagram:ModeloTresPuntos"
       }
@@ -1287,11 +1763,21 @@
     "AngulosOpuestos": [
       {
         "contentId": "teorema-angulos-opuestos-verticales",
+        "contentPath": "content/mdx/en/theorems/teorema-angulos-opuestos-verticales.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 717,
+          "end": 758
+        },
+        "blockId": "teorema-angulos-opuestos-verticales:diagram:AngulosOpuestos"
+      },
+      {
+        "contentId": "teorema-angulos-opuestos-verticales",
         "contentPath": "content/mdx/es/theorems/teorema-angulos-opuestos-verticales.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 813,
-          "end": 854
+          "start": 766,
+          "end": 807
         },
         "blockId": "teorema-angulos-opuestos-verticales:diagram:AngulosOpuestos"
       },
@@ -1300,8 +1786,8 @@
         "contentPath": "content/mdx/eu/theorems/teorema-angulos-opuestos-verticales.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 808,
-          "end": 849
+          "start": 761,
+          "end": 802
         },
         "blockId": "teorema-angulos-opuestos-verticales:diagram:AngulosOpuestos"
       }
@@ -1309,11 +1795,21 @@
     "CongruenciaALA": [
       {
         "contentId": "teorema-congruencia-ala",
+        "contentPath": "content/mdx/en/theorems/teorema-congruencia-ala.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 812,
+          "end": 852
+        },
+        "blockId": "teorema-congruencia-ala:diagram:CongruenciaALA"
+      },
+      {
+        "contentId": "teorema-congruencia-ala",
         "contentPath": "content/mdx/es/theorems/teorema-congruencia-ala.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 881,
-          "end": 921
+          "start": 871,
+          "end": 911
         },
         "blockId": "teorema-congruencia-ala:diagram:CongruenciaALA"
       },
@@ -1322,8 +1818,8 @@
         "contentPath": "content/mdx/eu/theorems/teorema-congruencia-ala.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 862,
-          "end": 902
+          "start": 865,
+          "end": 905
         },
         "blockId": "teorema-congruencia-ala:diagram:CongruenciaALA"
       }
@@ -1331,11 +1827,21 @@
     "Pitagoras": [
       {
         "contentId": "teorema-pitagoras",
+        "contentPath": "content/mdx/en/theorems/teorema-pitagoras.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 890,
+          "end": 925
+        },
+        "blockId": "teorema-pitagoras:diagram:Pitagoras"
+      },
+      {
+        "contentId": "teorema-pitagoras",
         "contentPath": "content/mdx/es/theorems/teorema-pitagoras.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 986,
-          "end": 1021
+          "start": 912,
+          "end": 947
         },
         "blockId": "teorema-pitagoras:diagram:Pitagoras"
       },
@@ -1344,8 +1850,8 @@
         "contentPath": "content/mdx/eu/theorems/teorema-pitagoras.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 995,
-          "end": 1030
+          "start": 899,
+          "end": 934
         },
         "blockId": "teorema-pitagoras:diagram:Pitagoras"
       }
@@ -1353,11 +1859,21 @@
     "SumaAngulos": [
       {
         "contentId": "teorema-suma-angulos-triangulo",
+        "contentPath": "content/mdx/en/theorems/teorema-suma-angulos-triangulo.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 704,
+          "end": 741
+        },
+        "blockId": "teorema-suma-angulos-triangulo:diagram:SumaAngulos"
+      },
+      {
+        "contentId": "teorema-suma-angulos-triangulo",
         "contentPath": "content/mdx/es/theorems/teorema-suma-angulos-triangulo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 783,
-          "end": 820
+          "start": 759,
+          "end": 796
         },
         "blockId": "teorema-suma-angulos-triangulo:diagram:SumaAngulos"
       },
@@ -1366,8 +1882,8 @@
         "contentPath": "content/mdx/eu/theorems/teorema-suma-angulos-triangulo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 772,
-          "end": 809
+          "start": 725,
+          "end": 762
         },
         "blockId": "teorema-suma-angulos-triangulo:diagram:SumaAngulos"
       }
@@ -1375,11 +1891,21 @@
     "Tales": [
       {
         "contentId": "teorema-tales",
+        "contentPath": "content/mdx/en/theorems/teorema-tales.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 749,
+          "end": 780
+        },
+        "blockId": "teorema-tales:diagram:Tales"
+      },
+      {
+        "contentId": "teorema-tales",
         "contentPath": "content/mdx/es/theorems/teorema-tales.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 713,
-          "end": 744
+          "start": 768,
+          "end": 799
         },
         "blockId": "teorema-tales:diagram:Tales"
       },
@@ -1388,8 +1914,8 @@
         "contentPath": "content/mdx/eu/theorems/teorema-tales.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 712,
-          "end": 743
+          "start": 760,
+          "end": 791
         },
         "blockId": "teorema-tales:diagram:Tales"
       }
@@ -1397,11 +1923,21 @@
     "TrianguloIsosceles": [
       {
         "contentId": "teorema-triangulo-isosceles",
+        "contentPath": "content/mdx/en/theorems/teorema-triangulo-isosceles.mdx",
+        "referenceKind": "Simulation",
+        "sourceRange": {
+          "start": 646,
+          "end": 690
+        },
+        "blockId": "teorema-triangulo-isosceles:diagram:TrianguloIsosceles"
+      },
+      {
+        "contentId": "teorema-triangulo-isosceles",
         "contentPath": "content/mdx/es/theorems/teorema-triangulo-isosceles.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 845,
-          "end": 889
+          "start": 665,
+          "end": 709
         },
         "blockId": "teorema-triangulo-isosceles:diagram:TrianguloIsosceles"
       },
@@ -1410,8 +1946,8 @@
         "contentPath": "content/mdx/eu/theorems/teorema-triangulo-isosceles.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 835,
-          "end": 879
+          "start": 679,
+          "end": 723
         },
         "blockId": "teorema-triangulo-isosceles:diagram:TrianguloIsosceles"
       }

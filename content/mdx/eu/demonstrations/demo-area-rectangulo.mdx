@@ -1,0 +1,69 @@
+export const metadata = {
+  "id": "demo-area-rectangulo",
+  "type": "demostracion",
+  "title": "Frogapena: Laukizuzenaren eremuaren teorema",
+  "description": "Frogapen axiomatikoa unitate-karratuen azpibanaketaren bidez eta irrazionaletarako Arkimedes-axioma erabiliz, Hilberten neurriaren teoriaren oinarritan.",
+  "parentTheorem": "teorema-area-rectangulo",
+  "lang": "eu",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["euclides", "hilbert"],
+  "tags": ["geometria", "eremuak", "laukizuzena", "neurria"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elementuak", "author": "Euklides", "locator": "I. Liburua, 35. Proposizioa", "role": "primary" },
+    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "locator": "V. Kapitulua, §22", "role": "secondary" }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="L" />aukizuzenaren eremuaren formula hiru fase ordenatuetan frogatzen da, dimentsio entero, arrazional eta irrazionaletarako baliotasuna bermatuz.
+
+<Separador />
+
+### Frogapena pausoz pauso
+
+<ProofStep number={1} title="Normalizazioa: unitate-karratua">
+Axiomaz finkatzen da unitate-laukiaren eremua erreferentzia-unitate gisa:
+
+<Formula>
+  $$ \text{Eremua}(\text{unitate-karratua}) = 1 $$
+</Formula>
+
+Konbentzioa hau <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>eremuaren adibidotasun-axiomak</ConceptLink> bermatzen du.
+</ProofStep>
+
+<ProofStep number={2} title="Dimentsio osoak">
+$m, n \in \mathbb{N}$ izanik, $m \times n$ laukizuzen batek $m \times n$ unitate-karratu ditu. Adibidotasunaren bidez:
+
+<Formula>
+  $$ \text{Eremua}(R) = m \cdot n $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={3} title="Dimentsio arrazionalak">
+$b = \frac{p}{q}$ eta $h = \frac{m}{n}$ direnean, aldeak $\frac{1}{q}$ eta $\frac{1}{n}$ zatikietan banatzen dira. Lortutako $p \cdot m$ azpikuadratuen eremu-batura biderkaketa arrazionalera hedatzen da:
+
+<Formula>
+  $$ \text{Eremua}(R) = \frac{p}{q} \cdot \frac{m}{n} = b \cdot h $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} title="Luzapen erreala Arkimedes-axiomaren bidez">
+$b, h \in \mathbb{R}^+$ irrazionalak direnean, arrazional-segidak $b_k \nearrow b$ eta $h_k \nearrow h$ eraikitzen dira. <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Arkimedes-axiomak</ConceptLink> muga-balioa bakarrarekin bermatzen du:
+
+<Formula>
+  $$ \text{Eremua}(R) = \lim_{k \to \infty} b_k \cdot h_k = b \cdot h $$
+</Formula>
+</ProofStep>
+
+<Separador />
+
+### Analisi deduktiboa
+
+<Nota>
+  Frogapen honek Eudoxoren agortatze-metodoa erakusten du, Hilbertek axioma-hizkuntzan berreraiki zuena. Arrazionaletatik errealetarako hedapenak funtsean <ConceptLink targetId="axioma-arquimedes">Arkimedes-axioma</ConceptLink> erabiltzen du nahitaez.
+</Nota>
+
+</DemonstrationSection>

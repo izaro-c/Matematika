@@ -3,42 +3,66 @@ export const metadata = {
   lang: "eu",
   type: "sistema-axiomatico",
   title: "Intzidentzia-sistema",
-  description: "Puntu, zuzen eta planoen arteko pertenentzia-erlazio formalak arautzen dituen oinarrizko sistema axiomatikoa.",
+  description: "Puntu, zuzen eta planoen arteko partaideitza- eta ebakidura-erlazio formalak arautzen dituen oinarrizko egitura axiomatikoa.",
   branch: "51M",
-  axiomas: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"]
+  axiomas: [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-incidencia-4",
+    "axioma-incidencia-5",
+    "axioma-incidencia-6",
+    "axioma-incidencia-7",
+    "axioma-incidencia-8"
+  ],
+  models: [
+    "modelo-tres-puntos",
+    "modelo-fano",
+    "modelo-cartesiano"
+  ],
+  authors: ["hilbert"],
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+  ]
 };
 
-<Capitular letra="I" />ntzidentzia-sistemak geometria axiomatiko formalaren lehen dedukzio-blokea osatzen du. Definitu gabeko objektu geometrikoen (<ConceptLink targetId="punto">puntu</ConceptLink>, <ConceptLink targetId="recta">zuzen</ConceptLink> eta <ConceptLink targetId="plano">plano</ConceptLink>) arteko pertenentzia-arau oinarrizkoak definitzen ditu, <ConceptLink targetId="distancia">distantziaren</ConceptLink>, <ConceptLink targetId="orden">ordenaren</ConceptLink> edo <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> nosio metrikoak alboratuz.
+<Capitular letra="I" />ntzidentzia-sistema geometria sintetiko formalaren lehen geruza deduktiboa da. Espazioko oinarrizko izakien (<ConceptLink targetId="punto">puntuak</ConceptLink>, <ConceptLink targetId="recta">zuzenak</ConceptLink> eta <ConceptLink targetId="plano">planoak</ConceptLink>) arteko partaideitza- eta inklusio-arau primitiboak ezartzen ditu, distantziaren, ordenaren edo angelu-kongruentziaren kontzeptu metrikoetatik guztiz abstraktuki.
 
 <Separador />
 
 ### Sistemaren egitura formala
 
-Intzidentzia-sistema bat formalki $(\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I})$ lau bikotetan definitzen da, non $\mathcal{P}$ puntuen multzoa den, $\mathcal{L}$ zuzenen multzoa den, $\mathcal{E}$ planoen multzoa den eta $\mathcal{I}$ bi elementuko <ConceptLink targetId="incidencia">intzidentzia-erlazioa</ConceptLink> den:
+Formalki, hiru dimentsioko intzidentzia-espazio bat $(\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I})$ laukote gisa definitzen da; bertan $\mathcal{P}$ puntuen multzo ez-hutsa da, $\mathcal{L}$ zuzenen multzoa, $\mathcal{E}$ planoen multzoa eta $\mathcal{I}$ intzidentzia-erlazio bitarra:
 
 $$
 \mathcal{I} \subseteq (\mathcal{P} \times \mathcal{L}) \cup (\mathcal{P} \times \mathcal{E}) \cup (\mathcal{L} \times \mathcal{E})
 $$
 
-Sistemak oinarrizko espazio-portaera arautzen du Hilberten oinarrizko axiomen bidez (I.1etik I.8ra):
+Sistemak espazioko oinarrizko portaera arautzen du Hilberten zortzi intzidentzia-axiomen bidez:
 
-- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>I.1 Axioma (zuzenaren bakartasuna)</ConceptLink>**: Edozein bi puntu desberdinetarako $A, B \in \mathcal{P}$, zuzen bakarra dago $l \in \mathcal{L}$ non $A \mathcal{I} l$ eta $B \mathcal{I} l$ baitira.
-- **<ConceptLink targetId="axioma-incidencia-2" isDependency={true}>I.2 Axioma (puntuen existentzia zuzenean)</ConceptLink>**: $l \in \mathcal{L}$ zuzen bakoitza gutxienez bi puntu desberdinekin intzidente da $\mathcal{P}$ multzoan.
-- **<ConceptLink targetId="axioma-incidencia-3" isDependency={true}>I.3 Axioma (kolinealtasun eza)</ConceptLink>**: Badira gutxienez hiru puntu $\mathcal{P}$ multzoan zuzen berean intzidente ez direnak (ez-<ConceptLink targetId="colinealidad">kolinealak</ConceptLink>).
+- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>I.1 axioma (Zuzenaren bakartasuna bi puntutatik)</ConceptLink>**: Edozein bi $A, B \in \mathcal{P}$ puntu desberdinetarako, $A \mathcal{I} l$ eta $B \mathcal{I} l$ betetzen dituen $l \in \mathcal{L}$ zuzen bakarra existitzen da.
+- **<ConceptLink targetId="axioma-incidencia-2" isDependency={true}>I.2 axioma (Puntuak zuzenean)</ConceptLink>**: Edozein $l \in \mathcal{L}$ zuzenek gutxienez bi puntu desberdinekin intziditzen du $\mathcal{P}$ multzoan.
+- **<ConceptLink targetId="axioma-incidencia-3" isDependency={true}>I.3 axioma (Puntu ez-kolinealak)</ConceptLink>**: Gutxienez zuzen berean intziditzen ez duten hiru puntu existitzen dira $\mathcal{P}$ multzoan.
+- **<ConceptLink targetId="axioma-incidencia-4" isDependency={true}>I.4 axioma (Planoaren bakartasuna hiru puntutatik)</ConceptLink>**: Lerrokatuta ez dauden edozein hiru $A, B, C \in \mathcal{P}$ puntutarako, haiekin intziditzen duen $\pi \in \mathcal{E}$ plano bakarra existitzen da.
+- **<ConceptLink targetId="axioma-incidencia-5" isDependency={true}>I.5 axioma (Puntu ez-kolinealak planoan)</ConceptLink>**: Edozein $\pi \in \mathcal{E}$ planok lerrokatuta ez dauden gutxienez hiru puntu ditu.
+- **<ConceptLink targetId="axioma-incidencia-6" isDependency={true}>I.6 axioma (Zuzenaren inklusioa planoan)</ConceptLink>**: $l$ zuzen baten bi puntu desberdin $\pi$ plano batekoak badira, $l$ zuzen osoa $\pi$ planoan sartuta dago.
+- **<ConceptLink targetId="axioma-incidencia-7" isDependency={true}>I.7 axioma (Planoen ebakidura)</ConceptLink>**: Bi plano desberdinek puntu bat partekatzen badute, haien ebakidura zuzen oso bat da.
+- **<ConceptLink targetId="axioma-incidencia-8" isDependency={true}>I.8 axioma (Hiru dimentsioko espazioa)</ConceptLink>**: Plano berean ez dauden gutxienez lau puntu existitzen dira $\mathcal{P}$ multzoan.
 
 <Separador />
 
-### Sistema egiaztatzen duten ereduak
+### Ereduak eta irudikapenak
 
-Intzidentzia-sistemaren koherentzia eta aniztasuna eredu finitu nahiz jarraituen bidez erakusten da:
+Intzidentzia-sistemaren sendotasuna eta malgutasuna egitura diskretu zein jarraituen bidez frogatzen dira:
 
-- **<ConceptLink targetId="modelo-tres-puntos">Hiru puntuko eredua</ConceptLink>**: I.1, I.2 eta I.3 betetzen dituen plano-eredu diskretu minimala.
-- **<ConceptLink targetId="modelo-fano">Fanoren planoa</ConceptLink>**: 7 puntu eta 7 zuzen dituen eredu proiektibo finitua.
-- **<ConceptLink targetId="modelo-cartesiano">Eredu kartesiarra</ConceptLink>**: $\mathbb{R}^3$ ekuazio lineal bidezko espazio analitiko jarraitua.
+- **<ConceptLink targetId="modelo-tres-puntos">Hiru puntuko eredua</ConceptLink>**: 3 puntuk eta 3 zuzenek osatutako plano-geometria finitu minimala.
+- **<ConceptLink targetId="modelo-fano">Fanoren planoa</ConceptLink>**: 2 ordenako geometria proiektibo finitua, 7 puntuz eta 7 zuzenez osatua.
+- **<ConceptLink targetId="modelo-cartesiano">Eredu kartesiarra $\mathbb{R}^3$</ConceptLink>**: Ekuazio aljebraiko linealez gidatutako hiru dimentsioko espazio afin estandarra.
 
 <Separador />
 
 ### Propietate metamatematikoak
 
-- **Independentzia**: Intzidentzia-axiomak elkarrekiko independenteak dira, ezin daitekeelarik bat bera ere gainerakoetatik deduzitu.
-- **Osotasun metriko eza**: Sistema zehaztu gabe dago neurri-nosioei dagokienez, <ConceptLink targetId="sistema-euclidiano">geometria euklidesarrera</ConceptLink> zein <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikora</ConceptLink> zabaltzea ahalbidetuz.
+- **Independentzia logikoa**: Intzidentzia-axiometako bakoitza gainerakoekiko independentea da kalkulu erlazionalaren barruan.
+- **Osatugabetasun metrikoa**: Sistemak ez du topologiarik edo metrikarik finkatzen; horregatik, hedatu egin daiteke <ConceptLink targetId="sistema-absoluto">geometria absolutura</ConceptLink>, <ConceptLink targetId="sistema-euclidiano">geometria euklidearrera</ConceptLink> zein <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikora</ConceptLink>.

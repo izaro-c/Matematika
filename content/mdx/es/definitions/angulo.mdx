@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Ángulo",
-  description: "Región del plano delimitada por dos semirrectas que comparten un origen común llamado vértice.",
+  description: "Figura plana formada por dos semirrectas no colineales que comparten un mismo origen denominado vértice.",
   branch: "51M",
   hasSimulation: true,
   sources: [
@@ -16,34 +16,41 @@ export const metadata = {
 import { Angulo } from '@content/diagrams/Definiciones/Angulo';
 export const Simulation = Angulo;
 
-<Capitular letra="E" />l ángulo es la figura geométrica constituida por la reunión de dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> que poseen el mismo origen o <ConceptLink targetId="vertice">vértice</ConceptLink>. Constituye el concepto central para medir la apertura entre direcciones y establecer las bases de la <ConceptLink targetId="trigonometria">trigonometría</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
+<Capitular letra="E" />l ángulo es la figura geométrica constituida por la unión de dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> que comparten un origen o <ConceptLink targetId="vertice">vértice</ConceptLink> común. Constituye la noción fundamental para cuantificar la divergencia angular entre direcciones y sustentar la trigonometría en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Definicion title="">
-  Dadas dos semirrectas <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> y <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> con origen común en el punto <VisualBind element="pO" color="carbon">$O$</VisualBind>, el ángulo <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> es la figura plana formada por la <ConceptLink targetId="union-conjuntos">unión</ConceptLink> de ambas semirrectas:
+  Dadas dos <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> distintas <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> y <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> con origen común en un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> <VisualBind element="pA" color="carbon">$O$</VisualBind>, el ángulo <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> es la figura plana formada por la unión de ambas semirrectas:
   $$
   \angle AOB = \overrightarrow{OA} \cup \overrightarrow{OB}
   $$
-  Su medida angular $\alpha = \text{m}(\angle AOB)$ en <ConceptLink targetId="radian">radianes</ConceptLink> o grados sexagesimales asigna un valor escalar real en el intervalo $[0, 2\pi)$.
+  Su apertura métrica $\theta \in [0, \pi]$ radianes se relaciona con el producto escalar de sus vectores unitarios $\vec{u}, \vec{v}$:
+  $$
+  \cos \theta = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \|\vec{v}\|}
+  $$
 </Definicion>
 
 <Separador />
 
 ### Clasificación según la amplitud angular
 
-Los ángulos se clasifican según el intervalo numérico al que pertenece su medida angular $\alpha$:
+En el plano euclidiano, los ángulos convexos se clasifican según su medida angular $\theta$:
 
-| Tipo de ángulo | Rango de medida en radianes | Rango de medida en grados |
+| Tipo de ángulo | Medida en radianes | Medida en grados sexagesimales |
 |---|---|---|
-| <ConceptLink targetId="angulo-agudo">Agudo</ConceptLink> | $0 < \alpha < \frac{\pi}{2}$ | $0^\circ < \alpha < 90^\circ$ |
-| <ConceptLink targetId="angulo-recto">Recto</ConceptLink> | $\alpha = \frac{\pi}{2}$ | $\alpha = 90^\circ$ |
-| <ConceptLink targetId="angulo-obtuso">Obtuso</ConceptLink> | $\frac{\pi}{2} < \alpha < \pi$ | $90^\circ < \alpha < 180^\circ$ |
-| <ConceptLink targetId="angulo-llano">Llano</ConceptLink> | $\alpha = \pi$ | $\alpha = 180^\circ$ |
-| Cóncavo | $\pi < \alpha < 2\pi$ | $180^\circ < \alpha < 360^\circ$ |
+| <ConceptLink targetId="angulo-agudo">Agudo</ConceptLink> | $0 < \theta < \frac{\pi}{2}$ | $0^\circ < \theta < 90^\circ$ |
+| <ConceptLink targetId="angulo-recto">Recto</ConceptLink> | $\theta = \frac{\pi}{2}$ | $\theta = 90^\circ$ |
+| <ConceptLink targetId="angulo-obtuso">Obtuso</ConceptLink> | $\frac{\pi}{2} < \theta < \pi$ | $90^\circ < \theta < 180^\circ$ |
+| <ConceptLink targetId="angulo-llano">Llano</ConceptLink> | $\theta = \pi$ | $\theta = 180^\circ$ |
 
 <Separador />
 
-### Propiedades
-
-- **<ConceptLink targetId="bisectriz">Existencia de bisectriz</ConceptLink>**: Todo ángulo no nulo posee una única <ConceptLink targetId="bisectriz">bisectriz</ConceptLink> que lo divide en dos ángulos congruentes.
-- **<ConceptLink targetId="angulos-suplementarios">Aditividad angular</ConceptLink>**: Si una semirrecta $\overrightarrow{OC}$ está en el interior de $\angle AOB$, entonces $\text{m}(\angle AOC) + \text{m}(\angle COB) = \text{m}(\angle AOB)$.
-- **<ConceptLink targetId="congruencia">Criterio de congruencia</ConceptLink>**: Dos ángulos son congruentes ($\angle AOB \cong \angle CDE$) si y solo si sus medidas angulares son iguales.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Congruencia y aditividad angular">
+    <PropiedadItem id="axioma-congruencia-4" title="Transporte de ángulos">
+      Todo ángulo puede transportarse de manera única a un semiplano respecto a una semirrecta dada.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-angulos-opuestos-verticales" title="Ángulos opuestos por el vértice">
+      Las parejas de ángulos formados por dos rectas secantes son congruentes entre sí.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -4,11 +4,11 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Zirkunferentzia",
-  description: "Zentro deritzon puntu finko batetik distantzia berera dauden planoko puntu guztien leku geometrikoa.",
+  description: "Zentro izeneko puntu finko batetik distantzia berera dauden planoko puntuen leku geometrikoa.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "I. Liburua, 15. Definizioa", role: "primary" },
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 15. Definizioa", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
   ]
 };
@@ -16,33 +16,41 @@ export const metadata = {
 import { Circunferencia } from '@content/diagrams/Definiciones/Circunferencia';
 export const Simulation = Circunferencia;
 
-<Capitular letra="Z" />irkunferentzia zentro deritzon <ConceptLink targetId="punto">puntu</ConceptLink> finko batetik distantzia konstante batera dauden <ConceptLink targetId="plano">planoko</ConceptLink> puntu guztien dimentsio bakarreko leku geometrikoa da. Kurba itxi oinarrizkoa da <ConceptLink targetId="geometria-euclidiana">geometria euklidearrean</ConceptLink>, zirkulu edo disko deritzon eremu konbexu mugatua barnean uzten duena.
+<Capitular letra="Z" />irkunferentzia zentro izeneko puntu finko batetik distantzia berera (erradiora) dauden planoko <ConceptLink targetId="punto">puntu</ConceptLink> guztien dimentsio bakarreko leku geometrikoa da. Geometria lauaren oinarrizko kurba itxia da, disko edo <VisualBind element="circulo" color="pavo">zirkulu</VisualBind> izeneko bi dimentsioko eskualde ganbila zedarritzen duena.
 
 <Definicion title="">
-  $\mathcal{P}$ plano bateko <VisualBind element="centro" color="musgo">$O \in \mathcal{P}$</VisualBind> puntu bat eta $r > 0$ eskalar erreal zorrozki positibo bat emanda, $O$ zentrodun eta $r$ erradiodun <VisualBind element="circunferencia" color="musgo">$\mathcal{C}(O, r)$</VisualBind> zirkunferentzia $O$ punturainoko distantzia eskalarra $r$ balioaren berdina duten $P \in \mathcal{P}$ puntu guztien multzo gisa definitzen da:
+  $\mathcal{P}$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko <VisualBind element="centro" color="musgo">$O$</VisualBind> <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat eta $r > 0$ zenbaki erreal bat emanda, $O$ zentrodun eta $r$ <VisualBind element="radio" color="pavo">erradiodun</VisualBind> <VisualBind element="circunferencia" color="musgo">$\mathcal{C}(O, r)$</VisualBind> zirkunferentzia $O$-rekiko distantzia zehazki $r$ duten $P \in \mathcal{P}$ puntu guztien multzoa da:
   $$
   \mathcal{C}(O, r) = \{ P \in \mathcal{P} \mid d(O, P) = r \}
   $$
-  non $d(O, P) = \|P - O\| = r$ den. Zentroa kurbako edozein punturekin lotzen duen $\overline{OP}$ <ConceptLink targetId="segmento">zuzenkiari</ConceptLink> <ConceptLink targetId="radio">erradioa</ConceptLink> deritzo.
+  $\mathbb{R}^2$-ko koordenatu kartesiarretan, zentroa $(x_0, y_0)$ puntuan izanik:
+  $$
+  (x - x_0)^2 + (y - y_0)^2 = r^2
+  $$
 </Definicion>
 
 <Separador />
 
-### Elementuak eta zuzen elkartuak
+### Osagaiak eta posizio erlatiboak
 
-Zirkunferentziaren geometriarekin lotutako zuzen eta zuzenki nagusiak honakoak dira:
+Zirkunferentziaren geometriari hainbat elementu zuzen eta angeluar lotzen zaizkio:
 
-| Elementua | Definizio geometrikoa | Espresioa edo propietatea |
+| Elementua | Definizio geometrikoa | Adierazpena edo propietatea |
 |---|---|---|
-| Zorda | Zirkunferentziako bi puntu lotzen dituen <ConceptLink targetId="segmento">zuzenkia</ConceptLink> | $\overline{AB} \text{ non } A, B \in \mathcal{C}$ |
-| Diametroa | $O$ zentroa barnean hartzen duen zorda | $d = 2r$ (gehienezko barne-distantzia) |
-| Zuzen ebakitzailea | Zirkunferentzia bi puntutan ebakitzen duen <ConceptLink targetId="recta">zuzena</ConceptLink> | $\lvert L \cap \mathcal{C} \rvert = 2$ |
-| Zuzen ukitzailea | Zirkunferentzia puntu bakar batean ukitzen duen <ConceptLink targetId="recta">zuzena</ConceptLink> | $\lvert L \cap \mathcal{C} \rvert = 1$, erradioarekiko <ConceptLink targetId="perpendicular">elkarzuta</ConceptLink> |
+| <VisualBind element="cuerda" color="ocre">Korda</VisualBind> | Kurbako bi puntu lotzen dituen zuzenkia | $\overline{AB}$ non $A, B \in \mathcal{C}$ diren |
+| <VisualBind element="diametro" color="terracota">Diametroa</VisualBind> | Zentrotik igarotzen den korda handiena | $d = 2r$ |
+| <VisualBind element="arco" color="canela">Arkua</VisualBind> | Bi punturen arteko zirkunferentziaren zati jarraitua | $\widehat{AB} \subset \mathcal{C}$ |
+| <VisualBind element="tangente" color="mora">Zuzen ukitzailea</VisualBind> | Kurba puntu bakar batean ukitzen duen zuzena | Ukitze-puntuko erradioarekiko ortogonala |
 
 <Separador />
 
-### Propietateak
-
-- **Perimetroaren luzera**: Kurba itxiaren dimentsio bakarreko neurriak $P = 2\pi r$ proportzionaltasun-erlazioa betetzen du nahitaez.
-- **Mugatutako diskoaren azalera**: Barruan geratzen den bi dimentsioko eremu planoaren azalera-neurriak $\mu(D) = \pi r^2$ balioa du.
-- **Simetria jarraitua**: Zirkunferentzia aldaezina da $O$ zentroaren inguruko edozein rotaziopean eta diametro bat <ConceptLink targetId="recta">zuzen eusletzat</ConceptLink> hartzen duen edozein erreflexiopean.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propietate metrikoak eta simetria">
+    <PropiedadItem id="axioma-arquimedes" title="Perimetroa eta $\pi$ konstantea">
+      Kurba itxiaren luzerak $P = 2\pi r$ erlazio proportzionala betetzen du.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-aditividad" title="Diskoaren azalera">
+      Zirkunferentziak mugatutako diskoaren azalera $\mu(D) = \pi r^2$ da.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -2,8 +2,8 @@ export const metadata = {
   id: "teorema-congruencia-ala",
   type: "teorema",
   title: "Angle-Side-Angle (ASA) Congruence Theorem",
-  description: "If two triangles have two angles and the included side of one respectively congruent to two angles and the included side of the other, then the two triangles are congruent.",
-  statement: "Given two triangles △ABC and △A'B'C', if ∠CAB ≅ ∠C'A'B', ∠ABC ≅ ∠A'B'C' and the included side AB ≅ A'B', then △ABC ≅ △A'B'C'.",
+  description: "If two triangles have two angles and the included side respectively congruent, then the triangles are congruent.",
+  statement: "Given two triangles △ABC and △A'B'C', if ∠CAB ≅ ∠C'A'B', ∠ABC ≅ ∠A'B'C', and AB ≅ A'B', then △ABC ≅ △A'B'C'.",
   branch: "51M",
   hasSimulation: true,
   authors: ["euclides", "hilbert"],
@@ -17,7 +17,7 @@ export const metadata = {
 import { CongruenciaALA } from '@content/diagrams/Teoremas/CongruenciaALA';
 export const Simulation = CongruenciaALA;
 
-<Capitular letra="T" />he Angle-Side-Angle (ASA) congruence theorem establishes one of the principal criteria for determining the metric identity and rigidity of two <ConceptLink targetId="triangulo">triangles</ConceptLink> in Euclidean <ConceptLink targetId="plano">plane geometry</ConceptLink>. It guarantees that fixing a line <ConceptLink targetId="segmento">segment</ConceptLink> and the inclinations of two rays originating from its endpoints uniquely determines the geometry of the triangle.
+<Capitular letra="T" />he Angle-Side-Angle (ASA) congruence theorem establishes one of the foundational criteria for geometric rigidity and metric equivalence between <ConceptLink targetId="triangulo">triangles</ConceptLink> in planar geometry. It guarantees that fixing a <ConceptLink targetId="segmento">segment</ConceptLink> and the inclinations of the two rays extending from its endpoints uniquely determines the triangle's geometry.
 
 <Separador />
 
@@ -25,28 +25,28 @@ export const Simulation = CongruenciaALA;
 
 Let $\triangle ABC$ and $\triangle A'B'C'$ be two <VisualBind element="triangulos" color="musgo"><ConceptLink targetId="triangulo">triangles</ConceptLink></VisualBind> in the Euclidean plane. Suppose the following <ConceptLink targetId="congruencia">congruence</ConceptLink> relations hold:
 1. The included side is congruent: $\overline{AB} \cong \overline{A'B'}$.
-2. The adjacent interior angles are respectively congruent: $\angle CAB \cong \angle C'A'B'$ and $\angle ABC \cong \angle A'B'C'$.
+2. The adjacent angles to the segment are respectively congruent: $\angle CAB \cong \angle C'A'B'$ and $\angle ABC \cong \angle A'B'C'$.
 
-Then, global metric <ConceptLink targetId="congruencia">congruence</ConceptLink> between both triangles holds necessarily:
+Then, overall triangle congruence holds necessarily:
 
 <Formula>
   $$ \triangle ABC \cong \triangle A'B'C' $$
 </Formula>
 
-Consequently, all corresponding sides and third angles are respectively congruent: $\overline{BC} \cong \overline{B'C'}$, $\overline{CA} \cong \overline{C'A'}$, and $\angle BCA \cong \angle B'C'A'$.
+Consequently, all corresponding homologous sides and the third angles are congruent: $\overline{BC} \cong \overline{B'C'}$, $\overline{CA} \cong \overline{C'A'}$, and $\angle BCA \cong \angle B'C'A'$.
 
 <Separador />
 
 ### Proof and axiomatic foundations
 
-In <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> foundations, the SAS criterion is taken as a basic <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>congruence axiom</ConceptLink>, while ASA is derived strictly by proof by contradiction:
-- If $\overline{AC}$ were not congruent to $\overline{A'C'}$, there would exist a point $D$ on the ray such that $\overline{AD} \cong \overline{A'C'}$.
-- By SAS, $\triangle ABD \cong \triangle A'B'C'$, which would imply $\angle ABD \cong \angle A'B'C'$.
-- This contradicts the angle transport axiom by producing two distinct angles congruent to the same reference angle.
+In <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> axiomatic framework, the SAS criterion is taken as an <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axiom of congruence</ConceptLink>, while the ASA criterion is rigorously proven by <ConceptLink targetId="metodo-contradiccion" isDependency={true}>contradiction</ConceptLink>:
+- If $\overline{AC}$ were not congruent to $\overline{A'C'}$, there would exist a point $D$ on the corresponding ray such that $\overline{AD} \cong \overline{A'C'}$.
+- By the SAS axiom, $\triangle ABD \cong \triangle A'B'C'$, implying $\angle ABD \cong \angle A'B'C'$.
+- This would contradict the uniqueness of angle transport (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>) by producing two distinct angles of the same measure on the same half-plane.
 
 <Separador />
 
-### Applications and extensions
+### Derived criteria
 
-- **Surveying and triangulation**: Serves as the theoretical backbone for determining unmeasurable distances by establishing a baseline segment and measuring two direction angles.
-- **AAS Criterion**: Combined with the <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink>, the criterion extends to any pair of angles and a non-included side.
+- **AAS Criterion (Angle-Angle-Side)**: Combined with the <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink>, the criterion extends to any two angles and a non-included side.
+- **Geodetic triangulation**: Forms the mathematical underpinning of triangulation and surveying to compute inaccessible distances.

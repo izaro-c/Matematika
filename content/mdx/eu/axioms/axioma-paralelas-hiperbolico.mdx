@@ -2,37 +2,48 @@ export const metadata = {
   id: "axioma-paralelas-hiperbolico",
   lang: "eu",
   type: "axioma",
-  title: "Paraleleo Hiperbolikoen Axioma",
-  description: "Zuzen bat eta kanpoko puntu bat emanda, gutxienez bi zuzen desberdin existitzen dira puntu horretatik igarotzen direnak eta emandako zuzena ebakitzen ez dutenak.",
+  title: "Paralelo hiperbolikoen axioma",
+  description: "Zuzen batetik kanpoko puntu batetik gutxienez bi zuzen desberdin igarotzen dira harekin ebakitzen ez direnak plano berean.",
   branch: "51M",
-  hasSimulation: true,
+  axiomSystem: "sistema-hiperbolico",
+  axiomFamily: "paralelas",
   alternativeGroup: "paralelismo",
+  hasSimulation: true,
   sources: [
-    { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolai Lobachevsky", locator: "§16", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "primary" }
+    { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolái Lobachevski", locator: "1840", role: "primary" },
+    { title: "Appendix scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "1832", role: "primary" }
   ]
 };
 
 import { HyperbolicParallel } from '@content/diagrams/Axiomas/HyperbolicParallel';
 export const Simulation = HyperbolicParallel;
 
-<Capitular letra="P" />araleleo hiperbolikoen axioma (edo <ConceptLink targetId="lobachevsky">Lobachevsky</ConceptLink>-Bolyai postulatuak) Euklidesen bostgarren postulatuaren ordezko gisa ezartzen da <ConceptLink targetId="geometria-hiperbolica">geometria hiperbolikoa</ConceptLink> oinarritzeko. Kanpoko <ConceptLink targetId="punto">puntu</ConceptLink> beretik igarotzen diren eta emandako <ConceptLink targetId="recta">zuzena</ConceptLink> ebakitzen ez duten zuzen anitzen existentzia postulatu egiten du.
+<Capitular letra="P" />aralelo hiperbolikoen axioma —<ConceptLink targetId="lobachevski">Nikolái Lobachevskik</ConceptLink> eta <ConceptLink targetId="bolyai">János Bolyaik</ConceptLink> formulatua— geometria hiperbolikoaren oinarrizko postulatua da. Bakartasun euklidearraren ordez, emandako <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat ebakitzen ez duten zuzen anitzen existentzia ezartzen du kanpoko <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> batetik <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> berean.
 
-<Definicion title="">
-  $l$ <ConceptLink targetId="recta">zuzen</ConceptLink> bat eta $l$ zuzenean ez dagoen $P$ <ConceptLink targetId="punto">puntu</ConceptLink> bat emanda, gutxienez bi $m_1, m_2$ zuzen desberdin existitzen dira, biak $P$ puntutik igarotzen direnak eta $l$ zuzenarekiko <ConceptLink targetId="paralelismo">paraleloak</ConceptLink> (disjuntuak) direnak:
+<Definicion title="Enuntziatu formala">
+  $\mathcal{P}$ plano bateko edozein $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzenetarako</ConceptLink> eta bertatik kanpoko edozein $P \notin l$ <ConceptLink targetId="punto" isDependency={true}>puntutarako</ConceptLink>, $P$ puntutik igarotzen diren eta $l$ ebakitzen ez duten gutxienez bi $l_1, l_2 \subset \mathcal{P}$ zuzen desberdin existitzen dira:
   $$
-  \forall l \in \mathcal{L}, \forall P \notin l \implies \exists m_1, m_2 \in \mathcal{L} \ (m_1 \neq m_2 \land P \in m_1 \cap m_2 \land m_1 \parallel l \land m_2 \parallel l)
+  \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists l_1, l_2 \subset \mathcal{P} \ \bigl(l_1 \neq l_2 \land P \in l_1 \cap l_2 \land l_1 \cap l = \emptyset \land l_2 \cap l = \emptyset\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Irudikapen bisuala
+### Ikus-irudikapena eta elkarrekintza
 
-Oinarriko <VisualBind element="l" color="pavo">$l$</VisualBind> zuzena eta kanpoko <VisualBind element="P" color="terracota">$P$</VisualBind> puntua marraztuz, <VisualBind element="m1" color="ocre">$m_1$</VisualBind> eta <VisualBind element="m2" color="verde">$m_2$</VisualBind> zuzen muga aztertzen dira, zeinek $l$ zuzena ebakitzen ez duten azpimugako eta ultraparaleloen hazia irekitzen duten.
+Poincaréren diskoaren simulazio interaktiboan, <VisualBind element="pP" color="terracota">$P$</VisualBind> puntutik bi <VisualBind element="lineM" color="carbon">$l_1$</VisualBind> eta <VisualBind element="lineN" color="carbon">$l_2$</VisualBind> paralelo asintotiko mugatzaileak igarotzen dira. Bien arteko barne-angeluan kokatutako zuzen-sorta osoak oinarrizko zuzena ebakitzen ez duten zuzen ultraparaleloen jarraitutasun infinitua osatzen du.
 
 <Separador />
 
-### Garrantzi axiomatikoa
+### Esanahi geometrikoa eta esparrua
 
-Axioma hau Euklidesen postulatuaren ordez onartzeak paraleleoen axiomaren independentzia logikoa frogatzen du, kurbatura gaussiar negatibo konstantea duen sistema geometriko trinkoa eratuz. Espazio honetan, edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barne-angeluen batura $\pi$ radian baino zorrozki txikiagoa da nahitaez.
+Axioma honek kurbadura gaussiar negatibo konstantea ($K < 0$) ematen dio planoari. Ondorioz, edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $180^\circ$ baino txikiagoa da zorrozki, eta poligonoen azalera angelu-defektuaren bidez mugatuta geratzen da.
+
+<Separador />
+
+### Propietateak
+
+- **Paralelotasun-angelua:** Zuzen ebakitzaileak eta ez-ebakitzaileak bereizten dituen $\Pi(x) < 90^\circ$ angelu zorrotz bereizgarria existitzen da.
+- **Angelu-defektua:** Edozein triangelu hiperbolikotan, $\alpha + \beta + \gamma < 180^\circ$.
+- **Paralelotasunaren ez-iragankortasuna:** Hirugarren zuzen batekiko paraleloak diren bi zuzen ez dira nahitaez paraleloak elkarren artean.
+- **Laukizuzenik eza:** Ezin da lau angelu zuzen dituen laukirik existitu.

@@ -2,38 +2,46 @@ export const metadata = {
   id: "axioma-congruencia-2",
   lang: "es",
   type: "axioma",
-  title: "Axioma III.2 (Transitividad de Segmentos)",
-  description: "Si dos segmentos son congruentes a un mismo tercer segmento, entonces son congruentes entre sí; además, todo segmento es congruente consigo mismo.",
+  title: "Axioma III.2 (Transitividad de la congruencia de segmentos)",
+  description: "Si dos segmentos son congruentes a un mismo tercer segmento, son congruentes entre sí.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
   ]
 };
 
 import { Congruence2 } from '@content/diagrams/Axiomas/Congruence2';
 export const Simulation = Congruence2;
 
-<Capitular letra="E" />l segundo axioma de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> establece la propiedad relacional de equivalencia para la congruencia de <ConceptLink targetId="segmento">segmentos</ConceptLink>. Garantiza que la congruencia de segmentos constituye una relación simétrica y transitiva en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
+<Capitular letra="E" />l segundo axioma de congruencia de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> confiere a la relación de congruencia entre <ConceptLink targetId="segmento">segmentos</ConceptLink> el carácter de una relación de equivalencia formal. Si dos segmentos $\overline{CD}$ y $\overline{EF}$ resultan ser congruentes con un mismo segmento $\overline{AB}$, entonces son necesariamente congruentes entre sí.
 
-<Definicion title="">
-  Si un <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con el segmento $\overline{EF}$ y el segmento $\overline{CD}$ también es congruente con $\overline{EF}$, entonces $\overline{AB}$ es congruente con $\overline{CD}$. Asimismo, todo segmento es congruente consigo mismo:
+<Definicion title="Enunciado formal">
+  Para cualesquiera tres <ConceptLink targetId="segmento">segmentos</ConceptLink> $\overline{AB}, \overline{CD}, \overline{EF}$, si $\overline{AB} \cong \overline{CD}$ y $\overline{AB} \cong \overline{EF}$, entonces $\overline{CD} \cong \overline{EF}$:
   $$
-  (\overline{AB} \cong \overline{EF}) \land (\overline{CD} \cong \overline{EF}) \implies (\overline{AB} \cong \overline{CD})
+  (\overline{AB} \cong \overline{CD} \land \overline{AB} \cong \overline{EF}) \implies \overline{CD} \cong \overline{EF}
   $$
-  $$
-  \forall \overline{AB} \implies \overline{AB} \cong \overline{AB}
-  $$
+  Asimismo, todo segmento es <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> consigo mismo: $\overline{AB} \cong \overline{AB}$.
 </Definicion>
 
 <Separador />
 
-### Representación visual
+### Representación visual e interacción
 
-Al comparar el segmento de referencia <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> con los segmentos <VisualBind element="CD" color="pavo">$\overline{CD}$</VisualBind> y <VisualBind element="EF" color="terracota">$\overline{EF}$</VisualBind>, se verifica empíricamente que la congruencia compartida hacia $\overline{EF}$ transmite invariablemente la igualdad de longitud entre $\overline{AB}$ y $\overline{CD}$.
+En la simulación interactiva, se muestran tres segmentos independientes <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> y <VisualBind element="segEF" color="terracota">$\overline{EF}$</VisualBind>. Las marcas de congruencia <VisualBind element="tickssegAB" color="terracota">$\cong$</VisualBind> confirman visualmente que al igualar $\overline{AB}$ con $\overline{CD}$ y $\overline{EF}$, la relación de igualdad métrica se transfiere de forma exacta entre $\overline{CD}$ y $\overline{EF}$.
 
 <Separador />
 
-### Significado axiomático
+### Significado geométrico y alcance
 
-Gracias a este postulado, la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> induce una partición en clases de equivalencia sobre el conjunto de todos los <ConceptLink targetId="segmento">segmentos</ConceptLink> del <ConceptLink targetId="plano">plano</ConceptLink>. Cada clase representa una magnitud abstracta de longitud sin necesidad de fijar previamente una unidad de medida numérica.
+Garantiza que la congruencia segmentaria particiona el conjunto de todos los segmentos del espacio en clases de equivalencia bien delimitadas. Cada clase de equivalencia define de manera abstracta la noción sintética de "longitud" en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+
+<Separador />
+
+### Propiedades
+
+- **Relación de equivalencia:** Satisface reflexividad ($\overline{AB} \cong \overline{AB}$), simetría ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) y transitividad.
+- **Definición de longitud sintética:** Cada clase de equivalencia $[\overline{AB}]$ actúa como medida de longitud invariable bajo traslaciones e isometrías.
+- **Consistencia métrica:** Impide derivas de longitud acumulativas en deducciones geométricas encadenadas.

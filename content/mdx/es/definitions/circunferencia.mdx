@@ -16,33 +16,41 @@ export const metadata = {
 import { Circunferencia } from '@content/diagrams/Definiciones/Circunferencia';
 export const Simulation = Circunferencia;
 
-<Capitular letra="L" />a circunferencia es el lugar geométrico unidimensional de todos los <ConceptLink targetId="punto">puntos</ConceptLink> de un <ConceptLink targetId="plano">plano</ConceptLink> que se encuentran a una distancia constante de un punto fijo denominado centro. Constituye la curva cerrada fundamental en la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>, delimitando la región convexa acotada conocida como disco o círculo.
+<Capitular letra="L" />a circunferencia es el lugar geométrico unidimensional de todos los <ConceptLink targetId="punto">puntos</ConceptLink> de un plano que equidistan de un punto fijo denominado centro. Constituye la curva cerrada fundamental de la geometría plana, delimitando la región convexa bidimensional denominada disco o <VisualBind element="circulo" color="pavo">círculo</VisualBind>.
 
 <Definicion title="">
-  Dado un punto <VisualBind element="centro" color="musgo">$O \in \mathcal{P}$</VisualBind> en un plano $\mathcal{P}$ y un escalar real estrictamente positivo $r > 0$, la circunferencia <VisualBind element="circunferencia" color="musgo">$\mathcal{C}(O, r)$</VisualBind> de centro $O$ y radio $r$ se define como el conjunto de puntos $P \in \mathcal{P}$ cuya distancia escalar a $O$ es idéntica a $r$:
+  Dado un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> <VisualBind element="centro" color="musgo">$O$</VisualBind> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\mathcal{P}$ y un número real $r > 0$, la circunferencia <VisualBind element="circunferencia" color="musgo">$\mathcal{C}(O, r)$</VisualBind> de centro $O$ y <VisualBind element="radio" color="pavo">radio</VisualBind> $r$ es el conjunto de puntos $P \in \mathcal{P}$ cuya distancia a $O$ es idéntica a $r$:
   $$
   \mathcal{C}(O, r) = \{ P \in \mathcal{P} \mid d(O, P) = r \}
   $$
-  donde $d(O, P) = \|P - O\| = r$. El segmento $\overline{OP}$ que une el centro con cualquier punto de la curva se denomina <ConceptLink targetId="radio">radio</ConceptLink>.
+  En coordenadas cartesianas sobre $\mathbb{R}^2$, con centro en $(x_0, y_0)$, se expresa mediante:
+  $$
+  (x - x_0)^2 + (y - y_0)^2 = r^2
+  $$
 </Definicion>
 
 <Separador />
 
-### Elementos y rectas asociadas
+### Elementos y posiciones relativas
 
-La geometría de la circunferencia involucra diversos elementos lineales y angulares característicos:
+La geometría de la circunferencia involucra diversos elementos lineales y angulares:
 
 | Elemento | Definición geométrica | Expresión o propiedad |
 |---|---|---|
-| Cuerda | <ConceptLink targetId="segmento">Segmento</ConceptLink> que une dos puntos de la circunferencia | $\overline{AB} \text{ con } A, B \in \mathcal{C}$ |
-| Diámetro | Cuerda que contiene al centro $O$ | $d = 2r$ (máxima distancia interna) |
-| Recta secante | <ConceptLink targetId="recta">Recta</ConceptLink> que interseca a la circunferencia en dos puntos | $\lvert L \cap \mathcal{C} \rvert = 2$ |
-| Recta tangente | Recta que interseca a la circunferencia en un único punto | $\lvert L \cap \mathcal{C} \rvert = 1$, <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> al radio |
+| <VisualBind element="cuerda" color="ocre">Cuerda</VisualBind> | Segmento que une dos puntos de la curva | $\overline{AB} \text{ con } A, B \in \mathcal{C}$ |
+| <VisualBind element="diametro" color="terracota">Diámetro</VisualBind> | Cuerda máxima que pasa por el centro | $d = 2r$ |
+| <VisualBind element="arco" color="canela">Arco</VisualBind> | Porción continua de la circunferencia entre dos puntos | $\widehat{AB} \subset \mathcal{C}$ |
+| <VisualBind element="tangente" color="mora">Recta tangente</VisualBind> | Recta que interseca a la curva en un único punto | Ortogonal al radio en el punto de contacto |
 
 <Separador />
 
-### Propiedades
-
-- **Longitud del perímetro**: La medida unidimensional de la curva cerrada satisface la relación proporcional $P = 2\pi r$.
-- **Área del disco delimitado**: La región plana bidimensional acotada interiormente posee una medida de superficie igual a $\mu(D) = \pi r^2$.
-- **Simetría continua**: La circunferencia es invariante bajo cualquier rotación alrededor de su centro $O$ y bajo cualquier reflexión respecto a un diámetro que actúe como <ConceptLink targetId="recta">recta soporte</ConceptLink>.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Métricas y simetría">
+    <PropiedadItem id="axioma-arquimedes" title="Perímetro y constante $\pi$">
+      La longitud perimetral de la curva cerrada satisface la relación $P = 2\pi r$.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-aditividad" title="Área del disco">
+      La medida del área del disco delimitado por la circunferencia es $\mu(D) = \pi r^2$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

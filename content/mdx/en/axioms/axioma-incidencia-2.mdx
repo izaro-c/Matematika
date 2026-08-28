@@ -5,6 +5,8 @@ export const metadata = {
   title: "Axiom I.2 (Existence of Points on a Line)",
   description: "Every line contains at least two distinct points in space.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
@@ -14,10 +16,10 @@ export const metadata = {
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="E" />very <ConceptLink targetId="recta">line</ConceptLink> contains a minimum of two distinct <ConceptLink targetId="punto">points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, as stipulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s second <ConceptLink targetId="incidencia">incidence axiom</ConceptLink>. This condition prevents the occurrence of degenerate single-point lines within the geometric system.
+<Capitular letra="T" />he second incidence axiom stipulates that every <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> possesses a minimal multiplicity of elements, containing no fewer than two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>. This condition prevents the emergence of degenerate lines consisting of a single isolated point or lacking linear extension.
 
 <Definicion title="Formal statement">
-  For every <ConceptLink targetId="recta">line</ConceptLink> $l \in \mathcal{L}$, there exist at least two distinct <ConceptLink targetId="punto">points</ConceptLink> $A, B \in \mathcal{S}$ belonging to $l$:
+  For every <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$, there exist at least two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B \in \mathcal{S}$ incident with $l$:
   $$
   \forall l \in \mathcal{L}, \ \exists A, B \in \mathcal{S} \ \bigl(A \in l \land B \in l \land A \neq B\bigr)
   $$
@@ -27,18 +29,18 @@ export const Simulation = Incidence2;
 
 ### Visual representation and interaction
 
-In the interactive diagram, line <VisualBind element="line" color="carbon">$l$</VisualBind> contains points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind>. The interaction illustrates that on any given line, at least two independent point locations $A \neq B$ can always be identified.
+In the interactive simulation, line <VisualBind element="lineCD" color="carbon">$l$</VisualBind> contains points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind>. The interaction shows that upon any given straight line, at least two independent positions with $A \neq B$ can always be located and shifted.
 
 <Separador />
 
 ### Geometric significance and scope
 
-This axiom ensures that lines are not isolated point-like entities, but structures possessing multiple distinguishable positions. Combined with Axiom I.1, it guarantees a foundational linear framework.
+This axiom ensures that lines are not isolated single points or empty sets, but continuous geometric structures composed of multiple distinguishable locations. Together with Axiom I.1, it secures a well-defined one-dimensional linear support.
 
 <Separador />
 
 ### Properties
 
-- **Non-degeneracy:** Excludes empty lines or lines comprising a single point.
-- **Multitude foundation:** Provides the starting point to prove that every line contains infinitely many points once <ConceptLink targetId="orden">order axioms</ConceptLink> are introduced.
-- **Segment viability:** Permits the formation of a non-trivial <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$.
+- **Non-degeneracy:** Prohibits lines consisting of a single point or empty sets.
+- **Elemental multiplicity:** Serves as the starting point to prove that every line contains infinitely many points once the <ConceptLink targetId="axioma-orden-1">order axioms</ConceptLink> are introduced.
+- **Segment viability:** Permits the formation of a non-trivial line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$.

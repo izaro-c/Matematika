@@ -127,8 +127,8 @@ export function localizePath(rawPath: string, targetLang: string = DEFAULT_LANGU
   return `/${target}/${parts.join('/')}`;
 }
 
-export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [persistedLang, setPersistedLang] = useState<string>(getInitialLanguage);
+export const I18nProvider: React.FC<{ children: React.ReactNode; initialLang?: string }> = ({ children, initialLang }) => {
+  const [persistedLang, setPersistedLang] = useState<string>(() => initialLang || getInitialLanguage());
   const [location, setLocation] = useLocation();
 
   const urlSegments = location.split('/').filter(Boolean);

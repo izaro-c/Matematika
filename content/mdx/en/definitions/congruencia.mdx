@@ -2,46 +2,59 @@ export const metadata = {
   id: "congruencia",
   lang: "en",
   type: "definicion",
-  subtype: "nominal",
-  title: "Geometric congruence",
-  description: "Equivalence relation between geometric figures that can be superimposed via an isometry preserving distances and angles.",
+  subtype: "primitivo",
+  title: "Geometric Congruence",
+  description: "Primitive equivalence and rigidity relation between geometric configurations preserving dimensions, distances, and angular amplitudes.",
   branch: "51M",
-  hasSimulation: true,
+  hasSimulation: false,
   sources: [
     { title: "Elements", author: "Euclid", locator: "Book I, Common Notion 4", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3 (Congruence Axioms)", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
   ]
 };
 
-import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
-export const Simulation = Congruence1;
-
-<Capitular letra="G" />eometric congruence is the fundamental <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink> between figures in the <ConceptLink targetId="plano">plane</ConceptLink> or space that share identical shape and size. Two figures are congruent if there exists a rigid <ConceptLink targetId="transformacion-geometrica">isometry</ConceptLink> (translation, rotation, or reflection) that maps one onto the other while preserving all inter-<ConceptLink targetId="punto">point</ConceptLink> distances and <ConceptLink targetId="angulo">angle</ConceptLink> measures.
+<Capitular letra="G" />eometric congruence is the primitive relation of rigidity and equivalence in synthetic geometry that formalizes the notion of equal size and shape between figures. In Hilbert's axiomatic system, congruence is postulated as a primitive relation for pairs of <ConceptLink targetId="segmento">segments</ConceptLink> ($\overline{AB} \cong \overline{CD}$) and pairs of <ConceptLink targetId="angulo">angles</ConceptLink> ($\angle ABC \cong \angle DEF$).
 
 <Definicion title="">
-  Let $F_1, F_2 \subset \mathcal{E}$ be two point subsets of a Euclidean metric space $\mathcal{E}$. Figures $F_1$ and $F_2$ are defined to be congruent, denoted <VisualBind element="figura-1" color="musgo">$F_1$</VisualBind> $\cong$ <VisualBind element="figura-2" color="pavo">$F_2$</VisualBind>, if and only if there exists a bijective transformation $f: \mathcal{E} \to \mathcal{E}$ such that $f(F_1) = F_2$ preserving all metric distances between points $A, B \in \mathcal{E}$:
+  Congruence ($\cong$) is a primitive equivalence relation on pairs of geometric configurations in a space $\mathcal{E}$. In analytic Euclidean geometry, two subsets $F_1, F_2 \subset \mathcal{E}$ are congruent if and only if there exists a bijective isometry $f: \mathcal{E} \to \mathcal{E}$ such that $f(F_1) = F_2$ and for all pairs of points $A, B \in \mathcal{E}$:
   $$
-  F_1 \cong F_2 \iff \exists f: \mathcal{E} \to \mathcal{E} \text{ such that } f(F_1) = F_2 \land \forall A, B \in \mathcal{E}, \|f(B) - f(A)\| = \|B - A\|
+  d(f(A), f(B)) = d(A, B)
   $$
-  For line <ConceptLink targetId="segmento">segments</ConceptLink> $\overline{AB} \cong \overline{CD}$, this implies equality of their scalar lengths $d(A, B) = d(C, D)$.
 </Definicion>
 
 <Separador />
 
+### Hilbert's congruence axioms (Group III)
+
+The behavior of the congruence relation is governed by the six axioms of Group III:
+- **Segment transport**: Given a segment $\overline{AB}$ and a ray originating at $A'$, there exists a unique point $B'$ on the ray such that $\overline{AB} \cong \overline{A'B'}$.
+- **Transitivity of segments**: If $\overline{AB} \cong \overline{CD}$ and $\overline{AB} \cong \overline{EF}$, then $\overline{CD} \cong \overline{EF}$.
+- **Addition of segments**: If $A * B * C$, $A' * B' * C'$, $\overline{AB} \cong \overline{A'B'}$, and $\overline{BC} \cong \overline{B'C'}$, then $\overline{AC} \cong \overline{A'C'}$.
+- **Angle transport**: Given an angle $\angle ABC$ and a reference ray on a given half-plane, there exists a unique congruent angle.
+- **SAS criterion**: If two triangles have two sides and the included angle respectively congruent, then their remaining corresponding angles are congruent.
+
 ### Triangle congruence criteria
 
-In <ConceptLink targetId="geometria-euclidiana">planar geometry</ConceptLink>, the congruence of <ConceptLink targetId="triangulo">triangles</ConceptLink> is completely determined by minimal sets of conditions regarding their <ConceptLink targetId="lado">sides</ConceptLink> and <ConceptLink targetId="angulo">angles</ConceptLink>:
-
-| Criterion | Axiom / theorem name | Minimal geometric condition |
-|---|---|---|
-| SAS | <ConceptLink targetId="axioma-congruencia-5">Side-Angle-Side</ConceptLink> | Two sides and the included angle are congruent |
-| ASA | <ConceptLink targetId="teorema-congruencia-ala">Angle-Side-Angle</ConceptLink> | One side and the two adjacent angles are congruent |
-| SSS | Side-Side-Side Criterion | All three pairs of corresponding sides are congruent |
+In the Euclidean plane, congruence between two <ConceptLink targetId="triangulo">triangles</ConceptLink> is established through the standard criteria:
+- **SAS** (Side-Angle-Side): Two sides and the included angle are congruent.
+- **ASA** (Angle-Side-Angle): One side and both adjacent angles are congruent.
+- **SSS** (Side-Side-Side): All three corresponding side pairs are congruent.
 
 <Separador />
 
-### Properties
-
-- **<ConceptLink targetId="relacion-equivalencia">Equivalence relation</ConceptLink>**: Congruence is reflexive ($F_1 \cong F_1$), symmetric ($F_1 \cong F_2 \implies F_2 \cong F_1$), and transitive ($F_1 \cong F_2 \land F_2 \cong F_3 \implies F_1 \cong F_3$).
-- **Invariance of measure**: If two measurable planar figures are congruent $F_1 \cong F_2$, their area measures satisfy strict equality $\mu(F_1) = \mu(F_2)$.
-- **Preservation of collinearity**: Every isometry preserves the <ConceptLink targetId="colinealidad">collinearity</ConceptLink> of points and the structure of <ConceptLink targetId="recta">lines</ConceptLink>.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Axiomatic structure of congruence">
+    <PropiedadItem id="axioma-congruencia-1" title="Segment transport">
+      Existence and uniqueness of congruent segments on a given ray.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-congruencia-2" title="Segment transitivity">
+      Segment congruence satisfies symmetry and formal transitivity.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-congruencia-4" title="Angle transport">
+      Existence and uniqueness of angle transport with respect to a reference ray.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-congruencia-5" title="SAS congruence axiom">
+      If two triangles agree on two sides and the included angle, they agree on all corresponding parts.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

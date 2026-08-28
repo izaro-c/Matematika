@@ -1,0 +1,58 @@
+export const metadata = {
+  id: "semirrecta",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Ray",
+  description: "Portion of a line originating at a fixed point and extending indefinitely in a single direction.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Common Notions", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+  ]
+};
+
+import { Semirrecta } from '@content/diagrams/Definiciones/Semirrecta';
+export const Simulation = Semirrecta;
+
+<Capitular letra="A" /> ray (or half-line) is a continuous one-dimensional portion of a <ConceptLink targetId="recta">line</ConceptLink> starting from a fixed origin and extending without bound in a single direction. It constitutes an indispensable geometric construct for defining <ConceptLink targetId="angulo">angles</ConceptLink> and setting directions in the <ConceptLink targetId="plano">plane</ConceptLink>.
+
+<Definicion title="">
+  Given an origin point <VisualBind element="pA" color="musgo">$O$</VisualBind> and a distinct point $A$ on a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> <VisualBind element="lineOA" color="carbon">$\ell$</VisualBind>, the closed ray <VisualBind element="rayOA" color="musgo">$\overrightarrow{OA}$</VisualBind> is the set comprising the <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $O$, the point $A$, and all points $P \in \ell$ such that $O$ is not <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $P$:
+  $$
+  \overrightarrow{OA} = \{ P \in \ell \mid P = O \lor \neg(A * O * P) \}
+  $$
+  In terms of affine combinations on the vector space $\mathbb{R}^n$:
+  $$
+  \overrightarrow{OA} = \{ P \in \mathbb{R}^n \mid P = O + t(A - O), \, t \ge 0 \}
+  $$
+</Definicion>
+
+<Separador />
+
+### Synthetic geometry
+
+In Hilbert's axiomatic system:
+- **Line separation**: Every point $O \in \ell$ partitions the line $\ell$ into two disjoint opposite rays with common origin $O$.
+- **Opposite rays**: If $A * O * B$, the rays $\overrightarrow{OA}$ and $\overrightarrow{OB}$ are opposite and satisfy $\overrightarrow{OA} \cap \overrightarrow{OB} = \{O\}$ and $\overrightarrow{OA} \cup \overrightarrow{OB} = \ell$.
+
+### Analytic geometry
+
+Given a unit direction vector $\vec{u} = \frac{A - O}{\|A - O\|}$, the ray is parameterized as:
+$$
+\vec{r}(t) = \vec{x}_O + t\vec{u}, \quad t \in [0, +\infty)
+$$
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Partition and linear orientation">
+    <PropiedadItem id="axioma-orden-2" title="Line partition">
+      A point on a line partitions the remaining points into exactly two convex equivalence classes.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-orden-3" title="Ray convexity">
+      Every ray $\overrightarrow{OA}$ is a connected and convex set.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

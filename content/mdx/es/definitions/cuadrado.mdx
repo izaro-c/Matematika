@@ -4,36 +4,41 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Cuadrado",
-  description: "Polígono regular equilátero y equiángulo de cuatro lados congruentes y cuatro ángulos rectos.",
+  description: "Polígono regular de cuatro lados caracterizado por poseer todos sus lados congruentes y todos sus ángulos interiores rectos.",
+  branch: "51M",
+  hasSimulation: false,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 22", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 22", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
   ]
 };
 
-<Capitular letra="E" />l <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> es el <ConceptLink targetId="poligono">polígono</ConceptLink> regular de cuatro lados por excelencia. Combina las propiedades métricas del rombo y del rectángulo, constituyendo la figura de máxima simetría dentro de la familia de los <ConceptLink targetId="cuadrilatero">cuadriláteros</ConceptLink> planos.
+<Capitular letra="E" />l cuadrado es el polígono regular de cuatro lados en la geometría euclidiana plana. Al combinar las propiedades métricas del rombo (cuatro lados congruentes) y del rectángulo (cuatro ángulos rectos), constituye la figura de máxima simetría dentro de la familia de los <ConceptLink targetId="cuadrilatero">cuadriláteros</ConceptLink>.
 
 <Definicion title="">
-  Un <ConceptLink targetId="cuadrilatero" isDependency={true}>cuadrilátero</ConceptLink> $ABCD$ es un cuadrado si y solo si sus cuatro lados son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí y sus cuatro <ConceptLink targetId="angulo">ángulos interiores son rectos</ConceptLink>:
+  Un <ConceptLink targetId="cuadrilatero" isDependency={true}>cuadrilátero</ConceptLink> convexo $ABCD$ es un cuadrado si y solo si sus cuatro lados son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> entre sí y sus cuatro ángulos interiores son <ConceptLink targetId="angulo-recto" isDependency={true}>ángulos rectos</ConceptLink>:
   $$
-  AB \cong BC \cong CD \cong DA \quad \land \quad \angle A \cong \angle B \cong \angle C \cong \angle D \cong 90^\circ
+  (\overline{AB} \cong \overline{BC} \cong \overline{CD} \cong \overline{DA}) \land (\angle A \cong \angle B \cong \angle C \cong \angle D \cong 90^\circ)
   $$
 </Definicion>
 
 <Separador />
 
-### Propiedades fundamentales
+### Propiedades geométricas y simetría
 
-- **Diagonales ortogonales y congruentes**: Sus dos diagonales poseen exactamente la misma longitud ($d = l\sqrt{2}$), se cortan en sus puntos medios y son <ConceptLink targetId="perpendicular">perpendiculares</ConceptLink> entre sí.
-- **Ejes de simetría**: Posee cuatro ejes de simetría (dos mediatrices de sus lados y dos diagonales).
+- **Diagonales**: Las dos diagonales poseen exactamente la misma longitud ($d = l\sqrt{2}$), se bisecan mutuamente y son <ConceptLink targetId="perpendicular">perpendiculares</ConceptLink> entre sí.
+- **Grupo de simetrías**: El grupo de automorfismos euclidianos del cuadrado es el grupo diedral $D_4$, compuesto por 4 rotaciones y 4 reflexiones respecto a sus ejes de simetría.
+- **Inscripción y circunscripción**: Posee circunferencias inscrita ($r = \frac{l}{2}$) y circunscrita ($R = \frac{l\sqrt{2}}{2}$) concéntricas.
 
 <Separador />
 
-### Relación métrica y área
-
-<Formula>
-  $$
-  \text{Área}(ABCD) = l^2
-  $$
-</Formula>
-
-El <ConceptLink targetId="teoria-medida-area">área</ConceptLink> de un cuadrado de lado $l$ equivale al cuadrado de su longitud lineal. Esta relación bidimensional constituye la base geométrica tradicional empleada en las demostraciones del <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Métricas y área">
+    <PropiedadItem id="teorema-area-rectangulo" title="Área del cuadrado">
+      El área de un cuadrado de lado $l$ equivale al cuadrado de su longitud: $\mu(ABCD) = l^2$.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-pitagoras" title="Relación diagonal">
+      La longitud de la diagonal satisface $d^2 = l^2 + l^2 = 2l^2 \implies d = l\sqrt{2}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

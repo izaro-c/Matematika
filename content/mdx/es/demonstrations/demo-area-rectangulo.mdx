@@ -1,0 +1,71 @@
+export const metadata = {
+  "id": "demo-area-rectangulo",
+  "type": "demostracion",
+  "title": "Demostración: Teorema del área del rectángulo",
+  "description": "Demostración axiomática por subdivisión en cuadrados unitarios y extensión por densidad a dimensiones irracionales, fundamentada en la teoría de la medida de Hilbert.",
+  "parentTheorem": "teorema-area-rectangulo",
+  "lang": "es",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["euclides", "hilbert"],
+  "tags": ["geometria", "areas", "rectangulo", "medida"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elementos", "author": "Euclides", "locator": "Libro I, Proposición 35", "role": "primary" },
+    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "locator": "Capítulo V, §22", "role": "secondary" }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="L" />a fórmula del área del <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectángulo</ConceptLink> se deduce en tres etapas sucesivas que garantizan su validez para longitudes racionales e irracionales.
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} title="Normalización: el cuadrado unitario">
+Se fija axiomáticamente el cuadrado de lado $1$ como unidad de referencia:
+
+<Formula>
+  $$ \text{Área}(\text{cuadrado unitario}) = 1 $$
+</Formula>
+
+Esta convención queda garantizada por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>axioma de aditividad del área</ConceptLink>, que asigna valor $1$ al cuadrado unidad.
+</ProofStep>
+
+<ProofStep number={2} title="Dimensiones enteras">
+Sea $R$ un rectángulo de base $m \in \mathbb{N}$ y altura $n \in \mathbb{N}$. Se divide $R$ en $m \times n$ cuadrados unitarios mediante <ConceptLink targetId="paralelas" isDependency={true}>rectas paralelas</ConceptLink> equidistantes. Por aditividad:
+
+<Formula>
+  $$ \text{Área}(R) = m \cdot n \cdot 1 = m \cdot n $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={3} title="Dimensiones racionales">
+Sea $b = \frac{p}{q}$ y $h = \frac{m}{n}$ con $p, q, m, n \in \mathbb{N}$. Se subdivide cada lado en fracciones de longitud $\frac{1}{q}$ y $\frac{1}{n}$ respectivamente. Los $p \cdot m$ subcuadrados obtenidos tienen lado $\frac{1}{q \cdot n}$ y, por el caso entero aplicado al rectángulo de dimensiones $q \cdot n \times 1$, cada subcuadrado tiene área $\frac{1}{q^2 n^2}$. Por tanto:
+
+<Formula>
+  $$ \text{Área}(R) = p \cdot m \cdot \frac{1}{q \cdot n} \cdot \frac{1}{q \cdot n} \cdot q \cdot n = \frac{p}{q} \cdot \frac{m}{n} = b \cdot h $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} title="Extensión a reales por densidad y axioma de Arquímedes">
+Para $b, h \in \mathbb{R}^+$ irracionales, se construyen sucesiones de racionales $(b_k)_{k \geq 1} \nearrow b$ y $(h_k)_{k \geq 1} \nearrow h$. Por el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> y la monotonía de la medida de área:
+
+<Formula>
+  $$ \text{Área}(R) = \lim_{k \to \infty} b_k \cdot h_k = b \cdot h $$
+</Formula>
+
+La unicidad de este límite garantiza que no existe otra función de área continua y aditiva que asigne valor distinto al rectángulo.
+</ProofStep>
+
+<Separador />
+
+### Análisis deductivo
+
+<Nota>
+  La demostración ilustra el método clásico de <em>exhausción</em> de Eudoxo, reelaborado en lenguaje axiomático por Hilbert. La extensión del resultado de racionales a reales usa esencialmente la propiedad arquimediana del orden.
+</Nota>
+
+</DemonstrationSection>

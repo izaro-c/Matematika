@@ -3,40 +3,43 @@ export const metadata = {
   lang: "eu",
   type: "metodo",
   subtype: "demostracion",
-  title: "Aurkakotasun-metodoa",
-  description: "Ezeztapenezko zeharkako metodoa: tesia faltsua dela suposatuz kontraesan logiko bat deduzitzen da.",
-  branch: "51M",
+  title: "Kontraesanezko froga",
+  description: "Froga-teknika ez-zuzena (absurdora eramatea), non proposizio baten egiazkotasuna ezartzen den bere ukapenak kontraesan logiko batera daramala frogatuz.",
+  branch: "03B",
+  difficulty: "intermedio",
   hasSimulation: true
 };
 
 import { ContradictionSimulation } from '@content/diagrams/Metodos/ContradictionSimulation';
 export const Simulation = ContradictionSimulation;
 
-<Capitular letra="A" />urkakotasun-metodoa —klasikoki *reductio ad absurdum* deitua— matematikako zeharkako froga-estrategia nagusia da. Hirugarren baztertuaren printzipioan eta ez-kontraesanaren printzipioan oinarritzen da, erakutsiz <ConceptLink targetId="tesis">tesiaren</ConceptLink> ezeztapenak $R \land \neg R$ absurdu batera ezinbestean eramango balu, jatorrizko tesia nahitaez egiazkoa dela.
+<Capitular letra="K" />ontraesanezko froga, historikoki *absurdora eramatea* (*reductio ad absurdum*) gisa ezaguna, zeharkako froga-teknika bat da. $P$ proposizio baten egiazkotasuna frogatzeko, behin-behinean bere $\neg P$ ukapena onartzen da hipotesitzat, eta hortik abiatuz $R \land \neg R \equiv \bot$ motako kontraesan logiko formal batera iristen da ezinbestean.
 
 <Separador />
 
-### Egitura logikoa
+### Oinarri logikoa eta hirugarren baztertuaren printzipioa
 
-$P \implies Q$ baldintzazko proposizioa frogatzeko, arrazoiketak hipotesi absurduaren bidez jotzen du aurrera:
+Metodoa logika klasikoaren oinarrizko legeetan bermatzen da:
 
-1. $P$ <ConceptLink targetId="hipotesis">hipotesiaren</ConceptLink> egiazkotasuna eta $\neg Q$ tesiaren ezeztapena onartzen dira batera premisa gisa.
-2. Deduizio-garapen zorrotza egiten da $P \land \neg Q$ konjunctionetik abiatuta.
-3. Formalki $R \land \neg R$ motako kontraesana lortzen da, non $R$ jakina den <ConceptLink targetId="axioma">axioma</ConceptLink> bat, <ConceptLink targetId="teorema">teorema</ConceptLink> bat edo garapenean lortutako proposizio bat den.
-4. Ez-kontraesanaren printzipioz, $\neg Q$ ezeztapena baztertu egiten da, $Q$ egiazkoa dela ezinbestean frogatuz:
-   $$ (P \land \neg Q \implies \bot) \implies (P \implies Q) $$
+- **Ez-kontraesanaren printzipioa**: Proposizio bat ezin da aldi berean egiazkoa eta gezurrezkoa izan testuinguru formal berean: $\neg (R \land \neg R)$.
+- **Hirugarren baztertuaren printzipioa**: Edozein $P$ proposizio nahitaez egiazkoa edo gezurrezkoa da ($P \lor \neg P$).
+- **Inplikazioaren baliokidetza**: $(\neg P \implies \bot)$ frogatzea logikoki $P$-ren egiazkotasun ukaezina ezartzearen baliokidea da:
+  <Formula>
+    $$ (\neg P \implies \bot) \iff P $$
+  </Formula>
 
-<Separador />
-
-### Adibideak geometrian eta zenbaki-teorian
-
-- **$\sqrt{2}$-ren irrazionaltasuna**: Suposatzen da $\sqrt{2}$ <ConceptLink targetId="numero-real">zenbaki erreala</ConceptLink> <ConceptLink targetId="koziente">zatiki laburtezina</ConceptLink> $p/q$ gisa adieraz daitekeela. Garapen aljebraikoak $p$ zein $q$ bikoitiak direla deduzitzen du, zatikiaren laburtezintasunarekin zuzenean kontraesanean sartuz.
-- **Zenbaki lehenen infinitutasuna**: Suposatzen da <ConceptLink targetId="numero-natural">zenbaki lehenen</ConceptLink> kopuru finitua dagoela $p_1, p_2, \dots, p_n$. Eraikitzen den $N = (p_1 p_2 \dots p_n) + 1$ zenbakiak kontraesana sortzen du zerrendako ezein zenbaki lehenez ezin daitekeelako zatitu.
-- **<ConceptLink targetId="paralelismo">Zuzen paraleloaren</ConceptLink> bakartasuna**: <ConceptLink targetId="geometria-euclidiana">Geometria euklidesarrean</ConceptLink>, puntu beretik igarotzen diren eta emandako zuzen batekiko paraleloak diren bi zuzen desberdin daudela suposatzeak kontraesana dakar <ConceptLink targetId="axioma-paralelas-euclides">bosgarren postulatuarekin</ConceptLink>.
+$P \implies Q$ inplikazio baldintzatu baten kasuan, prozedurak $P$ hipotesia eta $\neg Q$ tesiaren ukapena aldi berean onartzen ditu, sistemako axiomekin edo aurretiazko teoremeekin bateraezintasun logiko bat lortuz.
 
 <Separador />
 
-### Propietateak
+### Adibide klasikoak geometrian eta analisian
 
-- **Indar zeharkakoa**: <ConceptLink targetId="metodo-directo">Zuzeneko metodoaren</ConceptLink> bidez datu esplizituen faltagatik lortezinak diren proposizioak frogatzea ahalbidetzen du.
-- **Ez-eraikitzailetasuna**: Proposizio baten saihestezinezko egiazkotasuna ezartzen du, kasuan kasuko objektu geometriko edo numerikoa esplizituki erakutsi gabe.
+- **$\sqrt{2}$-ren irrazionaltasuna**: $\sqrt{2} = a/b$ dela suposatzen da, $\operatorname{mzk}(a, b) = 1$ izanik. Hortik $a$ zein $b$ bikoitiak direla ondorioztatzen da, zatiki laburtezina izatearen hipotesiarekin kontraesanean.
+- **Zuzen perpendikularren bakantasuna**: Kanpoko puntu batetik <ConceptLink targetId="recta">zuzen</ConceptLink> batera gehienez <ConceptLink targetId="perpendicular">zuzen perpendikular</ConceptLink> bakarra igarotzen dela frogatzeko, bi perpendikular ezberdin daudela suposatzen da. Horrek $90^\circ$-ko bi <ConceptLink targetId="angulo">angelu</ConceptLink> dituen <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat sortuko luke, <ConceptLink targetId="teorema-suma-angulos-triangulo">angeluen baturaren teoremaren</ConceptLink> aurka eginez.
+
+<Separador />
+
+### Ezaugarri metodologikoak
+
+- **Bereziki eraginkorra ezezkotasun eta bakantasun frogetan**: Egoera edo objektu jakin batzuk existitzea ezinezkoa dela frogatzeko metodorik egokiena da.
+- **Ez-eraikitzailea**: Askotan entitate baten existentzia frogatzen du hura eraikitzeko prozedura espliziturik eskaini gabe.

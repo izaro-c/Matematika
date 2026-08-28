@@ -2,8 +2,8 @@ export const metadata = {
   id: "teorema-tales",
   type: "teorema",
   title: "Talesen teorema",
-  description: "Bi zuzen ebakitzaile zuzen paraleloen familia batek ebakitzen dituenean, ebakitzaile batean mugatutako zuzenkiak beste ebakitzaileko beren dagokien zuzenkiekiko proportzionalak dira.",
-  statement: "Izan bitez r eta r' bi zuzen ebakitzaile L1, L2 eta L3 hiru zuzen paralelok A, B, C eta A', B', C' puntuetan ebakitzen dituztenak. Orduan: AB / BC = A'B' / B'C'.",
+  description: "Bi zuzen ebakitzaileri zuzen paraleloen familia batek ebakitzen badie, ebakitzaile batean zehaztutako zuzenkiak bestean zehaztutako zuzenkiekiko proportzionalak dira.",
+  statement: "r eta r' bi zuzen ebakitzaile L1, L2 eta L3 hiru zuzen paralelok ebakitzen badituzte hurrenez hurren A, B, C eta A', B', C' puntuetan, orduan |AB| / |BC| = |A'B'| / |B'C'| betetzen da.",
   branch: "51M",
   hasSimulation: true,
   authors: ["tales", "euclides"],
@@ -16,30 +16,30 @@ export const metadata = {
 import { Tales } from '@content/diagrams/Teoremas/Tales';
 export const Simulation = Tales;
 
-<Capitular letra="T" />alesen teoremak plano euklidetarrek aldeen <ConceptLink targetId="semejanza">antzekotasun</ConceptLink> eta <ConceptLink targetId="proporcionalidad">proportzionaltasun</ConceptLink> teoria oinarritzen du. <ConceptLink targetId="paralelas">Zuzen paraleloen</ConceptLink> sistema batek bi <ConceptLink targetId="recta">zuzen ebakitzaile</ConceptLink> ebakitzean, lortutako <ConceptLink targetId="segmento">zuzenkien</ConceptLink> luzeren arteko erlazioa aldaezin mantentzen dela ezartzen du.
+<Capitular letra="T" />alesen teoremak antzekotasun geometrikoaren eta proportzionaltasunaren oinarria finkatzen du plano euklidetarrean. Ezarri egiten du <ConceptLink targetId="paralelas">zuzen paraleloen</ConceptLink> sistema batek bi <ConceptLink targetId="recta">zuzen ebakitzailerekin</ConceptLink> duen ebakidurak aldagabe mantentzen duela ebakitako <ConceptLink targetId="segmento">zuzenkien</ConceptLink> luzeren arteko erlazioa.
 
 <Separador />
 
 ### Enuntziatu formala
 
-Bitzak $r$ eta $r'$ <ConceptLink targetId="recta">zuzen ebakitzaile</ConceptLink> bi $\mathcal{P}$ planoan. Izan bitez $L_1, L_2, L_3$ euren artean <VisualBind element="rectas-paralelas" color="musgo"><ConceptLink targetId="paralelas">paraleloak diren hiru zuzen</ConceptLink></VisualBind>, zeinek $r$ zuzena <VisualBind element="punto-a" color="pavo">$A$</VisualBind>, <VisualBind element="punto-b" color="terracota">$B$</VisualBind>, $C$ puntuetan eta $r'$ zuzena <VisualBind element="punto-a-primo" color="pavo">$A'$</VisualBind>, <VisualBind element="punto-b-primo" color="terracota">$B'$</VisualBind>, $C'$ puntuetan ebakitzen baitituzte. Proportzio hauek nahitaez betetzen dira:
+Izan bitez $r$ eta $r'$ planoko bi <ConceptLink targetId="recta">zuzen ebakitzaile</ConceptLink>. Izan bitez $L_1, L_2, L_3$ elkarren artean <VisualBind element="rectas-paralelas" color="musgo"><ConceptLink targetId="paralelas">paraleloak diren hiru zuzen</ConceptLink></VisualBind>, $r$ zuzena <VisualBind element="punto-a" color="pavo">$A$</VisualBind>, <VisualBind element="punto-b" color="terracota">$B$</VisualBind>, $C$ puntuetan eta $r'$ zuzena <VisualBind element="punto-a-primo" color="pavo">$A'$</VisualBind>, <VisualBind element="punto-b-primo" color="terracota">$B'$</VisualBind>, $C'$ puntuetan ebakitzen dutenak. Proportzionaltasun-arrazoien berdintza betetzen da:
 
 <Formula>
   $$ \frac{|\overline{AB}|}{|\overline{BC}|} = \frac{|\overline{A'B'}|}{|\overline{B'C'}|} \quad \Longleftrightarrow \quad \frac{|\overline{AB}|}{|\overline{A'B'}|} = \frac{|\overline{BC}|}{|\overline{B'C'}|} $$
 </Formula>
 
-Beste modura esanda, $r$ zuzeneko bi zuzenkiren neurrien arteko kozientea eta $r'$ zuzeneko dagokien zuzenkiren neurrien arteko kozientea berdin-berdinak dira.
+Beste era batera esanda, $r$ zuzeneko edozein bi zuzenkiren neurrien arteko arrazoia $r'$ zuzeneko zuzenki homologoen neurrien arteko arrazoiaren berdina da.
 
 <Separador />
 
 ### Triangeluetarako korolarioa
 
-Edozein $\triangle ABC$ <ConceptLink targetId="triangulo">triangelutan</ConceptLink>, $\overline{BC}$ aldeari <ConceptLink targetId="paralelas">paraleloa</ConceptLink> zaion eta $\overline{AB}$ zein $\overline{AC}$ aldeak $D$ eta $E$ puntuetan ebakitzen dituen $r$ zuzen bat marrazten bada, honako hau deduzitzen da:
-- Aldetan mugatutako zuzenkiak proportzionalak dira: $\frac{\overline{AD}}{\overline{DB}} = \frac{\overline{AE}}{\overline{EC}}$.
-- Lortutako $\triangle ADE$ triangelua eta jatorrizko $\triangle ABC$ triangelua <ConceptLink targetId="semejanza">antzekoak</ConceptLink> dira.
+Edozein $\triangle ABC$ <ConceptLink targetId="triangulo">triangelutan</ConceptLink>, baldin $\overline{BC}$ aldeari <ConceptLink targetId="paralelas">paraleloa</ConceptLink> zaion $r$ zuzen batek $\overline{AB}$ eta $\overline{AC}$ aldeak $D$ eta $E$ puntuetan ebakitzen baditu:
+- Aldeetan zehaztutako zuzenkiak proportzionalak dira: $\frac{|\overline{AD}|}{|\overline{DB}|} = \frac{|\overline{AE}|}{|\overline{EC}|}$.
+- Sortutako $\triangle ADE$ triangelua eta jatorrizko $\triangle ABC$ triangelua <ConceptLink targetId="semejanza">antzekoak</ConceptLink> dira.
 
 <Separador />
 
 ### Froga eta oinarritze axiomatikoa
 
-Demonstratu euklidetarra altuera edo oinarri bera duten triangeluen <ConceptLink targetId="area">azaleren</ConceptLink> kalkuluan oinarritzen da. Gaur egungo axiomatikan, <ConceptLink targetId="axioma-arquimedes">Arkimedesen propietatea</ConceptLink> eta zuzen errealaren jarraitutasuna beharrezkoak dira teorema zenbaki rasional zein irrazionaletan egiaztatzeko.
+Frogapen euklidetarra paraleloen artean oinarri edo altuera bera duten <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangeluen azalerak</ConceptLink> alderatzean oinarritzen da. Egitura axiomatiko modernoan, <ConceptLink targetId="axioma-arquimedes">Arkimedesen axioma</ConceptLink> eta zuzen errealaren osotasuna beharrezkoak dira arrazoi arrazional zein neurtezinetarako baliagarritasuna bermatzeko.

@@ -10,7 +10,7 @@ export const metadata = {
   "tags": ["geometria", "triangulos", "areas", "hilbert"],
   "layout": "split",
   "sources": [
-    { "title": "Elements", author: "Euclid", locator: "Book I, Proposition 47", role: "primary" }
+    { "title": "Elements", author: "Euclides", locator: "Book I, Proposition 47", role: "primary" }
   ]
 };
 
@@ -18,14 +18,14 @@ import { DemoPitagorasEuclides } from "@content/diagrams/Demos/DemoPitagorasEucl
 
 <DemonstrationSection diagram={<DemoPitagorasEuclides />}>
 
-<Capitular letra="G" />iven a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> $\triangle ABC$ with a <ConceptLink targetId="angulo-recto">right angle</ConceptLink> at <ConceptLink targetId="vertice">vertex</ConceptLink> $C$, the <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pythagorean theorem</ConceptLink> is formally demonstrated. The proof establishes that the <ConceptLink targetId="area">area</ConceptLink> of the <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">square constructed on the hypotenuse</ConceptLink></VisualBind> is equal to the sum of the areas of the <VisualBind element="cuadrado-a" color="pavo">square on cathetus $a$</VisualBind> and the <VisualBind element="cuadrado-b" color="terracota">square on cathetus $b$</VisualBind>.
+<Capitular letra="G" />iven a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> $\triangle ABC$ with a right angle at vertex $C$, the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink> is formally demonstrated. The proof establishes that the area of the <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">square constructed on the hypotenuse</ConceptLink></VisualBind> is equal to the sum of the areas of the <VisualBind element="cuadrado-a" color="pavo">square on cathetus $a$</VisualBind> and the <VisualBind element="cuadrado-b" color="terracota">square on cathetus $b$</VisualBind>.
 
 <Separador />
 
 ### Step-by-step proof
 
 <ProofStep number={1} target="triangulo" title="Configuration of the base right triangle">
-Let <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> be a right triangle with the right angle positioned at vertex $C$. The <ConceptLink targetId="cateto">catheti</ConceptLink> are denoted by <VisualBind element="cateto-a" color="pavo">$a = \overline{BC}$</VisualBind> and <VisualBind element="cateto-b" color="terracota">$b = \overline{CA}$</VisualBind>, and the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> by <VisualBind element="hipotenusa-c" color="ocre">$c = \overline{AB}$</VisualBind>.
+Let <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> be a right triangle with the right angle positioned at vertex $C$. The legs are denoted by <VisualBind element="cateto-a" color="pavo">$a = |\overline{BC}|$</VisualBind> and <VisualBind element="cateto-b" color="terracota">$b = |\overline{CA}|$</VisualBind>, and the hypotenuse by <VisualBind element="hipotenusa-c" color="ocre">$c = |\overline{AB}|$</VisualBind>.
 </ProofStep>
 
 <ProofStep number={2} target="cuadrados" title="Construction of the three exterior squares">
@@ -33,11 +33,11 @@ On each of the three sides of $\triangle ABC$, three squares exterior to the pol
 </ProofStep>
 
 <ProofStep number={3} target="altura" title="Division of the hypotenuse square by the altitude">
-From the right vertex $C$, the <VisualBind element="recta-altura" color="carbon"><ConceptLink targetId="perpendicular">perpendicular line</ConceptLink></VisualBind> to the hypotenuse $\overline{AB}$ is drawn. Extended through the square on the hypotenuse, this line partitions it into two polygons: the <VisualBind element="rectangulo-izq" color="terracota"><ConceptLink targetId="rectangulo">left rectangle</ConceptLink></VisualBind> $R_L$ and the <VisualBind element="rectangulo-der" color="pavo"><ConceptLink targetId="rectangulo">right rectangle</ConceptLink></VisualBind> $R_R$.
+From the right vertex $C$, the <VisualBind element="recta-altura" color="carbon"><ConceptLink targetId="perpendicular">perpendicular line</ConceptLink></VisualBind> to the hypotenuse $\overline{AB}$ is drawn. Extended through the square on the hypotenuse, this line partitions it into two rectangles: the <VisualBind element="rectangulo-izq" color="terracota">left rectangle</VisualBind> $R_L$ ($ADML$) and the <VisualBind element="rectangulo-der" color="pavo">right rectangle</VisualBind> $R_R$ ($BEML$).
 </ProofStep>
 
 <ProofStep number={4} target="triangulos-izq" title="Construction and congruence of the left triangles">
-Auxiliary <ConceptLink targetId="segmento">segments</ConceptLink> are drawn to form triangle <VisualBind element="triangulo-acd" color="terracota">$\triangle ACD$</VisualBind> and triangle <VisualBind element="triangulo-akb" color="terracota">$\triangle AKB$</VisualBind>. Applying <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>congruence axioms</ConceptLink> under the SAS (Side-Angle-Side) criterion yields <ConceptLink targetId="congruencia">congruence</ConceptLink>:
+Auxiliary <ConceptLink targetId="segmento">segments</ConceptLink> are drawn to form triangle <VisualBind element="triangulo-acd" color="terracota">$\triangle ACD$</VisualBind> and triangle <VisualBind element="triangulo-akb" color="terracota">$\triangle AKB$</VisualBind>. Applying the <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>SAS congruence axiom</ConceptLink> yields <ConceptLink targetId="congruencia">congruence</ConceptLink>:
 
 <Formula>
   $$ \triangle ACD \cong \triangle AKB $$

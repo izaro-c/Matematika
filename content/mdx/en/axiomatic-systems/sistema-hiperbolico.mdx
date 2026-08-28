@@ -3,37 +3,72 @@ export const metadata = {
   lang: "en",
   type: "sistema-axiomatico",
   title: "Hyperbolic geometry system",
-  description: "The axiomatic system of Lobachevsky and Gauss based on absolute geometry and the hyperbolic parallel axiom.",
+  description: "The axiomatic framework of Lobachevsky, Bolyai, and Gauss based on absolute geometry and the hyperbolic parallel postulate.",
   branch: "51M",
-  axiomas: ["axioma-paralelas-hiperbolico"]
+  axiomas: [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-incidencia-4",
+    "axioma-incidencia-5",
+    "axioma-incidencia-6",
+    "axioma-incidencia-7",
+    "axioma-incidencia-8",
+    "axioma-orden-1",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-4",
+    "axioma-congruencia-1",
+    "axioma-congruencia-2",
+    "axioma-congruencia-3",
+    "axioma-congruencia-4",
+    "axioma-congruencia-5",
+    "axioma-paralelas-hiperbolico",
+    "axioma-arquimedes",
+    "axioma-completitud"
+  ],
+  models: [
+    "modelo-poincare"
+  ],
+  authors: ["lobachevski", "bolyai", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolai Lobachevsky", locator: "1840", role: "primary" },
+    { title: "Appendix scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "1832", role: "primary" }
+  ]
 };
 
-<Capitular letra="T" />he hyperbolic geometry system —formulated independently by Nikolai Lobachevsky and János Bolyai— constitutes the first non-Euclidean geometry formally discovered. It is obtained by replacing the Euclidean parallel postulate with the hyperbolic parallel axiom within the framework of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, introducing a metric of constant negative Gaussian curvature.
+<Capitular letra="T" />he system of hyperbolic geometry —discovered independently by <ConceptLink targetId="lobachevski">Nikolai Lobachevsky</ConceptLink> and <ConceptLink targetId="bolyai">János Bolyai</ConceptLink>— constitutes the first non-Euclidean geometric theory developed formally. It arises from adjoining the hyperbolic parallel postulate to the foundational base of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, endowing space with a constant negative Gaussian curvature ($K < 0$).
 
 <Separador />
 
 ### Axiomatic structure
 
-The hyperbolic system integrates the full abstract formal framework:
+The hyperbolic system unifies the entire neutral deductive apparatus with the plural parallel postulate:
 
-1. **Foundation of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>**: Incorporates all axioms of <ConceptLink targetId="sistema-incidencia">incidence</ConceptLink>, <ConceptLink targetId="orden">order</ConceptLink>, <ConceptLink targetId="congruencia">congruence</ConceptLink>, and continuity.
-2. **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>Hyperbolic parallel axiom</ConceptLink>**: Given a <ConceptLink targetId="recta">line</ConceptLink> $l$ and an external <ConceptLink targetId="punto">point</ConceptLink> $P \notin l$ in a <ConceptLink targetId="plano">plane</ConceptLink>, there exist at least two distinct lines $l_1, l_2$ containing $P$ that do not intersect $l$:
-   $$ \forall l \in \mathcal{L}, \forall P \notin l, \exists l_1, l_2 \in \mathcal{L} \text{ such that } l_1 \neq l_2, P \in l_1 \cap l_2 \land l_1 \cap l = \emptyset \land l_2 \cap l = \emptyset $$
-
-<Separador />
-
-### Characteristic theorems
-
-The negative curvature metric fundamentally alters spatial metric and triangular properties:
-
-- **Angular defect**: The sum of interior <ConceptLink targetId="angulo">angles</ConceptLink> in any hyperbolic <ConceptLink targetId="triangulo">triangle</ConceptLink> is strictly less than $180^\circ$:
-  $$ \sum_{i=1}^3 \alpha_i < 180^\circ $$
-- **Proportionality of <ConceptLink targetId="area">area</ConceptLink>**: The area $\text{Area}(\triangle)$ of a triangle is directly proportional to its angular defect $\delta(\triangle) = \pi - (\alpha + \beta + \gamma)$.
-- **Non-existence of rectangles and non-congruent similarities**: There exist no quadrilaterals with four right angles. Two triangles sharing identical corresponding angles are necessarily congruent (AAA criterion).
+1. **Base of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>**: Incorporates all axioms of <ConceptLink targetId="sistema-incidencia">incidence</ConceptLink> (I.1-I.8), <ConceptLink targetId="axioma-orden-1">order</ConceptLink> (II.1-II.4), <ConceptLink targetId="axioma-congruencia-1">congruence</ConceptLink> (III.1-III.5), and continuity (V.1-V.2).
+2. **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>Hyperbolic parallel axiom (Lobachevsky-Bolyai axiom)</ConceptLink>**: Given a <ConceptLink targetId="recta">line</ConceptLink> $l$ and an external <ConceptLink targetId="punto">point</ConceptLink> $P \notin l$ in a <ConceptLink targetId="plano">plane</ConceptLink> $\mathcal{P}$, there exist at least two distinct lines $l_1, l_2$ passing through $P$ that do not intersect $l$:
+   $$
+   \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists l_1, l_2 \in \mathcal{L} \ \bigl(l_1 \neq l_2 \land P \in l_1 \cap l_2 \land l_1 \cap l = \emptyset \land l_2 \cap l = \emptyset\bigr)
+   $$
 
 <Separador />
 
-### Models and consistency
+### Characteristic theorems of hyperbolic geometry
 
-- **<ConceptLink targetId="modelo-poincare">Poincaré disk $\mathbb{D}^2$</ConceptLink>**: Canonical conformal model where hyperbolic lines are circular arcs orthogonal to the boundary.
-- **Relative consistency**: The existence of analytic conformal models in the complex plane reduces the logical consistency of hyperbolic geometry to standard real analysis.
+Constant negative curvature introduces profound structural differences compared to Euclidean space:
+
+- **Angular defect and triangular bound**: The sum of interior <ConceptLink targetId="angulo">angles</ConceptLink> of any hyperbolic <ConceptLink targetId="triangulo">triangle</ConceptLink> is strictly less than $180^\circ$:
+  $$
+  \alpha + \beta + \gamma < 180^\circ \quad (\alpha + \beta + \gamma < \pi)
+  $$
+- **Area proportionality**: The hyperbolic area of a triangle is directly proportional to its angular defect $\delta(\triangle) = \pi - (\alpha + \beta + \gamma)$, yielding an absolute upper bound for triangle areas ($\text{Area}(\triangle) < \pi R^2$).
+- **Absence of rectangles and strict similarity**: No quadrilaterals with four right angles exist (Saccheri and Lambert quadrilaterals have acute summit angles). Two triangles with equal corresponding angles are necessarily congruent (AAA criterion).
+- **Lobachevsky's angle of parallelism**: The limiting angle $\Pi(x)$ between the perpendicular and an asymptotic line depends on the distance $x$ via the formula $\tan(\Pi(x)/2) = e^{-x/k}$.
+
+<Separador />
+
+### Models and relative consistency
+
+- **<ConceptLink targetId="modelo-poincare">Poincaré disk model $\mathbb{D}^2$</ConceptLink>**: The conformal analytical model on the unit disk $\{z \in \mathbb{C} : |z| < 1\}$ endowed with Riemannian metric $ds^2 = \frac{4|dz|^2}{(1-|z|^2)^2}$.
+- **Equiconsistency**: Eugenio Beltrami, Henri Poincaré, and Felix Klein demonstrated that the consistency of hyperbolic geometry is equivalent to that of Euclidean geometry and the real number continuum $\mathbb{R}$.

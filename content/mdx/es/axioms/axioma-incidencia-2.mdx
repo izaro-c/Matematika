@@ -5,6 +5,8 @@ export const metadata = {
   title: "Axioma I.2 (Existencia de puntos en la recta)",
   description: "Toda recta contiene al menos dos puntos distintos del espacio.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
@@ -14,10 +16,10 @@ export const metadata = {
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="E" />l segundo <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> estipula que cualquier <ConceptLink targetId="recta">recta</ConceptLink> posee una pluralidad mínima de elementos, al albergar no menos de dos <ConceptLink targetId="punto">puntos</ConceptLink> diferenciados. Esta condición previene la existencia de rectas degeneradas compuestas por un único punto.
+<Capitular letra="E" />l segundo axioma de incidencia estipula que cualquier <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> posee una pluralidad mínima de elementos, al albergar no menos de dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> diferenciados. Esta condición previene la existencia de rectas degeneradas compuestas por un único punto o carentes de extensión lineal.
 
 <Definicion title="Enunciado formal">
-  Para toda <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$, existen al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B \in \mathcal{S}$ que pertenecen a $l$:
+  Para toda <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$, existen al menos dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos $A, B \in \mathcal{S}$ que pertenecen a $l$:
   $$
   \forall l \in \mathcal{L}, \ \exists A, B \in \mathcal{S} \ \bigl(A \in l \land B \in l \land A \neq B\bigr)
   $$
@@ -27,18 +29,18 @@ export const Simulation = Incidence2;
 
 ### Representación visual e interacción
 
-En la simulación, la recta <VisualBind element="line" color="carbon">$l$</VisualBind> contiene los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind>. La interacción demuestra que sobre cualquier recta dada siempre se pueden señalar al menos dos posiciones independientes $A \neq B$.
+En la simulación interactiva, la recta <VisualBind element="lineCD" color="carbon">$l$</VisualBind> contiene los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind>. La interacción demuestra que sobre cualquier recta dada siempre se pueden situar y deslizar al menos dos posiciones independientes con $A \neq B$.
 
 <Separador />
 
 ### Significado geométrico y alcance
 
-Garantiza que las rectas no son objetos puntuales aislados, sino estructuras constituidas por múltiples posiciones geométricamente distinguibles. Junto con el axioma I.1, asegura una relación biunívoca básica de soporte lineal.
+Garantiza que las rectas no son entidades puntuales aisladas ni conjuntos vacíos, sino estructuras constituidas por múltiples posiciones geométricamente distinguibles. Junto con el axioma I.1, asegura una relación biunívoca básica de soporte lineal.
 
 <Separador />
 
 ### Propiedades
 
 - **No degeneración:** Prohíbe rectas compuestas por un solo punto o vacías.
-- **Multitud elemental:** Sirve de partida para demostrar que toda recta contiene infinitos puntos tras añadir los axiomas de <ConceptLink targetId="orden">orden</ConceptLink>.
+- **Multitud elemental:** Sirve de punto de partida para demostrar que toda recta contiene infinitos puntos tras incorporar los axiomas de <ConceptLink targetId="axioma-orden-1">orden</ConceptLink>.
 - **Sostenibilidad del segmento:** Permite la formación del <ConceptLink targetId="segmento">segmento</ConceptLink> no trivial $\overline{AB}$.

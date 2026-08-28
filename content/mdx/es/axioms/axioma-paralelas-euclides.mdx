@@ -2,37 +2,48 @@ export const metadata = {
   id: "axioma-paralelas-euclides",
   lang: "es",
   type: "axioma",
-  title: "Axioma de las Paralelas de Euclides",
-  description: "Dada una recta y un punto exterior a ella, existe una única recta paralela a la dada que pasa por dicho punto.",
+  title: "Axioma de las paralelas de Euclides",
+  description: "Por un punto exterior a una recta pasa a lo sumo una recta paralela a la dada en el mismo plano.",
   branch: "51M",
-  hasSimulation: true,
+  axiomSystem: "sistema-euclidiano",
+  axiomFamily: "paralelas",
   alternativeGroup: "paralelismo",
+  hasSimulation: true,
   sources: [
     { title: "Elementos", author: "Euclides", locator: "Libro I, Postulado 5", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
   ]
 };
 
 import { EuclidParallel } from '@content/diagrams/Axiomas/EuclidParallel';
 export const Simulation = EuclidParallel;
 
-<Capitular letra="E" />l axioma de las <ConceptLink targetId="paralelismo">paralelas</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>, presentado equivalentemente en la formulación de Playfair, caracteriza la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink> plana frente a las geometrías no euclidianas.
+<Capitular letra="E" />l axioma de las paralelas de <ConceptLink targetId="euclides">Euclides</ConceptLink> —fijado en la forma equivalente de unicidad debida a John Playfair y formalizado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>— es el postulado definitorio de la geometría euclidiana clásica. Establece que por un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> no perteneciente a una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> dada pasa una única recta <ConceptLink targetId="paralelas">paralela</ConceptLink> en el mismo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>.
 
-<Definicion title="">
-  Dada una <ConceptLink targetId="recta">recta</ConceptLink> $l$ y un <ConceptLink targetId="punto">punto</ConceptLink> $P$ que no pertenece a $l$, existe una única recta $m$ tal que $P$ pertenece a $m$ y $m$ es <ConceptLink targetId="paralelismo">paralela</ConceptLink> a $l$:
+<Definicion title="Enunciado formal">
+  Dada una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$ y un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> exterior $P \notin l$ en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\mathcal{P}$, existe exactamente una recta $l' \subset \mathcal{P}$ que pasa por $P$ y no interseca a $l$:
   $$
-  \forall l \in \mathcal{L}, \forall P \notin l \implies \exists! m \in \mathcal{L} \ (P \in m \land m \parallel l)
+  \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists! l' \subset \mathcal{P} \ (P \in l' \land l \cap l' = \emptyset)
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual
+### Representación visual e interacción
 
-Dada la recta base <VisualBind element="lineBC" color="pavo">$l$</VisualBind> y el punto exterior <VisualBind element="pP" color="terracota">$P$</VisualBind>, se determina de manera única la recta paralela <VisualBind element="parBCP" color="ocre">$m$</VisualBind> que pasa por $P$ manteniendo una distancia constante sin intersecar jamás a $l$.
+En la simulación interactiva, la recta base <VisualBind element="lineBC" color="carbon">$l$</VisualBind> determinada por los puntos <VisualBind element="pB" color="carbon">$B$</VisualBind> y <VisualBind element="pC" color="carbon">$C$</VisualBind> se acompaña del punto exterior <VisualBind element="pA" color="terracota">$P$</VisualBind>. La construcción geométrica traza la única recta paralela <VisualBind element="parBCP" color="terracota">$l'$</VisualBind>. Al desplazar libremente $P$ o rotar la recta base, la paralela recalculada preserva de forma estricta la distancia y la ausencia total de intersección en el plano.
 
 <Separador />
 
-### Significado en los sistemas axiomáticos
+### Significado geométrico y alcance
 
-Este postulado postula la curvatura nula del espacio. Es lógicamente independiente de los axiomas de <ConceptLink targetId="incidencia">incidencia</ConceptLink>, <ConceptLink targetId="orden">orden</ConceptLink> y <ConceptLink targetId="congruencia">congruencia</ConceptLink>; su inclusión define la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink> e implica que la suma de los ángulos interiores de todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> sea exactamente igual a dos ángulos rectos ($\pi$ radianes).
+Este axioma fija la curvatura espacial nula ($K = 0$). Es el responsable directo de que la suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> sea exactamente igual a $180^\circ$, de la existencia de rectángulos perfectos y de la teoría de semejanza de figuras a escalas arbitrarias.
+
+<Separador />
+
+### Propiedades
+
+- **Equivalencia de Playfair:** Es lógicamente equivalente al quinto postulado original de Euclides sobre los ángulos interiores conjugados.
+- **Suma angular euclidiana:** Conduce de forma unívoca al <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de los ángulos de un triángulo</ConceptLink> ($\alpha + \beta + \gamma = 180^\circ$).
+- **Transitividad del paralelismo:** En la geometría euclidiana, el paralelismo es una relación de equivalencia ($l_1 \parallel l_2 \land l_2 \parallel l_3 \implies l_1 \parallel l_3$).
+- **Fundamento métrico:** Permite la demostración del <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink> y del <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>.

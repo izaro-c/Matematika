@@ -13,35 +13,47 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />n grupo es la <ConceptLink targetId="estructura-algebraica">estructura algebraica</ConceptLink> elemental que formaliza la simetría y la transformación en matemáticas. Consiste en un <ConceptLink targetId="conjunto">conjunto</ConceptLink> dotado de una <ConceptLink targetId="operacion-binaria">operación binaria</ConceptLink> interna que satisface cuatro axiomas algebraicos fundamentales.
+<Capitular letra="U" />n grupo es la estructura algebraica elemental que formaliza matemáticamente los conceptos de simetría, transformación e invariancia. Consiste en un conjunto dotado de una <ConceptLink targetId="operacion-binaria">operación binaria</ConceptLink> interna que cumple cuatro axiomas algebraicos fundamentales: clausura, asociatividad, existencia de elemento neutro y existencia de elemento inverso.
 
 <Definicion title="">
-  Un grupo $(G, \cdot)$ es un par ordenado formado por un <ConceptLink targetId="conjunto-no-vacio">conjunto no vacío</ConceptLink> $G$ y una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> $\cdot: G \times G \to G$ que satisface los siguientes axiomas:
-
-  1. **<ConceptLink targetId="propiedad-clausura">Clausura</ConceptLink>**: $\forall a, b \in G$, $a \cdot b \in G$.
-  2. **<ConceptLink targetId="asociatividad">Asociatividad</ConceptLink>**: $\forall a, b, c \in G$, $(a \cdot b) \cdot c = a \cdot (b \cdot c)$.
-  3. **<ConceptLink targetId="elemento-neutro">Elemento neutro</ConceptLink>**: $\exists e \in G$ tal que $\forall a \in G$, $a \cdot e = e \cdot a = a$.
-  4. **<ConceptLink targetId="elemento-inverso">Elemento inverso</ConceptLink>**: $\forall a \in G$, $\exists a^{-1} \in G$ tal que $a \cdot a^{-1} = a^{-1} \cdot a = e$.
+  Un grupo $(G, \cdot)$ es un par ordenado formado por un conjunto no vacío $G$ y una <ConceptLink targetId="operacion-binaria" isDependency={true}>operación binaria</ConceptLink> interna $\cdot: G \times G \to G$ que satisface los siguientes axiomas para todos los elementos $a, b, c \in G$:
+  1. **Clausura**: $\forall a, b \in G, \; a \cdot b \in G$.
+  2. **Asociatividad**: $\forall a, b, c \in G, \; (a \cdot b) \cdot c = a \cdot (b \cdot c)$.
+  3. **Elemento neutro**: $\exists e \in G \text{ tal que } \forall a \in G, \; a \cdot e = e \cdot a = a$.
+  4. **Elemento inverso**: $\forall a \in G, \; \exists a^{-1} \in G \text{ tal que } a \cdot a^{-1} = a^{-1} \cdot a = e$.
 </Definicion>
 
 <Separador />
 
 ### Clasificación estructural de grupos
 
-Los grupos se clasifican atendiendo a la conmutatividad de su <ConceptLink targetId="operacion-binaria">operación</ConceptLink> y al <ConceptLink targetId="cardinalidad">cardinal</ConceptLink> de su conjunto:
+Los grupos se clasifican formalmente según la conmutatividad de su operación y el cardinal de su conjunto subyacente:
 
 | Tipo de grupo | Condición algebraica | Ejemplo representativo |
 |---|---|---|
-| <ConceptLink targetId="grupo-abeliano">Abeliano (Conmutativo)</ConceptLink> | $\forall a, b \in G$, $a \cdot b = b \cdot a$ | <ConceptLink targetId="conjunto-enteros">Enteros</ConceptLink> $(\mathbb{Z}, +)$ bajo la suma |
-| <ConceptLink targetId="grupo-no-abeliano">No abeliano</ConceptLink> | $\exists a, b \in G$ tal que $a \cdot b \neq b \cdot a$ | <ConceptLink targetId="matriz-invertible">Matrices invertibles</ConceptLink> $(\text{GL}_n(\mathbb{R}), \cdot)$ con $n \ge 2$ |
-| <ConceptLink targetId="grupo-finito">Finito</ConceptLink> | El cardinal $\lvert G \rvert$ es un entero natural | <ConceptLink targetId="grupo-simetria">Grupo de simetrías</ConceptLink> $D_3$ de un triángulo |
-| <ConceptLink targetId="grupo-infinito">Infinito</ConceptLink> | El cardinal $\lvert G \rvert$ es infinito | <ConceptLink targetId="conjunto-reales">Reales no nulos</ConceptLink> $(\mathbb{R} \setminus \{0\}, \cdot)$ |
+| Abeliano (Conmutativo) | $\forall a, b \in G, \; a \cdot b = b \cdot a$ | Enteros $(\mathbb{Z}, +)$ bajo la adición |
+| No abeliano | $\exists a, b \in G \text{ tal que } a \cdot b \neq b \cdot a$ | Matrices invertibles $(\text{GL}_n(\mathbb{R}), \cdot)$ con $n \ge 2$ |
+| Finito | El cardinal $\lvert G \rvert$ es finito | Grupo simétrico $S_n$ sobre $n$ elementos ($\lvert S_n \rvert = n!$) |
+| Infinito | El cardinal $\lvert G \rvert = \infty$ | Reales no nulos $(\mathbb{R} \setminus \{0\}, \cdot)$ |
 
 <Separador />
 
-### Propiedades
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Unicidad algebraica">
+    <PropiedadItem id="unicidad-elemento-neutro" title="Unicidad del elemento neutro">
+      En todo grupo $(G, \cdot)$, el elemento neutro $e \in G$ es único.
+    </PropiedadItem>
+    <PropiedadItem id="unicidad-elemento-inverso" title="Unicidad del elemento inverso">
+      Para cada elemento $a \in G$, su inverso $a^{-1} \in G$ es único.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-- **<ConceptLink targetId="teorema-unicidad-elemento-neutro">Unicidad del elemento neutro</ConceptLink>**: El elemento neutro $e \in G$ de todo grupo es único.
-- **<ConceptLink targetId="teorema-unicidad-elemento-inverso">Unicidad del elemento inverso</ConceptLink>**: Para cada elemento $a \in G$, su elemento inverso $a^{-1}$ es único.
-- **<ConceptLink targetId="teorema-leyes-cancelacion-grupo">Leyes de cancelación</ConceptLink>**: Todo grupo satisface las leyes de cancelación por la izquierda ($a \cdot b = a \cdot c \implies b = c$) y por la derecha.
-- **<ConceptLink targetId="teorema-inverso-producto-grupo">Inverso de un producto</ConceptLink>**: Para cualesquiera elementos de un grupo, $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$.
+  <PropiedadesGrupo title="Leyes operacionales">
+    <PropiedadItem id="leyes-cancelacion-grupo" title="Leyes de cancelación">
+      $(a \cdot b = a \cdot c \implies b = c) \land (b \cdot a = c \cdot a \implies b = c)$.
+    </PropiedadItem>
+    <PropiedadItem id="inverso-producto-grupo" title="Inverso de un producto">
+      $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

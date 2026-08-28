@@ -148,7 +148,7 @@ export function buildAuthoringIntegrityReport(input: AuthoringIntegrityInput): E
 
   if (currentId) {
     const currentPath = normalizedContentPath(input.currentFile ?? '');
-    const pathLang = input.currentFile ? (/\b(eu|es)\b/.exec(normalizedContentPath(input.currentFile))?.[1]) : undefined;
+    const pathLang = input.currentFile ? (/\b(eu|es|en)\b/.exec(normalizedContentPath(input.currentFile))?.[1]) : undefined;
     const currentLang = typeof input.metadata.lang === 'string' ? input.metadata.lang : (pathLang || 'es');
     const duplicates = entries.filter(entry => {
       const entryLang = entry.lang || (entry.metadata?.lang as string) || 'es';

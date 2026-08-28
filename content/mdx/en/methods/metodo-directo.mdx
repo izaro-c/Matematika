@@ -3,45 +3,46 @@ export const metadata = {
   lang: "en",
   type: "metodo",
   subtype: "demostracion",
-  title: "Direct proof method",
-  description: "Elementary deductive strategy that chains valid inferences from the hypothesis to the thesis.",
-  branch: "51M",
+  title: "Direct Method",
+  description: "Elementary deductive proof strategy that chains valid inferences from hypothesis to conclusion.",
+  branch: "03B",
+  difficulty: "básico",
   hasSimulation: true
 };
 
 import { DirectoSimulation } from '@content/diagrams/Metodos/DirectoSimulation';
 export const Simulation = DirectoSimulation;
 
-<Capitular letra="T" />he direct proof method is the primary deductive strategy in mathematics for establishing the validity of a conditional statement $P \implies Q$. Its procedure formally assumes the truth of the <ConceptLink targetId="hipotesis">hypothesis</ConceptLink> $P$ and constructs a finite sequence of rigorous logical inferences to necessarily conclude the truth of the <ConceptLink targetId="tesis">thesis</ConceptLink> $Q$.
+<Capitular letra="T" />he direct method is the fundamental deductive technique for establishing mathematical conditional statements of the form $P \implies Q$. Its procedure formally assumes the truth of the hypothesis $P$ and constructs a finite, rigorous sequence of valid logical inferences that inevitably concludes with the truth of the thesis $Q$.
 
 <Separador />
 
-### Logical structure
+### Formal Logical Structure
 
-The deductive argument chains intermediate propositions through the inference rule *modus ponens*:
+The deductive argument chains propositions via the classical *modus ponens* rule of inference: whenever proposition $A$ holds and $A \implies B$ is valid, proposition $B$ is necessarily true:
 
 <Formula>
   $$ P \implies P_1 \implies P_2 \implies \dots \implies P_n \implies Q $$
 </Formula>
 
-Each step in the deductive chain is strictly justified by:
+Each intermediate link $P_k \implies P_{k+1}$ in the deductive chain is justified solely by:
 
-- The <ConceptLink targetId="axioma">axioms</ConceptLink> of the corresponding <ConceptLink targetId="sistema-axiomatico">formal system</ConceptLink>.
-- Previously proved <ConceptLink targetId="teorema">theorems</ConceptLink> or lemmas.
-- Formal definitions of the underlying objects.
-- Universal laws of propositional and predicate logic.
-
-<Separador />
-
-### Notable examples
-
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Sum of angles of a triangle</ConceptLink>**: Starting from the definition of a <ConceptLink targetId="triangulo">triangle</ConceptLink> and the <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink>, an auxiliary <ConceptLink targetId="recta">line</ConceptLink> <ConceptLink targetId="paralelismo">parallel</ConceptLink> to the base is drawn through the opposite <ConceptLink targetId="vertice">vertex</ConceptLink> to directly derive that its interior <ConceptLink targetId="angulo">angles</ConceptLink> sum to $180^\circ$.
-- **<ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>**: By geometric decomposition of the <ConceptLink targetId="area">area</ConceptLink> of squares erected on the <ConceptLink targetId="cateto">legs</ConceptLink> and <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> of a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink>, the algebraic identity $a^2 + b^2 = c^2$ is directly concluded.
+- Foundational axioms of the deductive system.
+- Previously established theorems, lemmas, or corollaries.
+- Rigorous formal definitions of the mathematical objects involved.
+- Valid transformation rules of propositional and predicate logic.
 
 <Separador />
 
-### Properties and applicability
+### Paradigm Applications
 
-- **Constructivity**: Provides an explicit deductive path linking the initial premise directly to the final conclusion.
-- **Deductive transparency**: Every intermediate step is individually verifiable.
-- **Scope**: Serves as the preferred approach whenever the hypothesis provides explicit relations that can be directly manipulated without requiring auxiliary hypotheses from <ConceptLink targetId="metodo-contradiccion">proof by contradiction</ConceptLink>.
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Sum of Angles in a Triangle</ConceptLink>**: Starting from the definition of a <ConceptLink targetId="triangulo">triangle</ConceptLink> and <ConceptLink targetId="axioma-paralelas-euclides">Euclid's parallel postulate</ConceptLink>, an auxiliary <ConceptLink targetId="paralelas">parallel line</ConceptLink> to the base is drawn through the opposite vertex to directly deduce that $\alpha + \beta + \gamma = 180^\circ$.
+- **<ConceptLink targetId="teorema-pitagoras">Pythagorean Theorem</ConceptLink>**: Using geometric <ConceptLink targetId="semejanza">similarity</ConceptLink> relations and area decomposition on a <ConceptLink targetId="triangulo-rectangulo">right-angled triangle</ConceptLink>, the algebraic relation $a^2 + b^2 = c^2$ is established directly.
+
+<Separador />
+
+### Methodological Properties
+
+- **Constructivity**: Provides an explicit, reproducible pathway converting initial assumptions into the target theorem.
+- **Local Verifiability**: Every intermediate deduction is logically self-contained and independently auditable.
+- **Epistemological Preference**: It represents the primary choice whenever the hypothesis provides explicit structural relationships directly accessible without indirect reduction.

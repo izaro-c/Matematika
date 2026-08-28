@@ -4,46 +4,53 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Angle",
-  description: "A region of the plane bounded by two rays sharing a common origin called vertex.",
+  description: "Planar figure formed by two non-collinear rays sharing a common origin point called the vertex.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 8 y 9", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+    { title: "Elements", author: "Euclid", locator: "Book I, Definitions 8 & 9", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
   ]
 };
 
 import { Angulo } from '@content/diagrams/Definiciones/Angulo';
 export const Simulation = Angulo;
 
-<Capitular letra="A" />n angle is the geometric figure formed by the union of two <ConceptLink targetId="semirrecta">rays</ConceptLink> sharing a common endpoint called the <ConceptLink targetId="vertice">vertex</ConceptLink>. It serves as the core concept for measuring directional deviation and laying the foundations of <ConceptLink targetId="trigonometria">trigonometry</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+<Capitular letra="A" />n angle is the geometric figure constituted by the union of two <ConceptLink targetId="semirrecta">rays</ConceptLink> sharing a common origin or <ConceptLink targetId="vertice">vertex</ConceptLink>. It is the fundamental concept for measuring angular divergence between directions and laying the groundwork for trigonometry in the <ConceptLink targetId="plano">plane</ConceptLink>.
 
 <Definicion title="">
-  Given two rays <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> and <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> with a common origin at point <VisualBind element="pO" color="carbon">$O$</VisualBind>, the angle <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> is the planar figure formed by the <ConceptLink targetId="union-conjuntos">union</ConceptLink> of both rays:
+  Given two distinct <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> and <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> originating at a common <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> <VisualBind element="pA" color="carbon">$O$</VisualBind>, the angle <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> is the planar figure formed by their union:
   $$
   \angle AOB = \overrightarrow{OA} \cup \overrightarrow{OB}
   $$
-  Its angular measure $\alpha = \text{m}(\angle AOB)$ in <ConceptLink targetId="radian">radians</ConceptLink> or sexagesimal degrees assigns a real scalar value in the interval $[0, 2\pi)$.
+  Its metric aperture $\theta \in [0, \pi]$ radians is related to the dot product of the unit direction vectors $\vec{u}, \vec{v}$:
+  $$
+  \cos \theta = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \|\vec{v}\|}
+  $$
 </Definicion>
 
 <Separador />
 
-### Angle classification by measure
+### Classification by angular measure
 
-Angles are classified according to the numerical interval containing their angular measure $\alpha$:
+In the Euclidean plane, convex angles are classified according to their angular measure $\theta$:
 
-| Angle type | Measure range in radians | Measure range in degrees |
+| Angle type | Measure in radians | Measure in sexagesimal degrees |
 |---|---|---|
-| <ConceptLink targetId="angulo-agudo">Acute</ConceptLink> | $0 < \alpha < \frac{\pi}{2}$ | $0^\circ < \alpha < 90^\circ$ |
-| <ConceptLink targetId="angulo-recto">Right</ConceptLink> | $\alpha = \frac{\pi}{2}$ | $\alpha = 90^\circ$ |
-| <ConceptLink targetId="angulo-obtuso">Obtuse</ConceptLink> | $\frac{\pi}{2} < \alpha < \pi$ | $90^\circ < \alpha < 180^\circ$ |
-| <ConceptLink targetId="angulo-llano">Straight</ConceptLink> | $\alpha = \pi$ | $\alpha = 180^\circ$ |
-| Reflex | $\pi < \alpha < 2\pi$ | $180^\circ < \alpha < 360^\circ$ |
+| <ConceptLink targetId="angulo-agudo">Acute</ConceptLink> | $0 < \theta < \frac{\pi}{2}$ | $0^\circ < \theta < 90^\circ$ |
+| <ConceptLink targetId="angulo-recto">Right</ConceptLink> | $\theta = \frac{\pi}{2}$ | $\theta = 90^\circ$ |
+| <ConceptLink targetId="angulo-obtuso">Obtuse</ConceptLink> | $\frac{\pi}{2} < \theta < \pi$ | $90^\circ < \theta < 180^\circ$ |
+| <ConceptLink targetId="angulo-llano">Straight</ConceptLink> | $\theta = \pi$ | $\theta = 180^\circ$ |
 
 <Separador />
 
-### Properties
-
-- **<ConceptLink targetId="bisectriz">Bisector existence</ConceptLink>**: Every non-zero angle possesses a unique <ConceptLink targetId="bisectriz">angle bisector</ConceptLink> dividing it into two congruent angles.
-- **<ConceptLink targetId="angulos-suplementarios">Angular additivity</ConceptLink>**: If a ray $\overrightarrow{OC}$ lies in the interior of $\angle AOB$, then $\text{m}(\angle AOC) + \text{m}(\angle COB) = \text{m}(\angle AOB)$.
-- **<ConceptLink targetId="congruencia">Congruence criterion</ConceptLink>**: Two angles are congruent ($\angle AOB \cong \angle CDE$) if and only if their angular measures are equal.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Congruence and angular additivity">
+    <PropiedadItem id="axioma-congruencia-4" title="Angle transport">
+      Every angle can be uniquely transported to a half-plane relative to a given reference ray.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-angulos-opuestos-verticales" title="Vertical angles">
+      Pairs of vertical angles formed by intersecting lines are congruent.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

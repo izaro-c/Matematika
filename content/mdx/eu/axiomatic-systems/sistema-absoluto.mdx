@@ -3,38 +3,69 @@ export const metadata = {
   lang: "eu",
   type: "sistema-axiomatico",
   title: "Geometria absolutuaren sistema",
-  description: "János Bolyai-k eratutako egitura axiomatikoa, intzidentzia, ordena, kongruentzia eta jarraitutasun axioma guztiak biltzen dituena paraleloen axiomarik suposatu gabe.",
+  description: "János Bolyaik eta David Hilbertek eratutako egitura axiomatikoa, intzidentzia-, ordena-, kongruentzia- eta jarraitutasun-axioma guztiak biltzen dituena paraleloen axiomarik suposatu gabe.",
   branch: "51M",
-  axiomas: ["axioma-incidencia-1", "axioma-orden-1", "axioma-congruencia-1"]
+  axiomas: [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-incidencia-4",
+    "axioma-incidencia-5",
+    "axioma-incidencia-6",
+    "axioma-incidencia-7",
+    "axioma-incidencia-8",
+    "axioma-orden-1",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-4",
+    "axioma-congruencia-1",
+    "axioma-congruencia-2",
+    "axioma-congruencia-3",
+    "axioma-congruencia-4",
+    "axioma-congruencia-5",
+    "axioma-arquimedes",
+    "axioma-completitud"
+  ],
+  models: [
+    "modelo-cartesiano",
+    "modelo-poincare"
+  ],
+  authors: ["bolyai", "lobachevski", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    { title: "Appendix scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "1832", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I-V. kapituluak", role: "primary" }
+  ]
 };
 
-<Capitular letra="G" />eometria absolutuaren sistemak —*geometria neutrala* ere deitua— geometria euklidesarrak zein geometria hiperbolikoak partekatzen duten nuki axiomatiko komuna osatzen du. János Bolyai-k eta Nikolái Lobachevski-k modu independentean eratua, Hilberten intzidentzia-, ordena-, kongruentzia- eta jarraitutasun-printzipio guztiak biltzen ditu, paraleloen postulatuak nahita utziz.
+<Capitular letra="G" />eometria absolutuaren sistemak —*geometria neutral* gisa ere ezagunak— geometria euklidearraren eta hiperbolikoaren oinarri deduktibo komuna osatzen du. <ConceptLink targetId="bolyai">János Bolyairen</ConceptLink> eta <ConceptLink targetId="lobachevski">Nikolái Lobachevskiren</ConceptLink> ikerketetan oinarritua eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> sistematizatua, intzidentzia-, ordena-, kongruentzia- eta jarraitutasun-axioma sintetiko guztiak biltzen ditu, paralelotasunari buruzko inolako hipotesirik ezarri gabe.
 
 <Separador />
 
-### Osagai diren multzo axiomatikoak
+### Talde axiomatiko eratzaileak
 
-Geometria absolutuak Hilberten gorputz axiomatikoaren lau multzo oinarrizko bateratzen ditu:
+Geometria absolutua funtsezko lau zutabe axiomatikotan egituratzen da:
 
-1. **<ConceptLink targetId="sistema-incidencia">Intzidentzia-axiomak (I.1etik I.8ra)</ConceptLink>**: <ConceptLink targetId="punto">Puntu</ConceptLink>, <ConceptLink targetId="recta">zuzen</ConceptLink> eta <ConceptLink targetId="plano">planoen</ConceptLink> arteko bi elementuko pertenentzia arautzen dute.
-2. **Ordena-axiomak (II.1etik II.4ra)**: Zuzen bateko <ConceptLink targetId="estar-entre">artean egoteko</ConceptLink> hiru elementuko erlazioa ezartzen dute, <ConceptLink targetId="erdiplano">erdiplanoaren</ConceptLink> eta eremu konbexuaren nosioak finkatuz.
-3. **Kongruentzia-axiomak (III.1etik III.5era)**: <ConceptLink targetId="zuzenki">Zuzenkien</ConceptLink> eta <ConceptLink targetId="angulo">angeluen</ConceptLink> berdintasunerako rigoera geometrikoa definitzen dute, LAL triangelu-<ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> irizpidea barne.
-4. **Jarraitutasun-axiomak (IV.1etik IV.2ra)**: Arkimedesen axioma eta osotasun lineala biltzen dituzte, espazio sintetikoa <ConceptLink targetId="numero-real">zenbaki errealeekin</ConceptLink> lotuz.
-
-<Separador />
-
-### Geometria absolutoan baliozkoak diren teoremak
-
-Sistema absolutoan frogatutako teorema guztiak automatikoki baliozkoak dira bai <ConceptLink targetId="sistema-euclidiano">geometria euklidesarrean</ConceptLink> bai <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoan</ConceptLink>:
-
-- **<ConceptLink targetId="teorema-triangulo-isosceles">Triangelu isoscelesaren teorema</ConceptLink>**: <ConceptLink targetId="triangulo">Triangelu</ConceptLink> bateko alde kongruenteen aurkako angeluak kongruenteak dira.
-- **Kanpo-angeluaren teorema**: Triangelu baten kanpo-angelua adiacenteak ez diren bi barne-angeluetako edozein baino zorrozki handiagoa da.
-- **<ConceptLink targetId="teorema-congruencia-ala">ALA eta LLL kongruentzia-irizpideak</ConceptLink>**: Triangeluen determinazio bakarra hiru osagai korrespondenteen bidez.
-- **Paraleloen existentzia**: Zuzen batekiko kanpoko puntu batetik gutxienez zuzen <ConceptLink targetId="paralelismo">paralelo</ConceptLink> bat igarotzen da (perpendikular komunaren eraikuntzaz frogatua).
+1. **<ConceptLink targetId="sistema-incidencia" isDependency={true}>Intzidentzia-axiomak (I.1 - I.8)</ConceptLink>**: Espazioko <ConceptLink targetId="punto">puntuen</ConceptLink>, <ConceptLink targetId="recta">zuzenen</ConceptLink> eta <ConceptLink targetId="plano">planoen</ConceptLink> arteko partaideitza eta ebakidurak arautzen dituzte.
+2. **<ConceptLink targetId="axioma-orden-1" isDependency={true}>Ordena-axiomak (II.1 - II.4)</ConceptLink>**: Zuzen bateko <ConceptLink targetId="estar-entre">tartean egotearen</ConceptLink> erlazio hirutarra ($A\text{-}B\text{-}C$) formalizatzen dute, <ConceptLink targetId="segmento">zuzenkia</ConceptLink> ($\overline{AB}$), erdi-planoak eta <ConceptLink targetId="axioma-orden-4">Paschen axioma</ConceptLink> definitzea ahalbidetuz.
+3. **<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Kongruentzia-axiomak (III.1 - III.5)</ConceptLink>**: Zuzenkien ($\overline{AB} \cong \overline{CD}$) eta <ConceptLink targetId="angulo">angeluen</ConceptLink> zurruntasun metrikoa ezartzen dute, triangeluen <ConceptLink targetId="axioma-congruencia-5">LAL kongruentzia-irizpidean</ConceptLink> amaituz.
+4. **<ConceptLink targetId="axioma-arquimedes" isDependency={true}>Jarraitutasun-axiomak (V.1 eta V.2)</ConceptLink>**: <ConceptLink targetId="axioma-arquimedes">Arkimedesen axioma</ConceptLink> eta Dedekinden <ConceptLink targetId="axioma-completitud">zuzen-osotasuna</ConceptLink> biltzen dituzte, zuzen geometrikoaren eta $\mathbb{R}$ gorputzaren arteko bijekzioa bermatuz.
 
 <Separador />
 
-### Propietate metamatematikoak
+### Geometria absolutuan baliozkoak diren teoremak
 
-- **Paralelismoaren neutraltasuna**: Paralelo kopurua finkatzen ez duenez, ez du zehazten triangelu baten angeluen batura $180^\circ$-ren berdina ala zorrozki txikiagoa den.
-- **Ereduen azpijokoa**: <ConceptLink targetId="modelo-cartesiano">Eredu kartesiarra</ConceptLink> zein <ConceptLink targetId="modelo-poincare">Poincareren diskoa</ConceptLink> geometria absolutuaren eredu erabat baliozkoak dira.
+Nukleo honetatik abiatuta frogatutako edozein proposiziok unibertsalki balio du espazioaren kurbadura edozein dela ere:
+
+- **<ConceptLink targetId="teorema-triangulo-isosceles">Triangelu isoszelearen teorema</ConceptLink>**: Bi alde kongruente dituen edozein triangelutan, alde horien aurkako angeluak ere kongruenteak dira.
+- **Kanpo-angeluaren teorema**: Edozein <ConceptLink targetId="triangulo">triangelutan</ConceptLink>, kanpo-angelu baten zabalera handiagoa da zorrozki ondokoak ez diren barne-angeluetako edozein baino.
+- **<ConceptLink targetId="teorema-congruencia-ala">ALA eta LLL kongruentzia-irizpideak</ConceptLink>**: Triangeluen determinazio bakarra elkarrekin bat datozen hiru elementuren bidez.
+- **Zuzen paraleloen existentzia**: Zuzen jakin batetik kanpoko edozein puntutatik igarotzen da harekin ebakitzen ez den zuzen bat gutxienez (perpendikular komunaren bidez eraikuntza bidez frogatua).
+
+<Separador />
+
+### Ereduak eta propietate metamatematikoak
+
+- **Angelu-baturaren neutraltasuna**: Sistemak frogatzen du triangelu baten angeluen batura $\sum_{i=1}^3 \alpha_i \le 180^\circ$ dela, baina ezin du zehaztu berdintza zorrotza betetzen den paraleloen axioma gehitu gabe.
+- **Geometria-bifurkazioa**: <ConceptLink targetId="axioma-paralelas-euclides">Axioma euklidearra</ConceptLink> gehitzean <ConceptLink targetId="sistema-euclidiano">geometria euklidearra</ConceptLink> lortzen da; <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma hiperbolikoa</ConceptLink> gehitzean, berriz, <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoa</ConceptLink>.
+- **Baliozkotasuna ereduetan**: <ConceptLink targetId="modelo-cartesiano">Plano kartesiarrak $\mathbb{R}^2$</ConceptLink> zein <ConceptLink targetId="modelo-poincare">Poincaréren diskoak $\mathbb{D}^2$</ConceptLink> guztiz egiaztatzen dute sistema absolutua.

@@ -1,0 +1,72 @@
+export const metadata = {
+  "id": "demo-area-aditividad",
+  "type": "demostracion",
+  "title": "Proof: Area Additivity Theorem",
+  "description": "Verification that the area measure satisfies the Hilbert-Dehn axioms for additive magnitudes: the Area function is additive over decompositions into interiorly disjoint polygonal regions.",
+  "parentTheorem": "teorema-area-aditividad",
+  "lang": "en",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["hilbert"],
+  "tags": ["geometry", "areas", "additivity", "measure"],
+  "layout": "split",
+  "sources": [
+    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "locator": "Chapter IV, §20", "role": "primary" },
+    { "title": "Über den Rauminhalt", "author": "Max Dehn", "locator": "Mathematische Annalen 55 (1901)", "role": "secondary" }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="T" />he <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink> establishes that the area measure function over polygons satisfies the extensional property: the area of the union of two interiorly disjoint regions equals the sum of their individual areas.
+
+<Separador />
+
+### Proof step by step
+
+<ProofStep number={1} title="Axiomatic definition of the area measure">
+Following Hilbert, one postulates a function $\mu: \mathcal{P} \to \mathbb{R}^+$ on the set $\mathcal{P}$ of polygonal regions satisfying:
+- $\mu(\text{unit square}) = 1$ (normalization).
+- If $P \cong Q$ are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> polygons, then $\mu(P) = \mu(Q)$ (isometric invariance).
+- (Additivity) If $P = P_1 \cup P_2$ with $P_1 \cap P_2$ of zero area, then $\mu(P) = \mu(P_1) + \mu(P_2)$.
+
+Additivity is an axiom; the theorem asserts that the formula $b \cdot h$ for rectangles and its derivatives yield the unique coherent extension.
+</ProofStep>
+
+<ProofStep number={2} title="Decomposition of a generic polygon into triangles">
+Every <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> $\triangle$ has a well-defined area by the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>: $\mu(\triangle) = \frac{1}{2} b h$. Every convex $n$-gon admits a triangulation into $n-2$ interiorly disjoint triangles. By induction on $n$:
+
+<Formula>
+  $$ \mu(P) = \sum_{k=1}^{n-2} \mu(\triangle_k) $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={3} title="Independence of the triangulation">
+If $P = \bigsqcup_i \triangle_i = \bigsqcup_j \triangle_j'$ are two distinct triangulations of the same polygon, their superposition produces a common refined triangulation. Since each resulting triangle appears in both decompositions, additivity implies that the sums are the same for both original triangulations:
+
+<Formula>
+  $$ \sum_i \mu(\triangle_i) = \sum_k \mu(\triangle_k^*) = \sum_j \mu(\triangle_j') $$
+</Formula>
+
+where $\{\triangle_k^*\}$ is the common refined triangulation.
+</ProofStep>
+
+<ProofStep number={4} title="Additivity for finite decompositions">
+Let $R_1, R_2$ be two polygonal regions with $R_1 \cap R_2$ of zero area (intersection in at most a segment or point). Taking compatible triangulations of $R_1$, $R_2$, and $R_1 \cup R_2$, the previous step guarantees:
+
+<Formula>
+  $$ \mu(R_1 \cup R_2) = \mu(R_1) + \mu(R_2) $$
+</Formula>
+
+By induction, the property extends to arbitrary finite unions.
+</ProofStep>
+
+<Separador />
+
+### Deductive analysis
+
+<Nota>
+  This result is specific to two-dimensional geometry. In three dimensions, the Dehn–Sydler theorem shows that volume additivity is insufficient to resolve equidecomposability: there exist polyhedra of equal volume that are not equidecomposable, illustrating the depth of Hilbert's Third Problem.
+</Nota>
+
+</DemonstrationSection>

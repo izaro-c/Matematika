@@ -228,6 +228,17 @@ for (const file of allFiles) {
     }
   }
 
+  // 15b. <PropiedadItem id="..." /> o <PropiedadItem theoremId="..." /> → existing theorem
+  const propiedadIds = [
+    ...extractTargetIds(content, 'PropiedadItem', 'id'),
+    ...extractTargetIds(content, 'PropiedadItem', 'theoremId'),
+  ];
+  for (const thmId of propiedadIds) {
+    if (!allContent.has(thmId)) {
+      console.warn(`  [WARN] ${relPath}: <PropiedadItem id="${thmId}"> apunta a ID inexistente (Generará página 'En construcción')`);
+    }
+  }
+
   // 16. <InteractiveElement target=""> — allow diagram element names, validated elsewhere
 }
 

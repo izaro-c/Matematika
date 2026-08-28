@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-6",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.6 (Intersection of Two Planes)",
-  description: "If two distinct planes have a point in common, they contain at least another common point and intersect along a line.",
+  title: "Axiom I.6 (Inclusion of a Line in a Plane)",
+  description: "If two distinct points of a line belong to a plane, then every point of the line belongs to that plane.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
@@ -14,12 +16,12 @@ export const metadata = {
 import { Incidence6 } from '@content/diagrams/Axiomas/Incidence6';
 export const Simulation = Incidence6;
 
-<Capitular letra="I" />f two distinct <ConceptLink targetId="plano">planes</ConceptLink> share a <ConceptLink targetId="punto">point</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s sixth <ConceptLink targetId="incidencia">incidence axiom</ConceptLink> dictates that they necessarily possess at least a second common point, intersecting along an entire <ConceptLink targetId="recta">line</ConceptLink>.
+<Capitular letra="I" />f two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> of a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> belong to a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>, the sixth incidence axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> asserts that every point of that line belongs to that plane. This postulate establishes the strict geometric flatness and rigidity of planar surfaces.
 
 <Definicion title="Formal statement">
-  If two distinct <ConceptLink targetId="plano">planes</ConceptLink> $\mathcal{P}_1, \mathcal{P}_2 \in \mathcal{F}$ ($\mathcal{P}_1 \neq \mathcal{P}_2$) share a <ConceptLink targetId="punto">point</ConceptLink> $A \in \mathcal{P}_1 \cap \mathcal{P}_2$, then there exists at least another point $B \in \mathcal{P}_1 \cap \mathcal{P}_2$ with $B \neq A$, and their exact intersection is a <ConceptLink targetId="recta">line</ConceptLink> $l \in \mathcal{L}$:
+  For every <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$ and every <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \mathcal{E}$, if there exist two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B \in l$ such that $A \in \pi$ and $B \in \pi$, then $l \subset \pi$:
   $$
-  \forall \mathcal{P}_1, \mathcal{P}_2 \in \mathcal{F} \ \bigl((\mathcal{P}_1 \neq \mathcal{P}_2 \land A \in \mathcal{P}_1 \cap \mathcal{P}_2) \implies \exists B \in \mathcal{P}_1 \cap \mathcal{P}_2 \ (B \neq A) \land \exists l \in \mathcal{L} \ (l = \mathcal{P}_1 \cap \mathcal{P}_2)\bigr)
+  \forall l \in \mathcal{L}, \forall \pi \in \mathcal{E} \ \bigl((\exists A, B \in l \ (A \neq B \land A \in \pi \land B \in \pi)) \implies l \subset \pi\bigr)
   $$
 </Definicion>
 
@@ -27,18 +29,18 @@ export const Simulation = Incidence6;
 
 ### Visual representation and interaction
 
-In the three-dimensional simulation, planes <VisualBind element="plane1" color="marino">$\mathcal{P}_1$</VisualBind> and <VisualBind element="plane2" color="terracota">$\mathcal{P}_2$</VisualBind> intersect. Adjusting the tilt of either plane while holding a common point fixes the line of intersection <VisualBind element="lineInt" color="carbon">$l$</VisualBind> as the continuous locus shared by both planes.
+In the 3D interactive simulation, line <VisualBind element="recta" color="carbon">$l$</VisualBind> contains points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind>, situated upon plane <VisualBind element="plano" color="canela">$\pi$</VisualBind>. Rotating the 3D perspective confirms that the continuous line trace remains fully embedded within the planar surface.
 
 <Separador />
 
 ### Geometric significance and scope
 
-This axiom guarantees dimensional consistency in three-dimensional space: two distinct planes cannot touch tangentially at an isolated point. Any non-empty intersection between distinct planes necessarily yields a one-dimensional linear trace.
+Ensures strict spatial flatness: a plane cannot possess ripples, curvatures, or creases that would allow a line to cross two of its points without being wholly absorbed into it. It establishes a consistent structural link between 1D and 2D geometry.
 
 <Separador />
 
 ### Properties
 
-- **Intersection continuity:** Excludes isolated point contacts between distinct planes.
-- **Dihedral angle foundation:** Serves as the basis for defining dihedral <ConceptLink targetId="angulo">angles</ConceptLink> and spatial separation.
-- **Linear duality:** Demonstrates the dual relationship between joining non-collinear points and intersecting planes.
+- **Criterion for complete containment:** Checking membership of two distinct points suffices to establish containment of the entire line.
+- **Maximal intersection of non-contained lines:** A line not wholly contained in a plane can intersect that plane in at most one single point.
+- **Segment support:** Any line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ whose endpoints lie in $\pi$ is completely contained in $\pi$.
