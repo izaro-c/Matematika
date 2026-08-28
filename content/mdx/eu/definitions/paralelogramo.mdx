@@ -4,11 +4,11 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Paralelogramoa",
-  description: "Bi aurkako alde-pareak binaka paraleloak dituen koadrilatero konbexua.",
+  description: "Aurkako aldeen bikoteak binaka paraleloak dituen lauki ganbila.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "I. Liburua, 34. Proposizioa", role: "primary" },
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 34. Proposizioa", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
   ]
 };
@@ -16,33 +16,38 @@ export const metadata = {
 import { Paralelogramo } from '@content/diagrams/Definiciones/Paralelogramo';
 export const Simulation = Paralelogramo;
 
-<Capitular letra="P" />aralelogramoa <ConceptLink targetId="geometria-euclidiana">geometria lauko</ConceptLink> <ConceptLink targetId="cuadrilatero">koadrilatero</ConceptLink> konbexua da, aurkako bi <ConceptLink targetId="lado">alde-pareak</ConceptLink> <ConceptLink targetId="paralelas">zuzen paraleloen</ConceptLink> gainean dituena. Plano-irudi hau erreferentziazko eredua da azaleraren eta bektore-biderkaduren kalkuluan <ConceptLink targetId="plano">planoan</ConceptLink>.
+<Capitular letra="P" />aralelogramoa aurkako aldeen bi bikoteak <ConceptLink targetId="paralelas">zuzen paraleloen</ConceptLink> gainean dituen <ConceptLink targetId="cuadrilatero">lauki</ConceptLink> ganbila da. Azalerak kalkulatzeko eta <ConceptLink targetId="plano">planoan</ConceptLink> bektoreen batuketa geometrikoki irudikatzeko eredu estandarra da.
 
 <Definicion title="">
-  $\mathcal{P}$ plano bateko <VisualBind element="paralelogramo" color="musgo">$ABCD$</VisualBind> koadrilatero konbexu bat emanda, paralelogramoa dela esaten da baldin eta soilik baldin aurkako <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> elkarrekikotasunez paraleloak badira:
+  $\mathcal{P}$ plano bateko <VisualBind element="poligono" color="musgo">$ABCD$</VisualBind> <ConceptLink targetId="cuadrilatero" isDependency={true}>lauki</ConceptLink> ganbila paralelogramoa da baldin eta soilik baldin bere aurkako aldeak binaka <ConceptLink targetId="paralelas" isDependency={true}>paraleloak</ConceptLink> badira:
   $$
   ABCD \text{ paralelogramoa da} \iff (\overline{AB} \parallel \overline{CD}) \land (\overline{BC} \parallel \overline{DA})
   $$
-  <ConceptLink targetId="congruencia">Kongruentzia-axiomak</ConceptLink> eta Euklidesen paralelotasun-postulatua direla medio, aurkako aldeak kongruenteak dira nahitaez ($\overline{AB} \cong \overline{CD}$ eta $\overline{BC} \cong \overline{DA}$).
+  Paralelotasun- eta kongruentzia-axiomen ondorioz, aurkako aldeak kongruenteak dira (<VisualBind element="lados-iguales" color="pavo">$\overline{AB} \cong \overline{CD}$</VisualBind> eta $\overline{BC} \cong \overline{DA}$).
 </Definicion>
 
 <Separador />
 
-### Azpifamilien sailkapena
+### Azpifamiliaren sailkapena
 
-Paralelogramoak kategoria zehatzetan banatzen dira beren aldeen kongruentziaren eta barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> neurriaren arabera:
+Paralelogramoak barne-angeluen neurrien eta aldeen kongruentziaren arabera bereizten dira:
 
-| Azpifamilia | Angelu-baldintza | Aldeen baldintza |
+| Azpifamilia | Baldintza angeluarra | Aldeen baldintza |
 |---|---|---|
-| Zuzena | Lau angelu <ConceptLink targetId="angulo-recto">zuzen</ConceptLink> ($\mu = 90^\circ$) | Aurkako aldeak binaka kongruenteak |
-| Erronboa | Aurkako angelu kongruenteak | Lau aldeak zorrozki kongruenteak ($\overline{AB} \cong \overline{BC}$) |
+| Laukizuzena | Lau <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> | Aurkako aldeak kongruenteak binaka |
+| Erronboa | <VisualBind element="angulos-opuestos" color="pavo">Aurkako angeluak kongruenteak</VisualBind> | Lau aldeak zorrozki kongruenteak |
 | <ConceptLink targetId="cuadrado">Karratua</ConceptLink> | Lau angelu zuzen | Lau aldeak zorrozki kongruenteak |
-| Erronboidea | Aurkako angelu kongruente ez-zuzenak | Alde ondokoak luzera ezberdinekoak |
+| Erronboidea | Aurkako angelu ez-zuzenak | Alboko aldeak luzera desberdinekoak |
 
 <Separador />
 
-### Propietateak
-
-- **Diagonalen erdibitzea**: Bi <ConceptLink targetId="diagonal">diagonalek</ConceptLink> $\overline{AC}$ eta $\overline{BD}$ beren erdiko $M$ puntu komunean ebakitzen dute elkar: $d(A, M) = d(M, C)$ eta $d(B, M) = d(M, D)$.
-- **Aurkako angeluen kongruentzia**: Paralelogramo ororen aurkako angeluak beren artean kongruenteak dira nahitaez, eta alde bereko angelu ondokoak suplementarioak dira.
-- **Azaleraren kalkulua**: Paralelogramoak barruan hartzen duen azalera $b = \|\overline{AB}\|$ oinarri-luzeraren eta horri dagokion altuera <ConceptLink targetId="perpendicular">elkarzutaren</ConceptLink> $h$ arteko biderkaduraz ematen da: $\mu(ABCD) = b \cdot h$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Diagonalak eta erlazio metrikoak">
+    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Diagonalen erdibitzea">
+      Edozein paralelogramoren bi diagonalek haien erdiko puntu komunean ebakitzen dute elkar.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-rectangulo" title="Azaleraren kalkulua">
+      Itxitako azalera oinarriaren eta bere altuera perpendikularraren biderkadurak ematen du: $\mu(ABCD) = b \cdot h$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

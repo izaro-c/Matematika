@@ -5,34 +5,67 @@ export const metadata = {
   title: "Sistema axiomático euclidiano",
   description: "La estructura axiomática canónica de la geometría plana estándar, formada por la geometría absoluta y el axioma de paralelas de Playfair.",
   branch: "51M",
-  axiomas: ["axioma-paralelas-euclides"]
+  axiomas: [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-incidencia-4",
+    "axioma-incidencia-5",
+    "axioma-incidencia-6",
+    "axioma-incidencia-7",
+    "axioma-incidencia-8",
+    "axioma-orden-1",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-4",
+    "axioma-congruencia-1",
+    "axioma-congruencia-2",
+    "axioma-congruencia-3",
+    "axioma-congruencia-4",
+    "axioma-congruencia-5",
+    "axioma-paralelas-euclides",
+    "axioma-arquimedes",
+    "axioma-completitud"
+  ],
+  models: [
+    "modelo-cartesiano"
+  ],
+  authors: ["euclides", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Postulado 5", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+  ]
 };
 
-<Capitular letra="E" />l sistema axiomático euclidiano representa el marco formal clásico de la geometría plana. Se obtiene al incorporar el quinto postulado de las paralelas (en la formulación equivalente de Playfair) a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, fijando la curvatura nula del plano y la escala de las figuras geométricas.
+<Capitular letra="E" />l sistema axiomático euclidiano constituye el marco formal clásico de la geometría plana y espacial ordinaria. Se obtiene al incorporar el postulado de las paralelas de <ConceptLink targetId="euclides">Euclides</ConceptLink> (en la formulación de unicidad de Playfair) sobre la base de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, fijando la curvatura espacial nula y permitiendo la existencia de figuras semejantes a cualquier escala.
 
 <Separador />
 
 ### Constitución axiomática
 
-El sistema euclidiano integra la totalidad de los principios hilbertianos:
+El sistema euclidiano integra la totalidad de los grupos hilbertianos con el postulado de unicidad paralela:
 
-1. **Base de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>**: Reúne todos los axiomas de <ConceptLink targetId="sistema-incidencia">incidencia</ConceptLink> (I.1-I.8), <ConceptLink targetId="orden">orden</ConceptLink> (II.1-II.4), <ConceptLink targetId="congruencia">congruencia</ConceptLink> (III.1-III.5) y continuidad (IV.1-IV.2).
-2. **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axioma de las paralelas de Euclides (V.1)</ConceptLink>**: Dada una <ConceptLink targetId="recta">recta</ConceptLink> $l$ y un <ConceptLink targetId="punto">punto</ConceptLink> exterior $P \notin l$ en un <ConceptLink targetId="plano">plano</ConceptLink>, existe a lo sumo una recta $l'$ que contiene a $P$ y no interseca a $l$:
-   $$ \forall l \in \mathcal{L}, \forall P \notin l, \exists! l' \in \mathcal{L} \text{ tal que } P \in l' \land l \cap l' = \emptyset $$
+1. **Base de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>**: Reúne todos los axiomas de <ConceptLink targetId="sistema-incidencia">incidencia</ConceptLink> (I.1-I.8), <ConceptLink targetId="axioma-orden-1">orden</ConceptLink> (II.1-II.4), <ConceptLink targetId="axioma-congruencia-1">congruencia</ConceptLink> (III.1-III.5) y continuidad (V.1-V.2).
+2. **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axioma de las paralelas de Euclides (IV.1 / Playfair)</ConceptLink>**: Dada una <ConceptLink targetId="recta">recta</ConceptLink> $l$ y un <ConceptLink targetId="punto">punto</ConceptLink> exterior $P \notin l$ en un <ConceptLink targetId="plano">plano</ConceptLink> $\mathcal{P}$, existe exactamente una recta $l'$ que contiene a $P$ y no interseca a $l$:
+   $$
+   \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists! l' \in \mathcal{L} \ (P \in l' \land l \cap l' = \emptyset)
+   $$
 
 <Separador />
 
 ### Teoremas fundamentales del sistema
 
-La presencia del axioma de las paralelas desencadena resultados métricos característicos:
+La presencia del axioma de paralelas euclidiano desencadena los teoremas centrales de la geometría sintética:
 
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Suma angular invariable</ConceptLink>**: La suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de cualquier <ConceptLink targetId="triangulo">triángulo</ConceptLink> es exactamente igual a $180^\circ$.
-- **<ConceptLink targetId="teorema-tales">Teorema de Tales y semejanza</ConceptLink>**: Las rectas paralelas cortadas por transversales determinan segmentos proporcionales, haciendo posible la existencia de figuras semejantes de distinto tamaño sin variación angular.
-- **<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>**: En todo <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink>, el área del cuadrado construido sobre la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> es igual a la suma de las áreas de los cuadrados sobre los <ConceptLink targetId="cateto">catetos</ConceptLink> ($a^2 + b^2 = c^2$).
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Suma angular invariable</ConceptLink>**: La suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de cualquier <ConceptLink targetId="triangulo">triángulo</ConceptLink> es exactamente igual a $180^\circ$ ($\pi\text{ rad}$).
+- **<ConceptLink targetId="teorema-tales">Teorema de Tales y semejanza</ConceptLink>**: Un haz de rectas paralelas cortado por transversales determina <ConceptLink targetId="segmento">segmentos</ConceptLink> proporcionales, fundamentando la noción de figuras semejantes no congruentes.
+- **<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>**: En todo <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink>, el área del cuadrado construido sobre la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> es igual a la suma de las áreas de los cuadrados construidos sobre los <ConceptLink targetId="cateto">catetos</ConceptLink> ($a^2 + b^2 = c^2$).
+- **Existencia de paralelogramos y rectángulos**: Existen cuadriláteros con cuatro ángulos rectos y lados opuestos congruentes.
 
 <Separador />
 
-### Modelo representativo y consistencia
+### Modelo canónico y consistencia
 
-- **<ConceptLink targetId="modelo-cartesiano">Modelo cartesiano $\mathbb{R}^2$</ConceptLink>**: Constituye el modelo analítico canónico del sistema euclidiano.
-- **Consistencia relativa**: La consistencia del sistema euclidiano equivale a la consistencia del cuerpo de los <ConceptLink targetId="numero-real">números reales</ConceptLink> y de la teoría de conjuntos de Zermelo-Fraenkel.
+- **<ConceptLink targetId="modelo-cartesiano">Modelo cartesiano $\mathbb{R}^n$</ConceptLink>**: Constituye el modelo analítico canónico del sistema euclidiano, dotado del producto escalar euclídeo $\langle u, v \rangle = \sum u_i v_i$.
+- **Consistencia y categoricidad**: Hilbert demostró que la consistencia del sistema axiomático euclidiano equivale a la consistencia de la aritmética del cuerpo real $\mathbb{R}$. Al incluir los axiomas de continuidad, el sistema es categórico en cada dimensión fijada.

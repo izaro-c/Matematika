@@ -3,37 +3,47 @@ export const metadata = {
   lang: "eu",
   type: "definicion",
   subtype: "nominal",
-  title: "Angelu Osagarriak (Suplementarioak)",
-  description: "Beren neurrien batura angelu lau baten edo 180 graduren berdina den bi angeluren arteko erlazioa.",
+  title: "Angelu gehigarriak",
+  description: "Beren neurri angeluarren batura angelu lau baten (180 gradu) baliokidea den bi angelu koplanarren bikotea.",
+  branch: "51M",
+  hasSimulation: false,
   sources: [
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 13. Proposizioa", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
   ]
 };
 
-<Capitular letra="B" />i <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> osagarriak edo suplementarioak dira haien irekiera angeluarren baturak zehazki angelu lau bat ($180^\circ$ edo $\pi$ radian) osatzen duenean. Erlazio hau oinarrizkoa da <ConceptLink targetId="perpendicular">ortogonaltasuna</ConceptLink> eta <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> angeluarra aztertzeko.
+<Capitular letra="B" />i angelu koplanarri gehigarriak deitzen zaie haien neurri angeluarren batura zehazki <ConceptLink targetId="angulo-llano">angelu lau</ConceptLink> baten baliokidea denean ($180^\circ$ edo $\pi\text{ rad}$). Erlazio hau ezinbestekoa da <ConceptLink targetId="angulo-recto">angelu zuzenak</ConceptLink> sintetikoki karakterizatzeko eta zuzen ebakitzaileen propietateak aztertzeko.
 
 <Definicion title="">
-  Izan bitez $\alpha$ eta $\beta$ bi angelu koplanar. Suplementarioak direla esaten da baldin eta soilik baldin haien neurrien baturak honako hau betetzen badu:
+  $\mathcal{P}$ plano bereko $\alpha$ eta $\beta$ bi <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> gehigarriak dira baldin eta soilik baldin haien neurri angeluarren baturak honakoa betetzen badu:
   $$
-  \alpha + \beta \cong 180^\circ
+  \mu(\alpha) + \mu(\beta) = \pi \quad (180^\circ)
   $$
 </Definicion>
 
 <Separador />
 
-### Angelu osagarri albokideak
+### Angelu gehigarri aldamenekoak
 
-Kasu geometriko estandarra bi angelu albokidek alde komun bat partekatzen dutenean eta beren alde ez-komunak <ConceptLink targetId="recta">zuzen</ConceptLink> beraren gaineko bi erredierari aurkako direnean gertatzen da. Konfigurazio horretan, bi angelu albokideen baturak $180^\circ$ osatzen du ezinbestean.
+Geometria sintetikoan, bi angelu aldamenekoak badira alde komuna partekatuz eta haien alde ez-komunek <ConceptLink targetId="recta">zuzen</ConceptLink> bereko bi <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> aurkako osatzen badituzte, haien irekiduren batura nahitaez bi angelu zuzenen berdina da.
+
+### Angelu zuzenaren karakterizazioa
+
+Hilberten formalizazioan, <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> bere aldameneko angelu gehigarriarekiko kongruentea den angelu gisa definitzen da axiomatikoki:
+$$
+\alpha \cong \beta \land \mu(\alpha) + \mu(\beta) = 180^\circ \implies \mu(\alpha) = 90^\circ
+$$
 
 <Separador />
 
-### Angelu zuzenaren ezaugarritzea
-
-<ConceptLink targetId="hilbert">Hilberten</ConceptLink> geometria sintetikoan, angelu zuzena osagarritasunaren bidez definitzen da zuzenean: angelu bat zuzena da baldin eta soilik baldin bere angelu osagarri albokidearekin <ConceptLink targetId="congruencia">kongruentea</ConceptLink> bada ($\alpha \cong \beta \implies \alpha \cong 90^\circ$).
-
-<Separador />
-
-### Egitura-propietateak
-
-- **Simetria**: Erlazioa simetrikoa da; baldin eta $\alpha$ $\beta$-ren suplementarioa bada, orduan $\beta$ $\alpha$-ren suplementarioa da.
-- **Kongruentzia suplementuen bidez**: Angelu beraren (edo angelu kongruenteen) suplementarioak diren bi angelu beren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Angelu gehigarrien propietateak">
+    <PropiedadItem id="teorema-angulos-opuestos-verticales" title="Gehigarrien kongruentzia">
+      Angelu beraren (edo angelu kongruenteen) gehigarriak diren bi angelu kongruenteak dira elkarren artean.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Gehigarritasun angeluarra">
+      Edozein triangelutan, kanpo-angelu bakoitza bere aldameneko barne-angeluaren gehigarria da.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

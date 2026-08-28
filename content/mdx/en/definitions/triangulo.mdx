@@ -16,32 +16,43 @@ export const metadata = {
 import { Triangulo } from '@content/diagrams/Definiciones/Triangulo';
 export const Simulation = Triangulo;
 
-<Capitular letra="A" /> triangle is the simplest <ConceptLink targetId="poligono">polygon</ConceptLink> in <ConceptLink targetId="geometria-euclidiana">planar geometry</ConceptLink> and serves as the structural foundation of <ConceptLink targetId="trigonometria">trigonometry</ConceptLink> and <ConceptLink targetId="congruencia">congruence</ConceptLink> theory. Formed by connecting three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink>, it encloses a bounded <ConceptLink targetId="region-convexa">convex region</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+<Capitular letra="A" /> triangle is the simplest <ConceptLink targetId="poligono">polygon</ConceptLink> in Euclidean planar geometry, forming the structural foundation of trigonometry and rigidity criteria. Formed by connecting three non-collinear <ConceptLink targetId="punto">points</ConceptLink>, it bounds a convex region in the <ConceptLink targetId="plano">plane</ConceptLink>.
 
 <Definicion title="">
-  Given three non-collinear points <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind>, and <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> belonging to a plane $\mathcal{P}$, the triangle <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> is the planar figure defined by the <ConceptLink targetId="union-conjuntos">union</ConceptLink> of the three line <ConceptLink targetId="segmento" isDependency={true}>segments</ConceptLink> <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind>, and <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
+  Given three non-collinear <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind>, and <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> in a plane $\mathcal{P}$, the triangle <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> is the planar figure defined by the union of the three <ConceptLink targetId="segmento" isDependency={true}>line segments</ConceptLink> <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind>, and <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
   $$
   \triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}
   $$
-  The points $A, B, C$ are called <ConceptLink targetId="vertice">vertices</ConceptLink>, and the segments $\overline{AB}, \overline{BC}, \overline{CA}$ are the <ConceptLink targetId="lado">sides</ConceptLink> of the triangle.
+  The points $A, B, C$ are the <ConceptLink targetId="vertice">vertices</ConceptLink> and the segments $\overline{AB}, \overline{BC}, \overline{CA}$ are the sides of the triangle.
 </Definicion>
 
 <Separador />
 
 ### Metric and angular classification
 
-The metric characterization of triangles relies on <ConceptLink targetId="congruencia">congruence</ConceptLink> relationships among their <ConceptLink targetId="lado">sides</ConceptLink> and the magnitude of their interior <ConceptLink targetId="angulo">angles</ConceptLink>:
+Triangles are classified according to the <ConceptLink targetId="congruencia">congruence</ConceptLink> relations among their sides and the measures of their interior <ConceptLink targetId="angulo">angles</ConceptLink>:
 
 | Classification by sides | Geometric condition | Classification by angles | Angular condition |
 |---|---|---|---|
-| <ConceptLink targetId="triangulo-equilatero">Equilateral</ConceptLink> | Three congruent sides ($\overline{AB} \cong \overline{BC} \cong \overline{CA}$) | <ConceptLink targetId="triangulo-acutangulo">Acute</ConceptLink> | Three <ConceptLink targetId="angulo-agudo">acute</ConceptLink> angles |
-| <ConceptLink targetId="triangulo-isosceles">Isosceles</ConceptLink> | At least two congruent sides | <ConceptLink targetId="triangulo-rectangulo">Right</ConceptLink> | One <ConceptLink targetId="angulo-recto">right</ConceptLink> angle |
-| <ConceptLink targetId="triangulo-escaleno">Scalene</ConceptLink> | No congruent pairs of sides | <ConceptLink targetId="triangulo-obtusangulo">Obtuse</ConceptLink> | One <ConceptLink targetId="angulo-obtuso">obtuse</ConceptLink> angle |
+| Equilateral | $\overline{AB} \cong \overline{BC} \cong \overline{CA}$ | Acute | Three <ConceptLink targetId="angulo-agudo">acute</ConceptLink> angles |
+| Isosceles | At least two congruent sides | <ConceptLink targetId="triangulo-rectangulo">Right</ConceptLink> | One <ConceptLink targetId="angulo-recto">right</ConceptLink> angle |
+| Scalene | No congruent side pairs | Obtuse | One <ConceptLink targetId="angulo-obtuso">obtuse</ConceptLink> angle |
 
 <Separador />
 
-### Properties
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Metric and angular properties">
+    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Angle sum">
+      $\alpha + \beta + \gamma = 180^\circ$ ($\pi\text{ rad}$) in $\mathcal{P}$.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-triangulo-isosceles" title="Isosceles triangle theorem">
+      In an isosceles triangle, the angles opposite the congruent sides are congruent.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Angle sum</ConceptLink>**: In Euclidean geometry, the sum of the three interior angles of any triangle always equals $180^\circ$.
-- **<ConceptLink targetId="teorema-desigualdad-triangular">Triangle inequality</ConceptLink>**: The length of any side is strictly less than the sum of the lengths of the other two sides.
-- **<ConceptLink targetId="teorema-congruencia-ala">Congruence criteria</ConceptLink>**: The structural rigidity of a triangle allows equality to be established via SAS, ASA, and SSS criteria.
+  <PropiedadesGrupo title="Rigidity and congruence">
+    <PropiedadItem id="teorema-congruencia-ala" title="Congruence criteria">
+      $\triangle ABC \cong \triangle A'B'C' \iff \text{SAS} \lor \text{ASA} \lor \text{SSS}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

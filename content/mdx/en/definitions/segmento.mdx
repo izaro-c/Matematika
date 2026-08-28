@@ -3,45 +3,57 @@ export const metadata = {
   lang: "en",
   type: "definicion",
   subtype: "nominal",
-  title: "Line segment",
-  description: "A bounded portion of a line contained between two distinct endpoints including them.",
+  title: "Line Segment",
+  description: "Bounded portion of a line consisting of two distinct endpoint points and all points lying between them.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Nociones Comunes", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
+    { title: "Elements", author: "Euclid", locator: "Book I, Common Notions", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
   ]
 };
 
 import { Segmento } from '@content/diagrams/Definiciones/Segmento';
 export const Simulation = Segmento;
 
-<Capitular letra="A" /> line segment is a bounded, connected subset of a <ConceptLink targetId="recta">line</ConceptLink> bounded by two distinct <ConceptLink targetId="punto">points</ConceptLink> called endpoints. Unlike an infinite line, it has a well-defined metric <ConceptLink targetId="distancia">length</ConceptLink> and serves as the fundamental building block for constructing <ConceptLink targetId="poligono">polygons</ConceptLink> and <ConceptLink targetId="triangulo">triangles</ConceptLink>.
+<Capitular letra="A" /> line segment is the bounded, connected, and convex subset of a <ConceptLink targetId="recta">line</ConceptLink> delimited by two <ConceptLink targetId="punto">points</ConceptLink> called endpoints. Unlike the infinite line, it possesses a well-defined metric length and forms the basic constituent entity for constructing <ConceptLink targetId="poligono">polygons</ConceptLink> and <ConceptLink targetId="triangulo">triangles</ConceptLink>.
 
 <Definicion title="">
-  Given two points <VisualBind element="A" color="musgo">$A$</VisualBind> and <VisualBind element="B" color="musgo">$B$</VisualBind> on a supporting <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="carrier" color="carbon">$\ell$</VisualBind>, the closed line segment <VisualBind element="segment" color="musgo">$\overline{AB}$</VisualBind> is the set consisting of $A$, $B$, and all points $P$ lying <ConceptLink targetId="estar-entre">between</ConceptLink> $A$ and $B$:
+  Given two distinct points <VisualBind element="pA" color="musgo">$A$</VisualBind> and <VisualBind element="pB" color="musgo">$B$</VisualBind> on a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> <VisualBind element="lineL" color="carbon">$\ell$</VisualBind>, the closed line segment <VisualBind element="segmentAB" color="musgo">$\overline{AB}$</VisualBind> is the set consisting of the <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A$, $B$ and all points $P \in \ell$ lying <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $B$:
   $$
-  \overline{AB} = \{ P \in \ell \mid P = (1 - t)A + tB, \, t \in [0, 1] \}
+  \overline{AB} = \{ P \in \ell \mid P = A \lor P = B \lor A * P * B \}
   $$
-  The scalar distance $d(A, B) = \|B - A\|$ defines the <VisualBind element="length" color="mora">length of the segment</VisualBind>.
+  In the vector space $\mathbb{R}^n$, it is expressed as the convex combination:
+  $$
+  \overline{AB} = \{ P \in \mathbb{R}^n \mid P = (1 - t)A + tB, \, t \in [0, 1] \}
+  $$
 </Definicion>
 
 <Separador />
 
-### Segment typology according to bounds and positioning
+### Synthetic and axiomatic geometry
 
-Line segments are formally classified based on endpoint inclusion or their relative geometric placement:
+In Hilbert's framework:
+- **Open segment**: Defined as $(AB) = \{ P \in \ell \mid A * P * B \}$, omitting endpoints $A$ and $B$.
+- **Segment congruence**: The primitive relation $\overline{AB} \cong \overline{CD}$ ensures rigid translation of distances without distortion.
+- **Midpoint**: For every segment $\overline{AB}$, there exists a unique interior point $M \in (AB)$ such that $\overline{AM} \cong \overline{MB}$.
 
-| Classification | Set definition | Geometric feature |
-|---|---|---|
-| Closed segment $\overline{AB}$ | $\{ P \in \ell \mid t \in [0, 1] \}$ | Includes both endpoints $A$ and $B$ |
-| Open segment $(AB)$ | $\{ P \in \ell \mid t \in (0, 1) \}$ | Excludes both endpoints $A$ and $B$ |
-| Consecutive segments | $\overline{AB} \cap \overline{BC} = \{B\}$ | Share exactly one endpoint $B$ |
+### Metric and analytic geometry
+
+The scalar length of the segment is the Euclidean distance between its endpoints:
+$$
+\|\overline{AB}\| = d(A, B) = \sqrt{\sum_{i=1}^n (b_i - a_i)^2}
+$$
 
 <Separador />
 
-### Properties
-
-- **<ConceptLink targetId="congruencia">Segment congruence</ConceptLink>**: Two line segments are congruent ($\overline{AB} \cong \overline{CD}$) if and only if they have equal metric length.
-- **<ConceptLink targetId="region-convexa">Convexity</ConceptLink>**: Every line segment is a strictly connected and convex set in $\mathbb{R}^n$.
-- **<ConceptLink targetId="punto-medio">Midpoint existence</ConceptLink>**: There exists a unique point $M \in \overline{AB}$ such that $\overline{AM} \cong \overline{MB}$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Metric and structural properties">
+    <PropiedadItem id="axioma-congruencia-1" title="Transport and congruence">
+      Every segment can be uniquely transported onto a given ray preserving its length.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-orden-3" title="Linear convexity">
+      Every line segment $\overline{AB}$ is a convex set in affine space.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

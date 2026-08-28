@@ -1,16 +1,20 @@
 export const metadata = {
-  "id": "ejercicio-pitagoras-cateto",
-  "type": "ejercicio",
-  "title": "Kateto baten kalkulua triangelu angeluzuzenean",
-  "description": "Pitagorasen teoremaren aplikazioa kateto ezezagun baten luzera zehazteko, hipotenusa eta beste katetoa jakinda.",
-  "branch": "51M",
-  "hasSimulation": true
+  id: "ejercicio-pitagoras-cateto",
+  lang: "eu",
+  type: "ejercicio",
+  title: "Kateto baten kalkulua triangelu angeluzuzenean",
+  description: "Pitagorasen teoremaren aplikazioa kateto ezezagun baten luzera bakantzeko eta kalkulatzeko hipotenusatik eta beste katetotik abiatuta.",
+  branch: "51M",
+  relatedTheorem: "teorema-pitagoras",
+  difficulty: "básico",
+  hint: "Pitagorasen teoremak a² + b² = c² ezartzen du. Kateto bat bakantzeko, kendu kateto ezagunaren karratua hipotenusaren karratuari: a² = c² - b².",
+  hasSimulation: true
 };
 
 import { EjercicioPitagorasCateto } from '@content/diagrams/Ejercicios/EjercicioPitagorasCateto';
 export const Simulation = EjercicioPitagorasCateto;
 
-<Capitular letra="E" />mandako <VisualBind element="poly" color="carbon">$\triangle ABC$</VisualBind> <ConceptLink targetId="triangulo-rectangulo" isDependency={false}>triangelu angeluzuzenean</ConceptLink>, <VisualBind element="C" color="carbon">$C$ erpinean</VisualBind> <ConceptLink targetId="angulo-recto" isDependency={false}>angelu zuzena</ConceptLink> duena, jakina da <ConceptLink targetId="hipotenusa" isDependency={false}>hipotenusak</ConceptLink> $c = |AB| = 10$ unitate neurtzen dituela (<VisualBind element="segAB" color="ocre">$c$ hipotenusa</VisualBind>) eta <ConceptLink targetId="cateto" isDependency={false}>kateto horizontalak</ConceptLink> $b = |BC| = 8$ unitate (<VisualBind element="segBC" color="terracota">$b$ katetoa</VisualBind>). <VisualBind element="segCA" color="musgo">$a$ kateto bertikalaren</VisualBind> ($a = |CA|$) luzera zehatza kalkulatzea eskatzen da.
+<Capitular letra="I" />zan bedi <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzena</ConceptLink>, <VisualBind element="pC" color="carbon">$C$ erpinean</VisualBind> <ConceptLink targetId="perpendicular">angelu zuzena</ConceptLink> duena. Hipotenusak $c = |\overline{AB}| = 10$ unitate neurtzen ditu (<VisualBind element="segAB" color="mora">$c$ hipotenusa</VisualBind>) eta kateto horizontalak $b = |\overline{BC}| = 8$ unitate (<VisualBind element="segBC" color="terracota">$b$ katetoa</VisualBind>). <VisualBind element="segCA" color="canela">$a = |\overline{CA}|$ kateto bertikalaren</VisualBind> luzera zehatza kalkulatu behar da.
 
 <Separador />
 
@@ -20,34 +24,30 @@ export const Simulation = EjercicioPitagorasCateto;
   titulo="Ekuazioaren planteamendua"
   questionIds={["p1_q1"]}
 >
-  Identifikatu <ConceptLink targetId="teorema-pitagoras" isDependency={false}>Pitagorasen teorema</ConceptLink> planteatzeko formulazio aljebraiko egokia datu ezagunen arabera:
+  Identifikatu <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> datu ezagunekin behar bezala adierazten duen erlazio aljebraikoa:
 
   <Pregunta
     id="p1_q1"
     correct="opt_correcta"
-    texto="Hurrengo erlazioetatik zeinek deskribatzen du zuzen azaleren proportzioa triangelu honetarako?"
+    texto="Hurrengo erlazioetatik zeinek deskribatzen du zuzen teorema triangelu honetarako?"
     opciones={[
       { value: 'opt_correcta', texto: "$a^2 + 8^2 = 10^2$" },
-      { value: 'opt_suma_catetos', texto: "$a^2 = 10^2 + 8^2$", feedback: "Kalkulua hipotenusa bilatuko bazenu bezala planteatu duzu azalerak batuz. Gogoratu hipotenusa dagoeneko ezaguna dela ($c=10$). Kateto bat bilatzeko: $a^2 = c^2 - b^2$." },
-      { value: 'opt_hipotenusa_err', texto: "$10^2 + a^2 = 8^2$", feedback: "Hipotenusa ($10^2$) eta katetoa ($a^2$) batu dituzu. Gogoratu hipotenusa karratua ($10^2$) bakarrik geratu behar dela kideetako batean: $a^2 + b^2 = c^2$." }
+      { value: 'opt_suma_catetos', texto: "$a^2 = 10^2 + 8^2$", feedback: "Formulan azalerak batu dituzu hipotenusa bilatuko bazenu bezala. Gogoratu hipotenusa ezaguna dela ($c=10$). Kateto bat bakantzeko, azalerak kendu behar dituzu: $a^2 = c^2 - b^2$." },
+      { value: 'opt_hipotenusa_err', texto: "$10^2 + a^2 = 8^2$", feedback: "Hipotenusaren karratua eta katetoa batu dituzu. Gogoratu hipotenusaren karratuak bakarrik geratu behar duela berdintzaren alde batean: $a^2 + b^2 = c^2$." }
     ]}
   >
     <Pregunta.ErrorComun titulo="Alde ezagunen karratuak batzea kentzearen ordez">
-      Kateto bat bakantzerakoan ohiko akats bat formula zuzena nahastea eta azalera ezagunak batzea da: $a^2 = c^2 + b^2$. Horrek $a^2 = 10^2 + 8^2 = 164 \implies a \approx 12.8$ emango luke. Luzera hori geometrikoki ezinezkoa da, hipotenusa beti baita alderik luzeena.
+      Kateto bat bakantzean ohiko akatsa da azalera ezagunak batzea: $a^2 = c^2 + b^2 = 100 + 64 = 164 \implies a \approx 12.8$. Triangelu angeluzuzenean hipotenusa da beti alderik luzeena ($c > a$ eta $c > b$); kateto batek ezin du inoiz hipotenusa gainditu.
     </Pregunta.ErrorComun>
 
     <Pregunta.Resolucion>
-      Triangelu honetan betetzen den oinarrizko ekuazioa $a^2 + b^2 = c^2$ da. Datu ezagunak ordezkatuz:
+      Pitagorasen teoremaren arabera $a^2 + b^2 = c^2$. $b = 8$ eta $c = 10$ datu ezagunak ordezkatuz, erlazio hau lortzen dugu:
       
       <Formula>
         $$ a^2 + 8^2 = 10^2 $$
       </Formula>
     </Pregunta.Resolucion>
   </Pregunta>
-
-  <Apoyo titulo="Triangelu angeluzuzen baten atalak errepasatu nahi dituzu?">
-    Kontsultatu <RefLink targetId="triangulo-rectangulo">triangelu angeluzuzenaren</RefLink> kontzeptua edo errepasatu <RefLink targetId="cateto">katetoen</RefLink> eta <RefLink targetId="hipotenusa">hipotenusaren</RefLink> arteko aldea.
-  </Apoyo>
 </ExerciseStep>
 
 <Separador />
@@ -59,7 +59,7 @@ export const Simulation = EjercicioPitagorasCateto;
   questionIds={["p2_q1"]}
   dependeDeQuestions={["p1_q1"]}
 >
-  Parekatu elementu geometrikoa dagokion azalera-balio edo adierazpenarekin:
+  Lotu elementu geometriko bakoitza dagokion azalera-balioarekin:
 
   <Emparejar
     id="p2_q1"
@@ -71,11 +71,11 @@ export const Simulation = EjercicioPitagorasCateto;
     ]}
   >
     <Emparejar.ErrorComun titulo="Azalerak eta luzera linealak nahastea">
-      Gogoratu Pitagorasen teoremak gainazal karratuak ($a^2, b^2, c^2$) alderatzen dituela, ez luzera zuzenak ($a, b, c$).
+      Pitagorasen teoremak karratuen azalerak alderatzen ditu ($a^2, b^2, c^2$), ez zuzenean luzera linealak ($a, b, c$).
     </Emparejar.ErrorComun>
 
     <Emparejar.Resolucion>
-      Hiru karratu laguntzaileen azalerak hauek dira:
+      Hiru karratuen azalerak hauek dira:
       
       <Formula>
         $$ c^2 = 10^2 = 100, \quad b^2 = 8^2 = 64, \quad a^2 = 100 - 64 = 36 $$
@@ -93,11 +93,11 @@ export const Simulation = EjercicioPitagorasCateto;
   questionIds={["p3_q1"]}
   dependeDeQuestions={["p2_q1"]}
 >
-  Ordenatu modu logikoan $a$ katetoaren luzera zehatza bakantzeko pauso aljebraikoak:
+  Ordenatu modu logikoan $a$ katetoaren luzera zehatza bakantzeko urrats aljebraikoak:
 
   <Ordenacion
     id="p3_q1"
-    pregunta="Arrastatu urratsak dedukzio-ordena egokian jartzeko:"
+    pregunta="Arrastatu urratsak ordena deduktibo egokian jartzeko:"
     pasos={[
       "$a^2 + 8^2 = 10^2$",
       "$a^2 + 64 = 100$",
@@ -106,15 +106,15 @@ export const Simulation = EjercicioPitagorasCateto;
     ]}
   >
     <Ordenacion.ErrorComun titulo="Erro karratua kenketa sinplifikatu aurretik ateratzea">
-      Ezin da erroa gai bakoitzari banan-banan aplikatu ($\sqrt{100 - 64} \neq \sqrt{100} - \sqrt{64} = 10 - 8 = 2$). Lehenik $100 - 64 = 36$ kalkulatu behar da, eta ondoren erro karratua atera.
+      Ezin da erro karratua gaiz gai aplikatu ($\sqrt{100 - 64} \neq \sqrt{100} - \sqrt{64} = 10 - 8 = 2$). Lehenik $100 - 64 = 36$ kendura kalkulatu behar da eta ondoren erroa atera.
     </Ordenacion.ErrorComun>
 
     <Ordenacion.Resolucion>
-      Dedukzio-ordena zuzena hauxe da:
+      Urrats deduktibo zuzenak hauek dira:
       - Planteamendua: $a^2 + 8^2 = 10^2$
-      - Potentziak: $a^2 + 64 = 100$
-      - Bakantzea: $a^2 = 100 - 64 = 36$
-      - Erro karratua: $a = \sqrt{36} = 6$
+      - Berreturen kalkulua: $a^2 + 64 = 100$
+      - Ezezagun koadratikoaren bakantzea: $a^2 = 100 - 64 = 36$
+      - Erro karratuaren kalkulua: $a = \sqrt{36} = 6$
     </Ordenacion.Resolucion>
   </Ordenacion>
 </ExerciseStep>
@@ -132,20 +132,16 @@ export const Simulation = EjercicioPitagorasCateto;
 
   <Hueco
     id="p4_q1"
-    pregunta="Kateto bertikalaren kalkulatutako luzera a:"
+    pregunta="a kateto bertikalaren luzera kalkulatua:"
     correct="6"
-    pista="Zein zenbaki erreal positibo karratura eramanda ematen du 36?"
+    pista="Zein zenbaki erreal positibo karratura jasota lortzen da 36?"
   >
-    <Hueco.ErrorComun titulo="Emaitza negatiboa kontuan hartzea">
-      Aljebraikoki $(-6)^2 = 36$ izan arren, <ConceptLink targetId="geometria-euclidiana">geometria euklidearrean</ConceptLink> distantzia bat beti da hertsiki zenbaki positiboa ($a > 0$).
+    <Hueco.ErrorComun titulo="Soluzio negatiboa kontuan hartzea">
+      Aljebraikoki $(-6)^2 = 36$ izan arren, geometria euklidearrean distantzia bat beti zenbaki positiboa da zorrozki ($a > 0$).
     </Hueco.ErrorComun>
 
     <Hueco.Resolucion>
-      Lortutako azalerari erro karratua ateraz ($a^2 = 36$), $a = \sqrt{36} = 6$ unitate lortzen dugu.
+      Azalerari erro karratua ateraz ($a^2 = 36$), $a = \sqrt{36} = 6$ unitate lortzen dira.
     </Hueco.Resolucion>
   </Hueco>
-
-  <Apoyo titulo="36ren erro karratua kalkulatzeko zalantzak dituzu?">
-    $36$ren erro karratua kalkulatzea bere buruarekin biderkatuta zehazki $36$ ematen duen zenbaki erreal positibo bat bilatzean datza. <RefLink targetId="raiz-cuadrada">Erro karratuaren</RefLink> kontzeptua errepasatu dezakezu.
-  </Apoyo>
 </ExerciseStep>

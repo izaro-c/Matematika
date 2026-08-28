@@ -17,25 +17,25 @@ export const metadata = {
 import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras';
 export const Simulation = Pitagoras;
 
-<Capitular letra="I" />n planar <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>, the metric relationship between the <ConceptLink targetId="lado">sides</ConceptLink> of a <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink></VisualBind> connects linear segment lengths directly to the <ConceptLink targetId="area">area</ConceptLink> of the square surfaces built upon them.
+<Capitular letra="I" />n planar <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>, the metric relationship between the sides of a <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink></VisualBind> connects linear segment lengths directly to the <ConceptLink targetId="teoria-medida-area">area</ConceptLink> of the square surfaces built upon them.
 
 <Separador />
 
 ### Formal statement
 
-Let $\triangle ABC$ be a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> in the Euclidean plane with a <ConceptLink targetId="angulo-recto">right angle</ConceptLink> at <ConceptLink targetId="vertice">vertex</ConceptLink> $C$. Let $a = |\overline{BC}|$ and $b = |\overline{CA}|$ be the scalar lengths of the <VisualBind element="cateto-a" color="pavo"><ConceptLink targetId="cateto">legs</ConceptLink></VisualBind>, and $c = |\overline{AB}|$ the scalar length of the <VisualBind element="hipotenusa" color="terracota"><ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink></VisualBind>. The metric equality holds necessarily:
+Let $\triangle ABC$ be a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> in the Euclidean plane with a right angle at vertex $C$. Let $a = |\overline{BC}|$ and $b = |\overline{CA}|$ be the scalar lengths of the <VisualBind element="cateto-a" color="pavo">legs</VisualBind>, and $c = |\overline{AB}|$ the scalar length of the <VisualBind element="hipotenusa" color="terracota">hypotenuse</VisualBind>. The metric equality holds necessarily:
 
 <Formula>
   $$ a^2 + b^2 = c^2 $$
 </Formula>
 
-In terms of planar region measures, the <ConceptLink targetId="area">area</ConceptLink> of the <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">square</ConceptLink></VisualBind> constructed on the hypotenuse $c^2$ is strictly equal to the sum of the areas of the squares constructed on leg $a$ ($a^2$) and leg $b$ ($b^2$).
+In terms of planar region measures, the area of the <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">square</ConceptLink></VisualBind> constructed on the hypotenuse ($c^2$) is strictly equal to the sum of the areas of the squares constructed on leg $a$ ($a^2$) and leg $b$ ($b^2$).
 
 <Separador />
 
 ### Axiomatic foundations and analysis
 
-The proof of this fundamental relation relies indispensably on the <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel postulate</ConceptLink> of <ConceptLink targetId="euclides">Euclid</ConceptLink>. In the axiomatic formulation established by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, this result is established using the theory of polygonal equidecomposability and the existence of an additive area measure function.
+The proof of this fundamental relation relies indispensably on the <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel postulate</ConceptLink> of <ConceptLink targetId="euclides">Euclid</ConceptLink>. In the axiomatic formulation established by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, this result is established using the theory of polygonal equidecomposability and the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>.
 
 In non-Euclidean geometries, such as spherical or hyperbolic geometry, the algebraic sum of linear squares is not preserved, requiring hyperbolic or spherical trigonometric formulations.
 
@@ -43,5 +43,5 @@ In non-Euclidean geometries, such as spherical or hyperbolic geometry, the algeb
 
 ### Properties and converse
 
-- **Converse theorem**: If the side lengths of a triangle $\triangle ABC$ satisfy $a^2 + b^2 = c^2$, then the angle opposite to side $\overline{AB}$ is necessarily a <ConceptLink targetId="angulo-recto">right angle</ConceptLink>.
+- **Converse theorem**: If the side lengths of a triangle $\triangle ABC$ satisfy $a^2 + b^2 = c^2$, then the angle opposite to side $\overline{AB}$ is necessarily a right angle.
 - **Proof by similarity**: The altitude drawn to the hypotenuse divides the original triangle into two <ConceptLink targetId="semejanza">similar</ConceptLink> triangles, establishing the proportional relations $a^2 = c \cdot p$ and $b^2 = c \cdot q$.

@@ -3,19 +3,22 @@ export const metadata = {
   lang: "es",
   type: "definicion",
   subtype: "nominal",
-  title: "Ángulos Suplementarios",
-  description: "Par de ángulos cuya suma de medidas equivale a un ángulo llano o 180 grados.",
+  title: "Ángulos suplementarios",
+  description: "Par de ángulos coplanares cuya adición de amplitudes angulares es equivalente a un ángulo llano o 180 grados.",
+  branch: "51M",
+  hasSimulation: false,
   sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 13", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
   ]
 };
 
-<Capitular letra="D" />os <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> son suplementarios cuando la adición de sus aberturas angulares equivale exactamente a un ángulo llano ($180^\circ$ o $\pi$ radianes). Esta relación constituye una herramienta fundamental para estudiar la <ConceptLink targetId="perpendicular">ortogonalidad</ConceptLink> y la <ConceptLink targetId="congruencia">congruencia</ConceptLink> angular.
+<Capitular letra="D" />os ángulos coplanares se denominan suplementarios cuando la suma de sus medidas angulares equivale exactamente a un <ConceptLink targetId="angulo-llano">ángulo llano</ConceptLink> ($180^\circ$ o $\pi\text{ rad}$). Esta relación es esencial en la caracterización sintética de los <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink> y en el estudio de las rectas secantes.
 
 <Definicion title="">
-  Sean $\alpha$ y $\beta$ dos ángulos coplanares. Se definen como suplementarios si y solo si la suma de sus medidas angulares satisface:
+  Dos <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> $\alpha$ y $\beta$ pertenecientes a un mismo plano $\mathcal{P}$ son suplementarios si y solo si la suma de sus medidas angulares satisface:
   $$
-  \alpha + \beta \cong 180^\circ
+  \mu(\alpha) + \mu(\beta) = \pi \quad (180^\circ)
   $$
 </Definicion>
 
@@ -23,17 +26,24 @@ export const metadata = {
 
 ### Ángulos suplementarios adyacentes
 
-El caso geométrico estándar se presenta cuando dos ángulos adyacentes comparten un lado común y sus lados no comunes constituyen dos semirrectas opuestas sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>. En tal configuración, el par de ángulos adyacentes suma necesariamente $180^\circ$.
-
-<Separador />
+En la geometría sintética, si dos ángulos adyacentes comparten un lado común y sus lados no comunes forman una pareja de <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> opuestas sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>, la suma de sus aberturas es necesariamente igual a dos ángulos rectos.
 
 ### Caracterización del ángulo recto
 
-En la geometría sintética de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, el ángulo recto se define directamente a través de la suplementariedad: un ángulo es recto si y solo si es <ConceptLink targetId="congruencia">congruente</ConceptLink> con su propio ángulo suplementario adyacente ($\alpha \cong \beta \implies \alpha \cong 90^\circ$).
+En la formalización de Hilbert, un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> se define axiomáticamente como aquel que es congruente con su propio ángulo suplementario adyacente:
+$$
+\alpha \cong \beta \land \mu(\alpha) + \mu(\beta) = 180^\circ \implies \mu(\alpha) = 90^\circ
+$$
 
 <Separador />
 
-### Propiedades estructurales
-
-- **Simetría**: La relación es simétrica; si $\alpha$ es suplementario de $\beta$, entonces $\beta$ es suplementario de $\alpha$.
-- **Congruencia por suplementos**: Dos ángulos suplementarios del mismo ángulo (o de ángulos congruentes) son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades de los ángulos suplementarios">
+    <PropiedadItem id="teorema-angulos-opuestos-verticales" title="Congruencia de suplementos">
+      Dos ángulos que son suplementarios del mismo ángulo (o de ángulos congruentes) son congruentes entre sí.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Suplementariedad angular">
+      En todo triángulo, cada ángulo exterior es suplementario del ángulo interior adyacente.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

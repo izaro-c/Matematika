@@ -3,8 +3,8 @@ export const metadata = {
   lang: "en",
   type: "definicion",
   subtype: "nominal",
-  title: "Geometric similarity",
-  description: "Equivalence relation between geometric figures preserving shape while maintaining a constant ratio of distance proportionality.",
+  title: "Geometric Similarity",
+  description: "Equivalence relation between geometric figures preserving shape and maintaining a constant ratio of proportionality between distances.",
   branch: "51M",
   hasSimulation: false,
   sources: [
@@ -13,32 +13,37 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="G" />eometric similarity is an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink> between figures in the <ConceptLink targetId="plano">plane</ConceptLink> or space that preserves identical shape while permitting variations in global scale. Two figures are similar when there exists a similarity transformation (the composition of an <ConceptLink targetId="congruencia">isometry</ConceptLink> and a homothety) that maintains proportional distances between all their <ConceptLink targetId="punto">points</ConceptLink> and equates corresponding <ConceptLink targetId="angulo">angles</ConceptLink>.
+<Capitular letra="G" />eometric similarity is an equivalence relation between figures in the <ConceptLink targetId="plano">plane</ConceptLink> or space that preserve identical shape while possibly differing in overall scale. Two figures are similar if there exists a similarity transformation (the composition of an <ConceptLink targetId="congruencia">isometry</ConceptLink> and a homothety) that preserves the proportionality of all distances between points and preserves all <ConceptLink targetId="angulo">angles</ConceptLink>.
 
 <Definicion title="">
-  Let $F_1, F_2 \subset \mathcal{E}$ be two subsets of points in a Euclidean metric space $\mathcal{E}$. Figures $F_1$ and $F_2$ are defined to be similar, denoted $F_1 \sim F_2$, if and only if there exists a positive scale factor $k > 0$ and a bijective transformation $g: \mathcal{E} \to \mathcal{E}$ such that $g(F_1) = F_2$ satisfying, for every pair of points $A, B \in \mathcal{E}$:
+  Let $F_1, F_2 \subset \mathcal{E}$ be subsets of points in a Euclidean metric space $\mathcal{E}$. $F_1$ and $F_2$ are similar ($F_1 \sim F_2$) if and only if there exists a scale factor $k > 0$ and a bijection $g: \mathcal{E} \to \mathcal{E}$ such that $g(F_1) = F_2$ and for all pairs $A, B \in \mathcal{E}$:
   $$
-  F_1 \sim F_2 \iff \exists k > 0, \exists g: \mathcal{E} \to \mathcal{E} \text{ s.t. } g(F_1) = F_2 \land \forall A, B \in \mathcal{E}, \|g(B) - g(A)\| = k \cdot \|B - A\|
+  d(g(A), g(B)) = k \cdot d(A, B)
   $$
-  The scalar $k$ represents the scale factor or constant <ConceptLink targetId="koziente">ratio</ConceptLink> of similarity between the lengths of corresponding line <ConceptLink targetId="segmento">segments</ConceptLink> (<ConceptLink targetId="teorema-tales">Thales' theorem</ConceptLink>).
+  When $k = 1$, similarity reduces to <ConceptLink targetId="congruencia" isDependency={true}>geometric congruence</ConceptLink>.
 </Definicion>
 
 <Separador />
 
 ### Triangle similarity criteria
 
-In <ConceptLink targetId="geometria-euclidiana">planar geometry</ConceptLink>, the similarity of two <ConceptLink targetId="triangulo">triangles</ConceptLink> is established by any of the following equivalent minimal criteria:
+In planar Euclidean geometry, similarity between two <ConceptLink targetId="triangulo">triangles</ConceptLink> is established through the following minimal criteria:
 
-| Criterion | Formulation | Proportionality condition |
+| Criterion | Formulation | Geometric condition |
 |---|---|---|
-| AA | Angle-Angle | Two pairs of corresponding angles are <ConceptLink targetId="congruencia">congruent</ConceptLink> |
-| SAS | Side-Angle-Side | One congruent angle with equal <ConceptLink targetId="koziente">ratio</ConceptLink> for adjacent sides |
-| SSS | Side-Side-Side | The <ConceptLink targetId="koziente">ratio</ConceptLink> of all three pairs of corresponding sides equals $k$ |
+| AA | Angle-Angle | Two pairs of corresponding angles are congruent ($\alpha \cong \alpha' \land \beta \cong \beta'$) |
+| SAS | Side-Angle-Side | One congruent angle and adjacent sides in the same ratio ($\frac{a'}{a} = \frac{b'}{b} = k$) |
+| SSS | Side-Side-Side | All three pairs of corresponding sides share the same ratio $k$ |
 
 <Separador />
 
-### Properties
-
-- **<ConceptLink targetId="relacion-equivalencia">Equivalence relation</ConceptLink>**: Similarity is reflexive ($F_1 \sim F_1$), symmetric ($F_1 \sim F_2 \implies F_2 \sim F_1$), and transitive ($F_1 \sim F_2 \land F_2 \sim F_3 \implies F_1 \sim F_3$).
-- **Relation to congruence**: Any pair of congruent figures $F_1 \cong F_2$ is a special case of similarity with scale factor $k = 1$.
-- **Area scaling**: If two planar figures are similar with scale factor $k$, their area measures satisfy the quadratic relation $\mu(F_2) = k^2 \cdot \mu(F_1)$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Proportionality and areas">
+    <PropiedadItem id="teorema-tales" title="Thales's theorem">
+      Parallel lines intersecting two transversals cut off proportional corresponding segments.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-triangulo" title="Area scaling">
+      If two planar figures are similar with ratio $k$, their areas satisfy $\mu(F_2) = k^2 \cdot \mu(F_1)$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

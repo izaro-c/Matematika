@@ -1,9 +1,9 @@
 export const metadata = {
   id: "teorema-suma-angulos-triangulo",
   type: "teorema",
-  title: "Triangelu baten barne-angeluen baturaren teorema",
-  description: "Geometria euklidetarrean, edozein triangeluren barne-angeluen neurrien batura bi angelu zuzenen (180° edo π rad) berdina da.",
-  statement: "Plano euklidetarreko △ABC triangelu baten barne-angeluak α, β eta γ izanik, α + β + γ = 180° betetzen da.",
+  title: "Triangelu baten angeluen baturaren teorema",
+  description: "Geometria euklidetarrean, edozein triangeluren barneko hiru angeluen neurrien batura bi angelu zuzenen berdina da (180° edo π radian).",
+  statement: "Plano euklidetarrean α, β eta γ barne-angeluak dituen △ABC triangelu orotan, α + β + γ = 180° betetzen da.",
   branch: "51M",
   hasSimulation: true,
   authors: ["euclides", "hilbert"],
@@ -16,33 +16,33 @@ export const metadata = {
 import { SumaAngulos } from '@content/diagrams/Teoremas/SumaAngulos';
 export const Simulation = SumaAngulos;
 
-<Capitular letra="T" />riangelu baten barne-angeluen baturaren teorema <ConceptLink targetId="geometria-euclidiana">geometria euklidetarrek</ConceptLink> ezaugarri unibertsal nagusietako bat da. <ConceptLink targetId="plano">Planoaren</ConceptLink> kurbadura nulua zehazten du, edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> hiru <ConceptLink targetId="angulo">angeluen</ConceptLink> sinergia <ConceptLink targetId="angulo-llano">angelu lau</ConceptLink> baten berdina dela finkatuz.
+<Capitular letra="T" />riangelu baten angeluen baturaren teorema <ConceptLink targetId="geometria-euclidiana">geometria euklidetarraren</ConceptLink> ezaugarririk ospetsuen eta unibertsalenetakoa da. Planoaren kurbadura nulua deskribatzen du, edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barneko hiru <ConceptLink targetId="angulo">angeluen</ConceptLink> zabalera osoa <ConceptLink targetId="angulos-suplementarios">angelu lau</ConceptLink> baten ($180^\circ$) parekoa dela ezarriz.
 
 <Separador />
 
 ### Enuntziatu formala
 
-Bitzak $\triangle ABC$ <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo">triangelu</ConceptLink></VisualBind> bat $\mathcal{P}$ plano euklidetarrean. Izan bitez $\alpha = \angle CAB$, $\beta = \angle ABC$ eta $\gamma = \angle BCA$ bere hiru <VisualBind element="angulos-interiores" color="terracota">barne-angeluen</VisualBind> neurri angeluarrak. Honako berdintza hau zorrotz betetzen da:
+Izan bedi $\triangle ABC$ plano euklidetarreko <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo">triangelu</ConceptLink></VisualBind> bat. Izan bitez $\alpha = \angle CAB$, $\beta = \angle ABC$ eta $\gamma = \angle BCA$ bere hiru <VisualBind element="angulos-interiores" color="terracota">barne-angeluak</VisualBind>. Zorrozki egiaztatzen da honako berdintza hau:
 
 <Formula>
   $$ \alpha + \beta + \gamma = 180^\circ \quad (\text{edo } \pi \text{ rad}) $$
 </Formula>
 
-Derrigorrez, edozein triangeluren hiru barne-angeluen batura metrikoki bi <ConceptLink targetId="angulo-recto">angelu zuzenen</ConceptLink> berdina da.
+Hau da, edozein triangeluren barne-angeluen batura metrikoa bi angelu zuzenen baliokidea da.
 
 <Separador />
 
-### Zuzen paralelo bidezko froga
+### Zuzen paraleloaren bidezko froga
 
-Pitagorikoek garatutako eta <ConceptLink targetId="euclides">Euklidesen</ConceptLink> Elementuetan formalizatutako eraikuntza klasikoak $C$ <ConceptLink targetId="vertice">erpinean</ConceptLink> zehar aurkako $\overline{AB}$ aldeari <ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink> bat marrazten du:
-1. Paralelo den $r$ zuzenak eta $\overline{AC}$ zein $\overline{BC}$ aldeek <ConceptLink targetId="teorema-angulos-alternos-internos">barne-angelu alterno</ConceptLink> kongruenteen pareak osatzen dituzte.
-2. $r$ zuzenaren gaineko hiru angelu jarraituek $180^\circ$-ko <ConceptLink targetId="angulo-llano">angelu laua</ConceptLink> osatzen dute.
-3. Angeluen arteko berdintzak ordezkatuz, ezinbestean lortzen da $\alpha + \beta + \gamma = 180^\circ$.
+<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> lanean jasotako eraikuntza klasikoak $C$ erpinetik aurrez aurreko $\overline{AB}$ aldeari <ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink> bat marrazten du:
+1. Zuzen paraleloak eta $\overline{AC}$ zein $\overline{BC}$ aldeek <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>barne-angelu alterno</ConceptLink> kongruenteen bikoteak sortzen dituzte ($\alpha \cong \alpha'$ eta $\beta \cong \beta'$).
+2. Zuzen paraleloaren gaineko hiru angeluek $180^\circ$-ko <ConceptLink targetId="angulos-suplementarios">angelu lau</ConceptLink> bat osatzen dute: $\alpha' + \gamma + \beta' = 180^\circ$.
+3. Berdintza angeluarrak ordezkatuz, zuzenean lortzen da $\alpha + \beta + \gamma = 180^\circ$.
 
 <Separador />
 
-### Bostgarren Postulatuarekin baliokidetasuna
+### Bosgarren Postulatuarekiko baliokidetasuna
 
-Teorema hau logikoki <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axiomarekin</ConceptLink> baliokidea da:
-- **Geometria hiperbolikoan**: Triangelu baten barne-angeluen batura $180^\circ$ baino zorrozki txikiagoa da ($\alpha + \beta + \gamma < 180^\circ$), triangeluaren <ConceptLink targetId="area">azalerarekiko</ConceptLink> proportzionala den akats angeluarra dagoelarik.
-- **Geometria esferikoan**: Barne-angeluen batura $180^\circ$ baino zorrozki handiagoa da ($\alpha + \beta + \gamma > 180^\circ$), gehiegikeria esferikoa definituz.
+Teorema hau logikoki baliokidea da <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euklidesen paraleloen axiomarekin</ConceptLink>:
+- **Geometria hiperbolikoa**: Triangelu baten barne-angeluen batura $180^\circ$ baino zorrozki txikiagoa da ($\alpha + \beta + \gamma < 180^\circ$), eta akats angeluar hori triangeluaren azalerarekiko proportzionala da.
+- **Geometria esferikoa**: Angeluen batura $180^\circ$ baino handiagoa da ($\alpha + \beta + \gamma > 180^\circ$), gehiegikeria esferikoa definituz.

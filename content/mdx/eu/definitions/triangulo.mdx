@@ -4,11 +4,11 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Triangelua",
-  description: "Hiru puntu ez-lerrokide lotzen dituzten hiru zuzenkien batasunak zehaztutako oinarrizko plano-poligonoa.",
+  description: "Lerrokatu gabeko hiru puntu lotzen dituzten hiru zuzenkiren elkarketaz osatutako oinarrizko poligono laua.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "I. Liburua, 19. Definizioa", role: "primary" },
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 19. Definizioa", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
   ]
 };
@@ -16,32 +16,43 @@ export const metadata = {
 import { Triangulo } from '@content/diagrams/Definiciones/Triangulo';
 export const Simulation = Triangulo;
 
-<Capitular letra="T" />riangelua <ConceptLink targetId="geometria-euclidiana">geometria lauaren</ConceptLink> <ConceptLink targetId="poligono">poligonorik</ConceptLink> bakunena da, eta <ConceptLink targetId="trigonometria">trigonometriaren</ConceptLink> zein <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> geometrikozko azterketaren oinarria osatzen du. Hiru <ConceptLink targetId="punto">puntu</ConceptLink> ez-<ConceptLink targetId="colinealidad">lerrokide</ConceptLink> lotzean, <ConceptLink targetId="plano">planoan</ConceptLink> <ConceptLink targetId="region-convexa">eremu konbexu</ConceptLink> mugatua uzten du barnean.
+<Capitular letra="T" />riangelua geometria lauaren <ConceptLink targetId="poligono">poligono</ConceptLink> sinpleena da, eta trigonometriaren zein zurruntasun-irizpideen oinarrizko egitura osatzen du. Lerrokatu gabeko hiru <ConceptLink targetId="punto">puntu</ConceptLink> lotuz eratzen da, <ConceptLink targetId="plano">planoan</ConceptLink> eskualde ganbil mugatu bat zedarrituz.
 
 <Definicion title="">
-  $\mathcal{P}$ plano bateko hiru <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> eta <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> puntu ez-lerrokide emanda, <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> triangelua hiru <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> eta <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind> <ConceptLink targetId="segmento" isDependency={true}>zuzenkien</ConceptLink> <ConceptLink targetId="union-conjuntos">batasunak</ConceptLink> zehaztutako plano-irudia da:
+  $\mathcal{P}$ plano batean lerrokatu gabeko <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> eta <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> emanda, <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> triangelua <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> eta <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind> hiru <ConceptLink targetId="segmento" isDependency={true}>zuzenkien</ConceptLink> elkarketaz definitutako irudi laua da:
   $$
   \triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}
   $$
-  $A, B, C$ puntuek <ConceptLink targetId="vertice">erpin</ConceptLink> izena hartzen dute eta $\overline{AB}, \overline{BC}, \overline{CA}$ zuzenkiak triangeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> dira.
+  $A, B, C$ puntuak <ConceptLink targetId="vertice">erpinak</ConceptLink> dira eta $\overline{AB}, \overline{BC}, \overline{CA}$ zuzenkiak triangeluaren aldeak.
 </Definicion>
 
 <Separador />
 
-### Sailkapen metrikoa eta angeluarra
+### Sailkapen metriko eta angeluarra
 
-Triangeluak beren <ConceptLink targetId="lado">aldeen</ConceptLink> arteko <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-erlazioen eta barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> neurriaren arabera sailkatzen dira:
+Triangeluen ezaugarritze metrikoak aldeen arteko <ConceptLink targetId="congruencia">kongruentzia-</ConceptLink>erlazioak eta barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> zabalera hartzen ditu kontuan:
 
 | Aldeen araberako sailkapena | Baldintza geometrikoa | Angeluen araberako sailkapena | Baldintza angeluarra |
 |---|---|---|---|
-| <ConceptLink targetId="triangulo-equilatero">Aldekidea</ConceptLink> | Hiru aldeak kongruenteak ($\overline{AB} \cong \overline{BC} \cong \overline{CA}$) | <ConceptLink targetId="triangulo-acutangulo">Zorrotza</ConceptLink> | Hiru barne-angeluak <ConceptLink targetId="angulo-agudo">zorrotzak</ConceptLink> |
-| <ConceptLink targetId="triangulo-isosceles">Isoszelea</ConceptLink> | Gutxienez bi alde kongruente | <ConceptLink targetId="triangulo-rectangulo">Angeluzuzena</ConceptLink> | Barne-angelu bat <ConceptLink targetId="angulo-recto">zuzena</ConceptLink> |
-| <ConceptLink targetId="triangulo-escaleno">Eskalenoa</ConceptLink> | Alde-parerik kongruente gabe | <ConceptLink targetId="triangulo-obtusangulo">Kamutsa</ConceptLink> | Barne-angelu bat <ConceptLink targetId="angulo-obtuso">kamutsa</ConceptLink> |
+| Aldekidea | $\overline{AB} \cong \overline{BC} \cong \overline{CA}$ | Zorrotza (akutangelua) | Hiru angelu <ConceptLink targetId="angulo-agudo">zorrotz</ConceptLink> |
+| Isoszelea | Gutxienez bi alde kongruente | <ConceptLink targetId="triangulo-rectangulo">Angeluzuzena</ConceptLink> | <ConceptLink targetId="angulo-recto">Angelu zuzen</ConceptLink> bat |
+| Eskalenoa | Alde-bikote kongruenterik gabea | Kamutsa (obtusangelua) | <ConceptLink targetId="angulo-obtuso">Angelu kamuts</ConceptLink> bat |
 
 <Separador />
 
-### Propietateak
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Metrikoak eta angeluarrak">
+    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Angelu-batura">
+      $\alpha + \beta + \gamma = 180^\circ$ ($\pi\text{ rad}$) $\mathcal{P}$ planoan.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-triangulo-isosceles" title="Triangelu isoszelearen teorema">
+      Triangelu isoszele batean, alde kongruenteen aurkako angeluak kongruenteak dira elkarren artean.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Angeluen batura</ConceptLink>**: Geometria euklidearrean, edozein triangeluren hiru barne-angeluen batura beti da $180^\circ$.
-- **<ConceptLink targetId="teorema-desigualdad-triangular">Triangelu-desberdintasuna</ConceptLink>**: Edozein alderen luzera zorrotz txikiagoa da beste bi aldeen luzeren batura baino.
-- **<ConceptLink targetId="teorema-congruencia-ala">Kongruentzia-kriterioak</ConceptLink>**: Triangeluaren egitura-rigidetasunak berdintasuna zehazten du LAL, ALA eta LLL kriterioen bidez.
+  <PropiedadesGrupo title="Zurruntasuna eta kongruentzia">
+    <PropiedadItem id="teorema-congruencia-ala" title="Kongruentzia-irizpideak">
+      $\triangle ABC \cong \triangle A'B'C' \iff \text{AL-A} \lor \text{An-Al-An} \lor \text{Al-Al-Al}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

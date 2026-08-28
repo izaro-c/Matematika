@@ -3,41 +3,46 @@ export const metadata = {
   lang: "eu",
   type: "definicion",
   subtype: "fundamentada",
-  title: "Azaleraren Neurketaren Teoria",
-  description: "Hilberten edukiaren teoriaren eraikuntza formala, plano-poligonoen deskonposagarritasun baliokidean oinarritua neurri erreal jarraitura jo gabe.",
+  title: "Azalera-neurriaren teoria",
+  description: "Poligonoen ekideskonposagarritasunean eta batukortasun finituan oinarritutako edukiaren eta azaleraren teoria formalaren eraikuntza.",
+  branch: "51M",
+  hasSimulation: false,
   sources: [
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, Nozio Komunak eta 35-41 Proposizioak", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "IV. Kapitulua, §17-§21", role: "primary" }
   ]
 };
 
-<Capitular letra="O" />inarritze axiomatiko modernoan, <ConceptLink targetId="teoria-medida-area">azaleraren neurketaren teoriak</ConceptLink> <ConceptLink targetId="euclides">Euklidesen</ConceptLink> nosio intuitiboak ordezkatzen ditu <ConceptLink targetId="poligono">plano-poligonoen</ConceptLink> deskonposagarritasun baliokidean oinarritutako eraikuntza riguroso baten bidez.
+<Capitular letra="F" />undamentazio axiomatiko modernoan, azalera-neurriaren teoriak irudi geometriko lauek betetzen duten bi dimentsioko espazioaren kuantifikazioa formalizatzen du. David Hilbertek edukiaren teoria gisa garatua, Euklidesen intuiziozko nozioak ordezkatzen ditu <ConceptLink targetId="poligono">poligonoen</ConceptLink> ekideskonposagarritasunaren bidez, neurri jarraituaren teoria analitikoaren premiarik gabe.
 
 <Definicion title="">
-  Bi $P$ eta $Q$ <ConceptLink targetId="poligono">plano-poligono</ConceptLink> eduki-baliokideak direla definitzen da baldin eta soilik baldin beren artean bikoteka <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> diren triangelu-pieza kopuru finitu batean deskonposatu badaitezke:
-  $$
-  P = \bigcup_{i=1}^n T_i, \quad Q = \bigcup_{i=1}^n T'_i \quad \text{non } T_i \cong T'_i \quad (\forall i \in \{1, \dots, n\})
-  $$
+  Plano bateko <ConceptLink targetId="poligono" isDependency={true}>poligono</ConceptLink> guztien $\mathcal{P}_{\text{pol}}$ multzoaren gaineko $\mu: \mathcal{P}_{\text{pol}} \to \mathbb{R}^+$ azalera-neurriko funtzioak honakoak betetzen ditu:
+  1. **Positibotasuna**: $\forall P \in \mathcal{P}_{\text{pol}}, \; \mu(P) > 0$.
+  2. **Kongruentziarekiko aldaezintasuna**: Isometria baten bidez $P \cong Q$ bada, orduan $\mu(P) = \mu(Q)$.
+  3. **Batukortasun finitua**: $\text{int}(P_1) \cap \text{int}(P_2) = \emptyset$ izanik $P = P_1 \cup P_2$ bada, orduan $\mu(P) = \mu(P_1) + \mu(P_2)$.
+  4. **Normalizazio unitarioa**: $U$ alde unitarioko ($l = 1$) <ConceptLink targetId="cuadrado">karratua</ConceptLink> bada, $\mu(U) = 1$.
 </Definicion>
 
 <Separador />
 
-### Edukiaren teoriaren oinarriak
+### Ekideskonposagarritasuna eta Hilberten edukia
 
-Azaleraren formalizazio axiomatikoak bi etapa nagusi ditu:
-
-- **Edukiaren definizio sintetikoa**: Deskonposizio finitu bidezko baliokidetzak ez du <ConceptLink targetId="numero-real">zenbaki errealetara</ConceptLink> jotzea eskatzen.
-- **Edukiaren teoriako teoremak**: <ConceptLink targetId="congruencia">Kongruentzia</ConceptLink> eta gehigarritasun printzipioetatik abiatuta azaleraren adierazpen numerikoak deduzitzea ahalbidetzen dute.
-
-<Separador />
-
-### Eduki-teoremak eta formula metrikoak
-
-- **Kongruentziagatiko inbariantzia**: Bi irudi <ConceptLink targetId="congruencia">kongruentek</ConceptLink> zehazki eduki bera dute.
-- **Gehigarritasun eskalarra**: Bi <ConceptLink targetId="poligono">poligonoren</ConceptLink> batasun ez-juntatuaren edukia beren banakako edukien baturaren berdina da.
-- **Lauzgilearen azalera**: Lauzgile baten azaleraren neurria bere oinarriaren eta altueraren biderkadurak ematen du.
+Hilberten geometria sintetikoan:
+- **Eduki bereko poligonoak**: $P$ eta $Q$ bi poligono ekideskonposagarriak dira baldin eta $P = \bigcup_{i=1}^n T_i$ eta $Q = \bigcup_{i=1}^n T'_i$ partizio finituak existitzen badira non $T_i \cong T'_i$ den guztientzat.
+- **Osagarri bereko poligonoak**: Bi poligono edukiz baliokideak dira baldin eta poligono kongruenteen bidez osatu badaitezke irudi ekideskonposagarriak lortzeko.
 
 <Separador />
 
-### Ondorio deduktiboak
-
-Lauzgilearen azaleratik abiatuta, <ConceptLink targetId="triangulo">triangelurako</ConceptLink> ($\frac{b \cdot h}{2}$) eta <ConceptLink targetId="paralelogramo">paralelogramorako</ConceptLink> ($b \cdot h$) formula orokorrak deduzitzen dira, <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremaren</ConceptLink> garapenerako babes logikoa eskainiz.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Azaleraren oinarrizko teoremak">
+    <PropiedadItem id="teorema-area-aditividad" title="Azaleraren batukortasuna">
+      Bi poligonoren elkarketa disjuntuaren azalera banakako azaleren baturaren berdina da.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-rectangulo" title="Laukizuzenaren azalera">
+      $b$ oinarria eta $h$ altuera dituen laukizuzen baten azalera $\mu(R) = b \cdot h$ formulak ematen du era bakarrean.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-triangulo" title="Triangeluaren azalera">
+      $b$ oinarria eta $h$ altuera dituen edozein triangeluren azalera $\mu(T) = \frac{b \cdot h}{2}$ da.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

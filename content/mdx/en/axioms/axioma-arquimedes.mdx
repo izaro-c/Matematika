@@ -2,36 +2,46 @@ export const metadata = {
   id: "axioma-arquimedes",
   lang: "en",
   type: "axioma",
-  title: "Archimedes' Axiom",
-  description: "Given any segment AB and segment CD, there exists a natural number n such that laying off n concatenated copies of CD exceeds the length of AB.",
+  title: "Axiom V.1 (Archimedean Axiom)",
+  description: "Given any two line segments, it is always possible to exceed the length of the larger by concatenating a finite number of copies of the smaller.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "continuidad",
   hasSimulation: true,
   sources: [
-    { title: "Sobre la esfera y el cilindro", author: "Arquímedes", locator: "Libro I, Asunción 5", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §7", role: "primary" }
+    { title: "On the Sphere and Cylinder", author: "Archimedes", locator: "Postulate 5", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §6", role: "primary" }
   ]
 };
 
 import { AxiomaArquimedes } from '@content/diagrams/Axiomas/AxiomaArquimedes';
 export const Simulation = AxiomaArquimedes;
 
-<Capitular letra="A" />rchimedes' axiom represents the first axiom of <ConceptLink targetId="continuidad">continuity</ConceptLink> (Hilbert's Axiom IV.1). It excludes infinitely large or infinitesimal elements from metric geometry.
+<Capitular letra="T" />he Archimedean axiom —incorporated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> as the first principle of the continuity group— excludes the existence of infinitely small (infinitesimal) or infinitely large quantities from synthetic geometry. It establishes that any distance, however vast, can be exceeded by repeated finite concatenation of an elementary <ConceptLink targetId="segmento">segment</ConceptLink>.
 
-<Definicion title="">
-  Let $\overline{AB}$ and $\overline{CD}$ be two arbitrary <ConceptLink targetId="segmento">segments</ConceptLink>. There exists a positive integer $n \in \mathbb{N}^+$ such that, laying off a chain of $n$ segments congruent to $\overline{CD}$ along ray $AB$ $(A = A_0, A_1, A_2, \dots, A_n)$, point $B$ lies between $A$ and $A_n$:
+<Definicion title="Formal statement">
+  Given any two non-zero line <ConceptLink targetId="segmento">segments</ConceptLink> $\overline{AB}$ and $\overline{CD}$, there exists a natural number $n \in \mathbb{N}$ such that laying $n$ consecutive copies of $\overline{AB}$ along ray $\overrightarrow{CD}$ starting at $C$ passes beyond <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $D$:
   $$
-  \forall \overline{AB}, \overline{CD} \implies \exists n \in \mathbb{N}^+ \ (n \cdot \overline{CD} > \overline{AB})
+  \forall \overline{AB}, \overline{CD} \ \bigl(A \neq B \land C \neq D \implies \exists n \in \mathbb{N} \ (n \cdot \overline{AB} > \overline{CD})\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Visual representation
+### Visual representation and interaction
 
-Given the target segment <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> and step unit <VisualBind element="CD" color="pavo">$\overline{CD}$</VisualBind>, iterating the layout of unit step <VisualBind element="An" color="terracota">$A_n$</VisualBind> eventually surpasses the total target length in a finite number of steps.
+In the interactive simulation, the elementary segment <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> and the target segment <VisualBind element="segCD" color="marino">$\overline{CD}$</VisualBind> are compared. Using dynamic slider <VisualBind element="n" color="ocre">$n$</VisualBind>, successive repetitions <VisualBind element="acumulado" color="terracota">$n \cdot \overline{AB}$</VisualBind> accumulate until surpassing the critical threshold <VisualBind element="lineDThreshold" color="marino">$D$</VisualBind>, visually confirming in <VisualBind element="copiasSuperanCD" color="musgo">green</VisualBind> that the target is exceeded for the minimal value <VisualBind element="nMinimo" color="ocre">$n_{\min}$</VisualBind>.
 
 <Separador />
 
-### Axiomatic significance
+### Geometric significance and scope
 
-This postulate ensures that no non-zero infinitesimal magnitudes exist. It is essential for the theory of proportions and the calculation of areas and volumes, underpinning exhaustion methods in <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>.
+Ensures the Archimedean property of spatial geometry: there exist no infinitesimal segments or insurmountable distances. It connects synthetic geometric scale with the Archimedean ordered field of real numbers $\mathbb{R}$ in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+
+<Separador />
+
+### Properties
+
+- **Exclusion of infinitesimals:** No non-zero segment is infinitely small relative to any other.
+- **Boundedness principle:** Every bounded subset of a line can be covered by a finite number of steps of fixed length.
+- **Metric compatibility:** Essential for defining angle measures, curve rectification, and polygon areas via convergent limits.

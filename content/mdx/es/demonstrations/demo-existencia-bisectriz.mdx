@@ -18,42 +18,42 @@ import { DemoExistenciaBisectriz } from "@content/diagrams/Demos/DemoExistenciaB
 
 <DemonstrationSection diagram={<DemoExistenciaBisectriz />}>
 
-<Capitular letra="D" />ado un <ConceptLink targetId="angulo">ángulo</ConceptLink> <VisualBind element="angulo-aob" color="carbon">$\angle AOB$</VisualBind> con <ConceptLink targetId="vertice">vértice</ConceptLink> en <VisualBind element="vertice-o" color="carbon">$O$</VisualBind>, se demuestra la existencia y unicidad de una semirrecta interior $\overrightarrow{OM}$ que divide al ángulo en dos partes <ConceptLink targetId="congruencia">congruentes</ConceptLink>, fundamentándose en la teoría de <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>congruencia de triángulos</ConceptLink>.
+<Capitular letra="D" />ado un <ConceptLink targetId="angulo">ángulo</ConceptLink> $\angle AOB$ con vértice en $O$, se demuestra la existencia y unicidad de una semirrecta interior $\overrightarrow{OM}$ que divide al ángulo en dos partes <ConceptLink targetId="congruencia">congruentes</ConceptLink>, fundamentándose en la teoría de <ConceptLink targetId="teorema-congruencia-ala">congruencia de triángulos</ConceptLink>.
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} target={["angulo-aob", "punto-c", "punto-d"]} title="Transporte de segmentos sobre los lados del ángulo">
-Sobre el rayo del lado $OA$, fijamos un <ConceptLink targetId="punto">punto</ConceptLink> <VisualBind element="punto-c" color="terracota">$C$</VisualBind> distinto de $O$. Por los axiomas de transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink>, construimos sobre el rayo del lado $OB$ un punto <VisualBind element="punto-d" color="pavo">$D$</VisualBind> tal que las distancias desde el origen sean congruentes:
+<ProofStep number={1} target="rayOA" title="Transporte de segmentos sobre los lados del ángulo">
+Sobre la semirrecta del lado $OA$, fijamos un <ConceptLink targetId="punto">punto</ConceptLink> $C$ distinto de $O$. Por el axioma de transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>), construimos sobre la semirrecta del lado $OB$ un punto $D$ tal que las distancias desde el origen sean congruentes:
 
 <Formula>
   $$ \overline{OC} \cong \overline{OD} $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} target={["segmento-cd", "punto-m"]} title="Segmento auxiliar y punto medio">
-Trazamos el segmento <VisualBind element="segmento-cd" color="ocre">$\overline{CD}$</VisualBind>. Por los axiomas de orden e incidencia, existe un único punto medio <VisualBind element="punto-m" color="carbon">$M$</VisualBind> sobre el segmento $\overline{CD}$ tal que se satisface la equidistancia:
+<ProofStep number={2} target="p4" title="Segmento auxiliar y punto medio">
+Trazamos el segmento auxiliar $\overline{CD}$. Por los axiomas de orden e incidencia, existe un único punto medio $M$ sobre el segmento $\overline{CD}$ que satisface la equidistancia:
 
 <Formula>
   $$ \overline{CM} \cong \overline{DM} $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={3} target={["triangulo-ocm", "triangulo-odm"]} title="Congruencia de triángulos auxiliares por LLL">
-Consideramos los triángulos <VisualBind element="triangulo-ocm" color="terracota">$\triangle OCM$</VisualBind> y <VisualBind element="triangulo-odm" color="pavo">$\triangle ODM$</VisualBind>. Dado que $\overline{OC} \cong \overline{OD}$, $\overline{CM} \cong \overline{DM}$ y el lado $\overline{OM}$ es compartido por ambos polígonos, aplicando los <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axiomas de congruencia</ConceptLink> bajo el criterio LLL (Lado-Lado-Lado) derivado de los criterios fundamentales de <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>congruencia</ConceptLink>, se concluye:
+<ProofStep number={3} target="bisAOB" title="Congruencia de triángulos auxiliares">
+Consideramos los triángulos $\triangle OCM$ y $\triangle ODM$. Dado que $\overline{OC} \cong \overline{OD}$, $\overline{CM} \cong \overline{DM}$ y el segmento $\overline{OM}$ es común a ambos, aplicando los criterios de congruencia derivados del axioma LAL (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5</ConceptLink>), se concluye la congruencia:
 
 <Formula>
   $$ \triangle OCM \cong \triangle ODM $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} target={["angulo-com", "angulo-dom"]} title="Igualdad de los ángulos interiores y existencia">
-De la congruencia de los triángulos se deduce la congruencia de sus ángulos homólogos correspondientes: <VisualBind element="angulo-com" color="terracota">$\angle COM$</VisualBind> $\cong$ <VisualBind element="angulo-dom" color="pavo">$\angle DOM$</VisualBind>. Por consiguiente, la semirrecta $\overrightarrow{OM}$ es una bisectriz válida del ángulo $\angle AOB$.
+<ProofStep number={4} target="nonReflexAngleBO6" title="Igualdad de los ángulos interiores y existencia">
+De la congruencia de los triángulos se deduce la congruencia de sus ángulos homólogos correspondientes: $\angle COM \cong \angle DOM$. Por consiguiente, la semirrecta $\overrightarrow{OM}$ es una bisectriz válida del ángulo $\angle AOB$.
 </ProofStep>
 
-<ProofStep number={5} target={["bisectriz-unica"]} title="Demostración de unicidad">
-Si existiera otra semirrecta bisectriz $\overrightarrow{OM'}$, formaría un ángulo idéntico con el rayo $OA$. Por los axiomas de unicidad en el transporte de ángulos sobre un mismo semiplano, las semirrectas $\overrightarrow{OM'}$ y $\overrightarrow{OM}$ deben coincidir. La <VisualBind element="bisectriz-unica" color="carbon">bisectriz es única</VisualBind>.
+<ProofStep number={5} target="nonReflexAngle6OA" title="Demostración de unicidad">
+Si existiera otra semirrecta bisectriz $\overrightarrow{OM'}$, formaría un ángulo idéntico con la semirrecta $OA$. Por el axioma de unicidad en el transporte de ángulos (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>) sobre un semiplano dado, las semirrectas $\overrightarrow{OM'}$ y $\overrightarrow{OM}$ deben coincidir necesariamente. Por tanto, la bisectriz es única.
 </ProofStep>
 
 <Separador />
@@ -61,7 +61,7 @@ Si existiera otra semirrecta bisectriz $\overrightarrow{OM'}$, formaría un áng
 ### Análisis deductivo
 
 <Nota>
-  Proposición I.9 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. En el sistema axiomático de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, esta construcción demuestra que la división bisectriz es una propiedad universal derivada de los <ConceptLink targetId="axioma-congruencia-1">axiomas de congruencia</ConceptLink> y el <ConceptLink targetId="sistema-absoluto">sistema absoluto</ConceptLink>.
+  Proposición I.9 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. En el sistema axiomático de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, esta construcción demuestra que la división bisectriz es una propiedad universal derivada de los axiomas de congruencia en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

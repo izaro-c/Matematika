@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-1",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.1 (Existence and Uniqueness of a Line)",
+  title: "Axiom I.1 (Existence and Uniqueness of the Line)",
   description: "Given any two distinct points in space, there exists exactly one line to which both belong.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
@@ -14,10 +16,10 @@ export const metadata = {
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto">points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, the first <ConceptLink targetId="incidencia">incidence axiom</ConceptLink> formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> guarantees the existence and uniqueness of a <ConceptLink targetId="recta">line</ConceptLink> passing through both. This postulate forms the fundamental basis for defining linear connectivity in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, the first incidence axiom formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> guarantees the existence and uniqueness of a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> passing through both. This postulate serves as the foundation for linear connection in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
 
 <Definicion title="Formal statement">
-  Given two distinct <ConceptLink targetId="punto">points</ConceptLink> $A, B \in \mathcal{S}$ with $A \neq B$, there exists a unique <ConceptLink targetId="recta">line</ConceptLink> $l \in \mathcal{L}$ such that both $A$ and $B$ lie on $l$:
+  Given any two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B \in \mathcal{S}$ with $A \neq B$, there exists a unique <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$ incident with both $A$ and $B$:
   $$
   \forall A, B \in \mathcal{S} \ \bigl(A \neq B \implies \exists! l \in \mathcal{L} \ (A \in l \land B \in l)\bigr)
   $$
@@ -27,18 +29,18 @@ export const Simulation = Incidence1;
 
 ### Visual representation and interaction
 
-In the interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> uniquely determine the supporting line <VisualBind element="lineAB" color="carbon">$l$</VisualBind>. Dragging either point in the plane dynamically recalculates the line's orientation while maintaining strict dual membership.
+In the interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> uniquely determine the supporting line <VisualBind element="lineAB" color="carbon">$l$</VisualBind>. Dragging either point freely across the plane instantly recalculates the position and direction of the line, maintaining the strict dual membership condition.
 
 <Separador />
 
 ### Geometric significance and scope
 
-This axiom establishes that two points exclusively determine a single direction and linear trajectory. It prevents multiple distinct lines from joining the same two primitive points without additional non-Euclidean postulates.
+This axiom establishes that two points uniquely fix a direction and rectilinear trajectory. It eliminates the presence of redundant connecting curves or multiple straight lines joining the same two primitive points without the intervention of additional axioms.
 
 <Separador />
 
 ### Properties
 
-- **Uniqueness of line:** Two distinct points cannot belong simultaneously to two different lines.
-- **System independence:** Remains valid in both <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink> and non-Euclidean geometries.
-- **Interconnection foundation:** Enables the formal definition of the <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ as a continuous subset of the supporting line.
+- **Uniqueness of path:** Two distinct points cannot belong simultaneously to two distinct lines.
+- **System independence:** Retains universal validity in both <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink> and <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>.
+- **Foundation of connection:** Enables the definition of line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ as a continuous subset of the supporting line.

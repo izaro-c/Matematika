@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Semejanza geométrica",
-  description: "Relación de equivalencia entre figuras geométricas conservando la forma y manteniendo constante la razón de proporcionalidad entre distancias.",
+  description: "Relación de equivalencia entre figuras geométricas que conservan la forma y mantienen constante la razón de proporcionalidad entre distancias.",
   branch: "51M",
   hasSimulation: false,
   sources: [
@@ -13,32 +13,37 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="L" />a semejanza geométrica es una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink> entre figuras del <ConceptLink targetId="plano">plano</ConceptLink> o del espacio que conservan idéntica forma geométrica pero pueden diferir en su escala global. Dos figuras son semejantes cuando existe una transformación de semejanza (composición de una <ConceptLink targetId="congruencia">isometría</ConceptLink> y una homotecia) que preserva la proporcionalidad de las distancias entre todos sus <ConceptLink targetId="punto">puntos</ConceptLink> e iguala sus <ConceptLink targetId="angulo">ángulos</ConceptLink>.
+<Capitular letra="L" />a semejanza geométrica es una relación de equivalencia entre figuras del <ConceptLink targetId="plano">plano</ConceptLink> o del espacio que conservan idéntica forma pero pueden diferir en su tamaño o escala global. Dos figuras son semejantes si existe una transformación (composición de una <ConceptLink targetId="congruencia">isometría</ConceptLink> y una homotecia) que preserva la proporcionalidad de las distancias entre todos sus puntos y conserva los <ConceptLink targetId="angulo">ángulos</ConceptLink>.
 
 <Definicion title="">
-  Sean $F_1, F_2 \subset \mathcal{E}$ dos subconjuntos de puntos en un espacio métrico euclidiano $\mathcal{E}$. Se dice que $F_1$ y $F_2$ son semejantes, denotado por $F_1 \sim F_2$, si y solo si existe una constante de escala o razón de semejanza $k > 0$ y una función biyectiva $g: \mathcal{E} \to \mathcal{E}$ tal que $g(F_1) = F_2$ satisfaciendo que para todo par de puntos $A, B \in \mathcal{E}$:
+  Sean $F_1, F_2 \subset \mathcal{E}$ dos subconjuntos de puntos en un espacio métrico euclidiano $\mathcal{E}$. Se dice que $F_1$ y $F_2$ son semejantes ($F_1 \sim F_2$) si y solo si existe una constante de escala $k > 0$ y una biyección $g: \mathcal{E} \to \mathcal{E}$ tal que $g(F_1) = F_2$ y para todo par de puntos $A, B \in \mathcal{E}$:
   $$
-  F_1 \sim F_2 \iff \exists k > 0, \exists g: \mathcal{E} \to \mathcal{E} \text{ t.q. } g(F_1) = F_2 \land \forall A, B \in \mathcal{E}, \|g(B) - g(A)\| = k \cdot \|B - A\|
+  d(g(A), g(B)) = k \cdot d(A, B)
   $$
-  El escalar $k$ representa la constante de proporcionalidad o <ConceptLink targetId="teorema-tales">razón de semejanza</ConceptLink> entre las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> correspondientes.
+  Si $k = 1$, la semejanza se reduce a una <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink>.
 </Definicion>
 
 <Separador />
 
 ### Criterios de semejanza de triángulos
 
-En la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>, la semejanza entre dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> se establece mediante las siguientes condiciones equivalentes:
+En la geometría plana, la semejanza entre dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> se establece mediante las siguientes condiciones minimales:
 
-| Criterio | Formulación del criterio | Condición de proporcionalidad u homología |
+| Criterio | Formulación | Condición geométrica |
 |---|---|---|
-| AA | Ángulo-Ángulo | Dos pares de ángulos correspondientes son <ConceptLink targetId="congruencia">congruentes</ConceptLink> |
-| LAL | Lado-Ángulo-Lado | Un ángulo congruente y la razón de los lados adyacentes constante |
-| LLL | Lado-Lado-Lado | El <ConceptLink targetId="koziente">cociente</ConceptLink> de los tres pares de lados es igual a $k$ |
+| AA | Ángulo-Ángulo | Dos pares de ángulos correspondientes son congruentes ($\alpha \cong \alpha' \land \beta \cong \beta'$) |
+| LAL | Lado-Ángulo-Lado | Un ángulo congruente y lados adyacentes en la misma proporción ($\frac{a'}{a} = \frac{b'}{b} = k$) |
+| LLL | Lado-Lado-Lado | Los tres pares de lados correspondientes guardan la misma razón $k$ |
 
 <Separador />
 
-### Propiedades
-
-- **<ConceptLink targetId="relacion-equivalencia">Relación de equivalencia</ConceptLink>**: La semejanza es reflexiva ($F_1 \sim F_1$), simétrica ($F_1 \sim F_2 \implies F_2 \sim F_1$) y transitiva ($F_1 \sim F_2 \land F_2 \sim F_3 \implies F_1 \sim F_3$).
-- **Relación con la congruencia**: Toda pareja de figuras congruentes $F_1 \cong F_2$ constituye un caso particular de semejanza con razón de escala $k = 1$.
-- **Escalado de áreas**: Si dos figuras bidimensionales son semejantes con razón de escala $k$, la razón entre sus medidas de área satisface $\mu(F_2) = k^2 \cdot \mu(F_1)$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Proporcionalidad y áreas">
+    <PropiedadItem id="teorema-tales" title="Teorema de Tales">
+      Rectas paralelas que cortan a dos transversales determinan segmentos proporcionales correspondientes.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-triangulo" title="Escalado de áreas">
+      Si dos figuras bidimensionales son semejantes con razón $k$, la razón de sus áreas es $\mu(F_2) = k^2 \cdot \mu(F_1)$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

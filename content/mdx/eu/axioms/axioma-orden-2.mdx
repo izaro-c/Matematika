@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-orden-2",
   lang: "eu",
   type: "axioma",
-  title: "II.2 Axioma (Segmentuaren luzapena)",
-  description: "Bi A eta C puntu desberdin emanda, gutxienez B puntu bat existitzen da zuzenean, C puntua A eta B artean egonik.",
+  title: "II.2 axioma (Zuzenaren hedapen mugagabea)",
+  description: "Edozein A eta B puntu desberdinetarako, beti existitzen da gutxienez C puntu bat non B puntua A eta C artean dagoen.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "orden",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §3", role: "primary" }
@@ -14,12 +16,12 @@ export const metadata = {
 import { Order2 } from '@content/diagrams/Axiomas/Order2';
 export const Simulation = Order2;
 
-<Capitular letra="B" />i $A$ eta $C$ <ConceptLink targetId="punto">puntu</ConceptLink> desberdin emanda, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-en bigarren <ConceptLink targetId="orden">ordena-axioma</ConceptLink> honek gutxienez $B$ puntu bat existitzen dela ezartzen du <ConceptLink targetId="zuzen">zuzen</ConceptLink> euskarrian, $C$ puntua $A$ eta $B$ artean egonik. Postulatu honek zuzenaren infinitutasuna eta edozein <ConceptLink targetId="segmento">zuzenki</ConceptLink> mugagabe luzatzeko aukera bermatzen ditu nahitaez.
+<Capitular letra="E" />dozein bi $A$ eta $B$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinetarako, <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> ordenako bigarren axiomak bermatzen du $\overline{AB}$ <ConceptLink targetId="segmento">zuzenkia</ConceptLink> beti luza daitekeela $B$-tik harago, $B$ tarteko posizioan ($A\text{-}B\text{-}C$) uzten duen $C$ puntu berri bat aurkituz.
 
 <Definicion title="Enuntziatu formala">
-  Edozein bi $A, C \in \mathcal{S}$ <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako ($A \neq C$), gutxienez $B \in \mathcal{S}$ puntu bat existitzen da $\overleftrightarrow{AC}$ zuzen euskarrian non $C$ puntua $A$ eta $B$ artean dagoen:
+  Edozein bi $A, B \in \mathcal{S}$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinetarako ($A \neq B$), gutxienez $C \in \mathcal{S}$ puntu bat existitzen da non $B$ puntua $A$ eta $C$ <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> dagoen ($A\text{-}B\text{-}C$):
   $$
-  \forall A, C \in \mathcal{S} \ \bigl(A \neq C \implies \exists B \in \overleftrightarrow{AC} \ (A\text{-}C\text{-}B)\bigr)
+  \forall A, B \in \mathcal{S} \ \bigl(A \neq B \implies \exists C \in \mathcal{S} \ (A\text{-}B\text{-}C)\bigr)
   $$
 </Definicion>
 
@@ -27,18 +29,18 @@ export const Simulation = Order2;
 
 ### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan, hasierako <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pC" color="carbon">$C$</VisualBind> puntuetatik abiatuta, lerroa luzatu egiten da <VisualBind element="pB" color="terracota">$B$</VisualBind> puntua kokatu arte non $A\text{-}C\text{-}B$ betetzen den. $C$ muturra aldatzean, $B$ punktuak bere kanpo-posizioa dinamikoki gordetzen du $C$-ren artekotasuna errespetatuz.
+Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="carbon">$B$</VisualBind> puntuek hasierako zuzenkia mugatzen dute. <VisualBind element="lineDC" color="carbon">$l$</VisualBind> zuzenaren gaineko hedapen zuzenak <VisualBind element="pC" color="terracota">$C$</VisualBind> puntu hedatua sortzen du, $B$ puntua $A$ eta $C$-k mugatutako tartearen barruan zorrozki dagoela egiaztatuz.
 
 <Separador />
 
 ### Esanahi geometrikoa eta esparrua
 
-Zuzenak edo segmentuak unada finituan "ixtea" (zirkunferentziak bezala) edo zeharkaezinezko muga-hesiak izatea ekiditen du. Zuzenen luzera-mugagabetasuna ezartzen du <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
+Axioma honek bermatzen du zuzenak mugagabeak direla bi noranzkoetan eta ez dutela amaierako muga-punturik. Intzidentzia-axiomekin batera, edozein zuzenek puntu infinitu dituela frogatzea ahalbidetzen du espazio-finitutasunik gabe.
 
 <Separador />
 
 ### Propietateak
 
-- **Zuzenaren infinitutasuna:** Edozein zuzenetan infinitu puntu daudela bermatzen du.
-- **Mugagabeko luzapena:** Edozein $\overline{AC}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> bere edozein mutur baino haratago luzatu daitekeela ziurtatzen du.
-- **Muga finitugabea:** Espazio linealak muga-ertzerik edo luzera finituko kontorno itxirik ez duela debekatzen du.
+- **Muga-eza lineala:** Zuzen bat bera ere ez da eteten eta ez du muturreko puntu mugarik.
+- **Dentsitatea eta luzapena:** Edozein zuzenki mugarik gabe luzatzea ahalbidetzen du <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
+- **Puntuen infinitutasuna:** Ordena-erlazioen aurrean geometria finituak erabat baztertzen dituen oinarrizko printzipioa da.

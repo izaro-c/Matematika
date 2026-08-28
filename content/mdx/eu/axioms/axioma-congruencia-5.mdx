@@ -2,35 +2,46 @@ export const metadata = {
   id: "axioma-congruencia-5",
   lang: "eu",
   type: "axioma",
-  title: "III.5 Axioma (LAL Kongruentzia Kriterioa)",
-  description: "Bi triangeluk bi alde eta bien artean bildutako angelua hurrenez hurren kongruenteak badituzte, orduan gainerako angeluak ere kongruenteak dira.",
+  title: "III.5 axioma (LAL kongruentzia-irizpidea)",
+  description: "Bi triangeluk bi alde eta bien arteko angelua hurrenez hurren kongruenteak badituzte, gainerako angelu eta aldeak ere kongruenteak dira.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §4", role: "primary" }
   ]
 };
 
 import { SAS } from '@content/diagrams/Axiomas/SAS';
 export const Simulation = SAS;
 
-<Capitular letra="H" />ilberten bostgarren <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-axiomak (klasikoki Aldea-Angulua-Aldea edo LAL irizpide gisa ezaguna) lotura nagusia ezartzen du <ConceptLink targetId="segmento">zuzenkien</ConceptLink> kongruentziaren eta <ConceptLink targetId="angulo">angeluen</ConceptLink> kongruentziaren artean. Axioma honek <ConceptLink targetId="triangulo">triangeluen</ConceptLink> gainezartze zurruna bermatzen du <ConceptLink targetId="geometria-absoluta">geometria absolutuan</ConceptLink>.
+<Capitular letra="D" />avid Hilberten bosgarren kongruentzia-axiomak <ConceptLink targetId="triangulo">triangeluen</ConceptLink> <ConceptLink targetId="congruencia" isDependency={true}>kongruentziarako</ConceptLink> Alde-Angelu-Alde (LAL) irizpidea formulatzen du modu zorrotzean. Euklidesek irudiak gainezarri eta mugitzeko metodoan oinarritutako planteamenduaren ordez, Hilbertek triangeluen berezko zurruntasuna oinarrizko printzipio axiomatiko gisa ezartzen du.
 
-<Definicion title="">
-  Izan bitez $\triangle ABC$ eta $\triangle A'B'C'$ bi <ConceptLink targetId="triangulo">triangelu</ConceptLink>. $\overline{AB} \cong \overline{A'B'}$ eta $\overline{AC} \cong \overline{A'C'}$ zuzenkiak eta bien artean bildutako $\angle BAC \cong \angle B'A'C'$ angelua kongruenteak badira, orduan gainerako angeluak ere hurrenez hurren <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira:
+<Definicion title="Enuntziatu formala">
+  Izan bitez $\triangle ABC$ eta $\triangle A'B'C'$ bi <ConceptLink targetId="triangulo">triangelu</ConceptLink>. Baldin eta $\overline{AB} \cong \overline{A'B'}$, $\overline{AC} \cong \overline{A'C'}$ eta $\angle BAC \cong \angle B'A'C'$ badira, orduan bat datozen gainerako angeluen kongruentziak betetzen dira:
   $$
-  (\overline{AB} \cong \overline{A'B'}) \land (\overline{AC} \cong \overline{A'C'}) \land (\angle BAC \cong \angle B'A'C') \implies (\angle ABC \cong \angle A'B'C') \land (\angle ACB \cong \angle A'C'B')
+  (\overline{AB} \cong \overline{A'B'} \land \overline{AC} \cong \overline{A'C'} \land \angle BAC \cong \angle B'A'C') \implies (\angle ABC \cong \angle A'B'C' \land \angle ACB \cong \angle A'C'B')
   $$
+  Ondorioz, hirugarren aldeak ere kongruenteak dira ($\overline{BC} \cong \overline{B'C'}$) eta bi triangeluak guztiz kongruenteak dira ($\triangle ABC \cong \triangle A'B'C'$).
 </Definicion>
 
 <Separador />
 
-### Irudikapen bisuala
+### Ikus-irudikapena eta elkarrekintza
 
-Kongruenteak diren <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> eta <VisualBind element="AC" color="pavo">$\overline{AC}$</VisualBind> aldeak, gehi bien arteko <VisualBind element="angA" color="terracota">$\angle BAC$</VisualBind> angelua finkatuz, triangeluaren forma eta posizioa modu bakarrean zehazten dira, irudiaren kongruentzia osoa behartuz.
+Simulazio interaktiboan, <VisualBind element="pA" color="carbon">$\triangle ABC$</VisualBind> eta <VisualBind element="pAA" color="carbon">$\triangle A'B'C'$</VisualBind> triangeluek <VisualBind element="segAB" color="terracota">$\overline{AB} \cong \overline{A'B'}$</VisualBind> eta <VisualBind element="segAC" color="terracota">$\overline{AC} \cong \overline{A'C'}$</VisualBind> alde kongruenteak eta bien arteko <VisualBind element="nonReflexAngleBAC" color="ocre">$\angle A \cong \angle A'$</VisualBind> angelua erakusten dituzte. Ikusizko korrespondentziak bigarren triangeluaren forma blokeatzen du, berdintza metriko osoa bermatuz.
 
 <Separador />
 
-### Garrantzi axiomatikoa
+### Esanahi geometrikoa eta esparrua
 
-Euklidesek ez bezala (zeinak gainezartzea mugimendu zurrun jarraitu baten bidez "frogatu" nahi baitzuen), Hilbertek LAL kongruentzia oinarrizko axioma gisa postulatu zuen. Postulatu honetatik abiatuta frogatzen dira gainerako kongruentzia-kriterioak (ALA, LLL) eta <ConceptLink targetId="triangulo-isosceles">triangelu isozelesaren</ConceptLink> teoremeak.
+Axioma honek plano abstraktuko irudien "higidura zurrunak" eragindako zailtasun logikoak saihesten ditu. Gainerako kongruentzia-irizpide guztiak (<ConceptLink targetId="teorema-congruencia-ala">ALA</ConceptLink>, LLL) eta <ConceptLink targetId="teorema-triangulo-isosceles">triangelu isoszelearen teorema</ConceptLink> frogatzeko funtsezko tresna deduktiboa da <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
+
+<Separador />
+
+### Propietateak
+
+- **Zurruntasun triangeluarra:** Hiru elementu independentek modu unibokoan zehazten dituzte triangelu baten magnitude guztiak.
+- **Oinarri deduktiboa:** ALA, LAA eta LLL irizpideak axioma osagarririk gabe ondorioztatzea ahalbidetzen du.
+- **Baliozkotasun unibertsala:** Balio osoa du bai <ConceptLink targetId="sistema-euclidiano">geometria euklidearrean</ConceptLink> bai <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoan</ConceptLink>.

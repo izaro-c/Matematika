@@ -51,7 +51,7 @@ describe('i18n system', () => {
     const puntoEu = db.getDefinition('punto', 'eu');
     expect(puntoEu).toBeDefined();
     expect(puntoEu?.title).toBe('Puntua');
-    expect(puntoEu?.description).toContain('Dimentsiorik gabeko');
+    expect(puntoEu?.description).toContain('Espazio matematiko baten');
 
     // Theorem exists in both Basque and Spanish
     const otherThm = db.getTheorem('teorema-tales', 'eu');

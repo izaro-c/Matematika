@@ -7,19 +7,19 @@ export const metadata = {
   branch: "51M",
   hasSimulation: false,
   authors: ["euclides"],
-  demos: [],
+  demos: ["demo-area-triangulo"],
   sources: [
     { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 41", role: "primary" }
   ]
 };
 
-<Capitular letra="E" />l teorema del área del <ConceptLink targetId="triangulo">triángulo</ConceptLink> determina la medida de superficie de la figura poligonal fundamental de la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>. Establece que la capacidad de área encerrada por tres segmentos depende exclusivamente de la magnitud lineal de una base y de su distancia perpendicular al vértice opuesto.
+<Capitular letra="E" />l teorema del área del <ConceptLink targetId="triangulo">triángulo</ConceptLink> determina la medida de superficie de la figura poligonal fundamental de la geometría plana. Establece que la capacidad de área encerrada por tres segmentos depende exclusivamente de la magnitud lineal de una base y de su distancia perpendicular al vértice opuesto.
 
 <Separador />
 
 ### Enunciado formal
 
-Sea $\triangle ABC$ un <ConceptLink targetId="triangulo">triángulo</ConceptLink> en el plano euclidiano $\mathcal{P}$. Sea $b = \overline{AB}$ la longitud de uno de sus lados tomado como base, y sea $h$ la longitud de la <ConceptLink targetId="perpendicular">altura perpendicular</ConceptLink> trazada desde el vértice opuesto $C$ a la recta soporte del lado $\overline{AB}$. La medida del <ConceptLink targetId="area">área</ConceptLink> del triángulo $\triangle ABC$ satisface la relación:
+Sea $\triangle ABC$ un <ConceptLink targetId="triangulo">triángulo</ConceptLink> en el plano euclidiano $\mathcal{P}$. Sea $b = |\overline{AB}|$ la longitud de uno de sus lados tomado como base, y sea $h$ la longitud de la <ConceptLink targetId="perpendicular">altura perpendicular</ConceptLink> trazada desde el vértice opuesto $C$ a la recta soporte del lado $\overline{AB}$. La medida del área del triángulo $\triangle ABC$ satisface la relación:
 
 <Formula>
   $$ \text{Área}(\triangle ABC) = \frac{1}{2} b \cdot h $$
@@ -32,11 +32,11 @@ Es decir, el área de todo triángulo equivale rigurosamente a la mitad del prod
 ### Demostración y equidescomposición
 
 La deducción euclidiana se obtiene completando el triángulo hasta formar un <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink>:
-1. Se traza por $C$ una <ConceptLink targetId="paralelas">recta paralela</ConceptLink> a $\overline{AB}$, y por $B$ una recta paralela a $\overline{AC}$, las cuales se intersectan en un punto $D$.
+1. Se traza por $C$ una <ConceptLink targetId="paralelas">recta paralela</ConceptLink> a $\overline{AB}$, y por $B$ una recta paralela a $\overline{AC}$, las cuales se intersecan en un punto $D$.
 2. El cuadrilátero $ABDC$ es un <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> con la misma base $b$ y la misma altura $h$.
 3. La diagonal $\overline{BC}$ divide al paralelogramo en dos triángulos <ConceptLink targetId="congruencia">congruentes</ConceptLink>: $\triangle ABC \cong \triangle DCB$.
-4. Por el <ConceptLink targetId="teorema-area-aditividad">teorema de aditividad del área</ConceptLink>, $\text{Área}(ABDC) = \text{Área}(\triangle ABC) + \text{Área}(\triangle DCB) = 2 \cdot \text{Área}(\triangle ABC)$.
-5. Dado que $\text{Área}(ABDC) = b \cdot h$ por el <ConceptLink targetId="teorema-area-rectangulo">teorema del área del rectángulo</ConceptLink>, se concluye que $\text{Área}(\triangle ABC) = \frac{1}{2} b \cdot h$.
+4. Por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink>, $\text{Área}(ABDC) = \text{Área}(\triangle ABC) + \text{Área}(\triangle DCB) = 2 \cdot \text{Área}(\triangle ABC)$.
+5. Dado que $\text{Área}(ABDC) = b \cdot h$ a partir del <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>teorema del área del rectángulo</ConceptLink>, se concluye que $\text{Área}(\triangle ABC) = \frac{1}{2} b \cdot h$.
 
 <Separador />
 

@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-7",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.7 (Existencia de puntos no colineales en el plano)",
-  description: "En todo plano existen al menos tres puntos que no pertenecen a una misma recta.",
+  title: "Axioma I.7 (Intersección de dos planos)",
+  description: "Si dos planos distintos tienen un punto común, entonces su intersección es una recta completa.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
@@ -14,12 +16,12 @@ export const metadata = {
 import { Incidence7 } from '@content/diagrams/Axiomas/Incidence7';
 export const Simulation = Incidence7;
 
-<Capitular letra="E" />n todo <ConceptLink targetId="plano">plano</ConceptLink> del <ConceptLink targetId="espacio">espacio</ConceptLink>, el séptimo <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> formulado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> garantiza la presencia de al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> no colineales. Este postulado asegura que ningún plano se degrada o colapsa en una sola <ConceptLink targetId="recta">recta</ConceptLink>.
+<Capitular letra="S" />i dos <ConceptLink targetId="plano" isDependency={true}>planos</ConceptLink> distintos comparten un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> en el <ConceptLink targetId="espacio">espacio</ConceptLink>, el séptimo axioma de incidencia de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece que necesariamente poseen al menos un segundo punto común, intersecándose a lo largo de una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> completa.
 
 <Definicion title="Enunciado formal">
-  Para todo <ConceptLink targetId="plano">plano</ConceptLink> $\mathcal{P} \in \mathcal{F}$, existen al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> $A, B, C \in \mathcal{P}$ tales que ninguna <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$ los contiene a los tres simultáneamente:
+  Si dos <ConceptLink targetId="plano" isDependency={true}>planos</ConceptLink> distintos $\pi, \sigma \in \mathcal{E}$ ($\pi \neq \sigma$) comparten un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $A \in \pi \cap \sigma$, entonces su intersección mutua es exactamente una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$:
   $$
-  \forall \mathcal{P} \in \mathcal{F}, \ \exists A, B, C \in \mathcal{P} \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
+  \forall \pi, \sigma \in \mathcal{E} \ \bigl((\pi \neq \sigma \land A \in \pi \cap \sigma) \implies \exists! l \in \mathcal{L} \ (l = \pi \cap \sigma)\bigr)
   $$
 </Definicion>
 
@@ -27,18 +29,18 @@ export const Simulation = Incidence7;
 
 ### Representación visual e interacción
 
-En la simulación interactiva, dentro del plano <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind> se ubican tres puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind>. Se verifica que la recta trazada por dos cualesquiera de ellos deja siempre al tercer punto fuera de la alineación lineal dentro de la superficie.
+En la simulación tridimensional, los planos <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> y <VisualBind element="plano-sigma" color="ocre">$\sigma$</VisualBind> se cortan oblicuamente. Al rotar la escena tridimensional, se observa con claridad cómo la recta <VisualBind element="recta-l" color="carbon">$l$</VisualBind> emerge como la traza continua común a ambas superficies planares.
 
 <Separador />
 
 ### Significado geométrico y alcance
 
-Este axioma garantiza la bidimensionalidad interna intrínseca de cada plano. Impide que existan planos degenerados formados únicamente por una recta o por un par de puntos, asegurando la riqueza geométrica de todas las superficies planares.
+Garantiza la consistencia dimensional del espacio tridimensional: dos planos no pueden tocarse tangencialmente en un único punto aislado. Toda intersección no vacía entre planos distintos genera necesariamente una traza lineal unidimensional continua.
 
 <Separador />
 
 ### Propiedades
 
-- **No degeneración planar:** Prohíbe que un plano sea unidimensional.
-- **Existencia de triángulos en cada plano:** Permite construir <ConceptLink targetId="triangulo">triángulos</ConceptLink> en cualquier plano del espacio.
-- **Estructura de semiejes:** Facilita la división del plano mediante rectas e induce la propiedad de <ConceptLink targetId="orden">orden</ConceptLink> planar.
+- **Continuidad de intersección:** Prohíbe contactos puntuales aislados entre planos distintos en el espacio 3D.
+- **Fundamento del ángulo diedro:** Permite definir la apertura angular diedra formada entre los dos semiplanos incidentes en la recta arista $l$.
+- **Dualidad dimensional:** Constituye la propiedad dual en el espacio de la determinación de un punto por la intersección de dos rectas secantes coplanares.

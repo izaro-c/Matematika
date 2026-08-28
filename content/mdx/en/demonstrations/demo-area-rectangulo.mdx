@@ -1,0 +1,71 @@
+export const metadata = {
+  "id": "demo-area-rectangulo",
+  "type": "demostracion",
+  "title": "Proof: Rectangle Area Theorem",
+  "description": "Axiomatic proof by subdivision into unit squares and extension to irrational dimensions via density and the Archimedean axiom, grounded in Hilbert's measure theory.",
+  "parentTheorem": "teorema-area-rectangulo",
+  "lang": "en",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["euclides", "hilbert"],
+  "tags": ["geometry", "areas", "rectangle", "measure"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 35", "role": "primary" },
+    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "locator": "Chapter V, §22", "role": "secondary" }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="T" />he area formula for a <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle</ConceptLink> is established in three successive stages that guarantee its validity for integer, rational, and irrational side lengths.
+
+<Separador />
+
+### Proof step by step
+
+<ProofStep number={1} title="Normalization: the unit square">
+The unit square is axiomatically assigned area 1 as the reference unit:
+
+<Formula>
+  $$ \text{Area}(\text{unit square}) = 1 $$
+</Formula>
+
+This convention is ensured by the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity axiom</ConceptLink>, which assigns value $1$ to the unit square.
+</ProofStep>
+
+<ProofStep number={2} title="Integer dimensions">
+Let $R$ be a rectangle with base $m \in \mathbb{N}$ and height $n \in \mathbb{N}$. Subdivide $R$ into $m \times n$ unit squares using equidistant <ConceptLink targetId="paralelas" isDependency={true}>parallel lines</ConceptLink>. By additivity:
+
+<Formula>
+  $$ \text{Area}(R) = m \cdot n \cdot 1 = m \cdot n $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={3} title="Rational dimensions">
+Let $b = \frac{p}{q}$ and $h = \frac{m}{n}$ with $p, q, m, n \in \mathbb{N}$. Subdivide each side into fractions of length $\frac{1}{q}$ and $\frac{1}{n}$ respectively, obtaining $p \cdot m$ sub-squares of side $\frac{1}{qn}$. Additivity yields:
+
+<Formula>
+  $$ \text{Area}(R) = \frac{p}{q} \cdot \frac{m}{n} = b \cdot h $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} title="Extension to reals via the Archimedean axiom">
+For $b, h \in \mathbb{R}^+$ irrational, construct rational sequences $(b_k)_{k \geq 1} \nearrow b$ and $(h_k)_{k \geq 1} \nearrow h$. By the <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Archimedean axiom</ConceptLink> and monotonicity of the area measure:
+
+<Formula>
+  $$ \text{Area}(R) = \lim_{k \to \infty} b_k \cdot h_k = b \cdot h $$
+</Formula>
+
+The uniqueness of this limit guarantees that no other continuous, additive area function assigns a different value to the rectangle.
+</ProofStep>
+
+<Separador />
+
+### Deductive analysis
+
+<Nota>
+  This proof illustrates the classical method of exhaustion due to Eudoxus, reformulated in Hilbert's axiomatic language. The extension from rationals to reals relies essentially on the Archimedean property of the ordering of $\mathbb{R}$.
+</Nota>
+
+</DemonstrationSection>

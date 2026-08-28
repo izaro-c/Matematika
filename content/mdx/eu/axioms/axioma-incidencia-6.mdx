@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-6",
   lang: "eu",
   type: "axioma",
-  title: "I.6 Axioma (Bi planoren ebakidura)",
-  description: "Bi plano desberdinek puntu komun bat badute, gutxienez beste puntu komun bat dute eta zuzen batean ebakitzen dute elkar.",
+  title: "I.6 axioma (Zuzenaren inklusioa planoan)",
+  description: "Zuzen baten bi puntu desberdin plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
@@ -14,12 +16,12 @@ export const metadata = {
 import { Incidence6 } from '@content/diagrams/Axiomas/Incidence6';
 export const Simulation = Incidence6;
 
-<Capitular letra="B" />i <ConceptLink targetId="plano">plano</ConceptLink> desberdinek espazioan <ConceptLink targetId="punto">puntu</ConceptLink> bat partekatzen badute, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>-en seigarren <ConceptLink targetId="intzidentzia">intzidentzia-axioma</ConceptLink> honek gutxienez bigarren puntu komun bat dutela ezartzen du nahitaez, haien ebakidura <ConceptLink targetId="zuzen">zuzen</ConceptLink> oso bat izanda.
+<Capitular letra="Z" />uzen baten bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdin <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> batekoak badira, <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> seigarren intzidentzia-axiomak ezartzen du zuzen horren puntu guztiak ere plano berekoak direla nahitaez. Postulatu honek planoaren zurruntasuna eta lautasun geometriko perfektua definitzen ditu.
 
 <Definicion title="Enuntziatu formala">
-  Bi $\mathcal{P}_1, \mathcal{P}_2 \in \mathcal{F}$ <ConceptLink targetId="plano">plano</ConceptLink> desberdinek ($\mathcal{P}_1 \neq \mathcal{P}_2$) $A \in \mathcal{P}_1 \cap \mathcal{P}_2$ <ConceptLink targetId="punto">puntu</ConceptLink> komun bat badute, orduan gutxienez beste $B \in \mathcal{P}_1 \cap \mathcal{P}_2$ puntu bat existitzen da ($B \neq A$), eta haien ebakidura zehatza $l \in \mathcal{L}$ <ConceptLink targetId="zuzen">zuzena</ConceptLink> da:
+  Edozein $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzenetarako</ConceptLink> eta $\pi \in \mathcal{E}$ <ConceptLink targetId="plano" isDependency={true}>planotarako</ConceptLink>, $A \in \pi$ eta $B \in \pi$ betetzen duten bi $A, B \in l$ puntu desberdin existitzen badira ($A \neq B$), orduan $l \subset \pi$ betetzen da:
   $$
-  \forall \mathcal{P}_1, \mathcal{P}_2 \in \mathcal{F} \ \bigl((\mathcal{P}_1 \neq \mathcal{P}_2 \land A \in \mathcal{P}_1 \cap \mathcal{P}_2) \implies \exists B \in \mathcal{P}_1 \cap \mathcal{P}_2 \ (B \neq A) \land \exists l \in \mathcal{L} \ (l = \mathcal{P}_1 \cap \mathcal{P}_2)\bigr)
+  \forall l \in \mathcal{L}, \forall \pi \in \mathcal{E} \ \bigl((\exists A, B \in l \ (A \neq B \land A \in \pi \land B \in \pi)) \implies l \subset \pi\bigr)
   $$
 </Definicion>
 
@@ -27,18 +29,18 @@ export const Simulation = Incidence6;
 
 ### Ikus-irudikapena eta elkarrekintza
 
-Hiru dimentsioko simulazioan, <VisualBind element="plane1" color="marino">$\mathcal{P}_1$</VisualBind> eta <VisualBind element="plane2" color="terracota">$\mathcal{P}_2$</VisualBind> planoek elkar ebakitzen dute. Edozein planoren okurdura egokitzean puntu komuna mantenduz, ebakidura-zuzena <VisualBind element="lineInt" color="carbon">$l$</VisualBind> bi planoen spazia komun gisa agertzen da etengabe.
+Hiru dimentsioko simulazioan, <VisualBind element="recta" color="carbon">$l$</VisualBind> zuzenak <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntuak ditu barnean, biak <VisualBind element="plano" color="canela">$\pi$</VisualBind> planoan kokatuta. 3D elkarrekintzak ikuspegia biratzeko aukera ematen du, zuzenaren traza jarraitua gainazal planarraren barruan mantentzen dela egiaztatuz.
 
 <Separador />
 
 ### Esanahi geometrikoa eta esparrua
 
-Hiru dimentsioko espazioaren dimentsio-koherentzia bermatzen du: bi plano ezin dira ukitu puntu isolatu bakar batean. Plano desberdinen arteko ebakidura ez-huts orok nahitaez dimentsio bakarreko spazia lineala sortzen du.
+Espazioaren lautasun zorrotza bermatzen du: plano batek ezin du tolesdurarik edo ondulaziorik izan, zuzen batek bere bi puntu zeharkatzea eta aldi berean planoan guztiz murgilduta ez egotea eragotziz. 1. eta 2. dimentsioak koherentziaz lotzen ditu.
 
 <Separador />
 
 ### Propietateak
 
-- **Ebakiduraren jarraitutasuna:** Plano desberdinen arteko puntu isolatuko ukipenak debekatzen ditu.
-- **Angelu diedroak:** Angelu diedroak eta espazioaren banaketa definitzeko oinarria osatzen du.
-- **Dualtasun lineala:** Zuzen berean ez dauden puntuen elkarketa eta planoen ebakiduraren arteko harremana erakusten du.
+- **Inklusio osoko irizpidea:** Bi puntu desberdinen partaideitza egiaztatzea nahikoa da zuzen osoaren inklusioa bermatzeko.
+- **Planoan ez dauden zuzenen gehieneko ebakidura:** Planoan ez dagoen zuzen batek puntu bakar batean ebaki dezake planoa gehienez.
+- **Zuzenkien euskarria:** Muturrak $\pi$ planoan dituen edozein $\overline{AB}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> guztiz $\pi$ planoan sartuta dago.

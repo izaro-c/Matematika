@@ -2,36 +2,46 @@ export const metadata = {
   id: "axioma-arquimedes",
   lang: "es",
   type: "axioma",
-  title: "Axioma de Arquímedes",
-  description: "Dado un segmento cualquiera AB y un segmento CD, existe un número natural n tal que la repetición de n segmentos CD concatenados supera en longitud al segmento AB.",
+  title: "Axioma V.1 (Axioma de Arquímedes)",
+  description: "Dados dos segmentos cualesquiera, siempre es posible superar la longitud del mayor transportando consecutivamente un número finito de copias del menor.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "continuidad",
   hasSimulation: true,
   sources: [
-    { title: "Sobre la esfera y el cilindro", author: "Arquímedes", locator: "Libro I, Asunción 5", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §7", role: "primary" }
+    { title: "Sobre la esfera y el cilindro", author: "Arquímedes", locator: "Postulado 5", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "primary" }
   ]
 };
 
 import { AxiomaArquimedes } from '@content/diagrams/Axiomas/AxiomaArquimedes';
 export const Simulation = AxiomaArquimedes;
 
-<Capitular letra="E" />l axioma de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink> constituye el primer postulado de <ConceptLink targetId="continuidad">continuidad</ConceptLink> (Axioma IV.1 de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>). Excluye la existencia de elementos infinitamente grandes o infinitesimales en la geometría métrica.
+<Capitular letra="E" />l axioma de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink> —incorporado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> como el primer principio del grupo de continuidad— descarta la presencia de magnitudes infinitamente pequeñas (infinitesimales) o infinitamente grandes en la geometría. Establece que cualquier distancia, por vasta que sea, puede ser superada mediante la adición sucesiva y finita de un <ConceptLink targetId="segmento">segmento</ConceptLink> elemental.
 
-<Definicion title="">
-  Sean $\overline{AB}$ y $\overline{CD}$ dos <ConceptLink targetId="segmento">segmentos</ConceptLink> arbitrarios. Existe un entero positivo $n \in \mathbb{N}^+$ tal que, al construir sobre la semirrecta $AB$ una cadena de $n$ segmentos congruentes a $\overline{CD}$ concatenados $(A = A_0, A_1, A_2, \dots, A_n)$, el punto $B$ se encuentra entre $A$ y $A_n$:
+<Definicion title="Enunciado formal">
+  Dados dos <ConceptLink targetId="segmento">segmentos</ConceptLink> no nulos $\overline{AB}$ y $\overline{CD}$, existe un número natural $n \in \mathbb{N}$ tal que al transportar $n$ copias consecutivas de $\overline{AB}$ a lo largo de la semirrecta $\overrightarrow{CD}$ a partir de $C$, se supera la posición del <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $D$:
   $$
-  \forall \overline{AB}, \overline{CD} \implies \exists n \in \mathbb{N}^+ \ (n \cdot \overline{CD} > \overline{AB})
+  \forall \overline{AB}, \overline{CD} \ \bigl(A \neq B \land C \neq D \implies \exists n \in \mathbb{N} \ (n \cdot \overline{AB} > \overline{CD})\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual
+### Representación visual e interacción
 
-Dado el segmento objetivo <VisualBind element="AB" color="ocre">$\overline{AB}$</VisualBind> y el segmento unidad <VisualBind element="CD" color="pavo">$\overline{CD}$</VisualBind>, la iteración del transporte del módulo unidad <VisualBind element="An" color="terracota">$A_n$</VisualBind> supera eventualmente la longitud del segmento objetivo para un número finito de pasos.
+En la simulación interactiva, se confrontan el segmento elemental <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> y el segmento objetivo <VisualBind element="segCD" color="marino">$\overline{CD}$</VisualBind>. Mediante el deslizador dinámico <VisualBind element="n" color="ocre">$n$</VisualBind>, se acumulan las repeticiones consecutivas <VisualBind element="acumulado" color="terracota">$n \cdot \overline{AB}$</VisualBind> hasta alcanzar el umbral crítico <VisualBind element="lineDThreshold" color="marino">$D$</VisualBind>, visualizando en <VisualBind element="copiasSuperanCD" color="musgo">verde</VisualBind> el rebasamiento del objetivo para el valor minimal <VisualBind element="nMinimo" color="ocre">$n_{\min}$</VisualBind>.
 
 <Separador />
 
-### Significado axiomático
+### Significado geométrico y alcance
 
-Este postulado garantiza que no existen magnitudes incomparables ni segmentos infinitésimos no nulos. Es indispensable para la teoría de proporciones y la medición de áreas y volúmenes, permitiendo la aproximación por agotamiento en la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink>.
+Garantiza la propiedad arquimediana del espacio: no existen segmentos infinitesimales ni barreras insalvables por acumulación finita. Conecta la escala geométrica sintética con la estructura de orden arquimediano del cuerpo de los números reales $\mathbb{R}$ en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+
+<Separador />
+
+### Propiedades
+
+- **Exclusión de infinitesimales:** Ningún segmento no nulo es infinitamente pequeño respecto a otro.
+- **Principio de acotación:** Todo subconjunto acotado de una recta puede ser cubierto por un número finito de pasos de longitud fija.
+- **Compatibilidad métrica:** Es indispensable para definir la medida de ángulos, la longitud de curvas y el área de polígonos mediante límites convergentes.

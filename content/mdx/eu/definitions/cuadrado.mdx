@@ -4,36 +4,41 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Karratua",
-  description: "Lau alde kongruente eta lau angelu zuzen dituen poligono erregular ekilateroa eta ekiakulua.",
+  description: "Lau aldeko poligono erregularra, lau alde kongruenteak eta barneko lau angelu zuzenak dituena.",
+  branch: "51M",
+  hasSimulation: false,
   sources: [
-    { title: "Elementuak", author: "Euclides", locator: "I. Liburua, 22. Definizioa", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 22. Definizioa", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
   ]
 };
 
-<Capitular letra="K" />arratua lau aldetako <ConceptLink targetId="poligono">poligono</ConceptLink> erregular nagusia da. Erronboaren eta lauzgilearen propietate metrikoak uztartzen ditu, <ConceptLink targetId="cuadrilatero">plano-koadrilateroen</ConceptLink> familiaren barruan simetria gehieneko irudia osatuz.
+<Capitular letra="K" />arratua plano euklidearreko lau aldeko poligono erregularra da. Erronboaren propietate metrikoak (lau alde kongruente) eta laukizuzenarenak (lau angelu zuzen) bateratzen dituenez, simetria handiena duen figura da <ConceptLink targetId="cuadrilatero">laukien</ConceptLink> familian.
 
 <Definicion title="">
-  $ABCD$ <ConceptLink targetId="cuadrilatero" isDependency={true}>koadrilatero</ConceptLink> bat <ConceptLink targetId="cuadrado">karratua</ConceptLink> da baldin eta soilik baldin bere lau aldeak beren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira eta bere lau <ConceptLink targetId="angulo">barne-angeluak</ConceptLink> zuzenak badira:
+  $ABCD$ <ConceptLink targetId="cuadrilatero" isDependency={true}>lauki</ConceptLink> ganbila karratua da baldin eta soilik baldin bere lau aldeak elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badira eta barneko lau angeluak <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzenak</ConceptLink> badira:
   $$
-  AB \cong BC \cong CD \cong DA \quad \land \quad \angle A \cong \angle B \cong \angle C \cong \angle D \cong 90^\circ
+  (\overline{AB} \cong \overline{BC} \cong \overline{CD} \cong \overline{DA}) \land (\angle A \cong \angle B \cong \angle C \cong \angle D \cong 90^\circ)
   $$
 </Definicion>
 
 <Separador />
 
-### Oinarrizko propietateak
+### Propietate geometrikoak eta simetria
 
-- **Diagonal ortogonalak eta kongruenteak**: Bere bi diagonalek zehazki luzera bera dute ($d = l\sqrt{2}$), beren erdialdeko puntuetan ebakitzen dute elkar eta beren artean <ConceptLink targetId="perpendicular">perpendikularrak</ConceptLink> dira.
-- **Simetria-ardatzak**: Lau simetria-ardatz ditu (aldeen bi erdibitzaile eta bi diagonalak).
+- **Diagonalak**: Bi diagonalek luzera bera dute ($d = l\sqrt{2}$), elkar erdibitzen dute eta <ConceptLink targetId="perpendicular">perpendikularrak</ConceptLink> dira elkarren artean.
+- **Simetria-taldea**: Karratuaren automorfismo euklidearren taldea $D_4$ talde diedrikoa da, 4 errotazioz eta 4 islapenez osatua.
+- **Inskripzioa eta zirkunskripzioa**: Zirkunferentzia inskribatu kontzentrikoa ($r = \frac{l}{2}$) eta zirkunskribatua ($R = \frac{l\sqrt{2}}{2}$) ditu.
 
 <Separador />
 
-### Erlazio metrikoa eta azalera
-
-<Formula>
-  $$
-  \text{Azalera}(ABCD) = l^2
-  $$
-</Formula>
-
-$l$ aldeko karratu baten <ConceptLink targetId="teoria-medida-area">azalera</ConceptLink> bere luzera linealaren karratuaren berdina da. Bi dimentsioko erlazio hau <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremaren</ConceptLink> froga geometriko tradizionaletan erabilitako oinarria da.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Neurriak eta azalera">
+    <PropiedadItem id="teorema-area-rectangulo" title="Karratuaren azalera">
+      $l$ alboko karratu baten azalera bere luzeraren karratuaren berdina da: $\mu(ABCD) = l^2$.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-pitagoras" title="Diagonalaren erlazioa">
+      Diagonalaren luzerak $d^2 = l^2 + l^2 = 2l^2 \implies d = l\sqrt{2}$ betetzen du.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

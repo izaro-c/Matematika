@@ -2,7 +2,7 @@ export const metadata = {
   id: "teorema-pitagoras",
   type: "teorema",
   title: "Pitagorasen teorema",
-  description: "Edozein triangelu angeluzuzenetan, hipotenusaren gainean eraikitako karratuaren azalera katetoen gainean eraikitako karratuen azaleran batura berdina da.",
+  description: "Edozein triangelu angeluzuzenetan, hipotenusaren gainean eraikitako karratuaren azalera katetoen gainean eraikitako karratuen azaleren baturaren berdina da.",
   statement: "C erpinean angelu zuzena duen △ABC triangelu angeluzuzen orotan, katetoen karratuen batura hipotenusaren karratuaren berdina da: a² + b² = c².",
   branch: "51M",
   hasSimulation: true,
@@ -17,31 +17,31 @@ export const metadata = {
 import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras';
 export const Simulation = Pitagoras;
 
-<Capitular letra="P" />lanoko <ConceptLink targetId="geometria-euclidiana">geometria euklidetarrean</ConceptLink>, <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink></VisualBind> baten <ConceptLink targetId="lado">aldeen</ConceptLink> arteko erlazio metrikoak <ConceptLink targetId="segmento">zuzenki</ConceptLink> lotzen ditu aldeen luzera linealak eta horien gainean marraztutako <ConceptLink targetId="cuadrado">karratuen</ConceptLink> <ConceptLink targetId="area">azalerak</ConceptLink>.
+<Capitular letra="P" />lanoko <ConceptLink targetId="geometria-euclidiana">geometria euklidetarrean</ConceptLink>, <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink></VisualBind> baten aldeen arteko erlazio metrikoak zuzenean lotzen ditu aldeen luzera linealak eta horien gainean marraztutako <ConceptLink targetId="cuadrado">karratuen</ConceptLink> <ConceptLink targetId="teoria-medida-area">azalerak</ConceptLink>.
 
 <Separador />
 
 ### Enuntziatu formala
 
-Bitzak plano euklidetarrean $C$ <ConceptLink targetId="vertice">erpinean</ConceptLink> <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> duen $\triangle ABC$ <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzena</ConceptLink>. Izan bitez $a = |\overline{BC}|$ eta $b = |\overline{CA}|$ <VisualBind element="cateto-a" color="pavo"><ConceptLink targetId="cateto">katetoen</ConceptLink></VisualBind> neurri metrikoak, eta $c = |\overline{AB}|$ <VisualBind element="hipotenusa" color="terracota"><ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink></VisualBind> neurri metrikoa. Ezinbestean betetzen da honako berdintza hau:
+Izan bedi plano euklidetarrean $C$ erpinean angelu zuzena duen $\triangle ABC$ <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzena</ConceptLink>. Izan bitez $a = |\overline{BC}|$ eta $b = |\overline{CA}|$ <VisualBind element="cateto-a" color="pavo">katetoen</VisualBind> neurri metrikoak, eta $c = |\overline{AB}|$ <VisualBind element="hipotenusa" color="terracota">hipotenusaren</VisualBind> neurri metrikoa. Ezinbestean betetzen da honako berdintza hau:
 
 <Formula>
   $$ a^2 + b^2 = c^2 $$
 </Formula>
 
-Azalera poligonalen neurriari dagokionez, hipotenusaren gaineko <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">karratuaren</ConceptLink></VisualBind> $c^2$ azalera eta $a$ zein $b$ katetoen gaineko $a^2$ eta $b^2$ karratuen azaleraren batura nahitaez berdinak dira.
+Azalera poligonalen neurriari dagokionez, hipotenusaren gaineko <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">karratuaren</ConceptLink></VisualBind> $c^2$ azalera eta $a$ zein $b$ katetoen gaineko $a^2$ eta $b^2$ karratuen azaleren batura nahitaez berdinak dira.
 
 <Separador />
 
 ### Azterketa eta oinarritze axiomatikoa
 
-Erlazio metriko honen froga nahitaez <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioman</ConceptLink> oinarritzen da. <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> garatutako eraikuntza formalean, emaitza hau plano deskonposagarritasunaren teoriatik eta azalera-neurri aditiboaren propietateetatik deduzitzen da.
+Erlazio metriko honen froga nahitaez <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioman</ConceptLink> oinarritzen da. <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> garatutako eraikuntza formalean, emaitza hau planoaren deskonposagarritasunaren teoriatik eta <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>azaleraren aditibitate-teorematik</ConceptLink> deduzitzen da.
 
-Geometria ez-euklidetarretan (geometria hiperbolikoan edo esferikoan esaterako), karratuen baturaren erlazio aljebraikoa ez da zuzenean mantentzen, funtzio trigonometriko hiperbolikoak edo esferikoak erabili behar direlarik.
+Geometria ez-euklidetarretan (geometria hiperbolikoan edo esferikoan, esaterako), karratuen baturaren erlazio aljebraikoa ez da zuzenean mantentzen, funtzio trigonometriko hiperbolikoak edo esferikoak erabili behar baitira.
 
 <Separador />
 
 ### Propietateak eta alderantzizkoa
 
-- **Izaera alderantzizkoa**: $\triangle ABC$ triangelu baten aldeen luzerek $a^2 + b^2 = c^2$ berdintza betetzen badute, orduan $\overline{AB}$ aldeari aurrez aurre dagon angelua nahitaez <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> da.
-- **Antzekotasun bidezko froga**: Hipotenusarekiko altuera marraztean, jatorrizko triangelua bi triangelu <ConceptLink targetId="semejanza">antzekoetan</ConceptLink> banatzen da, $a^2 = c \cdot p$ eta $b^2 = c \cdot q$ proportzioak lortuz.
+- **Izaera alderantzizkoa**: $\triangle ABC$ triangelu baten aldeen luzerek $a^2 + b^2 = c^2$ berdintza betetzen badute, orduan $\overline{AB}$ aldeari aurrez aurre dagoen angelua nahitaez angelu zuzena da.
+- **Antzekotasun bidezko froga**: Hipotenusarekiko altuera marraztean, jatorrizko triangelua bi triangelu <ConceptLink targetId="semejanza">antzekotan</ConceptLink> banatzen da, $a^2 = c \cdot p$ eta $b^2 = c \cdot q$ proportzioak lortuz.

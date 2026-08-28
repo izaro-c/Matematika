@@ -1,0 +1,64 @@
+export const metadata = {
+  "id": "demo-area-triangulo",
+  "type": "demostracion",
+  "title": "Frogapena: Triangeluaren eremuaren teorema",
+  "description": "Frogapen geometrikoa triangeluaren eremua inguruan dagoen laukizuzenaren eremuaren erdia dela frogatuz, diagonalaren kongruentzia eta eremuaren adibidotasuna erabiliz.",
+  "parentTheorem": "teorema-area-triangulo",
+  "lang": "eu",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["euclides"],
+  "tags": ["geometria", "eremuak", "triangelua", "neurria"],
+  "layout": "split",
+  "sources": [
+    { "title": "Elementuak", "author": "Euklides", "locator": "I. Liburua, 41. Proposizioa", "role": "primary" }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="D" />ela $\triangle ABC$ <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> bat $b = |\overline{AB}|$ oinarriarekin eta $h$ altuerarekin ($C$ erpinetik $\overline{AB}$ zuzenaren arteko distantzia perpendikularra). Frogapenak $\triangle$-ren eremua bikoizten duen laguntzako laukizuzen bat eraikitzen du.
+
+<Separador />
+
+### Frogapena pausoz pauso
+
+<ProofStep number={1} title="Inguruko laukizuzenaren eraiketa">
+$ABDE$ laukizuzena eraikitzen da $\overline{AB}$ oinarriarekin eta $h$ altuerarekin, $A$ eta $B$-tik <ConceptLink targetId="perpendicular" isDependency={true}>perpendikuluak</ConceptLink> trazatuz eta $C$-tik <ConceptLink targetId="paralelas" isDependency={true}>paraleloa</ConceptLink> $AB$-ri. <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>Laukizuzenaren eremuaren teoremaren</ConceptLink> arabera:
+
+<Formula>
+  $$ \text{Eremua}(ABDE) = b \cdot h $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={2} title="AC diagonalak bi triangelu sortzen ditu">
+$\overline{AC}$ diagonalak $ABDE$ laukizuzena bi triangelutan zatitzen du. <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>ALA kongruentzia-irizpidearen</ConceptLink> arabera, $\triangle ABC$ eta $\triangle CAE$ <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> dira: angelu zuzenak $B$ eta $E$-n, $\overline{AC}$ alde erkidea, eta $|\overline{AB}| = |\overline{CE}|$.
+</ProofStep>
+
+<ProofStep number={3} title="Eremuaren adibidotasunaren aplikazioa">
+Bi triangeluak kongruenteak direnez, eremua berdina dute. <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Eremuaren adibidotasun-teoremaren</ConceptLink> arabera:
+
+<Formula>
+  $$ \text{Eremua}(ABDE) = \text{Eremua}(\triangle ABC) + \text{Eremua}(\triangle CAE) = 2 \cdot \text{Eremua}(\triangle ABC) $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} title="Ondorioa">
+Triangeluaren eremua despejikatuz:
+
+<Formula>
+  $$ \text{Eremua}(\triangle ABC) = \frac{1}{2} \cdot b \cdot h $$
+</Formula>
+
+Berdintza hau edozein triangelurentzat balio du, zorrotza, angeluzuzena edo lauza, hiru kasuetan oinarri eta altuera berdineko laukizuzenean sartu daitekeelako.
+</ProofStep>
+
+<Separador />
+
+### Analisi deduktiboa
+
+<Nota>
+  Triangelu obtusanguluaren kasuan laukizuzena oinarritik kanpora hedatu behar da, baina adibidotasun- eta kongruentzia-argudioa aldatu gabe mantentzen da. Frogapenak <ConceptLink targetId="sistema-euclidiano">sistema axiomatiko euklidearraren</ConceptLink> barruan soilik funtzionatzen du nahitaez.
+</Nota>
+
+</DemonstrationSection>

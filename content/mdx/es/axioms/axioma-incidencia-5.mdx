@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-5",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.5 (Inclusión de la recta en el plano)",
-  description: "Si dos puntos distintos de una recta pertenecen a un plano, la recta entera está contenida en dicho plano.",
+  title: "Axioma I.5 (Existencia de puntos no colineales en el plano)",
+  description: "En todo plano existen al menos tres puntos que no pertenecen a una misma recta.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
@@ -14,12 +16,12 @@ export const metadata = {
 import { Incidence5 } from '@content/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
 
-<Capitular letra="S" />i dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos de una <ConceptLink targetId="recta">recta</ConceptLink> pertenecen a un <ConceptLink targetId="plano">plano</ConceptLink>, el quinto <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> formulado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> exige que la totalidad de la recta esté contenida en dicho plano. Este postulado asegura la llaneza y consistencia estructural del plano geométrico.
+<Capitular letra="E" />n todo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> del <ConceptLink targetId="espacio">espacio</ConceptLink>, el quinto axioma de incidencia formulado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> garantiza la presencia de al menos tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no colineales. Este postulado asegura que ningún plano se degrada o colapsa en una sola <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> o en una colección puntual degenerada.
 
 <Definicion title="Enunciado formal">
-  Para toda <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$ y todo <ConceptLink targetId="plano">plano</ConceptLink> $\mathcal{P} \in \mathcal{F}$, si existen dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B \in l$ tal que $A \in \mathcal{P}$ y $B \in \mathcal{P}$, entonces $l \subset \mathcal{P}$:
+  Para todo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \mathcal{E}$, existen al menos tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> $A, B, C \in \pi$ tales que ninguna <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$ los contiene a los tres simultáneamente:
   $$
-  \forall l \in \mathcal{L}, \forall \mathcal{P} \in \mathcal{F} \ \bigl((\exists A, B \in l \ (A \neq B \land A, B \in \mathcal{P})) \implies l \subset \mathcal{P}\bigr)
+  \forall \pi \in \mathcal{E}, \ \exists A, B, C \in \pi \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
   $$
 </Definicion>
 
@@ -27,18 +29,18 @@ export const Simulation = Incidence5;
 
 ### Representación visual e interacción
 
-En la simulación interactiva, la recta <VisualBind element="line" color="carbon">$l$</VisualBind> contiene los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind>, situados ambos sobre el plano <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind>. Al desplazar los puntos a lo largo del plano, la recta completa permanece adosada de forma continua dentro de la superficie planar.
+En la escena tridimensional interactiva, el plano <VisualBind element="plano" color="canela">$\pi$</VisualBind> alberga tres puntos diferenciados <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind>. La visualización permite rotar el espacio y verificar que los tres puntos definen una auténtica área bidimensional no contenida en ninguna recta única.
 
 <Separador />
 
 ### Significado geométrico y alcance
 
-Garantiza la planitud estricta: un plano no puede ser abombado ni tener hendiduras que permitan a una recta atravesar dos de sus puntos sin estar totalmente sumergida en él. Conecta la geometría lineal unidimensional con la bidimensional.
+Garantiza la bidimensionalidad interna de cada plano individual. Asegura que cada superficie plana posee una extensión superficial real capaz de albergar configuraciones geométricas ricas, <ConceptLink targetId="triangulo">triángulos</ConceptLink> y divisiones en semiplanos.
 
 <Separador />
 
 ### Propiedades
 
-- **Criterio de pertenencia planar:** Basta comprobar la pertenencia de dos puntos distintos para asegurar la inclusión completa de la recta.
-- **Intersección de superficies:** Impide que una recta corte a un plano en exactamente dos puntos distintos sin estar contenida en él.
-- **Convexidad subyacente:** Facilita la construcción de conjuntos <ConceptLink targetId="convexo">convexos</ConceptLink> y semoplanos.
+- **No degeneración planar:** Prohíbe la existencia de planos unidimensionales o puntuales.
+- **Universalidad de polígonos:** Permite inscribir triángulos en cualquier plano del espacio sin excepción.
+- **Riqueza afín:** Garantiza un sistema de coordenadas bidimensional libre sobre cada plano $\pi$.

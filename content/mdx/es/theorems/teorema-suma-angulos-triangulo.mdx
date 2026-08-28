@@ -16,7 +16,7 @@ export const metadata = {
 import { SumaAngulos } from '@content/diagrams/Teoremas/SumaAngulos';
 export const Simulation = SumaAngulos;
 
-<Capitular letra="E" />l teorema de la suma angular de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es una de las propiedades más célebres y universales de la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink>. Caracteriza la curvatura nula del <ConceptLink targetId="plano">plano</ConceptLink> al establecer que la amplitud conjunta de los tres <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de cualquier triángulo equivale a un <ConceptLink targetId="angulo-llano">ángulo llano</ConceptLink>.
+<Capitular letra="E" />l teorema de la suma angular de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es una de las propiedades más célebres y universales de la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink>. Caracteriza la curvatura nula del plano al establecer que la amplitud conjunta de los tres <ConceptLink targetId="angulo">ángulos interiores</ConceptLink> de cualquier triángulo equivale a un <ConceptLink targetId="angulos-suplementarios">ángulo llano</ConceptLink>.
 
 <Separador />
 
@@ -28,15 +28,15 @@ Sea $\triangle ABC$ un <VisualBind element="triangulo" color="musgo"><ConceptLin
   $$ \alpha + \beta + \gamma = 180^\circ \quad (\text{o } \pi \text{ rad}) $$
 </Formula>
 
-Es decir, la suma métrica de los tres ángulos interiores de todo triángulo equivale exactamente a dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>.
+Es decir, la suma métrica de los tres ángulos interiores de todo triángulo equivale exactamente a dos ángulos rectos.
 
 <Separador />
 
 ### Demostración mediante la recta paralela
 
-La construcción clásica ideada por los pitagóricos y formalizada en los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> traza por el <ConceptLink targetId="vertice">vértice</ConceptLink> $C$ una <ConceptLink targetId="paralelas">recta paralela</ConceptLink> al lado opuesto $\overline{AB}$:
-1. La recta paralela $r$ y los lados $\overline{AC}$ y $\overline{BC}$ forman pares de <ConceptLink targetId="teorema-angulos-alternos-internos">ángulos alternos internos</ConceptLink> congruentes.
-2. Los tres ángulos consecutivos sobre la recta $r$ componen un <ConceptLink targetId="angulo-llano">ángulo llano</ConceptLink> de $180^\circ$.
+La construcción clásica formalizada en los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> traza por el vértice $C$ una <ConceptLink targetId="paralelas">recta paralela</ConceptLink> al lado opuesto $\overline{AB}$:
+1. La recta paralela y los lados $\overline{AC}$ y $\overline{BC}$ forman pares de <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>ángulos alternos internos</ConceptLink> congruentes ($\alpha \cong \alpha'$ y $\beta \cong \beta'$).
+2. Los tres ángulos consecutivos sobre la recta paralela componen un <ConceptLink targetId="angulos-suplementarios">ángulo llano</ConceptLink> de $180^\circ$: $\alpha' + \gamma + \beta' = 180^\circ$.
 3. Por sustitución directa de las igualdades angulares, se obtiene $\alpha + \beta + \gamma = 180^\circ$.
 
 <Separador />
@@ -44,5 +44,5 @@ La construcción clásica ideada por los pitagóricos y formalizada en los <Conc
 ### Equivalencia con el Quinto Postulado
 
 Este teorema es lógicamente equivalente al <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas de Euclides</ConceptLink>:
-- **Geometría hiperbólica**: La suma de los ángulos interiores de un triángulo es estrictamente menor que $180^\circ$ ($\alpha + \beta + \gamma < 180^\circ$), existiendo un defecto angular proporcional a su <ConceptLink targetId="area">área</ConceptLink>.
+- **Geometría hiperbólica**: La suma de los ángulos interiores de un triángulo es estrictamente menor que $180^\circ$ ($\alpha + \beta + \gamma < 180^\circ$), existiendo un defecto angular proporcional a su área.
 - **Geometría esférica**: La suma angular es estrictamente mayor que $180^\circ$ ($\alpha + \beta + \gamma > 180^\circ$), definiendo el exceso esférico.

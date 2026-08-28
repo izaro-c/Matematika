@@ -22,7 +22,7 @@ export const Simulation = AngulosOpuestos;
 
 ### Enunciado formal
 
-Sean $r$ y $s$ dos <ConceptLink targetId="recta">rectas secantes</ConceptLink> en el plano $\mathcal{P}$ que se intersectan en el <VisualBind element="punto-interseccion" color="musgo">punto $O$</VisualBind>. Sean $\alpha$ y $\alpha'$ un par de <VisualBind element="angulos-opuestos" color="pavo">ángulos opuestos por el vértice</VisualBind> determinados por la intersección de las semi-rectas. Se verifica de manera indispensable la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
+Sean $r$ y $s$ dos <ConceptLink targetId="recta">rectas secantes</ConceptLink> en el plano $\mathcal{P}$ que se intersectan en el <VisualBind element="punto-interseccion" color="musgo">punto $O$</VisualBind>. Sean $\alpha$ y $\alpha'$ un par de <VisualBind element="angulos-opuestos" color="pavo">ángulos opuestos por el vértice</VisualBind> determinados por la intersección de las semirrectas. Se verifica de manera indispensable la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
 
 <Formula>
   $$ \alpha \cong \alpha' $$
@@ -32,17 +32,17 @@ Métricamente, las amplitudes angulares de ambos ángulos resultan rigurosamente
 
 <Separador />
 
-### Demostración mediante suplementariedad
+### Demostración y fundamentación axiomática
 
-La deducción formal se apoya en el axioma de los <ConceptLink targetId="angulos-suplementarios">ángulos suplementarios</ConceptLink> sobre una recta:
+La deducción formal se apoya en el carácter adyacente de los <ConceptLink targetId="angulos-suplementarios">ángulos suplementarios</ConceptLink> sobre una misma recta y en los <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axiomas de congruencia angular</ConceptLink>:
 1. Sea $\beta$ el ángulo adyacente común a $\alpha$ y $\alpha'$.
-2. Al yacer sobre la misma línea recta $r$, $\alpha$ y $\beta$ forman un <ConceptLink targetId="angulo-llano">ángulo llano</ConceptLink>, luego $\alpha + \beta = 180^\circ$.
+2. Al yacer sobre la misma línea recta $r$, $\alpha$ y $\beta$ forman un <ConceptLink targetId="angulos-suplementarios">ángulo llano</ConceptLink>, luego $\alpha + \beta = 180^\circ$.
 3. Del mismo modo, sobre la recta $s$, $\beta$ y $\alpha'$ componen un ángulo llano, por lo que $\alpha' + \beta = 180^\circ$.
-4. Restando $\beta$ a ambas igualdades se obtiene $\alpha = 180^\circ - \beta = \alpha'$, demostrando la congruencia requerida.
+4. Restando $\beta$ a ambas igualdades mediante las propiedades de sustracción de congruencias se obtiene $\alpha = 180^\circ - \beta = \alpha'$, demostrando la congruencia requerida $\alpha \cong \alpha'$.
 
 <Separador />
 
 ### Propiedades y trascendencia
 
-- **Independencia del paralelismo**: La congruencia de los ángulos opuestos por el vértice es un resultado de la geometría absoluta que no requiere el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>.
-- **Invariancia rotacional**: Corresponde a la simetría central de $180^\circ$ alrededor del punto de corte $O$.
+- **Independencia del paralelismo**: La congruencia de los ángulos opuestos por el vértice es un resultado de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> que no requiere el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>.
+- **Invariancia rotacional**: Corresponde a la simetría central de $180^\circ$ ($\pi$ radianes) alrededor del punto de corte $O$.

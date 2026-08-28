@@ -17,7 +17,7 @@ export const metadata = {
 import { CongruenciaALA } from '@content/diagrams/Teoremas/CongruenciaALA';
 export const Simulation = CongruenciaALA;
 
-<Capitular letra="E" />l teorema de congruencia Ángulo-Lado-Ángulo (ALA) establece uno de los criterios fundamentales para determinar la rigidez e igualdad métrica entre dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> en la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink>. Garantiza que fijar un <ConceptLink targetId="segmento">segmento</ConceptLink> y las inclinaciones de las dos rectas que parten de sus extremos determina de forma única la geometría del triángulo.
+<Capitular letra="E" />l teorema de congruencia Ángulo-Lado-Ángulo (ALA) establece uno de los criterios fundamentales para determinar la rigidez e igualdad métrica entre dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> en la geometría plana. Garantiza que fijar un <ConceptLink targetId="segmento">segmento</ConceptLink> y las inclinaciones de las dos semirrectas que parten de sus extremos determina de forma única la geometría del triángulo.
 
 <Separador />
 
@@ -27,7 +27,7 @@ Sean $\triangle ABC$ y $\triangle A'B'C'$ dos <VisualBind element="triangulos" c
 1. El lado comprendido es congruente: $\overline{AB} \cong \overline{A'B'}$.
 2. Los ángulos adyacentes al segmento son respectivamente congruentes: $\angle CAB \cong \angle C'A'B'$ y $\angle ABC \cong \angle A'B'C'$.
 
-Entonces, se satisface de forma indispensable la <ConceptLink targetId="congruencia">congruencia</ConceptLink> global entre ambos triángulos:
+Entonces, se satisface de forma indispensable la congruencia global entre ambos triángulos:
 
 <Formula>
   $$ \triangle ABC \cong \triangle A'B'C' $$
@@ -39,14 +39,14 @@ Como consecuencia, todos sus lados homólogos y sus terceros ángulos resultan s
 
 ### Demostración y fundamentación axiomática
 
-En la axiomatización de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el criterio LAL (Lado-Ángulo-Lado) se asume como <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axioma de congruencia</ConceptLink>, mientras que el criterio ALA se demuestra rigurosamente mediante el método de reducción al absurdo:
-- Si $\overline{AC}$ no fuera congruente a $\overline{A'C'}$, existiría un punto $D$ en el rayo de la recta tal que $\overline{AD} \cong \overline{A'C'}$.
+En la axiomatización de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el criterio LAL (Lado-Ángulo-Lado) se asume como <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axioma de congruencia</ConceptLink>, mientras que el criterio ALA se demuestra rigurosamente mediante el método de <ConceptLink targetId="metodo-contradiccion" isDependency={true}>reducción al absurdo</ConceptLink>:
+- Si $\overline{AC}$ no fuera congruente a $\overline{A'C'}$, existiría un punto $D$ en la semirrecta correspondiente tal que $\overline{AD} \cong \overline{A'C'}$.
 - Por el axioma LAL, se tendría $\triangle ABD \cong \triangle A'B'C'$, lo que implicaría $\angle ABD \cong \angle A'B'C'$.
-- Esto contradiría el axioma de transporte de ángulos al tener dos ángulos distintos congruentes al mismo ángulo de referencia.
+- Esto contradiría el axioma de transporte de ángulos (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>) al existir dos ángulos distintos con la misma medida sobre un mismo semiplano.
 
 <Separador />
 
-### Aplicaciones y criterios derivados
+### Criterios derivados
 
-- **Triangulación métrica**: Es la base teórica de la geodesia y levantamiento topográfico para determinar distancias inalcanzables mediante la medición de una base conocida y dos ángulos de elevación/azimut.
 - **Criterio LAA (Lado-Ángulo-Ángulo)**: Combinado con el <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de los ángulos de un triángulo</ConceptLink>, el criterio se extiende a cualquier par de ángulos y un lado no comprendido.
+- **Unicidad de construcciones**: Proporciona el fundamento lógico para la resolución de triángulos mediante trigonometría y triangulación geodésica.

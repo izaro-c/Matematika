@@ -1,0 +1,58 @@
+export const metadata = {
+  id: "semirrecta",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Zuzenerdia",
+  description: "Zuzen baten zatia, jatorrizko puntu finko batek eta noranzko bakarrean hedatzen diren puntu guztiek osatua.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, Nozioak", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
+  ]
+};
+
+import { Semirrecta } from '@content/diagrams/Definiciones/Semirrecta';
+export const Simulation = Semirrecta;
+
+<Capitular letra="Z" />uzenerdia jatorri finko bat duen eta noranzko bakarrean mugarik gabe hedatzen den <ConceptLink targetId="recta">zuzen</ConceptLink> baten zati jarraitua da. <ConceptLink targetId="angulo">Angeluak</ConceptLink> definitzeko eta <ConceptLink targetId="plano">planoan</ConceptLink> norabideak orientatzeko oinarrizko eraikuntza-elementua da.
+
+<Definicion title="">
+  <VisualBind element="lineOA" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> batean <VisualBind element="pA" color="musgo">$O$</VisualBind> jatorri-puntu bat eta $A \neq O$ puntu bat emanda, <VisualBind element="rayOA" color="musgo">$\overrightarrow{OA}$</VisualBind> zuzenerdi itxia $O$ <ConceptLink targetId="punto" isDependency={true}>puntuak</ConceptLink>, $A$ puntuak eta $O$ puntua $A$ eta $P$-ren <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> ez duten $P \in \ell$ puntu guztiek osatutako multzoa da:
+  $$
+  \overrightarrow{OA} = \{ P \in \ell \mid P = O \lor \neg(A * O * P) \}
+  $$
+  $\mathbb{R}^n$ espazio bektorialeko konbinazio afinen bidez:
+  $$
+  \overrightarrow{OA} = \{ P \in \mathbb{R}^n \mid P = O + t(A - O), \, t \ge 0 \}
+  $$
+</Definicion>
+
+<Separador />
+
+### Geometria sintetikoa
+
+Hilberten esparru axiomatikoan:
+- **Zuzenaren banaketa**: $O \in \ell$ puntu bakoitzak $\ell$ zuzena $O$ jatorria duten bi zuzenerdi aurkako eta disjuntotan banatzen du.
+- **Aurkako zuzenerdiak**: $A * O * B$ bada, $\overrightarrow{OA}$ eta $\overrightarrow{OB}$ zuzenerdiak aurkakoak dira eta $\overrightarrow{OA} \cap \overrightarrow{OB} = \{O\}$ zein $\overrightarrow{OA} \cup \overrightarrow{OB} = \ell$ betetzen dituzte.
+
+### Geometria analitikoa
+
+$\vec{u} = \frac{A - O}{\|A - O\|}$ norabide unitarioa emanda, zuzenerdia honela parametrizatzen da:
+$$
+\vec{r}(t) = \vec{x}_O + t\vec{u}, \quad t \in [0, +\infty)
+$$
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Banaketa eta orientazio lineala">
+    <PropiedadItem id="axioma-orden-2" title="Zuzenaren banaketa">
+      Zuzen bateko puntu batek gainerako puntuak bi baliokidetasun-klase ganbiltan banatzen ditu.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-orden-3" title="Zuzenerdiaren ganbiltasuna">
+      Edozein $\overrightarrow{OA}$ zuzenerdi multzo konexu eta ganbila da.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

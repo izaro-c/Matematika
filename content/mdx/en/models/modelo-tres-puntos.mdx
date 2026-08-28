@@ -2,44 +2,46 @@ export const metadata = {
   id: "modelo-tres-puntos",
   lang: "en",
   type: "modelo",
-  title: "Three-point model",
-  description: "Minimalist finite geometric structure consisting of three points and three lines that satisfies the fundamental axioms of incidence.",
-  branch: "51M",
-  satisfies: ["sistema-incidencia"],
+  title: "Three-Point Model",
+  description: "Elementary finite model demonstrating the consistency and independence of basic incidence axioms.",
+  branch: "51A",
+  satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
-  hasSimulation: true
+  hasDiagram: true
 };
 
 import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
-export const Simulation = ModeloTresPuntos;
+export const Diagram = ModeloTresPuntos;
 
-<Capitular letra="T" />he three-point model represents the simplest discrete geometric structure capable of satisfying the <ConceptLink targetId="incidencia">incidence</ConceptLink> axioms in the <ConceptLink targetId="plano">plane</ConceptLink>. This finite universe consists of exactly three <ConceptLink targetId="punto">points</ConceptLink> and three <ConceptLink targetId="recta">lines</ConceptLink>, providing a concrete example where primary containment rules hold without relying on <ConceptLink targetId="orden">order</ConceptLink> or <ConceptLink targetId="distancia">distance</ConceptLink>.
-
-<Separador />
-
-### Model definition
-
-Let $\mathcal{P} = \{A, B, C\}$ be the set of primitive points and let $\mathcal{L} = \{l_1, l_2, l_3\}$ be the set of lines. The incidence relation $\mathcal{I} \subset \mathcal{P} \times \mathcal{L}$ is explicitly defined by set membership:
-
-- Line <VisualBind element="l1" color="pavo">$l_1 = \{A, B\}$</VisualBind> contains points <VisualBind element="A" color="musgo">$A$</VisualBind> and <VisualBind element="B" color="musgo">$B$</VisualBind>.
-- Line <VisualBind element="l2" color="terracota">$l_2 = \{B, C\}$</VisualBind> contains points <VisualBind element="B" color="musgo">$B$</VisualBind> and <VisualBind element="C" color="musgo">$C$</VisualBind>.
-- Line <VisualBind element="l3" color="ocre">$l_3 = \{C, A\}$</VisualBind> contains points <VisualBind element="C" color="musgo">$C$</VisualBind> and <VisualBind element="A" color="musgo">$A$</VisualBind>.
-
-In this model, every line is precisely a non-empty two-element subset of $\mathcal{P}$.
+<Capitular letra="T" />he three-point model is the most elementary <ConceptLink targetId="sistema-incidencia">incidence model</ConceptLink> in finite geometry. Featuring a discrete universe of three points, three lines, and a single plane, it provides an essential metamathematical tool to establish the logical consistency and mutual independence of Hilbert's initial incidence axioms.
 
 <Separador />
 
-### Axiom verification
+### Model Definition
 
-The three-point model strictly satisfies the basic axioms of the plane <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>:
+The system is defined via explicit finite sets:
 
-- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>Axiom I.1 (Uniqueness of line)</ConceptLink>**: For any pair of distinct points in $\mathcal{P}$, there exists a unique line in $\mathcal{L}$ containing both points.
-- **<ConceptLink targetId="axioma-incidencia-2" isDependency={true}>Axiom I.2 (Existence of points on a line)</ConceptLink>**: Every line $l_i \in \mathcal{L}$ contains at least two distinct points.
-- **<ConceptLink targetId="axioma-incidencia-3" isDependency={true}>Axiom I.3 (Non-collinearity)</ConceptLink>**: There exists a set of three points $\{A, B, C\}$ that do not lie on the same line (non-<ConceptLink targetId="colinealidad">collinear</ConceptLink>).
+- **Point Set**: Composed of exactly three abstract elements: <VisualBind element="A" color="terracota">$A$</VisualBind>, <VisualBind element="B" color="terracota">$B$</VisualBind>, and <VisualBind element="C" color="terracota">$C$</VisualBind>.
+- **Line Set**: Three unordered pairs of distinct points:
+  - <VisualBind element="rAB" color="carbon">$r_{AB} = \{A, B\}$</VisualBind>
+  - <VisualBind element="rBC" color="carbon">$r_{BC} = \{B, C\}$</VisualBind>
+  - <VisualBind element="rCA" color="carbon">$r_{CA} = \{C, A\}$</VisualBind>
+- **<VisualBind element="plano" color="musgo">Plane</VisualBind>**: The total set $\mathcal{P} = \{A, B, C\}$.
+- **Incidence Relation**: Standard set membership $\in$. A point $P$ is incident with a line $l$ if $P \in l$.
 
 <Separador />
 
-### Properties
+### Verification of Incidence Axioms
 
-- **Finiteness and minimality**: It is the smallest possible planar model satisfying axioms I.1, I.2, and I.3.
-- **Absence of parallel lines**: In this model there are no non-intersecting lines; any two lines intersect in exactly one point, thus failing to satisfy the Euclidean concept of <ConceptLink targetId="paralelismo">parallelism</ConceptLink>.
+The model formally satisfies the first three axioms of the <ConceptLink targetId="sistema-incidencia">incidence group</ConceptLink>:
+
+- **<ConceptLink targetId="axioma-incidencia-1">Axiom I-1</ConceptLink>**: For any two distinct points (such as $A$ and $B$), there exists a unique line ($r_{AB}$) containing both.
+- **<ConceptLink targetId="axioma-incidencia-2">Axiom I-2</ConceptLink>**: Every line ($r_{AB}, r_{BC}, r_{CA}$) contains at least two distinct points.
+- **<ConceptLink targetId="axioma-incidencia-3">Axiom I-3</ConceptLink>**: There exist at least three points ($A, B, C$) not lying on the same line (non-collinear).
+
+<Separador />
+
+### Metamathematical Significance
+
+- **Consistency Proof**: By exhibiting a concrete finite interpretation where all incidence propositions evaluate to true, it establishes that the initial incidence axioms are mutually consistent.
+- **Independence of Parallelism**: Any two lines in this model share a common point ($r_{AB} \cap r_{BC} = \{B\}$); hence, no <ConceptLink targetId="paralelas">parallel lines</ConceptLink> exist, proving that parallelism requires additional independent postulates.

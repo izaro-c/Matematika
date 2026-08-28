@@ -61,7 +61,8 @@ function parseMetadata(content: string): Record<string, unknown> | null {
 }
 
 function computeCorpusHash(files: string[]): string {
-  const chunks = files.map(file => {
+  const sortedFiles = [...files].sort((a, b) => relativePath(a).localeCompare(relativePath(b)));
+  const chunks = sortedFiles.map(file => {
     const relative = relativePath(file);
     const content = fs.readFileSync(file, 'utf-8');
     return `${relative}\0${stableHash(content)}`;

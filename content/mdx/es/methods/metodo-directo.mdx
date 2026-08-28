@@ -5,43 +5,44 @@ export const metadata = {
   subtype: "demostracion",
   title: "Método directo",
   description: "Estrategia deductiva elemental que encadena inferencias válidas desde la hipótesis hasta la tesis.",
-  branch: "51M",
+  branch: "03B",
+  difficulty: "básico",
   hasSimulation: true
 };
 
 import { DirectoSimulation } from '@content/diagrams/Metodos/DirectoSimulation';
 export const Simulation = DirectoSimulation;
 
-<Capitular letra="E" />l método directo constituye la estrategia primaria de deducción matemática para establecer la validez de un condicional $P \implies Q$. Su procedimiento asume formalmente la veracidad de la <ConceptLink targetId="hipotesis">hipótesis</ConceptLink> $P$ y construye una secuencia finita de inferencias lógicas rigurosas hasta concluir de manera obligatoria la veracidad de la <ConceptLink targetId="tesis">tesis</ConceptLink> $Q$.
+<Capitular letra="E" />l método directo constituye la técnica fundamental de demostración deductiva para validar implicaciones lógicas de la forma $P \implies Q$. Su procedimiento asume formalmente la veracidad de la hipótesis $P$ y construye una secuencia finita y rigurosa de inferencias válidas que culmina necesariamente en la veracidad de la tesis $Q$.
 
 <Separador />
 
-### Estructura lógica
+### Estructura lógica formal
 
-El argumento deductivo encadena proposiciones intermedias mediante la regla de inferencia *modus ponens*:
+El argumento deductivo encadena proposiciones mediante la regla clásica del *modus ponens*: si una proposición $A$ es verdadera y la implicación $A \implies B$ es válida, entonces $B$ es necesariamente verdadera:
 
 <Formula>
   $$ P \implies P_1 \implies P_2 \implies \dots \implies P_n \implies Q $$
 </Formula>
 
-Cada paso de la cadena deductiva se justifica exclusivamente mediante:
+Cada eslabón $P_k \implies P_{k+1}$ de la cadena deductiva se justifica exclusivamente mediante:
 
-- Los <ConceptLink targetId="axioma">axiomas</ConceptLink> del <ConceptLink targetId="sistema-axiomatico">sistema formal</ConceptLink> correspondiente.
-- Los <ConceptLink targetId="teorema">teoremas</ConceptLink> o lemas previamente demostrados.
-- Las definiciones formales de los objetos involucrados.
-- Las leyes universales de la lógica proposicional y de predicados.
-
-<Separador />
-
-### Ejemplos notables
-
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Suma de ángulos de un triángulo</ConceptLink>**: A partir de la definición de <ConceptLink targetId="triangulo">triángulo</ConceptLink> y el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>, se traza una <ConceptLink targetId="recta">recta</ConceptLink> <ConceptLink targetId="paralelismo">paralela</ConceptLink> a la base por el <ConceptLink targetId="vertice">vértice</ConceptLink> opuesto para derivar directamente que la suma de sus <ConceptLink targetId="angulo">ángulos</ConceptLink> es $180^\circ$.
-- **<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>**: Mediante la descomposición geométrica del <ConceptLink targetId="area">área</ConceptLink> de cuadrados sobre los <ConceptLink targetId="cateto">catetos</ConceptLink> y la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> de un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink>, se concluye directamente la igualdad algebraica $a^2 + b^2 = c^2$.
+- Axiomas fundamentales del sistema deductivo.
+- Teoremas, lemas o corolarios previamente demostrados.
+- Definiciones formales rigurosas de los entes involucrados.
+- Reglas sintácticas de la lógica de proposiciones y predicados.
 
 <Separador />
 
-### Propiedades y aplicación
+### Aplicaciones paradigmáticas
 
-- **Constructividad**: Proporciona una trayectoria explícita que conecta la condición inicial con la conclusión final.
-- **Transparencia deductiva**: Cada proposición intermedia es individualmente verificable.
-- **Ámbito de aplicación**: Es el abordaje preferente cuando la hipótesis ofrece relaciones explícitas directamente manipulables sin requerir hipótesis auxiliares por <ConceptLink targetId="metodo-contradiccion">contradicción</ConceptLink>.
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Suma de ángulos de un triángulo</ConceptLink>**: A partir de la definición de <ConceptLink targetId="triangulo">triángulo</ConceptLink> y del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>, se traza una recta <ConceptLink targetId="paralelas">paralela</ConceptLink> a la base por el vértice opuesto para derivar directamente que $\alpha + \beta + \gamma = 180^\circ$.
+- **<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>**: Mediante relaciones de <ConceptLink targetId="semejanza">semejanza</ConceptLink> y cálculo de áreas sobre un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink>, se deriva de manera directa la relación algebraica $a^2 + b^2 = c^2$.
+
+<Separador />
+
+### Propiedades metodológicas
+
+- **Constructividad**: Proporciona un camino directo y reproducible que transforma las condiciones iniciales en el resultado final.
+- **Verificabilidad local**: Cada paso deductivo intermedio es autónomo y puede auditarse de manera aislada.
+- **Preferencia epistemológica**: Es la estrategia idónea cuando la estructura de la hipótesis ofrece datos explícitos que pueden transformarse directamente sin requerir reducciones al absurdo auxiliares.

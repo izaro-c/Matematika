@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-orden-3",
   lang: "en",
   type: "axioma",
-  title: "Axiom II.3 (Tricotomy of Line Order)",
-  description: "Of any three distinct points lying on a line, one and only one lies between the other two.",
+  title: "Axiom II.3 (Exclusivity of Linear Betweenness)",
+  description: "Of any three distinct points on a line, at most one lies between the other two.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "orden",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
@@ -14,31 +16,32 @@ export const metadata = {
 import { Order3 } from '@content/diagrams/Axiomas/Order3';
 export const Simulation = Order3;
 
-<Capitular letra="O" />f any three distinct <ConceptLink targetId="punto">points</ConceptLink> lying on the same <ConceptLink targetId="recta">line</ConceptLink>, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s third <ConceptLink targetId="orden">order axiom</ConceptLink> establishes the law of tricotomy: exactly one and only one of those points lies between the other two.
+<Capitular letra="O" />f any three distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> situated on a single <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, the third order axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establishes that at most one can lie <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> the other two. This condition prevents circular or cyclic orderings on geometric lines.
 
 <Definicion title="Formal statement">
-  For any three distinct <ConceptLink targetId="punto">points</ConceptLink> $A, B, C \in l$ belonging to line $l \in \mathcal{L}$, exactly one of the following three betweenness relations holds exclusively:
+  For any three distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B, C$ belonging to a single <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$, at most one betweenness relation holds simultaneously:
   $$
-  \forall A, B, C \in l \ (A \neq B \land B \neq C \land A \neq C) \implies (A\text{-}B\text{-}C \veebar B\text{-}C\text{-}A \veebar C\text{-}A\text{-}B)
+  \forall A, B, C \in l \ \bigl(A\text{-}B\text{-}C \implies (\neg B\text{-}A\text{-}C \land \neg A\text{-}C\text{-}B)\bigr)
   $$
+  In conjunction with the other order axioms, exactly one of the three points lies between the other two.
 </Definicion>
 
 <Separador />
 
 ### Visual representation and interaction
 
-In the interactive simulation, three collinear points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> are presented. Dragging the points along the line constantly highlights which point uniquely occupies the intermediate position.
+In the interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> are positioned on line <VisualBind element="lineDE" color="carbon">$l$</VisualBind>. Reordering or dragging any point along the line exclusively alters the betweenness relation, ensuring that only a single element occupies the central position at any given instant.
 
 <Separador />
 
 ### Geometric significance and scope
 
-This axiom guarantees that linear order is total and unambiguous. It excludes paradoxical configurations where two distinct points could simultaneously lie between the same pair in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+This axiom guarantees the strict linearity and open topological nature of geometric lines. It prevents the ordering relation from closing in on itself (as occurs in projective cyclic orders on circles), establishing a strict total order in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
 
 <Separador />
 
 ### Properties
 
-- **Strict exclusivity:** Two betweenness relations cannot hold simultaneously among the same three points.
-- **Linear completeness:** In every collinear triad of distinct points, an intermediate position necessarily exists.
-- **Implicit coordinates:** Induces a linear ordering structure fully compatible with the real line $\mathbb{R}$.
+- **Mutual exclusion:** Truth of $A\text{-}B\text{-}C$ automatically disproves $B\text{-}A\text{-}C$ and $A\text{-}C\text{-}B$.
+- **Strict linear ordering:** Enables ordering any finite set of collinear points into a unique sequence $A_1\text{-}A_2\text{-}\dots\text{-}A_n$.
+- **Non-cyclicity:** Forbids synthetic lines from closing topologically onto themselves without points at infinity.

@@ -3,40 +3,43 @@ export const metadata = {
   lang: "en",
   type: "metodo",
   subtype: "demostracion",
-  title: "Proof by contradiction",
-  description: "Indirect proof technique assuming the negation of the thesis to derive an unsustainable logical contradiction.",
-  branch: "51M",
+  title: "Proof by Contradiction",
+  description: "Indirect proof technique (reductio ad absurdum) establishing the validity of a proposition by showing that its negation implies a logical contradiction.",
+  branch: "03B",
+  difficulty: "intermedio",
   hasSimulation: true
 };
 
 import { ContradictionSimulation } from '@content/diagrams/Metodos/ContradictionSimulation';
 export const Simulation = ContradictionSimulation;
 
-<Capitular letra="P" />roof by contradiction —historically referred to as *reductio ad absurdum*— is the principal indirect proof strategy in mathematics. Grounded in the law of excluded middle and the principle of non-contradiction, it demonstrates that if assuming the negation of the <ConceptLink targetId="tesis">thesis</ConceptLink> leads to an absurdity $R \land \neg R$, then the original thesis must necessarily be true.
+<Capitular letra="P" />roof by contradiction, historically known as *reductio ad absurdum*, is an indirect proof technique that establishes the truth of a statement $P$ by provisionally assuming its negation $\neg P$ and rigorously deriving a formal contradiction of the form $R \land \neg R \equiv \bot$.
 
 <Separador />
 
-### Logical structure
+### Logical Foundations and the Excluded Middle
 
-To prove the conditional proposition $P \implies Q$, the reasoning proceeds by absurd hypothesis:
+The method relies strictly on the foundational principles of classical logic:
 
-1. The truth of the <ConceptLink targetId="hipotesis">hypothesis</ConceptLink> $P$ and the negation of the thesis $\neg Q$ are jointly assumed as premises.
-2. Rigorous deductive steps are executed starting from the conjunction $P \land \neg Q$.
-3. A formal contradiction of the form $R \land \neg R$ is derived, where $R$ is a known <ConceptLink targetId="axioma">axiom</ConceptLink>, a previously established <ConceptLink targetId="teorema">theorem</ConceptLink>, or a proposition constructed during the argument.
-4. By the law of non-contradiction, $\neg Q$ is rejected, proving that $Q$ is true:
-   $$ (P \land \neg Q \implies \bot) \implies (P \implies Q) $$
+- **Law of Non-Contradiction**: A proposition cannot be simultaneously true and false within the same formal framework: $\neg (R \land \neg R)$.
+- **Law of Excluded Middle**: Every well-formed statement $P$ is either true or false: $P \lor \neg P$.
+- **Implication Equivalence**: Demonstrating that $(\neg P \implies \bot)$ is logically equivalent to establishing the truth of $P$:
+  <Formula>
+    $$ (\neg P \implies \bot) \iff P $$
+  </Formula>
 
-<Separador />
-
-### Classic examples in geometry and number theory
-
-- **Irrationality of $\sqrt{2}$**: Assuming $\sqrt{2}$ is a <ConceptLink targetId="numero-real">real number</ConceptLink> that can be expressed as an irreducible fraction $p/q$, algebraic steps demonstrate that both $p$ and $q$ must be even, directly contradicting the irreducibility of the fraction.
-- **Infinitude of <ConceptLink targetId="numero-natural">prime numbers</ConceptLink>**: Assuming there are only finitely many primes $p_1, p_2, \dots, p_n$, the constructed integer $N = (p_1 p_2 \dots p_n) + 1$ leads to a contradiction since it cannot be divided by any prime in the list.
-- **Uniqueness of the <ConceptLink targetId="paralelismo">parallel line</ConceptLink>**: In <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>, assuming the existence of two distinct lines parallel to a given line passing through the same point directly contradicts the <ConceptLink targetId="axioma-paralelas-euclides">fifth postulate</ConceptLink>.
+For a conditional implication $P \implies Q$, the method assumes both the hypothesis $P$ and the negation of the conclusion $\neg Q$, subsequently deriving an inconsistency with the axiomatic foundations or established theorems.
 
 <Separador />
 
-### Properties
+### Classical Geometric and Analytic Examples
 
-- **Indirect power**: Establishes proofs for statements where the <ConceptLink targetId="metodo-directo">direct method</ConceptLink> is unfeasible due to a lack of explicit constructive relations.
-- **Non-constructivity**: Proves the truth of a mathematical statement without explicitly constructing the underlying geometric or numerical object.
+- **Irrationality of $\sqrt{2}$**: Assuming $\sqrt{2} = a/b$ with $\gcd(a, b) = 1$ leads deductively to the conclusion that both $a$ and $b$ are even, contradicting the coprimality hypothesis.
+- **Uniqueness of Perpendiculars**: To prove that at most one <ConceptLink targetId="perpendicular">perpendicular line</ConceptLink> passes through a point external to a given <ConceptLink targetId="recta">line</ConceptLink>, one assumes two distinct perpendiculars exist. This would form a <ConceptLink targetId="triangulo">triangle</ConceptLink> with two right <ConceptLink targetId="angulo">angles</ConceptLink>, contradicting the <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink>.
+
+<Separador />
+
+### Methodological Features
+
+- **Essential for Non-Existence and Uniqueness**: The primary strategy for establishing that certain mathematical configurations or counterexamples cannot exist.
+- **Non-Constructive Nature**: It proves that an object exists or a relation holds without necessarily constructing the witness object explicitly.

@@ -1,50 +1,52 @@
 export const metadata = {
   id: "teorema-area-aditividad",
   type: "teorema",
-  title: "Azaleraren aditibotasun-teorema",
-  description: "Plano-eremu poligonal bat barnealdetan elkarren artean disjuntuak diren azpieremu poligonal kopuru finitu batean banatzen denean, azalera osoa zatian azaleraren batura da.",
-  statement: "R eremua barnealdetan disjuntuak diren R1, R2, ..., Rn eremu poligonalen bilkura badira, orduan Azalera(R) = ∑ Azalera(Ri) betetzen da.",
+  title: "Azaleraren aditibitate-teorema",
+  description: "Planoko eskualde poligonal bat barnealde disjuntuko azpi-eskualde poligonal kopuru finitu batean banatzen bada, eskualde osoaren azalera bere zatien azaleren baturaren berdina da.",
+  statement: "R eskualdea binaka barnealde disjuntuko R1, R2, ..., Rn n eskualde poligonalen batasuna bada, orduan Azalera(R) = ∑ Azalera(Ri) betetzen da.",
   branch: "51M",
   hasSimulation: false,
   authors: ["euclides", "hilbert"],
-  demos: [],
+  demos: ["demo-area-aditividad"],
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §19", role: "primary" }
   ]
 };
 
-<Capitular letra="A" />zaleraren aditibotasun-teoremak <ConceptLink targetId="geometria-euclidiana">geometria euklidetarrean</ConceptLink> <ConceptLink targetId="teoria-medida-area">azaleraren neurri-teoriaren</ConceptLink> oinarrizko zutabea osatzen du. Eremu <ConceptLink targetId="poligono">poligonalei</ConceptLink> esleitutako azalera-funtzioa partizioen aurrean neurri finituki aditiboa eta aldaezina dela bermatzen du.
+<Capitular letra="A" />zaleraren aditibitate-teorema plano euklidetarreko <ConceptLink targetId="teoria-medida-area">azalera-neurketaren</ConceptLink> teoriaren zutabe nagusia da. Bermatzen du eskualde poligonalei esleitutako azalera-neurriaren funtzioa partizioekiko inbariantea den neurri finituki aditiboa dela.
 
 <Separador />
 
 ### Enuntziatu formala
 
-Bitzak $R \subset \mathcal{P}$ plano-eremu poligonal bat. Demagun $R$ eremua kopuru finitu bateko $R_1, R_2, \dots, R_n$ eremu poligonalen <ConceptLink targetId="union-conjuntos">bilkura</ConceptLink> dela:
+Izan bedi $R \subset \mathcal{P}$ planoko eskualde poligonal bat. Demagun $R$ eskualdea $R_1, R_2, \dots, R_n$ eskualde poligonalen batasun finitua dela:
 
-$$ R = \bigcup_{i=1}^n R_i $$
+<Formula>
+  $$ R = \bigcup_{i=1}^n R_i $$
+</Formula>
 
-non edozein $i \neq j$ paretsutarako beren barneak disjuntuak baitira ($\text{Int}(R_i) \cap \text{Int}(R_j) = \emptyset$). Azaleraren $\mu$ neurri-funtzioaren propietate aditiboa ezinbestean betetzen da:
+non $i \neq j$ bikote orotarako $R_i$-ren barnealdea eta $R_j$-ren barnealdea disjuntuak diren ($\text{Int}(R_i) \cap \text{Int}(R_j) = \emptyset$). Azalera-neurriaren funtzioaren propietate aditiboa zorrozki egiaztatzen da:
 
 <Formula>
   $$ \text{Azalera}(R) = \sum_{i=1}^n \text{Azalera}(R_i) $$
 </Formula>
 
-Beste modura esanda, azalera osoaren neurria osagai diren azpieremu bakoitzaren azaleraren neurri eskalarren baturaren berdina da.
+Hau da, azalera osoaren neurria azpi-eskualde osagarri bakoitzaren azaleren batura eskalarraren berdina da.
 
 <Separador />
 
-### Oinarritze axiomatikoa eta azpi-deskonposizioa
+### Oinarritze axiomatikoa eta deskonposagarritasuna
 
-<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> formalizazioan, azaleraren kontzeptua kalkulu infinitesimalaren beharrik gabe eraikitzen da, deskonposagarritasunaren kontzeptuaren bidez:
-- Bi $P$ eta $Q$ poligono **deskonposagarriak** direla esaten da beren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> diren triangelu kopuru finitu beretan banatu daitezkeenean.
-- Aditivitate teoremagatik, bi poligono deskonposagarriek nahitaez azalera bera dute ($\text{Azalera}(P) = \text{Azalera}(Q)$).
-- Bolyai-Gerwien teoremak ezartzen du plano euklidetarrean azalera bera duten edozein bi poligono beti direla beren artean deskonposagarriak.
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> formalizazioan, azaleraren kontzeptua kalkulu infinitesimala saihesteko eraikitzen da, deskonposagarritasun baliokidearen bidez:
+- Bi poligono $P$ eta $Q$ **bateragarriki deskonposagarriak** direla esaten da baldin eta hurrenez hurren <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> diren triangelu kopuru finitu berean bana badaitezke.
+- Aditibitate-teoremaren ondorioz, bateragarriki deskonposagarriak diren bi poligonok nahitaez azalera bera dute ($\text{Azalera}(P) = \text{Azalera}(Q)$).
+- Bolyai-Gerwienen teoremak ezartzen du plano euklidetarrean azalera bera duten edozein bi poligono beti direla bateragarriki deskonposagarriak.
 
 <Separador />
 
-### Invariantzia eta normalizazioa
+### Inbariantzia eta normalizazioa
 
-Azalera neurri-funtzioak hiru axioma nagusi betetzen ditu:
-1. **Positibotasuna**: $\text{Azalera}(R) > 0$ eremu ez-hutsetarako.
-2. **Kongruentzia bidezko invariantzia**: $R_1 \cong R_2$ bada, orduan $\text{Azalera}(R_1) = \text{Azalera}(R_2)$.
-3. **Aditivitate finitua**: $\text{Azalera}(R_1 \cup R_2) = \text{Azalera}(R_1) + \text{Azalera}(R_2)$ barnealdean disjuntuak diren eremuetarako.
+Azalera-neurriaren funtzioak oinarrizko hiru propietate betetzen ditu:
+1. **Positibotasuna**: $\text{Azalera}(R) > 0$ eskualde poligonal ez-huts orotarako.
+2. **Kongruentzia-inbariantzia**: $R_1 \cong R_2$ bada, orduan $\text{Azalera}(R_1) = \text{Azalera}(R_2)$.
+3. **Aditibitate finitua**: $\text{Azalera}(R_1 \cup R_2) = \text{Azalera}(R_1) + \text{Azalera}(R_2)$ barnealde disjuntuko eskualdeetarako.

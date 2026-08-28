@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-2",
   lang: "eu",
   type: "axioma",
-  title: "I.2 Axioma (Zuzeneko puntuen existentzia)",
-  description: "Zuzen bakoitzak gutxienez espazioko bi puntu desberdin ditu.",
+  title: "I.2 axioma (Puntuen existentzia zuzenean)",
+  description: "Edozein zuzenek espazioko gutxienez bi puntu desberdin ditu barnean.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
@@ -14,10 +16,10 @@ export const metadata = {
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="Z" />uzen bakoitzak gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> bereizgarri dituela ezartzen du <ConceptLink targetId="hilbert">Hilbert</ConceptLink>-en <ConceptLink targetId="intzidentzia">intzidentzia-axioma</ConceptLink> bigarrenak. Baldintza honek puntu bakar batez osatutako <ConceptLink targetId="zuzen">zuzen</ConceptLink> degeneratuak existitzea ekiditen du nahitaez.
+<Capitular letra="B" />igarren intzidentzia-axiomak ezartzen du edozein <ConceptLink targetId="recta" isDependency={true}>zuzenek</ConceptLink> elementuen gutxieneko aniztasuna duela, gutxienez bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bereizi hartzen baititu barnean. Baldintza honek puntu bakarrez osatutako edo hedadura linealik gabeko zuzen endekatuak eragozten ditu.
 
 <Definicion title="Enuntziatu formala">
-  Edozein $l \in \mathcal{L}$ <ConceptLink targetId="zuzen">zuzenetarako</ConceptLink>, gutxienez bi $A, B \in \mathcal{S}$ <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen dira $l$ zuzenaren barnean daudenak:
+  Edozein $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzenetarako</ConceptLink>, $l$ zuzenarenak diren gutxienez bi $A, B \in \mathcal{S}$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdin existitzen dira:
   $$
   \forall l \in \mathcal{L}, \ \exists A, B \in \mathcal{S} \ \bigl(A \in l \land B \in l \land A \neq B\bigr)
   $$
@@ -27,18 +29,18 @@ export const Simulation = Incidence2;
 
 ### Ikus-irudikapena eta elkarrekintza
 
-Simulazioan, <VisualBind element="line" color="carbon">$l$</VisualBind> zuzenak <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntu desberdinak ditu. Elkarrekintzak erakusten du emandako edozein zuzenen gainean beti zehaztu daitezkeela gutxienez bi posizio independente $A \neq B$.
+Simulazio interaktiboan, <VisualBind element="lineCD" color="carbon">$l$</VisualBind> zuzenak <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntuak ditu barnean. Elkarrekintzak erakusten du emandako edozein zuzenetan gutxienez bi posizio independente ezar eta labain daitezkeela $A \neq B$ izanik.
 
 <Separador />
 
 ### Esanahi geometrikoa eta esparrua
 
-Axioma honek bermatzen du zuzenak ez direla isolatutako objektu puntualak, baizik eta posizio anitzek osatutako egitura geometrikoak. I.1 axiomarekin batera, oinarrizko euskarri lineala zehazten du.
+Zuzenak puntu bakan bakartuak edo multzo hutsak ez direla bermatzen du, geometrikoki bereizgarriak diren posizio anitzez osatutako egiturak baizik. I.1 axiomarekin batera, euskarri linealaren oinarrizko erlazio bijektiboa ziurtatzen du.
 
 <Separador />
 
 ### Propietateak
 
-- **Ez-degenerazioa:** Puntu bakar bateko edo hutsik dauden zuzenak debekatzen ditu.
-- **Elementu-aniztasuna:** <ConceptLink targetId="orden">Ordena-axiomekin</ConceptLink> batera zuzen bakoitzak infinitu puntu dituela frogatzeko abiapuntua da.
-- **Segmentuen bideragarritasuna:** Triviala ez den $\overline{AB}$ <ConceptLink targetId="segmento">zuzenkia</ConceptLink> eratzea ahalbidetzen du.
+- **Endekapenik eza:** Puntu bakar batez osatutako zuzenak edo zuzen hutsak debekatzen ditu.
+- **Oinarrizko ugaritasuna:** <ConceptLink targetId="axioma-orden-1">Ordena-axiomak</ConceptLink> gehitzean edozein zuzenek puntu infinitu dituela frogatzeko abiapuntua da.
+- **Zuzenkiaren iraunkortasuna:** $\overline{AB}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> ez-tribiala eratzea ahalbidetzen du.

@@ -2,49 +2,51 @@ export const metadata = {
   id: "teorema-area-aditividad",
   type: "teorema",
   title: "Area Additivity Theorem",
-  description: "If a planar polygonal region is partitioned into a finite number of polygonal subregions that are disjoint in their interiors, the area of the whole region equals the sum of the areas of its parts.",
-  statement: "If R is the union of n polygonal regions R1, R2, ..., Rn pairwise disjoint in their interiors, then Area(R) = ∑ Area(Ri).",
+  description: "If a planar polygonal region is decomposed into a finite number of polygonal subregions with disjoint interiors, the area of the total region equals the sum of the areas of its parts.",
+  statement: "If R is the union of n pairwise interior-disjoint polygonal regions R1, R2, ..., Rn, then Area(R) = ∑ Area(Ri).",
   branch: "51M",
   hasSimulation: false,
   authors: ["euclides", "hilbert"],
-  demos: [],
+  demos: ["demo-area-aditividad"],
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV, §19", role: "primary" }
   ]
 };
 
-<Capitular letra="T" />he area additivity theorem constitutes the foundational pillar of the theory of <ConceptLink targetId="teoria-medida-area">surface measurement</ConceptLink> in Euclidean <ConceptLink targetId="plano">plane geometry</ConceptLink>. It guarantees that the area measure function assigned to <ConceptLink targetId="poligono">polygonal</ConceptLink> regions is a finitely additive, partition-invariant measure.
+<Capitular letra="T" />he area additivity theorem constitutes the fundamental pillar of <ConceptLink targetId="teoria-medida-area">surface measurement</ConceptLink> in planar geometry. It guarantees that the area measure function assigned to polygonal regions is a finitely additive measure invariant under finite partitions.
 
 <Separador />
 
 ### Formal statement
 
-Let $R \subset \mathcal{P}$ be a planar polygonal region. Suppose $R$ is the <ConceptLink targetId="union-conjuntos">union</ConceptLink> of a finite number of polygonal subregions $R_1, R_2, \dots, R_n$:
+Let $R \subset \mathcal{P}$ be a planar polygonal region. Suppose that $R$ is the finite union of polygonal regions $R_1, R_2, \dots, R_n$:
 
-$$ R = \bigcup_{i=1}^n R_i $$
+<Formula>
+  $$ R = \bigcup_{i=1}^n R_i $$
+</Formula>
 
-such that for all $i \neq j$, the interiors of $R_i$ and $R_j$ are disjoint ($\text{Int}(R_i) \cap \text{Int}(R_j) = \emptyset$). The additive property of the area measure function holds strictly:
+such that for every pair $i \neq j$, the interior of $R_i$ and the interior of $R_j$ are disjoint ($\text{Int}(R_i) \cap \text{Int}(R_j) = \emptyset$). The additive property of the area measure function holds strictly:
 
 <Formula>
   $$ \text{Area}(R) = \sum_{i=1}^n \text{Area}(R_i) $$
 </Formula>
 
-That is, the measure of the total surface equals the scalar sum of the measures of the areas of each constituent subregion.
+That is, the measure of the total region equals the sum of the area measures of each constituent subregion.
 
 <Separador />
 
-### Axiomatic foundations and equidecomposability
+### Axiomatic foundations and equidecomposition
 
-In <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> formalization, the concept of area is developed rigorously without calculus using the notion of equidecomposability:
-- Two polygons $P$ and $Q$ are **equidecomposable** (or equidissectable) if they can be partitioned into the same finite number of respectively <ConceptLink targetId="congruencia">congruent</ConceptLink> triangles.
-- By area additivity, two equidecomposable polygons necessarily have equal area ($\text{Area}(P) = \text{Area}(Q)$).
-- The Bolyai-Gerwien theorem establishes that in the Euclidean plane, any two simple polygons with equal area are always equidecomposable.
+In <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> formalization, the concept of area is constructed to bypass infinitesimal calculus via equidecomposability:
+- Two polygons $P$ and $Q$ are called **equidecomposable** (or scissors-congruent) if they can be partitioned into the same finite number of pairwise <ConceptLink targetId="congruencia">congruent</ConceptLink> triangles.
+- By the additivity theorem, any two equidecomposable polygons necessarily have the same area ($\text{Area}(P) = \text{Area}(Q)$).
+- The Bolyai-Gerwien theorem establishes that in the Euclidean plane, any two polygons with the same area are always equidecomposable.
 
 <Separador />
 
-### Invariance and normalization axioms
+### Invariance and normalization
 
-The area measure function satisfies three fundamental axioms:
-1. **Positivity**: $\text{Area}(R) > 0$ for every non-empty region.
+The area measure function satisfies three fundamental properties:
+1. **Positivity**: $\text{Area}(R) > 0$ for every non-empty polygonal region.
 2. **Congruence invariance**: If $R_1 \cong R_2$, then $\text{Area}(R_1) = \text{Area}(R_2)$.
 3. **Finite additivity**: $\text{Area}(R_1 \cup R_2) = \text{Area}(R_1) + \text{Area}(R_2)$ for interior-disjoint regions.

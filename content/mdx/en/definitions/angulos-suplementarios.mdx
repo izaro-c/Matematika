@@ -1,0 +1,49 @@
+export const metadata = {
+  id: "angulos-suplementarios",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Supplementary Angles",
+  description: "Pair of coplanar angles whose sum of angular measures equals a straight angle or 180 degrees.",
+  branch: "51M",
+  hasSimulation: false,
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Proposition 13", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+  ]
+};
+
+<Capitular letra="T" />wo coplanar angles are called supplementary when the sum of their angular measures equals a <ConceptLink targetId="angulo-llano">straight angle</ConceptLink> ($180^\circ$ or $\pi\text{ rad}$). This relation is fundamental for the synthetic characterization of <ConceptLink targetId="angulo-recto">right angles</ConceptLink> and the study of intersecting lines.
+
+<Definicion title="">
+  Two coplanar <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> $\alpha$ and $\beta$ in a plane $\mathcal{P}$ are supplementary if and only if the sum of their angular measures satisfies:
+  $$
+  \mu(\alpha) + \mu(\beta) = \pi \quad (180^\circ)
+  $$
+</Definicion>
+
+<Separador />
+
+### Adjacent supplementary angles
+
+In synthetic geometry, if two adjacent angles share a common side and their non-common sides form a pair of opposite <ConceptLink targetId="semirrecta">rays</ConceptLink> along a single <ConceptLink targetId="recta">line</ConceptLink>, the sum of their apertures is necessarily equal to two right angles.
+
+### Characterization of the right angle
+
+In Hilbert's axiomatization, a <ConceptLink targetId="angulo-recto">right angle</ConceptLink> is defined axiomatically as an angle congruent to its own adjacent supplementary angle:
+$$
+\alpha \cong \beta \land \mu(\alpha) + \mu(\beta) = 180^\circ \implies \mu(\alpha) = 90^\circ
+$$
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Properties of supplementary angles">
+    <PropiedadItem id="teorema-angulos-opuestos-verticales" title="Congruence of supplements">
+      Angles supplementary to the same angle (or to congruent angles) are congruent to each other.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Angular supplementarity">
+      In any triangle, each exterior angle is supplementary to its adjacent interior angle.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

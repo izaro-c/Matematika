@@ -1,14 +1,18 @@
 export const metadata = {
-  "id": "ejercicio-clasificacion-triangulos",
-  "type": "ejercicio",
-  "title": "Hirukiak beren angeluen arabera sailkatzea",
-  "description": "Barne-angeluen neurriaren arabera hiruki motak sailkatzeko, zenbatzeko eta aztertzeko ariketa interaktiboa.",
-  "hasSimulation": false
+  id: "ejercicio-clasificacion-triangulos",
+  lang: "eu",
+  type: "ejercicio",
+  title: "Triangeluen sailkapena beren angeluen arabera",
+  description: "Ariketa interaktiboa: triangeluak beren barne-angeluen arabera sailkatu, kontaketa-matrizea osatu eta egiaztapen bisuala egin.",
+  branch: "51M",
+  relatedTheorem: "teorema-suma-angulos-triangulo",
+  difficulty: "básico",
+  hasSimulation: false
 };
 
 import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/EjercicioClasificacionTriangulos';
 
-<Capitular letra="H" />irukiak beren angeluen arabera sailkatzea oinarrizko trebezia da <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> eta <ConceptLink targetId="semejanza">antzekotasun</ConceptLink> teoremak aplikatzeko. Ariketa honetan hiruki ezberdinak beren barne-angeluen arabera sailkatuko dituzu, zenbaketa-matrizea eraikiko duzu eta ezaugarriak mihisean egiaztatuko dituzu.
+<Capitular letra="I" />rudi geometrikoak beren angeluen propietateen arabera sailkatzea oinarrizko trebetasuna da <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> eta <ConceptLink targetId="semejanza">antzekotasun</ConceptLink> teoremak aplikatzeko. Ariketa honetan hainbat <ConceptLink targetId="triangulo">triangelu-mota</ConceptLink> sailkatuko dituzu beren barne-angeluen arabera, kontaketa-bektorea eraikiko duzu eta propietateak oihal interaktiboan egiaztatuko dituzu.
 
 <Separador />
 
@@ -18,31 +22,31 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
   titulo="Barne-angeluen araberako sailkapena"
   questionIds={["p1_q1"]}
 >
-  Arrastatu hiruki bakoitza bere kategoria egokira beren angeluen arabera:
+  Eraman triangelu bakoitza dagokion kategoriara bere angeluen neurriaren arabera:
 
   <Clasificador
     id="p1_q1"
-    pregunta="Sailkatu hurrengo hirukiak beren kategoria egokian:"
+    pregunta="Sailkatu ondorengo triangeluak dagozkien kategorietan:"
     buckets={[
-      { id: "rectangulo", title: "Hiruki zuzena (90°-ko angelu bat)" },
-      { id: "acutangulo", title: "Hiruki zorrotza (3 angelu < 90°)" },
-      { id: "obtusangulo", title: "Hiruki kamutsa (angelu bat > 90°)" }
+      { id: "rectangulo", title: "Triangelu angeluzuzena (90°-ko angelu bat)" },
+      { id: "acutangulo", title: "Triangelu zorrotza (3 angeluak < 90°)" },
+      { id: "obtusangulo", title: "Triangelu kamutsa (angelu bat > 90°)" }
     ]}
     items={[
       { id: "t1", content: "$90^\\circ, 45^\\circ, 45^\\circ$", bucketId: "rectangulo" },
       { id: "t2", content: "$60^\\circ, 60^\\circ, 60^\\circ$", bucketId: "acutangulo" },
       { id: "t3", content: "$120^\\circ, 30^\\circ, 30^\\circ$", bucketId: "obtusangulo" },
-      { id: "t4", content: "$3, 4, 5\\text{(aldeak)}$", bucketId: "rectangulo" }
+      { id: "t4", content: "$3, 4, 5\\text{ (aldeak)}$", bucketId: "rectangulo" }
     ]}
   >
-    <Clasificador.ErrorComun titulo="Hiruko pitagorikoa edo angelu kamutsak nahastea">
-      Gogoratu <ConceptLink targetId="teorema-pitagoras" isDependency={false}>Pitagorasen teoremagatik</ConceptLink> ($3^2 + 4^2 = 5^2$) 3, 4 eta 5 aldeak dituen hirukia zuzena dela. Era berean, nahikoa da 90° baino handiagoa den angelu bakar bat kamutsa izateko.
+    <Clasificador.ErrorComun titulo="Hirukote pitagorikoa edo angelu kamutsak nahastea">
+      Gogoratu <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremaren</ConceptLink> bidez ($3^2 + 4^2 = 5^2$) 3, 4 eta 5 aldeek triangelu angeluzuzena osatzen dutela. Era berean, 90° baino handiagoa den angelu bakar batek triangelua kamuts bihurtzen du.
     </Clasificador.ErrorComun>
 
     <Clasificador.Resolucion>
-      - **Zuzenak**: 90°-ko angelu bat dute ($90^\circ-45^\circ-45^\circ$ edo $3-4-5$ hiruko pitagorikoa).
-      - **Zehitzak**: Hiru angeluak 90° baino txikiagoak dira ($60^\circ-60^\circ-60^\circ$).
-      - **Kamutsak**: 90° baino handiagoa den angelu bat dute ($120^\circ-30^\circ-30^\circ$).
+      - **Angeluzuzenak**: 90°-ko angelu bat dute ($90^\circ, 45^\circ, 45^\circ$ edo $3, 4, 5$ hirukotea).
+      - **Zorrotzak**: Beren 3 angeluak 90° baino zorrozki txikiagoak dira ($60^\circ, 60^\circ, 60^\circ$).
+      - **Kamutsak**: 90° baino zorrozki handiagoa den angelu bat dute ($120^\circ, 30^\circ, 30^\circ$).
     </Clasificador.Resolucion>
   </Clasificador>
 </ExerciseStep>
@@ -52,23 +56,23 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
 <ExerciseStep
   id="p2"
   numero={2}
-  titulo="Sailkapenaren zenbaketa matriziala"
+  titulo="Sailkapenaren matrize-kontaketa"
   questionIds={["p2_q1"]}
   dependeDeQuestions={["p1_q1"]}
 >
-  Adierazi aurreko sailkapenaren emaitzak errenkada-bektore formatuan $[\text{Zuzenak}, \text{Zehitzak}, \text{Kamutsak}]$:
+  Adierazi aurreko sailkapenaren emaitzak errenkada-bektore formatuan $[\text{Angeluzuzenak}, \text{Zorrotzak}, \text{Kamutsak}]$:
 
   <MatrizInteractiva
     id="p2_q1"
-    pregunta="Sartu kategoria bakoitzari dagozkion hiruki kopurua [Zuzenak, Zehitzak, Kamutsak]:"
+    pregunta="Sartu kategoria bakoitzeko triangelu kopurua [Angeluzuzenak, Zorrotzak, Kamutsak]:"
     correct={[["2", "1", "1"]]}
   >
-    <MatrizInteractiva.ErrorComun titulo="Zenbaketa akatsa elementuetan">
-      Errepasatu aurreko urratseko hirukiak: 2 hiruki zuzen daude ($90^\circ-45^\circ-45^\circ$ eta $3-4-5$), 1 zehitza ($60^\circ-60^\circ-60^\circ$) eta 1 kamutsa ($120^\circ-30^\circ-30^\circ$).
+    <MatrizInteractiva.ErrorComun titulo="Elementuen zenbaketa okerra">
+      Berrikusi aurreko urratseko elementuak: 2 triangelu angeluzuzen daude ($90^\circ, 45^\circ, 45^\circ$ eta $3, 4, 5$), zorroztasun bat ($60^\circ, 60^\circ, 60^\circ$) eta kamuts bat ($120^\circ, 30^\circ, 30^\circ$).
     </MatrizInteractiva.ErrorComun>
 
     <MatrizInteractiva.Resolucion>
-      Sailkatutako 4 hirukiak taldekatzean 2 zuzen, 1 zehitz eta 1 kamuts lortzen ditugu. Dagookion errenkada-matrizea $[2 \quad 1 \quad 1]$ da.
+      Sailkatutako 4 triangeluak biltzean 2 angeluzuzen, 1 zorrotz eta 1 kamuts lortzen dira. Dagokion errenkada-matrizea $[2 \quad 1 \quad 1]$ da.
     </MatrizInteractiva.Resolucion>
   </MatrizInteractiva>
 </ExerciseStep>
@@ -78,26 +82,26 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
 <ExerciseStep
   id="p3"
   numero={3}
-  titulo="Egiaztapen bisuala mihisean"
+  titulo="Egiaztapen bisuala oihalean"
   questionIds={["p3_q1"]}
   dependeDeQuestions={["p2_q1"]}
 >
-  Bieztatu sailkapena angeluen antolaketa bisuala aztertuz mihise interaktiboan:
+  Egiaztatu sailkapena oihal interaktiboan angeluen irekidura aztertuz:
 
   <CanvasInteractivo
     id="p3_q1"
-    title="Angelu zuzenketarako mihise interaktiboa"
-    pregunta="Egin klik mihiseko ikuskapen-botoietan hiruki mota bakoitzaren irekiera egiaztatzeko:"
-    botonTexto="Balioztatu mihisearen analisia"
+    title="Angeluak ikuskatzeko oihala"
+    pregunta="Erabili oihaleko kontrolak triangelu-mota bakoitzaren irekidura egiaztatzeko:"
+    botonTexto="Balioztatu oihalaren analisia"
   >
     <EjercicioClasificacionTriangulos />
 
-    <CanvasInteractivo.ErrorComun titulo="Huts egitea angeluen batura egiaztatzean">
-      Gogoratu hiruki euklidear guztietan barne-angeluen batura zehazki 180° dela ($\alpha + \beta + \gamma = 180^\circ$).
+    <CanvasInteractivo.ErrorComun titulo="Angeluen baturaren errorea">
+      Gogoratu <ConceptLink targetId="teorema-suma-angulos-triangulo">angeluen baturaren teoremaren</ConceptLink> arabera edozein triangelu euklidearretan barne-angeluen batura zehazki 180° dela ($\alpha + \beta + \gamma = 180^\circ$).
     </CanvasInteractivo.ErrorComun>
 
     <CanvasInteractivo.Resolucion>
-      Mihisean egiaztatzen da kasu guztietan barne-angeluen baturak $\alpha + \beta + \gamma = 180^\circ$ betetzen duela, egindako sailkapen geometrikoa berretsiz.
+      Oihalean egiaztatzen da barne-angeluen baturak kasu guztietan $\alpha + \beta + \gamma = 180^\circ$ betetzen duela, egindako sailkapen geometrikoa bermatuz.
     </CanvasInteractivo.Resolucion>
   </CanvasInteractivo>
 </ExerciseStep>

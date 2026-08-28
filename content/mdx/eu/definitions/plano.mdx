@@ -1,0 +1,62 @@
+export const metadata = {
+  id: "plano",
+  lang: "eu",
+  type: "definicion",
+  subtype: "primitivo",
+  title: "Planoa",
+  description: "Bi dimentsioko gainazal geometriko jarraitu, mugagabe eta laua, berezko kurbadurarik gabekoa.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 5. eta 7. Definizioak", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
+  ]
+};
+
+import { Plano } from '@content/diagrams/Definiciones/Plano';
+export const Simulation = Plano;
+
+<Capitular letra="P" />lanoa bi dimentsioko entitate geometriko elemental eta jarraitua da, bere eremuko norabide guztietan mugarik gabe hedatzen dena inolako kurbadurarik gabe. Sistema axiomatiko sintetikoetan jatorrizko nozio nagusietako bat da, geometria lauaren eta trigonometriaren esparru kanonikoa osatuz.
+
+<Definicion title="">
+  $\mathcal{E}$ espazio afin edo euklidear batean lerrokatu gabeko hiru puntu emanda (<VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="musgo">$B$</VisualBind> eta <VisualBind element="pC" color="musgo">$C$</VisualBind>), haiek zehaztutako <VisualBind element="planeMesh" color="musgo">$\mathcal{P}$</VisualBind> planoa haien konbinazio afin guztiek sortutako bi dimentsioko multzoa da:
+  $$
+  \mathcal{P} = \{ P \in \mathcal{E} \mid P = \alpha A + \beta B + \gamma C, \, \alpha + \beta + \gamma = 1, \, \alpha, \beta, \gamma \in \mathbb{R} \}
+  $$
+</Definicion>
+
+<Separador />
+
+### Geometria sintetikoa
+
+Hilberten sistema axiomatikoan, planoak espazio-inzidentziako axiomek araututako hirugarren jatorrizko objektu-mota dira:
+- **Hiru punturen bidezko determinazioa**: Lerrokatu gabeko hiru puntuk plano bakar bat zehazten dute.
+- **Zuzenaren barne-hartzea**: <ConceptLink targetId="recta">Zuzen</ConceptLink> bateko bi puntu plano batekoak badira, zuzen osoa plano horren barruan dago.
+- **Planoen ebakidura**: Bi plano desberdinek puntu komun bat badute, haien ebakidura <ConceptLink targetId="recta">zuzen</ConceptLink> bakar bat da.
+- **Planoaren banaketa**: Planoan dagoen edozein zuzenek gainerako puntuak bi erdiplano ganbil disjuntotan banatzen ditu.
+
+### Geometria analitikoa
+
+$\mathbb{R}^3$ hiru dimentsioko espazio euklidearrean, planoa aljebraikoki honela deskribatzen da:
+- **Ekuazio orokor inplizitua**: $Ax + By + Cz + D = 0$, non $(A, B, C) \neq (0, 0, 0)$ den eta $\vec{n} = (A, B, C)$ planoarekiko bektore normal ortogonala den.
+- **Forma bektoriala**: $\vec{r}(u, v) = \vec{p}_0 + u\vec{v}_1 + v\vec{v}_2$, non $\vec{v}_1 \nparallel \vec{v}_2$ diren eta $u, v \in \mathbb{R}$.
+
+### Topologia eta geometria diferentziala
+
+Topologikoki, ohiko topologia metrikoaz hornitutako plano euklidearra $\mathbb{R}^2$-rekiko homeomorfoa da. 2 dimentsioko Riemannen barietate diferentziagarri gisa, bere Gauss-en kurbadura zero da zorrozki ($K = 0$).
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Inzidentzia eta espazio-banaketa">
+    <PropiedadItem id="axioma-incidencia-4" title="Lerrokatu gabeko hiru punturen determinazioa">
+      Lerrokatu gabeko $A, B, C$ hiru puntuk $\mathcal{P}$ plano bakar bat zehazten dute.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-6" title="Zuzenaren barne-hartzea">
+      $A \in \mathcal{P}$ eta $B \in \mathcal{P}$ badira ($A \neq B$), orduan $\overleftrightarrow{AB} \subset \mathcal{P}$.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-7" title="Bi planoren ebakidura">
+      Bi planok puntu bat partekatzen badute, gutxienez beste puntu bat partekatzen dute eta zuzen batean ebakitzen dute elkar.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

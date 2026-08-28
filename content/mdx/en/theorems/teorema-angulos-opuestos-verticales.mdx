@@ -1,8 +1,8 @@
 export const metadata = {
   id: "teorema-angulos-opuestos-verticales",
   type: "teorema",
-  title: "Vertically Opposite Angles Theorem",
-  description: "If two secant lines intersect at a point, the pairs of vertically opposite angles formed are respectively congruent to each other.",
+  title: "Vertical Angles Theorem",
+  description: "If two straight lines intersect at a point, the vertically opposite angles formed are respectively congruent to one another.",
   statement: "Given two intersecting lines r and s meeting at point O, if α and α' are vertically opposite angles, then α ≅ α'.",
   branch: "51M",
   hasSimulation: true,
@@ -16,33 +16,33 @@ export const metadata = {
 import { AngulosOpuestos } from '@content/diagrams/Teoremas/AngulosOpuestos';
 export const Simulation = AngulosOpuestos;
 
-<Capitular letra="T" />he vertically opposite angles theorem constitutes one of the most fundamental angular symmetry properties in planar <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>. It guarantees that the intersection of two <ConceptLink targetId="recta">secant lines</ConceptLink> generates pairs of <ConceptLink targetId="angulo">angles</ConceptLink> with equal geometric measure.
+<Capitular letra="T" />he vertical angles theorem is one of the most fundamental and rigorous angular symmetry theorems in planar <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>. It guarantees that the intersection of two <ConceptLink targetId="recta">intersecting lines</ConceptLink> generates pairs of <ConceptLink targetId="angulo">angles</ConceptLink> of equal geometric measure.
 
 <Separador />
 
 ### Formal statement
 
-Let $r$ and $s$ be two <ConceptLink targetId="recta">secant lines</ConceptLink> in plane $\mathcal{P}$ intersecting at <VisualBind element="punto-interseccion" color="musgo">point $O$</VisualBind>. Let $\alpha$ and $\alpha'$ be a pair of <VisualBind element="angulos-opuestos" color="pavo">vertically opposite angles</VisualBind> determined by the intersection of the rays. Global <ConceptLink targetId="congruencia">congruence</ConceptLink> holds necessarily:
+Let $r$ and $s$ be two <ConceptLink targetId="recta">intersecting lines</ConceptLink> in the plane $\mathcal{P}$ intersecting at the <VisualBind element="punto-interseccion" color="musgo">point $O$</VisualBind>. Let $\alpha$ and $\alpha'$ be a pair of <VisualBind element="angulos-opuestos" color="pavo">vertically opposite angles</VisualBind> determined by the intersecting rays. The <ConceptLink targetId="congruencia">congruence</ConceptLink> relation holds necessarily:
 
 <Formula>
   $$ \alpha \cong \alpha' $$
 </Formula>
 
-Metrically, the angular measures of both angles are strictly identical: $|\alpha| = |\alpha'|$.
+Metrically, their angular measures are identical: $|\alpha| = |\alpha'|$.
 
 <Separador />
 
-### Proof via supplementary angles
+### Proof and axiomatic foundations
 
-The formal deduction relies on the axiom of <ConceptLink targetId="angulos-suplementarios">supplementary angles</ConceptLink> along a straight line:
-1. Let $\beta$ be the common adjacent angle to $\alpha$ and $\alpha'$.
-2. Lying on line $r$, $\alpha$ and $\beta$ form a <ConceptLink targetId="angulo-llano">straight angle</ConceptLink>, so $\alpha + \beta = 180^\circ$.
-3. Likewise, along line $s$, $\beta$ and $\alpha'$ form a straight angle, so $\alpha' + \beta = 180^\circ$.
-4. Subtracting $\beta$ from both equations yields $\alpha = 180^\circ - \beta = \alpha'$, proving congruence.
+The formal deduction is based on adjacent <ConceptLink targetId="angulos-suplementarios">supplementary angles</ConceptLink> along a straight line and the <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>angle congruence axioms</ConceptLink>:
+1. Let $\beta$ be the common adjacent angle between $\alpha$ and $\alpha'$.
+2. Lying on the same straight line $r$, $\alpha$ and $\beta$ form a <ConceptLink targetId="angulos-suplementarios">straight angle</ConceptLink>, so $\alpha + \beta = 180^\circ$.
+3. Similarly, on line $s$, $\beta$ and $\alpha'$ form a straight angle, so $\alpha' + \beta = 180^\circ$.
+4. Subtracting $\beta$ from both equations yields $\alpha = 180^\circ - \beta = \alpha'$, proving the required congruence $\alpha \cong \alpha'$.
 
 <Separador />
 
 ### Properties and significance
 
-- **Independence from the parallel postulate**: The congruence of vertically opposite angles is a result of absolute geometry and does not depend on the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>.
-- **Rotational invariance**: Corresponds to a $180^\circ$ point reflection symmetry about the intersection point $O$.
+- **Independence from the parallel postulate**: The congruence of vertical angles is a theorem of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> and does not require the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>.
+- **Rotational invariance**: Corresponds to a central half-turn symmetry of $180^\circ$ ($\pi$ radians) about the intersection point $O$.

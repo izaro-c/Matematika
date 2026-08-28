@@ -1,0 +1,107 @@
+export const metadata = {
+  id: "ejercicio-clasificacion-triangulos",
+  lang: "en",
+  type: "ejercicio",
+  title: "Classification of Triangles by Interior Angles",
+  description: "Interactive exercise featuring classification, matrix counting, and visual canvas validation of triangles based on interior angles.",
+  branch: "51M",
+  relatedTheorem: "teorema-suma-angulos-triangulo",
+  difficulty: "básico",
+  hasSimulation: false
+};
+
+import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/EjercicioClasificacionTriangulos';
+
+<Capitular letra="C" />lassifying geometric figures according to angular properties is an essential skill for applying theorems of <ConceptLink targetId="congruencia">congruence</ConceptLink> and <ConceptLink targetId="semejanza">similarity</ConceptLink>. In this exercise, you will classify different <ConceptLink targetId="triangulo">triangle</ConceptLink> configurations based on their interior angles, construct the classification count matrix, and inspect them on the interactive canvas.
+
+<Separador />
+
+<ExerciseStep
+  id="p1"
+  numero={1}
+  titulo="Classification by Interior Angles"
+  questionIds={["p1_q1"]}
+>
+  Drag each triangle into the appropriate category based on the measure of its angles:
+
+  <Clasificador
+    id="p1_q1"
+    pregunta="Classify the following triangles into their corresponding categories:"
+    buckets={[
+      { id: "rectangulo", title: "Right triangle (one angle of 90°)" },
+      { id: "acutangulo", title: "Acute triangle (all 3 angles < 90°)" },
+      { id: "obtusangulo", title: "Obtuse triangle (one angle > 90°)" }
+    ]}
+    items={[
+      { id: "t1", content: "$90^\\circ, 45^\\circ, 45^\\circ$", bucketId: "rectangulo" },
+      { id: "t2", content: "$60^\\circ, 60^\\circ, 60^\\circ$", bucketId: "acutangulo" },
+      { id: "t3", content: "$120^\\circ, 30^\\circ, 30^\\circ$", bucketId: "obtusangulo" },
+      { id: "t4", content: "$3, 4, 5\\text{ (sides)}$", bucketId: "rectangulo" }
+    ]}
+  >
+    <Clasificador.ErrorComun titulo="Confusing the Pythagorean triple or obtuse angles">
+      Remember that by the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink> ($3^2 + 4^2 = 5^2$), sides 3, 4, and 5 form a right triangle. Furthermore, a single angle exceeding 90° is sufficient for a triangle to be obtuse.
+    </Clasificador.ErrorComun>
+
+    <Clasificador.Resolucion>
+      - **Right Triangles**: Have one 90° angle ($90^\circ, 45^\circ, 45^\circ$ or side triple $3, 4, 5$).
+      - **Acute Triangles**: All 3 interior angles are strictly less than 90° ($60^\circ, 60^\circ, 60^\circ$).
+      - **Obtuse Triangles**: Contain one interior angle strictly greater than 90° ($120^\circ, 30^\circ, 30^\circ$).
+    </Clasificador.Resolucion>
+  </Clasificador>
+</ExerciseStep>
+
+<Separador />
+
+<ExerciseStep
+  id="p2"
+  numero={2}
+  titulo="Matrix Counting of the Classification"
+  questionIds={["p2_q1"]}
+  dependeDeQuestions={["p1_q1"]}
+>
+  Express the results of the classification above as a row vector $[\text{Right}, \text{Acute}, \text{Obtuse}]$:
+
+  <MatrizInteractiva
+    id="p2_q1"
+    pregunta="Enter the number of triangles in each category [Right, Acute, Obtuse]:"
+    correct={[["2", "1", "1"]]}
+  >
+    <MatrizInteractiva.ErrorComun titulo="Incorrect element counting">
+      Review the items classified in Step 1: there are 2 right triangles ($90^\circ, 45^\circ, 45^\circ$ and $3, 4, 5$), 1 acute triangle ($60^\circ, 60^\circ, 60^\circ$), and 1 obtuse triangle ($120^\circ, 30^\circ, 30^\circ$).
+    </MatrizInteractiva.ErrorComun>
+
+    <MatrizInteractiva.Resolucion>
+      Grouping the 4 classified triangles gives 2 right, 1 acute, and 1 obtuse triangle. The corresponding row vector is $[2 \quad 1 \quad 1]$.
+    </MatrizInteractiva.Resolucion>
+  </MatrizInteractiva>
+</ExerciseStep>
+
+<Separador />
+
+<ExerciseStep
+  id="p3"
+  numero={3}
+  titulo="Visual Verification on Canvas"
+  questionIds={["p3_q1"]}
+  dependeDeQuestions={["p2_q1"]}
+>
+  Confirm your classification by inspecting the geometric layout on the interactive canvas:
+
+  <CanvasInteractivo
+    id="p3_q1"
+    title="Angle Inspection Canvas"
+    pregunta="Interact with the controls on the canvas to inspect each triangle category:"
+    botonTexto="Validate canvas inspection"
+  >
+    <EjercicioClasificacionTriangulos />
+
+    <CanvasInteractivo.ErrorComun titulo="Error in angle summation">
+      Recall that by the <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink>, the interior angles in any Euclidean triangle must sum to exactly 180° ($\alpha + \beta + \gamma = 180^\circ$).
+    </CanvasInteractivo.ErrorComun>
+
+    <CanvasInteractivo.Resolucion>
+      The canvas demonstrates that the sum of interior angles in all cases satisfies $\alpha + \beta + \gamma = 180^\circ$, validating the geometric classification.
+    </CanvasInteractivo.Resolucion>
+  </CanvasInteractivo>
+</ExerciseStep>

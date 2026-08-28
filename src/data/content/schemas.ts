@@ -120,7 +120,7 @@ export const DefinitionSchema = z.object({
   statement: z.string().optional(),
   authors: z.array(z.string()).optional(),
   color: z.string().optional(),
-  subtype: z.enum(['primitivo', 'nominal', 'fundamentada']).optional(),
+  subtype: z.enum(['primitivo', 'nominal', 'fundamentada', 'derivado', 'algebraico', 'analitico']).optional(),
   hasSimulation: z.boolean().optional(),
   ...BaseContentSchemaFields,
 });

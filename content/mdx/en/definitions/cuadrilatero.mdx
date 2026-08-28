@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Quadrilateral",
-  description: "Four-sided planar polygon formed by the union of four consecutive line segments joining four coplanar points no three collinear.",
+  description: "Planar four-sided polygon formed by the union of four line segments joining four coplanar points no three of which are collinear.",
   branch: "51M",
   hasSimulation: true,
   sources: [
@@ -16,32 +16,37 @@ export const metadata = {
 import { Cuadrilatero } from '@content/diagrams/Definiciones/Cuadrilatero';
 export const Simulation = Cuadrilatero;
 
-<Capitular letra="A" /> quadrilateral is a four-sided <ConceptLink targetId="poligono">polygon</ConceptLink> in planar <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink> bounded by the <ConceptLink targetId="union-conjuntos">union</ConceptLink> of four consecutive line <ConceptLink targetId="segmento">segments</ConceptLink>. It serves as a foundational polygonal figure in the study of <ConceptLink targetId="congruencia">congruence</ConceptLink> and <ConceptLink targetId="teoria-medida-area">area measure decompositions</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+<Capitular letra="A" /> quadrilateral is a four-sided <ConceptLink targetId="poligono">polygon</ConceptLink> in Euclidean planar geometry bounded by the union of four consecutive line <ConceptLink targetId="segmento">segments</ConceptLink>. It constitutes one of the foundational polygonal figures for studying geometric <ConceptLink targetId="congruencia">congruence</ConceptLink> and <ConceptLink targetId="teoria-medida-area">area</ConceptLink> decompositions in the <ConceptLink targetId="plano">plane</ConceptLink>.
 
 <Definicion title="">
-  Given four coplanar points <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind>, <VisualBind element="vertice-c" color="musgo">$C$</VisualBind>, and <VisualBind element="vertice-d" color="musgo">$D$</VisualBind> in a plane $\mathcal{P}$, such that no three are <ConceptLink targetId="colinealidad">collinear</ConceptLink> and the line segments intersect only at their endpoints, the quadrilateral <VisualBind element="cuadrilatero" color="musgo">$ABCD$</VisualBind> is defined by:
+  Given four coplanar <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> <VisualBind element="vertices" color="musgo">$A, B, C, D$</VisualBind> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\mathcal{P}$ such that no three are collinear and the connecting segments intersect only at their endpoints, the quadrilateral <VisualBind element="poligono" color="musgo">$ABCD$</VisualBind> is defined by the union of its four <ConceptLink targetId="segmento" isDependency={true}>line segments</ConceptLink> <VisualBind element="lados" color="musgo">$\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$</VisualBind>:
   $$
   ABCD = \overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}
   $$
-  Points $A, B, C, D$ are called <ConceptLink targetId="vertice">vertices</ConceptLink>, segments $\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$ are the <ConceptLink targetId="lado">sides</ConceptLink>, and segments $\overline{AC}, \overline{BD}$ are the <ConceptLink targetId="diagonal">diagonals</ConceptLink>.
+  The points $A, B, C, D$ are the <ConceptLink targetId="vertice">vertices</ConceptLink> and the segments <VisualBind element="diagonales" color="musgo">$\overline{AC}, \overline{BD}$</VisualBind> are the diagonals.
 </Definicion>
 
 <Separador />
 
 ### Structural classification
 
-Planar quadrilaterals are classified based on convexity properties and <ConceptLink targetId="paralelas">parallelism</ConceptLink> relationships between opposite sides:
+Planar quadrilaterals are classified according to convexity and the <ConceptLink targetId="paralelas">parallelism</ConceptLink> relations among their sides:
 
 | Type | Characteristic geometric condition | Main subclasses |
 |---|---|---|
-| <ConceptLink targetId="region-convexa">Convex</ConceptLink> | Both diagonals intersect at an interior point | <ConceptLink targetId="paralelogramo">Parallelogram</ConceptLink>, Trapezoid, Trapezium |
-| Concave | One diagonal lies entirely in the exterior region | Dart / Arrowhead quadrilateral |
-| <ConceptLink targetId="paralelogramo">Parallelogram</ConceptLink> | Both pairs of opposite sides are parallel ($\overline{AB} \parallel \overline{CD} \land \overline{BC} \parallel \overline{DA}$) | Rectangle, Rhombus, <ConceptLink targetId="cuadrado">Square</ConceptLink> |
+| Convex | The two diagonals intersect at an interior point | <ConceptLink targetId="paralelogramo">Paralellogram</ConceptLink>, Trapezoid, Trapezium |
+| Concave | One diagonal lies entirely in the exterior | Dart (arrowhead) |
+| <ConceptLink targetId="paralelogramo">Parallelogram</ConceptLink> | Opposite sides parallel ($\overline{AB} \parallel \overline{CD} \land \overline{BC} \parallel \overline{DA}$) | Rectangle, Rhombus, <ConceptLink targetId="cuadrado">Square</ConceptLink> |
 
 <Separador />
 
-### Properties
-
-- **Interior angle sum**: The sum of the four interior angles of any convex quadrilateral is always equal to $360^\circ$ ($2\pi\text{ rad}$).
-- **Triangular decomposition**: Any convex quadrilateral can be partitioned by a diagonal into two <ConceptLink targetId="triangulo">triangles</ConceptLink> disjoint except along their common boundary.
-- **Area additivity**: The surface measure of a convex quadrilateral satisfies strict <ConceptLink targetId="teorema-area-aditividad">additivity</ConceptLink>: $\mu(ABCD) = \mu(\triangle ABC) + \mu(\triangle ACD)$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Angular and decomposition properties">
+    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Interior angle sum">
+      The sum of the four interior angles of any convex quadrilateral is equal to $360^\circ$ ($2\pi\text{ rad}$).
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-aditividad" title="Triangular decomposition">
+      Every convex quadrilateral is partitioned by a diagonal into two disjoint triangles: $\mu(ABCD) = \mu(\triangle ABC) + \mu(\triangle ACD)$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

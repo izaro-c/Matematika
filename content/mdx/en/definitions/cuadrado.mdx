@@ -1,0 +1,44 @@
+export const metadata = {
+  id: "cuadrado",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Square",
+  description: "Regular four-sided polygon characterized by having all four sides congruent and all four interior angles right.",
+  branch: "51M",
+  hasSimulation: false,
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Definition 22", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+  ]
+};
+
+<Capitular letra="A" /> square is the regular four-sided polygon in Euclidean planar geometry. By combining the metric properties of a rhombus (four congruent sides) and a rectangle (four right angles), it constitutes the figure of maximal symmetry within the family of <ConceptLink targetId="cuadrilatero">quadrilaterals</ConceptLink>.
+
+<Definicion title="">
+  A convex <ConceptLink targetId="cuadrilatero" isDependency={true}>quadrilateral</ConceptLink> $ABCD$ is a square if and only if its four sides are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> and its four interior angles are <ConceptLink targetId="angulo-recto" isDependency={true}>right angles</ConceptLink>:
+  $$
+  (\overline{AB} \cong \overline{BC} \cong \overline{CD} \cong \overline{DA}) \land (\angle A \cong \angle B \cong \angle C \cong \angle D \cong 90^\circ)
+  $$
+</Definicion>
+
+<Separador />
+
+### Geometric properties and symmetry
+
+- **Diagonals**: The two diagonals have equal length ($d = l\sqrt{2}$), bisect each other, and are mutually <ConceptLink targetId="perpendicular">perpendicular</ConceptLink>.
+- **Symmetry group**: The Euclidean automorphism group of the square is the dihedral group $D_4$, consisting of 4 rotations and 4 reflections across axes of symmetry.
+- **Incircle and circumcircle**: It admits concentric inscribed ($r = \frac{l}{2}$) and circumscribed ($R = \frac{l\sqrt{2}}{2}$) circles.
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Metrics and area">
+    <PropiedadItem id="teorema-area-rectangulo" title="Area of a square">
+      The area of a square with side length $l$ equals the square of its side: $\mu(ABCD) = l^2$.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-pitagoras" title="Diagonal relation">
+      The diagonal length satisfies $d^2 = l^2 + l^2 = 2l^2 \implies d = l\sqrt{2}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

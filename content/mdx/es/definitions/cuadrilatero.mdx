@@ -16,32 +16,37 @@ export const metadata = {
 import { Cuadrilatero } from '@content/diagrams/Definiciones/Cuadrilatero';
 export const Simulation = Cuadrilatero;
 
-<Capitular letra="U" />n cuadrilátero es un <ConceptLink targetId="poligono">polígono</ConceptLink> de cuatro <ConceptLink targetId="lado">lados</ConceptLink> en la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink> delimitado por la <ConceptLink targetId="union-conjuntos">unión</ConceptLink> de cuatro <ConceptLink targetId="segmento">segmentos</ConceptLink> de <ConceptLink targetId="recta">recta</ConceptLink> consecutivos. Constituye una de las figuras poligonales fundamentales en el estudio de las <ConceptLink targetId="congruencia">congruencias</ConceptLink> y de las descomposiciones de <ConceptLink targetId="teoria-medida-area">área</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
+<Capitular letra="U" />n cuadrilátero es un <ConceptLink targetId="poligono">polígono</ConceptLink> de cuatro lados en la geometría plana delimitado por la unión de cuatro <ConceptLink targetId="segmento">segmentos</ConceptLink> de recta consecutivos. Constituye una de las figuras poligonales fundamentales en el estudio de las <ConceptLink targetId="congruencia">congruencias</ConceptLink> y de las descomposiciones de <ConceptLink targetId="teoria-medida-area">área</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Definicion title="">
-  Dados cuatro puntos coplanares <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind>, <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> y <VisualBind element="vertice-d" color="musgo">$D$</VisualBind> pertenecientes a un plano $\mathcal{P}$, tales que ningunos tres de ellos son <ConceptLink targetId="colinealidad">colineales</ConceptLink> y los segmentos no se intersecan salvo en sus extremos, el cuadrilátero <VisualBind element="cuadrilatero" color="musgo">$ABCD$</VisualBind> es la figura definida por:
+  Dados cuatro <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> coplanares <VisualBind element="vertices" color="musgo">$A, B, C, D$</VisualBind> pertenecientes a un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\mathcal{P}$, tales que ningunos tres de ellos son colineales y los segmentos no se cruzan salvo en sus extremos, el cuadrilátero <VisualBind element="poligono" color="musgo">$ABCD$</VisualBind> es la figura definida por la unión de sus cuatro <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> <VisualBind element="lados" color="musgo">$\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$</VisualBind>:
   $$
   ABCD = \overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}
   $$
-  Los puntos $A, B, C, D$ son los <ConceptLink targetId="vertice">vértices</ConceptLink>, los segmentos $\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$ son los lados, y los segmentos $\overline{AC}, \overline{BD}$ son las <ConceptLink targetId="diagonal">diagonales</ConceptLink>.
+  Los puntos $A, B, C, D$ son los <ConceptLink targetId="vertice">vértices</ConceptLink> y los segmentos <VisualBind element="diagonales" color="musgo">$\overline{AC}, \overline{BD}$</VisualBind> son las diagonales del cuadrilátero.
 </Definicion>
 
 <Separador />
 
 ### Clasificación estructural
 
-Los cuadriláteros planos se clasifican según sus propiedades de convexidad y las relaciones de <ConceptLink targetId="paralelas">paralelismo</ConceptLink> entre sus lados opuestos:
+Los cuadriláteros planos se clasifican según sus propiedades de convexidad y las relaciones de <ConceptLink targetId="paralelas">paralelismo</ConceptLink> entre sus lados:
 
 | Tipo | Condición geométrica característica | Subclases principales |
 |---|---|---|
-| <ConceptLink targetId="region-convexa">Convexo</ConceptLink> | Las dos diagonales se cortan en un punto interior | <ConceptLink targetId="paralelogramo">Paralelogramo</ConceptLink>, Trapecio, Trapezoide |
-| Concavo | Una diagonal queda contenida completamente en el exterior | Cuadrilátero en dardo o punta de flecha |
-| <ConceptLink targetId="paralelogramo">Paralelogramo</ConceptLink> | Dos pares de lados opuestos son paralelos ($\overline{AB} \parallel \overline{CD} \land \overline{BC} \parallel \overline{DA}$) | Rectángulo, Rombo, <ConceptLink targetId="cuadrado">Cuadrado</ConceptLink> |
+| Convexo | Las dos diagonales se intersecan en un punto interior | <ConceptLink targetId="paralelogramo">Paralelogramo</ConceptLink>, Trapecio, Trapezoide |
+| Cóncavo | Una diagonal queda contenida en el exterior | Cuadrilátero en dardo |
+| <ConceptLink targetId="paralelogramo">Paralelogramo</ConceptLink> | Lados opuestos paralelos ($\overline{AB} \parallel \overline{CD} \land \overline{BC} \parallel \overline{DA}$) | Rectángulo, Rombo, <ConceptLink targetId="cuadrado">Cuadrado</ConceptLink> |
 
 <Separador />
 
-### Propiedades
-
-- **Suma de ángulos interiores**: La suma de los cuatro ángulos interiores de todo cuadrilátero convexo es siempre igual a $360^\circ$ ($2\pi\text{ rad}$).
-- **Descomposición triangular**: Todo cuadrilátero convexo puede dividirse mediante una diagonal en dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> disjuntos salvo en la frontera.
-- **Aditividad del área**: La medida de superficie de un cuadrilátero convexo satisface <ConceptLink targetId="teorema-area-aditividad">aditividad</ConceptLink> estricta $\mu(ABCD) = \mu(\triangle ABC) + \mu(\triangle ACD)$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades angulares y de descomposición">
+    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Suma de ángulos interiores">
+      La suma de las amplitudes de los cuatro ángulos interiores de un cuadrilátero convexo es igual a $360^\circ$ ($2\pi\text{ rad}$).
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-aditividad" title="Descomposición triangular">
+      Todo cuadrilátero convexo se descompone mediante una diagonal en dos triángulos disjuntos: $\mu(ABCD) = \mu(\triangle ABC) + \mu(\triangle ACD)$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -2,36 +2,46 @@ export const metadata = {
   id: "axioma-congruencia-4",
   lang: "es",
   type: "axioma",
-  title: "Axioma III.4 (Transporte de Ángulos)",
-  description: "Dado un ángulo, una semirrecta dada y un semiplano determinado por ella, existe un único ángulo congruente al dado con vértice en el origen de la semirrecta.",
+  title: "Axioma III.4 (Transporte de ángulos)",
+  description: "Dado un ángulo, una semirrecta y un semiplano prefijado, existe una única semirrecta en dicho semiplano que forma un ángulo congruente con el dado.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
   ]
 };
 
 import { Congruence4 } from '@content/diagrams/Axiomas/Congruence4';
 export const Simulation = Congruence4;
 
-<Capitular letra="E" />l cuarto axioma de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> establece la posibilidad de trasladar aberturas angulares en el <ConceptLink targetId="plano">plano</ConceptLink>. Garantiza que cualquier <ConceptLink targetId="angulo">ángulo</ConceptLink> puede transportarse de forma unívoca a un semiplano dado a partir de una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> de referencia.
+<Capitular letra="E" />l cuarto axioma de congruencia de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> formaliza la transportabilidad rígida de los <ConceptLink targetId="angulo">ángulos</ConceptLink> en el plano. Dado un ángulo $\angle(h, k)$, una semirrecta $h'$ con origen $O'$ y uno de los semiplanos determinados por la recta soporte de $h'$, existe una única semirrecta $k'$ en dicho semiplano tal que $\angle(h, k) \cong \angle(h', k')$.
 
-<Definicion title="">
-  Dado un <ConceptLink targetId="angulo">ángulo</ConceptLink> $\angle (h, k)$, una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> $h'$ contenida en la recta $a'$, y un semiplano $H'$ delimitado por $a'$, existe una única semirrecta $k'$ contenida en $H'$ con origen en el mismo punto que $h'$ tal que el ángulo $\angle (h, k)$ es <ConceptLink targetId="congruencia">congruente</ConceptLink> con $\angle (h', k')$:
+<Definicion title="Enunciado formal">
+  Dado un <ConceptLink targetId="angulo">ángulo</ConceptLink> convexo $\angle(h, k)$ y dada una semirrecta $h'$ con origen $O'$ que delimita un semiplano $\mathcal{H}$, existe una única semirrecta $k'$ con origen en $O'$ contenida en $\mathcal{H}$ tal que:
   $$
-  \forall \angle (h, k), \forall h' \subset a', \forall H' \implies \exists! k' \subset H' \ (\angle (h, k) \cong \angle (h', k'))
+  \forall \angle(h,k), \forall h' \subset \partial\mathcal{H}, \ \exists! k' \subset \mathcal{H} \ \bigl(\angle(h, k) \cong \angle(h', k')\bigr)
   $$
-  Además, todo ángulo es congruente consigo mismo: $\angle (h, k) \cong \angle (h, k)$.
+  Asimismo, todo ángulo es <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> consigo mismo: $\angle(h, k) \cong \angle(h, k)$.
 </Definicion>
 
 <Separador />
 
-### Representación visual
+### Representación visual e interacción
 
-Dada la abertura del ángulo de origen <VisualBind element="h" color="ocre">$h$</VisualBind>-<VisualBind element="k" color="ocre">$k$</VisualBind>, al fijar la semirrecta base <VisualBind element="hP" color="pavo">$h'$</VisualBind> en el semiplano destino, la semirrecta construida <VisualBind element="kP" color="terracota">$k'$</VisualBind> delimita el ángulo transportado conservando con exactitud la amplitud angular.
+En la simulación interactiva, el ángulo original <VisualBind element="nonReflexAngleAOB" color="ocre">$\angle AOB$</VisualBind> delimitado por las semirrectas <VisualBind element="rayOA" color="carbon">$h$</VisualBind> y <VisualBind element="rayOB" color="carbon">$k$</VisualBind> se reproduce unívocamente como <VisualBind element="nonReflexAngleAAOOBB" color="ocre">$\angle A'O'B'$</VisualBind> a partir de la semirrecta base <VisualBind element="rayOOAA" color="carbon">$h'$</VisualBind>. La semirrecta transportada <VisualBind element="rayOOBB" color="carbon">$k'$</VisualBind> mantiene su apertura angular invariante respecto al vértice <VisualBind element="pOO" color="carbon">$O'$</VisualBind>.
 
 <Separador />
 
-### Significado axiomático
+### Significado geométrico y alcance
 
-Este axioma proporciona el análogo angular al transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink>. Permite comparar aberturas angulares sintéticamente sin requerir la medida sexagesimal ni funciones trigonométricas en la <ConceptLink targetId="geometria-absoluta">geometría absoluta</ConceptLink>.
+Este postulado fundamenta la noción sintética de rigidez angular sin recurrir a funciones trigonométricas analíticas ni medidas en grados sexagesimales o radianes. Garantiza que las rotaciones e isometrías preservan la amplitud en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+
+<Separador />
+
+### Propiedades
+
+- **Unicidad planar:** En cada semiplano prefijado existe una sola semirrecta que reproduce la apertura angular deseada.
+- **Invarianza de ángulos opuestos:** Permite demostrar que los <ConceptLink targetId="teorema-angulos-opuestos-verticales">ángulos opuestos por el vértice</ConceptLink> son congruentes.
+- **Relación de equivalencia:** La congruencia angular constituye una relación de equivalencia (reflexiva, simétrica y transitiva) en el conjunto de ángulos planos.

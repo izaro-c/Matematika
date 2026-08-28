@@ -1,8 +1,8 @@
 export const metadata = {
   "id": "demo-existencia-bisectriz",
   "type": "demostracion",
-  "title": "Froga: Bisektorearen existentzia eta bakartasuna",
-  "description": "Angelu baten bisektorearen existentziaren eta bakartasunaren froga eraikitzaile formala, triangeluen kongruentziaren eta zuzenkien garraioaren bidez.",
+  "title": "Frogapena: Bisektorearen existentzia eta bakartasuna",
+  "description": "Angelu baten bisektorearen existentziaren eta bakartasunaren frogapen eraikitzaile formala, triangeluen kongruentzian eta zuzenki-garraioan oinarritua.",
   "parentTheorem": "teorema-congruencia-ala",
   "branch": "51M",
   "proofMethod": "metodo-directo",
@@ -10,7 +10,7 @@ export const metadata = {
   "tags": ["geometria", "angulos", "bisectriz"],
   "layout": "split",
   "sources": [
-    { "title": "Elementuak", author: "Euclides", locator: "I. Liburukia, 9. Proposizioa", role: "primary" }
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 9", role: "primary" }
   ]
 };
 
@@ -18,50 +18,50 @@ import { DemoExistenciaBisectriz } from "@content/diagrams/Demos/DemoExistenciaB
 
 <DemonstrationSection diagram={<DemoExistenciaBisectriz />}>
 
-<Capitular letra="E" />manik <VisualBind element="vertice-o" color="carbon">$O$</VisualBind> bertizea duen <VisualBind element="angulo-aob" color="carbon">$\angle AOB$</VisualBind> <ConceptLink targetId="angulo">angelu bat</ConceptLink>, angelua bi zati <ConceptLink targetId="congruencia">kongruentetan</ConceptLink> banatzen duen barneko $\overrightarrow{OM}$ zuzenerdi baten existentzia eta bakartasuna frogatzen dira, <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>triangeluen kongruentzia-teoreman</ConceptLink> oinarrituz.
+<Capitular letra="O" /> erpinean sortutako $\angle AOB$ <ConceptLink targetId="angulo">angelu</ConceptLink> bat emanda, angelua bi zati <ConceptLink targetId="congruencia">kongruentetan</ConceptLink> banatzen duen $\overrightarrow{OM}$ barneko erdi-zuzenaren existentzia eta bakartasuna frogatzen dira, <ConceptLink targetId="teorema-congruencia-ala">triangeluen kongruentziaren teorian</ConceptLink> oinarrituta.
 
 <Separador />
 
-### Urratsez urratseko froga
+### Froga urratsez urrats
 
-<ProofStep number={1} target={["angulo-aob", "punto-c", "punto-d"]} title="Zuzenkiak angeluaren aldeetan garraiatzea">
-$OA$ aldearen zuzenerdian $O$-ren ezberdina den <ConceptLink targetId="punto">puntu</ConceptLink> bat <VisualBind element="punto-c" color="terracota">$C$</VisualBind> finkatzen da. <ConceptLink targetId="segmento">Zuzenkien</ConceptLink> garraio-axiomen bidez, $OB$ aldearen zuzenerdian <VisualBind element="punto-d" color="pavo">$D$</VisualBind> puntu bat eraikitzen da, jatorritik distantziak kongruenteak izateko moduan:
+<ProofStep number={1} target="rayOA" title="Zuzenkien garraioa angeluaren aldeen gainean">
+$OA$ aldearen erdi-zuzenean $O$-z bestelako $C$ <ConceptLink targetId="punto">puntu</ConceptLink> bat finkatzen dugu. <ConceptLink targetId="segmento">Zuzenkiak</ConceptLink> garraiatzeko axiomaren bidez (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 Axioma</ConceptLink>), $OB$ erdi-zuzenean $D$ puntu bat eraikitzen dugu jatorriarekiko distantziak kongruenteak izan daitezen:
 
 <Formula>
   $$ \overline{OC} \cong \overline{OD} $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} target={["segmento-cd", "punto-m"]} title="Laguntza-zuzenkia eta erdiko puntua">
-<VisualBind element="segmento-cd" color="ocre">$\overline{CD}$</VisualBind> zuzenkia marrazten da. Ordena eta intzidentzia axiomen bidez, $\overline{CD}$ zuzenkiaren gainean erdiko puntu bakarra dago, <VisualBind element="punto-m" color="carbon">$M$</VisualBind>, distantziakidetasuna betetzen duena:
+<ProofStep number={2} target="p4" title="Laguntza-zuzenkia eta erdigunea">
+$\overline{CD}$ laguntza-zuzenkia marrazten dugu. Hurrenkera eta intzidentziaren axiomen arabera, $\overline{CD}$ zuzenkian $M$ erdigune bakarra existitzen da distantziakidetasuna betetzen duena:
 
 <Formula>
   $$ \overline{CM} \cong \overline{DM} $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={3} target={["triangulo-ocm", "triangulo-odm"]} title="Laguntza-triangeluen kongruentzia AL-AL-AL irizpideaz">
-<VisualBind element="triangulo-ocm" color="terracota">$\triangle OCM$</VisualBind> eta <VisualBind element="triangulo-odm" color="pavo">$\triangle ODM$</VisualBind> triangeluak kontuan hartzen dira. $\overline{OC} \cong \overline{OD}$, $\overline{CM} \cong \overline{DM}$ denez eta $\overline{OM}$ aldea bi poligonoei dagokienez komuna denez, <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>kongruentzia-axiomei</ConceptLink> jarraituz AL-AL-AL (Aldea-Aldea-Aldea) irizpideaz, honako hau ondorioztatzen da <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>kongruentzia-teoremen</ConceptLink> babespean:
+<ProofStep number={3} target="bisAOB" title="Laguntza-triangeluen kongruentzia">
+$\triangle OCM$ eta $\triangle ODM$ triangeluak aztertzen ditugu. $\overline{OC} \cong \overline{OD}$, $\overline{CM} \cong \overline{DM}$ eta $\overline{OM}$ alde komuna denez, AlAnAl axiomaren (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 Axioma</ConceptLink>) ondoriozko kongruentzia-irizpideetatik bi triangeluak kongruenteak direla ondorioztatzen da:
 
 <Formula>
   $$ \triangle OCM \cong \triangle ODM $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} target={["angulo-com", "angulo-dom"]} title="Barne-angeluen berdintasuna eta existentzia">
-Triangeluen kongruentziatik haien angelu homologoen kongruentzia deduzitzen da: <VisualBind element="angulo-com" color="terracota">$\angle COM$</VisualBind> $\cong$ <VisualBind element="angulo-dom" color="pavo">$\angle DOM$</VisualBind>. Ondorioz, $\overrightarrow{OM}$ zuzenerdia $\angle AOB$ angeluaren bisektore baliogarria da.
+<ProofStep number={4} target="nonReflexAngleBO6" title="Barne-angeluen berdintasuna eta existentzia">
+Triangeluen kongruentziatik haien angelu homologoen kongruentzia eratortzen da: $\angle COM \cong \angle DOM$. Ondorioz, $\overrightarrow{OM}$ erdi-zuzena $\angle AOB$ angeluaren bisektore baliagarria da.
 </ProofStep>
 
-<ProofStep number={5} target={["bisectriz-unica"]} title="Bakartasunaren froga">
-Beste $\overrightarrow{OM'}$ zuzenerdi bisektore bat balego, angelu berbera osatuko luke $OA$ zuzenerdiarekin. Semiplano berean angeluak garraiatzearen bakartasun-axiomen bidez, $\overrightarrow{OM'}$ eta $\overrightarrow{OM}$ zuzenerdiek bat etorri behar dute nahitaez. <VisualBind element="bisectriz-unica" color="carbon">Bisektorea bakarra da</VisualBind>.
+<ProofStep number={5} target="nonReflexAngle6OA" title="Bakartasunaren frogapena">
+Beste $\overrightarrow{OM'}$ erdi-zuzen bisektore bat existituko balitz, $OA$ erdi-zuzenarekin angelu berdina osatuko luke. Erdi-plano jakin batean angeluak garraiatzearen bakartasunaren axiomagatik (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>), $\overrightarrow{OM'}$ eta $\overrightarrow{OM}$ erdi-zuzenek nahitaez bat etorri behar dute. Beraz, bisektorea bakarra da.
 </ProofStep>
 
 <Separador />
 
-### Dedukzio-analisia
+### Azterketa deduktiboa
 
 <Nota>
-  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.9 Proposizioa. <ConceptLink targetId="hilbert">Hilbert-en</ConceptLink> sistema axiomatikoan, eraikuntza honek erakusten du angeluaren zatitze bisektorea <ConceptLink targetId="axioma-congruencia-1">kongruentzia-axiometatik</ConceptLink> eta <ConceptLink targetId="sistema-absoluto">geometria absolututik</ConceptLink> eratorritako ezaugarri unibertsala dela.
+  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.9 Proposizioa. <ConceptLink targetId="hilbert">Hilberten</ConceptLink> sistema axiomatikoan, eraikuntza honek erakusten du angeluaren erdikaria kongruentzia-axiometatik eta <ConceptLink targetId="sistema-absoluto">geometria absolututik</ConceptLink> eratorritako ezaugarri unibertsala dela.
 </Nota>
 
 </DemonstrationSection>

@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-8",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.8 (Existence of Non-coplanar Points)",
-  description: "There exist at least four points in space that do not lie in the same plane.",
+  title: "Axiom I.8 (Existence of Four Non-Coplanar Points)",
+  description: "There exist at least four points in space that do not belong to the same plane.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
@@ -14,12 +16,12 @@ export const metadata = {
 import { Incidence8 } from '@content/diagrams/Axiomas/Incidence8';
 export const Simulation = Incidence8;
 
-<Capitular letra="T" />he eighth and final <ConceptLink targetId="incidencia">incidence axiom</ConceptLink> formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> asserts the existence of at least four non-coplanar <ConceptLink targetId="punto">points</ConceptLink>. This postulate breaks planar limitation and establishes genuine three-dimensionality in geometric <ConceptLink targetId="espacio">space</ConceptLink>.
+<Capitular letra="T" />he eighth incidence axiom formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> postulates the existence of at least four non-coplanar <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>. This axiom establishes the authentic three-dimensionality of spatial geometry, preventing the deductive domain from being restricted to a single <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>.
 
 <Definicion title="Formal statement">
-  There exist at least four <ConceptLink targetId="punto">points</ConceptLink> $A, B, C, D \in \mathcal{S}$ such that no <ConceptLink targetId="plano">plane</ConceptLink> $\mathcal{P} \in \mathcal{F}$ contains all four simultaneously:
+  There exist at least four <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B, C, D \in \mathcal{S}$ such that no <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \mathcal{E}$ contains all four simultaneously:
   $$
-  \exists A, B, C, D \in \mathcal{S} \ \forall \mathcal{P} \in \mathcal{F} \ \neg\bigl(A \in \mathcal{P} \land B \in \mathcal{P} \land C \in \mathcal{P} \land D \in \mathcal{P}\bigr)
+  \exists A, B, C, D \in \mathcal{S} \ \forall \pi \in \mathcal{E} \ \neg\bigl(A \in \pi \land B \in \pi \land C \in \pi \land D \in \pi\bigr)
   $$
 </Definicion>
 
@@ -27,18 +29,18 @@ export const Simulation = Incidence8;
 
 ### Visual representation and interaction
 
-In the three-dimensional simulation, four points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind>, and <VisualBind element="pD" color="terracota">$D$</VisualBind> define a tetrahedron. Constructing the plane spanned by any triad leaves the fourth point visibly outside that plane.
+In the 3D interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> lie on the base plane <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind>, while the fourth point <VisualBind element="pD" color="carbon">$D$</VisualBind> is elevated outside this plane, spanning a non-degenerate spatial tetrahedron.
 
 <Separador />
 
 ### Geometric significance and scope
 
-Prevents the geometric universe from collapsing into a single flat surface. By requiring four non-coplanar points, spatial dimension is fixed at three or higher ($n \ge 3$), permitting polyhedra and volumes within <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+Formally sets the dimension of the general geometric space to at least $3$ ($\dim \mathcal{S} \ge 3$). It provides the foundational requirement for solid geometry, polyhedra, and volume theory in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
 
 <Separador />
 
 ### Properties
 
-- **Guaranteed 3-dimensionality:** Ensures that geometric space possesses at least three independent spatial dimensions.
-- **Tetrahedron existence:** Enables defining the tetrahedron as the primitive three-dimensional spatial body.
-- **Closure of Group I:** Completes the system of incidence axioms required to structure points, lines, and planes in 3D.
+- **Guaranteed three-dimensionality:** Precludes the collapse of space into a single two-dimensional plane.
+- **Tetrahedral base:** The four points $A, B, C, D$ construct the fundamental non-degenerate tetrahedron of space.
+- **Affine span in $\mathbb{R}^3$:** Constitutes a non-coplanar affine reference frame with three spatial degrees of freedom.

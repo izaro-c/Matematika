@@ -1,0 +1,45 @@
+export const metadata = {
+  id: "triangulo-rectangulo",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Right Triangle",
+  description: "Planar triangle possessing an interior right angle (90 degrees), bounded by two perpendicular legs and an opposite hypotenuse.",
+  branch: "51M",
+  hasSimulation: false,
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Definition 21", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+  ]
+};
+
+<Capitular letra="A" /> right triangle is a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> having one of its interior angles congruent to a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> ($90^\circ$ or $\frac{\pi}{2}\text{ rad}$). It constitutes the foundational geometric figure for Euclidean trigonometry and the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>.
+
+<Definicion title="">
+  A triangle $\triangle ABC$ in a plane $\mathcal{P}$ is a right triangle at vertex $C$ if and only if its sides $\overline{AC}$ and $\overline{BC}$ are <ConceptLink targetId="perpendicular" isDependency={true}>perpendicular</ConceptLink>, making the interior angle $\angle C$ a right angle:
+  $$
+  \overline{AC} \perp \overline{BC} \iff \angle C \cong 90^\circ
+  $$
+  The side opposite the right angle $\overline{AB}$ is the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> ($c = \|\overline{AB}\|$), and the orthogonal sides $\overline{BC}$ and $\overline{CA}$ are the <ConceptLink targetId="cateto">legs</ConceptLink> ($a = \|\overline{BC}\|, b = \|\overline{CA}\|$).
+</Definicion>
+
+<Separador />
+
+### Constituent elements and metric relations
+
+- **Hypotenuse**: The side opposite the right angle. It is strictly the longest side of the triangle.
+- **Legs**: The pair of mutually perpendicular sides enclosing the right angle.
+- **Complementary acute angles**: The remaining two acute angles satisfy $\alpha + \beta = 90^\circ$ ($\frac{\pi}{2}\text{ rad}$).
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Metric and trigonometric relations">
+    <PropiedadItem id="teorema-pitagoras" title="Pythagorean theorem">
+      In every planar right triangle, the fundamental metric relation $a^2 + b^2 = c^2$ holds.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-area-triangulo" title="Area formula">
+      The area of a right triangle equals half the product of its legs: $\mu(\triangle ABC) = \frac{a \cdot b}{2}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

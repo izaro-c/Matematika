@@ -5,6 +5,8 @@ export const metadata = {
   title: "Axiom II.1 (Symmetry and Collinearity of Betweenness)",
   description: "If B lies between A and C, then A, B, and C are three distinct points on the same line, and B also lies between C and A.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "orden",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
@@ -14,10 +16,10 @@ export const metadata = {
 import { Order1 } from '@content/diagrams/Axiomas/Order1';
 export const Simulation = Order1;
 
-<Capitular letra="T" />he first <ConceptLink targetId="orden">order axiom</ConceptLink> (betweenness) formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establishes the symmetric nature and intrinsic collinearity of the ternary "betweenness" relation. If a <ConceptLink targetId="punto">point</ConceptLink> $B$ lies between $A$ and $C$, all three points belong to the same <ConceptLink targetId="recta">line</ConceptLink> and are mutually distinct.
+<Capitular letra="T" />he first order axiom formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establishes the symmetric nature and intrinsic collinearity of the ternary <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink> relation. If a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $B$ lies between $A$ and $C$, all three points belong to the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> and are mutually distinct.
 
 <Definicion title="Formal statement">
-  If a <ConceptLink targetId="punto">point</ConceptLink> $B$ lies between $A$ and $C$ (denoted $A\text{-}B\text{-}C$), then $A, B, C$ are three distinct points on a <ConceptLink targetId="recta">line</ConceptLink> $l \in \mathcal{L}$, and $B$ also lies between $C$ and $A$ ($C\text{-}B\text{-}A$):
+  If a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $B$ lies between $A$ and $C$ (denoted $A\text{-}B\text{-}C$), then $A, B, C$ are three distinct points on a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$, and $B$ also lies between $C$ and $A$ ($C\text{-}B\text{-}A$):
   $$
   A\text{-}B\text{-}C \implies \bigl(A \neq B \land B \neq C \land A \neq C \land \exists l \in \mathcal{L} \ (A,B,C \in l) \land C\text{-}B\text{-}A\bigr)
   $$
@@ -27,13 +29,13 @@ export const Simulation = Order1;
 
 ### Visual representation and interaction
 
-In the interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> are arranged linearly. Central element $B$ satisfies $A\text{-}B\text{-}C$, and reversing geometric reading from right to left verifies the symmetric equivalence $C\text{-}B\text{-}A$.
+In the interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> are arranged linearly along line <VisualBind element="lineDC" color="carbon">$l$</VisualBind>. Central element $B$ satisfies $A\text{-}B\text{-}C$, and reversing geometric reading direction from right to left confirms the symmetric equivalence $C\text{-}B\text{-}A$.
 
 <Separador />
 
 ### Geometric significance and scope
 
-Formalizes the primitive relation of one-dimensional ordering without relying on analytical constructs such as real coordinates or numerical metrics. Ensures spatial orientation independence in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+Formalizes the primitive relation of one-dimensional ordering without relying on analytical constructs such as real coordinates or numerical metrics. It ensures spatial orientation independence in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
 
 <Separador />
 

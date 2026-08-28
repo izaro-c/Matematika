@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-6",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.6 (Intersección de dos planos)",
-  description: "Si dos planos distintos tienen un punto común, entonces contienen al menos otro punto común y se intersecan en una recta.",
+  title: "Axioma I.6 (Inclusión de la recta en el plano)",
+  description: "Si dos puntos distintos de una recta pertenecen a un plano, la recta entera está contenida en dicho plano.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
@@ -14,12 +16,12 @@ export const metadata = {
 import { Incidence6 } from '@content/diagrams/Axiomas/Incidence6';
 export const Simulation = Incidence6;
 
-<Capitular letra="S" />i dos <ConceptLink targetId="plano">planos</ConceptLink> distintos comparten un <ConceptLink targetId="punto">punto</ConceptLink> en el <ConceptLink targetId="espacio">espacio</ConceptLink>, el sexto <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece que necesariamente poseen al menos un segundo punto común, intersecándose a lo largo de una <ConceptLink targetId="recta">recta</ConceptLink> completa.
+<Capitular letra="S" />i dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos de una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> pertenecen a un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>, el sexto axioma de incidencia de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece que la totalidad de los puntos de dicha recta pertenecen también a ese plano. Este postulado define la rigidez y planitud geométrica perfecta del plano.
 
 <Definicion title="Enunciado formal">
-  Si dos <ConceptLink targetId="plano">planos</ConceptLink> distintos $\mathcal{P}_1, \mathcal{P}_2 \in \mathcal{F}$ ($\mathcal{P}_1 \neq \mathcal{P}_2$) comparten un <ConceptLink targetId="punto">punto</ConceptLink> $A \in \mathcal{P}_1 \cap \mathcal{P}_2$, entonces existe al menos otro punto $B \in \mathcal{P}_1 \cap \mathcal{P}_2$ con $B \neq A$, y su intersección exacta es una <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$:
+  Para toda <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$ y todo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \mathcal{E}$, si existen dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos $A, B \in l$ tales que $A \in \pi$ y $B \in \pi$, entonces $l \subset \pi$:
   $$
-  \forall \mathcal{P}_1, \mathcal{P}_2 \in \mathcal{F} \ \bigl((\mathcal{P}_1 \neq \mathcal{P}_2 \land A \in \mathcal{P}_1 \cap \mathcal{P}_2) \implies \exists B \in \mathcal{P}_1 \cap \mathcal{P}_2 \ (B \neq A) \land \exists l \in \mathcal{L} \ (l = \mathcal{P}_1 \cap \mathcal{P}_2)\bigr)
+  \forall l \in \mathcal{L}, \forall \pi \in \mathcal{E} \ \bigl((\exists A, B \in l \ (A \neq B \land A \in \pi \land B \in \pi)) \implies l \subset \pi\bigr)
   $$
 </Definicion>
 
@@ -27,18 +29,18 @@ export const Simulation = Incidence6;
 
 ### Representación visual e interacción
 
-En la simulación tridimensional, los planos <VisualBind element="plane1" color="marino">$\mathcal{P}_1$</VisualBind> y <VisualBind element="plane2" color="terracota">$\mathcal{P}_2$</VisualBind> se intersectan. Al ajustar la inclinación de cualquiera de ellos manteniendo un punto común, la recta intersección <VisualBind element="lineInt" color="carbon">$l$</VisualBind> se manifiesta de forma continua como la traza común de ambos planos.
+En la simulación tridimensional, la recta <VisualBind element="recta" color="carbon">$l$</VisualBind> contiene los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind>, ubicados sobre el plano <VisualBind element="plano" color="canela">$\pi$</VisualBind>. La interacción 3D permite rotar la perspectiva para verificar que la traza continua de la recta no se despega de la superficie planar.
 
 <Separador />
 
 ### Significado geométrico y alcance
 
-Garantiza la consistencia dimensional del espacio tridimensional: dos planos no pueden tocarse tangencialmente en un único punto aislado. Toda intersección no vacía entre planos distintos genera necesariamente una traza lineal unidimensional.
+Garantiza la planitud estricta del espacio: un plano no puede presentar concavidades, ondulaciones ni pliegues que permitan a una recta atravesar dos de sus puntos sin quedar enteramente absorbida en él. Conecta coherentemente la dimensión 1 con la dimensión 2.
 
 <Separador />
 
 ### Propiedades
 
-- **Continuidad de intersección:** Prohíbe contactos puntuales aislados entre planos distintos.
-- **Formación de ángulos diedros:** Constituye la base para definir <ConceptLink targetId="angulo">ángulos</ConceptLink> diedros y la separación del espacio.
-- **Dualidad lineal:** Muestra la relación dual entre la reunión de puntos no colineales y la intersección de planos.
+- **Criterio de pertenencia total:** Es suficiente comprobar la coincidencia de dos puntos para verificar la contención íntegra de la recta.
+- **Intersección máxima de rectas no contenidas:** Una recta no contenida en un plano puede intersecarlo a lo sumo en un único punto.
+- **Soporte de segmentos:** Todo <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$ cuyos extremos yacen en $\pi$ está íntegramente contenido en $\pi$.

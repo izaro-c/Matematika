@@ -3,40 +3,43 @@ export const metadata = {
   lang: "es",
   type: "metodo",
   subtype: "demostracion",
-  title: "Método de contradicción",
-  description: "Técnica indirecta de demostración que supone falsa la tesis para derivar una contradicción lógica insostenible.",
-  branch: "51M",
+  title: "Demostración por contradicción",
+  description: "Técnica de demostración indirecta (reductio ad absurdum) que establece la veracidad de una proposición demostrando que su negación conduce a una contradicción lógica.",
+  branch: "03B",
+  difficulty: "intermedio",
   hasSimulation: true
 };
 
 import { ContradictionSimulation } from '@content/diagrams/Metodos/ContradictionSimulation';
 export const Simulation = ContradictionSimulation;
 
-<Capitular letra="E" />l método de contradicción —denominado clásicamente *reductio ad absurdum*— es la principal estrategia indirecta de prueba matemática. Se fundamenta en el principio lógico del tercero excluido y en el principio de no contradicción, demostrando que si la negación de la <ConceptLink targetId="tesis">tesis</ConceptLink> condujese inevitablemente a un absurdo $R \land \neg R$, entonces la tesis original debe ser necesariamente verdadera.
+<Capitular letra="L" />a demostración por contradicción, conocida históricamente como *reductio ad absurdum*, es una técnica de demostración indirecta que establece la veracidad de una proposición $P$ asumiendo provisionalmente su negación $\neg P$ y derivando rigurosamente a partir de ella una contradicción lógica formal del tipo $R \land \neg R \equiv \bot$.
 
 <Separador />
 
-### Estructura lógica
+### Fundamento lógico y principio del tercero excluso
 
-Para probar la proposición condicional $P \implies Q$, el razonamiento procede mediante la hipótesis absurda:
+El método se apoya en las leyes fundamentales de la lógica clásica:
 
-1. Se asume como premisa la veracidad de la <ConceptLink targetId="hipotesis">hipótesis</ConceptLink> $P$ conjuntamente con la negación de la tesis $\neg Q$.
-2. Se efectúa un desarrollo deductivo riguroso a partir de la conjunción $P \land \neg Q$.
-3. Se concluye una contradicción formal de la forma $R \land \neg R$, donde $R$ es un <ConceptLink targetId="axioma">axioma</ConceptLink>, un <ConceptLink targetId="teorema">teorema</ConceptLink> conocido o una proposición construida durante la deducción.
-4. Por el principio de no contradicción, se rechaza la validez de $\neg Q$, demostrando que $Q$ es verdadera:
-   $$ (P \land \neg Q \implies \bot) \implies (P \implies Q) $$
+- **Principio de no contradicción**: Una proposición no puede ser verdadera y falsa simultáneamente en el mismo contexto formal: $\neg (R \land \neg R)$.
+- **Principio del tercero excluso**: Toda proposición $P$ es necesariamente verdadera o falsa ($P \lor \neg P$).
+- **Equivalencia de implicación**: Demostrar $(\neg P \implies \bot)$ equivale lógicamente a demostrar la veracidad indiscutible de $P$:
+  <Formula>
+    $$ (\neg P \implies \bot) \iff P $$
+  </Formula>
 
-<Separador />
-
-### Ejemplos en geometría y teoría de números
-
-- **Irracionalidad de $\sqrt{2}$**: Se asume que $\sqrt{2}$ es un <ConceptLink targetId="numero-real">número racional</ConceptLink> expresable como <ConceptLink targetId="koziente">fracción irreducible</ConceptLink> $p/q$. El desarrollo algebraico demuestra que tanto $p$ como $q$ deben ser pares, lo cual contradice directamente la irreductibilidad de la fracción.
-- **Infinitud de los <ConceptLink targetId="numero-natural">números primos</ConceptLink>**: Se supone que existe un número finito de primos $p_1, p_2, \dots, p_n$. Se construye el número $N = (p_1 p_2 \dots p_n) + 1$, el cual genera una contradicción al no ser divisible por ningún primo de la lista.
-- **Unicidad de la <ConceptLink targetId="paralelismo">recta paralela</ConceptLink>**: En la <ConceptLink targetId="geometria-euclidiana">geometría euclídea</ConceptLink>, suponer la existencia de dos rectas distintas paralelas a una dada que pasan por el mismo punto conduce a una contradicción con el <ConceptLink targetId="axioma-paralelas-euclides">quinto postulado</ConceptLink>.
+Para una implicación condicional $P \implies Q$, el procedimiento consiste en suponer conjuntamente la hipótesis $P$ y la negación de la tesis $\neg Q$, deduciendo una incompatibilidad lógica con los axiomas o teoremas del sistema.
 
 <Separador />
 
-### Propiedades
+### Ejemplos clásicos en geometría y análisis
 
-- **Potencia indirecta**: Permite demostrar la validez de enunciados donde la deducción por el <ConceptLink targetId="metodo-directo">método directo</ConceptLink> resulta inaccesible por falta de datos explícitos.
-- **No constructividad**: Establece la verdad inevitable de una proposición sin necesidad de exhibir explícitamente el objeto geométrico o numérico involucrado.
+- **Irracionalidad de $\sqrt{2}$**: Se asume que $\sqrt{2} = a/b$ con $\operatorname{mcd}(a, b) = 1$. Se deduce que tanto $a$ como $b$ son pares, contradiciendo la hipótesis de fracción irreducible.
+- **Unicidad de perpendiculares**: Para demostrar que por un punto exterior a una <ConceptLink targetId="recta">recta</ConceptLink> pasa a lo sumo una <ConceptLink targetId="perpendicular">recta perpendicular</ConceptLink>, se asume la existencia de dos perpendiculares distintas. Esto formaría un <ConceptLink targetId="triangulo">triángulo</ConceptLink> con dos <ConceptLink targetId="angulo">ángulos</ConceptLink> de $90^\circ$, contradiciendo el <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de ángulos</ConceptLink> o el teorema del ángulo exterior.
+
+<Separador />
+
+### Características metodológicas
+
+- **Potencia en pruebas de no existencia y unicidad**: Es el método de elección cuando una afirmación enuncia que ciertos objetos o situaciones son imposibles.
+- **No constructividad**: A menudo valida que un ente existe sin proveer un algoritmo para construirlo de manera explícita.

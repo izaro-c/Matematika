@@ -1,9 +1,9 @@
 export const metadata = {
   id: "teorema-congruencia-ala",
   type: "teorema",
-  title: "Angelu-Alde-Angelu (ALA) kongruentzia teorema",
-  description: "Bi triangeluk hurrenez hurren bi angelu eta euren arteko aldea kongruenteak badituzte, orduan bi triangeluak kongruenteak dira.",
-  statement: "Bi △ABC eta △A'B'C' triangelutan, ∠CAB ≅ ∠C'A'B', ∠ABC ≅ ∠A'B'C' eta euren arteko AB ≅ A'B' aldea badira, orduan △ABC ≅ △A'B'C' betetzen da.",
+  title: "Angelua-Aldea-Angelua (AnAlAn) kongruentzia-teorema",
+  description: "Bi triangeluk bi angelu eta horien arteko aldea hurrenez hurren kongruenteak badituzte, orduan bi triangeluak kongruenteak dira.",
+  statement: "△ABC eta △A'B'C' bi triangelu emanda, baldin ∠CAB ≅ ∠C'A'B', ∠ABC ≅ ∠A'B'C' eta AB ≅ A'B' badira, orduan △ABC ≅ △A'B'C' betetzen da.",
   branch: "51M",
   hasSimulation: true,
   authors: ["euclides", "hilbert"],
@@ -17,36 +17,36 @@ export const metadata = {
 import { CongruenciaALA } from '@content/diagrams/Teoremas/CongruenciaALA';
 export const Simulation = CongruenciaALA;
 
-<Capitular letra="A" />ngelu-Alde-Angelu (ALA) kongruentzia teoremak plano euklidetarreko bi <ConceptLink targetId="triangulo">triangeluren</ConceptLink> arteko zurruntasun eta berdintasun metrikoa zehazteko irizpide nagusietako bat ezartzen du. Bi muturretatik abiatzen diren zuzenen okurdura-angeluak eta <ConceptLink targetId="segmento">zuzenki</ConceptLink> bat finkatzean triangeluaren geometria modua bakarrean mugatzen dela bermatzen du.
+<Capitular letra="A" />ngelua-Aldea-Angelua (AnAlAn / ALA) kongruentzia-teoremak bi <ConceptLink targetId="triangulo">triangeluren</ConceptLink> arteko zurruntasun eta berdintza geometrikoa finkatzeko funtsezko irizpidea ezartzen du planoan. Egiaztatzen du <ConceptLink targetId="segmento">zuzenki</ConceptLink> bat eta bere muturretatik irteten diren bi erdi-zuzenen inklinazioak finkatzeak triangeluaren geometria bakarra zehazten duela.
 
 <Separador />
 
 ### Enuntziatu formala
 
-Bitzak $\triangle ABC$ eta $\triangle A'B'C'$ bi <VisualBind element="triangulos" color="musgo"><ConceptLink targetId="triangulo">triangelu</ConceptLink></VisualBind> plano euklidetarrean. Demagun honako <ConceptLink targetId="congruencia">kongruentzia-erlazio</ConceptLink> hauek betetzen direla:
-1. Haien arteko aldea kongruentea da: $\overline{AB} \cong \overline{A'B'}$.
-2. Zuzenkiaren ondoko barne-angeluak hurrenez hurren kongruenteak dira: $\angle CAB \cong \angle C'A'B'$ eta $\angle ABC \cong \angle A'B'C'$.
+Izan bitez $\triangle ABC$ eta $\triangle A'B'C'$ planoko bi <VisualBind element="triangulos" color="musgo"><ConceptLink targetId="triangulo">triangelu</ConceptLink></VisualBind>. Demagun honako <ConceptLink targetId="congruencia">kongruentzia-erlazioak</ConceptLink> betetzen direla:
+1. Tarteko aldea kongruentea da: $\overline{AB} \cong \overline{A'B'}$.
+2. Zuzenkiari atxikitako angeluak kongruenteak dira hurrenez hurren: $\angle CAB \cong \angle C'A'B'$ eta $\angle ABC \cong \angle A'B'C'$.
 
-Orduan, ezinbestean betetzen da bi triangeluen arteko <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> globala:
+Orduan, bi triangeluen arteko kongruentzia orokorra nahitaez betetzen da:
 
 <Formula>
   $$ \triangle ABC \cong \triangle A'B'C' $$
 </Formula>
 
-Ondorioz, beren gainerako alde homologoak eta hirugarren barne-angelua ere hurrenez hurren kongruenteak dira: $\overline{BC} \cong \overline{B'C'}$, $\overline{CA} \cong \overline{C'A'}$ eta $\angle BCA \cong \angle B'C'A'$.
+Ondorioz, gainerako alde homologo guztiak eta hirugarren angeluak ere hurrenez hurren kongruenteak dira: $\overline{BC} \cong \overline{B'C'}$, $\overline{CA} \cong \overline{C'A'}$ eta $\angle BCA \cong \angle B'C'A'$.
 
 <Separador />
 
 ### Froga eta oinarritze axiomatikoa
 
-<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> axiomatikan, AL-A (Alde-Angelu-Alde) irizpidea <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>kongruentzia-axiomatzat</ConceptLink> hartzen da; ALA irizpidea berriz absurduaren bidezko frogaz deduzitzen da:
-- $\overline{AC}$ eta $\overline{A'C'}$ kongruenteak ez balira, $D$ puntu bat egongo litzateke zuzenaren <ConceptLink targetId="zuzenerdi">zuzenerdian</ConceptLink> non $\overline{AD} \cong \overline{A'C'}$ litzatekeen.
-- AL-A axiomaren bidez, $\triangle ABD \cong \triangle A'B'C'$ litzateke, eta ondorioz $\angle ABD \cong \angle A'B'C'$.
-- Horrek angeluak garraiatzeko axioma hautetsiko luke, erreferentziazko angelu berarekiko bi angelu ezberdin kongruenteak liratekeelako.
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> axiomatizazioan, AlAnAl (Aldea-Angelua-Aldea) irizpidea <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>kongruentzia-axioma</ConceptLink> gisa onartzen da, eta AnAlAn irizpidea, berriz, <ConceptLink targetId="metodo-contradiccion" isDependency={true}>absurdora bideratuz</ConceptLink> frogatzen da:
+- $\overline{AC}$ ez balitz $\overline{A'C'}$-rekin kongruentea, erdi-zuzenean $D$ puntu bat existituko litzateke non $\overline{AD} \cong \overline{A'C'}$ beteko litzatekeen.
+- AlAnAl axiomagatik $\triangle ABD \cong \triangle A'B'C'$ beteko litzateke, eta beraz $\angle ABD \cong \angle A'B'C'$.
+- Horrek kontraesana sortuko luke angelu-garraioaren axiomarekin (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>), erdi-plano berean angelu desberdin bi neurri berarekin leudekeelako.
 
 <Separador />
 
-### Aplikazioak eta irizpide eratorriak
+### Irizpide eratorriak
 
-- **Triangelaketa metrikoa**: Geodesian eta topografian distantzia lortezinak kalkulatzeko oinarri teorikoa da, oinarri ezagun bat eta bi norabide-angelu neurtuz.
-- **A-A-L irizpidea**: <ConceptLink targetId="teorema-suma-angulos-triangulo">Triangelu baten barne-angeluen baturaren teoremarekin</ConceptLink> konbinatuz, irizpidea edozein bi angelutara eta artean ez dagoen alde batera hedatzen da.
+- **AlAnAn irizpidea**: <ConceptLink targetId="teorema-suma-angulos-triangulo">Triangelu baten angeluen baturaren teoremarekin</ConceptLink> konbinatuz, irizpidea edozein bi angelu eta tartekoa ez den alde batera hedatzen da.
+- **Eraikuntzen bakartasuna**: Geodesian eta triangulazio topografikoan distantzia eskuraezinak neurtzeko oinarri teorikoa da.

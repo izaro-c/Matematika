@@ -2,37 +2,48 @@ export const metadata = {
   id: "axioma-paralelas-hiperbolico",
   lang: "es",
   type: "axioma",
-  title: "Axioma de las Paralelas Hiperbólico",
-  description: "Dada una recta y un punto exterior a ella, existen al menos dos rectas distintas que pasan por dicho punto y no intersecan a la recta dada.",
+  title: "Axioma de las paralelas hiperbólicas",
+  description: "Por un punto exterior a una recta pasan al menos dos rectas distintas que no la intersecan en el mismo plano.",
   branch: "51M",
-  hasSimulation: true,
+  axiomSystem: "sistema-hiperbolico",
+  axiomFamily: "paralelas",
   alternativeGroup: "paralelismo",
+  hasSimulation: true,
   sources: [
-    { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolai Lobachevsky", locator: "§16", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "primary" }
+    { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolái Lobachevski", locator: "1840", role: "primary" },
+    { title: "Appendix scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "1832", role: "primary" }
   ]
 };
 
 import { HyperbolicParallel } from '@content/diagrams/Axiomas/HyperbolicParallel';
 export const Simulation = HyperbolicParallel;
 
-<Capitular letra="E" />l axioma de las paralelas hiperbólico (o postulado de <ConceptLink targetId="lobachevsky">Lobachevsky</ConceptLink>-Bolyai) sustituye el quinto postulado euclidiano para fundamentar la <ConceptLink targetId="geometria-hiperbolica">geometría hiperbólica</ConceptLink>. Establece la existencia de múltiples <ConceptLink targetId="recta">rectas</ConceptLink> disjuntas que pasan por un mismo <ConceptLink targetId="punto">punto</ConceptLink> exterior.
+<Capitular letra="E" />l axioma de las paralelas hiperbólicas —formulado por <ConceptLink targetId="lobachevski">Nikolái Lobachevski</ConceptLink> y <ConceptLink targetId="bolyai">János Bolyai</ConceptLink>— es el postulado fundamental de la geometría hiperbólica. Sustituye la unicidad euclidiana por la existencia de una pluralidad de rectas que pasan por un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> exterior sin cortar a una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> dada en el mismo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>.
 
-<Definicion title="">
-  Dada una <ConceptLink targetId="recta">recta</ConceptLink> $l$ y un <ConceptLink targetId="punto">punto</ConceptLink> $P$ no perteneciente a $l$, existen al menos dos rectas distintas $m_1, m_2$ tales que ambas pasan por $P$ y son <ConceptLink targetId="paralelismo">paralelas</ConceptLink> (disjuntas) a $l$:
+<Definicion title="Enunciado formal">
+  Dada una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$ y un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> exterior $P \notin l$ en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\mathcal{P}$, existen al menos dos rectas distintas $l_1, l_2 \subset \mathcal{P}$ que contienen a $P$ y no intersecan a $l$:
   $$
-  \forall l \in \mathcal{L}, \forall P \notin l \implies \exists m_1, m_2 \in \mathcal{L} \ (m_1 \neq m_2 \land P \in m_1 \cap m_2 \land m_1 \parallel l \land m_2 \parallel l)
+  \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists l_1, l_2 \subset \mathcal{P} \ \bigl(l_1 \neq l_2 \land P \in l_1 \cap l_2 \land l_1 \cap l = \emptyset \land l_2 \cap l = \emptyset\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual
+### Representación visual e interacción
 
-Al trazar la recta base <VisualBind element="l" color="pavo">$l$</VisualBind> y fijar el punto exterior <VisualBind element="P" color="terracota">$P$</VisualBind>, se aprecian dos rectas límite <VisualBind element="m1" color="ocre">$m_1$</VisualBind> y <VisualBind element="m2" color="verde">$m_2$</VisualBind> que abren un haz de infinitas rectas asintóticas e ultraparalelas que no intersecan a $l$.
+En la simulación interactiva en el disco de Poincaré, a través del punto <VisualBind element="pP" color="terracota">$P$</VisualBind> se trazan las dos rectas paralelas asintóticas límite <VisualBind element="lineM" color="carbon">$l_1$</VisualBind> y <VisualBind element="lineN" color="carbon">$l_2$</VisualBind>. Todo el haz de rectas comprendido en el ángulo interior entre ambas constituye una infinidad continua de rectas ultraparalelas que no intersecan a la recta base.
 
 <Separador />
 
-### Significado en los sistemas axiomáticos
+### Significado geométrico y alcance
 
-La adopción de este axioma en lugar del postulado de Euclides demuestra la independencia lógica del axioma de las paralelas y da lugar a un sistema geométrico consistente con curvatura gaussiana constante negativa. En este espacio, la suma de los ángulos de todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> es estrictamente menor que $\pi$ radianes.
+Este axioma dota al plano de una curvatura Gaussiana negativa constante ($K < 0$). Provoca que la suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> sea estrictamente menor que $180^\circ$ y que el área de cualquier polígono esté acotada por su defecto angular.
+
+<Separador />
+
+### Propiedades
+
+- **Ángulo de paralelismo:** Existe un ángulo agudo característico $\Pi(x) < 90^\circ$ que separa las rectas secantes de las rectas no secantes.
+- **Defecto angular:** En todo triángulo hiperbólico, $\alpha + \beta + \gamma < 180^\circ$.
+- **No transitividad del paralelismo:** Dos rectas paralelas a una misma tercera recta no son necesariamente paralelas entre sí.
+- **Inexistencia de rectángulos:** Ningún cuadrilátero puede poseer cuatro ángulos rectos.

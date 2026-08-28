@@ -1,0 +1,70 @@
+export const metadata = {
+  "id": "demo-area-aditividad",
+  "type": "demostracion",
+  "title": "Frogapena: Eremuaren adibidotasunaren teorema",
+  "description": "Eremuaren neurria Hilbert-Dehnen axiomak betetzen dituela egiaztatzea: Eremua funtzioa poligono-eskualdeetan barne-disjuntuen deskonposaketen gainean adibidotasunezko da.",
+  "parentTheorem": "teorema-area-aditividad",
+  "lang": "eu",
+  "branch": "51M",
+  "proofMethod": "metodo-directo",
+  "authors": ["hilbert"],
+  "tags": ["geometria", "eremuak", "adibidotasuna", "neurria"],
+  "layout": "split",
+  "sources": [
+    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "locator": "IV. Kapitulua, §20", "role": "primary" },
+    { "title": "Über den Rauminhalt", "author": "Max Dehn", "locator": "Mathematische Annalen 55 (1901)", "role": "secondary" }
+  ]
+};
+
+<DemonstrationSection>
+
+<Capitular letra="E" />remuaren adibidotasun-teoremak <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>poligono-eskualdeen</ConceptLink> neurri-funtzioa propietate hau betetzen duela ezartzen du: barne-disjuntu diren bi eskualdeen batasunaren eremua banakako eremu-batura berdina da.
+
+<Separador />
+
+### Frogapena pausoz pauso
+
+<ProofStep number={1} title="Eremuaren neurriaren definizio axiomatikoa">
+Hilberten arabera, $\mu: \mathcal{P} \to \mathbb{R}^+$ funtzioa postulatu hauek betez definitzen da:
+- $\mu(\text{unitate-karratua}) = 1$ (normalizazioa).
+- $P \cong Q$ badira, $\mu(P) = \mu(Q)$ (<ConceptLink targetId="congruencia" isDependency={true}>kongruentzia</ConceptLink>-inbariantza).
+- (Adibidotasuna) $P = P_1 \cup P_2$ eta $P_1 \cap P_2$ eremua nulua bada, orduan $\mu(P) = \mu(P_1) + \mu(P_2)$.
+
+Adibidotasuna axioma da; teoremak $b \cdot h$ formulak hedapen koherentea bakarra dela frogatzen du.
+</ProofStep>
+
+<ProofStep number={2} title="Poligono orokorra triangeluetan zatikatzea">
+<ConceptLink targetId="triangulo" isDependency={true}>Triangelu</ConceptLink> oro $\mu(\triangle) = \frac{1}{2} b h$ eremua du <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangeluaren eremuaren teoremaren</ConceptLink> arabera. $n$ aldeko poligono konbexu oro $n-2$ triangelutan triangelatu daiteke. Indukzioz:
+
+<Formula>
+  $$ \mu(P) = \sum_{k=1}^{n-2} \mu(\triangle_k) $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={3} title="Triangulazioarekiko independentzia">
+$P$-ren bi triangulazio desberdinek triangulazio komun landua sortzen dute. Adibidotasunak bermatzen du bi banaketa originalen baturak berdinak direla:
+
+<Formula>
+  $$ \sum_i \mu(\triangle_i) = \sum_k \mu(\triangle_k^*) = \sum_j \mu(\triangle_j') $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} title="Adibidotasuna bukaerako deskonposaketetarako">
+$R_1 \cap R_2$ eremua nulua denean, bateragarriak diren triangulazioak hartuz:
+
+<Formula>
+  $$ \mu(R_1 \cup R_2) = \mu(R_1) + \mu(R_2) $$
+</Formula>
+
+Indukzioz, propietatea edozein bukaerako batasunera hedatzen da.
+</ProofStep>
+
+<Separador />
+
+### Analisi deduktiboa
+
+<Nota>
+  Emaitza bi dimentsioko geometriaren berezia da. Hiru dimentsiotan, Dehn-Sydler-en teoremak erakusten du bolumenaren adibidotasunak ez duela equidekonposabilitatea ebazten: bolumen berdina duten poliedroak daude equidekonposaezinak direnak, Hilberten Hirugarren Arazoaren sakontasuna erakutsiz.
+</Nota>
+
+</DemonstrationSection>

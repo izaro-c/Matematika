@@ -2,7 +2,7 @@ export const metadata = {
   "id": "demo-pitagoras-areas",
   "type": "demostracion",
   "title": "Proof: Pythagorean Theorem (Area Dissection Method)",
-  "description": "Algebraic and geometric proof dissecting the area of an outer square of side (a+b) into four right triangles and an inner square.",
+  "description": "Algebraic and geometric proof by decomposing the area of a square of side (a+b) into four right triangles and a central square.",
   "parentTheorem": "teorema-pitagoras",
   "branch": "51M",
   "proofMethod": "metodo-directo",
@@ -10,7 +10,7 @@ export const metadata = {
   "tags": ["geometria", "triangulos", "areas", "algebra"],
   "layout": "split",
   "sources": [
-    { "title": "Elements", author: "Euclid", locator: "Book I, Proposition 47 (Alternative dissection proof)", role: "primary" }
+    { "title": "Elements", author: "Euclides", locator: "Book I, Proposition 47 (Alternative dissection proof)", role: "primary" }
   ]
 };
 
@@ -18,42 +18,42 @@ import { DemoPitagorasAreas } from "@content/diagrams/Demos/DemoPitagorasAreas";
 
 <DemonstrationSection diagram={<DemoPitagorasAreas />}>
 
-<Capitular letra="F" />or a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> with <ConceptLink targetId="cateto">catheti</ConceptLink> $a, b$ and <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> $c$, the <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pythagorean theorem</ConceptLink> is demonstrated by dissecting the surface of an <VisualBind element="cuadrado-exterior" color="carbon"><ConceptLink targetId="cuadrado">outer square</ConceptLink></VisualBind> of side length $(a+b)$.
+<Capitular letra="I" />n a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> with legs $a, b$ and hypotenuse $c$, the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink> is proven through the equidecomposition of an <VisualBind element="outerSquare" color="carbon"><ConceptLink targetId="cuadrado">outer square</ConceptLink></VisualBind> of side length $(a+b)$.
 
 <Separador />
 
 ### Step-by-step proof
 
-<ProofStep number={1} target="cuadrado-exterior" title="Construction of the bounding square">
-A <ConceptLink targetId="cuadrado">square</ConceptLink> of side length $(a+b)$ is constructed. The total surface <ConceptLink targetId="area">area</ConceptLink> of this <VisualBind element="cuadrado-exterior" color="carbon">outer square</VisualBind> is given by algebraic expansion:
+<ProofStep number={1} target="outerSquare" title="Construction of the bounding outer square">
+Construct an enclosing <ConceptLink targetId="cuadrado">square</ConceptLink> of side length $(a+b)$. The total area of this outer square is given by algebraic expansion:
 
 <Formula>
   $$ \text{Total Area} = (a+b)^2 = a^2 + 2ab + b^2 $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} target="triangulos" title="Arrangement of the four right triangles">
-At each of the four corners of the outer square, a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> with catheti <VisualBind element="cateto-a" color="pavo">$a$</VisualBind> and <VisualBind element="cateto-b" color="terracota">$b$</VisualBind> is positioned. By the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>, the combined area of the four <VisualBind element="triangulos" color="pavo">congruent triangles</VisualBind> is:
+<ProofStep number={2} target="t1" title="Placement of the four right triangles">
+In each of the four corners of the outer square, place a right triangle with legs $a$ and $b$. By the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>area of a triangle theorem</ConceptLink>, the combined area of the four congruent triangles is:
 
 <Formula>
   $$ 4 \times \left( \frac{1}{2} a b \right) = 2ab $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={3} target="cuadrado-interior" title="Characterization of the central quadrilateral">
-The four hypotenuses form the boundary of a <VisualBind element="cuadrado-interior" color="ocre">central quadrilateral</VisualBind> of side length $c$. Since the sum of <ConceptLink targetId="angulo">adjacent angles</ConceptLink> at each interior boundary vertex is $180^\circ$, and the two acute angles of the right triangle sum to $90^\circ$, the interior angle of the central quadrilateral must equal $90^\circ$. Hence, it is an <VisualBind element="cuadrado-interior" color="ocre">inner square</VisualBind> of area $c^2$.
+<ProofStep number={3} target="emptyC" title="Characterization of the interior square">
+The four hypotenuses of the triangles form the boundary of a central region of side length $c$. Because the acute angles of each right triangle sum to $90^\circ$, the interior angle at each vertex of the central quadrilateral is $180^\circ - 90^\circ = 90^\circ$. Thus, it is an interior square of area $c^2$.
 </ProofStep>
 
-<ProofStep number={4} target="aditividad" title="Application of the area additivity principle">
-By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>, the area of the outer square equals the sum of the inner square area and the areas of the four triangles:
+<ProofStep number={4} target="emptyA" title="Application of the area additivity principle">
+By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>, the area of the outer square equals the sum of the central interior square's area and the areas of the four triangles:
 
 <Formula>
   $$ (a+b)^2 = c^2 + 4 \cdot \left( \frac{1}{2} a b \right) $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} target="conclusion" title="Algebraic simplification">
-Expanding the left-hand side expression and subtracting the term $2ab$ present on both sides:
+<ProofStep number={5} target="emptyB" title="Algebraic simplification and conclusion">
+Expanding the left-hand side and cancelling the $2ab$ term on both sides yields:
 
 <Formula>
   $$ a^2 + 2ab + b^2 = c^2 + 2ab \implies a^2 + b^2 = c^2 $$
@@ -65,7 +65,7 @@ Expanding the left-hand side expression and subtracting the term $2ab$ present o
 ### Deductive analysis
 
 <Nota>
-  Proof by visual and algebraic dissection historically attributed to Pythagorean and Indian traditions (Bhaskara). It relies on the invariance of <ConceptLink targetId="area">area</ConceptLink> under isometric transformations and <ConceptLink targetId="teoria-medida-area">measure theory of area</ConceptLink>.
+  Visual and algebraic dissection proof historically attributed to Pythagorean and Indian mathematicians (Bhaskara). It is founded on the isometry invariance of area and the <ConceptLink targetId="teoria-medida-area">theory of area measurement</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

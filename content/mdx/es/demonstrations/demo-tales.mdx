@@ -2,7 +2,7 @@ export const metadata = {
   "id": "demo-tales",
   "type": "demostracion",
   "title": "Demostración: Teorema de Tales",
-  "description": "Demostración directa de la proporcionalidad de segmentos determinados por tres o más rectas paralelas al ser cortadas por dos transversales.",
+  "description": "Demostración directa de la proporcionalidad de segmentos determinados por rectas paralelas mediante razones de áreas de triángulos.",
   "parentTheorem": "teorema-tales",
   "branch": "51M",
   "proofMethod": "metodo-directo",
@@ -18,41 +18,35 @@ import { DemoTales } from "@content/diagrams/Demos/DemoTales";
 
 <DemonstrationSection diagram={<DemoTales />}>
 
-<Capitular letra="D" />adas tres <ConceptLink targetId="recta">rectas</ConceptLink> <VisualBind element="paralelas" color="carbon"><ConceptLink targetId="paralelas">paralelas</ConceptLink></VisualBind> $r, s, t$ intersecadas por dos <ConceptLink targetId="recta">rectas secantes</ConceptLink> $u$ y $v$, se demuestra el <ConceptLink targetId="teorema-tales" isDependency={true}>teorema de Tales</ConceptLink>. La demostración prueba que la razón entre las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> determinados sobre la primera transversal $u$ es idéntica a la razón entre los segmentos homólogos sobre la segunda transversal $v$.
+<Capitular letra="D" />ado un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$ cortado por una recta paralela a uno de sus lados, se demuestra el <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink>. La demostración prueba que la razón entre las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> determinados sobre un lado es idéntica a la razón entre los segmentos determinados sobre el otro lado.
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} target="paralelas" title="Configuración de paralelas y secantes">
-Consideramos tres rectas paralelas <VisualBind element="recta-r" color="carbon">$r$</VisualBind>, <VisualBind element="recta-s" color="carbon">$s$</VisualBind> y <VisualBind element="recta-t" color="carbon">$t$</VisualBind>. La secante <VisualBind element="transversal-u" color="terracota">$u$</VisualBind> interseca a las paralelas en los puntos $A, B, C$, determinando los segmentos <VisualBind element="segmento-ab" color="terracota">$\overline{AB}$</VisualBind> y <VisualBind element="segmento-bc" color="terracota">$\overline{BC}$</VisualBind>. La secante <VisualBind element="transversal-v" color="pavo">$v$</VisualBind> las interseca en $A', B', C'$, determinando <VisualBind element="segmento-a1b1" color="pavo">$\overline{A'B'}$</VisualBind> y <VisualBind element="segmento-b1c1" color="pavo">$\overline{B'C'}$</VisualBind>.
+<ProofStep number={1} target="step1" title="Configuración del triángulo y la recta paralela">
+Consideramos el triángulo $\triangle ABC$ y una recta paralela al lado $\overline{BC}$ que interseca a los lados $\overline{AB}$ y $\overline{AC}$ en los puntos $D$ y $E$ respectivamente, determinando el segmento paralelo $\overline{DE} \parallel \overline{BC}$.
 </ProofStep>
 
-<ProofStep number={2} target="triangulos-u" title="Razones de áreas en la primera transversal">
-Trazamos los segmentos auxiliares $\overline{AB'}$ y $\overline{CB'}$. Los triángulos $\triangle ABB'$ y $\triangle BCB'$ comparten la misma altura desde el <ConceptLink targetId="vertice">vértice</ConceptLink> $B'$. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>, la razón de sus <ConceptLink targetId="area">áreas</ConceptLink> es proporcional a la razón de sus bases sobre la recta $u$:
+<ProofStep number={2} target="step2" title="Igualdad de áreas entre paralelas">
+Trazamos los segmentos auxiliares $\overline{BE}$ y $\overline{CD}$, formando los triángulos $\triangle BDE$ y $\triangle CDE$. Ambos triángulos comparten la misma base $\overline{DE}$ y están comprendidos entre las rectas paralelas $\overline{DE}$ y $\overline{BC}$. Por tener idéntica altura entre paralelas, el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink> garantiza la igualdad de sus áreas:
 
 <Formula>
-  $$ \frac{\text{Área}(\triangle ABB')}{\text{Área}(\triangle BCB')} = \frac{\overline{AB}}{\overline{BC}} $$
+  $$ \text{Área}(\triangle BDE) = \text{Área}(\triangle CDE) $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={3} target="triangulos-v" title="Razones de áreas en la segunda transversal">
-De forma análoga, al considerar los triángulos $\triangle A'BB'$ y $\triangle B'C'B$ que comparten altura desde el vértice $B$, la razón entre sus áreas sobre la recta $v$ viene dada por:
+<ProofStep number={3} target="step3" title="Razón de áreas y conclusión de proporcionalidad">
+Comparamos las áreas de estos triángulos con la del triángulo superior $\triangle ADE$:
+1. Los triángulos $\triangle ADE$ y $\triangle BDE$ comparten altura respecto a la recta $\overline{AB}$, por lo que la razón de sus áreas es proporcional a sus bases:
+$$ \frac{\text{Área}(\triangle ADE)}{\text{Área}(\triangle BDE)} = \frac{|\overline{AD}|}{|\overline{DB}|} $$
+2. Análogamente, $\triangle ADE$ y $\triangle CDE$ comparten altura respecto a $\overline{AC}$:
+$$ \frac{\text{Área}(\triangle ADE)}{\text{Área}(\triangle CDE)} = \frac{|\overline{AE}|}{|\overline{EC}|} $$
+
+Puesto que los denominadores son iguales por el paso anterior, se deduce la igualdad de razones:
 
 <Formula>
-  $$ \frac{\text{Área}(\triangle A'BB')}{\text{Área}(\triangle B'C'B)} = \frac{\overline{A'B'}}{\overline{B'C'}} $$
-</Formula>
-</ProofStep>
-
-<ProofStep number={4} target="igualdad-alturas" title="Equivalencia de áreas entre paralelas">
-Los triángulos $\triangle ABB'$ y $\triangle A'BB'$ tienen la misma base $\overline{BB'}$ y están comprendidos entre las paralelas $r$ y $s$. Por tener la misma altura entre paralelas, sus áreas son idénticas. Del mismo modo, $\text{Área}(\triangle BCB') = \text{Área}(\triangle B'C'B)$.
-</ProofStep>
-
-<ProofStep number={5} target="conclusion" title="Igualdad de proporciones">
-Igualando las razones de áreas gracias a la equivalencia entre los triángulos comprendidos entre las paralelas $r, s, t$, se deduce la proporción de <ConceptLink targetId="semejanza">semejanza</ConceptLink>:
-
-<Formula>
-  $$ \frac{\overline{AB}}{\overline{BC}} = \frac{\overline{A'B'}}{\overline{B'C'}} $$
+  $$ \frac{|\overline{AD}|}{|\overline{DB}|} = \frac{|\overline{AE}|}{|\overline{EC}|} $$
 </Formula>
 </ProofStep>
 

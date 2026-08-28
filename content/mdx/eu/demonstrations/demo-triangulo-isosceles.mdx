@@ -1,8 +1,8 @@
 export const metadata = {
   "id": "demo-triangulo-isosceles",
   "type": "demostracion",
-  "title": "Froga: Triangelu isoszelearen teorema",
-  "description": "Pappus-en froga dotorea, triangelu isoszele baten autokongruentzia erabiliz bere oinarriko angeluen berdintasuna frogatzeko.",
+  "title": "Frogapena: Triangelu isoszelearen teorema",
+  "description": "Bisektorearen eraikuntzan eta AlAnAl irizpidearen bidezko triangeluen kongruentzian oinarritutako frogapen klasikoa.",
   "parentTheorem": "teorema-triangulo-isosceles",
   "branch": "51M",
   "proofMethod": "metodo-directo",
@@ -10,7 +10,7 @@ export const metadata = {
   "tags": ["geometria", "triangulos", "congruencia"],
   "layout": "split",
   "sources": [
-    { "title": "Elementuak", author: "Euclides", locator: "I. Liburukia, 5. Proposizioa (Pappusen bertsio hobetua)", role: "primary" }
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 5", role: "primary" }
   ]
 };
 
@@ -18,39 +18,43 @@ import { DemoTrianguloIsosceles } from "@content/diagrams/Demos/DemoTrianguloIso
 
 <DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
 
-<Capitular letra="B" />i alde <ConceptLink targetId="congruencia">kongruente</ConceptLink> dituen $\triangle ABC$ <ConceptLink targetId="triangulo">triangelu bat</ConceptLink> emanik, <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>triangelu isoszelearen teorema</ConceptLink> frogatzen da. Frogapenak ezartzen du alde kongruente horien aurkako <ConceptLink targetId="angulo">angeluak</ConceptLink> (oinarriko angeluak) elkarren artean kongruenteak direla.
+<Capitular letra="B" />i alde <ConceptLink targetId="congruencia">kongruente</ConceptLink> dituen $\triangle ABC$ <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat emanda, <ConceptLink targetId="teorema-triangulo-isosceles">triangelu isoszelearen teorema</ConceptLink> frogatzen da. Frogapenak ezartzen du alde kongruente horiei aurrez aurre dauden <ConceptLink targetId="angulo">angeluak</ConceptLink> (oinarriko angeluak) elkarren artean kongruenteak direla.
 
 <Separador />
 
-### Urratsez urratseko froga
+### Froga urratsez urrats
 
-<ProofStep number={1} target="triangulo-base" title="Triangelu isoszelearen hipotesia">
-Bedi <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> triangelua, luzera bereko <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> eta <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> aldeak dituena:
+<ProofStep number={1} target="step-triangulo" title="Triangelu isoszelearen hipotesia">
+Izan bedi $\triangle ABC$ triangelu isoszelea, non $\overline{AB}$ eta $\overline{AC}$ aldeek luzera metriko bera duten:
 
 <Formula>
   $$ \overline{AB} \cong \overline{AC} $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} target="correspondencia" title="Bertizeen autokorrespondentzia zehaztea">
-$\triangle ABC$ triangelua bera eta oinarriko bertizeak alderantzikatuta dituen bigarren kopia bat hartzen dira kontuan: $\triangle ACB$. Bertizeen arteko korrespondentzia honako hau da: $(A, B, C) \leftrightarrow (A, C, B)$.
-</ProofStep>
-
-<ProofStep number={3} target="criterio-lal" title="AL-AN-AL kongruentzia-irizpidea egiaztatzea">
-$\triangle ABC$ eta $\triangle ACB$ triangeluen osagai homologoak alderatzen dira:
-1. <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> aldea <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> aldearekin kongruentea da hipotesiaz.
-2. Tarteko <VisualBind element="angulo-a" color="carbon">$\angle BAC$</VisualBind> <ConceptLink targetId="angulo">angelua</ConceptLink> bere buruaren berbera da ($\angle CAB$).
-3. <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> aldea <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> aldearekin kongruentea da hipotesiaz.
-
-<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>AL-AN-AL kongruentzia-axiomen</ConceptLink> bidez, <ConceptLink targetId="congruencia">triangeluen kongruentzia</ConceptLink> deduzitzen da:
+<ProofStep number={2} target="step-bisectriz" title="Erpineko angeluaren bisektorearen eraikuntza">
+$A$ erpineko angeluaren erdi-zuzen bisektorea marrazten da, $\overline{BC}$ oinarria $D$ puntuan ebakitzen duena. <ConceptLink targetId="demo-existencia-bisectriz">Bisektorearen</ConceptLink> definizioz, $\angle BAC$ angelua bi zati kongruentetan banatzen du:
 
 <Formula>
-  $$ \triangle ABC \cong \triangle ACB $$
+  $$ \angle BAD \cong \angle CAD $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} target="conclusion" title="Oinarriko angeluen berdintasuna">
-Bi triangeluak kongruenteak direnez, beren alborik homologoak kongruenteak dira. Zehazki, korrespondentzian luzera bereko aldeen aurkako angeluak berdinak dira: $B$ <ConceptLink targetId="vertice">bertizeko</ConceptLink> angelua (<VisualBind element="angulo-b" color="terracota">$\angle ABC$</VisualBind>) $C$ bertizeko angeluarekin (<VisualBind element="angulo-c" color="pavo">$\angle ACB$</VisualBind>) kongruentea da:
+<ProofStep number={3} target="step-congruencia" title="Triangeluen kongruentzia AlAnAl irizpidearen bidez">
+$\triangle ABD$ eta $\triangle ACD$ azpi-triangeluak alderatzen dira:
+1. $\overline{AB} \cong \overline{AC}$ hasierako hipotesiz.
+2. $\angle BAD \cong \angle CAD$ bisektorearen eraikuntzaz.
+3. $\overline{AD}$ zuzenkia bi triangeluen alde komuna da ($\overline{AD} \cong \overline{AD}$).
+
+AlAnAl kongruentzia-axiomaren bidez (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 Axioma</ConceptLink>), kongruentzia lortzen da:
+
+<Formula>
+  $$ \triangle ABD \cong \triangle ACD $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} target="step-angulos-base" title="Oinarriko angeluen berdintasuna">
+Bi triangeluak kongruenteak direnez, haien elementu homologo guztiak kongruenteak dira. Bereziki, oinarriko erpinetako angeluek honako hau betetzen dute:
 
 <Formula>
   $$ \angle ABC \cong \angle ACB $$
@@ -59,10 +63,10 @@ Bi triangeluak kongruenteak direnez, beren alborik homologoak kongruenteak dira.
 
 <Separador />
 
-### Dedukzio-analisia
+### Azterketa deduktiboa
 
 <Nota>
-  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.5 Proposizioa, historikoki *Pons Asinorum* izenez ezaguna. Laguntza-eraikuntzarik gabeko bertsio labur hau Pappus Alexandriakoari zor zaio eta <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> barnean dago.
+  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.5 Proposizioa, historikoki *Pons Asinorum* izenez ezaguna. Frogapen hau <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> barruan dago eta paraleloen axiomatik at mantentzen da.
 </Nota>
 
 </DemonstrationSection>

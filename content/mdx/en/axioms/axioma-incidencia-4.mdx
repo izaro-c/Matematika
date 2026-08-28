@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-4",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.4 (Existence and Uniqueness of a Plane)",
+  title: "Axiom I.4 (Existence and Uniqueness of the Plane)",
   description: "Given three non-collinear points in space, there exists exactly one plane containing all three.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
@@ -14,12 +16,12 @@ export const metadata = {
 import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 
-<Capitular letra="G" />iven any three non-collinear <ConceptLink targetId="punto">points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s fourth <ConceptLink targetId="incidencia">incidence axiom</ConceptLink> asserts the existence and uniqueness of a <ConceptLink targetId="plano">plane</ConceptLink> containing all three. Additionally, every plane is specified to contain at least one point.
+<Capitular letra="G" />iven any three non-collinear <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, the fourth incidence axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> guarantees the existence and uniqueness of a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> containing all three. This postulate defines the fundamental two-dimensional extension in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
 
 <Definicion title="Formal statement">
-  Given three non-collinear <ConceptLink targetId="punto">points</ConceptLink> $A, B, C \in \mathcal{S}$, there exists a unique <ConceptLink targetId="plano">plane</ConceptLink> $\mathcal{P} \in \mathcal{F}$ such that $A, B, C \in \mathcal{P}$:
+  Given three non-collinear <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B, C \in \mathcal{S}$, there exists a unique <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \mathcal{E}$ incident with $A, B, C$:
   $$
-  \forall A, B, C \in \mathcal{S} \ \Bigl(\neg\exists l \in \mathcal{L} \ (A,B,C \in l) \implies \exists! \mathcal{P} \in \mathcal{F} \ (A \in \mathcal{P} \land B \in \mathcal{P} \land C \in \mathcal{P})\Bigr)
+  \forall A, B, C \in \mathcal{S} \ \Bigl(\neg\exists l \in \mathcal{L} \ (A,B,C \in l) \implies \exists! \pi \in \mathcal{E} \ (A \in \pi \land B \in \pi \land C \in \pi)\Bigr)
   $$
 </Definicion>
 
@@ -27,18 +29,18 @@ export const Simulation = Incidence4;
 
 ### Visual representation and interaction
 
-In the three-dimensional simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> uniquely define plane <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind>. Dragging any point without creating collinearity dynamically pivots the plane while preserving triple membership.
+In the interactive simulation, the three vertices <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind>, along with sides <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="carbon">$\overline{BC}$</VisualBind>, and <VisualBind element="segCA" color="carbon">$\overline{CA}$</VisualBind>, delimit the triangle <VisualBind element="polyTriangulo" color="canela">$\triangle ABC$</VisualBind>. Moving the points in a non-collinear configuration uniquely establishes the supporting plane surface.
 
 <Separador />
 
 ### Geometric significance and scope
 
-This postulate defines a plane as the primitive two-dimensional extension spanned by a non-collinear triad. It guarantees that three non-aligned points fix a unique flat surface within <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+This postulate defines the plane as the elementary two-dimensional manifold spanned by three free points. It ensures that three non-aligned points admit no angular ambiguity or multiple planar orientations in three-dimensional space.
 
 <Separador />
 
 ### Properties
 
-- **Planar determination:** Three non-aligned points uniquely establish bidimensional spatial orientation.
-- **3D foundation:** Essential for constructing three-dimensional Euclidean and non-Euclidean space structures.
-- **Triangle support:** Every <ConceptLink targetId="triangulo">triangle</ConceptLink> lies on a unique supporting plane.
+- **Planar determination:** Three non-collinear points uniquely fix the position and orientation of a plane.
+- **Triangle support:** Every <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ lies on a single well-defined plane.
+- **Dimensional transition:** Permits the rigorous transition from one-dimensional linear analysis to two-dimensional planar analysis.

@@ -2,7 +2,7 @@ export const metadata = {
   "id": "demo-angulos-opuestos-verticales",
   "type": "demostracion",
   "title": "Proof: Vertical Angles Theorem",
-  "description": "Direct proof based on the supplementary nature of adjacent angles on a straight line and the subtraction of congruent angles.",
+  "description": "Direct proof based on the supplementary nature of adjacent angles along a straight line and the subtraction property of congruences.",
   "parentTheorem": "teorema-angulos-opuestos-verticales",
   "branch": "51M",
   "proofMethod": "metodo-directo",
@@ -10,7 +10,7 @@ export const metadata = {
   "tags": ["geometria", "congruencia", "angulos"],
   "layout": "split",
   "sources": [
-    { "title": "Elements", author: "Euclid", locator: "Book I, Proposition 15", role: "primary" }
+    { "title": "Elements", author: "Euclides", locator: "Book I, Proposition 15", role: "primary" }
   ]
 };
 
@@ -18,14 +18,14 @@ import { DemoAngulosOpuestos } from "@content/diagrams/Demos/DemoAngulosOpuestos
 
 <DemonstrationSection diagram={<DemoAngulosOpuestos />}>
 
-<Capitular letra="L" />et <VisualBind element="lineL" color="carbon">$l$</VisualBind> and <VisualBind element="lineM" color="carbon">$m$</VisualBind> be two intersecting secant <ConceptLink targetId="recta">lines</ConceptLink> meeting at a <ConceptLink targetId="punto">point</ConceptLink> $O$. The <ConceptLink targetId="teorema-angulos-opuestos-verticales" isDependency={true}>vertical angles theorem</ConceptLink> is demonstrated: any pair of vertical opposite angles formed at the intersection are <ConceptLink targetId="congruencia">congruent</ConceptLink> to each other.
+<Capitular letra="L" />et <VisualBind element="lineL" color="carbon">$l$</VisualBind> and <VisualBind element="lineM" color="carbon">$m$</VisualBind> be two <ConceptLink targetId="recta">lines</ConceptLink> intersecting at <ConceptLink targetId="punto">point</ConceptLink> $O$. The <ConceptLink targetId="teorema-angulos-opuestos-verticales">vertical angles theorem</ConceptLink> is demonstrated: any pair of vertically opposite angles formed by the intersection are <ConceptLink targetId="congruencia">congruent</ConceptLink> to each other.
 
 <Separador />
 
 ### Step-by-step proof
 
 <ProofStep number={1} target="supp12" title="Supplementary adjacent angles on the first line">
-The intersecting lines $l$ and $m$ define four <ConceptLink targetId="angulo">angles</ConceptLink> around vertex $O$. Angles <VisualBind element="angle1" color="terracota">$\angle 1$</VisualBind> and <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> are arranged adjacently along line $l$, forming a <ConceptLink targetId="angulos-suplementarios">straight angle</ConceptLink>:
+The intersecting lines $l$ and $m$ determine four <ConceptLink targetId="angulo">angles</ConceptLink> around the intersection vertex $O$. The angles <VisualBind element="angle1" color="terracota">$\angle 1$</VisualBind> and <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> lie adjacently on line $l$, forming a <ConceptLink targetId="angulos-suplementarios">straight angle</ConceptLink>:
 
 <Formula>
   $$ m(\angle 1) + m(\angle 2) = 180^\circ $$
@@ -33,15 +33,15 @@ The intersecting lines $l$ and $m$ define four <ConceptLink targetId="angulo">an
 </ProofStep>
 
 <ProofStep number={2} target="supp23" title="Supplementary adjacent angles on the second line">
-Analogously, along line $m$, adjacent angles <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> and <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> are <ConceptLink targetId="angulos-suplementarios">supplementary</ConceptLink>:
+Analogously, along line $m$, the adjacent angles <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> and <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> are <ConceptLink targetId="angulos-suplementarios">supplementary</ConceptLink>:
 
 <Formula>
   $$ m(\angle 2) + m(\angle 3) = 180^\circ $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={3} target="angle2" title="Equality of angle sums">
-Since both angle sums equal a straight angle ($180^\circ$), the equality of real measures implies:
+<ProofStep number={3} target="angle2" title="Equality of angular sums">
+Since both angular sums equal a straight angle ($180^\circ$), the equality of real numbers yields:
 
 <Formula>
   $$ m(\angle 1) + m(\angle 2) = m(\angle 2) + m(\angle 3) $$
@@ -49,15 +49,15 @@ Since both angle sums equal a straight angle ($180^\circ$), the equality of real
 </ProofStep>
 
 <ProofStep number={4} target="congruence13" title="Subtraction of the common angle">
-Applying <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>angle congruence axioms</ConceptLink>, subtracting common angle <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> from both sides yields the congruence of the first pair of vertical angles:
+Applying the <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>angle congruence axioms</ConceptLink>, subtracting the common angle <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> from both sides yields the congruence of the first pair:
 
 <Formula>
   $$ \angle 1 \cong \angle 3 $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={5} target="angle4" title="Proof for the second vertical pair">
-An identical argument applied to the adjacent pair formed by <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> and <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind> concludes that <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> $\cong$ <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind>.
+<ProofStep number={5} target="angle4" title="Proof for the complementary opposite pair">
+Applying the identical argument to the adjacent pair formed by <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> and <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind> establishes that the second opposite pair satisfies <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> $\cong$ <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind>.
 </ProofStep>
 
 <Separador />

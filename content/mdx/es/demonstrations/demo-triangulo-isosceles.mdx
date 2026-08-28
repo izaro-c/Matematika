@@ -2,7 +2,7 @@ export const metadata = {
   "id": "demo-triangulo-isosceles",
   "type": "demostracion",
   "title": "Demostración: Teorema del triángulo isósceles",
-  "description": "Demostración elegante de Pappus mediante la autocongruencia de un triángulo isósceles con sus lados correspondientes invertidos.",
+  "description": "Demostración clásica mediante la construcción de la bisectriz y la congruencia de triángulos por el criterio LAL.",
   "parentTheorem": "teorema-triangulo-isosceles",
   "branch": "51M",
   "proofMethod": "metodo-directo",
@@ -10,7 +10,7 @@ export const metadata = {
   "tags": ["geometria", "triangulos", "congruencia"],
   "layout": "split",
   "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 5 (Versión refinada de Pappus)", role: "primary" }
+    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 5", role: "primary" }
   ]
 };
 
@@ -18,39 +18,43 @@ import { DemoTrianguloIsosceles } from "@content/diagrams/Demos/DemoTrianguloIso
 
 <DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
 
-<Capitular letra="D" />ado un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$ que posee dos lados <ConceptLink targetId="congruencia">congruentes</ConceptLink>, se demuestra el <ConceptLink targetId="teorema-triangulo-isosceles" isDependency={true}>teorema del triángulo isósceles</ConceptLink>. La demostración establece que los <ConceptLink targetId="angulo">ángulos</ConceptLink> opuestos a dichos lados congruentes (los ángulos de la base) son congruentes entre sí.
+<Capitular letra="D" />ado un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$ que posee dos lados <ConceptLink targetId="congruencia">congruentes</ConceptLink>, se demuestra el <ConceptLink targetId="teorema-triangulo-isosceles">teorema del triángulo isósceles</ConceptLink>. La demostración establece que los <ConceptLink targetId="angulo">ángulos</ConceptLink> opuestos a dichos lados congruentes (los ángulos de la base) son congruentes entre sí.
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} target="triangulo-base" title="Hipótesis del triángulo isósceles">
-Sea el triángulo <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> con lados <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> y <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> de igual longitud:
+<ProofStep number={1} target="step-triangulo" title="Hipótesis del triángulo isósceles">
+Sea el triángulo isósceles $\triangle ABC$ con lados $\overline{AB}$ y $\overline{AC}$ de igual longitud métrica:
 
 <Formula>
   $$ \overline{AB} \cong \overline{AC} $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={2} target="correspondencia" title="Establecimiento de la autocorrespondencia de vértices">
-Se considera el propio triángulo $\triangle ABC$ y una segunda copia con los vértices de la base invertidos: $\triangle ACB$. La correspondencia entre vértices viene dada por $(A, B, C) \leftrightarrow (A, C, B)$.
-</ProofStep>
-
-<ProofStep number={3} target="criterio-lal" title="Verificación del criterio de congruencia LAL">
-Comparamos los elementos correspondientes de $\triangle ABC$ y $\triangle ACB$:
-1. El lado <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> es congruente con el lado <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> por hipótesis.
-2. El <ConceptLink targetId="angulo">ángulo</ConceptLink> comprendido <VisualBind element="angulo-a" color="carbon">$\angle BAC$</VisualBind> es idéntico a sí mismo ($\angle CAB$).
-3. El lado <VisualBind element="lado-ac" color="pavo">$\overline{AC}$</VisualBind> es congruente con el lado <VisualBind element="lado-ab" color="terracota">$\overline{AB}$</VisualBind> por hipótesis.
-
-Por los <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>axiomas de congruencia LAL</ConceptLink> (Lado-Ángulo-Lado), se deduce la <ConceptLink targetId="congruencia">congruencia de triángulos</ConceptLink>:
+<ProofStep number={2} target="step-bisectriz" title="Construcción de la bisectriz del ángulo en el vértice">
+Trazamos la semirrecta bisectriz del ángulo en el vértice $A$, la cual interseca al lado de la base $\overline{BC}$ en un punto $D$. Por definición de <ConceptLink targetId="demo-existencia-bisectriz">bisectriz</ConceptLink>, divide al ángulo $\angle BAC$ en dos partes congruentes:
 
 <Formula>
-  $$ \triangle ABC \cong \triangle ACB $$
+  $$ \angle BAD \cong \angle CAD $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={4} target="conclusion" title="Igualdad de los ángulos de la base">
-Dado que ambos triángulos son congruentes, sus partes homólogas son congruentes. En particular, los ángulos opuestos a los lados de igual longitud en la correspondencia son idénticos: el ángulo en el <ConceptLink targetId="vertice">vértice</ConceptLink> $B$ (<VisualBind element="angulo-b" color="terracota">$\angle ABC$</VisualBind>) es congruente con el ángulo en el vértice $C$ (<VisualBind element="angulo-c" color="pavo">$\angle ACB$</VisualBind>):
+<ProofStep number={3} target="step-congruencia" title="Congruencia de triángulos por el criterio LAL">
+Comparamos los subtriángulos $\triangle ABD$ y $\triangle ACD$:
+1. $\overline{AB} \cong \overline{AC}$ por hipótesis de partida.
+2. $\angle BAD \cong \angle CAD$ por construcción de la bisectriz.
+3. El segmento $\overline{AD}$ es un lado común a ambos triángulos ($\overline{AD} \cong \overline{AD}$).
+
+Por el axioma de congruencia LAL (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5</ConceptLink>), se deduce la congruencia:
+
+<Formula>
+  $$ \triangle ABD \cong \triangle ACD $$
+</Formula>
+</ProofStep>
+
+<ProofStep number={4} target="step-angulos-base" title="Igualdad de los ángulos de la base">
+Puesto que ambos triángulos son congruentes, todos sus elementos homólogos son congruentes. En particular, los ángulos en los vértices de la base satisfacen:
 
 <Formula>
   $$ \angle ABC \cong \angle ACB $$
@@ -62,7 +66,7 @@ Dado que ambos triángulos son congruentes, sus partes homólogas son congruente
 ### Análisis deductivo
 
 <Nota>
-  Proposición I.5 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>, conocida históricamente como el *Pons Asinorum*. Esta versión ultra-concisa sin construcciones auxiliares se debe a Pappus de Alejandría y pertenece a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+  Proposición I.5 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>, conocida históricamente como el *Pons Asinorum*. Esta demostración pertenece a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, siendo válida independientemente del axioma de las paralelas.
 </Nota>
 
 </DemonstrationSection>

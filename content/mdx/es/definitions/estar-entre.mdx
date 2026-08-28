@@ -2,7 +2,7 @@ export const metadata = {
   id: "estar-entre",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "primitivo",
   title: "Estar entre",
   description: "Relación ternaria primitiva de orden lineal que establece la intermediación entre tres puntos colineales.",
   branch: "51M",
@@ -15,32 +15,48 @@ export const metadata = {
 import { EstarEntre } from '@content/diagrams/Definiciones/EstarEntre';
 export const Simulation = EstarEntre;
 
-<Capitular letra="L" />a relación de intermediación, denotada funcionalmente como estar entre, es una relación ternaria primitiva en los cimientos axiomáticos de la <ConceptLink targetId="geometria-absoluta">geometría sintética</ConceptLink> formalizada por David Hilbert. Permite dotar a las <ConceptLink targetId="recta">rectas</ConceptLink> de una estructura de orden lineal denso sin recurrir prematuramente a los números reales ni a la <ConceptLink targetId="distancia">distancia métrica</ConceptLink>.
+<Capitular letra="L" />a relación de intermediación, denotada formalmente como estar entre, es una relación ternaria primitiva fundamental en la axiomatización de la geometría sintética de David Hilbert. Permite dotar a las <ConceptLink targetId="recta">rectas</ConceptLink> de una estructura de orden lineal estricto y denso sin recurrir a los números reales ni a nociones métricas externas.
 
 <Definicion title="">
-  Sean <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="musgo">$C$</VisualBind> tres <ConceptLink targetId="punto">puntos</ConceptLink> colineales distintos en una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineAC" color="carbon">$r$</VisualBind>. Se dice que $B$ está entre $A$ y $C$ (denotado $A * B * C$) si satisface los axiomas de orden de Hilbert. Métricamente, equivale a la aditividad de las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind> y <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind> respecto al <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind>:
+  Sean <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="musgo">$C$</VisualBind> tres <ConceptLink targetId="punto">puntos</ConceptLink> distintos pertenecientes a una misma <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>. La relación ternaria $A * B * C$ ($B$ está entre $A$ y $C$) es una relación primitiva regida por los axiomas de orden de Hilbert. En un marco métrico euclidiano, equivale a la aditividad de las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind> y <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind> respecto a <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind>:
   $$
   A * B * C \iff d(A, B) + d(B, C) = d(A, C)
   $$
-  donde $A, B, C$ son mutuamente distintos.
 </Definicion>
 
 <Separador />
 
-### Axiomas del grupo II de Hilbert (orden e intermediación)
+### Axiomas de orden de Hilbert (Grupo II)
 
 La ordenación sobre una recta se fundamenta formalmente en los siguientes axiomas de intermediación:
+- **Simetría**: Si $A * B * C$, entonces $C * B * A$.
+- **Extensión**: Dados dos puntos $A$ y $C$, existe al menos un punto $D$ tal que $A * C * D$.
+- **Exclusividad**: De tres puntos colineales distintos, a lo sumo uno se encuentra entre los otros dos.
+- **Axioma de Pasch**: Si una recta corta el interior de un lado de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> sin pasar por los vértices, corta necesariamente el interior de uno de los otros dos lados.
 
-| Axioma de orden | Enunciado formal | Significado geométrico |
-|---|---|---|
-| II.1: Simetría | $A * B * C \implies C * B * A$ | La intermediación es independiente de la orientación |
-| II.2: Extensión | $\forall A \neq C, \exists D : A * C * D$ | Toda recta se extiende indefinidamente |
-| II.3: Exclusividad | Dados $A,B,C \in r$, uno y solo uno está entre los otros dos | Ordenamiento total estricto sobre la recta |
+### Geometría analítica
+
+En la recta real $\mathbb{R}$, dados tres números reales distintos $x_A, x_B, x_C$, la relación se formula algebraicamente:
+$$
+A * B * C \iff (x_A < x_B < x_C) \lor (x_C < x_B < x_A)
+$$
+En $\mathbb{R}^n$, equivale a que $B = (1 - t)A + tC$ con $t \in (0, 1)$.
 
 <Separador />
 
-### Propiedades
-
-- **<ConceptLink targetId="segmento">Definición de segmento interior</ConceptLink>**: El conjunto de puntos $P$ tales que $A * P * B$ constituye el segmento abierto $(AB)$.
-- **<ConceptLink targetId="teorema-pasch">Axioma de Pasch</ConceptLink>**: Una recta que corta a un lado de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> debe cortar a uno de los otros dos lados o pasar por un vértice.
-- **<ConceptLink targetId="semirrecta">Separación de la recta</ConceptLink>**: Un punto $O$ sobre una recta divide a los demás puntos de la recta en dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> disjuntas.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Axiomas de orden y consecuencias">
+    <PropiedadItem id="axioma-orden-1" title="Simetría de la intermediación">
+      $A * B * C \implies C * B * A$.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-orden-2" title="Extensión de la recta">
+      $\forall A \neq B, \; \exists C \text{ tal que } A * B * C$.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-orden-3" title="Tricotomía de orden en la recta">
+      Dados tres puntos colineales distintos, uno y solo uno está entre los otros dos.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-orden-4" title="Axioma de Pasch">
+      Una recta coplanar que interseca el interior de un lado de un triángulo interseca a otro lado.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

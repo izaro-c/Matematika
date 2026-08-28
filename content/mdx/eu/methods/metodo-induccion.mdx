@@ -3,45 +3,52 @@ export const metadata = {
   lang: "eu",
   type: "metodo",
   subtype: "demostracion",
-  title: "Indukzio matematikoaren metodoa",
-  description: "Zenbaki naturalei buruzko proposizio parametrizatuak frogatzeko dedukzio-teknika, induizio osoaren printzipioan oinarritua.",
-  branch: "51M",
+  title: "Indukzio matematikoa",
+  description: "Zenbaki arruntetan parametrizatutako proposizioak frogatzeko metodo deduktiboa, oinarrizko kasu baten eta urrats induktibo baten bidez.",
+  branch: "03B",
+  difficulty: "intermedio",
   hasSimulation: true
 };
 
 import { InduccionSimulation } from '@content/diagrams/Metodos/InduccionSimulation';
 export const Simulation = InduccionSimulation;
 
-<Capitular letra="I" />ndukzio matematikoaren metodoa <ConceptLink targetId="numero-natural">zenbaki naturalen</ConceptLink> $\mathbb{N}$ multzo osoan hedaturiko $P(n)$ proposizioak frogatzeko oinarrizko dedukzio-teknika da. <ConceptLink targetId="axioma-peano">Peanoren axiomen</ConceptLink> egitura deduktiboan oinarritzen da zuzenean, baliotasun unibertsala bermatuz hasierako oinarri baten eta hedapen-urrats baten bidez.
+<Capitular letra="I" />ndukzio matematikoa funtsezko froga-metodo deduktibo bat da, zenbaki arrunten $\mathbb{N}$ multzoan indexatutako $\{P(n)\}_{n \in \mathbb{N}}$ proposizio-familia infinituen egiazkotasun unibertsala ezartzeko erabiltzen dena. Axiomatikoki, $\mathbb{N}$-ren ondo-ordenatzearen printzipioan eta Peanoren axiometan oinarritzen da.
 
 <Separador />
 
-### Egitura formala
+### Froga induktiboaren egitura
 
-$\forall n \in \mathbb{N}, P(n)$ proposizioaren baliotasuna egiaztatzeko, frogak bi urrats jarraian osatzea kencatzen du zorrozki:
+Indukziozko froga batek nahitaezko bi etapa kanoniko ditu:
 
-1. **Oinarrizko urratsa**: Propietatea hasierako $n_0$ elementurako egiazkoa dela frogatzen da (normalean $n_0 = 0$ edo $n_0 = 1$):
-   $$ P(n_0) \text{ egiazkoa da} $$
-2. **Urrats induktiboa**: $k \ge n_0$ osoko arbitrarrio baterako proposizioaren egiazkotasuna onartzen da formalki (<ConceptLink targetId="hipotesis">hipotesi induktiboa</ConceptLink> $P(k)$), eta hortik ondorengo $k+1$ elementurako egiazkotasuna ezinbestean deduzitzen dela frogatzen da (<ConceptLink targetId="tesis">tesi induktiboa</ConceptLink> $P(k+1)$):
-   $$ \forall k \ge n_0, (P(k) \implies P(k+1)) $$
+1. **Oinarrizko kasua**: Proposizioa multzoko lehen elementurako betetzen dela frogatzen da (normalean $n = 1$ edo $n = 0$ kasuan):
+   <Formula>
+     $$ P(1) \text{ egiazkoa da} $$
+   </Formula>
 
-Bi urratsak egiaztatzean, $\mathbb{N}$ multzoko ondo ordenatzearen printzipioak baliotasun unibertsala ondorioztatzen du:
+2. **Urrats induktiboa**: *Indukzio-hipotesitzat* onartzen da propietatea $k \ge 1$ osoko hautazko baterako betetzen dela ($P(k)$), eta hortik abiatuz nahitaez $k + 1$ ondorengorako ere betetzen dela frogatzen da:
+   <Formula>
+     $$ \forall k \in \mathbb{N}, \quad P(k) \implies P(k+1) $$
+   </Formula>
+
+Bi baldintzak betetzean, indukzio-printzipioak formalki bermatzen du adierazpenaren baliozkotasun unibertsala:
 
 <Formula>
-  $$ (P(n_0) \land \forall k \ge n_0 (P(k) \implies P(k+1))) \implies \forall n \ge n_0 P(n) $$
+  $$ [P(1) \land (\forall k \ge 1, \, P(k) \implies P(k+1))] \implies \forall n \in \mathbb{N}, \, P(n) $$
 </Formula>
 
 <Separador />
 
-### Adibide klasikoak
+### Aplikazio nagusiak
 
-- **Lehen $n$ zenbaki naturalen batura**: $\sum_{i=1}^n i = \frac{n(n+1)}{2}$ dela frogatzea. Oinarrizko urratsak $1 = \frac{1(2)}{2}$ egiaztatzen du, eta urrats induktiboak $(k+1)$ gehitzen dio bi aldetatik hipotesi induktiboari $k+1$ kasuko formula lortzeko.
-- **Poligono baten diagonal kopurua**: $n$ vertezeko <ConceptLink targetId="poligono">poligono</ConceptLink> baterako, diagonal kopurua $D(n) = \frac{n(n-3)}{2}$ da $n \ge 3$ guztietarako.
-- **Bernoulliren desberdintza**: Edozein $x > -1$ eta $n \in \mathbb{N}$ hartuta, $(1+x)^n \ge 1 + nx$ betetzen da.
+- **Batura finituak eta progresioak**: Lehen $n$ zenbaki arrunten baturaren formula itxiaren froga:
+  $$ \sum_{i=1}^n i = \frac{n(n+1)}{2} $$
+- **Geometria konbinatorioa**: $n$ aldeko poligono bakun baten barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $(n-2) \times 180^\circ$ dela frogatzea, <ConceptLink targetId="teorema-suma-angulos-triangulo">triangeluen teorema</ConceptLink> orokortuz ondoz ondoko triangelu-banaketen bidez.
+- **Desberdintzak eta zatigarritasuna**: Bernoulli-ren desberdintzaren egiaztapena: $(1+x)^n \ge 1+nx$, non $x > -1$.
 
 <Separador />
 
-### Aldaerak eta propietateak
+### Aldaera formalak
 
-- **Indukzio sendoa (osoa)**: Hipotesi induktiboak $P(m)$ egiazkotasuna onartzen du $n_0 \le m \le k$ osoko guztietarako $P(k+1)$ deduzitu ahal izateko.
-- **Oinarrizko urrats anizkoitza**: Sistemaren errekurrentziak bi hasierako balio independente edo gehiago behar dituenean aplikatzen da (adibidez Fibonacci-ren sekuentzian).
+- **Indukzio osoa (sendoa)**: Indukzio-hipotesiak onartzen du $P(m)$ egiazkoa dela $1 \le m \le k$ osoko guztietarako, $P(k+1)$ deduzitzeko.
+- **Egiturazko indukzioa eta transfinitua**: Printzipioaren hedapena datu-egitura errekurtsiboetara eta multzo-teoria axiomatikoaren ordinal transfinituetara.

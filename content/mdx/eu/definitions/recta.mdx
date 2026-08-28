@@ -2,46 +2,61 @@ export const metadata = {
   id: "recta",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "primitivo",
   title: "Zuzena",
-  description: "Mugagabe luzatzen den norabide bakarreko dimentsio bakarreko objektu geometriko jarraitua.",
+  description: "Dimentsio bakarreko objektu geometriko jarraitu eta infinitua, bi noranzkoetan kurbadurarik gabe hedatzen dena.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 2 y 4", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 2. eta 4. Definizioak", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
   ]
 };
 
 import { Recta } from '@content/diagrams/Definiciones/Recta';
 export const Simulation = Recta;
 
-<Capitular letra="Z" />uzena norabide berean lerrokatutako <ConceptLink targetId="punto">puntu</ConceptLink> kopuru amaigabe batez osatutako dimentsio bakarreko figura geometrikoa da. <ConceptLink targetId="geometria-euclidiana">Geometria planoan</ConceptLink>, <ConceptLink targetId="punto">puntuarekin</ConceptLink> eta <ConceptLink targetId="plano">planoarekin</ConceptLink> batera oinarrizko kontzeptu primitiboa da.
+<Capitular letra="Z" />uzena dimentsio bakarreko entitate geometriko jarraitua da, bi noranzkoetan infiniturantz hedatzen dena inolako kurbadurarik gabe. Geometria sintetikoan jatorrizko nozioa da, eta <ConceptLink targetId="punto">puntuarekin</ConceptLink> eta <ConceptLink targetId="plano">planoarekin</ConceptLink> batera inzidentziaren eta ordenaren egitura oinarritzen du.
 
 <Definicion title="">
-  $\mathcal{E}$ espazio afin edo euclidiar bateko <VisualBind element="A" color="musgo">$A$</VisualBind> eta <VisualBind element="B" color="musgo">$B$</VisualBind> bi puntu desberdin emanda, <VisualBind element="line" color="musgo">$\ell = \overleftrightarrow{AB}$</VisualBind> zuzena $A$ eta $B$-ren konbinazio afinak ezinbestean zehaztutako puntuen dimentsio bakarreko multzo jarraitua da:
+  $\mathcal{E}$ espazio afin edo euklidear batean bi puntu desberdin emanda (<VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pB" color="musgo">$B$</VisualBind>), <VisualBind element="lineAB" color="musgo">$\ell = \overleftrightarrow{AB}$</VisualBind> zuzena $A$ eta $B$-ren konbinazio afin guztiek osatutako dimentsio bakarreko multzo jarraitua da:
   $$
   \ell = \{ P \in \mathcal{E} \mid P = (1 - t)A + tB, \, t \in \mathbb{R} \}
   $$
-  $\mathbb{R}^2$ gaineko <ConceptLink targetId="geometria-analitica">geometria analitikoan</ConceptLink>, $Ax + By + C = 0$ ekuazio inplizituaren bidez adierazten da, $(A, B) \neq (0, 0)$ izanik.
 </Definicion>
 
 <Separador />
 
-### Ekuazio-formak plano kartesiarrean
+### Geometria sintetikoa
 
-Zuzen baten adierazpen aljebraikoak hainbat forma baliokide hartzen ditu ezagunak diren parametro geometrikoen arabera:
+Hilberten sisteman, zuzenak bigarren oinarrizko multzoko elementuak dira, inzidentzia- eta ordena-axiomek arautuak:
+- **Inzidentziaren bakartasuna**: Bi puntu desberdinetatik zuzen bakar bat igarotzen da.
+- **Jarraitutasun lineala**: Zuzen bateko edozein puntuk bi <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> disjuntotan banatzen du zuzena.
+- **Bitartekotasuna**: <ConceptLink targetId="estar-entre">Artean egotearen</ConceptLink> erlazioak ordena lineal zorrotz eta trinkoa ezartzen du zuzeneko puntuen artean.
 
-| Forma aljebraikoa | Ekuazio matematikoa | Parametro adierazgarriak |
-|---|---|---|
-| Bektoriala | $\vec{r}(t) = \vec{p}_0 + t\vec{v}$ | Igarotze-puntua $\vec{p}_0$, bektore zuzentzailea $\vec{v}$ |
-| Esplizitua | $y = mx + b$ | Malda $m$, jatorriko ordenatua $b$ |
-| Jarraitua | $\frac{x - x_0}{v_x} = \frac{y - y_0}{v_y}$ | Bektore zuzentzailearen osagaiak $(v_x, v_y)$ |
+### Geometria analitikoa
+
+$\mathbb{R}^2$ plano cartesiarrean, zuzena bere ekuazio orokor inplizituaren edo forma bektorial parametrikoaren bidez adierazten da:
+- **Ekuazio orokorra**: $Ax + By + C = 0$, non $(A, B) \neq (0, 0)$.
+- **Forma bektoriala**: $\vec{r}(t) = \vec{p}_0 + t\vec{v}$, non $\vec{p}_0$ igarotze-puntu bat den eta $\vec{v} \neq \vec{0}$ bektore zuzentzailea.
+- **Forma esplizitua**: $y = mx + b$, non $m$ malda den eta $b$ ordenatua jatorrian.
+
+### Topologia
+
+Topologikoki, ohiko topologiaz hornitutako edozein zuzen euklidear $\mathbb{R}$ zuzen errealarekiko homeomorfoa da. $1$ dimentsio topologikoko espazio metriko oso, konexu eta ez-konpaktua da.
 
 <Separador />
 
-### Propietateak
-
-- **<ConceptLink targetId="incidencia">Existentzia eta bakartasun axioma</ConceptLink>**: Bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetatik zuzen bat eta bakarra igarotzen da espazio euclidiarrean.
-- **<ConceptLink targetId="estar-entre">Jarraitutasuna eta amaigabetasuna</ConceptLink>**: Ez du muturrik eta <ConceptLink targetId="potencia-continuo">kontinuoaren potentzia</ConceptLink> du ($\text{card}(\ell) = \lvert \mathbb{R} \rvert$).
-- **<ConceptLink targetId="geodesica">Geodesiko euclidiarra</ConceptLink>**: Zuzen baten gaineko ibilbideak bere edozein punturen arteko gutxieneko <ConceptLink targetId="distancia">distantzia</ConceptLink> adierazten du.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Inzidentzia eta geometria lineala">
+    <PropiedadItem id="axioma-incidencia-1" title="Existentzia eta bakartasuna bi puntutatik">
+      $A \neq B$ emanda, $\ell$ zuzen bakar bat existitzen da non $A \in \ell$ eta $B \in \ell$ diren.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-2" title="Gutxieneko puntuak zuzenean">
+      Edozein zuzenek gutxienez bi puntu desberdin ditu.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-orden-2" title="Hedapen mugagabea">
+      $A$ eta $B$ emanda, $C$ puntu bat existitzen da non $A * B * C$ den.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

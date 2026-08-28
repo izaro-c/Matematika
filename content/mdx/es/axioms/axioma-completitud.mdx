@@ -2,36 +2,46 @@ export const metadata = {
   id: "axioma-completitud",
   lang: "es",
   type: "axioma",
-  title: "Axioma de Completitud de Dedekind",
-  description: "Si todos los puntos de una recta se dividen en dos clases no vacías tales que ningún punto de la primera está entre dos de la segunda, existe un único punto que produce dicha partición.",
+  title: "Axioma V.2 (Axioma de completitud lineal)",
+  description: "Toda partición de Dedekind de los puntos de una recta en dos clases continuas está determinada por un único punto frontera.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "continuidad",
   hasSimulation: true,
   sources: [
-    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "§3", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §7", role: "primary" }
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "primary" }
   ]
 };
 
 import { AxiomaDedekind } from '@content/diagrams/Axiomas/AxiomaDedekind';
 export const Simulation = AxiomaDedekind;
 
-<Capitular letra="E" />l axioma de completitud de <ConceptLink targetId="dedekind">Dedekind</ConceptLink> representa el postulado supremo de <ConceptLink targetId="continuidad">continuidad</ConceptLink> en la geometría lineal. Garantiza la ausencia de "huecos" o discontinuidades en la <ConceptLink targetId="recta">recta</ConceptLink> geométrica.
+<Capitular letra="E" />l axioma de completitud lineal —planteado en términos del principio de continuidad de <ConceptLink targetId="dedekind">Richard Dedekind</ConceptLink> y formalizado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>— asegura la ausencia total de "huecos" o discontinuidades en la recta geométrica. Establece que toda partición continua de los <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> de una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> está generada por un único punto frontera.
 
-<Definicion title="">
-  Si los puntos de una <ConceptLink targetId="recta">recta</ConceptLink> $l$ se dividen en dos subconjuntos no vacíos $S_1$ y $S_2$ tales que ningún punto de $S_1$ se encuentra entre dos puntos de $S_2$ y ningún punto de $S_2$ está entre dos de $S_1$, entonces existe un único <ConceptLink targetId="punto">punto</ConceptLink> $O \in l$ que determina dicha partición:
+<Definicion title="Enunciado formal">
+  Sea $l \in \mathcal{L}$ una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink>. Si todos los puntos de $l$ se dividen en dos clases no vacías $\Sigma_1$ y $\Sigma_2$ ($l = \Sigma_1 \cup \Sigma_2$, $\Sigma_1 \cap \Sigma_2 = \emptyset$) tales que ningún punto de $\Sigma_1$ yace <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> dos puntos de $\Sigma_2$ ni viceversa, entonces existe un único <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $P \in l$ tal que uno de los subconjuntos contiene a todos los puntos que preceden a $P$ y el otro a todos los que le suceden:
   $$
-  \forall (S_1, S_2) \text{ partición en } l \implies \exists! O \in l \ (\forall P \in S_1 \setminus \{O\}, \forall Q \in S_2 \setminus \{O\} \implies P \text{-} O \text{-} Q)
+  \forall \text{ partición } (\Sigma_1, \Sigma_2) \text{ de } l, \ \exists! P \in l \ \bigl(\forall A \in \Sigma_1 \setminus \{P\}, \forall B \in \Sigma_2 \setminus \{P\} \implies A\text{-}P\text{-}B\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual
+### Representación visual e interacción
 
-Al dividir la recta continua en las dos secciones disjuntas <VisualBind element="S1" color="ocre">$S_1$</VisualBind> y <VisualBind element="S2" color="pavo">$S_2$</VisualBind>, el punto límite <VisualBind element="pO" color="terracota">$O$</VisualBind> actúa como la frontera o corte exacto que cierra la continuidad geométrica de la recta.
+En la simulación interactiva, la recta continua <VisualBind element="recta" color="carbon">$l$</VisualBind> se divide en la clase izquierda <VisualBind element="claseL" color="terracota">$\Sigma_1$</VisualBind> y la clase derecha <VisualBind element="claseR" color="marino">$\Sigma_2$</VisualBind>. El punto de corte móvil <VisualBind element="pP" color="ocre">$P$</VisualBind> actúa como la frontera separadora unívoca; al desplazar $P$ a lo largo de la recta, la partición se actualiza sin dejar ninguna fisura ni punto indeterminado.
 
 <Separador />
 
-### Significado en los sistemas axiomáticos
+### Significado geométrico y alcance
 
-Este axioma asegura el isomorfismo entre la recta geométrica sintética y el cuerpo ordenado y completo de los números reales $\mathbb{R}$. Permite garantizar la intersección de circunferencias y rectas cuando la distancia relativa lo requiere, fundamentando el cálculo infinitesimal y la geometría analítica.
+Garantiza la correspondencia biyectiva e isomórfica entre la recta sintética y el cuerpo de los números reales $\mathbb{R}$. Permite demostrar la existencia de intersecciones entre circunferencias y rectas secantes, fundamentando rigurosamente el análisis matemático en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+
+<Separador />
+
+### Propiedades
+
+- **Continuidad perfecta:** Elimina cualquier laguna infinitesimal o fisura topológica en la recta geométrica.
+- **Isomorfismo con $\mathbb{R}$:** Junto con el <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink>, asegura que la recta geométrica es homeomorfa e isomorfa a la recta real euclidiana $\mathbb{R}$.
+- **Intersección de curvas continuas:** Garantiza que una recta que penetra en una región circular corta efectivamente a su frontera circunferencial.

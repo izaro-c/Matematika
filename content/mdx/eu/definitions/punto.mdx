@@ -2,46 +2,62 @@ export const metadata = {
   id: "punto",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "primitivo",
   title: "Puntua",
-  description: "Zati gabeko eta dimentsiorik gabeko oinarrizko elementu geometrikoa, espazioan kokapen zehatz bat definitzen duena.",
+  description: "Espazio matematiko baten oinarrizko osagai zatiezina eta sistema axiomatikoetako jatorrizko nozio aldebakarrekoa.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 1", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 1. Definizioa", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
   ]
 };
 
 import { Punto } from '@content/diagrams/Definiciones/Punto';
 export const Simulation = Punto;
 
-<Capitular letra="P" />untua <ConceptLink targetId="geometria-euclidiana">geometria euclidiarraren</ConceptLink> eta <ConceptLink targetId="espacio-topologico">espazio topologikoen</ConceptLink> oinarrizko elementu zatiezina da. Luzerarik, azalerarik edo bolumenik ez duenez, <ConceptLink targetId="recta">zuzena</ConceptLink>, <ConceptLink targetId="plano">planoa</ConceptLink> eta dimentsio altuagoko figura geometriko guztiak eraikitzeko oinarrizko osagaia da.
+<Capitular letra="P" />untua geometriaren eta topologiaren entitate elemental eta zatiezina da. Jatorrizko nozioa denez, ez du berezko neurri espazialik (luzerarik, azalerarik ez bolumenik), eta <ConceptLink targetId="recta">zuzenak</ConceptLink>, <ConceptLink targetId="plano">planoak</ConceptLink> zein espazio orokorrak egituratzeko oinarri gisa balio du.
 
 <Definicion title="">
-  <ConceptLink targetId="incidencia">Intzidentzia-geometriaren</ConceptLink> formulazio axiomatikoan, <VisualBind element="P" color="musgo">$P$</VisualBind> puntua $\mathcal{E}$ espazio geometriko bateko oinarrizko elementu zatiezin gisa definitzen da. $\mathbb{R}^n$ gaineko <ConceptLink targetId="geometria-analitica">geometria analitikoan</ConceptLink>, puntua <ConceptLink targetId="sistema-coordenadas">koordenatu errealen</ConceptLink> $n$-kote baten bidez identifikatzen da ezinbestean:
-  $$
-  P = (x_1, x_2, \dots, x_n) \in \mathbb{R}^n
-  $$
-  non bere <ConceptLink targetId="dimension-hausdorff">dimentsio topologikoa</ConceptLink> zorrotz nulua den ($\text{dim}(P) = 0$).
+  <VisualBind element="pPoint" color="musgo">$P$</VisualBind> puntua dimentsiorik gabeko jatorrizko entitate geometrikoa da. Axiomatizazio modernoan, puntuak azpiko $\mathcal{S}$ multzoko elementuak dira, eta haien gainean jarduten dute <ConceptLink targetId="incidencia">inzidentzia-</ConceptLink>, <ConceptLink targetId="estar-entre">ordena-</ConceptLink> eta <ConceptLink targetId="congruencia">kongruentzia-</ConceptLink>erlazioek.
 </Definicion>
 
 <Separador />
 
-### Adierazpena esparru geometriko desberdinetan
+### Geometria sintetikoa
 
-Puntuaren karakterizazio formala hautatutako egitura axiomatiko edo aljebraikoaren arabera aldatzen da:
+Hilberten sistema axiomatikoan, puntua formalki definitu gabeko kontzeptua da; bere propietateak eta portaera sistemaren axiomek zehazten dituzte:
+- **Inzidentzia**: Bi puntu desberdinek ($A \neq B$) <ConceptLink targetId="recta">zuzen</ConceptLink> bakar bat zehazten dute ($\ell$).
+- **Bitartekotasuna**: Zuzen bereko hiru puntu desberdin emanda, horietako bat eta bakarra dago beste bien artean ($A * B * C$).
+- **Existentzia**: Zuzen bakoitzak gutxienez bi puntu desberdin ditu, eta espazioan gutxienez lau puntu ez-koplanar existitzen dira.
 
-| Esparru geometrikoa | Adierazpen matematikoa | Dimentsioa |
-|---|---|---|
-| Euclidiarra edo axiomatikoa | Oinarrizko elementu zatiezina ($P \in \mathcal{E}$) | $0$ |
-| Kartesiarra ($\mathbb{R}^2$ edo $\mathbb{R}^3$) | Posizio-bektorea $(x, y)$ edo $(x, y, z)$ | $0$ |
-| Multzo-teoria | $S$ espazio abstraktu bateko banakako elementua | $0$ |
+### Geometria analitikoa
+
+$\mathbb{R}^n$ espazio afin errealean, $P$ puntu bat zenbaki errealen $n$-kote ordenatu baten bidez adierazten da:
+$$
+P = (x_1, x_2, \dots, x_n) \in \mathbb{R}^n
+$$
+Bi punturen ($P = (x_1, \dots, x_n)$ eta $Q = (y_1, \dots, y_n)$) arteko bereizketa metrikoa distantzia euklidearrak ematen du:
+$$
+d(P, Q) = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}
+$$
+
+### Topologia eta multzo-teoria
+
+$(X, \tau)$ espazio topologiko batean, puntua azpiko multzoko edozein $x \in X$ elementu da. $\{x\}$ multzo unitarioa itxia da espazioak $T_1$ bereizketa-axioma betetzen badu, eta bere dimentsio topologiko induktiboa zero da zorrozki ($\text{dim}(\{x\}) = 0$).
 
 <Separador />
 
-### Propietateak
-
-- **<ConceptLink targetId="incidencia">Intzidentzia eta kidetasuna</ConceptLink>**: Bi puntu desberdinek beren artetik igarotzen den <ConceptLink targetId="recta">zuzen</ConceptLink> bakarra zehazten dute.
-- **<ConceptLink targetId="dimension-hausdorff">Dimentsio eza</ConceptLink>**: Lebesgue-ren neurri nulua du ($\mu(\{P\}) = 0$) eta ez du hedadura espazialik.
-- **<ConceptLink targetId="distancia">Metrika eta distantzia</ConceptLink>**: Bi punturen arteko distantziak $d(P, Q) = 0 \iff P = Q$ betetzen du, <ConceptLink targetId="espacio-metrico">metrikaren</ConceptLink> nortasun-axioma betez.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Oinarri axiomatikoak eta metrikoak">
+    <PropiedadItem id="axioma-incidencia-1" title="Zuzenaren determinazioa">
+      Bi puntu desberdinetatik ($A \neq B$) $\ell = \overleftrightarrow{AB}$ zuzen bakar bat igarotzen da.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-3" title="Lerrokatu gabeko puntuen existentzia">
+      Zuzen bakoitzean gutxienez bi puntu daude; plano bakoitzean, gutxienez lerrokatu gabeko hiru puntu.
+    </PropiedadItem>
+    <PropiedadItem id="distancia-indiscernibles" title="Bereizezinen identitatea">
+      Edozein espazio metrikotan, $d(P, Q) = 0 \iff P = Q$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

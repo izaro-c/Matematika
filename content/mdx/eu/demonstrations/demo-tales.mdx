@@ -1,8 +1,8 @@
 export const metadata = {
   "id": "demo-tales",
   "type": "demostracion",
-  "title": "Froga: Talesen teorema",
-  "description": "Hiru edo gehiago zuzen paralelok bi ebakitzaileetan zehaztutako zuzenkien arteko proportzionaltasunaren froga zuzena.",
+  "title": "Frogapena: Talesen teorema",
+  "description": "Zuzen paraleloek mugatutako zuzenkien proportzionaltasunaren frogapen zuzena, triangeluen azaleren arrazoien bidez.",
   "parentTheorem": "teorema-tales",
   "branch": "51M",
   "proofMethod": "metodo-directo",
@@ -10,7 +10,7 @@ export const metadata = {
   "tags": ["geometria", "proporcionalidad", "semejanza", "rectas"],
   "layout": "split",
   "sources": [
-    { "title": "Elementuak", author: "Euclides", locator: "VI. Liburukia, 2. Proposizioa", role: "primary" }
+    { "title": "Elementos", author: "Euclides", locator: "Libro VI, Proposición 2", role: "primary" }
   ]
 };
 
@@ -18,50 +18,44 @@ import { DemoTales } from "@content/diagrams/Demos/DemoTales";
 
 <DemonstrationSection diagram={<DemoTales />}>
 
-<Capitular letra="E" />manik bi <ConceptLink targetId="recta">zuzen ebakitzailek</ConceptLink> $u$ eta $v$ ebakitzen dituzten hiru <VisualBind element="paralelas" color="carbon"><ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink></VisualBind> $r, s, t$, <ConceptLink targetId="teorema-tales" isDependency={true}>Talesen teorema</ConceptLink> frogatzen da. Frogapenak erakusten du lehenengo $u$ ebakitzailean muga daitezkeen <ConceptLink targetId="segmento">zuzenkien</ConceptLink> luzeren arteko kozientea bigarren $v$ ebakitzaileko zuzenki homologoen koziente berbera dela.
+<Capitular letra="B" />ere alde bati paraleloa zaion zuzen batek ebakitako $\triangle ABC$ <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat emanda, <ConceptLink targetId="teorema-tales">Talesen teorema</ConceptLink> frogatzen da. Frogapenak egiaztatzen du alde batean zehaztutako <ConceptLink targetId="segmento">zuzenkien</ConceptLink> luzeren arteko arrazoia beste aldean zehaztutako zuzenkien arteko arrazoiaren berdina dela.
 
 <Separador />
 
-### Urratsez urratseko froga
+### Froga urratsez urrats
 
-<ProofStep number={1} target="paralelas" title="Zuzen paraleloen eta ebakitzaileen konfigurazioa">
-Bedi hiru zuzen paralelo <VisualBind element="recta-r" color="carbon">$r$</VisualBind>, <VisualBind element="recta-s" color="carbon">$s$</VisualBind> eta <VisualBind element="recta-t" color="carbon">$t$</VisualBind>. Lehenengo <VisualBind element="transversal-u" color="terracota">$u$</VisualBind> ebakitzaileak $A, B, C$ puntuetan ebakitzen ditu zuzen paraleloak, <VisualBind element="segmento-ab" color="terracota">$\overline{AB}$</VisualBind> eta <VisualBind element="segmento-bc" color="terracota">$\overline{BC}$</VisualBind> zuzenkiak zehaztuz. Bigarren <VisualBind element="transversal-v" color="pavo">$v$</VisualBind> ebakitzaileak $A', B', C'$ puntuetan ebakitzen ditu, <VisualBind element="segmento-a1b1" color="pavo">$\overline{A'B'}$</VisualBind> eta <VisualBind element="segmento-b1c1" color="pavo">$\overline{B'C'}$</VisualBind> zuzenkiak sortuz.
+<ProofStep number={1} target="step1" title="Triangeluaren eta zuzen paraleloaren konfigurazioa">
+$\triangle ABC$ triangelua eta $\overline{BC}$ aldeari paraleloa zaion zuzen bat hartzen ditugu, $\overline{AB}$ eta $\overline{AC}$ aldeak hurrenez hurren $D$ eta $E$ puntuetan ebakitzen dituena eta $\overline{DE} \parallel \overline{BC}$ zuzenkia eratuz.
 </ProofStep>
 
-<ProofStep number={2} target="triangulos-u" title="Azalera-kozienteak lehenengo ebakitzailean">
-Laguntza-zuzenkiak marrazten dira: $\overline{AB'}$ eta $\overline{CB'}$. $\triangle ABB'$ eta $\triangle BCB'$ triangeluek altuera bera dute $B'$ <ConceptLink targetId="vertice">bertizetik</ConceptLink>. <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Triangeluaren azaleraren teoremari</ConceptLink> jarraituz, haien <ConceptLink targetId="area">azalerren</ConceptLink> arteko kozientea $u$ zuzenaren gaineko oinarrien arteko kozientearen proportzionala da:
+<ProofStep number={2} target="step2" title="Paraleloen arteko azaleren berdintasuna">
+$\overline{BE}$ eta $\overline{CD}$ laguntza-zuzenkiak marraztuz, $\triangle BDE$ eta $\triangle CDE$ triangeluak osatzen dira. Bi triangeluek $\overline{DE}$ oinarri bera partekatzen dute eta $\overline{DE}$ zein $\overline{BC}$ zuzen paraleloen artean kokatzen dira. Paraleloen arteko altuera bera dutenez, <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangeluaren azaleraren teoremak</ConceptLink> haien azaleren berdintasuna bermatzen du:
 
 <Formula>
-  $$ \frac{\text{Azalera}(\triangle ABB')}{\text{Azalera}(\triangle BCB')} = \frac{\overline{AB}}{\overline{BC}} $$
+  $$ \text{Azalera}(\triangle BDE) = \text{Azalera}(\triangle CDE) $$
 </Formula>
 </ProofStep>
 
-<ProofStep number={3} target="triangulos-v" title="Azalera-kozienteak bigarren ebakitzailean">
-Bide beretik, $B$ bertizetik altuera bera duten $\triangle A'BB'$ eta $\triangle B'C'B$ triangeluak kontuan hartuz, $v$ zuzenaren gaineko azalerren arteko kozientea honela geratzen da:
+<ProofStep number={3} target="step3" title="Azaleren arrazoia eta proportzionaltasunaren ondorioa">
+Triangelu horien azalerak goiko $\triangle ADE$ triangeluarenarekin alderatzen ditugu:
+1. $\triangle ADE$ eta $\triangle BDE$ triangeluek altuera bera dute $\overline{AB}$ zuzenarekiko; beraz, haien azaleren arrazoia oinarrien proportzionala da:
+$$ \frac{\text{Azalera}(\triangle ADE)}{\text{Azalera}(\triangle BDE)} = \frac{|\overline{AD}|}{|\overline{DB}|} $$
+2. Era berean, $\triangle ADE$ eta $\triangle CDE$ triangeluek altuera bera dute $\overline{AC}$ zuzenarekiko:
+$$ \frac{\text{Azalera}(\triangle ADE)}{\text{Azalera}(\triangle CDE)} = \frac{|\overline{AE}|}{|\overline{EC}|} $$
+
+Izendatzaileak berdinak direnez aurreko urratsagatik, arrazoien berdintasuna lortzen da:
 
 <Formula>
-  $$ \frac{\text{Azalera}(\triangle A'BB')}{\text{Azalera}(\triangle B'C'B)} = \frac{\overline{A'B'}}{\overline{B'C'}} $$
-</Formula>
-</ProofStep>
-
-<ProofStep number={4} target="igualdad-alturas" title="Azalera-baliokidetasuna zuzen paraleloen artean">
-$\triangle ABB'$ eta $\triangle A'BB'$ triangeluek oinarri bera dute $\overline{BB'}$ eta $r$ zein $s$ zuzen paraleloen artean daude kokatuta. Zuzen paraleloen arteko altuera bera dutenez, haien azalerak berdin-berdinak dira. Era berean, $\text{Azalera}(\triangle BCB') = \text{Azalera}(\triangle B'C'B)$.
-</ProofStep>
-
-<ProofStep number={5} target="conclusion" title="Proportzioen berdintasuna">
-Azaleren kozienteak berdinduz $r, s, t$ zuzen paraleloen arteko triangeluen arteko baliokidetasunari esker, <ConceptLink targetId="semejanza">antzekotasun-proportzioa</ConceptLink> ondorioztatzen da:
-
-<Formula>
-  $$ \frac{\overline{AB}}{\overline{BC}} = \frac{\overline{A'B'}}{\overline{B'C'}} $$
+  $$ \frac{|\overline{AD}|}{|\overline{DB}|} = \frac{|\overline{AE}|}{|\overline{EC}|} $$
 </Formula>
 </ProofStep>
 
 <Separador />
 
-### Dedukzio-analisia
+### Azterketa deduktiboa
 
 <Nota>
-  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko VI.2 Proposizioa, tradizioz <ConceptLink targetId="tales">Tales Miletokoari</ConceptLink> egotzita. Proportzionaltasun-teoriaren eta <ConceptLink targetId="semejanza">triangeluen antzekotasunaren</ConceptLink> oinarri nagusia da <ConceptLink targetId="sistema-euclidiano">sistema euklidotarrean</ConceptLink>.
+  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko VI.2 Proposizioa, tradizioz <ConceptLink targetId="tales">Tales Miletokoari</ConceptLink> egotzita. Proportzionaltasun-teoriaren eta <ConceptLink targetId="semejanza">triangeluen antzekotasunaren</ConceptLink> oinarri nagusia da <ConceptLink targetId="sistema-euclidiano">sistema euklidetarrean</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

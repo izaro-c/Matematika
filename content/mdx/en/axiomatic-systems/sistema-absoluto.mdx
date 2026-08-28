@@ -3,38 +3,69 @@ export const metadata = {
   lang: "en",
   type: "sistema-axiomatico",
   title: "Absolute geometry system",
-  description: "Axiomatic system established by János Bolyai uniting incidence, order, congruence, and continuity axioms without assuming any parallel axiom.",
+  description: "Axiomatic structure founded by János Bolyai and David Hilbert containing all incidence, order, congruence, and continuity axioms without any parallel postulate.",
   branch: "51M",
-  axiomas: ["axioma-incidencia-1", "axioma-orden-1", "axioma-congruencia-1"]
+  axiomas: [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-incidencia-4",
+    "axioma-incidencia-5",
+    "axioma-incidencia-6",
+    "axioma-incidencia-7",
+    "axioma-incidencia-8",
+    "axioma-orden-1",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-4",
+    "axioma-congruencia-1",
+    "axioma-congruencia-2",
+    "axioma-congruencia-3",
+    "axioma-congruencia-4",
+    "axioma-congruencia-5",
+    "axioma-arquimedes",
+    "axioma-completitud"
+  ],
+  models: [
+    "modelo-cartesiano",
+    "modelo-poincare"
+  ],
+  authors: ["bolyai", "lobachevski", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    { title: "Appendix scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "1832", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapters I-V", role: "primary" }
+  ]
 };
 
-<Capitular letra="T" />he absolute geometry system —also known as *neutral geometry*— encompasses the common axiomatic core shared by both Euclidean geometry and hyperbolic geometry. Formulated independently by János Bolyai and Nikolai Lobachevsky, it gathers the complete collection of Hilbert's incidence, order, congruence, and continuity principles while deliberately omitting any parallel postulate.
+<Capitular letra="T" />he system of absolute geometry —also known as *neutral geometry*— encompasses the common deductive core shared by Euclidean and hyperbolic geometries. Founded upon the foundational investigations of <ConceptLink targetId="bolyai">János Bolyai</ConceptLink>, <ConceptLink targetId="lobachevski">Nikolai Lobachevsky</ConceptLink>, and formalized by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, it gathers all synthetic axioms of incidence, order, congruence, and continuity, while deliberately withholding any hypothesis regarding parallelism.
 
 <Separador />
 
-### Constituent axiom groups
+### Constituent axiomatic groups
 
-Absolute geometry unifies four fundamental groups of Hilbert's axiomatic system:
+Absolute geometry is structured upon four fundamental axiomatic pillars:
 
-1. **<ConceptLink targetId="sistema-incidencia">Incidence axioms (I.1 to I.8)</ConceptLink>**: Govern containment relations between <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>.
-2. **Order axioms (II.1 to II.4)**: Establish the ternary <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation on a line and ground the concepts of half-plane and convex region.
-3. **Congruence axioms (III.1 to III.5)**: Define geometric rigidity for equality of line segments and <ConceptLink targetId="angulo">angles</ConceptLink>, including the SAS triangle <ConceptLink targetId="congruencia">congruence</ConceptLink> criterion.
-4. **Continuity axioms (IV.1 to IV.2)**: Include Archimedes' axiom and line completeness, linking synthetic space directly to <ConceptLink targetId="numero-real">real numbers</ConceptLink>.
+1. **<ConceptLink targetId="sistema-incidencia" isDependency={true}>Incidence axioms (I.1 to I.8)</ConceptLink>**: Govern containment and intersections among <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink> in space.
+2. **<ConceptLink targetId="axioma-orden-1" isDependency={true}>Order axioms (II.1 to II.4)</ConceptLink>**: Formalize the ternary <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation ($A\text{-}B\text{-}C$), establishing the definition of line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$, half-planes, and <ConceptLink targetId="axioma-orden-4">Pasch's axiom</ConceptLink>.
+3. **<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Congruence axioms (III.1 to III.5)</ConceptLink>**: Define metric rigidity for segments ($\overline{AB} \cong \overline{CD}$) and <ConceptLink targetId="angulo">angles</ConceptLink>, culminating in the <ConceptLink targetId="axioma-congruencia-5">SAS triangle congruence criterion</ConceptLink>.
+4. **<ConceptLink targetId="axioma-arquimedes" isDependency={true}>Continuity axioms (V.1 and V.2)</ConceptLink>**: Incorporate the <ConceptLink targetId="axioma-arquimedes">Archimedean axiom</ConceptLink> and <ConceptLink targetId="axioma-completitud">line completeness</ConceptLink> (Dedekind cut property), guaranteeing bijective correspondence between geometric lines and the real field $\mathbb{R}$.
 
 <Separador />
 
 ### Theorems valid in absolute geometry
 
-All theorems proved within the absolute system are automatically valid in both <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink> and <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>:
+Any proposition proved within this system remains universally valid regardless of spatial curvature:
 
-- **<ConceptLink targetId="teorema-triangulo-isosceles">Isosceles triangle theorem</ConceptLink>**: Angles opposite to congruent sides in a <ConceptLink targetId="triangulo">triangle</ConceptLink> are congruent.
-- **Exterior angle theorem**: The exterior angle of any triangle is strictly greater than either non-adjacent interior angle.
-- **<ConceptLink targetId="teorema-congruencia-ala">ASA and SSS congruence criteria</ConceptLink>**: Uniquely determine triangles through three corresponding elements.
-- **Existence of parallel lines**: Through a point not on a given line passes *at least* one <ConceptLink targetId="paralelismo">parallel line</ConceptLink> (proven by construction using the common perpendicular).
+- **<ConceptLink targetId="teorema-triangulo-isosceles">Isosceles triangle theorem</ConceptLink>**: In any triangle with two congruent sides, the angles opposite those sides are congruent.
+- **Exterior angle theorem**: In any <ConceptLink targetId="triangulo">triangle</ConceptLink>, the measure of an exterior angle is strictly greater than the measure of either non-adjacent interior angle.
+- **<ConceptLink targetId="teorema-congruencia-ala">ASA and SSS congruence criteria</ConceptLink>**: Unambiguous determination of triangles via three corresponding parts.
+- **Existence of parallel lines**: Through any point not lying on a given line, there passes at least one line that does not intersect it (proved constructively via the common perpendicular).
 
 <Separador />
 
-### Metamathematical properties
+### Models and metamathematical properties
 
-- **Parallel neutrality**: By not fixing the number of parallel lines, it leaves open whether the angle sum of a triangle equals $180^\circ$ or is strictly less.
-- **Subjacent to models**: Both the <ConceptLink targetId="modelo-cartesiano">Cartesian model</ConceptLink> and the <ConceptLink targetId="modelo-poincare">Poincaré disk model</ConceptLink> serve as fully valid models of absolute geometry.
+- **Neutrality of angle sum**: The system proves that the angle sum of a triangle satisfies $\sum_{i=1}^3 \alpha_i \le 180^\circ$, but cannot decide whether equality holds strictly without a parallel postulate.
+- **Geometric bifurcation**: Appending the <ConceptLink targetId="axioma-paralelas-euclides">Euclidean parallel axiom</ConceptLink> yields <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>; appending the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic parallel axiom</ConceptLink> yields <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>.
+- **Model verification**: Both the <ConceptLink targetId="modelo-cartesiano">Cartesian plane $\mathbb{R}^2$</ConceptLink> and the <ConceptLink targetId="modelo-poincare">Poincaré disk $\mathbb{D}^2$</ConceptLink> fully verify the absolute geometry system.

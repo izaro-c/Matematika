@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-incidencia-5",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.5 (Inclusion of a Line in a Plane)",
-  description: "If two distinct points of a line belong to a plane, the entire line is contained within that plane.",
+  title: "Axiom I.5 (Existence of Non-Collinear Points in a Plane)",
+  description: "Every plane contains at least three points that do not belong to the same line.",
   branch: "51M",
+  axiomSystem: "sistema-incidencia",
+  axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
@@ -14,12 +16,12 @@ export const metadata = {
 import { Incidence5 } from '@content/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
 
-<Capitular letra="I" />f two distinct <ConceptLink targetId="punto">points</ConceptLink> of a <ConceptLink targetId="recta">line</ConceptLink> lie in a <ConceptLink targetId="plano">plane</ConceptLink>, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s fifth <ConceptLink targetId="incidencia">incidence axiom</ConceptLink> mandates that the entire line lies in that plane. This postulate asserts the absolute flatness and structural coherence of the geometric plane.
+<Capitular letra="I" />n every <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> of <ConceptLink targetId="espacio">space</ConceptLink>, the fifth incidence axiom formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> guarantees the existence of at least three non-collinear <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>. This postulate ensures that no plane degenerates or collapses into a single straight <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> or a discrete point set.
 
 <Definicion title="Formal statement">
-  For every <ConceptLink targetId="recta">line</ConceptLink> $l \in \mathcal{L}$ and every <ConceptLink targetId="plano">plane</ConceptLink> $\mathcal{P} \in \mathcal{F}$, if there exist two distinct <ConceptLink targetId="punto">points</ConceptLink> $A, B \in l$ such that $A \in \mathcal{P}$ and $B \in \mathcal{P}$, then $l \subset \mathcal{P}$:
+  For every <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \mathcal{E}$, there exist at least three <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B, C \in \pi$ such that no <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$ contains all three simultaneously:
   $$
-  \forall l \in \mathcal{L}, \forall \mathcal{P} \in \mathcal{F} \ \bigl((\exists A, B \in l \ (A \neq B \land A, B \in \mathcal{P})) \implies l \subset \mathcal{P}\bigr)
+  \forall \pi \in \mathcal{E}, \ \exists A, B, C \in \pi \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
   $$
 </Definicion>
 
@@ -27,18 +29,18 @@ export const Simulation = Incidence5;
 
 ### Visual representation and interaction
 
-In the interactive simulation, line <VisualBind element="line" color="carbon">$l$</VisualBind> contains points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind>, both resting on plane <VisualBind element="plane" color="marino">$\mathcal{P}$</VisualBind>. Moving the points along the plane keeps the complete line strictly embedded within the planar surface.
+In the interactive 3D scene, plane <VisualBind element="plano" color="canela">$\pi$</VisualBind> accommodates three distinct points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind>. The visualization enables space rotation to verify that the three points define a genuine two-dimensional planar area not bounded by any single line.
 
 <Separador />
 
 ### Geometric significance and scope
 
-This axiom ensures strict flatness: a plane cannot warp or have indents that allow a straight line to pierce two of its points without being completely submerged in it. It bridges one-dimensional linear geometry with two-dimensional plane geometry.
+Guarantees the internal two-dimensionality of each individual plane. It ensures that every planar surface exhibits genuine spatial extent capable of hosting geometric configurations, <ConceptLink targetId="triangulo">triangles</ConceptLink>, and half-plane separations.
 
 <Separador />
 
 ### Properties
 
-- **Planar membership criterion:** Verifying the membership of two distinct points suffices to establish complete line inclusion.
-- **Surface intersection restriction:** Prevents a line from intersecting a plane at exactly two distinct points without being entirely contained in it.
-- **Convexity foundation:** Facilitates the construction of <ConceptLink targetId="convexo">convex</ConceptLink> sets and half-planes.
+- **Non-degeneracy of planes:** Prohibits one-dimensional or point-like planes.
+- **Universality of polygons:** Enables constructing triangles in any plane in space without exception.
+- **Affine span:** Guarantees a two-dimensional coordinate framework over every plane $\pi$.

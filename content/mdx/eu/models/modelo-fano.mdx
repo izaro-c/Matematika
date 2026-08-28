@@ -3,44 +3,44 @@ export const metadata = {
   lang: "eu",
   type: "modelo",
   title: "Fanoren planoa",
-  description: "7 puntuz eta 7 zuzenez osatutako plano proiektibo finitu minimala, non zuzen bakoitzak zehazki 3 puntu baitauzka.",
-  branch: "51M",
-  satisfies: ["sistema-incidencia"],
+  description: "Plano proiektibo finiturik txikiena, zehazki 7 puntuk eta 7 zuzenek osatua.",
+  branch: "51A",
+  satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
-  hasSimulation: true
+  hasDiagram: true
 };
 
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
-export const Simulation = ModeloFano;
+export const Diagram = ModeloFano;
 
-<Capitular letra="F" />anoren planoa —$PG(2, 2)$ gisa denotatua formalki— plano proiektibo finitu txikiena da. Egitura diskretu honetan, <ConceptLink targetId="punto">puntuaren</ConceptLink> eta <ConceptLink targetId="recta">zuzenaren</ConceptLink> oinarrizko nosioek simetria konbinatorio zorrotza betetzen dute, dualtasun proiektiboaren printzipioa erabat egiaztatuz.
-
-<Separador />
-
-### Ereduaren definizioa
-
-Ereduaren unibertsoa 7 puntuko multzo batek $\mathcal{P} = \{P_1, P_2, P_3, P_4, P_5, P_6, P_7\}$ eta 7 zuzeneko multzo batek $\mathcal{L} = \{l_1, l_2, l_3, l_4, l_5, l_6, l_7\}$ osatzen dute:
-
-- Kanpoko triangeluaren zuzenak <VisualBind element="l1" color="pavo">$l_1 = \{P_1, P_2, P_3\}$</VisualBind>, <VisualBind element="l2" color="terracota">$l_2 = \{P_3, P_4, P_5\}$</VisualBind> eta <VisualBind element="l3" color="musgo">$l_3 = \{P_5, P_6, P_1\}$</VisualBind> dira.
-- Erdiko zuzen edo erdiko-lerroak <VisualBind element="l4" color="ocre">$l_4 = \{P_1, P_4, P_7\}$</VisualBind>, <VisualBind element="l5" color="pavo">$l_5 = \{P_3, P_6, P_7\}$</VisualBind> eta <VisualBind element="l6" color="terracota">$l_6 = \{P_5, P_2, P_7\}$</VisualBind> dira.
-- Barneko zuzen zirkularra <VisualBind element="l7" color="carbon">$l_7 = \{P_2, P_4, P_6\}$</VisualBind> da.
-
-Zuzen bakoitzak zehazki 3 puntu dauzka eta puntu bakoitzetik zehazki 3 zuzen igarotzen dira. <ConceptLink targetId="incidencia">Intzidentzia</ConceptLink> multzo-pertenentzia bidez definitzen da.
+<Capitular letra="F" />anoren planoa, aljebraikoki $\mathrm{PG}(2, 2)$ gisa idatzia, <ConceptLink targetId="sistema-incidencia">intzidentziaren eredu finiturik</ConceptLink> eta plano proiektiborik txikiena da. $\mathbb{F}_2 = \{0, 1\}$ gorputz finituaren gainean eraikitzen da eta zehazki $7$ puntuk eta $7$ zuzenek osatzen dute, non paralelotasun euklidearra erabat desagertzen den.
 
 <Separador />
 
-### Propietateen eta axiomen egiaztapena
+### Egitura konbinatorioa
 
-Fanoren planoak intzidentzia-geometria proiektiboaren oinarrizko axiomak betetzen ditu <ConceptLink targetId="sistema-incidencia">intzidentzia-sisteman</ConceptLink>:
+Fanoren konfigurazioa $\mathbb{F}_2^3 \setminus \{(0, 0, 0)\}$ bektore-espazioaren bidez definitzen da:
 
-- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>Zuzenaren bakartasuna</ConceptLink>**: Edozein bi puntu desberdinetarako $P_i, P_j \in \mathcal{P}$, zehazki zuzen bakarra dago $l_k \in \mathcal{L}$ non $\{P_i, P_j\} \subset l_k$.
-- **Ebakitze unibertsala**: Edozein bi zuzen desberdinek $l_a, l_b \in \mathcal{L}$ puntu bakar batean ebakitzen dute elkar nahitaez.
-- **Paraleloen eza**: Ebakitze unibertsalaren ondorioz, ereduan ez dago <ConceptLink targetId="paralelismo">paralelismorik</ConceptLink>.
-- **Globalki ez-<ConceptLink targetId="colinealidad">kolinealak</ConceptLink> direnak**: Badira gutxienez hiru puntu zuzen berean ez daudenak.
+- **<ConceptLink targetId="punto">Puntuak</ConceptLink>**: $\mathbb{F}_2^3$-ko dimentsio bakarreko $7$ azpiespazioak dira: <VisualBind element="p1" color="terracota">$1$ puntua</VisualBind>, <VisualBind element="p2" color="terracota">$2$ puntua</VisualBind>, <VisualBind element="p3" color="terracota">$3$ puntua</VisualBind>, <VisualBind element="p4" color="terracota">$4$ puntua</VisualBind>, <VisualBind element="p5" color="terracota">$5$ puntua</VisualBind>, <VisualBind element="p6" color="terracota">$6$ puntua</VisualBind> eta <VisualBind element="p7" color="musgo">$7$ erdiguneko puntua</VisualBind>.
+- **<ConceptLink targetId="recta">Zuzenak</ConceptLink>**: Bi dimentsioko $7$ azpiespazioak (plano bektorialak), puntu hirukoteen bidez irudikatuak:
+  - Kanpoko triangeluaren hiru aldeak: <VisualBind element="l1" color="carbon">$l_1 = \{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$l_2 = \{2, 3, 5\}$</VisualBind> eta <VisualBind element="l3" color="carbon">$l_3 = \{3, 1, 6\}$</VisualBind>.
+  - Erdiko hiru ebakitzaileak: <VisualBind element="l4" color="carbon">$l_4 = \{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$l_5 = \{2, 6, 7\}$</VisualBind> eta <VisualBind element="l6" color="carbon">$l_6 = \{3, 4, 7\}$</VisualBind>.
+  - Barneko zirkunferentzia (zuzen proiektibo ez-euklidearra): <VisualBind element="l7" color="musgo">$l_7 = \{4, 5, 6\}$</VisualBind>.
 
 <Separador />
 
-### Propietateak
+### Intzidentzia-axiomen egiaztapena
 
-- **Simetria proiektiboa $PG(2, 2)$**: Bi elementuko $\mathbb{F}_2$ gorputz finituaren gaineko plano proiektibo gisa eraikitzen da aljebraikoki.
-- **Dualtasun osoa**: Puntu kopurua eta zuzen kopurua bera da ($N = 7$), eta egitura aldatu gabe mantentzen da puntu eta zuzen kontzeptuak elkarrekin trukatzean.
+Fanoren planoak geometria proiektiboaren eta intzidentziaren oinarrizko axioma guztiak betetzen ditu:
+
+- **<ConceptLink targetId="axioma-incidencia-1">I-1 axioma</ConceptLink>**: Edozein bi puntu ezberdinetatik zuzen bakar bat igarotzen da.
+- **Ebakidura proiektiboaren axioma**: Edozein bi zuzen ezberdin puntu bakar batean ebakitzen dira (ez dago <ConceptLink targetId="paralelas">zuzen paraleloric</ConceptLink>).
+- **Erregulartasuna**: Zuzen bakoitzak zehazki $3$ puntu ditu eta puntu bakoitzetik zehazki $3$ zuzen igarotzen dira.
+- **Ez-kolinealtasun orokorra**: Lau puntu existitzen dira, non horietako hirukote batek ere ez duen zuzen berbera osatzen.
+
+<Separador />
+
+### Propietate aljebraikoak
+
+- **Bikoiztasun proiektiboa**: Puntuen eta zuzenen rolak elkarri trukatuz gero, lortutako sistema jatorrizko planoaren isomorfoa da.
+- **Automorfismo-taldea**: Bere simetria-taldea $\mathrm{PGL}(3, 2) \cong \mathrm{PSL}(2, 7)$ talde lineala da, $168$ elementukoa, oinarrizkoa talde-teorian eta errore-zuzentzaileen kodifikazioan.

@@ -300,6 +300,13 @@ export const esLanguage: LanguageConfig = {
       seeContent: 'Ver contenido',
       modelPrefix: 'Modelo:',
     },
+    properties: {
+      title: 'Propiedades',
+      seeTheorem: 'Teorema',
+      seeProof: 'Demostración paso a paso',
+      proofInProgress: 'Demostración en preparación',
+      noProperties: 'No se han registrado propiedades adicionales para este concepto.',
+    },
     action: {
       practice: 'Practicar',
     },

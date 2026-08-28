@@ -4,44 +4,57 @@ export const metadata = {
   type: "definicion",
   subtype: "analitico",
   title: "Deribatua",
-  description: "Funtzio matematiko baten berehalako aldaketa-tasaren neurria bere aldagai independentearekiko, gehikuntza-kozientearen mugaren bidez definitua.",
+  description: "Funtzio matematiko baten berehalako aldaketa-tasaren neurria, hazkunde-zatiduraren muga gisa definitua.",
   branch: "26A",
-  hasSimulation: true,
+  hasSimulation: false,
   sources: [
     { title: "Philosophiae Naturalis Principia Mathematica", author: "Isaac Newton", locator: "Book I", role: "primary" },
     { title: "Nova Methodus pro Maximis et Minimis", author: "Gottfried Wilhelm Leibniz", locator: "Acta Eruditorum", role: "primary" },
-    { title: "Cours d'Analyse de l'École Royale Polytechnique", author: "Augustin-Louis Cauchy", locator: "Chapitre 6", role: "primary" }
+    { title: "Cours d'Analyse de l'École Royale Polytechnique", author: "Augustin-Louis Cauchy", locator: "6. Kapitulua", role: "primary" }
   ]
 };
 
-<Capitular letra="D" />eribatua <ConceptLink targetId="calculo-diferencial">kalkulu diferentzialaren</ConceptLink> kontzeptu nagusia da, <ConceptLink targetId="funcion-real">funtzio erreal</ConceptLink> baten <ConceptLink targetId="tasa-cambio-instantanea">berehalako aldatze-tasa</ConceptLink> kuantifikatzen duena bere <ConceptLink targetId="variable-independiente">aldagai independentearekiko</ConceptLink>. Geometrikoki, puntuko <ConceptLink targetId="grafica-funcion">funtzioaren grafikotik</ConceptLink> igarotzen den <ConceptLink targetId="recta-tangente">zuzen ukitzailearen</ConceptLink> <ConceptLink targetId="pendiente">malda</ConceptLink> adierazten du.
+<Capitular letra="D" />eribatua kalkulu diferentzialaren oinarrizko nozioa da, funtzio erreal baten berehalako aldaketa-tasa neurtzen duena aldagai independentearekiko. Ikuspegi geometrikotik, funtzioaren grafikoari emandako puntu batean ukitzaile zaion zuzenaren malda adierazten du.
 
 <Definicion title="">
-  Izan bedi $f: I \to \mathbb{R}$ <ConceptLink targetId="intervalo-abierto">tarte ireki</ConceptLink> batean definitutako funtzioa eta $x_0 \in I$ puntu bat. $f$-ren deribatua $x_0$ puntuan, $f'(x_0)$ gisa denotatua, <ConceptLink targetId="cociente-incremental">diferentzia-kozientearen</ConceptLink> <ConceptLink targetId="limite" isDependency={true}>muga</ConceptLink> gisa definitzen da $h$ gehikuntza zerora hurbiltzen denean:
+  $I \subset \mathbb{R}$ tarte ireki batean definitutako $f: I \to \mathbb{R}$ funtzio erreal bat eta $x_0 \in I$ puntu bat emanda, $f$-ren deribatua $x_0$ puntuan, $f'(x_0)$ bidez adierazia, gehikuntzazko zatiduraren <ConceptLink targetId="limite" isDependency={true}>muga</ConceptLink> gisa definitzen da $h$ gehikuntzak zerorantz jotzen duenean:
   $$
   f'(x_0) = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}
   $$
-  Muga hori existitzen bada eta finitua bada, $f$ funtzioa $x_0$ puntuan <ConceptLink targetId="diferenciabilidad">deribagarria</ConceptLink> dela esaten da.
+  Muga hori existitzen bada eta finitua bada, $f$ funtzioa $x_0$ puntuan diferentziagarria dela esaten da.
 </Definicion>
 
 <Separador />
 
-### Notazio historikoak eta konbentzioak
+### Notazio historikoak eta hitzarmenak
 
-Analisi matematikoaren garapenean zehar hainbat notazio finkatu dira $y = f(x)$ funtzioaren deribatua adierazteko:
+Analisi matematikoaren garapenean zehar hainbat notazio finkatu dira $y = f(x)$ funtzio baten deribaturako:
 
-| Notazioa | Adierazpen matematikoa | Testuingurua / Sortzailea |
+| Notazioa | Adierazpen matematikoa | Testuinguru nagusia |
 |---|---|---|
-| Lagrange | $f'(x), f''(x), \dots, f^{(n)}(x)$ | Kalkulu estandarra eta <ConceptLink targetId="analisis-real">analisi erreala</ConceptLink> |
-| Leibniz | $\frac{df}{dx}, \frac{d^2f}{dx^2}, \dots, \frac{d^n f}{dx^n}$ | Kalkulu infinitesimala eta <ConceptLink targetId="ecuaciones-diferenciales">ekuazio diferentzialak</ConceptLink> |
-| Newton | $\dot{y}, \ddot{y}$ | <ConceptLink targetId="mecanica-clasica">Mekanika klasikoa</ConceptLink> eta denborarekiko deribatuak |
-| Euler | $D f, D^2 f, \dots, D^n f$ | <ConceptLink targetId="operador-diferencial">Eragile diferentzial linealak</ConceptLink> |
+| Lagrange | $f'(x), f''(x), \dots, f^{(n)}(x)$ | Kalkulu estandarra eta analisi erreala |
+| Leibniz | $\frac{df}{dx}, \frac{d^2f}{dx^2}, \dots, \frac{d^n f}{dx^n}$ | Kalkulu infinitesimala eta ekuazio diferentzialak |
+| Newton | $\dot{y}, \ddot{y}$ | Mekanika klasikoa eta denborarekiko deribatuak |
+| Euler | $D f, D^2 f, \dots, D^n f$ | Eragile diferentzial linealak |
 
 <Separador />
 
-### Propietateak
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Oinarriak eta jarraitutasuna">
+    <PropiedadItem id="derivabilidad-implica-continuidad" title="Diferentziagarritasuna eta jarraitutasuna">
+      $f \text{ diferentziagarria } x_0 \text{ puntuan} \implies f \text{ jarraitua } x_0 \text{ puntuan}$.
+    </PropiedadItem>
+    <PropiedadItem id="linealidad-derivada" title="Eragilearen linealtasuna">
+      $(\alpha f + \beta g)' = \alpha f' + \beta g'$ edozein $\alpha, \beta \in \mathbb{R}$ eskalarrentzat.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-- **<ConceptLink targetId="teorema-derivabilidad-implica-continuidad">Deribagarritasuna eta jarraitutasuna</ConceptLink>**: Funtzio bat puntu batean deribagarria bada, nahitaez da <ConceptLink targetId="continuidad">jarraitua</ConceptLink> puntu horretan.
-- **<ConceptLink targetId="teorema-linealidad-derivada">Deribatu-eragilearen linealtasuna</ConceptLink>**: Eragile diferentzialak konbinazio linealak kontserbatzen ditu: $(\alpha f + \beta g)' = \alpha f' + \beta g'$.
-- **<ConceptLink targetId="teorema-regla-producto">Leibnizen produktuaren araua</ConceptLink>**: Bi funtzio deribagarriren produktuaren deribaziorako araua: $(f \cdot g)' = f'g + fg'$.
-- **<ConceptLink targetId="teorema-regla-cadena">Katearen araua</ConceptLink>**: <ConceptLink targetId="composicion-funciones">Funtzio-konposizioaren</ConceptLink> deribazioa: $(f \circ g)'(x) = f'(g(x)) \cdot g'(x)$.
+  <PropiedadesGrupo title="Deribatuen aljebra">
+    <PropiedadItem id="regla-producto" title="Leibnizen biderkadura-erregela">
+      $(f \cdot g)' = f'g + fg'$.
+    </PropiedadItem>
+    <PropiedadItem id="regla-cadena" title="Katearen erregela">
+      $(f \circ g)' = (f' \circ g) \cdot g'$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -122,27 +122,27 @@ export const dictionaryEu: Record<string, Partial<GlossaryEntry>> = {
     category: 'Aljebra' as any,
   },
   propiedad_distributiva: {
-    title: 'Propietate Banatzailea',
-    definition: 'Eragiketa aljebraikoen propietatea non biderketak batuketarekiko banatzen den.',
+    title: 'Banakortasuna (Propietate banatzailea)',
+    definition: 'Eragiketa aljebraikoen propietatea non biderketa batuketarekiko banatzen den.',
     category: 'Aljebra' as any,
   },
   propiedad_conmutativa: {
-    title: 'Propietate Trukakorra',
+    title: 'Kommutatibitatea (Propietate trukakorra)',
     definition: 'Eragikigaien ordenak eragiketaren emaitza aldatzen ez dueneko propietatea.',
     category: 'Aljebra' as any,
   },
   propiedad_asociativa: {
-    title: 'Propietate Elkartzailea',
+    title: 'Asoziatibitatea (Propietate elkartzailea)',
     definition: 'Segidako eragiketetan gaiak taldekatzeko moduak azken emaitza aldatzen ez dueneko propietatea.',
     category: 'Aljebra' as any,
   },
   propiedad_transitiva: {
-    title: 'Berdintzaren Propietate Iragankorra',
+    title: 'Berdintzaren Propietate Trantsitiboa',
     definition: 'Baliokidetasun-erlazioen oinarrizko propietatea: a = b eta b = c badira, orduan a = c.',
     category: 'Aljebra' as any,
   },
   propiedad_cancelativa: {
-    title: 'Ezeztapen Legea',
+    title: 'Ezabatze Legea (Ezeztatze Legea)',
     definition: 'Berdintza baten bi aldeetako gai komunak deuseztatzeko aukera ematen duen arau aljebraikoa.',
     category: 'Aljebra' as any,
   },
@@ -294,7 +294,7 @@ export const dictionaryEu: Record<string, Partial<GlossaryEntry>> = {
     category: 'Analisi Matematikoa' as any,
   },
   imaginary: {
-    title: 'Unitate Imaginarioa ( i )',
+    title: 'Unitate Irudikaria ( i )',
     definition: 'Karratura igotzean -1 ematen duen zenbakia.',
     category: 'Analisi Matematikoa' as any,
   },
@@ -314,8 +314,8 @@ export const dictionaryEu: Record<string, Partial<GlossaryEntry>> = {
     category: 'Analisi Matematikoa' as any,
   },
   primitiva: {
-    title: 'Primitiboa ( F )',
-    definition: 'F(x) funtzioa f(x)-ren primitiboa da F(x)-ren deribatua zehazki f(x) bada.',
+    title: 'Primitiba ( F )',
+    definition: 'F(x) funtzioa f(x)-ren primitiba da F(x)-ren deribatua zehazki f(x) bada.',
     category: 'Analisi Matematikoa' as any,
   },
   pendiente_secante: {

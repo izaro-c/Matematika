@@ -16,32 +16,43 @@ export const metadata = {
 import { Triangulo } from '@content/diagrams/Definiciones/Triangulo';
 export const Simulation = Triangulo;
 
-<Capitular letra="E" />l triángulo es el <ConceptLink targetId="poligono">polígono</ConceptLink> más simple en la <ConceptLink targetId="geometria-euclidiana">geometría plana</ConceptLink> y constituye la base estructural de la <ConceptLink targetId="trigonometria">trigonometría</ConceptLink> y de las <ConceptLink targetId="congruencia">congruencias</ConceptLink>. Formado al conectar tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, delimita una <ConceptLink targetId="region-convexa">región convexa</ConceptLink> acotada en el <ConceptLink targetId="plano">plano</ConceptLink>.
+<Capitular letra="E" />l triángulo es el <ConceptLink targetId="poligono">polígono</ConceptLink> más simple en la geometría plana y constituye la base estructural de la trigonometría y de los criterios de rigidez en el plano. Formado al conectar tres <ConceptLink targetId="punto">puntos</ConceptLink> no colineales, delimita una región convexa acotada en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Definicion title="">
-  Dados tres puntos no colineales <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> y <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> pertenecientes a un plano $\mathcal{P}$, el triángulo <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> es la figura plana definida por la <ConceptLink targetId="union-conjuntos">unión</ConceptLink> de los tres <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> de <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> y <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
+  Dados tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no colineales <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> y <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> pertenecientes a un plano $\mathcal{P}$, el triángulo <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> es la figura plana definida por la unión de los tres <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> de recta <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> y <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
   $$
   \triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}
   $$
-  Los puntos $A, B, C$ son los <ConceptLink targetId="vertice">vértices</ConceptLink> y los segmentos $\overline{AB}, \overline{BC}, \overline{CA}$ son los <ConceptLink targetId="lado">lados</ConceptLink> del triángulo.
+  Los puntos $A, B, C$ son los <ConceptLink targetId="vertice">vértices</ConceptLink> y los segmentos $\overline{AB}, \overline{BC}, \overline{CA}$ son los lados del triángulo.
 </Definicion>
 
 <Separador />
 
 ### Clasificación métrica y angular
 
-La caracterización métrica de los triángulos atiende a las relaciones de <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre sus <ConceptLink targetId="lado">lados</ConceptLink> y a la amplitud de sus <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores:
+La caracterización métrica de los triángulos atiende a las relaciones de <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre sus lados y a la amplitud de sus <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores:
 
 | Clasificación por lados | Condición geométrica | Clasificación por ángulos | Condición angular |
 |---|---|---|---|
-| <ConceptLink targetId="triangulo-equilatero">Equilátero</ConceptLink> | Tres lados congruentes ($\overline{AB} \cong \overline{BC} \cong \overline{CA}$) | <ConceptLink targetId="triangulo-acutangulo">Acutángulo</ConceptLink> | Tres ángulos <ConceptLink targetId="angulo-agudo">agudos</ConceptLink> |
-| <ConceptLink targetId="triangulo-isosceles">Isósceles</ConceptLink> | Al menos dos lados congruentes | <ConceptLink targetId="triangulo-rectangulo">Rectángulo</ConceptLink> | Un ángulo <ConceptLink targetId="angulo-recto">recto</ConceptLink> |
-| <ConceptLink targetId="triangulo-escaleno">Escaleno</ConceptLink> | Ningún par de lados congruentes | <ConceptLink targetId="triangulo-obtusangulo">Obtusángulo</ConceptLink> | Un ángulo <ConceptLink targetId="angulo-obtuso">obtuso</ConceptLink> |
+| Equilátero | $\overline{AB} \cong \overline{BC} \cong \overline{CA}$ | Acutángulo | Tres ángulos <ConceptLink targetId="angulo-agudo">agudos</ConceptLink> |
+| Isósceles | Al menos dos lados congruentes | <ConceptLink targetId="triangulo-rectangulo">Rectángulo</ConceptLink> | Un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> |
+| Escaleno | Ningún par de lados congruentes | Obtusángulo | Un <ConceptLink targetId="angulo-obtuso">ángulo obtuso</ConceptLink> |
 
 <Separador />
 
-### Propiedades
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Métricas y angulares">
+    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Suma angular">
+      $\alpha + \beta + \gamma = 180^\circ$ ($\pi\text{ rad}$) en $\mathcal{P}$.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-triangulo-isosceles" title="Teorema del triángulo isósceles">
+      En un triángulo isósceles, los ángulos opuestos a los lados congruentes son congruentes.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Suma angular</ConceptLink>**: En la geometría euclidiana, la suma de los tres ángulos interiores de cualquier triángulo es siempre igual a $180^\circ$.
-- **<ConceptLink targetId="teorema-desigualdad-triangular">Desigualdad triangular</ConceptLink>**: La longitud de cada lado es estrictamente menor que la suma de las longitudes de los otros dos lados.
-- **<ConceptLink targetId="teorema-congruencia-ala">Criterios de congruencia</ConceptLink>**: La rigidez estructural del triángulo permite determinar su igualdad mediante los criterios LAL, ALA y LLL.
+  <PropiedadesGrupo title="Rigidez y congruencia">
+    <PropiedadItem id="teorema-congruencia-ala" title="Criterios de congruencia">
+      $\triangle ABC \cong \triangle A'B'C' \iff \text{LAL} \lor \text{ALA} \lor \text{LLL}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

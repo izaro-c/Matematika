@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-orden-2",
   lang: "en",
   type: "axioma",
-  title: "Axiom II.2 (Extension of a Segment)",
-  description: "Given two distinct points A and C, there exists at least one point B on the line such that C lies between A and B.",
+  title: "Axiom II.2 (Indefinite Extension of the Line)",
+  description: "Given any two distinct points A and B, there always exists at least one point C such that B lies between A and C.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "orden",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
@@ -14,12 +16,12 @@ export const metadata = {
 import { Order2 } from '@content/diagrams/Axiomas/Order2';
 export const Simulation = Order2;
 
-<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto">points</ConceptLink> $A$ and $C$, <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>'s second <ConceptLink targetId="orden">order axiom</ConceptLink> asserts the existence of at least one point $B$ on their supporting <ConceptLink targetId="recta">line</ConceptLink> such that $C$ lies between $A$ and $B$. This postulate establishes the infinitude of lines and the indefinite extendability of any <ConceptLink targetId="segmento">segment</ConceptLink>.
+<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A$ and $B$, the second order axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> guarantees that the line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ can always be extended beyond $B$, locating a new point $C$ such that $B$ occupies an intermediate position ($A\text{-}B\text{-}C$).
 
 <Definicion title="Formal statement">
-  For every pair of distinct <ConceptLink targetId="punto">points</ConceptLink> $A, C \in \mathcal{S}$ with $A \neq C$, there exists at least one point $B \in \mathcal{S}$ on line $\overleftrightarrow{AC}$ such that $C$ lies between $A$ and $B$:
+  For any two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B \in \mathcal{S}$, there exists at least one point $C \in \mathcal{S}$ such that $B$ lies <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $C$:
   $$
-  \forall A, C \in \mathcal{S} \ \bigl(A \neq C \implies \exists B \in \overleftrightarrow{AC} \ (A\text{-}C\text{-}B)\bigr)
+  \forall A, B \in \mathcal{S} \ \bigl(A \neq B \implies \exists C \in \mathcal{S} \ (A\text{-}B\text{-}C)\bigr)
   $$
 </Definicion>
 
@@ -27,18 +29,18 @@ export const Simulation = Order2;
 
 ### Visual representation and interaction
 
-In the interactive simulation, starting from initial points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pC" color="carbon">$C$</VisualBind>, the line extends to position point <VisualBind element="pB" color="terracota">$B$</VisualBind> such that $A\text{-}C\text{-}B$. Dragging endpoint $C$ dynamically maintains point $B$'s external position respecting the betweenness of $C$.
+In the interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="carbon">$B$</VisualBind> delimit the initial segment. Rectilinear extension along line <VisualBind element="lineDC" color="carbon">$l$</VisualBind> produces the extended point <VisualBind element="pC" color="terracota">$C$</VisualBind>, confirming that $B$ lies strictly inside the open interval determined by $A$ and $C$.
 
 <Separador />
 
 ### Geometric significance and scope
 
-Prevents lines or segments from "closing" into finite loops (like circles) or having impenetrable terminal barriers. Enforces the unbounded longitudinal nature of lines in <ConceptLink targetId="geometria-absoluta">absolute geometry</ConceptLink>.
+This axiom ensures that geometric lines are unbounded in both directions and possess no intrinsic endpoints or borders. Together with incidence axioms, it proves that every line contains infinitely many ordered points without spatial finiteness.
 
 <Separador />
 
 ### Properties
 
-- **Line infinitude:** Guarantees the presence of infinitely many points on any line.
-- **Indefinite extension:** Ensures that any <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AC}$ can be extended past either of its endpoints.
-- **No finite boundaries:** Prohibits linear space from having terminal edges or closed finite-length loops.
+- **Linear unboundedness:** No line terminates or possesses an extreme boundary point.
+- **Segment extendibility:** Enables extending any rectilinear segment without limitation in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+- **Infinitude of points:** Constitutes the primary principle excluding finite geometric systems in the presence of order relations.

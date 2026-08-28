@@ -3,45 +3,52 @@ export const metadata = {
   lang: "es",
   type: "metodo",
   subtype: "demostracion",
-  title: "Método de inducción matemática",
-  description: "Técnica de demostración para proposiciones parametrizadas sobre los números naturales basada en el principio de inducción completa.",
-  branch: "51M",
+  title: "Inducción matemática",
+  description: "Método de demostración para proposiciones parametrizadas sobre los números naturales mediante un caso base y un paso inductivo.",
+  branch: "03B",
+  difficulty: "intermedio",
   hasSimulation: true
 };
 
 import { InduccionSimulation } from '@content/diagrams/Metodos/InduccionSimulation';
 export const Simulation = InduccionSimulation;
 
-<Capitular letra="E" />l método de inducción matemática es la técnica deductiva fundamental para demostrar proposiciones $P(n)$ cuya validez se extiende sobre la totalidad de los <ConceptLink targetId="numero-natural">números naturales</ConceptLink> $\mathbb{N}$. Se apoya directamente en la estructura deductiva de los <ConceptLink targetId="axioma-peano">axiomas de Peano</ConceptLink>, garantizando la validez universal mediante una base inicial y un paso de propagación hereditaria.
+<Capitular letra="L" />a inducción matemática es un método fundamental de demostración deductiva utilizado para establecer la veracidad universal de una familia infinita de proposiciones $\{P(n)\}_{n \in \mathbb{N}}$ indexadas sobre el conjunto de los números naturales $\mathbb{N}$. Se fundamenta axiomáticamente en el principio del buen orden de $\mathbb{N}$ y en los axiomas de Peano.
 
 <Separador />
 
-### Estructura formal
+### Estructura de la demostración inductiva
 
-Para verificar la validez de $\forall n \in \mathbb{N}, P(n)$, la demostración requiere completar rigurosamente dos etapas consecutivas:
+Una demostración por inducción consta rigurosamente de dos etapas canónicas indispensables:
 
-1. **Paso base**: Se demuestra que la propiedad es verdadera para el elemento inicial $n_0$ (típicamente $n_0 = 0$ o $n_0 = 1$):
-   $$ P(n_0) \text{ es verdadero} $$
-2. **Paso inductivo**: Se asume formalmente la veracidad de la proposición para un entero arbitrario $k \ge n_0$ (la **<ConceptLink targetId="hipotesis">hipótesis inductiva</ConceptLink>** $P(k)$) y se demuestra que de ella se deduce necesariamente la validez para el sucesor $k+1$ (la **<ConceptLink targetId="tesis">tesis inductiva</ConceptLink>** $P(k+1)$):
-   $$ \forall k \ge n_0, (P(k) \implies P(k+1)) $$
+1. **Caso base**: Se demuestra directamente que la proposición se cumple para el primer elemento del conjunto (habitualmente $n = 1$ o $n = 0$):
+   <Formula>
+     $$ P(1) \text{ es verdadero} $$
+   </Formula>
 
-Al verificar ambos pasos, el principio del buen ordenamiento en $\mathbb{N}$ concluye la validez universal:
+2. **Paso inductivo**: Se asume como *hipótesis de inducción* que la propiedad se verifica para un entero arbitrario $k \ge 1$ ($P(k)$) y, a partir de ella, se demuestra que necesariamente se verifica para el sucesor $k + 1$:
+   <Formula>
+     $$ \forall k \in \mathbb{N}, \quad P(k) \implies P(k+1) $$
+   </Formula>
+
+Al verificarse ambas condiciones, el principio de inducción garantiza formalmente la validez universal:
 
 <Formula>
-  $$ (P(n_0) \land \forall k \ge n_0 (P(k) \implies P(k+1))) \implies \forall n \ge n_0 P(n) $$
+  $$ [P(1) \land (\forall k \ge 1, \, P(k) \implies P(k+1))] \implies \forall n \in \mathbb{N}, \, P(n) $$
 </Formula>
 
 <Separador />
 
-### Ejemplos clásicos
+### Aplicaciones esenciales
 
-- **Suma de los primeros $n$ naturales**: Demostrar que $\sum_{i=1}^n i = \frac{n(n+1)}{2}$. El paso base verifica $1 = \frac{1(2)}{2}$, mientras que el paso inductivo añade $(k+1)$ a ambos lados de la hipótesis inductiva para concluir la fórmula en $k+1$.
-- **Número de diagonales de un polígono**: Para un <ConceptLink targetId="poligono">polígono</ConceptLink> de $n$ vértices, el número de diagonales es $D(n) = \frac{n(n-3)}{2}$ para todo $n \ge 3$.
-- **Desigualdad de Bernoulli**: Para todo $x > -1$ y $n \in \mathbb{N}$, se verifica $(1+x)^n \ge 1 + nx$.
+- **Sumas finitas y progresiones**: Demostración de fórmulas cerradas como la suma de los primeros $n$ números naturales:
+  $$ \sum_{i=1}^n i = \frac{n(n+1)}{2} $$
+- **Geometría combinatoria**: Demostración de que la suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de un polígono simple de $n$ lados es $(n-2) \times 180^\circ$, generalizando el <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema para triángulos</ConceptLink> mediante triangulaciones sucesivas.
+- **Desigualdades y divisibilidad**: Validación de acotaciones analíticas como la desigualdad de Bernoulli $(1+x)^n \ge 1+nx$ para $x > -1$.
 
 <Separador />
 
-### Variantes y propiedades
+### Variantes formales
 
-- **Inducción fuerte (completa)**: La hipótesis inductiva presupone la veracidad de $P(m)$ para todos los enteros $n_0 \le m \le k$ para deducir $P(k+1)$.
-- **Paso base múltiple**: Esencial cuando la recurrencia del sistema requiere dos o más valores iniciales independientes (ej. la secuencia de Fibonacci).
+- **Inducción fuerte (completa)**: La hipótesis de inducción asume que $P(m)$ es verdadero para todos los enteros $1 \le m \le k$ para deducir $P(k+1)$.
+- **Inducción estructural y transfinita**: Extensión del principio a estructuras recursivas de datos y a ordinales transfinitos en teoría axiomática de conjuntos.

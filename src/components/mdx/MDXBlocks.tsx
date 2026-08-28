@@ -28,6 +28,7 @@ import { GlossaryLink } from '@/components/ui/GlossaryLink';
 import StepNavigator from '@/components/ui/StepNavigator';
 import { UI } from '@/design';
 import { VisualBind, InteractiveElement } from '@/components/ui/VisualBind';
+import { SeccionPropiedades, PropiedadesGrupo, PropiedadItem } from "@/components/content/PropertiesSection";
 import { Link } from 'wouter';
 
 import { useI18n } from '@/i18n';
@@ -298,6 +299,9 @@ export const MDXComponents = {
   EquationRow,
   InteractiveElement,
   StepNavigator,
+  SeccionPropiedades,
+  PropiedadesGrupo,
+  PropiedadItem,
   a: MDXAnchor,
   h3: (props: React.ComponentProps<'h3'>) => <h3 className="page-accent-text text-3xl font-serif mt-12 mb-6 pb-2 border-b border-carbon/10 italic" {...props} />,
   h4: (props: React.ComponentProps<'h4'>) => <h4 className="text-xl font-serif text-carbon mt-8 mb-4 font-bold" {...props} />,

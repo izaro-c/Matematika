@@ -2,7 +2,7 @@ export const metadata = {
   id: "modelo-cartesiano",
   lang: "en",
   type: "modelo",
-  title: "Cartesian plane",
+  title: "Cartesian Plane",
   description: "The canonical analytic model for two-dimensional Euclidean geometry based on ordered pairs of real numbers.",
   branch: "51M",
   satisfies: ["sistema-euclidiano", "sistema-absoluto"],
@@ -13,33 +13,33 @@ export const metadata = {
 import { ModeloCartesiano } from '@content/diagrams/Models/ModeloCartesiano';
 export const Simulation = ModeloCartesiano;
 
-<Capitular letra="T" />he Cartesian plane $\mathbb{R}^2$ constitutes the standard analytic model for two-dimensional <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>. By translates geometric objects into algebraic structures of ordered pairs over the field of <ConceptLink targetId="numero-real">real numbers</ConceptLink>, it grounds the consistency of synthetic geometry in mathematical analysis.
+<Capitular letra="T" />he Cartesian plane $\mathbb{R}^2$ constitutes the canonical analytic model of two-dimensional Euclidean geometry. By rigorously mapping synthetic geometric entities into algebraic structures of ordered pairs over the field of real numbers $\mathbb{R}$, it grounds the consistency of synthetic geometry in mathematical analysis and arithmetic.
 
 <Separador />
 
-### Model definition
+### Model Definition
 
-In the two-dimensional space $\mathbb{R}^2 = \{(x, y) \mid x, y \in \mathbb{R}\}$, synthetic geometric primitives are interpreted using set theory and linear algebra:
+In the two-dimensional space $\mathbb{R}^2 = \{(x, y) \mid x, y \in \mathbb{R}\}$, synthetic geometric primitives are interpreted through linear algebra and set theory:
 
-- **<ConceptLink targetId="punto">Points</ConceptLink>**: Individual elements <VisualBind element="A" color="terracota">$A(x_A, y_A)$</VisualBind>, <VisualBind element="B" color="musgo">$B(x_B, y_B)$</VisualBind>, and <VisualBind element="P" color="ocre">$P(x_P, y_P)$</VisualBind> in $\mathbb{R}^2$.
-- **<ConceptLink targetId="recta">Lines</ConceptLink>**: Sets of points satisfying a linear equation of the form $ax + by + c = 0$, with $(a, b) \neq (0, 0)$. Line <VisualBind element="lineAB" color="musgo">$l$</VisualBind> contains points $A$ and $B$, while the <VisualBind element="parallelP" color="pavo">parallel line $l'$</VisualBind> passes through $P$.
-- **<ConceptLink targetId="incidencia">Incidence</ConceptLink>**: A point $A$ lies on a line $l$ if and only if its coordinates satisfy the linear equation of $l$.
-- **Euclidean <ConceptLink targetId="distancia">distance</ConceptLink>**: For any two points $A$ and $B$, the Euclidean metric is given by the Pythagorean distance formula:
+- **<ConceptLink targetId="punto">Points</ConceptLink>**: Individual elements represented by their coordinates <VisualBind element="A" color="terracota">$A(x_A, y_A)$</VisualBind>, <VisualBind element="B" color="terracota">$B(x_B, y_B)$</VisualBind>, and <VisualBind element="P" color="ocre">$P(x_P, y_P)$</VisualBind> in $\mathbb{R}^2$.
+- **<ConceptLink targetId="recta">Lines</ConceptLink>**: Subsets of points satisfying a linear equation of the form $ax + by + c = 0$, with $(a, b) \neq (0, 0)$. The <VisualBind element="lineAB" color="musgo">line $l$</VisualBind> passes through points $A$ and $B$, while the <VisualBind element="parallelP" color="canela">parallel line $l'$</VisualBind> passes through the exterior point $P$.
+- **Incidence**: A point $A(x_A, y_A)$ is incident with a line $l: ax + by + c = 0$ if and only if $a x_A + b y_A + c = 0$.
+- **Euclidean Distance**: For any two points $A$ and $B$, the Euclidean metric is given by the <ConceptLink targetId="teorema-pitagoras">Pythagorean</ConceptLink> formula:
   $$ d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2} $$
 
 <Separador />
 
-### Axiom verification
+### Verification of Axioms
 
-The Cartesian plane satisfies the complete <ConceptLink targetId="sistema-euclidiano">Euclidean axiomatic system</ConceptLink>:
+The Cartesian plane satisfies the entirety of the <ConceptLink targetId="sistema-euclidiano">Euclidean axiomatic system</ConceptLink>:
 
-- **<ConceptLink targetId="incidencia">Incidence</ConceptLink> axioms**: For any two distinct points $A$ and $B$, there exists a unique linear equation (up to a non-zero scalar multiple) satisfied by both.
-- **<ConceptLink targetId="orden">Order</ConceptLink> axioms**: The <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation is metrically verified via the equality $d(A, B) + d(B, C) = d(A, C)$.
-- **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euclidean parallel axiom</ConceptLink>**: Given a line $l$ and an external point $P \notin l$, there exists a unique <ConceptLink targetId="paralelismo">parallel line</ConceptLink> $l'$ containing $P$ (lines sharing the identical algebraic slope $m = -a/b$).
+- **<ConceptLink targetId="axioma-incidencia-1">Incidence Axiom I-1</ConceptLink>**: Given any two distinct points $A(x_A, y_A)$ and $B(x_B, y_B)$, there exists a unique line defined by $\det \begin{pmatrix} x & y & 1 \\ x_A & y_A & 1 \\ x_B & y_B & 1 \end{pmatrix} = 0$.
+- **Order Axioms**: The <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation ($B \text{ lies between } A \text{ and } C$) is verified metrically via the identity $d(A, B) + d(B, C) = d(A, C)$ with $A \neq B \neq C$.
+- **<ConceptLink targetId="axioma-paralelas-euclides">Euclid's Parallel Axiom</ConceptLink>**: Given a line $l: ax + by + c = 0$ and an external point $P(x_P, y_P) \notin l$, there exists a unique <ConceptLink targetId="paralelas">parallel line</ConceptLink> $l': ax + by - (ax_P + by_P) = 0$ passing through $P$.
 
 <Separador />
 
-### Properties
+### Fundamental Properties
 
-- **Completeness and continuity**: Inherits topological completeness directly from the continuous real field $\mathbb{R}$.
-- **Isometric invariance**: Translations, rotations, and reflections preserve the metric $d(A, B)$ and the structure of <ConceptLink targetId="congruencia">congruence</ConceptLink>.
+- **Metric Completeness**: Inherits the topological completeness and continuum order of the real field $\mathbb{R}$.
+- **Isometric Invariance**: Rigid transformations (translations, rotations, and reflections) preserve distances, <ConceptLink targetId="angulo">angles</ConceptLink>, and <ConceptLink targetId="congruencia">congruence</ConceptLink> relations between <ConceptLink targetId="triangulo">triangles</ConceptLink>.

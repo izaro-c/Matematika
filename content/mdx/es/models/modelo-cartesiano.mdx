@@ -13,33 +13,33 @@ export const metadata = {
 import { ModeloCartesiano } from '@content/diagrams/Models/ModeloCartesiano';
 export const Simulation = ModeloCartesiano;
 
-<Capitular letra="E" />l plano cartesiano $\mathbb{R}^2$ constituye el modelo analítico estándar para la <ConceptLink targetId="geometria-euclidiana">geometría euclídea</ConceptLink> bidimensional. Al traducir rigurosamente los objetos geométricos a estructuras algebraicas de pares ordenados sobre el cuerpo de los <ConceptLink targetId="numero-real">números reales</ConceptLink>, fundamenta la consistencia de la geometría sintética en el análisis matemático.
+<Capitular letra="E" />l plano cartesiano $\mathbb{R}^2$ constituye el modelo analítico canónico de la geometría euclídea bidimensional. Al traducir rigurosamente las nociones geométricas sintéticas a estructuras algebraicas de pares ordenados sobre el cuerpo de los números reales $\mathbb{R}$, fundamenta la consistencia de la geometría sintética en la aritmética y el análisis matemático.
 
 <Separador />
 
 ### Definición del modelo
 
-En el espacio bidimensional $\mathbb{R}^2 = \{(x, y) \mid x, y \in \mathbb{R}\}$, los elementos sintéticos de la geometría se interpretan mediante la teoría de conjuntos y el álgebra lineal:
+En el espacio bidimensional $\mathbb{R}^2 = \{(x, y) \mid x, y \in \mathbb{R}\}$, los elementos sintéticos de la geometría se interpretan formalmente mediante el álgebra lineal y la teoría de conjuntos:
 
-- **<ConceptLink targetId="punto">Puntos</ConceptLink>**: Son elementos individuales <VisualBind element="A" color="terracota">$A(x_A, y_A)$</VisualBind>, <VisualBind element="B" color="musgo">$B(x_B, y_B)$</VisualBind> y <VisualBind element="P" color="ocre">$P(x_P, y_P)$</VisualBind> en $\mathbb{R}^2$.
-- **<ConceptLink targetId="recta">Rectas</ConceptLink>**: Son conjuntos de puntos que satisfacen una ecuación lineal de la forma $ax + by + c = 0$, con $(a, b) \neq (0, 0)$. La <VisualBind element="lineAB" color="musgo">recta $l$</VisualBind> contiene a los puntos $A$ y $B$, mientras que la <VisualBind element="parallelP" color="pavo">recta paralela $l'$</VisualBind> pasa por $P$.
-- **<ConceptLink targetId="incidencia">Incidencia</ConceptLink>**: Un punto $A$ incide en una recta $l$ si sus coordenadas satisfacen la ecuación lineal de $l$.
-- **<ConceptLink targetId="distancia">Distancia euclídea</ConceptLink>**: Para cualesquiera dos puntos $A$ y $B$, la métrica euclídea viene dada por la fórmula pitagórica:
+- **<ConceptLink targetId="punto">Puntos</ConceptLink>**: Son elementos individuales representados por sus coordenadas cartesianas <VisualBind element="A" color="terracota">$A(x_A, y_A)$</VisualBind>, <VisualBind element="B" color="terracota">$B(x_B, y_B)$</VisualBind> y <VisualBind element="P" color="ocre">$P(x_P, y_P)$</VisualBind> en $\mathbb{R}^2$.
+- **<ConceptLink targetId="recta">Rectas</ConceptLink>**: Son subconjuntos de puntos que satisfacen una ecuación lineal de la forma $ax + by + c = 0$, con $(a, b) \neq (0, 0)$. La <VisualBind element="lineAB" color="musgo">recta $l$</VisualBind> contiene a los puntos $A$ y $B$, mientras que la <VisualBind element="parallelP" color="canela">recta paralela $l'$</VisualBind> pasa por el punto exterior $P$.
+- **Incidencia**: Un punto $A(x_A, y_A)$ incide en una recta $l: ax + by + c = 0$ si y solo si $a x_A + b y_A + c = 0$.
+- **Distancia euclídea**: Para cualesquiera dos puntos $A$ y $B$, la métrica euclídea viene dada por la formulación de <ConceptLink targetId="teorema-pitagoras">Pitágoras</ConceptLink>:
   $$ d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2} $$
 
 <Separador />
 
 ### Verificación de axiomas
 
-El plano cartesiano satisface la totalidad del <ConceptLink targetId="sistema-euclidiano">sistema axiomático euclidiano</ConceptLink>:
+El plano cartesiano verifica la totalidad del <ConceptLink targetId="sistema-euclidiano">sistema axiomático euclidiano</ConceptLink>:
 
-- **Axiomas de <ConceptLink targetId="incidencia">incidencia</ConceptLink>**: Dados dos puntos distintos $A$ y $B$, existe una única ecuación lineal (salvo factor escalar) que ambos satisfacen.
-- **Axiomas de <ConceptLink targetId="orden">orden</ConceptLink>**: La relación <ConceptLink targetId="estar-entre">estar entre</ConceptLink> se verifica métricamente mediante la igualdad $d(A, B) + d(B, C) = d(A, C)$.
-- **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axioma de las paralelas de Euclides</ConceptLink>**: Dada una recta $l$ y un punto exterior $P \notin l$, existe una única <ConceptLink targetId="paralelismo">recta paralela</ConceptLink> $l'$ que contiene a $P$ (rectas con idéntica pendiente $m = -a/b$).
+- **<ConceptLink targetId="axioma-incidencia-1">Axioma de incidencia I-1</ConceptLink>**: Dados dos puntos distintos $A(x_A, y_A)$ y $B(x_B, y_B)$, existe una única recta determinada por el determinante $\det \begin{pmatrix} x & y & 1 \\ x_A & y_A & 1 \\ x_B & y_B & 1 \end{pmatrix} = 0$.
+- **Axiomas de orden**: La relación <ConceptLink targetId="estar-entre">estar entre</ConceptLink> $B \text{ está entre } A \text{ y } C$ se verifica métricamente mediante la igualdad $d(A, B) + d(B, C) = d(A, C)$ con $A \neq B \neq C$.
+- **<ConceptLink targetId="axioma-paralelas-euclides">Axioma de las paralelas de Euclides</ConceptLink>**: Dada una recta $l: ax + by + c = 0$ y un punto exterior $P(x_P, y_P) \notin l$, existe una única <ConceptLink targetId="paralelas">recta paralela</ConceptLink> $l': ax + by - (ax_P + by_P) = 0$ que pasa por $P$.
 
 <Separador />
 
-### Propiedades
+### Propiedades fundamentales
 
-- **Completitud y continuidad**: Hereda la completitud topológica del cuerpo continuo $\mathbb{R}$.
-- **Invariancia isométrica**: Las traslaciones, rotaciones y reflexiones preservan la métrica $d(A, B)$ y la estructura de <ConceptLink targetId="congruencia">congruencia</ConceptLink>.
+- **Completitud métrica**: Hereda la completitud topológica y el orden continuo del cuerpo real $\mathbb{R}$.
+- **Invariancia isométrica**: Las transformaciones rígidas (traslaciones, rotaciones y reflexiones) preservan las distancias, los <ConceptLink targetId="angulo">ángulos</ConceptLink> y las relaciones de <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre <ConceptLink targetId="triangulo">triángulos</ConceptLink>.

@@ -1,0 +1,58 @@
+export const metadata = {
+  id: "semirrecta",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Semirrecta",
+  description: "Parte de una recta formada por un punto de origen y todos los puntos que se extienden en un único sentido.",
+  branch: "51M",
+  hasSimulation: true,
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Nociones", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+  ]
+};
+
+import { Semirrecta } from '@content/diagrams/Definiciones/Semirrecta';
+export const Simulation = Semirrecta;
+
+<Capitular letra="L" />a semirrecta o rayo es la porción unidimensional continua de una <ConceptLink targetId="recta">recta</ConceptLink> que tiene un origen fijo y se extiende ilimitadamente en un solo sentido. Constituye el elemento constructivo esencial para definir los <ConceptLink targetId="angulo">ángulos</ConceptLink> y orientar las direcciones en el <ConceptLink targetId="plano">plano</ConceptLink>.
+
+<Definicion title="">
+  Dado un punto origen <VisualBind element="pA" color="musgo">$O$</VisualBind> y un punto distinto <VisualBind element="pB" color="musgo">$A$</VisualBind> en una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> <VisualBind element="lineOA" color="carbon">$\ell$</VisualBind>, la semirrecta cerrada <VisualBind element="rayOA" color="musgo">$\overrightarrow{OA}$</VisualBind> es el conjunto formado por el <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $O$, el punto $A$ y todos los puntos $P \in \ell$ tales que $O$ no está <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $P$:
+  $$
+  \overrightarrow{OA} = \{ P \in \ell \mid P = O \lor \neg(A * O * P) \}
+  $$
+  En términos de combinaciones afines sobre el espacio vectorial $\mathbb{R}^n$:
+  $$
+  \overrightarrow{OA} = \{ P \in \mathbb{R}^n \mid P = O + t(A - O), \, t \ge 0 \}
+  $$
+</Definicion>
+
+<Separador />
+
+### Geometría sintética
+
+En el marco axiomático de Hilbert:
+- **Separación de la recta**: Todo punto $O \in \ell$ divide a la recta $\ell$ en dos semirrectas disjuntas y opuestas con origen en $O$.
+- **Semirrectas opuestas**: Si $A * O * B$, las semirrectas $\overrightarrow{OA}$ y $\overrightarrow{OB}$ son opuestas y satisfacen $\overrightarrow{OA} \cap \overrightarrow{OB} = \{O\}$ y $\overrightarrow{OA} \cup \overrightarrow{OB} = \ell$.
+
+### Geometría analítica
+
+Dada una dirección unitaria $\vec{u} = \frac{A - O}{\|A - O\|}$, la semirrecta se parametriza como:
+$$
+\vec{r}(t) = \vec{x}_O + t\vec{u}, \quad t \in [0, +\infty)
+$$
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Partición y orientación lineal">
+    <PropiedadItem id="axioma-orden-2" title="Partición de la recta">
+      Un punto sobre una recta divide a los demás puntos en exactamente dos clases de equivalencia convexas.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-orden-3" title="Convexidad de la semirrecta">
+      Toda semirrecta $\overrightarrow{OA}$ es un conjunto conexo y convexo.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -2,9 +2,11 @@ export const metadata = {
   id: "axioma-orden-3",
   lang: "es",
   type: "axioma",
-  title: "Axioma II.3 (Tricotomía del orden lineal)",
-  description: "De tres puntos distintos pertenecientes a una misma recta, uno y solo uno de ellos está entre los otros dos.",
+  title: "Axioma II.3 (Exclusividad de la entreidad lineal)",
+  description: "De tres puntos distintos cualesquiera situados en una misma recta, a lo sumo uno está entre los otros dos.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "orden",
   hasSimulation: true,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
@@ -14,31 +16,32 @@ export const metadata = {
 import { Order3 } from '@content/diagrams/Axiomas/Order3';
 export const Simulation = Order3;
 
-<Capitular letra="D" />e tres <ConceptLink targetId="punto">puntos</ConceptLink> distintos situados sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>, el tercer <ConceptLink targetId="axioma">axioma</ConceptLink> de <ConceptLink targetId="orden">orden</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece la ley de tricotomía: exactamente uno y solo uno de dichos puntos se encuentra entre los otros dos.
+<Capitular letra="D" />e tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos situados sobre una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink>, el tercer axioma de orden de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece que no más de uno puede encontrarse <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> los otros dos. Esta condición previene configuraciones circulares o cíclicas en la ordenación de la recta geométrica.
 
 <Definicion title="Enunciado formal">
-  Para cualesquiera tres <ConceptLink targetId="punto">puntos</ConceptLink> distintos $A, B, C \in l$ pertenecientes a la misma <ConceptLink targetId="recta">recta</ConceptLink> $l \in \mathcal{L}$, se verifica exactamente una de las siguientes tres relaciones de entreidad de forma exclusiva:
+  Dados tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos $A, B, C$ pertenecientes a una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$, no puede cumplirse más de una relación de entreidad simultáneamente:
   $$
-  \forall A, B, C \in l \ (A \neq B \land B \neq C \land A \neq C) \implies (A\text{-}B\text{-}C \veebar B\text{-}C\text{-}A \veebar C\text{-}A\text{-}B)
+  \forall A, B, C \in l \ \bigl(A\text{-}B\text{-}C \implies (\neg B\text{-}A\text{-}C \land \neg A\text{-}C\text{-}B)\bigr)
   $$
+  En conjunción con el resto de axiomas de orden, exactamente uno de los tres puntos está entre los otros dos.
 </Definicion>
 
 <Separador />
 
 ### Representación visual e interacción
 
-En la simulación interactiva, se presentan tres puntos colineales <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind>. Al desplazar alternadamente los puntos sobre la recta soporte, el indicador de entreidad resalta en todo momento de manera unívoca cuál de los tres puntos ocupa la posición intermedia.
+En la simulación interactiva, los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> se ubican sobre la recta <VisualBind element="lineDE" color="carbon">$l$</VisualBind>. Al reordenar o arrastrar cualquiera de los puntos a lo largo de la recta, la relación de entreidad muta de manera exclusiva, garantizando que una única posición ocupa el lugar central en cada instante.
 
 <Separador />
 
 ### Significado geométrico y alcance
 
-Este axioma garantiza que el orden lineal es total y no ambiguo. Impide configuraciones paradójicas donde dos puntos distintos pudieran ser simultáneamente intermedios respecto a la misma pareja en la <ConceptLink targetId="geometria-absoluta">geometria absoluta</ConceptLink>.
+Este axioma garantiza la linealidad estricta y la naturaleza abierta de las rectas geométricas. Impide que la relación de orden se cierre sobre sí misma como en una circunferencia (ordenación cíclica proyectiva), asegurando una estructura de orden total estricto en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
 
 <Separador />
 
 ### Propiedades
 
-- **Exclusividad estricta:** No pueden darse dos relaciones de entreidad simultáneas entre los mismos tres puntos.
-- **Exhaustividad lineal:** En toda terna colineal de puntos distintos existe de forma obligatoria una posición intermedia.
-- **Coordenadas implícitas:** Induce una estructura de ordenamiento lineal consistente con la recta real $\mathbb{R}$.
+- **Exclusión mutua:** La veracidad de $A\text{-}B\text{-}C$ refuta automáticamente $B\text{-}A\text{-}C$ y $A\text{-}C\text{-}B$.
+- **Orden total lineal:** Permite ordenar cualquier conjunto finito de puntos colineales en una secuencia unívoca $A_1\text{-}A_2\text{-}\dots\text{-}A_n$.
+- **No ciclicidad:** Prohíbe que una recta sintética se cierre topológicamente sobre sí misma sin la intervención de puntos del infinito.

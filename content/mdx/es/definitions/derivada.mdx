@@ -6,7 +6,7 @@ export const metadata = {
   title: "Derivada",
   description: "Medida del cambio instantáneo de una función matemática respecto a su variable independiente, definida como el límite del cociente incremental.",
   branch: "26A",
-  hasSimulation: true,
+  hasSimulation: false,
   sources: [
     { title: "Philosophiae Naturalis Principia Mathematica", author: "Isaac Newton", locator: "Book I", role: "primary" },
     { title: "Nova Methodus pro Maximis et Minimis", author: "Gottfried Wilhelm Leibniz", locator: "Acta Eruditorum", role: "primary" },
@@ -14,14 +14,14 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="L" />a derivada es la noción central del <ConceptLink targetId="calculo-diferencial">cálculo diferencial</ConceptLink> que cuantifica la <ConceptLink targetId="tasa-cambio-instantanea">tasa de cambio instantánea</ConceptLink> de una <ConceptLink targetId="funcion-real">función real</ConceptLink> respecto a su <ConceptLink targetId="variable-independiente">variable independiente</ConceptLink>. Geométricamente, representa la <ConceptLink targetId="pendiente">pendiente</ConceptLink> de la <ConceptLink targetId="recta-tangente">recta tangente</ConceptLink> a la <ConceptLink targetId="grafica-funcion">gráfica de la función</ConceptLink> en un punto.
+<Capitular letra="L" />a derivada es la noción central del cálculo diferencial que cuantifica la tasa de cambio instantánea de una función real respecto a su variable independiente. Geométricamente, representa la pendiente de la recta tangente a la gráfica de la función en un punto dado.
 
 <Definicion title="">
-  Dada una función $f: I \to \mathbb{R}$ definida en un <ConceptLink targetId="intervalo-abierto">intervalo abierto</ConceptLink> $I \subset \mathbb{R}$ y un punto $x_0 \in I$, la derivada de $f$ en $x_0$, denotada por $f'(x_0)$, se define como el <ConceptLink targetId="limite" isDependency={true}>límite</ConceptLink> del <ConceptLink targetId="cociente-incremental">cociente incremental</ConceptLink> cuando el incremento $h$ tiende a cero:
+  Dada una función real $f: I \to \mathbb{R}$ definida en un intervalo abierto $I \subset \mathbb{R}$ y un punto $x_0 \in I$, la derivada de $f$ en $x_0$, denotada por $f'(x_0)$, se define como el <ConceptLink targetId="limite" isDependency={true}>límite</ConceptLink> del cociente incremental cuando el incremento $h$ tiende a cero:
   $$
   f'(x_0) = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}
   $$
-  Si este límite existe y es finito, se dice que la función $f$ es <ConceptLink targetId="diferenciabilidad">diferenciable</ConceptLink> en el punto $x_0$.
+  Si este límite existe y es finito, se dice que la función $f$ es diferenciable en el punto $x_0$.
 </Definicion>
 
 <Separador />
@@ -30,18 +30,31 @@ export const metadata = {
 
 A lo largo del desarrollo del análisis matemático se han consolidado diversas notaciones para la derivada de una función $y = f(x)$:
 
-| Notación | Expresión matemática | Contexto / Creador |
+| Notación | Expresión matemática | Contexto de uso principal |
 |---|---|---|
-| Lagrange | $f'(x), f''(x), \dots, f^{(n)}(x)$ | Cálculo estándar y <ConceptLink targetId="analisis-real">análisis real</ConceptLink> |
-| Leibniz | $\frac{df}{dx}, \frac{d^2f}{dx^2}, \dots, \frac{d^n f}{dx^n}$ | Cálculo infinitesimal y <ConceptLink targetId="ecuaciones-diferenciales">ecuaciones diferenciales</ConceptLink> |
-| Newton | $\dot{y}, \ddot{y}$ | <ConceptLink targetId="mecanica-clasica">Mecánica clásica</ConceptLink> y derivadas temporales |
-| Euler | $D f, D^2 f, \dots, D^n f$ | <ConceptLink targetId="operador-diferencial">Operadores diferenciales lineales</ConceptLink> |
+| Lagrange | $f'(x), f''(x), \dots, f^{(n)}(x)$ | Cálculo estándar y análisis real |
+| Leibniz | $\frac{df}{dx}, \frac{d^2f}{dx^2}, \dots, \frac{d^n f}{dx^n}$ | Cálculo infinitesimal y ecuaciones diferenciales |
+| Newton | $\dot{y}, \ddot{y}$ | Mecánica clásica y derivadas temporales |
+| Euler | $D f, D^2 f, \dots, D^n f$ | Operadores diferenciales lineales |
 
 <Separador />
 
-### Propiedades
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Fundamentos y continuidad">
+    <PropiedadItem id="derivabilidad-implica-continuidad" title="Diferenciabilidad y continuidad">
+      $f \text{ diferenciable en } x_0 \implies f \text{ continua en } x_0$.
+    </PropiedadItem>
+    <PropiedadItem id="linealidad-derivada" title="Linealidad del operador">
+      $(\alpha f + \beta g)' = \alpha f' + \beta g'$ para todo $\alpha, \beta \in \mathbb{R}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-- **<ConceptLink targetId="teorema-derivabilidad-implica-continuidad">Diferenciabilidad y continuidad</ConceptLink>**: Si una función es derivable en un punto, es necesariamente <ConceptLink targetId="continuidad">continua</ConceptLink> en dicho punto.
-- **<ConceptLink targetId="teorema-linealidad-derivada">Linealidad del operador derivada</ConceptLink>**: El operador diferencial preserva las combinaciones lineales: $(\alpha f + \beta g)' = \alpha f' + \beta g'$.
-- **<ConceptLink targetId="teorema-regla-producto">Regla del producto de Leibniz</ConceptLink>**: Diferenciación del producto de dos funciones: $(f \cdot g)' = f'g + fg'$.
-- **<ConceptLink targetId="teorema-regla-cadena">Regla de la cadena</ConceptLink>**: Diferenciación de la <ConceptLink targetId="composicion-funciones">composición de funciones</ConceptLink>: $(f \circ g)'(x) = f'(g(x)) \cdot g'(x)$.
+  <PropiedadesGrupo title="Álgebra de derivadas">
+    <PropiedadItem id="regla-producto" title="Regla del producto de Leibniz">
+      $(f \cdot g)' = f'g + fg'$.
+    </PropiedadItem>
+    <PropiedadItem id="regla-cadena" title="Regla de la cadena">
+      $(f \circ g)' = (f' \circ g) \cdot g'$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

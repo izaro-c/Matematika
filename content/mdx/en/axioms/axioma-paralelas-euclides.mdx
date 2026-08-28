@@ -2,37 +2,48 @@ export const metadata = {
   id: "axioma-paralelas-euclides",
   lang: "en",
   type: "axioma",
-  title: "Euclid's Parallel Axiom",
-  description: "Given a line and a point not on it, there exists a unique line passing through the point that is parallel to the given line.",
+  title: "Euclidean parallel axiom",
+  description: "Through a point not on a line, at most one parallel line can be drawn in the same plane.",
   branch: "51M",
-  hasSimulation: true,
+  axiomSystem: "sistema-euclidiano",
+  axiomFamily: "paralelas",
   alternativeGroup: "paralelismo",
+  hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Postulado 5", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "primary" }
+    { title: "Elements", author: "Euclid", locator: "Book I, Postulate 5", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §5", role: "primary" }
   ]
 };
 
 import { EuclidParallel } from '@content/diagrams/Axiomas/EuclidParallel';
 export const Simulation = EuclidParallel;
 
-<Capitular letra="E" />uclid's <ConceptLink targetId="paralelismo">parallel</ConceptLink> axiom, presented equivalently via Playfair's axiom, characterizes planar <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink> in contrast to non-Euclidean geometries.
+<Capitular letra="E" />uclid's parallel axiom —established in the equivalent uniqueness formulation by John Playfair and formalized by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>— is the hallmark postulate of classical Euclidean geometry. It asserts that through a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> not on a given <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, there exists exactly one <ConceptLink targetId="paralelas">parallel</ConceptLink> line in the same <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>.
 
-<Definicion title="">
-  Given a <ConceptLink targetId="recta">line</ConceptLink> $l$ and a <ConceptLink targetId="punto">point</ConceptLink> $P$ not on $l$, there exists a unique line $m$ containing $P$ such that $m$ is <ConceptLink targetId="paralelismo">parallel</ConceptLink> to $l$:
+<Definicion title="Formal statement">
+  Given a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$ and a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $P \notin l$ in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\mathcal{P}$, there exists exactly one line $l' \subset \mathcal{P}$ passing through $P$ that does not intersect $l$:
   $$
-  \forall l \in \mathcal{L}, \forall P \notin l \implies \exists! m \in \mathcal{L} \ (P \in m \land m \parallel l)
+  \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists! l' \subset \mathcal{P} \ (P \in l' \land l \cap l' = \emptyset)
   $$
 </Definicion>
 
 <Separador />
 
-### Visual representation
+### Visual representation and interaction
 
-Given the base line <VisualBind element="lineBC" color="pavo">$l$</VisualBind> and exterior point <VisualBind element="pP" color="terracota">$P$</VisualBind>, the construction uniquely determines the parallel line <VisualBind element="parBCP" color="ocre">$m$</VisualBind> passing through $P$ without intersecting $l$.
+In the interactive simulation, base line <VisualBind element="lineBC" color="carbon">$l$</VisualBind> determined by points <VisualBind element="pB" color="carbon">$B$</VisualBind> and <VisualBind element="pC" color="carbon">$C$</VisualBind> is accompanied by external point <VisualBind element="pA" color="terracota">$P$</VisualBind>. The geometric construction draws the unique parallel line <VisualBind element="parBCP" color="terracota">$l'$</VisualBind>. Freely dragging $P$ or rotating the base line recalculates the parallel, strictly maintaining distance and the complete absence of intersection in the plane.
 
 <Separador />
 
-### Axiomatic significance
+### Geometric significance and scope
 
-This postulate asserts zero spatial curvature. It is logically independent of the axioms of <ConceptLink targetId="incidencia">incidence</ConceptLink>, <ConceptLink targetId="orden">order</ConceptLink>, and <ConceptLink targetId="congruencia">congruence</ConceptLink>; its inclusion defines <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink> and implies that the interior angle sum of any <ConceptLink targetId="triangulo">triangle</ConceptLink> equals exactly two right angles ($\pi$ radians).
+This axiom fixes zero spatial curvature ($K = 0$). It is directly responsible for the constant angle sum of $180^\circ$ in every <ConceptLink targetId="triangulo">triangle</ConceptLink>, the existence of rectangles, and the theory of similar figures at arbitrary scales.
+
+<Separador />
+
+### Properties
+
+- **Playfair equivalence:** Logically equivalent to Euclid's original fifth postulate on interior angles.
+- **Euclidean angle sum:** Directly proves the <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink> ($\alpha + \beta + \gamma = 180^\circ$).
+- **Transitivity of parallelism:** In Euclidean geometry, parallelism is an equivalence relation ($l_1 \parallel l_2 \land l_2 \parallel l_3 \implies l_1 \parallel l_3$).
+- **Metric foundation:** Enables proving <ConceptLink targetId="teorema-tales">Thales's theorem</ConceptLink> and the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>.

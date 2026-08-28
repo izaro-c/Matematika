@@ -2,36 +2,46 @@ export const metadata = {
   id: "axioma-completitud",
   lang: "eu",
   type: "axioma",
-  title: "Dedekinden Osotasun Axioma",
-  description: "Zuzen bateko puntu guztiak bi klase ez-hutsetan banatzen badira, lehenengo klaseko punturik bigarren klaseko bi punturen artean ez dagoelarik, banaketa hori sortzen duen puntu bakar bat existitzen da.",
+  title: "V.2 axioma (Zuzen-osotasunaren axioma)",
+  description: "Zuzen bateko puntuen Dedekind-en ebakidura jarraitu orok muga-puntu bakar eta zehatz bat du.",
   branch: "51M",
+  axiomSystem: "sistema-absoluto",
+  axiomFamily: "continuidad",
   hasSimulation: true,
   sources: [
-    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "§3", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §7", role: "primary" }
+    { title: "Stetigkeit und irrationale Zahlen", author: "Richard Dedekind", locator: "1872", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §6", role: "primary" }
   ]
 };
 
 import { AxiomaDedekind } from '@content/diagrams/Axiomas/AxiomaDedekind';
 export const Simulation = AxiomaDedekind;
 
-<Capitular letra="D" />edekinden osotasun-axioma <ConceptLink targetId="continuidad">jarraitutasunaren</ConceptLink> gorengo postulatu gisa ezartzen da geometria linealean. <ConceptLink targetId="recta">Zuzen</ConceptLink> geometrikoan "zilorik" edo etenik ez dagoela bermatzen du.
+<Capitular letra="Z" />uzen-osotasunaren axiomak —<ConceptLink targetId="dedekind">Richard Dedekinden</ConceptLink> jarraitutasun-printzipioan oinarritua eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> formalizatua— hutsune edo etengabeko etenik eza bermatzen du zuzen geometrikoan. Ezarri egiten du <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bateko <ConceptLink targetId="punto" isDependency={true}>puntuen</ConceptLink> partizio jarraitu orok muga-puntu bakar bat duela.
 
-<Definicion title="">
-  $l$ <ConceptLink targetId="recta">zuzen</ConceptLink> bateko puntu guztiak bi $S_1$ eta $S_2$ azpimultzo ez-hutsetan banatzen badira, $S_1$-eko punturik $S_2$-ko bi punturen artean ez dagoelarik eta $S_2$-ko punturik $S_1$-eko bi punturen artean ez dagoelarik, orduan banaketa hori zehazten duen $O \in l$ <ConceptLink targetId="punto">puntu</ConceptLink> bakar bat existitzen da:
+<Definicion title="Enuntziatu formala">
+  Izan bedi $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat. $l$ zuzeneko puntu guztiak bi $\Sigma_1$ eta $\Sigma_2$ klase ez-hutsetan banatzen badira ($l = \Sigma_1 \cup \Sigma_2$, $\Sigma_1 \cap \Sigma_2 = \emptyset$) $\Sigma_1$-eko puntu bat bera ere $\Sigma_2$-ko bi punturen <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> ez egoteko moduan eta alderantziz, orduan $P \in l$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bakarra existitzen da bi klaseak zorrozki banatzen dituena:
   $$
-  \forall (S_1, S_2) \text{ partizioa } l\text{-n} \implies \exists! O \in l \ (\forall P \in S_1 \setminus \{O\}, \forall Q \in S_2 \setminus \{O\} \implies P \text{-} O \text{-} Q)
+  \forall \text{ partizio } (\Sigma_1, \Sigma_2), \ \exists! P \in l \ \bigl(\forall A \in \Sigma_1 \setminus \{P\}, \forall B \in \Sigma_2 \setminus \{P\} \implies A\text{-}P\text{-}B\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Irudikapen bisuala
+### Ikus-irudikapena eta elkarrekintza
 
-Zuzen jarraitua <VisualBind element="S1" color="ocre">$S_1$</VisualBind> eta <VisualBind element="S2" color="pavo">$S_2$</VisualBind> bi sekzio disjuntutan banatzean, <VisualBind element="pO" color="terracota">$O$</VisualBind> muga-puntuak zuzenaren jarraitutasun geometrikoa ixteko ebaki zehatz gisa jarduten du.
+Simulazio interaktiboan, <VisualBind element="recta" color="carbon">$l$</VisualBind> zuzen jarraitua ezkerreko <VisualBind element="claseL" color="terracota">$\Sigma_1$</VisualBind> klasean eta eskuineko <VisualBind element="claseR" color="marino">$\Sigma_2$</VisualBind> klasean banatzen da. <VisualBind element="pP" color="ocre">$P$</VisualBind> ebakidura-puntu mugikorrak muga banatzaile uniboko gisa jokatzen du; $P$ zuzenean zehar mugitzean, partizioa etengabe eguneratzen da inolako arrakala edo zehaztu gabeko punturik utzi gabe.
 
 <Separador />
 
-### Garrantzi axiomatikoa
+### Esanahi geometrikoa eta esparrua
 
-Axioma honek zuzen geometriko sintetikoaren eta $\mathbb{R}$ zenbaki errealen gorputz ordenatu eta osoaren arteko isomorfismoa bermatzen du. Zirkunferentzien eta zuzenkien arteko ebakitze-puntuak existitzen direla ziurtatzen du distantzia erlatiboak hala eskatzen duenean, kalkulu infinitesimalaren zein geometria analitikoaren oinarriak finkatuz.
+Zuzen sintetikoaren eta $\mathbb{R}$ zenbaki errealen gorputzaren arteko korrespondentzia bijektibo eta isomorfoa bermatzen du. Zirkunferentzien eta zuzen ebakitzaileen arteko ebakiduren existentzia frogatzea ahalbidetzen du, analisi matematikoa modu zorrotzean oinarrituz <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
+
+<Separador />
+
+### Propietateak
+
+- **Jarraitutasun perfektua:** Zuzen geometrikoko edozein hutsune infinitesimal edo arrakala topologiko ezabatzen du.
+- **$\mathbb{R}$-rekiko isomorfismoa:** <ConceptLink targetId="axioma-arquimedes">Arkimedesen axiomarekin</ConceptLink> batera, zuzen geometrikoa $\mathbb{R}$ zuzen erreal euklidearrarekiko homeomorfoa eta isomorfoa dela ziurtatzen du.
+- **Kurba jarraituen ebakidura:** Eremu zirkular batean sartzen den zuzen batek haren zirkunferentzia-muga ebakitzen duela bermatzen du.

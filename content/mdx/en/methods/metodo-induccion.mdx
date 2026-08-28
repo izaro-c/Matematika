@@ -3,45 +3,52 @@ export const metadata = {
   lang: "en",
   type: "metodo",
   subtype: "demostracion",
-  title: "Mathematical induction method",
-  description: "Deductive proof technique for statements parametrized over natural numbers based on the principle of complete induction.",
-  branch: "51M",
+  title: "Mathematical Induction",
+  description: "Deductive proof technique for statements parameterized over natural numbers, established via a base case and an inductive step.",
+  branch: "03B",
+  difficulty: "intermedio",
   hasSimulation: true
 };
 
 import { InduccionSimulation } from '@content/diagrams/Metodos/InduccionSimulation';
 export const Simulation = InduccionSimulation;
 
-<Capitular letra="M" />athematical induction is the fundamental deductive proof technique for establishing propositions $P(n)$ whose validity extends over all <ConceptLink targetId="numero-natural">natural numbers</ConceptLink> $\mathbb{N}$. Grounded directly in the deductive framework of <ConceptLink targetId="axioma-peano">Peano's axioms</ConceptLink>, it guarantees universal truth via a base case and an inductive propagation step.
+<Capitular letra="M" />athematical induction is a fundamental deductive proof technique used to establish the universal validity of an infinite family of statements $\{P(n)\}_{n \in \mathbb{N}}$ indexed over the set of natural numbers $\mathbb{N}$. Axiomatically, it is rooted in the well-ordering principle of $\mathbb{N}$ and Peano's axioms.
 
 <Separador />
 
-### Formal structure
+### Structure of an Inductive Proof
 
-To verify the universal validity $\forall n \in \mathbb{N}, P(n)$, the proof requires completing two consecutive steps:
+A proof by mathematical induction consists of two mandatory canonical stages:
 
-1. **Base step**: The statement is shown to be true for the initial element $n_0$ (typically $n_0 = 0$ or $n_0 = 1$):
-   $$ P(n_0) \text{ is true} $$
-2. **Inductive step**: The truth of the proposition is assumed for an arbitrary integer $k \ge n_0$ (the **<ConceptLink targetId="hipotesis">inductive hypothesis</ConceptLink>** $P(k)$), and it is proven that the truth for the successor $k+1$ necessarily follows (the **<ConceptLink targetId="tesis">inductive thesis</ConceptLink>** $P(k+1)$):
-   $$ \forall k \ge n_0, (P(k) \implies P(k+1)) $$
+1. **Base Case**: Demonstrating directly that the statement holds for the initial element (typically $n = 1$ or $n = 0$):
+   <Formula>
+     $$ P(1) \text{ is true} $$
+   </Formula>
 
-Upon completing both steps, the well-ordering principle of $\mathbb{N}$ implies universal validity:
+2. **Inductive Step**: Assuming as the *induction hypothesis* that the statement holds for an arbitrary positive integer $k \ge 1$ ($P(k)$), and rigorously deriving that it must also hold for the successor $k + 1$:
+   <Formula>
+     $$ \forall k \in \mathbb{N}, \quad P(k) \implies P(k+1) $$
+   </Formula>
+
+Once both conditions are verified, the principle of mathematical induction establishes universal truth across all natural numbers:
 
 <Formula>
-  $$ (P(n_0) \land \forall k \ge n_0 (P(k) \implies P(k+1))) \implies \forall n \ge n_0 P(n) $$
+  $$ [P(1) \land (\forall k \ge 1, \, P(k) \implies P(k+1))] \implies \forall n \in \mathbb{N}, \, P(n) $$
 </Formula>
 
 <Separador />
 
-### Classic examples
+### Essential Applications
 
-- **Sum of the first $n$ natural numbers**: Proving $\sum_{i=1}^n i = \frac{n(n+1)}{2}$. The base step verifies $1 = \frac{1(2)}{2}$, while the inductive step adds $(k+1)$ to both sides of the inductive hypothesis to derive the formula for $k+1$.
-- **Number of diagonals of a polygon**: For a <ConceptLink targetId="poligono">polygon</ConceptLink> with $n$ vertices, the number of diagonals is $D(n) = \frac{n(n-3)}{2}$ for all $n \ge 3$.
-- **Bernoulli's inequality**: For all $x > -1$ and $n \in \mathbb{N}$, the inequality $(1+x)^n \ge 1 + nx$ holds.
+- **Finite Sums and Sequences**: Proving closed-form summations such as the sum of the first $n$ positive integers:
+  $$ \sum_{i=1}^n i = \frac{n(n+1)}{2} $$
+- **Combinatorial Geometry**: Proving that the sum of the interior <ConceptLink targetId="angulo">angles</ConceptLink> of a simple $n$-sided polygon is $(n-2) \times 180^\circ$, generalizing the <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink> via successive triangulations.
+- **Inequalities and Divisibility**: Validating classical bounds like Bernoulli's inequality $(1+x)^n \ge 1+nx$ for $x > -1$.
 
 <Separador />
 
-### Variants and properties
+### Formal Variations
 
-- **Strong (complete) induction**: The inductive hypothesis assumes the truth of $P(m)$ for all integers $n_0 \le m \le k$ to deduce $P(k+1)$.
-- **Multiple base cases**: Necessary when system recurrences depend on two or more independent initial values (e.g. the Fibonacci sequence).
+- **Strong (Complete) Induction**: The induction hypothesis assumes that $P(m)$ holds for all integers $1 \le m \le k$ in order to deduce $P(k+1)$.
+- **Structural and Transfinite Induction**: Generalizations of the induction principle applied to recursively defined data structures and transfinite ordinals in axiomatic set theory.
