@@ -1,0 +1,38 @@
+export const metadata = {
+  id: "signatura",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Signatura",
+  description: "Colección formal de símbolos de tipos, relaciones y funciones que caracterizan el lenguaje de una teoría matemática.",
+  branch: "03",
+  hasSimulation: false,
+  sources: [
+    { title: "Model Theory", author: "Wilfrid Hodges", locator: "Capítulo 1", role: "primary" },
+    { title: "A Course in Model Theory", author: "Katrin Tent, Martin Ziegler", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="E" />n <ConceptLink targetId="logica">lógica matemática</ConceptLink>, <ConceptLink targetId="algebra">álgebra universal</ConceptLink> y <ConceptLink targetId="teoria-modelos">teoría de modelos</ConceptLink>, una **signatura** (o lenguaje formal $\mathcal{L}$) es el repertorio de símbolos no lógicos que especifica los tipos de objetos, las <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink> y las operaciones que intervienen en una teoría matemática.
+
+La signatura determina la sintaxis de la teoría sin asignarle todavía una interpretación concreta (la cual se define al construir una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> o modelo).
+
+<Definicion title="Definición Formal">
+  Una **signatura** $\sigma$ es una tupla:
+  $$
+  \sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})
+  $$
+  donde:
+  - $\mathcal{S}_{\text{sorts}}$ es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de tipos o <ConceptLink targetId="dominio">dominios</ConceptLink> de partida (por ejemplo, <ConceptLink targetId="punto">puntos</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">rectas</ConceptLink> $\mathcal{L}$ y <ConceptLink targetId="plano">planos</ConceptLink> $\Pi$).
+  - $\mathcal{F}$ es el conjunto de símbolos de función u <ConceptLink targetId="operacion-binaria">operación</ConceptLink>.
+  - $\mathcal{R}$ es el conjunto de símbolos de relación primitiva (como la <ConceptLink targetId="incidencia">incidencia</ConceptLink> $\mathbf{I}$, el <ConceptLink targetId="estar-entre">orden</ConceptLink> $\mathbf{B}$ o la <ConceptLink targetId="congruencia">congruencia</ConceptLink> $\cong$).
+  - $\text{ar}$ es la función de aridad que asigna a cada símbolo el número y tipo de sus argumentos.
+</Definicion>
+
+<Separador />
+
+### Ejemplos en geometría y álgebra
+
+- **Signatura de incidencia pura:** $\sigma_{\text{inc}} = ( \{\mathcal{P}, \mathcal{L}\}, \emptyset, \{\mathbf{I}\} )$, con un único símbolo de relación binaria $\mathbf{I} \subseteq \mathcal{P} \times \mathcal{L}$ (<ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>).
+- **Signatura sintética de Hilbert:** $\sigma_{\text{Hil}} = ( \{\mathcal{P}, \mathcal{L}, \Pi\}, \emptyset, \{\mathbf{I}, \mathbf{B}, \cong\} )$, base de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>.
+- **Signatura de grupos:** $\sigma_{\text{grp}} = ( \{G\}, \{\cdot, ^{-1}, e\}, \emptyset )$, con una <ConceptLink targetId="operacion-binaria">operación binaria</ConceptLink>, una operación unaria (inverso) y una constante (<ConceptLink targetId="grupo">grupo</ConceptLink>).

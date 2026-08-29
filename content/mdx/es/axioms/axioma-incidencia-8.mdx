@@ -2,9 +2,9 @@ export const metadata = {
   id: "axioma-incidencia-8",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.8 (Existencia de cuatro puntos no coplanares)",
+  title: "Axioma I.8 (Espacio tridimensional)",
   description: "Existen al menos cuatro puntos en el espacio que no pertenecen a un mismo plano.",
-  branch: "51M",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,31 +16,20 @@ export const metadata = {
 import { Incidence8 } from '@content/diagrams/Axiomas/Incidence8';
 export const Simulation = Incidence8;
 
-<Capitular letra="E" />l octavo axioma de incidencia de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> postula la existencia de al menos cuatro <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no coplanares en el <ConceptLink targetId="espacio">espacio</ConceptLink>. Este axioma consagra la tridimensionalidad efectiva de la geometría espacial, impidiendo que el universo deductivo quede restringido a un único <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>.
+<Capitular letra="E" />xisten al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> que no pertenecen a un mismo <ConceptLink targetId="plano">plano</ConceptLink>.
 
-<Definicion title="Enunciado formal">
-  Existen al menos cuatro <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> $A, B, C, D \in \mathcal{S}$ tales que ningún <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \mathcal{E}$ los contiene a los cuatro simultáneamente:
+Este postulado fija la dimensión tridimensional de la geometría del <ConceptLink targetId="espacio">espacio</ConceptLink>, impidiendo que todo el universo geométrico quede confinado a un único plano bidimensional.
+
+<Definicion title="Enunciado Formal">
+  Existen al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> y <VisualBind element="pD" color="carbon">$D$</VisualBind> tales que ningún <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> los contiene a los cuatro a la vez:
   $$
-  \exists A, B, C, D \in \mathcal{S} \ \forall \pi \in \mathcal{E} \ \neg\bigl(A \in \pi \land B \in \pi \land C \in \pi \land D \in \pi\bigr)
+  \exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \in \pi \land B \in \pi \land C \in \pi \land D \in \pi)
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Importancia en la teoría
 
-En la simulación tridimensional interactiva, los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> yacen sobre el plano base <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind>, mientras que el cuarto punto <VisualBind element="pD" color="carbon">$D$</VisualBind> se sitúa en el espacio exterior a dicho plano, configurando un tetraedro tridimensional no degenerado.
-
-<Separador />
-
-### Significado geométrico y alcance
-
-Establece formalmente que la dimensión del espacio geométrico general es al menos $3$ ($\dim \mathcal{S} \ge 3$). Proporciona el soporte indispensable para la estereometría, los poliedros y el cálculo de volúmenes en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
-
-<Separador />
-
-### Propiedades
-
-- **Tridimensionalidad garantizada:** Prohíbe que el universo geométrico se colapse en un único plano bidimensional.
-- **Base tetraédrica:** Los cuatro puntos $A, B, C, D$ forman el tetraedro fundamental no degenerado del espacio.
-- **Independencia afín en $\mathbb{R}^3$:** Constituyen un sistema de referencia afín no coplanar con 3 grados de libertad espacial.
+- **<ConceptLink targetId="coplanaridad">No coplanaridad</ConceptLink>:** Garantiza la existencia de cuerpos tridimensionales como el tetraedro.
+- **Cierre del Grupo I:** Con este axioma concluye el grupo de incidencia, delimitando el marco espacial completo sobre el que actuarán el orden y la congruencia.

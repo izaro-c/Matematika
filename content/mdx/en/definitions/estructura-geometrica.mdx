@@ -1,0 +1,46 @@
+export const metadata = {
+  id: "estructura-geometrica",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Geometric Structure",
+  description: "Formal specification composed of object domains and primitive relations satisfying an axiomatic system.",
+  branch: "03",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I", role: "primary" },
+    { title: "Model Theory", author: "Wilfrid Hodges", locator: "Chapter 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="A" /> **geometric structure** is the mathematical specification assigning meaning and interpretation to a formal <ConceptLink targetId="signatura">signature</ConceptLink>: defining initial object <ConceptLink targetId="dominio">domains</ConceptLink> and the <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink> operating among them.
+
+<Definicion title="General Formal Definition">
+  A **mathematical structure** $\mathcal{S}$ is determined by a tuple of non-empty <ConceptLink targetId="conjunto">sets</ConceptLink> $\mathcal{D}_i$ (called domains) and relations $\mathcal{R}_j$:
+  $$
+  \mathcal{S} = (\mathcal{D}_1, \dots, \mathcal{D}_k, \mathcal{R}_1, \dots, \mathcal{R}_m)
+  $$
+  where each relation $\mathcal{R}_j \subseteq \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n}$ links elements across one or several domains.
+</Definicion>
+
+<Separador />
+
+### Hilbert's synthetic structure (3D)
+
+In <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, the canonical formal <ConceptLink targetId="signatura">signature</ConceptLink> gathers three disjoint domains and three primitive relations:
+$$
+\mathcal{S}_{\text{synthetic}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong)
+$$
+- **Object domains:** <ConceptLink targetId="punto">Points</ConceptLink> ($\mathcal{P}$), <ConceptLink targetId="recta">lines</ConceptLink> ($\mathcal{L}$), and <ConceptLink targetId="plano">planes</ConceptLink> ($\Pi$).
+- **Primitive relations:**
+  - $\mathbf{I}$: Binary <ConceptLink targetId="incidencia">incidence</ConceptLink> ($P \text{ is incident with } \ell$, etc.).
+  - $\mathbf{B}$: Ternary <ConceptLink targetId="estar-entre">betweenness or order</ConceptLink> ($A * B * C$, "$B$ is between $A$ and $C$").
+  - $\cong$: <ConceptLink targetId="congruencia">Congruence</ConceptLink> on segments and angles (historically denoted as $\equiv$ by Hilbert).
+
+<Separador />
+
+### Other geometric signatures
+
+- **Pure incidence plane:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$, foundation of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink> in finite or projective geometries.
+- **Analytic metric space:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, d)$, where a numerical distance function $d: \mathcal{P} \times \mathcal{P} \to \mathbb{R}$ replaces synthetic congruence and order.
+- **Vector space:** $\mathcal{S}_{\text{vec}} = (V, \mathbb{K}, +, \cdot)$, based on linear algebra over a field.

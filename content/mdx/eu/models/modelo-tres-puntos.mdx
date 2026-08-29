@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "modelo",
   title: "Hiru puntuko eredua",
-  description: "Oinarrizko eredu finitua, intzidentziaren oinarrizko axiomen trinkotasuna eta independentzia frogatzen duena.",
+  description: "Oinarrizko intzidentzia-axiomen bateragarritasuna eta independentzia frogatzen dituen oinarrizko eredu finitua.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
@@ -13,35 +13,31 @@ export const metadata = {
 import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
 export const Diagram = ModeloTresPuntos;
 
-<Capitular letra="H" />iru puntuko eredua geometria finituko <ConceptLink targetId="sistema-incidencia">intzidentzia-eredurik</ConceptLink> oinarrizkoena eta txikiena da. Hiru puntuk, hiru zuzenek eta plano bakar batek osatutako unibertso diskretu baten bidez, Hilberten hasierako intzidentzia-axiomen trinkotasun logikoa eta elkarrekiko independentzia egiaztatzeko tresna metamatematiko ezinbestekoa eskaintzen du.
+<Capitular letra="H" />**iru puntuko eredua** geometria finitu baten adibiderik sinpleena da. Hiru puntu eta hiru zuzenez soilik osatutako unibertso batekin, modu praktiko eta argian frogatzen du <ConceptLink targetId="sistema-incidencia">intzidentzia-sistemaren</ConceptLink> lehen axiomek elkarrekin zentzua dutela eta ez direla kontraesankorrak.
 
-<Separador />
-
-### Ereduaren definizioa
-
-Sistema multzo finitu esplizituen bidez definitzen da:
-
-- **<ConceptLink targetId="punto">Puntuen</ConceptLink> multzoa**: Zehazki hiru elementu abstraktuz osatua: <VisualBind element="A" color="terracota">$A$</VisualBind>, <VisualBind element="B" color="terracota">$B$</VisualBind> eta <VisualBind element="C" color="terracota">$C$</VisualBind>.
-- **<ConceptLink targetId="recta">Zuzenen</ConceptLink> multzoa**: Puntu ezberdinen hiru bikote ez-ordenatu:
-  - <VisualBind element="rAB" color="carbon">$r_{AB} = \{A, B\}$</VisualBind>
-  - <VisualBind element="rBC" color="carbon">$r_{BC} = \{B, C\}$</VisualBind>
-  - <VisualBind element="rCA" color="carbon">$r_{CA} = \{C, A\}$</VisualBind>
-- **<VisualBind element="plano" color="musgo">Planoa</VisualBind>**: Multzo osoa $\mathcal{P} = \{A, B, C\}$.
-- **Intzidentzia-erlazioa**: Multzo-teoriako partaide-erlazio estandarra ($\in$). $P$ puntu bat $l$ zuzenarekiko intzidentea da $P \in l$ bada.
+<Definicion title="Ereduaren Egitura">
+  Eredua multzo finitu esplizituen bidez definitzen da:
+  - **<ConceptLink targetId="punto">Puntuen</ConceptLink> multzoa**: $\mathcal{P} = \{ \text{<VisualBind element="A" color="terracota">A</VisualBind>}, \text{<VisualBind element="B" color="terracota">B</VisualBind>}, \text{<VisualBind element="C" color="terracota">C</VisualBind>} \}$.
+  - **<ConceptLink targetId="recta">Zuzenen</ConceptLink> multzoa**: $\mathcal{L} = \{ \text{<VisualBind element="rAB" color="carbon">r_{AB}</VisualBind>}, \text{<VisualBind element="rBC" color="carbon">r_{BC}</VisualBind>}, \text{<VisualBind element="rCA" color="carbon">r_{CA}</VisualBind>} \}$, non zuzen bakoitza osatzen duten puntu-parea den:
+    $$
+    r_{AB} = \{A, B\}, \quad r_{BC} = \{B, C\}, \quad r_{CA} = \{C, A\}
+    $$
+  - **<ConceptLink targetId="incidencia">Intzidentzia-erlazioa</ConceptLink>**: Ohiko kidetza ($\in$). $P$ puntu batek $\ell$ zuzen batean intziditzen du $P \in \ell$ bada.
+</Definicion>
 
 <Separador />
 
 ### Intzidentzia-axiomen egiaztapena
 
-Ereduak <ConceptLink targetId="sistema-incidencia">intzidentzia-taldeko</ConceptLink> lehen hiru axiomak betetzen ditu:
+Eredu honek berehala egiaztatzen ditu Hilberten lehen hiru axiomak:
 
-- **<ConceptLink targetId="axioma-incidencia-1">I-1 axioma</ConceptLink>**: Edozein bi puntu ezberdinetarako (adibidez $A$ eta $B$), biak barne dituen zuzen bakar bat existitzen da ($r_{AB}$).
-- **<ConceptLink targetId="axioma-incidencia-2">I-2 axioma</ConceptLink>**: Zuzen bakoitzak ($r_{AB}, r_{BC}, r_{CA}$) gutxienez bi puntu ezberdin ditu.
-- **<ConceptLink targetId="axioma-incidencia-3">I-3 axioma</ConceptLink>**: Zuzen berean ez dauden gutxienez hiru puntu existitzen dira ($A, B, C$).
+- **<ConceptLink targetId="axioma-incidencia-1">I.1 Axioma</ConceptLink>:** Edozein bi puntu desberdinetarako (hala nola $A$ eta $B$), biak biltzen dituen zuzen bakar bat ($r_{AB}$) existitzen da.
+- **<ConceptLink targetId="axioma-incidencia-2">I.2 Axioma</ConceptLink>:** Hiru zuzenetako bakoitzak gutxienez bi puntu desberdin ditu.
+- **<ConceptLink targetId="axioma-incidencia-3">I.3 Axioma</ConceptLink>:** Hiru puntuak ($A, B, C$) ez daude zuzen berean (<ConceptLink targetId="colinealidad">ez dira kolinealak</ConceptLink>).
 
 <Separador />
 
-### Garrantzi metamatematikoa
+### Garrantzia metamatematikoa
 
-- **Trinkotasun-froga**: Eredu finitu konkretu bat eskainiz non enuntziatu guztiak egiazkoak diren, frogatzen da intzidentziaren lehen hiru axiomak ez direla elkarren artean kontraesankorrak.
-- **Paralelotasunaren independentzia**: Eredu honetan, edozein bi zuzenek beti puntu komun bat partekatzen dute ($r_{AB} \cap r_{BC} = \{B\}$); beraz, ez dago <ConceptLink targetId="paralelas">zuzen paraleloric</ConceptLink>. Honek erakusten du paralelotasunaren kontzeptuak beste postulatu independente batzuk behar dituela nahitaez.
+- **Bateragarritasun-froga:** I.1, I.2 eta I.3 axiomak aldi berean egiazkoak diren eredu zehatz bat existitzen denez, frogatuta geratzen da postulatuek ez dutela elkar ukatzen.
+- **Paraleloen eza:** Eredu honetan, edozein bi zuzenek elkar puntu komun batean ebakitzen dute beti ($r_{AB} \cap r_{BC} = \{B\}$); beraz, ez dago <ConceptLink targetId="paralelas">zuzen paralelorik</ConceptLink>, paralelismoaren nozioak aparteko axioma independenteak behar dituela erakutsiz.

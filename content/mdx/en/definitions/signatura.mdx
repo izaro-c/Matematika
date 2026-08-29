@@ -1,0 +1,38 @@
+export const metadata = {
+  id: "signatura",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Signature",
+  description: "Formal collection of sort symbols, relation symbols, and function symbols characterizing the language of a mathematical theory.",
+  branch: "03",
+  hasSimulation: false,
+  sources: [
+    { title: "Model Theory", author: "Wilfrid Hodges", locator: "Chapter 1", role: "primary" },
+    { title: "A Course in Model Theory", author: "Katrin Tent, Martin Ziegler", locator: "Chapter 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="I" />n <ConceptLink targetId="logica">mathematical logic</ConceptLink>, <ConceptLink targetId="algebra">universal algebra</ConceptLink>, and <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, a **signature** (or formal language $\mathcal{L}$) is the collection of non-logical symbols specifying the sorts of objects, <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink>, and operations involved in a mathematical theory.
+
+A signature establishes the syntax of a theory without yet attaching a semantics or concrete interpretation (which occurs when constructing a <ConceptLink targetId="estructura-geometrica">mathematical structure</ConceptLink> or model).
+
+<Definicion title="Formal Definition">
+  A **signature** $\sigma$ is a tuple:
+  $$
+  \sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})
+  $$
+  where:
+  - $\mathcal{S}_{\text{sorts}}$ is the <ConceptLink targetId="conjunto">set</ConceptLink> of sorts or object <ConceptLink targetId="dominio">domains</ConceptLink> (e.g. <ConceptLink targetId="punto">points</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">lines</ConceptLink> $\mathcal{L}$, and <ConceptLink targetId="plano">planes</ConceptLink> $\Pi$).
+  - $\mathcal{F}$ is the set of function or <ConceptLink targetId="operacion-binaria">operation</ConceptLink> symbols.
+  - $\mathcal{R}$ is the set of primitive relation symbols (such as <ConceptLink targetId="incidencia">incidence</ConceptLink> $\mathbf{I}$, <ConceptLink targetId="estar-entre">order</ConceptLink> $\mathbf{B}$, or <ConceptLink targetId="congruencia">congruence</ConceptLink> $\cong$).
+  - $\text{ar}$ is the arity function assigning to each symbol its number and type of arguments.
+</Definicion>
+
+<Separador />
+
+### Examples in geometry and algebra
+
+- **Pure incidence signature:** $\sigma_{\text{inc}} = ( \{\mathcal{P}, \mathcal{L}\}, \emptyset, \{\mathbf{I}\} )$, with a single binary relation $\mathbf{I} \subseteq \mathcal{P} \times \mathcal{L}$ (<ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>).
+- **Hilbert's synthetic signature:** $\sigma_{\text{Hil}} = ( \{\mathcal{P}, \mathcal{L}, \Pi\}, \emptyset, \{\mathbf{I}, \mathbf{B}, \cong\} )$, the foundation of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>.
+- **Group signature:** $\sigma_{\text{grp}} = ( \{G\}, \{\cdot, ^{-1}, e\}, \emptyset )$, featuring one <ConceptLink targetId="operacion-binaria">binary operation</ConceptLink>, one unary operation, and one constant (<ConceptLink targetId="grupo">group</ConceptLink>).

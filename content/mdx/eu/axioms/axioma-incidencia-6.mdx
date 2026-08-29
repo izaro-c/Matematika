@@ -2,45 +2,33 @@ export const metadata = {
   id: "axioma-incidencia-6",
   lang: "eu",
   type: "axioma",
-  title: "I.6 axioma (Zuzenaren inklusioa planoan)",
-  description: "Zuzen baten bi puntu desberdin plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
-  branch: "51M",
+  title: "I.6 Axioma (Zuzena planoan sartzea)",
+  description: "Zuzen baten bi puntu plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
   ]
 };
 
 import { Incidence6 } from '@content/diagrams/Axiomas/Incidence6';
 export const Simulation = Incidence6;
 
-<Capitular letra="Z" />uzen baten bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdin <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> batekoak badira, <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> seigarren intzidentzia-axiomak ezartzen du zuzen horren puntu guztiak ere plano berekoak direla nahitaez. Postulatu honek planoaren zurruntasuna eta lautasun geometriko perfektua definitzen ditu.
+<Capitular letra="Z" />**uzen** baten bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin <ConceptLink targetId="plano">plano</ConceptLink> batekoak badira, orduan zuzen horren puntu guztiak plano horretakoak dira.
 
-<Definicion title="Enuntziatu formala">
-  Edozein $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzenetarako</ConceptLink> eta $\pi \in \mathcal{E}$ <ConceptLink targetId="plano" isDependency={true}>planotarako</ConceptLink>, $A \in \pi$ eta $B \in \pi$ betetzen duten bi $A, B \in l$ puntu desberdin existitzen badira ($A \neq B$), orduan $l \subset \pi$ betetzen da:
+Axioma honek planoaren zurruntasuna eta lautasuna formalizatzen ditu: zuzen bat ezin da plano batetik sartu eta atera, ezta planoarekiko okertu ere.
+
+<Definicion title="Enuntziatu Formala">
+  Izan bitez <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> <VisualBind element="recta" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bateko bi puntu desberdin. $A$ eta $B$ <VisualBind element="plano" color="canela">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> batekoak badira, orduan $\ell$ zuzen osoa $\pi$-n sartuta dago:
   $$
-  \forall l \in \mathcal{L}, \forall \pi \in \mathcal{E} \ \bigl((\exists A, B \in l \ (A \neq B \land A \in \pi \land B \in \pi)) \implies l \subset \pi\bigr)
+  (A \in \ell \land B \in \ell \land A \neq B \land A \in \pi \land B \in \pi) \implies \ell \subset \pi
   $$
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
+### Garrantzia teorian
 
-Hiru dimentsioko simulazioan, <VisualBind element="recta" color="carbon">$l$</VisualBind> zuzenak <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntuak ditu barnean, biak <VisualBind element="plano" color="canela">$\pi$</VisualBind> planoan kokatuta. 3D elkarrekintzak ikuspegia biratzeko aukera ematen du, zuzenaren traza jarraitua gainazal planarraren barruan mantentzen dela egiaztatuz.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Espazioaren lautasun zorrotza bermatzen du: plano batek ezin du tolesdurarik edo ondulaziorik izan, zuzen batek bere bi puntu zeharkatzea eta aldi berean planoan guztiz murgilduta ez egotea eragotziz. 1. eta 2. dimentsioak koherentziaz lotzen ditu.
-
-<Separador />
-
-### Propietateak
-
-- **Inklusio osoko irizpidea:** Bi puntu desberdinen partaideitza egiaztatzea nahikoa da zuzen osoaren inklusioa bermatzeko.
-- **Planoan ez dauden zuzenen gehieneko ebakidura:** Planoan ez dagoen zuzen batek puntu bakar batean ebaki dezake planoa gehienez.
-- **Zuzenkien euskarria:** Muturrak $\pi$ planoan dituen edozein $\overline{AB}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> guztiz $\pi$ planoan sartuta dago.
+Zuzenen geometriaren propietate guztiak bi dimentsioko planoaren barrualdera eramatea ahalbidetzen du.

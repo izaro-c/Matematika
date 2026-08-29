@@ -1,0 +1,36 @@
+export const metadata = {
+  id: "incidencia",
+  lang: "eu",
+  type: "definicion",
+  subtype: "primitivo",
+  title: "Intzidentzia",
+  description: "Puntu, zuzen eta planoen arteko posizio-kidetza ezartzen duen oinarrizko erlazio geometrikoa.",
+  branch: "51A",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
+  ]
+};
+
+<Capitular letra="I" />**ntzidentzia** objektu geometrikoen arteko (<ConceptLink targetId="punto">puntuak</ConceptLink>, <ConceptLink targetId="recta">zuzenak</ConceptLink> eta <ConceptLink targetId="plano">planoak</ConceptLink>) posizio-kidetza edo ukipenaren ideia formalizatzen duen geometriako <ConceptLink targetId="concepto-primitivo">oinarrizko erlazio</ConceptLink> bat da.
+
+Oinarrizko kontzeptua denez, ez da formula aljebraikoen bidez definitzen; bere portaera <ConceptLink targetId="sistema-incidencia">intzidentzia-sistemako</ConceptLink> axiomek finkatzen dute. Hizkera arruntean, puntu bat eta zuzen bat intzidenteak direla esateak puntua zuzenean kokatuta dagoela edo zuzena puntu horretatik igarotzen dela esan nahi du.
+
+<Definicion title="Adierazpen Formala">
+  $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$ <ConceptLink targetId="estructura-geometrica">intzidentzia-egitura</ConceptLink> batean, $\mathbf{I}$ **intzidentzia** $\mathcal{P}$ puntu, $\mathcal{L}$ zuzen eta $\Pi$ planoen domeinuen arteko erlazio bitarra da:
+  $$
+  \mathbf{I} \subseteq (\mathcal{P} \times \mathcal{L}) \cup (\mathcal{P} \times \Pi) \cup (\mathcal{L} \times \Pi)
+  $$
+  - $(P, \ell) \in \mathbf{I}$ bada, $P \, \mathbf{I} \, \ell$ idazten da ($P$ puntuak $\ell$ zuzenarekin intziditzen du, edo $P \in \ell$).
+  - $(P, \pi) \in \mathbf{I}$ bada, $P \, \mathbf{I} \, \pi$ idazten da ($P$ puntuak $\pi$ planoarekin intziditzen du, edo $P \in \pi$).
+  - $(\ell, \pi) \in \mathbf{I}$ bada, $\ell \, \mathbf{I} \, \pi$ idazten da ($\ell$ zuzena $\pi$ planoan sartuta dago, edo $\ell \subset \pi$).
+</Definicion>
+
+<Separador />
+
+### Rola geometria sintetikoan
+
+Intzidentziak <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> lehen maila deduktiboa osatzen du:
+
+- **Intzidentzia-sistemetan:** Espazioaren oinarrizko konfigurazioa ezartzen du axiomen bidez (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>), hainbat puntu noiz diren <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> edo <ConceptLink targetId="coplanaridad">koplanarrak</ConceptLink> zehaztuz.
+- **Metrikarekiko independentzia:** Intzidentzia-erlazioak ez du <ConceptLink targetId="distancia">distantzia</ConceptLink>, <ConceptLink targetId="angulo">angelu</ConceptLink> edo <ConceptLink targetId="estar-entre">ordena</ConceptLink> noziorik behar; beraz, bai geometria jarraituetan bai <ConceptLink targetId="modelo-fano">geometria finituetan</ConceptLink> baliozkoa da.

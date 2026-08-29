@@ -3,7 +3,7 @@ export const metadata = {
   lang: "en",
   type: "modelo",
   title: "Three-Point Model",
-  description: "Elementary finite model demonstrating the consistency and independence of basic incidence axioms.",
+  description: "Elementary finite model demonstrating the consistency and independence of the basic incidence axioms.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
@@ -13,35 +13,31 @@ export const metadata = {
 import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
 export const Diagram = ModeloTresPuntos;
 
-<Capitular letra="T" />he three-point model is the most elementary <ConceptLink targetId="sistema-incidencia">incidence model</ConceptLink> in finite geometry. Featuring a discrete universe of three points, three lines, and a single plane, it provides an essential metamathematical tool to establish the logical consistency and mutual independence of Hilbert's initial incidence axioms.
+<Capitular letra="T" />he **three-point model** is the simplest possible example of a finite geometry. With a universe consisting solely of three points and three lines, it practically demonstrates that the first axioms of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink> are consistent and do not contradict one another.
+
+<Definicion title="Model Structure">
+  The model is defined via explicit finite sets:
+  - **Set of <ConceptLink targetId="punto">points</ConceptLink>**: $\mathcal{P} = \{ \text{<VisualBind element="A" color="terracota">A</VisualBind>}, \text{<VisualBind element="B" color="terracota">B</VisualBind>}, \text{<VisualBind element="C" color="terracota">C</VisualBind>} \}$.
+  - **Set of <ConceptLink targetId="recta">lines</ConceptLink>**: $\mathcal{L} = \{ \text{<VisualBind element="rAB" color="carbon">r_{AB}</VisualBind>}, \text{<VisualBind element="rBC" color="carbon">r_{BC}</VisualBind>}, \text{<VisualBind element="rCA" color="carbon">r_{CA}</VisualBind>} \}$, where each line is the pair of points forming it:
+    $$
+    r_{AB} = \{A, B\}, \quad r_{BC} = \{B, C\}, \quad r_{CA} = \{C, A\}
+    $$
+  - **<ConceptLink targetId="incidencia">Incidence relation</ConceptLink>**: Standard set membership ($\in$). A point $P$ is incident with a line $\ell$ if $P \in \ell$.
+</Definicion>
 
 <Separador />
 
-### Model Definition
+### Verification of incidence axioms
 
-The system is defined via explicit finite sets:
+This model immediately satisfies Hilbert's first three axioms:
 
-- **Point Set**: Composed of exactly three abstract elements: <VisualBind element="A" color="terracota">$A$</VisualBind>, <VisualBind element="B" color="terracota">$B$</VisualBind>, and <VisualBind element="C" color="terracota">$C$</VisualBind>.
-- **Line Set**: Three unordered pairs of distinct points:
-  - <VisualBind element="rAB" color="carbon">$r_{AB} = \{A, B\}$</VisualBind>
-  - <VisualBind element="rBC" color="carbon">$r_{BC} = \{B, C\}$</VisualBind>
-  - <VisualBind element="rCA" color="carbon">$r_{CA} = \{C, A\}$</VisualBind>
-- **<VisualBind element="plano" color="musgo">Plane</VisualBind>**: The total set $\mathcal{P} = \{A, B, C\}$.
-- **Incidence Relation**: Standard set membership $\in$. A point $P$ is incident with a line $l$ if $P \in l$.
+- **<ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>:** For any two distinct points (such as $A$ and $B$), there exists exactly one line ($r_{AB}$) containing both.
+- **<ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink>:** Each of the three lines contains at least two distinct points.
+- **<ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>:** The three points $A, B, C$ do not belong to the same line (<ConceptLink targetId="colinealidad">non-collinear</ConceptLink>).
 
 <Separador />
 
-### Verification of Incidence Axioms
+### Metamathematical significance
 
-The model formally satisfies the first three axioms of the <ConceptLink targetId="sistema-incidencia">incidence group</ConceptLink>:
-
-- **<ConceptLink targetId="axioma-incidencia-1">Axiom I-1</ConceptLink>**: For any two distinct points (such as $A$ and $B$), there exists a unique line ($r_{AB}$) containing both.
-- **<ConceptLink targetId="axioma-incidencia-2">Axiom I-2</ConceptLink>**: Every line ($r_{AB}, r_{BC}, r_{CA}$) contains at least two distinct points.
-- **<ConceptLink targetId="axioma-incidencia-3">Axiom I-3</ConceptLink>**: There exist at least three points ($A, B, C$) not lying on the same line (non-collinear).
-
-<Separador />
-
-### Metamathematical Significance
-
-- **Consistency Proof**: By exhibiting a concrete finite interpretation where all incidence propositions evaluate to true, it establishes that the initial incidence axioms are mutually consistent.
-- **Independence of Parallelism**: Any two lines in this model share a common point ($r_{AB} \cap r_{BC} = \{B\}$); hence, no <ConceptLink targetId="paralelas">parallel lines</ConceptLink> exist, proving that parallelism requires additional independent postulates.
+- **Consistency proof:** By providing a concrete model in which axioms I.1, I.2, and I.3 are simultaneously true, it is proven that these axioms are non-contradictory.
+- **Absence of parallels:** In this model, any two lines always intersect at a common point ($r_{AB} \cap r_{BC} = \{B\}$); therefore, no <ConceptLink targetId="paralelas">parallel lines</ConceptLink> exist, showing that parallelism requires additional independent axioms.

@@ -2,9 +2,9 @@ export const metadata = {
   id: "axioma-incidencia-1",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.1 (Existence and Uniqueness of the Line)",
-  description: "Given any two distinct points in space, there exists exactly one line to which both belong.",
-  branch: "51M",
+  title: "Axiom I.1 (Determination of the Line)",
+  description: "Through any two distinct points passes exactly one line.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,31 +16,20 @@ export const metadata = {
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, the first incidence axiom formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> guarantees the existence and uniqueness of a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> passing through both. This postulate serves as the foundation for linear connection in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto">points</ConceptLink>, there exists exactly one <ConceptLink targetId="recta">line</ConceptLink> passing through both.
 
-<Definicion title="Formal statement">
-  Given any two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B \in \mathcal{S}$ with $A \neq B$, there exists a unique <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$ incident with both $A$ and $B$:
+This postulate establishes the most basic linear connection of geometry: two distinct points uniquely determine a direction and an entire line.
+
+<Definicion title="Formal Statement">
+  For any two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> ($A \neq B$), there exists a unique <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> such that $A$ and $B$ <ConceptLink targetId="incidencia">are incident</ConceptLink> with $\ell$:
   $$
-  \forall A, B \in \mathcal{S} \ \bigl(A \neq B \implies \exists! l \in \mathcal{L} \ (A \in l \land B \in l)\bigr)
+  \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \in \ell \land B \in \ell)\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Visual representation and interaction
+### Significance in the theory
 
-In the interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> uniquely determine the supporting line <VisualBind element="lineAB" color="carbon">$l$</VisualBind>. Dragging either point freely across the plane instantly recalculates the position and direction of the line, maintaining the strict dual membership condition.
-
-<Separador />
-
-### Geometric significance and scope
-
-This axiom establishes that two points uniquely fix a direction and rectilinear trajectory. It eliminates the presence of redundant connecting curves or multiple straight lines joining the same two primitive points without the intervention of additional axioms.
-
-<Separador />
-
-### Properties
-
-- **Uniqueness of path:** Two distinct points cannot belong simultaneously to two distinct lines.
-- **System independence:** Retains universal validity in both <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink> and <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>.
-- **Foundation of connection:** Enables the definition of line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ as a continuous subset of the supporting line.
+- **Uniqueness:** Two distinct points cannot share more than one common line.
+- **Maximum intersection:** As an immediate consequence, two distinct lines can intersect in at most one point.

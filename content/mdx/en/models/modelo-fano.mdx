@@ -3,7 +3,7 @@ export const metadata = {
   lang: "en",
   type: "modelo",
   title: "Fano Plane",
-  description: "The smallest finite projective plane, composed of exactly 7 points and 7 lines.",
+  description: "The smallest possible finite projective plane, composed of exactly 7 points and 7 lines.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
@@ -13,34 +13,21 @@ export const metadata = {
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
 export const Diagram = ModeloFano;
 
-<Capitular letra="T" />he Fano plane, denoted algebraically as $\mathrm{PG}(2, 2)$, constitutes the smallest <ConceptLink targetId="sistema-incidencia">finite incidence model</ConceptLink> and finite projective plane. Constructed over the finite field $\mathbb{F}_2 = \{0, 1\}$, it consists of exactly $7$ points and $7$ lines, exhibiting complete combinatorial symmetry where the Euclidean notion of parallelism vanishes entirely.
+<Capitular letra="T" />he **Fano plane** (denoted $\mathrm{PG}(2, 2)$) is the smallest finite <ConceptLink targetId="sistema-incidencia">incidence model</ConceptLink> and projective plane that exists. It is composed of exactly 7 <ConceptLink targetId="punto">points</ConceptLink> and 7 <ConceptLink targetId="recta">lines</ConceptLink>, with a perfect combinatorial symmetry where any two lines always intersect at a single point.
+
+<Definicion title="Combinatorial Structure">
+  The Fano plane consists of:
+  - **7 Points**: <VisualBind element="p1" color="terracota">1</VisualBind>, <VisualBind element="p2" color="terracota">2</VisualBind>, <VisualBind element="p3" color="terracota">3</VisualBind>, <VisualBind element="p4" color="terracota">4</VisualBind>, <VisualBind element="p5" color="terracota">5</VisualBind>, <VisualBind element="p6" color="terracota">6</VisualBind>, and <VisualBind element="p7" color="musgo">7</VisualBind>.
+  - **7 Lines** (each formed by a triple of points):
+    - Three sides of the outer triangle: <VisualBind element="l1" color="carbon">$\{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$\{2, 3, 5\}$</VisualBind>, <VisualBind element="l3" color="carbon">$\{3, 1, 6\}$</VisualBind>.
+    - Three concurrent median lines: <VisualBind element="l4" color="carbon">$\{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$\{2, 6, 7\}$</VisualBind>, <VisualBind element="l6" color="carbon">$\{3, 4, 7\}$</VisualBind>.
+    - An inner circle (projective line): <VisualBind element="l7" color="musgo">$\{4, 5, 6\}$</VisualBind>.
+</Definicion>
 
 <Separador />
 
-### Combinatorial Structure
+### Verification of axioms and properties
 
-The Fano configuration is formally defined using the 3-dimensional vector space $\mathbb{F}_2^3 \setminus \{(0, 0, 0)\}$:
-
-- **<ConceptLink targetId="punto">Points</ConceptLink>**: The $7$ one-dimensional linear subspaces of $\mathbb{F}_2^3$: <VisualBind element="p1" color="terracota">point $1$</VisualBind>, <VisualBind element="p2" color="terracota">point $2$</VisualBind>, <VisualBind element="p3" color="terracota">point $3$</VisualBind>, <VisualBind element="p4" color="terracota">point $4$</VisualBind>, <VisualBind element="p5" color="terracota">point $5$</VisualBind>, <VisualBind element="p6" color="terracota">point $6$</VisualBind>, and the <VisualBind element="p7" color="musgo">central point $7$</VisualBind>.
-- **<ConceptLink targetId="recta">Lines</ConceptLink>**: The $7$ two-dimensional subspaces (planes), represented by triples of collinear points:
-  - Three outer triangle edges: <VisualBind element="l1" color="carbon">$l_1 = \{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$l_2 = \{2, 3, 5\}$</VisualBind>, and <VisualBind element="l3" color="carbon">$l_3 = \{3, 1, 6\}$</VisualBind>.
-  - Three concurrent medians: <VisualBind element="l4" color="carbon">$l_4 = \{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$l_5 = \{2, 6, 7\}$</VisualBind>, and <VisualBind element="l6" color="carbon">$l_6 = \{3, 4, 7\}$</VisualBind>.
-  - The interior circle (projective non-Euclidean line): <VisualBind element="l7" color="musgo">$l_7 = \{4, 5, 6\}$</VisualBind>.
-
-<Separador />
-
-### Verification of Incidence Axioms
-
-The Fano plane satisfies the core axioms of projective geometry and incidence:
-
-- **<ConceptLink targetId="axioma-incidencia-1">Incidence Axiom I-1</ConceptLink>**: Any two distinct points determine a unique line incident with both.
-- **Projective Intersection Axiom**: Any two distinct lines intersect at exactly one point (there are no <ConceptLink targetId="paralelas">parallel lines</ConceptLink>).
-- **Uniform Regularity**: Every line contains exactly $3$ points, and every point is incident with exactly $3$ lines.
-- **Global Non-Collinearity**: There exist four points such that no three are collinear.
-
-<Separador />
-
-### Algebraic Properties
-
-- **Projective Duality**: Swapping the designations of points and lines yields an incidence structure isomorphic to the original plane.
-- **Automorphism Group**: Its symmetry group is the projective special linear group $\mathrm{PGL}(3, 2) \cong \mathrm{PSL}(2, 7)$ of order $168$, fundamental in finite group theory and error-correcting codes.
+- **<ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>:** Any two points belong to a unique shared line.
+- **Projective intersection:** Any two distinct lines intersect at exactly one point; there are no <ConceptLink targetId="paralelas">parallel lines</ConceptLink>.
+- **Symmetric uniformity:** Every line contains exactly 3 points, and through every point pass exactly 3 lines.

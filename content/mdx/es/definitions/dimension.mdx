@@ -1,0 +1,37 @@
+export const metadata = {
+  id: "dimension",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Dimensión",
+  description: "Número de grados de libertad o parámetros independientes necesarios para especificar la posición de un punto en un espacio o figura.",
+  branch: "51",
+  hasSimulation: false,
+  sources: [
+    { title: "Dimension Theory", author: "Witold Hurewicz, Henry Wallman", locator: "Capítulo I", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I", role: "secondary" }
+  ]
+};
+
+<Capitular letra="L" />a **dimensión** es la medida matemática del número de grados de libertad o direcciones independientes que caracterizan a un <ConceptLink targetId="espacio">espacio</ConceptLink> o a una figura geométrica.
+
+En la geometría elemental, los objetos se clasifican según sus grados de libertad: el <ConceptLink targetId="punto">punto</ConceptLink> carece de extensión (dimensión 0), la <ConceptLink targetId="recta">recta</ConceptLink> posee una única dirección de desplazamiento (dimensión 1), el <ConceptLink targetId="plano">plano</ConceptLink> admite dos direcciones independientes (dimensión 2) y el espacio tridimensional admite tres (dimensión 3).
+
+<Definicion title="Definición en Distintas Teorías">
+  El concepto de dimensión se formaliza rigurosamente en cada rama matemática:
+  - **En <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>:** Queda fijada por los postulados de incidencia de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>. El <ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink> fija un plano al requerir 3 puntos no colineales, y el <ConceptLink targetId="axioma-incidencia-8">Axioma I.8</ConceptLink> fija la tridimensionalidad del espacio al exigir 4 puntos no coplanares.
+  - **En <ConceptLink targetId="algebra-lineal">álgebra lineal</ConceptLink>:** Es el <ConceptLink targetId="cardinalidad">cardinal</ConceptLink> de cualquier <ConceptLink targetId="base">base</ConceptLink> $B$ de un <ConceptLink targetId="espacio-vectorial">espacio vectorial</ConceptLink> $V$ sobre un cuerpo $\mathbb{K}$:
+    $$
+    \dim_{\mathbb{K}}(V) = |B|
+    $$
+  - **En <ConceptLink targetId="topologia">topología</ConceptLink>:** Se define mediante la dimensión topológica de recubrimiento de <ConceptLink targetId="lebesgue">Henri Lebesgue</ConceptLink> o la dimensión inductiva de <ConceptLink targetId="menger">Karl Menger</ConceptLink> y <ConceptLink targetId="urysohn">Pável Urysón</ConceptLink>, sistematizadas por <ConceptLink targetId="hurewicz">Witold Hurewicz</ConceptLink> y <ConceptLink targetId="wallman">Henry Wallman</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+### Jerarquía dimensional
+
+- **Dimensión 0:** El <ConceptLink targetId="punto">punto</ConceptLink> aislado (sin extensión).
+- **Dimensión 1:** La <ConceptLink targetId="recta">recta</ConceptLink>, el <ConceptLink targetId="segmento">segmento</ConceptLink> y la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> (magnitud: <ConceptLink targetId="longitud">longitud</ConceptLink>).
+- **Dimensión 2:** El <ConceptLink targetId="plano">plano</ConceptLink>, el <ConceptLink targetId="semiplano">semiplano</ConceptLink> y los <ConceptLink targetId="poligono">polígonos</ConceptLink> (magnitud: <ConceptLink targetId="area">área</ConceptLink>).
+- **Dimensión 3:** El <ConceptLink targetId="espacio">espacio tridimensional</ConceptLink> y los poliedros (magnitud: <ConceptLink targetId="volumen">volumen</ConceptLink>).

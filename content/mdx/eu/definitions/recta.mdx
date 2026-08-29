@@ -4,11 +4,11 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Zuzena",
-  description: "Dimentsio bakarreko objektu geometriko jarraitu eta infinitua, bi noranzkoetan kurbadurarik gabe hedatzen dena.",
+  description: "Luzapen lineal hutseko oinarrizko kontzeptu geometrikoa, zabalerarik eta lodierarik gabea; bere propietateak hautatutako sistema formalaren axiomek finkatzen dituzte.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 2. eta 4. Definizioak", role: "primary" },
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 2 eta 4. Definizioak", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
   ]
 };
@@ -16,47 +16,26 @@ export const metadata = {
 import { Recta } from '@content/diagrams/Definiciones/Recta';
 export const Simulation = Recta;
 
-<Capitular letra="Z" />uzena dimentsio bakarreko entitate geometriko jarraitua da, bi noranzkoetan infiniturantz hedatzen dena inolako kurbadurarik gabe. Geometria sintetikoan jatorrizko nozioa da, eta <ConceptLink targetId="punto">puntuarekin</ConceptLink> eta <ConceptLink targetId="plano">planoarekin</ConceptLink> batera inzidentziaren eta ordenaren egitura oinarritzen du.
+<Capitular letra="Z" /><VisualBind element="lineAB" color="musgo">**uzena**</VisualBind> geometriako <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptu</ConceptLink> bat da: espazioko objektu lineal sinpleena, zabalerarik eta lodierarik gabea.
 
-<Definicion title="">
-  $\mathcal{E}$ espazio afin edo euklidear batean bi puntu desberdin emanda (<VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pB" color="musgo">$B$</VisualBind>), <VisualBind element="lineAB" color="musgo">$\ell = \overleftrightarrow{AB}$</VisualBind> zuzena $A$ eta $B$-ren konbinazio afin guztiek osatutako dimentsio bakarreko multzo jarraitua da:
+Kontzeptu primitiboa denez, ez da beste irudi batzuen bidez definitzen. Horren ordez, bere portaera formala eta <ConceptLink targetId="punto">puntuekin</ConceptLink> zein <ConceptLink targetId="plano">planoekin</ConceptLink> nola erlazionatzen den hautatutako <ConceptLink targetId="sistema-axiomatico">sistema formaleko</ConceptLink> <ConceptLink targetId="axioma">axiomek</ConceptLink> finkatzen dute.
+
+<Definicion title="Definizio Formala">
+  $\mathcal{S}$ <ConceptLink targetId="estructura-geometrica">egitura geometriko</ConceptLink> batean, <VisualBind element="lineAB" color="musgo">$\ell$</VisualBind> **zuzen** bat $\mathcal{L}$ zuzenen <ConceptLink targetId="conjunto">multzo</ConceptLink> ez-hutsaren edozein elementu da:
   $$
-  \ell = \{ P \in \mathcal{E} \mid P = (1 - t)A + tB, \, t \in \mathbb{R} \}
+  \ell \in \mathcal{L}
   $$
+  Isolatuta, zuzenak ez du berezko propietaterik; bere esanahi matematikoa axiomek zuzenen eta espazioko gainerako elementuen artean ezartzen dituzten erlaziotatik soilik sortzen da.
 </Definicion>
 
 <Separador />
 
-### Geometria sintetikoa
+### Oinarrizko erlazio axiomatikoak
 
-Hilberten sisteman, zuzenak bigarren oinarrizko multzoko elementuak dira, inzidentzia- eta ordena-axiomek arautuak:
-- **Inzidentziaren bakartasuna**: Bi puntu desberdinetatik zuzen bakar bat igarotzen da.
-- **Jarraitutasun lineala**: Zuzen bateko edozein puntuk bi <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> disjuntotan banatzen du zuzena.
-- **Bitartekotasuna**: <ConceptLink targetId="estar-entre">Artean egotearen</ConceptLink> erlazioak ordena lineal zorrotz eta trinkoa ezartzen du zuzeneko puntuen artean.
+Zuzenak barne-egiturarik ez duenez, hari buruz baiezta dezakeguna hautatutako <ConceptLink targetId="sistema-axiomatico">sistema geometrikoak</ConceptLink> zer axioma-multzo barneratzen dituen araberakoa da (sistema jakin bat lehenengoetara soilik mugatu daiteke):
 
-### Geometria analitikoa
-
-$\mathbb{R}^2$ plano cartesiarrean, zuzena bere ekuazio orokor inplizituaren edo forma bektorial parametrikoaren bidez adierazten da:
-- **Ekuazio orokorra**: $Ax + By + C = 0$, non $(A, B) \neq (0, 0)$.
-- **Forma bektoriala**: $\vec{r}(t) = \vec{p}_0 + t\vec{v}$, non $\vec{p}_0$ igarotze-puntu bat den eta $\vec{v} \neq \vec{0}$ bektore zuzentzailea.
-- **Forma esplizitua**: $y = mx + b$, non $m$ malda den eta $b$ ordenatua jatorrian.
-
-### Topologia
-
-Topologikoki, ohiko topologiaz hornitutako edozein zuzen euklidear $\mathbb{R}$ zuzen errealarekiko homeomorfoa da. $1$ dimentsio topologikoko espazio metriko oso, konexu eta ez-konpaktua da.
-
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Inzidentzia eta geometria lineala">
-    <PropiedadItem id="axioma-incidencia-1" title="Existentzia eta bakartasuna bi puntutatik">
-      $A \neq B$ emanda, $\ell$ zuzen bakar bat existitzen da non $A \in \ell$ eta $B \in \ell$ diren.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-2" title="Gutxieneko puntuak zuzenean">
-      Edozein zuzenek gutxienez bi puntu desberdin ditu.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-orden-2" title="Hedapen mugagabea">
-      $A$ eta $B$ emanda, $C$ puntu bat existitzen da non $A * B * C$ den.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
+- **<ConceptLink targetId="incidencia">Intzidentzia-sistemetan</ConceptLink>:** Puntuen eta zuzenen arteko posizio-kidetza ezartzen dute: bi puntu desberdinek zuzen bakar bat zehazten dute (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>), zuzen orok gutxienez bi puntu ditu (<ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>), zuzenetik kanpoko puntuak existitzen dira (<ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>), zuzena plano batean sartuta geratzen da planoak haren bi puntu baditu (<ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>) eta bi plano desberdinen ebakidura zuzen bat da (<ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>).
+- **<ConceptLink targetId="estar-entre">Ordena edo bitartekotasuna</ConceptLink> gehitzean:** Zuzenaren gaineko puntuak sekuentzialki eta muturrik gabe antolatzen dira (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>), bi noranzkoetako hedapen mugagabea formalizatzea eta <ConceptLink targetId="segmento">segmentua</ConceptLink> zein <ConceptLink targetId="semirrecta">zuzenerdia</ConceptLink> mugatzea ahalbidetuz.
+- **<ConceptLink targetId="congruencia">Kongruentzia</ConceptLink> gehitzean:** Zuzenaren gaineko puntu-pareak segmentu kongruente gisa alderatzea eta garraiatzea ahalbidetzen du (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink>), oraindik <ConceptLink targetId="distancia">distantziaren</ConceptLink> zenbakizko noziorik aurresuposatu gabe.
+- **<ConceptLink targetId="paralelas">Paralelismoa</ConceptLink> finkatzean:** Zuzen jakin bat ebakitzen ez duten zenbat zuzen igaro daitezkeen zehazten du, geometria euklidearra (<ConceptLink targetId="axioma-paralelas-euclides">Euklidesen postulatua</ConceptLink>, paralelo bakarra) eta hiperbolikoa (<ConceptLink targetId="axioma-paralelas-hiperbolico">postulatu hiperbolikoa</ConceptLink>, paralelo anitzak) bereiziz.
+- **<ConceptLink targetId="continuidad">Jarraitutasuna</ConceptLink> gehitzean:** Zuzena lerro jarraitu neurgarri gisa jokatzea bermatzen du: magnitude infinitesimalik (<ConceptLink targetId="axioma-arquimedes">Arkimedes, V.1</ConceptLink>) eta hutsunerik gabe (<ConceptLink targetId="axioma-completitud">osotasuna, V.2</ConceptLink>).

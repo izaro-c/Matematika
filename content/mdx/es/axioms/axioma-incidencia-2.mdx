@@ -3,8 +3,8 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma I.2 (Existencia de puntos en la recta)",
-  description: "Toda recta contiene al menos dos puntos distintos del espacio.",
-  branch: "51M",
+  description: "Toda recta contiene al menos dos puntos distintos.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,31 +16,19 @@ export const metadata = {
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="E" />l segundo axioma de incidencia estipula que cualquier <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> posee una pluralidad mínima de elementos, al albergar no menos de dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> diferenciados. Esta condición previene la existencia de rectas degeneradas compuestas por un único punto o carentes de extensión lineal.
+<Capitular letra="T" />oda <ConceptLink targetId="recta">recta</ConceptLink> contiene al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos.
 
-<Definicion title="Enunciado formal">
-  Para toda <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$, existen al menos dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos $A, B \in \mathcal{S}$ que pertenecen a $l$:
+Este axioma garantiza que las rectas no sean conjuntos vacíos ni estén formadas por un único punto aislado, asegurando que cada línea tenga contenido geométrico real sobre el cual operar.
+
+<Definicion title="Enunciado Formal">
+  Para toda <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind>, existen al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> que <ConceptLink targetId="incidencia">inciden</ConceptLink> en $\ell$:
   $$
-  \forall l \in \mathcal{L}, \ \exists A, B \in \mathcal{S} \ \bigl(A \in l \land B \in l \land A \neq B\bigr)
+  \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \in \ell \land B \in \ell)
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Importancia en la teoría
 
-En la simulación interactiva, la recta <VisualBind element="lineCD" color="carbon">$l$</VisualBind> contiene los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind>. La interacción demuestra que sobre cualquier recta dada siempre se pueden situar y deslizar al menos dos posiciones independientes con $A \neq B$.
-
-<Separador />
-
-### Significado geométrico y alcance
-
-Garantiza que las rectas no son entidades puntuales aisladas ni conjuntos vacíos, sino estructuras constituidas por múltiples posiciones geométricamente distinguibles. Junto con el axioma I.1, asegura una relación biunívoca básica de soporte lineal.
-
-<Separador />
-
-### Propiedades
-
-- **No degeneración:** Prohíbe rectas compuestas por un solo punto o vacías.
-- **Multitud elemental:** Sirve de punto de partida para demostrar que toda recta contiene infinitos puntos tras incorporar los axiomas de <ConceptLink targetId="axioma-orden-1">orden</ConceptLink>.
-- **Sostenibilidad del segmento:** Permite la formación del <ConceptLink targetId="segmento">segmento</ConceptLink> no trivial $\overline{AB}$.
+Junto con el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>, establece una correspondencia recíproca: dos puntos determinan una recta, y toda recta contiene al menos dos puntos para poder ser identificada.

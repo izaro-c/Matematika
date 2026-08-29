@@ -4,11 +4,11 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Line",
-  description: "One-dimensional continuous and infinite geometric object extending in both directions without curvature.",
+  description: "Primitive geometric concept of purely linear extension, without width or thickness, whose properties are established by the axioms of the adopted formal system.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Elements", author: "Euclid", locator: "Book I, Definitions 2 & 4", role: "primary" },
+    { title: "Elements", author: "Euclid", locator: "Book I, Definitions 2 and 4", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
   ]
 };
@@ -16,47 +16,26 @@ export const metadata = {
 import { Recta } from '@content/diagrams/Definiciones/Recta';
 export const Simulation = Recta;
 
-<Capitular letra="A" /> line is a continuous one-dimensional geometric entity that extends indefinitely in both directions without curvature. In synthetic geometry, it constitutes an undefined primitive notion that, together with the <ConceptLink targetId="punto">point</ConceptLink> and the <ConceptLink targetId="plano">plane</ConceptLink>, underpins the axiomatic structure of incidence and order.
+<Capitular letra="A" /> <VisualBind element="lineAB" color="musgo">**line**</VisualBind> is a <ConceptLink targetId="concepto-primitivo">primitive concept</ConceptLink> of geometry: the simplest linear object in space, possessing neither width nor thickness.
 
-<Definicion title="">
-  Given two distinct points <VisualBind element="pA" color="musgo">$A$</VisualBind> and <VisualBind element="pB" color="musgo">$B$</VisualBind> in an affine or Euclidean space $\mathcal{E}$, the line <VisualBind element="lineAB" color="musgo">$\ell = \overleftrightarrow{AB}$</VisualBind> is the one-dimensional continuous set formed by all affine combinations of $A$ and $B$:
+Being a basic notion, it is not defined in terms of other figures. Instead, its formal behavior and its relations to <ConceptLink targetId="punto">points</ConceptLink> and <ConceptLink targetId="plano">planes</ConceptLink> are established by the <ConceptLink targetId="axioma">axioms</ConceptLink> of the adopted <ConceptLink targetId="sistema-axiomatico">formal system</ConceptLink>.
+
+<Definicion title="Formal Definition">
+  In a <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink> $\mathcal{S}$, a **line** <VisualBind element="lineAB" color="musgo">$\ell$</VisualBind> is any element of the non-empty <ConceptLink targetId="conjunto">set</ConceptLink> of lines $\mathcal{L}$:
   $$
-  \ell = \{ P \in \mathcal{E} \mid P = (1 - t)A + tB, \, t \in \mathbb{R} \}
+  \ell \in \mathcal{L}
   $$
+  In isolation, a line possesses no intrinsic properties; its mathematical meaning arises exclusively from the relations that the axioms establish between lines and other elements of space.
 </Definicion>
 
 <Separador />
 
-### Synthetic geometry
+### Fundamental axiomatic relations
 
-In Hilbert's formal framework, lines are elements of the second fundamental set governed by the axioms of incidence and order:
-- **Uniqueness of incidence**: Two distinct points determine a unique line.
-- **Linear continuity**: Any point on a line partitions the line into two disjoint <ConceptLink targetId="semirrecta">rays</ConceptLink>.
-- **Betweenness**: The <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation establishes a strict, dense linear order among the points of the line.
+Since a line lacks internal structure, what can be asserted about it depends on which groups of axioms are incorporated into the adopted <ConceptLink targetId="sistema-axiomatico">geometric system</ConceptLink> (a specific system may be restricted to only the first few):
 
-### Analytic geometry
-
-In the Cartesian plane $\mathbb{R}^2$, a line is represented by its general implicit equation or parametric vector form:
-- **General equation**: $Ax + By + C = 0$, with $(A, B) \neq (0, 0)$.
-- **Vector form**: $\vec{r}(t) = \vec{p}_0 + t\vec{v}$, where $\vec{p}_0$ is an anchor point and $\vec{v} \neq \vec{0}$ is the direction vector.
-- **Slope-intercept form**: $y = mx + b$, where $m$ is the slope and $b$ is the $y$-intercept.
-
-### Topology
-
-Topologically, any Euclidean line equipped with the standard topology is homeomorphic to the real line $\mathbb{R}$. It constitutes a complete, connected, non-compact metric space of topological dimension $1$.
-
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Incidence and linear geometry">
-    <PropiedadItem id="axioma-incidencia-1" title="Existence and uniqueness through two points">
-      Given $A \neq B$, there exists a unique line $\ell$ such that $A \in \ell$ and $B \in \ell$.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-2" title="Minimum points per line">
-      Every line contains at least two distinct points.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-orden-2" title="Indefinite extension">
-      Given $A$ and $B$, there exists a point $C$ such that $A * B * C$.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
+- **In <ConceptLink targetId="incidencia">incidence</ConceptLink> systems:** They establish positional membership between points and lines: two distinct points determine a unique line (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>), every line contains at least two points (<ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>), points not lying on a given line exist (<ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>), a line is contained in a plane if the plane contains two of its points (<ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>), and the intersection of two distinct planes is a line (<ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>).
+- **Upon adding <ConceptLink targetId="estar-entre">order or betweenness</ConceptLink>:** Points on the line are arranged sequentially without endpoints (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>), formalizing boundless extension in both directions and enabling the definition of figures such as the <ConceptLink targetId="segmento">segment</ConceptLink> and the <ConceptLink targetId="semirrecta">ray</ConceptLink>.
+- **Upon adding <ConceptLink targetId="congruencia">congruence</ConceptLink>:** Allows pairs of points on the line to be compared as congruent segments (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink>), without yet presupposing a numerical notion of <ConceptLink targetId="distancia">distance</ConceptLink>.
+- **Upon fixing <ConceptLink targetId="paralelas">parallelism</ConceptLink>:** Determines how many lines not intersecting a given line can pass through an external point, distinguishing Euclidean geometry (<ConceptLink targetId="axioma-paralelas-euclides">Euclid's postulate</ConceptLink>, a unique parallel) from hyperbolic geometry (<ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic postulate</ConceptLink>, multiple parallels).
+- **Upon adding <ConceptLink targetId="continuidad">continuity</ConceptLink>:** Guarantees that the line of points behaves as a measurable continuum: free of infinitesimal magnitudes (<ConceptLink targetId="axioma-arquimedes">Archimedes, V.1</ConceptLink>) and gaps (<ConceptLink targetId="axioma-completitud">completeness, V.2</ConceptLink>).

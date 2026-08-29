@@ -3,7 +3,7 @@ export const metadata = {
   lang: "es",
   type: "modelo",
   title: "Plano de Fano",
-  description: "El plano proyectivo finito más pequeño, compuesto por exactamente 7 puntos y 7 rectas.",
+  description: "El plano proyectivo finito más pequeño posible, compuesto por exactamente 7 puntos y 7 rectas.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
@@ -13,34 +13,21 @@ export const metadata = {
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
 export const Diagram = ModeloFano;
 
-<Capitular letra="E" />l plano de Fano, denotado algebraicamente como $\mathrm{PG}(2, 2)$, constituye el <ConceptLink targetId="sistema-incidencia">modelo finito de incidencia</ConceptLink> y plano proyectivo más pequeño posible. Desarrollado sobre el cuerpo finito $\mathbb{F}_2 = \{0, 1\}$, contiene exactamente $7$ puntos y $7$ rectas, exhibiendo una simetría combinatoria perfecta donde el concepto euclídeo de paralelismo desaparece por completo.
+<Capitular letra="E" />l **plano de Fano** (denotado $\mathrm{PG}(2, 2)$) es el <ConceptLink targetId="sistema-incidencia">modelo de incidencia</ConceptLink> finito y plano proyectivo más pequeño que existe. Está formado por exactamente 7 <ConceptLink targetId="punto">puntos</ConceptLink> y 7 <ConceptLink targetId="recta">rectas</ConceptLink>, con una simetría combinatoria perfecta donde dos rectas cualesquiera siempre se cortan en un único punto.
+
+<Definicion title="Estructura Combinatoria">
+  El plano de Fano está compuesto por:
+  - **7 Puntos**: <VisualBind element="p1" color="terracota">1</VisualBind>, <VisualBind element="p2" color="terracota">2</VisualBind>, <VisualBind element="p3" color="terracota">3</VisualBind>, <VisualBind element="p4" color="terracota">4</VisualBind>, <VisualBind element="p5" color="terracota">5</VisualBind>, <VisualBind element="p6" color="terracota">6</VisualBind> y <VisualBind element="p7" color="musgo">7</VisualBind>.
+  - **7 Rectas** (cada una formada por una terna de puntos):
+    - Tres lados del triángulo exterior: <VisualBind element="l1" color="carbon">$\{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$\{2, 3, 5\}$</VisualBind>, <VisualBind element="l3" color="carbon">$\{3, 1, 6\}$</VisualBind>.
+    - Tres líneas medianas concurrentes: <VisualBind element="l4" color="carbon">$\{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$\{2, 6, 7\}$</VisualBind>, <VisualBind element="l6" color="carbon">$\{3, 4, 7\}$</VisualBind>.
+    - Un círculo interior (recta proyectiva): <VisualBind element="l7" color="musgo">$\{4, 5, 6\}$</VisualBind>.
+</Definicion>
 
 <Separador />
 
-### Estructura combinatoria
+### Verificación de axiomas y propiedades
 
-La configuración de Fano se define rigurosamente mediante el espacio vectorial tridimensional $\mathbb{F}_2^3 \setminus \{(0, 0, 0)\}$:
-
-- **<ConceptLink targetId="punto">Puntos</ConceptLink>**: Los $7$ subespacios vectoriales unidimensionales de $\mathbb{F}_2^3$: <VisualBind element="p1" color="terracota">punto $1$</VisualBind>, <VisualBind element="p2" color="terracota">punto $2$</VisualBind>, <VisualBind element="p3" color="terracota">punto $3$</VisualBind>, <VisualBind element="p4" color="terracota">punto $4$</VisualBind>, <VisualBind element="p5" color="terracota">punto $5$</VisualBind>, <VisualBind element="p6" color="terracota">punto $6$</VisualBind> y el <VisualBind element="p7" color="musgo">punto central $7$</VisualBind>.
-- **<ConceptLink targetId="recta">Rectas</ConceptLink>**: Los $7$ subespacios bidimensionales (planos vectoriales), representados por tríos de puntos:
-  - Tres lados del triángulo exterior: <VisualBind element="l1" color="carbon">$l_1 = \{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$l_2 = \{2, 3, 5\}$</VisualBind> y <VisualBind element="l3" color="carbon">$l_3 = \{3, 1, 6\}$</VisualBind>.
-  - Tres medianas concurrentes: <VisualBind element="l4" color="carbon">$l_4 = \{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$l_5 = \{2, 6, 7\}$</VisualBind> y <VisualBind element="l6" color="carbon">$l_6 = \{3, 4, 7\}$</VisualBind>.
-  - El círculo interior (recta proyectiva no euclídea): <VisualBind element="l7" color="musgo">$l_7 = \{4, 5, 6\}$</VisualBind>.
-
-<Separador />
-
-### Verificación de los axiomas de incidencia
-
-El plano de Fano satisface los axiomas fundamentales de la geometría proyectiva y de incidencia:
-
-- **<ConceptLink targetId="axioma-incidencia-1">Axioma I-1</ConceptLink>**: Cualesquiera dos puntos distintos determinan una única recta que incide en ambos.
-- **Axioma de intersección proyectiva**: Cualesquiera dos rectas distintas se intersecan en exactamente un único punto (no existen <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>).
-- **Uniformidad**: Cada recta contiene exactamente $3$ puntos y por cada punto pasan exactamente $3$ rectas.
-- **No colinealidad global**: Existen cuatro puntos tales que ningún trío de ellos pertenece a una misma recta.
-
-<Separador />
-
-### Propiedades algebraicas
-
-- **Dualidad proyectiva**: Al intercambiar los roles de puntos y rectas, el sistema resultante es isomorfo al plano original.
-- **Grupo de automorfismos**: Su grupo de simetría es el grupo lineal proyectivo $\mathrm{PGL}(3, 2) \cong \mathrm{PSL}(2, 7)$, con un orden de $168$ elementos, fundamental en teoría de grupos finitos y códigos correctores de errores.
+- **<ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>:** Dos puntos cualesquiera pertenecen a una única recta compartida.
+- **Intersección proyectiva:** Dos rectas distintas cualesquiera se cortan exactamente en un único punto; no existen <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>.
+- **Uniformidad simétrica:** Cada recta contiene exactamente 3 puntos, y por cada punto pasan exactamente 3 rectas.

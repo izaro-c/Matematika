@@ -2,45 +2,34 @@ export const metadata = {
   id: "axioma-incidencia-1",
   lang: "eu",
   type: "axioma",
-  title: "I.1 axioma (Zuzenaren existentzia eta bakartasuna)",
-  description: "Espazioko bi puntu desberdin emanda, biak barnean hartzen dituen zuzen bakarra existitzen da.",
-  branch: "51M",
+  title: "I.1 Axioma (Zuzenaren determinazioa)",
+  description: "Edozein bi puntu desberdinetatik zuzen bakar bat igarotzen da.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
   ]
 };
 
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="E" />spazioko edozein bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinetarako, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> formulatutako lehen intzidentzia-axiomak bietatik igarotzen den <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> baten existentzia eta bakartasuna bermatzen ditu. Postulatu hau lotura linealaren oinarria da <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
+<Capitular letra="E" />dozein bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin emanda, bietatik igarotzen den <ConceptLink targetId="recta">zuzen</ConceptLink> bakar bat existitzen da zehazki.
 
-<Definicion title="Enuntziatu formala">
-  Edozein bi $A, B \in \mathcal{S}$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinetarako ($A \neq B$), $A$ eta $B$ barnean dituen $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bakarra existitzen da:
+Postulatu honek geometriako oinarrizko lotura lineala ezartzen du: bi puntu desberdinek norabide bat eta lerro zuzen oso bat zehazten dituzte modu unibokoan.
+
+<Definicion title="Enuntziatu Formala">
+  Edozein bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako (<VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind>, $A \neq B$), <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bakar bat existitzen da, non $A$ eta $B$ $\ell$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten:
   $$
-  \forall A, B \in \mathcal{S} \ \bigl(A \neq B \implies \exists! l \in \mathcal{L} \ (A \in l \land B \in l)\bigr)
+  \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \in \ell \land B \in \ell)\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
+### Garrantzia teorian
 
-Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntuek modu unibokoan zehazten dute <VisualBind element="lineAB" color="carbon">$l$</VisualBind> zuzen euskarria. Planoan bi puntuetako edozein aske mugitzean, zuzenaren posizioa eta orientazioa berehala birkalkulatzen dira, partaideitza bikoitzaren baldintza zorrotza mantenduz.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Axioma honek ezartzen du bi puntuk norabide eta ibilbide zuzen bat zehazten dutela modu esklusiboan. Puntu berak lotzen dituzten lerro paralelo anizkoitzak edo bide erredundanteak eragozten ditu axioma gehigarririk gabe.
-
-<Separador />
-
-### Propietateak
-
-- **Ibilbidearen bakartasuna:** Bi puntu desberdin ezin dira aldi berean bi zuzen desberdinenak izan.
-- **Sistemarekiko independentzia:** Balio osoa gordetzen du bai <ConceptLink targetId="sistema-euclidiano">geometria euklidearrean</ConceptLink> bai <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoan</ConceptLink>.
-- **Elkarrekiko konexioaren oinarria:** $\overline{AB}$ <ConceptLink targetId="segmento">zuzenkia</ConceptLink> zuzen euskarriaren azpimultzo jarraitu gisa definitzea ahalbidetzen du.
+- **Zuzenaren bakartasuna:** Bi puntuk ezin dute zuzen komun bat baino gehiago partekatu.
+- **Gehienezko ebakidura:** Zuzeneko ondorio gisa, bi zuzen desberdinek elkar gehienez puntu bakar batean ebakitzen dute.

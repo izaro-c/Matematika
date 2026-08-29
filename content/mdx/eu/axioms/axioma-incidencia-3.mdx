@@ -2,45 +2,34 @@ export const metadata = {
   id: "axioma-incidencia-3",
   lang: "eu",
   type: "axioma",
-  title: "I.3 axioma (Hiru puntu ez-kolinealen existentzia)",
-  description: "Espazioan gutxienez hiru puntu existitzen dira zuzen berekoak ez direnak.",
-  branch: "51M",
+  title: "I.3 Axioma (Puntu ez-kolinealak)",
+  description: "Zuzen berekoak ez diren gutxienez hiru puntu existitzen dira.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
   ]
 };
 
 import { Incidence3 } from '@content/diagrams/Axiomas/Incidence3';
 export const Simulation = Incidence3;
 
-<Capitular letra="H" />irugarren intzidentzia-axiomak ezartzen du <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> berean lerrokatuta ez dauden gutxienez hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> existitzen direla. Printzipio honek unibertso geometrikoak gutxienez bi dimentsio dituela bermatzen du, espazioa dimentsio bakarreko lerro bakar batean kolapsatzea eragotziz.
+<Capitular letra="Z" />**uzen** berean kokatuta ez dauden gutxienez hiru <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira.
 
-<Definicion title="Enuntziatu formala">
-  Gutxienez hiru $A, B, C \in \mathcal{S}$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> existitzen dira, $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> batek ere hirurak batera barnean hartzen ez dituelarik:
+Axioma honek geometria dimentsio bakarreko lerro batera ez mugatzea bermatzen du, azalera eta <ConceptLink targetId="triangulo">triangelua</ConceptLink> bezalako irudi poligonalak dituen bi dimentsioko plano baten existentzia ziurtatuz.
+
+<Definicion title="Enuntziatu Formala">
+  Gutxienez hiru <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira (<VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind>), non $\ell$ <ConceptLink targetId="recta">zuzen</ConceptLink> batek ere ez dituen hirurak batera biltzen:
   $$
-  \exists A, B, C \in \mathcal{S} \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
+  \exists A, B, C \in \mathcal{P} \ \forall \ell \in \mathcal{L} \ \neg(A \in \ell \land B \in \ell \land C \in \ell)
   $$
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
+### Garrantzia teorian
 
-Simulazio interaktiboan, <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind> hiru puntuek <VisualBind element="polygonABC" color="ocre">$\triangle ABC$</VisualBind> triangelu planarra osatzen dute. Erpinetako edozein mugitzean, egiaztatzen da ez dagoela hiru puntuak aldi berean xurgatzeko gai den zuzen bakar bat ere konfigurazio ez-lerrokatuan dauden bitartean.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Geometriaren berezko dimentsioaniztasuna bermatzen du. Puntu ez-kolinealen hirukoteen existentzia ziurtatuz, azalera positiboko irudiak definitzeko ezinbesteko oinarria eskaintzen du, hala nola <ConceptLink targetId="triangulo">triangeluak</ConceptLink> eta <ConceptLink targetId="poligono">poligonoak</ConceptLink> <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
-
-<Separador />
-
-### Propietateak
-
-- **Gutxieneko dimentsionaltasuna:** Espazio geometrikoaren dimentsioa $2$ edo handiagoa dela bermatzen du zorrozki ($\dim \ge 2$).
-- **Planoaren sorrera:** I.4 axiomarekin batera, ondo zehaztutako <ConceptLink targetId="plano" isDependency={true}>planoen</ConceptLink> existentzia finkatzea ahalbidetzen du.
-- **Independentzia afina:** Hiru puntuek oinarri afin aske gisa jokatzen dute bi dimentsiotan.
+- **<ConceptLink targetId="colinealidad">Ez-kolinealtasuna</ConceptLink>:** Lerrokatuta ez dauden puntu-hirukoteen existentzia definitzen du formalki.
+- **Planoen oinarria:** Axioma honek bermatutako hiru puntu ez-kolinealek espazioko lehen <ConceptLink targetId="plano">planoa</ConceptLink> definitzeko beharrezko oinarria osatzen dute.

@@ -2,9 +2,9 @@ export const metadata = {
   id: "axioma-incidencia-4",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.4 (Existence and Uniqueness of the Plane)",
-  description: "Given three non-collinear points in space, there exists exactly one plane containing all three.",
-  branch: "51M",
+  title: "Axiom I.4 (Determination of the Plane)",
+  description: "Through any three non-collinear points passes at least one plane.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,31 +16,19 @@ export const metadata = {
 import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 
-<Capitular letra="G" />iven any three non-collinear <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, the fourth incidence axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> guarantees the existence and uniqueness of a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> containing all three. This postulate defines the fundamental two-dimensional extension in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+<Capitular letra="G" />iven any three non-collinear <ConceptLink targetId="punto">points</ConceptLink>, there exists at least one <ConceptLink targetId="plano">plane</ConceptLink> containing all three.
 
-<Definicion title="Formal statement">
-  Given three non-collinear <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B, C \in \mathcal{S}$, there exists a unique <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \mathcal{E}$ incident with $A, B, C$:
+This postulate extends the principle of linear determination to two-dimensional space: just as two points fix a line, three non-aligned points fix the position of a plane in space.
+
+<Definicion title="Formal Statement">
+  For any three non-collinear <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind>, there exists at least one <ConceptLink targetId="plano">plane</ConceptLink> $\pi$ such that all three points <ConceptLink targetId="incidencia">are incident</ConceptLink> with $\pi$:
   $$
-  \forall A, B, C \in \mathcal{S} \ \Bigl(\neg\exists l \in \mathcal{L} \ (A,B,C \in l) \implies \exists! \pi \in \mathcal{E} \ (A \in \pi \land B \in \pi \land C \in \pi)\Bigr)
+  \forall A, B, C \in \mathcal{P} \ \bigl(\text{non-collinear}(A, B, C) \implies \exists \pi \in \Pi \ (A \in \pi \land B \in \pi \land C \in \pi)\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Visual representation and interaction
+### Significance in the theory
 
-In the interactive simulation, the three vertices <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind>, along with sides <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="carbon">$\overline{BC}$</VisualBind>, and <VisualBind element="segCA" color="carbon">$\overline{CA}$</VisualBind>, delimit the triangle <VisualBind element="polyTriangulo" color="canela">$\triangle ABC$</VisualBind>. Moving the points in a non-collinear configuration uniquely establishes the supporting plane surface.
-
-<Separador />
-
-### Geometric significance and scope
-
-This postulate defines the plane as the elementary two-dimensional manifold spanned by three free points. It ensures that three non-aligned points admit no angular ambiguity or multiple planar orientations in three-dimensional space.
-
-<Separador />
-
-### Properties
-
-- **Planar determination:** Three non-collinear points uniquely fix the position and orientation of a plane.
-- **Triangle support:** Every <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ lies on a single well-defined plane.
-- **Dimensional transition:** Permits the rigorous transition from one-dimensional linear analysis to two-dimensional planar analysis.
+Enables the construction of planes from minimal configurations of points and supports the study of three-dimensional geometry in the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>.

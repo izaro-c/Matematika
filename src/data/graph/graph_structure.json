@@ -1,10 +1,7 @@
 {
   "topologicalOrder": [
-    "punto",
-    "recta",
     "axioma-incidencia-1",
     "axioma-incidencia-2",
-    "plano",
     "axioma-incidencia-3",
     "axioma-incidencia-4",
     "axioma-incidencia-5",
@@ -12,6 +9,8 @@
     "axioma-incidencia-7",
     "axioma-incidencia-8",
     "estar-entre",
+    "punto",
+    "recta",
     "axioma-orden-1",
     "axioma-orden-2",
     "axioma-orden-3",
@@ -26,6 +25,7 @@
     "axioma-completitud",
     "sistema-incidencia",
     "sistema-absoluto",
+    "plano",
     "axioma-paralelas-euclides",
     "sistema-euclidiano",
     "axioma-paralelas-hiperbolico",
@@ -34,15 +34,26 @@
     "angulo",
     "angulos-suplementarios",
     "circunferencia",
+    "concepto-primitivo",
+    "conjunto-disjunto",
     "segmento",
     "cuadrilatero",
     "cuadrado",
     "derivada",
+    "dimension",
+    "dominio",
+    "espacio",
+    "estructura-geometrica",
+    "geometria-hilbertiana",
+    "geometria-sintetica",
     "grupo",
+    "incidencia",
     "paralelas",
     "paralelogramo",
     "perpendicular",
     "semejanza",
+    "semiplano",
+    "signatura",
     "teoria-medida-area",
     "triangulo",
     "triangulo-rectangulo",
@@ -69,12 +80,23 @@
     "arquimedes",
     "bolyai",
     "dedekind",
+    "descartes",
     "euclides",
+    "fermat",
     "hilbert",
+    "hurewicz",
+    "lebesgue",
     "lobachevski",
+    "menger",
     "pasch",
+    "peano",
     "pitagoras",
+    "poncelet",
+    "staudt",
+    "steiner",
     "tales",
+    "urysohn",
+    "wallman",
     "metodo-contradiccion",
     "metodo-directo",
     "metodo-induccion",
@@ -181,7 +203,7 @@
       "id": "sistema-incidencia",
       "type": "sistema-axiomatico",
       "title": "Intzidentzia-sistema",
-      "description": "Puntu, zuzen eta planoen arteko partaideitza- eta ebakidura-erlazio formalak arautzen dituen oinarrizko egitura axiomatikoa.",
+      "description": "Geometriaren oinarrizko egitura axiomatikoa, puntu, zuzen eta planoen arteko kidetza-arauak ezartzen dituena distantzia edo ordena noziorik gabe.",
       "proofs": [],
       "directDependencies": [
         "axioma-incidencia-1",
@@ -271,94 +293,66 @@
     "axioma-incidencia-1": {
       "id": "axioma-incidencia-1",
       "type": "axioma",
-      "title": "I.1 axioma (Zuzenaren existentzia eta bakartasuna)",
-      "description": "Espazioko bi puntu desberdin emanda, biak barnean hartzen dituen zuzen bakarra existitzen da.",
+      "title": "I.1 Axioma (Zuzenaren determinazioa)",
+      "description": "Edozein bi puntu desberdinetatik zuzen bakar bat igarotzen da.",
       "proofs": [],
-      "directDependencies": [
-        "punto",
-        "recta"
-      ]
+      "directDependencies": []
     },
     "axioma-incidencia-2": {
       "id": "axioma-incidencia-2",
       "type": "axioma",
-      "title": "I.2 axioma (Puntuen existentzia zuzenean)",
-      "description": "Edozein zuzenek espazioko gutxienez bi puntu desberdin ditu barnean.",
+      "title": "I.2 Axioma (Puntuak zuzenean)",
+      "description": "Zuzen orok gutxienez bi puntu desberdin ditu.",
       "proofs": [],
-      "directDependencies": [
-        "recta",
-        "punto"
-      ]
+      "directDependencies": []
     },
     "axioma-incidencia-3": {
       "id": "axioma-incidencia-3",
       "type": "axioma",
-      "title": "I.3 axioma (Hiru puntu ez-kolinealen existentzia)",
-      "description": "Espazioan gutxienez hiru puntu existitzen dira zuzen berekoak ez direnak.",
+      "title": "I.3 Axioma (Puntu ez-kolinealak)",
+      "description": "Zuzen berekoak ez diren gutxienez hiru puntu existitzen dira.",
       "proofs": [],
-      "directDependencies": [
-        "recta",
-        "punto",
-        "plano"
-      ]
+      "directDependencies": []
     },
     "axioma-incidencia-4": {
       "id": "axioma-incidencia-4",
       "type": "axioma",
-      "title": "I.4 axioma (Planoaren existentzia eta bakartasuna)",
-      "description": "Espazioko hiru puntu ez-kolineal emanda, hirurak barnean hartzen dituen plano bakarra existitzen da.",
+      "title": "I.4 Axioma (Planoaren determinazioa)",
+      "description": "Kolinealak ez diren hiru puntutatik gutxienez plano bat igarotzen da.",
       "proofs": [],
-      "directDependencies": [
-        "punto",
-        "plano"
-      ]
+      "directDependencies": []
     },
     "axioma-incidencia-5": {
       "id": "axioma-incidencia-5",
       "type": "axioma",
-      "title": "I.5 axioma (Planoan puntu ez-kolinealak existitzea)",
-      "description": "Edozein planotan lerrokatuta ez dauden gutxienez hiru puntu existitzen dira.",
+      "title": "I.5 Axioma (Planoaren bakartasuna eta puntu ez-kolinealak)",
+      "description": "Kolinealak ez diren hiru puntutatik gehienez plano bat igarotzen da, eta plano orok kolinealak ez diren gutxienez hiru puntu ditu.",
       "proofs": [],
-      "directDependencies": [
-        "plano",
-        "punto",
-        "recta"
-      ]
+      "directDependencies": []
     },
     "axioma-incidencia-6": {
       "id": "axioma-incidencia-6",
       "type": "axioma",
-      "title": "I.6 axioma (Zuzenaren inklusioa planoan)",
-      "description": "Zuzen baten bi puntu desberdin plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
+      "title": "I.6 Axioma (Zuzena planoan sartzea)",
+      "description": "Zuzen baten bi puntu plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
       "proofs": [],
-      "directDependencies": [
-        "punto",
-        "plano",
-        "recta"
-      ]
+      "directDependencies": []
     },
     "axioma-incidencia-7": {
       "id": "axioma-incidencia-7",
       "type": "axioma",
-      "title": "I.7 axioma (Bi planoren ebakidura)",
-      "description": "Bi plano desberdinek puntu komun bat badute, haien ebakidura zuzen oso bat da.",
+      "title": "I.7 Axioma (Planoen ebakidura)",
+      "description": "Bi plano desberdinek puntu komun bat badute, haien ebakidura zuzen bat da zehazki.",
       "proofs": [],
-      "directDependencies": [
-        "plano",
-        "punto",
-        "recta"
-      ]
+      "directDependencies": []
     },
     "axioma-incidencia-8": {
       "id": "axioma-incidencia-8",
       "type": "axioma",
-      "title": "I.8 axioma (Plano berekoak ez diren lau punturen existentzia)",
-      "description": "Espazioan plano berekoak ez diren gutxienez lau puntu existitzen dira.",
+      "title": "I.8 Axioma (Hiru dimentsioko espazioa)",
+      "description": "Plano berekoak ez diren gutxienez lau puntu existitzen dira espazioan.",
       "proofs": [],
-      "directDependencies": [
-        "punto",
-        "plano"
-      ]
+      "directDependencies": []
     },
     "axioma-orden-1": {
       "id": "axioma-orden-1",
@@ -468,12 +462,30 @@
         "punto"
       ]
     },
+    "concepto-primitivo": {
+      "id": "concepto-primitivo",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Oinarrizko kontzeptua",
+      "description": "Aurreko objektuetatik definitzen ez den oinarrizko nozio matematikoa; bere esanahia eta portaera sistema formalaren axiomek finkatzen dituzte.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "congruencia": {
       "id": "congruencia",
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Kongruentzia geometrikoa",
       "description": "Dimentsioak, distantziak eta angelu-irekidurak kontserbatzen dituzten konfigurazio geometrikoa lotzen dituen baliokidetasun- eta zurruntasun-erlazio primitiboa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "conjunto-disjunto": {
+      "id": "conjunto-disjunto",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Multzo disjuntuak",
+      "description": "Haien ebakidura hutsik duten bi multzo edo gehiago; hau da, elementu komunik partekatzen ez dutenak.",
       "proofs": [],
       "directDependencies": []
     },
@@ -511,6 +523,33 @@
       "proofs": [],
       "directDependencies": []
     },
+    "dimension": {
+      "id": "dimension",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Dimentsioa",
+      "description": "Espazio edo irudi batean puntu baten posizioa zehazteko behar diren askatasun-gradu edo parametro independenteen kopurua.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "dominio": {
+      "id": "dominio",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Domeinua",
+      "description": "Egitura matematiko edo teoria formal batean mota jakin bateko objektuak biltzen dituen abiapuntuko multzo ez-hutsa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "espacio": {
+      "id": "espacio",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Espazioa",
+      "description": "Teoria dimentsional bateko puntu, zuzen eta plano guztiak biltzen dituen eremu geometriko globala eta unibertso edukitzailea.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "estar-entre": {
       "id": "estar-entre",
       "type": "definicion",
@@ -520,12 +559,48 @@
       "proofs": [],
       "directDependencies": []
     },
+    "estructura-geometrica": {
+      "id": "estructura-geometrica",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Egitura geometrikoa",
+      "description": "Sistema axiomatiko bat betetzen duten objektu-domeinuek eta oinarrizko erlazioek osatutako zehaztapen formala.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "geometria-hilbertiana": {
+      "id": "geometria-hilbertiana",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Geometria hilbertiarra",
+      "description": "David Hilbertek 1899an proposatutako geometria euklidearraren refundazio axiomatiko zorrotza, bost talde independentetan banatutako 20 axiomatan oinarritua.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "geometria-sintetica": {
+      "id": "geometria-sintetica",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Geometria sintetikoa",
+      "description": "Geometriaren ikuspegi axiomatiko zuzena, irudiak eta eraikuntzak oinarrizko nozioetatik eta postulatuetatik aztertzen dituena, zenbakizko koordenaturik erabili gabe.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "grupo": {
       "id": "grupo",
       "type": "definicion",
       "subtype": "algebraico",
       "title": "Taldea",
       "description": "Asoziatibitatea, elementu neutroa eta alderantzizko elementua betetzen dituen eragiketa bitar batez hornitutako oinarrizko egitura aljebraikoa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "incidencia": {
+      "id": "incidencia",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Intzidentzia",
+      "description": "Puntu, zuzen eta planoen arteko posizio-kidetza ezartzen duen oinarrizko erlazio geometrikoa.",
       "proofs": [],
       "directDependencies": []
     },
@@ -569,7 +644,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Planoa",
-      "description": "Bi dimentsioko gainazal geometriko jarraitu, mugagabe eta laua, berezko kurbadurarik gabekoa.",
+      "description": "Kurbadurarik eta lodierarik gabeko oinarrizko kontzeptu geometrikoa; bere propietateak hautatutako sistema formalaren axiomek finkatzen dituzte.",
       "proofs": [],
       "directDependencies": []
     },
@@ -578,7 +653,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Puntua",
-      "description": "Espazio matematiko baten oinarrizko osagai zatiezina eta sistema axiomatikoetako jatorrizko nozio aldebakarrekoa.",
+      "description": "Geometriako oinarrizko kontzeptu zatiezina eta hedadura espazialik gabea; bere propietateak hautatutako sistema formalaren axiomek zehazten dituzte.",
       "proofs": [],
       "directDependencies": []
     },
@@ -587,7 +662,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Zuzena",
-      "description": "Dimentsio bakarreko objektu geometriko jarraitu eta infinitua, bi noranzkoetan kurbadurarik gabe hedatzen dena.",
+      "description": "Luzapen lineal hutseko oinarrizko kontzeptu geometrikoa, zabalerarik eta lodierarik gabea; bere propietateak hautatutako sistema formalaren axiomek finkatzen dituzte.",
       "proofs": [],
       "directDependencies": []
     },
@@ -615,6 +690,20 @@
         "congruencia"
       ]
     },
+    "semiplano": {
+      "id": "semiplano",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Planoerdia",
+      "description": "Zuzen batek plano bateko puntuak banatzean sortzen diren bi eskualde irekietako bakoitza.",
+      "proofs": [],
+      "directDependencies": [
+        "recta",
+        "plano",
+        "axioma-orden-4",
+        "segmento"
+      ]
+    },
     "semirrecta": {
       "id": "semirrecta",
       "type": "definicion",
@@ -627,6 +716,15 @@
         "punto",
         "estar-entre"
       ]
+    },
+    "signatura": {
+      "id": "signatura",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Sinadura",
+      "description": "Teoria matematiko baten hizkuntza ezaugarritzen duten mota-, erlazio- eta funtzio-ikurren bilduma formala.",
+      "proofs": [],
+      "directDependencies": []
     },
     "teoria-medida-area": {
       "id": "teoria-medida-area",
@@ -799,11 +897,27 @@
       "proofs": [],
       "directDependencies": []
     },
+    "descartes": {
+      "id": "descartes",
+      "type": "matematico",
+      "title": "René Descartes",
+      "description": "Frantziar filosofo eta matematikaria, koordenatu kartesiarren sortzailea eta geometria analitiko modernoaren aitzindaria.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "euclides": {
       "id": "euclides",
       "type": "matematico",
       "title": "Alexandriako Euklides",
       "description": "Antzinate klasikoko matematikari greziarra, Elementuak lanaren egilea, historiako tratatu axiomatiko eta geometrikorik eraginkorrena.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "fermat": {
+      "id": "fermat",
+      "type": "matematico",
+      "title": "Pierre de Fermat",
+      "description": "Zenbakien teorian eta kalkulu diferentzialean aitzindaria eta geometria analitikoaren sortzaileetako bat izan zen frantziar matematikaria.",
       "proofs": [],
       "directDependencies": []
     },
@@ -815,11 +929,35 @@
       "proofs": [],
       "directDependencies": []
     },
+    "hurewicz": {
+      "id": "hurewicz",
+      "type": "matematico",
+      "title": "Witold Hurewicz",
+      "description": "Dimentsioaren teorian eta homotopiaren teorian funtsezkoa izan zen poloniar matematikaria.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "lebesgue": {
+      "id": "lebesgue",
+      "type": "matematico",
+      "title": "Henri Lebesgue",
+      "description": "Neurriaren eta integralaren teoria eta estaldura-dimentsio topologikoa garatu zituen matematikari frantsesa.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "lobachevski": {
       "id": "lobachevski",
       "type": "matematico",
       "title": "Nikolai Lobatxevski",
       "description": "Matematikari eta geometrilari errusiarra, geometria ez-euklidear hiperbolikoaren lehen sortzaile eta argitaratzaile aitzindaria.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "menger": {
+      "id": "menger",
+      "type": "matematico",
+      "title": "Karl Menger",
+      "description": "Dimentsioaren teorian, topologia orokorrean eta grafoen teorian aitzindaria izan zen austriar matematikaria.",
       "proofs": [],
       "directDependencies": []
     },
@@ -831,6 +969,14 @@
       "proofs": [],
       "directDependencies": []
     },
+    "peano": {
+      "id": "peano",
+      "type": "matematico",
+      "title": "Giuseppe Peano",
+      "description": "Logika sinbolikoaren aitzindaria, zenbaki arrunten axiomak eta geometriaren axiomatizazio zorrotza garatu zituen italiar matematikaria.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "pitagoras": {
       "id": "pitagoras",
       "type": "matematico",
@@ -839,11 +985,51 @@
       "proofs": [],
       "directDependencies": []
     },
+    "poncelet": {
+      "id": "poncelet",
+      "type": "matematico",
+      "title": "Jean-Victor Poncelet",
+      "description": "Geometria proiektibo sintetiko modernoaren berritzaile nagusia izan zen matematikari eta ingeniari frantsesa.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "staudt": {
+      "id": "staudt",
+      "type": "matematico",
+      "title": "Karl Georg Christian von Staudt",
+      "description": "Geometria proiektiboa distantzia- eta neurri-nozio guztietatik guztiz independentizatu zuen alemaniar matematikaria.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "steiner": {
+      "id": "steiner",
+      "type": "matematico",
+      "title": "Jakob Steiner",
+      "description": "Metodo sintetiko hutsen aldeko defendatzaile sutsua eta historiako geometra sintetiko handienetakoa izan zen suitzar matematikaria.",
+      "proofs": [],
+      "directDependencies": []
+    },
     "tales": {
       "id": "tales",
       "type": "matematico",
       "title": "Miletoko Tales",
       "description": "Filosofo eta matematikari joniarra, historiako lehen benetako matematikaritzat eta geometria deduktiboaren aitzindaritzat hartua.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "urysohn": {
+      "id": "urysohn",
+      "type": "matematico",
+      "title": "Pavel Urysohn",
+      "description": "Topologia modernoaren aitzindari errusiarra, dimentsioaren teoria eta Urysohnen lema garatu zituena.",
+      "proofs": [],
+      "directDependencies": []
+    },
+    "wallman": {
+      "id": "wallman",
+      "type": "matematico",
+      "title": "Henry Wallman",
+      "description": "Dimentsioaren teorian eta trinkotze topologikoan aitzindaria izan zen estatubatuar matematikaria.",
       "proofs": [],
       "directDependencies": []
     },
@@ -889,7 +1075,7 @@
       "id": "modelo-fano",
       "type": "modelo",
       "title": "Fanoren planoa",
-      "description": "Plano proiektibo finiturik txikiena, zehazki 7 puntuk eta 7 zuzenek osatua.",
+      "description": "Existitzen den plano proiektibo finitu txikiena, zehazki 7 puntuz eta 7 zuzenez osatua.",
       "proofs": [],
       "directDependencies": [
         "axioma-incidencia-1",
@@ -912,7 +1098,7 @@
       "id": "modelo-tres-puntos",
       "type": "modelo",
       "title": "Hiru puntuko eredua",
-      "description": "Oinarrizko eredu finitua, intzidentziaren oinarrizko axiomen trinkotasuna eta independentzia frogatzen duena.",
+      "description": "Oinarrizko intzidentzia-axiomen bateragarritasuna eta independentzia frogatzen dituen oinarrizko eredu finitua.",
       "proofs": [],
       "directDependencies": [
         "axioma-incidencia-1",

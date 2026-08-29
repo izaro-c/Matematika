@@ -1,0 +1,36 @@
+export const metadata = {
+  id: "incidencia",
+  lang: "en",
+  type: "definicion",
+  subtype: "primitivo",
+  title: "Incidence",
+  description: "Primitive geometric relation establishing positional membership between points, lines, and planes.",
+  branch: "51A",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+  ]
+};
+
+<Capitular letra="I" />**ncidence** is a <ConceptLink targetId="concepto-primitivo">primitive relation</ConceptLink> of geometry that formalizes the idea of membership or positional contact between geometric objects (such as <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>).
+
+Being a primitive concept, it is not defined via algebraic formulas; its behavior is established by the axioms of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>. In common language, saying that a point and a line "are incident" means that the point lies on the line, or equivalently, that the line passes through that point.
+
+<Definicion title="Formal Declaration">
+  In an <ConceptLink targetId="estructura-geometrica">incidence structure</ConceptLink> $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$, **incidence** $\mathbf{I}$ is a binary relation between the domains of points $\mathcal{P}$, lines $\mathcal{L}$, and planes $\Pi$:
+  $$
+  \mathbf{I} \subseteq (\mathcal{P} \times \mathcal{L}) \cup (\mathcal{P} \times \Pi) \cup (\mathcal{L} \times \Pi)
+  $$
+  - If $(P, \ell) \in \mathbf{I}$, we write $P \, \mathbf{I} \, \ell$ (point $P$ is incident with line $\ell$, or $P \in \ell$).
+  - If $(P, \pi) \in \mathbf{I}$, we write $P \, \mathbf{I} \, \pi$ (point $P$ is incident with plane $\pi$, or $P \in \pi$).
+  - If $(\ell, \pi) \in \mathbf{I}$, we write $\ell \, \mathbf{I} \, \pi$ (line $\ell$ lies on plane $\pi$, or $\ell \subset \pi$).
+</Definicion>
+
+<Separador />
+
+### Role in synthetic geometry
+
+Incidence constitutes the first deductive stratum of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>:
+
+- **In incidence systems:** Establishes the basic spatial configuration via axioms (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>), determining when points are <ConceptLink targetId="colinealidad">collinear</ConceptLink> or <ConceptLink targetId="coplanaridad">coplanar</ConceptLink>.
+- **Independence from metrics:** Incidence does not require notions of <ConceptLink targetId="distancia">distance</ConceptLink>, <ConceptLink targetId="angulo">angle</ConceptLink>, or <ConceptLink targetId="estar-entre">order</ConceptLink>, making it equally applicable to continuous and <ConceptLink targetId="modelo-fano">finite geometries</ConceptLink>.

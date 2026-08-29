@@ -1,0 +1,34 @@
+export const metadata = {
+  id: "espacio",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Space",
+  description: "Total geometric realm and ambient universe containing all points, lines, and planes in a dimensional theory.",
+  branch: "51M",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" },
+    { title: "Elements", author: "Euclid", locator: "Book XI", role: "secondary" }
+  ]
+};
+
+<Capitular letra="S" />**pace** is the total geometric realm and ambient universe containing all figures of a mathematical theory. It represents the pinnacle in geometry's elementary dimensional hierarchy: the <ConceptLink targetId="punto">point</ConceptLink> (<ConceptLink targetId="dimension">dimension</ConceptLink> 0), the <ConceptLink targetId="recta">line</ConceptLink> (dimension 1), the <ConceptLink targetId="plano">plane</ConceptLink> (dimension 2), and **space** (dimension 3 or higher).
+
+In an <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink>, space possesses no pre-established intrinsic properties; its behavior and its geometry are governed entirely by the adopted <ConceptLink targetId="axioma">axioms</ConceptLink>.
+
+<Definicion title="Geometric Definition">
+  In <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, **three-dimensional space** $\mathcal{E}$ is the universal <ConceptLink targetId="dominio">domain</ConceptLink> gathering all <ConceptLink targetId="punto">points</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">lines</ConceptLink> $\mathcal{L}$, and <ConceptLink targetId="plano">planes</ConceptLink> $\Pi$, formally characterized by two <ConceptLink targetId="incidencia">incidence</ConceptLink> conditions:
+  1. **Three-dimensionality:** There exist at least four non-coplanar points (<ConceptLink targetId="axioma-incidencia-8">Axiom I.8</ConceptLink>), preventing space from collapsing into a single plane.
+  2. **Planar intersection:** If two distinct planes share a point, their common intersection is precisely a line (<ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink>).
+</Definicion>
+
+<Separador />
+
+### Varieties of geometric spaces and their signatures
+
+- <ConceptLink targetId="espacio-incidencia">**Incidence space**</ConceptLink>: $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$, minimal structure governed solely by positional membership relations (<ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>).
+- <ConceptLink targetId="espacio-absoluto">**Absolute space**</ConceptLink>: $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong)$, incorporating <ConceptLink targetId="estar-entre">order</ConceptLink>, <ConceptLink targetId="congruencia">congruence</ConceptLink>, and <ConceptLink targetId="continuidad">continuity</ConceptLink> (<ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>).
+- <ConceptLink targetId="espacio-euclidiano">**Euclidean space**</ConceptLink>: $\mathcal{S}_{\text{euc}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong) \models \mathcal{T}_{\text{abs}} \cup \{\text{Axiom IV}\}$, flat zero-curvature space governed by <ConceptLink targetId="axioma-paralelas-euclides">Euclid's parallel postulate</ConceptLink> (<ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>).
+- <ConceptLink targetId="espacio-hiperbolico">**Hyperbolic space**</ConceptLink>: $\mathcal{S}_{\text{hip}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong) \models \mathcal{T}_{\text{abs}} \cup \{\text{Axiom IV}_{\text{hip}}\}$, homogeneous space of constant negative curvature governed by the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic postulate</ConceptLink> (<ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>).
+- <ConceptLink targetId="espacio-proyectivo">**Projective space**</ConceptLink>: $\mathcal{S}_{\text{proy}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$, geometric extension where coplanar lines always intersect at a proper or ideal point.

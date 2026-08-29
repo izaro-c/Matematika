@@ -2,9 +2,9 @@ export const metadata = {
   id: "axioma-incidencia-7",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.7 (Intersection of Two Planes)",
-  description: "If two distinct planes share a point, then their intersection is an entire line.",
-  branch: "51M",
+  title: "Axiom I.7 (Intersection of Planes)",
+  description: "If two distinct planes share a point, their intersection is precisely a line.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,31 +16,19 @@ export const metadata = {
 import { Incidence7 } from '@content/diagrams/Axiomas/Incidence7';
 export const Simulation = Incidence7;
 
-<Capitular letra="I" />f two distinct <ConceptLink targetId="plano" isDependency={true}>planes</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink> share a common <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink>, the seventh incidence axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establishes that they necessarily share a second common point, intersecting along an entire straight <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>.
+<Capitular letra="I" />f two distinct <ConceptLink targetId="plano">planes</ConceptLink> share a <ConceptLink targetId="punto">point</ConceptLink>, they share at least one other point, and their complete intersection is a <ConceptLink targetId="recta">line</ConceptLink>.
 
-<Definicion title="Formal statement">
-  If two distinct <ConceptLink targetId="plano" isDependency={true}>planes</ConceptLink> $\pi, \sigma \in \mathcal{E}$ ($\pi \neq \sigma$) share a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $A \in \pi \cap \sigma$, then their mutual intersection is exactly a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$:
+This axiom describes how planes intersect in three-dimensional space: two planes cannot meet at a single isolated point.
+
+<Definicion title="Formal Statement">
+  If two distinct planes (<VisualBind element="plano-pi" color="canela">$\pi_1$</VisualBind> and <VisualBind element="plano-sigma" color="ocre">$\pi_2$</VisualBind>) share a point $A \in \mathcal{P}$, there exists a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> constituting their common intersection:
   $$
-  \forall \pi, \sigma \in \mathcal{E} \ \bigl((\pi \neq \sigma \land A \in \pi \cap \sigma) \implies \exists! l \in \mathcal{L} \ (l = \pi \cap \sigma)\bigr)
+  (\pi_1 \neq \pi_2 \land A \in \pi_1 \cap \pi_2) \implies \exists \ell \in \mathcal{L} \ (\pi_1 \cap \pi_2 = \ell)
   $$
 </Definicion>
 
 <Separador />
 
-### Visual representation and interaction
+### Significance in the theory
 
-In the three-dimensional simulation, planes <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> and <VisualBind element="plano-sigma" color="ocre">$\sigma$</VisualBind> intersect obliquely. Rotating the 3D scene clearly demonstrates how line <VisualBind element="recta-l" color="carbon">$l$</VisualBind> emerges as the continuous linear trace common to both planar surfaces.
-
-<Separador />
-
-### Geometric significance and scope
-
-Guarantees the dimensional integrity of three-dimensional space: two planes cannot meet tangentially at a single isolated point. Any non-empty intersection between distinct planes necessarily yields a continuous one-dimensional linear trace.
-
-<Separador />
-
-### Properties
-
-- **Continuity of intersection:** Prohibits isolated point contacts between distinct planes in 3D space.
-- **Foundation of dihedral angles:** Permits defining the dihedral angular opening formed between two half-planes meeting at edge line $l$.
-- **Dimensional duality:** Represents the spatial dual of point determination via intersection of two coplanar secant lines.
+- **Spatial behavior:** Ensures that the intersection of two planes is never an isolated point or a deformed surface.

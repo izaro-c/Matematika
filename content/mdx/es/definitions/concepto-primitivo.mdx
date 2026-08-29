@@ -1,0 +1,34 @@
+export const metadata = {
+  id: "concepto-primitivo",
+  lang: "es",
+  type: "definicion",
+  subtype: "primitivo",
+  title: "Concepto primitivo",
+  description: "Noción matemática fundamental no definida a partir de objetos previos, cuyo significado y comportamiento quedan fijados por los axiomas del sistema formal.",
+  branch: "03",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+  ]
+};
+
+<Capitular letra="E" />n la matemática formal, un **concepto primitivo** (o término no definido) es un objeto o relación de partida que no se define mediante conceptos anteriores.
+
+Toda teoría matemática necesita términos iniciales para comenzar. Si intentáramos definir cada objeto usando conceptos más simples, caeríamos en un razonamiento circular o en una cadena interminable hacia atrás. Para evitar esto, los sistemas axiomáticos eligen un conjunto básico de nociones primitivas y fijan su comportamiento a través de las reglas o <ConceptLink targetId="axioma">axiomas</ConceptLink> del <ConceptLink targetId="sistema-axiomatico">sistema formal</ConceptLink>.
+
+<Definicion title="Definición Epistemológica">
+  En una teoría formalizada o <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> $\mathcal{S}$, los **conceptos primitivos** son los símbolos básicos del lenguaje (objetos y relaciones) que carecen de definición explícita dentro del sistema:
+  $$
+  \mathcal{S} = (\mathcal{D}_1, \mathcal{D}_2, \dots, \mathcal{R}_1, \mathcal{R}_2, \dots)
+  $$
+  El significado matemático de estos términos no reside en una descripción sustancial o física, sino exclusivamente en las relaciones formales que los <ConceptLink targetId="axioma">axiomas</ConceptLink> establecen entre ellos.
+</Definicion>
+
+<Separador />
+
+### Conceptos primitivos en la geometría sintética
+
+En los fundamentos de la geometría (como el sistema de Hilbert), los conceptos primitivos se dividen en dos categorías:
+
+- **Dominios de objetos:** Entidades elementales como el <ConceptLink targetId="punto">punto</ConceptLink>, la <ConceptLink targetId="recta">recta</ConceptLink>, el <ConceptLink targetId="plano">plano</ConceptLink> y el <ConceptLink targetId="espacio">espacio</ConceptLink>.
+- **Relaciones primitivas:** Vínculos básicos entre objetos, como la <ConceptLink targetId="incidencia">incidencia</ConceptLink> (pertenencia), la <ConceptLink targetId="estar-entre">intermediación</ConceptLink> (orden lineal) y la <ConceptLink targetId="congruencia">congruencia</ConceptLink> (igualdad geométrica).

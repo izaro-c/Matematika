@@ -2,9 +2,9 @@ export const metadata = {
   id: "axioma-incidencia-3",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.3 (Existence of Three Non-Collinear Points)",
-  description: "There exist at least three points in space that do not belong to the same line.",
-  branch: "51M",
+  title: "Axiom I.3 (Non-Collinear Points)",
+  description: "There exist at least three points that do not belong to the same line.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,31 +16,20 @@ export const metadata = {
 import { Incidence3 } from '@content/diagrams/Axiomas/Incidence3';
 export const Simulation = Incidence3;
 
-<Capitular letra="T" />he third incidence axiom postulates the existence of at least three <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> that are not aligned along a single <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>. This principle guarantees that the geometric universe possesses at least two dimensions, preventing the space from collapsing into a one-dimensional line.
+<Capitular letra="T" />here exist at least three <ConceptLink targetId="punto">points</ConceptLink> not lying on the same <ConceptLink targetId="recta">line</ConceptLink>.
 
-<Definicion title="Formal statement">
-  There exist at least three <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B, C \in \mathcal{S}$ such that no <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$ contains all three simultaneously:
+This axiom ensures that geometry does not reduce to a single one-dimensional line, guaranteeing the existence of a two-dimensional plane with surface and polygonal figures such as the <ConceptLink targetId="triangulo">triangle</ConceptLink>.
+
+<Definicion title="Formal Statement">
+  There exist at least three <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> such that no <ConceptLink targetId="recta">line</ConceptLink> $\ell$ contains all three simultaneously:
   $$
-  \exists A, B, C \in \mathcal{S} \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
+  \exists A, B, C \in \mathcal{P} \ \forall \ell \in \mathcal{L} \ \neg(A \in \ell \land B \in \ell \land C \in \ell)
   $$
 </Definicion>
 
 <Separador />
 
-### Visual representation and interaction
+### Significance in the theory
 
-In the interactive simulation, three points <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> form a planar triangle <VisualBind element="polygonABC" color="ocre">$\triangle ABC$</VisualBind>. By freely dragging any vertex, one verifies that no single line can contain all three points simultaneously while they remain in a non-collinear configuration.
-
-<Separador />
-
-### Geometric significance and scope
-
-This axiom guarantees the multidimensional nature of geometry. By ensuring the existence of non-collinear triads, it provides the essential prerequisite for constructing positive-area figures such as <ConceptLink targetId="triangulo">triangles</ConceptLink> and <ConceptLink targetId="poligono">polygons</ConceptLink> in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
-
-<Separador />
-
-### Properties
-
-- **Minimal dimensionality:** Guarantees that the dimension of the geometric space is strictly at least two ($\dim \ge 2$).
-- **Genesis of the plane:** Together with Axiom I.4, it permits fixing the existence of well-defined geometric <ConceptLink targetId="plano" isDependency={true}>planes</ConceptLink>.
-- **Affine independence:** The three points act as a free affine basis in two dimensions.
+- **<ConceptLink targetId="colinealidad">Non-collinearity</ConceptLink>:** Formally establishes the existence of triples of non-aligned points.
+- **Basis for planes:** The three non-collinear points guaranteed by this axiom form the necessary basis to define the first <ConceptLink targetId="plano">plane</ConceptLink> of space.

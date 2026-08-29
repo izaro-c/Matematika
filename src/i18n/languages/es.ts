@@ -132,9 +132,9 @@ export const esLanguage: LanguageConfig = {
     },
     construction: {
       title: 'En Construcción',
-      description: 'La página para {title} está siendo desarrollada como parte del jardín digital de Matematika. Los teoremas, demostraciones y ejercicios se incorporan de forma progresiva.',
+      description: 'está siendo desarrollada como parte del jardín digital de Matematika. Los teoremas, demostraciones y ejercicios se incorporan de forma progresiva.',
       exploreMore: 'Mientras tanto, puedes seguir explorando la enciclopedia:',
-      backToLibrary: '← Volver a la Biblioteca',
+      backToLibrary: 'Volver a la Biblioteca',
       pendingTitle: '"{id}" — página en construcción',
       pageFor: 'La página para',
       whileExploring: 'Mientras tanto, puedes seguir explorando la biblioteca:',

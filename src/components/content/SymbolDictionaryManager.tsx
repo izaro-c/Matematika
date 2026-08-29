@@ -12,7 +12,6 @@ const sortedMacros = Object.keys(texSymbolMap).sort((a, b) => b.length - a.lengt
  * cruzando los datos con el texSymbolMap del GlossaryStore.
  */
 export const SymbolDictionaryManager = () => {
-  const openTerm = useGlossaryStore((state) => state.openTerm);
   const openFormulaTerms = useGlossaryStore((state) => state.openFormulaTerms);
   const [location] = useLocation();
   const { t } = useI18n();
@@ -84,11 +83,7 @@ export const SymbolDictionaryManager = () => {
           e.stopPropagation();
           const terms = extractTerms(inlineRoot);
           if (terms.length > 0) {
-            if (terms.length === 1) {
-              openTerm(terms[0]);
-            } else {
-              openFormulaTerms(terms);
-            }
+            openFormulaTerms(terms);
           }
         };
       });
@@ -119,7 +114,7 @@ export const SymbolDictionaryManager = () => {
         window.cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [location, openTerm, openFormulaTerms, t]);
+  }, [location, openFormulaTerms, t]);
 
   return null;
 };
