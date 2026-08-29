@@ -17,13 +17,17 @@ export const metadata = {
 Oinarrizko kontzeptua denez, ez da formula aljebraikoen bidez definitzen; bere portaera <ConceptLink targetId="sistema-incidencia">intzidentzia-sistemako</ConceptLink> axiomek finkatzen dute. Hizkera arruntean, puntu bat eta zuzen bat intzidenteak direla esateak puntua zuzenean kokatuta dagoela edo zuzena puntu horretatik igarotzen dela esan nahi du.
 
 <Definicion title="Adierazpen Formala">
-  $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$ <ConceptLink targetId="estructura-geometrica">intzidentzia-egitura</ConceptLink> batean, $\mathbf{I}$ **intzidentzia** $\mathcal{P}$ puntu, $\mathcal{L}$ zuzen eta $\Pi$ planoen domeinuen arteko erlazio bitarra da:
+  $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$ mota anitzeko <ConceptLink targetId="estructura-geometrica">intzidentzia-egitura</ConceptLink> batean, **intzidentzia** <ConceptLink targetId="dominio">oinarrizko domeinuen</ConceptLink> arteko erlazio bitar independente eta tipifikatuen bidez adierazten da:
   $$
-  \mathbf{I} \subseteq (\mathcal{P} \times \mathcal{L}) \cup (\mathcal{P} \times \Pi) \cup (\mathcal{L} \times \Pi)
+  \mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}, \quad \mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi
   $$
-  - $(P, \ell) \in \mathbf{I}$ bada, $P \, \mathbf{I} \, \ell$ idazten da ($P$ puntuak $\ell$ zuzenarekin intziditzen du, edo $P \in \ell$).
-  - $(P, \pi) \in \mathbf{I}$ bada, $P \, \mathbf{I} \, \pi$ idazten da ($P$ puntuak $\pi$ planoarekin intziditzen du, edo $P \in \pi$).
-  - $(\ell, \pi) \in \mathbf{I}$ bada, $\ell \, \mathbf{I} \, \pi$ idazten da ($\ell$ zuzena $\pi$ planoan sartuta dago, edo $\ell \subset \pi$).
+  - **Puntua eta zuzena:** $(P, \ell) \in \mathbf{I}_{\mathcal{P}\mathcal{L}}$ bada, formalki $P \, \mathbf{I} \, \ell$ idazten da ($P$ puntuak $\ell$ zuzenarekin intziditzen du; $P \in \ell$ adierazpena ohiko notazio laburtua da hizkuntzaren abusu bidez, zuzena bere puntu intzidenteen multzoarekin identifikatzean).
+  - **Puntua eta planoa:** $(P, \pi) \in \mathbf{I}_{\mathcal{P}\Pi}$ bada, formalki $P \, \mathbf{I} \, \pi$ idazten da ($P$ puntuak $\pi$ planoarekin intziditzen du; era berean, $P \in \pi$ hizkuntzaren abusu bidez).
+
+  Zuzen bat plano batean barneratuta egotearen erlazioa ($\ell \subseteq \pi$) ez da oinarrizko erlazio independente bat, <ConceptLink targetId="axioma-incidencia-6">I.6 Axiomak</ConceptLink> finkatutako nozio eratorria baizik:
+  $$
+  \ell \subseteq \pi \iff \forall P \in \mathcal{P} \, (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)
+  $$
 </Definicion>
 
 <Separador />
@@ -32,5 +36,5 @@ Oinarrizko kontzeptua denez, ez da formula aljebraikoen bidez definitzen; bere p
 
 Intzidentziak <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> lehen maila deduktiboa osatzen du:
 
-- **Intzidentzia-sistemetan:** Espazioaren oinarrizko konfigurazioa ezartzen du axiomen bidez (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>), hainbat puntu noiz diren <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> edo <ConceptLink targetId="coplanaridad">koplanarrak</ConceptLink> zehaztuz.
-- **Metrikarekiko independentzia:** Intzidentzia-erlazioak ez du <ConceptLink targetId="distancia">distantzia</ConceptLink>, <ConceptLink targetId="angulo">angelu</ConceptLink> edo <ConceptLink targetId="estar-entre">ordena</ConceptLink> noziorik behar; beraz, bai geometria jarraituetan bai <ConceptLink targetId="modelo-fano">geometria finituetan</ConceptLink> baliozkoa da.
+- **Intzidentzia-sistemetan:** <ConceptLink targetId="espacio">Espazioaren</ConceptLink> oinarrizko konfigurazioa ezartzen du axiomen bidez (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>), hainbat puntu noiz diren <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> edo <ConceptLink targetId="coplanaridad">koplanarrak</ConceptLink> zehaztuz.
+- **Metrikarekiko independentzia:** Intzidentzia-erlazioak ez du <ConceptLink targetId="distancia">distantzia</ConceptLink>, <ConceptLink targetId="angulo">angelu</ConceptLink> edo <ConceptLink targetId="estar-entre">ordena</ConceptLink> noziorik behar; beraz, bai geometria <ConceptLink targetId="continuidad">jarraituetan</ConceptLink> bai <ConceptLink targetId="modelo-fano">geometria finituetan</ConceptLink> baliozkoa da.

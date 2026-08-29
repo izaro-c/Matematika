@@ -49,7 +49,7 @@ export const Incidence1Spec = createDiagramSpec(
     {
       "id": "pA",
       "label": "A",
-      "color": "terracota",
+      "color": "ocre",
       "layerId": "geometry",
       "order": 7000,
       "visible": true,
@@ -81,7 +81,7 @@ export const Incidence1Spec = createDiagramSpec(
     {
       "id": "pB",
       "label": "B",
-      "color": "terracota",
+      "color": "ocre",
       "layerId": "geometry",
       "order": 8000,
       "visible": true,

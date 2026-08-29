@@ -427,9 +427,20 @@
       "id": "sistema-incidencia",
       "lang": "en",
       "type": "sistema-axiomatico",
-      "title": "Incidence System",
-      "description": "Fundamental axiomatic structure of geometry establishing membership rules between points, lines, and planes without distance or order.",
+      "title": "Incidence system",
+      "description": "Fundamental axiomatic structure of synthetic geometry establishing membership and alignment relations among points, lines, and planes.",
       "branch": "51A",
+      "branches": [
+        "51A",
+        "51M",
+        "03B"
+      ],
+      "tags": [
+        "geometry",
+        "incidence",
+        "hilbert",
+        "foundations"
+      ],
       "axiomas": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
@@ -480,8 +491,19 @@
       "lang": "es",
       "type": "sistema-axiomatico",
       "title": "Sistema de incidencia",
-      "description": "Estructura axiomática fundamental de la geometría que establece las reglas de pertenencia entre puntos, rectas y planos sin nociones de distancia u orden.",
+      "description": "Estructura axiomática fundamental de la geometría sintética que establece las relaciones de pertenencia y determinación entre puntos, rectas y planos.",
       "branch": "51A",
+      "branches": [
+        "51A",
+        "51M",
+        "03B"
+      ],
+      "tags": [
+        "geometria",
+        "incidencia",
+        "hilbert",
+        "fundamentos"
+      ],
       "axiomas": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
@@ -1059,9 +1081,15 @@
       "id": "axioma-incidencia-1",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.1 (Determination of the Line)",
-      "description": "Through any two distinct points passes exactly one line.",
+      "title": "Axiom I.1 (Determination of the line)",
+      "description": "Any two distinct points uniquely determine a line incident with both.",
       "branch": "51A",
+      "tags": [
+        "geometry",
+        "incidence",
+        "axiom",
+        "line"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1096,8 +1124,14 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.1 (Determinación de la recta)",
-      "description": "Por dos puntos distintos pasa exactamente una recta.",
+      "description": "Dos puntos distintos determinan unívocamente una recta que incide con ambos.",
       "branch": "51A",
+      "tags": [
+        "geometria",
+        "incidencia",
+        "axioma",
+        "recta"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1131,9 +1165,15 @@
       "id": "axioma-incidencia-2",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.2 (Points on a Line)",
-      "description": "Every line contains at least two distinct points.",
+      "title": "Axiom I.2 (Points on a line)",
+      "description": "Every line is incident with at least two distinct points.",
       "branch": "51A",
+      "tags": [
+        "geometry",
+        "incidence",
+        "axiom",
+        "line"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1168,8 +1208,14 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.2 (Existencia de puntos en la recta)",
-      "description": "Toda recta contiene al menos dos puntos distintos.",
+      "description": "Toda recta incide al menos con dos puntos distintos.",
       "branch": "51A",
+      "tags": [
+        "geometria",
+        "incidencia",
+        "axioma",
+        "recta"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1203,9 +1249,15 @@
       "id": "axioma-incidencia-3",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.3 (Non-Collinear Points)",
+      "title": "Axiom I.3 (Non-collinear points)",
       "description": "There exist at least three points that do not belong to the same line.",
       "branch": "51A",
+      "tags": [
+        "geometry",
+        "incidence",
+        "axiom",
+        "plane"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1239,9 +1291,15 @@
       "id": "axioma-incidencia-3",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.3 (Existencia de puntos no colineales)",
+      "title": "Axioma I.3 (Puntos no colineales)",
       "description": "Existen al menos tres puntos que no pertenecen a una misma recta.",
       "branch": "51A",
+      "tags": [
+        "geometria",
+        "incidencia",
+        "axioma",
+        "plano"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1275,9 +1333,15 @@
       "id": "axioma-incidencia-4",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.4 (Determination of the Plane)",
-      "description": "Through any three non-collinear points passes at least one plane.",
+      "title": "Axiom I.4 (Determination of the plane)",
+      "description": "Through any three non-collinear points passes at least one plane incident with them.",
       "branch": "51A",
+      "tags": [
+        "geometry",
+        "incidence",
+        "axiom",
+        "plane"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1312,8 +1376,14 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.4 (Determinación del plano)",
-      "description": "Por tres puntos no colineales pasa al menos un plano.",
+      "description": "Por tres puntos no colineales pasa al menos un plano que incide con ellos.",
       "branch": "51A",
+      "tags": [
+        "geometria",
+        "incidencia",
+        "axioma",
+        "plano"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1347,7 +1417,7 @@
       "id": "axioma-incidencia-5",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.5 (Uniqueness of the Plane and Non-Collinear Points)",
+      "title": "Axiom I.5 (Uniqueness of the plane)",
       "description": "Through three non-collinear points passes at most one plane, and every plane contains at least three non-collinear points.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
@@ -1383,7 +1453,7 @@
       "id": "axioma-incidencia-5",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.5 (Unicidad del plano y puntos no colineales)",
+      "title": "Axioma I.5 (Unicidad del plano)",
       "description": "Por tres puntos no colineales pasa a lo sumo un plano, y todo plano contiene al menos tres puntos no colineales.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
@@ -1419,8 +1489,8 @@
       "id": "axioma-incidencia-6",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.6 (Inclusion of a Line in a Plane)",
-      "description": "If two points of a line lie in a plane, then the entire line is contained in that plane.",
+      "title": "Axiom I.6 (Line inclusion in a plane)",
+      "description": "If two distinct points of a line belong to a plane, then the entire line is contained in that plane.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -1456,7 +1526,7 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.6 (Inclusión de la recta en el plano)",
-      "description": "Si dos puntos de una recta pertenecen a un plano, toda la recta está contenida en dicho plano.",
+      "description": "Si dos puntos distintos de una recta pertenecen a un plano, toda la recta está contenida en dicho plano.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -1491,8 +1561,8 @@
       "id": "axioma-incidencia-7",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.7 (Intersection of Planes)",
-      "description": "If two distinct planes share a point, their intersection is precisely a line.",
+      "title": "Axiom I.7 (Intersection of planes)",
+      "description": "If two distinct planes share a point, then they share at least another common point.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -1527,8 +1597,8 @@
       "id": "axioma-incidencia-7",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.7 (Intersección de dos planos)",
-      "description": "Si dos planos distintos tienen un punto en común, su intersección es exactamente una recta.",
+      "title": "Axioma I.7 (Intersección de planos)",
+      "description": "Si dos planos distintos tienen un punto en común, entonces tienen al menos otro punto en común.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -1563,8 +1633,8 @@
       "id": "axioma-incidencia-8",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.8 (Three-Dimensional Space)",
-      "description": "There exist at least four points in space not belonging to the same plane.",
+      "title": "Axiom I.8 (Three-dimensional space)",
+      "description": "There exist at least four points in space that do not belong to the same plane.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -1600,7 +1670,7 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.8 (Espacio tridimensional)",
-      "description": "Existen al menos cuatro puntos en el espacio que no pertenecen a un mismo plano.",
+      "description": "Existen al menos cuatro puntos que no pertenecen a un mismo plano.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -2506,8 +2576,8 @@
       "lang": "en",
       "type": "definicion",
       "subtype": "nominal",
-      "title": "Disjoint Sets",
-      "description": "Two or more sets whose intersection is empty, meaning they share no elements in common.",
+      "title": "Disjoint sets",
+      "description": "Property of two sets or a family of sets that share no common elements, emphasizing the condition of pairwise (mutually) disjoint sets.",
       "branch": "03",
       "hasSimulation": false,
       "sources": [
@@ -2542,7 +2612,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Conjuntos disjuntos",
-      "description": "Dos o más conjuntos cuya intersección es vacía, es decir, que no comparten ningún elemento en común.",
+      "description": "Propiedad de dos conjuntos o una familia de conjuntos que no comparten elementos en común, destacando la condición de conjuntos mutuamente disjuntos (disjuntos dos a dos).",
       "branch": "03",
       "hasSimulation": false,
       "sources": [
@@ -2987,7 +3057,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Space",
-      "description": "Total geometric realm and ambient universe containing all points, lines, and planes in a dimensional theory.",
+      "description": "Total universe of discourse and geometric realm gathering the domains of points, lines, and planes in a dimensional theory.",
       "branch": "51M",
       "hasSimulation": false,
       "sources": [
@@ -3028,7 +3098,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Espacio",
-      "description": "Ámbito geométrico total y universo contenedor que reúne a todos los puntos, rectas y planos en una teoría dimensional.",
+      "description": "Universo del discurso total y ámbito geométrico que reúne los dominios de puntos, rectas y planos en una teoría dimensional.",
       "branch": "51M",
       "hasSimulation": false,
       "sources": [
@@ -3220,7 +3290,7 @@
       "lang": "en",
       "type": "definicion",
       "subtype": "nominal",
-      "title": "Hilbertian Geometry",
+      "title": "Hilbertian geometry",
       "description": "Rigorous axiomatic refundation of Euclidean geometry proposed by David Hilbert in 1899, based on 20 axioms divided into five independent groups.",
       "branch": "51M",
       "hasSimulation": false,
@@ -3865,7 +3935,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Point",
-      "description": "Primitive geometric concept, indivisible and without spatial extension, whose properties are determined by the axioms of the adopted formal system.",
+      "description": "Primitive geometric concept, indivisible and lacking dimensional extension (dim = 0), whose properties are determined by the axioms of the adopted formal system.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -3906,7 +3976,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Punto",
-      "description": "Concepto geométrico primitivo, indivisible y sin extensión espacial, cuyas propiedades quedan determinadas por los axiomas del sistema formal adoptado.",
+      "description": "Concepto geométrico primitivo, indivisible y carente de extensión dimensional (dim = 0), cuyas propiedades quedan determinadas por los axiomas del sistema formal adoptado.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -6133,6 +6203,64 @@
       "eu"
     ]
   },
+  "en:fano": {
+    "id": "fano",
+    "slug": "fano",
+    "lang": "en",
+    "filePath": "en/mathematicians/fano.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "fano",
+      "lang": "en",
+      "type": "matematico",
+      "name": "Gino Fano",
+      "birthYear": 1871,
+      "deathYear": 1952,
+      "country": "Italy",
+      "title": "Gino Fano",
+      "description": "Italian mathematician, pioneer of algebraic geometry and creator of the first finite projective plane (the Fano plane).",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "fano": {
+    "id": "fano",
+    "slug": "fano",
+    "lang": "es",
+    "filePath": "es/mathematicians/fano.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "fano",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Gino Fano",
+      "birthYear": 1871,
+      "deathYear": 1952,
+      "country": "Italia",
+      "title": "Gino Fano",
+      "description": "Matemático italiano, pionero de la geometría algebraica y creador del primer plano proyectivo finito (el plano de Fano).",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "en:fermat": {
     "id": "fermat",
     "slug": "fermat",
@@ -7249,8 +7377,8 @@
       "id": "modelo-fano",
       "lang": "en",
       "type": "modelo",
-      "title": "Fano Plane",
-      "description": "The smallest possible finite projective plane, composed of exactly 7 points and 7 lines.",
+      "title": "Fano plane",
+      "description": "The minimal finite projective plane, composed of exactly 7 points and 7 lines.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -7282,7 +7410,7 @@
       "lang": "es",
       "type": "modelo",
       "title": "Plano de Fano",
-      "description": "El plano proyectivo finito más pequeño posible, compuesto por exactamente 7 puntos y 7 rectas.",
+      "description": "El plano proyectivo finito minimal, compuesto por exactamente 7 puntos y 7 rectas.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -7381,8 +7509,8 @@
       "id": "modelo-tres-puntos",
       "lang": "en",
       "type": "modelo",
-      "title": "Three-Point Model",
-      "description": "Elementary finite model demonstrating the consistency and independence of the basic incidence axioms.",
+      "title": "Three-point model",
+      "description": "Minimal finite model satisfying axioms I.1, I.2, and I.3 of the incidence system.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -7414,7 +7542,7 @@
       "lang": "es",
       "type": "modelo",
       "title": "Modelo de tres puntos",
-      "description": "Modelo finito elemental que demuestra la consistencia e independencia de los axiomas básicos de incidencia.",
+      "description": "Modelo finito minimal que satisface los axiomas I.1, I.2 e I.3 del sistema de incidencia.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -8739,8 +8867,19 @@
       "lang": "es",
       "type": "sistema-axiomatico",
       "title": "Sistema de incidencia",
-      "description": "Estructura axiomática fundamental de la geometría que establece las reglas de pertenencia entre puntos, rectas y planos sin nociones de distancia u orden.",
+      "description": "Estructura axiomática fundamental de la geometría sintética que establece las relaciones de pertenencia y determinación entre puntos, rectas y planos.",
       "branch": "51A",
+      "branches": [
+        "51A",
+        "51M",
+        "03B"
+      ],
+      "tags": [
+        "geometria",
+        "incidencia",
+        "hilbert",
+        "fundamentos"
+      ],
       "axiomas": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
@@ -9055,8 +9194,14 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.1 (Determinación de la recta)",
-      "description": "Por dos puntos distintos pasa exactamente una recta.",
+      "description": "Dos puntos distintos determinan unívocamente una recta que incide con ambos.",
       "branch": "51A",
+      "tags": [
+        "geometria",
+        "incidencia",
+        "axioma",
+        "recta"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -9091,8 +9236,14 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.2 (Existencia de puntos en la recta)",
-      "description": "Toda recta contiene al menos dos puntos distintos.",
+      "description": "Toda recta incide al menos con dos puntos distintos.",
       "branch": "51A",
+      "tags": [
+        "geometria",
+        "incidencia",
+        "axioma",
+        "recta"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -9126,9 +9277,15 @@
       "id": "axioma-incidencia-3",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.3 (Existencia de puntos no colineales)",
+      "title": "Axioma I.3 (Puntos no colineales)",
       "description": "Existen al menos tres puntos que no pertenecen a una misma recta.",
       "branch": "51A",
+      "tags": [
+        "geometria",
+        "incidencia",
+        "axioma",
+        "plano"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -9163,8 +9320,14 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.4 (Determinación del plano)",
-      "description": "Por tres puntos no colineales pasa al menos un plano.",
+      "description": "Por tres puntos no colineales pasa al menos un plano que incide con ellos.",
       "branch": "51A",
+      "tags": [
+        "geometria",
+        "incidencia",
+        "axioma",
+        "plano"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -9198,7 +9361,7 @@
       "id": "axioma-incidencia-5",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.5 (Unicidad del plano y puntos no colineales)",
+      "title": "Axioma I.5 (Unicidad del plano)",
       "description": "Por tres puntos no colineales pasa a lo sumo un plano, y todo plano contiene al menos tres puntos no colineales.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
@@ -9235,7 +9398,7 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.6 (Inclusión de la recta en el plano)",
-      "description": "Si dos puntos de una recta pertenecen a un plano, toda la recta está contenida en dicho plano.",
+      "description": "Si dos puntos distintos de una recta pertenecen a un plano, toda la recta está contenida en dicho plano.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -9270,8 +9433,8 @@
       "id": "axioma-incidencia-7",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.7 (Intersección de dos planos)",
-      "description": "Si dos planos distintos tienen un punto en común, su intersección es exactamente una recta.",
+      "title": "Axioma I.7 (Intersección de planos)",
+      "description": "Si dos planos distintos tienen un punto en común, entonces tienen al menos otro punto en común.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -9307,7 +9470,7 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.8 (Espacio tridimensional)",
-      "description": "Existen al menos cuatro puntos en el espacio que no pertenecen a un mismo plano.",
+      "description": "Existen al menos cuatro puntos que no pertenecen a un mismo plano.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -9779,7 +9942,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Conjuntos disjuntos",
-      "description": "Dos o más conjuntos cuya intersección es vacía, es decir, que no comparten ningún elemento en común.",
+      "description": "Propiedad de dos conjuntos o una familia de conjuntos que no comparten elementos en común, destacando la condición de conjuntos mutuamente disjuntos (disjuntos dos a dos).",
       "branch": "03",
       "hasSimulation": false,
       "sources": [
@@ -10019,7 +10182,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Espacio",
-      "description": "Ámbito geométrico total y universo contenedor que reúne a todos los puntos, rectas y planos en una teoría dimensional.",
+      "description": "Universo del discurso total y ámbito geométrico que reúne los dominios de puntos, rectas y planos en una teoría dimensional.",
       "branch": "51M",
       "hasSimulation": false,
       "sources": [
@@ -10458,7 +10621,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Punto",
-      "description": "Concepto geométrico primitivo, indivisible y sin extensión espacial, cuyas propiedades quedan determinadas por los axiomas del sistema formal adoptado.",
+      "description": "Concepto geométrico primitivo, indivisible y carente de extensión dimensional (dim = 0), cuyas propiedades quedan determinadas por los axiomas del sistema formal adoptado.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -11586,6 +11749,35 @@
       "eu"
     ]
   },
+  "es:fano": {
+    "id": "fano",
+    "slug": "fano",
+    "lang": "es",
+    "filePath": "es/mathematicians/fano.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "fano",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Gino Fano",
+      "birthYear": 1871,
+      "deathYear": 1952,
+      "country": "Italia",
+      "title": "Gino Fano",
+      "description": "Matemático italiano, pionero de la geometría algebraica y creador del primer plano proyectivo finito (el plano de Fano).",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "es:fermat": {
     "id": "fermat",
     "slug": "fermat",
@@ -12150,7 +12342,7 @@
       "lang": "es",
       "type": "modelo",
       "title": "Plano de Fano",
-      "description": "El plano proyectivo finito más pequeño posible, compuesto por exactamente 7 puntos y 7 rectas.",
+      "description": "El plano proyectivo finito minimal, compuesto por exactamente 7 puntos y 7 rectas.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -12216,7 +12408,7 @@
       "lang": "es",
       "type": "modelo",
       "title": "Modelo de tres puntos",
-      "description": "Modelo finito elemental que demuestra la consistencia e independencia de los axiomas básicos de incidencia.",
+      "description": "Modelo finito minimal que satisface los axiomas I.1, I.2 e I.3 del sistema de incidencia.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -12999,8 +13191,19 @@
       "lang": "eu",
       "type": "sistema-axiomatico",
       "title": "Intzidentzia-sistema",
-      "description": "Geometriaren oinarrizko egitura axiomatikoa, puntu, zuzen eta planoen arteko kidetza-arauak ezartzen dituena distantzia edo ordena noziorik gabe.",
+      "description": "Geometria sintetikoaren oinarrizko egitura axiomatikoa, puntu, zuzen eta planoen arteko kidetza- eta determinazio-erlazioak ezartzen dituena.",
       "branch": "51A",
+      "branches": [
+        "51A",
+        "51M",
+        "03B"
+      ],
+      "tags": [
+        "geometria",
+        "intzidentzia",
+        "hilbert",
+        "oinarriak"
+      ],
       "axiomas": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
@@ -13315,8 +13518,14 @@
       "lang": "eu",
       "type": "axioma",
       "title": "I.1 Axioma (Zuzenaren determinazioa)",
-      "description": "Edozein bi puntu desberdinetatik zuzen bakar bat igarotzen da.",
+      "description": "Edozein bi puntu desberdinek biekiko intzidente den zuzen bakar bat zehazten dute.",
       "branch": "51A",
+      "tags": [
+        "geometria",
+        "intzidentzia",
+        "axioma",
+        "zuzena"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -13351,8 +13560,14 @@
       "lang": "eu",
       "type": "axioma",
       "title": "I.2 Axioma (Puntuak zuzenean)",
-      "description": "Zuzen orok gutxienez bi puntu desberdin ditu.",
+      "description": "Zuzen orok gutxienez bi puntu desberdinekin intziditzen du.",
       "branch": "51A",
+      "tags": [
+        "geometria",
+        "intzidentzia",
+        "axioma",
+        "zuzena"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -13389,6 +13604,12 @@
       "title": "I.3 Axioma (Puntu ez-kolinealak)",
       "description": "Zuzen berekoak ez diren gutxienez hiru puntu existitzen dira.",
       "branch": "51A",
+      "tags": [
+        "geometria",
+        "intzidentzia",
+        "axioma",
+        "planoa"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -13423,8 +13644,14 @@
       "lang": "eu",
       "type": "axioma",
       "title": "I.4 Axioma (Planoaren determinazioa)",
-      "description": "Kolinealak ez diren hiru puntutatik gutxienez plano bat igarotzen da.",
+      "description": "Kolinealak ez diren edozein hiru puntutatik gutxienez plano bat igarotzen da.",
       "branch": "51A",
+      "tags": [
+        "geometria",
+        "intzidentzia",
+        "axioma",
+        "planoa"
+      ],
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -13458,7 +13685,7 @@
       "id": "axioma-incidencia-5",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.5 Axioma (Planoaren bakartasuna eta puntu ez-kolinealak)",
+      "title": "I.5 Axioma (Planoaren bakartasuna)",
       "description": "Kolinealak ez diren hiru puntutatik gehienez plano bat igarotzen da, eta plano orok kolinealak ez diren gutxienez hiru puntu ditu.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
@@ -13495,7 +13722,7 @@
       "lang": "eu",
       "type": "axioma",
       "title": "I.6 Axioma (Zuzena planoan sartzea)",
-      "description": "Zuzen baten bi puntu plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
+      "description": "Zuzen baten bi puntu desberdin plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -13531,7 +13758,7 @@
       "lang": "eu",
       "type": "axioma",
       "title": "I.7 Axioma (Planoen ebakidura)",
-      "description": "Bi plano desberdinek puntu komun bat badute, haien ebakidura zuzen bat da zehazki.",
+      "description": "Bi plano desberdinek puntu komun bat badute, orduan gutxienez beste puntu komun bat dute.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -14039,7 +14266,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Multzo disjuntuak",
-      "description": "Haien ebakidura hutsik duten bi multzo edo gehiago; hau da, elementu komunik partekatzen ez dutenak.",
+      "description": "Elementu komunik partekatzen ez duten bi multzoren edo multzo-familia baten propietatea, binaka disjuntuak (elkarren artean disjuntuak) diren multzoen baldintza nabarmenduz.",
       "branch": "03",
       "hasSimulation": false,
       "sources": [
@@ -14279,7 +14506,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Espazioa",
-      "description": "Teoria dimentsional bateko puntu, zuzen eta plano guztiak biltzen dituen eremu geometriko globala eta unibertso edukitzailea.",
+      "description": "Teoria dimentsional bateko puntu, zuzen eta planoen domeinuak biltzen dituen diskurtso-unibertso orokorra eta eremu geometrikoa.",
       "branch": "51M",
       "hasSimulation": false,
       "sources": [
@@ -14718,7 +14945,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Puntua",
-      "description": "Geometriako oinarrizko kontzeptu zatiezina eta hedadura espazialik gabea; bere propietateak hautatutako sistema formalaren axiomek zehazten dituzte.",
+      "description": "Geometriako oinarrizko kontzeptu zatiezina eta dimentsio-hedadurarik gabea (dim = 0); bere propietateak hautatutako sistema formalaren axiomek zehazten dituzte.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -15846,6 +16073,35 @@
       "eu"
     ]
   },
+  "eu:fano": {
+    "id": "fano",
+    "slug": "fano",
+    "lang": "eu",
+    "filePath": "eu/mathematicians/fano.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "fano",
+      "lang": "eu",
+      "type": "matematico",
+      "name": "Gino Fano",
+      "birthYear": 1871,
+      "deathYear": 1952,
+      "country": "Italia",
+      "title": "Gino Fano",
+      "description": "Geometria aljebraikoaren eta geometria proiektibo finituen aitzindari izan zen matematikari italiarra (Fanoren planoaren sortzailea).",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "eu:fermat": {
     "id": "fermat",
     "slug": "fermat",
@@ -16410,7 +16666,7 @@
       "lang": "eu",
       "type": "modelo",
       "title": "Fanoren planoa",
-      "description": "Existitzen den plano proiektibo finitu txikiena, zehazki 7 puntuz eta 7 zuzenez osatua.",
+      "description": "Plano proiektibo finitu minimala, zehazki 7 puntuz eta 7 zuzenez osatua.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -16476,7 +16732,7 @@
       "lang": "eu",
       "type": "modelo",
       "title": "Hiru puntuko eredua",
-      "description": "Oinarrizko intzidentzia-axiomen bateragarritasuna eta independentzia frogatzen dituen oinarrizko eredu finitua.",
+      "description": "Intzidentzia-sistemaren I.1, I.2 eta I.3 axiomak betetzen dituen eredu finitu minimala.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [

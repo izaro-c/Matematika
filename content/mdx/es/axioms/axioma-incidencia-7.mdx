@@ -2,8 +2,8 @@ export const metadata = {
   id: "axioma-incidencia-7",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.7 (Intersección de dos planos)",
-  description: "Si dos planos distintos tienen un punto en común, su intersección es exactamente una recta.",
+  title: "Axioma I.7 (Intersección de planos)",
+  description: "Si dos planos distintos tienen un punto en común, entonces tienen al menos otro punto en común.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
@@ -16,19 +16,28 @@ export const metadata = {
 import { Incidence7 } from '@content/diagrams/Axiomas/Incidence7';
 export const Simulation = Incidence7;
 
-<Capitular letra="S" />i dos <ConceptLink targetId="plano">planos</ConceptLink> distintos comparten un <ConceptLink targetId="punto">punto</ConceptLink>, entonces comparten al menos otro punto, y su intersección completa es una <ConceptLink targetId="recta">recta</ConceptLink>.
+<Capitular letra="S" />i dos <ConceptLink targetId="plano">planos</ConceptLink> distintos comparten un <ConceptLink targetId="punto">punto</ConceptLink>, entonces comparten al menos otro punto en común.
 
-Este axioma describe la manera en que los planos se cortan en el espacio tridimensional: dos planos no pueden tocarse en un único punto aislado.
+Este axioma describe el comportamiento local de los planos en el <ConceptLink targetId="espacio">espacio</ConceptLink> tridimensional: dos planos distintos no pueden tocarse en un único punto aislado.
 
 <Definicion title="Enunciado Formal">
-  Si dos planos distintos <VisualBind element="plano-pi" color="canela">$\pi_1$</VisualBind> y <VisualBind element="plano-sigma" color="ocre">$\pi_2$</VisualBind> comparten un punto $A \in \mathcal{P}$, existe una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> que constituye su intersección común:
+  Si dos planos distintos <VisualBind element="plano-pi" color="canela">$\pi_1$</VisualBind> y <VisualBind element="plano-sigma" color="ocre">$\pi_2$</VisualBind> inciden con un mismo punto $A \in \mathcal{P}$, existe al menos un segundo punto distinto $B \in \mathcal{P}$ que también incide en ambos planos:
   $$
-  (\pi_1 \neq \pi_2 \land A \in \pi_1 \cap \pi_2) \implies \exists \ell \in \mathcal{L} \ (\pi_1 \cap \pi_2 = \ell)
+  \forall \pi_1, \pi_2 \in \Pi, \, \forall A \in \mathcal{P} \ \bigl((\pi_1 \neq \pi_2 \land A \, \mathbf{I} \, \pi_1 \land A \, \mathbf{I} \, \pi_2) \implies \exists B \in \mathcal{P} \ (B \neq A \land B \, \mathbf{I} \, \pi_1 \land B \, \mathbf{I} \, \pi_2)\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Importancia en la teoría
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Teorema de la Recta de Intersección y Consecuencias">
+    <PropiedadItem id="ebakidura-lineala" title="Deducción de la recta de intersección planar">
+      A partir del segundo punto $B$ garantizado por este axioma, el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink> determina una única recta $\overleftrightarrow{AB}$, y el <ConceptLink targetId="axioma-incidencia-6">Axioma I.6</ConceptLink> asegura que toda la recta está contenida en ambos planos ($\overleftrightarrow{AB} \subseteq \pi_1 \cap \pi_2$). Como un punto no colineal fuera de $\overleftrightarrow{AB}$ forzaría $\pi_1 = \pi_2$ por el <ConceptLink targetId="axioma-incidencia-5">Axioma I.5</ConceptLink>, se demuestra formalmente que $\pi_1 \cap \pi_2 = \overleftrightarrow{AB}$.
+    </PropiedadItem>
+    <PropiedadItem id="posicion-relativa-planos" title="Posiciones relativas de planos en el espacio">
+      En el espacio, dos planos o bien son disjuntos (paralelos), o bien coinciden plenamente, o bien se intersecan a lo largo de una única recta secante.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-- **Comportamiento espacial:** Garantiza que la intersección de dos planos nunca sea un punto aislado ni una superficie deforme.
+

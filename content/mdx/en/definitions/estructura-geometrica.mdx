@@ -16,31 +16,32 @@ export const metadata = {
 <Capitular letra="A" /> **geometric structure** is the mathematical specification assigning meaning and interpretation to a formal <ConceptLink targetId="signatura">signature</ConceptLink>: defining initial object <ConceptLink targetId="dominio">domains</ConceptLink> and the <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink> operating among them.
 
 <Definicion title="General Formal Definition">
-  A **mathematical structure** $\mathcal{S}$ is determined by a tuple of non-empty <ConceptLink targetId="conjunto">sets</ConceptLink> $\mathcal{D}_i$ (called domains) and relations $\mathcal{R}_j$:
+  A **mathematical structure** $\mathcal{S}$ (or model) is determined by a tuple of non-empty <ConceptLink targetId="conjunto">sets</ConceptLink> $\mathcal{D}_i$ (called <ConceptLink targetId="dominio">domains</ConceptLink>), functions or operations $\mathcal{F}_l$, and relations $\mathcal{R}_j$:
   $$
-  \mathcal{S} = (\mathcal{D}_1, \dots, \mathcal{D}_k, \mathcal{R}_1, \dots, \mathcal{R}_m)
+  \mathcal{S} = (\mathcal{D}_1, \dots, \mathcal{D}_k, \mathcal{F}_1, \dots, \mathcal{F}_p, \mathcal{R}_1, \dots, \mathcal{R}_m)
   $$
-  where each relation $\mathcal{R}_j \subseteq \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n}$ links elements across one or several domains.
+  where each function $\mathcal{F}_l: \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n} \to \mathcal{D}_{i_{n+1}}$ operates on the domains and each relation $\mathcal{R}_j \subseteq \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n}$ links their elements. In purely relational theories (such as Hilbert's synthetic geometry), the functional inventory is empty ($\mathcal{F} = \emptyset$).
 </Definicion>
 
 <Separador />
 
 ### Hilbert's synthetic structure (3D)
 
-In <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, the canonical formal <ConceptLink targetId="signatura">signature</ConceptLink> gathers three disjoint domains and three primitive relations:
+In <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, the canonical formal structure gathers three <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> domains and their corresponding typed primitive relations:
 $$
-\mathcal{S}_{\text{synthetic}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong)
+\mathcal{S}_{\text{synthetic}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})
 $$
 - **Object domains:** <ConceptLink targetId="punto">Points</ConceptLink> ($\mathcal{P}$), <ConceptLink targetId="recta">lines</ConceptLink> ($\mathcal{L}$), and <ConceptLink targetId="plano">planes</ConceptLink> ($\Pi$).
 - **Primitive relations:**
-  - $\mathbf{I}$: Binary <ConceptLink targetId="incidencia">incidence</ConceptLink> ($P \text{ is incident with } \ell$, etc.).
-  - $\mathbf{B}$: Ternary <ConceptLink targetId="estar-entre">betweenness or order</ConceptLink> ($A * B * C$, "$B$ is between $A$ and $C$").
-  - $\cong$: <ConceptLink targetId="congruencia">Congruence</ConceptLink> on segments and angles (historically denoted as $\equiv$ by Hilbert).
+  - $\mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}$: Binary point-line ($P \, \mathbf{I} \, \ell$) and point-plane ($P \, \mathbf{I} \, \pi$) <ConceptLink targetId="incidencia">incidence</ConceptLink>.
+  - $\mathbf{B}$: Ternary <ConceptLink targetId="estar-entre">betweenness or order</ConceptLink> on points ($A * B * C$, "$B$ is between $A$ and $C$").
+  - $\cong_{\text{seg}}$: <ConceptLink targetId="congruencia">Congruence</ConceptLink> of <ConceptLink targetId="segmento">segments</ConceptLink> (4-ary relation on points: $AB \cong CD$).
+  - $\cong_{\angle}$: <ConceptLink targetId="congruencia">Congruence</ConceptLink> of <ConceptLink targetId="angulo">angles</ConceptLink> (binary relation on angles formed by pairs of non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> concurrent <ConceptLink targetId="semirrecta">rays</ConceptLink>: $\angle ABC \cong \angle DEF$, or between pairs of rays $\angle(h, k) \cong \angle(h', k')$).
 
 <Separador />
 
-### Other geometric signatures
+### Other geometric structures and signatures
 
-- **Pure incidence plane:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$, foundation of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink> in finite or projective geometries.
-- **Analytic metric space:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, d)$, where a numerical distance function $d: \mathcal{P} \times \mathcal{P} \to \mathbb{R}$ replaces synthetic congruence and order.
-- **Vector space:** $\mathcal{S}_{\text{vec}} = (V, \mathbb{K}, +, \cdot)$, based on linear algebra over a field.
+- **Pure incidence plane:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I}_{\mathcal{P}\mathcal{L}})$, foundation of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink> in <ConceptLink targetId="modelo-fano">finite geometries</ConceptLink> or <ConceptLink targetId="espacio-proyectivo">projective geometries</ConceptLink>.
+- **Analytic metric space:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, d)$, where a numerical <ConceptLink targetId="distancia">distance</ConceptLink> function $d: \mathcal{P} \times \mathcal{P} \to \mathbb{R}$ replaces synthetic congruence and order.
+- **Vector space:** $\mathcal{S}_{\text{vec}} = (V, \mathbb{K}, +, \cdot)$, based on <ConceptLink targetId="algebra-lineal">linear algebra</ConceptLink> over a <ConceptLink targetId="cuerpo">field</ConceptLink>.

@@ -5,6 +5,7 @@ export const metadata = {
   title: "I.3 Axioma (Puntu ez-kolinealak)",
   description: "Zuzen berekoak ez diren gutxienez hiru puntu existitzen dira.",
   branch: "51A",
+  tags: ["geometria", "intzidentzia", "axioma", "planoa"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -18,18 +19,12 @@ export const Simulation = Incidence3;
 
 <Capitular letra="Z" />**uzen** berean kokatuta ez dauden gutxienez hiru <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira.
 
-Axioma honek geometria dimentsio bakarreko lerro batera ez mugatzea bermatzen du, azalera eta <ConceptLink targetId="triangulo">triangelua</ConceptLink> bezalako irudi poligonalak dituen bi dimentsioko plano baten existentzia ziurtatuz.
+Axioma honek geometria dimentsio lineal bakar batera ez kolapsatzea bermatzen du, bi dimentsioko konfigurazioak ahalbidetuz eta <ConceptLink targetId="espacio">espazioan</ConceptLink> <ConceptLink targetId="triangulo">triangelua</ConceptLink> bezalako irudietarako erpinen oinarria finkatuz.
 
 <Definicion title="Enuntziatu Formala">
-  Gutxienez hiru <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira (<VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind>), non $\ell$ <ConceptLink targetId="recta">zuzen</ConceptLink> batek ere ez dituen hirurak batera biltzen:
+  Gutxienez hiru <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen dira (<VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind>), non $\ell \in \mathcal{L}$ <ConceptLink targetId="recta">zuzen</ConceptLink> batek ere ez dituen hirurak batera <ConceptLink targetId="incidencia">intziditzen</ConceptLink>:
   $$
-  \exists A, B, C \in \mathcal{P} \ \forall \ell \in \mathcal{L} \ \neg(A \in \ell \land B \in \ell \land C \in \ell)
+  \exists A, B, C \in \mathcal{P} \ \bigl(A \neq B \land B \neq C \land A \neq C \land \forall \ell \in \mathcal{L} \ \neg(A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\bigr)
   $$
+  Baldintza hau betetzen duen puntu-hirukoteari ez-<ConceptLink targetId="colinealidad">kolineal</ConceptLink> deritzo, eta <ConceptLink targetId="estar-entre">ordena lineala</ConceptLink> (II. taldea) txertatutakoan <ConceptLink targetId="triangulo">triangelua</ConceptLink> sortuko duen oinarrizko erpin-konfigurazioa osatzen du.
 </Definicion>
-
-<Separador />
-
-### Garrantzia teorian
-
-- **<ConceptLink targetId="colinealidad">Ez-kolinealtasuna</ConceptLink>:** Lerrokatuta ez dauden puntu-hirukoteen existentzia definitzen du formalki.
-- **Planoen oinarria:** Axioma honek bermatutako hiru puntu ez-kolinealek espazioko lehen <ConceptLink targetId="plano">planoa</ConceptLink> definitzeko beharrezko oinarria osatzen dute.

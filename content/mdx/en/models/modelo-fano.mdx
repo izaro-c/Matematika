@@ -2,8 +2,8 @@ export const metadata = {
   id: "modelo-fano",
   lang: "en",
   type: "modelo",
-  title: "Fano Plane",
-  description: "The smallest possible finite projective plane, composed of exactly 7 points and 7 lines.",
+  title: "Fano plane",
+  description: "The minimal finite projective plane, composed of exactly 7 points and 7 lines.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
@@ -13,12 +13,12 @@ export const metadata = {
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
 export const Diagram = ModeloFano;
 
-<Capitular letra="T" />he **Fano plane** (denoted $\mathrm{PG}(2, 2)$) is the smallest finite <ConceptLink targetId="sistema-incidencia">incidence model</ConceptLink> and projective plane that exists. It is composed of exactly 7 <ConceptLink targetId="punto">points</ConceptLink> and 7 <ConceptLink targetId="recta">lines</ConceptLink>, with a perfect combinatorial symmetry where any two lines always intersect at a single point.
+<Capitular letra="T" />he **Fano plane** (denoted $\mathrm{PG}(2, \mathbb{F}_2)$) is the smallest finite <ConceptLink targetId="sistema-incidencia">incidence model</ConceptLink> and projective plane that exists. Introduced in 1892 by the Italian mathematician <ConceptLink targetId="fano">Gino Fano</ConceptLink>, it is composed of exactly 7 <ConceptLink targetId="punto">points</ConceptLink> and 7 <ConceptLink targetId="recta">lines</ConceptLink>, exhibiting complete combinatorial symmetry.
 
-<Definicion title="Combinatorial Structure">
+<Definicion title="Combinatorial Structure and Points">
   The Fano plane consists of:
   - **7 Points**: <VisualBind element="p1" color="terracota">1</VisualBind>, <VisualBind element="p2" color="terracota">2</VisualBind>, <VisualBind element="p3" color="terracota">3</VisualBind>, <VisualBind element="p4" color="terracota">4</VisualBind>, <VisualBind element="p5" color="terracota">5</VisualBind>, <VisualBind element="p6" color="terracota">6</VisualBind>, and <VisualBind element="p7" color="musgo">7</VisualBind>.
-  - **7 Lines** (each formed by a triple of points):
+  - **7 Lines** (each formed by an incident triple of points):
     - Three sides of the outer triangle: <VisualBind element="l1" color="carbon">$\{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$\{2, 3, 5\}$</VisualBind>, <VisualBind element="l3" color="carbon">$\{3, 1, 6\}$</VisualBind>.
     - Three concurrent median lines: <VisualBind element="l4" color="carbon">$\{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$\{2, 6, 7\}$</VisualBind>, <VisualBind element="l6" color="carbon">$\{3, 4, 7\}$</VisualBind>.
     - An inner circle (projective line): <VisualBind element="l7" color="musgo">$\{4, 5, 6\}$</VisualBind>.
@@ -26,8 +26,23 @@ export const Diagram = ModeloFano;
 
 <Separador />
 
-### Verification of axioms and properties
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Structural and Axiomatic Properties">
+    <PropiedadItem id="axioma-incidencia-1" title="Unambiguous determination of lines">
+      Through any two distinct points passes exactly one line containing both (<ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>).
+    </PropiedadItem>
+    <PropiedadItem id="interseccion-proyectiva" title="Universal projective intersection">
+      Any two distinct lines intersect at exactly one point; consequently, there are no <ConceptLink targetId="paralelas">parallel lines</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="uniformidad-combinatoria" title="Combinatorial uniformity and duality">
+      Symmetric configuration of type $(7_3, 7_3)$: every line contains exactly 3 points, and through every point pass exactly 3 lines.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-- **<ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>:** Any two points belong to a unique shared line.
-- **Projective intersection:** Any two distinct lines intersect at exactly one point; there are no <ConceptLink targetId="paralelas">parallel lines</ConceptLink>.
-- **Symmetric uniformity:** Every line contains exactly 3 points, and through every point pass exactly 3 lines.
+  <PropiedadesGrupo title="Algebraic Construction">
+    <PropiedadItem id="espacio-vectorial-f2" title="Projective space over the finite field F2">
+      Corresponds to the projective plane $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{(0,0,0)\}) / \sim$, where points are the 7 1-dimensional subspaces (lines) and lines are the 7 2-dimensional subspaces (planes) of $\mathbb{F}_2^3$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+

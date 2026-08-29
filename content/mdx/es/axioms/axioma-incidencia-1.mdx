@@ -3,8 +3,9 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma I.1 (Determinación de la recta)",
-  description: "Por dos puntos distintos pasa exactamente una recta.",
+  description: "Dos puntos distintos determinan unívocamente una recta que incide con ambos.",
   branch: "51A",
+  tags: ["geometria", "incidencia", "axioma", "recta"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,20 +17,15 @@ export const metadata = {
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="D" />ados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos cualesquiera, existe exactamente una <ConceptLink targetId="recta">recta</ConceptLink> que pasa por ambos.
+<Capitular letra="D" />ados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos cualesquiera, existe exactamente una <ConceptLink targetId="recta">recta</ConceptLink> que incide con ambos.
 
-Este postulado establece la conexión lineal más básica de la geometría: dos puntos distintos fijan de forma unívoca una dirección y una línea recta completa.
+Este axioma establece la conexión lineal elemental de la geometría: dos puntos distintos determinan de manera unívoca la posición de una única línea recta en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
 
 <Definicion title="Enunciado Formal">
-  Para cualesquiera dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> ($A \neq B$), existe una única <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> tal que $A$ y $B$ <ConceptLink targetId="incidencia">inciden</ConceptLink> en $\ell$:
+  Para cualesquiera dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind> y <VisualBind element="pB" color="ocre">$B$</VisualBind> ($A \neq B$), existe una única <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> tal que $A$ y $B$ <ConceptLink targetId="incidencia">inciden</ConceptLink> en $\ell$:
   $$
-  \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \in \ell \land B \in \ell)\bigr)
+  \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)\bigr)
   $$
+  La recta determinada por los puntos $A$ y $B$ se denota comúnmente como $\overleftrightarrow{AB}$.
 </Definicion>
 
-<Separador />
-
-### Importancia en la teoría
-
-- **Unicidad del trazo:** Dos puntos no pueden compartir más de una recta común.
-- **Intersección máxima:** Como consecuencia directa, dos rectas distintas pueden cortarse como máximo en un solo punto.

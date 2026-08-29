@@ -15,12 +15,12 @@ export const metadata = {
 
 <Capitular letra="D" />**imentsioa** <ConceptLink targetId="espacio">espazio</ConceptLink> edo irudi geometriko bat ezaugarritzen duten askatasun-gradu edo norabide independenteen kopuruaren neurri matematikoa da.
 
-Oinarrizko geometrian, objektuak beren askatasun-graduen arabera sailkatzen dira: <ConceptLink targetId="punto">puntuak</ConceptLink> ez du hedadurarik (0 dimentsioa), <ConceptLink targetId="recta">zuzenak</ConceptLink> desplazamendu-norabide bakarra du (1 dimentsioa), <ConceptLink targetId="plano">planoak</ConceptLink> bi norabide independente onartzen ditu (2 dimentsioa) eta hiru dimentsioko espazioak hiru (3 dimentsioa).
+Oinarrizko geometrian, objektuak beren askatasun-graduen arabera sailkatzen dira: <ConceptLink targetId="punto">puntuak</ConceptLink> ez du hedadurarik (0 dimentsioa), <ConceptLink targetId="recta">zuzenak</ConceptLink> desplazamendu-norabide bakarra du (1 dimentsioa), <ConceptLink targetId="plano">planoak</ConceptLink> bi norabide independente onartzen ditu (2 dimentsioa) eta <ConceptLink targetId="espacio">hiru dimentsioko espazioak</ConceptLink> hiru (3 dimentsioa).
 
 <Definicion title="Definizioa Teoria Desberdinetan">
   Dimentsioaren kontzeptua matematikako adar bakoitzean formalizatzen da zehazki:
-  - **<ConceptLink targetId="geometria-sintetica">Geometria sintetikoan</ConceptLink>:** <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> intzidentzia-postulatuek finkatzen dute. <ConceptLink targetId="axioma-incidencia-3">I.3 Axiomak</ConceptLink> planoa finkatzen du lerrokatuta ez dauden 3 puntu eskatuz, eta <ConceptLink targetId="axioma-incidencia-8">I.8 Axiomak</ConceptLink> espazioaren hiru dimentsioko izaera finkatzen du plano berekoak ez diren 4 puntu eskatuz.
-  - **<ConceptLink targetId="algebra-lineal">Aljebra linealean</ConceptLink>:** $\mathbb{K}$ gorputz baten gaineko $V$ <ConceptLink targetId="espacio-vectorial">espazio bektorial</ConceptLink> baten edozein $B$ <ConceptLink targetId="base">oinarriren</ConceptLink> <ConceptLink targetId="cardinalidad">kardinala</ConceptLink> da:
+  - **<ConceptLink targetId="geometria-sintetica">Geometria sintetikoan</ConceptLink>:** <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> axioma existentzialek beheko mugak ezartzen dituzte (<ConceptLink targetId="axioma-incidencia-3">I.3 Axiomak</ConceptLink> $\dim \ge 2$ inposatzen du <ConceptLink targetId="colinealidad">lerrokatuta</ConceptLink> ez dauden gutxienez 3 puntu eskatuz, eta <ConceptLink targetId="axioma-incidencia-8">I.8 Axiomak</ConceptLink> $\dim \ge 3$ inposatzen du <ConceptLink targetId="coplanaridad">koplanarrak</ConceptLink> ez diren 4 puntu eskatuz), eta goiko muga ebakidura- eta itxitura-axiomek finkatzen dute.
+  - **<ConceptLink targetId="algebra-lineal">Aljebra linealean</ConceptLink>:** $\mathbb{K}$ <ConceptLink targetId="cuerpo">gorputz</ConceptLink> baten gaineko $V$ <ConceptLink targetId="espacio-vectorial">espazio bektorial</ConceptLink> baten edozein $B$ <ConceptLink targetId="base">oinarriren</ConceptLink> <ConceptLink targetId="cardinalidad">kardinala</ConceptLink> da:
     $$
     \dim_{\mathbb{K}}(V) = |B|
     $$
@@ -31,7 +31,7 @@ Oinarrizko geometrian, objektuak beren askatasun-graduen arabera sailkatzen dira
 
 ### Dimentsio-hierarkia
 
-- **0 dimentsioa:** <ConceptLink targetId="punto">Puntu</ConceptLink> isolatua (hedadurarik gabea).
-- **1 dimentsioa:** <ConceptLink targetId="recta">Zuzena</ConceptLink>, <ConceptLink targetId="segmento">segmentua</ConceptLink> eta <ConceptLink targetId="semirrecta">zuzenerdia</ConceptLink> (magnitudea: <ConceptLink targetId="longitud">luzera</ConceptLink>).
-- **2 dimentsioa:** <ConceptLink targetId="plano">Planoa</ConceptLink>, <ConceptLink targetId="semiplano">planoerdia</ConceptLink> eta <ConceptLink targetId="poligono">poligonoak</ConceptLink> (magnitudea: <ConceptLink targetId="area">azalera</ConceptLink>).
-- **3 dimentsioa:** Hiru dimentsioko <ConceptLink targetId="espacio">espazioa</ConceptLink> eta poliedroak (magnitudea: <ConceptLink targetId="volumen">bolumena</ConceptLink>).
+- **0 dimentsioa:** Oinarrizko <ConceptLink targetId="punto">puntua</ConceptLink> (hedadurarik gabea).
+- **1 dimentsioa:** <ConceptLink targetId="recta">Zuzena</ConceptLink>, <ConceptLink targetId="segmento">segmentua</ConceptLink> eta <ConceptLink targetId="semirrecta">zuzenerdia</ConceptLink> (hedadura lineal hutsa).
+- **2 dimentsioa:** <ConceptLink targetId="plano">Planoa</ConceptLink>, <ConceptLink targetId="semiplano">planoerdia</ConceptLink> eta <ConceptLink targetId="poligono">poligonoak</ConceptLink> (gainazaleko hedadura, sintetikoki deskonposizio- eta osatze-erlazioen bidez formalizatua).
+- **3 dimentsioa:** <ConceptLink targetId="espacio">Hiru dimentsioko espazioa</ConceptLink> eta <ConceptLink targetId="poliedro">poliedroak</ConceptLink> (espazioko bolumen-hedadura).

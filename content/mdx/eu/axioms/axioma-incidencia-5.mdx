@@ -2,7 +2,7 @@ export const metadata = {
   id: "axioma-incidencia-5",
   lang: "eu",
   type: "axioma",
-  title: "I.5 Axioma (Planoaren bakartasuna eta puntu ez-kolinealak)",
+  title: "I.5 Axioma (Planoaren bakartasuna)",
   description: "Kolinealak ez diren hiru puntutatik gehienez plano bat igarotzen da, eta plano orok kolinealak ez diren gutxienez hiru puntu ditu.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
@@ -18,18 +18,26 @@ export const Simulation = Incidence5;
 
 <Capitular letra="K" />olinealak ez diren hiru <ConceptLink targetId="punto">puntu</ConceptLink> ezin dira <ConceptLink targetId="plano">plano</ConceptLink> bat baino gehiagokoak izan, eta plano orok <ConceptLink targetId="recta">zuzen</ConceptLink> berekoak ez diren gutxienez hiru puntu ditu.
 
-Postulatu honek <ConceptLink targetId="axioma-incidencia-4">I.4 Axioma</ConceptLink> osatzen du, bakartasunaren propietatea itxiz: lerrokatuta ez dauden hiru puntuk plano bakar bat zehazten dute zehazki.
+Postulatu honek <ConceptLink targetId="axioma-incidencia-4">I.4 Axioma</ConceptLink> osatzen du, bakartasunaren propietatea itxiz: lerrokatuta ez dauden hiru puntuk plano uniboko bakar bat zehazten dute <ConceptLink targetId="espacio">espazioan</ConceptLink>.
 
 <Definicion title="Enuntziatu Formala">
-  1. Hiru puntu (<VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind>) ez badira <ConceptLink targetId="colinealidad">kolinealak</ConceptLink>, haiek biltzen dituen gehienez <VisualBind element="plano" color="canela">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> bakar bat existitzen da:
+  1. Hiru puntu (<VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind>) ez badira kolinealak, hirurekin intziditzen duen gehienez <VisualBind element="plano" color="canela">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> bat existitzen da:
   $$
-  \text{ez-kolinealak}(A, B, C) \implies \exists! \pi \in \Pi \ (A \in \pi \land B \in \pi \land C \in \pi)
+  \forall A, B, C \in \mathcal{P}, \, \forall \pi_1, \pi_2 \in \Pi \ \bigl((\text{ez-kolinealak}(A, B, C) \land A, B, C \, \mathbf{I} \, \pi_1 \land A, B, C \, \mathbf{I} \, \pi_2) \implies \pi_1 = \pi_2\bigr)
   $$
-  2. $\pi \in \Pi$ plano orok kolinealak ez diren gutxienez hiru puntu desberdin ditu.
+  2. $\pi \in \Pi$ plano orok bertan intziditzen duten eta kolinealak ez diren gutxienez hiru puntu desberdin ditu.
 </Definicion>
 
 <Separador />
 
-### Garrantzia teorian
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorio eta Propietate Teorikoak">
+    <PropiedadItem id="unicidad-plano" title="Zehaztutako planoaren bakartasuna">
+      <ConceptLink targetId="axioma-incidencia-4">I.4 Axiomarekin</ConceptLink> batera, bermatzen du kolinealak ez diren hiru puntuk zehazki plano bakar bat finkatzen dutela ($\exists! \pi \in \Pi$).
+    </PropiedadItem>
+    <PropiedadItem id="densidad-plano" title="Planoaren ez-kolapsoa">
+      Ziurtatzen du planorik ez dela zuzen bakar batera edo konfigurazio huts batera murrizten, bere benetako bi dimentsioko izaera gordez.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-Planoak ongi bereizitako bi dimentsioko gainazalak direla bermatzen du, erreferentzia triangeluar berdinen gainean bikoiztu gabe.

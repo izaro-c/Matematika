@@ -18,15 +18,16 @@ export const metadata = {
 Constituye el paradigma fundacional del formalismo moderno en geometría sintética: prescinde de intuiciones espaciales y define los objetos geométricos exclusivamente a través de las relaciones formales que los <ConceptLink targetId="axioma">axiomas</ConceptLink> imponen entre ellos.
 
 <Definicion title="Estructura y Signatura de Hilbert (3D)">
-  La **geometría hilbertiana tridimensional** se modela mediante una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> de <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> cuya <ConceptLink targetId="signatura">signatura</ConceptLink> reúne tres <ConceptLink targetId="dominio">dominios</ConceptLink> disjuntos y tres <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink>:
+  La **geometría hilbertiana tridimensional** se modela mediante una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> de <ConceptLink targetId="logica">lógica multitipo</ConceptLink> cuya <ConceptLink targetId="signatura">signatura</ConceptLink> reúne tres <ConceptLink targetId="dominio">dominios</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntos dos a dos</ConceptLink> y cinco <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink> irreducibles:
   $$
-  \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong)
+  \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \equiv_{\text{seg}}, \equiv_{\angle})
   $$
   donde:
-  - $\mathcal{P}$, $\mathcal{L}$ y $\Pi$ son los dominios de <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>.
-  - $\mathbf{I}$ es la relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink> binaria.
-  - $\mathbf{B}$ es la relación ternaria de <ConceptLink targetId="estar-entre">orden e intermediación</ConceptLink> ($A * B * C$).
-  - $\cong$ es la relación de equivalencia de <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre pares de puntos (segmentos) y entre ángulos (denotada por Hilbert en 1899 mediante el símbolo $\equiv$).
+  - $\mathcal{P}$, $\mathcal{L}$ y $\Pi$ son los dominios disjuntos de <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>.
+  - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ e $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$ son las relaciones binarias de <ConceptLink targetId="incidencia">incidencia</ConceptLink> tipadas punto-recta y punto-plano.
+  - $\mathbf{B} \subseteq \mathcal{P}^3$ es la relación ternaria de <ConceptLink targetId="estar-entre">orden e intermediación</ConceptLink> ($A * B * C$).
+  - $\equiv_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2$ es la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> (pares de puntos).
+  - $\equiv_{\angle} \, \subseteq \mathcal{P}^6$ es la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="angulo">ángulos</ConceptLink> (relación binaria entre ternas de puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink> $\angle ABC \equiv \angle DEF$, o sobre pares de <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> concurrentes).
 </Definicion>
 
 <Separador />
@@ -35,8 +36,22 @@ Constituye el paradigma fundacional del formalismo moderno en geometría sintét
 
 El sistema se estructura en 20 axiomas organizados en cinco grupos modulares:
 
-1. **Grupo I: <ConceptLink targetId="sistema-incidencia">Axiomas de Incidencia</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink> a <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>):** Establecen la pertenencia mutua entre puntos, rectas y planos, fijando la dimensión mínima del espacio.
-2. **Grupo II: Axiomas de Orden (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink> a <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>):** Formalizan la noción de intermediación y la separación del plano mediante el <ConceptLink targetId="axioma-orden-4">Axioma de Pasch</ConceptLink>, permitiendo definir <ConceptLink targetId="segmento">segmentos</ConceptLink>, <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> y <ConceptLink targetId="semiplano">semiplanos</ConceptLink>.
-3. **Grupo III: Axiomas de Congruencia (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> a <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>):** Definen el transporte rígido de segmentos y ángulos sin recurrir a nociones métricas de distancia.
-4. **Grupo IV: Axioma de las Paralelas (<ConceptLink targetId="axioma-paralelas-euclides">IV</ConceptLink>):** Postulado euclidiano de unicidad de la paralela por un punto exterior.
-5. **Grupo V: Axiomas de Continuidad (<ConceptLink targetId="axioma-arquimedes">V.1</ConceptLink> y <ConceptLink targetId="axioma-completitud">V.2</ConceptLink>):** El axioma de Arquímedes y el de completitud lineal, que garantizan la ausencia de huecos en el continuo geométrico.
+1. **Grupo I: <ConceptLink targetId="sistema-incidencia">Axiomas de Incidencia</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink> a <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>):** Establecen la pertenencia mutua entre puntos, rectas y planos, fijando la <ConceptLink targetId="dimension">dimensión</ConceptLink> mínima del <ConceptLink targetId="espacio">espacio</ConceptLink>.
+2. **Grupo II: <ConceptLink targetId="estar-entre">Axiomas de Orden</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink> a <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>):** Formalizan la intermediación $\mathbf{B}$ y la separación del plano mediante el <ConceptLink targetId="axioma-orden-4">Axioma de Pasch</ConceptLink> (<ConceptLink targetId="pasch">Moritz Pasch</ConceptLink>), permitiendo definir <ConceptLink targetId="segmento">segmentos</ConceptLink>, <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> y <ConceptLink targetId="semiplano">semiplanos</ConceptLink>.
+3. **Grupo III: <ConceptLink targetId="congruencia">Axiomas de Congruencia</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> a <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>):** Gobiernan el comportamiento de $\equiv_{\text{seg}}$ y $\equiv_{\angle}$ y su transporte rígido sin recurrir a nociones métricas de <ConceptLink targetId="distancia">distancia</ConceptLink>.
+4. **Grupo IV: <ConceptLink targetId="paralelas">Axioma de las Paralelas</ConceptLink> (<ConceptLink targetId="axioma-paralelas-euclides">IV</ConceptLink>):** Postulado <ConceptLink targetId="sistema-euclidiano">euclidiano</ConceptLink> de unicidad de la paralela por un punto exterior.
+5. **Grupo V: <ConceptLink targetId="continuidad">Axiomas de Continuidad</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">V.1</ConceptLink> y <ConceptLink targetId="axioma-completitud">V.2</ConceptLink>):** El axioma de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink> y el de completitud lineal, que garantizan la ausencia de huecos en el continuo geométrico.
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Modularidad y Estructura Formal">
+    <PropiedadItem id="independencia-grupos" title="Independencia modular de los cinco grupos">
+      Cada uno de los cinco grupos axiomáticos (incidencia, orden, congruencia, paralelas y continuidad) es lógicamente independiente, permitiendo aislar subsistemas coherentes como la <ConceptLink targetId="sistema-incidencia">geometría de incidencia</ConceptLink>, la geometría ordenada o la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="distincion-predicados-congruencia" title="Distinción categorial de la congruencia">
+      La congruencia no es un único predicado monolítico, sino dos relaciones primitivas irreducibles con aridades y dominios ontológicos distintos: la congruencia de <ConceptLink targetId="segmento">segmentos</ConceptLink> ($\equiv_{\text{seg}}$) y la congruencia de <ConceptLink targetId="angulo">ángulos</ConceptLink> ($\equiv_{\angle}$).
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+

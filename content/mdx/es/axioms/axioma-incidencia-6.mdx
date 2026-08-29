@@ -3,7 +3,7 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma I.6 (Inclusión de la recta en el plano)",
-  description: "Si dos puntos de una recta pertenecen a un plano, toda la recta está contenida en dicho plano.",
+  description: "Si dos puntos distintos de una recta pertenecen a un plano, toda la recta está contenida en dicho plano.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
@@ -18,17 +18,26 @@ export const Simulation = Incidence6;
 
 <Capitular letra="S" />i dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos de una <ConceptLink targetId="recta">recta</ConceptLink> pertenecen a un <ConceptLink targetId="plano">plano</ConceptLink>, entonces todos los puntos de esa recta pertenecen a ese plano.
 
-Este axioma formaliza la rigidez y la planitud del plano: una recta no puede entrar y salir de un plano ni doblarse respecto a él.
+Este axioma formaliza la rigidez y la planitud del plano: una recta no puede entrar y salir de un plano ni curvarse respecto a él en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
 
 <Definicion title="Enunciado Formal">
-  Sean <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> dos puntos distintos de una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="recta" color="carbon">$\ell$</VisualBind>. Si $A$ y $B$ pertenecen a un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="canela">$\pi$</VisualBind>, entonces la recta $\ell$ entera está contenida en $\pi$:
+  Sean <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> dos puntos distintos de una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="recta" color="carbon">$\ell$</VisualBind>. Si $A$ y $B$ inciden en un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="canela">$\pi$</VisualBind>, entonces la recta $\ell$ entera está contenida en $\pi$:
   $$
-  (A \in \ell \land B \in \ell \land A \neq B \land A \in \pi \land B \in \pi) \implies \ell \subset \pi
+  \forall \ell \in \mathcal{L}, \, \forall \pi \in \Pi, \, \forall A, B \in \mathcal{P} \ \bigl((A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi) \implies \ell \subseteq \pi\bigr)
   $$
+  donde $\ell \subseteq \pi$ denota que todo punto incidente con $\ell$ es también incidente con $\pi$.
 </Definicion>
 
 <Separador />
 
-### Importancia en la teoría
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias y Propiedades Teóricas">
+    <PropiedadItem id="planitud-espacial" title="Rigidez y planitud geométrica">
+      Formaliza la planitud elemental del plano: una recta que incide con dos puntos de un plano no puede doblarse ni salir de él, quedando íntegramente contenida en su superficie.
+    </PropiedadItem>
+    <PropiedadItem id="transferencia-lineal" title="Transferencia de propiedades al plano">
+      Permite trasladar todas las propiedades y teoremas de la geometría lineal directamente al interior de cualquier plano bidimensional del espacio.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-Permite trasladar todas las propiedades de la geometría de rectas al interior del plano bidimensional.

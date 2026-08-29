@@ -2,8 +2,8 @@ export const metadata = {
   id: "modelo-tres-puntos",
   lang: "en",
   type: "modelo",
-  title: "Three-Point Model",
-  description: "Elementary finite model demonstrating the consistency and independence of the basic incidence axioms.",
+  title: "Three-point model",
+  description: "Minimal finite model satisfying axioms I.1, I.2, and I.3 of the incidence system.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
@@ -13,31 +13,40 @@ export const metadata = {
 import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
 export const Diagram = ModeloTresPuntos;
 
-<Capitular letra="T" />he **three-point model** is the simplest possible example of a finite geometry. With a universe consisting solely of three points and three lines, it practically demonstrates that the first axioms of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink> are consistent and do not contradict one another.
+<Capitular letra="T" />he **three-point model** is the simplest finite example of an incidence geometry. With a universe consisting solely of three points and three lines, it formally demonstrates that the first three axioms of <ConceptLink targetId="hilbert">Hilbert's</ConceptLink> <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink> are consistent and free of contradictions.
 
-<Definicion title="Model Structure">
-  The model is defined via explicit finite sets:
-  - **Set of <ConceptLink targetId="punto">points</ConceptLink>**: $\mathcal{P} = \{ \text{<VisualBind element="A" color="terracota">A</VisualBind>}, \text{<VisualBind element="B" color="terracota">B</VisualBind>}, \text{<VisualBind element="C" color="terracota">C</VisualBind>} \}$.
-  - **Set of <ConceptLink targetId="recta">lines</ConceptLink>**: $\mathcal{L} = \{ \text{<VisualBind element="rAB" color="carbon">r_{AB}</VisualBind>}, \text{<VisualBind element="rBC" color="carbon">r_{BC}</VisualBind>}, \text{<VisualBind element="rCA" color="carbon">r_{CA}</VisualBind>} \}$, where each line is the pair of points forming it:
+<Definicion title="Formal Model Structure">
+  The model is defined as a finite <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> $(\mathcal{P}, \mathcal{L}, \mathbf{I})$:
+  - **Set of <ConceptLink targetId="punto">points</ConceptLink>**: $\mathcal{P} = \{ \text{<VisualBind element="A" color="terracota">A</VisualBind>}, \text{<VisualBind element="B" color="terracota">B</VisualBind>}, \text{<VisualBind element="C" color="terracota">C</VisualBind>} \}$ with $A \neq B \neq C$.
+  - **Set of <ConceptLink targetId="recta">lines</ConceptLink>**: $\mathcal{L} = \{ \text{<VisualBind element="rAB" color="carbon">r_{AB}</VisualBind>}, \text{<VisualBind element="rBC" color="carbon">r_{BC}</VisualBind>}, \text{<VisualBind element="rCA" color="carbon">r_{CA}</VisualBind>} \}$, where each line is a two-point subset:
     $$
     r_{AB} = \{A, B\}, \quad r_{BC} = \{B, C\}, \quad r_{CA} = \{C, A\}
     $$
-  - **<ConceptLink targetId="incidencia">Incidence relation</ConceptLink>**: Standard set membership ($\in$). A point $P$ is incident with a line $\ell$ if $P \in \ell$.
+  - **<ConceptLink targetId="incidencia">Incidence relation</ConceptLink>**: Standard set membership ($\in$). A point $P$ is incident with a line $\ell$ if and only if $P \in \ell$.
 </Definicion>
 
 <Separador />
 
-### Verification of incidence axioms
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Axiomatic Incidence Verification">
+    <PropiedadItem id="axioma-incidencia-1" title="Verification of Axiom I.1">
+      For any two distinct points, there exists exactly one line containing both: $\{A, B\}$ determines $r_{AB}$, $\{B, C\}$ determines $r_{BC}$, and $\{C, A\}$ determines $r_{CA}$ (<ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>).
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-2" title="Verification of Axiom I.2">
+      Each of the three lines contains exactly two distinct points ($\lvert r_{AB} \rvert = \lvert r_{BC} \rvert = \lvert r_{CA} \rvert = 2 \ge 2$), satisfying <ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-3" title="Verification of Axiom I.3">
+      No line contains all three points simultaneously ($C \notin r_{AB}$, $A \notin r_{BC}$, $B \notin r_{CA}$), ensuring the non-collinearity of the triple (<ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>).
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-This model immediately satisfies Hilbert's first three axioms:
+  <PropiedadesGrupo title="Metamathematical Significance">
+    <PropiedadItem id="consistencia-incidencia" title="Logical consistency proof">
+      Constructing an explicit concrete model in which axioms I.1, I.2, and I.3 are simultaneously true proves that these postulates are logically consistent and non-contradictory.
+    </PropiedadItem>
+    <PropiedadItem id="ausencia-paralelas" title="Absence of parallel lines">
+      Any two lines always intersect at exactly one common point ($r_{AB} \cap r_{BC} = \{B\}$); consequently, no <ConceptLink targetId="paralelas">parallel lines</ConceptLink> exist, showing that Euclidean parallelism requires independent postulates.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-- **<ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>:** For any two distinct points (such as $A$ and $B$), there exists exactly one line ($r_{AB}$) containing both.
-- **<ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink>:** Each of the three lines contains at least two distinct points.
-- **<ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>:** The three points $A, B, C$ do not belong to the same line (<ConceptLink targetId="colinealidad">non-collinear</ConceptLink>).
-
-<Separador />
-
-### Metamathematical significance
-
-- **Consistency proof:** By providing a concrete model in which axioms I.1, I.2, and I.3 are simultaneously true, it is proven that these axioms are non-contradictory.
-- **Absence of parallels:** In this model, any two lines always intersect at a common point ($r_{AB} \cap r_{BC} = \{B\}$); therefore, no <ConceptLink targetId="paralelas">parallel lines</ConceptLink> exist, showing that parallelism requires additional independent axioms.

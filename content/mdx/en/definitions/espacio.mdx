@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Space",
-  description: "Total geometric realm and ambient universe containing all points, lines, and planes in a dimensional theory.",
+  description: "Total universe of discourse and geometric realm gathering the domains of points, lines, and planes in a dimensional theory.",
   branch: "51M",
   hasSimulation: false,
   sources: [
@@ -13,22 +13,36 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="S" />**pace** is the total geometric realm and ambient universe containing all figures of a mathematical theory. It represents the pinnacle in geometry's elementary dimensional hierarchy: the <ConceptLink targetId="punto">point</ConceptLink> (<ConceptLink targetId="dimension">dimension</ConceptLink> 0), the <ConceptLink targetId="recta">line</ConceptLink> (dimension 1), the <ConceptLink targetId="plano">plane</ConceptLink> (dimension 2), and **space** (dimension 3 or higher).
+<Capitular letra="S" />**pace** is the total universe of discourse and geometric realm in which all relations of a mathematical theory are interpreted. It represents the highest tier in geometry's elementary dimensional hierarchy: the <ConceptLink targetId="punto">point</ConceptLink> (<ConceptLink targetId="dimension">dimension</ConceptLink> 0), the <ConceptLink targetId="recta">line</ConceptLink> (<ConceptLink targetId="dimension">dimension</ConceptLink> 1), the <ConceptLink targetId="plano">plane</ConceptLink> (<ConceptLink targetId="dimension">dimension</ConceptLink> 2), and **space** (<ConceptLink targetId="dimension">dimension</ConceptLink> 3 or higher).
 
-In an <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink>, space possesses no pre-established intrinsic properties; its behavior and its geometry are governed entirely by the adopted <ConceptLink targetId="axioma">axioms</ConceptLink>.
+In an <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink>, space possesses no pre-established substantial properties; its behavior and geometry are governed entirely by the postulated <ConceptLink targetId="axioma">axioms</ConceptLink>.
 
-<Definicion title="Geometric Definition">
-  In <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, **three-dimensional space** $\mathcal{E}$ is the universal <ConceptLink targetId="dominio">domain</ConceptLink> gathering all <ConceptLink targetId="punto">points</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">lines</ConceptLink> $\mathcal{L}$, and <ConceptLink targetId="plano">planes</ConceptLink> $\Pi$, formally characterized by two <ConceptLink targetId="incidencia">incidence</ConceptLink> conditions:
-  1. **Three-dimensionality:** There exist at least four non-coplanar points (<ConceptLink targetId="axioma-incidencia-8">Axiom I.8</ConceptLink>), preventing space from collapsing into a single plane.
-  2. **Planar intersection:** If two distinct planes share a point, their common intersection is precisely a line (<ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink>).
+<Definicion title="Geometric Definition and Universe of Discourse">
+  In <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, **three-dimensional space** is the universe of discourse $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ formed by the disjoint union of the <ConceptLink targetId="dominio">domains</ConceptLink> of <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> $\mathcal{L}$, and <ConceptLink targetId="plano" isDependency={true}>planes</ConceptLink> $\Pi$, formally characterized by two fundamental <ConceptLink targetId="incidencia">incidence</ConceptLink> conditions:
+  1. **Three-dimensionality:** There exist at least four non-<ConceptLink targetId="coplanaridad">coplanar</ConceptLink> points (<ConceptLink targetId="axioma-incidencia-8" isDependency={true}>Axiom I.8</ConceptLink>).
+  2. **Planar intersection:** If two distinct planes share a point, they share at least a second common point (<ConceptLink targetId="axioma-incidencia-7" isDependency={true}>Axiom I.7</ConceptLink>), which entails that their complete mutual intersection is precisely a line (theorem derived from I.7, I.1, I.6, and I.4-I.5).
 </Definicion>
 
 <Separador />
 
 ### Varieties of geometric spaces and their signatures
 
-- <ConceptLink targetId="espacio-incidencia">**Incidence space**</ConceptLink>: $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$, minimal structure governed solely by positional membership relations (<ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>).
-- <ConceptLink targetId="espacio-absoluto">**Absolute space**</ConceptLink>: $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong)$, incorporating <ConceptLink targetId="estar-entre">order</ConceptLink>, <ConceptLink targetId="congruencia">congruence</ConceptLink>, and <ConceptLink targetId="continuidad">continuity</ConceptLink> (<ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>).
-- <ConceptLink targetId="espacio-euclidiano">**Euclidean space**</ConceptLink>: $\mathcal{S}_{\text{euc}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong) \models \mathcal{T}_{\text{abs}} \cup \{\text{Axiom IV}\}$, flat zero-curvature space governed by <ConceptLink targetId="axioma-paralelas-euclides">Euclid's parallel postulate</ConceptLink> (<ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>).
-- <ConceptLink targetId="espacio-hiperbolico">**Hyperbolic space**</ConceptLink>: $\mathcal{S}_{\text{hip}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong) \models \mathcal{T}_{\text{abs}} \cup \{\text{Axiom IV}_{\text{hip}}\}$, homogeneous space of constant negative curvature governed by the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic postulate</ConceptLink> (<ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>).
-- <ConceptLink targetId="espacio-proyectivo">**Projective space**</ConceptLink>: $\mathcal{S}_{\text{proy}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$, geometric extension where coplanar lines always intersect at a proper or ideal point.
+- <ConceptLink targetId="espacio-incidencia">**Incidence space**</ConceptLink>: $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, minimal structure governed solely by positional membership relations (<ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>).
+- <ConceptLink targetId="espacio-absoluto">**Absolute space**</ConceptLink>: $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \equiv_{\text{seg}}, \equiv_{\angle})$, incorporating <ConceptLink targetId="estar-entre">order</ConceptLink>, <ConceptLink targetId="congruencia">congruence</ConceptLink>, and <ConceptLink targetId="continuidad">continuity</ConceptLink> (<ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>).
+- <ConceptLink targetId="espacio-euclidiano">**Euclidean space**</ConceptLink>: $\mathcal{S}_{\text{euc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \equiv_{\text{seg}}, \equiv_{\angle})$ such that $\mathcal{S}_{\text{euc}} \models \mathcal{T}_{\text{abs}} \cup \{\text{Axiom IV}\}$, flat zero-curvature space governed by <ConceptLink targetId="axioma-paralelas-euclides">Euclid's parallel postulate</ConceptLink>.
+- <ConceptLink targetId="espacio-hiperbolico">**Hyperbolic space**</ConceptLink>: $\mathcal{S}_{\text{hip}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \equiv_{\text{seg}}, \equiv_{\angle})$ such that $\mathcal{S}_{\text{hip}} \models \mathcal{T}_{\text{abs}} \cup \{\text{Axiom IV}_{\text{hip}}\}$, homogeneous space of constant negative curvature governed by the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic postulate</ConceptLink>.
+- <ConceptLink targetId="espacio-proyectivo">**Projective space**</ConceptLink>: $\mathcal{S}_{\text{proy}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, geometric extension where <ConceptLink targetId="coplanaridad">coplanar</ConceptLink> lines always intersect at a common point.
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Logical and Structural Foundations">
+    <PropiedadItem id="universo-vs-dominios" title="Universe of discourse vs. domains">
+      Global space constitutes the total universe of discourse ($\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$), while $\mathcal{P}$, $\mathcal{L}$, and $\Pi$ are the typed, <ConceptLink targetId="conjunto-disjunto">pairwise disjoint</ConceptLink> <ConceptLink targetId="dominio">domains</ConceptLink> (sorts) over which the quantifiers of the theory range.
+    </PropiedadItem>
+    <PropiedadItem id="teorema-interseccion-planos" title="Planar intersection theorem">
+      <ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink> postulates the existence of a second common point $B \neq A$; its conjunction with <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink> (line $\overleftrightarrow{AB}$) and <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink> establishes the inclusion of traces $\operatorname{tr}(\overleftrightarrow{AB}) \subseteq \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$. Strict equality ($\operatorname{tr}(\overleftrightarrow{AB}) = \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$ for distinct planes $\pi_1 \neq \pi_2$) is completed by plane uniqueness axioms (<ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>), since any non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> external common point would force $\pi_1 = \pi_2$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+

@@ -13,7 +13,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="L" />ogika matematikoan, <ConceptLink targetId="algebra">aljebra unibertsalean</ConceptLink> eta <ConceptLink targetId="teoria-modelos">eredu-teorian</ConceptLink>, **sinadura** bat ($\mathcal{L}$ hizkuntza formala) teoria matematiko batean parte hartzen duten objektu-motak, <ConceptLink targetId="concepto-primitivo">oinarrizko erlazioak</ConceptLink> eta eragiketak zehazten dituen ikur ez-logikoen bilduma da.
+<Capitular letra="L" /><ConceptLink targetId="logica">ogika matematikoan</ConceptLink>, <ConceptLink targetId="algebra">aljebra unibertsalean</ConceptLink> eta <ConceptLink targetId="teoria-modelos">eredu-teorian</ConceptLink>, **sinadura** bat ($\mathcal{L}$ hizkuntza formala) teoria matematiko batean parte hartzen duten objektu-motak, <ConceptLink targetId="concepto-primitivo">oinarrizko erlazioak</ConceptLink> eta eragiketak zehazten dituen ikur ez-logikoen bilduma da.
 
 Sinadurak teoriaren sintaxia finkatzen du aldez aurretik interpretazio zehatzik eman gabe (interpretazioa <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> edo eredu bat eraikitzean ematen da).
 
@@ -25,7 +25,7 @@ Sinadurak teoriaren sintaxia finkatzen du aldez aurretik interpretazio zehatzik 
   non:
   - $\mathcal{S}_{\text{sorts}}$ abiapuntuko mota edo <ConceptLink targetId="dominio">domeinuen</ConceptLink> <ConceptLink targetId="conjunto">multzoa</ConceptLink> den (adibidez, <ConceptLink targetId="punto">puntuak</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">zuzenak</ConceptLink> $\mathcal{L}$ eta <ConceptLink targetId="plano">planoak</ConceptLink> $\Pi$).
   - $\mathcal{F}$ funtzio- edo <ConceptLink targetId="operacion-binaria">eragiketa-ikurren</ConceptLink> multzoa den.
-  - $\mathcal{R}$ oinarrizko erlazio-ikurren multzoa den (<ConceptLink targetId="incidencia">intzidentzia</ConceptLink> $\mathbf{I}$, <ConceptLink targetId="estar-entre">ordena</ConceptLink> $\mathbf{B}$ edo <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> $\cong$, adibidez).
+  - $\mathcal{R}$ oinarrizko erlazio-ikurren multzoa den (<ConceptLink targetId="incidencia">intzidentzia</ConceptLink> $\mathbf{I}_{\mathcal{P}\mathcal{L}}$, <ConceptLink targetId="estar-entre">ordena</ConceptLink> $\mathbf{B}$ edo $\cong_{\text{seg}}$ eta $\cong_{\angle}$ <ConceptLink targetId="congruencia">kongruentzia-erlazioak</ConceptLink>, adibidez).
   - $\text{ar}$ aritate-funtzioa den, ikur bakoitzari bere argumentu-kopurua eta motak esleitzen dizkiona.
 </Definicion>
 
@@ -33,6 +33,6 @@ Sinadurak teoriaren sintaxia finkatzen du aldez aurretik interpretazio zehatzik 
 
 ### Adibideak geometrian eta aljebran
 
-- **Intzidentzia hutsaren sinadura:** $\sigma_{\text{inc}} = ( \{\mathcal{P}, \mathcal{L}\}, \emptyset, \{\mathbf{I}\} )$, $\mathbf{I} \subseteq \mathcal{P} \times \mathcal{L}$ erlazio bitar bakarrarekin (<ConceptLink targetId="sistema-incidencia">intzidentzia-sistema</ConceptLink>).
-- **Hilberten sinadura sintetikoa:** $\sigma_{\text{Hil}} = ( \{\mathcal{P}, \mathcal{L}, \Pi\}, \emptyset, \{\mathbf{I}, \mathbf{B}, \cong\} )$, <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> oinarria.
-- **Taldeen sinadura:** $\sigma_{\text{tal}} = ( \{G\}, \{\cdot, ^{-1}, e\}, \emptyset )$, <ConceptLink targetId="operacion-binaria">eragiketa bitar</ConceptLink> batekin, eragiketa unario batekin eta konstante batekin (<ConceptLink targetId="grupo">taldea</ConceptLink>).
+- **Intzidentzia hutsaren sinadura:** $\sigma_{\text{inc}} = ( \{\mathcal{P}, \mathcal{L}\}, \emptyset, \{\mathbf{I}_{\mathcal{P}\mathcal{L}}\}, \text{ar} )$, $\text{ar}(\mathbf{I}_{\mathcal{P}\mathcal{L}}) = \mathcal{P} \times \mathcal{L}$ erlazio bitar bakarrarekin (<ConceptLink targetId="sistema-incidencia">intzidentzia-sistema</ConceptLink>).
+- **Hilberten sinadura sintetikoa:** $\sigma_{\text{Hil}} = ( \{\mathcal{P}, \mathcal{L}, \Pi\}, \emptyset, \{\mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle}\}, \text{ar} )$, aritate tipifikatuekin: $\text{ar}(\mathbf{I}_{\mathcal{P}\mathcal{L}}) = \mathcal{P} \times \mathcal{L}$, $\text{ar}(\mathbf{I}_{\mathcal{P}\Pi}) = \mathcal{P} \times \Pi$, $\text{ar}(\mathbf{B}) = \mathcal{P}^3$, $\text{ar}(\cong_{\text{seg}}) = \mathcal{P}^4$ eta $\text{ar}(\cong_{\angle})$ irudi <ConceptLink targetId="angulo">angeluarren</ConceptLink> bikoteen gainean (<ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> oinarria).
+- **Taldeen sinadura:** $\sigma_{\text{tal}} = ( \{G\}, \{\cdot, ^{-1}, e\}, \emptyset, \text{ar} )$, <ConceptLink targetId="operacion-binaria">eragiketa bitar</ConceptLink> bat ($\text{ar}(\cdot) = G \times G \to G$), eragiketa unario bat ($\text{ar}(^{-1}) = G \to G$) eta sintaktikoki 0 aritateko funtzio gisa formalizatutako konstante bat ($\text{ar}(e) = \emptyset \to G$, $\text{sort}(e) = G$ motarekin) biltzen dituena (<ConceptLink targetId="grupo">taldea</ConceptLink>).

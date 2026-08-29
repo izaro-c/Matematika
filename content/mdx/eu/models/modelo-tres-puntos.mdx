@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "modelo",
   title: "Hiru puntuko eredua",
-  description: "Oinarrizko intzidentzia-axiomen bateragarritasuna eta independentzia frogatzen dituen oinarrizko eredu finitua.",
+  description: "Intzidentzia-sistemaren I.1, I.2 eta I.3 axiomak betetzen dituen eredu finitu minimala.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
@@ -13,31 +13,40 @@ export const metadata = {
 import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
 export const Diagram = ModeloTresPuntos;
 
-<Capitular letra="H" />**iru puntuko eredua** geometria finitu baten adibiderik sinpleena da. Hiru puntu eta hiru zuzenez soilik osatutako unibertso batekin, modu praktiko eta argian frogatzen du <ConceptLink targetId="sistema-incidencia">intzidentzia-sistemaren</ConceptLink> lehen axiomek elkarrekin zentzua dutela eta ez direla kontraesankorrak.
+<Capitular letra="H" />**iru puntuko eredua** intzidentzia-geometria baten adibide finitu sinpleena da. Hiru puntu eta hiru zuzenez soilik osatutako unibertso batekin, formalki frogatzen du <ConceptLink targetId="hilbert">Hilbert</ConceptLink>en <ConceptLink targetId="sistema-incidencia">intzidentzia-sistemaren</ConceptLink> lehen hiru axiomak bateragarriak direla eta ez direla kontraesankorrak.
 
-<Definicion title="Ereduaren Egitura">
-  Eredua multzo finitu esplizituen bidez definitzen da:
-  - **<ConceptLink targetId="punto">Puntuen</ConceptLink> multzoa**: $\mathcal{P} = \{ \text{<VisualBind element="A" color="terracota">A</VisualBind>}, \text{<VisualBind element="B" color="terracota">B</VisualBind>}, \text{<VisualBind element="C" color="terracota">C</VisualBind>} \}$.
-  - **<ConceptLink targetId="recta">Zuzenen</ConceptLink> multzoa**: $\mathcal{L} = \{ \text{<VisualBind element="rAB" color="carbon">r_{AB}</VisualBind>}, \text{<VisualBind element="rBC" color="carbon">r_{BC}</VisualBind>}, \text{<VisualBind element="rCA" color="carbon">r_{CA}</VisualBind>} \}$, non zuzen bakoitza osatzen duten puntu-parea den:
+<Definicion title="Ereduaren Egitura Formala">
+  Eredua multzo finituz osatutako $(\mathcal{P}, \mathcal{L}, \mathbf{I})$ <ConceptLink targetId="estructura-geometrica">egitura</ConceptLink> gisa definitzen da:
+  - **<ConceptLink targetId="punto">Puntuen</ConceptLink> multzoa**: $\mathcal{P} = \{ \text{<VisualBind element="A" color="terracota">A</VisualBind>}, \text{<VisualBind element="B" color="terracota">B</VisualBind>}, \text{<VisualBind element="C" color="terracota">C</VisualBind>} \}$ non $A \neq B \neq C$ den.
+  - **<ConceptLink targetId="recta">Zuzenen</ConceptLink> multzoa**: $\mathcal{L} = \{ \text{<VisualBind element="rAB" color="carbon">r_{AB}</VisualBind>}, \text{<VisualBind element="rBC" color="carbon">r_{BC}</VisualBind>}, \text{<VisualBind element="rCA" color="carbon">r_{CA}</VisualBind>} \}$, non zuzen bakoitza bi puntuko azpimultzo bat den:
     $$
     r_{AB} = \{A, B\}, \quad r_{BC} = \{B, C\}, \quad r_{CA} = \{C, A\}
     $$
-  - **<ConceptLink targetId="incidencia">Intzidentzia-erlazioa</ConceptLink>**: Ohiko kidetza ($\in$). $P$ puntu batek $\ell$ zuzen batean intziditzen du $P \in \ell$ bada.
+  - **<ConceptLink targetId="incidencia">Intzidentzia-erlazioa</ConceptLink>**: Ohiko multzo-kidetza ($\in$). $P$ puntu batek $\ell$ zuzen batean intziditzen du baldin eta soilik baldin $P \in \ell$ bada.
 </Definicion>
 
 <Separador />
 
-### Intzidentzia-axiomen egiaztapena
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Intzidentzia-Axiomen Egiaztapen Formala">
+    <PropiedadItem id="axioma-incidencia-1" title="I.1 Axiomaren egiaztapena">
+      Edozein bi puntu desberdinetarako, biak biltzen dituen zehazki zuzen bakar bat existitzen da: $\{A, B\}$ bikoteak $r_{AB}$ zehazten du, $\{B, C\}$ bikoteak $r_{BC}$, eta $\{C, A\}$ bikoteak $r_{CA}$ (<ConceptLink targetId="axioma-incidencia-1">I.1 Axioma</ConceptLink>).
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-2" title="I.2 Axiomaren egiaztapena">
+      Hiru zuzenetako bakoitzak zehazki bi puntu desberdin ditu ($\lvert r_{AB} \rvert = \lvert r_{BC} \rvert = \lvert r_{CA} \rvert = 2 \ge 2$), <ConceptLink targetId="axioma-incidencia-2">I.2 Axioma</ConceptLink> betez.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-3" title="I.3 Axiomaren egiaztapena">
+      Zuzen batek ere ez ditu hiru puntuak aldi berean biltzen ($C \notin r_{AB}$, $A \notin r_{BC}$, $B \notin r_{CA}$), hirukotearen ez-kolinealtasuna bermatuz (<ConceptLink targetId="axioma-incidencia-3">I.3 Axioma</ConceptLink>).
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-Eredu honek berehala egiaztatzen ditu Hilberten lehen hiru axiomak:
+  <PropiedadesGrupo title="Garrantzia Metamatematikoa">
+    <PropiedadItem id="consistencia-incidencia" title="Bateragarritasun logikoaren froga">
+      I.1, I.2 eta I.3 postulatuak aldi berean egiazkoak diren eredu zehatz bat eraikitzean, frogatuta geratzen da axioma horiek ez dutela barne-kontraesanik.
+    </PropiedadItem>
+    <PropiedadItem id="ausencia-paralelas" title="Zuzen paraleloen eza">
+      Edozein bi zuzenek elkar puntu komun bakar batean ebakitzen dute beti ($r_{AB} \cap r_{BC} = \{B\}$); beraz, ez dago <ConceptLink targetId="paralelas">zuzen paralelorik</ConceptLink>, paralelismoaren nozioak aparteko postulatu independenteak eskatzen dituela agerian utziz.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-- **<ConceptLink targetId="axioma-incidencia-1">I.1 Axioma</ConceptLink>:** Edozein bi puntu desberdinetarako (hala nola $A$ eta $B$), biak biltzen dituen zuzen bakar bat ($r_{AB}$) existitzen da.
-- **<ConceptLink targetId="axioma-incidencia-2">I.2 Axioma</ConceptLink>:** Hiru zuzenetako bakoitzak gutxienez bi puntu desberdin ditu.
-- **<ConceptLink targetId="axioma-incidencia-3">I.3 Axioma</ConceptLink>:** Hiru puntuak ($A, B, C$) ez daude zuzen berean (<ConceptLink targetId="colinealidad">ez dira kolinealak</ConceptLink>).
-
-<Separador />
-
-### Garrantzia metamatematikoa
-
-- **Bateragarritasun-froga:** I.1, I.2 eta I.3 axiomak aldi berean egiazkoak diren eredu zehatz bat existitzen denez, frogatuta geratzen da postulatuek ez dutela elkar ukatzen.
-- **Paraleloen eza:** Eredu honetan, edozein bi zuzenek elkar puntu komun batean ebakitzen dute beti ($r_{AB} \cap r_{BC} = \{B\}$); beraz, ez dago <ConceptLink targetId="paralelas">zuzen paralelorik</ConceptLink>, paralelismoaren nozioak aparteko axioma independenteak behar dituela erakutsiz.

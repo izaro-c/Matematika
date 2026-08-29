@@ -158,7 +158,7 @@ export const Definicion: React.FC<DefinicionProps> = ({ title, children }) => {
       <div className="page-accent-text ac-eyebrow text-sm mb-4">
         {defaultTitle}
       </div>
-      <div className="italic leading-relaxed text-carbon/90 text-justify">
+      <div className="italic leading-relaxed text-carbon/90 text-justify [&_ul]:text-left [&_ol]:text-left [&_li]:text-left [&_ul]:my-4 [&_ol]:my-4">
         {children}
       </div>
     </div>
@@ -171,7 +171,7 @@ interface DemostracionProps {
 export const Demostracion: React.FC<DemostracionProps> = ({ children }) => {
   const { t } = useI18n();
   return (
-    <div className="page-accent-border my-10 pl-8 font-serif text-justify text-carbon/90 border-l-2 relative">
+    <div className="page-accent-border my-10 pl-8 font-serif text-justify text-carbon/90 border-l-2 relative [&_ul]:text-left [&_ol]:text-left [&_li]:text-left">
       <span className="page-accent-text italic font-bold mr-2">{t('content', 'demonstration')}.</span>
       <div className="inline">
         {children}
@@ -187,7 +187,7 @@ interface NotaProps {
 export const Nota: React.FC<NotaProps> = ({ children }) => {
   const { t } = useI18n();
   return (
-    <div className="page-accent-border my-8 pl-6 border-l-[1px] font-serif text-sm text-carbon/70 text-justify">
+    <div className="page-accent-border my-8 pl-6 border-l-[1px] font-serif text-sm text-carbon/70 text-justify [&_ul]:text-left [&_ol]:text-left [&_li]:text-left">
       <span className="page-accent-text ac-label ac-label--md mr-2">{t('common', 'note')}.</span>
       {children}
     </div>
@@ -216,7 +216,7 @@ export const Corolario: React.FC<CorolarioProps> = ({ children }) => {
       <div className="page-accent-text ac-eyebrow text-sm mb-4">
         {label}
       </div>
-      <div className="leading-relaxed text-carbon/90 text-justify">
+      <div className="leading-relaxed text-carbon/90 text-justify [&_ul]:text-left [&_ol]:text-left [&_li]:text-left">
         {children}
       </div>
     </div>
@@ -305,4 +305,7 @@ export const MDXComponents = {
   a: MDXAnchor,
   h3: (props: React.ComponentProps<'h3'>) => <h3 className="page-accent-text text-3xl font-serif mt-12 mb-6 pb-2 border-b border-carbon/10 italic" {...props} />,
   h4: (props: React.ComponentProps<'h4'>) => <h4 className="text-xl font-serif text-carbon mt-8 mb-4 font-bold" {...props} />,
+  ul: (props: React.ComponentProps<'ul'>) => <ul className="my-4 pl-6 space-y-2 list-none" {...props} />,
+  ol: (props: React.ComponentProps<'ol'>) => <ol className="my-4 pl-7 space-y-2 list-none [counter-reset:prose-ordered-counter]" {...props} />,
+  li: (props: React.ComponentProps<'li'>) => <li className="relative leading-relaxed text-left" {...props} />,
 };

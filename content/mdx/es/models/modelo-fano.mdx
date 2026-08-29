@@ -3,7 +3,7 @@ export const metadata = {
   lang: "es",
   type: "modelo",
   title: "Plano de Fano",
-  description: "El plano proyectivo finito más pequeño posible, compuesto por exactamente 7 puntos y 7 rectas.",
+  description: "El plano proyectivo finito minimal, compuesto por exactamente 7 puntos y 7 rectas.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
@@ -13,12 +13,12 @@ export const metadata = {
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
 export const Diagram = ModeloFano;
 
-<Capitular letra="E" />l **plano de Fano** (denotado $\mathrm{PG}(2, 2)$) es el <ConceptLink targetId="sistema-incidencia">modelo de incidencia</ConceptLink> finito y plano proyectivo más pequeño que existe. Está formado por exactamente 7 <ConceptLink targetId="punto">puntos</ConceptLink> y 7 <ConceptLink targetId="recta">rectas</ConceptLink>, con una simetría combinatoria perfecta donde dos rectas cualesquiera siempre se cortan en un único punto.
+<Capitular letra="E" />l **plano de Fano** (denotado $\mathrm{PG}(2, \mathbb{F}_2)$) es el <ConceptLink targetId="sistema-incidencia">modelo de incidencia</ConceptLink> finito y plano proyectivo más pequeño que existe. Introducido en 1892 por el matemático italiano <ConceptLink targetId="fano">Gino Fano</ConceptLink>, está formado por exactamente 7 <ConceptLink targetId="punto">puntos</ConceptLink> y 7 <ConceptLink targetId="recta">rectas</ConceptLink>, dotado de una simetría combinatoria perfecta.
 
-<Definicion title="Estructura Combinatoria">
+<Definicion title="Estructura Combinatoria y Puntos">
   El plano de Fano está compuesto por:
   - **7 Puntos**: <VisualBind element="p1" color="terracota">1</VisualBind>, <VisualBind element="p2" color="terracota">2</VisualBind>, <VisualBind element="p3" color="terracota">3</VisualBind>, <VisualBind element="p4" color="terracota">4</VisualBind>, <VisualBind element="p5" color="terracota">5</VisualBind>, <VisualBind element="p6" color="terracota">6</VisualBind> y <VisualBind element="p7" color="musgo">7</VisualBind>.
-  - **7 Rectas** (cada una formada por una terna de puntos):
+  - **7 Rectas** (cada una formada por una terna de puntos que inciden en ella):
     - Tres lados del triángulo exterior: <VisualBind element="l1" color="carbon">$\{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$\{2, 3, 5\}$</VisualBind>, <VisualBind element="l3" color="carbon">$\{3, 1, 6\}$</VisualBind>.
     - Tres líneas medianas concurrentes: <VisualBind element="l4" color="carbon">$\{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$\{2, 6, 7\}$</VisualBind>, <VisualBind element="l6" color="carbon">$\{3, 4, 7\}$</VisualBind>.
     - Un círculo interior (recta proyectiva): <VisualBind element="l7" color="musgo">$\{4, 5, 6\}$</VisualBind>.
@@ -26,8 +26,23 @@ export const Diagram = ModeloFano;
 
 <Separador />
 
-### Verificación de axiomas y propiedades
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades Estructurales y Axiomáticas">
+    <PropiedadItem id="axioma-incidencia-1" title="Determinación unívoca de rectas">
+      Por cualesquiera dos puntos distintos pasa exactamente una única recta que contiene a ambos (<ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>).
+    </PropiedadItem>
+    <PropiedadItem id="interseccion-proyectiva" title="Intersección proyectiva universal">
+      Dos rectas distintas cualesquiera se cortan exactamente en un único punto común; por tanto, no existen <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="uniformidad-combinatoria" title="Uniformidad simétrica y dualidad">
+      Configuración simétrica de tipo $(7_3, 7_3)$: cada recta contiene exactamente 3 puntos, y por cada punto concurren exactamente 3 rectas.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-- **<ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>:** Dos puntos cualesquiera pertenecen a una única recta compartida.
-- **Intersección proyectiva:** Dos rectas distintas cualesquiera se cortan exactamente en un único punto; no existen <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>.
-- **Uniformidad simétrica:** Cada recta contiene exactamente 3 puntos, y por cada punto pasan exactamente 3 rectas.
+  <PropiedadesGrupo title="Construcción Algebraica">
+    <PropiedadItem id="espacio-vectorial-f2" title="Espacio proyectivo sobre el cuerpo finito F2">
+      Corresponde al plano proyectivo $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{(0,0,0)\}) / \sim$, donde los puntos son las 7 rectas vectoriales unidimensionales y las rectas son los 7 subespacios bidimensionales de $\mathbb{F}_2^3$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+

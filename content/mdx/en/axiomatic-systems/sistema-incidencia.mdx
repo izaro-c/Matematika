@@ -2,9 +2,11 @@ export const metadata = {
   id: "sistema-incidencia",
   lang: "en",
   type: "sistema-axiomatico",
-  title: "Incidence System",
-  description: "Fundamental axiomatic structure of geometry establishing membership rules between points, lines, and planes without distance or order.",
+  title: "Incidence system",
+  description: "Fundamental axiomatic structure of synthetic geometry establishing membership and alignment relations among points, lines, and planes.",
   branch: "51A",
+  branches: ["51A", "51M", "03B"],
+  tags: ["geometry", "incidence", "hilbert", "foundations"],
   axiomas: [
     "axioma-incidencia-1",
     "axioma-incidencia-2",
@@ -27,35 +29,38 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="T" />he **incidence system** forms the first deductive stratum of synthetic geometry. It establishes the basic rules of membership among the <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> of space (<ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>), entirely disregarding distances, angular measures, or ordering.
+<Capitular letra="T" />he **incidence system** constitutes the foundational deductive layer of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>. It establishes the formal rules of containment and mutual determination among the <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> of <ConceptLink targetId="espacio">space</ConceptLink> (<ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>), setting aside metric notions of <ConceptLink targetId="distancia">distance</ConceptLink>, <ConceptLink targetId="angulo">angle</ConceptLink>, or <ConceptLink targetId="estar-entre">order</ConceptLink> relations.
 
-<Definicion title="Formal Structure">
-  An **incidence space** is a <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> $(\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$ where $\mathcal{P}$, $\mathcal{L}$, and $\Pi$ are non-empty, pairwise disjoint sets of points, lines, and planes, and $\mathbf{I}$ is the <ConceptLink targetId="incidencia">incidence relation</ConceptLink>:
+Within this framework, lines and planes are not defined as sets of points, but as independent primitive entities connected by <ConceptLink targetId="incidencia">incidence relations</ConceptLink>. The points incident with a geometric object form its trace in <ConceptLink targetId="espacio">space</ConceptLink>.
+
+<Definicion title="Formal structure">
+  In <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, an **incidence space** is a <ConceptLink targetId="estructura-geometrica">multi-sorted relational structure</ConceptLink> $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$ over a <ConceptLink targetId="universo-discurso">universe of discourse</ConceptLink> $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ consisting of three <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> <ConceptLink targetId="dominio">domains</ConceptLink>:
+  - $\mathcal{P}$: primitive domain of <ConceptLink targetId="punto">points</ConceptLink>.
+  - $\mathcal{L}$: primitive domain of <ConceptLink targetId="recta">lines</ConceptLink>.
+  - $\Pi$: primitive domain of <ConceptLink targetId="plano">planes</ConceptLink>.
+  - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ and $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$: point-line and point-plane <ConceptLink targetId="incidencia">incidence relations</ConceptLink> (commonly denoted by $\mathbf{I}$).
+
+  The structure satisfies Hilbert's Group I theory ($\mathcal{S}_{\text{inc}} \models \mathcal{T}_{\text{incidence}}$), where the point trace of a line $\ell \in \mathcal{L}$ or plane $\pi \in \Pi$ is:
   $$
-  \mathbf{I} \subseteq (\mathcal{P} \times \mathcal{L}) \cup (\mathcal{P} \times \Pi) \cup (\mathcal{L} \times \Pi)
+  \operatorname{tr}(\ell) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \}, \quad \operatorname{tr}(\pi) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \pi \}
   $$
-  satisfying the eight axioms of Hilbert's Group I.
 </Definicion>
 
 <Separador />
 
-### Incidence Axioms (Hilbert's Group I)
+### Plane and spatial geometry
 
-The system consists of eight foundational axioms:
+The incidence system is formulated across two dimensional levels:
 
-- **<ConceptLink targetId="axioma-incidencia-1">Axiom I.1 (Determination of the line)</ConceptLink>:** Two distinct points determine a unique line passing through both.
-- **<ConceptLink targetId="axioma-incidencia-2">Axiom I.2 (Points on a line)</ConceptLink>:** Every line contains at least two distinct points.
-- **<ConceptLink targetId="axioma-incidencia-3">Axiom I.3 (Non-collinear points)</ConceptLink>:** There exist at least three points not belonging to the same line.
-- **<ConceptLink targetId="axioma-incidencia-4">Axiom I.4 (Determination of the plane)</ConceptLink>:** Three non-collinear points determine a unique plane containing them.
-- **<ConceptLink targetId="axioma-incidencia-5">Axiom I.5 (Non-collinear points on a plane)</ConceptLink>:** Every plane contains at least three non-collinear points.
-- **<ConceptLink targetId="axioma-incidencia-6">Axiom I.6 (Line inclusion in a plane)</ConceptLink>:** If two points of a line lie in a plane, the entire line is contained in that plane.
-- **<ConceptLink targetId="axioma-incidencia-7">Axiom I.7 (Intersection of planes)</ConceptLink>:** If two distinct planes share a point, their intersection is precisely a line.
-- **<ConceptLink targetId="axioma-incidencia-8">Axiom I.8 (Three-dimensional space)</ConceptLink>:** There exist at least four points not belonging to the same plane.
+- **Plane ($\dim = 2$):** Axioms <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, and <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink> suffice to establish two-dimensional geometry, ensuring the determination of lines by point pairs and the existence of non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> configurations.
+- **Space ($\dim = 3$):** Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> to <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink> introduce planes, their determination, and the non-<ConceptLink targetId="coplanaridad">coplanarity</ConceptLink> of four points to establish the three-dimensionality of space.
 
 <Separador />
 
-### Models of the incidence system
+### Models and consistency
 
-Requiring neither continuity nor metric, the incidence system admits diverse realizations:
-- **Finite geometries:** Such as the <ConceptLink targetId="modelo-tres-puntos">three-point model</ConceptLink> or the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink>, with finitely many points and lines.
-- **Continuous geometries:** Such as the real affine space $\mathbb{R}^3$ (<ConceptLink targetId="modelo-cartesiano">Cartesian model</ConceptLink>).
+The formal consistency of the system is demonstrated through the existence of diverse models:
+- **Finite models:** Discrete combinatorial geometries such as the <ConceptLink targetId="modelo-tres-puntos">three-point model</ConceptLink> or the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink>.
+- **Continuous models:** The classical real affine space $\mathbb{R}^3$ (<ConceptLink targetId="modelo-cartesiano">Cartesian model</ConceptLink>).
+
+Without order or continuity axioms, the pure incidence system is non-categorical and admits structures of both finite and infinite cardinalities.

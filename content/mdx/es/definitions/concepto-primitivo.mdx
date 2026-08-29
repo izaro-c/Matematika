@@ -17,18 +17,18 @@ export const metadata = {
 Toda teoría matemática necesita términos iniciales para comenzar. Si intentáramos definir cada objeto usando conceptos más simples, caeríamos en un razonamiento circular o en una cadena interminable hacia atrás. Para evitar esto, los sistemas axiomáticos eligen un conjunto básico de nociones primitivas y fijan su comportamiento a través de las reglas o <ConceptLink targetId="axioma">axiomas</ConceptLink> del <ConceptLink targetId="sistema-axiomatico">sistema formal</ConceptLink>.
 
 <Definicion title="Definición Epistemológica">
-  En una teoría formalizada o <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> $\mathcal{S}$, los **conceptos primitivos** son los símbolos básicos del lenguaje (objetos y relaciones) que carecen de definición explícita dentro del sistema:
+  En un lenguaje formal especificado por una <ConceptLink targetId="signatura">signatura</ConceptLink> $\sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})$, los **conceptos primitivos** son los símbolos no lógicos básicos de partida (tipos de objetos y símbolos de relación u operación) que carecen de definición previa dentro de la teoría:
   $$
-  \mathcal{S} = (\mathcal{D}_1, \mathcal{D}_2, \dots, \mathcal{R}_1, \mathcal{R}_2, \dots)
+  \sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})
   $$
-  El significado matemático de estos términos no reside en una descripción sustancial o física, sino exclusivamente en las relaciones formales que los <ConceptLink targetId="axioma">axiomas</ConceptLink> establecen entre ellos.
+  Su significado matemático no reside en una descripción física o sustancial, sino en las reglas formales que los <ConceptLink targetId="axioma">axiomas</ConceptLink> imponen sobre sus interpretaciones en una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> o modelo.
 </Definicion>
 
 <Separador />
 
-### Conceptos primitivos en la geometría sintética
+### Conceptos primitivos en la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>
 
-En los fundamentos de la geometría (como el sistema de Hilbert), los conceptos primitivos se dividen en dos categorías:
+En los fundamentos de la geometría (como el sistema de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>), los conceptos primitivos se dividen en dos categorías:
 
-- **Dominios de objetos:** Entidades elementales como el <ConceptLink targetId="punto">punto</ConceptLink>, la <ConceptLink targetId="recta">recta</ConceptLink>, el <ConceptLink targetId="plano">plano</ConceptLink> y el <ConceptLink targetId="espacio">espacio</ConceptLink>.
-- **Relaciones primitivas:** Vínculos básicos entre objetos, como la <ConceptLink targetId="incidencia">incidencia</ConceptLink> (pertenencia), la <ConceptLink targetId="estar-entre">intermediación</ConceptLink> (orden lineal) y la <ConceptLink targetId="congruencia">congruencia</ConceptLink> (igualdad geométrica).
+- **Tipos de objetos (<ConceptLink targetId="dominio">dominios primitivos</ConceptLink>):** Las tres clases elementales de entes: <ConceptLink targetId="punto">puntos</ConceptLink> ($\mathcal{P}$), <ConceptLink targetId="recta">rectas</ConceptLink> ($\mathcal{L}$) y <ConceptLink targetId="plano">planos</ConceptLink> ($\Pi$). El <ConceptLink targetId="espacio">espacio tridimensional</ConceptLink> constituye el universo global del modelo y no un objeto primitivo de la signatura.
+- **Relaciones primitivas:** Vínculos básicos entre objetos, como la <ConceptLink targetId="incidencia">incidencia</ConceptLink> (pertenencia posicional), la <ConceptLink targetId="estar-entre">intermediación</ConceptLink> (orden lineal) y la <ConceptLink targetId="congruencia">congruencia</ConceptLink> (de <ConceptLink targetId="segmento">segmentos</ConceptLink> y de <ConceptLink targetId="angulo">ángulos</ConceptLink>).

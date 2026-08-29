@@ -82,6 +82,7 @@
     "dedekind",
     "descartes",
     "euclides",
+    "fano",
     "fermat",
     "hilbert",
     "hurewicz",
@@ -203,7 +204,7 @@
       "id": "sistema-incidencia",
       "type": "sistema-axiomatico",
       "title": "Intzidentzia-sistema",
-      "description": "Geometriaren oinarrizko egitura axiomatikoa, puntu, zuzen eta planoen arteko kidetza-arauak ezartzen dituena distantzia edo ordena noziorik gabe.",
+      "description": "Geometria sintetikoaren oinarrizko egitura axiomatikoa, puntu, zuzen eta planoen arteko kidetza- eta determinazio-erlazioak ezartzen dituena.",
       "proofs": [],
       "directDependencies": [
         "axioma-incidencia-1",
@@ -294,7 +295,7 @@
       "id": "axioma-incidencia-1",
       "type": "axioma",
       "title": "I.1 Axioma (Zuzenaren determinazioa)",
-      "description": "Edozein bi puntu desberdinetatik zuzen bakar bat igarotzen da.",
+      "description": "Edozein bi puntu desberdinek biekiko intzidente den zuzen bakar bat zehazten dute.",
       "proofs": [],
       "directDependencies": []
     },
@@ -302,7 +303,7 @@
       "id": "axioma-incidencia-2",
       "type": "axioma",
       "title": "I.2 Axioma (Puntuak zuzenean)",
-      "description": "Zuzen orok gutxienez bi puntu desberdin ditu.",
+      "description": "Zuzen orok gutxienez bi puntu desberdinekin intziditzen du.",
       "proofs": [],
       "directDependencies": []
     },
@@ -318,14 +319,14 @@
       "id": "axioma-incidencia-4",
       "type": "axioma",
       "title": "I.4 Axioma (Planoaren determinazioa)",
-      "description": "Kolinealak ez diren hiru puntutatik gutxienez plano bat igarotzen da.",
+      "description": "Kolinealak ez diren edozein hiru puntutatik gutxienez plano bat igarotzen da.",
       "proofs": [],
       "directDependencies": []
     },
     "axioma-incidencia-5": {
       "id": "axioma-incidencia-5",
       "type": "axioma",
-      "title": "I.5 Axioma (Planoaren bakartasuna eta puntu ez-kolinealak)",
+      "title": "I.5 Axioma (Planoaren bakartasuna)",
       "description": "Kolinealak ez diren hiru puntutatik gehienez plano bat igarotzen da, eta plano orok kolinealak ez diren gutxienez hiru puntu ditu.",
       "proofs": [],
       "directDependencies": []
@@ -334,7 +335,7 @@
       "id": "axioma-incidencia-6",
       "type": "axioma",
       "title": "I.6 Axioma (Zuzena planoan sartzea)",
-      "description": "Zuzen baten bi puntu plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
+      "description": "Zuzen baten bi puntu desberdin plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
       "proofs": [],
       "directDependencies": []
     },
@@ -342,7 +343,7 @@
       "id": "axioma-incidencia-7",
       "type": "axioma",
       "title": "I.7 Axioma (Planoen ebakidura)",
-      "description": "Bi plano desberdinek puntu komun bat badute, haien ebakidura zuzen bat da zehazki.",
+      "description": "Bi plano desberdinek puntu komun bat badute, orduan gutxienez beste puntu komun bat dute.",
       "proofs": [],
       "directDependencies": []
     },
@@ -485,7 +486,7 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Multzo disjuntuak",
-      "description": "Haien ebakidura hutsik duten bi multzo edo gehiago; hau da, elementu komunik partekatzen ez dutenak.",
+      "description": "Elementu komunik partekatzen ez duten bi multzoren edo multzo-familia baten propietatea, binaka disjuntuak (elkarren artean disjuntuak) diren multzoen baldintza nabarmenduz.",
       "proofs": [],
       "directDependencies": []
     },
@@ -546,9 +547,15 @@
       "type": "definicion",
       "subtype": "nominal",
       "title": "Espazioa",
-      "description": "Teoria dimentsional bateko puntu, zuzen eta plano guztiak biltzen dituen eremu geometriko globala eta unibertso edukitzailea.",
+      "description": "Teoria dimentsional bateko puntu, zuzen eta planoen domeinuak biltzen dituen diskurtso-unibertso orokorra eta eremu geometrikoa.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "plano",
+        "axioma-incidencia-8",
+        "axioma-incidencia-7"
+      ]
     },
     "estar-entre": {
       "id": "estar-entre",
@@ -653,7 +660,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Puntua",
-      "description": "Geometriako oinarrizko kontzeptu zatiezina eta hedadura espazialik gabea; bere propietateak hautatutako sistema formalaren axiomek zehazten dituzte.",
+      "description": "Geometriako oinarrizko kontzeptu zatiezina eta dimentsio-hedadurarik gabea (dim = 0); bere propietateak hautatutako sistema formalaren axiomek zehazten dituzte.",
       "proofs": [],
       "directDependencies": []
     },
@@ -913,6 +920,14 @@
       "proofs": [],
       "directDependencies": []
     },
+    "fano": {
+      "id": "fano",
+      "type": "matematico",
+      "title": "Gino Fano",
+      "description": "Geometria aljebraikoaren eta geometria proiektibo finituen aitzindari izan zen matematikari italiarra (Fanoren planoaren sortzailea).",
+      "proofs": [],
+      "directDependencies": []
+    },
     "fermat": {
       "id": "fermat",
       "type": "matematico",
@@ -1075,7 +1090,7 @@
       "id": "modelo-fano",
       "type": "modelo",
       "title": "Fanoren planoa",
-      "description": "Existitzen den plano proiektibo finitu txikiena, zehazki 7 puntuz eta 7 zuzenez osatua.",
+      "description": "Plano proiektibo finitu minimala, zehazki 7 puntuz eta 7 zuzenez osatua.",
       "proofs": [],
       "directDependencies": [
         "axioma-incidencia-1",
@@ -1098,7 +1113,7 @@
       "id": "modelo-tres-puntos",
       "type": "modelo",
       "title": "Hiru puntuko eredua",
-      "description": "Oinarrizko intzidentzia-axiomen bateragarritasuna eta independentzia frogatzen dituen oinarrizko eredu finitua.",
+      "description": "Intzidentzia-sistemaren I.1, I.2 eta I.3 axiomak betetzen dituen eredu finitu minimala.",
       "proofs": [],
       "directDependencies": [
         "axioma-incidencia-1",

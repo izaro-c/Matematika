@@ -2,8 +2,8 @@ export const metadata = {
   id: "axioma-incidencia-8",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.8 (Three-Dimensional Space)",
-  description: "There exist at least four points in space not belonging to the same plane.",
+  title: "Axiom I.8 (Three-dimensional space)",
+  description: "There exist at least four points in space that do not belong to the same plane.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
@@ -18,18 +18,25 @@ export const Simulation = Incidence8;
 
 <Capitular letra="T" />here exist at least four <ConceptLink targetId="punto">points</ConceptLink> that do not belong to the same <ConceptLink targetId="plano">plane</ConceptLink>.
 
-This postulate fixes the three-dimensional character of the geometry of <ConceptLink targetId="espacio">space</ConceptLink>, preventing the entire geometric universe from being confined to a single two-dimensional plane.
+This postulate establishes the three-dimensional character of the geometry of <ConceptLink targetId="espacio">space</ConceptLink>, preventing the entire geometric universe from being confined to a single two-dimensional plane.
 
 <Definicion title="Formal Statement">
-  There exist at least four <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind>, and <VisualBind element="pD" color="carbon">$D$</VisualBind> such that no <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> contains all four simultaneously:
+  There exist at least four distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind>, and <VisualBind element="pD" color="carbon">$D$</VisualBind> such that no <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> is incident with all four simultaneously:
   $$
-  \exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \in \pi \land B \in \pi \land C \in \pi \land D \in \pi)
+  \exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi \land D \, \mathbf{I} \, \pi)
   $$
 </Definicion>
 
 <Separador />
 
-### Significance in the theory
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consequences and Theoretical Properties">
+    <PropiedadItem id="tridimensionalidad" title="Three-dimensionality of space">
+      Formally guarantees the existence of non-coplanar point configurations, preventing the geometric universe from collapsing into a single plane and establishing the 3-dimensionality of <ConceptLink targetId="espacio">space</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="cierre-grupo-incidencia" title="Closure of Hilbert's Group I">
+      Concludes the incidence system, establishing the foundational spatial framework upon which <ConceptLink targetId="estar-entre">order</ConceptLink>, <ConceptLink targetId="congruencia">congruence</ConceptLink>, and <ConceptLink targetId="continuidad">continuity</ConceptLink> will operate.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-- **<ConceptLink targetId="coplanaridad">Non-coplanarity</ConceptLink>:** Guarantees the existence of three-dimensional bodies such as the tetrahedron.
-- **Closure of Group I:** This axiom concludes the incidence group, establishing the full spatial domain upon which order and congruence operate.

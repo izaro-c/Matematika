@@ -3,8 +3,9 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma I.4 (Determinación del plano)",
-  description: "Por tres puntos no colineales pasa al menos un plano.",
+  description: "Por tres puntos no colineales pasa al menos un plano que incide con ellos.",
   branch: "51A",
+  tags: ["geometria", "incidencia", "axioma", "plano"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,19 +17,14 @@ export const metadata = {
 import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 
-<Capitular letra="D" />ados tres <ConceptLink targetId="punto">puntos</ConceptLink> no colineales cualesquiera, existe al menos un <ConceptLink targetId="plano">plano</ConceptLink> que los contiene a los tres.
+<Capitular letra="D" />ados tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> cualesquiera, existe al menos un <ConceptLink targetId="plano">plano</ConceptLink> que incide con los tres.
 
-Este postulado traslada al espacio bidimensional el principio de determinación lineal: así como dos puntos fijan una recta, tres puntos no alineados fijan la posición de un plano en el espacio.
+Este axioma traslada al espacio bidimensional el principio de determinación lineal: así como dos puntos fijan una recta, tres puntos no alineados aseguran la existencia de un plano en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
 
 <Definicion title="Enunciado Formal">
-  Para cualesquiera tres <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> no colineales, existe al menos un <ConceptLink targetId="plano">plano</ConceptLink> $\pi$ tal que los tres puntos <ConceptLink targetId="incidencia">inciden</ConceptLink> en $\pi$:
+  Para cualesquiera tres <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, existe al menos un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="polyTriangulo" color="canela">$\pi$</VisualBind> tal que los tres puntos <ConceptLink targetId="incidencia">inciden</ConceptLink> en $\pi$:
   $$
-  \forall A, B, C \in \mathcal{P} \ \bigl(\text{no-colineales}(A, B, C) \implies \exists \pi \in \Pi \ (A \in \pi \land B \in \pi \land C \in \pi)\bigr)
+  \forall A, B, C \in \mathcal{P} \ \bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \implies \exists \pi \in \Pi \ (A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi)\bigr)
   $$
 </Definicion>
 
-<Separador />
-
-### Importancia en la teoría
-
-Permite construir planos a partir de configuraciones mínimas de puntos y sostiene el estudio de la geometría tridimensional en el <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>.

@@ -3,7 +3,7 @@ export const metadata = {
   lang: "es",
   type: "modelo",
   title: "Modelo de tres puntos",
-  description: "Modelo finito elemental que demuestra la consistencia e independencia de los axiomas básicos de incidencia.",
+  description: "Modelo finito minimal que satisface los axiomas I.1, I.2 e I.3 del sistema de incidencia.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
@@ -13,31 +13,40 @@ export const metadata = {
 import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
 export const Diagram = ModeloTresPuntos;
 
-<Capitular letra="E" />l **modelo de tres puntos** es el ejemplo más sencillo posible de una geometría finita. Con un universo compuesto únicamente por tres puntos y tres rectas, demuestra de forma práctica y tangible que los primeros axiomas del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink> son coherentes y no se contradicen entre sí.
+<Capitular letra="E" />l **modelo de tres puntos** es el ejemplo finito más simple de una geometría de incidencia. Con un universo formado por únicamente tres puntos y tres rectas, demuestra formalmente que los tres primeros axiomas del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> son consistentes y no contradictorios.
 
-<Definicion title="Estructura del Modelo">
-  El modelo se define mediante conjuntos finitos explícitos:
-  - **Conjunto de <ConceptLink targetId="punto">puntos</ConceptLink>**: $\mathcal{P} = \{ \text{<VisualBind element="A" color="terracota">A</VisualBind>}, \text{<VisualBind element="B" color="terracota">B</VisualBind>}, \text{<VisualBind element="C" color="terracota">C</VisualBind>} \}$.
-  - **Conjunto de <ConceptLink targetId="recta">rectas</ConceptLink>**: $\mathcal{L} = \{ \text{<VisualBind element="rAB" color="carbon">r_{AB}</VisualBind>}, \text{<VisualBind element="rBC" color="carbon">r_{BC}</VisualBind>}, \text{<VisualBind element="rCA" color="carbon">r_{CA}</VisualBind>} \}$, donde cada recta es el par de puntos que la forman:
+<Definicion title="Estructura Formal del Modelo">
+  El modelo se define como una <ConceptLink targetId="estructura-geometrica">estructura</ConceptLink> $(\mathcal{P}, \mathcal{L}, \mathbf{I})$ con conjuntos finitos:
+  - **Conjunto de <ConceptLink targetId="punto">puntos</ConceptLink>**: $\mathcal{P} = \{ \text{<VisualBind element="A" color="terracota">A</VisualBind>}, \text{<VisualBind element="B" color="terracota">B</VisualBind>}, \text{<VisualBind element="C" color="terracota">C</VisualBind>} \}$ con $A \neq B \neq C$.
+  - **Conjunto de <ConceptLink targetId="recta">rectas</ConceptLink>**: $\mathcal{L} = \{ \text{<VisualBind element="rAB" color="carbon">r_{AB}</VisualBind>}, \text{<VisualBind element="rBC" color="carbon">r_{BC}</VisualBind>}, \text{<VisualBind element="rCA" color="carbon">r_{CA}</VisualBind>} \}$, donde cada recta es el subconjunto de dos puntos:
     $$
     r_{AB} = \{A, B\}, \quad r_{BC} = \{B, C\}, \quad r_{CA} = \{C, A\}
     $$
-  - **Relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink>**: La pertenencia usual ($\in$). Un punto $P$ incide en una recta $\ell$ si $P \in \ell$.
+  - **Relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink>**: La pertenencia conjuntista usual ($\in$). Un punto $P$ incide en una recta $\ell$ si y solo si $P \in \ell$.
 </Definicion>
 
 <Separador />
 
-### Verificación de los axiomas de incidencia
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Verificación Axiomática de Incidencia">
+    <PropiedadItem id="axioma-incidencia-1" title="Verificación del Axioma I.1">
+      Para cualesquiera dos puntos distintos, existe exactamente una recta que los contiene a ambos: $\{A, B\}$ determina $r_{AB}$, $\{B, C\}$ determina $r_{BC}$, y $\{C, A\}$ determina $r_{CA}$ (<ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>).
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-2" title="Verificación del Axioma I.2">
+      Cada una de las tres rectas contiene exactamente dos puntos distintos ($\lvert r_{AB} \rvert = \lvert r_{BC} \rvert = \lvert r_{CA} \rvert = 2 \ge 2$), verificando el <ConceptLink targetId="axioma-incidencia-2">Axioma I.2</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="axioma-incidencia-3" title="Verificación del Axioma I.3">
+      Ninguna recta contiene simultáneamente a los tres puntos ($C \notin r_{AB}$, $A \notin r_{BC}$, $B \notin r_{CA}$), garantizando la no colinealidad de la terna (<ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink>).
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-Este modelo verifica de manera inmediata los tres primeros axiomas de Hilbert:
+  <PropiedadesGrupo title="Relevancia Metamatemática">
+    <PropiedadItem id="consistencia-incidencia" title="Prueba de consistencia lógica">
+      Al construir un modelo concreto donde los postulados I.1, I.2 e I.3 son simultáneamente verdaderos, queda demostrado que dichos axiomas están libres de contradicciones internas.
+    </PropiedadItem>
+    <PropiedadItem id="ausencia-paralelas" title="Ausencia de rectas paralelas">
+      Dos rectas cualesquiera siempre se intersecan en un único punto común ($r_{AB} \cap r_{BC} = \{B\}$); por consiguiente, no existen <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>, demostrando que la noción de paralelismo requiere postulados adicionales independientes.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-- **<ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>:** Para cualesquiera dos puntos distintos (como $A$ y $B$), existe exactamente una recta ($r_{AB}$) que contiene a ambos.
-- **<ConceptLink targetId="axioma-incidencia-2">Axioma I.2</ConceptLink>:** Cada una de las tres rectas contiene al menos dos puntos distintos.
-- **<ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink>:** Los tres puntos $A, B, C$ no están contenidos en una misma recta (<ConceptLink targetId="colinealidad">no son colineales</ConceptLink>).
-
-<Separador />
-
-### Relevancia metamatemática
-
-- **Prueba de consistencia:** Al existir un modelo concreto donde los axiomas I.1, I.2 e I.3 son simultáneamente verdaderos, queda demostrado que estos postulados no son contradictorios.
-- **Ausencia de paralelas:** En este modelo, dos rectas cualesquiera siempre se cortan en un punto común ($r_{AB} \cap r_{BC} = \{B\}$); por tanto, no existen <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>, demostrando que la noción de paralelismo requiere axiomas independientes adicionales.

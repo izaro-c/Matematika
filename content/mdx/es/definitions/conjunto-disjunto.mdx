@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Conjuntos disjuntos",
-  description: "Dos o más conjuntos cuya intersección es vacía, es decir, que no comparten ningún elemento en común.",
+  description: "Propiedad de dos conjuntos o una familia de conjuntos que no comparten elementos en común, destacando la condición de conjuntos mutuamente disjuntos (disjuntos dos a dos).",
   branch: "03",
   hasSimulation: false,
   sources: [
@@ -14,5 +14,29 @@ export const metadata = {
 
 <Capitular letra="D" />os <ConceptLink targetId="conjunto">conjuntos</ConceptLink> $A$ y $B$ son **disjuntos** (o mutuamente excluyentes) si no poseen ningún elemento en común, es decir, si su intersección es el conjunto vacío:
 $$
-A \cap B = \emptyset
+A \cap B = \emptyset \iff \forall x \ (x \in A \implies x \notin B)
 $$
+
+<Definicion title="Familia de Conjuntos Mutuamente Disjuntos (Disjuntos dos a dos)">
+  Sea $\{A_i\}_{i \in I}$ una familia de conjuntos indexada por un conjunto $I$. Se dice que la familia es **mutuamente disjunta** (o **disjunta dos a dos**) si cualesquiera dos conjuntos distintos de la familia tienen intersección vacía:
+  $$
+  \forall i, j \in I \ (i \neq j \implies A_i \cap A_j = \emptyset)
+  $$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades y Distinciones Formales">
+    <PropiedadItem id="disjuncion-dos-a-dos-vs-global" title="Disyunción dos a dos frente a intersección global nula">
+      Para $n \ge 3$ conjuntos, la condición de ser disjuntos dos a dos ($\forall i \neq j, \, A_i \cap A_j = \emptyset$) es estrictamente más fuerte que la simple intersección global vacía ($\bigcap_{i \in I} A_i = \emptyset$). Tres conjuntos pueden no compartir ningún elemento común a los tres y, sin embargo, solaparse por pares.
+    </PropiedadItem>
+    <PropiedadItem id="fundamento-geometrico-sorts" title="Partición del universo del discurso en dominios">
+      En <ConceptLink targetId="logica">lógica multitipo</ConceptLink> y en los fundamentos axiomáticos de la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>, los <ConceptLink targetId="dominio">dominios</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">rectas</ConceptLink> $\mathcal{L}$ y <ConceptLink targetId="plano">planos</ConceptLink> $\Pi$ son mutuamente disjuntos dos a dos y conforman una partición del universo del discurso global (<ConceptLink targetId="espacio">espacio</ConceptLink>) $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$:
+      $$
+      \mathcal{P} \cap \mathcal{L} = \emptyset, \quad \mathcal{P} \cap \Pi = \emptyset, \quad \mathcal{L} \cap \Pi = \emptyset
+      $$
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+

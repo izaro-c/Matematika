@@ -17,13 +17,17 @@ export const metadata = {
 Al ser un concepto primitivo, no se define mediante fórmulas algebraicas; su comportamiento queda determinado por los axiomas del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>. En el lenguaje habitual, decir que un punto y una recta «inciden» significa que el punto está situado sobre la recta, o equivalentemente, que la recta pasa por dicho punto.
 
 <Definicion title="Declaración Formal">
-  En una <ConceptLink targetId="estructura-geometrica">estructura de incidencia</ConceptLink> $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$, la **incidencia** $\mathbf{I}$ es una relación binaria entre los dominios de puntos $\mathcal{P}$, rectas $\mathcal{L}$ y planos $\Pi$:
+  En una <ConceptLink targetId="estructura-geometrica">estructura de incidencia</ConceptLink> multitipo $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, la **incidencia** se formula mediante relaciones binarias independientes y tipadas entre los <ConceptLink targetId="dominio">dominios primitivos</ConceptLink>:
   $$
-  \mathbf{I} \subseteq (\mathcal{P} \times \mathcal{L}) \cup (\mathcal{P} \times \Pi) \cup (\mathcal{L} \times \Pi)
+  \mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}, \quad \mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi
   $$
-  - Si $(P, \ell) \in \mathbf{I}$, se escribe $P \, \mathbf{I} \, \ell$ (el punto $P$ incide en la recta $\ell$, o $P \in \ell$).
-  - Si $(P, \pi) \in \mathbf{I}$, se escribe $P \, \mathbf{I} \, \pi$ (el punto $P$ incide en el plano $\pi$, o $P \in \pi$).
-  - Si $(\ell, \pi) \in \mathbf{I}$, se escribe $\ell \, \mathbf{I} \, \pi$ (la recta $\ell$ está contenida en el plano $\pi$, o $\ell \subset \pi$).
+  - **Punto y recta:** Si $(P, \ell) \in \mathbf{I}_{\mathcal{P}\mathcal{L}}$, se escribe formalmente $P \, \mathbf{I} \, \ell$ (el punto $P$ incide en la recta $\ell$; la expresión $P \in \ell$ es una notación abreviada por abuso de lenguaje al identificar la recta con sus puntos incidentes).
+  - **Punto y plano:** Si $(P, \pi) \in \mathbf{I}_{\mathcal{P}\Pi}$, se escribe formalmente $P \, \mathbf{I} \, \pi$ (el punto $P$ incide en el plano $\pi$; análogamente, $P \in \pi$ por abuso de lenguaje).
+
+  La relación de una recta contenida en un plano ($\ell \subseteq \pi$) no es una relación primitiva independiente, sino una noción derivada fijada por el <ConceptLink targetId="axioma-incidencia-6">Axioma I.6</ConceptLink>:
+  $$
+  \ell \subseteq \pi \iff \forall P \in \mathcal{P} \, (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)
+  $$
 </Definicion>
 
 <Separador />
@@ -32,5 +36,5 @@ Al ser un concepto primitivo, no se define mediante fórmulas algebraicas; su co
 
 La incidencia constituye el primer estrato deductivo de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>:
 
-- **En sistemas de incidencia:** Establece la configuración básica del espacio mediante los axiomas (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>), determinando cuándo varios puntos son <ConceptLink targetId="colinealidad">colineales</ConceptLink> (están en una misma recta) o <ConceptLink targetId="coplanaridad">coplanares</ConceptLink> (están en un mismo plano).
-- **Independencia de métricas:** La relación de incidencia no requiere nociones de <ConceptLink targetId="distancia">distancia</ConceptLink>, <ConceptLink targetId="angulo">ángulo</ConceptLink> ni <ConceptLink targetId="estar-entre">orden</ConceptLink>, por lo que es válida tanto en geometrías continuas como en <ConceptLink targetId="modelo-fano">geometrías finitas</ConceptLink>.
+- **En sistemas de incidencia:** Establece la configuración básica del <ConceptLink targetId="espacio">espacio</ConceptLink> mediante los axiomas (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>), determinando cuándo varios puntos son <ConceptLink targetId="colinealidad">colineales</ConceptLink> (están en una misma recta) o <ConceptLink targetId="coplanaridad">coplanares</ConceptLink> (están en un mismo plano).
+- **Independencia de métricas:** La relación de incidencia no requiere nociones de <ConceptLink targetId="distancia">distancia</ConceptLink>, <ConceptLink targetId="angulo">ángulo</ConceptLink> ni <ConceptLink targetId="estar-entre">orden</ConceptLink>, por lo que es válida tanto en geometrías <ConceptLink targetId="continuidad">continuas</ConceptLink> como en <ConceptLink targetId="modelo-fano">geometrías finitas</ConceptLink>.

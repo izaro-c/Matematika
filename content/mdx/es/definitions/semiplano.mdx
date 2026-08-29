@@ -12,19 +12,18 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="U" />n **semiplano** es cada una de las dos regiones en que una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> divide a los puntos de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>. La recta divisoria recibe el nombre de **borde** o frontera y no forma parte del semiplano.
+<Capitular letra="U" />n **semiplano** es cada una de las dos regiones en que una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> divide a los <ConceptLink targetId="punto">puntos</ConceptLink> de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>. La recta divisoria recibe el nombre de **borde** o frontera y no forma parte del semiplano.
 
-En la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, la partición del plano en exactamente dos regiones <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink> es una consecuencia directa del <ConceptLink targetId="axioma-orden-4" isDependency={true}>Axioma de Pasch</ConceptLink> (Axioma II.4 de orden).
+En la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, la partición del plano en exactamente dos regiones <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink> es consecuencia del Teorema de Separación del Plano, demostrado a partir del <ConceptLink targetId="axioma-orden-4" isDependency={true}>Axioma de Pasch</ConceptLink> (Axioma II.4) y los axiomas de <ConceptLink targetId="estar-entre">orden lineal</ConceptLink>.
 
 <Definicion title="Definición Formal">
-  Sea $\pi$ un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> y sea $\ell$ una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> contenida en $\pi$. La recta $\ell$ divide a los <ConceptLink targetId="punto">puntos</ConceptLink> de $\pi \setminus \ell$ en dos <ConceptLink targetId="conjunto-disjunto">conjuntos disjuntos</ConceptLink> $\mathcal{H}_1$ y $\mathcal{H}_2$, denominados **semiplanos**, determinados por:
+  Sea $\pi$ un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> y sea $\ell$ una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> contenida en $\pi$. Sobre el conjunto de <ConceptLink targetId="punto">puntos</ConceptLink> del plano exteriores a la recta ($\pi \setminus \ell$), se define la relación binaria $\sim_\ell$:
   $$
-  A, B \in \mathcal{H}_1 \iff \overline{AB} \cap \ell = \emptyset
+  A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \ell = \emptyset
   $$
-  $$
-  A \in \mathcal{H}_1, \, C \in \mathcal{H}_2 \iff \overline{AC} \cap \ell \neq \emptyset
-  $$
-  donde $\overline{AB}$ representa el <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> que une los puntos $A$ y $B$.
+  donde $\operatorname{seg}(AB)$ representa el <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> abierto que une los puntos $A$ y $B$ (excluyendo sus extremos).
+
+  Por el Teorema de Separación del Plano, $\sim_\ell$ es una relación de equivalencia que particiona $\pi \setminus \ell$ en exactamente dos clases de equivalencia en el espacio cociente $(\pi \setminus \ell) / {\sim_\ell} = \{ \mathcal{H}_1, \mathcal{H}_2 \}$. Cada una de estas clases $\mathcal{H}_1$ y $\mathcal{H}_2$ es un **semiplano** abierto determinado por $\ell$.
 </Definicion>
 
 <Separador />
@@ -32,10 +31,10 @@ En la <ConceptLink targetId="geometria-sintetica">geometría sintética</Concept
 <SeccionPropiedades>
   <PropiedadesGrupo title="Propiedades Geométricas Fundamentales">
     <PropiedadItem id="conjunto-convexo" title="Convexidad">
-      Todo semiplano es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>: si contiene dos puntos cualesquiera, contiene enteramente al segmento que los une.
+      Todo semiplano es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>: si contiene dos puntos cualesquiera $A$ y $B$, contiene enteramente al segmento abierto $\operatorname{seg}(AB)$ que los une.
     </PropiedadItem>
     <PropiedadItem id="angulo" title="Regiones interiores poligonales">
-      La intersección de dos o más semiplanos cuyos bordes se cortan permite definir formalmente la región interior de un <ConceptLink targetId="angulo">ángulo</ConceptLink>, de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> y de cualquier <ConceptLink targetId="poligono">polígono</ConceptLink>.
+      La intersección finita de semiplanos cuyos bordes se cortan permite definir formalmente la región interior de un <ConceptLink targetId="angulo">ángulo</ConceptLink>, de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> y de cualquier <ConceptLink targetId="poligono">polígono convexo</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

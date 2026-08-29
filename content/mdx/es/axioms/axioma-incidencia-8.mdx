@@ -3,7 +3,7 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma I.8 (Espacio tridimensional)",
-  description: "Existen al menos cuatro puntos en el espacio que no pertenecen a un mismo plano.",
+  description: "Existen al menos cuatro puntos que no pertenecen a un mismo plano.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
@@ -21,15 +21,22 @@ export const Simulation = Incidence8;
 Este postulado fija la dimensión tridimensional de la geometría del <ConceptLink targetId="espacio">espacio</ConceptLink>, impidiendo que todo el universo geométrico quede confinado a un único plano bidimensional.
 
 <Definicion title="Enunciado Formal">
-  Existen al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> y <VisualBind element="pD" color="carbon">$D$</VisualBind> tales que ningún <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> los contiene a los cuatro a la vez:
+  Existen al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> y <VisualBind element="pD" color="carbon">$D$</VisualBind> tales que ningún <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> incide con los cuatro simultáneamente:
   $$
-  \exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \in \pi \land B \in \pi \land C \in \pi \land D \in \pi)
+  \exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi \land D \, \mathbf{I} \, \pi)
   $$
 </Definicion>
 
 <Separador />
 
-### Importancia en la teoría
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias y Propiedades Teóricas">
+    <PropiedadItem id="tridimensionalidad" title="Tridimensionalidad del espacio">
+      Garantiza formalmente la existencia de configuraciones no coplanares de puntos, impidiendo que el universo geométrico colapse en un único plano y fijando la tridimensionalidad del <ConceptLink targetId="espacio">espacio</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="cierre-grupo-incidencia" title="Cierre del Grupo I de Hilbert">
+      Con este axioma concluye el sistema de incidencia, estableciendo el marco espacial elemental sobre el que actuarán el <ConceptLink targetId="estar-entre">orden</ConceptLink>, la <ConceptLink targetId="congruencia">congruencia</ConceptLink> y la <ConceptLink targetId="continuidad">continuidad</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-- **<ConceptLink targetId="coplanaridad">No coplanaridad</ConceptLink>:** Garantiza la existencia de cuerpos tridimensionales como el tetraedro.
-- **Cierre del Grupo I:** Con este axioma concluye el grupo de incidencia, delimitando el marco espacial completo sobre el que actuarán el orden y la congruencia.

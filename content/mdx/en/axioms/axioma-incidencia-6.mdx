@@ -2,8 +2,8 @@ export const metadata = {
   id: "axioma-incidencia-6",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.6 (Inclusion of a Line in a Plane)",
-  description: "If two points of a line lie in a plane, then the entire line is contained in that plane.",
+  title: "Axiom I.6 (Line inclusion in a plane)",
+  description: "If two distinct points of a line belong to a plane, then the entire line is contained in that plane.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
@@ -18,17 +18,26 @@ export const Simulation = Incidence6;
 
 <Capitular letra="I" />f two distinct <ConceptLink targetId="punto">points</ConceptLink> of a <ConceptLink targetId="recta">line</ConceptLink> belong to a <ConceptLink targetId="plano">plane</ConceptLink>, then all points of that line belong to that plane.
 
-This axiom formalizes the rigidity and flatness of the plane: a line cannot enter and leave a plane, nor can it bend relative to it.
+This axiom formalizes the geometric rigidity and flatness of the plane: a line cannot enter and leave a plane, nor can it bend relative to it in <ConceptLink targetId="espacio">space</ConceptLink>.
 
 <Definicion title="Formal Statement">
-  Let <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> be two distinct points of a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="recta" color="carbon">$\ell$</VisualBind>. If $A$ and $B$ belong to a <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano" color="canela">$\pi$</VisualBind>, then the entire line $\ell$ is contained in $\pi$:
+  Let <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> be two distinct points of a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="recta" color="carbon">$\ell$</VisualBind>. If $A$ and $B$ <ConceptLink targetId="incidencia">are incident</ConceptLink> with a <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano" color="canela">$\pi$</VisualBind>, then the entire line $\ell$ is contained in $\pi$:
   $$
-  (A \in \ell \land B \in \ell \land A \neq B \land A \in \pi \land B \in \pi) \implies \ell \subset \pi
+  \forall \ell \in \mathcal{L}, \, \forall \pi \in \Pi, \, \forall A, B \in \mathcal{P} \ \bigl((A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi) \implies \ell \subseteq \pi\bigr)
   $$
+  where $\ell \subseteq \pi$ denotes that every point incident with $\ell$ is also incident with $\pi$.
 </Definicion>
 
 <Separador />
 
-### Significance in the theory
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consequences and Theoretical Properties">
+    <PropiedadItem id="planitud-espacial" title="Rigidity and geometric flatness">
+      Formalizes the elemental flatness of the plane: a line incident with two points of a plane cannot bend or leave it, remaining entirely contained within its surface.
+    </PropiedadItem>
+    <PropiedadItem id="transferencia-lineal" title="Transfer of linear properties">
+      Enables the transfer of all theorems and properties of linear geometry directly into any two-dimensional plane of space.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-Allows all properties of the geometry of lines to be transferred into the two-dimensional plane.

@@ -2,7 +2,7 @@ export const metadata = {
   id: "axioma-incidencia-5",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.5 (Unicidad del plano y puntos no colineales)",
+  title: "Axioma I.5 (Unicidad del plano)",
   description: "Por tres puntos no colineales pasa a lo sumo un plano, y todo plano contiene al menos tres puntos no colineales.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
@@ -16,20 +16,28 @@ export const metadata = {
 import { Incidence5 } from '@content/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
 
-<Capitular letra="T" />res <ConceptLink targetId="punto">puntos</ConceptLink> no colineales no pueden pertenecer a más de un <ConceptLink targetId="plano">plano</ConceptLink>, y todo plano contiene al menos tres puntos que no pertenecen a una misma <ConceptLink targetId="recta">recta</ConceptLink>.
+<Capitular letra="T" />res <ConceptLink targetId="punto">puntos</ConceptLink> no colineales no pueden pertenecer a más de un <ConceptLink targetId="plano">plano</ConceptLink>, y todo plano contiene al menos tres puntos no situados sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>.
 
-Este postulado complementa al <ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink>, cerrando la propiedad de unicidad: tres puntos no alineados determinan exactamente un único plano.
+Este postulado complementa al <ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink>, cerrando la propiedad de unicidad: tres puntos no alineados determinan un único plano unívoco en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
 
 <Definicion title="Enunciado Formal">
-  1. Si tres puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> no son <ConceptLink targetId="colinealidad">colineales</ConceptLink>, existe como máximo un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="canela">$\pi$</VisualBind> que los contiene:
+  1. Si tres puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> no son colineales, existe a lo sumo un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="canela">$\pi$</VisualBind> que incide con los tres:
   $$
-  \text{no-colineales}(A, B, C) \implies \exists! \pi \in \Pi \ (A \in \pi \land B \in \pi \land C \in \pi)
+  \forall A, B, C \in \mathcal{P}, \, \forall \pi_1, \pi_2 \in \Pi \ \bigl((\text{no-colineales}(A, B, C) \land A, B, C \, \mathbf{I} \, \pi_1 \land A, B, C \, \mathbf{I} \, \pi_2) \implies \pi_1 = \pi_2\bigr)
   $$
-  2. Todo plano $\pi \in \Pi$ contiene al menos tres puntos distintos no colineales.
+  2. Todo plano $\pi \in \Pi$ contiene al menos tres puntos distintos no colineales que inciden en él.
 </Definicion>
 
 <Separador />
 
-### Importancia en la teoría
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias y Propiedades Teóricas">
+    <PropiedadItem id="unicidad-plano" title="Unicidad del plano determinado">
+      Junto con el <ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink>, garantiza que tres puntos no colineales determinan exactamente un único plano ($\exists! \pi \in \Pi$).
+    </PropiedadItem>
+    <PropiedadItem id="densidad-plano" title="No colapso del plano">
+      Asegura que ningún plano se reduzca a una única recta o a una configuración vacía, preservando su naturaleza bidimensional genuina.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-Garantiza que los planos sean superficies bidimensionales bien diferenciadas y no se dupliquen sobre las mismas referencias triangulares.
