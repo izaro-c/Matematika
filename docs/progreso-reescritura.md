@@ -12,7 +12,7 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 
 ---
 
-## 1. Documentos con Visto Bueno Oficial (Aprobados: 26)
+## 1. Documentos con Visto Bueno Oficial (Aprobados: 27)
 
 | ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Fecha Aprobación |
 | :--- | :--- | :--- | :--- | :--- | :---: |
@@ -51,11 +51,11 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 
 ---
 
-## 3. Plan de Reescritura Ordenado por Prioridad Epistemológica (85 pendientes)
+## 3. Plan de Reescritura Ordenado por Prioridad Epistemológica (84 pendientes)
 
 El orden de los siguientes bloques sigue la secuencia lógica rigurosa de Hilbert y los fundamentos del grafo de conocimiento: desde los axiomas y conceptos de orden (Grupo II), pasando por congruencia (Grupo III), paralelismo (Grupo IV), continuidad (Grupo V), sistemas globales, teoremas mayores y demostraciones, hasta modelos, didáctica y biografías complementarias.
 
-### Fase 1: Prioridad 1: Fundamentos de Orden e Intermediación (Hilbert Grupo II) (10)
+### Fase 1: Prioridad 1: Fundamentos de Orden e Intermediación (Hilbert Grupo II) (9)
 *Estructuras lineales primitivas, axiomas II.1-II.4 y nociones derivadas básicas (segmento, semirrecta, ángulo, triángulo y Moritz Pasch).*
 
 | ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
