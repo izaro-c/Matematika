@@ -3298,7 +3298,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Recta",
-      "description": "Término primitivo de la geometría que representa una variedad lineal unidimensional continua y no acotada.",
+      "description": "Concepto geométrico primitivo determinado por los axiomas de incidencia y orden del espacio en el que se inscribe.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -3309,9 +3309,9 @@
           "role": "primary"
         },
         {
-          "title": "Euclidean and Non-Euclidean Geometries: Development and History",
+          "title": "Euclidean and Non-Euclidean Geometries",
           "author": "Marvin Jay Greenberg",
-          "locator": "Capítulo 3",
+          "locator": "Capítulo 2 y 3",
           "role": "secondary"
         }
       ],
@@ -8674,7 +8674,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Recta",
-      "description": "Término primitivo de la geometría que representa una variedad lineal unidimensional continua y no acotada.",
+      "description": "Concepto geométrico primitivo determinado por los axiomas de incidencia y orden del espacio en el que se inscribe.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -8685,9 +8685,9 @@
           "role": "primary"
         },
         {
-          "title": "Euclidean and Non-Euclidean Geometries: Development and History",
+          "title": "Euclidean and Non-Euclidean Geometries",
           "author": "Marvin Jay Greenberg",
-          "locator": "Capítulo 3",
+          "locator": "Capítulo 2 y 3",
           "role": "secondary"
         }
       ],

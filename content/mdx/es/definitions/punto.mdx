@@ -1,63 +1,69 @@
 export const metadata = {
   id: "punto",
-  lang: "es",
+  conceptKey: "punto",
+  lang: "en",
   type: "definicion",
   subtype: "primitivo",
-  title: "Punto",
-  description: "Elemento constitutivo primario e indivisible del espacio geométrico y noción primitiva fundamental en los sistemas axiomáticos.",
-  branch: "51M",
+  title: "Point",
+  description: "Fundamental, indivisible geometric entity implicitly defined by the axioms of the geometric system.",
+  branch: "51M04",
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 1", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
   ]
 };
 
 import { Punto } from '@content/diagrams/Definiciones/Punto';
 export const Simulation = Punto;
 
-<Capitular letra="E" />l punto es la entidad elemental e indivisible de la geometría y la topología. Al constituir una noción primitiva, carece de dimensiones espaciales intrínsecas (longitud, área o volumen) y sirve como base estructural para la definición de <ConceptLink targetId="recta">rectas</ConceptLink>, <ConceptLink targetId="plano">planos</ConceptLink> y espacios abstractos.
+<Capitular letra="T"/>he point is the basic, indivisible entity constituting the fundamental unit of geometric space. As a <ConceptLink targetId="concepto-primitivo">primitive concept</ConceptLink>, it lacks a prior constructive definition; its mathematical nature is implicitly and relationally determined by the set of axioms satisfied by the geometric structure in which it resides.
 
-<Definicion title="">
-  Un punto <VisualBind element="pPoint" color="musgo">$P$</VisualBind> es una entidad geométrica primitiva adimensional. En la axiomatización moderna, los puntos constituyen los elementos del conjunto subyacente $\mathcal{S}$ sobre el cual operan las relaciones de <ConceptLink targetId="incidencia">incidencia</ConceptLink>, <ConceptLink targetId="estar-entre">orden</ConceptLink> y <ConceptLink targetId="congruencia">congruencia</ConceptLink>.
+<Definicion>
+  Given a geometric structure $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \mathcal{Pl}, \mathcal{I}, \mathcal{B}, \equiv)$ satisfying a formal system of axioms $\Phi$, the non-empty set $\mathcal{P}$ constitutes the point domain. A **point** is any element belonging to this carrier set:
+  $$
+  P \in \mathcal{P}
+  $$
+  whose properties are uniquely determined by the relations of incidence $\mathcal{I}$, betweenness $\mathcal{B}$, and congruence $\equiv$ prescribed by $\Phi$.
 </Definicion>
 
 <Separador />
 
-### Geometría sintética
+### Axiomatic characterization by groups
 
-En el sistema axiomático de Hilbert, el punto es un concepto no definido formalmente; sus propiedades y comportamiento quedan determinados por los axiomas del sistema:
-- **Incidencia**: Dos puntos distintos $A \neq B$ determinan una única <ConceptLink targetId="recta">recta</ConceptLink> $\ell$.
-- **Intermediación**: Dados tres puntos colineales distintos, exactamente uno de ellos se encuentra entre los otros dos ($A * B * C$).
-- **Existencia**: Toda recta contiene al menos dos puntos distintos, y existen al menos cuatro puntos no coplanares en el espacio.
+The formal behavior of points is structured across five fundamental axiom groups:
 
-### Geometría analítica
+#### Group I: Axioms of incidence
+- **<ConceptLink targetId="axioma-i-1">Axiom I.1</ConceptLink>:** Two distinct points <VisualBind color="musgo" element="pA">$A$</VisualBind> and <VisualBind color="musgo" element="pB">$B$</VisualBind> uniquely determine a <ConceptLink targetId="recta">line</ConceptLink> $\overleftrightarrow{AB}$.
+- **<ConceptLink targetId="axioma-i-2">Axiom I.2</ConceptLink>:** Every line contains at least two distinct points.
+- **<ConceptLink targetId="axioma-i-3">Axiom I.3</ConceptLink>:** In a <ConceptLink targetId="plano">plane</ConceptLink> there exist at least three non-collinear points.
+- **<ConceptLink targetId="axioma-i-4">Axiom I.4</ConceptLink>:** Three non-collinear points uniquely determine a plane.
+- **<ConceptLink targetId="axioma-i-5">Axiom I.5</ConceptLink>:** If two points of a line lie in a plane, then all points of that line lie in that plane.
+- **<ConceptLink targetId="axioma-i-6">Axiom I.6</ConceptLink>:** If two planes share a common point, then they share at least one additional point.
+- **<ConceptLink targetId="axioma-i-7">Axiom I.7</ConceptLink>:** Space contains at least four points that do not lie in the same plane.
 
-En el espacio afín real $\mathbb{R}^n$, un punto $P$ se representa mediante una $n$-tupla ordenada de números reales:
-$$
-P = (x_1, x_2, \dots, x_n) \in \mathbb{R}^n
-$$
-La separación métrica entre dos puntos $P = (x_1, \dots, x_n)$ y $Q = (y_1, \dots, y_n)$ viene dada por la distancia euclídea:
-$$
-d(P, Q) = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}
-$$
+#### Group II: Axioms of order and betweenness
+- **<ConceptLink targetId="axioma-ii-1">Axiom II.1</ConceptLink>:** The <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation ($A * B * C$) involves triples of distinct collinear points and is symmetric ($C * B * A$).
+- **<ConceptLink targetId="axioma-ii-2">Axiom II.2</ConceptLink>:** For any two distinct points $A$ and $B$, there exists at least one point $C$ such that $A * B * C$.
+- **<ConceptLink targetId="axioma-ii-3">Axiom II.3</ConceptLink>:** Of three distinct collinear points, exactly one lies between the other two.
+- **<ConceptLink targetId="axioma-ii-4">Axiom II.4 (Pasch)</ConceptLink>:** If a line coplanar with a triangle intersects a point on one of its sides, it necessarily intersects a point on one of the other two sides.
 
-### Topología y teoría de conjuntos
+#### Group III: Axioms of congruence
+- **<ConceptLink targetId="axioma-iii-1">Axiom III.1</ConceptLink>:** Two points bound a <ConceptLink targetId="segmento">segment</ConceptLink> that can be congruently transported onto any ray from a given origin.
+- **<ConceptLink targetId="axioma-iii-4">Axiom III.4</ConceptLink>:** Three non-collinear points determine an <ConceptLink targetId="angulo">angle</ConceptLink> that can be congruently constructed with respect to a given ray.
 
-En un espacio topológico $(X, \tau)$, un punto es cualquier elemento $x \in X$. El subconjunto unitario $\{x\}$ es cerrado si el espacio satisface el axioma de separación $T_1$, y su dimensión topológica inductiva es idénticamente nula ($\text{dim}(\{x\}) = 0$).
+#### Group IV: Axiom of parallels
+- **<ConceptLink targetId="axioma-iv-1">Axiom IV.1 (Parallels)</ConceptLink>:** Given a line $\ell$ and a point $P \notin \ell$, there exists at most one coplanar line passing through $P$ that does not intersect $\ell$.
+
+#### Group V: Axioms of continuity
+- **<ConceptLink targetId="axioma-v-1">Axiom V.1 (Archimedes)</ConceptLink>:** Along a line, successive translations of a segment determined by two points can surpass any other specified point.
+- **<ConceptLink targetId="axioma-v-2">Axiom V.2 (Completeness)</ConceptLink>:** The ordered set of points on a line admits no extension preserving both order and congruence.
 
 <Separador />
 
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Fundamentos axiomáticos y métricos">
-    <PropiedadItem id="axioma-incidencia-1" title="Determinación lineal">
-      Por dos puntos distintos $A \neq B$ pasa una única recta $\ell = \overleftrightarrow{AB}$.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-3" title="Existencia de puntos no alineados">
-      En cada recta existen al menos dos puntos; en cada plano, al menos tres puntos no colineales.
-    </PropiedadItem>
-    <PropiedadItem id="distancia-indiscernibles" title="Identidad de los indiscernibles">
-      En todo espacio métrico, $d(P, Q) = 0 \iff P = Q$.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
+### Model dependence and subsystems
+
+The specific axioms a point satisfies depend on the chosen formal subsystem:
+- **Incidence Geometry:** Considers solely Group I axioms.
+- **Ordered Geometry:** Adds Group II axioms, endowing the point set with order and convexity.
+- **Neutral or Absolute Geometry:** Incorporates Group III congruence axioms without assuming the parallel postulate.
+- **Euclidean Geometry:** Integrates all five axiom groups.

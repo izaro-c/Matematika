@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "f3ca69fcf57196f3a180005ec8f7c2675d6a0abe5052150f4bf8e87599ae9dd1",
+  "corpusHash": "ca2439a968ada7425aabe4fca1d64c5e1b433e5804e8f019a95f3ef3d4e08fd3",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -1040,8 +1040,8 @@
         "contentPath": "content/mdx/es/definitions/punto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 598,
-          "end": 629
+          "start": 495,
+          "end": 526
         },
         "blockId": "punto:diagram:Punto"
       },
@@ -1072,8 +1072,8 @@
         "contentPath": "content/mdx/es/definitions/recta.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 579,
-          "end": 610
+          "start": 624,
+          "end": 655
         },
         "blockId": "recta:diagram:Recta"
       },
