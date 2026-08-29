@@ -9,34 +9,30 @@ export const metadata = {
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §1",
+      role: "primary"
+    }
   ]
 };
 
 import { Incidence8 } from '@content/diagrams/Axiomas/Incidence8';
 export const Simulation = Incidence8;
 
-<Capitular letra="E" />xisten al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> que no pertenecen a un mismo <ConceptLink targetId="plano">plano</ConceptLink>.
+<Capitular letra="E" />xisten al menos cuatro <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no <ConceptLink targetId="coplanaridad">coplanares</ConceptLink>, es decir, tales que ningún <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> <ConceptLink targetId="incidencia" isDependency={true}>incide</ConceptLink> simultáneamente con los cuatro.
 
-Este postulado fija la dimensión tridimensional de la geometría del <ConceptLink targetId="espacio">espacio</ConceptLink>, impidiendo que todo el universo geométrico quede confinado a un único plano bidimensional.
+En el <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>, este postulado fija la cota dimensional inferior del <ConceptLink targetId="espacio">espacio</ConceptLink>, impidiendo que la totalidad de los elementos geométricos quede confinada en un único <ConceptLink targetId="plano">plano</ConceptLink> bidimensional.
 
-<Definicion title="Enunciado Formal">
-  Existen al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> y <VisualBind element="pD" color="carbon">$D$</VisualBind> tales que ningún <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> incide con los cuatro simultáneamente:
-  $$
-  \exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi \land D \, \mathbf{I} \, \pi)
-  $$
+<Definicion title="Axioma I.8 (Espacio tridimensional)">
+Existen al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> y <VisualBind element="pD" color="carbon">$D$</VisualBind> que no pertenecen a un mismo <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano-pi" color="azul">$\pi$</VisualBind>:
+
+$$
+\exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi \land D \, \mathbf{I} \, \pi)
+$$
 </Definicion>
 
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Consecuencias y Propiedades Teóricas">
-    <PropiedadItem id="tridimensionalidad" title="Tridimensionalidad del espacio">
-      Garantiza formalmente la existencia de configuraciones no coplanares de puntos, impidiendo que el universo geométrico colapse en un único plano y fijando la tridimensionalidad del <ConceptLink targetId="espacio">espacio</ConceptLink>.
-    </PropiedadItem>
-    <PropiedadItem id="cierre-grupo-incidencia" title="Cierre del Grupo I de Hilbert">
-      Con este axioma concluye el sistema de incidencia, estableciendo el marco espacial elemental sobre el que actuarán el <ConceptLink targetId="estar-entre">orden</ConceptLink>, la <ConceptLink targetId="congruencia">congruencia</ConceptLink> y la <ConceptLink targetId="continuidad">continuidad</ConceptLink>.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
-
+<Nota>
+Este axioma garantiza la existencia de configuraciones genuinamente espaciales, fijando un mínimo de tres <ConceptLink targetId="dimension">dimensiones</ConceptLink> para el <ConceptLink targetId="espacio">espacio</ConceptLink>. Con este postulado concluye el grupo de axiomas de <ConceptLink targetId="incidencia">incidencia</ConceptLink> de Hilbert.
+</Nota>

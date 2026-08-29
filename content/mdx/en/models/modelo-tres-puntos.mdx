@@ -2,51 +2,65 @@ export const metadata = {
   id: "modelo-tres-puntos",
   lang: "en",
   type: "modelo",
-  title: "Three-point model",
-  description: "Minimal finite model satisfying axioms I.1, I.2, and I.3 of the incidence system.",
+  title: "Three-Point Model",
+  description: "Minimal finite structure satisfying planar incidence axioms I.1, I.2, and I.3.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
-  hasDiagram: true
+  hasDiagram: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §2",
+      role: "primary"
+    }
+  ]
 };
 
 import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
 export const Diagram = ModeloTresPuntos;
 
-<Capitular letra="T" />he **three-point model** is the simplest finite example of an incidence geometry. With a universe consisting solely of three points and three lines, it formally demonstrates that the first three axioms of <ConceptLink targetId="hilbert">Hilbert's</ConceptLink> <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink> are consistent and free of contradictions.
+<Capitular letra="T" />he **three-point model** is a finite <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink> that satisfies the first three axioms of <ConceptLink targetId="david-hilbert">David Hilbert's</ConceptLink> planar <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>.
 
-<Definicion title="Formal Model Structure">
-  The model is defined as a finite <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> $(\mathcal{P}, \mathcal{L}, \mathbf{I})$:
-  - **Set of <ConceptLink targetId="punto">points</ConceptLink>**: $\mathcal{P} = \{ \text{<VisualBind element="A" color="terracota">A</VisualBind>}, \text{<VisualBind element="B" color="terracota">B</VisualBind>}, \text{<VisualBind element="C" color="terracota">C</VisualBind>} \}$ with $A \neq B \neq C$.
-  - **Set of <ConceptLink targetId="recta">lines</ConceptLink>**: $\mathcal{L} = \{ \text{<VisualBind element="rAB" color="carbon">r_{AB}</VisualBind>}, \text{<VisualBind element="rBC" color="carbon">r_{BC}</VisualBind>}, \text{<VisualBind element="rCA" color="carbon">r_{CA}</VisualBind>} \}$, where each line is a two-point subset:
-    $$
-    r_{AB} = \{A, B\}, \quad r_{BC} = \{B, C\}, \quad r_{CA} = \{C, A\}
-    $$
-  - **<ConceptLink targetId="incidencia">Incidence relation</ConceptLink>**: Standard set membership ($\in$). A point $P$ is incident with a line $\ell$ if and only if $P \in \ell$.
+In <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, it constitutes a minimal <ConceptLink targetId="incidencia">incidence</ConceptLink> plane of finite <ConceptLink targetId="cardinalidad">cardinality</ConceptLink>, serving as a semantic witness to the <ConceptLink targetId="consistencia-logica">logical consistency</ConceptLink> of planar incidence postulates.
+
+<Definicion title="Formal Structure of the Model">
+The model is defined as a tuple $\mathcal{M} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$ consisting of finite and <ConceptLink targetId="conjunto-disjunto">disjoint sets</ConceptLink> ($\mathcal{P} \cap \mathcal{L} = \emptyset$):
+
+- **<ConceptLink targetId="dominio">Domain</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink>**: $\mathcal{P} = \{$ <VisualBind element="A" color="terracota">$A$</VisualBind>, <VisualBind element="B" color="terracota">$B$</VisualBind>, <VisualBind element="C" color="terracota">$C$</VisualBind> $\}$ with $A \neq B \land B \neq C \land A \neq C$.
+- **<ConceptLink targetId="dominio">Domain</ConceptLink> of <ConceptLink targetId="recta">lines</ConceptLink>**: $\mathcal{L} = \{$ <VisualBind element="rAB" color="carbon">$\ell_{AB}$</VisualBind>, <VisualBind element="rBC" color="carbon">$\ell_{BC}$</VisualBind>, <VisualBind element="rCA" color="carbon">$\ell_{CA}$</VisualBind> $\}$.
+- **<ConceptLink targetId="incidencia">Incidence</ConceptLink> <ConceptLink targetId="relacion">relation</ConceptLink>** $\mathbf{I} \subseteq \mathcal{P} \times \mathcal{L}$:
+  $$
+  \mathbf{I} = \{ (A, \ell_{AB}), (B, \ell_{AB}), (B, \ell_{BC}), (C, \ell_{BC}), (C, \ell_{CA}), (A, \ell_{CA}) \}
+  $$
+  or equivalently, via the point traces of each line in the point <ConceptLink targetId="conjunto">set</ConceptLink>: $\operatorname{tr}(\ell_{AB}) = \{A, B\}$, $\operatorname{tr}(\ell_{BC}) = \{B, C\}$, and $\operatorname{tr}(\ell_{CA}) = \{C, A\}$.
 </Definicion>
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Axiomatic Incidence Verification">
-    <PropiedadItem id="axioma-incidencia-1" title="Verification of Axiom I.1">
-      For any two distinct points, there exists exactly one line containing both: $\{A, B\}$ determines $r_{AB}$, $\{B, C\}$ determines $r_{BC}$, and $\{C, A\}$ determines $r_{CA}$ (<ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>).
+  <PropiedadesGrupo title="Incidence Axiom Satisfaction">
+    <PropiedadItem id="axioma-incidencia-1" title="Unique Line Determination">
+      For any pair of distinct points in $\mathcal{P}$, there exists exactly one line in $\mathcal{L}$ incident with both ($\{A, B\}$ determines $\ell_{AB}$, $\{B, C\}$ determines $\ell_{BC}$, and $\{C, A\}$ determines $\ell_{CA}$), satisfying <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-2" title="Verification of Axiom I.2">
-      Each of the three lines contains exactly two distinct points ($\lvert r_{AB} \rvert = \lvert r_{BC} \rvert = \lvert r_{CA} \rvert = 2 \ge 2$), satisfying <ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink>.
+    <PropiedadItem id="axioma-incidencia-2" title="Incident Points per Line">
+      Every line $\ell \in \mathcal{L}$ is incident with exactly two distinct points ($\lvert \operatorname{tr}(\ell) \rvert = 2 \ge 2$), satisfying <ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-3" title="Verification of Axiom I.3">
-      No line contains all three points simultaneously ($C \notin r_{AB}$, $A \notin r_{BC}$, $B \notin r_{CA}$), ensuring the non-collinearity of the triple (<ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>).
+    <PropiedadItem id="axioma-incidencia-3" title="Existence of Non-Collinear Points">
+      No line contains all three points simultaneously in its trace ($C \notin \operatorname{tr}(\ell_{AB})$, $A \notin \operatorname{tr}(\ell_{BC})$, $B \notin \operatorname{tr}(\ell_{CA})$); thus, there exist three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points, satisfying <ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 
-  <PropiedadesGrupo title="Metamathematical Significance">
-    <PropiedadItem id="consistencia-incidencia" title="Logical consistency proof">
-      Constructing an explicit concrete model in which axioms I.1, I.2, and I.3 are simultaneously true proves that these postulates are logically consistent and non-contradictory.
+  <PropiedadesGrupo title="Structural and Combinatorial Properties">
+    <PropiedadItem id="regularidad-combinatoria" title="Configuration Regularity">
+      The structure is homogeneous and regular: it has a <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> of $\lvert \mathcal{P} \rvert = 3$ and $\lvert \mathcal{L} \rvert = 3$, where each line contains exactly 2 points and each point is incident with exactly 2 lines.
     </PropiedadItem>
-    <PropiedadItem id="ausencia-paralelas" title="Absence of parallel lines">
-      Any two lines always intersect at exactly one common point ($r_{AB} \cap r_{BC} = \{B\}$); consequently, no <ConceptLink targetId="paralelas">parallel lines</ConceptLink> exist, showing that Euclidean parallelism requires independent postulates.
+    <PropiedadItem id="ausencia-paralelas" title="Absence of Parallelism">
+      Any two lines in $\mathcal{L}$ have non-disjoint traces ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), intersecting at exactly one point; consequently, the model lacks <ConceptLink targetId="paralelas">parallel lines</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="autodualidad" title="Self-Duality">
+      The structure is <ConceptLink targetId="dualidad">self-dual</ConceptLink>: formally swapping domains $\mathcal{P}$ and $\mathcal{L}$ together with the <ConceptLink targetId="transposicion">transposition</ConceptLink> of relation $\mathbf{I}$ yields an incidence structure strictly <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink> to the original.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
-

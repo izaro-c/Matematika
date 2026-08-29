@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useGlossaryStore, getGlossaryDictionary } from '@/lib/stores/GlossaryStore';
 import { db } from '@/data/content';
 import type { 
@@ -211,9 +211,11 @@ function renderTextWithMath(text: string): React.ReactNode {
 export const MarginaliaPanel = () => {
   const { activeTerms, activeFormulaTerms, closeTerm, displayMode, toggleDisplayMode } = useGlossaryStore();
   const { lang, t, getLocalizedPath } = useI18n();
+  const activeTermsKey = activeTerms ? activeTerms.join(',') : '';
+  const activeFormulaTermsKey = activeFormulaTerms ? activeFormulaTerms.join(',') : '';
 
-  const activeTermDataList = buildActiveTermDataList(activeTerms, lang);
-  const formulaData = buildFormulaData(activeFormulaTerms, lang);
+  const activeTermDataList = useMemo(() => buildActiveTermDataList(activeTerms, lang), [activeTermsKey, lang]);
+  const formulaData = useMemo(() => buildFormulaData(activeFormulaTerms, lang), [activeFormulaTermsKey, lang]);
 
   const isTermsActive = activeTerms !== null && activeTerms.length > 0;
   const isFormulaActive = activeFormulaTerms !== null && activeFormulaTerms.length > 0;

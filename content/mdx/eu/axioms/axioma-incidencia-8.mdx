@@ -2,41 +2,37 @@ export const metadata = {
   id: "axioma-incidencia-8",
   lang: "eu",
   type: "axioma",
-  title: "I.8 Axioma (Hiru dimentsioko espazioa)",
-  description: "Plano berekoak ez diren gutxienez lau puntu existitzen dira espazioan.",
+  title: "I.8 axioma (Hiru dimentsioko espazioa)",
+  description: "Plano berekoak ez diren lau puntu existitzen dira gutxienez.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §1",
+      role: "primary"
+    }
   ]
 };
 
 import { Incidence8 } from '@content/diagrams/Axiomas/Incidence8';
 export const Simulation = Incidence8;
 
-<Capitular letra="P" />lano berekoak ez diren gutxienez lau <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira.
+<Capitular letra="G" />utxienez lau <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> ez-<ConceptLink targetId="coplanaridad">koplanar</ConceptLink> existitzen dira, hau da, inolako <ConceptLink targetId="plano" isDependency={true}>planok</ConceptLink> ez du laurekin aldi berean <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink>.
 
-Postulatu honek <ConceptLink targetId="espacio">espazioaren</ConceptLink> geometriaren hiru dimentsioko izaera finkatzen du, unibertso geometrikoa bi dimentsioko plano bakar batera mugatzea eragotziz.
+<ConceptLink targetId="sistema-incidencia">Intzidentzia-sisteman</ConceptLink>, postulatu honek <ConceptLink targetId="espacio">espazioaren</ConceptLink> behe-dimentsioa finkatzen du, elementu geometriko guztiak bi dimentsioko <ConceptLink targetId="plano">plano</ConceptLink> bakar batera mugatuta gera ez daitezen.
 
-<Definicion title="Enuntziatu Formala">
-  Gutxienez lau <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen dira (<VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> eta <VisualBind element="pD" color="carbon">$D$</VisualBind>), non <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> batek ere ez dituen laurak batera intziditzen:
-  $$
-  \exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi \land D \, \mathbf{I} \, \pi)
-  $$
+<Definicion title="I.8 axioma (Hiru dimentsioko espazioa)">
+Elkarren artean desberdinak diren lau <ConceptLink targetId="punto">puntu</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> eta <VisualBind element="pD" color="carbon">$D$</VisualBind> existitzen dira, <VisualBind element="plano-pi" color="azul">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> berekoak ez direnak:
+
+$$
+\exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi \land D \, \mathbf{I} \, \pi)
+$$
 </Definicion>
 
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Ondorio eta Propietate Teorikoak">
-    <PropiedadItem id="tridimensionalidad" title="Espazioaren hiru dimentsioko izaera">
-      Formalki bermatzen du puntu ez-koplanarren konfigurazioen existentzia, unibertso geometrikoa plano bakar batera kolapsatzea eragotziz eta <ConceptLink targetId="espacio">espazioaren</ConceptLink> 3 dimentsioak finkatuz.
-    </PropiedadItem>
-    <PropiedadItem id="cierre-grupo-incidencia" title="Hilberten I. Taldearen itxiera">
-      Axioma honekin amaitzen da intzidentzia-sistema, eta oinarrizko espazio-esparrua finkatzen da, non <ConceptLink targetId="estar-entre">ordena</ConceptLink>, <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> eta <ConceptLink targetId="continuidad">jarraitutasuna</ConceptLink> garatuko diren.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
-
+<Nota>
+Axioma honek konfigurazio espazial errealen existentzia bermatzen du, <ConceptLink targetId="espacio">espaziorako</ConceptLink> gutxienez hiru <ConceptLink targetId="dimension">dimentsio</ConceptLink> ezarriz. Postulatu honekin osatzen da Hilberten <ConceptLink targetId="incidencia">intzidentzia</ConceptLink>-axiomen taldea.
+</Nota>

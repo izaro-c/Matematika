@@ -3,46 +3,66 @@ export const metadata = {
   lang: "es",
   type: "modelo",
   title: "Plano de Fano",
-  description: "El plano proyectivo finito minimal, compuesto por exactamente 7 puntos y 7 rectas.",
+  description: "Estructura finita minimal de la geometría proyectiva compuesta por 7 puntos y 7 rectas.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
-  hasDiagram: true
+  hasDiagram: true,
+  sources: [
+    {
+      title: "Sui postulati fondamentali della geometria proiettiva",
+      author: "Gino Fano",
+      locator: "Giornale di Matematiche, Vol. 30, pp. 106–132",
+      role: "primary"
+    }
+  ]
 };
 
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
 export const Diagram = ModeloFano;
 
-<Capitular letra="E" />l **plano de Fano** (denotado $\mathrm{PG}(2, \mathbb{F}_2)$) es el <ConceptLink targetId="sistema-incidencia">modelo de incidencia</ConceptLink> finito y plano proyectivo más pequeño que existe. Introducido en 1892 por el matemático italiano <ConceptLink targetId="fano">Gino Fano</ConceptLink>, está formado por exactamente 7 <ConceptLink targetId="punto">puntos</ConceptLink> y 7 <ConceptLink targetId="recta">rectas</ConceptLink>, dotado de una simetría combinatoria perfecta.
+<Capitular letra="E" />l **plano de Fano** (denotado $\mathrm{PG}(2, \mathbb{F}_2)$) es una <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink> finita que constituye el <ConceptLink targetId="espacio-proyectivo">plano proyectivo</ConceptLink> minimal y satisface los axiomas de incidencia plana del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>.
 
-<Definicion title="Estructura Combinatoria y Puntos">
-  El plano de Fano está compuesto por:
-  - **7 Puntos**: <VisualBind element="p1" color="terracota">1</VisualBind>, <VisualBind element="p2" color="terracota">2</VisualBind>, <VisualBind element="p3" color="terracota">3</VisualBind>, <VisualBind element="p4" color="terracota">4</VisualBind>, <VisualBind element="p5" color="terracota">5</VisualBind>, <VisualBind element="p6" color="terracota">6</VisualBind> y <VisualBind element="p7" color="musgo">7</VisualBind>.
-  - **7 Rectas** (cada una formada por una terna de puntos que inciden en ella):
-    - Tres lados del triángulo exterior: <VisualBind element="l1" color="carbon">$\{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$\{2, 3, 5\}$</VisualBind>, <VisualBind element="l3" color="carbon">$\{3, 1, 6\}$</VisualBind>.
-    - Tres líneas medianas concurrentes: <VisualBind element="l4" color="carbon">$\{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$\{2, 6, 7\}$</VisualBind>, <VisualBind element="l6" color="carbon">$\{3, 4, 7\}$</VisualBind>.
-    - Un círculo interior (recta proyectiva): <VisualBind element="l7" color="musgo">$\{4, 5, 6\}$</VisualBind>.
+Introducido en 1892 por el matemático <ConceptLink targetId="gino-fano">Gino Fano</ConceptLink>, representa el espacio proyectivo de menor <ConceptLink targetId="cardinalidad">cardinalidad</ConceptLink> posible, combinando propiedades de <ConceptLink targetId="simetria">simetría</ConceptLink> en <ConceptLink targetId="geometria-discreta">geometría discreta</ConceptLink> y <ConceptLink targetId="algebra-lineal">álgebra lineal</ConceptLink> sobre <ConceptLink targetId="cuerpo-finito">cuerpos finitos</ConceptLink>.
+
+<Definicion title="Estructura formal del modelo">
+El plano de Fano se formaliza como una tupla $\mathcal{M}_{\text{Fano}} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$ compuesta por <ConceptLink targetId="conjunto-disjunto">conjuntos disjuntos</ConceptLink> y finitos ($\mathcal{P} \cap \mathcal{L} = \emptyset$):
+
+- **<ConceptLink targetId="dominio">Dominio</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink>**: $\mathcal{P} = \{$ <VisualBind element="p1" color="terracota">$1$</VisualBind>, <VisualBind element="p2" color="terracota">$2$</VisualBind>, <VisualBind element="p3" color="terracota">$3$</VisualBind>, <VisualBind element="p4" color="terracota">$4$</VisualBind>, <VisualBind element="p5" color="terracota">$5$</VisualBind>, <VisualBind element="p6" color="terracota">$6$</VisualBind>, <VisualBind element="p7" color="musgo">$7$</VisualBind> $\}$.
+- **<ConceptLink targetId="dominio">Dominio</ConceptLink> de <ConceptLink targetId="recta">rectas</ConceptLink>**: $\mathcal{L} = \{$ <VisualBind element="l1" color="carbon">$\ell_1$</VisualBind>, <VisualBind element="l2" color="carbon">$\ell_2$</VisualBind>, <VisualBind element="l3" color="carbon">$\ell_3$</VisualBind>, <VisualBind element="l4" color="carbon">$\ell_4$</VisualBind>, <VisualBind element="l5" color="carbon">$\ell_5$</VisualBind>, <VisualBind element="l6" color="carbon">$\ell_6$</VisualBind>, <VisualBind element="l7" color="musgo">$\ell_7$</VisualBind> $\}$.
+- **<ConceptLink targetId="relacion">Relación</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink>** $\mathbf{I} \subseteq \mathcal{P} \times \mathcal{L}$, definida mediante las <ConceptLink targetId="traza">trazas puntuales</ConceptLink> de cada recta en el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de puntos:
+  - Lados del <ConceptLink targetId="triangulo">triángulo</ConceptLink> exterior: $\operatorname{tr}(\ell_1) = \{1, 2, 4\}$, $\operatorname{tr}(\ell_2) = \{2, 3, 5\}$, $\operatorname{tr}(\ell_3) = \{3, 1, 6\}$.
+  - Medianas concurrentes: $\operatorname{tr}(\ell_4) = \{1, 5, 7\}$, $\operatorname{tr}(\ell_5) = \{2, 6, 7\}$, $\operatorname{tr}(\ell_6) = \{3, 4, 7\}$.
+  - Círculo interior (recta proyectiva): $\operatorname{tr}(\ell_7) = \{4, 5, 6\}$.
 </Definicion>
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Propiedades Estructurales y Axiomáticas">
-    <PropiedadItem id="axioma-incidencia-1" title="Determinación unívoca de rectas">
-      Por cualesquiera dos puntos distintos pasa exactamente una única recta que contiene a ambos (<ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>).
+  <PropiedadesGrupo title="Satisfacción de axiomas de incidencia">
+    <PropiedadItem id="axioma-incidencia-1" title="Determinación unívoca de la recta">
+      Para cualquier par de puntos distintos en $\mathcal{P}$, existe exactamente una recta en $\mathcal{L}$ incidente con ambos ($\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L} \ (P \, \mathbf{I} \, \ell \land Q \, \mathbf{I} \, \ell))$), satisfaciendo el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="interseccion-proyectiva" title="Intersección proyectiva universal">
-      Dos rectas distintas cualesquiera se cortan exactamente en un único punto común; por tanto, no existen <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>.
+    <PropiedadItem id="axioma-incidencia-2" title="Puntos incidentes por recta">
+      Toda recta $\ell \in \mathcal{L}$ incide con al menos dos puntos distintos; en este modelo, cada recta incide con exactamente 3 puntos ($\lvert \operatorname{tr}(\ell) \rvert = 3 \ge 2$), satisfaciendo el <ConceptLink targetId="axioma-incidencia-2">Axioma I.2</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="uniformidad-combinatoria" title="Uniformidad simétrica y dualidad">
-      Configuración simétrica de tipo $(7_3, 7_3)$: cada recta contiene exactamente 3 puntos, y por cada punto concurren exactamente 3 rectas.
+    <PropiedadItem id="axioma-incidencia-3" title="Existencia de puntos no colineales">
+      Ninguna recta contiene en su traza a la totalidad de los puntos ($\lvert \operatorname{tr}(\ell) \rvert = 3 < 7$); por consiguiente, existen ternas de puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink> (por ejemplo, $\{1, 2, 3\}$), satisfaciendo el <ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 
-  <PropiedadesGrupo title="Construcción Algebraica">
-    <PropiedadItem id="espacio-vectorial-f2" title="Espacio proyectivo sobre el cuerpo finito F2">
-      Corresponde al plano proyectivo $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{(0,0,0)\}) / \sim$, donde los puntos son las 7 rectas vectoriales unidimensionales y las rectas son los 7 subespacios bidimensionales de $\mathbb{F}_2^3$.
+  <PropiedadesGrupo title="Propiedades proyectivas, algebraicas y combinatorias">
+    <PropiedadItem id="configuracion-simetrica" title="Configuración simétrica y regularidad">
+      La estructura forma una configuración simétrica de tipo $(7_3, 7_3)$: contiene $\lvert \mathcal{P} \rvert = 7$ puntos y $\lvert \mathcal{L} \rvert = 7$ rectas, donde cada recta contiene exactamente 3 puntos y por cada punto concurren exactamente 3 rectas.
+    </PropiedadItem>
+    <PropiedadItem id="ausencia-paralelas" title="Intersección proyectiva universal">
+      Dos rectas distintas cualesquiera en $\mathcal{L}$ tienen trazas no disjuntas ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), cortándose siempre en un único punto común; por tanto, el modelo carece de <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="autodualidad" title="Autodualidad">
+      La estructura es <ConceptLink targetId="dualidad">autodual</ConceptLink>: el intercambio formal de los dominios $\mathcal{P}$ y $\mathcal{L}$ junto con la <ConceptLink targetId="transposicion">transposición</ConceptLink> de la relación $\mathbf{I}$ produce una estructura de incidencia estrictamente <ConceptLink targetId="isomorfismo">isomorfa</ConceptLink> a la original.
+    </PropiedadItem>
+    <PropiedadItem id="construccion-algebraica" title="Construcción sobre el cuerpo finito F2">
+      Se define algebraicamente como el plano proyectivo $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ sobre el <ConceptLink targetId="cuerpo-finito">cuerpo finito</ConceptLink> $\mathbb{F}_2$ bajo la <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink> proporcional. Los puntos del plano corresponden a los 7 <ConceptLink targetId="subespacio">subespacios</ConceptLink> de <ConceptLink targetId="dimension">dimensión</ConceptLink> 1 del <ConceptLink targetId="espacio-vectorial">espacio vectorial</ConceptLink> $\mathbb{F}_2^3$, y las rectas corresponden a los 7 subespacios de dimensión 2.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
-

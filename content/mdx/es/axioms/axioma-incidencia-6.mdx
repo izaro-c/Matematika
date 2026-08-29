@@ -3,41 +3,36 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma I.6 (Inclusión de la recta en el plano)",
-  description: "Si dos puntos distintos de una recta pertenecen a un plano, toda la recta está contenida en dicho plano.",
+  description: "Si dos puntos distintos de una recta inciden en un plano, todos los puntos de dicha recta inciden en él.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §1",
+      role: "primary"
+    }
   ]
 };
 
 import { Incidence6 } from '@content/diagrams/Axiomas/Incidence6';
 export const Simulation = Incidence6;
 
-<Capitular letra="S" />i dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos de una <ConceptLink targetId="recta">recta</ConceptLink> pertenecen a un <ConceptLink targetId="plano">plano</ConceptLink>, entonces todos los puntos de esa recta pertenecen a ese plano.
+<Capitular letra="S" />i dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos de una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> <ConceptLink targetId="incidencia" isDependency={true}>inciden</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>, entonces todos los puntos de esa recta inciden también en dicho plano.
 
-Este axioma formaliza la rigidez y la planitud del plano: una recta no puede entrar y salir de un plano ni curvarse respecto a él en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
+En el <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>, este postulado formaliza la planitud elemental del <ConceptLink targetId="plano">plano</ConceptLink>. Garantiza que una <ConceptLink targetId="recta">recta</ConceptLink> que comparte dos <ConceptLink targetId="punto">puntos</ConceptLink> con un plano queda íntegramente contenida en su superficie dentro del <ConceptLink targetId="espacio">espacio</ConceptLink>.
 
-<Definicion title="Enunciado Formal">
-  Sean <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> dos puntos distintos de una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="recta" color="carbon">$\ell$</VisualBind>. Si $A$ y $B$ inciden en un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="canela">$\pi$</VisualBind>, entonces la recta $\ell$ entera está contenida en $\pi$:
-  $$
-  \forall \ell \in \mathcal{L}, \, \forall \pi \in \Pi, \, \forall A, B \in \mathcal{P} \ \bigl((A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi) \implies \ell \subseteq \pi\bigr)
-  $$
-  donde $\ell \subseteq \pi$ denota que todo punto incidente con $\ell$ es también incidente con $\pi$.
+<Definicion title="Axioma I.6 (Inclusión de la recta en el plano)">
+Sean <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos de una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="recta" color="carbon">$\ell$</VisualBind>. Si $A$ y $B$ <ConceptLink targetId="incidencia">inciden</ConceptLink> en un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="azul">$\pi$</VisualBind>, entonces cualquier punto incidente con $\ell$ también incide con $\pi$:
+
+$$
+\forall \ell \in \mathcal{L}, \, \forall \pi \in \Pi, \, \forall A, B \in \mathcal{P} \ \Biggl(\Bigl(A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi\Bigr) \implies \forall P \in \mathcal{P} \ (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)\Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Consecuencias y Propiedades Teóricas">
-    <PropiedadItem id="planitud-espacial" title="Rigidez y planitud geométrica">
-      Formaliza la planitud elemental del plano: una recta que incide con dos puntos de un plano no puede doblarse ni salir de él, quedando íntegramente contenida en su superficie.
-    </PropiedadItem>
-    <PropiedadItem id="transferencia-lineal" title="Transferencia de propiedades al plano">
-      Permite trasladar todas las propiedades y teoremas de la geometría lineal directamente al interior de cualquier plano bidimensional del espacio.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
-
+<Nota>
+En términos de <ConceptLink targetId="conjunto">conjuntos</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink>, la conclusión del axioma expresa la inclusión de trazas puntuales $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. Esta propiedad permite transferir sistemáticamente los <ConceptLink targetId="teorema">teoremas</ConceptLink> de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> plana al ámbito del <ConceptLink targetId="espacio">espacio</ConceptLink> tridimensional.
+</Nota>

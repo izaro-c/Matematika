@@ -1417,8 +1417,8 @@
       "id": "axioma-incidencia-5",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.5 (Uniqueness of the plane)",
-      "description": "Through three non-collinear points passes at most one plane, and every plane contains at least three non-collinear points.",
+      "title": "Axiom I.5 (Uniqueness of the Plane)",
+      "description": "Through three non-collinear points, there is at most one plane.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -1454,7 +1454,7 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.5 (Unicidad del plano)",
-      "description": "Por tres puntos no colineales pasa a lo sumo un plano, y todo plano contiene al menos tres puntos no colineales.",
+      "description": "Por tres puntos no colineales pasa a lo sumo un plano.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -1489,8 +1489,8 @@
       "id": "axioma-incidencia-6",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.6 (Line inclusion in a plane)",
-      "description": "If two distinct points of a line belong to a plane, then the entire line is contained in that plane.",
+      "title": "Axiom I.6 (Inclusion of the Line in the Plane)",
+      "description": "If two distinct points of a line are incident with a plane, all points of that line are incident with it.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -1526,7 +1526,7 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.6 (Inclusión de la recta en el plano)",
-      "description": "Si dos puntos distintos de una recta pertenecen a un plano, toda la recta está contenida en dicho plano.",
+      "description": "Si dos puntos distintos de una recta inciden en un plano, todos los puntos de dicha recta inciden en él.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -1561,8 +1561,8 @@
       "id": "axioma-incidencia-7",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.7 (Intersection of planes)",
-      "description": "If two distinct planes share a point, then they share at least another common point.",
+      "title": "Axiom I.7 (Intersection of Planes)",
+      "description": "If two distinct planes have a point in common, then they have at least one more point in common.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -1633,8 +1633,8 @@
       "id": "axioma-incidencia-8",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.8 (Three-dimensional space)",
-      "description": "There exist at least four points in space that do not belong to the same plane.",
+      "title": "Axiom I.8 (Three-Dimensional Space)",
+      "description": "There exist at least four points that do not lie in the same plane.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -3174,14 +3174,25 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Estar entre",
-      "description": "Relación ternaria primitiva de orden lineal que establece la intermediación entre tres puntos colineales.",
-      "branch": "51M",
+      "description": "Relación ternaria primitiva de orden lineal que establece la intermediación posicional entre tres puntos colineales.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, Axiomas del Grupo II",
+          "locator": "Capítulo I, §3",
           "role": "primary"
         }
       ],
@@ -6214,11 +6225,11 @@
       "lang": "en",
       "type": "matematico",
       "name": "Gino Fano",
+      "title": "Gino Fano",
+      "description": "Italian mathematician, pioneer of algebraic geometry and creator of the first finite projective plane.",
       "birthYear": 1871,
       "deathYear": 1952,
       "country": "Italy",
-      "title": "Gino Fano",
-      "description": "Italian mathematician, pioneer of algebraic geometry and creator of the first finite projective plane (the Fano plane).",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -6243,11 +6254,11 @@
       "lang": "es",
       "type": "matematico",
       "name": "Gino Fano",
+      "title": "Gino Fano",
+      "description": "Matemático italiano, pionero de la geometría algebraica y creador del primer plano proyectivo finito.",
       "birthYear": 1871,
       "deathYear": 1952,
       "country": "Italia",
-      "title": "Gino Fano",
-      "description": "Matemático italiano, pionero de la geometría algebraica y creador del primer plano proyectivo finito (el plano de Fano).",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -7377,8 +7388,8 @@
       "id": "modelo-fano",
       "lang": "en",
       "type": "modelo",
-      "title": "Fano plane",
-      "description": "The minimal finite projective plane, composed of exactly 7 points and 7 lines.",
+      "title": "Fano Plane",
+      "description": "Minimal finite projective geometry structure composed of 7 points and 7 lines.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -7387,6 +7398,14 @@
         "axioma-incidencia-3"
       ],
       "hasDiagram": true,
+      "sources": [
+        {
+          "title": "Sui postulati fondamentali della geometria proiettiva",
+          "author": "Gino Fano",
+          "locator": "Giornale di Matematiche, Vol. 30, pp. 106–132",
+          "role": "primary"
+        }
+      ],
       "availableLangs": [
         "en",
         "es",
@@ -7410,7 +7429,7 @@
       "lang": "es",
       "type": "modelo",
       "title": "Plano de Fano",
-      "description": "El plano proyectivo finito minimal, compuesto por exactamente 7 puntos y 7 rectas.",
+      "description": "Estructura finita minimal de la geometría proyectiva compuesta por 7 puntos y 7 rectas.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -7419,6 +7438,14 @@
         "axioma-incidencia-3"
       ],
       "hasDiagram": true,
+      "sources": [
+        {
+          "title": "Sui postulati fondamentali della geometria proiettiva",
+          "author": "Gino Fano",
+          "locator": "Giornale di Matematiche, Vol. 30, pp. 106–132",
+          "role": "primary"
+        }
+      ],
       "availableLangs": [
         "en",
         "es",
@@ -7509,8 +7536,8 @@
       "id": "modelo-tres-puntos",
       "lang": "en",
       "type": "modelo",
-      "title": "Three-point model",
-      "description": "Minimal finite model satisfying axioms I.1, I.2, and I.3 of the incidence system.",
+      "title": "Three-Point Model",
+      "description": "Minimal finite structure satisfying planar incidence axioms I.1, I.2, and I.3.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -7519,6 +7546,14 @@
         "axioma-incidencia-3"
       ],
       "hasDiagram": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I, §2",
+          "role": "primary"
+        }
+      ],
       "availableLangs": [
         "en",
         "es",
@@ -7542,7 +7577,7 @@
       "lang": "es",
       "type": "modelo",
       "title": "Modelo de tres puntos",
-      "description": "Modelo finito minimal que satisface los axiomas I.1, I.2 e I.3 del sistema de incidencia.",
+      "description": "Estructura finita minimal que satisface los axiomas de incidencia plana I.1, I.2 e I.3.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -7551,6 +7586,14 @@
         "axioma-incidencia-3"
       ],
       "hasDiagram": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §2",
+          "role": "primary"
+        }
+      ],
       "availableLangs": [
         "en",
         "es",
@@ -9362,7 +9405,7 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.5 (Unicidad del plano)",
-      "description": "Por tres puntos no colineales pasa a lo sumo un plano, y todo plano contiene al menos tres puntos no colineales.",
+      "description": "Por tres puntos no colineales pasa a lo sumo un plano.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -9398,7 +9441,7 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.6 (Inclusión de la recta en el plano)",
-      "description": "Si dos puntos distintos de una recta pertenecen a un plano, toda la recta está contenida en dicho plano.",
+      "description": "Si dos puntos distintos de una recta inciden en un plano, todos los puntos de dicha recta inciden en él.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -10223,14 +10266,25 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Estar entre",
-      "description": "Relación ternaria primitiva de orden lineal que establece la intermediación entre tres puntos colineales.",
-      "branch": "51M",
+      "description": "Relación ternaria primitiva de orden lineal que establece la intermediación posicional entre tres puntos colineales.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, Axiomas del Grupo II",
+          "locator": "Capítulo I, §3",
           "role": "primary"
         }
       ],
@@ -11760,11 +11814,11 @@
       "lang": "es",
       "type": "matematico",
       "name": "Gino Fano",
+      "title": "Gino Fano",
+      "description": "Matemático italiano, pionero de la geometría algebraica y creador del primer plano proyectivo finito.",
       "birthYear": 1871,
       "deathYear": 1952,
       "country": "Italia",
-      "title": "Gino Fano",
-      "description": "Matemático italiano, pionero de la geometría algebraica y creador del primer plano proyectivo finito (el plano de Fano).",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -12342,7 +12396,7 @@
       "lang": "es",
       "type": "modelo",
       "title": "Plano de Fano",
-      "description": "El plano proyectivo finito minimal, compuesto por exactamente 7 puntos y 7 rectas.",
+      "description": "Estructura finita minimal de la geometría proyectiva compuesta por 7 puntos y 7 rectas.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -12351,6 +12405,14 @@
         "axioma-incidencia-3"
       ],
       "hasDiagram": true,
+      "sources": [
+        {
+          "title": "Sui postulati fondamentali della geometria proiettiva",
+          "author": "Gino Fano",
+          "locator": "Giornale di Matematiche, Vol. 30, pp. 106–132",
+          "role": "primary"
+        }
+      ],
       "availableLangs": [
         "en",
         "es",
@@ -12408,7 +12470,7 @@
       "lang": "es",
       "type": "modelo",
       "title": "Modelo de tres puntos",
-      "description": "Modelo finito minimal que satisface los axiomas I.1, I.2 e I.3 del sistema de incidencia.",
+      "description": "Estructura finita minimal que satisface los axiomas de incidencia plana I.1, I.2 e I.3.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -12417,6 +12479,14 @@
         "axioma-incidencia-3"
       ],
       "hasDiagram": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §2",
+          "role": "primary"
+        }
+      ],
       "availableLangs": [
         "en",
         "es",
@@ -13685,8 +13755,8 @@
       "id": "axioma-incidencia-5",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.5 Axioma (Planoaren bakartasuna)",
-      "description": "Kolinealak ez diren hiru puntutatik gehienez plano bat igarotzen da, eta plano orok kolinealak ez diren gutxienez hiru puntu ditu.",
+      "title": "I.5 axioma (Planoaren bakartasuna)",
+      "description": "Kolinealak ez diren hiru puntutatik plano bakar bat igarotzen da gehienez.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -13695,7 +13765,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. Kapitulua, §1",
+          "locator": "I. kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -13721,8 +13791,8 @@
       "id": "axioma-incidencia-6",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.6 Axioma (Zuzena planoan sartzea)",
-      "description": "Zuzen baten bi puntu desberdin plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
+      "title": "I.6 axioma (Zuzenaren inklusioa planoan)",
+      "description": "Zuzen bateko bi puntu desberdinek plano batekin intziditzen badute, zuzen horretako puntu guztiek ere planoarekin intziditzen dute.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -13731,7 +13801,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. Kapitulua, §1",
+          "locator": "I. kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -13757,8 +13827,8 @@
       "id": "axioma-incidencia-7",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.7 Axioma (Planoen ebakidura)",
-      "description": "Bi plano desberdinek puntu komun bat badute, orduan gutxienez beste puntu komun bat dute.",
+      "title": "I.7 axioma (Planoen ebakidura)",
+      "description": "Bi plano desberdinek puntu bat komunean badute, gutxienez beste puntu bat ere badute komunean.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -13767,7 +13837,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. Kapitulua, §1",
+          "locator": "I. kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -13793,8 +13863,8 @@
       "id": "axioma-incidencia-8",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.8 Axioma (Hiru dimentsioko espazioa)",
-      "description": "Plano berekoak ez diren gutxienez lau puntu existitzen dira espazioan.",
+      "title": "I.8 axioma (Hiru dimentsioko espazioa)",
+      "description": "Plano berekoak ez diren lau puntu existitzen dira gutxienez.",
       "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
@@ -13803,7 +13873,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. Kapitulua, §1",
+          "locator": "I. kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -16084,11 +16154,11 @@
       "lang": "eu",
       "type": "matematico",
       "name": "Gino Fano",
+      "title": "Gino Fano",
+      "description": "Italiar matematikaria, geometria aljebraikoaren aitzindaria eta lehen plano proiektibo finituaren sortzailea.",
       "birthYear": 1871,
       "deathYear": 1952,
       "country": "Italia",
-      "title": "Gino Fano",
-      "description": "Geometria aljebraikoaren eta geometria proiektibo finituen aitzindari izan zen matematikari italiarra (Fanoren planoaren sortzailea).",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -16666,7 +16736,7 @@
       "lang": "eu",
       "type": "modelo",
       "title": "Fanoren planoa",
-      "description": "Plano proiektibo finitu minimala, zehazki 7 puntuz eta 7 zuzenez osatua.",
+      "description": "Geometria proiektiboko egitura finitu minimala, 7 puntuz eta 7 zuzenez osatua.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -16675,6 +16745,14 @@
         "axioma-incidencia-3"
       ],
       "hasDiagram": true,
+      "sources": [
+        {
+          "title": "Sui postulati fondamentali della geometria proiettiva",
+          "author": "Gino Fano",
+          "locator": "Giornale di Matematiche, Vol. 30, pp. 106–132",
+          "role": "primary"
+        }
+      ],
       "availableLangs": [
         "en",
         "es",
@@ -16732,7 +16810,7 @@
       "lang": "eu",
       "type": "modelo",
       "title": "Hiru puntuko eredua",
-      "description": "Intzidentzia-sistemaren I.1, I.2 eta I.3 axiomak betetzen dituen eredu finitu minimala.",
+      "description": "Planoko I.1, I.2 eta I.3 intzidentzia-axiak betetzen dituen egitura finitu minimala.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -16741,6 +16819,14 @@
         "axioma-incidencia-3"
       ],
       "hasDiagram": true,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "I. kapitulua, §2",
+          "role": "primary"
+        }
+      ],
       "availableLangs": [
         "en",
         "es",

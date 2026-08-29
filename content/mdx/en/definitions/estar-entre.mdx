@@ -3,60 +3,57 @@ export const metadata = {
   lang: "en",
   type: "definicion",
   subtype: "primitivo",
-  title: "Betweenness Relation",
-  description: "Primitive ternary relation of linear order establishing intermediacy among three collinear points.",
-  branch: "51M",
+  title: "Betweenness",
+  description: "Primitive ternary relation of linear order formalizing the intermediation of points along a line.",
+  branch: "51A",
+  branches: ["51A", "03B"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, Group II Axioms", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { EstarEntre } from '@content/diagrams/Definiciones/EstarEntre';
 export const Simulation = EstarEntre;
 
-<Capitular letra="T" />he betweenness relation, denoted formally as lying between, is a fundamental primitive ternary relation in David Hilbert's synthetic axiomatic geometry. It equips <ConceptLink targetId="recta">lines</ConceptLink> with a strict, dense linear order without presupposing real numbers or external metric concepts.
+<Capitular letra="T" />he **betweenness** relation (or intermediation) is a <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> <ConceptLink targetId="relacion-ternaria">ternary relation</ConceptLink> that formalizes the strict <ConceptLink targetId="orden">linear order</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink> along a <ConceptLink targetId="recta">line</ConceptLink> in <ConceptLink targetId="david-hilbert">David Hilbert's</ConceptLink> <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>.
 
-<Definicion title="">
-  Let <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="musgo">$C$</VisualBind> be three distinct <ConceptLink targetId="punto">points</ConceptLink> lying on the same <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>. The ternary relation $A * B * C$ ($B$ is between $A$ and $C$) is a primitive relation governed by Hilbert's order axioms. In a Euclidean metric setting, it is equivalent to the additivity of the lengths of <ConceptLink targetId="segmento">segments</ConceptLink> <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind> and <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind> relative to <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind>:
-  $$
-  A * B * C \iff d(A, B) + d(B, C) = d(A, C)
-  $$
+In the abstract <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink>, this primitive notion does not presuppose numerical <ConceptLink targetId="coordenadas">coordinates</ConceptLink> or external <ConceptLink targetId="metrica">metric functions</ConceptLink>; its formal behavior is governed by the group of order <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>), formally introduced to resolve the logical gaps in classical postulates identified by <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink>.
+
+<Definicion title="Primitive betweenness relation">
+In Hilbert's <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma_{\text{Hil}}$, betweenness is a ternary relation symbol $\mathbf{B}$ with <ConceptLink targetId="aridad">arity</ConceptLink> $\text{ar}(\mathbf{B}) = \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ over the <ConceptLink targetId="dominio">primitive domain</ConceptLink> of points $\mathcal{P}$.
+
+For three points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="azul">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> lying on the same line <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, the relation is formally denoted as:
+
+$$
+A * B * C \quad \text{or} \quad \mathbf{B}(A, B, C)
+$$
+
+and expresses the predicate "point $B$ lies between $A$ and $C$". Satisfying the relation formally requires all three points to be distinct and mutually <ConceptLink targetId="colinealidad">collinear</ConceptLink> via <ConceptLink targetId="incidencia">incidence</ConceptLink>:
+
+$$
+\forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\Bigr)\Biggr)
+$$
 </Definicion>
 
 <Separador />
 
-### Hilbert's order axioms (Group II)
-
-Linear ordering along a line is formally grounded on the following betweenness axioms:
-- **Symmetry**: If $A * B * C$, then $C * B * A$.
-- **Extension**: Given points $A$ and $C$, there exists at least one point $D$ such that $A * C * D$.
-- **Exclusivity**: Of any three distinct collinear points, at most one lies between the other two.
-- **Pasch's Axiom**: A line intersecting the interior of one side of a <ConceptLink targetId="triangulo">triangle</ConceptLink> without passing through its vertices necessarily intersects the interior of another side.
-
-### Analytic geometry
-
-On the real line $\mathbb{R}$, given three distinct real numbers $x_A, x_B, x_C$, the relation is expressed algebraically:
-$$
-A * B * C \iff (x_A < x_B < x_C) \lor (x_C < x_B < x_A)
-$$
-In $\mathbb{R}^n$, this is equivalent to $B = (1 - t)A + tC$ for some $t \in (0, 1)$.
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Order axioms and consequences">
-    <PropiedadItem id="axioma-orden-1" title="Symmetry of betweenness">
-      $A * B * C \implies C * B * A$.
+  <PropiedadesGrupo title="Relational properties of the predicate">
+    <PropiedadItem id="simetria-extremos" title="Endpoint symmetry">
+      The relation is invariant under reversal of the endpoint order: $A * B * C \iff C * B * A$.
     </PropiedadItem>
-    <PropiedadItem id="axioma-orden-2" title="Extension of the line">
-      $\forall A \neq B, \; \exists C \text{ such that } A * B * C$.
+    <PropiedadItem id="asimetria-posicional" title="Exclusivity and internal asymmetry">
+      The intermediate position is unique for a given point triplet; if a point lies between two others, no other point in the triplet can lie between the remaining ones: $A * B * C \implies \neg(B * A * C) \land \neg(A * C * B)$.
     </PropiedadItem>
-    <PropiedadItem id="axioma-orden-3" title="Trichotomy of order on a line">
-      Given three distinct collinear points, one and only one lies between the other two.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-orden-4" title="Pasch's axiom">
-      A coplanar line crossing one side of a triangle crosses another side.
+    <PropiedadItem id="irreflexividad-estricta" title="Strict irreflexivity">
+      No point can lie between itself and another point: $\neg(A * A * B) \land \neg(A * B * B) \land \neg(A * B * A)$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

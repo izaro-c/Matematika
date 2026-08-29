@@ -342,34 +342,52 @@
     "axioma-incidencia-5": {
       "id": "axioma-incidencia-5",
       "type": "axioma",
-      "title": "I.5 Axioma (Planoaren bakartasuna)",
-      "description": "Kolinealak ez diren hiru puntutatik gehienez plano bat igarotzen da, eta plano orok kolinealak ez diren gutxienez hiru puntu ditu.",
+      "title": "I.5 axioma (Planoaren bakartasuna)",
+      "description": "Kolinealak ez diren hiru puntutatik plano bakar bat igarotzen da gehienez.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "plano",
+        "recta",
+        "incidencia"
+      ]
     },
     "axioma-incidencia-6": {
       "id": "axioma-incidencia-6",
       "type": "axioma",
-      "title": "I.6 Axioma (Zuzena planoan sartzea)",
-      "description": "Zuzen baten bi puntu desberdin plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
+      "title": "I.6 axioma (Zuzenaren inklusioa planoan)",
+      "description": "Zuzen bateko bi puntu desberdinek plano batekin intziditzen badute, zuzen horretako puntu guztiek ere planoarekin intziditzen dute.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "plano",
+        "incidencia",
+        "recta"
+      ]
     },
     "axioma-incidencia-7": {
       "id": "axioma-incidencia-7",
       "type": "axioma",
-      "title": "I.7 Axioma (Planoen ebakidura)",
-      "description": "Bi plano desberdinek puntu komun bat badute, orduan gutxienez beste puntu komun bat dute.",
+      "title": "I.7 axioma (Planoen ebakidura)",
+      "description": "Bi plano desberdinek puntu bat komunean badute, gutxienez beste puntu bat ere badute komunean.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "plano",
+        "punto",
+        "incidencia"
+      ]
     },
     "axioma-incidencia-8": {
       "id": "axioma-incidencia-8",
       "type": "axioma",
-      "title": "I.8 Axioma (Hiru dimentsioko espazioa)",
-      "description": "Plano berekoak ez diren gutxienez lau puntu existitzen dira espazioan.",
+      "title": "I.8 axioma (Hiru dimentsioko espazioa)",
+      "description": "Plano berekoak ez diren lau puntu existitzen dira gutxienez.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "plano",
+        "incidencia"
+      ]
     },
     "axioma-orden-1": {
       "id": "axioma-orden-1",
@@ -940,7 +958,7 @@
       "id": "fano",
       "type": "matematico",
       "title": "Gino Fano",
-      "description": "Geometria aljebraikoaren eta geometria proiektibo finituen aitzindari izan zen matematikari italiarra (Fanoren planoaren sortzailea).",
+      "description": "Italiar matematikaria, geometria aljebraikoaren aitzindaria eta lehen plano proiektibo finituaren sortzailea.",
       "proofs": [],
       "directDependencies": []
     },
@@ -1106,7 +1124,7 @@
       "id": "modelo-fano",
       "type": "modelo",
       "title": "Fanoren planoa",
-      "description": "Plano proiektibo finitu minimala, zehazki 7 puntuz eta 7 zuzenez osatua.",
+      "description": "Geometria proiektiboko egitura finitu minimala, 7 puntuz eta 7 zuzenez osatua.",
       "proofs": [],
       "directDependencies": [
         "axioma-incidencia-1",
@@ -1129,7 +1147,7 @@
       "id": "modelo-tres-puntos",
       "type": "modelo",
       "title": "Hiru puntuko eredua",
-      "description": "Intzidentzia-sistemaren I.1, I.2 eta I.3 axiomak betetzen dituen eredu finitu minimala.",
+      "description": "Planoko I.1, I.2 eta I.3 intzidentzia-axiak betetzen dituen egitura finitu minimala.",
       "proofs": [],
       "directDependencies": [
         "axioma-incidencia-1",
