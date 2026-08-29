@@ -2,45 +2,39 @@ export const metadata = {
   id: "axioma-orden-1",
   lang: "es",
   type: "axioma",
-  title: "Axioma II.1 (Simetría y colinealidad de la entreidad)",
-  description: "Si B está entre A y C, entonces A, B y C son tres puntos distintos de una misma recta y B también está entre C y A.",
-  branch: "51M",
+  title: "Axioma II.1 (Simetría y colinealidad de la intermediación)",
+  description: "Si un punto B está entre A y C, entonces A, B y C son puntos distintos sobre una misma recta y B también está entre C y A.",
+  branch: "51A",
+  branches: ["51A", "03B"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "orden",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { Order1 } from '@content/diagrams/Axiomas/Order1';
 export const Simulation = Order1;
 
-<Capitular letra="E" />l primer axioma del grupo de orden formulado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece la naturaleza simétrica y la colinealidad intrínseca de la relación ternaria <ConceptLink targetId="estar-entre" isDependency={true}>estar entre</ConceptLink>. Si un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $B$ yace entre $A$ y $C$, los tres puntos pertenecen a la misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> y son mutuamente distintos.
+<Capitular letra="S" />i un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> se encuentra <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> otros dos, entonces los tres puntos son mutuamente distintos, <ConceptLink targetId="incidencia" isDependency={true}>inciden</ConceptLink> en una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> y el punto intermedio también se halla entre ellos al invertir el <ConceptLink targetId="orden">orden</ConceptLink> de los extremos.
 
-<Definicion title="Enunciado formal">
-  Si un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $B$ está entre $A$ y $C$ (notado $A\text{-}B\text{-}C$), entonces $A, B, C$ son tres puntos distintos sobre una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$, y $B$ también está entre $C$ y $A$ ($C\text{-}B\text{-}A$):
-  $$
-  A\text{-}B\text{-}C \implies \bigl(A \neq B \land B \neq C \land A \neq C \land \exists l \in \mathcal{L} \ (A,B,C \in l) \land C\text{-}B\text{-}A\bigr)
-  $$
+En la fundamentación de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, este postulado establece la <ConceptLink targetId="simetria">simetría</ConceptLink> básica de la relación de orden y vincula formalmente la intermediación con la <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> y la <ConceptLink targetId="incidencia">incidencia</ConceptLink>.
+
+<Definicion title="Axioma II.1 (Simetría y colinealidad)">
+Para cualquier <ConceptLink targetId="terna">terna</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind>, si <VisualBind element="pB" color="terracota">$B$</VisualBind> está entre <VisualBind element="pA" color="ocre">$A$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind>, entonces $A, B$ y $C$ son distintos entre sí, <ConceptLink targetId="incidencia">inciden</ConceptLink> en una misma <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineDC" color="carbon">$\ell$</VisualBind> y satisfacen la relación simétrica $C * B * A$:
+
+$$
+\forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land C * B * A\Bigr)\Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-### Representación visual e interacción
-
-En la simulación interactiva, los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> se disponen linealmente sobre la recta <VisualBind element="lineDC" color="carbon">$l$</VisualBind>. El elemento intermedio $B$ satisface la relación $A\text{-}B\text{-}C$, y al invertir la orientación de lectura geométrica se comprueba la equivalencia simétrica $C\text{-}B\text{-}A$.
-
-<Separador />
-
-### Significado geométrico y alcance
-
-Formaliza la relación primitiva de ordenación unidimensional sin depender de conceptos métricos analíticos como coordenadas reales o distancias numéricas. Garantiza la independencia de la orientación espacial en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
-
-<Separador />
-
-### Propiedades
-
-- **Simetría intrínseca:** La relación $A\text{-}B\text{-}C$ es estrictamente equivalente a $C\text{-}B\text{-}A$.
-- **Colinealidad obligatoria:** La entreidad solo es válida entre ternas pertenecientes a una misma recta soporte.
-- **Distinción triple:** Excluye coincidencias $A = B$, $B = C$ o $A = C$ bajo la relación de entreidad.
+<Nota>
+Este axioma garantiza que la noción de intermediación no dependa de una <ConceptLink targetId="orientacion">orientación</ConceptLink> privilegiada de la recta. Asimismo, excluye casos degenerados de coincidencia puntual ($A = B$, $B = C$ o $A = C$) y asegura que toda <ConceptLink targetId="terna">terna</ConceptLink> en relación de orden sea estrictamente colineal.
+</Nota>

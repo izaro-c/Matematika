@@ -72,7 +72,7 @@ export const Order1Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -2.5,
+        "x": -3.8499999999999996,
         "y": 0
       },
       "mobility": {
@@ -97,15 +97,15 @@ export const Order1Spec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto B",
+        "ariaLabel": "Punto C",
         "role": "primary"
       },
       "target": true,
-      "targetId": "pB",
+      "targetId": "pC",
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 4.5,
+        "x": 3.88,
         "y": 0
       },
       "mobility": {
@@ -125,15 +125,15 @@ export const Order1Spec = createDiagramSpec(
       "color": "carbon",
       "layerId": "geometry",
       "order": 2000,
-      "visible": true,
+      "visible": false,
       "locked": false,
       "groupIds": [],
       "selection": {
-        "selectable": true,
+        "selectable": false,
         "ariaLabel": "Punto C",
         "role": "primary"
       },
-      "target": true,
+      "target": false,
       "targetId": "pC",
       "objectType": "point",
       "definition": {
@@ -165,7 +165,7 @@ export const Order1Spec = createDiagramSpec(
         "ariaLabel": "Punto D",
         "role": "primary"
       },
-      "target": true,
+      "target": false,
       "targetId": "pD",
       "objectType": "point",
       "definition": {
@@ -190,15 +190,15 @@ export const Order1Spec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto E",
+        "ariaLabel": "Punto B",
         "role": "primary"
       },
       "target": true,
-      "targetId": "pE",
+      "targetId": "pB",
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 1,
+        "x": 0.15000000000000036,
         "y": 0
       },
       "mobility": {
@@ -214,7 +214,7 @@ export const Order1Spec = createDiagramSpec(
     },
     {
       "id": "lineDC",
-      "label": "Recta",
+      "label": "$l$",
       "color": "carbon",
       "layerId": "geometry",
       "order": 4000,
@@ -241,7 +241,13 @@ export const Order1Spec = createDiagramSpec(
       },
       "appearance": {
         "strokeWidth": 2,
-        "highlightStrokeWidth": 2,
+        "labelVisible": true,
+        "labelOffset": [
+          0,
+          11
+        ],
+        "labelPosition": 0.55,
+        "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
     },
@@ -259,7 +265,7 @@ export const Order1Spec = createDiagramSpec(
         "ariaLabel": "Segmento",
         "role": "secondary"
       },
-      "target": true,
+      "target": false,
       "targetId": "segAB",
       "objectType": "path",
       "geometry": {

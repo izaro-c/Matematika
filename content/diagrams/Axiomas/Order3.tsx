@@ -166,7 +166,7 @@ export const Order3Spec = createDiagramSpec(
         "ariaLabel": "Punto D",
         "role": "primary"
       },
-      "target": true,
+      "target": false,
       "targetId": "pD",
       "objectType": "point",
       "definition": {
@@ -199,7 +199,7 @@ export const Order3Spec = createDiagramSpec(
         "ariaLabel": "Punto E",
         "role": "primary"
       },
-      "target": true,
+      "target": false,
       "targetId": "pE",
       "objectType": "point",
       "definition": {
@@ -233,7 +233,7 @@ export const Order3Spec = createDiagramSpec(
         "role": "secondary"
       },
       "target": true,
-      "targetId": "line",
+      "targetId": "lineDE",
       "objectType": "path",
       "geometry": {
         "type": "line",

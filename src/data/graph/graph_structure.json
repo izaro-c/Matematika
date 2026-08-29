@@ -392,13 +392,14 @@
     "axioma-orden-1": {
       "id": "axioma-orden-1",
       "type": "axioma",
-      "title": "II.1 axioma (Tartean egotearen simetria eta kolinealtasuna)",
-      "description": "B puntua A eta C artean badago, A, B eta C zuzen bereko hiru puntu desberdin dira eta B puntua C eta A artean ere badago.",
+      "title": "II.1 axioma (Bitartekotasunaren simetria eta kolinealtasuna)",
+      "description": "B puntua A eta C-ren artean badago, orduan A, B eta C zuzen bereko hiru puntu desberdin dira eta B puntua C eta A-ren artean ere badago.",
       "proofs": [],
       "directDependencies": [
         "estar-entre",
         "punto",
-        "recta"
+        "recta",
+        "incidencia"
       ]
     },
     "axioma-orden-2": {

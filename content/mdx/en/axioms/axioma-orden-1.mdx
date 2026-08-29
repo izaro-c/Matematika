@@ -3,44 +3,38 @@ export const metadata = {
   lang: "en",
   type: "axioma",
   title: "Axiom II.1 (Symmetry and Collinearity of Betweenness)",
-  description: "If B lies between A and C, then A, B, and C are three distinct points on the same line, and B also lies between C and A.",
-  branch: "51M",
+  description: "If a point B lies between A and C, then A, B, and C are distinct points on the same line and B also lies between C and A.",
+  branch: "51A",
+  branches: ["51A", "03B"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "orden",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { Order1 } from '@content/diagrams/Axiomas/Order1';
 export const Simulation = Order1;
 
-<Capitular letra="T" />he first order axiom formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establishes the symmetric nature and intrinsic collinearity of the ternary <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink> relation. If a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $B$ lies between $A$ and $C$, all three points belong to the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> and are mutually distinct.
+<Capitular letra="I" />f a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> lies <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> two others, then the three points are mutually distinct, are <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, and the intermediate point also lies between them when reversing the <ConceptLink targetId="orden">order</ConceptLink> of the endpoints.
 
-<Definicion title="Formal statement">
-  If a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $B$ lies between $A$ and $C$ (denoted $A\text{-}B\text{-}C$), then $A, B, C$ are three distinct points on a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$, and $B$ also lies between $C$ and $A$ ($C\text{-}B\text{-}A$):
-  $$
-  A\text{-}B\text{-}C \implies \bigl(A \neq B \land B \neq C \land A \neq C \land \exists l \in \mathcal{L} \ (A,B,C \in l) \land C\text{-}B\text{-}A\bigr)
-  $$
+In the foundations of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, this postulate establishes the baseline <ConceptLink targetId="simetria">symmetry</ConceptLink> of the order relation and explicitly connects betweenness with <ConceptLink targetId="colinealidad">collinearity</ConceptLink> and <ConceptLink targetId="incidencia">incidence</ConceptLink>.
+
+<Definicion title="Axiom II.1 (Symmetry and Collinearity)">
+For any <ConceptLink targetId="terna">triplet</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind>, if <VisualBind element="pB" color="terracota">$B$</VisualBind> lies between <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pC" color="ocre">$C$</VisualBind>, then $A, B$, and $C$ are mutually distinct, are <ConceptLink targetId="incidencia">incident</ConceptLink> with the same <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineDC" color="carbon">$\ell$</VisualBind>, and satisfy the symmetric relation $C * B * A$:
+
+$$
+\forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land C * B * A\Bigr)\Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-### Visual representation and interaction
-
-In the interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> are arranged linearly along line <VisualBind element="lineDC" color="carbon">$l$</VisualBind>. Central element $B$ satisfies $A\text{-}B\text{-}C$, and reversing geometric reading direction from right to left confirms the symmetric equivalence $C\text{-}B\text{-}A$.
-
-<Separador />
-
-### Geometric significance and scope
-
-Formalizes the primitive relation of one-dimensional ordering without relying on analytical constructs such as real coordinates or numerical metrics. It ensures spatial orientation independence in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
-
-<Separador />
-
-### Properties
-
-- **Intrinsic symmetry:** The relation $A\text{-}B\text{-}C$ is strictly equivalent to $C\text{-}B\text{-}A$.
-- **Mandatory collinearity:** Betweenness is only defined among triads belonging to the same supporting line.
-- **Triple distinction:** Excludes coincidences $A = B$, $B = C$, or $A = C$ under the betweenness relation.
+<Nota>
+This axiom ensures that the notion of betweenness does not depend on a privileged <ConceptLink targetId="orientacion">orientation</ConceptLink> of the line. Furthermore, it excludes degenerate cases of point coincidence ($A = B$, $B = C$, or $A = C$) and ensures that any <ConceptLink targetId="terna">triplet</ConceptLink> in an order relation is strictly collinear.
+</Nota>

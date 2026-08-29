@@ -2,45 +2,39 @@ export const metadata = {
   id: "axioma-orden-1",
   lang: "eu",
   type: "axioma",
-  title: "II.1 axioma (Tartean egotearen simetria eta kolinealtasuna)",
-  description: "B puntua A eta C artean badago, A, B eta C zuzen bereko hiru puntu desberdin dira eta B puntua C eta A artean ere badago.",
-  branch: "51M",
+  title: "II.1 axioma (Bitartekotasunaren simetria eta kolinealtasuna)",
+  description: "B puntua A eta C-ren artean badago, orduan A, B eta C zuzen bereko hiru puntu desberdin dira eta B puntua C eta A-ren artean ere badago.",
+  branch: "51A",
+  branches: ["51A", "03B"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "orden",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §3", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { Order1 } from '@content/diagrams/Axiomas/Order1';
 export const Simulation = Order1;
 
-<Capitular letra="O" />rdena-taldeko lehen axioma honek, <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> formulatuak, <ConceptLink targetId="estar-entre" isDependency={true}>tartean egotearen</ConceptLink> erlazio hirutarraren izaera simetrikoa eta barne-kolinealtasuna ezartzen ditu. $B$ <ConceptLink targetId="punto" isDependency={true}>puntua</ConceptLink> $A$ eta $C$ artean badago, hiru puntuak <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> berekoak dira eta elkarrekiko desberdinak dira nahitaez.
+<Capitular letra="P" />untu bat beste biren <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> badago, hiru <ConceptLink targetId="punto" isDependency={true}>puntuak</ConceptLink> elkarren artean desberdinak dira, <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> berean <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> dute eta muturren <ConceptLink targetId="orden">ordena</ConceptLink> alderantzikatzean ere tarteko puntua haien artean dago.
 
-<Definicion title="Enuntziatu formala">
-  $B$ <ConceptLink targetId="punto" isDependency={true}>puntua</ConceptLink> $A$ eta $C$ artean badago ($A\text{-}B\text{-}C$ notazioaz), orduan $A, B, C$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bereko hiru puntu desberdin dira, eta $B$ puntua $C$ eta $A$ artean ere badago ($C\text{-}B\text{-}A$):
-  $$
-  A\text{-}B\text{-}C \implies \bigl(A \neq B \land B \neq C \land A \neq C \land \exists l \in \mathcal{L} \ (A,B,C \in l) \land C\text{-}B\text{-}A\bigr)
-  $$
+<ConceptLink targetId="geometria-sintetica">Geometria sintetikoaren</ConceptLink> oinarrietan, postulatu honek ordena-erlazioaren oinarrizko <ConceptLink targetId="simetria">simetria</ConceptLink> ezartzen du, eta bitartekotasuna <ConceptLink targetId="colinealidad">kolinealtasunarekin</ConceptLink> eta <ConceptLink targetId="incidencia">intzidentziarekin</ConceptLink> lotzen du.
+
+<Definicion title="II.1 axioma (Simetria eta kolinealtasuna)">
+Edozein <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind> <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="terna">hirukoterako</ConceptLink>, baldin eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntua <VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind>-ren artean badago, orduan $A, B$ eta $C$ elkarren artean desberdinak dira, <VisualBind element="lineDC" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> berean <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dute eta $C * B * A$ erlazio simetrikoa betetzen da:
+
+$$
+\forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land C * B * A\Bigr)\Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-### Ikus-irudikapena eta elkarrekintza
-
-Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntuak <VisualBind element="lineDC" color="carbon">$l$</VisualBind> zuzenean kokatuta daude. Erdiko $B$ elementuak $A\text{-}B\text{-}C$ erlazioa betetzen du, eta irakurketa geometrikoa eskuinetik ezkerrera alderantzikatzean $C\text{-}B\text{-}A$ baliokidetasun simetrikoa egiaztatzen da.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Dimentsio bakarreko antolaketa-erlazio primitiboa formalizatzen du, koordenatu errealen edo distantzia metriko zenbakizkoen mende egon gabe. Orientazio espazialaren independentzia bermatzen du <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
-
-<Separador />
-
-### Propietateak
-
-- **Barne-simetria:** $A\text{-}B\text{-}C$ erlazioa eta $C\text{-}B\text{-}A$ erabat baliokideak dira.
-- **Nahitaezko kolinealtasuna:** Tartean egotea zuzen euskarri bereko hirukoteetan bakarrik da baliozkoa.
-- **Bereizketa hirukoitza:** $A = B$, $B = C$ edo $A = C$ kasuak erabat baztertzen ditu tartean egotearen erlazioan.
+<Nota>
+Axioma honek bitartekotasunaren nozioa zuzenaren <ConceptLink targetId="orientacion">orientazio</ConceptLink> pribilegiatu baten mende ez egotea bermatzen du. Era berean, puntu-berdintasunaren kasu degeneratuak ($A = B$, $B = C$ edo $A = C$) baztertzen ditu eta ordena-erlazioan dagoen edozein <ConceptLink targetId="terna">hirukote</ConceptLink> zorrozki kolineala dela ziurtatzen du.
+</Nota>
