@@ -2,9 +2,9 @@ export const metadata = {
   id: "axioma-incidencia-2",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.2 (Existence of Points on a Line)",
-  description: "Every line contains at least two distinct points in space.",
-  branch: "51M",
+  title: "Axiom I.2 (Points on a Line)",
+  description: "Every line contains at least two distinct points.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,31 +16,19 @@ export const metadata = {
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="T" />he second incidence axiom stipulates that every <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> possesses a minimal multiplicity of elements, containing no fewer than two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>. This condition prevents the emergence of degenerate lines consisting of a single isolated point or lacking linear extension.
+<Capitular letra="E" />very <ConceptLink targetId="recta">line</ConceptLink> contains at least two distinct <ConceptLink targetId="punto">points</ConceptLink>.
 
-<Definicion title="Formal statement">
-  For every <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$, there exist at least two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B \in \mathcal{S}$ incident with $l$:
+This axiom ensures that lines are not empty sets and do not consist of a single isolated point, guaranteeing that every line has real geometric content to operate upon.
+
+<Definicion title="Formal Statement">
+  For every <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind>, there exist at least two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> <ConceptLink targetId="incidencia">incident</ConceptLink> with $\ell$:
   $$
-  \forall l \in \mathcal{L}, \ \exists A, B \in \mathcal{S} \ \bigl(A \in l \land B \in l \land A \neq B\bigr)
+  \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \in \ell \land B \in \ell)
   $$
 </Definicion>
 
 <Separador />
 
-### Visual representation and interaction
+### Significance in the theory
 
-In the interactive simulation, line <VisualBind element="lineCD" color="carbon">$l$</VisualBind> contains points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind>. The interaction shows that upon any given straight line, at least two independent positions with $A \neq B$ can always be located and shifted.
-
-<Separador />
-
-### Geometric significance and scope
-
-This axiom ensures that lines are not isolated single points or empty sets, but continuous geometric structures composed of multiple distinguishable locations. Together with Axiom I.1, it secures a well-defined one-dimensional linear support.
-
-<Separador />
-
-### Properties
-
-- **Non-degeneracy:** Prohibits lines consisting of a single point or empty sets.
-- **Elemental multiplicity:** Serves as the starting point to prove that every line contains infinitely many points once the <ConceptLink targetId="axioma-orden-1">order axioms</ConceptLink> are introduced.
-- **Segment viability:** Permits the formation of a non-trivial line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$.
+Together with <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>, it establishes a reciprocal connection: two points determine a line, and every line contains at least two points to be identifiable.

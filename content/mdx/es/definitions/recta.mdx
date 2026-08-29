@@ -4,65 +4,38 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Recta",
-  description: "Concepto geométrico primitivo determinado por los axiomas de incidencia y orden del espacio en el que se inscribe.",
+  description: "Concepto geométrico primitivo de extensión puramente lineal, sin anchura ni grosor, cuyas propiedades quedan fijadas por los axiomas del sistema formal adoptado.",
   branch: "51M",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1–§2", role: "primary" },
-    { title: "Euclidean and Non-Euclidean Geometries", author: "Marvin Jay Greenberg", locator: "Capítulo 2 y 3", role: "secondary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 2 y 4", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
   ]
 };
 
 import { Recta } from '@content/diagrams/Definiciones/Recta';
 export const Simulation = Recta;
 
-<Capitular letra="L" />a recta es un <ConceptLink targetId="concepto-primitivo">concepto primitivo</ConceptLink> de la geometría. Esto significa que no se construye a partir de objetos más simples, sino que sus propiedades quedan fijadas por los <ConceptLink targetId="axioma">axiomas</ConceptLink> del sistema geométrico en el que se utiliza.
+<Capitular letra="L" />a <VisualBind element="lineAB" color="musgo">**recta**</VisualBind> es un <ConceptLink targetId="concepto-primitivo">concepto primitivo</ConceptLink> de la geometría: el objeto lineal más simple del espacio, que carece de anchura y de grosor.
 
-<Definicion title="Estructura de Incidencia">
-  En una <ConceptLink targetId="estructura-de-incidencia">estructura de incidencia</ConceptLink> $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \mathcal{I})$, formada por un conjunto de <ConceptLink targetId="punto">puntos</ConceptLink> $\mathcal{P}$, un conjunto de rectas $\mathcal{L}$ y una relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink> $\mathcal{I}$, una recta es simplemente un elemento:
+Al ser una noción básica, no se define a partir de otras figuras. En su lugar, su comportamiento formal y la manera en que se relaciona con los <ConceptLink targetId="punto">puntos</ConceptLink> y los <ConceptLink targetId="plano">planos</ConceptLink> quedan fijados por los <ConceptLink targetId="axioma">axiomas</ConceptLink> del <ConceptLink targetId="sistema-axiomatico">sistema formal</ConceptLink> adoptado.
+
+<Definicion title="Definición Formal">
+  En una <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink> $\mathcal{S}$, una **recta** <VisualBind element="lineAB" color="musgo">$\ell$</VisualBind> es cualquier elemento del <ConceptLink targetId="conjunto">conjunto</ConceptLink> de rectas no vacío $\mathcal{L}$:
   $$
   \ell \in \mathcal{L}
   $$
+  De forma aislada, la recta no posee propiedades intrínsecas; su significado matemático surge exclusivamente de las relaciones que los axiomas establecen entre las rectas y los demás elementos del espacio.
 </Definicion>
 
 <Separador />
 
-### Comportamiento axiomático
+### Relaciones axiomáticas fundamentales
 
-En la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, las rectas se rigen por relaciones lógicas fundamentales:
+Dado que la recta carece de estructura interna, lo que podemos afirmar sobre ella depende de qué grupos de axiomas incorpore el <ConceptLink targetId="sistema-axiomatico">sistema geométrico</ConceptLink> adoptado (un sistema concreto puede limitarse solo a los primeros):
 
-- **<ConceptLink targetId="axiomas-de-incidencia">Incidencia</ConceptLink>:** Dos puntos distintos determinan una única recta que pasa por ambos. Toda recta contiene al menos dos puntos.
-- **<ConceptLink targetId="axiomas-de-orden">Orden</ConceptLink>:** En geometrías ordenadas, la relación <ConceptLink targetId="estar-entre">estar entre</ConceptLink> organiza los puntos de la recta en un <ConceptLink targetId="orden-lineal">orden lineal</ConceptLink> continuo y sin extremos.
-- **<ConceptLink targetId="separacion-geometrica">Separación</ConceptLink>:** Un punto cualquiera situado en una recta la divide en dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> disjuntas.
-
-### Representaciones en modelos analíticos
-
-Cuando la geometría se estudia con coordenadas o álgebra, la recta adquiere fórmulas concretas:
-
-- **Ecuación vectorial ($\mathbb{R}^n$):** Se describe a partir de un punto de paso $\vec{p}_0$ y un <ConceptLink targetId="vector-director">vector director</ConceptLink> $\vec{v} \neq \vec{0}$:
-  $$
-  \ell = \{ \vec{p}_0 + t\vec{v} \mid t \in \mathbb{R} \}
-  $$
-- **Ecuación general implícita ($\mathbb{R}^2$):** En el plano cartesiano, es el conjunto de soluciones a una ecuación lineal:
-  $$
-  Ax + By + C = 0 \quad ((A, B) \neq (0, 0))
-  $$
-- **Combinación afín:** Dados dos puntos distintos $A$ y $B$, es la <ConceptLink targetId="variedad-lineal">variedad afín</ConceptLink> que generan:
-  $$
-  \overleftrightarrow{AB} = \{ (1 - t)A + tB \mid t \in \mathbb{R} \}
-  $$
-
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Teoremas fundamentales">
-    <PropiedadItem id="teorema-interseccion-rectas" title="Intersección de dos rectas">
-      Dos rectas distintas en un mismo plano se cortan como máximo en un punto:
-      $$ \ell_1 \neq \ell_2 \implies |\ell_1 \cap \ell_2| \le 1 $$
-    </PropiedadItem>
-    <PropiedadItem id="teorema-determinacion-plano" title="Determinación de un plano">
-      Una recta y un punto exterior a ella determinan un único <ConceptLink targetId="plano">plano</ConceptLink> que los contiene:
-      $$ \forall \ell \in \mathcal{L}, \; \forall P \notin \ell \implies \exists! \, \pi \text{ tal que } \ell \subset \pi \land P \in \pi $$
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
+- **En sistemas de <ConceptLink targetId="incidencia">incidencia</ConceptLink>:** Establecen la pertenencia posicional entre puntos y rectas: dos puntos distintos determinan una única recta (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>), toda recta contiene al menos dos puntos (<ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>), existen puntos no pertenecientes a una recta dada (<ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>), una recta queda contenida en un plano si este contiene dos de sus puntos (<ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>) y la intersección de dos planos distintos es una recta (<ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>).
+- **Al añadir <ConceptLink targetId="estar-entre">orden o intermediación</ConceptLink>:** Los puntos de la recta quedan organizados secuencialmente y sin extremos (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>), permitiendo formalizar la prolongación ilimitada en ambos sentidos y delimitar figuras como el <ConceptLink targetId="segmento">segmento</ConceptLink> y la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink>.
+- **Al añadir <ConceptLink targetId="congruencia">congruencia</ConceptLink>:** Permite transportar y comparar pares de puntos sobre la recta como segmentos congruentes (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink>), sin presuponer todavía una noción numérica de <ConceptLink targetId="distancia">distancia</ConceptLink>.
+- **Al fijar el <ConceptLink targetId="paralelas">paralelismo</ConceptLink>:** Determina cuántas rectas que no cortan a una recta dada pueden pasar por un punto exterior, distinguiendo la geometría euclidiana (<ConceptLink targetId="axioma-paralelas-euclides">postulado de Euclides</ConceptLink>, una única paralela) de la hiperbólica (<ConceptLink targetId="axioma-paralelas-hiperbolico">postulado hiperbólico</ConceptLink>, múltiples paralelas).
+- **Al añadir <ConceptLink targetId="continuidad">continuidad</ConceptLink>:** Garantiza que la recta de puntos se comporte como una línea continua medible: sin magnitudes infinitesimales (<ConceptLink targetId="axioma-arquimedes">Arquímedes, V.1</ConceptLink>) ni huecos (<ConceptLink targetId="axioma-completitud">completitud, V.2</ConceptLink>).

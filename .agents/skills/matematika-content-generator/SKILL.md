@@ -1,382 +1,232 @@
 ---
 name: matematika-content-generator
-description: Guía y estándar técnico exhaustivo para la generación, estructuración y validación de contenido atómico en MDX para la Enciclopedia Matemática Matematika (Castellano, Euskara e Inglés).
+description: Guía y estándar técnico para la generación, redacción y estructuración de contenido en MDX para la Enciclopedia Matemática Matematika (Castellano, Euskara Batua e Inglés).
 ---
 
-# Guía Estricta de Generación de Contenido — Enciclopedia Matematika
+# Guía de Generación y Estructuración de Contenido — Matematika
 
-Esta skill establece el estándar normativo e inflexible para redactar, estructurar, hiperenlazar y validar páginas de contenido en formato MDX para la plataforma **Matematika**, garantizando rigor lógico absoluto, atomicidad modular, accesibilidad pedagógica y simetría trilingüe (**Castellano**, **Euskara Batua** e **Inglés**).
-
----
-
-## 1. Filosofía Arquitectónica y Separación por Marcos (`framework`)
-
-La enciclopedia modela el conocimiento matemático como un **bosque de sistemas deductivos (DAGs)** interconectados semánticamente, evitando el reduccionismo de forzar toda la matemática bajo una única raíz.
-
-### 1.1. Los Cinco Marcos Teóricos Canónicos
-Todo artículo debe declarar formalmente su marco teórico en los metadatos (`framework`):
-
-1. **`sintetico` (MSC: `51M`, `51A`):** Geometría sintética pura (Hilbert, Tarski, Birkhoff). Trata con entes geométricos primitivos no definidos numéricamente y sus axiomas de incidencia, orden, congruencia y continuidad.
-2. **`afin-vectorial` (MSC: `15A`, `51N`):** Geometría analítica, álgebra lineal y espacios afines $\mathbb{A}^n(K)$ sobre un cuerpo $K$. Los objetos se construyen como variedades lineales ($p + V$).
-3. **`proyectivo` (MSC: `51A`, `51E`):** Geometría proyectiva axiomática y algebraica ($\mathbb{P}(V)$, coordenadas homogéneas, geometrías finitas como el Plano de Fano $PG(2,2)$).
-4. **`diferencial-metrico` (MSC: `53A`, `53C`, `54A`):** Topología general, espacios métricos y variedades de Riemann. Los objetos lineales se generalizan a curvas geodésicas ($\nabla_{\dot{\gamma}} \dot{\gamma} = 0$).
-5. **`set-teorico` (MSC: `03E`, `03B`, `03C`):** Teoría axiomática de conjuntos ($\text{ZFC}$), lógica formal y teoría de modelos.
-
-### 1.2. Principio de Separación Epistemológica (Sintaxis vs. Semántica)
-- **Prohibición de Contaminación de Marcos:** La definición formal en el bloque `<Definicion>` de un concepto sintético (ej. `recta`) **nunca debe contener coordenadas cartesianas, vectores ni métricas**.
-- **Tratamiento de Modelos:** La realización de una teoría abstracta en un dominio concreto (ej. $\mathbb{R}^2$ como modelo de los axiomas de Hilbert) se desarrolla en la sección de modelos del artículo o se traslada a un nodo dedicado de tipo `type: "modelo"`.
+Esta skill establece el estándar técnico y editorial para redactar, estructurar, hiperenlazar y validar páginas de contenido en formato MDX para la plataforma **Matematika**, garantizando rigor matemático, modularidad, interactividad visual y coherencia trilingüe (**Castellano**, **Euskara Batua** e **Inglés**).
 
 ---
 
-## 2. Grafo de Conocimiento y Causalidad Lógica (`isDependency`)
+## 1. Filosofía Editorial y Principios Epistemológicos de Redacción
 
-El analizador estático (`npm run validate-graph`) infiere el Grafo Acíclico Dirigido (DAG) deductivo examinando los atributos `isDependency={true}` en los enlaces `<ConceptLink>`.
+La enciclopedia modela el conocimiento como un **grafo de nodos atómicos hiperenlazados**. Para asegurar que el contenido sea riguroso, pedagógico y universalmente accesible, toda redacción debe regirse por los siguientes principios meta-editoriales:
 
-### 2.1. Reglas de Marcado Deductivo
+### 1.1. Principio de Lenguaje Llano, Pedagogía Directa y Tono No Defensivo
+- **Accesibilidad universal:** La prosa debe ser limpia, fluida y transparente para cualquier lector, sin exigir formación especializada previa para comprender las ideas fundamentales.
+- **Cero jerga burocrática u oscura:** Evitar arcaísmos, términos rebuscados o formulismos barrocos. Reemplazar expresiones como *«rige»* o *«marco ontológico»* por verbos directos y comunes: *«establece»*, *«describe»*, *«permite»*, *«determina»*, *«garantiza»*.
+- **Tono asertivo y no defensivo:** Presentar las definiciones directamente por lo que son, sin caer en sobre-correcciones o explicaciones negativas innecesarias (e.g. evitar frases reactivas como *«no se definen como subconjuntos unos de otros...»* o *«sin reducir unos a colecciones de otros...»* a menos que se trate explícitamente de una sección comparativa entre modelos).
+- **Cero redundancias léxicas:** No repetir la misma cualidad o adjetivo (e.g. *«convexa»*) de manera reiterativa entre la entradilla, la definición formal y la sección de propiedades.
+- **Intuición previa a la formalización:** Explicar siempre de forma directa y sencilla el significado del objeto antes de presentar el bloque formal.
 
-| Tipo de Nodo | Elemento / Contexto | `isDependency` | Justificación |
-| :--- | :--- | :--- | :--- |
-| **Primitivo** (`subtype: "primitivo"`) | Cualquier enlace en su cuerpo | **`false` (o ausente)** | Es una raíz del grafo (nivel 0 / -1). Prohibido tener dependencias entrantes. |
-| **Derivado** (`subtype: "derivado"`) | Conceptos constitutivos en `<Definicion>` | **`true`** | Obligatorio. Define la causalidad constructiva del nuevo ente. |
-| **Demostración** (`type: "demostracion"`) | Axiomas, lemas y teoremas en `<ProofStep>` | **`true`** | Obligatorio. Fundamenta el paso inferencial en el árbol lógico. |
-| **Demostración** (`type: "demostracion"`) | El teorema demostrado (`parentTheorem`) | **`false` (o ausente)** | Prohibido. Evita ciclos lógicos y autorreferencias espurias. |
-| **Cualquier nodo** | Términos auxiliares o contexto divulgativo | **`false` (o ausente)** | Permite la navegación hipertextual sin alterar el DAG causal. |
+### 1.2. Principio de Respeto a la Frontera Epistémica (Cero Anacronismo Teórico)
+- **Prohibición de contaminación de marcos externos:** No atribuir a un objeto propiedades, dimensiones o etiquetas formales que sólo existen en teorías más ricas o posteriores (topológicas, analíticas o algebraicas) a menos que se aclare explícitamente dicha procedencia.
+- **No atribuir orden, infinitud o diferenciabilidad a primitivos de incidencia pura:**
+  - No afirmar como propiedad intrínseca de la recta que *«se extiende indefinidamente en ambos sentidos»* en su definición básica de nivel 0, ya que nociones como *«sentido»* o *«prolongación ilimitada»* presuponen axiomas de orden lineal ($A * B * C$) y continuidad que no existen en geometrías de incidencia finitas (como Fano).
+  - No emplear términos procedentes de variedades diferenciables (como *«superficie lisa»* o *«liso»*) para definir objetos primitivos como el plano; utilizar lenguaje puramente geométrico (*«superficie elemental uniforme y sin curvatura»*).
+- **Prohibición de expresiones vagas:** Evitar etiquetas ambiguas o informales como *«geometría intuitiva»*; emplear siempre la denominación formal precisa (*«geometría elemental»*, *«geometría sintética»* o *«geometría euclidiana»*).
+- **Preferencia por el lenguaje natural en lo intuitivo:** Si una propiedad de partida se puede formular con claridad en lenguaje llano (*«sin partes, longitud, área o volumen»*), se debe emplear lenguaje natural en lugar de forzar etiquetas técnicas anacrónicas (*«dimensión inductiva cero»*) que aún no han sido construidas deductivamente en ese estrato.
 
-### 2.2. Prohibición Absoluta de Autorreferencias
-Un archivo con `id: "concepto"` **nunca** debe incluir `<ConceptLink targetId="concepto">` apuntando a sí mismo.
+### 1.3. Principio de Fidelidad al Orden Deductivo Real
+- **No presuponer lo derivado en lo primitivo:** Nunca explicar una noción básica o primitiva asumiendo conceptos construidos a posteriori que dependen de ella.
+- **Diferenciación entre relación primitiva y construcción métrica:** Identificar siempre la relación primitiva pura (como la congruencia sintética $\cong$, el orden $*$ o la incidencia $\mathbf{I}$) frente a construcciones numéricas posteriores (como funciones de distancia $d(A,B) \in \mathbb{R}$, medidas de área o coordenadas numéricas). Por ejemplo, la congruencia compara pares de puntos directamente como segmentos congruentes; la distancia métrica es una construcción posterior.
+- **Definición formal precisa con «si y solo si» ($\iff$):** En definiciones de conceptos derivados (como el `semiplano`), enunciar las condiciones matemáticas de pertenencia de forma nítida y simétrica mediante $\iff$, explicitando los axiomas de los que dependen causalmente.
 
----
+### 1.4. Principio de Precisión Ontológica y Cuantificación
+- **Evitar el sesgo del artículo determinado:** Prohibido usar *«el»* o *«la»* cuando existan múltiples entidades del mismo rango epistemológico. Usar *«un concepto primitivo»* (coexiste con rectas y planos), *«un sistema formal»* o *«una relación de orden»*, evitando sugerir falsas unicidades salvo cuando exista un teorema formal de unicidad.
 
-## 3. Catálogo Exhaustivo de Componentes MDX y Sintaxis
+### 1.5. Principio de Estratificación Axiomática Condicional y Modularidad
+- **Las propiedades no son intrínsecas, sino axiomáticas:** Los objetos matemáticos no poseen propiedades "mágicas" aisladas; su comportamiento depende estrictamente de las reglas que los axiomas establecen sobre ellos.
+- **Modularidad y desacoplamiento de conceptos auxiliares:**
+  - Si un concepto formal (como `signatura`, `geometria-sintetica`, `geometria-hilbertiana`, `dominio`, `conjunto-disjunto`) posee entidad propia, **debe contar con su propia página en el grafo**.
+  - En los nodos que utilicen dichos conceptos, **no se debe duplicar ni sobre-explicar** su definición: basta con referenciarlos mediante `<ConceptLink targetId="...">` para preservar la pureza y concisión de cada artículo.
+- **Signaturas explícitas en variedades:** Al clasificar o listar variedades de espacios o teorías geométricas en un nodo de nivel superior, explicitar siempre su **signatura formal** y su **teoría axiomática** ($\mathcal{S} \models \mathcal{T}$).
+- **Exposición en capas condicionales:** Estructurar las relaciones en niveles claros (*«En sistemas de incidencia...»*, *«Al añadir orden...»*, *«Al añadir congruencia...»*, *«Al fijar el paralelismo...»*, *«Al añadir continuidad...»*).
 
-### 3.1. `<Capitular letra="X" />`
-Inicializa el artículo estilizando la primera letra del primer párrafo descriptivo.
-```tsx
-<Capitular letra="L"/>a recta es un concepto primitivo fundamental...
-```
+### 1.6. Principio de Cobertura Balanceada y Cero Ejemplos Flotantes
+- **Prohibición de ejemplos aislados o descontextualizados:** Evitar ejemplos sueltos entre paréntesis que enuncien fragmentos de axiomas sin trazabilidad.
+- **Cobertura completa de familias axiomáticas:** Cuando se resuma un grupo axiomático (como la continuidad), la síntesis debe abarcar honestamente todos sus principios esenciales (p. ej. V.1 Arquímedes —ausencia de infinitesimales— y V.2 Completitud —ausencia de huecos—).
+- **Acceso interactivo sistemático a axiomas:** Enlazar siempre a todos los axiomas de la familia de forma compacta y accesible (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, etc.) para permitir al usuario abrir su panel lateral interactivo con su enunciado y diagrama.
 
-### 3.2. `<ConceptLink targetId="..." isDependency={true|false}>Texto</ConceptLink>`
-Crea enlaces hipertextuales en la enciclopedia e informa al motor de grafos.
-- `targetId`: Identificador exacto del archivo MDX destino (sin extensión `.mdx`).
-- `isDependency`: Booleano opcional (por defecto `false`).
+### 1.7. Principio de Grafo Hipertextual Abierto y Cobertura Biográfica
+- **Trazabilidad conceptual total:** Todo término técnico, magnitud o concepto matemático (incluso nociones estructurales como *«dimensión»*, *«longitud»*, *«área»*, *«volumen»*, *«conjunto»*, *«continuidad»*, *«distancia»*, *«signatura»*, *«dominio»*) debe contar con su respectivo `<ConceptLink>`.
+- **Cobertura biográfica completa:** Cada vez que se cite o mencione a un matemático fundamental en el texto histórico o motivacional (e.g. Descartes, Fermat, Euclides, Poncelet, Steiner, von Staudt, Pasch, Peano, Hilbert, Lebesgue, Menger, Urysohn, Hurewicz, Wallman), debe existir su archivo biográfico en `mathematicians/` y su correspondiente enlace `<ConceptLink targetId="...">`.
+- **Estructuración nativa de propiedades:** Toda sección de propiedades debe emplear los componentes MDX nativos (`<SeccionPropiedades>`, `<PropiedadesGrupo>` y `<PropiedadItem id="..." title="...">`) en lugar de listas de viñetas genéricas en Markdown plano.
 
-### 3.3. `<VisualBind element="..." color="...">Fórmula</VisualBind>`
-Vincula términos matemáticos en el texto o fórmulas con elementos interactivos del diagrama (JSXGraph / Canvas / WebGL).
-- `element`: Identificador del objeto en el script de simulación (`pA`, `lineAB`, `segBC`, `polyABC`).
-- `color`: Nombre del token de color del tema:
-  - `"musgo"`: Primario geométrico (#2D5A27 / verde natural).
-  - `"azul"`: Elementos secundarios (#1E40AF).
-  - `"terracota"`: Elementos destacados o auxiliares (#C2410C).
-  - `"ocre"`: Elementos angulares (#B45309).
-
-```tsx
-Dados dos puntos <VisualBind color="musgo" element="pA">$A$</VisualBind> y <VisualBind color="musgo" element="pB">$B$</VisualBind>, la recta <VisualBind color="azul" element="lineAB">$\overleftrightarrow{AB}$</VisualBind>...
-```
-
-### 3.4. `<Definicion title="..."> ... </Definicion>`
-Bloque destacado para la formulación matemática estricta.
-- En conceptos primitivos: Declaración abstracta en la firma de la teoría ($\ell \in \mathcal{L}$).
-- En conceptos derivados: Construcción simbólica unívoca con cuantificadores y pertenencias.
-
-### 3.5. `<Separador />`
-Línea divisoria horizontal estilizada para separar secciones estructurales mayores.
-
-### 3.6. `<SeccionPropiedades>`, `<PropiedadesGrupo>` y `<PropiedadItem>`
-Bloques estructurados para enunciar y enlazar teoremas demostrables derivados del concepto.
-- Todo `<PropiedadItem>` debe incluir `id` (apuntando al teorema correspondiente) y `title` formal.
-- No debe utilizarse para duplicar axiomas completos.
-
-```tsx
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Teoremas de Incidencia">
-    <PropiedadItem id="teorema-interseccion-rectas" title="Intersección en espacios lineales">
-      $ \forall \ell_1, \ell_2 \in \mathcal{L}, \; \ell_1 \neq \ell_2 \implies |\ell_1 \cap \ell_2| \le 1 $
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
-```
-
-### 3.7. `<DemonstrationSection>`, `<ProofStep>` y `<Nota>`
-Componentes dedicados a páginas de demostración formal paso a paso (`type: "demostracion"`).
-- `<DemonstrationSection diagram={<DiagramaDemo />}>`: Contenedor principal en layout dividido (*split view*).
-- `<ProofStep number={n} target="elemVisual" title="...">`: Paso deductivo con foco interactivo.
-- `<Nota title="...">`: Observaciones metamatemáticas o comentarios pedagógicos.
-
-```tsx
-<ProofStep number="{1}" target="pC" title="Construcción del punto auxiliar">
-  Por el <ConceptLink isDependency="{true}" targetId="axioma-orden-extension">axioma de extensión</ConceptLink>, existe un punto <VisualBind color="terracota" element="pC">$C$</VisualBind> tal que $A * B * C$.
-</ProofStep>
-```
+### 1.8. Principio de Simbología y Notación Estándar, Internacional y Moderna (ISO 80000-2)
+- **Universalidad y modernidad:** Se deben utilizar **siempre** los símbolos matemáticos contemporáneos e internacionalmente estandarizados por la comunidad matemática global y el estándar **ISO 80000-2**.
+- **Cero notaciones arcaicas o ambiguas:**
+  - **Congruencia geométrica:** Utilizar **siempre `\cong` ($\cong$)** para figuras, segmentos y ángulos ($\overline{AB} \cong \overline{CD}$, $\angle ABC \cong \angle DEF$). Prohibido usar `\equiv` ($\equiv$) para congruencia geométrica, ya que colisiona con la aritmética modular ($a \equiv b \pmod m$) y la equivalencia lógica.
+  - **Semejanza geométrica:** Utilizar **`\sim` ($\sim$)** ($\triangle ABC \sim \triangle DEF$).
+  - **Paralelismo y perpendicularidad:** Utilizar **`\parallel` ($\parallel$)** y **`\perp` ($\perp$)**.
+  - **Notaciones históricas:** Si un autor histórico empleó un símbolo arcaico en su texto fundacional (como Hilbert usando $\equiv$ en 1899), se emplea el símbolo estándar moderno ($\cong$) en todo el aparato matemático y se añade, si procede, una breve nota histórica explicativa.
 
 ---
 
-## 4. Integración de Diagramas Interactivos y Simulaciones
+## 2. Esquema Real de Metadatos (`export const metadata`)
 
-Todo artículo con `hasSimulation: true` debe enlazar su componente interactivo de JSXGraph o React mediante exportación nominal:
+Los metadatos se validan en tiempo de compilación según los esquemas de `src/data/content/schemas.ts`.
 
-```tsx
-// Importación del componente de diagrama visual
-import { DiagramaRecta } from '@content/diagrams/Definiciones/DiagramaRecta';
+### 2.1. Campos Comunes (`BaseContentSchemaFields`)
 
-// Exportación obligatoria para el motor de renderizado
-export const Simulation = DiagramaRecta;
-```
-
----
-
-## 5. Especificación del Esquema de Metadatos
+Todo archivo `.mdx` debe exportar un objeto `metadata` con los campos correspondientes:
 
 ```typescript
-export interface ContentMetadata {
-  id: string;                         // Identificador único (kebab-case, ej: "recta")
-  conceptKey: string;                 // Clave conceptual unificadora para perspectivas (ej: "recta")
-  lang: 'es' | 'eu' | 'en';           // Código de idioma
-  type: 'definicion' | 'axioma' | 'teorema' | 'demostracion' | 'modelo' | 'ejemplo';
-  subtype?: 'primitivo' | 'derivado'; // Obligatorio si type === 'definicion'
-  framework: 'sintetico' | 'afin-vectorial' | 'proyectivo' | 'diferencial-metrico' | 'set-teorico';
-  branch: string;                     // Código MSC 2020 válido (ej: "51M04", "15A03")
-  title: string;                      // Título formal del artículo
-  description: string;                // Resumen conciso de 1 frase para metadatos y tooltips
-  hasSimulation: boolean;             // true si monta componente interactivo
-  
-  // Para demostraciones:
-  parentTheorem?: string;             // ID del teorema que demuestra
-  proofMethod?: 'metodo-directo' | 'reduccion-al-absurdo' | 'induccion' | 'construccion';
-  layout?: 'split' | 'stacked';
-
-  // Navegación multiperspectiva:
-  perspectives?: {
-    framework: string;
-    targetId: string;
-    label: { es: string; eu: string; en: string };
-  }[];
-
-  sources: {
-    title: string;
-    author: string;
-    locator: string;
-    role: 'primary' | 'secondary';
-  }[];
-}
-```
-
----
-
-## 6. Plantillas Maestras Completas
-
-### 6.1. Concepto Primitivo Sintético (`recta.mdx`)
-```tsx
 export const metadata = {
-  id: "recta",
-  conceptKey: "recta",
-  lang: "es",
-  type: "definicion",
-  subtype: "primitivo",
-  framework: "sintetico",
-  title: "Recta",
-  description: "Concepto geométrico primitivo caracterizado implícitamente por los axiomas del sistema formal.",
-  branch: "51M04",
-  hasSimulation: true,
-  perspectives: [
+  id: "identificador-kebab-case",   // Obligatorio. Coincide con el nombre del archivo
+  lang: "es",                       // "es" | "eu" | "en" (por defecto "es")
+  type: "definicion",               // Tipo de nodo (ver tabla de tipos)
+  subtype: "primitivo",             // Opcional para definiciones ('primitivo' | 'nominal' | 'derivado' | etc.)
+  title: "Título Formal",           // Título principal visible
+  description: "Resumen conciso...",// Descripción para resúmenes, SEO y tarjetas
+  branch: "51M04",                  // Código MSC 2020 opcional (ej. "51M", "15A", "03")
+  branches: ["51M04", "51A05"],     // Ramas MSC secundarias opcionales
+  tags: ["geometria", "incidencia"],// Etiquetas temáticas opcionales
+  hasSimulation: true,              // true si monta componente interactivo
+  sources: [                        // Referencias bibliográficas opcionales
     {
-      framework: "afin-vectorial",
-      targetId: "recta-afin",
-      label: { es: "Espacio Afín", eu: "Espazio Afina", en: "Affine Space" }
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §1",
+      role: "primary"               // "primary" | "secondary" | "formalization"
     }
-  ],
-  sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
   ]
 };
+```
 
-import { DiagramaRecta } from '@content/diagrams/Definiciones/DiagramaRecta';
-export const Simulation = DiagramaRecta;
+### 2.2. Tipos de Contenido y Campos Específicos
 
-<Capitular letra="L"/>a recta es un <ConceptLink targetId="concepto-primitivo">concepto primitivo</ConceptLink> fundamental de la geometría sintética. No admite una definición constructiva explícita; su naturaleza formal queda determinada por los <ConceptLink targetId="axioma">axiomas</ConceptLink> que gobiernan su relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink> con los <ConceptLink targetId="punto">puntos</ConceptLink> y los <ConceptLink targetId="plano">planos</ConceptLink>.
+| `type` | Campos Específicos Principales | Descripción |
+| :--- | :--- | :--- |
+| **`definicion`** | `subtype?: 'primitivo' \| 'nominal' \| 'fundamentada' \| 'derivado' \| 'algebraico' \| 'analitico'`, `statement?: string`, `authors?: string[]`, `color?: string` | Noción matemática base o derivada. |
+| **`axioma`** | `axiomSystem?: string`, `axiomFamily?: string`, `alternativeGroup?: string`, `statement?: string`, `authors?: string[]` | Postulado o axioma de un sistema formal. |
+| **`teorema`** | `statement?: string`, `authors?: string[]`, `requires?: string[]`, `lemmas?: string[]`, `corollaries?: string[]`, `demos?: string[]`, `examples?: string[]`, `exercises?: string[]`, `difficulty?: 'básico' \| 'intermedio' \| 'avanzado'` | Proposición demostrable principal. |
+| **`lema`** | *(Igual que teorema)* | Proposición auxiliar intermedia. |
+| **`corolario`** | `parentTheorem?: string`, *(demás campos de teorema)* | Consecuencia directa de un teorema. |
+| **`demostracion`** | `parentTheorem?: string`, `proofMethod?: string` (ej. `"metodo-contradiccion"`), `lemmas?: string[]`, `layout?: 'split' \| 'text'`, `dependencias?: string[]`, `authors?: string[]` | Demostración paso a paso. |
+| **`sistema-axiomatico`** | `axiomas: string[]`, `models?: string[]`, `authors?: string[]` | Conjunto de axiomas que constituyen una teoría. |
+| **`modelo`** | `satisfies: string \| string[]`, `axioms_verified?: string[]`, `hasDiagram?: boolean` | Estructura concreta que satisface un sistema. |
+| **`metodo`** | `subtype: 'demostracion' \| 'construccion' \| 'calculo' \| 'algoritmo'`, `links?: string[]`, `seeAlso?: string[]`, `requires?: string[]` | Procedimiento matemático o técnica demostrativa. |
+| **`matematico`** | `name: string`, `birthYear?: number`, `deathYear?: number`, `country?: string`, `image?: string` | Biografía de un matemático histórico. |
 
-<Definicion title="Declaración Formal">
-  En una <ConceptLink targetId="estructura-de-incidencia">estructura de incidencia</ConceptLink> formal, una recta es un elemento básico:
-  $$
-  \ell \in \mathcal{L}
-  $$
-  donde $\mathcal{L}$ representa el conjunto de rectas de la signatura geométrica.
-</Definicion>
+---
 
-<Separador/>
+## 3. Grafo Lógico, Enlaces Hipertextuales y Causalidad (`isDependency`)
 
-### Caracterización axiomática
+### 3.1. Enlaces a Páginas Futuras o No Creadas
+- **Es totalmente válido y bienvenido enlazar a conceptos, axiomas o teoremas que todavía no existen en el repositorio.**
+- En la interfaz web, esos enlaces se renderizan de manera segura conduciendo a una página provisional ("*En construcción*").
+- En la suite de validación estática (`npm run validate-references`), estos enlaces generan únicamente un aviso informativo (`[WARN]`), sin bloquear la compilación.
 
-- **<ConceptLink targetId="axiomas-incidencia-hilbert">Incidencia</ConceptLink>:** Cualesquiera dos puntos distintos determinan una única recta que pasa por ambos. Toda recta contiene al menos dos puntos.
-- **<ConceptLink targetId="axiomas-orden-hilbert">Orden e intermediación</ConceptLink>:** En geometrías ordenadas, la relación ternaria <ConceptLink targetId="estar-entre">estar entre</ConceptLink> dota a la recta de un <ConceptLink targetId="orden-lineal">orden lineal</ConceptLink> estricto, denso y sin extremos.
-- **Separación lineal:** Todo punto perteneciente a una recta determina una partición de sus puntos restantes en dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> disjuntas y convexas.
+### 3.2. Causalidad Lógica con `isDependency`
 
-### Realizaciones en modelos canónicos
+El atributo `isDependency={true}` en `<ConceptLink>` se utiliza para alimentar el Grafo Acíclico Dirigido (DAG) deductivo:
 
-- **Espacio afín real $\mathbb{A}^n(\mathbb{R})$:** Variedad afín de dimensión $1$ generada por un punto de paso y un vector director.
-- **Plano cartesiano $\mathbb{R}^2$:** Conjunto de pares $(x, y)$ que satisfacen la ecuación lineal general $Ax + By + C = 0$, con $(A, B) \neq (0, 0)$.
-- **Geometrías no euclidianas:** Círculos máximos en la esfera $S^2$, o curvas ortogonales a la frontera en el disco de Poincaré.
+```tsx
+<ConceptLink targetId="axioma-orden-4" isDependency={true}>Axioma de Pasch</ConceptLink>
+```
 
-<Separador/>
+| Contexto | `isDependency` | Regla |
+| :--- | :--- | :--- |
+| **Concepto primitivo** (`subtype: "primitivo"`) | Omitir o `false` | **Prohibido `isDependency={true}`**. Es un nodo raíz (nivel 0); no tiene dependencias conceptuales previas. |
+| **Concepto derivado** (`subtype: "derivado"`) | `true` en conceptos base | Define los conceptos constitutivos a partir de los cuales se construye el nuevo ente (e.g. `recta`, `plano`, `axioma-orden-4` para `semiplano`). |
+| **Demostración** (`type: "demostracion"`) | `true` en axiomas/lemas | Justifica el paso deductivo en la prueba lógica. |
+| **Enlaces divulgativos o contextuales** | Omitir o `false` | Enlace hipertextual estándar de navegación sin alterar el DAG causal. |
+| **Autorreferencia** | — | **Prohibido** enlazar con `isDependency={true}` al propio ID del archivo (evita ciclos lógicos). |
 
+---
+
+## 4. Catálogo de Componentes MDX Disponibles
+
+Los siguientes componentes están disponibles globalmente en cualquier archivo `.mdx`:
+
+### 4.1. Estructura y Texto
+- **`<Capitular letra="E" />`**: Inicializa el primer párrafo con letra capital estilizada de imprenta clásica.
+- **`<Separador />`**: Línea divisoria horizontal estilizada con adorno central clásico.
+- **`<Nota>`**: Bloque de anotación lateral o comentario pedagógico complementario.
+- **`<Cita author="Autor">`**: Bloque de cita destacada con autor.
+
+### 4.2. Matemáticas y Definiciones
+- **`<Definicion title="...">`**: Contenedor formal para la definición matemática o enunciado axiomático.
+- **`<Formula title="...">`**: Recuadro estilizado para ecuaciones o fórmulas destacadas que requieren scroll horizontal asistido en pantallas pequeñas.
+- **`<EquationRow>`**: Agrupador horizontal centrado para varias fórmulas en línea.
+
+### 4.3. Hiperenlaces y Vinculación Visual
+- **`<ConceptLink targetId="..." isDependency={true|false}>Texto</ConceptLink>`**: Enlace semántico a otra página del grafo.
+- **`<VisualBind element="..." color="...">Fórmula/Término</VisualBind>`**: Vincula texto o símbolos con elementos interactivos del diagrama (`color`: `"musgo"` | `"azul"` | `"terracota"` | `"ocre"` | `"carbon"`).
+
+### 4.4. Bloque Estructurado de Propiedades y Teoremas
+- **`<SeccionPropiedades>`, `<PropiedadesGrupo>` y `<PropiedadItem>`**:
+  Permite enumerar propiedades, axiomas o teoremas derivados de forma limpia y tipografiada.
+
+```tsx
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Teoremas fundamentales">
-    <PropiedadItem id="teorema-interseccion-rectas" title="Intersección en espacios lineales">
-      $ \forall \ell_1, \ell_2 \in \mathcal{L}, \; \ell_1 \neq \ell_2 \implies |\ell_1 \cap \ell_2| \le 1 $
+  <PropiedadesGrupo title="Propiedades Geométricas Fundamentales">
+    <PropiedadItem id="conjunto-convexo" title="Convexidad">
+      Todo semiplano es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>...
     </PropiedadItem>
-    <PropiedadItem id="teorema-determinacion-plano-recta-punto" title="Determinación del plano">
-      $ \forall \ell \in \mathcal{L}, \; \forall P \notin \ell \implies \exists! \, \pi \text{ tal que } \ell \subset \pi \land P \in \pi $
+    <PropiedadItem id="angulo" title="Regiones interiores poligonales">
+      La intersección de semiplanos permite definir la región interior...
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
 ```
 
-### 6.2. Concepto Derivado (`triangulo.mdx`)
-```tsx
-export const metadata = {
-  id: "triangulo",
-  conceptKey: "triangulo",
-  lang: "es",
-  type: "definicion",
-  subtype: "derivado",
-  framework: "sintetico",
-  title: "Triángulo",
-  description: "Figura geométrica delimitada por tres segmentos determinados por tres puntos no colineales.",
-  branch: "51M04",
-  hasSimulation: true,
-  sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
-  ]
-};
+---
 
-import { DiagramaTriangulo } from '@content/diagrams/Definiciones/DiagramaTriangulo';
-export const Simulation = DiagramaTriangulo;
+## 5. Estándares de Notación KaTeX y Símbolos Canónicos Modernos (ISO 80000-2)
 
-<Capitular letra="U"/>n triángulo es la figura geométrica fundamental del plano formada por tres vértices no alineados y los tres segmentos que los conectan dos a dos.
+Toda fórmula y notación matemática en Matematika debe seguir rigurosamente la tabla de símbolos canónicos contemporáneos:
 
-<Definicion title="Definición Constructiva">
-  Dados tres <ConceptLink isDependency="{true}" targetId="punto">puntos</ConceptLink> no colineales <VisualBind color="musgo" element="pA">$A$</VisualBind>, <VisualBind color="musgo" element="pB">$B$</VisualBind> y <VisualBind color="musgo" element="pC">$C$</VisualBind>, el triángulo <VisualBind color="musgo" element="polyABC">$\triangle ABC$</VisualBind> se define formalmente como la unión de los tres <ConceptLink isDependency="{true}" targetId="segmento">segmentos</ConceptLink> que determinan:
-  $$
-  \triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}
-  $$
-</Definicion>
-
-<Separador/>
-
-### Elementos constitutivos
-
-- **Vértices:** La terna de puntos no colineales $\{A, B, C\}$.
-- **Lados:** Los tres segmentos $\overline{AB}$, $\overline{BC}$ y $\overline{CA}$.
-- **Ángulos interiores:** Los tres <ConceptLink targetId="angulo">ángulos</ConceptLink> $\angle BAC$, $\angle ABC$ y $\angle BCA$.
-
-<Separador/>
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Teoremas clásicos asociados">
-    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Suma de ángulos interiores">
-      $ \angle A + \angle B + \angle C = \pi \text{ (en geometría euclidiana)} $
-    </PropiedadItem>
-    <PropiedadItem id="teorema-desigualdad-triangular" title="Desigualdad triangular">
-      $ \overline{AB} < \overline{AC} + \overline{CB} $
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
-```
-
-### 6.3. Demostración Paso a Paso (`demo-interseccion-rectas.mdx`)
-```tsx
-export const metadata = {
-  id: "demo-interseccion-rectas",
-  type: "demostracion",
-  title: "Demostración: Intersección máxima de dos rectas distintas",
-  description: "Prueba por reducción al absurdo fundamentada en el primer axioma de incidencia de Hilbert.",
-  parentTheorem: "teorema-interseccion-rectas",
-  framework: "sintetico",
-  branch: "51M04",
-  proofMethod: "reduccion-al-absurdo",
-  authors: ["hilbert"],
-  tags: ["incidencia", "rectas", "unicidad"],
-  layout: "split",
-  sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
-  ]
-};
-
-import { DiagramaDemoInterseccion } from "@content/diagrams/Demos/DiagramaDemoInterseccion";
-
-<DemonstrationSection diagram="{<DiagramaDemoInterseccion"/>}>
-
-<Capitular letra="S"/>e demuestra que dos <ConceptLink targetId="recta">rectas</ConceptLink> distintas coplanares no pueden cortarse en más de un <ConceptLink targetId="punto">punto</ConceptLink>.
-
-<Separador/>
-
-### Demostración paso a paso
-
-<ProofStep number="{1}" target="lineasIniciales" title="Hipótesis de reducción al absurdo">
-  Sean <VisualBind color="musgo" element="lineA">$\ell_1$</VisualBind> y <VisualBind color="azul" element="lineB">$\ell_2$</VisualBind> dos rectas distintas ($\ell_1 \neq \ell_2$). Supongamos por reducción al absurdo que intersecan en al menos dos puntos distintos <VisualBind color="terracota" element="pP">$P$</VisualBind> y <VisualBind color="terracota" element="pQ">$Q$</VisualBind> ($P \neq Q$).
-</ProofStep>
-
-<ProofStep number="{2}" target="incidenciaDoble" title="Aplicación del axioma de incidencia">
-  Por hipótesis, $P \in \ell_1 \land Q \in \ell_1$, y simultáneamente $P \in \ell_2 \land Q \in \ell_2$. Sin embargo, por el <ConceptLink isDependency="{true}" targetId="axiomas-incidencia-hilbert">Axioma I.1 de Incidencia</ConceptLink>, por dos puntos distintos pasa una **única** recta.
-</ProofStep>
-
-<ProofStep number="{3}" target="conclusionAbsurdo" title="Contradicción y conclusión">
-  La existencia de dos rectas que contienen a $P$ y a $Q$ implica $\ell_1 = \ell_2$, lo cual contradice la hipótesis inicial $\ell_1 \neq \ell_2$. Por tanto, $|\ell_1 \cap \ell_2| \le 1$.
-</ProofStep>
-
-<Separador/>
-
-### Análisis deductivo
-<Nota title="Alcance del resultado">
-  Esta demostración depende exclusivamente del Axioma I.1. Por tanto, es válida en toda geometría de incidencia lineal, con independencia de los axiomas de paralelas o de orden.
-</Nota>
-
-</DemonstrationSection>
-```
+| Concepto Matemático | Símbolo Canónico | Comando KaTeX | Ejemplo de Uso | Prohibido / Desaconsejado |
+| :--- | :---: | :--- | :--- | :--- |
+| **Congruencia geométrica** | $\cong$ | `\cong` | $\overline{AB} \cong \overline{CD}$, $\angle A \cong \angle B$ | $\equiv$ *(reservado a aritmética modular / lógica)* |
+| **Semejanza geométrica** | $\sim$ | `\sim` | $\triangle ABC \sim \triangle A'B'C'$ | $\approx$ *(reservado a aproximación numérica)* |
+| **Paralelismo** | $\parallel$ | `\parallel` | $\ell \parallel m$ | $\slash\slash$, $\parallel\mkern-2mu\parallel$ |
+| **Perpendicularidad** | $\perp$ | `\perp` | $\ell \perp m$ | $\top$, $\bot$ *(reservado a lógica: falsedad)* |
+| **Incidencia sintética** | $\mathbf{I}$ | `\mathbf{I}` | $P \, \mathbf{I} \, \ell$, $\ell \, \mathbf{I} \, \pi$ | $I$ cursiva ambigua |
+| **Pertenencia conjuntista** | $\in$ | `\in` | $P \in \ell$, $x \in X$ | $\epsilon$ (letra griega épsilon) |
+| **Intermediación / Orden** | $*$ o $\mathbf{B}$ | `*` o `\mathbf{B}` | $A * B * C$, $\mathbf{B}(A, B, C)$ | $B(A,B,C)$ sin negrita |
+| **Segmento geométrico** | $\overline{AB}$ | `\overline{AB}` | $\overline{AB} \subset \ell$ | $\underline{AB}$, $AB$ sin barra para el conjunto |
+| **Semirrecta (Rayo)** | $\overrightarrow{AB}$ | `\overrightarrow{AB}` | $\overrightarrow{AB}$ (origen $A$, pasa por $B$) | $\vec{AB}$ *(reservado a vectores)* |
+| **Recta generada** | $\overleftrightarrow{AB}$ | `\overleftrightarrow{AB}` | $\overleftrightarrow{AB}$ (recta que une $A$ y $B$) | $\overline{AB}$ |
+| **Ángulo** | $\angle ABC$ | `\angle ABC` | $\angle ABC$ o $\widehat{ABC}$ | $<ABC$ |
+| **Triángulo** | $\triangle ABC$ | `\triangle ABC` | $\triangle ABC$ | $\Delta ABC$ *(delta griega mayúscula)* |
+| **Doble implicación** | $\iff$ | `\iff` | $A \in \mathcal{H} \iff \overline{AB} \cap \ell = \emptyset$ | $\leftrightarrow$, `<=>` |
+| **Implicación directa** | $\implies$ | `\implies` | $P \implies Q$ | `->`, $\to$ *(reservado a funciones)* |
+| **Conjunto vacío** | $\emptyset$ | `\emptyset` | $A \cap B = \emptyset$ | $\Phi$, $\phi$, $\{\}$ |
+| **Conjuntos numéricos** | $\mathbb{N}, \mathbb{Z}, \mathbb{Q}, \mathbb{R}, \mathbb{C}$ | `\mathbb{R}`, etc. | $x \in \mathbb{R}^n$ | $\mathbf{R}$, $R$ cursiva |
+| **Cardinalidad** | $\lvert S \rvert$ o $\text{card}(S)$ | `\lvert S \rvert` | $\dim(V) = \lvert B \rvert$ | `\card` *(comando KaTeX inexistente)* |
+| **Tablas KaTeX** | $\mid$ o $\lvert \dots \rvert$ | `\mid` | $S = \{ x \in \mathbb{R} \mid x > 0 \}$ | `|` directo *(rompe el parser Markdown)* |
 
 ---
 
-## 7. Estándares de Notación KaTeX
+## 6. Glosario Técnico de Euskara Batua
 
-- **Conjuntos numéricos:** $\mathbb{R}$, $\mathbb{Z}$, $\mathbb{N}$, $\mathbb{Q}$, $\mathbb{C}$.
-- **Segmentos geométricos:** Usar $\overline{AB}$ para el segmento como conjunto de puntos. Reservar $d(A, B)$ o $AB$ para la distancia numérica.
-- **Semirrectas:** $\overrightarrow{AB}$.
-- **Rectas generadas:** $\overleftrightarrow{AB}$.
-- **Ángulos:** $\angle ABC$ o $\widehat{ABC}$.
-- **Planos y espacios:** $\pi$, $\alpha$, $\beta$ para planos sintéticos; letra caligráfica $\mathcal{P}$ para el conjunto de puntos, $\mathcal{L}$ para rectas y $\mathcal{E}$ para espacios afines.
-- **Cardinalidad:** $\lvert S \rvert$ o $\text{card}(S)$ (prohibido `\card`).
-- **Tablas Markdown:** Usar siempre `\mid` o `\lvert \dots \rvert` dentro de KaTeX (prohibido `|` suelto para evitar romper el parser Markdown).
-
----
-
-## 8. Glosario Técnico de Euskara Batua
-
-| ❌ Término Prohibido | ✅ Término Correcto | Ámbito / Significado |
+| ❌ Término Desaconsejado | ✅ Término Correcto | Significado / Contexto |
 |---|---|---|
-| `nekez` (significa *raras veces*) | **`nahitaez`** / **`ezinbestean`** | *"necesariamente"* |
-| `ekitzaile` (significa *activista*) | **`ebakitzaile`** | Recta *"secante"* |
-| `koproportzio` (inexistente) | **`koziente`** | *"cociente"* |
-| `tratuaren` (del trato) | **`higikariaren`** / **`gorputzaren`** | Móvil / cuerpo en movimiento |
-| `konhexu` ('h' incorrecta) | **`konbexu`** / **`ganbil`** | *"convexo"* |
-| `strictly` (anglicismo) | **`zorrozki`** / **`zorrotz`** | *"estrictamente"* |
+| `nekez` (*raras veces*) | **`nahitaez`** / **`ezinbestean`** | *"necesariamente"* |
+| `ekitzaile` (*activista*) | **`ebakitzaile`** | Recta *"secante"* |
+| `koproportzio` | **`koziente`** | *"cociente"* |
+| `tratuaren` | **`higikariaren`** / **`gorputzaren`** | Móvil / cuerpo en movimiento |
+| `konhexu` | **`konbexu`** / **`ganbil`** | *"convexo"* |
+| `strictly` | **`zorrozki`** / **`zorrotz`** | *"estrictamente"* |
 | `alderanzgarri` | **`alderantzizgarri`** | Matriz *"invertible"* |
-| `Asociatibitatea` (con 'c') | **`Asoziatibitatea`** / **`Elkartuzkotasuna`** | *"asociatividad"* |
-| `zuzenki segmentuen` (redundancia) | **`zuzenkien`** / **`segmentuen`** | *"segmentos de recta"* |
+| `Asociatibitatea` | **`Asoziatibitatea`** / **`Elkartuzkotasuna`** | *"asociatividad"* |
+| `zuzenki segmentuen` | **`zuzenkien`** / **`segmentuen`** | *"segmentos de recta"* |
 | `Parerik gabe aldeen...` | **`Alde-parerik kongruente gabe`** | *"sin pares de lados congruentes"* |
 
 ---
 
-## 9. Protocolo de Auto-Auditoría en 5 Filtros
+## 7. Verificación y Auditoría
 
-Antes de dar por concluida la redacción de cualquier archivo:
+Para validar la coherencia del contenido:
 
-1. **Filtro 1: Simetría Trilingüe:** El identificador `id` existe en `content/mdx/es/`, `content/mdx/eu/` y `content/mdx/en/` con idénticos metadatos estructurales.
-2. **Filtro 2: Corrección Léxica en Euskara:** Comprobación estricta contra el glosario técnico de la Sección 8.
-3. **Filtro 3: Notación KaTeX:** KaTeX limpio, uso de $\overline{AB}$, sin macros inexistentes.
-4. **Filtro 4: Integridad Causal:** 
-   - Primitivos: `subtype: "primitivo"` sin `isDependency={true}`.
-   - Derivados: `subtype: "derivado"` con `isDependency={true}` en conceptos base.
-   - Demostraciones: `isDependency={true}` en axiomas y lemas justificativos.
-5. **Filtro 5: Validación Estática:**
-   ```bash
-   npm run validate-references && npm run validate-graph
-   ```
+```bash
+# Validar referencias cruzadas y metadatos
+npm run validate-references
+
+# Validar integridad del grafo lógico acíclico
+npm run validate-graph
+```

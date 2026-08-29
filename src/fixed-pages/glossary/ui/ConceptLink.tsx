@@ -38,31 +38,6 @@ const COLOR_MAP: Record<string, string> = {
   'musgo': 'var(--theme-musgo)',
 };
 
-const resolveTargetHref = (id: string, lang: string): string => {
-  const theorem = db.getTheorem(id, lang);
-  if (theorem) return `/teorema/${theorem.slug}`;
-  const definition = db.getDefinition(id, lang);
-  if (definition) return `/definicion/${definition.slug}`;
-  const axiom = db.getAxiom(id, lang);
-  if (axiom) return `/axioma/${axiom.slug}`;
-  const bio = db.getMathematicianById(id, lang);
-  if (bio) return `/bio/${bio.slug}`;
-  const method = db.getMethod(id, lang);
-  if (method) return `/metodo/${method.slug}`;
-  const example = db.getExample(id, lang);
-  if (example) return `/ejemplo/${example.slug}`;
-  const exercise = db.getExercise(id, lang);
-  if (exercise) return `/ejercicio/${exercise.slug}`;
-  const useCase = db.getUseCase(id, lang);
-  if (useCase) return `/caso/${useCase.slug}`;
-  const system = db.getAxiomaticSystem(id, lang);
-  if (system) return `/sistema/${system.slug}`;
-  const model = db.getModel(id, lang);
-  if (model) return `/modelo/${model.slug}`;
-  const demo = db.getDemo(id, lang);
-  if (demo) return `/demo/${demo.slug}`;
-  return `/definicion/${id}`;
-};
 
 export const ConceptLink: React.FC<ConceptLinkProps> = ({
   targetId,
@@ -71,7 +46,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
   highlightColor
 }) => {
   const { lang, t, getLocalizedPath } = useI18n();
-  const { openTerm } = useGlossaryStore();
+  const { openTerm, activeTerms } = useGlossaryStore();
   const setVariable = useMathStore((state) => state.setVariable);
 
   const targetIds = Array.isArray(targetId) ? targetId : [targetId];
@@ -80,6 +55,7 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
   const validIds = targetIds.filter(id => isIdValid(id, lang));
   const allValid = validIds.length === targetIds.length;
   const dataAttr = validIds.length > 0 ? validIds.join(',') : undefined;
+  const isActive = activeTerms ? targetIds.some(id => activeTerms.includes(id)) : false;
 
   // Manejadores para la interactividad del gráfico
   const handleMouseEnter = () => {
@@ -122,14 +98,20 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
     );
   }
 
-  const targetHref = resolveTargetHref(targetIds[0], lang);
-
   return (
-    <Link
-      href={getLocalizedPath(targetHref)}
+    <span
+      role="button"
+      tabIndex={0}
       onClick={() => {
         openTerm(targetIds);
         handleClickHighlight();
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openTerm(targetIds);
+          handleClickHighlight();
+        }
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -137,13 +119,14 @@ export const ConceptLink: React.FC<ConceptLinkProps> = ({
       title={t('common', 'relatedContent')}
       style={highlightStyles}
       className={[
-        'page-accent-link font-bold cursor-pointer transition-all duration-150 rounded-none',
+        'page-accent-link font-bold cursor-pointer transition-all duration-150 rounded-none inline',
         'underline decoration-2 underline-offset-4',
+        isActive ? 'is-active' : '',
         highlightTarget ? "border-b-2 box-decoration-clone px-[2px] py-[1px]" : ""
-      ].join(' ')}
+      ].filter(Boolean).join(' ')}
     >
       {children}
       {isRead && <span className="ml-[2px] text-canela opacity-80" style={{ fontSize: '0.85em' }}>✓</span>}
-    </Link>
+    </span>
   );
 };

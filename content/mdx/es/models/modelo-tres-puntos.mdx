@@ -13,35 +13,31 @@ export const metadata = {
 import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
 export const Diagram = ModeloTresPuntos;
 
-<Capitular letra="E" />l modelo de tres puntos constituye el <ConceptLink targetId="sistema-incidencia">modelo de incidencia</ConceptLink> más elemental y minimalista de la geometría finita. Con un universo compuesto por un trío discreto de puntos, tres rectas y un único plano, proporciona una herramienta pedagógica y metamatemática esencial para probar la consistencia lógica y la independencia mutua de los axiomas iniciales de Hilbert.
+<Capitular letra="E" />l **modelo de tres puntos** es el ejemplo más sencillo posible de una geometría finita. Con un universo compuesto únicamente por tres puntos y tres rectas, demuestra de forma práctica y tangible que los primeros axiomas del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink> son coherentes y no se contradicen entre sí.
 
-<Separador />
-
-### Definición del modelo
-
-El sistema se define a partir de conjuntos finitos explícitos:
-
-- **Conjunto de <ConceptLink targetId="punto">puntos</ConceptLink>**: Consta exactamente de tres elementos abstractos: <VisualBind element="A" color="terracota">$A$</VisualBind>, <VisualBind element="B" color="terracota">$B$</VisualBind> y <VisualBind element="C" color="terracota">$C$</VisualBind>.
-- **Conjunto de <ConceptLink targetId="recta">rectas</ConceptLink>**: Tres pares no ordenados de puntos distintos:
-  - <VisualBind element="rAB" color="carbon">$r_{AB} = \{A, B\}$</VisualBind>
-  - <VisualBind element="rBC" color="carbon">$r_{BC} = \{B, C\}$</VisualBind>
-  - <VisualBind element="rCA" color="carbon">$r_{CA} = \{C, A\}$</VisualBind>
-- **<VisualBind element="plano" color="musgo">Plano</VisualBind>**: El conjunto total $\mathcal{P} = \{A, B, C\}$.
-- **Relación de incidencia**: La pertenencia conjuntista estándar $\in$. Un punto $P$ incide en una recta $l$ si $P \in l$.
+<Definicion title="Estructura del Modelo">
+  El modelo se define mediante conjuntos finitos explícitos:
+  - **Conjunto de <ConceptLink targetId="punto">puntos</ConceptLink>**: $\mathcal{P} = \{ \text{<VisualBind element="A" color="terracota">A</VisualBind>}, \text{<VisualBind element="B" color="terracota">B</VisualBind>}, \text{<VisualBind element="C" color="terracota">C</VisualBind>} \}$.
+  - **Conjunto de <ConceptLink targetId="recta">rectas</ConceptLink>**: $\mathcal{L} = \{ \text{<VisualBind element="rAB" color="carbon">r_{AB}</VisualBind>}, \text{<VisualBind element="rBC" color="carbon">r_{BC}</VisualBind>}, \text{<VisualBind element="rCA" color="carbon">r_{CA}</VisualBind>} \}$, donde cada recta es el par de puntos que la forman:
+    $$
+    r_{AB} = \{A, B\}, \quad r_{BC} = \{B, C\}, \quad r_{CA} = \{C, A\}
+    $$
+  - **Relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink>**: La pertenencia usual ($\in$). Un punto $P$ incide en una recta $\ell$ si $P \in \ell$.
+</Definicion>
 
 <Separador />
 
 ### Verificación de los axiomas de incidencia
 
-El modelo verifica formalmente los tres primeros axiomas del <ConceptLink targetId="sistema-incidencia">grupo de incidencia</ConceptLink>:
+Este modelo verifica de manera inmediata los tres primeros axiomas de Hilbert:
 
-- **<ConceptLink targetId="axioma-incidencia-1">Axioma I-1</ConceptLink>**: Para cualesquiera dos puntos distintos (como $A$ y $B$), existe una única recta ($r_{AB}$) que contiene a ambos.
-- **<ConceptLink targetId="axioma-incidencia-2">Axioma I-2</ConceptLink>**: Cada una de las rectas ($r_{AB}, r_{BC}, r_{CA}$) contiene al menos dos puntos distintos.
-- **<ConceptLink targetId="axioma-incidencia-3">Axioma I-3</ConceptLink>**: Existen al menos tres puntos ($A, B, C$) que no pertenecen simultáneamente a una misma recta (no son colineales).
+- **<ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>:** Para cualesquiera dos puntos distintos (como $A$ y $B$), existe exactamente una recta ($r_{AB}$) que contiene a ambos.
+- **<ConceptLink targetId="axioma-incidencia-2">Axioma I.2</ConceptLink>:** Cada una de las tres rectas contiene al menos dos puntos distintos.
+- **<ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink>:** Los tres puntos $A, B, C$ no están contenidos en una misma recta (<ConceptLink targetId="colinealidad">no son colineales</ConceptLink>).
 
 <Separador />
 
 ### Relevancia metamatemática
 
-- **Prueba de consistencia**: Al exhibir una interpretación finita concreta cuyos enunciados son todos verdaderos, demuestra que los tres primeros axiomas de incidencia no son contradictorios entre sí.
-- **Independencia del paralelismo y del orden**: En este modelo, dos rectas cualesquiera siempre comparten exactamente un punto común ($r_{AB} \cap r_{BC} = \{B\}$), por lo que no existen <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>, demostrando que la noción de paralelismo requiere postulados adicionales independientes.
+- **Prueba de consistencia:** Al existir un modelo concreto donde los axiomas I.1, I.2 e I.3 son simultáneamente verdaderos, queda demostrado que estos postulados no son contradictorios.
+- **Ausencia de paralelas:** En este modelo, dos rectas cualesquiera siempre se cortan en un punto común ($r_{AB} \cap r_{BC} = \{B\}$); por tanto, no existen <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>, demostrando que la noción de paralelismo requiere axiomas independientes adicionales.

@@ -1,0 +1,34 @@
+export const metadata = {
+  id: "concepto-primitivo",
+  lang: "en",
+  type: "definicion",
+  subtype: "primitivo",
+  title: "Primitive Concept",
+  description: "Fundamental mathematical notion not defined in terms of prior objects, whose meaning and behavior are established by the axioms of the formal system.",
+  branch: "03",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+  ]
+};
+
+<Capitular letra="I" />n formal mathematics, a **primitive concept** (or undefined term) is a starting object or relation that is not defined in terms of prior concepts.
+
+Every mathematical theory requires starting terms. If one attempted to define every object using simpler concepts, one would fall into circular reasoning or an infinite regression. To avoid this, axiomatic systems select a basic set of primitive notions and establish their behavior through the rules or <ConceptLink targetId="axioma">axioms</ConceptLink> of the adopted <ConceptLink targetId="sistema-axiomatico">formal system</ConceptLink>.
+
+<Definicion title="Epistemological Definition">
+  In a formalized theory or <ConceptLink targetId="estructura-geometrica">mathematical structure</ConceptLink> $\mathcal{S}$, **primitive concepts** are the basic symbols of the language (objects and relations) that lack an explicit definition within the system:
+  $$
+  \mathcal{S} = (\mathcal{D}_1, \mathcal{D}_2, \dots, \mathcal{R}_1, \mathcal{R}_2, \dots)
+  $$
+  The mathematical meaning of these terms does not lie in a physical or substantial description, but exclusively in the formal relations that the <ConceptLink targetId="axioma">axioms</ConceptLink> establish among them.
+</Definicion>
+
+<Separador />
+
+### Primitive concepts in synthetic geometry
+
+In the foundations of geometry (such as Hilbert's system), primitive concepts are divided into two categories:
+
+- **Object domains:** Fundamental entities such as the <ConceptLink targetId="punto">point</ConceptLink>, the <ConceptLink targetId="recta">line</ConceptLink>, the <ConceptLink targetId="plano">plane</ConceptLink>, and <ConceptLink targetId="espacio">space</ConceptLink>.
+- **Primitive relations:** Basic links between objects, such as <ConceptLink targetId="incidencia">incidence</ConceptLink> (membership), <ConceptLink targetId="estar-entre">betweenness</ConceptLink> (linear ordering), and <ConceptLink targetId="congruencia">congruence</ConceptLink> (geometric equality).

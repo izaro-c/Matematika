@@ -132,9 +132,9 @@ export const enLanguage: LanguageConfig = {
     },
     construction: {
       title: 'Under Construction',
-      description: 'The page for {title} is currently under development as part of the Matematika digital garden. Theorems, proofs, and exercises are added progressively.',
+      description: 'is currently under development as part of the Matematika digital garden. Theorems, proofs, and exercises are added progressively.',
       exploreMore: 'In the meantime, feel free to explore the encyclopedia:',
-      backToLibrary: '← Back to Library',
+      backToLibrary: 'Back to Library',
       pendingTitle: '"{id}" — page under construction',
       pageFor: 'The page for',
       whileExploring: 'In the meantime, feel free to explore the library:',

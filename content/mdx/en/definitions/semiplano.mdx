@@ -1,0 +1,41 @@
+export const metadata = {
+  id: "semiplano",
+  lang: "en",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Half-Plane",
+  description: "Either of the two open regions into which a line divides the points of a plane.",
+  branch: "51M",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §2 (Axiom II.4)", role: "primary" }
+  ]
+};
+
+<Capitular letra="A" /> **half-plane** is either of the two regions into which a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> divides the points of a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>. The dividing line is called the **boundary** or edge and is not part of the half-plane.
+
+In <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, the partition of the plane into exactly two <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> regions is a direct consequence of <ConceptLink targetId="axioma-orden-4" isDependency={true}>Pasch's Axiom</ConceptLink> (Axiom II.4 of order).
+
+<Definicion title="Formal Definition">
+  Let $\pi$ be a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> and let $\ell$ be a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> contained in $\pi$. The line $\ell$ divides the <ConceptLink targetId="punto">points</ConceptLink> of $\pi \setminus \ell$ into two <ConceptLink targetId="conjunto-disjunto">disjoint sets</ConceptLink> $\mathcal{H}_1$ and $\mathcal{H}_2$, called **half-planes**, determined by:
+  $$
+  A, B \in \mathcal{H}_1 \iff \overline{AB} \cap \ell = \emptyset
+  $$
+  $$
+  A \in \mathcal{H}_1, \, C \in \mathcal{H}_2 \iff \overline{AC} \cap \ell \neq \emptyset
+  $$
+  where $\overline{AB}$ denotes the <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> joining points $A$ and $B$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Fundamental Geometric Properties">
+    <PropiedadItem id="conjunto-convexo" title="Convexity">
+      Every half-plane is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if it contains any two points, it entirely contains the segment joining them.
+    </PropiedadItem>
+    <PropiedadItem id="angulo" title="Interior polygonal regions">
+      The intersection of two or more half-planes whose boundaries cross allows the formal definition of the interior region of an <ConceptLink targetId="angulo">angle</ConceptLink>, a <ConceptLink targetId="triangulo">triangle</ConceptLink>, and any <ConceptLink targetId="poligono">polygon</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

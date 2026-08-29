@@ -1,0 +1,37 @@
+export const metadata = {
+  id: "dimension",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Dimension",
+  description: "Number of degrees of freedom or independent parameters required to specify the position of a point in a space or figure.",
+  branch: "51",
+  hasSimulation: false,
+  sources: [
+    { title: "Dimension Theory", author: "Witold Hurewicz, Henry Wallman", locator: "Chapter I", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I", role: "secondary" }
+  ]
+};
+
+<Capitular letra="D" />**imension** is the mathematical measure of the number of degrees of freedom or independent directions characterizing a <ConceptLink targetId="espacio">space</ConceptLink> or geometric figure.
+
+In elementary geometry, objects are classified according to their degrees of freedom: a <ConceptLink targetId="punto">point</ConceptLink> has no extension (dimension 0), a <ConceptLink targetId="recta">line</ConceptLink> has a single direction of displacement (dimension 1), a <ConceptLink targetId="plano">plane</ConceptLink> admits two independent directions (dimension 2), and three-dimensional space admits three (dimension 3).
+
+<Definicion title="Definition Across Mathematical Theories">
+  The concept of dimension is rigorously formalized across branches of mathematics:
+  - **In <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>:** It is established by <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> incidence postulates. <ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink> fixes a plane by requiring 3 non-collinear points, and <ConceptLink targetId="axioma-incidencia-8">Axiom I.8</ConceptLink> fixes the three-dimensionality of space by requiring 4 non-coplanar points.
+  - **In <ConceptLink targetId="algebra-lineal">linear algebra</ConceptLink>:** It is the <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> of any <ConceptLink targetId="base">basis</ConceptLink> $B$ of a <ConceptLink targetId="espacio-vectorial">vector space</ConceptLink> $V$ over a field $\mathbb{K}$:
+    $$
+    \dim_{\mathbb{K}}(V) = |B|
+    $$
+  - **In <ConceptLink targetId="topologia">topology</ConceptLink>:** It is defined via <ConceptLink targetId="lebesgue">Henri Lebesgue's</ConceptLink> covering dimension or the inductive dimension of <ConceptLink targetId="menger">Karl Menger</ConceptLink> and <ConceptLink targetId="urysohn">Pavel Urysohn</ConceptLink>, systematically developed by <ConceptLink targetId="hurewicz">Witold Hurewicz</ConceptLink> and <ConceptLink targetId="wallman">Henry Wallman</ConceptLink>.
+</Definicion>
+
+<Separador />
+
+### Dimensional hierarchy
+
+- **Dimension 0:** The isolated <ConceptLink targetId="punto">point</ConceptLink> (no extension).
+- **Dimension 1:** The <ConceptLink targetId="recta">line</ConceptLink>, <ConceptLink targetId="segmento">segment</ConceptLink>, and <ConceptLink targetId="semirrecta">ray</ConceptLink> (magnitude: <ConceptLink targetId="longitud">length</ConceptLink>).
+- **Dimension 2:** The <ConceptLink targetId="plano">plane</ConceptLink>, <ConceptLink targetId="semiplano">half-plane</ConceptLink>, and <ConceptLink targetId="poligono">polygons</ConceptLink> (magnitude: <ConceptLink targetId="area">area</ConceptLink>).
+- **Dimension 3:** Three-dimensional <ConceptLink targetId="espacio">space</ConceptLink> and polyhedra (magnitude: <ConceptLink targetId="volumen">volume</ConceptLink>).

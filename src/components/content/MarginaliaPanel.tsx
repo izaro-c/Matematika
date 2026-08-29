@@ -74,17 +74,21 @@ function resolveEntityMeta(entity: EntityWrapper): TermMeta | null {
 }
 
 function resolveTermFromDb(activeTerm: string, lang: string = 'es'): TermData | null {
-  const theorem = db.getTheorem(activeTerm, lang);
-  const definition = db.getDefinition(activeTerm, lang);
-  const bio = db.getMathematicianById(activeTerm, lang);
-  const method = db.getMethod(activeTerm, lang);
-  const example = db.getExample(activeTerm, lang);
-  const exercise = db.getExercise(activeTerm, lang);
-  const useCase = db.getUseCase(activeTerm, lang);
-  const axiom = db.getAxiom(activeTerm, lang);
-  const system = db.getAxiomaticSystem(activeTerm, lang);
-  const model = db.getModel(activeTerm, lang);
-  const demo = db.getDemo(activeTerm, lang);
+  const k1 = activeTerm;
+  const k2 = activeTerm.replace(/_/g, '-');
+  const k3 = activeTerm.replace(/-/g, '_');
+
+  const theorem = db.getTheorem(k1, lang) || db.getTheorem(k2, lang) || db.getTheorem(k3, lang);
+  const definition = db.getDefinition(k1, lang) || db.getDefinition(k2, lang) || db.getDefinition(k3, lang);
+  const bio = db.getMathematicianById(k1, lang) || db.getMathematicianById(k2, lang) || db.getMathematicianById(k3, lang);
+  const method = db.getMethod(k1, lang) || db.getMethod(k2, lang) || db.getMethod(k3, lang);
+  const example = db.getExample(k1, lang) || db.getExample(k2, lang) || db.getExample(k3, lang);
+  const exercise = db.getExercise(k1, lang) || db.getExercise(k2, lang) || db.getExercise(k3, lang);
+  const useCase = db.getUseCase(k1, lang) || db.getUseCase(k2, lang) || db.getUseCase(k3, lang);
+  const axiom = db.getAxiom(k1, lang) || db.getAxiom(k2, lang) || db.getAxiom(k3, lang);
+  const system = db.getAxiomaticSystem(k1, lang) || db.getAxiomaticSystem(k2, lang) || db.getAxiomaticSystem(k3, lang);
+  const model = db.getModel(k1, lang) || db.getModel(k2, lang) || db.getModel(k3, lang);
+  const demo = db.getDemo(k1, lang) || db.getDemo(k2, lang) || db.getDemo(k3, lang);
 
   const entity = theorem || definition || bio || method || example || exercise || useCase || axiom || system || model || demo;
   if (!entity) return null;
@@ -128,14 +132,13 @@ function buildActiveTermDataList(activeTerms: string[] | null, lang: string = 'e
   const dict = getGlossaryDictionary(lang);
 
   activeTerms.forEach(activeTerm => {
-    let termData: TermData | null = (dict[activeTerm] as unknown as TermData) || null;
+    let termData = resolveTermFromDb(activeTerm, lang);
     let isDefinition = false;
 
-    if (!termData) {
-      termData = resolveTermFromDb(activeTerm, lang);
-      if (termData) {
-        isDefinition = true;
-      }
+    if (termData) {
+      isDefinition = true;
+    } else {
+      termData = ((dict[activeTerm] || dict[activeTerm.replace(/-/g, '_')] || dict[activeTerm.replace(/_/g, '-')]) as unknown as TermData) || null;
     }
 
     if (termData) {
@@ -212,37 +215,50 @@ export const MarginaliaPanel = () => {
   const activeTermDataList = buildActiveTermDataList(activeTerms, lang);
   const formulaData = buildFormulaData(activeFormulaTerms, lang);
 
-  const isActive = (activeTerms !== null && activeTerms.length > 0) ||
-                   (activeFormulaTerms !== null && activeFormulaTerms.length > 0);
+  const isTermsActive = activeTerms !== null && activeTerms.length > 0;
+  const isFormulaActive = activeFormulaTerms !== null && activeFormulaTerms.length > 0;
+  const isActive = isTermsActive || isFormulaActive;
 
-  // Preserve content during exit animation without reading/writing refs in render
+  // Track the active content type ('terms' | 'formula') to preserve the correct content during exit animation
+  const [activeContentType, setActiveContentType] = useState<'terms' | 'formula' | null>(() => {
+    if (isTermsActive) return 'terms';
+    if (isFormulaActive) return 'formula';
+    return null;
+  });
+
   const [cachedTerms, setCachedTerms] = useState<(TermData & { isDefinition: boolean })[]>(activeTermDataList);
   const [cachedFormulas, setCachedFormulas] = useState<TermData[] | null>(formulaData);
 
   useEffect(() => {
-    if (activeTermDataList.length > 0) {
+    if (isTermsActive && activeTermDataList.length > 0) {
+      setActiveContentType('terms');
       setCachedTerms(activeTermDataList);
-    }
-  }, [activeTermDataList]);
-
-  useEffect(() => {
-    if (formulaData && formulaData.length > 0) {
+    } else if (isFormulaActive && formulaData && formulaData.length > 0) {
+      setActiveContentType('formula');
       setCachedFormulas(formulaData);
     }
-  }, [formulaData]);
+  }, [isTermsActive, isFormulaActive, activeTermDataList, formulaData]);
 
-  const displayedTermDataList = activeTermDataList.length > 0 ? activeTermDataList : cachedTerms;
-  const displayedFormulaData = (formulaData && formulaData.length > 0) ? formulaData : cachedFormulas;
+  const currentType = isTermsActive
+    ? 'terms'
+    : isFormulaActive
+      ? 'formula'
+      : activeContentType;
+
+  const displayedTermDataList = isTermsActive ? activeTermDataList : cachedTerms;
+  const displayedFormulaData = isFormulaActive ? formulaData : cachedFormulas;
 
   const isSidebar = displayMode === 'sidebar';
   const panelClassName = computePanelClassName(isSidebar, isActive);
 
   // Resolver el color del panel a partir del primer término visible (fallback glosario -> piedra)
-  const firstType = displayedTermDataList[0]?.type || displayedFormulaData?.[0]?.type || 'glosario';
+  const firstType = currentType === 'formula'
+    ? (displayedFormulaData?.[0]?.type || 'glosario')
+    : (displayedTermDataList[0]?.type || 'glosario');
   const panelAccent = getContentPageAccent(firstType);
 
   let panelContent: React.ReactNode;
-  if (displayedTermDataList.length > 0) {
+  if (currentType === 'terms' && displayedTermDataList.length > 0) {
     panelContent = (
       <div className="flex flex-col">
         {displayedTermDataList.map((term, idx) => {
@@ -292,13 +308,12 @@ export const MarginaliaPanel = () => {
               )}
               {term.isDefinition && term.href && (
                 <div className="mt-10 text-center">
-                  <Link href={getLocalizedPath(term.href)}>
-                    <a
-                      onClick={closeTerm}
-                      className="page-accent-hover inline-block px-8 py-3 border border-carbon/20 transition-all ac-eyebrow font-bold"
-                    >
-                      {t('glossary', 'readFullArticle')}
-                    </a>
+                  <Link
+                    href={getLocalizedPath(term.href)}
+                    onClick={closeTerm}
+                    className="page-accent-hover inline-block px-8 py-3 border border-carbon/20 transition-all ac-eyebrow font-bold"
+                  >
+                    {t('glossary', 'readFullArticle')}
                   </Link>
                 </div>
               )}

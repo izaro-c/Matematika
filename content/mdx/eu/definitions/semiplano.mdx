@@ -1,0 +1,41 @@
+export const metadata = {
+  id: "semiplano",
+  lang: "eu",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Planoerdia",
+  description: "Zuzen batek plano bateko puntuak banatzean sortzen diren bi eskualde irekietako bakoitza.",
+  branch: "51M",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §2 (II.4 Axioma)", role: "primary" }
+  ]
+};
+
+<Capitular letra="P" />**lanoerdi** bat <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> batek <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko puntuak banatzean sortzen diren bi eskualdeetako bakoitza da. Zuzen zatitzaileari planoerdiaren **ertz** edo mugalde deitzen zaio eta ez da planoerdiaren parte.
+
+<ConceptLink targetId="geometria-sintetica">Geometria sintetikoan</ConceptLink>, planoa zehazki bi eskualde <ConceptLink targetId="conjunto-disjunto">disjuntotan</ConceptLink> banatzea <ConceptLink targetId="axioma-orden-4" isDependency={true}>Paschen Axiomaren</ConceptLink> (ordenako II.4 Axioma) ondorio zuzena da.
+
+<Definicion title="Definizio Formala">
+  Izan bedi $\pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bat eta $\ell$ bertan kokatutako <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat. $\ell$ zuzenak $\pi \setminus \ell$-ko <ConceptLink targetId="punto">puntuak</ConceptLink> bi <ConceptLink targetId="conjunto-disjunto">multzo disjuntotan</ConceptLink> ($\mathcal{H}_1$ eta $\mathcal{H}_2$) banatzen ditu, **planoerdi** deituak, honako baldintzapean:
+  $$
+  A, B \in \mathcal{H}_1 \iff \overline{AB} \cap \ell = \emptyset
+  $$
+  $$
+  A \in \mathcal{H}_1, \, C \in \mathcal{H}_2 \iff \overline{AC} \cap \ell \neq \emptyset
+  $$
+  non $\overline{AB}$ $A$ eta $B$ puntuak lotzen dituen <ConceptLink targetId="segmento" isDependency={true}>segmentua</ConceptLink> den.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Oinarrizko Propietate Geometrikoak">
+    <PropiedadItem id="conjunto-convexo" title="Konbexutasuna">
+      Planoerdi oro <ConceptLink targetId="conjunto-convexo">multzo konbexua</ConceptLink> da: edozein bi puntu baditu, haiek lotzen dituen segmentu osoa bertan sartuta dago.
+    </PropiedadItem>
+    <PropiedadItem id="angulo" title="Poligonoen barne-eskualdeak">
+      Haien ertzak ebakitzen diren bi planoerdi edo gehiagoren ebakidurak <ConceptLink targetId="angulo">angelu</ConceptLink> baten, <ConceptLink targetId="triangulo">triangelu</ConceptLink> baten eta edozein <ConceptLink targetId="poligono">poligonoren</ConceptLink> barne-eskualdea formalki definitzea ahalbidetzen du.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

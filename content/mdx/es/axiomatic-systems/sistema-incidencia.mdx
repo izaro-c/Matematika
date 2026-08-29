@@ -3,8 +3,8 @@ export const metadata = {
   lang: "es",
   type: "sistema-axiomatico",
   title: "Sistema de incidencia",
-  description: "Estructura axiomática primordial que rige las relaciones formales de pertenencia e intersección entre puntos, rectas y planos.",
-  branch: "51M",
+  description: "Estructura axiomática fundamental de la geometría que establece las reglas de pertenencia entre puntos, rectas y planos sin nociones de distancia u orden.",
+  branch: "51A",
   axiomas: [
     "axioma-incidencia-1",
     "axioma-incidencia-2",
@@ -27,42 +27,35 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="E" />l sistema de incidencia constituye el primer estrato deductivo de la geometría sintética formal. Establece las reglas primitivas de inclusión y pertenencia entre los entes indefinidos del espacio (<ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>), abstrayendo cualquier noción métrica de distancia, ordenación lineal o congruencia angular.
+<Capitular letra="E" />l **sistema de incidencia** constituye el primer nivel deductivo de la geometría sintética. Establece las reglas básicas de pertenencia entre los <ConceptLink targetId="concepto-primitivo">conceptos primitivos</ConceptLink> del espacio (<ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>), prescindiendo por completo de distancias, medidas angulares u ordenación.
+
+<Definicion title="Estructura Formal">
+  Un **espacio de incidencia** es una <ConceptLink targetId="estructura-geometrica">estructura</ConceptLink> $(\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$ donde $\mathcal{P}$, $\mathcal{L}$ y $\Pi$ son conjuntos no vacíos y disjuntos dos a dos de puntos, rectas y planos, y $\mathbf{I}$ es la relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink>:
+  $$
+  \mathbf{I} \subseteq (\mathcal{P} \times \mathcal{L}) \cup (\mathcal{P} \times \Pi) \cup (\mathcal{L} \times \Pi)
+  $$
+  que satisface los ocho axiomas del Grupo I de Hilbert.
+</Definicion>
 
 <Separador />
 
-### Estructura formal del sistema
+### Axiomas de incidencia (Grupo I de Hilbert)
 
-Formalmente, un espacio de incidencia tridimensional se define como una tupla $(\mathcal{P}, \mathcal{L}, \mathcal{E}, \mathcal{I})$, donde $\mathcal{P}$ designa el conjunto no vacío de puntos, $\mathcal{L}$ el conjunto de rectas, $\mathcal{E}$ el conjunto de planos y $\mathcal{I}$ la relación binaria de incidencia:
+El sistema se compone de ocho axiomas fundamentales:
 
-$$
-\mathcal{I} \subseteq (\mathcal{P} \times \mathcal{L}) \cup (\mathcal{P} \times \mathcal{E}) \cup (\mathcal{L} \times \mathcal{E})
-$$
-
-El sistema rige el comportamiento geométrico elemental mediante los ocho axiomas fundamentales de Hilbert:
-
-- **<ConceptLink targetId="axioma-incidencia-1" isDependency={true}>Axioma I.1 (Recta por dos puntos)</ConceptLink>**: Para cualesquiera dos puntos distintos $A, B \in \mathcal{P}$, existe una única recta $l \in \mathcal{L}$ tal que $A \mathcal{I} l$ y $B \mathcal{I} l$.
-- **<ConceptLink targetId="axioma-incidencia-2" isDependency={true}>Axioma I.2 (Puntos en recta)</ConceptLink>**: Toda recta $l \in \mathcal{L}$ incide con al menos dos puntos distintos en $\mathcal{P}$.
-- **<ConceptLink targetId="axioma-incidencia-3" isDependency={true}>Axioma I.3 (Puntos no colineales)</ConceptLink>**: Existen al menos tres puntos en $\mathcal{P}$ que no inciden sobre una misma recta.
-- **<ConceptLink targetId="axioma-incidencia-4" isDependency={true}>Axioma I.4 (Plano por tres puntos)</ConceptLink>**: Para cualesquiera tres puntos no colineales $A, B, C \in \mathcal{P}$, existe un único plano $\pi \in \mathcal{E}$ incidente con los tres.
-- **<ConceptLink targetId="axioma-incidencia-5" isDependency={true}>Axioma I.5 (Puntos no colineales en plano)</ConceptLink>**: Todo plano $\pi \in \mathcal{E}$ contiene al menos tres puntos no colineales.
-- **<ConceptLink targetId="axioma-incidencia-6" isDependency={true}>Axioma I.6 (Inclusión de recta en plano)</ConceptLink>**: Si dos puntos distintos de una recta $l$ pertenecen a un plano $\pi$, toda la recta $l$ está contenida en $\pi$.
-- **<ConceptLink targetId="axioma-incidencia-7" isDependency={true}>Axioma I.7 (Intersección de planos)</ConceptLink>**: Si dos planos distintos comparten un punto, su intersección es una recta completa.
-- **<ConceptLink targetId="axioma-incidencia-8" isDependency={true}>Axioma I.8 (Espacio tridimensional)</ConceptLink>**: Existen al menos cuatro puntos en $\mathcal{P}$ que no pertenecen a un mismo plano.
+- **<ConceptLink targetId="axioma-incidencia-1">Axioma I.1 (Determinación de la recta)</ConceptLink>:** Dos puntos distintos determinan una única recta que pasa por ambos.
+- **<ConceptLink targetId="axioma-incidencia-2">Axioma I.2 (Puntos en recta)</ConceptLink>:** Toda recta contiene al menos dos puntos distintos.
+- **<ConceptLink targetId="axioma-incidencia-3">Axioma I.3 (Puntos no colineales)</ConceptLink>:** Existen al menos tres puntos que no pertenecen a una misma recta.
+- **<ConceptLink targetId="axioma-incidencia-4">Axioma I.4 (Determinación del plano)</ConceptLink>:** Tres puntos no colineales determinan un único plano que los contiene.
+- **<ConceptLink targetId="axioma-incidencia-5">Axioma I.5 (Puntos no colineales en plano)</ConceptLink>:** Todo plano contiene al menos tres puntos no colineales.
+- **<ConceptLink targetId="axioma-incidencia-6">Axioma I.6 (Inclusión de recta en plano)</ConceptLink>:** Si dos puntos de una recta pertenecen a un plano, toda la recta está contenida en dicho plano.
+- **<ConceptLink targetId="axioma-incidencia-7">Axioma I.7 (Intersección de planos)</ConceptLink>:** Si dos planos distintos comparten un punto, su intersección es exactamente una recta.
+- **<ConceptLink targetId="axioma-incidencia-8">Axioma I.8 (Espacio tridimensional)</ConceptLink>:** Existen al menos cuatro puntos que no pertenecen a un mismo plano.
 
 <Separador />
 
-### Modelos y representaciones
+### Modelos del sistema de incidencia
 
-La consistencia y versatilidad del sistema de incidencia se manifiesta a través de diversas estructuras discretas y continuas:
-
-- **<ConceptLink targetId="modelo-tres-puntos">Modelo de tres puntos</ConceptLink>**: La geometría plana finita minimal compuesta por 3 puntos y 3 rectas.
-- **<ConceptLink targetId="modelo-fano">Plano de Fano</ConceptLink>**: Geometría proyectiva finita de orden 2 con 7 puntos y 7 rectas.
-- **<ConceptLink targetId="modelo-cartesiano">Modelo cartesiano $\mathbb{R}^3$</ConceptLink>**: El espacio afín tridimensional estándar regido por variedades lineales algebraicas.
-
-<Separador />
-
-### Propiedades metamatemáticas
-
-- **Independencia lógica**: Cada uno de los axiomas de incidencia es independiente de los demás dentro del cálculo proposicional y relacional.
-- **Incompletitud métrica**: El sistema no impone topología ni métrica, admitiendo extensiones directas a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink> y la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>.
+Al no exigir continuidad ni métrica, el sistema de incidencia admite realizaciones muy diversas:
+- **Geometrías finitas:** Como el <ConceptLink targetId="modelo-tres-puntos">modelo de tres puntos</ConceptLink> o el <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink>, con un número finito de puntos y rectas.
+- **Geometrías continuas:** Como el <ConceptLink targetId="modelo-cartesiano">espacio afín real $\mathbb{R}^3$</ConceptLink>.

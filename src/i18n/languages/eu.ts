@@ -132,12 +132,12 @@ export const euLanguage: LanguageConfig = {
     },
     construction: {
       title: 'Eraikuntzan',
-      description: 'Orrialde hau prestatzen ari gara. Laster egongo da eskuragarri.',
-      exploreMore: 'Arakatu gehiago',
-      backToLibrary: 'Itzuli liburutegira',
-      pendingTitle: 'Edukia eraikuntzan',
-      pageFor: 'Orrialdea',
-      whileExploring: 'Bitartean, liburutegiko beste atal batzuk arakatu ditzakezu.',
+      description: 'orrialdea Matematikaren lorategi digitalaren parte gisa garatzen ari da. Teoremak, frogapenak eta ariketak modu progresiboan txertatuko dira.',
+      exploreMore: 'Bitartean, entziklopedia arakatzen jarrai dezakezu:',
+      backToLibrary: 'Liburutegira itzuli',
+      pendingTitle: '"{id}" — orrialdea eraikuntzan',
+      pageFor: 'Une honetan,',
+      whileExploring: 'Bitartean, liburutegiko beste atal batzuk arakatu ditzakezu:',
     },
     graph: {
       logicExplorer: 'Logika Esploratzailea',

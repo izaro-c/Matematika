@@ -2,45 +2,34 @@ export const metadata = {
   id: "axioma-incidencia-8",
   lang: "eu",
   type: "axioma",
-  title: "I.8 axioma (Plano berekoak ez diren lau punturen existentzia)",
-  description: "Espazioan plano berekoak ez diren gutxienez lau puntu existitzen dira.",
-  branch: "51M",
+  title: "I.8 Axioma (Hiru dimentsioko espazioa)",
+  description: "Plano berekoak ez diren gutxienez lau puntu existitzen dira espazioan.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
   ]
 };
 
 import { Incidence8 } from '@content/diagrams/Axiomas/Incidence8';
 export const Simulation = Incidence8;
 
-<Capitular letra="D" />avid Hilberten zortzigarren intzidentzia-axiomak plano berekoak ez diren gutxienez lau <ConceptLink targetId="punto" isDependency={true}>punturen</ConceptLink> existentzia ezartzen du <ConceptLink targetId="espacio">espazioan</ConceptLink>. Axioma honek espazio-geometriaren hiru dimentsioko izaera efektiboa bermatzen du, unibertso deduktiboa <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bakar batera mugatzea eragotziz.
+<Capitular letra="P" />lano berekoak ez diren gutxienez lau <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira.
 
-<Definicion title="Enuntziatu formala">
-  Gutxienez lau $A, B, C, D \in \mathcal{S}$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> existitzen dira, $\pi \in \mathcal{E}$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bakar batek ere laurak batera barnean hartzen ez dituelarik:
+Postulatu honek <ConceptLink targetId="espacio">espazioaren</ConceptLink> geometriaren hiru dimentsioko izaera finkatzen du, unibertso geometrikoa bi dimentsioko plano bakar batera mugatzea eragotziz.
+
+<Definicion title="Enuntziatu Formala">
+  Gutxienez lau <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira (<VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> eta <VisualBind element="pD" color="carbon">$D$</VisualBind>), non <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> batek ere ez dituen laurak batera biltzen:
   $$
-  \exists A, B, C, D \in \mathcal{S} \ \forall \pi \in \mathcal{E} \ \neg\bigl(A \in \pi \land B \in \pi \land C \in \pi \land D \in \pi\bigr)
+  \exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \in \pi \land B \in \pi \land C \in \pi \land D \in \pi)
   $$
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
+### Garrantzia teorian
 
-Hiru dimentsioko simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntuek oinarrizko <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> planoan dautza; laugarren <VisualBind element="pD" color="carbon">$D$</VisualBind> puntua, berriz, plano horretatik kanpo kokatuta dago, espazioan endekatu gabeko tetraedro tridimentsionala osatuz.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Espazio geometriko orokorraren dimentsioa gutxienez $3$ dela ezartzen du formalki ($\dim \mathcal{S} \ge 3$). Estereometriarako, poliedroetarako eta bolumenen kalkulurako ezinbesteko oinarria eskaintzen du <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
-
-<Separador />
-
-### Propietateak
-
-- **Hirudimentsionaltasun bermatua:** Unibertso geometrikoa bi dimentsioko plano bakar batera kolapsatzea debekatzen du.
-- **Oinarri tetraedrikoa:** Lau $A, B, C, D$ puntuek espazioko oinarrizko tetraedro ez-endakatua eratzen dute.
-- **Independentzia afina $\mathbb{R}^3$-an:** Plano berekoak ez diren erreferentzia-sistema afina osatzen dute, hiru askatasun-gradu espazialekin.
+- **<ConceptLink targetId="coplanaridad">Ez-koplanartasuna</ConceptLink>:** Tetraedroa bezalako hiru dimentsioko gorputzen existentzia bermatzen du.
+- **I. Taldearen itxiera:** Axioma honekin amaitzen da intzidentzia-taldea, ordenak eta kongruentziak gainean jardungo duten espazio-esparru osoa mugatuz.

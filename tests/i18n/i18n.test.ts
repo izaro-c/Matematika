@@ -51,7 +51,7 @@ describe('i18n system', () => {
     const puntoEu = db.getDefinition('punto', 'eu');
     expect(puntoEu).toBeDefined();
     expect(puntoEu?.title).toBe('Puntua');
-    expect(puntoEu?.description).toContain('Espazio matematiko baten');
+    expect(puntoEu?.description).toContain('Geometriako oinarrizko kontzeptu');
 
     // Theorem exists in both Basque and Spanish
     const otherThm = db.getTheorem('teorema-tales', 'eu');
@@ -157,6 +157,17 @@ describe('i18n system', () => {
     expect(t('editor', 'itemCount', 5)).toBe('5 elementos');
     // Multiple placeholders with fallback matching (e.g. ExercisePage)
     expect(t('exercise', 'correctCount', { count: 10 })).toBe('Correctas: 10 de 10');
+  });
+
+  it('provides coherent construction page text without unparsed placeholders', () => {
+    const es = getLanguage('es');
+    const eu = getLanguage('eu');
+    const en = getLanguage('en');
+
+    expect(es.dictionary.construction.description).not.toContain('{title}');
+    expect(en.dictionary.construction.description).not.toContain('{title}');
+    expect(eu.dictionary.construction.description).not.toContain('{title}');
+    expect(es.dictionary.construction.pageFor).toBe('La página para');
   });
 });
 

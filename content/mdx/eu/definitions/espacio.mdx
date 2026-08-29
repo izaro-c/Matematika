@@ -1,0 +1,34 @@
+export const metadata = {
+  id: "espacio",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Espazioa",
+  description: "Teoria dimentsional bateko puntu, zuzen eta plano guztiak biltzen dituen eremu geometriko globala eta unibertso edukitzailea.",
+  branch: "51M",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" },
+    { title: "Elementuak", author: "Euklides", locator: "XI. Liburukia", role: "secondary" }
+  ]
+};
+
+<Capitular letra="E" />**spazioa** teoria matematiko bateko irudi guztiak biltzen dituen eremu geometriko orokorra eta unibertso edukitzailea da. Geometriaren oinarrizko dimentsio-hierarkiaren goiko maila da: <ConceptLink targetId="punto">puntua</ConceptLink> (0 <ConceptLink targetId="dimension">dimentsioa</ConceptLink>), <ConceptLink targetId="recta">zuzena</ConceptLink> (1 dimentsioa), <ConceptLink targetId="plano">planoa</ConceptLink> (2 dimentsioa) eta **espazioa** (3 dimentsioa edo handiagoa).
+
+<ConceptLink targetId="sistema-axiomatico">Sistema axiomatiko</ConceptLink> batean, espazioak ez du aldez aurretik emandako berezko propietaterik; bere portaera eta bere geometria hautatutako <ConceptLink targetId="axioma">axiomek</ConceptLink> finkatzen dute guztiz.
+
+<Definicion title="Definizio Geometrikoa">
+  <ConceptLink targetId="geometria-sintetica">Geometria sintetikoan</ConceptLink>, hiru dimentsioko $\mathcal{E}$ **espazioa** <ConceptLink targetId="punto">puntu</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">zuzen</ConceptLink> $\mathcal{L}$ eta <ConceptLink targetId="plano">plano</ConceptLink> $\Pi$ guztiak biltzen dituen <ConceptLink targetId="dominio">domeinu</ConceptLink> unibertsala da, <ConceptLink targetId="incidencia">intzidentziaren</ConceptLink> bi baldintza nagusik ezaugarritua:
+  1. **Hiru dimentsioko izaera:** Plano berean ez dauden gutxienez lau puntu existitzen dira (<ConceptLink targetId="axioma-incidencia-8">I.8 Axioma</ConceptLink>), espazioa plano bakar batera murriztea eragotziz.
+  2. **Planoen ebakidura:** Bi plano desberdinek puntu bat partekatzen badute, haien ebakidura zuzen bakar bat da zehazki (<ConceptLink targetId="axioma-incidencia-7">I.7 Axioma</ConceptLink>).
+</Definicion>
+
+<Separador />
+
+### Espazio geometriko motak eta haien sinadurak
+
+- <ConceptLink targetId="espacio-incidencia">**Intzidentzia-espazioa**</ConceptLink>: $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$, kokapen-erlazioek soilik gobernatutako gutxieneko egitura (<ConceptLink targetId="sistema-incidencia">intzidentzia-sistema</ConceptLink>).
+- <ConceptLink targetId="espacio-absoluto">**Espazio absolutua**</ConceptLink>: $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong)$, <ConceptLink targetId="estar-entre">ordena</ConceptLink>, <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> eta <ConceptLink targetId="continuidad">jarraitutasuna</ConceptLink> barneratzen dituena (<ConceptLink targetId="sistema-absoluto">geometria absolutua</ConceptLink>).
+- <ConceptLink targetId="espacio-euclidiano">**Espazio euklidearra**</ConceptLink>: $\mathcal{S}_{\text{euc}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong) \models \mathcal{T}_{\text{abs}} \cup \{\text{IV. Axioma}\}$, <ConceptLink targetId="axioma-paralelas-euclides">Euklidesen paraleloen postulatuak</ConceptLink> finkatutako zero kurbadurako espazioa (<ConceptLink targetId="sistema-euclidiano">geometria euklidearra</ConceptLink>).
+- <ConceptLink targetId="espacio-hiperbolico">**Espazio hiperbolikoa**</ConceptLink>: $\mathcal{S}_{\text{hip}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong) \models \mathcal{T}_{\text{abs}} \cup \{\text{IV}_{\text{hip}}\text{ Axioma}\}$, <ConceptLink targetId="axioma-paralelas-hiperbolico">postulatu hiperbolikoak</ConceptLink> finkatutako kurbadura negatibo konstanteko espazio homogeneoa (<ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoa</ConceptLink>).
+- <ConceptLink targetId="espacio-proyectivo">**Espazio proiektiboa**</ConceptLink>: $\mathcal{S}_{\text{proy}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$, plano bereko bi zuzenek beti puntu propio edo idealean ebakitzen duten hedadura geometrikoa.

@@ -1,0 +1,46 @@
+export const metadata = {
+  id: "estructura-geometrica",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Estructura geométrica",
+  description: "Especificación formal compuesta por dominios de objetos y relaciones primitivas que satisfacen un sistema axiomático.",
+  branch: "03",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I", role: "primary" },
+    { title: "Model Theory", author: "Wilfrid Hodges", locator: "Capítulo 1", role: "secondary" }
+  ]
+};
+
+<Capitular letra="U" />na **estructura geométrica** es la especificación matemática que asigna significado e interpretación a una <ConceptLink targetId="signatura">signatura</ConceptLink> formal: define los <ConceptLink targetId="dominio">dominios</ConceptLink> de objetos de partida y las <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink> que operan entre ellos.
+
+<Definicion title="Definición Formal General">
+  Una **estructura matemática** $\mathcal{S}$ está determinada por una tupla de <ConceptLink targetId="conjunto">conjuntos</ConceptLink> no vacíos $\mathcal{D}_i$ (llamados dominios) y relaciones $\mathcal{R}_j$:
+  $$
+  \mathcal{S} = (\mathcal{D}_1, \dots, \mathcal{D}_k, \mathcal{R}_1, \dots, \mathcal{R}_m)
+  $$
+  donde cada relación $\mathcal{R}_j \subseteq \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n}$ vincula elementos de uno o varios dominios.
+</Definicion>
+
+<Separador />
+
+### Estructura sintética de Hilbert (3D)
+
+En la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, la <ConceptLink targetId="signatura">signatura</ConceptLink> formal canónica reúne tres dominios disjuntos y tres relaciones primitivas:
+$$
+\mathcal{S}_{\text{sintética}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong)
+$$
+- **Dominios de objetos:** Los <ConceptLink targetId="punto">puntos</ConceptLink> ($\mathcal{P}$), las <ConceptLink targetId="recta">rectas</ConceptLink> ($\mathcal{L}$) y los <ConceptLink targetId="plano">planos</ConceptLink> ($\Pi$).
+- **Relaciones primitivas:**
+  - $\mathbf{I}$: <ConceptLink targetId="incidencia">Incidencia</ConceptLink> binaria ($P \text{ incide con } \ell$, $P \text{ incide con } \pi$, $\ell \text{ incide con } \pi$).
+  - $\mathbf{B}$: <ConceptLink targetId="estar-entre">Intermediación u orden</ConceptLink> ternario ($A * B * C$, «$B$ está entre $A$ y $C$»).
+  - $\cong$: <ConceptLink targetId="congruencia">Congruencia</ConceptLink> entre pares de puntos (segmentos) y entre ángulos (notada históricamente como $\equiv$ por Hilbert).
+
+<Separador />
+
+### Otras signaturas geométricas
+
+- **Plano de incidencia puro:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$, base del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink> en geometrías finitas o proyectivas.
+- **Espacio métrico analítico:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, d)$, donde una función de distancia numérica $d: \mathcal{P} \times \mathcal{P} \to \mathbb{R}$ sustituye a las relaciones sintéticas de congruencia y orden.
+- **Espacio vectorial:** $\mathcal{S}_{\text{vec}} = (V, \mathbb{K}, +, \cdot)$, fundamentado en el álgebra lineal sobre un cuerpo.

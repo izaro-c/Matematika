@@ -2,9 +2,9 @@ export const metadata = {
   id: "axioma-incidencia-5",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.5 (Existencia de puntos no colineales en el plano)",
-  description: "En todo plano existen al menos tres puntos que no pertenecen a una misma recta.",
-  branch: "51M",
+  title: "Axioma I.5 (Unicidad del plano y puntos no colineales)",
+  description: "Por tres puntos no colineales pasa a lo sumo un plano, y todo plano contiene al menos tres puntos no colineales.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,31 +16,20 @@ export const metadata = {
 import { Incidence5 } from '@content/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
 
-<Capitular letra="E" />n todo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> del <ConceptLink targetId="espacio">espacio</ConceptLink>, el quinto axioma de incidencia formulado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> garantiza la presencia de al menos tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no colineales. Este postulado asegura que ningún plano se degrada o colapsa en una sola <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> o en una colección puntual degenerada.
+<Capitular letra="T" />res <ConceptLink targetId="punto">puntos</ConceptLink> no colineales no pueden pertenecer a más de un <ConceptLink targetId="plano">plano</ConceptLink>, y todo plano contiene al menos tres puntos que no pertenecen a una misma <ConceptLink targetId="recta">recta</ConceptLink>.
 
-<Definicion title="Enunciado formal">
-  Para todo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \mathcal{E}$, existen al menos tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> $A, B, C \in \pi$ tales que ninguna <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$ los contiene a los tres simultáneamente:
+Este postulado complementa al <ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink>, cerrando la propiedad de unicidad: tres puntos no alineados determinan exactamente un único plano.
+
+<Definicion title="Enunciado Formal">
+  1. Si tres puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> no son <ConceptLink targetId="colinealidad">colineales</ConceptLink>, existe como máximo un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="canela">$\pi$</VisualBind> que los contiene:
   $$
-  \forall \pi \in \mathcal{E}, \ \exists A, B, C \in \pi \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
+  \text{no-colineales}(A, B, C) \implies \exists! \pi \in \Pi \ (A \in \pi \land B \in \pi \land C \in \pi)
   $$
+  2. Todo plano $\pi \in \Pi$ contiene al menos tres puntos distintos no colineales.
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Importancia en la teoría
 
-En la escena tridimensional interactiva, el plano <VisualBind element="plano" color="canela">$\pi$</VisualBind> alberga tres puntos diferenciados <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind>. La visualización permite rotar el espacio y verificar que los tres puntos definen una auténtica área bidimensional no contenida en ninguna recta única.
-
-<Separador />
-
-### Significado geométrico y alcance
-
-Garantiza la bidimensionalidad interna de cada plano individual. Asegura que cada superficie plana posee una extensión superficial real capaz de albergar configuraciones geométricas ricas, <ConceptLink targetId="triangulo">triángulos</ConceptLink> y divisiones en semiplanos.
-
-<Separador />
-
-### Propiedades
-
-- **No degeneración planar:** Prohíbe la existencia de planos unidimensionales o puntuales.
-- **Universalidad de polígonos:** Permite inscribir triángulos en cualquier plano del espacio sin excepción.
-- **Riqueza afín:** Garantiza un sistema de coordenadas bidimensional libre sobre cada plano $\pi$.
+Garantiza que los planos sean superficies bidimensionales bien diferenciadas y no se dupliquen sobre las mismas referencias triangulares.

@@ -3,8 +3,8 @@ export const metadata = {
   lang: "en",
   type: "axioma",
   title: "Axiom I.6 (Inclusion of a Line in a Plane)",
-  description: "If two distinct points of a line belong to a plane, then every point of the line belongs to that plane.",
-  branch: "51M",
+  description: "If two points of a line lie in a plane, then the entire line is contained in that plane.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,31 +16,19 @@ export const metadata = {
 import { Incidence6 } from '@content/diagrams/Axiomas/Incidence6';
 export const Simulation = Incidence6;
 
-<Capitular letra="I" />f two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> of a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> belong to a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>, the sixth incidence axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> asserts that every point of that line belongs to that plane. This postulate establishes the strict geometric flatness and rigidity of planar surfaces.
+<Capitular letra="I" />f two distinct <ConceptLink targetId="punto">points</ConceptLink> of a <ConceptLink targetId="recta">line</ConceptLink> belong to a <ConceptLink targetId="plano">plane</ConceptLink>, then all points of that line belong to that plane.
 
-<Definicion title="Formal statement">
-  For every <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$ and every <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \mathcal{E}$, if there exist two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B \in l$ such that $A \in \pi$ and $B \in \pi$, then $l \subset \pi$:
+This axiom formalizes the rigidity and flatness of the plane: a line cannot enter and leave a plane, nor can it bend relative to it.
+
+<Definicion title="Formal Statement">
+  Let <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> be two distinct points of a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="recta" color="carbon">$\ell$</VisualBind>. If $A$ and $B$ belong to a <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano" color="canela">$\pi$</VisualBind>, then the entire line $\ell$ is contained in $\pi$:
   $$
-  \forall l \in \mathcal{L}, \forall \pi \in \mathcal{E} \ \bigl((\exists A, B \in l \ (A \neq B \land A \in \pi \land B \in \pi)) \implies l \subset \pi\bigr)
+  (A \in \ell \land B \in \ell \land A \neq B \land A \in \pi \land B \in \pi) \implies \ell \subset \pi
   $$
 </Definicion>
 
 <Separador />
 
-### Visual representation and interaction
+### Significance in the theory
 
-In the 3D interactive simulation, line <VisualBind element="recta" color="carbon">$l$</VisualBind> contains points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind>, situated upon plane <VisualBind element="plano" color="canela">$\pi$</VisualBind>. Rotating the 3D perspective confirms that the continuous line trace remains fully embedded within the planar surface.
-
-<Separador />
-
-### Geometric significance and scope
-
-Ensures strict spatial flatness: a plane cannot possess ripples, curvatures, or creases that would allow a line to cross two of its points without being wholly absorbed into it. It establishes a consistent structural link between 1D and 2D geometry.
-
-<Separador />
-
-### Properties
-
-- **Criterion for complete containment:** Checking membership of two distinct points suffices to establish containment of the entire line.
-- **Maximal intersection of non-contained lines:** A line not wholly contained in a plane can intersect that plane in at most one single point.
-- **Segment support:** Any line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ whose endpoints lie in $\pi$ is completely contained in $\pi$.
+Allows all properties of the geometry of lines to be transferred into the two-dimensional plane.

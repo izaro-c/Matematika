@@ -2,9 +2,9 @@ export const metadata = {
   id: "axioma-incidencia-5",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.5 (Existence of Non-Collinear Points in a Plane)",
-  description: "Every plane contains at least three points that do not belong to the same line.",
-  branch: "51M",
+  title: "Axiom I.5 (Uniqueness of the Plane and Non-Collinear Points)",
+  description: "Through three non-collinear points passes at most one plane, and every plane contains at least three non-collinear points.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,31 +16,20 @@ export const metadata = {
 import { Incidence5 } from '@content/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
 
-<Capitular letra="I" />n every <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> of <ConceptLink targetId="espacio">space</ConceptLink>, the fifth incidence axiom formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> guarantees the existence of at least three non-collinear <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>. This postulate ensures that no plane degenerates or collapses into a single straight <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> or a discrete point set.
+<Capitular letra="T" />hree non-collinear <ConceptLink targetId="punto">points</ConceptLink> cannot belong to more than one <ConceptLink targetId="plano">plane</ConceptLink>, and every plane contains at least three points not belonging to the same <ConceptLink targetId="recta">line</ConceptLink>.
 
-<Definicion title="Formal statement">
-  For every <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \mathcal{E}$, there exist at least three <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B, C \in \pi$ such that no <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$ contains all three simultaneously:
+This postulate complements <ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink>, completing the uniqueness property: three non-aligned points determine exactly one plane.
+
+<Definicion title="Formal Statement">
+  1. If three points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> are not <ConceptLink targetId="colinealidad">collinear</ConceptLink>, there exists at most one <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano" color="canela">$\pi$</VisualBind> containing them:
   $$
-  \forall \pi \in \mathcal{E}, \ \exists A, B, C \in \pi \ \forall l \in \mathcal{L} \ \neg\bigl(A \in l \land B \in l \land C \in l\bigr)
+  \text{non-collinear}(A, B, C) \implies \exists! \pi \in \Pi \ (A \in \pi \land B \in \pi \land C \in \pi)
   $$
+  2. Every plane $\pi \in \Pi$ contains at least three distinct non-collinear points.
 </Definicion>
 
 <Separador />
 
-### Visual representation and interaction
+### Significance in the theory
 
-In the interactive 3D scene, plane <VisualBind element="plano" color="canela">$\pi$</VisualBind> accommodates three distinct points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind>. The visualization enables space rotation to verify that the three points define a genuine two-dimensional planar area not bounded by any single line.
-
-<Separador />
-
-### Geometric significance and scope
-
-Guarantees the internal two-dimensionality of each individual plane. It ensures that every planar surface exhibits genuine spatial extent capable of hosting geometric configurations, <ConceptLink targetId="triangulo">triangles</ConceptLink>, and half-plane separations.
-
-<Separador />
-
-### Properties
-
-- **Non-degeneracy of planes:** Prohibits one-dimensional or point-like planes.
-- **Universality of polygons:** Enables constructing triangles in any plane in space without exception.
-- **Affine span:** Guarantees a two-dimensional coordinate framework over every plane $\pi$.
+Guarantees that planes are well-differentiated two-dimensional surfaces and do not duplicate across the same triangular references.

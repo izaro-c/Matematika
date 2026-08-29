@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Point",
-  description: "Primary and indivisible constituent element of geometric space and fundamental primitive notion in axiomatic systems.",
+  description: "Primitive geometric concept, indivisible and without spatial extension, whose properties are determined by the axioms of the adopted formal system.",
   branch: "51M",
   hasSimulation: true,
   sources: [
@@ -16,48 +16,26 @@ export const metadata = {
 import { Punto } from '@content/diagrams/Definiciones/Punto';
 export const Simulation = Punto;
 
-<Capitular letra="A" /> point is the fundamental and indivisible primitive entity of geometry and topology. As an undefined primitive notion, it possesses no intrinsic spatial dimensions (length, area, or volume) and serves as the structural foundation for defining <ConceptLink targetId="recta">lines</ConceptLink>, <ConceptLink targetId="plano">planes</ConceptLink>, and abstract spaces.
+<Capitular letra="A" /> <VisualBind element="pPoint" color="musgo">**point**</VisualBind> is a <ConceptLink targetId="concepto-primitivo">primitive concept</ConceptLink> of geometry: the simplest object in space, having no parts and possessing neither <ConceptLink targetId="longitud">length</ConceptLink>, <ConceptLink targetId="area">area</ConceptLink>, nor <ConceptLink targetId="volumen">volume</ConceptLink>.
 
-<Definicion title="">
-  A point <VisualBind element="pPoint" color="musgo">$P$</VisualBind> is a zero-dimensional primitive geometric entity. In modern axiomatics, points are the elements of the underlying set $\mathcal{S}$ upon which relations of <ConceptLink targetId="incidencia">incidence</ConceptLink>, <ConceptLink targetId="estar-entre">order</ConceptLink>, and <ConceptLink targetId="congruencia">congruence</ConceptLink> operate.
+Being a basic notion, it is not defined in terms of other figures. Instead, its behavior and properties are established by the <ConceptLink targetId="axioma">axioms</ConceptLink> of the adopted <ConceptLink targetId="sistema-axiomatico">formal system</ConceptLink>.
+
+<Definicion title="Formal Definition">
+  In a <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink> $\mathcal{S}$, a **point** <VisualBind element="pPoint" color="musgo">$P$</VisualBind> is any element of the non-empty <ConceptLink targetId="conjunto">base set</ConceptLink> $\mathcal{P}$:
+  $$
+  P \in \mathcal{P}
+  $$
+  In isolation, a point possesses no internal properties; its mathematical meaning arises exclusively from the relations that the axioms establish between the elements of $\mathcal{P}$ and other geometric objects, such as <ConceptLink targetId="recta">lines</ConceptLink> and <ConceptLink targetId="plano">planes</ConceptLink>.
 </Definicion>
 
 <Separador />
 
-### Synthetic geometry
+### Fundamental axiomatic relations
 
-In Hilbert's axiomatic foundation, a point is an undefined concept whose mathematical properties are entirely characterized by the axioms:
-- **Incidence**: Any two distinct points $A \neq B$ determine a unique <ConceptLink targetId="recta">line</ConceptLink> $\ell$.
-- **Betweenness**: Given three distinct collinear points, exactly one lies between the other two ($A * B * C$).
-- **Existence**: Every line contains at least two distinct points, and there exist at least four non-coplanar points in space.
+Since a point lacks internal structure, what can be asserted about it depends on which groups of axioms are incorporated into the adopted <ConceptLink targetId="sistema-axiomatico">geometric system</ConceptLink> (a specific system may be restricted to only the first few):
 
-### Analytic geometry
-
-In the real affine space $\mathbb{R}^n$, a point $P$ is represented by an ordered $n$-tuple of real numbers:
-$$
-P = (x_1, x_2, \dots, x_n) \in \mathbb{R}^n
-$$
-The metric distance between two points $P = (x_1, \dots, x_n)$ and $Q = (y_1, \dots, y_n)$ is given by the standard Euclidean metric:
-$$
-d(P, Q) = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}
-$$
-
-### Topology and set theory
-
-In a topological space $(X, \tau)$, a point is an element of the underlying set $x \in X$. The singleton $\{x\}$ is closed whenever the space satisfies the $T_1$ separation axiom, and its inductive topological dimension is identically zero ($\text{dim}(\{x\}) = 0$).
-
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Axiomatic and metric foundations">
-    <PropiedadItem id="axioma-incidencia-1" title="Line determination">
-      Two distinct points $A \neq B$ uniquely determine a line $\ell = \overleftrightarrow{AB}$.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-3" title="Non-collinear points existence">
-      Every line contains at least two points; every plane contains at least three non-collinear points.
-    </PropiedadItem>
-    <PropiedadItem id="distancia-indiscernibles" title="Identity of indiscernibles">
-      In any metric space, $d(P, Q) = 0 \iff P = Q$.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
+- **In <ConceptLink targetId="incidencia">incidence</ConceptLink> systems:** They establish solely the membership of points in <ConceptLink targetId="recta">lines</ConceptLink> and <ConceptLink targetId="plano">planes</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>).
+- **Upon adding <ConceptLink targetId="estar-entre">order or betweenness</ConceptLink>:** Describes when a point lies between two others on a line, enabling the definition of figures such as the <ConceptLink targetId="segmento">segment</ConceptLink> and the <ConceptLink targetId="semirrecta">ray</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>).
+- **Upon adding <ConceptLink targetId="congruencia">congruence</ConceptLink>:** Allows pairs of points to be compared to determine whether they form equal (congruent) segments, without yet presupposing a numerical notion of <ConceptLink targetId="distancia">distance</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4">III.4</ConceptLink>, <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>).
+- **Upon fixing <ConceptLink targetId="paralelas">parallelism</ConceptLink>:** Determines how many parallel lines can pass through a point not on a given line, distinguishing Euclidean geometry (<ConceptLink targetId="axioma-paralelas-euclides">Euclid's postulate</ConceptLink>, a unique parallel) from hyperbolic geometry (<ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic postulate</ConceptLink>, multiple parallels).
+- **Upon adding <ConceptLink targetId="continuidad">continuity</ConceptLink>:** Guarantees that the line of points behaves as a measurable continuum: free of infinitesimal magnitudes (<ConceptLink targetId="axioma-arquimedes">Archimedes, V.1</ConceptLink>) and gaps (<ConceptLink targetId="axioma-completitud">completeness, V.2</ConceptLink>).

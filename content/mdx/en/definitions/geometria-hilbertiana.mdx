@@ -1,0 +1,42 @@
+export const metadata = {
+  id: "geometria-hilbertiana",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Hilbertian Geometry",
+  description: "Rigorous axiomatic refundation of Euclidean geometry proposed by David Hilbert in 1899, based on 20 axioms divided into five independent groups.",
+  branch: "51M",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I", role: "primary" },
+    { title: "Hilbert's Foundations of Geometry", author: "Howard Eves", locator: "Chapter 5", role: "secondary" }
+  ]
+};
+
+<Capitular letra="H" />**ilbertian geometry** is the formal axiomatic system of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> developed by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in his seminal treatise *Grundlagen der Geometrie* (1899).
+
+It constitutes the foundational paradigm of modern formal synthetic mathematics: dispensing with spatial intuition and defining geometric entities solely through the formal relations that the <ConceptLink targetId="axioma">axioms</ConceptLink> establish among them.
+
+<Definicion title="Hilbert's Structure and Signature (3D)">
+  **Three-dimensional Hilbertian geometry** is modeled by a <ConceptLink targetId="geometria-sintetica">synthetic geometric</ConceptLink> <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> whose <ConceptLink targetId="signatura">signature</ConceptLink> gathers three disjoint <ConceptLink targetId="dominio">domains</ConceptLink> and three <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink>:
+  $$
+  \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong)
+  $$
+  where:
+  - $\mathcal{P}$, $\mathcal{L}$, and $\Pi$ are the object domains of <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>.
+  - $\mathbf{I}$ is the binary <ConceptLink targetId="incidencia">incidence</ConceptLink> relation.
+  - $\mathbf{B}$ is the ternary <ConceptLink targetId="estar-entre">betweenness and order</ConceptLink> relation ($A * B * C$).
+  - $\cong$ is the equivalence relation of <ConceptLink targetId="congruencia">congruence</ConceptLink> on segments and angles (originally denoted as $\equiv$ by Hilbert in 1899).
+</Definicion>
+
+<Separador />
+
+### Hilbert's five axiomatic groups
+
+The system is structured around 20 axioms grouped into five modular families:
+
+1. **Group I: <ConceptLink targetId="sistema-incidencia">Incidence Axioms</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink> to <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>):** Establish positional relations among points, lines, and planes, fixing minimum spatial dimension.
+2. **Group II: Order Axioms (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink> to <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>):** Formalize betweenness and plane separation via <ConceptLink targetId="axioma-orden-4">Pasch's Axiom</ConceptLink>, enabling rigorous definitions of <ConceptLink targetId="segmento">segments</ConceptLink>, <ConceptLink targetId="semirrecta">rays</ConceptLink>, and <ConceptLink targetId="semiplano">half-planes</ConceptLink>.
+3. **Group III: Congruence Axioms (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> to <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>):** Define rigid transport of segments and angles without numerical distances.
+4. **Group IV: Parallel Axiom (<ConceptLink targetId="axioma-paralelas-euclides">IV</ConceptLink>):** Euclidean parallel uniqueness postulate through an external point.
+5. **Group V: Continuity Axioms (<ConceptLink targetId="axioma-arquimedes">V.1</ConceptLink> and <ConceptLink targetId="axioma-completitud">V.2</ConceptLink>):** The Archimedean axiom and line completeness, ensuring the geometric continuum is gap-free.

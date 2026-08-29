@@ -1,0 +1,42 @@
+export const metadata = {
+  id: "geometria-hilbertiana",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Geometria hilbertiarra",
+  description: "David Hilbertek 1899an proposatutako geometria euklidearraren refundazio axiomatiko zorrotza, bost talde independentetan banatutako 20 axiomatan oinarritua.",
+  branch: "51M",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua", role: "primary" },
+    { title: "Hilbert's Foundations of Geometry", author: "Howard Eves", locator: "5. Kapitulua", role: "secondary" }
+  ]
+};
+
+<Capitular letra="G" />**eometria hilbertiarra** <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> bere *Grundlagen der Geometrie* (1899) lan nagusian garatutako <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> sistema axiomatiko formala da.
+
+Geometria sintetikoaren metodo formalista modernoaren paradigma fundazionala da: intuizio espazialetatik aldendu eta objektu geometrikoak <ConceptLink targetId="axioma">axiomek</ConceptLink> haien artean ezartzen dituzten erlazio formalen bidez soilik definitzen ditu.
+
+<Definicion title="Hilberten Egitura eta Sinadura (3D)">
+  **Hiru dimentsioko geometria hilbertiarra** hiru <ConceptLink targetId="dominio">domeinu</ConceptLink> disjuntu eta hiru <ConceptLink targetId="concepto-primitivo">oinarrizko erlazio</ConceptLink> biltzen dituen <ConceptLink targetId="geometria-sintetica">geometria sintetikoko</ConceptLink> <ConceptLink targetId="signatura">sinadura</ConceptLink> baten bidez modelatzen da:
+  $$
+  \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong)
+  $$
+  non:
+  - $\mathcal{P}$, $\mathcal{L}$ eta $\Pi$ <ConceptLink targetId="punto">puntuen</ConceptLink>, <ConceptLink targetId="recta">zuzenen</ConceptLink> eta <ConceptLink targetId="plano">planoen</ConceptLink> domeinuak diren.
+  - $\mathbf{I}$ <ConceptLink targetId="incidencia">intzidentzia-erlazio</ConceptLink> bitarra den.
+  - $\mathbf{B}$ <ConceptLink targetId="estar-entre">ordena eta bitartekotasun</ConceptLink> hirutarreko erlazioa den ($A * B * C$).
+  - $\cong$ segmentu eta angeluen arteko <ConceptLink targetId="congruencia">kongruentzia-erlazioa</ConceptLink> den (Hilbertek 1899an $\equiv$ ikurraz idatzia).
+</Definicion>
+
+<Separador />
+
+### Hilberten bost talde axiomatikoak
+
+Sistema bost talde modularretan antolatutako 20 axiomak osatzen dute:
+
+1. **I. Taldea: <ConceptLink targetId="sistema-incidencia">Intzidentzia-Axiomak</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>etik <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>ra):** Puntuen, zuzenen eta planoen arteko posizio-kidetza finkatzen dute.
+2. **II. Taldea: Ordena-Axiomak (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>etik <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>ra):** Bitartekotasuna eta planoaren banaketa formalizatzen dute <ConceptLink targetId="axioma-orden-4">Paschen Axiomaren</ConceptLink> bidez, <ConceptLink targetId="segmento">segmentuak</ConceptLink>, <ConceptLink targetId="semirrecta">zuzenerdiak</ConceptLink> eta <ConceptLink targetId="semiplano">planoerdiak</ConceptLink> definituz.
+3. **III. Taldea: Kongruentzia-Axiomak (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink>etik <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>era):** Segmentu eta angeluen garraio zurruna definitzen dute distantziaren nozio numerikorik gabe.
+4. **IV. Taldea: Paraleloen Axioma (<ConceptLink targetId="axioma-paralelas-euclides">IV</ConceptLink>):** Kanpoko puntu batetik paralelo bakarra igarotzen dela dioen postulatu euklidearra.
+5. **V. Taldea: Jarraitutasun-Axiomak (<ConceptLink targetId="axioma-arquimedes">V.1</ConceptLink> eta <ConceptLink targetId="axioma-completitud">V.2</ConceptLink>):** Arkimedesen axioma eta osotasun lineala, lerro geometrikoetan hutsunerik ez dagoela bermatzen dutenak.

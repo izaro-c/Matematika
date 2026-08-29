@@ -132,6 +132,11 @@ const LocalizedContentRouteDispatcher: React.FC = () => {
       itemDescription = mat?.description;
       break;
     }
+    case 'construccion': {
+      itemTitle = t('notFound', 'constructionTitle');
+      itemDescription = t('construction', 'description');
+      break;
+    }
   }
 
   const breadcrumbs = itemTagsOrBranch ? db.getBreadcrumbs(itemTagsOrBranch, undefined, activeLang) : [];
@@ -172,6 +177,8 @@ const LocalizedContentRouteDispatcher: React.FC = () => {
           </MathProvider>
         );
       }
+      case 'construccion':
+        return <ConstructionPage />;
       default:
         return <NotFoundPage />;
     }
@@ -185,6 +192,7 @@ const LocalizedContentRouteDispatcher: React.FC = () => {
         type={seoType}
         author={itemAuthors}
         breadcrumbs={breadcrumbs}
+        noindex={canonicalType === 'construccion' ? true : undefined}
       />
       {renderComponent()}
     </>
@@ -346,15 +354,6 @@ export const AppRouter = () => {
         <Route path="/">
           <SeoHead title={t('notFound', 'siteTitle')} description={t('hero', 'tagline')} />
           <HomePage />
-        </Route>
-
-        {/* CONSTRUCCIÓN */}
-        <Route path="/:lang/construccion/:id">
-          <SeoHead title={t('notFound', 'constructionTitle')} noindex={true} />
-          <ConstructionPage />
-        </Route>
-        <Route path="/construccion/:id">
-          {(params) => <Redirect to={`/${lang}/construccion/${params.id}`} replace />}
         </Route>
 
         {/* ALIAS HISTÓRICOS DE LECCIÓN */}

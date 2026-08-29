@@ -2,9 +2,9 @@ export const metadata = {
   id: "axioma-incidencia-8",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.8 (Existence of Four Non-Coplanar Points)",
-  description: "There exist at least four points in space that do not belong to the same plane.",
-  branch: "51M",
+  title: "Axiom I.8 (Three-Dimensional Space)",
+  description: "There exist at least four points in space not belonging to the same plane.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,31 +16,20 @@ export const metadata = {
 import { Incidence8 } from '@content/diagrams/Axiomas/Incidence8';
 export const Simulation = Incidence8;
 
-<Capitular letra="T" />he eighth incidence axiom formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> postulates the existence of at least four non-coplanar <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>. This axiom establishes the authentic three-dimensionality of spatial geometry, preventing the deductive domain from being restricted to a single <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>.
+<Capitular letra="T" />here exist at least four <ConceptLink targetId="punto">points</ConceptLink> that do not belong to the same <ConceptLink targetId="plano">plane</ConceptLink>.
 
-<Definicion title="Formal statement">
-  There exist at least four <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B, C, D \in \mathcal{S}$ such that no <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \mathcal{E}$ contains all four simultaneously:
+This postulate fixes the three-dimensional character of the geometry of <ConceptLink targetId="espacio">space</ConceptLink>, preventing the entire geometric universe from being confined to a single two-dimensional plane.
+
+<Definicion title="Formal Statement">
+  There exist at least four <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind>, and <VisualBind element="pD" color="carbon">$D$</VisualBind> such that no <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> contains all four simultaneously:
   $$
-  \exists A, B, C, D \in \mathcal{S} \ \forall \pi \in \mathcal{E} \ \neg\bigl(A \in \pi \land B \in \pi \land C \in \pi \land D \in \pi\bigr)
+  \exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \in \pi \land B \in \pi \land C \in \pi \land D \in \pi)
   $$
 </Definicion>
 
 <Separador />
 
-### Visual representation and interaction
+### Significance in the theory
 
-In the 3D interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> lie on the base plane <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind>, while the fourth point <VisualBind element="pD" color="carbon">$D$</VisualBind> is elevated outside this plane, spanning a non-degenerate spatial tetrahedron.
-
-<Separador />
-
-### Geometric significance and scope
-
-Formally sets the dimension of the general geometric space to at least $3$ ($\dim \mathcal{S} \ge 3$). It provides the foundational requirement for solid geometry, polyhedra, and volume theory in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
-
-<Separador />
-
-### Properties
-
-- **Guaranteed three-dimensionality:** Precludes the collapse of space into a single two-dimensional plane.
-- **Tetrahedral base:** The four points $A, B, C, D$ construct the fundamental non-degenerate tetrahedron of space.
-- **Affine span in $\mathbb{R}^3$:** Constitutes a non-coplanar affine reference frame with three spatial degrees of freedom.
+- **<ConceptLink targetId="coplanaridad">Non-coplanarity</ConceptLink>:** Guarantees the existence of three-dimensional bodies such as the tetrahedron.
+- **Closure of Group I:** This axiom concludes the incidence group, establishing the full spatial domain upon which order and congruence operate.

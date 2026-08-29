@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "modelo",
   title: "Fanoren planoa",
-  description: "Plano proiektibo finiturik txikiena, zehazki 7 puntuk eta 7 zuzenek osatua.",
+  description: "Existitzen den plano proiektibo finitu txikiena, zehazki 7 puntuz eta 7 zuzenez osatua.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
@@ -13,34 +13,21 @@ export const metadata = {
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
 export const Diagram = ModeloFano;
 
-<Capitular letra="F" />anoren planoa, aljebraikoki $\mathrm{PG}(2, 2)$ gisa idatzia, <ConceptLink targetId="sistema-incidencia">intzidentziaren eredu finiturik</ConceptLink> eta plano proiektiborik txikiena da. $\mathbb{F}_2 = \{0, 1\}$ gorputz finituaren gainean eraikitzen da eta zehazki $7$ puntuk eta $7$ zuzenek osatzen dute, non paralelotasun euklidearra erabat desagertzen den.
+<Capitular letra="F" />**anoren planoa** ($\mathrm{PG}(2, 2)$ gisa adierazia) existitzen den <ConceptLink targetId="sistema-incidencia">intzidentzia-eredu</ConceptLink> finitu eta plano proiektibo txikiena da. Zehazki 7 <ConceptLink targetId="punto">puntuz</ConceptLink> eta 7 <ConceptLink targetId="recta">zuzenez</ConceptLink> osatuta dago, simetria konbinatorio perfektuarekin, non edozein bi zuzen beti puntu bakar batean ebakitzen diren.
+
+<Definicion title="Egitura Konbinatorioa">
+  Fanoren planoa honako hauek osatzen dute:
+  - **7 Puntu**: <VisualBind element="p1" color="terracota">1</VisualBind>, <VisualBind element="p2" color="terracota">2</VisualBind>, <VisualBind element="p3" color="terracota">3</VisualBind>, <VisualBind element="p4" color="terracota">4</VisualBind>, <VisualBind element="p5" color="terracota">5</VisualBind>, <VisualBind element="p6" color="terracota">6</VisualBind> eta <VisualBind element="p7" color="musgo">7</VisualBind>.
+  - **7 Zuzen** (bakoitza puntu-hirukote batek osatua):
+    - Kanpoko triangeluaren hiru aldeak: <VisualBind element="l1" color="carbon">$\{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$\{2, 3, 5\}$</VisualBind>, <VisualBind element="l3" color="carbon">$\{3, 1, 6\}$</VisualBind>.
+    - Hiru lerro erdibitzaile elkarzut: <VisualBind element="l4" color="carbon">$\{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$\{2, 6, 7\}$</VisualBind>, <VisualBind element="l6" color="carbon">$\{3, 4, 7\}$</VisualBind>.
+    - Barneko zirkulua (zuzen proiektiboa): <VisualBind element="l7" color="musgo">$\{4, 5, 6\}$</VisualBind>.
+</Definicion>
 
 <Separador />
 
-### Egitura konbinatorioa
+### Axiomen eta propietateen egiaztapena
 
-Fanoren konfigurazioa $\mathbb{F}_2^3 \setminus \{(0, 0, 0)\}$ bektore-espazioaren bidez definitzen da:
-
-- **<ConceptLink targetId="punto">Puntuak</ConceptLink>**: $\mathbb{F}_2^3$-ko dimentsio bakarreko $7$ azpiespazioak dira: <VisualBind element="p1" color="terracota">$1$ puntua</VisualBind>, <VisualBind element="p2" color="terracota">$2$ puntua</VisualBind>, <VisualBind element="p3" color="terracota">$3$ puntua</VisualBind>, <VisualBind element="p4" color="terracota">$4$ puntua</VisualBind>, <VisualBind element="p5" color="terracota">$5$ puntua</VisualBind>, <VisualBind element="p6" color="terracota">$6$ puntua</VisualBind> eta <VisualBind element="p7" color="musgo">$7$ erdiguneko puntua</VisualBind>.
-- **<ConceptLink targetId="recta">Zuzenak</ConceptLink>**: Bi dimentsioko $7$ azpiespazioak (plano bektorialak), puntu hirukoteen bidez irudikatuak:
-  - Kanpoko triangeluaren hiru aldeak: <VisualBind element="l1" color="carbon">$l_1 = \{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$l_2 = \{2, 3, 5\}$</VisualBind> eta <VisualBind element="l3" color="carbon">$l_3 = \{3, 1, 6\}$</VisualBind>.
-  - Erdiko hiru ebakitzaileak: <VisualBind element="l4" color="carbon">$l_4 = \{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$l_5 = \{2, 6, 7\}$</VisualBind> eta <VisualBind element="l6" color="carbon">$l_6 = \{3, 4, 7\}$</VisualBind>.
-  - Barneko zirkunferentzia (zuzen proiektibo ez-euklidearra): <VisualBind element="l7" color="musgo">$l_7 = \{4, 5, 6\}$</VisualBind>.
-
-<Separador />
-
-### Intzidentzia-axiomen egiaztapena
-
-Fanoren planoak geometria proiektiboaren eta intzidentziaren oinarrizko axioma guztiak betetzen ditu:
-
-- **<ConceptLink targetId="axioma-incidencia-1">I-1 axioma</ConceptLink>**: Edozein bi puntu ezberdinetatik zuzen bakar bat igarotzen da.
-- **Ebakidura proiektiboaren axioma**: Edozein bi zuzen ezberdin puntu bakar batean ebakitzen dira (ez dago <ConceptLink targetId="paralelas">zuzen paraleloric</ConceptLink>).
-- **Erregulartasuna**: Zuzen bakoitzak zehazki $3$ puntu ditu eta puntu bakoitzetik zehazki $3$ zuzen igarotzen dira.
-- **Ez-kolinealtasun orokorra**: Lau puntu existitzen dira, non horietako hirukote batek ere ez duen zuzen berbera osatzen.
-
-<Separador />
-
-### Propietate aljebraikoak
-
-- **Bikoiztasun proiektiboa**: Puntuen eta zuzenen rolak elkarri trukatuz gero, lortutako sistema jatorrizko planoaren isomorfoa da.
-- **Automorfismo-taldea**: Bere simetria-taldea $\mathrm{PGL}(3, 2) \cong \mathrm{PSL}(2, 7)$ talde lineala da, $168$ elementukoa, oinarrizkoa talde-teorian eta errore-zuzentzaileen kodifikazioan.
+- **<ConceptLink targetId="axioma-incidencia-1">I.1 Axioma</ConceptLink>:** Edozein bi puntu partekatutako zuzen bakar batenak dira.
+- **Ebakidura proiektiboa:** Edozein bi zuzen desberdinek elkar puntu bakar batean ebakitzen dute zehazki; ez dago <ConceptLink targetId="paralelas">zuzen paralelorik</ConceptLink>.
+- **Uniformotasun simetrikoa:** Zuzen bakoitzak zehazki 3 puntu ditu, eta puntu bakoitzetik zehazki 3 zuzen igarotzen dira.

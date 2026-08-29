@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Plano",
-  description: "Superficie geométrica bidimensional continua, ilimitada y perfectamente plana sin curvatura intrínseca.",
+  description: "Concepto geométrico primitivo de superficie elemental sin curvatura ni grosor, cuyas propiedades quedan fijadas por los axiomas del sistema formal adoptado.",
   branch: "51M",
   hasSimulation: true,
   sources: [
@@ -16,47 +16,26 @@ export const metadata = {
 import { Plano } from '@content/diagrams/Definiciones/Plano';
 export const Simulation = Plano;
 
-<Capitular letra="E" />l plano es la entidad geométrica bidimensional elemental y continua que se extiende infinitamente en todas las direcciones de su dominio sin presentar curvatura. Constituye una noción primitiva fundamental en los sistemas axiomáticos sintéticos, sirviendo como escenario canónico para la geometría plana y la trigonometría.
+<Capitular letra="E" />l <VisualBind element="planeMesh" color="musgo">**plano**</VisualBind> es un <ConceptLink targetId="concepto-primitivo">concepto primitivo</ConceptLink> de la geometría: la superficie elemental uniforme y sin curvatura, que carece de grosor o de profundidad.
 
-<Definicion title="">
-  Dados tres puntos no colineales <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="musgo">$B$</VisualBind> y <VisualBind element="pC" color="musgo">$C$</VisualBind> en un espacio afín o euclidiano $\mathcal{E}$, el plano <VisualBind element="planeMesh" color="musgo">$\mathcal{P}$</VisualBind> determinado por ellos es el conjunto bidimensional generado por todas sus combinaciones afines:
+Al tratarse de una noción básica de partida, no se define a partir de otras figuras. En su lugar, sus propiedades formales y la manera en que contiene e interseca a los <ConceptLink targetId="punto">puntos</ConceptLink> y a las <ConceptLink targetId="recta">rectas</ConceptLink> quedan determinadas por los <ConceptLink targetId="axioma">axiomas</ConceptLink> del <ConceptLink targetId="sistema-axiomatico">sistema formal</ConceptLink> adoptado.
+
+<Definicion title="Definición Formal">
+  En una <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink> $\mathcal{S}$, un **plano** <VisualBind element="planeMesh" color="musgo">$\pi$</VisualBind> es cualquier elemento del <ConceptLink targetId="conjunto">conjunto</ConceptLink> de planos no vacío $\Pi$:
   $$
-  \mathcal{P} = \{ P \in \mathcal{E} \mid P = \alpha A + \beta B + \gamma C, \, \alpha + \beta + \gamma = 1, \, \alpha, \beta, \gamma \in \mathbb{R} \}
+  \pi \in \Pi
   $$
+  Aisladamente, el plano no posee propiedades intrínsecas; su significado matemático surge de las relaciones que los axiomas establecen entre los planos y los demás entes del espacio.
 </Definicion>
 
 <Separador />
 
-### Geometría sintética
+### Relaciones axiomáticas fundamentales
 
-En el sistema axiomático de Hilbert, los planos constituyen la tercera clase de objetos primitivos regidos por los axiomas de incidencia espacial:
-- **Determinación por tres puntos**: Tres puntos no colineales determinan un único plano.
-- **Inclusión lineal**: Si dos puntos de una <ConceptLink targetId="recta">recta</ConceptLink> pertenecen a un plano, la recta entera está contenida en dicho plano.
-- **Intersección de planos**: Si dos planos distintos tienen un punto común, su intersección es exactamente una <ConceptLink targetId="recta">recta</ConceptLink>.
-- **Separación del plano**: Toda recta contenida en un plano divide a los puntos restantes en dos semiplanos convexos disjuntos.
+Dado que el plano carece de estructura interna, lo que podemos afirmar sobre él depende de qué grupos de axiomas incorpore el <ConceptLink targetId="sistema-axiomatico">sistema geométrico</ConceptLink> adoptado (un sistema concreto puede limitarse solo a los primeros):
 
-### Geometría analítica
-
-En el espacio euclidiano tridimensional $\mathbb{R}^3$, un plano se describe algebraicamente mediante:
-- **Ecuación general implícita**: $Ax + By + Cz + D = 0$, con $(A, B, C) \neq (0, 0, 0)$, donde $\vec{n} = (A, B, C)$ es el vector normal ortogonal al plano.
-- **Forma vectorial**: $\vec{r}(u, v) = \vec{p}_0 + u\vec{v}_1 + v\vec{v}_2$, con $\vec{v}_1 \nparallel \vec{v}_2$ y $u, v \in \mathbb{R}$.
-
-### Topología y geometría diferencial
-
-Topológicamente, el plano euclidiano provisto de su topología métrica usual es homeomorfo a $\mathbb{R}^2$. Como variedad diferenciable riemanniana de dimensión 2, posee curvatura de Gauss idénticamente nula ($K = 0$).
-
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Incidencia y separación espacial">
-    <PropiedadItem id="axioma-incidencia-4" title="Determinación por tres puntos no colineales">
-      Tres puntos no alineados $A, B, C$ determinan un único plano $\mathcal{P}$.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-6" title="Inclusión de la recta">
-      Si $A \in \mathcal{P}$ y $B \in \mathcal{P}$ con $A \neq B$, entonces $\overleftrightarrow{AB} \subset \mathcal{P}$.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-7" title="Intersección de dos planos">
-      Si dos planos comparten un punto, comparten al menos otro punto y se intersecan en una recta.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
+- **En sistemas de <ConceptLink targetId="incidencia">incidencia</ConceptLink>:** Tres puntos no colineales determinan un único plano que los contiene (<ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>), si dos puntos de una recta pertenecen a un plano la recta entera queda contenida en él (<ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>), dos planos que comparten un punto se cortan en una recta (<ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>) y existen puntos fuera de un plano dado que evitan que todo el espacio se reduzca a él (<ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>).
+- **Al añadir <ConceptLink targetId="estar-entre">orden o intermediación</ConceptLink>:** Toda recta contenida en el plano divide a sus puntos restantes en dos <ConceptLink targetId="semiplano">semiplanos</ConceptLink> convexos disjuntos (garantizado por el <ConceptLink targetId="axioma-orden-4">Axioma de Pasch, II.4</ConceptLink>), permitiendo definir formalmente el interior de <ConceptLink targetId="triangulo">triángulos</ConceptLink> y <ConceptLink targetId="poligono">polígonos</ConceptLink>.
+- **Al añadir <ConceptLink targetId="congruencia">congruencia</ConceptLink>:** Permite transportar <ConceptLink targetId="angulo">ángulos</ConceptLink> y construir figuras congruentes dentro del plano (<ConceptLink targetId="axioma-congruencia-4">III.4</ConceptLink>, <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>).
+- **Al fijar el <ConceptLink targetId="paralelas">paralelismo</ConceptLink>:** Determina si por un punto exterior a una recta en el plano pasa una única recta que no la corta (<ConceptLink targetId="sistema-euclidiano">plano euclidiano</ConceptLink>) o más de una (<ConceptLink targetId="sistema-hiperbolico">plano hiperbólico</ConceptLink>).
+- **Al añadir <ConceptLink targetId="continuidad">continuidad</ConceptLink>:** Garantiza que el plano sea un medio geométrico continuo sin huecos ni saltos discretos, fundamentando la geometría de la <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> y la medida de áreas.

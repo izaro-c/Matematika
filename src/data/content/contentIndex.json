@@ -427,9 +427,9 @@
       "id": "sistema-incidencia",
       "lang": "en",
       "type": "sistema-axiomatico",
-      "title": "Incidence system",
-      "description": "Foundational axiomatic structure governing the formal relations of containment and intersection among points, lines, and planes.",
-      "branch": "51M",
+      "title": "Incidence System",
+      "description": "Fundamental axiomatic structure of geometry establishing membership rules between points, lines, and planes without distance or order.",
+      "branch": "51A",
       "axiomas": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
@@ -480,8 +480,8 @@
       "lang": "es",
       "type": "sistema-axiomatico",
       "title": "Sistema de incidencia",
-      "description": "Estructura axiomática primordial que rige las relaciones formales de pertenencia e intersección entre puntos, rectas y planos.",
-      "branch": "51M",
+      "description": "Estructura axiomática fundamental de la geometría que establece las reglas de pertenencia entre puntos, rectas y planos sin nociones de distancia u orden.",
+      "branch": "51A",
       "axiomas": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
@@ -1059,9 +1059,9 @@
       "id": "axioma-incidencia-1",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.1 (Existence and Uniqueness of the Line)",
-      "description": "Given any two distinct points in space, there exists exactly one line to which both belong.",
-      "branch": "51M",
+      "title": "Axiom I.1 (Determination of the Line)",
+      "description": "Through any two distinct points passes exactly one line.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1095,9 +1095,9 @@
       "id": "axioma-incidencia-1",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.1 (Existencia y unicidad de la recta)",
-      "description": "Dados dos puntos distintos del espacio, existe exactamente una recta a la que ambos pertenecen.",
-      "branch": "51M",
+      "title": "Axioma I.1 (Determinación de la recta)",
+      "description": "Por dos puntos distintos pasa exactamente una recta.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1131,9 +1131,9 @@
       "id": "axioma-incidencia-2",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.2 (Existence of Points on a Line)",
-      "description": "Every line contains at least two distinct points in space.",
-      "branch": "51M",
+      "title": "Axiom I.2 (Points on a Line)",
+      "description": "Every line contains at least two distinct points.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1168,8 +1168,8 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.2 (Existencia de puntos en la recta)",
-      "description": "Toda recta contiene al menos dos puntos distintos del espacio.",
-      "branch": "51M",
+      "description": "Toda recta contiene al menos dos puntos distintos.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1203,9 +1203,9 @@
       "id": "axioma-incidencia-3",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.3 (Existence of Three Non-Collinear Points)",
-      "description": "There exist at least three points in space that do not belong to the same line.",
-      "branch": "51M",
+      "title": "Axiom I.3 (Non-Collinear Points)",
+      "description": "There exist at least three points that do not belong to the same line.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1239,9 +1239,9 @@
       "id": "axioma-incidencia-3",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.3 (Existencia de tres puntos no colineales)",
-      "description": "Existen al menos tres puntos en el espacio que no pertenecen a una misma recta.",
-      "branch": "51M",
+      "title": "Axioma I.3 (Existencia de puntos no colineales)",
+      "description": "Existen al menos tres puntos que no pertenecen a una misma recta.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1275,9 +1275,9 @@
       "id": "axioma-incidencia-4",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.4 (Existence and Uniqueness of the Plane)",
-      "description": "Given three non-collinear points in space, there exists exactly one plane containing all three.",
-      "branch": "51M",
+      "title": "Axiom I.4 (Determination of the Plane)",
+      "description": "Through any three non-collinear points passes at least one plane.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1311,9 +1311,9 @@
       "id": "axioma-incidencia-4",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.4 (Existencia y unicidad del plano)",
-      "description": "Dados tres puntos no colineales del espacio, existe exactamente un plano al que pertenecen los tres.",
-      "branch": "51M",
+      "title": "Axioma I.4 (Determinación del plano)",
+      "description": "Por tres puntos no colineales pasa al menos un plano.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1347,9 +1347,9 @@
       "id": "axioma-incidencia-5",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.5 (Existence of Non-Collinear Points in a Plane)",
-      "description": "Every plane contains at least three points that do not belong to the same line.",
-      "branch": "51M",
+      "title": "Axiom I.5 (Uniqueness of the Plane and Non-Collinear Points)",
+      "description": "Through three non-collinear points passes at most one plane, and every plane contains at least three non-collinear points.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1383,9 +1383,9 @@
       "id": "axioma-incidencia-5",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.5 (Existencia de puntos no colineales en el plano)",
-      "description": "En todo plano existen al menos tres puntos que no pertenecen a una misma recta.",
-      "branch": "51M",
+      "title": "Axioma I.5 (Unicidad del plano y puntos no colineales)",
+      "description": "Por tres puntos no colineales pasa a lo sumo un plano, y todo plano contiene al menos tres puntos no colineales.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1420,8 +1420,8 @@
       "lang": "en",
       "type": "axioma",
       "title": "Axiom I.6 (Inclusion of a Line in a Plane)",
-      "description": "If two distinct points of a line belong to a plane, then every point of the line belongs to that plane.",
-      "branch": "51M",
+      "description": "If two points of a line lie in a plane, then the entire line is contained in that plane.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1456,8 +1456,8 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.6 (Inclusión de la recta en el plano)",
-      "description": "Si dos puntos distintos de una recta pertenecen a un plano, la recta entera está contenida en dicho plano.",
-      "branch": "51M",
+      "description": "Si dos puntos de una recta pertenecen a un plano, toda la recta está contenida en dicho plano.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1491,9 +1491,9 @@
       "id": "axioma-incidencia-7",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.7 (Intersection of Two Planes)",
-      "description": "If two distinct planes share a point, then their intersection is an entire line.",
-      "branch": "51M",
+      "title": "Axiom I.7 (Intersection of Planes)",
+      "description": "If two distinct planes share a point, their intersection is precisely a line.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1528,8 +1528,8 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.7 (Intersección de dos planos)",
-      "description": "Si dos planos distintos tienen un punto común, entonces su intersección es una recta completa.",
-      "branch": "51M",
+      "description": "Si dos planos distintos tienen un punto en común, su intersección es exactamente una recta.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1563,9 +1563,9 @@
       "id": "axioma-incidencia-8",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom I.8 (Existence of Four Non-Coplanar Points)",
-      "description": "There exist at least four points in space that do not belong to the same plane.",
-      "branch": "51M",
+      "title": "Axiom I.8 (Three-Dimensional Space)",
+      "description": "There exist at least four points in space not belonging to the same plane.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -1599,9 +1599,9 @@
       "id": "axioma-incidencia-8",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.8 (Existencia de cuatro puntos no coplanares)",
+      "title": "Axioma I.8 (Espacio tridimensional)",
       "description": "Existen al menos cuatro puntos en el espacio que no pertenecen a un mismo plano.",
-      "branch": "51M",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -2343,6 +2343,76 @@
       "eu"
     ]
   },
+  "en:concepto-primitivo": {
+    "id": "concepto-primitivo",
+    "slug": "concepto-primitivo",
+    "lang": "en",
+    "filePath": "en/definitions/concepto-primitivo.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "concepto-primitivo",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Primitive Concept",
+      "description": "Fundamental mathematical notion not defined in terms of prior objects, whose meaning and behavior are established by the axioms of the formal system.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I, §1",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "concepto-primitivo": {
+    "id": "concepto-primitivo",
+    "slug": "concepto-primitivo",
+    "lang": "es",
+    "filePath": "es/definitions/concepto-primitivo.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "concepto-primitivo",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Concepto primitivo",
+      "description": "Noción matemática fundamental no definida a partir de objetos previos, cuyo significado y comportamiento quedan fijados por los axiomas del sistema formal.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §1",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "en:congruencia": {
     "id": "congruencia",
     "slug": "congruencia",
@@ -2410,6 +2480,76 @@
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
           "locator": "Capítulo I, §3",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:conjunto-disjunto": {
+    "id": "conjunto-disjunto",
+    "slug": "conjunto-disjunto",
+    "lang": "en",
+    "filePath": "en/definitions/conjunto-disjunto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "conjunto-disjunto",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Disjoint Sets",
+      "description": "Two or more sets whose intersection is empty, meaning they share no elements in common.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Naive Set Theory",
+          "author": "Paul Halmos",
+          "locator": "Chapter 4",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "conjunto-disjunto": {
+    "id": "conjunto-disjunto",
+    "slug": "conjunto-disjunto",
+    "lang": "es",
+    "filePath": "es/definitions/conjunto-disjunto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "conjunto-disjunto",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Conjuntos disjuntos",
+      "description": "Dos o más conjuntos cuya intersección es vacía, es decir, que no comparten ningún elemento en común.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Naive Set Theory",
+          "author": "Paul Halmos",
+          "locator": "Capítulo 4",
           "role": "primary"
         }
       ],
@@ -2683,6 +2823,240 @@
       "eu"
     ]
   },
+  "en:dimension": {
+    "id": "dimension",
+    "slug": "dimension",
+    "lang": "en",
+    "filePath": "en/definitions/dimension.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "dimension",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Dimension",
+      "description": "Number of degrees of freedom or independent parameters required to specify the position of a point in a space or figure.",
+      "branch": "51",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Dimension Theory",
+          "author": "Witold Hurewicz, Henry Wallman",
+          "locator": "Chapter I",
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "dimension": {
+    "id": "dimension",
+    "slug": "dimension",
+    "lang": "es",
+    "filePath": "es/definitions/dimension.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "dimension",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Dimensión",
+      "description": "Número de grados de libertad o parámetros independientes necesarios para especificar la posición de un punto en un espacio o figura.",
+      "branch": "51",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Dimension Theory",
+          "author": "Witold Hurewicz, Henry Wallman",
+          "locator": "Capítulo I",
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:dominio": {
+    "id": "dominio",
+    "slug": "dominio",
+    "lang": "en",
+    "filePath": "en/definitions/dominio.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "dominio",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Domain",
+      "description": "Non-empty underlying set gathering objects of a given sort in a mathematical structure or formal theory.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Model Theory",
+          "author": "Wilfrid Hodges",
+          "locator": "Chapter 1",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "dominio": {
+    "id": "dominio",
+    "slug": "dominio",
+    "lang": "es",
+    "filePath": "es/definitions/dominio.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "dominio",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Dominio",
+      "description": "Conjunto no vacío de partida que reúne a los objetos de un determinado tipo en una estructura matemática o teoría formal.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Model Theory",
+          "author": "Wilfrid Hodges",
+          "locator": "Capítulo 1",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:espacio": {
+    "id": "espacio",
+    "slug": "espacio",
+    "lang": "en",
+    "filePath": "en/definitions/espacio.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "espacio",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Space",
+      "description": "Total geometric realm and ambient universe containing all points, lines, and planes in a dimensional theory.",
+      "branch": "51M",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I, §1",
+          "role": "primary"
+        },
+        {
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book XI",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "espacio": {
+    "id": "espacio",
+    "slug": "espacio",
+    "lang": "es",
+    "filePath": "es/definitions/espacio.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "espacio",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Espacio",
+      "description": "Ámbito geométrico total y universo contenedor que reúne a todos los puntos, rectas y planos en una teoría dimensional.",
+      "branch": "51M",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §1",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro XI",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "en:estar-entre": {
     "id": "estar-entre",
     "slug": "estar-entre",
@@ -2739,6 +3113,252 @@
           "author": "David Hilbert",
           "locator": "Capítulo I, Axiomas del Grupo II",
           "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:estructura-geometrica": {
+    "id": "estructura-geometrica",
+    "slug": "estructura-geometrica",
+    "lang": "en",
+    "filePath": "en/definitions/estructura-geometrica.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "estructura-geometrica",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Geometric Structure",
+      "description": "Formal specification composed of object domains and primitive relations satisfying an axiomatic system.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I",
+          "role": "primary"
+        },
+        {
+          "title": "Model Theory",
+          "author": "Wilfrid Hodges",
+          "locator": "Chapter 1",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "estructura-geometrica": {
+    "id": "estructura-geometrica",
+    "slug": "estructura-geometrica",
+    "lang": "es",
+    "filePath": "es/definitions/estructura-geometrica.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "estructura-geometrica",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Estructura geométrica",
+      "description": "Especificación formal compuesta por dominios de objetos y relaciones primitivas que satisfacen un sistema axiomático.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I",
+          "role": "primary"
+        },
+        {
+          "title": "Model Theory",
+          "author": "Wilfrid Hodges",
+          "locator": "Capítulo 1",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:geometria-hilbertiana": {
+    "id": "geometria-hilbertiana",
+    "slug": "geometria-hilbertiana",
+    "lang": "en",
+    "filePath": "en/definitions/geometria-hilbertiana.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "geometria-hilbertiana",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Hilbertian Geometry",
+      "description": "Rigorous axiomatic refundation of Euclidean geometry proposed by David Hilbert in 1899, based on 20 axioms divided into five independent groups.",
+      "branch": "51M",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I",
+          "role": "primary"
+        },
+        {
+          "title": "Hilbert's Foundations of Geometry",
+          "author": "Howard Eves",
+          "locator": "Chapter 5",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "geometria-hilbertiana": {
+    "id": "geometria-hilbertiana",
+    "slug": "geometria-hilbertiana",
+    "lang": "es",
+    "filePath": "es/definitions/geometria-hilbertiana.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "geometria-hilbertiana",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Geometría hilbertiana",
+      "description": "Refundación axiomática rigurosa de la geometría euclídea propuesta por David Hilbert en 1899, basada en 20 axiomas divididos en cinco grupos independientes.",
+      "branch": "51M",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I",
+          "role": "primary"
+        },
+        {
+          "title": "Hilbert's Foundations of Geometry",
+          "author": "Howard Eves",
+          "locator": "Capítulo 5",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:geometria-sintetica": {
+    "id": "geometria-sintetica",
+    "slug": "geometria-sintetica",
+    "lang": "en",
+    "filePath": "en/definitions/geometria-sintetica.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "geometria-sintetica",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Synthetic Geometry",
+      "description": "Direct axiomatic approach to geometry studying figures and constructions from primitive notions and postulates, without employing numerical coordinates.",
+      "branch": "51",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Elements",
+          "author": "Euclid",
+          "locator": "Book I",
+          "role": "primary"
+        },
+        {
+          "title": "Traité des propriétés projectives des figures",
+          "author": "Jean-Victor Poncelet",
+          "locator": "Introduction",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "geometria-sintetica": {
+    "id": "geometria-sintetica",
+    "slug": "geometria-sintetica",
+    "lang": "es",
+    "filePath": "es/definitions/geometria-sintetica.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "geometria-sintetica",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Geometría sintética",
+      "description": "Enfoque axiomático directo de la geometría que estudia figuras y construcciones a partir de nociones primitivas y postulados, sin emplear coordenadas numéricas.",
+      "branch": "51",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I",
+          "role": "primary"
+        },
+        {
+          "title": "Traité des propriétés projectives des figures",
+          "author": "Jean-Victor Poncelet",
+          "locator": "Introducción",
+          "role": "secondary"
         }
       ],
       "availableLangs": [
@@ -2819,6 +3439,76 @@
         {
           "title": "Algebra",
           "author": "Serge Lang",
+          "locator": "Capítulo I, §1",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:incidencia": {
+    "id": "incidencia",
+    "slug": "incidencia",
+    "lang": "en",
+    "filePath": "en/definitions/incidencia.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "incidencia",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Incidence",
+      "description": "Primitive geometric relation establishing positional membership between points, lines, and planes.",
+      "branch": "51A",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I, §1",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "incidencia": {
+    "id": "incidencia",
+    "slug": "incidencia",
+    "lang": "es",
+    "filePath": "es/definitions/incidencia.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "incidencia",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Incidencia",
+      "description": "Relación geométrica primitiva que establece la pertenencia posicional entre puntos, rectas y planos.",
+      "branch": "51A",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
           "locator": "Capítulo I, §1",
           "role": "primary"
         }
@@ -3093,14 +3783,14 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Plane",
-      "description": "Two-dimensional continuous, unbounded, and flat geometric surface with zero intrinsic curvature.",
+      "description": "Primitive geometric concept of an elementary surface without curvature or thickness, whose properties are established by the axioms of the adopted formal system.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elements",
           "author": "Euclid",
-          "locator": "Book I, Definitions 5 & 7",
+          "locator": "Book I, Definitions 5 and 7",
           "role": "primary"
         },
         {
@@ -3134,7 +3824,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Plano",
-      "description": "Superficie geométrica bidimensional continua, ilimitada y perfectamente plana sin curvatura intrínseca.",
+      "description": "Concepto geométrico primitivo de superficie elemental sin curvatura ni grosor, cuyas propiedades quedan fijadas por los axiomas del sistema formal adoptado.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -3175,7 +3865,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Point",
-      "description": "Primary and indivisible constituent element of geometric space and fundamental primitive notion in axiomatic systems.",
+      "description": "Primitive geometric concept, indivisible and without spatial extension, whose properties are determined by the axioms of the adopted formal system.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -3216,7 +3906,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Punto",
-      "description": "Elemento constitutivo primario e indivisible del espacio geométrico y noción primitiva fundamental en los sistemas axiomáticos.",
+      "description": "Concepto geométrico primitivo, indivisible y sin extensión espacial, cuyas propiedades quedan determinadas por los axiomas del sistema formal adoptado.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -3257,14 +3947,14 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Line",
-      "description": "One-dimensional continuous and infinite geometric object extending in both directions without curvature.",
+      "description": "Primitive geometric concept of purely linear extension, without width or thickness, whose properties are established by the axioms of the adopted formal system.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elements",
           "author": "Euclid",
-          "locator": "Book I, Definitions 2 & 4",
+          "locator": "Book I, Definitions 2 and 4",
           "role": "primary"
         },
         {
@@ -3298,21 +3988,21 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Recta",
-      "description": "Concepto geométrico primitivo determinado por los axiomas de incidencia y orden del espacio en el que se inscribe.",
+      "description": "Concepto geométrico primitivo de extensión puramente lineal, sin anchura ni grosor, cuyas propiedades quedan fijadas por los axiomas del sistema formal adoptado.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
         {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "Capítulo I, §1–§2",
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 2 y 4",
           "role": "primary"
         },
         {
-          "title": "Euclidean and Non-Euclidean Geometries",
-          "author": "Marvin Jay Greenberg",
-          "locator": "Capítulo 2 y 3",
-          "role": "secondary"
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §1",
+          "role": "primary"
         }
       ],
       "availableLangs": [
@@ -3491,6 +4181,76 @@
       "eu"
     ]
   },
+  "en:semiplano": {
+    "id": "semiplano",
+    "slug": "semiplano",
+    "lang": "en",
+    "filePath": "en/definitions/semiplano.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "semiplano",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Half-Plane",
+      "description": "Either of the two open regions into which a line divides the points of a plane.",
+      "branch": "51M",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I, §2 (Axiom II.4)",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "semiplano": {
+    "id": "semiplano",
+    "slug": "semiplano",
+    "lang": "es",
+    "filePath": "es/definitions/semiplano.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "semiplano",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Semiplano",
+      "description": "Cada una de las dos regiones abiertas en que una recta divide a los puntos de un plano.",
+      "branch": "51M",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §2 (Axioma II.4)",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "en:semirrecta": {
     "id": "semirrecta",
     "slug": "semirrecta",
@@ -3559,6 +4319,88 @@
           "author": "David Hilbert",
           "locator": "Capítulo I, §4",
           "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:signatura": {
+    "id": "signatura",
+    "slug": "signatura",
+    "lang": "en",
+    "filePath": "en/definitions/signatura.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "signatura",
+      "lang": "en",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Signature",
+      "description": "Formal collection of sort symbols, relation symbols, and function symbols characterizing the language of a mathematical theory.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Model Theory",
+          "author": "Wilfrid Hodges",
+          "locator": "Chapter 1",
+          "role": "primary"
+        },
+        {
+          "title": "A Course in Model Theory",
+          "author": "Katrin Tent, Martin Ziegler",
+          "locator": "Chapter 1",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "signatura": {
+    "id": "signatura",
+    "slug": "signatura",
+    "lang": "es",
+    "filePath": "es/definitions/signatura.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "signatura",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Signatura",
+      "description": "Colección formal de símbolos de tipos, relaciones y funciones que caracterizan el lenguaje de una teoría matemática.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Model Theory",
+          "author": "Wilfrid Hodges",
+          "locator": "Capítulo 1",
+          "role": "primary"
+        },
+        {
+          "title": "A Course in Model Theory",
+          "author": "Katrin Tent, Martin Ziegler",
+          "locator": "Capítulo 1",
+          "role": "secondary"
         }
       ],
       "availableLangs": [
@@ -5291,6 +6133,122 @@
       "eu"
     ]
   },
+  "en:hurewicz": {
+    "id": "hurewicz",
+    "slug": "hurewicz",
+    "lang": "en",
+    "filePath": "en/mathematicians/hurewicz.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "hurewicz",
+      "lang": "en",
+      "type": "matematico",
+      "name": "Witold Hurewicz",
+      "birthYear": 1904,
+      "deathYear": 1956,
+      "country": "Poland",
+      "title": "Witold Hurewicz",
+      "description": "Polish mathematician, author of seminal works in dimension theory and algebraic topology.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "hurewicz": {
+    "id": "hurewicz",
+    "slug": "hurewicz",
+    "lang": "es",
+    "filePath": "es/mathematicians/hurewicz.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "hurewicz",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Witold Hurewicz",
+      "birthYear": 1904,
+      "deathYear": 1956,
+      "country": "Polonia",
+      "title": "Witold Hurewicz",
+      "description": "Matemático polaco, autor fundamental de la teoría de la dimensión y de la teoría de homotopía en topología algebraica.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:lebesgue": {
+    "id": "lebesgue",
+    "slug": "lebesgue",
+    "lang": "en",
+    "filePath": "en/mathematicians/lebesgue.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "lebesgue",
+      "lang": "en",
+      "type": "matematico",
+      "name": "Henri Lebesgue",
+      "birthYear": 1875,
+      "deathYear": 1941,
+      "country": "France",
+      "title": "Henri Lebesgue",
+      "description": "French mathematician celebrated for formulating measure theory, the Lebesgue integral, and Lebesgue covering dimension.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "lebesgue": {
+    "id": "lebesgue",
+    "slug": "lebesgue",
+    "lang": "es",
+    "filePath": "es/mathematicians/lebesgue.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "lebesgue",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Henri Lebesgue",
+      "birthYear": 1875,
+      "deathYear": 1941,
+      "country": "Francia",
+      "title": "Henri Lebesgue",
+      "description": "Matemático francés célebre por formular la teoría de la medida y la integral de Lebesgue, así como la dimensión topológica de recubrimiento.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "en:lobachevski": {
     "id": "lobachevski",
     "slug": "lobachevski",
@@ -5336,6 +6294,64 @@
       "country": "Rusia",
       "title": "Nikolái Lobachevski",
       "description": "Matemático y geómetra ruso pionero en la fundación de la geometría no euclídea hiperbólica.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:menger": {
+    "id": "menger",
+    "slug": "menger",
+    "lang": "en",
+    "filePath": "en/mathematicians/menger.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "menger",
+      "lang": "en",
+      "type": "matematico",
+      "name": "Karl Menger",
+      "birthYear": 1902,
+      "deathYear": 1985,
+      "country": "Austria",
+      "title": "Karl Menger",
+      "description": "Austrian mathematician, pioneer in dimension theory, general topology, and graph theory.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "menger": {
+    "id": "menger",
+    "slug": "menger",
+    "lang": "es",
+    "filePath": "es/mathematicians/menger.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "menger",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Karl Menger",
+      "birthYear": 1902,
+      "deathYear": 1985,
+      "country": "Austria",
+      "title": "Karl Menger",
+      "description": "Matemático austriaco, pionero en teoría de la dimensión, topología general y teoría de grafos (esponja de Menger, teorema de Menger).",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -5510,6 +6526,122 @@
       "country": "Mileto (Grecia clásica)",
       "title": "Tales de Mileto",
       "description": "Filósofo y matemático jonio considerado el primer matemático verdadero de la historia y pionero de la geometría deductiva.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:urysohn": {
+    "id": "urysohn",
+    "slug": "urysohn",
+    "lang": "en",
+    "filePath": "en/mathematicians/urysohn.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "urysohn",
+      "lang": "en",
+      "type": "matematico",
+      "name": "Pavel Urysohn",
+      "birthYear": 1898,
+      "deathYear": 1924,
+      "country": "Russia",
+      "title": "Pavel Urysohn",
+      "description": "Russian mathematician, founding figure of modern topology and co-creator of dimension theory.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "urysohn": {
+    "id": "urysohn",
+    "slug": "urysohn",
+    "lang": "es",
+    "filePath": "es/mathematicians/urysohn.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "urysohn",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Pável Urysón",
+      "birthYear": 1898,
+      "deathYear": 1924,
+      "country": "Rusia",
+      "title": "Pável Urysón",
+      "description": "Matemático ruso, figura fundacional de la topología moderna y co-creador de la teoría de la dimensión y el lema de Urysohn.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:wallman": {
+    "id": "wallman",
+    "slug": "wallman",
+    "lang": "en",
+    "filePath": "en/mathematicians/wallman.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "wallman",
+      "lang": "en",
+      "type": "matematico",
+      "name": "Henry Wallman",
+      "birthYear": 1915,
+      "deathYear": 1992,
+      "country": "United States",
+      "title": "Henry Wallman",
+      "description": "American mathematician who co-authored the classic 'Dimension Theory' and pioneered topological compactifications.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "wallman": {
+    "id": "wallman",
+    "slug": "wallman",
+    "lang": "es",
+    "filePath": "es/mathematicians/wallman.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "wallman",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Henry Wallman",
+      "birthYear": 1915,
+      "deathYear": 1992,
+      "country": "Estados Unidos",
+      "title": "Henry Wallman",
+      "description": "Matemático estadounidense coautor del tratado seminal 'Dimension Theory' y pionero en compactificación topológica (compactificación de Wallman).",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -5770,7 +6902,7 @@
       "lang": "en",
       "type": "modelo",
       "title": "Fano Plane",
-      "description": "The smallest finite projective plane, composed of exactly 7 points and 7 lines.",
+      "description": "The smallest possible finite projective plane, composed of exactly 7 points and 7 lines.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -5802,7 +6934,7 @@
       "lang": "es",
       "type": "modelo",
       "title": "Plano de Fano",
-      "description": "El plano proyectivo finito más pequeño, compuesto por exactamente 7 puntos y 7 rectas.",
+      "description": "El plano proyectivo finito más pequeño posible, compuesto por exactamente 7 puntos y 7 rectas.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -5902,7 +7034,7 @@
       "lang": "en",
       "type": "modelo",
       "title": "Three-Point Model",
-      "description": "Elementary finite model demonstrating the consistency and independence of basic incidence axioms.",
+      "description": "Elementary finite model demonstrating the consistency and independence of the basic incidence axioms.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -7259,8 +8391,8 @@
       "lang": "es",
       "type": "sistema-axiomatico",
       "title": "Sistema de incidencia",
-      "description": "Estructura axiomática primordial que rige las relaciones formales de pertenencia e intersección entre puntos, rectas y planos.",
-      "branch": "51M",
+      "description": "Estructura axiomática fundamental de la geometría que establece las reglas de pertenencia entre puntos, rectas y planos sin nociones de distancia u orden.",
+      "branch": "51A",
       "axiomas": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
@@ -7574,9 +8706,9 @@
       "id": "axioma-incidencia-1",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.1 (Existencia y unicidad de la recta)",
-      "description": "Dados dos puntos distintos del espacio, existe exactamente una recta a la que ambos pertenecen.",
-      "branch": "51M",
+      "title": "Axioma I.1 (Determinación de la recta)",
+      "description": "Por dos puntos distintos pasa exactamente una recta.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -7611,8 +8743,8 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.2 (Existencia de puntos en la recta)",
-      "description": "Toda recta contiene al menos dos puntos distintos del espacio.",
-      "branch": "51M",
+      "description": "Toda recta contiene al menos dos puntos distintos.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -7646,9 +8778,9 @@
       "id": "axioma-incidencia-3",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.3 (Existencia de tres puntos no colineales)",
-      "description": "Existen al menos tres puntos en el espacio que no pertenecen a una misma recta.",
-      "branch": "51M",
+      "title": "Axioma I.3 (Existencia de puntos no colineales)",
+      "description": "Existen al menos tres puntos que no pertenecen a una misma recta.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -7682,9 +8814,9 @@
       "id": "axioma-incidencia-4",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.4 (Existencia y unicidad del plano)",
-      "description": "Dados tres puntos no colineales del espacio, existe exactamente un plano al que pertenecen los tres.",
-      "branch": "51M",
+      "title": "Axioma I.4 (Determinación del plano)",
+      "description": "Por tres puntos no colineales pasa al menos un plano.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -7718,9 +8850,9 @@
       "id": "axioma-incidencia-5",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.5 (Existencia de puntos no colineales en el plano)",
-      "description": "En todo plano existen al menos tres puntos que no pertenecen a una misma recta.",
-      "branch": "51M",
+      "title": "Axioma I.5 (Unicidad del plano y puntos no colineales)",
+      "description": "Por tres puntos no colineales pasa a lo sumo un plano, y todo plano contiene al menos tres puntos no colineales.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -7755,8 +8887,8 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.6 (Inclusión de la recta en el plano)",
-      "description": "Si dos puntos distintos de una recta pertenecen a un plano, la recta entera está contenida en dicho plano.",
-      "branch": "51M",
+      "description": "Si dos puntos de una recta pertenecen a un plano, toda la recta está contenida en dicho plano.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -7791,8 +8923,8 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma I.7 (Intersección de dos planos)",
-      "description": "Si dos planos distintos tienen un punto común, entonces su intersección es una recta completa.",
-      "branch": "51M",
+      "description": "Si dos planos distintos tienen un punto en común, su intersección es exactamente una recta.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -7826,9 +8958,9 @@
       "id": "axioma-incidencia-8",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma I.8 (Existencia de cuatro puntos no coplanares)",
+      "title": "Axioma I.8 (Espacio tridimensional)",
       "description": "Existen al menos cuatro puntos en el espacio que no pertenecen a un mismo plano.",
-      "branch": "51M",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -8211,6 +9343,41 @@
       "eu"
     ]
   },
+  "es:concepto-primitivo": {
+    "id": "concepto-primitivo",
+    "slug": "concepto-primitivo",
+    "lang": "es",
+    "filePath": "es/definitions/concepto-primitivo.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "concepto-primitivo",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Concepto primitivo",
+      "description": "Noción matemática fundamental no definida a partir de objetos previos, cuyo significado y comportamiento quedan fijados por los axiomas del sistema formal.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §1",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "es:congruencia": {
     "id": "congruencia",
     "slug": "congruencia",
@@ -8237,6 +9404,41 @@
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
           "locator": "Capítulo I, §3",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:conjunto-disjunto": {
+    "id": "conjunto-disjunto",
+    "slug": "conjunto-disjunto",
+    "lang": "es",
+    "filePath": "es/definitions/conjunto-disjunto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "conjunto-disjunto",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Conjuntos disjuntos",
+      "description": "Dos o más conjuntos cuya intersección es vacía, es decir, que no comparten ningún elemento en común.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Naive Set Theory",
+          "author": "Paul Halmos",
+          "locator": "Capítulo 4",
           "role": "primary"
         }
       ],
@@ -8381,6 +9583,123 @@
       "eu"
     ]
   },
+  "es:dimension": {
+    "id": "dimension",
+    "slug": "dimension",
+    "lang": "es",
+    "filePath": "es/definitions/dimension.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "dimension",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Dimensión",
+      "description": "Número de grados de libertad o parámetros independientes necesarios para especificar la posición de un punto en un espacio o figura.",
+      "branch": "51",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Dimension Theory",
+          "author": "Witold Hurewicz, Henry Wallman",
+          "locator": "Capítulo I",
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:dominio": {
+    "id": "dominio",
+    "slug": "dominio",
+    "lang": "es",
+    "filePath": "es/definitions/dominio.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "dominio",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Dominio",
+      "description": "Conjunto no vacío de partida que reúne a los objetos de un determinado tipo en una estructura matemática o teoría formal.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Model Theory",
+          "author": "Wilfrid Hodges",
+          "locator": "Capítulo 1",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:espacio": {
+    "id": "espacio",
+    "slug": "espacio",
+    "lang": "es",
+    "filePath": "es/definitions/espacio.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "espacio",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Espacio",
+      "description": "Ámbito geométrico total y universo contenedor que reúne a todos los puntos, rectas y planos en una teoría dimensional.",
+      "branch": "51M",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §1",
+          "role": "primary"
+        },
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro XI",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "es:estar-entre": {
     "id": "estar-entre",
     "slug": "estar-entre",
@@ -8402,6 +9721,129 @@
           "author": "David Hilbert",
           "locator": "Capítulo I, Axiomas del Grupo II",
           "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:estructura-geometrica": {
+    "id": "estructura-geometrica",
+    "slug": "estructura-geometrica",
+    "lang": "es",
+    "filePath": "es/definitions/estructura-geometrica.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "estructura-geometrica",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Estructura geométrica",
+      "description": "Especificación formal compuesta por dominios de objetos y relaciones primitivas que satisfacen un sistema axiomático.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I",
+          "role": "primary"
+        },
+        {
+          "title": "Model Theory",
+          "author": "Wilfrid Hodges",
+          "locator": "Capítulo 1",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:geometria-hilbertiana": {
+    "id": "geometria-hilbertiana",
+    "slug": "geometria-hilbertiana",
+    "lang": "es",
+    "filePath": "es/definitions/geometria-hilbertiana.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "geometria-hilbertiana",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Geometría hilbertiana",
+      "description": "Refundación axiomática rigurosa de la geometría euclídea propuesta por David Hilbert en 1899, basada en 20 axiomas divididos en cinco grupos independientes.",
+      "branch": "51M",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I",
+          "role": "primary"
+        },
+        {
+          "title": "Hilbert's Foundations of Geometry",
+          "author": "Howard Eves",
+          "locator": "Capítulo 5",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:geometria-sintetica": {
+    "id": "geometria-sintetica",
+    "slug": "geometria-sintetica",
+    "lang": "es",
+    "filePath": "es/definitions/geometria-sintetica.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "geometria-sintetica",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Geometría sintética",
+      "description": "Enfoque axiomático directo de la geometría que estudia figuras y construcciones a partir de nociones primitivas y postulados, sin emplear coordenadas numéricas.",
+      "branch": "51",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I",
+          "role": "primary"
+        },
+        {
+          "title": "Traité des propriétés projectives des figures",
+          "author": "Jean-Victor Poncelet",
+          "locator": "Introducción",
+          "role": "secondary"
         }
       ],
       "availableLangs": [
@@ -8441,6 +9883,41 @@
         {
           "title": "Algebra",
           "author": "Serge Lang",
+          "locator": "Capítulo I, §1",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:incidencia": {
+    "id": "incidencia",
+    "slug": "incidencia",
+    "lang": "es",
+    "filePath": "es/definitions/incidencia.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "incidencia",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Incidencia",
+      "description": "Relación geométrica primitiva que establece la pertenencia posicional entre puntos, rectas y planos.",
+      "branch": "51A",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
           "locator": "Capítulo I, §1",
           "role": "primary"
         }
@@ -8592,7 +10069,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Plano",
-      "description": "Superficie geométrica bidimensional continua, ilimitada y perfectamente plana sin curvatura intrínseca.",
+      "description": "Concepto geométrico primitivo de superficie elemental sin curvatura ni grosor, cuyas propiedades quedan fijadas por los axiomas del sistema formal adoptado.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -8633,7 +10110,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Punto",
-      "description": "Elemento constitutivo primario e indivisible del espacio geométrico y noción primitiva fundamental en los sistemas axiomáticos.",
+      "description": "Concepto geométrico primitivo, indivisible y sin extensión espacial, cuyas propiedades quedan determinadas por los axiomas del sistema formal adoptado.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -8674,21 +10151,21 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Recta",
-      "description": "Concepto geométrico primitivo determinado por los axiomas de incidencia y orden del espacio en el que se inscribe.",
+      "description": "Concepto geométrico primitivo de extensión puramente lineal, sin anchura ni grosor, cuyas propiedades quedan fijadas por los axiomas del sistema formal adoptado.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
         {
-          "title": "Grundlagen der Geometrie",
-          "author": "David Hilbert",
-          "locator": "Capítulo I, §1–§2",
+          "title": "Elementos",
+          "author": "Euclides",
+          "locator": "Libro I, Definición 2 y 4",
           "role": "primary"
         },
         {
-          "title": "Euclidean and Non-Euclidean Geometries",
-          "author": "Marvin Jay Greenberg",
-          "locator": "Capítulo 2 y 3",
-          "role": "secondary"
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §1",
+          "role": "primary"
         }
       ],
       "availableLangs": [
@@ -8785,6 +10262,41 @@
       "eu"
     ]
   },
+  "es:semiplano": {
+    "id": "semiplano",
+    "slug": "semiplano",
+    "lang": "es",
+    "filePath": "es/definitions/semiplano.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "semiplano",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Semiplano",
+      "description": "Cada una de las dos regiones abiertas en que una recta divide a los puntos de un plano.",
+      "branch": "51M",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §2 (Axioma II.4)",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "es:semirrecta": {
     "id": "semirrecta",
     "slug": "semirrecta",
@@ -8812,6 +10324,47 @@
           "author": "David Hilbert",
           "locator": "Capítulo I, §4",
           "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:signatura": {
+    "id": "signatura",
+    "slug": "signatura",
+    "lang": "es",
+    "filePath": "es/definitions/signatura.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "signatura",
+      "lang": "es",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Signatura",
+      "description": "Colección formal de símbolos de tipos, relaciones y funciones que caracterizan el lenguaje de una teoría matemática.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Model Theory",
+          "author": "Wilfrid Hodges",
+          "locator": "Capítulo 1",
+          "role": "primary"
+        },
+        {
+          "title": "A Course in Model Theory",
+          "author": "Katrin Tent, Martin Ziegler",
+          "locator": "Capítulo 1",
+          "role": "secondary"
         }
       ],
       "availableLangs": [
@@ -9685,6 +11238,64 @@
       "eu"
     ]
   },
+  "es:hurewicz": {
+    "id": "hurewicz",
+    "slug": "hurewicz",
+    "lang": "es",
+    "filePath": "es/mathematicians/hurewicz.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "hurewicz",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Witold Hurewicz",
+      "birthYear": 1904,
+      "deathYear": 1956,
+      "country": "Polonia",
+      "title": "Witold Hurewicz",
+      "description": "Matemático polaco, autor fundamental de la teoría de la dimensión y de la teoría de homotopía en topología algebraica.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:lebesgue": {
+    "id": "lebesgue",
+    "slug": "lebesgue",
+    "lang": "es",
+    "filePath": "es/mathematicians/lebesgue.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "lebesgue",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Henri Lebesgue",
+      "birthYear": 1875,
+      "deathYear": 1941,
+      "country": "Francia",
+      "title": "Henri Lebesgue",
+      "description": "Matemático francés célebre por formular la teoría de la medida y la integral de Lebesgue, así como la dimensión topológica de recubrimiento.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "es:lobachevski": {
     "id": "lobachevski",
     "slug": "lobachevski",
@@ -9701,6 +11312,35 @@
       "country": "Rusia",
       "title": "Nikolái Lobachevski",
       "description": "Matemático y geómetra ruso pionero en la fundación de la geometría no euclídea hiperbólica.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:menger": {
+    "id": "menger",
+    "slug": "menger",
+    "lang": "es",
+    "filePath": "es/mathematicians/menger.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "menger",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Karl Menger",
+      "birthYear": 1902,
+      "deathYear": 1985,
+      "country": "Austria",
+      "title": "Karl Menger",
+      "description": "Matemático austriaco, pionero en teoría de la dimensión, topología general y teoría de grafos (esponja de Menger, teorema de Menger).",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -9788,6 +11428,64 @@
       "country": "Mileto (Grecia clásica)",
       "title": "Tales de Mileto",
       "description": "Filósofo y matemático jonio considerado el primer matemático verdadero de la historia y pionero de la geometría deductiva.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:urysohn": {
+    "id": "urysohn",
+    "slug": "urysohn",
+    "lang": "es",
+    "filePath": "es/mathematicians/urysohn.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "urysohn",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Pável Urysón",
+      "birthYear": 1898,
+      "deathYear": 1924,
+      "country": "Rusia",
+      "title": "Pável Urysón",
+      "description": "Matemático ruso, figura fundacional de la topología moderna y co-creador de la teoría de la dimensión y el lema de Urysohn.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:wallman": {
+    "id": "wallman",
+    "slug": "wallman",
+    "lang": "es",
+    "filePath": "es/mathematicians/wallman.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "wallman",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Henry Wallman",
+      "birthYear": 1915,
+      "deathYear": 1992,
+      "country": "Estados Unidos",
+      "title": "Henry Wallman",
+      "description": "Matemático estadounidense coautor del tratado seminal 'Dimension Theory' y pionero en compactificación topológica (compactificación de Wallman).",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -9930,7 +11628,7 @@
       "lang": "es",
       "type": "modelo",
       "title": "Plano de Fano",
-      "description": "El plano proyectivo finito más pequeño, compuesto por exactamente 7 puntos y 7 rectas.",
+      "description": "El plano proyectivo finito más pequeño posible, compuesto por exactamente 7 puntos y 7 rectas.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -10779,8 +12477,8 @@
       "lang": "eu",
       "type": "sistema-axiomatico",
       "title": "Intzidentzia-sistema",
-      "description": "Puntu, zuzen eta planoen arteko partaideitza- eta ebakidura-erlazio formalak arautzen dituen oinarrizko egitura axiomatikoa.",
-      "branch": "51M",
+      "description": "Geometriaren oinarrizko egitura axiomatikoa, puntu, zuzen eta planoen arteko kidetza-arauak ezartzen dituena distantzia edo ordena noziorik gabe.",
+      "branch": "51A",
       "axiomas": [
         "axioma-incidencia-1",
         "axioma-incidencia-2",
@@ -10804,7 +12502,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §1",
+          "locator": "I. Kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -11094,9 +12792,9 @@
       "id": "axioma-incidencia-1",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.1 axioma (Zuzenaren existentzia eta bakartasuna)",
-      "description": "Espazioko bi puntu desberdin emanda, biak barnean hartzen dituen zuzen bakarra existitzen da.",
-      "branch": "51M",
+      "title": "I.1 Axioma (Zuzenaren determinazioa)",
+      "description": "Edozein bi puntu desberdinetatik zuzen bakar bat igarotzen da.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -11104,7 +12802,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §1",
+          "locator": "I. Kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -11130,9 +12828,9 @@
       "id": "axioma-incidencia-2",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.2 axioma (Puntuen existentzia zuzenean)",
-      "description": "Edozein zuzenek espazioko gutxienez bi puntu desberdin ditu barnean.",
-      "branch": "51M",
+      "title": "I.2 Axioma (Puntuak zuzenean)",
+      "description": "Zuzen orok gutxienez bi puntu desberdin ditu.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -11140,7 +12838,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §1",
+          "locator": "I. Kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -11166,9 +12864,9 @@
       "id": "axioma-incidencia-3",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.3 axioma (Hiru puntu ez-kolinealen existentzia)",
-      "description": "Espazioan gutxienez hiru puntu existitzen dira zuzen berekoak ez direnak.",
-      "branch": "51M",
+      "title": "I.3 Axioma (Puntu ez-kolinealak)",
+      "description": "Zuzen berekoak ez diren gutxienez hiru puntu existitzen dira.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -11176,7 +12874,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §1",
+          "locator": "I. Kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -11202,9 +12900,9 @@
       "id": "axioma-incidencia-4",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.4 axioma (Planoaren existentzia eta bakartasuna)",
-      "description": "Espazioko hiru puntu ez-kolineal emanda, hirurak barnean hartzen dituen plano bakarra existitzen da.",
-      "branch": "51M",
+      "title": "I.4 Axioma (Planoaren determinazioa)",
+      "description": "Kolinealak ez diren hiru puntutatik gutxienez plano bat igarotzen da.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -11212,7 +12910,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §1",
+          "locator": "I. Kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -11238,9 +12936,9 @@
       "id": "axioma-incidencia-5",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.5 axioma (Planoan puntu ez-kolinealak existitzea)",
-      "description": "Edozein planotan lerrokatuta ez dauden gutxienez hiru puntu existitzen dira.",
-      "branch": "51M",
+      "title": "I.5 Axioma (Planoaren bakartasuna eta puntu ez-kolinealak)",
+      "description": "Kolinealak ez diren hiru puntutatik gehienez plano bat igarotzen da, eta plano orok kolinealak ez diren gutxienez hiru puntu ditu.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -11248,7 +12946,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §1",
+          "locator": "I. Kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -11274,9 +12972,9 @@
       "id": "axioma-incidencia-6",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.6 axioma (Zuzenaren inklusioa planoan)",
-      "description": "Zuzen baten bi puntu desberdin plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
-      "branch": "51M",
+      "title": "I.6 Axioma (Zuzena planoan sartzea)",
+      "description": "Zuzen baten bi puntu plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -11284,7 +12982,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §1",
+          "locator": "I. Kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -11310,9 +13008,9 @@
       "id": "axioma-incidencia-7",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.7 axioma (Bi planoren ebakidura)",
-      "description": "Bi plano desberdinek puntu komun bat badute, haien ebakidura zuzen oso bat da.",
-      "branch": "51M",
+      "title": "I.7 Axioma (Planoen ebakidura)",
+      "description": "Bi plano desberdinek puntu komun bat badute, haien ebakidura zuzen bat da zehazki.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -11320,7 +13018,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §1",
+          "locator": "I. Kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -11346,9 +13044,9 @@
       "id": "axioma-incidencia-8",
       "lang": "eu",
       "type": "axioma",
-      "title": "I.8 axioma (Plano berekoak ez diren lau punturen existentzia)",
-      "description": "Espazioan plano berekoak ez diren gutxienez lau puntu existitzen dira.",
-      "branch": "51M",
+      "title": "I.8 Axioma (Hiru dimentsioko espazioa)",
+      "description": "Plano berekoak ez diren gutxienez lau puntu existitzen dira espazioan.",
+      "branch": "51A",
       "axiomSystem": "sistema-incidencia",
       "axiomFamily": "incidencia",
       "hasSimulation": true,
@@ -11356,7 +13054,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §1",
+          "locator": "I. Kapitulua, §1",
           "role": "primary"
         }
       ],
@@ -11731,6 +13429,41 @@
       "eu"
     ]
   },
+  "eu:concepto-primitivo": {
+    "id": "concepto-primitivo",
+    "slug": "concepto-primitivo",
+    "lang": "eu",
+    "filePath": "eu/definitions/concepto-primitivo.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "concepto-primitivo",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Oinarrizko kontzeptua",
+      "description": "Aurreko objektuetatik definitzen ez den oinarrizko nozio matematikoa; bere esanahia eta portaera sistema formalaren axiomek finkatzen dituzte.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "I. Kapitulua, §1",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "eu:congruencia": {
     "id": "congruencia",
     "slug": "congruencia",
@@ -11757,6 +13490,41 @@
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
           "locator": "I. Kapitulua, §3",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:conjunto-disjunto": {
+    "id": "conjunto-disjunto",
+    "slug": "conjunto-disjunto",
+    "lang": "eu",
+    "filePath": "eu/definitions/conjunto-disjunto.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "conjunto-disjunto",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Multzo disjuntuak",
+      "description": "Haien ebakidura hutsik duten bi multzo edo gehiago; hau da, elementu komunik partekatzen ez dutenak.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Naive Set Theory",
+          "author": "Paul Halmos",
+          "locator": "4. Kapitulua",
           "role": "primary"
         }
       ],
@@ -11901,6 +13669,123 @@
       "eu"
     ]
   },
+  "eu:dimension": {
+    "id": "dimension",
+    "slug": "dimension",
+    "lang": "eu",
+    "filePath": "eu/definitions/dimension.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "dimension",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Dimentsioa",
+      "description": "Espazio edo irudi batean puntu baten posizioa zehazteko behar diren askatasun-gradu edo parametro independenteen kopurua.",
+      "branch": "51",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Dimension Theory",
+          "author": "Witold Hurewicz, Henry Wallman",
+          "locator": "I. Kapitulua",
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "I. Kapitulua",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:dominio": {
+    "id": "dominio",
+    "slug": "dominio",
+    "lang": "eu",
+    "filePath": "eu/definitions/dominio.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "dominio",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Domeinua",
+      "description": "Egitura matematiko edo teoria formal batean mota jakin bateko objektuak biltzen dituen abiapuntuko multzo ez-hutsa.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Model Theory",
+          "author": "Wilfrid Hodges",
+          "locator": "1. Kapitulua",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:espacio": {
+    "id": "espacio",
+    "slug": "espacio",
+    "lang": "eu",
+    "filePath": "eu/definitions/espacio.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "espacio",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Espazioa",
+      "description": "Teoria dimentsional bateko puntu, zuzen eta plano guztiak biltzen dituen eremu geometriko globala eta unibertso edukitzailea.",
+      "branch": "51M",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "I. Kapitulua, §1",
+          "role": "primary"
+        },
+        {
+          "title": "Elementuak",
+          "author": "Euklides",
+          "locator": "XI. Liburukia",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "eu:estar-entre": {
     "id": "estar-entre",
     "slug": "estar-entre",
@@ -11922,6 +13807,129 @@
           "author": "David Hilbert",
           "locator": "I. Kapitulua, II. Taldeko Axiomak",
           "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:estructura-geometrica": {
+    "id": "estructura-geometrica",
+    "slug": "estructura-geometrica",
+    "lang": "eu",
+    "filePath": "eu/definitions/estructura-geometrica.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "estructura-geometrica",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Egitura geometrikoa",
+      "description": "Sistema axiomatiko bat betetzen duten objektu-domeinuek eta oinarrizko erlazioek osatutako zehaztapen formala.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "I. Kapitulua",
+          "role": "primary"
+        },
+        {
+          "title": "Model Theory",
+          "author": "Wilfrid Hodges",
+          "locator": "1. Kapitulua",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:geometria-hilbertiana": {
+    "id": "geometria-hilbertiana",
+    "slug": "geometria-hilbertiana",
+    "lang": "eu",
+    "filePath": "eu/definitions/geometria-hilbertiana.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "geometria-hilbertiana",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Geometria hilbertiarra",
+      "description": "David Hilbertek 1899an proposatutako geometria euklidearraren refundazio axiomatiko zorrotza, bost talde independentetan banatutako 20 axiomatan oinarritua.",
+      "branch": "51M",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "I. Kapitulua",
+          "role": "primary"
+        },
+        {
+          "title": "Hilbert's Foundations of Geometry",
+          "author": "Howard Eves",
+          "locator": "5. Kapitulua",
+          "role": "secondary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:geometria-sintetica": {
+    "id": "geometria-sintetica",
+    "slug": "geometria-sintetica",
+    "lang": "eu",
+    "filePath": "eu/definitions/geometria-sintetica.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "geometria-sintetica",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Geometria sintetikoa",
+      "description": "Geometriaren ikuspegi axiomatiko zuzena, irudiak eta eraikuntzak oinarrizko nozioetatik eta postulatuetatik aztertzen dituena, zenbakizko koordenaturik erabili gabe.",
+      "branch": "51",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Elementuak",
+          "author": "Euklides",
+          "locator": "I. Liburukia",
+          "role": "primary"
+        },
+        {
+          "title": "Traité des propriétés projectives des figures",
+          "author": "Jean-Victor Poncelet",
+          "locator": "Sarrera",
+          "role": "secondary"
         }
       ],
       "availableLangs": [
@@ -11961,6 +13969,41 @@
         {
           "title": "Algebra",
           "author": "Serge Lang",
+          "locator": "I. Kapitulua, §1",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:incidencia": {
+    "id": "incidencia",
+    "slug": "incidencia",
+    "lang": "eu",
+    "filePath": "eu/definitions/incidencia.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "incidencia",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "primitivo",
+      "title": "Intzidentzia",
+      "description": "Puntu, zuzen eta planoen arteko posizio-kidetza ezartzen duen oinarrizko erlazio geometrikoa.",
+      "branch": "51A",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
           "locator": "I. Kapitulua, §1",
           "role": "primary"
         }
@@ -12112,14 +14155,14 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Planoa",
-      "description": "Bi dimentsioko gainazal geometriko jarraitu, mugagabe eta laua, berezko kurbadurarik gabekoa.",
+      "description": "Kurbadurarik eta lodierarik gabeko oinarrizko kontzeptu geometrikoa; bere propietateak hautatutako sistema formalaren axiomek finkatzen dituzte.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elementuak",
           "author": "Euklides",
-          "locator": "I. Liburukia, 5. eta 7. Definizioak",
+          "locator": "I. Liburukia, 5 eta 7. Definizioak",
           "role": "primary"
         },
         {
@@ -12153,7 +14196,7 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Puntua",
-      "description": "Espazio matematiko baten oinarrizko osagai zatiezina eta sistema axiomatikoetako jatorrizko nozio aldebakarrekoa.",
+      "description": "Geometriako oinarrizko kontzeptu zatiezina eta hedadura espazialik gabea; bere propietateak hautatutako sistema formalaren axiomek zehazten dituzte.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
@@ -12194,14 +14237,14 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Zuzena",
-      "description": "Dimentsio bakarreko objektu geometriko jarraitu eta infinitua, bi noranzkoetan kurbadurarik gabe hedatzen dena.",
+      "description": "Luzapen lineal hutseko oinarrizko kontzeptu geometrikoa, zabalerarik eta lodierarik gabea; bere propietateak hautatutako sistema formalaren axiomek finkatzen dituzte.",
       "branch": "51M",
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elementuak",
           "author": "Euklides",
-          "locator": "I. Liburukia, 2. eta 4. Definizioak",
+          "locator": "I. Liburukia, 2 eta 4. Definizioak",
           "role": "primary"
         },
         {
@@ -12305,6 +14348,41 @@
       "eu"
     ]
   },
+  "eu:semiplano": {
+    "id": "semiplano",
+    "slug": "semiplano",
+    "lang": "eu",
+    "filePath": "eu/definitions/semiplano.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "semiplano",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "derivado",
+      "title": "Planoerdia",
+      "description": "Zuzen batek plano bateko puntuak banatzean sortzen diren bi eskualde irekietako bakoitza.",
+      "branch": "51M",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "I. Kapitulua, §2 (II.4 Axioma)",
+          "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "eu:semirrecta": {
     "id": "semirrecta",
     "slug": "semirrecta",
@@ -12332,6 +14410,47 @@
           "author": "David Hilbert",
           "locator": "I. Kapitulua, §4",
           "role": "primary"
+        }
+      ],
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:signatura": {
+    "id": "signatura",
+    "slug": "signatura",
+    "lang": "eu",
+    "filePath": "eu/definitions/signatura.mdx",
+    "contentType": "definicion",
+    "metadata": {
+      "id": "signatura",
+      "lang": "eu",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Sinadura",
+      "description": "Teoria matematiko baten hizkuntza ezaugarritzen duten mota-, erlazio- eta funtzio-ikurren bilduma formala.",
+      "branch": "03",
+      "hasSimulation": false,
+      "sources": [
+        {
+          "title": "Model Theory",
+          "author": "Wilfrid Hodges",
+          "locator": "1. Kapitulua",
+          "role": "primary"
+        },
+        {
+          "title": "A Course in Model Theory",
+          "author": "Katrin Tent, Martin Ziegler",
+          "locator": "1. Kapitulua",
+          "role": "secondary"
         }
       ],
       "availableLangs": [
@@ -13205,6 +15324,64 @@
       "eu"
     ]
   },
+  "eu:hurewicz": {
+    "id": "hurewicz",
+    "slug": "hurewicz",
+    "lang": "eu",
+    "filePath": "eu/mathematicians/hurewicz.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "hurewicz",
+      "lang": "eu",
+      "type": "matematico",
+      "name": "Witold Hurewicz",
+      "birthYear": 1904,
+      "deathYear": 1956,
+      "country": "Polonia",
+      "title": "Witold Hurewicz",
+      "description": "Dimentsioaren teorian eta homotopiaren teorian funtsezkoa izan zen poloniar matematikaria.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:lebesgue": {
+    "id": "lebesgue",
+    "slug": "lebesgue",
+    "lang": "eu",
+    "filePath": "eu/mathematicians/lebesgue.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "lebesgue",
+      "lang": "eu",
+      "type": "matematico",
+      "name": "Henri Lebesgue",
+      "birthYear": 1875,
+      "deathYear": 1941,
+      "country": "Frantzia",
+      "title": "Henri Lebesgue",
+      "description": "Neurriaren eta integralaren teoria eta estaldura-dimentsio topologikoa garatu zituen matematikari frantsesa.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "eu:lobachevski": {
     "id": "lobachevski",
     "slug": "lobachevski",
@@ -13221,6 +15398,35 @@
       "country": "Errusia",
       "title": "Nikolai Lobatxevski",
       "description": "Matematikari eta geometrilari errusiarra, geometria ez-euklidear hiperbolikoaren lehen sortzaile eta argitaratzaile aitzindaria.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:menger": {
+    "id": "menger",
+    "slug": "menger",
+    "lang": "eu",
+    "filePath": "eu/mathematicians/menger.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "menger",
+      "lang": "eu",
+      "type": "matematico",
+      "name": "Karl Menger",
+      "birthYear": 1902,
+      "deathYear": 1985,
+      "country": "Austria",
+      "title": "Karl Menger",
+      "description": "Dimentsioaren teorian, topologia orokorrean eta grafoen teorian aitzindaria izan zen austriar matematikaria.",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -13308,6 +15514,64 @@
       "country": "Mileto (Grezia klasikoa)",
       "title": "Miletoko Tales",
       "description": "Filosofo eta matematikari joniarra, historiako lehen benetako matematikaritzat eta geometria deduktiboaren aitzindaritzat hartua.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:urysohn": {
+    "id": "urysohn",
+    "slug": "urysohn",
+    "lang": "eu",
+    "filePath": "eu/mathematicians/urysohn.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "urysohn",
+      "lang": "eu",
+      "type": "matematico",
+      "name": "Pavel Urysohn",
+      "birthYear": 1898,
+      "deathYear": 1924,
+      "country": "Errusia",
+      "title": "Pavel Urysohn",
+      "description": "Topologia modernoaren aitzindari errusiarra, dimentsioaren teoria eta Urysohnen lema garatu zituena.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:wallman": {
+    "id": "wallman",
+    "slug": "wallman",
+    "lang": "eu",
+    "filePath": "eu/mathematicians/wallman.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "wallman",
+      "lang": "eu",
+      "type": "matematico",
+      "name": "Henry Wallman",
+      "birthYear": 1915,
+      "deathYear": 1992,
+      "country": "AEB",
+      "title": "Henry Wallman",
+      "description": "Dimentsioaren teorian eta trinkotze topologikoan aitzindaria izan zen estatubatuar matematikaria.",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -13450,7 +15714,7 @@
       "lang": "eu",
       "type": "modelo",
       "title": "Fanoren planoa",
-      "description": "Plano proiektibo finiturik txikiena, zehazki 7 puntuk eta 7 zuzenek osatua.",
+      "description": "Existitzen den plano proiektibo finitu txikiena, zehazki 7 puntuz eta 7 zuzenez osatua.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [
@@ -13516,7 +15780,7 @@
       "lang": "eu",
       "type": "modelo",
       "title": "Hiru puntuko eredua",
-      "description": "Oinarrizko eredu finitua, intzidentziaren oinarrizko axiomen trinkotasuna eta independentzia frogatzen duena.",
+      "description": "Oinarrizko intzidentzia-axiomen bateragarritasuna eta independentzia frogatzen dituen oinarrizko eredu finitua.",
       "branch": "51A",
       "satisfies": "sistema-incidencia",
       "axioms_verified": [

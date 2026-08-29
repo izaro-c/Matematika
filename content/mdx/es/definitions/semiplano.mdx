@@ -1,0 +1,41 @@
+export const metadata = {
+  id: "semiplano",
+  lang: "es",
+  type: "definicion",
+  subtype: "derivado",
+  title: "Semiplano",
+  description: "Cada una de las dos regiones abiertas en que una recta divide a los puntos de un plano.",
+  branch: "51M",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §2 (Axioma II.4)", role: "primary" }
+  ]
+};
+
+<Capitular letra="U" />n **semiplano** es cada una de las dos regiones en que una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> divide a los puntos de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>. La recta divisoria recibe el nombre de **borde** o frontera y no forma parte del semiplano.
+
+En la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, la partición del plano en exactamente dos regiones <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink> es una consecuencia directa del <ConceptLink targetId="axioma-orden-4" isDependency={true}>Axioma de Pasch</ConceptLink> (Axioma II.4 de orden).
+
+<Definicion title="Definición Formal">
+  Sea $\pi$ un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> y sea $\ell$ una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> contenida en $\pi$. La recta $\ell$ divide a los <ConceptLink targetId="punto">puntos</ConceptLink> de $\pi \setminus \ell$ en dos <ConceptLink targetId="conjunto-disjunto">conjuntos disjuntos</ConceptLink> $\mathcal{H}_1$ y $\mathcal{H}_2$, denominados **semiplanos**, determinados por:
+  $$
+  A, B \in \mathcal{H}_1 \iff \overline{AB} \cap \ell = \emptyset
+  $$
+  $$
+  A \in \mathcal{H}_1, \, C \in \mathcal{H}_2 \iff \overline{AC} \cap \ell \neq \emptyset
+  $$
+  donde $\overline{AB}$ representa el <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> que une los puntos $A$ y $B$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades Geométricas Fundamentales">
+    <PropiedadItem id="conjunto-convexo" title="Convexidad">
+      Todo semiplano es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>: si contiene dos puntos cualesquiera, contiene enteramente al segmento que los une.
+    </PropiedadItem>
+    <PropiedadItem id="angulo" title="Regiones interiores poligonales">
+      La intersección de dos o más semiplanos cuyos bordes se cortan permite definir formalmente la región interior de un <ConceptLink targetId="angulo">ángulo</ConceptLink>, de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> y de cualquier <ConceptLink targetId="poligono">polígono</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

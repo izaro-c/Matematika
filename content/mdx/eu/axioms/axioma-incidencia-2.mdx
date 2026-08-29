@@ -2,45 +2,33 @@ export const metadata = {
   id: "axioma-incidencia-2",
   lang: "eu",
   type: "axioma",
-  title: "I.2 axioma (Puntuen existentzia zuzenean)",
-  description: "Edozein zuzenek espazioko gutxienez bi puntu desberdin ditu barnean.",
-  branch: "51M",
+  title: "I.2 Axioma (Puntuak zuzenean)",
+  description: "Zuzen orok gutxienez bi puntu desberdin ditu.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
   ]
 };
 
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="B" />igarren intzidentzia-axiomak ezartzen du edozein <ConceptLink targetId="recta" isDependency={true}>zuzenek</ConceptLink> elementuen gutxieneko aniztasuna duela, gutxienez bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bereizi hartzen baititu barnean. Baldintza honek puntu bakarrez osatutako edo hedadura linealik gabeko zuzen endekatuak eragozten ditu.
+<Capitular letra="Z" />**uzen** orok gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin ditu.
 
-<Definicion title="Enuntziatu formala">
-  Edozein $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzenetarako</ConceptLink>, $l$ zuzenarenak diren gutxienez bi $A, B \in \mathcal{S}$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdin existitzen dira:
+Axioma honek bermatzen du zuzenak multzo hutsak ez izatea eta puntu isolatu bakar batek ez osatzea, lerro bakoitzak gainean jarduteko benetako eduki geometrikoa duela ziurtatuz.
+
+<Definicion title="Enuntziatu Formala">
+  Edozein <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzenetarako</ConceptLink>, gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen dira (<VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind>) $\ell$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutenak:
   $$
-  \forall l \in \mathcal{L}, \ \exists A, B \in \mathcal{S} \ \bigl(A \in l \land B \in l \land A \neq B\bigr)
+  \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \in \ell \land B \in \ell)
   $$
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
+### Garrantzia teorian
 
-Simulazio interaktiboan, <VisualBind element="lineCD" color="carbon">$l$</VisualBind> zuzenak <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntuak ditu barnean. Elkarrekintzak erakusten du emandako edozein zuzenetan gutxienez bi posizio independente ezar eta labain daitezkeela $A \neq B$ izanik.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Zuzenak puntu bakan bakartuak edo multzo hutsak ez direla bermatzen du, geometrikoki bereizgarriak diren posizio anitzez osatutako egiturak baizik. I.1 axiomarekin batera, euskarri linealaren oinarrizko erlazio bijektiboa ziurtatzen du.
-
-<Separador />
-
-### Propietateak
-
-- **Endekapenik eza:** Puntu bakar batez osatutako zuzenak edo zuzen hutsak debekatzen ditu.
-- **Oinarrizko ugaritasuna:** <ConceptLink targetId="axioma-orden-1">Ordena-axiomak</ConceptLink> gehitzean edozein zuzenek puntu infinitu dituela frogatzeko abiapuntua da.
-- **Zuzenkiaren iraunkortasuna:** $\overline{AB}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> ez-tribiala eratzea ahalbidetzen du.
+<ConceptLink targetId="axioma-incidencia-1">I.1 Axiomarekin</ConceptLink> batera, elkarrekiko lotura ezartzen du: bi puntuk zuzen bat zehazten dute, eta zuzen orok gutxienez bi puntu ditu identifikagarria izateko.

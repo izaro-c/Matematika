@@ -1,15 +1,15 @@
 {
   "generatedAt": "2026-07-12T14:50:29.392Z",
   "summary": {
-    "total": 88,
+    "total": 104,
     "byType": {
       "sistema-axiomatico": 4,
       "axioma": 21,
-      "definicion": 21,
+      "definicion": 32,
       "demostracion": 11,
       "ejemplo": 1,
       "ejercicio": 2,
-      "matematico": 9,
+      "matematico": 14,
       "metodo": 3,
       "modelo": 4,
       "plan-de-estudio": 1,
@@ -17,7 +17,7 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 38,
+      "none": 54,
       "exported": 50
     },
     "theoremLike": {
@@ -189,7 +189,7 @@
     {
       "id": "axioma-incidencia-1",
       "type": "axioma",
-      "title": "I.1 axioma (Zuzenaren existentzia eta bakartasuna)",
+      "title": "I.1 Axioma (Zuzenaren determinazioa)",
       "filePath": "eu/axioms/axioma-incidencia-1.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -204,7 +204,7 @@
     {
       "id": "axioma-incidencia-2",
       "type": "axioma",
-      "title": "I.2 axioma (Puntuen existentzia zuzenean)",
+      "title": "I.2 Axioma (Puntuak zuzenean)",
       "filePath": "eu/axioms/axioma-incidencia-2.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -219,7 +219,7 @@
     {
       "id": "axioma-incidencia-3",
       "type": "axioma",
-      "title": "I.3 axioma (Hiru puntu ez-kolinealen existentzia)",
+      "title": "I.3 Axioma (Puntu ez-kolinealak)",
       "filePath": "eu/axioms/axioma-incidencia-3.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -234,7 +234,7 @@
     {
       "id": "axioma-incidencia-4",
       "type": "axioma",
-      "title": "I.4 axioma (Planoaren existentzia eta bakartasuna)",
+      "title": "I.4 Axioma (Planoaren determinazioa)",
       "filePath": "eu/axioms/axioma-incidencia-4.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -249,7 +249,7 @@
     {
       "id": "axioma-incidencia-5",
       "type": "axioma",
-      "title": "I.5 axioma (Planoan puntu ez-kolinealak existitzea)",
+      "title": "I.5 Axioma (Planoaren bakartasuna eta puntu ez-kolinealak)",
       "filePath": "eu/axioms/axioma-incidencia-5.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -264,7 +264,7 @@
     {
       "id": "axioma-incidencia-6",
       "type": "axioma",
-      "title": "I.6 axioma (Zuzenaren inklusioa planoan)",
+      "title": "I.6 Axioma (Zuzena planoan sartzea)",
       "filePath": "eu/axioms/axioma-incidencia-6.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -279,7 +279,7 @@
     {
       "id": "axioma-incidencia-7",
       "type": "axioma",
-      "title": "I.7 axioma (Bi planoren ebakidura)",
+      "title": "I.7 Axioma (Planoen ebakidura)",
       "filePath": "eu/axioms/axioma-incidencia-7.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -294,7 +294,7 @@
     {
       "id": "axioma-incidencia-8",
       "type": "axioma",
-      "title": "I.8 axioma (Plano berekoak ez diren lau punturen existentzia)",
+      "title": "I.8 Axioma (Hiru dimentsioko espazioa)",
       "filePath": "eu/axioms/axioma-incidencia-8.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -440,6 +440,19 @@
       "demos": []
     },
     {
+      "id": "concepto-primitivo",
+      "type": "definicion",
+      "title": "Oinarrizko kontzeptua",
+      "filePath": "eu/definitions/concepto-primitivo.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "congruencia",
       "type": "definicion",
       "title": "Kongruentzia geometrikoa",
@@ -448,6 +461,19 @@
       "diagramExports": [],
       "diagramStatus": "none",
       "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "conjunto-disjunto",
+      "type": "definicion",
+      "title": "Multzo disjuntuak",
+      "filePath": "eu/definitions/conjunto-disjunto.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -494,6 +520,45 @@
       "demos": []
     },
     {
+      "id": "dimension",
+      "type": "definicion",
+      "title": "Dimentsioa",
+      "filePath": "eu/definitions/dimension.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "dominio",
+      "type": "definicion",
+      "title": "Domeinua",
+      "filePath": "eu/definitions/dominio.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "espacio",
+      "type": "definicion",
+      "title": "Espazioa",
+      "filePath": "eu/definitions/espacio.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "estar-entre",
       "type": "definicion",
       "title": "Bitartekotasuna (Artean egotea)",
@@ -509,6 +574,45 @@
       "demos": []
     },
     {
+      "id": "estructura-geometrica",
+      "type": "definicion",
+      "title": "Egitura geometrikoa",
+      "filePath": "eu/definitions/estructura-geometrica.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "geometria-hilbertiana",
+      "type": "definicion",
+      "title": "Geometria hilbertiarra",
+      "filePath": "eu/definitions/geometria-hilbertiana.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "geometria-sintetica",
+      "type": "definicion",
+      "title": "Geometria sintetikoa",
+      "filePath": "eu/definitions/geometria-sintetica.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "grupo",
       "type": "definicion",
       "title": "Taldea",
@@ -517,6 +621,19 @@
       "diagramExports": [],
       "diagramStatus": "none",
       "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "incidencia",
+      "type": "definicion",
+      "title": "Intzidentzia",
+      "filePath": "eu/definitions/incidencia.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -640,6 +757,19 @@
       "demos": []
     },
     {
+      "id": "semiplano",
+      "type": "definicion",
+      "title": "Planoerdia",
+      "filePath": "eu/definitions/semiplano.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 1,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "semirrecta",
       "type": "definicion",
       "title": "Zuzenerdia",
@@ -649,6 +779,19 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
+      "sourcesCount": 2,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "signatura",
+      "type": "definicion",
+      "title": "Sinadura",
+      "filePath": "eu/definitions/signatura.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -947,10 +1090,49 @@
       "demos": []
     },
     {
+      "id": "hurewicz",
+      "type": "matematico",
+      "title": "Witold Hurewicz",
+      "filePath": "eu/mathematicians/hurewicz.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "lebesgue",
+      "type": "matematico",
+      "title": "Henri Lebesgue",
+      "filePath": "eu/mathematicians/lebesgue.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "lobachevski",
       "type": "matematico",
       "title": "Nikolai Lobatxevski",
       "filePath": "eu/mathematicians/lobachevski.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "menger",
+      "type": "matematico",
+      "title": "Karl Menger",
+      "filePath": "eu/mathematicians/menger.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
@@ -990,6 +1172,32 @@
       "type": "matematico",
       "title": "Miletoko Tales",
       "filePath": "eu/mathematicians/tales.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "urysohn",
+      "type": "matematico",
+      "title": "Pavel Urysohn",
+      "filePath": "eu/mathematicians/urysohn.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "wallman",
+      "type": "matematico",
+      "title": "Henry Wallman",
+      "filePath": "eu/mathematicians/wallman.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",

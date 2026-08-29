@@ -2,9 +2,9 @@ export const metadata = {
   id: "axioma-incidencia-1",
   lang: "es",
   type: "axioma",
-  title: "Axioma I.1 (Existencia y unicidad de la recta)",
-  description: "Dados dos puntos distintos del espacio, existe exactamente una recta a la que ambos pertenecen.",
-  branch: "51M",
+  title: "Axioma I.1 (Determinación de la recta)",
+  description: "Por dos puntos distintos pasa exactamente una recta.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,31 +16,20 @@ export const metadata = {
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="D" />ados dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos cualesquiera del <ConceptLink targetId="espacio">espacio</ConceptLink>, el primer axioma de incidencia formulado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> garantiza la existencia y la unicidad de una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> que pasa por ambos. Este postulado constituye la base de la conexión lineal en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+<Capitular letra="D" />ados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos cualesquiera, existe exactamente una <ConceptLink targetId="recta">recta</ConceptLink> que pasa por ambos.
 
-<Definicion title="Enunciado formal">
-  Dados dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos $A, B \in \mathcal{S}$ con $A \neq B$, existe una única <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$ tal que $A$ y $B$ inciden en $l$:
+Este postulado establece la conexión lineal más básica de la geometría: dos puntos distintos fijan de forma unívoca una dirección y una línea recta completa.
+
+<Definicion title="Enunciado Formal">
+  Para cualesquiera dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> ($A \neq B$), existe una única <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> tal que $A$ y $B$ <ConceptLink targetId="incidencia">inciden</ConceptLink> en $\ell$:
   $$
-  \forall A, B \in \mathcal{S} \ \bigl(A \neq B \implies \exists! l \in \mathcal{L} \ (A \in l \land B \in l)\bigr)
+  \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \in \ell \land B \in \ell)\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Importancia en la teoría
 
-En la simulación interactiva, los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> determinan de forma unívoca la recta soporte <VisualBind element="lineAB" color="carbon">$l$</VisualBind>. Al desplazar libremente cualquiera de los dos puntos en el plano, la posición y orientación de la recta se recalculan instantáneamente manteniendo la condición estricta de pertenencia dual.
-
-<Separador />
-
-### Significado geométrico y alcance
-
-Este axioma establece que dos puntos determinan una dirección y una trayectoria rectilínea de forma exclusiva. Impide la presencia de líneas paralelas múltiples o trayectorias redundantes que conecten los mismos dos puntos primitivos sin la intervención de axiomas adicionales.
-
-<Separador />
-
-### Propiedades
-
-- **Unicidad del trazo:** Dos puntos distintos no pueden pertenecer simultáneamente a dos rectas distintas.
-- **Independencia del sistema:** Conserva su validez tanto en la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink> como en la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>.
-- **Fundamento de interconexión:** Permite definir el <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$ como subconjunto continuo de la recta soporte.
+- **Unicidad del trazo:** Dos puntos no pueden compartir más de una recta común.
+- **Intersección máxima:** Como consecuencia directa, dos rectas distintas pueden cortarse como máximo en un solo punto.

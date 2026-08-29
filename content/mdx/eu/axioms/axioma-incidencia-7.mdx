@@ -2,45 +2,33 @@ export const metadata = {
   id: "axioma-incidencia-7",
   lang: "eu",
   type: "axioma",
-  title: "I.7 axioma (Bi planoren ebakidura)",
-  description: "Bi plano desberdinek puntu komun bat badute, haien ebakidura zuzen oso bat da.",
-  branch: "51M",
+  title: "I.7 Axioma (Planoen ebakidura)",
+  description: "Bi plano desberdinek puntu komun bat badute, haien ebakidura zuzen bat da zehazki.",
+  branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
   ]
 };
 
 import { Incidence7 } from '@content/diagrams/Axiomas/Incidence7';
 export const Simulation = Incidence7;
 
-<Capitular letra="B" />i <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> desberdinek <ConceptLink targetId="espacio">espazioan</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat partekatzen badute, <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> zazpigarren intzidentzia-axiomak ezartzen du nahitaez bigarren puntu komun bat dutela eta haien ebakidura <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> oso bat dela.
+<Capitular letra="B" />i <ConceptLink targetId="plano">plano</ConceptLink> desberdinek <ConceptLink targetId="punto">puntu</ConceptLink> bat partekatzen badute, gutxienez beste puntu bat partekatzen dute, eta haien ebakidura osoa <ConceptLink targetId="recta">zuzen</ConceptLink> bat da.
 
-<Definicion title="Enuntziatu formala">
-  Bi $\pi, \sigma \in \mathcal{E}$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> desberdinek ($\pi \neq \sigma$) $A \in \pi \cap \sigma$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat partekatzen badute, haien arteko ebakidura $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bakar bat da:
+Axioma honek planoak hiru dimentsioko espazioan nola ebakitzen diren deskribatzen du: bi planok ezin dute puntu isolatu bakar batean elkar ukitu.
+
+<Definicion title="Enuntziatu Formala">
+  Bi plano desberdinek (<VisualBind element="plano-pi" color="canela">$\pi_1$</VisualBind> eta <VisualBind element="plano-sigma" color="ocre">$\pi_2$</VisualBind>) $A \in \mathcal{P}$ puntu bat partekatzen badute, haien ebakidura komuna osatzen duen <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bat existitzen da:
   $$
-  \forall \pi, \sigma \in \mathcal{E} \ \bigl((\pi \neq \sigma \land A \in \pi \cap \sigma) \implies \exists! l \in \mathcal{L} \ (l = \pi \cap \sigma)\bigr)
+  (\pi_1 \neq \pi_2 \land A \in \pi_1 \cap \pi_2) \implies \exists \ell \in \mathcal{L} \ (\pi_1 \cap \pi_2 = \ell)
   $$
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
+### Garrantzia teorian
 
-Hiru dimentsioko simulazioan, <VisualBind element="plano-pi" color="canela">$\pi$</VisualBind> eta <VisualBind element="plano-sigma" color="ocre">$\sigma$</VisualBind> planoek elkar ebakitzen dute zeharka. 3D eszena biratzean, argi ikusten da <VisualBind element="recta-l" color="carbon">$l$</VisualBind> zuzena bi gainazal planarren traza jarraitu komuna dela.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Hiru dimentsioko espazioaren dimentsio-koherentzia bermatzen du: bi planok ezin dute elkar ukitu puntu isolatu bakar batean. Plano desberdinen arteko ebakidura ez-huts orok dimentsio bakarreko traza lineal jarraitua sortzen du nahitaez.
-
-<Separador />
-
-### Propietateak
-
-- **Ebakiduraren jarraitutasuna:** 3D espazioan bi plano desberdinen arteko puntu-ukipen bakartuak debekatzen ditu.
-- **Angelu diedroaren oinarria:** $l$ ertzeko zuzenean intziditzen duten bi erdi-planoen arteko angelu diedroaren irekiera definitzea ahalbidetzen du.
-- **Dimentsio-dualitatea:** Plano bereko bi zuzen ebakitzaileren bidez puntu bat zehaztearen espazioko propietate duala da.
+- **Espazio-portaera:** Bermatzen du bi planoren ebakidura inoiz ez izatea puntu isolatu bat ezta gainazal deformatu bat ere.

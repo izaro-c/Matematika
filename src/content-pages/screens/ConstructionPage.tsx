@@ -37,10 +37,11 @@ export const ConstructionPage: React.FC = () => {
             {t('construction', 'whileExploring')}
           </p>
 
-          <Link href={getLocalizedPath('/')}>
-            <a className="inline-block px-8 py-3 border border-carbon/20 hover:border-terracota hover:text-terracota transition-all ac-eyebrow font-bold">
-              ← {t('construction', 'backToLibrary')}
-            </a>
+          <Link
+            href={getLocalizedPath('/')}
+            className="inline-block px-8 py-3 border border-carbon/20 hover:border-terracota hover:text-terracota transition-all ac-eyebrow font-bold"
+          >
+            ← {t('construction', 'backToLibrary')}
           </Link>
         </div>
       </FadeIn>

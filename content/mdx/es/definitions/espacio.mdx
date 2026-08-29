@@ -1,0 +1,34 @@
+export const metadata = {
+  id: "espacio",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Espacio",
+  description: "Ámbito geométrico total y universo contenedor que reúne a todos los puntos, rectas y planos en una teoría dimensional.",
+  branch: "51M",
+  hasSimulation: false,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" },
+    { title: "Elementos", author: "Euclides", locator: "Libro XI", role: "secondary" }
+  ]
+};
+
+<Capitular letra="E" />l **espacio** es el ámbito geométrico total y el universo contenedor donde habitan todas las figuras de una teoría matemática. Representa el nivel superior en la jerarquía dimensional elemental de la geometría: el <ConceptLink targetId="punto">punto</ConceptLink> (<ConceptLink targetId="dimension">dimensión</ConceptLink> 0), la <ConceptLink targetId="recta">recta</ConceptLink> (dimensión 1), el <ConceptLink targetId="plano">plano</ConceptLink> (dimensión 2) y el **espacio** (dimensión 3 o superior).
+
+En un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink>, el espacio no posee propiedades fijas predeterminadas; su comportamiento y su geometría quedan completamente gobernados por los <ConceptLink targetId="axioma">axiomas</ConceptLink> adoptados.
+
+<Definicion title="Definición Geométrica">
+  En la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, el **espacio tridimensional** $\mathcal{E}$ es el <ConceptLink targetId="dominio">dominio</ConceptLink> universal que reúne a todos los <ConceptLink targetId="punto">puntos</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">rectas</ConceptLink> $\mathcal{L}$ y <ConceptLink targetId="plano">planos</ConceptLink> $\Pi$, caracterizado formalmente por dos condiciones de <ConceptLink targetId="incidencia">incidencia</ConceptLink>:
+  1. **Tridimensionalidad:** Existen al menos cuatro puntos que no pertenecen a un mismo plano (<ConceptLink targetId="axioma-incidencia-8">Axioma I.8</ConceptLink>), impidiendo que el espacio se reduzca a un único plano.
+  2. **Intersección planar:** Si dos planos distintos comparten un punto, su intersección común es exactamente una recta (<ConceptLink targetId="axioma-incidencia-7">Axioma I.7</ConceptLink>).
+</Definicion>
+
+<Separador />
+
+### Variedades de espacios geométricos y sus signaturas
+
+- <ConceptLink targetId="espacio-incidencia">**Espacio de incidencia**</ConceptLink>: $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$, estructura mínima gobernada únicamente por las relaciones de pertenencia posicional (<ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>).
+- <ConceptLink targetId="espacio-absoluto">**Espacio absoluto**</ConceptLink>: $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong)$, que incorpora <ConceptLink targetId="estar-entre">orden</ConceptLink>, <ConceptLink targetId="congruencia">congruencia</ConceptLink> y <ConceptLink targetId="continuidad">continuidad</ConceptLink> (<ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>).
+- <ConceptLink targetId="espacio-euclidiano">**Espacio euclidiano**</ConceptLink>: $\mathcal{S}_{\text{euc}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong) \models \mathcal{T}_{\text{abs}} \cup \{\text{Axioma IV}\}$, espacio de curvatura nula determinado por el <ConceptLink targetId="axioma-paralelas-euclides">postulado de las paralelas de Euclides</ConceptLink> (<ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>).
+- <ConceptLink targetId="espacio-hiperbolico">**Espacio hiperbólico**</ConceptLink>: $\mathcal{S}_{\text{hip}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong) \models \mathcal{T}_{\text{abs}} \cup \{\text{Axioma IV}_{\text{hip}}\}$, espacio homogéneo de curvatura constante negativa determinado por el <ConceptLink targetId="axioma-paralelas-hiperbolico">postulado hiperbólico</ConceptLink> (<ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>).
+- <ConceptLink targetId="espacio-proyectivo">**Espacio proyectivo**</ConceptLink>: $\mathcal{S}_{\text{proy}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$, extensión geométrica donde dos rectas coplanares siempre se cortan en un punto propio o ideal.
