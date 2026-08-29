@@ -17,12 +17,12 @@ export const metadata = {
 import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 
-<Capitular letra="D" />ados tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> cualesquiera, existe al menos un <ConceptLink targetId="plano">plano</ConceptLink> que incide con los tres.
+<Capitular letra="D" />ados tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> cualesquiera, existe al menos un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> que incide con los tres.
 
 Este axioma traslada al espacio bidimensional el principio de determinación lineal: así como dos puntos fijan una recta, tres puntos no alineados aseguran la existencia de un plano en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
 
 <Definicion title="Enunciado Formal">
-  Para cualesquiera tres <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, existe al menos un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="polyTriangulo" color="canela">$\pi$</VisualBind> tal que los tres puntos <ConceptLink targetId="incidencia">inciden</ConceptLink> en $\pi$:
+  Para cualesquiera tres <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, existe al menos un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="polyTriangulo" color="canela">$\pi$</VisualBind> tal que los tres puntos <ConceptLink targetId="incidencia" isDependency={true}>inciden</ConceptLink> en $\pi$:
   $$
   \forall A, B, C \in \mathcal{P} \ \bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \implies \exists \pi \in \Pi \ (A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi)\bigr)
   $$

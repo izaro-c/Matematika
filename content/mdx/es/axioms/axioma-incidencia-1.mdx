@@ -17,12 +17,12 @@ export const metadata = {
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="D" />ados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos cualesquiera, existe exactamente una <ConceptLink targetId="recta">recta</ConceptLink> que incide con ambos.
+<Capitular letra="D" />ados dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos cualesquiera, existe exactamente una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> que incide con ambos.
 
 Este axioma establece la conexión lineal elemental de la geometría: dos puntos distintos determinan de manera unívoca la posición de una única línea recta en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
 
 <Definicion title="Enunciado Formal">
-  Para cualesquiera dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind> y <VisualBind element="pB" color="ocre">$B$</VisualBind> ($A \neq B$), existe una única <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> tal que $A$ y $B$ <ConceptLink targetId="incidencia">inciden</ConceptLink> en $\ell$:
+  Para cualesquiera dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind> y <VisualBind element="pB" color="ocre">$B$</VisualBind> ($A \neq B$), existe una única <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> tal que $A$ y $B$ <ConceptLink targetId="incidencia" isDependency={true}>inciden</ConceptLink> en $\ell$:
   $$
   \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)\bigr)
   $$

@@ -17,12 +17,12 @@ export const metadata = {
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="T" />oda <ConceptLink targetId="recta">recta</ConceptLink> incide al menos con dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos.
+<Capitular letra="T" />oda <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> incide al menos con dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos.
 
 Este axioma garantiza que las rectas posean contenido geométrico en el <ConceptLink targetId="espacio">espacio</ConceptLink>, impidiendo que existan líneas sin puntos o reducidas a un único punto aislado.
 
 <Definicion title="Enunciado Formal">
-  Para toda <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind>, existen al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> que <ConceptLink targetId="incidencia">inciden</ConceptLink> en $\ell$:
+  Para toda <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind>, existen al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> que <ConceptLink targetId="incidencia" isDependency={true}>inciden</ConceptLink> en $\ell$:
   $$
   \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)
   $$

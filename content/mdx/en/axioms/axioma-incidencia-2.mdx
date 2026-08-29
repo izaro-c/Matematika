@@ -17,12 +17,12 @@ export const metadata = {
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="E" />very <ConceptLink targetId="recta">line</ConceptLink> is <ConceptLink targetId="incidencia">incident</ConceptLink> with at least two distinct <ConceptLink targetId="punto">points</ConceptLink>.
+<Capitular letra="E" />very <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> is <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with at least two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>.
 
 This axiom guarantees that lines possess geometric content in <ConceptLink targetId="espacio">space</ConceptLink>, preventing lines from being empty or collapsing into a single isolated point.
 
 <Definicion title="Formal Statement">
-  For every <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind>, there exist at least two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> <ConceptLink targetId="incidencia">incident</ConceptLink> with $\ell$:
+  For every <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind>, there exist at least two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> <ConceptLink targetId="incidencia">incident</ConceptLink> with $\ell$:
   $$
   \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)
   $$
