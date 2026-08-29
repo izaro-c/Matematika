@@ -3138,15 +3138,25 @@
       "lang": "en",
       "type": "definicion",
       "subtype": "primitivo",
-      "title": "Betweenness Relation",
-      "description": "Primitive ternary relation of linear order establishing intermediacy among three collinear points.",
-      "branch": "51M",
+      "title": "Betweenness",
+      "description": "Primitive ternary relation of linear order formalizing the intermediation of points along a line.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Chapter I, Group II Axioms",
+          "locator": "Chapter I, §3",
           "role": "primary"
         }
       ],
@@ -3174,11 +3184,10 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Estar entre",
-      "description": "Relación ternaria primitiva de orden lineal que establece la intermediación posicional entre tres puntos colineales.",
+      "description": "Relación ternaria primitiva de orden lineal que formaliza la intermediación de puntos sobre una recta.",
       "branch": "51A",
       "branches": [
         "51A",
-        "51M",
         "03B"
       ],
       "tags": [
@@ -10266,11 +10275,10 @@
       "type": "definicion",
       "subtype": "primitivo",
       "title": "Estar entre",
-      "description": "Relación ternaria primitiva de orden lineal que establece la intermediación posicional entre tres puntos colineales.",
+      "description": "Relación ternaria primitiva de orden lineal que formaliza la intermediación de puntos sobre una recta.",
       "branch": "51A",
       "branches": [
         "51A",
-        "51M",
         "03B"
       ],
       "tags": [
@@ -14616,15 +14624,25 @@
       "lang": "eu",
       "type": "definicion",
       "subtype": "primitivo",
-      "title": "Bitartekotasuna (Artean egotea)",
-      "description": "Zuzen bereko hiru punturen arteko bitartekotasuna ezartzen duen ordena linealeko jatorrizko erlazio hirutarra.",
-      "branch": "51M",
+      "title": "Tartean egotea",
+      "description": "Zuzen baten gaineko puntuen bitartekotasuna formalizatzen duen oinarrizko ordena linealeko erlazio hirutarra.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. Kapitulua, II. Taldeko Axiomak",
+          "locator": "I. kapitulua, §3",
           "role": "primary"
         }
       ],

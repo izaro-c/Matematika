@@ -595,8 +595,8 @@
       "id": "estar-entre",
       "type": "definicion",
       "subtype": "primitivo",
-      "title": "Bitartekotasuna (Artean egotea)",
-      "description": "Zuzen bereko hiru punturen arteko bitartekotasuna ezartzen duen ordena linealeko jatorrizko erlazio hirutarra.",
+      "title": "Tartean egotea",
+      "description": "Zuzen baten gaineko puntuen bitartekotasuna formalizatzen duen oinarrizko ordena linealeko erlazio hirutarra.",
       "proofs": [],
       "directDependencies": []
     },
