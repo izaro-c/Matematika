@@ -24,36 +24,24 @@ export const Simulation = EstarEntre;
 
 <Capitular letra="L" />a relación de **estar entre** (o intermediación) es una <ConceptLink targetId="relacion-ternaria">relación ternaria</ConceptLink> <ConceptLink targetId="concepto-primitivo">primitiva</ConceptLink> que formaliza el <ConceptLink targetId="orden">orden lineal</ConceptLink> estricto de los <ConceptLink targetId="punto">puntos</ConceptLink> sobre una <ConceptLink targetId="recta">recta</ConceptLink> en la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> de <ConceptLink targetId="david-hilbert">David Hilbert</ConceptLink>.
 
-En la <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink> abstracta, esta noción primitiva no presupone <ConceptLink targetId="coordenadas">coordenadas</ConceptLink> numéricas ni <ConceptLink targetId="metrica">funciones métricas</ConceptLink> externas; su comportamiento formal está gobernado por el grupo de <ConceptLink targetId="axioma">axiomas</ConceptLink> de orden (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> y <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>), introducido formalmente para subsanar los vacíos lógicos en los postulados clásicos señalados por <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink>.
+En la <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink>, su comportamiento formal está gobernado por el grupo de <ConceptLink targetId="axioma">axiomas</ConceptLink> de orden (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> y <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>).
 
 <Definicion title="Relación primitiva de intermediación">
 En la <ConceptLink targetId="signatura">signatura</ConceptLink> de Hilbert $\sigma_{\text{Hil}}$, la intermediación es un símbolo de relación ternaria $\mathbf{B}$ con <ConceptLink targetId="aridad">aridad</ConceptLink> $\text{ar}(\mathbf{B}) = \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ sobre el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> de puntos $\mathcal{P}$.
 
-Para tres puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="azul">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> pertenecientes a una misma recta <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, la relación se denota formalmente como:
+Para cualquier <ConceptLink targetId="terna">terna</ConceptLink> de puntos <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> de una misma recta <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, la relación se denota formalmente como:
 
 $$
 A * B * C \quad \text{o bien} \quad \mathbf{B}(A, B, C)
 $$
 
-y expresa el predicado «el punto $B$ está entre $A$ y $C$». Toda terna que satisface la relación exige formalmente que los tres puntos sean distintos entre sí y mutuamente <ConceptLink targetId="colinealidad">collineales</ConceptLink> mediante <ConceptLink targetId="incidencia">incidencia</ConceptLink>:
+y expresa el predicado «el punto $B$ está entre $A$ y $C$». La relación exige formalmente que los tres puntos sean distintos entre sí y mutuamente <ConceptLink targetId="colinealidad">colineales</ConceptLink> mediante <ConceptLink targetId="incidencia">incidencia</ConceptLink>:
 
 $$
 \forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\Bigr)\Biggr)
 $$
 </Definicion>
 
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Propiedades relacionales del predicado">
-    <PropiedadItem id="simetria-extremos" title="Simetría de extremos">
-      La relación es invariante ante la inversión del orden de los puntos extremos: $A * B * C \iff C * B * A$.
-    </PropiedadItem>
-    <PropiedadItem id="asimetria-posicional" title="Exclusividad y asimetría interna">
-      La posición intermedia es unívoca para una terna dada; si un punto se encuentra entre otros dos, ningún otro punto de la terna puede estar entre los restantes: $A * B * C \implies \neg(B * A * C) \land \neg(A * C * B)$.
-    </PropiedadItem>
-    <PropiedadItem id="irreflexividad-estricta" title="Irreflexividad estricta">
-      Ningún punto puede encontrarse entre sí mismo y otro punto: $\neg(A * A * B) \land \neg(A * B * B) \land \neg(A * B * A)$.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
+<Nota>
+Esta relación primitiva constituye el fundamento formal para definir el <ConceptLink targetId="segmento">segmento</ConceptLink>, la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink>, el <ConceptLink targetId="semiplano">semiplano</ConceptLink> y la separación lineal de la recta.
+</Nota>

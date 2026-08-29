@@ -24,12 +24,12 @@ export const Simulation = EstarEntre;
 
 <Capitular letra="T" />he **betweenness** relation (or intermediation) is a <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> <ConceptLink targetId="relacion-ternaria">ternary relation</ConceptLink> that formalizes the strict <ConceptLink targetId="orden">linear order</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink> along a <ConceptLink targetId="recta">line</ConceptLink> in <ConceptLink targetId="david-hilbert">David Hilbert's</ConceptLink> <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>.
 
-In the abstract <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink>, this primitive notion does not presuppose numerical <ConceptLink targetId="coordenadas">coordinates</ConceptLink> or external <ConceptLink targetId="metrica">metric functions</ConceptLink>; its formal behavior is governed by the group of order <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>), formally introduced to resolve the logical gaps in classical postulates identified by <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink>.
+In the <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink>, its formal behavior is governed by the group of order <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>).
 
 <Definicion title="Primitive betweenness relation">
 In Hilbert's <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma_{\text{Hil}}$, betweenness is a ternary relation symbol $\mathbf{B}$ with <ConceptLink targetId="aridad">arity</ConceptLink> $\text{ar}(\mathbf{B}) = \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ over the <ConceptLink targetId="dominio">primitive domain</ConceptLink> of points $\mathcal{P}$.
 
-For three points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="azul">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> lying on the same line <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, the relation is formally denoted as:
+For any <ConceptLink targetId="terna">triplet</ConceptLink> of points <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> lying on the same line <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, the relation is formally denoted as:
 
 $$
 A * B * C \quad \text{or} \quad \mathbf{B}(A, B, C)
@@ -42,18 +42,6 @@ $$
 $$
 </Definicion>
 
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Relational properties of the predicate">
-    <PropiedadItem id="simetria-extremos" title="Endpoint symmetry">
-      The relation is invariant under reversal of the endpoint order: $A * B * C \iff C * B * A$.
-    </PropiedadItem>
-    <PropiedadItem id="asimetria-posicional" title="Exclusivity and internal asymmetry">
-      The intermediate position is unique for a given point triplet; if a point lies between two others, no other point in the triplet can lie between the remaining ones: $A * B * C \implies \neg(B * A * C) \land \neg(A * C * B)$.
-    </PropiedadItem>
-    <PropiedadItem id="irreflexividad-estricta" title="Strict irreflexivity">
-      No point can lie between itself and another point: $\neg(A * A * B) \land \neg(A * B * B) \land \neg(A * B * A)$.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
+<Nota>
+This primitive relation provides the formal foundation for defining <ConceptLink targetId="segmento">segments</ConceptLink>, <ConceptLink targetId="semirrecta">rays</ConceptLink>, <ConceptLink targetId="semiplano">half-planes</ConceptLink>, and the linear separation of the line.
+</Nota>

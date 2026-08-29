@@ -171,7 +171,7 @@ export const PaschSpec = createDiagramSpec(
       "selection": {
         "selectable": true,
         "highlightable": false,
-        "ariaLabel": "Punto D",
+        "ariaLabel": "Punto P",
         "role": "primary"
       },
       "target": true,
@@ -205,7 +205,7 @@ export const PaschSpec = createDiagramSpec(
       "selection": {
         "selectable": true,
         "highlightable": false,
-        "ariaLabel": "Punto D",
+        "ariaLabel": "Punto de dirección",
         "role": "primary"
       },
       "target": true,

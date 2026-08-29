@@ -1706,8 +1706,18 @@
       "lang": "en",
       "type": "axioma",
       "title": "Axiom II.1 (Symmetry and Collinearity of Betweenness)",
-      "description": "If B lies between A and C, then A, B, and C are three distinct points on the same line, and B also lies between C and A.",
-      "branch": "51M",
+      "description": "If a point B lies between A and C, then A, B, and C are distinct points on the same line and B also lies between C and A.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -1741,9 +1751,19 @@
       "id": "axioma-orden-1",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma II.1 (Simetría y colinealidad de la entreidad)",
-      "description": "Si B está entre A y C, entonces A, B y C son tres puntos distintos de una misma recta y B también está entre C y A.",
-      "branch": "51M",
+      "title": "Axioma II.1 (Simetría y colinealidad de la intermediación)",
+      "description": "Si un punto B está entre A y C, entonces A, B y C son puntos distintos sobre una misma recta y B también está entre C y A.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -9557,9 +9577,19 @@
       "id": "axioma-orden-1",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma II.1 (Simetría y colinealidad de la entreidad)",
-      "description": "Si B está entre A y C, entonces A, B y C son tres puntos distintos de una misma recta y B también está entre C y A.",
-      "branch": "51M",
+      "title": "Axioma II.1 (Simetría y colinealidad de la intermediación)",
+      "description": "Si un punto B está entre A y C, entonces A, B y C son puntos distintos sobre una misma recta y B también está entre C y A.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -13907,9 +13937,19 @@
       "id": "axioma-orden-1",
       "lang": "eu",
       "type": "axioma",
-      "title": "II.1 axioma (Tartean egotearen simetria eta kolinealtasuna)",
-      "description": "B puntua A eta C artean badago, A, B eta C zuzen bereko hiru puntu desberdin dira eta B puntua C eta A artean ere badago.",
-      "branch": "51M",
+      "title": "II.1 axioma (Bitartekotasunaren simetria eta kolinealtasuna)",
+      "description": "B puntua A eta C-ren artean badago, orduan A, B eta C zuzen bereko hiru puntu desberdin dira eta B puntua C eta A-ren artean ere badago.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,

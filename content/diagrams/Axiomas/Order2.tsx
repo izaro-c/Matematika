@@ -97,11 +97,11 @@ export const Order2Spec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto B",
+        "ariaLabel": "Punto C",
         "role": "primary"
       },
       "target": true,
-      "targetId": "pB",
+      "targetId": "pC",
       "objectType": "point",
       "definition": {
         "type": "coordinates",
@@ -125,15 +125,15 @@ export const Order2Spec = createDiagramSpec(
       "color": "carbon",
       "layerId": "geometry",
       "order": 2000,
-      "visible": true,
+      "visible": false,
       "locked": false,
       "groupIds": [],
       "selection": {
-        "selectable": true,
+        "selectable": false,
         "ariaLabel": "Punto C",
         "role": "primary"
       },
-      "target": true,
+      "target": false,
       "targetId": "pC",
       "objectType": "point",
       "definition": {
@@ -165,7 +165,7 @@ export const Order2Spec = createDiagramSpec(
         "ariaLabel": "Punto D",
         "role": "primary"
       },
-      "target": true,
+      "target": false,
       "targetId": "pD",
       "objectType": "point",
       "definition": {
@@ -190,11 +190,11 @@ export const Order2Spec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto E",
+        "ariaLabel": "Punto B",
         "role": "primary"
       },
       "target": true,
-      "targetId": "pE",
+      "targetId": "pB",
       "objectType": "point",
       "definition": {
         "type": "coordinates",
@@ -203,7 +203,7 @@ export const Order2Spec = createDiagramSpec(
       },
       "mobility": {
         "type": "on-support",
-        "support": "segAB"
+        "support": "segAC"
       },
       "appearance": {
         "size": 7,
@@ -246,7 +246,7 @@ export const Order2Spec = createDiagramSpec(
       }
     },
     {
-      "id": "segAB",
+      "id": "segAC",
       "label": "Segmento",
       "color": "carbon",
       "layerId": "layer3",
@@ -259,8 +259,8 @@ export const Order2Spec = createDiagramSpec(
         "ariaLabel": "Segmento",
         "role": "secondary"
       },
-      "target": true,
-      "targetId": "segAB",
+      "target": false,
+      "targetId": "segAC",
       "objectType": "path",
       "geometry": {
         "type": "segment",

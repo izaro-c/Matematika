@@ -24,36 +24,24 @@ export const Simulation = EstarEntre;
 
 <Capitular letra="T" />**artean egotearen** erlazioa (edo bitartekotasuna) <ConceptLink targetId="david-hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoan</ConceptLink> <ConceptLink targetId="recta">zuzen</ConceptLink> baten gaineko <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="orden">ordena lineal</ConceptLink> hertsia formalizatzen duen <ConceptLink targetId="concepto-primitivo">oinarrizko</ConceptLink> <ConceptLink targetId="relacion-ternaria">erlazio hirutarra</ConceptLink> da.
 
-<ConceptLink targetId="estructura-geometrica">Egitura geometriko</ConceptLink> abstraktuan, nozio primitibo honek ez ditu kanpoko zenbakizko <ConceptLink targetId="coordenadas">koordenatuak</ConceptLink> ezta <ConceptLink targetId="metrica">funtzio metrikoak</ConceptLink> oinarritzat hartzen; bere portaera formala ordena-<ConceptLink targetId="axioma">axiomen</ConceptLink> taldeak (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> eta <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>) arautzen du, zeina <ConceptLink targetId="pasch">Moritz Paschek</ConceptLink> geometria klasikoko postulatuetan identifikatutako hutsune logikoak gainditzeko txertatu baitzen.
+<ConceptLink targetId="estructura-geometrica">Egitura geometrikoan</ConceptLink>, bere portaera formala ordena-<ConceptLink targetId="axioma">axiomen</ConceptLink> taldeak (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> eta <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>) arautzen du.
 
 <Definicion title="Bitartekotasunaren oinarrizko erlazioa">
 Hilberten $\sigma_{\text{Hil}}$ <ConceptLink targetId="signatura">signaturan</ConceptLink>, bitartekotasuna $\mathbf{B}$ erlazio-ikur hirutarra da, puntuen $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuaren</ConceptLink> gainean $\text{ar}(\mathbf{B}) = \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ <ConceptLink targetId="aridad">aritatea</ConceptLink> duena.
 
-<VisualBind element="lineAC" color="carbon">$\ell$</VisualBind> zuzen bereko hiru <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="azul">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntutarako, erlazioa formalki honela adierazten da:
+<VisualBind element="lineAC" color="carbon">$\ell$</VisualBind> zuzen bereko edozein <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind> <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="terna">hirukoterako</ConceptLink>, erlazioa formalki honela adierazten da:
 
 $$
 A * B * C \quad \text{edo} \quad \mathbf{B}(A, B, C)
 $$
 
-eta formalki «$B$ puntua $A$ eta $C$-ren artean dago» predikatua adierazten du. Erlazioa betetzeak formalki hiru puntuak elkarren artean desberdinak eta <ConceptLink targetId="incidencia">intzidentziaren</ConceptLink> bidez elkarrekin <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> izatea eskatzen du:
+eta formalki «$B$ puntua $A$ eta $C$-ren artean dago» predikatua adierazten du. Erlazioa betetzeak formalki eskatzen du hiru puntuak elkarren artean desberdinak eta elkarrekin <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> izatea <ConceptLink targetId="incidencia">intzidentziaren</ConceptLink> bidez:
 
 $$
 \forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\Bigr)\Biggr)
 $$
 </Definicion>
 
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Predikatuaren erlazio-propietateak">
-    <PropiedadItem id="simetria-extremos" title="Muturren simetria">
-      Erlazioa aldaezina da muturreko puntuen ordena alderantzikatzean: $A * B * C \iff C * B * A$.
-    </PropiedadItem>
-    <PropiedadItem id="asimetria-posicional" title="Esklusibotasuna eta barne-asimetria">
-      Tarteko posizioa bakarra da emandako puntu-hirukote baterako; puntu bat beste biren artean badago, hirukoteko beste ezein puntu ezin da gainerakoen artean egon: $A * B * C \implies \neg(B * A * C) \land \neg(A * C * B)$.
-    </PropiedadItem>
-    <PropiedadItem id="irreflexividad-estricta" title="Irreflexibotasun hertsia">
-      Ezein puntu ezin da bere buruaren eta beste puntu baten artean egon: $\neg(A * A * B) \land \neg(A * B * B) \land \neg(A * B * A)$.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
+<Nota>
+Oinarrizko erlazio honek oinarri formala ematen du <ConceptLink targetId="segmento">zuzenki</ConceptLink>, <ConceptLink targetId="semirrecta">semizuzen</ConceptLink>, <ConceptLink targetId="semiplano">planoerdi</ConceptLink> eta zuzenaren bereizketa linealaren nozioak definitzeko.
+</Nota>
