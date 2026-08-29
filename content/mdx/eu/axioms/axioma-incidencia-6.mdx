@@ -2,42 +2,37 @@ export const metadata = {
   id: "axioma-incidencia-6",
   lang: "eu",
   type: "axioma",
-  title: "I.6 Axioma (Zuzena planoan sartzea)",
-  description: "Zuzen baten bi puntu desberdin plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
+  title: "I.6 axioma (Zuzenaren inklusioa planoan)",
+  description: "Zuzen bateko bi puntu desberdinek plano batekin intziditzen badute, zuzen horretako puntu guztiek ere planoarekin intziditzen dute.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §1",
+      role: "primary"
+    }
   ]
 };
 
 import { Incidence6 } from '@content/diagrams/Axiomas/Incidence6';
 export const Simulation = Incidence6;
 
-<Capitular letra="Z" />**uzen** baten bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin <ConceptLink targetId="plano">plano</ConceptLink> batekoak badira, orduan zuzen horren puntu guztiak plano horretakoak dira.
+<Capitular letra="Z" />uzen bateko bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinek <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> batekin <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> badute, <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> horretako puntu guztiek ere plano horrekin intziditzen dute.
 
-Axioma honek planoaren zurruntasuna eta lautasuna formalizatzen ditu: zuzen bat ezin da plano batetik sartu eta atera, ezta planoarekiko okertu ere <ConceptLink targetId="espacio">espazioan</ConceptLink>.
+<ConceptLink targetId="sistema-incidencia">Intzidentzia-sisteman</ConceptLink>, postulatu honek <ConceptLink targetId="plano">planoaren</ConceptLink> oinarrizko planotasuna formalizatzen du. <ConceptLink targetId="recta">Zuzen</ConceptLink> batek plano batekin bi <ConceptLink targetId="punto">puntu</ConceptLink> partekatzen baditu, bere osotasunean planoaren gainazalean geratuko dela bermatzen du <ConceptLink targetId="espacio">espazioan</ConceptLink>.
 
-<Definicion title="Enuntziatu Formala">
-  Izan bitez <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> <VisualBind element="recta" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bateko bi puntu desberdin. $A$ eta $B$ <VisualBind element="plano" color="canela">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> batean <ConceptLink targetId="incidencia">intziditzen</ConceptLink> badute, orduan $\ell$ zuzen osoa $\pi$-n sartuta dago:
-  $$
-  \forall \ell \in \mathcal{L}, \, \forall \pi \in \Pi, \, \forall A, B \in \mathcal{P} \ \bigl((A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi) \implies \ell \subseteq \pi\bigr)
-  $$
-  non $\ell \subseteq \pi$ adierazpenak esan nahi duen $\ell$-rekin intzidente den puntu orok $\pi$-rekin ere intziditzen duela.
+<Definicion title="I.6 axioma (Zuzenaren inklusioa planoan)">
+Izan bitez <VisualBind element="recta" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzeneko</ConceptLink> bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind>. $A$-k eta $B$-k <VisualBind element="plano" color="azul">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> batekin <ConceptLink targetId="incidencia">intziditzen</ConceptLink> badute, $\ell$-rekin intziditzen duen edozein puntuk $\pi$-rekin ere intziditzen du:
+
+$$
+\forall \ell \in \mathcal{L}, \, \forall \pi \in \Pi, \, \forall A, B \in \mathcal{P} \ \Biggl(\Bigl(A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi\Bigr) \implies \forall P \in \mathcal{P} \ (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)\Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Ondorio eta Propietate Teorikoak">
-    <PropiedadItem id="planitud-espacial" title="Zurruntasun eta lautasun geometrikoa">
-      Planoaren oinarrizko lautasuna formalizatzen du: plano baten bi punturekin intziditzen duen zuzena ezin da okertu ezta bertatik atera ere, haren azaleran erabat sartuta geratuz.
-    </PropiedadItem>
-    <PropiedadItem id="transferencia-lineal" title="Propietateen transferentzia planora">
-      Zuzen-geometriaren teorema eta propietate guztiak espazioko edozein plano bidimentsionalen barrualdera zuzenean eramatea ahalbidetzen du.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
-
+<Nota>
+<ConceptLink targetId="incidencia">Intzidentzia</ConceptLink>-<ConceptLink targetId="conjunto">multzoen</ConceptLink> terminoetan, axiomaren ondorioak $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$ puntu-trazen inklusioa adierazten du. Propietate honi esker, <ConceptLink targetId="geometria-sintetica">geometria sintetiko</ConceptLink> planoko <ConceptLink targetId="teorema">teoremak</ConceptLink> hiru dimentsioko <ConceptLink targetId="espacio">espazioaren</ConceptLink> esparrura transferi daitezke sistematikoki.
+</Nota>

@@ -3,41 +3,36 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma I.5 (Unicidad del plano)",
-  description: "Por tres puntos no colineales pasa a lo sumo un plano, y todo plano contiene al menos tres puntos no colineales.",
+  description: "Por tres puntos no colineales pasa a lo sumo un plano.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §1",
+      role: "primary"
+    }
   ]
 };
 
 import { Incidence5 } from '@content/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
 
-<Capitular letra="T" />res <ConceptLink targetId="punto">puntos</ConceptLink> no colineales no pueden pertenecer a más de un <ConceptLink targetId="plano">plano</ConceptLink>, y todo plano contiene al menos tres puntos no situados sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>.
+<Capitular letra="P" />or tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> pasa a lo sumo un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>.
 
-Este postulado complementa al <ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink>, cerrando la propiedad de unicidad: tres puntos no alineados determinan un único plano unívoco en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
+En el <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>, este postulado complementa al <ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink>, fijando la unicidad del <ConceptLink targetId="plano">plano</ConceptLink> determinado por tres <ConceptLink targetId="punto">puntos</ConceptLink> que no pertenecen a una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
 
-<Definicion title="Enunciado Formal">
-  1. Si tres puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> no son colineales, existe a lo sumo un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="canela">$\pi$</VisualBind> que incide con los tres:
-  $$
-  \forall A, B, C \in \mathcal{P}, \, \forall \pi_1, \pi_2 \in \Pi \ \bigl((\text{no-colineales}(A, B, C) \land A, B, C \, \mathbf{I} \, \pi_1 \land A, B, C \, \mathbf{I} \, \pi_2) \implies \pi_1 = \pi_2\bigr)
-  $$
-  2. Todo plano $\pi \in \Pi$ contiene al menos tres puntos distintos no colineales que inciden en él.
+<Definicion title="Axioma I.5 (Unicidad del plano)">
+Sean <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink>. Existe a lo sumo un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="azul">$\pi$</VisualBind> que <ConceptLink targetId="incidencia" isDependency={true}>incide</ConceptLink> con los tres:
+
+$$
+\forall A, B, C \in \mathcal{P}, \, \forall \pi_1, \pi_2 \in \Pi \ \Biggl(\Bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land A, B, C \, \mathbf{I} \, \pi_1 \land A, B, C \, \mathbf{I} \, \pi_2\Bigr) \implies \pi_1 = \pi_2\Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Consecuencias y Propiedades Teóricas">
-    <PropiedadItem id="unicidad-plano" title="Unicidad del plano determinado">
-      Junto con el <ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink>, garantiza que tres puntos no colineales determinan exactamente un único plano ($\exists! \pi \in \Pi$).
-    </PropiedadItem>
-    <PropiedadItem id="densidad-plano" title="No colapso del plano">
-      Asegura que ningún plano se reduzca a una única recta o a una configuración vacía, preservando su naturaleza bidimensional genuina.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
-
+<Nota>
+Este axioma descarta la posibilidad de que una misma terna de <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> sirva como soporte de múltiples <ConceptLink targetId="plano">planos</ConceptLink> simultáneos, asegurando la rigidez bidimensional de cada plano dentro del <ConceptLink targetId="espacio">espacio</ConceptLink> de tres <ConceptLink targetId="dimension">dimensiones</ConceptLink>.
+</Nota>

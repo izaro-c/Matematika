@@ -4,59 +4,56 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Estar entre",
-  description: "Relación ternaria primitiva de orden lineal que establece la intermediación entre tres puntos colineales.",
-  branch: "51M",
+  description: "Relación ternaria primitiva de orden lineal que formaliza la intermediación de puntos sobre una recta.",
+  branch: "51A",
+  branches: ["51A", "03B"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, Axiomas del Grupo II", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { EstarEntre } from '@content/diagrams/Definiciones/EstarEntre';
 export const Simulation = EstarEntre;
 
-<Capitular letra="L" />a relación de intermediación, denotada formalmente como estar entre, es una relación ternaria primitiva fundamental en la axiomatización de la geometría sintética de David Hilbert. Permite dotar a las <ConceptLink targetId="recta">rectas</ConceptLink> de una estructura de orden lineal estricto y denso sin recurrir a los números reales ni a nociones métricas externas.
+<Capitular letra="L" />a relación de **estar entre** (o intermediación) es una <ConceptLink targetId="relacion-ternaria">relación ternaria</ConceptLink> <ConceptLink targetId="concepto-primitivo">primitiva</ConceptLink> que formaliza el <ConceptLink targetId="orden">orden lineal</ConceptLink> estricto de los <ConceptLink targetId="punto">puntos</ConceptLink> sobre una <ConceptLink targetId="recta">recta</ConceptLink> en la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> de <ConceptLink targetId="david-hilbert">David Hilbert</ConceptLink>.
 
-<Definicion title="">
-  Sean <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="musgo">$C$</VisualBind> tres <ConceptLink targetId="punto">puntos</ConceptLink> distintos pertenecientes a una misma <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>. La relación ternaria $A * B * C$ ($B$ está entre $A$ y $C$) es una relación primitiva regida por los axiomas de orden de Hilbert. En un marco métrico euclidiano, equivale a la aditividad de las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind> y <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind> respecto a <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind>:
-  $$
-  A * B * C \iff d(A, B) + d(B, C) = d(A, C)
-  $$
+En la <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink> abstracta, esta noción primitiva no presupone <ConceptLink targetId="coordenadas">coordenadas</ConceptLink> numéricas ni <ConceptLink targetId="metrica">funciones métricas</ConceptLink> externas; su comportamiento formal está gobernado por el grupo de <ConceptLink targetId="axioma">axiomas</ConceptLink> de orden (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> y <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>), introducido formalmente para subsanar los vacíos lógicos en los postulados clásicos señalados por <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink>.
+
+<Definicion title="Relación primitiva de intermediación">
+En la <ConceptLink targetId="signatura">signatura</ConceptLink> de Hilbert $\sigma_{\text{Hil}}$, la intermediación es un símbolo de relación ternaria $\mathbf{B}$ con <ConceptLink targetId="aridad">aridad</ConceptLink> $\text{ar}(\mathbf{B}) = \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ sobre el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> de puntos $\mathcal{P}$.
+
+Para tres puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="azul">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> pertenecientes a una misma recta <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, la relación se denota formalmente como:
+
+$$
+A * B * C \quad \text{o bien} \quad \mathbf{B}(A, B, C)
+$$
+
+y expresa el predicado «el punto $B$ está entre $A$ y $C$». Toda terna que satisface la relación exige formalmente que los tres puntos sean distintos entre sí y mutuamente <ConceptLink targetId="colinealidad">collineales</ConceptLink> mediante <ConceptLink targetId="incidencia">incidencia</ConceptLink>:
+
+$$
+\forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\Bigr)\Biggr)
+$$
 </Definicion>
 
 <Separador />
 
-### Axiomas de orden de Hilbert (Grupo II)
-
-La ordenación sobre una recta se fundamenta formalmente en los siguientes axiomas de intermediación:
-- **Simetría**: Si $A * B * C$, entonces $C * B * A$.
-- **Extensión**: Dados dos puntos $A$ y $C$, existe al menos un punto $D$ tal que $A * C * D$.
-- **Exclusividad**: De tres puntos colineales distintos, a lo sumo uno se encuentra entre los otros dos.
-- **Axioma de Pasch**: Si una recta corta el interior de un lado de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> sin pasar por los vértices, corta necesariamente el interior de uno de los otros dos lados.
-
-### Geometría analítica
-
-En la recta real $\mathbb{R}$, dados tres números reales distintos $x_A, x_B, x_C$, la relación se formula algebraicamente:
-$$
-A * B * C \iff (x_A < x_B < x_C) \lor (x_C < x_B < x_A)
-$$
-En $\mathbb{R}^n$, equivale a que $B = (1 - t)A + tC$ con $t \in (0, 1)$.
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Axiomas de orden y consecuencias">
-    <PropiedadItem id="axioma-orden-1" title="Simetría de la intermediación">
-      $A * B * C \implies C * B * A$.
+  <PropiedadesGrupo title="Propiedades relacionales del predicado">
+    <PropiedadItem id="simetria-extremos" title="Simetría de extremos">
+      La relación es invariante ante la inversión del orden de los puntos extremos: $A * B * C \iff C * B * A$.
     </PropiedadItem>
-    <PropiedadItem id="axioma-orden-2" title="Extensión de la recta">
-      $\forall A \neq B, \; \exists C \text{ tal que } A * B * C$.
+    <PropiedadItem id="asimetria-posicional" title="Exclusividad y asimetría interna">
+      La posición intermedia es unívoca para una terna dada; si un punto se encuentra entre otros dos, ningún otro punto de la terna puede estar entre los restantes: $A * B * C \implies \neg(B * A * C) \land \neg(A * C * B)$.
     </PropiedadItem>
-    <PropiedadItem id="axioma-orden-3" title="Tricotomía de orden en la recta">
-      Dados tres puntos colineales distintos, uno y solo uno está entre los otros dos.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-orden-4" title="Axioma de Pasch">
-      Una recta coplanar que interseca el interior de un lado de un triángulo interseca a otro lado.
+    <PropiedadItem id="irreflexividad-estricta" title="Irreflexividad estricta">
+      Ningún punto puede encontrarse entre sí mismo y otro punto: $\neg(A * A * B) \land \neg(A * B * B) \land \neg(A * B * A)$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

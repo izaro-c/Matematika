@@ -2,42 +2,37 @@ export const metadata = {
   id: "axioma-incidencia-5",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.5 (Uniqueness of the plane)",
-  description: "Through three non-collinear points passes at most one plane, and every plane contains at least three non-collinear points.",
+  title: "Axiom I.5 (Uniqueness of the Plane)",
+  description: "Through three non-collinear points, there is at most one plane.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §1",
+      role: "primary"
+    }
   ]
 };
 
 import { Incidence5 } from '@content/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
 
-<Capitular letra="T" />hree non-collinear <ConceptLink targetId="punto">points</ConceptLink> cannot belong to more than one <ConceptLink targetId="plano">plane</ConceptLink>, and every plane contains at least three points not lying on the same <ConceptLink targetId="recta">line</ConceptLink>.
+<Capitular letra="T" />hrough three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>, there passes at most one <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>.
 
-This postulate complements <ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink>, completing the uniqueness property: three non-aligned points determine a single unique plane in <ConceptLink targetId="espacio">space</ConceptLink>.
+In the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>, this postulate complements <ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink>, establishing the uniqueness of the <ConceptLink targetId="plano">plane</ConceptLink> determined by three <ConceptLink targetId="punto">points</ConceptLink> not lying on the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>.
 
-<Definicion title="Formal Statement">
-  1. If three points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> are non-collinear, there exists at most one <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano" color="canela">$\pi$</VisualBind> incident with all three:
-  $$
-  \forall A, B, C \in \mathcal{P}, \, \forall \pi_1, \pi_2 \in \Pi \ \bigl((\text{non-collinear}(A, B, C) \land A, B, C \, \mathbf{I} \, \pi_1 \land A, B, C \, \mathbf{I} \, \pi_2) \implies \pi_1 = \pi_2\bigr)
-  $$
-  2. Every plane $\pi \in \Pi$ contains at least three distinct non-collinear points incident with it.
+<Definicion title="Axiom I.5 (Uniqueness of the Plane)">
+Let <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> be three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink>. There exists at most one <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano" color="azul">$\pi$</VisualBind> <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with all three:
+
+$$
+\forall A, B, C \in \mathcal{P}, \, \forall \pi_1, \pi_2 \in \Pi \ \Biggl(\Bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land A, B, C \, \mathbf{I} \, \pi_1 \land A, B, C \, \mathbf{I} \, \pi_2\Bigr) \implies \pi_1 = \pi_2\Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Consequences and Theoretical Properties">
-    <PropiedadItem id="unicidad-plano" title="Uniqueness of the determined plane">
-      Together with <ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink>, ensures that three non-collinear points uniquely determine exactly one plane ($\exists! \pi \in \Pi$).
-    </PropiedadItem>
-    <PropiedadItem id="densidad-plano" title="Non-collapse of the plane">
-      Guarantees that no plane collapses into a single line or empty configuration, preserving its authentic two-dimensional character.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
-
+<Nota>
+This axiom excludes the possibility of multiple distinct <ConceptLink targetId="plano">planes</ConceptLink> passing through the same non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> triplet of <ConceptLink targetId="punto">points</ConceptLink>, ensuring the two-dimensional rigidity of each plane within three-<ConceptLink targetId="dimension">dimensional</ConceptLink> <ConceptLink targetId="espacio">space</ConceptLink>.
+</Nota>

@@ -3,60 +3,57 @@ export const metadata = {
   lang: "eu",
   type: "definicion",
   subtype: "primitivo",
-  title: "Bitartekotasuna (Artean egotea)",
-  description: "Zuzen bereko hiru punturen arteko bitartekotasuna ezartzen duen ordena linealeko jatorrizko erlazio hirutarra.",
-  branch: "51M",
+  title: "Tartean egotea",
+  description: "Zuzen baten gaineko puntuen bitartekotasuna formalizatzen duen oinarrizko ordena linealeko erlazio hirutarra.",
+  branch: "51A",
+  branches: ["51A", "03B"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, II. Taldeko Axiomak", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { EstarEntre } from '@content/diagrams/Definiciones/EstarEntre';
 export const Simulation = EstarEntre;
 
-<Capitular letra="B" />itartekotasun-erlazioa, formalki artean egotea gisa adierazia, David Hilberten geometria sintetikoaren oinarrizko jatorrizko erlazio hirutarra da. <ConceptLink targetId="recta">Zuzenei</ConceptLink> ordena lineal zorrotz eta trinkoko egitura ematea ahalbidetzen du, zenbaki errealetara edo kanpoko nozio metrikoetara jo beharrik gabe.
+<Capitular letra="T" />**artean egotearen** erlazioa (edo bitartekotasuna) <ConceptLink targetId="david-hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoan</ConceptLink> <ConceptLink targetId="recta">zuzen</ConceptLink> baten gaineko <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="orden">ordena lineal</ConceptLink> hertsia formalizatzen duen <ConceptLink targetId="concepto-primitivo">oinarrizko</ConceptLink> <ConceptLink targetId="relacion-ternaria">erlazio hirutarra</ConceptLink> da.
 
-<Definicion title="">
-  Izan bitez <VisualBind element="pA" color="musgo">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="musgo">$C$</VisualBind> <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bereko hiru <ConceptLink targetId="punto">puntu</ConceptLink> desberdin. $A * B * C$ erlazio hirutarra ($B$ puntua $A$ eta $C$-ren artean dago) Hilberten ordena-axiomek araututako jatorrizko erlazioa da. Esparru metriko euklidear batean, <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind> eta <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind> <ConceptLink targetId="segmento">zuzenkien</ConceptLink> luzeren batukortasunaren baliokidea da <VisualBind element="segAC" color="musgo">$\overline{AC}$</VisualBind>-rekiko:
-  $$
-  A * B * C \iff d(A, B) + d(B, C) = d(A, C)
-  $$
+<ConceptLink targetId="estructura-geometrica">Egitura geometriko</ConceptLink> abstraktuan, nozio primitibo honek ez ditu kanpoko zenbakizko <ConceptLink targetId="coordenadas">koordenatuak</ConceptLink> ezta <ConceptLink targetId="metrica">funtzio metrikoak</ConceptLink> oinarritzat hartzen; bere portaera formala ordena-<ConceptLink targetId="axioma">axiomen</ConceptLink> taldeak (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> eta <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>) arautzen du, zeina <ConceptLink targetId="pasch">Moritz Paschek</ConceptLink> geometria klasikoko postulatuetan identifikatutako hutsune logikoak gainditzeko txertatu baitzen.
+
+<Definicion title="Bitartekotasunaren oinarrizko erlazioa">
+Hilberten $\sigma_{\text{Hil}}$ <ConceptLink targetId="signatura">signaturan</ConceptLink>, bitartekotasuna $\mathbf{B}$ erlazio-ikur hirutarra da, puntuen $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuaren</ConceptLink> gainean $\text{ar}(\mathbf{B}) = \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ <ConceptLink targetId="aridad">aritatea</ConceptLink> duena.
+
+<VisualBind element="lineAC" color="carbon">$\ell$</VisualBind> zuzen bereko hiru <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="azul">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntutarako, erlazioa formalki honela adierazten da:
+
+$$
+A * B * C \quad \text{edo} \quad \mathbf{B}(A, B, C)
+$$
+
+eta formalki «$B$ puntua $A$ eta $C$-ren artean dago» predikatua adierazten du. Erlazioa betetzeak formalki hiru puntuak elkarren artean desberdinak eta <ConceptLink targetId="incidencia">intzidentziaren</ConceptLink> bidez elkarrekin <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> izatea eskatzen du:
+
+$$
+\forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\Bigr)\Biggr)
+$$
 </Definicion>
 
 <Separador />
 
-### Hilberten ordena-axiomiak (II. Taldea)
-
-Zuzen baten gaineko ordenazioa formalki honako bitartekotasun-axiometan oinarritzen da:
-- **Simetria**: $A * B * C$ bada, orduan $C * B * A$.
-- **Hedapena**: $A$ eta $C$ emanda, gutxienez $D$ puntu bat existitzen da non $A * C * D$ den.
-- **Esklusibotasuna**: Zuzen bereko hiru puntu desberdinetatik, gehienez bat dago beste bien artean.
-- **Paschen axioma**: Zuzen batek <ConceptLink targetId="triangulo">triangelu</ConceptLink> baten alde baten barnealdea ebakitzen badu erpinetatik igaro gabe, beste bi aldeetako baten barnealdea ebakitzen du nahitaez.
-
-### Geometria analitikoa
-
-$\mathbb{R}$ zuzen errealean, hiru zenbaki erreal desberdin emanda ($x_A, x_B, x_C$), erlazioa aljebraikoki honela adierazten da:
-$$
-A * B * C \iff (x_A < x_B < x_C) \lor (x_C < x_B < x_A)
-$$
-$\mathbb{R}^n$-n, $B = (1 - t)A + tC$ izatearen baliokidea da $t \in (0, 1)$ izanik.
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Ordena-axiomak eta ondorioak">
-    <PropiedadItem id="axioma-orden-1" title="Bitartekotasunaren simetria">
-      $A * B * C \implies C * B * A$.
+  <PropiedadesGrupo title="Predikatuaren erlazio-propietateak">
+    <PropiedadItem id="simetria-extremos" title="Muturren simetria">
+      Erlazioa aldaezina da muturreko puntuen ordena alderantzikatzean: $A * B * C \iff C * B * A$.
     </PropiedadItem>
-    <PropiedadItem id="axioma-orden-2" title="Zuzenaren hedapena">
-      $\forall A \neq B, \; \exists C \text{ non } A * B * C \text{ den}$.
+    <PropiedadItem id="asimetria-posicional" title="Esklusibotasuna eta barne-asimetria">
+      Tarteko posizioa bakarra da emandako puntu-hirukote baterako; puntu bat beste biren artean badago, hirukoteko beste ezein puntu ezin da gainerakoen artean egon: $A * B * C \implies \neg(B * A * C) \land \neg(A * C * B)$.
     </PropiedadItem>
-    <PropiedadItem id="axioma-orden-3" title="Ordenaren trikotomia zuzenean">
-      Zuzen bereko hiru puntu desberdin emanda, bat eta bakarra dago beste bien artean.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-orden-4" title="Paschen axioma">
-      Triangelu baten alde bat ebakitzen duen zuzen koplanarrak beste alde bat ere ebakitzen du.
+    <PropiedadItem id="irreflexividad-estricta" title="Irreflexibotasun hertsia">
+      Ezein puntu ezin da bere buruaren eta beste puntu baten artean egon: $\neg(A * A * B) \land \neg(A * B * B) \land \neg(A * B * A)$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

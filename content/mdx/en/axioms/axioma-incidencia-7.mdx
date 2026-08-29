@@ -2,42 +2,37 @@ export const metadata = {
   id: "axioma-incidencia-7",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.7 (Intersection of planes)",
-  description: "If two distinct planes share a point, then they share at least another common point.",
+  title: "Axiom I.7 (Intersection of Planes)",
+  description: "If two distinct planes have a point in common, then they have at least one more point in common.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §1",
+      role: "primary"
+    }
   ]
 };
 
 import { Incidence7 } from '@content/diagrams/Axiomas/Incidence7';
 export const Simulation = Incidence7;
 
-<Capitular letra="I" />f two distinct <ConceptLink targetId="plano">planes</ConceptLink> share a <ConceptLink targetId="punto">point</ConceptLink>, then they share at least another common point.
+<Capitular letra="I" />f two distinct <ConceptLink targetId="plano" isDependency={true}>planes</ConceptLink> <ConceptLink targetId="incidencia" isDependency={true}>are incident</ConceptLink> with the same <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink>, then they are incident with at least a second common point.
 
-This axiom describes the local behavior of planes in three-dimensional <ConceptLink targetId="espacio">space</ConceptLink>: two distinct planes cannot meet at a single isolated point.
+In the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>, this postulate describes the dimensional behavior of <ConceptLink targetId="espacio">space</ConceptLink>, preventing two distinct planes from intersecting at a single isolated point.
 
-<Definicion title="Formal Statement">
-  If two distinct planes (<VisualBind element="plano-pi" color="canela">$\pi_1$</VisualBind> and <VisualBind element="plano-sigma" color="ocre">$\pi_2$</VisualBind>) <ConceptLink targetId="incidencia">are incident</ConceptLink> with a common point $A \in \mathcal{P}$, there exists at least a second distinct point $B \in \mathcal{P}$ incident with both planes:
-  $$
-  \forall \pi_1, \pi_2 \in \Pi, \, \forall A \in \mathcal{P} \ \bigl((\pi_1 \neq \pi_2 \land A \, \mathbf{I} \, \pi_1 \land A \, \mathbf{I} \, \pi_2) \implies \exists B \in \mathcal{P} \ (B \neq A \land B \, \mathbf{I} \, \pi_1 \land B \, \mathbf{I} \, \pi_2)\bigr)
-  $$
+<Definicion title="Axiom I.7 (Intersection of Planes)">
+Let <VisualBind element="plano-pi" color="azul">$\pi_1$</VisualBind> and <VisualBind element="plano-sigma" color="ocre">$\pi_2$</VisualBind> be two distinct <ConceptLink targetId="plano">planes</ConceptLink>. If both are <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="punto">point</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, there exists at least a second point <VisualBind element="pB" color="terracota">$B$</VisualBind> distinct from $A$ that is also incident with both planes:
+
+$$
+\forall \pi_1, \pi_2 \in \Pi, \, \forall A \in \mathcal{P} \ \Biggl(\Bigl(\pi_1 \neq \pi_2 \land A \, \mathbf{I} \, \pi_1 \land A \, \mathbf{I} \, \pi_2\Bigr) \implies \exists B \in \mathcal{P} \ \Bigl(B \neq A \land B \, \mathbf{I} \, \pi_1 \land B \, \mathbf{I} \, \pi_2\Bigr)\Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Line Intersection Theorem and Consequences">
-    <PropiedadItem id="ebakidura-lineala" title="Deduction of the planar intersection line">
-      From the second common point $B$ guaranteed by this axiom, <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink> determines a unique line $\overleftrightarrow{AB}$, and <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink> ensures the entire line lies in both planes ($\overleftrightarrow{AB} \subseteq \pi_1 \cap \pi_2$). Since any non-collinear point outside $\overleftrightarrow{AB}$ would force $\pi_1 = \pi_2$ by <ConceptLink targetId="axioma-incidencia-5">Axiom I.5</ConceptLink>, it is formally proven that $\pi_1 \cap \pi_2 = \overleftrightarrow{AB}$.
-    </PropiedadItem>
-    <PropiedadItem id="posicion-relativa-planos" title="Relative positions of planes in space">
-      In space, two planes are either disjoint (parallel), completely identical, or intersect along a single secant line.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
-
-
+<Nota>
+This postulate strictly asserts the existence of a second common <ConceptLink targetId="punto">point</ConceptLink>. The deduction that the full intersection of the point traces of both <ConceptLink targetId="plano">planes</ConceptLink> is exactly a single <ConceptLink targetId="recta">line</ConceptLink> ($\operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \operatorname{tr}(\overleftrightarrow{AB})$) constitutes the <ConceptLink targetId="teorema-interseccion-planos">plane intersection line theorem</ConceptLink>, proved by combining this axiom with postulates <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>.
+</Nota>

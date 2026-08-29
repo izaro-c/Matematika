@@ -3,50 +3,64 @@ export const metadata = {
   lang: "es",
   type: "modelo",
   title: "Modelo de tres puntos",
-  description: "Modelo finito minimal que satisface los axiomas I.1, I.2 e I.3 del sistema de incidencia.",
+  description: "Estructura finita minimal que satisface los axiomas de incidencia plana I.1, I.2 e I.3.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
-  hasDiagram: true
+  hasDiagram: true,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §2",
+      role: "primary"
+    }
+  ]
 };
 
 import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
 export const Diagram = ModeloTresPuntos;
 
-<Capitular letra="E" />l **modelo de tres puntos** es el ejemplo finito más simple de una geometría de incidencia. Con un universo formado por únicamente tres puntos y tres rectas, demuestra formalmente que los tres primeros axiomas del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> son consistentes y no contradictorios.
+<Capitular letra="E" />l **modelo de tres puntos** es una <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink> finita que satisface los tres primeros axiomas del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink> plano de <ConceptLink targetId="david-hilbert">David Hilbert</ConceptLink>.
 
-<Definicion title="Estructura Formal del Modelo">
-  El modelo se define como una <ConceptLink targetId="estructura-geometrica">estructura</ConceptLink> $(\mathcal{P}, \mathcal{L}, \mathbf{I})$ con conjuntos finitos:
-  - **Conjunto de <ConceptLink targetId="punto">puntos</ConceptLink>**: $\mathcal{P} = \{ \text{<VisualBind element="A" color="terracota">A</VisualBind>}, \text{<VisualBind element="B" color="terracota">B</VisualBind>}, \text{<VisualBind element="C" color="terracota">C</VisualBind>} \}$ con $A \neq B \neq C$.
-  - **Conjunto de <ConceptLink targetId="recta">rectas</ConceptLink>**: $\mathcal{L} = \{ \text{<VisualBind element="rAB" color="carbon">r_{AB}</VisualBind>}, \text{<VisualBind element="rBC" color="carbon">r_{BC}</VisualBind>}, \text{<VisualBind element="rCA" color="carbon">r_{CA}</VisualBind>} \}$, donde cada recta es el subconjunto de dos puntos:
-    $$
-    r_{AB} = \{A, B\}, \quad r_{BC} = \{B, C\}, \quad r_{CA} = \{C, A\}
-    $$
-  - **Relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink>**: La pertenencia conjuntista usual ($\in$). Un punto $P$ incide en una recta $\ell$ si y solo si $P \in \ell$.
+En <ConceptLink targetId="teoria-modelos">teoría de modelos</ConceptLink>, constituye un plano de <ConceptLink targetId="incidencia">incidencia</ConceptLink> minimal con <ConceptLink targetId="cardinalidad">cardinalidad</ConceptLink> finita, actuando como testigo semántico de la <ConceptLink targetId="consistencia-logica">consistencia lógica</ConceptLink> de los postulados de incidencia plana.
+
+<Definicion title="Estructura formal del modelo">
+El modelo se define como una tupla $\mathcal{M} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$ compuesta por <ConceptLink targetId="conjunto-disjunto">conjuntos disjuntos</ConceptLink> y finitos ($\mathcal{P} \cap \mathcal{L} = \emptyset$):
+
+- **<ConceptLink targetId="dominio">Dominio</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink>**: $\mathcal{P} = \{$ <VisualBind element="A" color="terracota">$A$</VisualBind>, <VisualBind element="B" color="terracota">$B$</VisualBind>, <VisualBind element="C" color="terracota">$C$</VisualBind> $\}$ con $A \neq B \land B \neq C \land A \neq C$.
+- **<ConceptLink targetId="dominio">Dominio</ConceptLink> de <ConceptLink targetId="recta">rectas</ConceptLink>**: $\mathcal{L} = \{$ <VisualBind element="rAB" color="carbon">$\ell_{AB}$</VisualBind>, <VisualBind element="rBC" color="carbon">$\ell_{BC}$</VisualBind>, <VisualBind element="rCA" color="carbon">$\ell_{CA}$</VisualBind> $\}$.
+- **<ConceptLink targetId="relacion">Relación</ConceptLink> de <ConceptLink targetId="incidencia">incidencia</ConceptLink>** $\mathbf{I} \subseteq \mathcal{P} \times \mathcal{L}$:
+  $$
+  \mathbf{I} = \{ (A, \ell_{AB}), (B, \ell_{AB}), (B, \ell_{BC}), (C, \ell_{BC}), (C, \ell_{CA}), (A, \ell_{CA}) \}
+  $$
+  o equivalentemente, mediante las trazas puntuales de cada recta en el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de puntos: $\operatorname{tr}(\ell_{AB}) = \{A, B\}$, $\operatorname{tr}(\ell_{BC}) = \{B, C\}$ y $\operatorname{tr}(\ell_{CA}) = \{C, A\}$.
 </Definicion>
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Verificación Axiomática de Incidencia">
-    <PropiedadItem id="axioma-incidencia-1" title="Verificación del Axioma I.1">
-      Para cualesquiera dos puntos distintos, existe exactamente una recta que los contiene a ambos: $\{A, B\}$ determina $r_{AB}$, $\{B, C\}$ determina $r_{BC}$, y $\{C, A\}$ determina $r_{CA}$ (<ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>).
+  <PropiedadesGrupo title="Satisfacción de axiomas de incidencia">
+    <PropiedadItem id="axioma-incidencia-1" title="Determinación unívoca de la recta">
+      Para cualquier par de puntos distintos en $\mathcal{P}$, existe exactamente una recta en $\mathcal{L}$ incidente con ambos ($\{A, B\}$ determina $\ell_{AB}$, $\{B, C\}$ determina $\ell_{BC}$ y $\{C, A\}$ determina $\ell_{CA}$), satisfaciendo el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-2" title="Verificación del Axioma I.2">
-      Cada una de las tres rectas contiene exactamente dos puntos distintos ($\lvert r_{AB} \rvert = \lvert r_{BC} \rvert = \lvert r_{CA} \rvert = 2 \ge 2$), verificando el <ConceptLink targetId="axioma-incidencia-2">Axioma I.2</ConceptLink>.
+    <PropiedadItem id="axioma-incidencia-2" title="Puntos incidentes por recta">
+      Toda recta $\ell \in \mathcal{L}$ incide con exactamente dos puntos distintos ($\lvert \operatorname{tr}(\ell) \rvert = 2 \ge 2$), satisfaciendo el <ConceptLink targetId="axioma-incidencia-2">Axioma I.2</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-3" title="Verificación del Axioma I.3">
-      Ninguna recta contiene simultáneamente a los tres puntos ($C \notin r_{AB}$, $A \notin r_{BC}$, $B \notin r_{CA}$), garantizando la no colinealidad de la terna (<ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink>).
+    <PropiedadItem id="axioma-incidencia-3" title="Existencia de puntos no colineales">
+      Ninguna recta contiene en su traza a los tres puntos simultáneamente ($C \notin \operatorname{tr}(\ell_{AB})$, $A \notin \operatorname{tr}(\ell_{BC})$, $B \notin \operatorname{tr}(\ell_{CA})$); por tanto, existen tres puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, satisfaciendo el <ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 
-  <PropiedadesGrupo title="Relevancia Metamatemática">
-    <PropiedadItem id="consistencia-incidencia" title="Prueba de consistencia lógica">
-      Al construir un modelo concreto donde los postulados I.1, I.2 e I.3 son simultáneamente verdaderos, queda demostrado que dichos axiomas están libres de contradicciones internas.
+  <PropiedadesGrupo title="Propiedades estructurales y combinatorias">
+    <PropiedadItem id="regularidad-combinatoria" title="Regularidad de la configuración">
+      La estructura es homogénea y regular: posee una <ConceptLink targetId="cardinalidad">cardinalidad</ConceptLink> de $\lvert \mathcal{P} \rvert = 3$ y $\lvert \mathcal{L} \rvert = 3$, donde cada recta contiene exactamente 2 puntos y por cada punto pasan exactamente 2 rectas.
     </PropiedadItem>
-    <PropiedadItem id="ausencia-paralelas" title="Ausencia de rectas paralelas">
-      Dos rectas cualesquiera siempre se intersecan en un único punto común ($r_{AB} \cap r_{BC} = \{B\}$); por consiguiente, no existen <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>, demostrando que la noción de paralelismo requiere postulados adicionales independientes.
+    <PropiedadItem id="ausencia-paralelas" title="Ausencia de paralelismo">
+      Dos rectas cualesquiera de $\mathcal{L}$ tienen trazas no disjuntas ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), cortándose siempre en un único punto; en consecuencia, el modelo carece de <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="autodualidad" title="Autodualidad">
+      La estructura es <ConceptLink targetId="dualidad">autodual</ConceptLink>: el intercambio formal de los dominios $\mathcal{P}$ y $\mathcal{L}$ junto con la <ConceptLink targetId="transposicion">transposición</ConceptLink> de la relación $\mathbf{I}$ produce una estructura de incidencia estrictamente <ConceptLink targetId="isomorfismo">isomorfa</ConceptLink> a la original.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
-

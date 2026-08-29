@@ -3,46 +3,66 @@ export const metadata = {
   lang: "eu",
   type: "modelo",
   title: "Fanoren planoa",
-  description: "Plano proiektibo finitu minimala, zehazki 7 puntuz eta 7 zuzenez osatua.",
+  description: "Geometria proiektiboko egitura finitu minimala, 7 puntuz eta 7 zuzenez osatua.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
-  hasDiagram: true
+  hasDiagram: true,
+  sources: [
+    {
+      title: "Sui postulati fondamentali della geometria proiettiva",
+      author: "Gino Fano",
+      locator: "Giornale di Matematiche, Vol. 30, pp. 106–132",
+      role: "primary"
+    }
+  ]
 };
 
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
 export const Diagram = ModeloFano;
 
-<Capitular letra="F" />**anoren planoa** ($\mathrm{PG}(2, \mathbb{F}_2)$ gisa adierazia) existitzen den <ConceptLink targetId="sistema-incidencia">intzidentzia-eredu</ConceptLink> finitu eta plano proiektibo txikiena da. <ConceptLink targetId="fano">Gino Fano</ConceptLink> italiar matematikariak 1892an sortua, zehazki 7 <ConceptLink targetId="punto">puntuz</ConceptLink> eta 7 <ConceptLink targetId="recta">zuzenez</ConceptLink> osatuta dago simetria konbinatorio handiarekin.
+<Capitular letra="F" />anoren planoa ($\mathrm{PG}(2, \mathbb{F}_2)$ ikurrez adierazia) <ConceptLink targetId="espacio-proyectivo">plano proiektibo</ConceptLink> minimala osatzen duen eta <ConceptLink targetId="sistema-incidencia">intzidentzia-sistemako</ConceptLink> planoko intzidentzia-axiomak betetzen dituen <ConceptLink targetId="estructura-geometrica">egitura geometriko</ConceptLink> finitu bat da.
 
-<Definicion title="Egitura Konbinatorioa eta Puntuak">
-  Fanoren planoa honako hauek osatzen dute:
-  - **7 Puntu**: <VisualBind element="p1" color="terracota">1</VisualBind>, <VisualBind element="p2" color="terracota">2</VisualBind>, <VisualBind element="p3" color="terracota">3</VisualBind>, <VisualBind element="p4" color="terracota">4</VisualBind>, <VisualBind element="p5" color="terracota">5</VisualBind>, <VisualBind element="p6" color="terracota">6</VisualBind> eta <VisualBind element="p7" color="musgo">7</VisualBind>.
-  - **7 Zuzen** (bakoitza bertan intziditzen duen puntu-hirukote batek osatua):
-    - Kanpoko triangeluaren hiru aldeak: <VisualBind element="l1" color="carbon">$\{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$\{2, 3, 5\}$</VisualBind>, <VisualBind element="l3" color="carbon">$\{3, 1, 6\}$</VisualBind>.
-    - Hiru lerro erdibitzaile elkarzut: <VisualBind element="l4" color="carbon">$\{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$\{2, 6, 7\}$</VisualBind>, <VisualBind element="l6" color="carbon">$\{3, 4, 7\}$</VisualBind>.
-    - Barneko zirkulua (zuzen proiektiboa): <VisualBind element="l7" color="musgo">$\{4, 5, 6\}$</VisualBind>.
+<ConceptLink targetId="gino-fano">Gino Fano</ConceptLink> matematikariak 1892an aurkeztua, ahalik eta <ConceptLink targetId="cardinalidad">kardinalitate</ConceptLink> txikieneko espazio proiektiboa da, <ConceptLink targetId="geometria-discreta">geometria diskretuko</ConceptLink> <ConceptLink targetId="simetria">simetria-propietateak</ConceptLink> eta <ConceptLink targetId="cuerpo-finito">gorputz finituen</ConceptLink> gaineko <ConceptLink targetId="algebra-lineal">aljebra lineala</ConceptLink> bateratuz.
+
+<Definicion title="Ereduaren egitura formala">
+Fanoren planoa $\mathcal{M}_{\text{Fano}} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$ tupla gisa definitzen da, <ConceptLink targetId="conjunto-disjunto">multzo disjuntu</ConceptLink> eta finituez osatua ($\mathcal{P} \cap \mathcal{L} = \emptyset$):
+
+- **<ConceptLink targetId="punto">Puntuen</ConceptLink> <ConceptLink targetId="dominio">domeinua</ConceptLink>**: $\mathcal{P} = \{$ <VisualBind element="p1" color="terracota">$1$</VisualBind>, <VisualBind element="p2" color="terracota">$2$</VisualBind>, <VisualBind element="p3" color="terracota">$3$</VisualBind>, <VisualBind element="p4" color="terracota">$4$</VisualBind>, <VisualBind element="p5" color="terracota">$5$</VisualBind>, <VisualBind element="p6" color="terracota">$6$</VisualBind>, <VisualBind element="p7" color="musgo">$7$</VisualBind> $\}$.
+- **<ConceptLink targetId="recta">Zuzenen</ConceptLink> <ConceptLink targetId="dominio">domeinua</ConceptLink>**: $\mathcal{L} = \{$ <VisualBind element="l1" color="carbon">$\ell_1$</VisualBind>, <VisualBind element="l2" color="carbon">$\ell_2$</VisualBind>, <VisualBind element="l3" color="carbon">$\ell_3$</VisualBind>, <VisualBind element="l4" color="carbon">$\ell_4$</VisualBind>, <VisualBind element="l5" color="carbon">$\ell_5$</VisualBind>, <VisualBind element="l6" color="carbon">$\ell_6$</VisualBind>, <VisualBind element="l7" color="musgo">$\ell_7$</VisualBind> $\}$.
+- **<ConceptLink targetId="incidencia">Intzidentzia</ConceptLink>-<ConceptLink targetId="relacion">erlazioa</ConceptLink>** $\mathbf{I} \subseteq \mathcal{P} \times \mathcal{L}$, zuzen bakoitzaren <ConceptLink targetId="traza">puntu-trazen</ConceptLink> bidez definitua puntuen <ConceptLink targetId="conjunto">multzoan</ConceptLink>:
+  - Kanpoko <ConceptLink targetId="triangulo">triangeluaren</ConceptLink> aldeak: $\operatorname{tr}(\ell_1) = \{1, 2, 4\}$, $\operatorname{tr}(\ell_2) = \{2, 3, 5\}$, $\operatorname{tr}(\ell_3) = \{3, 1, 6\}$.
+  - Erdiko lerro konkurrentak: $\operatorname{tr}(\ell_4) = \{1, 5, 7\}$, $\operatorname{tr}(\ell_5) = \{2, 6, 7\}$, $\operatorname{tr}(\ell_6) = \{3, 4, 7\}$.
+  - Barruko zirkulua (zuzen proiektiboa): $\operatorname{tr}(\ell_7) = \{4, 5, 6\}$.
 </Definicion>
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Egiturazko eta Axiometako Propietateak">
-    <PropiedadItem id="axioma-incidencia-1" title="Zuzenen determinazio unibokoa">
-      Edozein bi puntu desberdinetatik biak biltzen dituen zuzen bakar bat igarotzen da (<ConceptLink targetId="axioma-incidencia-1">I.1 Axioma</ConceptLink>).
+  <PropiedadesGrupo title="Intzidentzia-axiomen betetzea">
+    <PropiedadItem id="axioma-incidencia-1" title="Zuzenaren zehaztapen bakarra">
+      $\mathcal{P}$-ko edozein bi puntu desberdinetarako, biekiko intziditzen duen $\mathcal{L}$-ko zuzen bakar bat existitzen da ($\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L} \ (P \, \mathbf{I} \, \ell \land Q \, \mathbf{I} \, \ell))$), <ConceptLink targetId="axioma-incidencia-1">I.1 axioma</ConceptLink> betez.
     </PropiedadItem>
-    <PropiedadItem id="interseccion-proyectiva" title="Ebakidura proiektibo unibertsala">
-      Edozein bi zuzen desberdinek elkar puntu bakar batean ebakitzen dute zehazki; beraz, ez dago <ConceptLink targetId="paralelas">zuzen paralelorik</ConceptLink>.
+    <PropiedadItem id="axioma-incidencia-2" title="Puntu intzidenteak zuzeneko">
+      $\ell \in \mathcal{L}$ zuzen bakoitzak gutxienez bi puntu desberdinekin intziditzen du; eredu honetan, zuzen bakoitzak zehazki 3 puntu ditu ($\lvert \operatorname{tr}(\ell) \rvert = 3 \ge 2$), <ConceptLink targetId="axioma-incidencia-2">I.2 axioma</ConceptLink> betez.
     </PropiedadItem>
-    <PropiedadItem id="uniformidad-combinatoria" title="Uniformotasun simetrikoa eta dualtasuna">
-      $(7_3, 7_3)$ motako konfigurazio simetrikoa: zuzen bakoitzak zehazki 3 puntu ditu, eta puntu bakoitzetik zehazki 3 zuzen igarotzen dira.
+    <PropiedadItem id="axioma-incidencia-3" title="Puntu ez-kolinealen existentzia">
+      Inolako zuzenek ez ditu puntu guztiak bere trazan barne hartzen ($\lvert \operatorname{tr}(\ell) \rvert = 3 < 7$); ondorioz, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru puntu existitzen dira (adibidez, $\{1, 2, 3\}$), <ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink> betez.
     </PropiedadItem>
   </PropiedadesGrupo>
 
-  <PropiedadesGrupo title="Eraikuntza Aljebraikoa">
-    <PropiedadItem id="espacio-vectorial-f2" title="Espazio proiektiboa F2 gorputz finituaren gainean">
-      $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{(0,0,0)\}) / \sim$ plano proiektiboari dagokio, non puntuak dimentsio bakarreko 7 zuzen bektorialak diren eta zuzenak $\mathbb{F}_2^3$ espazioko 2 dimentsioko 7 azpiespazioak diren.
+  <PropiedadesGrupo title="Propietate proiektiboak, aljebraikoak eta konbinatoriakoak">
+    <PropiedadItem id="configuracion-simetrica" title="Konfigurazio simetrikoa eta erregulartasuna">
+      Egiturak $(7_3, 7_3)$ motako konfigurazio simetriko bat osatzen du: $\lvert \mathcal{P} \rvert = 7$ puntu eta $\lvert \mathcal{L} \rvert = 7$ zuzen ditu, non zuzen bakoitzak zehazki 3 puntu dituen eta puntu bakoitzetik zehazki 3 zuzen igarotzen diren.
+    </PropiedadItem>
+    <PropiedadItem id="ausencia-paralelas" title="Ebakidura proiektibo unibertsala">
+      $\mathcal{L}$-ko edozein bi zuzen desberdinek traza ez-disjuntuak dituzte ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), beti puntu komun bakar batean elkar ebakiz; beraz, ereduak ez du <ConceptLink targetId="paralelas">zuzen paraleloric</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="autodualidad" title="Autodualtasuna">
+      Egitura <ConceptLink targetId="dualidad">autoduala</ConceptLink> da: $\mathcal{P}$ eta $\mathcal{L}$ domeinuak elkarrekin trukatzeak eta $\mathbf{I}$ erlazioaren <ConceptLink targetId="transposicion">transposizioak</ConceptLink> jatorrizkoaren egitura zorrozki <ConceptLink targetId="isomorfismo">isomorfoa</ConceptLink> sortzen dute.
+    </PropiedadItem>
+    <PropiedadItem id="construccion-algebraica" title="F2 gorputz finituaren gaineko eraikuntza">
+      Aljebraikoki $\mathbb{F}_2$ <ConceptLink targetId="cuerpo-finito">gorputz finituaren</ConceptLink> gaineko $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ plano proiektibo gisa definitzen da proportzionaltasunaren <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioaren</ConceptLink> pean. Planoko puntuak $\mathbb{F}_2^3$ <ConceptLink targetId="espacio-vectorial">bektore-espazioko</ConceptLink> 1 <ConceptLink targetId="dimension">dimentsioko</ConceptLink> 7 <ConceptLink targetId="subespacio">azpiespazioei</ConceptLink> dagozkie, eta zuzenak 2 dimentsioko 7 azpiespazioei.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
-

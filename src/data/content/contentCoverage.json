@@ -249,7 +249,7 @@
     {
       "id": "axioma-incidencia-5",
       "type": "axioma",
-      "title": "I.5 Axioma (Planoaren bakartasuna)",
+      "title": "I.5 axioma (Planoaren bakartasuna)",
       "filePath": "eu/axioms/axioma-incidencia-5.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -264,7 +264,7 @@
     {
       "id": "axioma-incidencia-6",
       "type": "axioma",
-      "title": "I.6 Axioma (Zuzena planoan sartzea)",
+      "title": "I.6 axioma (Zuzenaren inklusioa planoan)",
       "filePath": "eu/axioms/axioma-incidencia-6.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -279,7 +279,7 @@
     {
       "id": "axioma-incidencia-7",
       "type": "axioma",
-      "title": "I.7 Axioma (Planoen ebakidura)",
+      "title": "I.7 axioma (Planoen ebakidura)",
       "filePath": "eu/axioms/axioma-incidencia-7.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -294,7 +294,7 @@
     {
       "id": "axioma-incidencia-8",
       "type": "axioma",
-      "title": "I.8 Axioma (Hiru dimentsioko espazioa)",
+      "title": "I.8 axioma (Hiru dimentsioko espazioa)",
       "filePath": "eu/axioms/axioma-incidencia-8.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -1367,7 +1367,7 @@
         "Diagram"
       ],
       "diagramStatus": "exported",
-      "sourcesCount": 0,
+      "sourcesCount": 1,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -1397,7 +1397,7 @@
         "Diagram"
       ],
       "diagramStatus": "exported",
-      "sourcesCount": 0,
+      "sourcesCount": 1,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []

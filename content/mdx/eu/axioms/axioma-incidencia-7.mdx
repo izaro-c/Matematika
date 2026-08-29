@@ -2,42 +2,37 @@ export const metadata = {
   id: "axioma-incidencia-7",
   lang: "eu",
   type: "axioma",
-  title: "I.7 Axioma (Planoen ebakidura)",
-  description: "Bi plano desberdinek puntu komun bat badute, orduan gutxienez beste puntu komun bat dute.",
+  title: "I.7 axioma (Planoen ebakidura)",
+  description: "Bi plano desberdinek puntu bat komunean badute, gutxienez beste puntu bat ere badute komunean.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §1",
+      role: "primary"
+    }
   ]
 };
 
 import { Incidence7 } from '@content/diagrams/Axiomas/Incidence7';
 export const Simulation = Incidence7;
 
-<Capitular letra="B" />i <ConceptLink targetId="plano">plano</ConceptLink> desberdinek <ConceptLink targetId="punto">puntu</ConceptLink> bat partekatzen badute, orduan gutxienez beste puntu komun bat partekatzen dute.
+<Capitular letra="B" />i <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> desberdinek <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> berarekin <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> badute, gutxienez bigarren puntu komun batekin ere intziditzen dute.
 
-Axioma honek planoen portaera lokala deskribatzen du hiru dimentsioko <ConceptLink targetId="espacio">espazioan</ConceptLink>: bi plano desberdinek ezin dute puntu isolatu bakar batean elkar ukitu.
+<ConceptLink targetId="sistema-incidencia">Intzidentzia-sisteman</ConceptLink>, postulatu honek <ConceptLink targetId="espacio">espazioaren</ConceptLink> izaera dimentsionala deskribatzen du, bi plano desberdinek puntu isolatu bakar batean elkar ebakitzea eragotziz.
 
-<Definicion title="Enuntziatu Formala">
-  Bi plano desberdinek (<VisualBind element="plano-pi" color="canela">$\pi_1$</VisualBind> eta <VisualBind element="plano-sigma" color="ocre">$\pi_2$</VisualBind>) $A \in \mathcal{P}$ puntu berarekin <ConceptLink targetId="incidencia">intziditzen</ConceptLink> badute, gutxienez bi planoetan intziditzen duen $B \in \mathcal{P}$ bigarren puntu desberdin bat existitzen da:
-  $$
-  \forall \pi_1, \pi_2 \in \Pi, \, \forall A \in \mathcal{P} \ \bigl((\pi_1 \neq \pi_2 \land A \, \mathbf{I} \, \pi_1 \land A \, \mathbf{I} \, \pi_2) \implies \exists B \in \mathcal{P} \ (B \neq A \land B \, \mathbf{I} \, \pi_1 \land B \, \mathbf{I} \, \pi_2)\bigr)
-  $$
+<Definicion title="I.7 axioma (Planoen ebakidura)">
+Izan bitez <VisualBind element="plano-pi" color="azul">$\pi_1$</VisualBind> eta <VisualBind element="plano-sigma" color="ocre">$\pi_2$</VisualBind> bi <ConceptLink targetId="plano">plano</ConceptLink> desberdin. Biek <VisualBind element="pA" color="terracota">$A$</VisualBind> <ConceptLink targetId="punto">puntu</ConceptLink> batekin <ConceptLink targetId="incidencia">intziditzen</ConceptLink> badute, gutxienez $A$-ren desberdina den bigarren <VisualBind element="pB" color="terracota">$B$</VisualBind> puntu bat existitzen da bi planoekin intziditzen duena:
+
+$$
+\forall \pi_1, \pi_2 \in \Pi, \, \forall A \in \mathcal{P} \ \Biggl(\Bigl(\pi_1 \neq \pi_2 \land A \, \mathbf{I} \, \pi_1 \land A \, \mathbf{I} \, \pi_2\Bigr) \implies \exists B \in \mathcal{P} \ \Bigl(B \neq A \land B \, \mathbf{I} \, \pi_1 \land B \, \mathbf{I} \, \pi_2\Bigr)\Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Ebakidura-Zuzenaren Teorema eta Ondorioak">
-    <PropiedadItem id="ebakidura-lineala" title="Ebakidura planarreko zuzenaren dedukzioa">
-      Axioma honek bermatutako $B$ bigarren puntutik abiatuta, <ConceptLink targetId="axioma-incidencia-1">I.1 Axiomak</ConceptLink> $\overleftrightarrow{AB}$ zuzen bakar bat zehazten du, eta <ConceptLink targetId="axioma-incidencia-6">I.6 Axiomak</ConceptLink> zuzen osoa bi planoetan sartuta dagoela bermatzen du ($\overleftrightarrow{AB} \subseteq \pi_1 \cap \pi_2$). $\overleftrightarrow{AB}$-tik kanpoko puntu ez-kolineal batek $\pi_1 = \pi_2$ izatera behartuko lukeenez <ConceptLink targetId="axioma-incidencia-5">I.5 Axiomaren</ConceptLink> bidez, formalki frogatuta geratzen da $\pi_1 \cap \pi_2 = \overleftrightarrow{AB}$ dela.
-    </PropiedadItem>
-    <PropiedadItem id="posicion-relativa-planos" title="Planoen posizio erlatiboak espazioan">
-      Espazioan, bi plano edo disjuntuak (paraleloak) dira, edo guztiz bat datoz, edo ebakitzaileak dira zuzen bakar batean zehar.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
-
-
+<Nota>
+Axioma honek zorrozki bigarren <ConceptLink targetId="punto">puntu</ConceptLink> baten existentzia postulatzen du. Bi <ConceptLink targetId="plano">planoen</ConceptLink> puntu-trazen ebakidura osoa zehazki <ConceptLink targetId="recta">zuzen</ConceptLink> bakar bat dela ondorioztatzea ($\operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \operatorname{tr}(\overleftrightarrow{AB})$) <ConceptLink targetId="teorema-interseccion-planos">planoen ebakidura-zuzenaren teorema</ConceptLink> da, postulatu hau <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink> axiomekin batera konbinatuz frogatzen dena.
+</Nota>

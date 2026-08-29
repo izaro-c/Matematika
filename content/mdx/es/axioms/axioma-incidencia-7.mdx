@@ -9,35 +9,30 @@ export const metadata = {
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §1",
+      role: "primary"
+    }
   ]
 };
 
 import { Incidence7 } from '@content/diagrams/Axiomas/Incidence7';
 export const Simulation = Incidence7;
 
-<Capitular letra="S" />i dos <ConceptLink targetId="plano">planos</ConceptLink> distintos comparten un <ConceptLink targetId="punto">punto</ConceptLink>, entonces comparten al menos otro punto en común.
+<Capitular letra="S" />i dos <ConceptLink targetId="plano" isDependency={true}>planos</ConceptLink> distintos <ConceptLink targetId="incidencia" isDependency={true}>inciden</ConceptLink> con un mismo <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink>, entonces inciden al menos con un segundo punto común.
 
-Este axioma describe el comportamiento local de los planos en el <ConceptLink targetId="espacio">espacio</ConceptLink> tridimensional: dos planos distintos no pueden tocarse en un único punto aislado.
+En el <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>, este postulado describe el comportamiento dimensional del <ConceptLink targetId="espacio">espacio</ConceptLink>, impidiendo que dos planos distintos puedan intersecarse en un único punto aislado.
 
-<Definicion title="Enunciado Formal">
-  Si dos planos distintos <VisualBind element="plano-pi" color="canela">$\pi_1$</VisualBind> y <VisualBind element="plano-sigma" color="ocre">$\pi_2$</VisualBind> inciden con un mismo punto $A \in \mathcal{P}$, existe al menos un segundo punto distinto $B \in \mathcal{P}$ que también incide en ambos planos:
-  $$
-  \forall \pi_1, \pi_2 \in \Pi, \, \forall A \in \mathcal{P} \ \bigl((\pi_1 \neq \pi_2 \land A \, \mathbf{I} \, \pi_1 \land A \, \mathbf{I} \, \pi_2) \implies \exists B \in \mathcal{P} \ (B \neq A \land B \, \mathbf{I} \, \pi_1 \land B \, \mathbf{I} \, \pi_2)\bigr)
-  $$
+<Definicion title="Axioma I.7 (Intersección de planos)">
+Sean <VisualBind element="plano-pi" color="azul">$\pi_1$</VisualBind> y <VisualBind element="plano-sigma" color="ocre">$\pi_2$</VisualBind> dos <ConceptLink targetId="plano">planos</ConceptLink> distintos. Si ambos <ConceptLink targetId="incidencia">inciden</ConceptLink> con un <ConceptLink targetId="punto">punto</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, existe al menos un segundo punto <VisualBind element="pB" color="terracota">$B$</VisualBind> distinto de $A$ que también incide con ambos planos:
+
+$$
+\forall \pi_1, \pi_2 \in \Pi, \, \forall A \in \mathcal{P} \ \Biggl(\Bigl(\pi_1 \neq \pi_2 \land A \, \mathbf{I} \, \pi_1 \land A \, \mathbf{I} \, \pi_2\Bigr) \implies \exists B \in \mathcal{P} \ \Bigl(B \neq A \land B \, \mathbf{I} \, \pi_1 \land B \, \mathbf{I} \, \pi_2\Bigr)\Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Teorema de la Recta de Intersección y Consecuencias">
-    <PropiedadItem id="ebakidura-lineala" title="Deducción de la recta de intersección planar">
-      A partir del segundo punto $B$ garantizado por este axioma, el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink> determina una única recta $\overleftrightarrow{AB}$, y el <ConceptLink targetId="axioma-incidencia-6">Axioma I.6</ConceptLink> asegura que toda la recta está contenida en ambos planos ($\overleftrightarrow{AB} \subseteq \pi_1 \cap \pi_2$). Como un punto no colineal fuera de $\overleftrightarrow{AB}$ forzaría $\pi_1 = \pi_2$ por el <ConceptLink targetId="axioma-incidencia-5">Axioma I.5</ConceptLink>, se demuestra formalmente que $\pi_1 \cap \pi_2 = \overleftrightarrow{AB}$.
-    </PropiedadItem>
-    <PropiedadItem id="posicion-relativa-planos" title="Posiciones relativas de planos en el espacio">
-      En el espacio, dos planos o bien son disjuntos (paralelos), o bien coinciden plenamente, o bien se intersecan a lo largo de una única recta secante.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
-
-
+<Nota>
+Este postulado formula estrictamente la existencia de un segundo <ConceptLink targetId="punto">punto</ConceptLink> común. La deducción de que la intersección completa de las trazas puntuales de ambos <ConceptLink targetId="plano">planos</ConceptLink> es exactamente una única <ConceptLink targetId="recta">recta</ConceptLink> ($\operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \operatorname{tr}(\overleftrightarrow{AB})$) constituye el <ConceptLink targetId="teorema-interseccion-planos">teorema de la recta de intersección</ConceptLink>, demostrado al conjugar este axioma con los postulados <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>.
+</Nota>
