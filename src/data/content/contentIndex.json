@@ -6017,6 +6017,64 @@
       "eu"
     ]
   },
+  "en:descartes": {
+    "id": "descartes",
+    "slug": "descartes",
+    "lang": "en",
+    "filePath": "en/mathematicians/descartes.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "descartes",
+      "lang": "en",
+      "type": "matematico",
+      "name": "René Descartes",
+      "birthYear": 1596,
+      "deathYear": 1650,
+      "country": "France",
+      "title": "René Descartes",
+      "description": "French philosopher and mathematician who introduced Cartesian coordinates and founded modern analytic geometry.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "descartes": {
+    "id": "descartes",
+    "slug": "descartes",
+    "lang": "es",
+    "filePath": "es/mathematicians/descartes.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "descartes",
+      "lang": "es",
+      "type": "matematico",
+      "name": "René Descartes",
+      "birthYear": 1596,
+      "deathYear": 1650,
+      "country": "Francia",
+      "title": "René Descartes",
+      "description": "Filósofo y matemático francés, creador del sistema de coordenadas cartesianas y fundador de la geometría analítica moderna.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "en:euclides": {
     "id": "euclides",
     "slug": "euclides",
@@ -6062,6 +6120,64 @@
       "country": "Alejandría (Egipto ptolemaico)",
       "title": "Euclides de Alejandría",
       "description": "Matemático griego de la antigüedad clásica, autor de los Elementos, el tratado axiomático y geométrico más influyente de la historia.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:fermat": {
+    "id": "fermat",
+    "slug": "fermat",
+    "lang": "en",
+    "filePath": "en/mathematicians/fermat.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "fermat",
+      "lang": "en",
+      "type": "matematico",
+      "name": "Pierre de Fermat",
+      "birthYear": 1607,
+      "deathYear": 1665,
+      "country": "France",
+      "title": "Pierre de Fermat",
+      "description": "French mathematician who pioneered number theory, infinitesimal calculus, and co-invented analytic geometry.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "fermat": {
+    "id": "fermat",
+    "slug": "fermat",
+    "lang": "es",
+    "filePath": "es/mathematicians/fermat.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "fermat",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Pierre de Fermat",
+      "birthYear": 1607,
+      "deathYear": 1665,
+      "country": "Francia",
+      "title": "Pierre de Fermat",
+      "description": "Jurista y matemático francés, pionero del cálculo diferencial, la teoría de números y co-creador de la geometría analítica.",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -6423,6 +6539,64 @@
       "eu"
     ]
   },
+  "en:peano": {
+    "id": "peano",
+    "slug": "peano",
+    "lang": "en",
+    "filePath": "en/mathematicians/peano.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "peano",
+      "lang": "en",
+      "type": "matematico",
+      "name": "Giuseppe Peano",
+      "birthYear": 1858,
+      "deathYear": 1932,
+      "country": "Italy",
+      "title": "Giuseppe Peano",
+      "description": "Italian mathematician and logician, pioneer of symbolic logic, author of Peano axioms for arithmetic and rigorous geometry axiomatization.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "peano": {
+    "id": "peano",
+    "slug": "peano",
+    "lang": "es",
+    "filePath": "es/mathematicians/peano.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "peano",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Giuseppe Peano",
+      "birthYear": 1858,
+      "deathYear": 1932,
+      "country": "Italia",
+      "title": "Giuseppe Peano",
+      "description": "Matemático y lógico italiano, pionero de la lógica simbólica, autor de los axiomas de Peano para los números naturales y de la axiomatización de la geometría.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "en:pitagoras": {
     "id": "pitagoras",
     "slug": "pitagoras",
@@ -6468,6 +6642,180 @@
       "country": "Samos / Magna Grecia",
       "title": "Pitágoras de Samos",
       "description": "Filósofo y matemático griego de la antigüedad clásica, fundador de la escuela pitagórica y del teorema fundamental sobre triángulos rectángulos.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:poncelet": {
+    "id": "poncelet",
+    "slug": "poncelet",
+    "lang": "en",
+    "filePath": "en/mathematicians/poncelet.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "poncelet",
+      "lang": "en",
+      "type": "matematico",
+      "name": "Jean-Victor Poncelet",
+      "birthYear": 1788,
+      "deathYear": 1867,
+      "country": "France",
+      "title": "Jean-Victor Poncelet",
+      "description": "French mathematician and engineer who revived modern synthetic projective geometry (continuity principle, duality, and homography).",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "poncelet": {
+    "id": "poncelet",
+    "slug": "poncelet",
+    "lang": "es",
+    "filePath": "es/mathematicians/poncelet.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "poncelet",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Jean-Victor Poncelet",
+      "birthYear": 1788,
+      "deathYear": 1867,
+      "country": "Francia",
+      "title": "Jean-Victor Poncelet",
+      "description": "Matemático e ingeniero francés, refundador de la geometría proyectiva sintética moderna (principio de continuidad, dualidad y homografía).",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:staudt": {
+    "id": "staudt",
+    "slug": "staudt",
+    "lang": "en",
+    "filePath": "en/mathematicians/staudt.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "staudt",
+      "lang": "en",
+      "type": "matematico",
+      "name": "Karl Georg Christian von Staudt",
+      "birthYear": 1798,
+      "deathYear": 1867,
+      "country": "Germany",
+      "title": "Karl Georg Christian von Staudt",
+      "description": "German mathematician who fully freed projective geometry from metric distance concepts in his 'Geometrie der Lage'.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "staudt": {
+    "id": "staudt",
+    "slug": "staudt",
+    "lang": "es",
+    "filePath": "es/mathematicians/staudt.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "staudt",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Karl Georg Christian von Staudt",
+      "birthYear": 1798,
+      "deathYear": 1867,
+      "country": "Alemania",
+      "title": "Karl Georg Christian von Staudt",
+      "description": "Matemático alemán que independizó por completo la geometría proyectiva de cualquier noción métrica o de distancia en su obra 'Geometrie der Lage'.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "en:steiner": {
+    "id": "steiner",
+    "slug": "steiner",
+    "lang": "en",
+    "filePath": "en/mathematicians/steiner.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "steiner",
+      "lang": "en",
+      "type": "matematico",
+      "name": "Jakob Steiner",
+      "birthYear": 1796,
+      "deathYear": 1863,
+      "country": "Switzerland",
+      "title": "Jakob Steiner",
+      "description": "Swiss mathematician, one of the greatest synthetic geometers of modern times, celebrated for advocating purely geometric methods.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "steiner": {
+    "id": "steiner",
+    "slug": "steiner",
+    "lang": "es",
+    "filePath": "es/mathematicians/steiner.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "steiner",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Jakob Steiner",
+      "birthYear": 1796,
+      "deathYear": 1863,
+      "country": "Suiza",
+      "title": "Jakob Steiner",
+      "description": "Matemático suizo, uno de los mayores geómetras sintéticos de la historia moderna, célebre por su defensa de los métodos puramente geométricos.",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -11180,6 +11528,35 @@
       "eu"
     ]
   },
+  "es:descartes": {
+    "id": "descartes",
+    "slug": "descartes",
+    "lang": "es",
+    "filePath": "es/mathematicians/descartes.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "descartes",
+      "lang": "es",
+      "type": "matematico",
+      "name": "René Descartes",
+      "birthYear": 1596,
+      "deathYear": 1650,
+      "country": "Francia",
+      "title": "René Descartes",
+      "description": "Filósofo y matemático francés, creador del sistema de coordenadas cartesianas y fundador de la geometría analítica moderna.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "es:euclides": {
     "id": "euclides",
     "slug": "euclides",
@@ -11196,6 +11573,35 @@
       "country": "Alejandría (Egipto ptolemaico)",
       "title": "Euclides de Alejandría",
       "description": "Matemático griego de la antigüedad clásica, autor de los Elementos, el tratado axiomático y geométrico más influyente de la historia.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:fermat": {
+    "id": "fermat",
+    "slug": "fermat",
+    "lang": "es",
+    "filePath": "es/mathematicians/fermat.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "fermat",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Pierre de Fermat",
+      "birthYear": 1607,
+      "deathYear": 1665,
+      "country": "Francia",
+      "title": "Pierre de Fermat",
+      "description": "Jurista y matemático francés, pionero del cálculo diferencial, la teoría de números y co-creador de la geometría analítica.",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -11383,6 +11789,35 @@
       "eu"
     ]
   },
+  "es:peano": {
+    "id": "peano",
+    "slug": "peano",
+    "lang": "es",
+    "filePath": "es/mathematicians/peano.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "peano",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Giuseppe Peano",
+      "birthYear": 1858,
+      "deathYear": 1932,
+      "country": "Italia",
+      "title": "Giuseppe Peano",
+      "description": "Matemático y lógico italiano, pionero de la lógica simbólica, autor de los axiomas de Peano para los números naturales y de la axiomatización de la geometría.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "es:pitagoras": {
     "id": "pitagoras",
     "slug": "pitagoras",
@@ -11399,6 +11834,93 @@
       "country": "Samos / Magna Grecia",
       "title": "Pitágoras de Samos",
       "description": "Filósofo y matemático griego de la antigüedad clásica, fundador de la escuela pitagórica y del teorema fundamental sobre triángulos rectángulos.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:poncelet": {
+    "id": "poncelet",
+    "slug": "poncelet",
+    "lang": "es",
+    "filePath": "es/mathematicians/poncelet.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "poncelet",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Jean-Victor Poncelet",
+      "birthYear": 1788,
+      "deathYear": 1867,
+      "country": "Francia",
+      "title": "Jean-Victor Poncelet",
+      "description": "Matemático e ingeniero francés, refundador de la geometría proyectiva sintética moderna (principio de continuidad, dualidad y homografía).",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:staudt": {
+    "id": "staudt",
+    "slug": "staudt",
+    "lang": "es",
+    "filePath": "es/mathematicians/staudt.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "staudt",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Karl Georg Christian von Staudt",
+      "birthYear": 1798,
+      "deathYear": 1867,
+      "country": "Alemania",
+      "title": "Karl Georg Christian von Staudt",
+      "description": "Matemático alemán que independizó por completo la geometría proyectiva de cualquier noción métrica o de distancia en su obra 'Geometrie der Lage'.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "es:steiner": {
+    "id": "steiner",
+    "slug": "steiner",
+    "lang": "es",
+    "filePath": "es/mathematicians/steiner.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "steiner",
+      "lang": "es",
+      "type": "matematico",
+      "name": "Jakob Steiner",
+      "birthYear": 1796,
+      "deathYear": 1863,
+      "country": "Suiza",
+      "title": "Jakob Steiner",
+      "description": "Matemático suizo, uno de los mayores geómetras sintéticos de la historia moderna, célebre por su defensa de los métodos puramente geométricos.",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -15266,6 +15788,35 @@
       "eu"
     ]
   },
+  "eu:descartes": {
+    "id": "descartes",
+    "slug": "descartes",
+    "lang": "eu",
+    "filePath": "eu/mathematicians/descartes.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "descartes",
+      "lang": "eu",
+      "type": "matematico",
+      "name": "René Descartes",
+      "birthYear": 1596,
+      "deathYear": 1650,
+      "country": "Frantzia",
+      "title": "René Descartes",
+      "description": "Frantziar filosofo eta matematikaria, koordenatu kartesiarren sortzailea eta geometria analitiko modernoaren aitzindaria.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "eu:euclides": {
     "id": "euclides",
     "slug": "euclides",
@@ -15282,6 +15833,35 @@
       "country": "Alexandria (Egipto ptolemaikoa)",
       "title": "Alexandriako Euklides",
       "description": "Antzinate klasikoko matematikari greziarra, Elementuak lanaren egilea, historiako tratatu axiomatiko eta geometrikorik eraginkorrena.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:fermat": {
+    "id": "fermat",
+    "slug": "fermat",
+    "lang": "eu",
+    "filePath": "eu/mathematicians/fermat.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "fermat",
+      "lang": "eu",
+      "type": "matematico",
+      "name": "Pierre de Fermat",
+      "birthYear": 1607,
+      "deathYear": 1665,
+      "country": "Frantzia",
+      "title": "Pierre de Fermat",
+      "description": "Zenbakien teorian eta kalkulu diferentzialean aitzindaria eta geometria analitikoaren sortzaileetako bat izan zen frantziar matematikaria.",
       "branch": "01A",
       "availableLangs": [
         "en",
@@ -15469,6 +16049,35 @@
       "eu"
     ]
   },
+  "eu:peano": {
+    "id": "peano",
+    "slug": "peano",
+    "lang": "eu",
+    "filePath": "eu/mathematicians/peano.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "peano",
+      "lang": "eu",
+      "type": "matematico",
+      "name": "Giuseppe Peano",
+      "birthYear": 1858,
+      "deathYear": 1932,
+      "country": "Italia",
+      "title": "Giuseppe Peano",
+      "description": "Logika sinbolikoaren aitzindaria, zenbaki arrunten axiomak eta geometriaren axiomatizazio zorrotza garatu zituen italiar matematikaria.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
   "eu:pitagoras": {
     "id": "pitagoras",
     "slug": "pitagoras",
@@ -15485,6 +16094,93 @@
       "country": "Samos / Magna Grezia",
       "title": "Samosko Pitagoras",
       "description": "Antzinate klasikoko filosofo eta matematikari greziarra, eskola pitagorikoaren fundatzailea eta triangelu angeluzuzenei buruzko teorema nagusiaren sortzailea.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:poncelet": {
+    "id": "poncelet",
+    "slug": "poncelet",
+    "lang": "eu",
+    "filePath": "eu/mathematicians/poncelet.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "poncelet",
+      "lang": "eu",
+      "type": "matematico",
+      "name": "Jean-Victor Poncelet",
+      "birthYear": 1788,
+      "deathYear": 1867,
+      "country": "Frantzia",
+      "title": "Jean-Victor Poncelet",
+      "description": "Geometria proiektibo sintetiko modernoaren berritzaile nagusia izan zen matematikari eta ingeniari frantsesa.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:staudt": {
+    "id": "staudt",
+    "slug": "staudt",
+    "lang": "eu",
+    "filePath": "eu/mathematicians/staudt.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "staudt",
+      "lang": "eu",
+      "type": "matematico",
+      "name": "Karl Georg Christian von Staudt",
+      "birthYear": 1798,
+      "deathYear": 1867,
+      "country": "Alemania",
+      "title": "Karl Georg Christian von Staudt",
+      "description": "Geometria proiektiboa distantzia- eta neurri-nozio guztietatik guztiz independentizatu zuen alemaniar matematikaria.",
+      "branch": "01A",
+      "availableLangs": [
+        "en",
+        "es",
+        "eu"
+      ]
+    },
+    "availableLangs": [
+      "en",
+      "es",
+      "eu"
+    ]
+  },
+  "eu:steiner": {
+    "id": "steiner",
+    "slug": "steiner",
+    "lang": "eu",
+    "filePath": "eu/mathematicians/steiner.mdx",
+    "contentType": "matematico",
+    "metadata": {
+      "id": "steiner",
+      "lang": "eu",
+      "type": "matematico",
+      "name": "Jakob Steiner",
+      "birthYear": 1796,
+      "deathYear": 1863,
+      "country": "Suitza",
+      "title": "Jakob Steiner",
+      "description": "Metodo sintetiko hutsen aldeko defendatzaile sutsua eta historiako geometra sintetiko handienetakoa izan zen suitzar matematikaria.",
       "branch": "01A",
       "availableLangs": [
         "en",
