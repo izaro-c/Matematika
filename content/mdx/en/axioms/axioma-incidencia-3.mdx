@@ -17,12 +17,12 @@ export const metadata = {
 import { Incidence3 } from '@content/diagrams/Axiomas/Incidence3';
 export const Simulation = Incidence3;
 
-<Capitular letra="T" />here exist at least three <ConceptLink targetId="punto">points</ConceptLink> not lying on the same <ConceptLink targetId="recta">line</ConceptLink>.
+<Capitular letra="T" />here exist at least three <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> not lying on the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>.
 
 This axiom ensures that geometry does not collapse into a single linear dimension, establishing the foundation for two-dimensional configurations and setting the vertex basis for figures such as the <ConceptLink targetId="triangulo">triangle</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>.
 
 <Definicion title="Formal Statement">
-  There exist at least three distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> such that no <ConceptLink targetId="recta">line</ConceptLink> $\ell \in \mathcal{L}$ is simultaneously <ConceptLink targetId="incidencia">incident</ConceptLink> with all three:
+  There exist at least three distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> such that no <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $\ell \in \mathcal{L}$ is simultaneously <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with all three:
   $$
   \exists A, B, C \in \mathcal{P} \ \bigl(A \neq B \land B \neq C \land A \neq C \land \forall \ell \in \mathcal{L} \ \neg(A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\bigr)
   $$

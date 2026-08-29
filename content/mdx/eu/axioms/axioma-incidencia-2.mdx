@@ -17,12 +17,12 @@ export const metadata = {
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="Z" />**uzen** orok gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinekin <ConceptLink targetId="incidencia">intziditzen</ConceptLink> du.
+<Capitular letra="Z" />**uzen** orok gutxienez bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinekin <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> du.
 
 Axioma honek zuzenek <ConceptLink targetId="espacio">espazioan</ConceptLink> eduki geometrikoa izatea bermatzen du, punturik gabeko lerroak edo puntu isolatu bakar batera murriztutakoak saihestuz.
 
 <Definicion title="Enuntziatu Formala">
-  Edozein <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzenetarako</ConceptLink>, gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen dira (<VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pB" color="ocre">$B$</VisualBind>) $\ell$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutenak:
+  Edozein <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta" isDependency={true}>zuzenetarako</ConceptLink>, gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen dira (<VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pB" color="ocre">$B$</VisualBind>) $\ell$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutenak:
   $$
   \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)
   $$

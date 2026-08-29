@@ -17,12 +17,12 @@ export const metadata = {
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto">points</ConceptLink>, there exists exactly one <ConceptLink targetId="recta">line</ConceptLink> incident with both.
+<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>, there exists exactly one <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> incident with both.
 
 This postulate establishes the elementary linear connection of geometry: two distinct points uniquely determine the position of a single straight line in <ConceptLink targetId="espacio">space</ConceptLink>.
 
 <Definicion title="Formal Statement">
-  For any two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pB" color="ocre">$B$</VisualBind> ($A \neq B$), there exists a unique <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> such that $A$ and $B$ <ConceptLink targetId="incidencia">are incident</ConceptLink> with $\ell$:
+  For any two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pB" color="ocre">$B$</VisualBind> ($A \neq B$), there exists a unique <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> such that $A$ and $B$ <ConceptLink targetId="incidencia" isDependency={true}>are incident</ConceptLink> with $\ell$:
   $$
   \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)\bigr)
   $$

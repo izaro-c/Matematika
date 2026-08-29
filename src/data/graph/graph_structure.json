@@ -1,16 +1,18 @@
 {
   "topologicalOrder": [
+    "punto",
+    "incidencia",
+    "recta",
     "axioma-incidencia-1",
     "axioma-incidencia-2",
     "axioma-incidencia-3",
+    "plano",
     "axioma-incidencia-4",
     "axioma-incidencia-5",
     "axioma-incidencia-6",
     "axioma-incidencia-7",
     "axioma-incidencia-8",
     "estar-entre",
-    "punto",
-    "recta",
     "axioma-orden-1",
     "axioma-orden-2",
     "axioma-orden-3",
@@ -25,7 +27,6 @@
     "axioma-completitud",
     "sistema-incidencia",
     "sistema-absoluto",
-    "plano",
     "axioma-paralelas-euclides",
     "sistema-euclidiano",
     "axioma-paralelas-hiperbolico",
@@ -47,7 +48,6 @@
     "geometria-hilbertiana",
     "geometria-sintetica",
     "grupo",
-    "incidencia",
     "paralelas",
     "paralelogramo",
     "perpendicular",
@@ -297,7 +297,11 @@
       "title": "I.1 Axioma (Zuzenaren determinazioa)",
       "description": "Edozein bi puntu desberdinek biekiko intzidente den zuzen bakar bat zehazten dute.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "incidencia",
+        "recta"
+      ]
     },
     "axioma-incidencia-2": {
       "id": "axioma-incidencia-2",
@@ -305,7 +309,11 @@
       "title": "I.2 Axioma (Puntuak zuzenean)",
       "description": "Zuzen orok gutxienez bi puntu desberdinekin intziditzen du.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "incidencia",
+        "recta"
+      ]
     },
     "axioma-incidencia-3": {
       "id": "axioma-incidencia-3",
@@ -313,7 +321,11 @@
       "title": "I.3 Axioma (Puntu ez-kolinealak)",
       "description": "Zuzen berekoak ez diren gutxienez hiru puntu existitzen dira.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "recta",
+        "incidencia"
+      ]
     },
     "axioma-incidencia-4": {
       "id": "axioma-incidencia-4",
@@ -321,7 +333,11 @@
       "title": "I.4 Axioma (Planoaren determinazioa)",
       "description": "Kolinealak ez diren edozein hiru puntutatik gutxienez plano bat igarotzen da.",
       "proofs": [],
-      "directDependencies": []
+      "directDependencies": [
+        "punto",
+        "incidencia",
+        "plano"
+      ]
     },
     "axioma-incidencia-5": {
       "id": "axioma-incidencia-5",

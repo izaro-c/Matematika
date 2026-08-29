@@ -17,12 +17,12 @@ export const metadata = {
 import { Incidence3 } from '@content/diagrams/Axiomas/Incidence3';
 export const Simulation = Incidence3;
 
-<Capitular letra="E" />xisten al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> que no están situados sobre una misma <ConceptLink targetId="recta">recta</ConceptLink>.
+<Capitular letra="E" />xisten al menos tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> que no están situados sobre una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink>.
 
 Este axioma garantiza que la geometría no colapse en una única dimensión lineal, fundamentando la existencia de configuraciones bidimensionales y estableciendo la base de vértices para figuras como el <ConceptLink targetId="triangulo">triángulo</ConceptLink> en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
 
 <Definicion title="Enunciado Formal">
-  Existen al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> tales que ninguna <ConceptLink targetId="recta">recta</ConceptLink> $\ell \in \mathcal{L}$ <ConceptLink targetId="incidencia">incide</ConceptLink> simultáneamente con los tres:
+  Existen al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> tales que ninguna <ConceptLink targetId="recta">recta</ConceptLink> $\ell \in \mathcal{L}$ <ConceptLink targetId="incidencia" isDependency={true}>incide</ConceptLink> simultáneamente con los tres:
   $$
   \exists A, B, C \in \mathcal{P} \ \bigl(A \neq B \land B \neq C \land A \neq C \land \forall \ell \in \mathcal{L} \ \neg(A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\bigr)
   $$

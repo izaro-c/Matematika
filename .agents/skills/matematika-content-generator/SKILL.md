@@ -236,6 +236,9 @@ Los siguientes componentes están disponibles globalmente en cualquier archivo `
 
 ### 4.3. Hiperenlaces y Vinculación Visual
 - **`<ConceptLink targetId="..." isDependency={true|false}>Texto</ConceptLink>`**: Enlace semántico a otra página del grafo.
+  - **`isDependency={true}`**: Crea una arista formal de dependencia en el DAG lógico.
+    - **En Axiomas (`type: "axioma"`):** Debe aplicarse a los términos primitivos de su signatura (`punto`, `recta`, `plano`) y a las relaciones primitivas que rige (`incidencia`, `estar-entre`, `congruencia`), accesibles como Grado $-1$ del DAG.
+    - **En Teoremas y Demostraciones (`type: "teorema"` / `type: "demostracion"`):** Debe aplicarse a los axiomas, lemas o teoremas antecedentes que fundamentan deductivamente la demostración.
 - **`<VisualBind element="..." color="...">Fórmula/Término</VisualBind>`**: Vincula texto o símbolos con elementos interactivos del diagrama (`color`: `"musgo"` | `"azul"` | `"terracota"` | `"ocre"` | `"carbon"`).
 
 ### 4.4. Bloque Estructurado de Propiedades (`<SeccionPropiedades>`)
