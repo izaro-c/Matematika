@@ -2,9 +2,10 @@ export const metadata = {
   id: "axioma-incidencia-1",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.1 (Determination of the Line)",
-  description: "Through any two distinct points passes exactly one line.",
+  title: "Axiom I.1 (Determination of the line)",
+  description: "Any two distinct points uniquely determine a line incident with both.",
   branch: "51A",
+  tags: ["geometry", "incidence", "axiom", "line"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,20 +17,14 @@ export const metadata = {
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto">points</ConceptLink>, there exists exactly one <ConceptLink targetId="recta">line</ConceptLink> passing through both.
+<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto">points</ConceptLink>, there exists exactly one <ConceptLink targetId="recta">line</ConceptLink> incident with both.
 
-This postulate establishes the most basic linear connection of geometry: two distinct points uniquely determine a direction and an entire line.
+This postulate establishes the elementary linear connection of geometry: two distinct points uniquely determine the position of a single straight line in <ConceptLink targetId="espacio">space</ConceptLink>.
 
 <Definicion title="Formal Statement">
-  For any two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> ($A \neq B$), there exists a unique <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> such that $A$ and $B$ <ConceptLink targetId="incidencia">are incident</ConceptLink> with $\ell$:
+  For any two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pB" color="ocre">$B$</VisualBind> ($A \neq B$), there exists a unique <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> such that $A$ and $B$ <ConceptLink targetId="incidencia">are incident</ConceptLink> with $\ell$:
   $$
-  \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \in \ell \land B \in \ell)\bigr)
+  \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)\bigr)
   $$
+  The line determined by points $A$ and $B$ is commonly denoted by $\overleftrightarrow{AB}$.
 </Definicion>
-
-<Separador />
-
-### Significance in the theory
-
-- **Uniqueness:** Two distinct points cannot share more than one common line.
-- **Maximum intersection:** As an immediate consequence, two distinct lines can intersect in at most one point.

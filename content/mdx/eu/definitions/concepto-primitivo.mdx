@@ -17,18 +17,18 @@ export const metadata = {
 Teoria matematiko orok hasierako terminoak behar ditu abiatzeko. Objektu bakoitza kontzeptu sinpleagoen bidez definitzen saiatuko bagina, arrazoibide zirkularrean edo amaigabeko atzerakada-kate batean eroriko ginateke. Hori saihesteko, sistema axiomatikoek oinarrizko nozio-multzo bat aukeratzen dute eta haien portaera finkatzen dute <ConceptLink targetId="sistema-axiomatico">sistema formaleko</ConceptLink> <ConceptLink targetId="axioma">axiomen</ConceptLink> bidez.
 
 <Definicion title="Definizio Epistemologikoa">
-  Teoria formalizatu edo $\mathcal{S}$ <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> batean, **oinarrizko kontzeptuak** sistemaren barruan definizio espliziturik ez duten hizkuntzaren oinarrizko ikurrak (objektuak eta erlazioak) dira:
+  $\sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})$ <ConceptLink targetId="signatura">sinadura</ConceptLink> batek zehaztutako hizkuntza formal batean, **oinarrizko kontzeptuak** teoriaren barruan aldez aurreko definiziorik ez duten abiapuntuko ikur ez-logikoak (objektu-motak eta erlazio- edo eragiketa-ikurrak) dira:
   $$
-  \mathcal{S} = (\mathcal{D}_1, \mathcal{D}_2, \dots, \mathcal{R}_1, \mathcal{R}_2, \dots)
+  \sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})
   $$
-  Termino horien esanahi matematikoa ez datza deskribapen fisiko edo substantzial batean, <ConceptLink targetId="axioma">axiomek</ConceptLink> haien artean ezartzen dituzten erlazio formaletan baizik.
+  Haien esanahi matematikoa ez datza deskribapen fisiko edo substantzialean, <ConceptLink targetId="axioma">axiomek</ConceptLink> <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> edo eredu batean haien interpretazioen gainean ezartzen dituzten arau formaletan baizik.
 </Definicion>
 
 <Separador />
 
-### Oinarrizko kontzeptuak geometria sintetikoan
+### Oinarrizko kontzeptuak <ConceptLink targetId="geometria-sintetica">geometria sintetikoan</ConceptLink>
 
-Geometriaren oinarrietan (Hilbert-en sisteman adibidez), oinarrizko kontzeptuak bi kategoriatan banatzen dira:
+Geometriaren oinarrietan (<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> sisteman adibidez), oinarrizko kontzeptuak bi kategoriatan banatzen dira:
 
-- **Objektu-domeinuak:** Elementu nagusiak, hala nola <ConceptLink targetId="punto">puntua</ConceptLink>, <ConceptLink targetId="recta">zuzena</ConceptLink>, <ConceptLink targetId="plano">planoa</ConceptLink> eta <ConceptLink targetId="espacio">espazioa</ConceptLink>.
-- **Oinarrizko erlazioak:** Objektuen arteko oinarrizko loturak, hala nola <ConceptLink targetId="incidencia">intzidentzia</ConceptLink> (kidetza), <ConceptLink targetId="estar-entre">bitartekotasuna</ConceptLink> (ordena lineala) eta <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> (berdintasun geometrikoa).
+- **Objektu-motak (<ConceptLink targetId="dominio">oinarrizko domeinuak</ConceptLink>):** Entitateen hiru oinarrizko klaseak: <ConceptLink targetId="punto">puntuak</ConceptLink> ($\mathcal{P}$), <ConceptLink targetId="recta">zuzenak</ConceptLink> ($\mathcal{L}$) eta <ConceptLink targetId="plano">planoak</ConceptLink> ($\Pi$). <ConceptLink targetId="espacio">Hiru dimentsioko espazioa</ConceptLink> ereduaren unibertso orokorra da eta ez signaturako objektu primitibo independente bat.
+- **Oinarrizko erlazioak:** Objektuen arteko oinarrizko loturak, hala nola <ConceptLink targetId="incidencia">intzidentzia</ConceptLink> (posizio-kidetza), <ConceptLink targetId="estar-entre">bitartekotasuna</ConceptLink> (ordena lineala) eta <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> (<ConceptLink targetId="segmento">segmentuena</ConceptLink> eta <ConceptLink targetId="angulo">angeluena</ConceptLink>).

@@ -3,8 +3,9 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma I.2 (Existencia de puntos en la recta)",
-  description: "Toda recta contiene al menos dos puntos distintos.",
+  description: "Toda recta incide al menos con dos puntos distintos.",
   branch: "51A",
+  tags: ["geometria", "incidencia", "axioma", "recta"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,19 +17,15 @@ export const metadata = {
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="T" />oda <ConceptLink targetId="recta">recta</ConceptLink> contiene al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos.
+<Capitular letra="T" />oda <ConceptLink targetId="recta">recta</ConceptLink> incide al menos con dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos.
 
-Este axioma garantiza que las rectas no sean conjuntos vacíos ni estén formadas por un único punto aislado, asegurando que cada línea tenga contenido geométrico real sobre el cual operar.
+Este axioma garantiza que las rectas posean contenido geométrico en el <ConceptLink targetId="espacio">espacio</ConceptLink>, impidiendo que existan líneas sin puntos o reducidas a un único punto aislado.
 
 <Definicion title="Enunciado Formal">
-  Para toda <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind>, existen al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> que <ConceptLink targetId="incidencia">inciden</ConceptLink> en $\ell$:
+  Para toda <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind>, existen al menos dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> que <ConceptLink targetId="incidencia">inciden</ConceptLink> en $\ell$:
   $$
-  \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \in \ell \land B \in \ell)
+  \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)
   $$
+  En términos de la traza puntual de la recta, esto equivale a establecer que su cardinalidad cumple $\lvert \operatorname{tr}(\ell) \rvert \ge 2$.
 </Definicion>
 
-<Separador />
-
-### Importancia en la teoría
-
-Junto con el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>, establece una correspondencia recíproca: dos puntos determinan una recta, y toda recta contiene al menos dos puntos para poder ser identificada.

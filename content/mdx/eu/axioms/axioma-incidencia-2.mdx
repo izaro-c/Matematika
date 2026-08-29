@@ -3,8 +3,9 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "I.2 Axioma (Puntuak zuzenean)",
-  description: "Zuzen orok gutxienez bi puntu desberdin ditu.",
+  description: "Zuzen orok gutxienez bi puntu desberdinekin intziditzen du.",
   branch: "51A",
+  tags: ["geometria", "intzidentzia", "axioma", "zuzena"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,19 +17,15 @@ export const metadata = {
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="Z" />**uzen** orok gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin ditu.
+<Capitular letra="Z" />**uzen** orok gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinekin <ConceptLink targetId="incidencia">intziditzen</ConceptLink> du.
 
-Axioma honek bermatzen du zuzenak multzo hutsak ez izatea eta puntu isolatu bakar batek ez osatzea, lerro bakoitzak gainean jarduteko benetako eduki geometrikoa duela ziurtatuz.
+Axioma honek zuzenek <ConceptLink targetId="espacio">espazioan</ConceptLink> eduki geometrikoa izatea bermatzen du, punturik gabeko lerroak edo puntu isolatu bakar batera murriztutakoak saihestuz.
 
 <Definicion title="Enuntziatu Formala">
-  Edozein <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzenetarako</ConceptLink>, gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen dira (<VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind>) $\ell$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutenak:
+  Edozein <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzenetarako</ConceptLink>, gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen dira (<VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pB" color="ocre">$B$</VisualBind>) $\ell$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutenak:
   $$
-  \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \in \ell \land B \in \ell)
+  \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)
   $$
+  Zuzenaren puntu-trazaren ikuspegitik, horrek bere kardinalak $\lvert \operatorname{tr}(\ell) \rvert \ge 2$ betetzen duela ezartzen du.
 </Definicion>
 
-<Separador />
-
-### Garrantzia teorian
-
-<ConceptLink targetId="axioma-incidencia-1">I.1 Axiomarekin</ConceptLink> batera, elkarrekiko lotura ezartzen du: bi puntuk zuzen bat zehazten dute, eta zuzen orok gutxienez bi puntu ditu identifikagarria izateko.

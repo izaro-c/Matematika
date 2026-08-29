@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Punto",
-  description: "Concepto geométrico primitivo, indivisible y sin extensión espacial, cuyas propiedades quedan determinadas por los axiomas del sistema formal adoptado.",
+  description: "Concepto geométrico primitivo, indivisible y carente de extensión dimensional (dim = 0), cuyas propiedades quedan determinadas por los axiomas del sistema formal adoptado.",
   branch: "51M",
   hasSimulation: true,
   sources: [
@@ -16,12 +16,12 @@ export const metadata = {
 import { Punto } from '@content/diagrams/Definiciones/Punto';
 export const Simulation = Punto;
 
-<Capitular letra="E" />l <VisualBind element="pPoint" color="musgo">**punto**</VisualBind> es un <ConceptLink targetId="concepto-primitivo">concepto primitivo</ConceptLink> de la geometría: el objeto más simple del espacio, que no tiene partes ni posee <ConceptLink targetId="longitud">longitud</ConceptLink>, <ConceptLink targetId="area">área</ConceptLink> o <ConceptLink targetId="volumen">volumen</ConceptLink>.
+<Capitular letra="E" />l <VisualBind element="pPoint" color="musgo">**punto**</VisualBind> es un <ConceptLink targetId="concepto-primitivo">concepto primitivo</ConceptLink> de la geometría: el objeto elemental del <ConceptLink targetId="espacio">espacio</ConceptLink> que carece de partes y de <ConceptLink targetId="dimension">extensión dimensional</ConceptLink> ($\dim = 0$).
 
 Al ser una noción básica, no se define a partir de otras figuras. En su lugar, su comportamiento y sus propiedades quedan fijados por los <ConceptLink targetId="axioma">axiomas</ConceptLink> del <ConceptLink targetId="sistema-axiomatico">sistema formal</ConceptLink> adoptado.
 
 <Definicion title="Definición Formal">
-  En una <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink> $\mathcal{S}$, un **punto** <VisualBind element="pPoint" color="musgo">$P$</VisualBind> es cualquier elemento del <ConceptLink targetId="conjunto">conjunto base</ConceptLink> no vacío $\mathcal{P}$:
+  En una <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink> $\mathcal{S}$, un **punto** <VisualBind element="pPoint" color="musgo">$P$</VisualBind> es cualquier elemento del <ConceptLink targetId="dominio">dominio primitivo de puntos</ConceptLink> $\mathcal{P}$:
   $$
   P \in \mathcal{P}
   $$
@@ -34,8 +34,8 @@ Al ser una noción básica, no se define a partir de otras figuras. En su lugar,
 
 Dado que el punto carece de estructura interna, lo que podemos afirmar sobre él depende de qué grupos de axiomas incorpore el <ConceptLink targetId="sistema-axiomatico">sistema geométrico</ConceptLink> adoptado (un sistema concreto puede limitarse solo a algunos):
 
-- **En sistemas de <ConceptLink targetId="incidencia">incidencia</ConceptLink>:** Establecen únicamente la pertenencia de los puntos a <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>).
+- **En sistemas de <ConceptLink targetId="incidencia">incidencia</ConceptLink>:** Establecen las condiciones de incidencia posicional de los puntos en <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>).
 - **Al añadir <ConceptLink targetId="estar-entre">orden o intermediación</ConceptLink>:** Describe cuándo un punto se encuentra entre otros dos en una recta, lo que permite delimitar figuras como el <ConceptLink targetId="segmento">segmento</ConceptLink> y la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>).
-- **Al añadir <ConceptLink targetId="congruencia">congruencia</ConceptLink>:** Permite comparar pares de puntos para determinar si forman segmentos iguales (congruentes), sin presuponer todavía una noción numérica de <ConceptLink targetId="distancia">distancia</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4">III.4</ConceptLink>, <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>).
-- **Al fijar el <ConceptLink targetId="paralelas">paralelismo</ConceptLink>:** Determina cuántas rectas paralelas pueden pasar por un punto exterior a una recta dada, diferenciando la geometría euclidiana (<ConceptLink targetId="axioma-paralelas-euclides">postulado de Euclides</ConceptLink>, una única paralela) de la hiperbólica (<ConceptLink targetId="axioma-paralelas-hiperbolico">postulado hiperbólico</ConceptLink>, múltiples paralelas).
+- **Al añadir <ConceptLink targetId="congruencia">congruencia</ConceptLink>:** Permite comparar pares de puntos para determinar si forman segmentos congruentes, sin presuponer una noción métrica de <ConceptLink targetId="distancia">distancia</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink>).
+- **Al fijar el <ConceptLink targetId="paralelas">paralelismo</ConceptLink>:** Postula la cota superior y unicidad de rectas paralelas coplanares que pasan por un punto exterior a una recta dada (a lo sumo una paralela en el <ConceptLink targetId="axioma-paralelas-euclides">postulado de Euclides, IV</ConceptLink>), dado que la existencia de al menos una paralela es un teorema previo de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
 - **Al añadir <ConceptLink targetId="continuidad">continuidad</ConceptLink>:** Garantiza que la recta de puntos se comporte como un continuo medible: sin magnitudes infinitesimales (<ConceptLink targetId="axioma-arquimedes">Arquímedes, V.1</ConceptLink>) ni huecos (<ConceptLink targetId="axioma-completitud">completitud, V.2</ConceptLink>).

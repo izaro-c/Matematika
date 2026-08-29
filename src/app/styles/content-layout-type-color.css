@@ -27,7 +27,8 @@
   .demo-container h1,
   .prose h3,
   .prose th,
-  .prose ul > li::before
+  .prose ul > li::before,
+  .prose ol > li::before
 ) {
   color: var(--page-accent);
 }

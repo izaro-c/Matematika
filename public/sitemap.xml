@@ -1478,6 +1478,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/bio/euclides" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/bio/fano</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/bio/fano" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/bio/fano" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/bio/fano" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/bio/fano</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/bio/fano" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/bio/fano" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/bio/fano" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/bio/fermat</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
@@ -2772,6 +2790,15 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/bio/euclides" />
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/bio/euclides" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/bio/euclides" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/bio/fano</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/bio/fano" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/bio/fano" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/bio/fano" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/bio/fermat</loc>

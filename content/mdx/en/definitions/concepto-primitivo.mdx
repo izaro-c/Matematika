@@ -17,18 +17,18 @@ export const metadata = {
 Every mathematical theory requires starting terms. If one attempted to define every object using simpler concepts, one would fall into circular reasoning or an infinite regression. To avoid this, axiomatic systems select a basic set of primitive notions and establish their behavior through the rules or <ConceptLink targetId="axioma">axioms</ConceptLink> of the adopted <ConceptLink targetId="sistema-axiomatico">formal system</ConceptLink>.
 
 <Definicion title="Epistemological Definition">
-  In a formalized theory or <ConceptLink targetId="estructura-geometrica">mathematical structure</ConceptLink> $\mathcal{S}$, **primitive concepts** are the basic symbols of the language (objects and relations) that lack an explicit definition within the system:
+  In a formal language specified by a <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})$, **primitive concepts** are the basic non-logical starting symbols (sorts/object types and relation or function symbols) that lack a prior definition within the theory:
   $$
-  \mathcal{S} = (\mathcal{D}_1, \mathcal{D}_2, \dots, \mathcal{R}_1, \mathcal{R}_2, \dots)
+  \sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})
   $$
-  The mathematical meaning of these terms does not lie in a physical or substantial description, but exclusively in the formal relations that the <ConceptLink targetId="axioma">axioms</ConceptLink> establish among them.
+  Their mathematical meaning does not lie in a physical or substantial description, but in the formal rules that the <ConceptLink targetId="axioma">axioms</ConceptLink> impose on their interpretations within a <ConceptLink targetId="estructura-geometrica">mathematical structure</ConceptLink> or model.
 </Definicion>
 
 <Separador />
 
-### Primitive concepts in synthetic geometry
+### Primitive concepts in <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>
 
-In the foundations of geometry (such as Hilbert's system), primitive concepts are divided into two categories:
+In the foundations of geometry (such as <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> system), primitive concepts are divided into two categories:
 
-- **Object domains:** Fundamental entities such as the <ConceptLink targetId="punto">point</ConceptLink>, the <ConceptLink targetId="recta">line</ConceptLink>, the <ConceptLink targetId="plano">plane</ConceptLink>, and <ConceptLink targetId="espacio">space</ConceptLink>.
-- **Primitive relations:** Basic links between objects, such as <ConceptLink targetId="incidencia">incidence</ConceptLink> (membership), <ConceptLink targetId="estar-entre">betweenness</ConceptLink> (linear ordering), and <ConceptLink targetId="congruencia">congruence</ConceptLink> (geometric equality).
+- **Object types (<ConceptLink targetId="dominio">primitive domains</ConceptLink>):** The three elementary sorts of entities: <ConceptLink targetId="punto">points</ConceptLink> ($\mathcal{P}$), <ConceptLink targetId="recta">lines</ConceptLink> ($\mathcal{L}$), and <ConceptLink targetId="plano">planes</ConceptLink> ($\Pi$). <ConceptLink targetId="espacio">Three-dimensional space</ConceptLink> serves as the global universe of the model rather than a primitive sort in the signature.
+- **Primitive relations:** Basic links between objects, such as <ConceptLink targetId="incidencia">incidence</ConceptLink> (positional membership), <ConceptLink targetId="estar-entre">betweenness</ConceptLink> (linear ordering), and <ConceptLink targetId="congruencia">congruence</ConceptLink> (of <ConceptLink targetId="segmento">segments</ConceptLink> and of <ConceptLink targetId="angulo">angles</ConceptLink>).

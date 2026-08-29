@@ -2,9 +2,10 @@ export const metadata = {
   id: "axioma-incidencia-3",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.3 (Non-Collinear Points)",
+  title: "Axiom I.3 (Non-collinear points)",
   description: "There exist at least three points that do not belong to the same line.",
   branch: "51A",
+  tags: ["geometry", "incidence", "axiom", "plane"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -18,18 +19,13 @@ export const Simulation = Incidence3;
 
 <Capitular letra="T" />here exist at least three <ConceptLink targetId="punto">points</ConceptLink> not lying on the same <ConceptLink targetId="recta">line</ConceptLink>.
 
-This axiom ensures that geometry does not reduce to a single one-dimensional line, guaranteeing the existence of a two-dimensional plane with surface and polygonal figures such as the <ConceptLink targetId="triangulo">triangle</ConceptLink>.
+This axiom ensures that geometry does not collapse into a single linear dimension, establishing the foundation for two-dimensional configurations and setting the vertex basis for figures such as the <ConceptLink targetId="triangulo">triangle</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>.
 
 <Definicion title="Formal Statement">
-  There exist at least three <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> such that no <ConceptLink targetId="recta">line</ConceptLink> $\ell$ contains all three simultaneously:
+  There exist at least three distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> such that no <ConceptLink targetId="recta">line</ConceptLink> $\ell \in \mathcal{L}$ is simultaneously <ConceptLink targetId="incidencia">incident</ConceptLink> with all three:
   $$
-  \exists A, B, C \in \mathcal{P} \ \forall \ell \in \mathcal{L} \ \neg(A \in \ell \land B \in \ell \land C \in \ell)
+  \exists A, B, C \in \mathcal{P} \ \bigl(A \neq B \land B \neq C \land A \neq C \land \forall \ell \in \mathcal{L} \ \neg(A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\bigr)
   $$
+  A triple of points satisfying this condition is called non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> and constitutes the fundamental vertex configuration that gives rise to the <ConceptLink targetId="triangulo">triangle</ConceptLink> once <ConceptLink targetId="estar-entre">linear order</ConceptLink> (Group II) is introduced.
 </Definicion>
 
-<Separador />
-
-### Significance in the theory
-
-- **<ConceptLink targetId="colinealidad">Non-collinearity</ConceptLink>:** Formally establishes the existence of triples of non-aligned points.
-- **Basis for planes:** The three non-collinear points guaranteed by this axiom form the necessary basis to define the first <ConceptLink targetId="plano">plane</ConceptLink> of space.

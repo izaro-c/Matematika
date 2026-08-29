@@ -3,8 +3,10 @@ export const metadata = {
   lang: "eu",
   type: "sistema-axiomatico",
   title: "Intzidentzia-sistema",
-  description: "Geometriaren oinarrizko egitura axiomatikoa, puntu, zuzen eta planoen arteko kidetza-arauak ezartzen dituena distantzia edo ordena noziorik gabe.",
+  description: "Geometria sintetikoaren oinarrizko egitura axiomatikoa, puntu, zuzen eta planoen arteko kidetza- eta determinazio-erlazioak ezartzen dituena.",
   branch: "51A",
+  branches: ["51A", "51M", "03B"],
+  tags: ["geometria", "intzidentzia", "hilbert", "oinarriak"],
   axiomas: [
     "axioma-incidencia-1",
     "axioma-incidencia-2",
@@ -27,35 +29,38 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="I" />**ntzidentzia-sistema** geometria sintetikoaren lehen maila deduktiboa da. Espazioko <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptuen</ConceptLink> (<ConceptLink targetId="punto">puntuak</ConceptLink>, <ConceptLink targetId="recta">zuzenak</ConceptLink> eta <ConceptLink targetId="plano">planoak</ConceptLink>) arteko kidetza-arau nagusiak ezartzen ditu, distantzia, angelu-neurri edo ordenazio oro guztiz baztertuz.
+<Capitular letra="I" />**ntzidentzia-sistema** <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> lehenengo estratu deduktiboa da. <ConceptLink targetId="espacio">Espazioko</ConceptLink> <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptuen</ConceptLink> (<ConceptLink targetId="punto">puntuak</ConceptLink>, <ConceptLink targetId="recta">zuzenak</ConceptLink> eta <ConceptLink targetId="plano">planoak</ConceptLink>) arteko kidetza- eta determinazio-arau formalak ezartzen ditu, <ConceptLink targetId="distancia">distantzia</ConceptLink> edo <ConceptLink targetId="angulo">angeluen</ConceptLink> neurri metrikoak eta <ConceptLink targetId="estar-entre">ordenako</ConceptLink> erlazioak alboratuz.
 
-<Definicion title="Egitura Formala">
-  **Intzidentzia-espazio** bat $(\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$ <ConceptLink targetId="estructura-geometrica">egitura</ConceptLink> bat da, non $\mathcal{P}$, $\mathcal{L}$ eta $\Pi$ puntu, zuzen eta planoen multzo ez-hutsak eta binaka disjuntuak diren, eta $\mathbf{I}$ <ConceptLink targetId="incidencia">intzidentzia-erlazioa</ConceptLink> den:
+Esparru honetan, zuzenak eta planoak ez dira puntuen multzo gisa definitzen, <ConceptLink targetId="incidencia">intzidentzia-erlazioen</ConceptLink> bidez lotutako oinarrizko entitate independente gisa baizik. Objektu batekin intziditzen duten puntuek haren traza osatzen dute <ConceptLink targetId="espacio">espazioan</ConceptLink>.
+
+<Definicion title="Egitura formala">
+  <ConceptLink targetId="teoria-modelos">Ereduen teorian</ConceptLink>, **intzidentzia-espazio** bat $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$ <ConceptLink targetId="estructura-geometrica">egitura erlazional politipatua</ConceptLink> da, binaka <ConceptLink targetId="conjunto-disjunto">disjuntuak</ConceptLink> diren hiru <ConceptLink targetId="dominio">domeinuz</ConceptLink> osatutako $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ <ConceptLink targetId="universo-discurso">diskurtsoaren unibertsoan</ConceptLink>:
+  - $\mathcal{P}$: <ConceptLink targetId="punto">puntuen</ConceptLink> domeinu primitiboa.
+  - $\mathcal{L}$: <ConceptLink targetId="recta">zuzenen</ConceptLink> domeinu primitiboa.
+  - $\Pi$: <ConceptLink targetId="plano">planoen</ConceptLink> domeinu primitiboa.
+  - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ eta $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$: puntu-zuzen eta puntu-plano <ConceptLink targetId="incidencia">intzidentzia-erlazioak</ConceptLink> (orokorrean $\mathbf{I}$ gisa idatziak).
+
+  Egiturak Hilberten I. taldeko teoria betetzen du ($\mathcal{S}_{\text{inc}} \models \mathcal{T}_{\text{intzidentzia}}$), non $\ell \in \mathcal{L}$ zuzen baten edo $\pi \in \Pi$ plano baten puntu-traza honakoa den:
   $$
-  \mathbf{I} \subseteq (\mathcal{P} \times \mathcal{L}) \cup (\mathcal{P} \times \Pi) \cup (\mathcal{L} \times \Pi)
+  \operatorname{tr}(\ell) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \}, \quad \operatorname{tr}(\pi) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \pi \}
   $$
-  eta Hilberten I. taldeko zortzi axiomak betetzen ditu.
 </Definicion>
 
 <Separador />
 
-### Intzidentzia-axiomak (Hilberten I. taldea)
+### Geometria planoa eta espaziala
 
-Zortzi oinarrizko axiomek osatzen dute sistema:
+Intzidentzia-sistema bi maila dimentsionaletan formulatzen da:
 
-- **<ConceptLink targetId="axioma-incidencia-1">I.1 Axioma (Zuzenaren determinazioa)</ConceptLink>:** Bi puntu desberdinek haietatik igarotzen den zuzen bakar bat zehazten dute.
-- **<ConceptLink targetId="axioma-incidencia-2">I.2 Axioma (Puntuak zuzenean)</ConceptLink>:** Zuzen orok gutxienez bi puntu desberdin ditu.
-- **<ConceptLink targetId="axioma-incidencia-3">I.3 Axioma (Puntu ez-kolinealak)</ConceptLink>:** Zuzen berekoak ez diren gutxienez hiru puntu existitzen dira.
-- **<ConceptLink targetId="axioma-incidencia-4">I.4 Axioma (Planoaren determinazioa)</ConceptLink>:** Kolinealak ez diren hiru puntuk haiek biltzen dituen plano bakar bat zehazten dute.
-- **<ConceptLink targetId="axioma-incidencia-5">I.5 Axioma (Puntu ez-kolinealak planoan)</ConceptLink>:** Plano orok kolinealak ez diren gutxienez hiru puntu ditu.
-- **<ConceptLink targetId="axioma-incidencia-6">I.6 Axioma (Zuzena planoan sartzea)</ConceptLink>:** Zuzen baten bi puntu plano batekoak badira, zuzen osoa plano horretan sartuta dago.
-- **<ConceptLink targetId="axioma-incidencia-7">I.7 Axioma (Planoen ebakidura)</ConceptLink>:** Bi plano desberdinek puntu bat partekatzen badute, haien ebakidura zuzen bat da zehazki.
-- **<ConceptLink targetId="axioma-incidencia-8">I.8 Axioma (Hiru dimentsioko espazioa)</ConceptLink>:** Plano berekoak ez diren gutxienez lau puntu existitzen dira.
+- **Planoa ($\dim = 2$):** <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink> axiomak nahikoak dira bi dimentsioko geometria finkatzeko, puntuen bidezko zuzenen determinazioa eta puntu ez-<ConceptLink targetId="colinealidad">kolinealen</ConceptLink> existentzia bermatuz.
+- **Espazioa ($\dim = 3$):** <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>-tik <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>-ra arteko axiomek planoak, haien determinazioa eta lau punturen ez-<ConceptLink targetId="coplanaridad">koplanartasuna</ConceptLink> txertatzen dituzte espazioaren hiru dimentsioko izaera zehazteko.
 
 <Separador />
 
-### Intzidentzia-sistemaren ereduak
+### Ereduak eta sendotasuna
 
-Jarraitutasunik edo metrikarik eskatzen ez denez, intzidentzia-sistemak era askotako egiturak onartzen ditu:
-- **Geometria finituak:** Hala nola <ConceptLink targetId="modelo-tres-puntos">hiru puntuko eredua</ConceptLink> edo <ConceptLink targetId="modelo-fano">Fanoren planoa</ConceptLink>, puntu eta zuzen kopuru finituarekin.
-- **Geometria jarraituak:** Hala nola $\mathbb{R}^3$ <ConceptLink targetId="modelo-cartesiano">espazio afin erreala</ConceptLink>.
+Sistemaren sendotasun formala izaera askotariko ereduen bidez bermatzen da:
+- **Eredu finituak:** Geometria konbinatorio diskretuak, esaterako <ConceptLink targetId="modelo-tres-puntos">hiru puntuko eredua</ConceptLink> edo <ConceptLink targetId="modelo-fano">Fanoren planoa</ConceptLink>.
+- **Eredu jarraituak:** $\mathbb{R}^3$ espazio afin klasikoa (<ConceptLink targetId="modelo-cartesiano">eredu kartesiarra</ConceptLink>).
+
+Ordena edo jarraitutasun axiometatik at, intzidentzia-sistema hutsa ez da kategorikoa eta kardinalitate finituko zein infinituko egiturak onartzen ditu.

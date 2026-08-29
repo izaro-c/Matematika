@@ -2,9 +2,10 @@ export const metadata = {
   id: "axioma-incidencia-2",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.2 (Points on a Line)",
-  description: "Every line contains at least two distinct points.",
+  title: "Axiom I.2 (Points on a line)",
+  description: "Every line is incident with at least two distinct points.",
   branch: "51A",
+  tags: ["geometry", "incidence", "axiom", "line"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,19 +17,15 @@ export const metadata = {
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="E" />very <ConceptLink targetId="recta">line</ConceptLink> contains at least two distinct <ConceptLink targetId="punto">points</ConceptLink>.
+<Capitular letra="E" />very <ConceptLink targetId="recta">line</ConceptLink> is <ConceptLink targetId="incidencia">incident</ConceptLink> with at least two distinct <ConceptLink targetId="punto">points</ConceptLink>.
 
-This axiom ensures that lines are not empty sets and do not consist of a single isolated point, guaranteeing that every line has real geometric content to operate upon.
+This axiom guarantees that lines possess geometric content in <ConceptLink targetId="espacio">space</ConceptLink>, preventing lines from being empty or collapsing into a single isolated point.
 
 <Definicion title="Formal Statement">
-  For every <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind>, there exist at least two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> <ConceptLink targetId="incidencia">incident</ConceptLink> with $\ell$:
+  For every <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind>, there exist at least two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> <ConceptLink targetId="incidencia">incident</ConceptLink> with $\ell$:
   $$
-  \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \in \ell \land B \in \ell)
+  \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)
   $$
+  In terms of the point trace of the line, this establishes that its cardinality satisfies $\lvert \operatorname{tr}(\ell) \rvert \ge 2$.
 </Definicion>
 
-<Separador />
-
-### Significance in the theory
-
-Together with <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>, it establishes a reciprocal connection: two points determine a line, and every line contains at least two points to be identifiable.

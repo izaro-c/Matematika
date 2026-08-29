@@ -2,9 +2,10 @@ export const metadata = {
   id: "axioma-incidencia-4",
   lang: "en",
   type: "axioma",
-  title: "Axiom I.4 (Determination of the Plane)",
-  description: "Through any three non-collinear points passes at least one plane.",
+  title: "Axiom I.4 (Determination of the plane)",
+  description: "Through any three non-collinear points passes at least one plane incident with them.",
   branch: "51A",
+  tags: ["geometry", "incidence", "axiom", "plane"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,19 +17,14 @@ export const metadata = {
 import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 
-<Capitular letra="G" />iven any three non-collinear <ConceptLink targetId="punto">points</ConceptLink>, there exists at least one <ConceptLink targetId="plano">plane</ConceptLink> containing all three.
+<Capitular letra="G" />iven any three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink>, there exists at least one <ConceptLink targetId="plano">plane</ConceptLink> incident with all three.
 
-This postulate extends the principle of linear determination to two-dimensional space: just as two points fix a line, three non-aligned points fix the position of a plane in space.
+This postulate extends the principle of linear determination to two-dimensional space: just as two points fix a line, three non-aligned points guarantee the existence of a plane in <ConceptLink targetId="espacio">space</ConceptLink>.
 
 <Definicion title="Formal Statement">
-  For any three non-collinear <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind>, there exists at least one <ConceptLink targetId="plano">plane</ConceptLink> $\pi$ such that all three points <ConceptLink targetId="incidencia">are incident</ConceptLink> with $\pi$:
+  For any three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind>, there exists at least one <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="polyTriangulo" color="canela">$\pi$</VisualBind> such that all three points <ConceptLink targetId="incidencia">are incident</ConceptLink> with $\pi$:
   $$
-  \forall A, B, C \in \mathcal{P} \ \bigl(\text{non-collinear}(A, B, C) \implies \exists \pi \in \Pi \ (A \in \pi \land B \in \pi \land C \in \pi)\bigr)
+  \forall A, B, C \in \mathcal{P} \ \bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \implies \exists \pi \in \Pi \ (A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi)\bigr)
   $$
 </Definicion>
 
-<Separador />
-
-### Significance in the theory
-
-Enables the construction of planes from minimal configurations of points and supports the study of three-dimensional geometry in the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>.

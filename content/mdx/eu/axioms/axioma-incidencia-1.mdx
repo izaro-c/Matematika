@@ -3,8 +3,9 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "I.1 Axioma (Zuzenaren determinazioa)",
-  description: "Edozein bi puntu desberdinetatik zuzen bakar bat igarotzen da.",
+  description: "Edozein bi puntu desberdinek biekiko intzidente den zuzen bakar bat zehazten dute.",
   branch: "51A",
+  tags: ["geometria", "intzidentzia", "axioma", "zuzena"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,20 +17,14 @@ export const metadata = {
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="E" />dozein bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin emanda, bietatik igarotzen den <ConceptLink targetId="recta">zuzen</ConceptLink> bakar bat existitzen da zehazki.
+<Capitular letra="E" />dozein bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin emanda, biekiko <ConceptLink targetId="incidencia">intzidente</ConceptLink> den <ConceptLink targetId="recta">zuzen</ConceptLink> bakar bat existitzen da zehazki.
 
-Postulatu honek geometriako oinarrizko lotura lineala ezartzen du: bi puntu desberdinek norabide bat eta lerro zuzen oso bat zehazten dituzte modu unibokoan.
+Postulatu honek geometriaren oinarrizko lotura lineala ezartzen du: bi puntu desberdinek lerro zuzen bakar baten posizioa zehazten dute <ConceptLink targetId="espacio">espazioan</ConceptLink>.
 
 <Definicion title="Enuntziatu Formala">
-  Edozein bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako (<VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind>, $A \neq B$), <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bakar bat existitzen da, non $A$ eta $B$ $\ell$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten:
+  Edozein bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako (<VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pB" color="ocre">$B$</VisualBind>, $A \neq B$), <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bakar bat existitzen da, non $A$ eta $B$ $\ell$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten:
   $$
-  \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \in \ell \land B \in \ell)\bigr)
+  \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)\bigr)
   $$
+  $A$ eta $B$ puntuek zehaztutako zuzena $\overleftrightarrow{AB}$ gisa idatzi ohi da.
 </Definicion>
-
-<Separador />
-
-### Garrantzia teorian
-
-- **Zuzenaren bakartasuna:** Bi puntuk ezin dute zuzen komun bat baino gehiago partekatu.
-- **Gehienezko ebakidura:** Zuzeneko ondorio gisa, bi zuzen desberdinek elkar gehienez puntu bakar batean ebakitzen dute.

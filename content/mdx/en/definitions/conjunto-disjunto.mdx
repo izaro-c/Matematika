@@ -3,8 +3,8 @@ export const metadata = {
   lang: "en",
   type: "definicion",
   subtype: "nominal",
-  title: "Disjoint Sets",
-  description: "Two or more sets whose intersection is empty, meaning they share no elements in common.",
+  title: "Disjoint sets",
+  description: "Property of two sets or a family of sets that share no common elements, emphasizing the condition of pairwise (mutually) disjoint sets.",
   branch: "03",
   hasSimulation: false,
   sources: [
@@ -14,5 +14,29 @@ export const metadata = {
 
 <Capitular letra="T" />wo <ConceptLink targetId="conjunto">sets</ConceptLink> $A$ and $B$ are **disjoint** (or mutually exclusive) if they share no elements in common, that is, if their intersection is the empty set:
 $$
-A \cap B = \emptyset
+A \cap B = \emptyset \iff \forall x \ (x \in A \implies x \notin B)
 $$
+
+<Definicion title="Family of Mutually Disjoint Sets (Pairwise Disjoint)">
+  Let $\{A_i\}_{i \in I}$ be a family of sets indexed by a set $I$. The family is said to be **mutually disjoint** (or **pairwise disjoint**) if any two distinct sets in the family have empty intersection:
+  $$
+  \forall i, j \in I \ (i \neq j \implies A_i \cap A_j = \emptyset)
+  $$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Formal Properties and Distinctions">
+    <PropiedadItem id="disjuncion-dos-a-dos-vs-global" title="Pairwise disjointness vs. null global intersection">
+      For $n \ge 3$ sets, being pairwise disjoint ($\forall i \neq j, \, A_i \cap A_j = \emptyset$) is strictly stronger than having an empty global intersection ($\bigcap_{i \in I} A_i = \emptyset$). Three sets may share no single element in common while still overlapping pairwise.
+    </PropiedadItem>
+    <PropiedadItem id="fundamento-geometrico-sorts" title="Partition of the universe of discourse into domains">
+      In <ConceptLink targetId="logica">many-sorted logic</ConceptLink> and the axiomatic foundations of <ConceptLink targetId="geometria-hilbertiana">Hilbertian geometry</ConceptLink>, the <ConceptLink targetId="dominio">domains</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">lines</ConceptLink> $\mathcal{L}$, and <ConceptLink targetId="plano">planes</ConceptLink> $\Pi$ are pairwise disjoint and form a partition of the global universe of discourse (<ConceptLink targetId="espacio">space</ConceptLink>) $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$:
+      $$
+      \mathcal{P} \cap \mathcal{L} = \emptyset, \quad \mathcal{P} \cap \Pi = \emptyset, \quad \mathcal{L} \cap \Pi = \emptyset
+      $$
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+

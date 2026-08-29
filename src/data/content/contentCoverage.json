@@ -1,7 +1,7 @@
 {
   "generatedAt": "2026-07-12T14:50:29.392Z",
   "summary": {
-    "total": 110,
+    "total": 111,
     "byType": {
       "sistema-axiomatico": 4,
       "axioma": 21,
@@ -9,7 +9,7 @@
       "demostracion": 11,
       "ejemplo": 1,
       "ejercicio": 2,
-      "matematico": 20,
+      "matematico": 21,
       "metodo": 3,
       "modelo": 4,
       "plan-de-estudio": 1,
@@ -17,7 +17,7 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 60,
+      "none": 61,
       "exported": 50
     },
     "theoremLike": {
@@ -249,7 +249,7 @@
     {
       "id": "axioma-incidencia-5",
       "type": "axioma",
-      "title": "I.5 Axioma (Planoaren bakartasuna eta puntu ez-kolinealak)",
+      "title": "I.5 Axioma (Planoaren bakartasuna)",
       "filePath": "eu/axioms/axioma-incidencia-5.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -1081,6 +1081,19 @@
       "type": "matematico",
       "title": "Alexandriako Euklides",
       "filePath": "eu/mathematicians/euclides.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "fano",
+      "type": "matematico",
+      "title": "Gino Fano",
+      "filePath": "eu/mathematicians/fano.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",

@@ -15,12 +15,12 @@ export const metadata = {
 
 <Capitular letra="L" />a **dimensión** es la medida matemática del número de grados de libertad o direcciones independientes que caracterizan a un <ConceptLink targetId="espacio">espacio</ConceptLink> o a una figura geométrica.
 
-En la geometría elemental, los objetos se clasifican según sus grados de libertad: el <ConceptLink targetId="punto">punto</ConceptLink> carece de extensión (dimensión 0), la <ConceptLink targetId="recta">recta</ConceptLink> posee una única dirección de desplazamiento (dimensión 1), el <ConceptLink targetId="plano">plano</ConceptLink> admite dos direcciones independientes (dimensión 2) y el espacio tridimensional admite tres (dimensión 3).
+En la geometría elemental, los objetos se clasifican según sus grados de libertad: el <ConceptLink targetId="punto">punto</ConceptLink> carece de extensión (dimensión 0), la <ConceptLink targetId="recta">recta</ConceptLink> posee una única dirección de desplazamiento (dimensión 1), el <ConceptLink targetId="plano">plano</ConceptLink> admite dos direcciones independientes (dimensión 2) y el <ConceptLink targetId="espacio">espacio tridimensional</ConceptLink> admite tres (dimensión 3).
 
 <Definicion title="Definición en Distintas Teorías">
   El concepto de dimensión se formaliza rigurosamente en cada rama matemática:
-  - **En <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>:** Queda fijada por los postulados de incidencia de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>. El <ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink> fija un plano al requerir 3 puntos no colineales, y el <ConceptLink targetId="axioma-incidencia-8">Axioma I.8</ConceptLink> fija la tridimensionalidad del espacio al exigir 4 puntos no coplanares.
-  - **En <ConceptLink targetId="algebra-lineal">álgebra lineal</ConceptLink>:** Es el <ConceptLink targetId="cardinalidad">cardinal</ConceptLink> de cualquier <ConceptLink targetId="base">base</ConceptLink> $B$ de un <ConceptLink targetId="espacio-vectorial">espacio vectorial</ConceptLink> $V$ sobre un cuerpo $\mathbb{K}$:
+  - **En <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>:** Queda acotada inferiormente por los axiomas existenciales de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> (<ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink> impone $\dim \ge 2$ al exigir al menos 3 puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, y el <ConceptLink targetId="axioma-incidencia-8">Axioma I.8</ConceptLink> impone $\dim \ge 3$ al exigir 4 puntos no <ConceptLink targetId="coplanaridad">coplanares</ConceptLink>), mientras que la cota superior queda fijada por los axiomas de intersección y clausura espacial.
+  - **En <ConceptLink targetId="algebra-lineal">álgebra lineal</ConceptLink>:** Es el <ConceptLink targetId="cardinalidad">cardinal</ConceptLink> de cualquier <ConceptLink targetId="base">base</ConceptLink> $B$ de un <ConceptLink targetId="espacio-vectorial">espacio vectorial</ConceptLink> $V$ sobre un <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> $\mathbb{K}$:
     $$
     \dim_{\mathbb{K}}(V) = |B|
     $$
@@ -31,7 +31,7 @@ En la geometría elemental, los objetos se clasifican según sus grados de liber
 
 ### Jerarquía dimensional
 
-- **Dimensión 0:** El <ConceptLink targetId="punto">punto</ConceptLink> aislado (sin extensión).
-- **Dimensión 1:** La <ConceptLink targetId="recta">recta</ConceptLink>, el <ConceptLink targetId="segmento">segmento</ConceptLink> y la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> (magnitud: <ConceptLink targetId="longitud">longitud</ConceptLink>).
-- **Dimensión 2:** El <ConceptLink targetId="plano">plano</ConceptLink>, el <ConceptLink targetId="semiplano">semiplano</ConceptLink> y los <ConceptLink targetId="poligono">polígonos</ConceptLink> (magnitud: <ConceptLink targetId="area">área</ConceptLink>).
-- **Dimensión 3:** El <ConceptLink targetId="espacio">espacio tridimensional</ConceptLink> y los poliedros (magnitud: <ConceptLink targetId="volumen">volumen</ConceptLink>).
+- **Dimensión 0:** El <ConceptLink targetId="punto">punto</ConceptLink> elemental (carente de extensión).
+- **Dimensión 1:** La <ConceptLink targetId="recta">recta</ConceptLink>, el <ConceptLink targetId="segmento">segmento</ConceptLink> y la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> (extensión puramente lineal).
+- **Dimensión 2:** El <ConceptLink targetId="plano">plano</ConceptLink>, el <ConceptLink targetId="semiplano">semiplano</ConceptLink> y los <ConceptLink targetId="poligono">polígonos</ConceptLink> (extensión superficial, formalizada sintéticamente mediante relaciones de descomposición y complementación).
+- **Dimensión 3:** El <ConceptLink targetId="espacio">espacio tridimensional</ConceptLink> y los <ConceptLink targetId="poliedro">poliedros</ConceptLink> (extensión volumétrica espacial).

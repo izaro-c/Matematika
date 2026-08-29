@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Puntua",
-  description: "Geometriako oinarrizko kontzeptu zatiezina eta hedadura espazialik gabea; bere propietateak hautatutako sistema formalaren axiomek zehazten dituzte.",
+  description: "Geometriako oinarrizko kontzeptu zatiezina eta dimentsio-hedadurarik gabea (dim = 0); bere propietateak hautatutako sistema formalaren axiomek zehazten dituzte.",
   branch: "51M",
   hasSimulation: true,
   sources: [
@@ -16,12 +16,12 @@ export const metadata = {
 import { Punto } from '@content/diagrams/Definiciones/Punto';
 export const Simulation = Punto;
 
-<Capitular letra="G" />eometrian, <VisualBind element="pPoint" color="musgo">**puntua**</VisualBind> <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptu</ConceptLink> bat da: espazioko objekturik sinpleena, ez du zatirik eta ez du <ConceptLink targetId="longitud">luzerarik</ConceptLink>, <ConceptLink targetId="area">azalerarik</ConceptLink> ez <ConceptLink targetId="volumen">bolumenik</ConceptLink>.
+<Capitular letra="G" />eometrian, <VisualBind element="pPoint" color="musgo">**puntua**</VisualBind> <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptu</ConceptLink> bat da: <ConceptLink targetId="espacio">espazioko</ConceptLink> oinarrizko objektua, ez du zatirik ezta <ConceptLink targetId="dimension">dimentsio-hedadurarik</ConceptLink> ere ($\dim = 0$).
 
 Kontzeptu primitiboa denez, ez da beste irudi batzuen bidez definitzen. Horren ordez, bere portaera eta propietateak hautatutako <ConceptLink targetId="sistema-axiomatico">sistema formaleko</ConceptLink> <ConceptLink targetId="axioma">axiomek</ConceptLink> finkatzen dituzte.
 
 <Definicion title="Definizio Formala">
-  $\mathcal{S}$ <ConceptLink targetId="estructura-geometrica">egitura geometriko</ConceptLink> batean, **puntu** <VisualBind element="pPoint" color="musgo">$P$</VisualBind> bat $\mathcal{P}$ <ConceptLink targetId="conjunto">oinarri-multzo</ConceptLink> ez-hutsaren edozein elementu da:
+  $\mathcal{S}$ <ConceptLink targetId="estructura-geometrica">egitura geometriko</ConceptLink> batean, **puntu** <VisualBind element="pPoint" color="musgo">$P$</VisualBind> bat $\mathcal{P}$ <ConceptLink targetId="dominio">puntuen oinarrizko domeinuko</ConceptLink> edozein elementu da:
   $$
   P \in \mathcal{P}
   $$
@@ -34,8 +34,8 @@ Kontzeptu primitiboa denez, ez da beste irudi batzuen bidez definitzen. Horren o
 
 Puntuak barne-egiturarik ez duenez, hari buruz baiezta dezakeguna hautatutako <ConceptLink targetId="sistema-axiomatico">sistema geometrikoak</ConceptLink> zer axioma-multzo barneratzen dituen araberakoa da (sistema jakin bat lehenengoetara soilik mugatu daiteke):
 
-- **<ConceptLink targetId="incidencia">Inzidentzia-sistemetan</ConceptLink>:** Puntuek <ConceptLink targetId="recta">zuzenetan</ConceptLink> eta <ConceptLink targetId="plano">planoetan</ConceptLink> duten parte-hartzea (kidetza) soilik ezartzen dute (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>).
+- **<ConceptLink targetId="incidencia">Intzidentzia-sistemetan</ConceptLink>:** Puntuek <ConceptLink targetId="recta">zuzenetan</ConceptLink> eta <ConceptLink targetId="plano">planoetan</ConceptLink> duten posizio-intzidentziako baldintzak ezartzen dituzte (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>).
 - **<ConceptLink targetId="estar-entre">Ordena edo bitartekotasuna</ConceptLink> gehitzean:** Zuzen batean puntu bat beste bien artean noiz dagoen deskribatzen du; horrek <ConceptLink targetId="segmento">segmentua</ConceptLink> eta <ConceptLink targetId="semirrecta">zuzenerdia</ConceptLink> bezalako irudiak mugatzea ahalbidetzen du (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>).
-- **<ConceptLink targetId="congruencia">Kongruentzia</ConceptLink> gehitzean:** Puntu-pareak alderatzea ahalbidetzen du segmentu berdinak (kongruenteak) osatzen dituzten zehazteko, oraindik <ConceptLink targetId="distancia">distantziaren</ConceptLink> zenbakizko noziorik aurresuposatu gabe (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4">III.4</ConceptLink>, <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>).
-- **<ConceptLink targetId="paralelas">Paralelismoa</ConceptLink> finkatzean:** Zuzen jakin baten kanpoko puntu batetik zenbat zuzen paralelo igaro daitezkeen zehaztu eta bereizten du geometria euklidearra (<ConceptLink targetId="axioma-paralelas-euclides">Euklidesen postulatua</ConceptLink>, paralelo bakarra) eta hiperbolikoa (<ConceptLink targetId="axioma-paralelas-hiperbolico">postulatu hiperbolikoa</ConceptLink>, paralelo anitzak).
+- **<ConceptLink targetId="congruencia">Kongruentzia</ConceptLink> gehitzean:** Puntu-pareak alderatzea ahalbidetzen du segmentu kongruenteak osatzen dituzten zehazteko, <ConceptLink targetId="distancia">distantziaren</ConceptLink> nozio metriko bat aurresuposatu gabe (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink>).
+- **<ConceptLink targetId="paralelas">Paralelismoa</ConceptLink> finkatzean:** Zuzen jakin baten kanpoko puntu batetik igarotzen diren zuzen paralelo koplanarren goiko muga eta bakartasuna postulatzen du (gehienez paralelo bakarra <ConceptLink targetId="axioma-paralelas-euclides">Euklidesen postulatuaren arabera, IV</ConceptLink>), gutxienez paralelo baten existentzia <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> aldez aurreko teorema bat baita.
 - **<ConceptLink targetId="continuidad">Jarraitutasuna</ConceptLink> gehitzean:** Puntuen zuzenak jarraitu neurgarri gisa jokatzea bermatzen du: magnitude infinitesimalik (<ConceptLink targetId="axioma-arquimedes">Arkimedes, V.1</ConceptLink>) eta hutsunerik gabe (<ConceptLink targetId="axioma-completitud">osotasuna, V.2</ConceptLink>).

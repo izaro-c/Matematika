@@ -16,31 +16,32 @@ export const metadata = {
 <Capitular letra="E" />**gitura geometrikoa** <ConceptLink targetId="signatura">sinadura</ConceptLink> formal bati esanahia eta interpretazioa ematen dion zehaztapen matematikoa da: abiapuntuko objektu-<ConceptLink targetId="dominio">domeinuak</ConceptLink> eta haien artean jarduten duten <ConceptLink targetId="concepto-primitivo">oinarrizko erlazioak</ConceptLink> definitzen ditu.
 
 <Definicion title="Definizio Formal Orokorra">
-  $\mathcal{S}$ **egitura matematiko** bat $\mathcal{D}_i$ <ConceptLink targetId="conjunto">multzo</ConceptLink> ez-hutsez (domeinu deituak) eta $\mathcal{R}_j$ erlazioz osatutako tupla batek zehazten du:
+  $\mathcal{S}$ **egitura matematiko** bat (edo eredu bat) $\mathcal{D}_i$ <ConceptLink targetId="conjunto">multzo</ConceptLink> ez-hutsez (<ConceptLink targetId="dominio">domeinu</ConceptLink> deituak), $\mathcal{F}_l$ funtzio edo eragiketaz eta $\mathcal{R}_j$ erlazioz osatutako tupla batek zehazten du:
   $$
-  \mathcal{S} = (\mathcal{D}_1, \dots, \mathcal{D}_k, \mathcal{R}_1, \dots, \mathcal{R}_m)
+  \mathcal{S} = (\mathcal{D}_1, \dots, \mathcal{D}_k, \mathcal{F}_1, \dots, \mathcal{F}_p, \mathcal{R}_1, \dots, \mathcal{R}_m)
   $$
-  non $\mathcal{R}_j \subseteq \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n}$ erlazio bakoitzak domeinu bateko edo gehiagotako elementuak lotzen dituen.
+  non $\mathcal{F}_l: \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n} \to \mathcal{D}_{i_{n+1}}$ funtzio bakoitzak domeinuen gainean eragiten duen eta $\mathcal{R}_j \subseteq \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n}$ erlazio bakoitzak haien elementuak lotzen dituen. Teoria erlazional hutsatan (Hilberten geometria sintetikoan bezala), funtzioen errepertorioa hutsa da ($\mathcal{F} = \emptyset$).
 </Definicion>
 
 <Separador />
 
 ### Hilberten egitura sintetikoa (3D)
 
-<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoan</ConceptLink>, <ConceptLink targetId="signatura">sinadura</ConceptLink> formal kanonikoak hiru domeinu disjuntu eta hiru oinarrizko erlazio biltzen ditu:
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoan</ConceptLink>, egitura formal kanonikoak hiru domeinu <ConceptLink targetId="conjunto-disjunto">disjuntu</ConceptLink> eta haiei dagozkien oinarrizko erlazio tipifikatuak biltzen ditu:
 $$
-\mathcal{S}_{\text{sintetikoa}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong)
+\mathcal{S}_{\text{sintetikoa}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})
 $$
 - **Objektu-domeinuak:** <ConceptLink targetId="punto">Puntuak</ConceptLink> ($\mathcal{P}$), <ConceptLink targetId="recta">zuzenak</ConceptLink> ($\mathcal{L}$) eta <ConceptLink targetId="plano">planoak</ConceptLink> ($\Pi$).
 - **Oinarrizko erlazioak:**
-  - $\mathbf{I}$: <ConceptLink targetId="incidencia">Intzidentzia</ConceptLink> bitarra ($P$-k $\ell$-rekin intziditzen du, etab.).
-  - $\mathbf{B}$: <ConceptLink targetId="estar-entre">Bitartekotasun edo ordena</ConceptLink> hirutarra ($A * B * C$, «$B$ $A$ eta $C$-ren artean dago»).
-  - $\cong$: Segmentu eta angeluen arteko <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> (Hilbertek historikoki $\equiv$ ikurraz idatzia).
+  - $\mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}$: Puntu-zuzen ($P \, \mathbf{I} \, \ell$) eta puntu-plano ($P \, \mathbf{I} \, \pi$) <ConceptLink targetId="incidencia">intzidentzia</ConceptLink> bitarra.
+  - $\mathbf{B}$: Puntuen gaineko <ConceptLink targetId="estar-entre">bitartekotasun edo ordena</ConceptLink> hirutarra ($A * B * C$, «$B$ $A$ eta $C$-ren artean dago»).
+  - $\cong_{\text{seg}}$: <ConceptLink targetId="segmento">Segmentuen</ConceptLink> <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> (puntuen gaineko lau aritateko erlazioa: $AB \cong CD$).
+  - $\cong_{\angle}$: <ConceptLink targetId="angulo">Angeluen</ConceptLink> <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> (<ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren bi <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> elkarrekin ebakitzaileek osatutako angeluen gaineko erlazio bitarra: $\angle ABC \cong \angle DEF$, edo izpi-pareen artean $\angle(h, k) \cong \angle(h', k')$).
 
 <Separador />
 
-### Beste sinadura geometriko batzuk
+### Beste egitura eta sinadura geometriko batzuk
 
-- **Intzidentzia-plano hutsa:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$, <ConceptLink targetId="sistema-incidencia">intzidentzia-sistemaren</ConceptLink> oinarria geometria finitu edo proiektiboetan.
-- **Espazio metriko analitikoa:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, d)$, non $d: \mathcal{P} \times \mathcal{P} \to \mathbb{R}$ distantzia-funtzioak kongruentzia eta ordena ordezkatzen dituen.
-- **Espazio bektoriala:** $\mathcal{S}_{\text{bek}} = (V, \mathbb{K}, +, \cdot)$, gorputz baten gaineko aljebra linealean oinarritua.
+- **Intzidentzia-plano hutsa:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I}_{\mathcal{P}\mathcal{L}})$, <ConceptLink targetId="sistema-incidencia">intzidentzia-sistemaren</ConceptLink> oinarria <ConceptLink targetId="modelo-fano">geometria finitu</ConceptLink> edo <ConceptLink targetId="espacio-proyectivo">proiektiboetan</ConceptLink>.
+- **Espazio metriko analitikoa:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, d)$, non $d: \mathcal{P} \times \mathcal{P} \to \mathbb{R}$ <ConceptLink targetId="distancia">distantzia-funtzioak</ConceptLink> kongruentzia eta ordena ordezkatzen dituen.
+- **Espazio bektoriala:** $\mathcal{S}_{\text{bek}} = (V, \mathbb{K}, +, \cdot)$, <ConceptLink targetId="cuerpo">gorputz</ConceptLink> baten gaineko <ConceptLink targetId="algebra-lineal">aljebra linealean</ConceptLink> oinarritua.

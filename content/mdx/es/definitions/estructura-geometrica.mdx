@@ -16,31 +16,32 @@ export const metadata = {
 <Capitular letra="U" />na **estructura geométrica** es la especificación matemática que asigna significado e interpretación a una <ConceptLink targetId="signatura">signatura</ConceptLink> formal: define los <ConceptLink targetId="dominio">dominios</ConceptLink> de objetos de partida y las <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink> que operan entre ellos.
 
 <Definicion title="Definición Formal General">
-  Una **estructura matemática** $\mathcal{S}$ está determinada por una tupla de <ConceptLink targetId="conjunto">conjuntos</ConceptLink> no vacíos $\mathcal{D}_i$ (llamados dominios) y relaciones $\mathcal{R}_j$:
+  Una **estructura matemática** $\mathcal{S}$ (o modelo) está determinada por una tupla de <ConceptLink targetId="conjunto">conjuntos</ConceptLink> no vacíos $\mathcal{D}_i$ (llamados <ConceptLink targetId="dominio">dominios</ConceptLink>), funciones u operaciones $\mathcal{F}_l$ y relaciones $\mathcal{R}_j$:
   $$
-  \mathcal{S} = (\mathcal{D}_1, \dots, \mathcal{D}_k, \mathcal{R}_1, \dots, \mathcal{R}_m)
+  \mathcal{S} = (\mathcal{D}_1, \dots, \mathcal{D}_k, \mathcal{F}_1, \dots, \mathcal{F}_p, \mathcal{R}_1, \dots, \mathcal{R}_m)
   $$
-  donde cada relación $\mathcal{R}_j \subseteq \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n}$ vincula elementos de uno o varios dominios.
+  donde cada función $\mathcal{F}_l: \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n} \to \mathcal{D}_{i_{n+1}}$ opera sobre los dominios y cada relación $\mathcal{R}_j \subseteq \mathcal{D}_{i_1} \times \dots \times \mathcal{D}_{i_n}$ vincula sus elementos. En teorías puramente relacionales (como la geometría sintética de Hilbert), el repertorio de funciones es vacío ($\mathcal{F} = \emptyset$).
 </Definicion>
 
 <Separador />
 
 ### Estructura sintética de Hilbert (3D)
 
-En la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, la <ConceptLink targetId="signatura">signatura</ConceptLink> formal canónica reúne tres dominios disjuntos y tres relaciones primitivas:
+En la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, la estructura formal canónica reúne tres dominios <ConceptLink targetId="conjunto-disjunto">disjuntos</ConceptLink> y sus correspondientes relaciones primitivas tipadas:
 $$
-\mathcal{S}_{\text{sintética}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}, \mathbf{B}, \cong)
+\mathcal{S}_{\text{sintética}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})
 $$
 - **Dominios de objetos:** Los <ConceptLink targetId="punto">puntos</ConceptLink> ($\mathcal{P}$), las <ConceptLink targetId="recta">rectas</ConceptLink> ($\mathcal{L}$) y los <ConceptLink targetId="plano">planos</ConceptLink> ($\Pi$).
 - **Relaciones primitivas:**
-  - $\mathbf{I}$: <ConceptLink targetId="incidencia">Incidencia</ConceptLink> binaria ($P \text{ incide con } \ell$, $P \text{ incide con } \pi$, $\ell \text{ incide con } \pi$).
-  - $\mathbf{B}$: <ConceptLink targetId="estar-entre">Intermediación u orden</ConceptLink> ternario ($A * B * C$, «$B$ está entre $A$ y $C$»).
-  - $\cong$: <ConceptLink targetId="congruencia">Congruencia</ConceptLink> entre pares de puntos (segmentos) y entre ángulos (notada históricamente como $\equiv$ por Hilbert).
+  - $\mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}$: <ConceptLink targetId="incidencia">Incidencia</ConceptLink> binaria punto-recta ($P \, \mathbf{I} \, \ell$) y punto-plano ($P \, \mathbf{I} \, \pi$).
+  - $\mathbf{B}$: <ConceptLink targetId="estar-entre">Intermediación u orden</ConceptLink> ternario sobre puntos ($A * B * C$, «$B$ está entre $A$ y $C$»).
+  - $\cong_{\text{seg}}$: <ConceptLink targetId="congruencia">Congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> (relación cuaternaria sobre puntos: $AB \cong CD$).
+  - $\cong_{\angle}$: <ConceptLink targetId="congruencia">Congruencia</ConceptLink> de <ConceptLink targetId="angulo">ángulos</ConceptLink> (relación binaria sobre ángulos formados por pares de <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> concurrentes: $\angle ABC \cong \angle DEF$, o entre pares de rayos $\angle(h, k) \cong \angle(h', k')$).
 
 <Separador />
 
-### Otras signaturas geométricas
+### Otras estructuras y signaturas geométricas
 
-- **Plano de incidencia puro:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$, base del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink> en geometrías finitas o proyectivas.
-- **Espacio métrico analítico:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, d)$, donde una función de distancia numérica $d: \mathcal{P} \times \mathcal{P} \to \mathbb{R}$ sustituye a las relaciones sintéticas de congruencia y orden.
-- **Espacio vectorial:** $\mathcal{S}_{\text{vec}} = (V, \mathbb{K}, +, \cdot)$, fundamentado en el álgebra lineal sobre un cuerpo.
+- **Plano de incidencia puro:** $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \mathbf{I}_{\mathcal{P}\mathcal{L}})$, base del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink> en <ConceptLink targetId="modelo-fano">geometrías finitas</ConceptLink> o <ConceptLink targetId="espacio-proyectivo">proyectivas</ConceptLink>.
+- **Espacio métrico analítico:** $\mathcal{S}_{\text{met}} = (\mathcal{P}, d)$, donde una función de <ConceptLink targetId="distancia">distancia</ConceptLink> numérica $d: \mathcal{P} \times \mathcal{P} \to \mathbb{R}$ sustituye a las relaciones sintéticas de congruencia y orden.
+- **Espacio vectorial:** $\mathcal{S}_{\text{vec}} = (V, \mathbb{K}, +, \cdot)$, fundamentado en el <ConceptLink targetId="algebra-lineal">álgebra lineal</ConceptLink> sobre un <ConceptLink targetId="cuerpo">cuerpo</ConceptLink>.

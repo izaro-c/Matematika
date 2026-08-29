@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "modelo",
   title: "Fanoren planoa",
-  description: "Existitzen den plano proiektibo finitu txikiena, zehazki 7 puntuz eta 7 zuzenez osatua.",
+  description: "Plano proiektibo finitu minimala, zehazki 7 puntuz eta 7 zuzenez osatua.",
   branch: "51A",
   satisfies: "sistema-incidencia",
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
@@ -13,12 +13,12 @@ export const metadata = {
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
 export const Diagram = ModeloFano;
 
-<Capitular letra="F" />**anoren planoa** ($\mathrm{PG}(2, 2)$ gisa adierazia) existitzen den <ConceptLink targetId="sistema-incidencia">intzidentzia-eredu</ConceptLink> finitu eta plano proiektibo txikiena da. Zehazki 7 <ConceptLink targetId="punto">puntuz</ConceptLink> eta 7 <ConceptLink targetId="recta">zuzenez</ConceptLink> osatuta dago, simetria konbinatorio perfektuarekin, non edozein bi zuzen beti puntu bakar batean ebakitzen diren.
+<Capitular letra="F" />**anoren planoa** ($\mathrm{PG}(2, \mathbb{F}_2)$ gisa adierazia) existitzen den <ConceptLink targetId="sistema-incidencia">intzidentzia-eredu</ConceptLink> finitu eta plano proiektibo txikiena da. <ConceptLink targetId="fano">Gino Fano</ConceptLink> italiar matematikariak 1892an sortua, zehazki 7 <ConceptLink targetId="punto">puntuz</ConceptLink> eta 7 <ConceptLink targetId="recta">zuzenez</ConceptLink> osatuta dago simetria konbinatorio handiarekin.
 
-<Definicion title="Egitura Konbinatorioa">
+<Definicion title="Egitura Konbinatorioa eta Puntuak">
   Fanoren planoa honako hauek osatzen dute:
   - **7 Puntu**: <VisualBind element="p1" color="terracota">1</VisualBind>, <VisualBind element="p2" color="terracota">2</VisualBind>, <VisualBind element="p3" color="terracota">3</VisualBind>, <VisualBind element="p4" color="terracota">4</VisualBind>, <VisualBind element="p5" color="terracota">5</VisualBind>, <VisualBind element="p6" color="terracota">6</VisualBind> eta <VisualBind element="p7" color="musgo">7</VisualBind>.
-  - **7 Zuzen** (bakoitza puntu-hirukote batek osatua):
+  - **7 Zuzen** (bakoitza bertan intziditzen duen puntu-hirukote batek osatua):
     - Kanpoko triangeluaren hiru aldeak: <VisualBind element="l1" color="carbon">$\{1, 2, 4\}$</VisualBind>, <VisualBind element="l2" color="carbon">$\{2, 3, 5\}$</VisualBind>, <VisualBind element="l3" color="carbon">$\{3, 1, 6\}$</VisualBind>.
     - Hiru lerro erdibitzaile elkarzut: <VisualBind element="l4" color="carbon">$\{1, 5, 7\}$</VisualBind>, <VisualBind element="l5" color="carbon">$\{2, 6, 7\}$</VisualBind>, <VisualBind element="l6" color="carbon">$\{3, 4, 7\}$</VisualBind>.
     - Barneko zirkulua (zuzen proiektiboa): <VisualBind element="l7" color="musgo">$\{4, 5, 6\}$</VisualBind>.
@@ -26,8 +26,23 @@ export const Diagram = ModeloFano;
 
 <Separador />
 
-### Axiomen eta propietateen egiaztapena
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Egiturazko eta Axiometako Propietateak">
+    <PropiedadItem id="axioma-incidencia-1" title="Zuzenen determinazio unibokoa">
+      Edozein bi puntu desberdinetatik biak biltzen dituen zuzen bakar bat igarotzen da (<ConceptLink targetId="axioma-incidencia-1">I.1 Axioma</ConceptLink>).
+    </PropiedadItem>
+    <PropiedadItem id="interseccion-proyectiva" title="Ebakidura proiektibo unibertsala">
+      Edozein bi zuzen desberdinek elkar puntu bakar batean ebakitzen dute zehazki; beraz, ez dago <ConceptLink targetId="paralelas">zuzen paralelorik</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="uniformidad-combinatoria" title="Uniformotasun simetrikoa eta dualtasuna">
+      $(7_3, 7_3)$ motako konfigurazio simetrikoa: zuzen bakoitzak zehazki 3 puntu ditu, eta puntu bakoitzetik zehazki 3 zuzen igarotzen dira.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-- **<ConceptLink targetId="axioma-incidencia-1">I.1 Axioma</ConceptLink>:** Edozein bi puntu partekatutako zuzen bakar batenak dira.
-- **Ebakidura proiektiboa:** Edozein bi zuzen desberdinek elkar puntu bakar batean ebakitzen dute zehazki; ez dago <ConceptLink targetId="paralelas">zuzen paralelorik</ConceptLink>.
-- **Uniformotasun simetrikoa:** Zuzen bakoitzak zehazki 3 puntu ditu, eta puntu bakoitzetik zehazki 3 zuzen igarotzen dira.
+  <PropiedadesGrupo title="Eraikuntza Aljebraikoa">
+    <PropiedadItem id="espacio-vectorial-f2" title="Espazio proiektiboa F2 gorputz finituaren gainean">
+      $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{(0,0,0)\}) / \sim$ plano proiektiboari dagokio, non puntuak dimentsio bakarreko 7 zuzen bektorialak diren eta zuzenak $\mathbb{F}_2^3$ espazioko 2 dimentsioko 7 azpiespazioak diren.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+

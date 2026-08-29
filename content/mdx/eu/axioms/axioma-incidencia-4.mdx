@@ -3,8 +3,9 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "I.4 Axioma (Planoaren determinazioa)",
-  description: "Kolinealak ez diren hiru puntutatik gutxienez plano bat igarotzen da.",
+  description: "Kolinealak ez diren edozein hiru puntutatik gutxienez plano bat igarotzen da.",
   branch: "51A",
+  tags: ["geometria", "intzidentzia", "axioma", "planoa"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
@@ -16,19 +17,14 @@ export const metadata = {
 import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 
-<Capitular letra="K" />olinealak ez diren edozein hiru <ConceptLink targetId="punto">puntu</ConceptLink> emanda, hirurak biltzen dituen gutxienez <ConceptLink targetId="plano">plano</ConceptLink> bat existitzen da.
+<Capitular letra="K" />olinealak ez diren edozein hiru <ConceptLink targetId="punto">puntu</ConceptLink> emanda, hirurekin <ConceptLink targetId="incidencia">intzidente</ConceptLink> den gutxienez <ConceptLink targetId="plano">plano</ConceptLink> bat existitzen da.
 
-Postulatu honek determinazio linealaren printzipioa bi dimentsioko espaziora eramaten du: bi puntuk zuzen bat finkatzen duten bezala, lerrokatuta ez dauden hiru puntuk plano baten posizioa finkatzen dute espazioan.
+Postulatu honek determinazio linealaren printzipioa bi dimentsioko espaziora eramaten du: bi puntuk zuzen bat finkatzen duten bezala, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru puntuk plano baten existentzia ziurtatzen dute <ConceptLink targetId="espacio">espazioan</ConceptLink>.
 
 <Definicion title="Enuntziatu Formala">
-  Kolinealak ez diren edozein hiru <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako (<VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind>), gutxienez $\pi$ <ConceptLink targetId="plano">plano</ConceptLink> bat existitzen da, non hirurek $\pi$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten:
+  <ConceptLink targetId="colinealidad">Kolinealak</ConceptLink> ez diren edozein hiru <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako (<VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind>), gutxienez <VisualBind element="polyTriangulo" color="canela">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> bat existitzen da, non hirurek $\pi$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten:
   $$
-  \forall A, B, C \in \mathcal{P} \ \bigl(\text{ez-kolinealak}(A, B, C) \implies \exists \pi \in \Pi \ (A \in \pi \land B \in \pi \land C \in \pi)\bigr)
+  \forall A, B, C \in \mathcal{P} \ \bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \implies \exists \pi \in \Pi \ (A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi)\bigr)
   $$
 </Definicion>
 
-<Separador />
-
-### Garrantzia teorian
-
-Puntu-konfigurazio minimoetatik planoak eraikitzea ahalbidetzen du eta hiru dimentsioko geometriaren azterketa bermatzen du <ConceptLink targetId="sistema-incidencia">intzidentzia-sisteman</ConceptLink>.

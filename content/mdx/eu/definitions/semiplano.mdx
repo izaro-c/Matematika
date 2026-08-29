@@ -12,19 +12,18 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="P" />**lanoerdi** bat <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> batek <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko puntuak banatzean sortzen diren bi eskualdeetako bakoitza da. Zuzen zatitzaileari planoerdiaren **ertz** edo mugalde deitzen zaio eta ez da planoerdiaren parte.
+<Capitular letra="P" />**lanoerdi** bat <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> batek <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko <ConceptLink targetId="punto">puntuak</ConceptLink> banatzean sortzen diren bi eskualdeetako bakoitza da. Zuzen zatitzaileari planoerdiaren **ertz** edo mugalde deitzen zaio eta ez da planoerdiaren parte.
 
-<ConceptLink targetId="geometria-sintetica">Geometria sintetikoan</ConceptLink>, planoa zehazki bi eskualde <ConceptLink targetId="conjunto-disjunto">disjuntotan</ConceptLink> banatzea <ConceptLink targetId="axioma-orden-4" isDependency={true}>Paschen Axiomaren</ConceptLink> (ordenako II.4 Axioma) ondorio zuzena da.
+<ConceptLink targetId="geometria-sintetica">Geometria sintetikoan</ConceptLink>, planoa zehazki bi eskualde <ConceptLink targetId="conjunto-disjunto">disjuntotan</ConceptLink> banatzea Planoa Bereizteko Teoremaren ondorioa da, <ConceptLink targetId="axioma-orden-4" isDependency={true}>Paschen Axiomatik</ConceptLink> (II.4 Axioma) eta <ConceptLink targetId="estar-entre">ordenako axiometatik</ConceptLink> frogatua.
 
 <Definicion title="Definizio Formala">
-  Izan bedi $\pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bat eta $\ell$ bertan kokatutako <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat. $\ell$ zuzenak $\pi \setminus \ell$-ko <ConceptLink targetId="punto">puntuak</ConceptLink> bi <ConceptLink targetId="conjunto-disjunto">multzo disjuntotan</ConceptLink> ($\mathcal{H}_1$ eta $\mathcal{H}_2$) banatzen ditu, **planoerdi** deituak, honako baldintzapean:
+  Izan bedi $\pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bat eta $\ell$ bertan kokatutako <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat. Zuzenetik kanpoko planoko <ConceptLink targetId="punto">puntuen</ConceptLink> multzoaren gainean ($\pi \setminus \ell$), $\sim_\ell$ erlazio bitarra definitzen da:
   $$
-  A, B \in \mathcal{H}_1 \iff \overline{AB} \cap \ell = \emptyset
+  A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \ell = \emptyset
   $$
-  $$
-  A \in \mathcal{H}_1, \, C \in \mathcal{H}_2 \iff \overline{AC} \cap \ell \neq \emptyset
-  $$
-  non $\overline{AB}$ $A$ eta $B$ puntuak lotzen dituen <ConceptLink targetId="segmento" isDependency={true}>segmentua</ConceptLink> den.
+  non $\operatorname{seg}(AB)$ $A$ eta $B$ puntuak lotzen dituen <ConceptLink targetId="segmento" isDependency={true}>segmentu</ConceptLink> irekia den (bere muturrak kanpo utzita).
+
+  Planoa Bereizteko Teoremaren arabera, $\sim_\ell$ baliokidetasun-erlazio bat da eta $\pi \setminus \ell$ zehazki bi baliokidetasun-klasetan partizionatzen du $(\pi \setminus \ell) / {\sim_\ell} = \{ \mathcal{H}_1, \mathcal{H}_2 \}$ zatidura-espazioan. $\mathcal{H}_1$ eta $\mathcal{H}_2$ klase horietako bakoitza $\ell$-k mugatutako **planoerdi** ireki bat da.
 </Definicion>
 
 <Separador />
@@ -32,10 +31,10 @@ export const metadata = {
 <SeccionPropiedades>
   <PropiedadesGrupo title="Oinarrizko Propietate Geometrikoak">
     <PropiedadItem id="conjunto-convexo" title="Konbexutasuna">
-      Planoerdi oro <ConceptLink targetId="conjunto-convexo">multzo konbexua</ConceptLink> da: edozein bi puntu baditu, haiek lotzen dituen segmentu osoa bertan sartuta dago.
+      Planoerdi oro <ConceptLink targetId="conjunto-convexo">multzo konbexua</ConceptLink> da: edozein $A$ eta $B$ bi puntu baditu, haiek lotzen dituen $\operatorname{seg}(AB)$ segmentu ireki osoa bertan sartuta dago.
     </PropiedadItem>
     <PropiedadItem id="angulo" title="Poligonoen barne-eskualdeak">
-      Haien ertzak ebakitzen diren bi planoerdi edo gehiagoren ebakidurak <ConceptLink targetId="angulo">angelu</ConceptLink> baten, <ConceptLink targetId="triangulo">triangelu</ConceptLink> baten eta edozein <ConceptLink targetId="poligono">poligonoren</ConceptLink> barne-eskualdea formalki definitzea ahalbidetzen du.
+      Haien ertzak ebakitzen diren planoerdien ebakidura finituak <ConceptLink targetId="angulo">angelu</ConceptLink> baten, <ConceptLink targetId="triangulo">triangelu</ConceptLink> baten eta edozein <ConceptLink targetId="poligono">poligono konbexuren</ConceptLink> barne-eskualdea formalki definitzea ahalbidetzen du.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

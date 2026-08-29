@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "I.6 Axioma (Zuzena planoan sartzea)",
-  description: "Zuzen baten bi puntu plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
+  description: "Zuzen baten bi puntu desberdin plano batekoak badira, zuzen osoa plano horretan sartuta dago.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
@@ -18,17 +18,26 @@ export const Simulation = Incidence6;
 
 <Capitular letra="Z" />**uzen** baten bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin <ConceptLink targetId="plano">plano</ConceptLink> batekoak badira, orduan zuzen horren puntu guztiak plano horretakoak dira.
 
-Axioma honek planoaren zurruntasuna eta lautasuna formalizatzen ditu: zuzen bat ezin da plano batetik sartu eta atera, ezta planoarekiko okertu ere.
+Axioma honek planoaren zurruntasuna eta lautasuna formalizatzen ditu: zuzen bat ezin da plano batetik sartu eta atera, ezta planoarekiko okertu ere <ConceptLink targetId="espacio">espazioan</ConceptLink>.
 
 <Definicion title="Enuntziatu Formala">
-  Izan bitez <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> <VisualBind element="recta" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bateko bi puntu desberdin. $A$ eta $B$ <VisualBind element="plano" color="canela">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> batekoak badira, orduan $\ell$ zuzen osoa $\pi$-n sartuta dago:
+  Izan bitez <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> <VisualBind element="recta" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bateko bi puntu desberdin. $A$ eta $B$ <VisualBind element="plano" color="canela">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> batean <ConceptLink targetId="incidencia">intziditzen</ConceptLink> badute, orduan $\ell$ zuzen osoa $\pi$-n sartuta dago:
   $$
-  (A \in \ell \land B \in \ell \land A \neq B \land A \in \pi \land B \in \pi) \implies \ell \subset \pi
+  \forall \ell \in \mathcal{L}, \, \forall \pi \in \Pi, \, \forall A, B \in \mathcal{P} \ \bigl((A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi) \implies \ell \subseteq \pi\bigr)
   $$
+  non $\ell \subseteq \pi$ adierazpenak esan nahi duen $\ell$-rekin intzidente den puntu orok $\pi$-rekin ere intziditzen duela.
 </Definicion>
 
 <Separador />
 
-### Garrantzia teorian
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorio eta Propietate Teorikoak">
+    <PropiedadItem id="planitud-espacial" title="Zurruntasun eta lautasun geometrikoa">
+      Planoaren oinarrizko lautasuna formalizatzen du: plano baten bi punturekin intziditzen duen zuzena ezin da okertu ezta bertatik atera ere, haren azaleran erabat sartuta geratuz.
+    </PropiedadItem>
+    <PropiedadItem id="transferencia-lineal" title="Propietateen transferentzia planora">
+      Zuzen-geometriaren teorema eta propietate guztiak espazioko edozein plano bidimentsionalen barrualdera zuzenean eramatea ahalbidetzen du.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-Zuzenen geometriaren propietate guztiak bi dimentsioko planoaren barrualdera eramatea ahalbidetzen du.

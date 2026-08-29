@@ -56,7 +56,7 @@ export const Incidence2Spec = createDiagramSpec(
     {
       "id": "pA",
       "label": "A",
-      "color": "terracota",
+      "color": "ocre",
       "layerId": "geometry",
       "order": 4000,
       "visible": true,
@@ -89,7 +89,7 @@ export const Incidence2Spec = createDiagramSpec(
     {
       "id": "pB",
       "label": "B",
-      "color": "terracota",
+      "color": "ocre",
       "layerId": "geometry",
       "order": 5000,
       "visible": true,
@@ -105,7 +105,7 @@ export const Incidence2Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 4.68,
+        "x": 4.03,
         "y": 0
       },
       "mobility": {

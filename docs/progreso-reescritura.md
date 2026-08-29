@@ -25,40 +25,34 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 | [`geometria-sintetica`](../content/mdx/es/definitions/geometria-sintetica.mdx) | Geometría sintética | Geometria sintetikoa | Synthetic geometry | Definición (`nominal`) | ✅ 2026-08-29 |
 | [`geometria-hilbertiana`](../content/mdx/es/definitions/geometria-hilbertiana.mdx) | Geometría hilbertiana | Geometria hilbertiarra | Hilbertian geometry | Definición (`nominal`) | ✅ 2026-08-29 |
 | [`espacio`](../content/mdx/es/definitions/espacio.mdx) | Espacio | Espazioa | Space | Definición (`nominal`) | ✅ 2026-08-29 |
+| [`sistema-incidencia`](../content/mdx/es/axiomatic-systems/sistema-incidencia.mdx) | Sistema de incidencia | Intzidentzia-sistema | Incidence system | `sistema-axiomatico` | ✅ 2026-08-29 |
+| [`axioma-incidencia-1`](../content/mdx/es/axioms/axioma-incidencia-1.mdx) | Axioma I.1 (Determinación de la recta) | I.1 Axioma (Zuzenaren determinazioa) | Axiom I.1 (Determination of the line) | `axioma` | ✅ 2026-08-29 |
+| [`axioma-incidencia-2`](../content/mdx/es/axioms/axioma-incidencia-2.mdx) | Axioma I.2 (Existencia de puntos en la recta) | I.2 Axioma (Puntuak zuzenean) | Axiom I.2 (Points on a line) | `axioma` | ✅ 2026-08-29 |
+| [`axioma-incidencia-3`](../content/mdx/es/axioms/axioma-incidencia-3.mdx) | Axioma I.3 (Puntos no colineales) | I.3 Axioma (Puntu ez-kolinealak) | Axiom I.3 (Non-collinear points) | `axioma` | ✅ 2026-08-29 |
+| [`axioma-incidencia-4`](../content/mdx/es/axioms/axioma-incidencia-4.mdx) | Axioma I.4 (Determinación del plano) | I.4 Axioma (Planoaren determinazioa) | Axiom I.4 (Determination of the plane) | `axioma` | ✅ 2026-08-29 |
 
 ---
 
-## 2. Documentos Reescritos / Generados (En Espera de Revisión)
+## 2. Documentos Reescritos con Skill Actualizada (En Espera de Revisión)
 
-### A. Conceptos Fundamentales y Primitivos
-*(Todos los conceptos fundamentales del Lote 1 han recibido visto bueno oficial)*.
-
-### B. Sistema Axiomático de Incidencia
-| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`sistema-incidencia`](../content/mdx/es/axiomatic-systems/sistema-incidencia.mdx) | Sistema de incidencia | Intzidentzia-sistema | Incidence system | `sistema-axiomatico` | ⏳ Pendiente |
-
-### C. Axiomas de Incidencia (Hilbert Grupo I)
+### Micro-Lote 3: Axiomas Espaciales de Incidencia Restantes (Hilbert I.5 - I.8)
 | ID | Título (ES) | Izenburua (EU) | Title (EN) | Axioma | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`axioma-incidencia-1`](../content/mdx/es/axioms/axioma-incidencia-1.mdx) | Determinación de la recta | Zuzenaren determinazioa | Determination of the line | I.1 | ⏳ Pendiente |
-| [`axioma-incidencia-2`](../content/mdx/es/axioms/axioma-incidencia-2.mdx) | Puntos en recta | Puntuak zuzenean | Points on a line | I.2 | ⏳ Pendiente |
-| [`axioma-incidencia-3`](../content/mdx/es/axioms/axioma-incidencia-3.mdx) | Puntos no colineales | Puntu ez-kolinealak | Non-collinear points | I.3 | ⏳ Pendiente |
-| [`axioma-incidencia-4`](../content/mdx/es/axioms/axioma-incidencia-4.mdx) | Determinación del plano | Planoaren determinazioa | Determination of the plane | I.4 | ⏳ Pendiente |
-| [`axioma-incidencia-5`](../content/mdx/es/axioms/axioma-incidencia-5.mdx) | Unicidad del plano | Planoaren bakartasuna | Uniqueness of the plane | I.5 | ⏳ Pendiente |
-| [`axioma-incidencia-6`](../content/mdx/es/axioms/axioma-incidencia-6.mdx) | Inclusión de recta en plano | Zuzena planoan sartzea | Line inclusion in a plane | I.6 | ⏳ Pendiente |
-| [`axioma-incidencia-7`](../content/mdx/es/axioms/axioma-incidencia-7.mdx) | Intersección de dos planos | Planoen ebakidura | Intersection of planes | I.7 | ⏳ Pendiente |
-| [`axioma-incidencia-8`](../content/mdx/es/axioms/axioma-incidencia-8.mdx) | Espacio tridimensional | Hiru dimentsioko espazioa | Three-dimensional space | I.8 | ⏳ Pendiente |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| [`axioma-incidencia-5`](../content/mdx/es/axioms/axioma-incidencia-5.mdx) | Unicidad del plano | Planoaren bakartasuna | Uniqueness of the plane | I.5 | ⏳ Reescrito con rigor |
+| [`axioma-incidencia-6`](../content/mdx/es/axioms/axioma-incidencia-6.mdx) | Inclusión de la recta en el plano | Zuzena planoan sartzea | Line inclusion in a plane | I.6 | ⏳ Reescrito con rigor |
+| [`axioma-incidencia-7`](../content/mdx/es/axioms/axioma-incidencia-7.mdx) | Intersección de planos | Planoen ebakidura | Intersection of planes | I.7 | ⏳ Reescrito con rigor |
+| [`axioma-incidencia-8`](../content/mdx/es/axioms/axioma-incidencia-8.mdx) | Espacio tridimensional | Hiru dimentsioko espazioa | Three-dimensional space | I.8 | ⏳ Reescrito con rigor |
 
-### D. Modelos de Incidencia
+### Micro-Lote 4: Modelos Finitos de Incidencia y Biografías
 | ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`modelo-tres-puntos`](../content/mdx/es/models/modelo-tres-puntos.mdx) | Modelo de tres puntos | Hiru puntuko eredua | Three-point model | `modelo` | ⏳ Pendiente |
-| [`modelo-fano`](../content/mdx/es/models/modelo-fano.mdx) | Plano de Fano | Fanoren planoa | Fano plane | `modelo` | ⏳ Pendiente |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| [`modelo-tres-puntos`](../content/mdx/es/models/modelo-tres-puntos.mdx) | Modelo de tres puntos | Hiru puntuko eredua | Three-point model | `modelo` | ⏳ Reescrito con rigor |
+| [`modelo-fano`](../content/mdx/es/models/modelo-fano.mdx) | Plano de Fano | Fanoren planoa | Fano plane | `modelo` | ⏳ Reescrito con rigor |
+| [`fano`](../content/mdx/es/mathematicians/fano.mdx) | Gino Fano | Gino Fano | Gino Fano | `matematico` | ⏳ Creado |
 
 ---
 
-## 3. Próximos Documentos por Escribir (Micro-Lote 2: Orden e Intermediación)
+## 3. Próximos Documentos por Escribir (Micro-Lote 5: Orden e Intermediación)
 
 - `estar-entre.mdx` (Definición primitiva de intermediación)
 - `axioma-orden-1.mdx` (Axioma II.1 - Simetría e intermediación)

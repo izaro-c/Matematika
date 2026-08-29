@@ -6,16 +6,19 @@
 .prose ul {
   list-style-type: none;
   padding-left: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
 }
 
-.prose ul>li {
+.prose ul > li {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   line-height: 1.8;
   padding-left: 0;
+  text-align: left;
 }
 
-.prose ul>li::before {
+.prose ul > li::before {
   content: "❖";
   position: absolute;
   left: -1.5rem;
@@ -23,10 +26,50 @@
   font-size: 0.9em;
   top: 0.2em;
   opacity: 1;
+  font-style: normal;
 }
 
-.prose ul>li::marker {
+.prose ul > li::marker {
   content: none;
+}
+
+.prose ol {
+  list-style-type: none;
+  counter-reset: prose-ordered-counter;
+  padding-left: 1.75rem;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose ol > li {
+  position: relative;
+  margin-bottom: 0.75rem;
+  line-height: 1.8;
+  padding-left: 0;
+  counter-increment: prose-ordered-counter;
+  text-align: left;
+}
+
+.prose ol > li::before {
+  content: counter(prose-ordered-counter) ".";
+  position: absolute;
+  left: -1.75rem;
+  color: var(--page-accent, var(--color-terracota));
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-style: normal;
+}
+
+.prose ol > li::marker {
+  content: none;
+}
+
+.prose ul ul,
+.prose ul ol,
+.prose ol ul,
+.prose ol ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .demo-container h1 {

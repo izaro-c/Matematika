@@ -17,13 +17,17 @@ export const metadata = {
 Being a primitive concept, it is not defined via algebraic formulas; its behavior is established by the axioms of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>. In common language, saying that a point and a line "are incident" means that the point lies on the line, or equivalently, that the line passes through that point.
 
 <Definicion title="Formal Declaration">
-  In an <ConceptLink targetId="estructura-geometrica">incidence structure</ConceptLink> $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$, **incidence** $\mathbf{I}$ is a binary relation between the domains of points $\mathcal{P}$, lines $\mathcal{L}$, and planes $\Pi$:
+  In a many-sorted <ConceptLink targetId="estructura-geometrica">incidence structure</ConceptLink> $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, **incidence** is formulated through independent typed binary relations between <ConceptLink targetId="dominio">primitive domains</ConceptLink>:
   $$
-  \mathbf{I} \subseteq (\mathcal{P} \times \mathcal{L}) \cup (\mathcal{P} \times \Pi) \cup (\mathcal{L} \times \Pi)
+  \mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}, \quad \mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi
   $$
-  - If $(P, \ell) \in \mathbf{I}$, we write $P \, \mathbf{I} \, \ell$ (point $P$ is incident with line $\ell$, or $P \in \ell$).
-  - If $(P, \pi) \in \mathbf{I}$, we write $P \, \mathbf{I} \, \pi$ (point $P$ is incident with plane $\pi$, or $P \in \pi$).
-  - If $(\ell, \pi) \in \mathbf{I}$, we write $\ell \, \mathbf{I} \, \pi$ (line $\ell$ lies on plane $\pi$, or $\ell \subset \pi$).
+  - **Point and line:** If $(P, \ell) \in \mathbf{I}_{\mathcal{P}\mathcal{L}}$, we formally write $P \, \mathbf{I} \, \ell$ (point $P$ is incident with line $\ell$; the expression $P \in \ell$ is a common informal shorthand by abuse of language identifying a line with its incident points).
+  - **Point and plane:** If $(P, \pi) \in \mathbf{I}_{\mathcal{P}\Pi}$, we formally write $P \, \mathbf{I} \, \pi$ (point $P$ is incident with plane $\pi$; similarly, $P \in \pi$ by abuse of language).
+
+  The relation of a line lying on a plane ($\ell \subseteq \pi$) is not an independent primitive relation, but a derived concept established by <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink>:
+  $$
+  \ell \subseteq \pi \iff \forall P \in \mathcal{P} \, (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)
+  $$
 </Definicion>
 
 <Separador />
@@ -32,5 +36,5 @@ Being a primitive concept, it is not defined via algebraic formulas; its behavio
 
 Incidence constitutes the first deductive stratum of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>:
 
-- **In incidence systems:** Establishes the basic spatial configuration via axioms (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>), determining when points are <ConceptLink targetId="colinealidad">collinear</ConceptLink> or <ConceptLink targetId="coplanaridad">coplanar</ConceptLink>.
-- **Independence from metrics:** Incidence does not require notions of <ConceptLink targetId="distancia">distance</ConceptLink>, <ConceptLink targetId="angulo">angle</ConceptLink>, or <ConceptLink targetId="estar-entre">order</ConceptLink>, making it equally applicable to continuous and <ConceptLink targetId="modelo-fano">finite geometries</ConceptLink>.
+- **In incidence systems:** Establishes the basic configuration of <ConceptLink targetId="espacio">space</ConceptLink> via axioms (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>), determining when points are <ConceptLink targetId="colinealidad">collinear</ConceptLink> or <ConceptLink targetId="coplanaridad">coplanar</ConceptLink>.
+- **Independence from metrics:** Incidence does not require notions of <ConceptLink targetId="distancia">distance</ConceptLink>, <ConceptLink targetId="angulo">angle</ConceptLink>, or <ConceptLink targetId="estar-entre">order</ConceptLink>, making it equally applicable to <ConceptLink targetId="continuidad">continuous</ConceptLink> and <ConceptLink targetId="modelo-fano">finite geometries</ConceptLink>.
