@@ -1,7 +1,7 @@
 {
   "generatedAt": "2026-07-12T14:50:29.392Z",
   "summary": {
-    "total": 104,
+    "total": 110,
     "byType": {
       "sistema-axiomatico": 4,
       "axioma": 21,
@@ -9,7 +9,7 @@
       "demostracion": 11,
       "ejemplo": 1,
       "ejercicio": 2,
-      "matematico": 14,
+      "matematico": 20,
       "metodo": 3,
       "modelo": 4,
       "plan-de-estudio": 1,
@@ -17,7 +17,7 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 54,
+      "none": 60,
       "exported": 50
     },
     "theoremLike": {
@@ -1064,10 +1064,36 @@
       "demos": []
     },
     {
+      "id": "descartes",
+      "type": "matematico",
+      "title": "René Descartes",
+      "filePath": "eu/mathematicians/descartes.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "euclides",
       "type": "matematico",
       "title": "Alexandriako Euklides",
       "filePath": "eu/mathematicians/euclides.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "fermat",
+      "type": "matematico",
+      "title": "Pierre de Fermat",
+      "filePath": "eu/mathematicians/fermat.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
@@ -1155,10 +1181,62 @@
       "demos": []
     },
     {
+      "id": "peano",
+      "type": "matematico",
+      "title": "Giuseppe Peano",
+      "filePath": "eu/mathematicians/peano.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
       "id": "pitagoras",
       "type": "matematico",
       "title": "Samosko Pitagoras",
       "filePath": "eu/mathematicians/pitagoras.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "poncelet",
+      "type": "matematico",
+      "title": "Jean-Victor Poncelet",
+      "filePath": "eu/mathematicians/poncelet.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "staudt",
+      "type": "matematico",
+      "title": "Karl Georg Christian von Staudt",
+      "filePath": "eu/mathematicians/staudt.mdx",
+      "hasDeclaredDiagram": false,
+      "diagramExports": [],
+      "diagramStatus": "none",
+      "sourcesCount": 0,
+      "proofSteps": 0,
+      "parentTheorem": null,
+      "demos": []
+    },
+    {
+      "id": "steiner",
+      "type": "matematico",
+      "title": "Jakob Steiner",
+      "filePath": "eu/mathematicians/steiner.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
