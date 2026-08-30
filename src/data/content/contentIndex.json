@@ -2455,7 +2455,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Supplementary Angles",
-      "description": "A pair of angles whose union under congruence reproduces the configuration of a linear pair along opposite rays of a supporting line.",
+      "description": "A pair of adjacent angles that share a common side while their other two sides form opposite rays along the same supporting line.",
       "branch": "51A",
       "branches": [
         "51A",
@@ -2501,7 +2501,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Ángulos suplementarios",
-      "description": "Par de ángulos cuya unión por congruencia reproduce la configuración de un par lineal sobre semirrectas opuestas de una misma recta soporte.",
+      "description": "Par de ángulos adyacentes que comparten un lado común mientras que sus otros dos lados forman semirrectas opuestas sobre una misma recta soporte.",
       "branch": "51A",
       "branches": [
         "51A",
@@ -10223,7 +10223,7 @@
       "type": "definicion",
       "subtype": "derivado",
       "title": "Ángulos suplementarios",
-      "description": "Par de ángulos cuya unión por congruencia reproduce la configuración de un par lineal sobre semirrectas opuestas de una misma recta soporte.",
+      "description": "Par de ángulos adyacentes que comparten un lado común mientras que sus otros dos lados forman semirrectas opuestas sobre una misma recta soporte.",
       "branch": "51A",
       "branches": [
         "51A",
@@ -14716,9 +14716,8 @@
       "id": "angulos-suplementarios",
       "lang": "eu",
       "type": "definicion",
-      "subtype": "derivado",
-      "title": "Angelu gehigarriak",
-      "description": "Beren batasunak kongruentzia bidez euskarri-zuzen bereko aurkako zuzenerdien angelu-pare lineal baten egitura erreproduzitzen duen angelu-bikotea.",
+      "title": "Angelu betegarriak",
+      "description": "Elkarren ondokoak izanik alde ez-komunek aurkako zuzenerdiak osatzen dituzten bi angeluren pare batekiko kongruenteak diren bi angeluren arteko erlazio geometrikoa.",
       "branch": "51A",
       "branches": [
         "51A",
@@ -14727,8 +14726,7 @@
       "tags": [
         "geometria-sintetica",
         "congruencia",
-        "angulos",
-        "orden",
+        "angulo",
         "hilbert"
       ],
       "hasSimulation": false,
@@ -14736,7 +14734,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. Kapitulua, §4",
+          "locator": "I. kapitulua, §5",
           "role": "primary"
         }
       ],
