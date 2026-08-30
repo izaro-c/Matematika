@@ -2,48 +2,68 @@ export const metadata = {
   id: "angulos-suplementarios",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
-  title: "Angelu gehigarriak",
-  description: "Beren neurri angeluarren batura angelu lau baten (180 gradu) baliokidea den bi angelu koplanarren bikotea.",
-  branch: "51M",
+  title: "Angelu betegarriak",
+  description: "Elkarren ondokoak izanik alde ez-komunek aurkako zuzenerdiak osatzen dituzten bi angeluren pare batekiko kongruenteak diren bi angeluren arteko erlazio geometrikoa.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "angulo", "hilbert"],
   hasSimulation: false,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 13. Proposizioa", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §5",
+      role: "primary"
+    }
   ]
 };
 
-<Capitular letra="B" />i angelu koplanarri gehigarriak deitzen zaie haien neurri angeluarren batura zehazki <ConceptLink targetId="angulo-llano">angelu lau</ConceptLink> baten baliokidea denean ($180^\circ$ edo $\pi\text{ rad}$). Erlazio hau ezinbestekoa da <ConceptLink targetId="angulo-recto">angelu zuzenak</ConceptLink> sintetikoki karakterizatzeko eta zuzen ebakitzaileen propietateak aztertzeko.
+<Capitular letra="B" />i <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> **betegarriak** dira baldin eta <ConceptLink targetId="lado">alde</ConceptLink> komun bat partekatzen badute eta haien beste bi aldeek <ConceptLink targetId="recta">zuzen</ConceptLink> bereko <ConceptLink targetId="semirrectas-opuestas" isDependency={true}>aurkako zuzenerdiak</ConceptLink> osatzen badituzte, edota konfigurazio hori betetzen duen angelu-pare batekiko hurrenez hurren <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badira.
 
-<Definicion title="">
-  $\mathcal{P}$ plano bereko $\alpha$ eta $\beta$ bi <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> gehigarriak dira baldin eta soilik baldin haien neurri angeluarren baturak honakoa betetzen badu:
-  $$
-  \mu(\alpha) + \mu(\beta) = \pi \quad (180^\circ)
-  $$
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> oinarrietan, angelu betegarriak modu posizional hutsean definitzen dira <ConceptLink targetId="estar-entre">bitartekotasun-erlazioaren</ConceptLink> bidez, neurri angeluarren batuketa aritmetikora ($180^\circ$ edo $\pi\text{ rad}$) jo gabe. Nozio honi esker, <ConceptLink targetId="angulo-recto">angelu zuzenaren</ConceptLink> kontzeptua zorroztasun osoz formalizatzen da, bere <ConceptLink targetId="angulos-adyacentes">ondoko angelu betegarriarekiko</ConceptLink> <ConceptLink targetId="congruencia">kongruentea</ConceptLink> den angelu gisa definituz.
+
+<Definicion title="Angelu betegarriak">
+$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> hiru <ConceptLink targetId="punto">puntu</ConceptLink> <ConceptLink targetId="colinealidad">kolineal</ConceptLink> $A, B, C$ emanda, non $B$ puntua $A$ eta $C$-ren <ConceptLink targetId="estar-entre">artean dagoen</ConceptLink> ($A * B * C$), eta $D \notin \operatorname{recta}(A, C)$ <ConceptLink targetId="punto">puntu</ConceptLink> bat izanik, $\angle ABD = \angle(\overrightarrow{BA}, \overrightarrow{BD})$ eta $\angle CBD = \angle(\overrightarrow{BC}, \overrightarrow{BD})$ <ConceptLink targetId="angulo">angeluei</ConceptLink> <ConceptLink targetId="angulos-adyacentes">ondoko angelu betegarriak</ConceptLink> deritze.
+
+Modu orokorrean, bi $\alpha$ eta $\beta$ <ConceptLink targetId="angulo">angelu</ConceptLink> **betegarriak** dira ($\operatorname{Supl}(\alpha, \beta)$) baldin eta ondoko bi angelu betegarriren <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira:
+
+$$
+\operatorname{Supl}(\alpha, \beta) \iff \exists A, B, C, D \in \mathcal{P} \ \Biggl( A * B * C \ \land \ D \notin \operatorname{recta}(A, C) \ \land \ \alpha \cong \angle(\overrightarrow{BA}, \overrightarrow{BD}) \ \land \ \beta \cong \angle(\overrightarrow{BC}, \overrightarrow{BD}) \Biggr)
+$$
 </Definicion>
 
 <Separador />
 
-### Angelu gehigarri aldamenekoak
-
-Geometria sintetikoan, bi angelu aldamenekoak badira alde komuna partekatuz eta haien alde ez-komunek <ConceptLink targetId="recta">zuzen</ConceptLink> bereko bi <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> aurkako osatzen badituzte, haien irekiduren batura nahitaez bi angelu zuzenen berdina da.
-
-### Angelu zuzenaren karakterizazioa
-
-Hilberten formalizazioan, <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> bere aldameneko angelu gehigarriarekiko kongruentea den angelu gisa definitzen da axiomatikoki:
-$$
-\alpha \cong \beta \land \mu(\alpha) + \mu(\beta) = 180^\circ \implies \mu(\alpha) = 90^\circ
-$$
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Angelu gehigarrien propietateak">
-    <PropiedadItem id="teorema-angulos-opuestos-verticales" title="Gehigarrien kongruentzia">
-      Angelu beraren (edo angelu kongruenteen) gehigarriak diren bi angelu kongruenteak dira elkarren artean.
+  <PropiedadesGrupo title="Propietate aljebraikoak eta kongruentziazkoak">
+    <PropiedadItem 
+      id="erlazioaren-simetria" 
+      title="Erlazioaren simetria" 
+      formula="\operatorname{Supl}(\alpha, \beta) \iff \operatorname{Supl}(\beta, \alpha)"
+    >
+      Betegarritasun-erlazioa simetrikoa da <ConceptLink targetId="estar-entre">ordenaren</ConceptLink> <ConceptLink targetId="axioma-orden-1">II.1 axiomaren</ConceptLink> ondorio zuzen gisa ($A * B * C \iff C * B * A$), bikoteko <ConceptLink targetId="angulo">angeluen</ConceptLink> hurrenkerak eraginik ez duela bermatuz.
     </PropiedadItem>
-    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Gehigarritasun angeluarra">
-      Edozein triangelutan, kanpo-angelu bakoitza bere aldameneko barne-angeluaren gehigarria da.
+
+    <PropiedadItem 
+      id="kongruentziarekiko-aldaezintasuna" 
+      title="Kongruentziarekiko aldaezintasuna" 
+      formula="\operatorname{Supl}(\alpha, \beta) \land \alpha \cong \alpha' \land \beta \cong \beta' \implies \operatorname{Supl}(\alpha', \beta')"
+    >
+      Betegarritasuna <ConceptLink targetId="congruencia">kongruentzia-erlazioaren</ConceptLink> pean mantentzen da; beraz, angelu-pareen kokapen espazialarekiko independentea den berezko propietate geometrikoa da.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="betegarriaren-bakartasuna" 
+      title="Betegarri modularraren bakartasuna" 
+      formula="\operatorname{Supl}(\alpha, \beta) \land \operatorname{Supl}(\alpha', \beta') \land \alpha \cong \alpha' \implies \beta \cong \beta'"
+    >
+      Angelu kongruenteen betegarriak nahitaez kongruenteak dira elkarren artean <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>; hortaz, betegarritasuna eragiketa uniboko ondo definitua da angeluen <ConceptLink targetId="clase-equivalencia">baliokidetasun-klaseen</ConceptLink> artean.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+<ConceptLink targetId="sistema-absoluto">Geometria absolutuan</ConceptLink>, betegarriaren bakartasunak <ConceptLink targetId="teorema-angulos-opuestos-vertice">Erpinez aurkako angeluen teorema</ConceptLink> formalki frogatzea ahalbidetzen du —aurkako bi angeluk ondoko betegarri bera partekatzen dutela ikusita—, eta planoan <ConceptLink targetId="rectas-perpendiculares">zuzen perpendikularrak</ConceptLink> existitzea bermatzen du.
+</Nota>

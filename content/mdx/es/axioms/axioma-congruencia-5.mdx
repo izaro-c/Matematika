@@ -2,46 +2,41 @@ export const metadata = {
   id: "axioma-congruencia-5",
   lang: "es",
   type: "axioma",
-  title: "Axioma III.5 (Criterio de congruencia LAL)",
-  description: "Si dos triángulos tienen dos lados y el ángulo comprendido respectivamente congruentes, entonces los restantes ángulos correspondientes son congruentes.",
-  branch: "51M",
+  title: "Axioma III.5 (Criterio Lado-Ángulo-Lado)",
+  description: "Si dos triángulos tienen respectivamente congruentes dos lados y el ángulo comprendido entre ellos, entonces los ángulos restantes opuestos a dichos lados son también congruentes entre sí.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "triangulo", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5",
+      role: "primary"
+    }
   ]
 };
 
 import { SAS } from '@content/diagrams/Axiomas/SAS';
 export const Simulation = SAS;
 
-<Capitular letra="E" />l quinto axioma de congruencia de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> formula rigurosamente el criterio Lado-Ángulo-Lado (LAL) para la <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink> de <ConceptLink targetId="triangulo">triángulos</ConceptLink>. A diferencia del planteamiento de Euclides basado en el movimiento de superposición de figuras, Hilbert postula la rigidez triangular intrínseca como un principio axiomático fundamental.
+<Capitular letra="S" />i dos <ConceptLink targetId="triangulo" isDependency={true}>triángulos</ConceptLink> tienen respectivamente <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> dos <ConceptLink targetId="lado">lados</ConceptLink> y el <ConceptLink targetId="angulo" isDependency={true}>ángulo</ConceptLink> comprendido entre ellos, entonces los ángulos restantes opuestos a dichos lados son también congruentes entre sí.
 
-<Definicion title="Enunciado formal">
-  Sean $\triangle ABC$ y $\triangle A'B'C'$ dos <ConceptLink targetId="triangulo">triángulos</ConceptLink>. Si $\overline{AB} \cong \overline{A'B'}$, $\overline{AC} \cong \overline{A'C'}$ y $\angle BAC \cong \angle B'A'C'$, entonces se verifican las congruencias angulares correspondientes:
-  $$
-  (\overline{AB} \cong \overline{A'B'} \land \overline{AC} \cong \overline{A'C'} \land \angle BAC \cong \angle B'A'C') \implies (\angle ABC \cong \angle A'B'C' \land \angle ACB \cong \angle A'C'B')
-  $$
-  Consecuentemente, se deduce que los terceros lados son congruentes ($\overline{BC} \cong \overline{B'C'}$) y ambos triángulos son plenamente congruentes ($\triangle ABC \cong \triangle A'B'C'$).
+En la fundamentación de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, este <ConceptLink targetId="axioma">postulado</ConceptLink> constituye la base de la rigidez en el <ConceptLink targetId="plano">plano</ConceptLink>. A diferencia del enfoque clásico de <ConceptLink targetId="euclides">Euclides</ConceptLink> —basado en la superposición mediante <ConceptLink targetId="movimiento-rigido">movimiento rígido</ConceptLink>—, Hilbert lo formula como un axioma de consistencia relacional entre <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> y ángulos.
+
+<Definicion title="Axioma III.5 (Criterio Lado-Ángulo-Lado)">
+Sean dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> <VisualBind element="triangleABC" color="ocre">$\triangle ABC$</VisualBind> y <VisualBind element="triangleAABBCC" color="mora">$\triangle A'B'C'$</VisualBind> determinados por <ConceptLink targetId="punto">puntos</ConceptLink> <ConceptLink targetId="colinealidad">no colineales</ConceptLink> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$, con <ConceptLink targetId="vertice">vértices</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, <VisualBind element="pC" color="ocre">$C$</VisualBind> y <VisualBind element="pAA" color="mora">$A'$</VisualBind>, <VisualBind element="pBB" color="mora">$B'$</VisualBind>, <VisualBind element="pCC" color="mora">$C'$</VisualBind>. Si se verifican las congruencias de los <ConceptLink targetId="lado">lados</ConceptLink> <VisualBind element="sidesAB" color="ocre">$\overline{AB} \cong \overline{A'B'}$</VisualBind> y <VisualBind element="sidesAC" color="pavo">$\overline{AC} \cong \overline{A'C'}$</VisualBind>, junto con la congruencia del <ConceptLink targetId="angulo">ángulo</ConceptLink> comprendido <VisualBind element="angles" color="terracota">$\angle BAC \cong \angle B'A'C'$</VisualBind>, entonces se satisfacen las congruencias angulares <VisualBind element="anglesB" color="ocre">$\angle ABC \cong \angle A'B'C'$</VisualBind> y <VisualBind element="anglesC" color="pavo">$\angle ACB \cong \angle A'C'B'$</VisualBind>:
+
+$$
+\forall A, B, C, A', B', C' \in \mathcal{P} \ \Biggl( (\neg\operatorname{Col}(A,B,C) \land \neg\operatorname{Col}(A',B',C')) \implies \Bigl( (\overline{AB} \cong \overline{A'B'} \land \overline{AC} \cong \overline{A'C'} \land \angle BAC \cong \angle B'A'C') \implies (\angle ABC \cong \angle A'B'C' \land \angle ACB \cong \angle A'C'B') \Bigr) \Biggr)
+$$
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
-
-En la simulación interactiva, los triángulos <VisualBind element="pA" color="carbon">$\triangle ABC$</VisualBind> y <VisualBind element="pAA" color="carbon">$\triangle A'B'C'$</VisualBind> muestran lados congruentes <VisualBind element="segAB" color="terracota">$\overline{AB} \cong \overline{A'B'}$</VisualBind> y <VisualBind element="segAC" color="terracota">$\overline{AC} \cong \overline{A'C'}$</VisualBind> junto con el ángulo comprendido <VisualBind element="nonReflexAngleBAC" color="ocre">$\angle A \cong \angle A'$</VisualBind>. La correspondencia visual bloquea la forma del segundo triángulo, garantizando la total igualdad métrica.
-
-<Separador />
-
-### Significado geométrico y alcance
-
-Este axioma evita las dificultades lógicas del "movimiento rígido" de figuras en el plano abstracto. Proporciona la herramienta deductiva fundamental para demostrar todos los criterios de congruencia posteriores (<ConceptLink targetId="teorema-congruencia-ala">ALA</ConceptLink>, LLL) y el <ConceptLink targetId="teorema-triangulo-isosceles">teorema del triángulo isósceles</ConceptLink> en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
-
-<Separador />
-
-### Propiedades
-
-- **Rigidez planar triangular:** Tres elementos independientes determinan unívocamente la totalidad de las magnitudes de un triángulo.
-- **Fundamento deductivo:** Permite deducir los criterios ALA, LAA y LLL sin recurrir a axiomas suplementarios.
-- **Validez universal:** Es plenamente válido tanto en la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink> como en la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>.
+<Nota>
+En conjunción con los axiomas de <ConceptLink targetId="axioma-congruencia-1">transporte de segmentos</ConceptLink> y <ConceptLink targetId="axioma-congruencia-4">transporte de ángulos</ConceptLink>, el <ConceptLink targetId="axioma">Axioma III.5</ConceptLink> permite demostrar por reducción al absurdo el <ConceptLink targetId="teorema-congruencia-sas">teorema de congruencia LAL completo</ConceptLink> —garantizando la congruencia del tercer lado (<VisualBind element="sidesBC" color="carbon">$\overline{BC} \cong \overline{B'C'}$</VisualBind>) y la <ConceptLink targetId="congruencia-triangulos">congruencia total de triángulos ($\triangle ABC \cong \triangle A'B'C'$)</ConceptLink>—, a partir del cual se derivan en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> los restantes <ConceptLink targetId="criterio-congruencia">criterios de congruencia</ConceptLink>: <ConceptLink targetId="criterio-ala">Ángulo-Lado-Ángulo (ALA)</ConceptLink> y <ConceptLink targetId="criterio-lll">Lado-Lado-Lado (LLL)</ConceptLink>.
+</Nota>

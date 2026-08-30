@@ -2,55 +2,76 @@ export const metadata = {
   id: "angulo",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Angelua",
-  description: "Erpin izeneko jatorri bera partekatzen duten bi zuzenerdi ez-lerrokaturen elkarketaz osatutako irudi laua.",
-  branch: "51M",
+  description: "Erpin izeneko jatorri-puntu bera partekatzen duten eta zuzen berekoak ez diren bi zuzenerdiren bikote ez-ordenatuz osatutako figura geometrikoa.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "congruencia", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 8. eta 9. Definizioak", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. liburua, 8 eta 9. definizioak",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §4",
+      role: "primary"
+    }
   ]
 };
 
 import { Angulo } from '@content/diagrams/Definiciones/Angulo';
 export const Simulation = Angulo;
 
-<Capitular letra="A" />ngelua jatorri edo <ConceptLink targetId="vertice">erpin</ConceptLink> komuna partekatzen duten bi <ConceptLink targetId="semirrecta">zuzenerdik</ConceptLink> osatutako irudi geometrikoa da. Norabideen arteko dibergentzia angeluarra neurtzeko eta <ConceptLink targetId="plano">planoan</ConceptLink> trigonometria garatzeko funtsezko kontzeptua da.
+<Capitular letra="A" />ngelua <ConceptLink targetId="punto">jatorri</ConceptLink> bera partekatzen duten eta <ConceptLink targetId="recta">zuzen</ConceptLink> euskarri desberdinak dituzten bi <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdiren</ConceptLink> <ConceptLink targetId="conjunto">bikote ez-ordenatua</ConceptLink> da.
 
-<Definicion title="">
-  <VisualBind element="pA" color="carbon">$O$</VisualBind> <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> jatorri komuna duten <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> eta <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> bi <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> desberdin emanda, <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> angelua bi zuzenerdien elkarketaz osatutako irudi laua da:
-  $$
-  \angle AOB = \overrightarrow{OA} \cup \overrightarrow{OB}
-  $$
-  Bere $\theta \in [0, \pi]$ radianeko irekidura metrikoa $\vec{u}, \vec{v}$ bektore unitarioen biderketa eskalarrarekin erlazionatzen da:
-  $$
-  \cos \theta = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \|\vec{v}\|}
-  $$
+<ConceptLink targetId="geometria-sintetica">Geometria sintetikoaren</ConceptLink> oinarrietan, angelua ez da zenbakizko magnitude bat ezta neurri metriko bat ere, <ConceptLink targetId="semirrecta">zuzenerdiaren</ConceptLink> noziotik eta <ConceptLink targetId="plano">planoko</ConceptLink> ez-<ConceptLink targetId="colinealidad" isDependency={true}>kolinealtasunetik</ConceptLink> abiatuta eraikitako objektu formala baizik.
+
+<Definicion title="Angeluaren definizio formala">
+$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> <ConceptLink targetId="punto">puntu</ConceptLink> baterako eta $\{O, A, B\}$ hirukotea <ConceptLink targetId="colinealidad">kolineala</ConceptLink> ez izatea betetzen duten <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ bi puntu desberdinetarako, <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> (edo $\angle(h, k)$) **angelua** <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> eta <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind> bi <ConceptLink targetId="semirrecta">zuzenerdiek</ConceptLink> osatzen duten <ConceptLink targetId="conjunto">bikotea</ConceptLink> da:
+
+$$
+\angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}
+$$
+
+$h$ eta $k$ zuzenerdiei angeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> deritze, eta $O$ puntu komunari <ConceptLink targetId="vertice">erpin</ConceptLink>. Haren lotutako $\operatorname{tr}(\angle AOB) \subset \mathcal{P}$ **puntu-traza** aldeen trazen bildura da:
+
+$$
+\operatorname{tr}(\angle AOB) = \operatorname{tr}(\overrightarrow{OA}) \cup \operatorname{tr}(\overrightarrow{OB})
+$$
 </Definicion>
 
 <Separador />
 
-### Sailkapena angelu-irekiduraren arabera
-
-Plano euklidearrean, angelu ganbilak haien $\theta$ neurri angeluarraren arabera sailkatzen dira:
-
-| Angelu-mota | Neurria radianetan | Neurria gradu sexagesimaletan |
-|---|---|---|
-| <ConceptLink targetId="angulo-agudo">Zorrotza</ConceptLink> | $0 < \theta < \frac{\pi}{2}$ | $0^\circ < \theta < 90^\circ$ |
-| <ConceptLink targetId="angulo-recto">Zuzena</ConceptLink> | $\theta = \frac{\pi}{2}$ | $\theta = 90^\circ$ |
-| <ConceptLink targetId="angulo-obtuso">Kamutsa</ConceptLink> | $\frac{\pi}{2} < \theta < \pi$ | $90^\circ < \theta < 180^\circ$ |
-| <ConceptLink targetId="angulo-llano">Laua</ConceptLink> | $\theta = \pi$ | $\theta = 180^\circ$ |
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Kongruentzia eta batukortasun angeluarra">
-    <PropiedadItem id="axioma-congruencia-4" title="Angeluen garraioa">
-      Edozein angelu era bakarrean garraia daiteke erdiplano batera emandako zuzenerdi batekiko.
+  <PropiedadesGrupo title="Structural and Order Properties">
+    <PropiedadItem 
+      id="simetria-lados" 
+      title="Symmetry of Sides"
+      formula="\angle AOB = \angle BOA \iff \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{ \overrightarrow{OB}, \overrightarrow{OA} \}"
+    >
+      Formally defined as the unordered pair of two non-collinear <ConceptLink targetId="semirrecta">rays</ConceptLink> sharing a common origin ($\angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}$), an angle is strictly symmetric with respect to the order of its sides: $\angle AOB = \angle BOA$ and $\angle(h, k) = \angle(k, h)$, satisfying <ConceptLink targetId="igualdad-matematica">set equality</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="teorema-angulos-opuestos-verticales" title="Erpinez aurkako angeluak">
-      Bi zuzen ebakitzailek sortutako erpinez aurkako angelu-bikoteak kongruenteak dira elkarren artean.
+
+    <PropiedadItem 
+      id="coplanaridad-soporte" 
+      title="Coplanarity and Unique Supporting Plane"
+      formula="\exists! \pi \in \Pi : \operatorname{tr}(\angle AOB) \subset \operatorname{tr}(\pi)"
+    >
+      By Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, the non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> of the vertex triple $\{O, A, B\}$ uniquely determines a single <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$ that contains the entire point trace of the angle: $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="interior-angular" 
+      title="Angular Interior as a Convex Region"
+      formula="\operatorname{Int}(\angle AOB) = \mathcal{H}_{\overleftrightarrow{OA}}(B) \cap \mathcal{H}_{\overleftrightarrow{OB}}(A)"
+    >
+      Every angle $\angle AOB$ in a plane $\pi$ determines an open and unbounded region termed the **interior of the angle** ($\operatorname{Int}(\angle AOB)$), formally defined as the <ConceptLink targetId="interseccion">intersection</ConceptLink> of the open <ConceptLink targetId="semiplano">half-plane</ConceptLink> with respect to $\overleftrightarrow{OA}$ containing $B$ and the open half-plane with respect to $\overleftrightarrow{OB}$ containing $A$. This region forms a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

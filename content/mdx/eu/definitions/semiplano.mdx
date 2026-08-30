@@ -29,12 +29,21 @@ export const metadata = {
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Oinarrizko Propietate Geometrikoak">
-    <PropiedadItem id="conjunto-convexo" title="Konbexutasuna">
-      Planoerdi oro <ConceptLink targetId="conjunto-convexo">multzo konbexua</ConceptLink> da: edozein $A$ eta $B$ bi puntu baditu, haiek lotzen dituen $\operatorname{seg}(AB)$ segmentu ireki osoa bertan sartuta dago.
+  <PropiedadesGrupo title="Propietate geometrikoak eta ganbiltasuna">
+    <PropiedadItem 
+      id="conjunto-convexo" 
+      title="Planoerdiaren ganbiltasuna"
+      formula="A, B \in \mathcal{H} \implies \operatorname{seg}(AB) \subset \mathcal{H}"
+    >
+      $\mathcal{H}$ planoerdi ireki oro <ConceptLink targetId="conjunto-convexo">multzo ganbila</ConceptLink> da: edozein bi $A, B \in \mathcal{H}$ puntu baditu, haiek lotzen dituen $\operatorname{seg}(AB)$ <ConceptLink targetId="segmento">segmentu</ConceptLink> ireki osoa $\mathcal{H}$-ren barnean kokatzen da, Planoa Bereizteko Teoremaren eta <ConceptLink targetId="axioma-orden-4">Paschen Axiomaren</ConceptLink> ondorio zuzen gisa.
     </PropiedadItem>
-    <PropiedadItem id="angulo" title="Poligonoen barne-eskualdeak">
-      Haien ertzak ebakitzen diren planoerdien ebakidura finituak <ConceptLink targetId="angulo">angelu</ConceptLink> baten, <ConceptLink targetId="triangulo">triangelu</ConceptLink> baten eta edozein <ConceptLink targetId="poligono">poligono konbexuren</ConceptLink> barne-eskualdea formalki definitzea ahalbidetzen du.
+
+    <PropiedadItem 
+      id="generacion-interiores-poligonales" 
+      title="Poligonoen barne-eskualdeen sorkuntza"
+      formula="\operatorname{Int}(\mathcal{P}_n) = \bigcap_{i=1}^n \mathcal{H}_{\ell_i}"
+    >
+      Konfigurazio planarreko <ConceptLink targetId="recta">zuzen</ConceptLink> euskarriek mugatutako planoerdi irekien ebakidura finituak <ConceptLink targetId="angulo">angelu</ConceptLink> baten barne-eskualdea ($\operatorname{Int}(\angle AOB) = \mathcal{H}_1 \cap \mathcal{H}_2$), <ConceptLink targetId="triangulo">triangelu</ConceptLink> baten barrualdea zein edozein <ConceptLink targetId="poligono">poligono ganbilen</ConceptLink> barnealdea formalki definitzea ahalbidetzen du, ganbiltasuna ebakidurarekiko itxieraz mantenduz.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

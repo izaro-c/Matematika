@@ -2,46 +2,39 @@ export const metadata = {
   id: "axioma-orden-3",
   lang: "es",
   type: "axioma",
-  title: "Axioma II.3 (Exclusividad de la entreidad lineal)",
+  title: "Axioma II.3 (Exclusividad de la intermediación lineal)",
   description: "De tres puntos distintos cualesquiera situados en una misma recta, a lo sumo uno está entre los otros dos.",
-  branch: "51M",
+  branch: "51A",
+  branches: ["51A", "03B"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "orden",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { Order3 } from '@content/diagrams/Axiomas/Order3';
 export const Simulation = Order3;
 
-<Capitular letra="D" />e tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos situados sobre una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink>, el tercer axioma de orden de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establece que no más de uno puede encontrarse <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> los otros dos. Esta condición previene configuraciones circulares o cíclicas en la ordenación de la recta geométrica.
+<Capitular letra="D" />e tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos situados sobre una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink>, a lo sumo uno se encuentra <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> los otros dos.
 
-<Definicion title="Enunciado formal">
-  Dados tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos $A, B, C$ pertenecientes a una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$, no puede cumplirse más de una relación de entreidad simultáneamente:
-  $$
-  \forall A, B, C \in l \ \bigl(A\text{-}B\text{-}C \implies (\neg B\text{-}A\text{-}C \land \neg A\text{-}C\text{-}B)\bigr)
-  $$
-  En conjunción con el resto de axiomas de orden, exactamente uno de los tres puntos está entre los otros dos.
+En la formulación de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> propuesta por <ConceptLink targetId="david-hilbert">David Hilbert</ConceptLink>, este postulado establece la exclusión mutua de las relaciones de intermediación lineal, impidiendo que el <ConceptLink targetId="orden">orden</ConceptLink> sobre una recta sea cíclico o se cierre sobre sí mismo como en una <ConceptLink targetId="circunferencia">circunferencia</ConceptLink>.
+
+<Definicion title="Axioma II.3 (Exclusividad de la intermediación lineal)">
+Para cualquier <ConceptLink targetId="terna">terna</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink> mutuamente distintos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> en $\mathcal{P}$ que <ConceptLink targetId="incidencia">inciden</ConceptLink> en una misma <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineDE" color="carbon">$\ell$</VisualBind>, a lo sumo una de las relaciones de intermediación $A * B * C$, $B * A * C$ o $A * C * B$ es verdadera:
+
+$$
+\forall A, B, C \in \mathcal{P} \ \Biggl( \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\Bigr) \implies \neg\Bigl( (A * B * C \land B * A * C) \lor (A * B * C \land A * C * B) \lor (B * A * C \land A * C * B) \Bigr) \Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-### Representación visual e interacción
-
-En la simulación interactiva, los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> se ubican sobre la recta <VisualBind element="lineDE" color="carbon">$l$</VisualBind>. Al reordenar o arrastrar cualquiera de los puntos a lo largo de la recta, la relación de entreidad muta de manera exclusiva, garantizando que una única posición ocupa el lugar central en cada instante.
-
-<Separador />
-
-### Significado geométrico y alcance
-
-Este axioma garantiza la linealidad estricta y la naturaleza abierta de las rectas geométricas. Impide que la relación de orden se cierre sobre sí misma como en una circunferencia (ordenación cíclica proyectiva), asegurando una estructura de orden total estricto en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
-
-<Separador />
-
-### Propiedades
-
-- **Exclusión mutua:** La veracidad de $A\text{-}B\text{-}C$ refuta automáticamente $B\text{-}A\text{-}C$ y $A\text{-}C\text{-}B$.
-- **Orden total lineal:** Permite ordenar cualquier conjunto finito de puntos colineales en una secuencia unívoca $A_1\text{-}A_2\text{-}\dots\text{-}A_n$.
-- **No ciclicidad:** Prohíbe que una recta sintética se cierre topológicamente sobre sí misma sin la intervención de puntos del infinito.
+<Nota>
+En conjunción con el <ConceptLink targetId="axioma-orden-1">Axioma II.1</ConceptLink> y el <ConceptLink targetId="axioma-orden-2">Axioma II.2</ConceptLink>, se deduce el <ConceptLink targetId="teorema-orden-tres-puntos">teorema de ordenación lineal de tres puntos</ConceptLink>, según el cual de tres puntos distintos <ConceptLink targetId="colinealidad">colineales</ConceptLink>, exactamente uno se halla entre los otros dos. Esta propiedad confiere a cada recta en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> una estructura de intermediación lineal estricta, a partir de la cual se induce un <ConceptLink targetId="orden-total">orden total</ConceptLink> al fijar una <ConceptLink targetId="orientacion">orientación</ConceptLink> o <ConceptLink targetId="sentido">sentido</ConceptLink>.
+</Nota>

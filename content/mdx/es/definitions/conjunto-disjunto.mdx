@@ -27,15 +27,21 @@ $$
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Propiedades y Distinciones Formales">
-    <PropiedadItem id="disjuncion-dos-a-dos-vs-global" title="Disyunción dos a dos frente a intersección global nula">
-      Para $n \ge 3$ conjuntos, la condición de ser disjuntos dos a dos ($\forall i \neq j, \, A_i \cap A_j = \emptyset$) es estrictamente más fuerte que la simple intersección global vacía ($\bigcap_{i \in I} A_i = \emptyset$). Tres conjuntos pueden no compartir ningún elemento común a los tres y, sin embargo, solaparse por pares.
+  <PropiedadesGrupo title="Propiedades y distinciones formales">
+    <PropiedadItem 
+      id="disjuncion-dos-a-dos-vs-global" 
+      title="Disyunción dos a dos vs. intersección global vacía"
+      formula="\big(\forall i \neq j \, (A_i \cap A_j = \emptyset)\big) \implies \bigcap_{i \in I} A_i = \emptyset"
+    >
+      Para $n \ge 3$ conjuntos, la condición de ser disjuntos dos a dos ($\forall i \neq j, \, A_i \cap A_j = \emptyset$) es estrictamente más restrictiva que tener intersección global vacía ($\bigcap_{i \in I} A_i = \emptyset$). Es posible que tres conjuntos no tengan ningún elemento común simultáneo a pesar de compartir elementos dos a dos.
     </PropiedadItem>
-    <PropiedadItem id="fundamento-geometrico-sorts" title="Partición del universo del discurso en dominios">
-      En <ConceptLink targetId="logica">lógica multitipo</ConceptLink> y en los fundamentos axiomáticos de la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>, los <ConceptLink targetId="dominio">dominios</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">rectas</ConceptLink> $\mathcal{L}$ y <ConceptLink targetId="plano">planos</ConceptLink> $\Pi$ son mutuamente disjuntos dos a dos y conforman una partición del universo del discurso global (<ConceptLink targetId="espacio">espacio</ConceptLink>) $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$:
-      $$
-      \mathcal{P} \cap \mathcal{L} = \emptyset, \quad \mathcal{P} \cap \Pi = \emptyset, \quad \mathcal{L} \cap \Pi = \emptyset
-      $$
+
+    <PropiedadItem 
+      id="fundamento-geometrico-sorts" 
+      title="Partición del universo del discurso en dominios"
+      formula="\mathcal{P} \cap \mathcal{L} = \emptyset \land \mathcal{P} \cap \Pi = \emptyset \land \mathcal{L} \cap \Pi = \emptyset"
+    >
+      En la <ConceptLink targetId="logica">lógica de varios tipos</ConceptLink> y en los fundamentos axiomáticos de la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>, los <ConceptLink targetId="dominio">dominios</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">rectas</ConceptLink> $\mathcal{L}$ y <ConceptLink targetId="plano">planos</ConceptLink> $\Pi$ son mutuamente disjuntos dos a dos y forman una partición del universo del discurso global $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ (<ConceptLink targetId="espacio">espacio</ConceptLink>).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

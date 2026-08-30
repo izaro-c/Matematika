@@ -3,44 +3,42 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "III.1 axioma (Zuzenkien garraioa)",
-  description: "Zuzenki bat eta jatorri finkodun erdi-zuzen bat emanda, erdi-zuzenean puntu bakar bat existitzen da emandakoarekin kongruentea den zuzenki bat zehazten duena.",
-  branch: "51M",
+  description: "Edozein zuzenki eta jatorri jakin bateko zuzenerdi bat emanda, zuzenerdi horretan puntu bakar bat existitzen da jatorrizkoaren kongruentea den zuzenki bat zehazten duena.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §5",
+      role: "primary"
+    }
   ]
 };
 
 import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
 export const Simulation = Congruence1;
 
-<Capitular letra="D" />avid Hilberten lehen kongruentzia-axiomak magnitude lineal zurrunak espazioko norabide batean zehar mugitzeko aukera formalizatzen du. Edozein $\overline{AB}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> eta $C$ jatorriko erdi-zuzen bat emanda, erdi-zuzen horretan puntu bakar bat existitzen da $\overline{AB}$-rekin <ConceptLink targetId="congruencia" isDependency={true}>kongruentea</ConceptLink> den $\overline{CE}$ zuzenkia eratzen duena.
+<Capitular letra="E" />dozein <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink> eta <ConceptLink targetId="punto" isDependency={true}>jatorri</ConceptLink> jakin bateko <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> bat emanda, zuzenerdi horren gainean <ConceptLink targetId="punto">puntu</ConceptLink> bakar bat existitzen da jatorrizko zuzenkiarekiko <ConceptLink targetId="congruencia" isDependency={true}>kongruentea</ConceptLink> den zuzenki bat osatzen duena.
 
-<Definicion title="Enuntziatu formala">
-  Edozein $\overline{AB}$ <ConceptLink targetId="segmento">zuzenkitarako</ConceptLink> eta $C$ <ConceptLink targetId="punto" isDependency={true}>puntuan</ConceptLink> jatorria eta $D$ norabidea dituen $r = \overrightarrow{CD}$ erdi-zuzenetarako, $\overline{AB} \cong \overline{CE}$ betetzen duen $E \in r$ puntu bakarra existitzen da:
-  $$
-  \forall \overline{AB}, \forall r = \overrightarrow{CD}, \ \exists! E \in r \ (\overline{AB} \cong \overline{CE})
-  $$
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> oinarrietan, postulado honek <ConceptLink targetId="espacio">espazioko</ConceptLink> edozein norabidetan luzerak modu unibokoan garraiatzeko aukera formalizatzen du, zenbakizko eskala metrikoetara edo koordenatu-sistemetara jo gabe.
+
+<Definicion title="III.1 axioma (Zuzenkien garraioa)">
+<VisualBind element="segAB" color="ocre">$\overline{AB}$</VisualBind> <ConceptLink targetId="segmento">zuzenkia</ConceptLink> zehazten duten $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako (<VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> $\in \mathcal{P}$) eta <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ jatorria izanik <VisualBind element="pDir" color="pavo">$\text{dir}$</VisualBind> $\in \mathcal{P} \setminus \{C\}$ punturantz zuzendutako <VisualBind element="rayCDir" color="pavo">$r = \overrightarrow{C\,\text{dir}}$</VisualBind> <ConceptLink targetId="semirrecta">zuzenerdirako</ConceptLink>, $r \setminus \{C\}$ zuzenerdian <VisualBind element="pD" color="terracota">$D$</VisualBind> puntu bakar bat existitzen da non <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> zuzenkia $\overline{AB}$-rekiko <ConceptLink targetId="congruencia">kongruentea</ConceptLink> baita:
+
+$$
+\forall A, B \in \mathcal{P} \ \Biggl( A \neq B \implies \forall C, \text{dir} \in \mathcal{P} \ \Bigl( C \neq \text{dir} \implies \exists! D \in \operatorname{tr}(\overrightarrow{C\,\text{dir}}) \setminus \{C\} \ (\overline{AB} \cong \overline{CD}) \Bigr) \Biggr)
+$$
+
+Halaber, edozein zuzenki bere buruarekiko kongruentea da: $\overline{AB} \cong \overline{AB}$ eta $\overline{AB} \cong \overline{BA}$.
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
-
-Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntuek mugatutako jatorrizko <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> zuzenkia <VisualBind element="pC" color="carbon">$C$</VisualBind> jatorria duen <VisualBind element="rayCDir" color="carbon">$r$</VisualBind> erdi-zuzenaren gainera garraiatzen da. <VisualBind element="circleCD" color="carbon">$\mathcal{C}(C, AB)$</VisualBind> zirkunferentzia birtualak <VisualBind element="pE" color="terracota">$E$</VisualBind> puntu bakarrean ebakitzen du erdi-zuzena, <VisualBind element="segCD" color="terracota">$\overline{CE}$</VisualBind> irudi-zuzenkia finkatuz.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Postulatu honek konpas zurrun bidezko eraikuntza euklidear klasikoa matematikoki oinarritzen du: luzerak modu sintetikoan "neurtzea" eta garraiatzea ahalbidetzen du kanpoko zenbakizko eskala metrikorik gabe <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
-
-<Separador />
-
-### Propietateak
-
-- **Garraioaren bakartasuna:** Erdi-zuzen bakoitzaren gainean kongruentzia-erlazioa betetzen duen muturreko puntu bakarra dago.
-- **Simetria bidezko aldaezintasuna:** Edozein zuzenki bere buruarekin kongruentea da muturrak alderantzikatuta ere ($\overline{AB} \cong \overline{BA}$).
-- **Oinarri metriko sintetikoa:** Zuzenkien arteko luzera erlatiboen konparazioa definitzea ahalbidetzen du ($\overline{AB} < \overline{CD}$).
+<Nota>
+III.1 axioma eraikuntza euklidearretako konpas zurrunaren baliokide sintetiko eta zorrotza da, <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> garraio metrikoaren existentzia eta bakartasuna bermatuz.
+</Nota>

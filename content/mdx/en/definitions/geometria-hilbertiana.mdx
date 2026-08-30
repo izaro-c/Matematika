@@ -46,11 +46,20 @@ The system is structured around 20 axioms grouped into five modular families:
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Modularity and Formal Structure">
-    <PropiedadItem id="independencia-grupos" title="Modular independence of the five groups">
-      Each of the five axiomatic families (incidence, order, congruence, parallels, and continuity) is logically independent, allowing coherent subtheories such as <ConceptLink targetId="sistema-incidencia">incidence geometry</ConceptLink>, ordered geometry, or <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> to be isolated and studied.
+    <PropiedadItem 
+      id="independencia-grupos" 
+      title="Modular Independence of the Five Axiom Groups"
+      formula="\forall i \neq j : \mathcal{G}_i \not\vdash \mathcal{G}_j"
+    >
+      Each of the five axiomatic groups (incidence, order, congruence, parallels, and continuity) is logically independent, allowing the isolation of consistent sub-theories such as <ConceptLink targetId="sistema-incidencia">incidence geometry</ConceptLink>, ordered geometry, or <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="distincion-predicados-congruencia" title="Categorial distinction of congruence">
-      Congruence is not a single monolithic predicate, but two irreducible primitive relations with distinct arities and ontological domains: <ConceptLink targetId="segmento">segment congruence</ConceptLink> ($\equiv_{\text{seg}}$) and <ConceptLink targetId="angulo">angle congruence</ConceptLink> ($\equiv_{\angle}$).
+
+    <PropiedadItem 
+      id="distincion-predicados-congruencia" 
+      title="Categorial Distinction of Congruence"
+      formula="\equiv_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2, \quad \equiv_{\angle} \, \subseteq \mathcal{P}^6"
+    >
+      Congruence is not a monolithic single predicate, but rather consists of two distinct primitive relations possessing different arities and ontological domains: <ConceptLink targetId="segmento">segment congruence</ConceptLink> ($\equiv_{\text{seg}}$) and <ConceptLink targetId="angulo">angle congruence</ConceptLink> ($\equiv_{\angle}$).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

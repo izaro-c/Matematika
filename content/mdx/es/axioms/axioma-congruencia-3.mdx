@@ -2,45 +2,41 @@ export const metadata = {
   id: "axioma-congruencia-3",
   lang: "es",
   type: "axioma",
-  title: "Axioma III.3 (Aditividad de segmentos congruentes)",
-  description: "La concatenación de pares de segmentos adyacentes congruentes produce segmentos totales congruentes.",
-  branch: "51M",
+  title: "Axioma III.3 (Adición de segmentos)",
+  description: "Si dos pares de segmentos adyacentes sobre una misma recta o sobre rectas distintas son respectivamente congruentes, entonces los segmentos totales resultantes son congruentes entre sí.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "orden", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5",
+      role: "primary"
+    }
   ]
 };
 
 import { Congruence3 } from '@content/diagrams/Axiomas/Congruence3';
 export const Simulation = Congruence3;
 
-<Capitular letra="E" />l tercer axioma de congruencia de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> introduce la propiedad aditiva para la concatenación de <ConceptLink targetId="segmento">segmentos</ConceptLink>. Si dos pares de segmentos adyacentes sobre sendas rectas son congruentes uno a uno, entonces los segmentos totales resultantes de su unión son también congruentes entre sí.
+<Capitular letra="S" />i dos pares de <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> adyacentes, situados sobre una misma <ConceptLink targetId="recta">recta</ConceptLink> o sobre rectas distintas, tienen sus componentes respectivamente <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>, entonces los segmentos totales resultantes de su concatenación son también congruentes entre sí.
 
-<Definicion title="Enunciado formal">
-  Sean $A, B, C$ tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> de una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> con $A\text{-}B\text{-}C$ y sean $D, E, F$ tres puntos de otra recta con $D\text{-}E\text{-}F$. Si $\overline{AB} \cong \overline{DE}$ y $\overline{BC} \cong \overline{EF}$, entonces $\overline{AC} \cong \overline{DF}$:
-  $$
-  (A\text{-}B\text{-}C \land D\text{-}E\text{-}F \land \overline{AB} \cong \overline{DE} \land \overline{BC} \cong \overline{EF}) \implies \overline{AC} \cong \overline{DF}
-  $$
+En la fundamentación de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, este postulado vincula la relación de <ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink> con la congruencia, garantizando la <ConceptLink targetId="adicion">aditividad</ConceptLink> de las <ConceptLink targetId="longitud">longitudes</ConceptLink> sintéticas y formalizando la <ConceptLink targetId="suma-segmentos">suma de segmentos</ConceptLink>.
+
+<Definicion title="Axioma III.3 (Adición de segmentos)">
+Sean los <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> sobre una <ConceptLink targetId="recta">recta</ConceptLink> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ con $B$ <ConceptLink targetId="estar-entre">entre</ConceptLink> $A$ y $C$ ($A * B * C$), y sean <VisualBind element="pD" color="ocre">$D$</VisualBind>, <VisualBind element="pE" color="ocre">$E$</VisualBind>, <VisualBind element="pF" color="terracota">$F$</VisualBind> $\in \mathcal{P}$ sobre la misma recta o sobre otra recta distinta con $E$ entre $D$ y $F$ ($D * E * F$). Si <VisualBind element="ABDE" color="ocre">$\overline{AB} \cong \overline{DE}$</VisualBind> y <VisualBind element="BCEF" color="terracota">$\overline{BC} \cong \overline{EF}$</VisualBind>, entonces los <ConceptLink targetId="segmento">segmentos</ConceptLink> compuestos <VisualBind element="segAC" color="pavo">$\overline{AC}$</VisualBind> y <VisualBind element="segDF" color="pavo">$\overline{DF}$</VisualBind> son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí (<VisualBind element="ACDF" color="pavo">$\overline{AC} \cong \overline{DF}$</VisualBind>):
+
+$$
+\forall A, B, C, D, E, F \in \mathcal{P} \ \Biggl( (A * B * C \land D * E * F) \implies \Bigl( (\overline{AB} \cong \overline{DE} \land \overline{BC} \cong \overline{EF}) \implies \overline{AC} \cong \overline{DF} \Bigr) \Biggr)
+$$
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
-
-En la simulación interactiva, los segmentos compuestos <VisualBind element="segAC" color="terracota">$\overline{AC}$</VisualBind> se configuran a partir de sus componentes <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> y <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind>. Al modificar la longitud de cualquiera de los sumandos, la adición sintética conserva de forma rigurosa la congruencia total de la suma lineal.
-
-<Separador />
-
-### Significado geométrico y alcance
-
-Este axioma fundamenta el álgebra de longitudes dentro de la geometría sintética. Permite definir la operación de suma de clases de congruencia $[\overline{AB}] + [\overline{BC}] = [\overline{AC}]$, otorgando a las longitudes la estructura de semigrupo conmutativo ordenado en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
-
-<Separador />
-
-### Propiedades
-
-- **Compatibilidad con el orden:** La adición geométrica preserva estrictamente el orden lineal ($\overline{AB} < \overline{CD} \implies \overline{AB} + \overline{EF} < \overline{CD} + \overline{EF}$).
-- **Monotonía estricta:** La longitud de la suma es estrictamente mayor que la de cualquiera de sus sumandos componentes.
-- **Base de la resta geométrica:** Permite definir la diferencia de segmentos cuando uno está estrictamente contenido en otro.
+<Nota>
+El Axioma III.3 establece la compatibilidad de la congruencia con la concatenación segmental, permitiendo formalizar la <ConceptLink targetId="suma-segmentos">suma</ConceptLink> de <ConceptLink targetId="clase-equivalencia">clases de congruencia</ConceptLink> ($[\overline{AB}] + [\overline{BC}] = [\overline{AC}]$) en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, a partir de la cual se deducen formalmente los <ConceptLink targetId="teorema">teoremas</ConceptLink> del <ConceptLink targetId="orden-segmentos">orden y comparación de segmentos</ConceptLink> y de la <ConceptLink targetId="resta-segmentos">sustracción de segmentos</ConceptLink>.
+</Nota>

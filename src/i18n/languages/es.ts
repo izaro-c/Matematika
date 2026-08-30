@@ -107,7 +107,7 @@ export const esLanguage: LanguageConfig = {
     },
     timeline: {
       title: 'Índice biográfico',
-      eyebrow: 'Crónica universal',
+      eyebrow: 'Línea temporal de matemáticos',
       subtitle: '{count} matemáticos · {from} a.C. — presente',
       all: 'Todos los períodos',
       noEntries: 'No hay matemáticos en este período',

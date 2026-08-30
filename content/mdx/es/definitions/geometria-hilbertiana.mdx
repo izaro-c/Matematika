@@ -45,12 +45,21 @@ El sistema se estructura en 20 axiomas organizados en cinco grupos modulares:
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Modularidad y Estructura Formal">
-    <PropiedadItem id="independencia-grupos" title="Independencia modular de los cinco grupos">
+  <PropiedadesGrupo title="Modularidad y estructura formal">
+    <PropiedadItem 
+      id="independencia-grupos" 
+      title="Independencia modular de los cinco grupos"
+      formula="\forall i \neq j : \mathcal{G}_i \not\vdash \mathcal{G}_j"
+    >
       Cada uno de los cinco grupos axiomáticos (incidencia, orden, congruencia, paralelas y continuidad) es lógicamente independiente, permitiendo aislar subsistemas coherentes como la <ConceptLink targetId="sistema-incidencia">geometría de incidencia</ConceptLink>, la geometría ordenada o la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="distincion-predicados-congruencia" title="Distinción categorial de la congruencia">
-      La congruencia no es un único predicado monolítico, sino dos relaciones primitivas irreducibles con aridades y dominios ontológicos distintos: la congruencia de <ConceptLink targetId="segmento">segmentos</ConceptLink> ($\equiv_{\text{seg}}$) y la congruencia de <ConceptLink targetId="angulo">ángulos</ConceptLink> ($\equiv_{\angle}$).
+
+    <PropiedadItem 
+      id="distincion-predicados-congruencia" 
+      title="Distinción categorial de la congruencia"
+      formula="\equiv_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2, \quad \equiv_{\angle} \, \subseteq \mathcal{P}^6"
+    >
+      La congruencia no es un predicado monolítico único, sino dos relaciones primitivas irreducibles con aridades y dominios ontológicos distintos: la <ConceptLink targetId="segmento">congruencia de segmentos</ConceptLink> ($\equiv_{\text{seg}}$) y la <ConceptLink targetId="angulo">congruencia de ángulos</ConceptLink> ($\equiv_{\angle}$).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

@@ -37,11 +37,20 @@ In an <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink>,
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Logical and Structural Foundations">
-    <PropiedadItem id="universo-vs-dominios" title="Universe of discourse vs. domains">
-      Global space constitutes the total universe of discourse ($\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$), while $\mathcal{P}$, $\mathcal{L}$, and $\Pi$ are the typed, <ConceptLink targetId="conjunto-disjunto">pairwise disjoint</ConceptLink> <ConceptLink targetId="dominio">domains</ConceptLink> (sorts) over which the quantifiers of the theory range.
+    <PropiedadItem 
+      id="universo-vs-dominios" 
+      title="Universe of Discourse vs. Typed Domains"
+      formula="\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi \implies \mathcal{P} \cap \mathcal{L} = \emptyset \land \mathcal{P} \cap \Pi = \emptyset \land \mathcal{L} \cap \Pi = \emptyset"
+    >
+      The global space constitutes the entire universe of discourse ($\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$), where $\mathcal{P}$, $\mathcal{L}$, and $\Pi$ are pairwise <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> typed <ConceptLink targetId="dominio">domains</ConceptLink> (sorts) over which the quantifiers of the theory operate.
     </PropiedadItem>
-    <PropiedadItem id="teorema-interseccion-planos" title="Planar intersection theorem">
-      <ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink> postulates the existence of a second common point $B \neq A$; its conjunction with <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink> (line $\overleftrightarrow{AB}$) and <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink> establishes the inclusion of traces $\operatorname{tr}(\overleftrightarrow{AB}) \subseteq \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$. Strict equality ($\operatorname{tr}(\overleftrightarrow{AB}) = \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$ for distinct planes $\pi_1 \neq \pi_2$) is completed by plane uniqueness axioms (<ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>), since any non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> external common point would force $\pi_1 = \pi_2$.
+
+    <PropiedadItem 
+      id="teorema-interseccion-planos" 
+      title="Plane Intersection Theorem"
+      formula="\pi_1 \neq \pi_2 \land \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) \neq \emptyset \implies \exists! \ell \in \mathcal{L} : \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \operatorname{tr}(\ell)"
+    >
+      <ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink> postulates the existence of a second common point ($B \neq A$); combined with <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink> (line $\overleftrightarrow{AB}$) and <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink>, the trace inclusion $\operatorname{tr}(\overleftrightarrow{AB}) \subseteq \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$ is established. The strict equality ($\operatorname{tr}(\overleftrightarrow{AB}) = \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$ for distinct planes $\pi_1 \neq \pi_2$) is guaranteed by the plane uniqueness axioms (<ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>), as any non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> common point would force $\pi_1 = \pi_2$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

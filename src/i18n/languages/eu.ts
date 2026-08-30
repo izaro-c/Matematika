@@ -106,7 +106,7 @@ export const euLanguage: LanguageConfig = {
       exploreByTypeAria: 'Arakatu motaren arabera',
     },
     timeline: {
-      title: 'Biografia-indizea',
+      title: 'Matematikarien denbora-lerroa',
       eyebrow: 'Kronika unibertsala',
       subtitle: '{count} matematikari · K.a. {from} — gaur egun',
       all: 'Garai guztiak',

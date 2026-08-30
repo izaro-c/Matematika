@@ -41,25 +41,53 @@ Eredua $\mathcal{M} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$ tupla gisa definit
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Intzidentzia-axiomen betetzea">
-    <PropiedadItem id="axioma-incidencia-1" title="Zuzenaren zehaztapen bakarra">
+    <PropiedadItem 
+      id="axioma-incidencia-1" 
+      title="Zuzenaren zehaztapen bakarra"
+      formula="\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L})"
+    >
       $\mathcal{P}$-ko edozein bi puntu desberdinetarako, biekiko intziditzen duen $\mathcal{L}$-ko zuzen bakar bat existitzen da ($\{A, B\}$-k $\ell_{AB}$ zehazten du, $\{B, C\}$-k $\ell_{BC}$ eta $\{C, A\}$-k $\ell_{CA}$), <ConceptLink targetId="axioma-incidencia-1">I.1 axioma</ConceptLink> betez.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-2" title="Puntu intzidenteak zuzeneko">
+
+    <PropiedadItem 
+      id="axioma-incidencia-2" 
+      title="Puntu intzidenteak zuzeneko"
+      formula="|\operatorname{tr}(\ell)| = 2 \ge 2"
+    >
       $\ell \in \mathcal{L}$ zuzen bakoitzak zehazki bi puntu desberdinekin intziditzen du ($\lvert \operatorname{tr}(\ell) \rvert = 2 \ge 2$), <ConceptLink targetId="axioma-incidencia-2">I.2 axioma</ConceptLink> betez.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-3" title="Puntu ez-kolinealen existentzia">
+
+    <PropiedadItem 
+      id="axioma-incidencia-3" 
+      title="Puntu ez-kolinealen existentzia"
+      formula="|\operatorname{tr}(\ell)| = 2 < 3 \implies \exists \{A, B, C\} \text{ ez-kolineal}"
+    >
       Inolako zuzenek ez ditu hiru puntuak aldi berean bere trazan barne hartzen ($C \notin \operatorname{tr}(\ell_{AB})$, $A \notin \operatorname{tr}(\ell_{BC})$, $B \notin \operatorname{tr}(\ell_{CA})$); beraz, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru puntu existitzen dira, <ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink> betez.
     </PropiedadItem>
   </PropiedadesGrupo>
 
   <PropiedadesGrupo title="Egiturazko propietateak eta konbinatoriakoak">
-    <PropiedadItem id="regularidad-combinatoria" title="Konfigurazioaren erregulartasuna">
-      Egitura homogeneoa eta erregularra da: $\lvert \mathcal{P} \rvert = 3$ eta $\lvert \mathcal{L} \rvert = 3$ <ConceptLink targetId="cardinalidad">kardinalitatea</ConceptLink> du, non zuzen bakoitzak zehazki 2 puntu dituen eta puntu bakoitzetik zehazki 2 zuzen igarotzen diren.
+    <PropiedadItem 
+      id="regularidad-combinatoria" 
+      title="Konfigurazioaren erregulartasuna"
+      formula="(3_2, 3_2)"
+    >
+      Egitura homogeneoa eta erregularra da: $(3_2, 3_2)$ motako konfigurazioa osatuz, $\lvert \mathcal{P} \rvert = 3$ eta $\lvert \mathcal{L} \rvert = 3$ <ConceptLink targetId="cardinalidad">kardinalitatea</ConceptLink> du, non zuzen bakoitzak zehazki 2 puntu dituen eta puntu bakoitzetik zehazki 2 zuzen igarotzen diren.
     </PropiedadItem>
-    <PropiedadItem id="ausencia-paralelas" title="Paralelotasunaren eza">
+
+    <PropiedadItem 
+      id="ausencia-paralelas" 
+      title="Paralelotasunaren eza"
+      formula="\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset \quad (\forall i \neq j)"
+    >
       $\mathcal{L}$-ko edozein bi zuzenek traza ez-disjuntuak dituzte ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), beti puntu bakar batean elkar ebakiz; ondorioz, ereduak ez du <ConceptLink targetId="paralelas">zuzen paraleloric</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="autodualidad" title="Autodualtasuna">
+
+    <PropiedadItem 
+      id="autodualidad" 
+      title="Autodualtasuna"
+      formula="\mathcal{P} \cong \mathcal{L}, \quad \mathbf{I} \cong \mathbf{I}^T"
+    >
       Egitura <ConceptLink targetId="dualidad">autoduala</ConceptLink> da: $\mathcal{P}$ eta $\mathcal{L}$ domeinuak elkarrekin trukatzeak eta $\mathbf{I}$ erlazioaren <ConceptLink targetId="transposicion">transposizioak</ConceptLink> jatorrizkoaren egitura zorrozki <ConceptLink targetId="isomorfismo">isomorfoa</ConceptLink> sortzen dute.
     </PropiedadItem>
   </PropiedadesGrupo>

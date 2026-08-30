@@ -27,15 +27,21 @@ $$
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Propietateak eta Bereizketa Formalak">
-    <PropiedadItem id="disjuncion-dos-a-dos-vs-global" title="Binaka disjuntuak izatea vs. ebakidura global hutsa">
+  <PropiedadesGrupo title="Propietateak eta bereizketa formalak">
+    <PropiedadItem 
+      id="disjuncion-dos-a-dos-vs-global" 
+      title="Binaka disjuntuak izatea vs. ebakidura global hutsa"
+      formula="\big(\forall i \neq j \, (A_i \cap A_j = \emptyset)\big) \implies \bigcap_{i \in I} A_i = \emptyset"
+    >
       $n \ge 3$ multzotarako, binaka disjuntuak izatearen baldintza ($\forall i \neq j, \, A_i \cap A_j = \emptyset$) zorrotzagoa da ebakidura global hutsa izatea baino ($\bigcap_{i \in I} A_i = \emptyset$). Hiru multzok elkarrekin elementu komunik ez izatea gerta daiteke, binaka elementuak partekatzen dituzten arren.
     </PropiedadItem>
-    <PropiedadItem id="fundamento-geometrico-sorts" title="Diskurtsoaren unibertsoaren partizioa domeinutan">
-      <ConceptLink targetId="logica">Mota anitzeko logikan</ConceptLink> eta <ConceptLink targetId="geometria-hilbertiana">geometria hilbertiarraren</ConceptLink> oinarri axiomatikoetan, <ConceptLink targetId="punto">puntuen</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">zuzenen</ConceptLink> $\mathcal{L}$ eta <ConceptLink targetId="plano">planoen</ConceptLink> $\Pi$ <ConceptLink targetId="dominio">domeinuak</ConceptLink> binaka disjuntuak dira elkarren artean eta $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ diskurtsoaren unibertso globalaren (<ConceptLink targetId="espacio">espazioaren</ConceptLink>) partizio bat osatzen dute:
-      $$
-      \mathcal{P} \cap \mathcal{L} = \emptyset, \quad \mathcal{P} \cap \Pi = \emptyset, \quad \mathcal{L} \cap \Pi = \emptyset
-      $$
+
+    <PropiedadItem 
+      id="fundamento-geometrico-sorts" 
+      title="Diskurtsoaren unibertsoaren partizioa domeinutan"
+      formula="\mathcal{P} \cap \mathcal{L} = \emptyset \land \mathcal{P} \cap \Pi = \emptyset \land \mathcal{L} \cap \Pi = \emptyset"
+    >
+      <ConceptLink targetId="logica">Mota anitzeko logikan</ConceptLink> eta <ConceptLink targetId="geometria-hilbertiana">geometria hilbertiarraren</ConceptLink> oinarri axiomatikoetan, <ConceptLink targetId="punto">puntuen</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">zuzenen</ConceptLink> $\mathcal{L}$ eta <ConceptLink targetId="plano">planoen</ConceptLink> $\Pi$ <ConceptLink targetId="dominio">domeinuak</ConceptLink> binaka disjuntuak dira elkarren artean eta $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ diskurtsoaren unibertso globalaren (<ConceptLink targetId="espacio">espazioaren</ConceptLink>) partizio bat osatzen dute.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

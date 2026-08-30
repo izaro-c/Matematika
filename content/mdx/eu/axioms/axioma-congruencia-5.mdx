@@ -2,46 +2,41 @@ export const metadata = {
   id: "axioma-congruencia-5",
   lang: "eu",
   type: "axioma",
-  title: "III.5 axioma (LAL kongruentzia-irizpidea)",
-  description: "Bi triangeluk bi alde eta bien arteko angelua hurrenez hurren kongruenteak badituzte, gainerako angelu eta aldeak ere kongruenteak dira.",
-  branch: "51M",
+  title: "III.5 axioma (Aldea-Angelua-Aldea irizpidea)",
+  description: "Bi hirukik bi alde eta haien arteko angelua hurrenez hurren kongruenteak badituzte, orduan alde horiei aurrez aurreko gainerako angeluak ere kongruenteak dira elkarren artean.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "triangulo", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §5",
+      role: "primary"
+    }
   ]
 };
 
 import { SAS } from '@content/diagrams/Axiomas/SAS';
 export const Simulation = SAS;
 
-<Capitular letra="D" />avid Hilberten bosgarren kongruentzia-axiomak <ConceptLink targetId="triangulo">triangeluen</ConceptLink> <ConceptLink targetId="congruencia" isDependency={true}>kongruentziarako</ConceptLink> Alde-Angelu-Alde (LAL) irizpidea formulatzen du modu zorrotzean. Euklidesek irudiak gainezarri eta mugitzeko metodoan oinarritutako planteamenduaren ordez, Hilbertek triangeluen berezko zurruntasuna oinarrizko printzipio axiomatiko gisa ezartzen du.
+<Capitular letra="B" />i <ConceptLink targetId="triangulo" isDependency={true}>hirukik</ConceptLink> bi <ConceptLink targetId="lado">alde</ConceptLink> eta haien arteko <ConceptLink targetId="angulo" isDependency={true}>angelua</ConceptLink> hurrenez hurren elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badituzte, orduan alde horiei aurrez aurreko gainerako angeluak ere kongruenteak dira elkarren artean.
 
-<Definicion title="Enuntziatu formala">
-  Izan bitez $\triangle ABC$ eta $\triangle A'B'C'$ bi <ConceptLink targetId="triangulo">triangelu</ConceptLink>. Baldin eta $\overline{AB} \cong \overline{A'B'}$, $\overline{AC} \cong \overline{A'C'}$ eta $\angle BAC \cong \angle B'A'C'$ badira, orduan bat datozen gainerako angeluen kongruentziak betetzen dira:
-  $$
-  (\overline{AB} \cong \overline{A'B'} \land \overline{AC} \cong \overline{A'C'} \land \angle BAC \cong \angle B'A'C') \implies (\angle ABC \cong \angle A'B'C' \land \angle ACB \cong \angle A'C'B')
-  $$
-  Ondorioz, hirugarren aldeak ere kongruenteak dira ($\overline{BC} \cong \overline{B'C'}$) eta bi triangeluak guztiz kongruenteak dira ($\triangle ABC \cong \triangle A'B'C'$).
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> oinarrietan, <ConceptLink targetId="axioma">postulatu</ConceptLink> hau <ConceptLink targetId="plano">planoaren</ConceptLink> zurruntasunaren oinarria da. <ConceptLink targetId="movimiento-rigido">Mugimendu zurrunaren</ConceptLink> bidezko gainezartzean oinarritzen zen <ConceptLink targetId="euclides">Euklidesen</ConceptLink> ikuspegi klasikoa ez bezala, Hilbertek <ConceptLink targetId="segmento" isDependency={true}>zuzenkien</ConceptLink> eta angeluen arteko koherentzia erlazionalaren axioma gisa ezartzen du.
+
+<Definicion title="III.5 axioma (Aldea-Angelua-Aldea irizpidea)">
+Izan bitez $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <ConceptLink targetId="punto">puntu</ConceptLink> <ConceptLink targetId="colinealidad">ez-kolinealek</ConceptLink> zehaztutako bi <ConceptLink targetId="triangulo">hiruki</ConceptLink> (<VisualBind element="triangleABC" color="ocre">$\triangle ABC$</VisualBind> eta <VisualBind element="triangleAABBCC" color="mora">$\triangle A'B'C'$</VisualBind>), <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, <VisualBind element="pC" color="ocre">$C$</VisualBind> eta <VisualBind element="pAA" color="mora">$A'$</VisualBind>, <VisualBind element="pBB" color="mora">$B'$</VisualBind>, <VisualBind element="pCC" color="mora">$C'$</VisualBind> <ConceptLink targetId="vertice">erpinak</ConceptLink> izanik. Baldin eta <ConceptLink targetId="lado">aldeen</ConceptLink> kongruentziak (<VisualBind element="sidesAB" color="ocre">$\overline{AB} \cong \overline{A'B'}$</VisualBind> eta <VisualBind element="sidesAC" color="pavo">$\overline{AC} \cong \overline{A'C'}$</VisualBind>) zein haien arteko <ConceptLink targetId="angulo">angeluaren</ConceptLink> kongruentzia (<VisualBind element="angles" color="terracota">$\angle BAC \cong \angle B'A'C'$</VisualBind>) betetzen badira, orduan <VisualBind element="anglesB" color="ocre">$\angle ABC \cong \angle A'B'C'$</VisualBind> eta <VisualBind element="anglesC" color="pavo">$\angle ACB \cong \angle A'C'B'$</VisualBind> angeluen arteko kongruentziak betetzen dira:
+
+$$
+\forall A, B, C, A', B', C' \in \mathcal{P} \ \Biggl( (\neg\operatorname{Col}(A,B,C) \land \neg\operatorname{Col}(A',B',C')) \implies \Bigl( (\overline{AB} \cong \overline{A'B'} \land \overline{AC} \cong \overline{A'C'} \land \angle BAC \cong \angle B'A'C') \implies (\angle ABC \cong \angle A'B'C' \land \angle ACB \cong \angle A'C'B') \Bigr) \Biggr)
+$$
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
-
-Simulazio interaktiboan, <VisualBind element="pA" color="carbon">$\triangle ABC$</VisualBind> eta <VisualBind element="pAA" color="carbon">$\triangle A'B'C'$</VisualBind> triangeluek <VisualBind element="segAB" color="terracota">$\overline{AB} \cong \overline{A'B'}$</VisualBind> eta <VisualBind element="segAC" color="terracota">$\overline{AC} \cong \overline{A'C'}$</VisualBind> alde kongruenteak eta bien arteko <VisualBind element="nonReflexAngleBAC" color="ocre">$\angle A \cong \angle A'$</VisualBind> angelua erakusten dituzte. Ikusizko korrespondentziak bigarren triangeluaren forma blokeatzen du, berdintza metriko osoa bermatuz.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Axioma honek plano abstraktuko irudien "higidura zurrunak" eragindako zailtasun logikoak saihesten ditu. Gainerako kongruentzia-irizpide guztiak (<ConceptLink targetId="teorema-congruencia-ala">ALA</ConceptLink>, LLL) eta <ConceptLink targetId="teorema-triangulo-isosceles">triangelu isoszelearen teorema</ConceptLink> frogatzeko funtsezko tresna deduktiboa da <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
-
-<Separador />
-
-### Propietateak
-
-- **Zurruntasun triangeluarra:** Hiru elementu independentek modu unibokoan zehazten dituzte triangelu baten magnitude guztiak.
-- **Oinarri deduktiboa:** ALA, LAA eta LLL irizpideak axioma osagarririk gabe ondorioztatzea ahalbidetzen du.
-- **Baliozkotasun unibertsala:** Balio osoa du bai <ConceptLink targetId="sistema-euclidiano">geometria euklidearrean</ConceptLink> bai <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoan</ConceptLink>.
+<Nota>
+<ConceptLink targetId="axioma-congruencia-1">Zuzenkien garraioaren</ConceptLink> zein <ConceptLink targetId="axioma-congruencia-4">angeluen garraioaren</ConceptLink> axiomekin batera, <ConceptLink targetId="axioma">III.5 axiomak</ConceptLink> absurduaren bidez <ConceptLink targetId="teorema-congruencia-sas">AAA kongruentzia-teorema osoa</ConceptLink> frogatzea ahalbidetzen du —hirugarren aldearen kongruentzia (<VisualBind element="sidesBC" color="carbon">$\overline{BC} \cong \overline{B'C'}$</VisualBind>) eta <ConceptLink targetId="congruencia-triangulos">hirukien kongruentzia osoa ($\triangle ABC \cong \triangle A'B'C'$)</ConceptLink> bermatuz—, eta bertatik <ConceptLink targetId="sistema-absoluto">geometria absolutuko</ConceptLink> gainerako <ConceptLink targetId="criterio-congruencia">kongruentzia-irizpideak</ConceptLink> eratortzen dira: <ConceptLink targetId="criterio-ala">Angelua-Aldea-Angelua (ALA)</ConceptLink> eta <ConceptLink targetId="criterio-lll">Aldea-Aldea-Aldea (LLL)</ConceptLink>.
+</Nota>

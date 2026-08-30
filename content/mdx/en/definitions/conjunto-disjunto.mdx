@@ -27,15 +27,21 @@ $$
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Formal Properties and Distinctions">
-    <PropiedadItem id="disjuncion-dos-a-dos-vs-global" title="Pairwise disjointness vs. null global intersection">
-      For $n \ge 3$ sets, being pairwise disjoint ($\forall i \neq j, \, A_i \cap A_j = \emptyset$) is strictly stronger than having an empty global intersection ($\bigcap_{i \in I} A_i = \emptyset$). Three sets may share no single element in common while still overlapping pairwise.
+  <PropiedadesGrupo title="Properties and Formal Distinctions">
+    <PropiedadItem 
+      id="disjuncion-dos-a-dos-vs-global" 
+      title="Pairwise Disjointness vs. Empty Global Intersection"
+      formula="\big(\forall i \neq j \, (A_i \cap A_j = \emptyset)\big) \implies \bigcap_{i \in I} A_i = \emptyset"
+    >
+      For $n \ge 3$ sets, the condition of being pairwise disjoint ($\forall i \neq j, \, A_i \cap A_j = \emptyset$) is strictly stronger than having an empty global intersection ($\bigcap_{i \in I} A_i = \emptyset$). Three sets may share no elements in common simultaneously despite having non-empty pairwise intersections.
     </PropiedadItem>
-    <PropiedadItem id="fundamento-geometrico-sorts" title="Partition of the universe of discourse into domains">
-      In <ConceptLink targetId="logica">many-sorted logic</ConceptLink> and the axiomatic foundations of <ConceptLink targetId="geometria-hilbertiana">Hilbertian geometry</ConceptLink>, the <ConceptLink targetId="dominio">domains</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">lines</ConceptLink> $\mathcal{L}$, and <ConceptLink targetId="plano">planes</ConceptLink> $\Pi$ are pairwise disjoint and form a partition of the global universe of discourse (<ConceptLink targetId="espacio">space</ConceptLink>) $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$:
-      $$
-      \mathcal{P} \cap \mathcal{L} = \emptyset, \quad \mathcal{P} \cap \Pi = \emptyset, \quad \mathcal{L} \cap \Pi = \emptyset
-      $$
+
+    <PropiedadItem 
+      id="fundamento-geometrico-sorts" 
+      title="Partition of the Universe of Discourse into Domains"
+      formula="\mathcal{P} \cap \mathcal{L} = \emptyset \land \mathcal{P} \cap \Pi = \emptyset \land \mathcal{L} \cap \Pi = \emptyset"
+    >
+      In <ConceptLink targetId="logica">many-sorted logic</ConceptLink> and the axiomatic foundations of <ConceptLink targetId="geometria-hilbertiana">Hilbertian geometry</ConceptLink>, the <ConceptLink targetId="dominio">domains</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">lines</ConceptLink> $\mathcal{L}$, and <ConceptLink targetId="plano">planes</ConceptLink> $\Pi$ are pairwise disjoint and form a partition of the global universe of discourse $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ (<ConceptLink targetId="espacio">space</ConceptLink>).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

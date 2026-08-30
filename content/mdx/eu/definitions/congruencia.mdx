@@ -3,58 +3,41 @@ export const metadata = {
   lang: "eu",
   type: "definicion",
   subtype: "primitivo",
-  title: "Kongruentzia geometrikoa",
-  description: "Dimentsioak, distantziak eta angelu-irekidurak kontserbatzen dituzten konfigurazio geometrikoa lotzen dituen baliokidetasun- eta zurruntasun-erlazio primitiboa.",
-  branch: "51M",
+  title: "Kongruentzia",
+  description: "Zuzenkien zein angeluen arteko zurruntasuna eta tamaina- zein forma-baliokidetasuna ezartzen dituen oinarrizko erlazioa.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "hilbert", "rigidez"],
   hasSimulation: false,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 4. Nozio Komuna", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §3", role: "primary" }
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. liburua, Nozio Orokorrak 4",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §5",
+      role: "primary"
+    }
   ]
 };
 
-<Capitular letra="K" />ongruentzia geometrikoa geometria sintetikoaren jatorrizko zurruntasun- eta baliokidetasun-erlazioa da, figuren arteko forma- eta neurri-berdintasuna formalki ezartzen duena. Hilberten sistema axiomatikoan, kongruentzia primitiboki postulatzen da bai <ConceptLink targetId="segmento">zuzenkien</ConceptLink> bikoteentzat ($\overline{AB} \cong \overline{CD}$) bai <ConceptLink targetId="angulo">angeluen</ConceptLink> bikoteentzat ($\angle ABC \cong \angle DEF$).
+<Capitular letra="K" />ongruentzia geometrikoa <ConceptLink targetId="segmento">zuzenki</ConceptLink>-bikoteen zein <ConceptLink targetId="angulo">angelu</ConceptLink>-bikoteen arteko tamaina- eta forma-baliokidetasuna ezartzen duen zurruntasun formaleko <ConceptLink targetId="relacion">oinarrizko erlazio</ConceptLink> bat da.
 
-<Definicion title="">
-  Kongruentzia ($\cong$) $\mathcal{E}$ espazio bateko konfigurazio geometrikoen bikoteen gaineko jatorrizko baliokidetasun-erlazioa da. Geometria euklidear analitikoan, $F_1, F_2 \subset \mathcal{E}$ bi figura kongruenteak dira baldin eta soilik baldin $f: \mathcal{E} \to \mathcal{E}$ isometria bijektibo bat existitzen bada non $f(F_1) = F_2$ den eta espazioko edozein $A, B \in \mathcal{E}$ puntuentzat honakoa betetzen den:
-  $$
-  d(f(A), f(B)) = d(A, B)
-  $$
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> oinarri deduktiboetan, kongruentzia <ConceptLink targetId="estructura-geometrica">egitura geometrikoaren</ConceptLink> <ConceptLink targetId="signatura">sinadura formalean</ConceptLink> postulatzen den oinarrizko erlazioa da, eta haren portaera deduktiboa Hilberten hirugarren <ConceptLink targetId="axioma">axioma</ConceptLink>-taldeak zehazten du (<ConceptLink targetId="axioma-congruencia-1">III.1 axiomatik</ConceptLink> <ConceptLink targetId="axioma-congruencia-5">III.5 axiomara</ConceptLink>).
+
+<Definicion title="Kongruentzia sintetikoaren formalizazioa">
+<ConceptLink targetId="geometria-hilbertiana">Geometria hilbertiarraren</ConceptLink> sinaduran, **kongruentziak** ($\cong$) oinarrizko bi <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> independente barne hartzen ditu:
+
+1. **Zuzenkien kongruentzia**: $\mathcal{P}$ <ConceptLink targetId="dominio">domeinuko</ConceptLink> bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinek zehaztutako <ConceptLink targetId="segmento">zuzenkien</ConceptLink> <ConceptLink targetId="conjunto">multzoaren</ConceptLink> gaineko $\cong_{\text{seg}}$ erlazio bitarra, $A \neq B$ eta $C \neq D$ muturretarako $\overline{AB} \cong \overline{CD}$ gisa adierazia.
+2. **Angeluen kongruentzia**: <ConceptLink targetId="espacio">Espazioko</ConceptLink> <ConceptLink targetId="angulo">angeluen</ConceptLink> multzoaren gaineko $\cong_{\angle}$ erlazio bitarra, $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> batean koplanarrak diren eta <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren bi <ConceptLink targetId="semirrecta">zuzenerdik</ConceptLink> osatutako bikoteetarako $\angle AOB \cong \angle A'O'B'$ gisa adierazia.
 </Definicion>
 
 <Separador />
 
-### Hilberten kongruentzia-axiomak (III. Taldea)
-
-Kongruentzia-erlazioaren portaera III. Taldeko sei axiomek gobernatzen dute:
-- **Zuzenkien garraioa**: $\overline{AB}$ zuzenki bat eta $A'$ jatorria duen zuzenerdi bat emanda, $B'$ puntu bakar bat existitzen da non $\overline{AB} \cong \overline{A'B'}$ den.
-- **Zuzenkien trantsitibitatea**: $\overline{AB} \cong \overline{CD}$ eta $\overline{AB} \cong \overline{EF}$ badira, orduan $\overline{CD} \cong \overline{EF}$.
-- **Zuzenkien batuketa**: $A * B * C$, $A' * B' * C'$, $\overline{AB} \cong \overline{A'B'}$ eta $\overline{BC} \cong \overline{B'C'}$ badira, orduan $\overline{AC} \cong \overline{A'C'}$.
-- **Angeluen garraioa**: $\angle ABC$ angelu bat eta erdiplano bateko erreferentziazko zuzenerdi bat emanda, angelu kongruente bakar bat existitzen da.
-- **AL-A axioma**: Bi triangeluk bi alde eta bien arteko angelua hurrenez hurren kongruenteak badituzte, gainerako angelu homologoak kongruenteak dira.
-
-### Triangeluen kongruentzia-irizpideak
-
-Plano euklidearrean, bi <ConceptLink targetId="triangulo">triangeluren</ConceptLink> arteko kongruentzia globala oinarrizko irizpideen bidez ondorioztatzen da:
-- **AL-A** (Aldea-Angelua-Aldea): Bi alde eta haien arteko angelua kongruenteak.
-- **An-Al-An** (Angelua-Aldea-Angelua): Alde bat eta bere inguruko bi angeluak kongruenteak.
-- **Al-Al-Al** (Aldea-Aldea-Aldea): Hiru alde homologoen bikoteak kongruenteak.
-
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Kongruentziaren egitura axiomatikoa">
-    <PropiedadItem id="axioma-congruencia-1" title="Zuzenkien garraioa">
-      Emandako zuzenerdi baten gainean zuzenki kongruentearen existentzia eta bakartasuna.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-congruencia-2" title="Zuzenkien trantsitibitatea">
-      Zuzenkien kongruentziak simetria eta trantsitibitate formala betetzen ditu.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-congruencia-4" title="Angeluen garraioa">
-      Erreferentziazko zuzenerdi batekiko angelu kongruentearen existentzia eta bakartasuna.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-congruencia-5" title="Kongruentziaren AL-A axioma">
-      Bi triangelu bi aldetan eta haien arteko angeluan bat badatoz, gainerako elementuetan ere bat datoz.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
+<Nota>
+Zuzenkien eta angeluen gaineko oinarrizko kongruentzia-erlazioetatik abiatuta, nozioa figura konposatuetara hedatzen da formalki, hala nola <ConceptLink targetId="triangulo">triangeluetara</ConceptLink> eta <ConceptLink targetId="poligono">poligonoetara</ConceptLink>: bi figura kongruenteak dira baldin eta haien <ConceptLink targetId="vertice">erpinen</ConceptLink> artean elkarrekiko <ConceptLink targetId="lado">alde</ConceptLink> eta <ConceptLink targetId="angulo">angelu</ConceptLink> guztien kongruentzia gordetzen duen bijekzio bat existitzen bada.
+</Nota>

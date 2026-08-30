@@ -3,45 +3,40 @@ export const metadata = {
   lang: "en",
   type: "axioma",
   title: "Axiom III.2 (Transitivity of Segment Congruence)",
-  description: "If two line segments are congruent to a third segment, they are congruent to each other.",
-  branch: "51M",
+  description: "If two segments are congruent to the same third segment, then they are congruent to each other.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §5",
+      role: "primary"
+    }
   ]
 };
 
 import { Congruence2 } from '@content/diagrams/Axiomas/Congruence2';
 export const Simulation = Congruence2;
 
-<Capitular letra="T" />he second congruence axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> endows the congruence relation on line <ConceptLink targetId="segmento">segments</ConceptLink> with the status of a formal equivalence relation. If two segments $\overline{CD}$ and $\overline{EF}$ are both congruent to a common segment $\overline{AB}$, they are necessarily <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to each other.
+<Capitular letra="I" />f two <ConceptLink targetId="segmento" isDependency={true}>line segments</ConceptLink> are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to the same third segment, then they are congruent to each other.
 
-<Definicion title="Formal statement">
-  For any three line <ConceptLink targetId="segmento">segments</ConceptLink> $\overline{AB}, \overline{CD}, \overline{EF}$, if $\overline{AB} \cong \overline{CD}$ and $\overline{AB} \cong \overline{EF}$, then $\overline{CD} \cong \overline{EF}$:
-  $$
-  (\overline{AB} \cong \overline{CD} \land \overline{AB} \cong \overline{EF}) \implies \overline{CD} \cong \overline{EF}
-  $$
-  Additionally, every segment is congruent to itself: $\overline{AB} \cong \overline{AB}$.
+In the <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, this postulate, together with the reflexivity established in <ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink>, endows segment congruence with the formal structure of an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>.
+
+<Definicion title="Axiom III.2 (Transitivity of Segment Congruence)">
+For any <ConceptLink targetId="segmento">segments</ConceptLink> <VisualBind element="segAB" color="ocre">$\overline{AB}$</VisualBind>, <VisualBind element="segCD" color="mora">$\overline{CD}$</VisualBind>, and <VisualBind element="segEF" color="terracota">$\overline{EF}$</VisualBind> determined by <ConceptLink targetId="punto">points</ConceptLink> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$, if <VisualBind element="ABCD" color="mora">$\overline{AB} \cong \overline{CD}$</VisualBind> and <VisualBind element="ABEF" color="terracota">$\overline{AB} \cong \overline{EF}$</VisualBind>, then <VisualBind element="CDEF" color="pavo">$\overline{CD} \cong \overline{EF}$</VisualBind>:
+
+$$
+\forall A, B, C, D, E, F \in \mathcal{P} \ \Biggl( (A \neq B \land C \neq D \land E \neq F) \implies \Bigl( (\overline{AB} \cong \overline{CD} \land \overline{AB} \cong \overline{EF}) \implies \overline{CD} \cong \overline{EF} \Bigr) \Biggr)
+$$
 </Definicion>
 
 <Separador />
 
-### Visual representation and interaction
-
-In the interactive simulation, three independent segments <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind>, and <VisualBind element="segEF" color="terracota">$\overline{EF}$</VisualBind> are displayed. Congruence tick marks <VisualBind element="tickssegAB" color="terracota">$\cong$</VisualBind> visually confirm that equating $\overline{AB}$ with $\overline{CD}$ and $\overline{EF}$ transfers the metric equality relation directly between $\overline{CD}$ and $\overline{EF}$.
-
-<Separador />
-
-### Geometric significance and scope
-
-Guarantees that segment congruence partitions the set of all spatial segments into well-defined equivalence classes. Each equivalence class $[\overline{AB}]$ abstractly defines the synthetic concept of "length" in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
-
-<Separador />
-
-### Properties
-
-- **Equivalence relation:** Satisfies reflexivity ($\overline{AB} \cong \overline{AB}$), symmetry ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$), and transitivity.
-- **Synthetic length classes:** Each equivalence class $[\overline{AB}]$ represents an invariant length measure under translations and isometries.
-- **Metric consistency:** Prevents cumulative length drift across chained geometric deductions.
+<Nota>
+From the reflexivity $\overline{AB} \cong \overline{AB}$ in <ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink> and this postulate, <ConceptLink targetId="simetria">symmetry</ConceptLink> ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) and canonical <ConceptLink targetId="transitividad">transitivity</ConceptLink> ($\overline{AB} \cong \overline{CD} \land \overline{CD} \cong \overline{EF} \implies \overline{AB} \cong \overline{EF}$) are formally deduced as <ConceptLink targetId="teorema">theorems</ConceptLink>, partitioning the set of segments into <ConceptLink targetId="clase-equivalencia">equivalence classes</ConceptLink> that ground the synthetic notion of <ConceptLink targetId="longitud">length</ConceptLink> in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+</Nota>

@@ -2,45 +2,41 @@ export const metadata = {
   id: "axioma-congruencia-3",
   lang: "eu",
   type: "axioma",
-  title: "III.3 axioma (Zuzenkien batuketa eta aditibitatea)",
-  description: "Ondoko zuzenki kongruenteen bikoteak kateatzean, lortutako zuzenki osoak ere kongruenteak dira.",
-  branch: "51M",
+  title: "III.3 axioma (Zuzenkien batuketa)",
+  description: "Zuzen bereko zein zuzen desberdinetako ondoz ondoko bi zuzenki-pare elkarren artean kongruenteak badira, lortutako zuzenki osoak ere kongruenteak dira elkarren artean.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "orden", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §5",
+      role: "primary"
+    }
   ]
 };
 
 import { Congruence3 } from '@content/diagrams/Axiomas/Congruence3';
 export const Simulation = Congruence3;
 
-<Capitular letra="D" />avid Hilberten hirugarren kongruentzia-axiomak <ConceptLink targetId="segmento">zuzenkien</ConceptLink> kateamendurako adizio-propietatea ezartzen du. Bi zuzenki-pareren osagaiak banan-banan kongruenteak badira, haien baturaren bidez lortutako zuzenki osoak ere <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> dira elkarren artean.
+<Capitular letra="Z" />uzen berean zein <ConceptLink targetId="recta">zuzen</ConceptLink> desberdinetan kokatutako ondoz ondoko bi <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink>-pareren osagaiak elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badira, haien kateamendutik lortutako zuzenki osoak ere kongruenteak dira elkarren artean.
 
-<Definicion title="Enuntziatu formala">
-  Izan bitez $A, B, C$ zuzen bateko hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> $A\text{-}B\text{-}C$ izanik, eta izan bitez $D, E, F$ beste zuzen bateko hiru puntu $D\text{-}E\text{-}F$ izanik. Baldin eta $\overline{AB} \cong \overline{DE}$ eta $\overline{BC} \cong \overline{EF}$ badira, orduan $\overline{AC} \cong \overline{DF}$ betetzen da:
-  $$
-  (A\text{-}B\text{-}C \land D\text{-}E\text{-}F \land \overline{AB} \cong \overline{DE} \land \overline{BC} \cong \overline{EF}) \implies \overline{AC} \cong \overline{DF}
-  $$
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> oinarrietan, postulatu honek <ConceptLink targetId="estar-entre" isDependency={true}>bitartekotasun-erlazioa</ConceptLink> eta kongruentzia lotzen ditu, <ConceptLink targetId="longitud">luzera</ConceptLink> sintetikoen <ConceptLink targetId="adicion">aditibitatea</ConceptLink> bermatuz eta <ConceptLink targetId="suma-segmentos">zuzenkien batuketa</ConceptLink> formalizatuz.
+
+<Definicion title="III.3 axioma (Zuzenkien batuketa)">
+Izan bitez $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <ConceptLink targetId="recta">zuzen</ConceptLink> bateko hiru <ConceptLink targetId="punto">puntu</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind>, non $B$ puntua $A$ eta $C$-ren <ConceptLink targetId="estar-entre">artean baitago</ConceptLink> ($A * B * C$), eta izan bitez zuzen bereko edo beste zuzen bateko hiru puntu <VisualBind element="pD" color="ocre">$D$</VisualBind>, <VisualBind element="pE" color="ocre">$E$</VisualBind>, <VisualBind element="pF" color="terracota">$F$</VisualBind> $\in \mathcal{P}$, non $E$ puntua $D$ eta $F$-ren artean baitago ($D * E * F$). Baldin eta <VisualBind element="ABDE" color="ocre">$\overline{AB} \cong \overline{DE}$</VisualBind> eta <VisualBind element="BCEF" color="terracota">$\overline{BC} \cong \overline{EF}$</VisualBind> badira, orduan <VisualBind element="segAC" color="pavo">$\overline{AC}$</VisualBind> eta <VisualBind element="segDF" color="pavo">$\overline{DF}$</VisualBind> <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> elkarren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira (<VisualBind element="ACDF" color="pavo">$\overline{AC} \cong \overline{DF}$</VisualBind>):
+
+$$
+\forall A, B, C, D, E, F \in \mathcal{P} \ \Biggl( (A * B * C \land D * E * F) \implies \Bigl( (\overline{AB} \cong \overline{DE} \land \overline{BC} \cong \overline{EF}) \implies \overline{AC} \cong \overline{DF} \Bigr) \Biggr)
+$$
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
-
-Simulazio interaktiboan, <VisualBind element="segAC" color="terracota">$\overline{AC}$</VisualBind> zuzenki konposatuak bere <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> eta <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind> osagaietatik abiatuta eratzen dira. Gaietako edozeinen luzera aldatzean, batuketa sintetikoak zorrotz mantentzen du batura linealaren kongruentzia osoa.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Axioma honek geometria sintetikoaren barruko luzeren aljebra oinarritzen du. Kongruentzia-klaseen arteko batuketa-eragiketa definitzea ahalbidetzen du ($[\overline{AB}] + [\overline{BC}] = [\overline{AC}]$), luzerei erdi-talde trukakor ordenatuaren egitura emanez <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
-
-<Separador />
-
-### Propietateak
-
-- **Ordenarekiko bateragarritasuna:** Batuketa geometrikoak ordena lineala gordetzen du zorrozki ($\overline{AB} < \overline{CD} \implies \overline{AB} + \overline{EF} < \overline{CD} + \overline{EF}$).
-- **Monotonia zorrotza:** Baturaren luzera handiagoa da zorrozki bere osagaietako edozein baino.
-- **Kenketa geometrikoa:** Zuzenkien arteko kendura definitzeko oinarria da, bata bestearen barruan zorrozki dagoenean.
+<Nota>
+III.3 axiomak kongruentziaren eta zuzenkien kateamenduaren arteko bateragarritasuna ezartzen du, <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> <ConceptLink targetId="clase-equivalencia">kongruentzia-klaseen</ConceptLink> <ConceptLink targetId="suma-segmentos">batuketa</ConceptLink> ($[\overline{AB}] + [\overline{BC}] = [\overline{AC}]$) definitzea ahalbidetuz, eta bertatik <ConceptLink targetId="orden-segmentos">zuzenkien ordenaren eta konparazioaren</ConceptLink> zein <ConceptLink targetId="resta-segmentos">zuzenkien kenketaren</ConceptLink> <ConceptLink targetId="teorema">teoremak</ConceptLink> formalki frogatzea bermatuz.
+</Nota>

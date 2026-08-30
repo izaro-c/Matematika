@@ -3,45 +3,42 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "III.4 axioma (Angeluen garraioa)",
-  description: "Angelu bat, erdi-zuzen bat eta erdi-plano finkatu bat emanda, erdi-plano horretan erdi-zuzen bakarra existitzen da emandakoarekin kongruentea den angelu bat eratzen duena.",
-  branch: "51M",
+  description: "Edozein angelu, plano bateko zuzen baten gaineko jatorri jakin bateko zuzenerdi bat eta zuzen horrek mugatutako erdi-plano bat emanda, zuzenerdi bakar bat existitzen da erdi-plano horretan jatorrizkoarekiko kongruentea den angelu bat osatzen duena.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §5",
+      role: "primary"
+    }
   ]
 };
 
 import { Congruence4 } from '@content/diagrams/Axiomas/Congruence4';
 export const Simulation = Congruence4;
 
-<Capitular letra="D" />avid Hilberten laugarren kongruentzia-axiomak <ConceptLink targetId="angulo">angeluen</ConceptLink> garraio zurruna formalizatzen du planoan. $\angle(h, k)$ angelu bat, $O'$ jatorria duen $h'$ erdi-zuzen bat eta $h'$-ren zuzen euskarriak mugatutako erdi-plano bat emanda, erdi-plano horretan $k'$ erdi-zuzen bakarra existitzen da non $\angle(h, k) \cong \angle(h', k')$ betetzen den.
+<Capitular letra="E" />dozein <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink>, <ConceptLink targetId="plano">plano</ConceptLink> bateko <ConceptLink targetId="recta">zuzen</ConceptLink> baten gaineko <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> bat eta zuzen horrek mugatutako <ConceptLink targetId="semiplano" isDependency={true}>erdi-plano</ConceptLink> bat emanda, erdi-plano horretan zuzenerdi bakar bat existitzen da emandako angeluaren <ConceptLink targetId="congruencia" isDependency={true}>kongruentea</ConceptLink> den angelu bat eratzen duena.
 
-<Definicion title="Enuntziatu formala">
-  $\angle(h, k)$ <ConceptLink targetId="angulo">angelu</ConceptLink> konbexu bat eta $\mathcal{H}$ erdi-planoa mugatzen duen $O'$ jatorriko $h'$ erdi-zuzen bat emanda, $O'$ jatorria duen eta $\mathcal{H}$ barnean dagoen $k'$ erdi-zuzen bakarra existitzen da non:
-  $$
-  \forall \angle(h,k), \forall h' \subset \partial\mathcal{H}, \ \exists! k' \subset \mathcal{H} \ \bigl(\angle(h, k) \cong \angle(h', k')\bigr)
-  $$
-  Gainera, edozein angelu bere buruarekin <ConceptLink targetId="congruencia" isDependency={true}>kongruentea</ConceptLink> da: $\angle(h, k) \cong \angle(h, k)$.
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoan</ConceptLink>, postulatu honek angelu-irekidurak <ConceptLink targetId="espacio">espazioko</ConceptLink> edozein kokagunetara modu unibokoan garraiatzea ahalbidetzen du, zenbakizko eskala metrikoetara zein funtzio trigonometrikoetara jo gabe.
+
+<Definicion title="III.4 axioma (Angeluen garraioa)">
+$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuan</ConceptLink> <VisualBind element="pO" color="terracota">$O$</VisualBind> <ConceptLink targetId="punto">puntuko</ConceptLink> <ConceptLink targetId="vertice">erpina</ConceptLink> duten <VisualBind element="rayOA" color="ocre">$\overrightarrow{OA}$</VisualBind> eta <VisualBind element="rayOB" color="ocre">$\overrightarrow{OB}$</VisualBind> <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> <ConceptLink targetId="colinealidad">ez-kolinealek</ConceptLink> osatutako <VisualBind element="angleAOB" color="terracota">$\angle(\overrightarrow{OA}, \overrightarrow{OB})$</VisualBind> <ConceptLink targetId="angulo">angelua</ConceptLink>, $\alpha'$ <ConceptLink targetId="plano">plano</ConceptLink> bateko <VisualBind element="r" color="pizarra">$r'$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> baten gaineko <VisualBind element="pOO" color="terracota">$O'$</VisualBind> <ConceptLink targetId="punto">jatorriko</ConceptLink> <VisualBind element="rayOOAA" color="ocre">$\overrightarrow{O'A'}$</VisualBind> zuzenerdia eta $r'$-k mugatutako <VisualBind element="Semiplano" color="mora">$\mathcal{H} \subset \alpha'$</VisualBind> <ConceptLink targetId="semiplano">erdi-planoa</ConceptLink> emanda, $\mathcal{H}$-ren barruan ($\operatorname{tr}(\overrightarrow{O'B'}) \setminus \{O'\} \subset \mathcal{H}$) $O'$ jatorria duen <VisualBind element="rayOOBB" color="pavo">$\overrightarrow{O'B'}$</VisualBind> zuzenerdi bakar bat existitzen da non <VisualBind element="angleAOBPrime" color="terracota">$\angle(\overrightarrow{O'A'}, \overrightarrow{O'B'})$</VisualBind> angelua jatorrizko angeluaren <ConceptLink targetId="congruencia">kongruentea</ConceptLink> den (<VisualBind element="angles" color="terracota">$\angle AOB \cong \angle A'O'B'$</VisualBind>):
+
+$$
+\forall \angle AOB, \ \forall \overrightarrow{O'A'} \subset r' \subset \alpha', \ \forall \mathcal{H} \in \operatorname{Semiplanos}(r', \alpha') \ \Biggl( \exists! \overrightarrow{O'B'} \subset (\mathcal{H} \cup \{O'\}) \ \Bigl( \angle AOB \cong \angle A'O'B' \Bigr) \Biggr)
+$$
+
+Halaber, edozein angeluk kongruentziaren <ConceptLink targetId="reflexividad">erreflexibitatea</ConceptLink> betetzen du: $\angle AOB \cong \angle AOB$ eta $\angle(\overrightarrow{OA}, \overrightarrow{OB}) \cong \angle(\overrightarrow{OB}, \overrightarrow{OA})$.
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
-
-Simulazio interaktiboan, <VisualBind element="rayOA" color="carbon">$h$</VisualBind> eta <VisualBind element="rayOB" color="carbon">$k$</VisualBind> erdi-zuzenek osatutako jatorrizko <VisualBind element="nonReflexAngleAOB" color="ocre">$\angle AOB$</VisualBind> angelua modu unibokoan errepikatzen da <VisualBind element="nonReflexAngleAAOOBB" color="ocre">$\angle A'O'B'$</VisualBind> gisa <VisualBind element="rayOOAA" color="carbon">$h'$</VisualBind> oinarrizko erdi-zuzenetik abiatuta. Garraiatutako <VisualBind element="rayOOBB" color="carbon">$k'$</VisualBind> erdi-zuzenak bere angelu-zabalera aldaezin mantentzen du <VisualBind element="pOO" color="carbon">$O'$</VisualBind> erpinarekiko.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Postulatu honek angelu-zurruntasunaren nozio sintetikoa oinarritzen du funtzio trigonometriko analitikoen edo gradu sexagesimalen mende egon gabe. Biraketek eta isometriek zabalera mantentzen dutela bermatzen du <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
-
-<Separador />
-
-### Propietateak
-
-- **Bakartasun planarra:** Erdi-plano finkatu bakoitzean nahi den angelu-zabalera zehazki erreproduzitzen duen erdi-zuzen bakarra dago.
-- **Erpinez aurkako angeluak:** <ConceptLink targetId="teorema-angulos-opuestos-verticales">Erpinez aurkako angeluak</ConceptLink> kongruenteak direla frogatzea ahalbidetzen du.
-- **Baliokidetasun-erlazioa:** Angelu-kongruentziak baliokidetasun-erlazioa eratzen du plano-angeluen multzoan.
+<Nota>
+III.4 axioma eraikuntza euklidearretako angelu-garraiagailuaren baliokide sintetikoa da, <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> garraio angeluarraren existentzia eta bakartasuna bermatuz eta angeluak <ConceptLink targetId="clase-equivalencia">baliokidetasun-klasetan</ConceptLink> <ConceptLink targetId="particion">banatzea</ConceptLink> ahalbidetuz.
+</Nota>

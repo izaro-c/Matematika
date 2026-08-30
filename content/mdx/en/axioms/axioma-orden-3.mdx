@@ -4,44 +4,37 @@ export const metadata = {
   type: "axioma",
   title: "Axiom II.3 (Exclusivity of Linear Betweenness)",
   description: "Of any three distinct points on a line, at most one lies between the other two.",
-  branch: "51M",
+  branch: "51A",
+  branches: ["51A", "03B"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "orden",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { Order3 } from '@content/diagrams/Axiomas/Order3';
 export const Simulation = Order3;
 
-<Capitular letra="O" />f any three distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> situated on a single <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, the third order axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> establishes that at most one can lie <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> the other two. This condition prevents circular or cyclic orderings on geometric lines.
+<Capitular letra="O" />f three distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> situated on the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, at most one lies <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> the other two.
 
-<Definicion title="Formal statement">
-  For any three distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B, C$ belonging to a single <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$, at most one betweenness relation holds simultaneously:
-  $$
-  \forall A, B, C \in l \ \bigl(A\text{-}B\text{-}C \implies (\neg B\text{-}A\text{-}C \land \neg A\text{-}C\text{-}B)\bigr)
-  $$
-  In conjunction with the other order axioms, exactly one of the three points lies between the other two.
+In the formulation of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> established by <ConceptLink targetId="david-hilbert">David Hilbert</ConceptLink>, this postulate establishes the mutual exclusion of linear betweenness relations, preventing the <ConceptLink targetId="orden">order</ConceptLink> along a line from becoming cyclic or closing upon itself like a <ConceptLink targetId="circunferencia">circle</ConceptLink>.
+
+<Definicion title="Axiom II.3 (Exclusivity of Linear Betweenness)">
+For any <ConceptLink targetId="terna">triple</ConceptLink> of mutually distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> in $\mathcal{P}$ <ConceptLink targetId="incidencia">incident</ConceptLink> with the same <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineDE" color="carbon">$\ell$</VisualBind>, at most one of the betweenness relations $A * B * C$, $B * A * C$, or $A * C * B$ holds true:
+
+$$
+\forall A, B, C \in \mathcal{P} \ \Biggl( \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\Bigr) \implies \neg\Bigl( (A * B * C \land B * A * C) \lor (A * B * C \land A * C * B) \lor (B * A * C \land A * C * B) \Bigr) \Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-### Visual representation and interaction
-
-In the interactive simulation, points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> are positioned on line <VisualBind element="lineDE" color="carbon">$l$</VisualBind>. Reordering or dragging any point along the line exclusively alters the betweenness relation, ensuring that only a single element occupies the central position at any given instant.
-
-<Separador />
-
-### Geometric significance and scope
-
-This axiom guarantees the strict linearity and open topological nature of geometric lines. It prevents the ordering relation from closing in on itself (as occurs in projective cyclic orders on circles), establishing a strict total order in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
-
-<Separador />
-
-### Properties
-
-- **Mutual exclusion:** Truth of $A\text{-}B\text{-}C$ automatically disproves $B\text{-}A\text{-}C$ and $A\text{-}C\text{-}B$.
-- **Strict linear ordering:** Enables ordering any finite set of collinear points into a unique sequence $A_1\text{-}A_2\text{-}\dots\text{-}A_n$.
-- **Non-cyclicity:** Forbids synthetic lines from closing topologically onto themselves without points at infinity.
+<Nota>
+In conjunction with <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink> and <ConceptLink targetId="axioma-orden-2">Axiom II.2</ConceptLink>, it is deduced as the <ConceptLink targetId="teorema-orden-tres-puntos">three-point linear order theorem</ConceptLink> that of three distinct <ConceptLink targetId="colinealidad">collinear</ConceptLink> points, exactly one lies between the other two. This property endows every line in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> with a strict linear betweenness structure, from which a <ConceptLink targetId="orden-total">total order</ConceptLink> is induced upon selecting an <ConceptLink targetId="orientacion">orientation</ConceptLink> or <ConceptLink targetId="sentido">sense</ConceptLink>.
+</Nota>

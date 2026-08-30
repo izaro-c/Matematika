@@ -3,45 +3,40 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma III.2 (Transitividad de la congruencia de segmentos)",
-  description: "Si dos segmentos son congruentes a un mismo tercer segmento, son congruentes entre sí.",
-  branch: "51M",
+  description: "Si dos segmentos son congruentes con un mismo tercer segmento, entonces son congruentes entre sí.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5",
+      role: "primary"
+    }
   ]
 };
 
 import { Congruence2 } from '@content/diagrams/Axiomas/Congruence2';
 export const Simulation = Congruence2;
 
-<Capitular letra="E" />l segundo axioma de congruencia de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> confiere a la relación de congruencia entre <ConceptLink targetId="segmento">segmentos</ConceptLink> el carácter de una relación de equivalencia formal. Si dos segmentos $\overline{CD}$ y $\overline{EF}$ resultan ser congruentes con un mismo segmento $\overline{AB}$, entonces son necesariamente congruentes entre sí.
+<Capitular letra="S" />i dos <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> con un mismo tercer segmento, entonces son congruentes entre sí.
 
-<Definicion title="Enunciado formal">
-  Para cualesquiera tres <ConceptLink targetId="segmento">segmentos</ConceptLink> $\overline{AB}, \overline{CD}, \overline{EF}$, si $\overline{AB} \cong \overline{CD}$ y $\overline{AB} \cong \overline{EF}$, entonces $\overline{CD} \cong \overline{EF}$:
-  $$
-  (\overline{AB} \cong \overline{CD} \land \overline{AB} \cong \overline{EF}) \implies \overline{CD} \cong \overline{EF}
-  $$
-  Asimismo, todo segmento es <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> consigo mismo: $\overline{AB} \cong \overline{AB}$.
+En la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, este postulado, junto con la reflexividad establecida en el <ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink>, confiere a la congruencia de segmentos la estructura formal de una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>.
+
+<Definicion title="Axioma III.2 (Transitividad de la congruencia de segmentos)">
+Para cualesquiera <ConceptLink targetId="segmento">segmentos</ConceptLink> <VisualBind element="segAB" color="ocre">$\overline{AB}$</VisualBind>, <VisualBind element="segCD" color="mora">$\overline{CD}$</VisualBind> y <VisualBind element="segEF" color="terracota">$\overline{EF}$</VisualBind> determinados por <ConceptLink targetId="punto">puntos</ConceptLink> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$, si <VisualBind element="ABCD" color="mora">$\overline{AB} \cong \overline{CD}$</VisualBind> y <VisualBind element="ABEF" color="terracota">$\overline{AB} \cong \overline{EF}$</VisualBind>, entonces <VisualBind element="CDEF" color="pavo">$\overline{CD} \cong \overline{EF}$</VisualBind>:
+
+$$
+\forall A, B, C, D, E, F \in \mathcal{P} \ \Biggl( (A \neq B \land C \neq D \land E \neq F) \implies \Bigl( (\overline{AB} \cong \overline{CD} \land \overline{AB} \cong \overline{EF}) \implies \overline{CD} \cong \overline{EF} \Bigr) \Biggr)
+$$
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
-
-En la simulación interactiva, se muestran tres segmentos independientes <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> y <VisualBind element="segEF" color="terracota">$\overline{EF}$</VisualBind>. Las marcas de congruencia <VisualBind element="tickssegAB" color="terracota">$\cong$</VisualBind> confirman visualmente que al igualar $\overline{AB}$ con $\overline{CD}$ y $\overline{EF}$, la relación de igualdad métrica se transfiere de forma exacta entre $\overline{CD}$ y $\overline{EF}$.
-
-<Separador />
-
-### Significado geométrico y alcance
-
-Garantiza que la congruencia segmentaria particiona el conjunto de todos los segmentos del espacio en clases de equivalencia bien delimitadas. Cada clase de equivalencia define de manera abstracta la noción sintética de "longitud" en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
-
-<Separador />
-
-### Propiedades
-
-- **Relación de equivalencia:** Satisface reflexividad ($\overline{AB} \cong \overline{AB}$), simetría ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) y transitividad.
-- **Definición de longitud sintética:** Cada clase de equivalencia $[\overline{AB}]$ actúa como medida de longitud invariable bajo traslaciones e isometrías.
-- **Consistencia métrica:** Impide derivas de longitud acumulativas en deducciones geométricas encadenadas.
+<Nota>
+A partir de la reflexividad $\overline{AB} \cong \overline{AB}$ del <ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink> y de este postulado, se deducen formalmente como <ConceptLink targetId="teorema">teoremas</ConceptLink> la <ConceptLink targetId="simetria">simetría</ConceptLink> ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) y la <ConceptLink targetId="transitividad">transitividad</ConceptLink> canónica ($\overline{AB} \cong \overline{CD} \land \overline{CD} \cong \overline{EF} \implies \overline{AB} \cong \overline{EF}$), particionando el conjunto de segmentos en <ConceptLink targetId="clase-equivalencia">clases de equivalencia</ConceptLink> que fundamentan la noción sintética de <ConceptLink targetId="longitud">longitud</ConceptLink> en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+</Nota>

@@ -45,11 +45,20 @@ Sistema bost talde modularretan antolatutako 20 axiomak osatzen dute:
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Modularitatea eta Egitura Formala">
-    <PropiedadItem id="independencia-grupos" title="Bost taldeen independentzia modularra">
+  <PropiedadesGrupo title="Modularitatea eta egitura formala">
+    <PropiedadItem 
+      id="independencia-grupos" 
+      title="Bost taldeen independentzia modularra"
+      formula="\forall i \neq j : \mathcal{G}_i \not\vdash \mathcal{G}_j"
+    >
       Bost talde axiomatikoetako bakoitza (intzidentzia, ordena, kongruentzia, paraleloak eta jarraitutasuna) logikoki independentea da, <ConceptLink targetId="sistema-incidencia">intzidentzia-geometria</ConceptLink>, geometria ordenatua edo <ConceptLink targetId="sistema-absoluto">geometria absolutua</ConceptLink> bezalako azpisistema koherenteak bereiztea ahalbidetuz.
     </PropiedadItem>
-    <PropiedadItem id="distincion-predicados-congruencia" title="Kongruentziaren bereizketa kategoriala">
+
+    <PropiedadItem 
+      id="distincion-predicados-congruencia" 
+      title="Kongruentziaren bereizketa kategoriala"
+      formula="\equiv_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2, \quad \equiv_{\angle} \, \subseteq \mathcal{P}^6"
+    >
       Kongruentzia ez da predikatu monolitiko bakarra, aritate eta domeinu ontologiko desberdinak dituzten bi oinarrizko erlazio baizik: <ConceptLink targetId="segmento">segmentuen kongruentzia</ConceptLink> ($\equiv_{\text{seg}}$) eta <ConceptLink targetId="angulo">angeluen kongruentzia</ConceptLink> ($\equiv_{\angle}$).
     </PropiedadItem>
   </PropiedadesGrupo>

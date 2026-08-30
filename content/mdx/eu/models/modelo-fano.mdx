@@ -40,29 +40,62 @@ Fanoren planoa $\mathcal{M}_{\text{Fano}} = (\mathcal{P}, \mathcal{L}, \mathbf{I
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Intzidentzia-axiomen betetzea">
-    <PropiedadItem id="axioma-incidencia-1" title="Zuzenaren zehaztapen bakarra">
+    <PropiedadItem 
+      id="axioma-incidencia-1" 
+      title="Zuzenaren zehaztapen bakarra"
+      formula="\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L})"
+    >
       $\mathcal{P}$-ko edozein bi puntu desberdinetarako, biekiko intziditzen duen $\mathcal{L}$-ko zuzen bakar bat existitzen da ($\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L} \ (P \, \mathbf{I} \, \ell \land Q \, \mathbf{I} \, \ell))$), <ConceptLink targetId="axioma-incidencia-1">I.1 axioma</ConceptLink> betez.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-2" title="Puntu intzidenteak zuzeneko">
-      $\ell \in \mathcal{L}$ zuzen bakoitzak gutxienez bi puntu desberdinekin intziditzen du; eredu honetan, zuzen bakoitzak zehazki 3 puntu ditu ($\lvert \operatorname{tr}(\ell) \rvert = 3 \ge 2$), <ConceptLink targetId="axioma-incidencia-2">I.2 axioma</ConceptLink> betez.
+
+    <PropiedadItem 
+      id="axioma-incidencia-2" 
+      title="Puntu intzidenteak zuzeneko"
+      formula="|\operatorname{tr}(\ell)| = 3 \ge 2"
+    >
+      $\ell \in \mathcal{L}$ zuzen bakoitzak gutxienez bi puntu desberdinekin intziditzen du; eredu honetan, zuzen bakoitzak zehazki 3 puntu ditu ($|\operatorname{tr}(\ell)| = 3 \ge 2$), <ConceptLink targetId="axioma-incidencia-2">I.2 axioma</ConceptLink> betez.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-3" title="Puntu ez-kolinealen existentzia">
-      Inolako zuzenek ez ditu puntu guztiak bere trazan barne hartzen ($\lvert \operatorname{tr}(\ell) \rvert = 3 < 7$); ondorioz, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru puntu existitzen dira (adibidez, $\{1, 2, 3\}$), <ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink> betez.
+
+    <PropiedadItem 
+      id="axioma-incidencia-3" 
+      title="Puntu ez-kolinealen existentzia"
+      formula="|\operatorname{tr}(\ell)| = 3 < 7 \implies \exists \{P, Q, R\} \text{ ez-kolineal}"
+    >
+      Inolako zuzenek ez ditu puntu guztiak bere trazan barne hartzen ($|\operatorname{tr}(\ell)| = 3 < 7$); ondorioz, <ConceptLink targetId="kolinealitate">kolinealak</ConceptLink> ez diren hiru puntu existitzen dira (adibidez, $\{1, 2, 3\}$), <ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink> betez.
     </PropiedadItem>
   </PropiedadesGrupo>
 
-  <PropiedadesGrupo title="Propietate proiektiboak, aljebraikoak eta konbinatoriakoak">
-    <PropiedadItem id="configuracion-simetrica" title="Konfigurazio simetrikoa eta erregulartasuna">
-      Egiturak $(7_3, 7_3)$ motako konfigurazio simetriko bat osatzen du: $\lvert \mathcal{P} \rvert = 7$ puntu eta $\lvert \mathcal{L} \rvert = 7$ zuzen ditu, non zuzen bakoitzak zehazki 3 puntu dituen eta puntu bakoitzetik zehazki 3 zuzen igarotzen diren.
+  <PropiedadesGrupo title="Propietate proiektiboak, aljebraikoak eta konbinatorioak">
+    <PropiedadItem 
+      id="configuracion-simetrica" 
+      title="Konfigurazio simetrikoa eta erregulartasuna"
+      formula="(7_3, 7_3)"
+    >
+      Egiturak $(7_3, 7_3)$ motako konfigurazio simetriko bat osatzen du: $|\mathcal{P}| = 7$ puntu eta $|\mathcal{L}| = 7$ zuzen ditu, non zuzen bakoitzak zehazki 3 puntu dituen eta puntu bakoitzetik zehazki 3 zuzen igarotzen diren.
     </PropiedadItem>
-    <PropiedadItem id="ausencia-paralelas" title="Ebakidura proiektibo unibertsala">
-      $\mathcal{L}$-ko edozein bi zuzen desberdinek traza ez-disjuntuak dituzte ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), beti puntu komun bakar batean elkar ebakiz; beraz, ereduak ez du <ConceptLink targetId="paralelas">zuzen paraleloric</ConceptLink>.
+
+    <PropiedadItem 
+      id="ausencia-paralelas" 
+      title="Ebakidura proiektibo unibertsala"
+      formula="\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset \quad (\forall i \neq j)"
+    >
+      $\mathcal{L}$-ko edozein bi zuzen desberdinek traza ez-disjuntuak dituzte ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), beti puntu komun bakar batean elkar ebakiz; beraz, ereduak ez du <ConceptLink targetId="paraleloak">zuzen paraleloric</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="autodualidad" title="Autodualtasuna">
-      Egitura <ConceptLink targetId="dualidad">autoduala</ConceptLink> da: $\mathcal{P}$ eta $\mathcal{L}$ domeinuak elkarrekin trukatzeak eta $\mathbf{I}$ erlazioaren <ConceptLink targetId="transposicion">transposizioak</ConceptLink> jatorrizkoaren egitura zorrozki <ConceptLink targetId="isomorfismo">isomorfoa</ConceptLink> sortzen dute.
+
+    <PropiedadItem 
+      id="autodualidad" 
+      title="Autodualtasuna"
+      formula="\mathcal{P} \cong \mathcal{L}, \quad \mathbf{I} \cong \mathbf{I}^T"
+    >
+      Egitura <ConceptLink targetId="dualtasun">autoduala</ConceptLink> da: $\mathcal{P}$ eta $\mathcal{L}$ domeinuen elkarren arteko truke formalak eta $\mathbf{I}$ erlazioaren <ConceptLink targetId="transposizio">transposizioak</ConceptLink> jatorrizko egiturarekiko hertsiki <ConceptLink targetId="isomorfismo">isomorfoa</ConceptLink> den intzidentzia-egitura bat sortzen dute.
     </PropiedadItem>
-    <PropiedadItem id="construccion-algebraica" title="F2 gorputz finituaren gaineko eraikuntza">
-      Aljebraikoki $\mathbb{F}_2$ <ConceptLink targetId="cuerpo-finito">gorputz finituaren</ConceptLink> gaineko $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ plano proiektibo gisa definitzen da proportzionaltasunaren <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioaren</ConceptLink> pean. Planoko puntuak $\mathbb{F}_2^3$ <ConceptLink targetId="espacio-vectorial">bektore-espazioko</ConceptLink> 1 <ConceptLink targetId="dimension">dimentsioko</ConceptLink> 7 <ConceptLink targetId="subespacio">azpiespazioei</ConceptLink> dagozkie, eta zuzenak 2 dimentsioko 7 azpiespazioei.
+
+    <PropiedadItem 
+      id="construccion-algebraica" 
+      title="F2 gorputz finituaren gaineko eraikuntza"
+      formula="\mathrm{PG}(2, \mathbb{F}_2) \cong (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim"
+    >
+      Aljebraikoki $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ plano proiektibo gisa definitzen da $\mathbb{F}_2$ <ConceptLink targetId="gorputz-finitu">gorputz finituaren</ConceptLink> gainean, erlazio proportzionalaren baliokidetasun-klaseen bidez. Planoko puntuak $\mathbb{F}_2^3$ <ConceptLink targetId="bektore-espazio">bektore-espazioko</ConceptLink> 1 <ConceptLink targetId="dimentsio">dimentsioko</ConceptLink> 7 <ConceptLink targetId="azpiespazio">azpiespazioei</ConceptLink> dagozkie, eta zuzenak 2 dimentsioko 7 azpiespazioei.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

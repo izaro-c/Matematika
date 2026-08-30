@@ -40,29 +40,62 @@ The Fano plane is formalized as a tuple $\mathcal{M}_{\text{Fano}} = (\mathcal{P
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Incidence Axiom Satisfaction">
-    <PropiedadItem id="axioma-incidencia-1" title="Unique Line Determination">
-      For any pair of distinct points in $\mathcal{P}$, there exists exactly one line in $\mathcal{L}$ incident with both ($\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L} \ (P \, \mathbf{I} \, \ell \land Q \, \mathbf{I} \, \ell))$), satisfying <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>.
+    <PropiedadItem 
+      id="axioma-incidencia-1" 
+      title="Unique Line Determination"
+      formula="\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L})"
+    >
+      For any two distinct points in $\mathcal{P}$, there exists a unique line in $\mathcal{L}$ incident with both ($\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L} \ (P \, \mathbf{I} \, \ell \land Q \, \mathbf{I} \, \ell))$), satisfying <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-2" title="Incident Points per Line">
-      Every line $\ell \in \mathcal{L}$ is incident with at least two distinct points; in this model, each line is incident with exactly 3 points ($\lvert \operatorname{tr}(\ell) \rvert = 3 \ge 2$), satisfying <ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink>.
+
+    <PropiedadItem 
+      id="axioma-incidencia-2" 
+      title="Incident Points per Line"
+      formula="|\operatorname{tr}(\ell)| = 3 \ge 2"
+    >
+      Every line $\ell \in \mathcal{L}$ is incident with at least two distinct points; in this model, each line contains exactly 3 points ($\lvert \operatorname{tr}(\ell) \rvert = 3 \ge 2$), satisfying <ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-3" title="Existence of Non-Collinear Points">
-      No line contains all points in its trace ($\lvert \operatorname{tr}(\ell) \rvert = 3 < 7$); thus, there exist non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> triplets of points (for example, $\{1, 2, 3\}$), satisfying <ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>.
+
+    <PropiedadItem 
+      id="axioma-incidencia-3" 
+      title="Existence of Non-Collinear Points"
+      formula="|\operatorname{tr}(\ell)| = 3 < 7 \implies \exists \{P, Q, R\} \text{ non-collinear}"
+    >
+      No single line contains all points of the space within its trace ($\lvert \operatorname{tr}(\ell) \rvert = 3 < 7$); consequently, there exist triples of non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points (e.g., $\{1, 2, 3\}$), satisfying <ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 
   <PropiedadesGrupo title="Projective, Algebraic, and Combinatorial Properties">
-    <PropiedadItem id="configuracion-simetrica" title="Symmetric Configuration and Regularity">
-      The structure forms a symmetric configuration of type $(7_3, 7_3)$: it contains $\lvert \mathcal{P} \rvert = 7$ points and $\lvert \mathcal{L} \rvert = 7$ lines, where each line contains exactly 3 points and each point is incident with exactly 3 lines.
+    <PropiedadItem 
+      id="configuracion-simetrica" 
+      title="Symmetric Configuration and Regularity"
+      formula="(7_3, 7_3)"
+    >
+      The structure forms a symmetric configuration of type $(7_3, 7_3)$: it contains $\lvert \mathcal{P} \rvert = 7$ points and $\lvert \mathcal{L} \rvert = 7$ lines, where every line contains exactly 3 points and through every point pass exactly 3 lines.
     </PropiedadItem>
-    <PropiedadItem id="ausencia-paralelas" title="Universal Projective Intersection">
-      Any two distinct lines in $\mathcal{L}$ have non-disjoint traces ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), intersecting at exactly one common point; consequently, the model lacks <ConceptLink targetId="paralelas">parallel lines</ConceptLink>.
+
+    <PropiedadItem 
+      id="ausencia-paralelas" 
+      title="Universal Projective Intersection"
+      formula="\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset \quad (\forall i \neq j)"
+    >
+      Any two distinct lines in $\mathcal{L}$ have non-disjoint traces ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), intersecting at exactly one common point; therefore, the model contains no <ConceptLink targetId="paralelas">parallel lines</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="autodualidad" title="Self-Duality">
-      The structure is <ConceptLink targetId="dualidad">self-dual</ConceptLink>: formally swapping domains $\mathcal{P}$ and $\mathcal{L}$ together with the <ConceptLink targetId="transposicion">transposition</ConceptLink> of relation $\mathbf{I}$ yields an incidence structure strictly <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink> to the original.
+
+    <PropiedadItem 
+      id="autodualidad" 
+      title="Self-Duality"
+      formula="\mathcal{P} \cong \mathcal{L}, \quad \mathbf{I} \cong \mathbf{I}^T"
+    >
+      The structure is <ConceptLink targetId="dualidad">self-dual</ConceptLink>: formally interchanging the domains $\mathcal{P}$ and $\mathcal{L}$ along with the <ConceptLink targetId="transposicion">transposition</ConceptLink> of the relation $\mathbf{I}$ yields an incidence structure strictly <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink> to the original one.
     </PropiedadItem>
-    <PropiedadItem id="construccion-algebraica" title="Construction over the Finite Field F2">
-      It is algebraically defined as the projective plane $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ over the <ConceptLink targetId="cuerpo-finito">finite field</ConceptLink> $\mathbb{F}_2$ under the proportionality <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>. The points of the plane correspond to the 7 1-<ConceptLink targetId="dimension">dimensional</ConceptLink> <ConceptLink targetId="subespacio">subspaces</ConceptLink> of the <ConceptLink targetId="espacio-vectorial">vector space</ConceptLink> $\mathbb{F}_2^3$, and the lines correspond to the 7 2-dimensional subspaces.
+
+    <PropiedadItem 
+      id="construccion-algebraica" 
+      title="Construction over the Finite Field F2"
+      formula="\mathrm{PG}(2, \mathbb{F}_2) \cong (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim"
+    >
+      It is algebraically formalized as the projective plane $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ over the <ConceptLink targetId="cuerpo-finito">finite field</ConceptLink> $\mathbb{F}_2$ under proportional equivalence. Points correspond to the 7 1-dimensional <ConceptLink targetId="subespacio">subspaces</ConceptLink> of the <ConceptLink targetId="espacio-vectorial">vector space</ConceptLink> $\mathbb{F}_2^3$, while lines correspond to the 7 2-dimensional subspaces.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

@@ -1,144 +1,318 @@
-import React from 'react';
-import { Link } from 'wouter';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useI18n } from '@/i18n';
 import { db } from '@/data/content';
 import { KatexText } from '@/components/ui/KatexText';
+import { ConceptLink } from '@/fixed-pages/glossary/ui/ConceptLink';
 
-interface SeccionPropiedadesProps {
+// ============================================================================
+// Tipos e Interfaces
+// ============================================================================
+
+export interface SeccionPropiedadesProps {
+  /** Título de la sección principal */
   title?: string;
+  className?: string;
   children: React.ReactNode;
 }
 
-/**
- * Convierte un ID como "teorema-desigualdad-triangular" en un título legible como "Desigualdad triangular"
- */
+export interface PropiedadesGrupoProps {
+  /** Título temático del grupo */
+  title: string;
+  /** Estado de apertura del grupo (por defecto true) */
+  defaultOpen?: boolean;
+  children: React.ReactNode;
+}
+
+export interface PropiedadItemProps {
+  /** Identificador formal en la base de datos de axiomas / teoremas */
+  id?: string;
+  /** Alias retrocompatible de id */
+  theoremId?: string;
+  /** Título de la propiedad */
+  title?: string;
+  /** Fórmula matemática resumida */
+  formula?: string;
+  /** Alias de formula */
+  summaryMath?: string;
+  /** Modo de visualización de la fórmula: 'auto' (salta y centra si no cabe), 'inline' o 'block' */
+  displayMode?: 'auto' | 'inline' | 'block';
+  /** Estado inicial de apertura del detalle (por defecto false) */
+  defaultOpen?: boolean;
+  /** Enunciado o fórmula alternativa si no se usa children */
+  statement?: string;
+  /** Explicación detallada en MDX con ConceptLinks, KaTeX y VisualBinds */
+  children?: React.ReactNode;
+}
+
+// ============================================================================
+// Funciones auxiliares
+// ============================================================================
+
 function humanizeId(id: string): string {
   const clean = id
     .replace(/^teorema-/, '')
     .replace(/^lema-/, '')
     .replace(/^corolario-/, '')
     .replace(/^propiedad-/, '')
+    .replace(/^axioma-/, '')
     .replace(/-/g, ' ');
   return clean.charAt(0).toUpperCase() + clean.slice(1);
 }
 
+// ============================================================================
+// Componentes
+// ============================================================================
+
 /**
- * Contenedor principal para la sección de propiedades de un concepto.
- * Se integra naturalmente en la prosa editorial del artículo con tipografía Arts & Crafts.
+ * Contenedor principal de la sección de propiedades.
  */
-export const SeccionPropiedades: React.FC<SeccionPropiedadesProps> = ({ title, children }) => {
+export const SeccionPropiedades: React.FC<SeccionPropiedadesProps> = ({
+  title,
+  className = '',
+  children,
+}) => {
   const { t } = useI18n();
   const displayTitle = title || t('properties', 'title');
 
   return (
-    <section className="my-10 w-full" aria-label={displayTitle}>
-      <h3 className="page-accent-text text-3xl font-serif mt-10 mb-6 pb-2 border-b border-carbon/10 italic flex items-center justify-between">
+    <section className={`my-12 w-full ${className}`} aria-label={displayTitle}>
+      <h3 className="page-accent-text text-2xl sm:text-3xl font-serif mt-10 mb-6 pb-2 border-b border-carbon/15 italic flex items-center justify-between">
         <span>{displayTitle}</span>
-        <span className="opacity-30 not-italic text-lg font-serif select-none">❧</span>
+        <span className="opacity-30 not-italic text-lg font-serif select-none" aria-hidden="true">
+          ❧
+        </span>
       </h3>
-      <div className="space-y-6">
+      <div className="space-y-8">
         {children}
       </div>
     </section>
   );
 };
 
-interface PropiedadesGrupoProps {
-  title: string;
-  children: React.ReactNode;
-}
-
 /**
- * Subgrupo temático para organizar propiedades según su rama o naturaleza
- * (ej. métricas, algebraicas, topológicas, congruencia).
+ * Grupo temático colapsable con cabecera de acento Arts & Crafts.
  */
-export const PropiedadesGrupo: React.FC<PropiedadesGrupoProps> = ({ title, children }) => {
+export const PropiedadesGrupo: React.FC<PropiedadesGrupoProps> = ({
+  title,
+  defaultOpen = true,
+  children,
+}) => {
+  const [isOpen, setIsOpen] = useState<boolean>(defaultOpen);
+
   return (
-    <div className="my-6 first:mt-2">
-      <div className="flex items-center gap-2 mb-3">
-        <span className="page-accent-text text-xs opacity-70">✦</span>
-        <h4 className="ac-eyebrow ac-eyebrow--sm ac-eyebrow--accent text-carbon/85 uppercase tracking-wider font-semibold">
+    <div className="my-6 first:mt-0">
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        aria-expanded={isOpen}
+        className="w-full flex items-center gap-2 mb-2 text-left group focus-visible:outline-none py-1.5 cursor-pointer"
+      >
+        <span
+          className="page-accent-text text-xs opacity-75 group-hover:opacity-100 transition-opacity select-none"
+          aria-hidden="true"
+        >
+          ✦
+        </span>
+        <h4 className="ac-eyebrow ac-eyebrow--sm ac-eyebrow--accent text-carbon/85 uppercase tracking-wider font-semibold select-none">
           {title}
         </h4>
-        <div className="h-px bg-carbon/10 flex-grow ml-2" />
-      </div>
-      <ul className="space-y-3 pl-0 list-none">
-        {children}
-      </ul>
+        <div className="h-px bg-carbon/15 group-hover:bg-carbon/30 flex-grow ml-2 transition-colors" />
+        <span
+          className={`text-carbon/40 group-hover:text-carbon/80 text-[11px] font-sans font-semibold transition-transform duration-200 select-none ${
+            isOpen ? 'rotate-0' : '-rotate-90'
+          }`}
+          aria-hidden="true"
+        >
+          ▾
+        </span>
+      </button>
+
+      {isOpen && (
+        <ul className="pl-0 list-none space-y-1.5 [&>li]:before:hidden animate-page-enter">
+          {children}
+        </ul>
+      )}
     </div>
   );
 };
 
-interface PropiedadItemProps {
-  /** ID del teorema formal asociado en la base de datos (prop principal) */
-  id?: string;
-  /** Alias retrocompatible de id */
-  theoremId?: string;
-  /** Título explícito de la propiedad (si no se indica, se consulta del teorema o se humaniza el ID) */
-  title?: string;
-  /** Enunciado o fórmula matemática directa */
-  statement?: string;
-  /** Contenido libre en MDX */
-  children?: React.ReactNode;
-}
-
 /**
- * Elemento individual de propiedad matemática integrado en la prosa.
- * Muestra el enunciado formal/simbólico en KaTeX y accesos contextuales sutiles al teorema y su demostración.
+ * Ítem de propiedad con resumen formal continuo, salto/centrado reactivo y desglose colapsable.
  */
 export const PropiedadItem: React.FC<PropiedadItemProps> = ({
   id,
   theoremId,
   title,
+  formula,
+  summaryMath,
+  displayMode = 'auto',
+  defaultOpen = false,
   statement,
   children,
 }) => {
-  const { t, lang, getLocalizedPath } = useI18n();
-  const targetId = id || theoremId;
+  const [isOpen, setIsOpen] = useState<boolean>(defaultOpen);
+  const [isWrapped, setIsWrapped] = useState<boolean>(displayMode === 'block');
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const formulaRef = useRef<HTMLSpanElement>(null);
+
+  const { lang } = useI18n();
+
+  const targetId = id || theoremId;
   const theorem = targetId ? db.getTheorem(targetId, lang) : undefined;
   const itemTitle = title || theorem?.title || (targetId ? humanizeId(targetId) : 'Propiedad');
-  const hasDemo = Boolean(theorem?.demos && theorem.demos.length > 0);
-  const demoId = hasDemo && theorem?.demos ? theorem.demos[0] : undefined;
 
+  const displayFormula = formula || summaryMath;
   const contentText = statement || (typeof children === 'string' ? children : undefined);
   const fallbackText = theorem?.statement || theorem?.description || '';
 
-  const targetHref = theorem
-    ? getLocalizedPath(`/teorema/${theorem.id}`)
-    : targetId
-      ? getLocalizedPath(`/construccion/${targetId}`)
-      : undefined;
+  const hasExpandableContent = Boolean(children || contentText || fallbackText);
+
+  // Detección reactiva de desbordamiento para salto y centrado dinámico
+  useLayoutEffect(() => {
+    if (displayMode === 'block') {
+      setIsWrapped(true);
+      return;
+    }
+    if (displayMode === 'inline') {
+      setIsWrapped(false);
+      return;
+    }
+
+    const container = containerRef.current;
+    if (!container || !displayFormula) return;
+
+    const calculateOverflow = () => {
+      const containerWidth = container.offsetWidth;
+      const titleWidth = titleRef.current?.offsetWidth || 0;
+      const formulaWidth = formulaRef.current?.scrollWidth || 0;
+
+      // Margen de seguridad para chevron, dos puntos y separaciones
+      const totalInlineNeeded = titleWidth + formulaWidth + 36;
+      setIsWrapped(totalInlineNeeded > containerWidth);
+    };
+
+    calculateOverflow();
+
+    const resizeObserver = new ResizeObserver(() => {
+      calculateOverflow();
+    });
+
+    resizeObserver.observe(container);
+    return () => resizeObserver.disconnect();
+  }, [displayFormula, itemTitle, displayMode]);
 
   return (
-    <li className="relative pl-4 py-1 text-base text-carbon font-serif leading-relaxed">
-      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-        {/* Marcador tipográfico matemático */}
-        <span className="page-accent-text opacity-70 select-none text-xs font-serif font-bold">―</span>
+    <li className="group/item py-2.5 transition-colors">
+      <div ref={containerRef} className="w-full text-base text-carbon leading-relaxed">
+        {/* ── Modo 1: En una sola línea (Inline) ── */}
+        {!isWrapped ? (
+          <div className="flex items-baseline gap-2 min-w-0">
+            {/* Indicador interactivo */}
+            {hasExpandableContent ? (
+              <button
+                type="button"
+                onClick={() => setIsOpen((prev) => !prev)}
+                aria-expanded={isOpen}
+                aria-label={isOpen ? 'Contraer justificación' : 'Expandir justificación'}
+                className="text-carbon/40 group-hover/item:text-[var(--page-accent)] text-xs font-serif transition-colors cursor-pointer select-none w-3.5 text-left flex-shrink-0"
+              >
+                {isOpen ? '▾' : '▸'}
+              </button>
+            ) : (
+              <span className="text-carbon/25 text-xs font-serif select-none w-3.5 text-left flex-shrink-0">
+                ―
+              </span>
+            )}
 
-        {/* Título formal enlazado (o enlace a construcción si aún no existe) */}
-        {targetHref ? (
-          <Link
-            href={targetHref}
-            className={
-              theorem
-                ? "font-bold text-carbon hover:text-[var(--page-accent)] transition-colors border-b border-transparent hover:border-[var(--page-accent)]"
-                : "font-bold text-carbon/70 hover:text-carbon border-b border-dashed border-carbon/30 transition-colors"
-            }
-            title={theorem ? theorem.title : t('construction', 'pendingTitle', { id: targetId || '' })}
-          >
-            {itemTitle}
-          </Link>
+            {/* Título */}
+            <div ref={titleRef} className="font-serif font-semibold text-carbon flex-shrink-0">
+              {targetId ? (
+                <ConceptLink targetId={targetId}>
+                  {itemTitle}
+                </ConceptLink>
+              ) : (
+                <span
+                  onClick={() => hasExpandableContent && setIsOpen((prev) => !prev)}
+                  className={hasExpandableContent ? 'cursor-pointer hover:text-[var(--page-accent)] transition-colors' : ''}
+                >
+                  {itemTitle}
+                </span>
+              )}
+            </div>
+
+            {/* Separador y Fórmula */}
+            {displayFormula && (
+              <>
+                <span className="text-carbon/40 font-serif select-none">:</span>
+                <span
+                  ref={formulaRef}
+                  onClick={() => hasExpandableContent && setIsOpen((prev) => !prev)}
+                  className={`font-serif text-ink-body whitespace-nowrap ${hasExpandableContent ? 'cursor-pointer' : ''}`}
+                >
+                  <KatexText text={`$${displayFormula.replace(/^\$|\$$/g, '')}$`} />
+                </span>
+              </>
+            )}
+          </div>
         ) : (
-          <span className="font-bold text-carbon">
-            {itemTitle}
-          </span>
+          /* ── Modo 2: Desbordado / Salto con Fórmula Centrada ── */
+          <div className="flex flex-col gap-1.5">
+            {/* Fila 1: Título */}
+            <div className="flex items-baseline gap-2">
+              {hasExpandableContent ? (
+                <button
+                  type="button"
+                  onClick={() => setIsOpen((prev) => !prev)}
+                  aria-expanded={isOpen}
+                  aria-label={isOpen ? 'Contraer justificación' : 'Expandir justificación'}
+                  className="text-carbon/40 group-hover/item:text-[var(--page-accent)] text-xs font-serif transition-colors cursor-pointer select-none w-3.5 text-left flex-shrink-0"
+                >
+                  {isOpen ? '▾' : '▸'}
+                </button>
+              ) : (
+                <span className="text-carbon/25 text-xs font-serif select-none w-3.5 text-left flex-shrink-0">
+                  ―
+                </span>
+              )}
+
+              <div ref={titleRef} className="font-serif font-semibold text-carbon">
+                {targetId ? (
+                  <ConceptLink targetId={targetId}>
+                    {itemTitle}
+                  </ConceptLink>
+                ) : (
+                  <span
+                    onClick={() => hasExpandableContent && setIsOpen((prev) => !prev)}
+                    className={hasExpandableContent ? 'cursor-pointer hover:text-[var(--page-accent)] transition-colors' : ''}
+                  >
+                    {itemTitle}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Fila 2: Fórmula en bloque centrada */}
+            {displayFormula && (
+              <div
+                onClick={() => hasExpandableContent && setIsOpen((prev) => !prev)}
+                className={`w-full py-1 text-center font-serif text-ink-body overflow-x-auto ${
+                  hasExpandableContent ? 'cursor-pointer hover:opacity-90' : ''
+                }`}
+              >
+                <span ref={formulaRef} className="inline-block text-[1.03em]">
+                  <KatexText text={`$${displayFormula.replace(/^\$|\$$/g, '')}$`} />
+                </span>
+              </div>
+            )}
+          </div>
         )}
+      </div>
 
-        <span className="font-bold text-carbon/70 select-none">:</span>
-
-        {/* Contenido / Fórmula simbólica matemática */}
-        <span className="text-carbon/90 text-justify">
+      {/* ── Desglose explicativo colapsable ── */}
+      {isOpen && hasExpandableContent && (
+        <div className="mt-2.5 ml-5 pl-3.5 border-l border-carbon/15 text-[15px] sm:text-base text-ink-body font-serif leading-relaxed text-justify animate-page-enter">
           {children ? (
             children
           ) : contentText ? (
@@ -146,19 +320,8 @@ export const PropiedadItem: React.FC<PropiedadItemProps> = ({
           ) : fallbackText ? (
             <KatexText text={fallbackText} />
           ) : null}
-        </span>
-
-        {/* Enlace contextual sutil y directo a la demostración o teorema */}
-        {hasDemo && demoId && (
-          <Link
-            href={getLocalizedPath(`/demo/${demoId}`)}
-            className="text-carbon/40 hover:text-[var(--page-accent)] text-xs font-sans italic whitespace-nowrap pl-1.5 transition-colors select-none"
-            title={t('properties', 'seeProof')}
-          >
-            [demo ❧]
-          </Link>
-        )}
-      </div>
+        </div>
+      )}
     </li>
   );
 };
