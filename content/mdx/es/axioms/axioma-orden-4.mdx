@@ -4,44 +4,43 @@ export const metadata = {
   type: "axioma",
   title: "Axioma II.4 (Axioma de Pasch)",
   description: "Si una recta coplanar a un triángulo corta a uno de sus lados sin pasar por sus vértices, entonces corta necesariamente a uno de los otros dos lados.",
-  branch: "51M",
+  branch: "51A",
+  branches: ["51A", "03B"],
+  tags: ["geometria-sintetica", "orden", "pasch", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "orden",
   hasSimulation: true,
   sources: [
-    { title: "Vorlesungen über neuere Geometrie", author: "Moritz Pasch", locator: "1882", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
+    {
+      title: "Vorlesungen über neuere Geometrie",
+      author: "Moritz Pasch",
+      locator: "1882",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { Pasch } from '@content/diagrams/Axiomas/Pasch';
 export const Simulation = Pasch;
 
-<Capitular letra="F" />ormulado originalmente por <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink> e incorporado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> como el cuarto axioma de orden, este postulado llena una de las lagunas deductivas más célebres de los *Elementos* de Euclides. Garantiza que una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> que penetra en el interior de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> a través de uno de sus lados no puede quedar atrapada ni desvanecerse, debiendo cruzar obligatoriamente un segundo lado.
+<Capitular letra="S" />i una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> situada en el mismo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> que un <ConceptLink targetId="triangulo">triángulo</ConceptLink> determinado por tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> <ConceptLink targetId="colinealidad">no colineales</ConceptLink> <ConceptLink targetId="incidencia" isDependency={true}>incide</ConceptLink> con un punto de uno de sus <ConceptLink targetId="lado">lados</ConceptLink> pasando <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> dos <ConceptLink targetId="vertice">vértices</ConceptLink> sin coincidir con ellos, entonces incide necesariamente con un punto interior de alguno de los otros dos lados.
 
-<Definicion title="Enunciado formal">
-  Sean $A, B, C \in \mathcal{S}$ tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no colineales y sea $l \in \mathcal{L}$ una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> situada en el plano $\pi(ABC)$ que no pasa por ninguno de los vértices ($A, B, C \notin l$). Si $l$ contiene un punto $P$ <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $B$ ($A\text{-}P\text{-}B$, es decir, $l$ interseca al <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$), entonces $l$ contiene un punto $Q$ tal que $A\text{-}Q\text{-}C$ o bien un punto $R$ tal que $B\text{-}R\text{-}C$:
-  $$
-  (P \in l \land A\text{-}P\text{-}B) \implies \bigl(\exists Q \in l \ (A\text{-}Q\text{-}C) \lor \exists R \in l \ (B\text{-}R\text{-}C)\bigr)
-  $$
+Formulado por <ConceptLink targetId="pasch">Moritz Pasch</ConceptLink> e integrado por <ConceptLink targetId="david-hilbert">David Hilbert</ConceptLink> como el cuarto axioma de <ConceptLink targetId="orden">orden</ConceptLink>, este postulado extiende la noción lineal de <ConceptLink targetId="estar-entre">intermediación</ConceptLink> al ámbito bidimensional de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, fundamentando la separación planar y la <ConceptLink targetId="conjunto-convexo">convexidad</ConceptLink> de los <ConceptLink targetId="semiplano">semiplanos</ConceptLink> en la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>.
+
+<Definicion title="Axioma II.4 (Axioma de Pasch)">
+Sean <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> en $\mathcal{P}$ que <ConceptLink targetId="incidencia">inciden</ConceptLink> en un <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$, y sea <VisualBind element="lineL" color="mora">$\ell$</VisualBind> una <ConceptLink targetId="recta">recta</ConceptLink> coplanar ($\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$) que no incide con ninguno de los <ConceptLink targetId="vertice">vértices</ConceptLink> ($\neg(A \, \mathbf{I} \, \ell)$, $\neg(B \, \mathbf{I} \, \ell)$, $\neg(C \, \mathbf{I} \, \ell)$). Si $\ell$ incide con un punto <VisualBind element="pP" color="terracota">$P \in \mathcal{P}$</VisualBind> tal que $A * P * B$ sobre el segmento abierto <VisualBind element="segAB" color="ocre">$\operatorname{seg}(AB)$</VisualBind> del triángulo <VisualBind element="triangle" color="ocre">$\triangle ABC$</VisualBind>, entonces $\ell$ incide también con un punto <VisualBind element="pQ" color="terracota">$Q \in \mathcal{P}$</VisualBind> tal que $A * Q * C$ o bien $B * Q * C$:
+
+$$
+\forall A, B, C \in \mathcal{P} \ \forall \ell \in \mathcal{L} \ \forall \pi \in \Pi \ \Biggl( \Bigl(\neg\exists m \in \mathcal{L} \, (A \, \mathbf{I} \, m \land B \, \mathbf{I} \, m \land C \, \mathbf{I} \, m) \land A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi \land \operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \land \neg(A \, \mathbf{I} \, \ell) \land \neg(B \, \mathbf{I} \, \ell) \land \neg(C \, \mathbf{I} \, \ell)\Bigr) \implies \Bigl(\exists P \in \mathcal{P} \, (P \, \mathbf{I} \, \ell \land A * P * B) \implies \exists Q \in \mathcal{P} \, (Q \, \mathbf{I} \, \ell \land (A * Q * C \lor B * Q * C))\Bigr)\Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-### Representación visual e interacción
-
-En la simulación interactiva, el triángulo <VisualBind element="triangle" color="ocre">$\triangle ABC$</VisualBind> con vértices <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> es intersecado por la recta móvil <VisualBind element="lineL" color="mora">$l$</VisualBind>. Al deslizar el punto de entrada <VisualBind element="pP" color="terracota">$P$</VisualBind> sobre el lado $\overline{AB}$, la recta corta de forma continua e ineludible a un segundo lado en el punto <VisualBind element="pQ" color="terracota">$Q$</VisualBind>.
-
-<Separador />
-
-### Significado geométrico y alcance
-
-El axioma de Pasch extiende la ordenación unidimensional a la separación topológica del plano. Permite demostrar rigurosamente el teorema de separación planar de Jordan para polígonos simples y fundamenta la noción de región interior y exterior convexa en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
-
-<Separador />
-
-### Propiedades
-
-- **Separación del plano:** Permite demostrar que toda recta $l$ divide al plano $\pi \setminus l$ en dos semiplanos conexos y convexos disjuntos.
-- **Topología planar:** Evita discontinuidades espaciales o "agujeros" donde las líneas pudieran cruzarse sin intersección real.
-- **Rigor en polígonos:** Fundamenta la noción de interior de polígonos y la prueba de teoremas clásicos como el de la barra transversal.
+<Nota>
+El axioma de Pasch constituye la clave deductiva que permite demostrar el <ConceptLink targetId="teorema-separacion-plana">teorema de separación planar</ConceptLink>, según el cual toda recta descompone a su plano en dos regiones <ConceptLink targetId="conjunto-convexo">convexas</ConceptLink> y <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink> denominadas <ConceptLink targetId="semiplano">semiplanos</ConceptLink>. En la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, garantiza que una recta no pueda penetrar en el interior de un <ConceptLink targetId="poligono">polígono</ConceptLink> sin atravesar su <ConceptLink targetId="frontera">frontera</ConceptLink>.
+</Nota>

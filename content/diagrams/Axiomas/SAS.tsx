@@ -126,6 +126,142 @@ export const SASSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "all"
+    },
+    {
+      "id": "sidesab",
+      "label": "sidesAB",
+      "memberIds": [
+        "segAB",
+        "segAABB",
+        "pA",
+        "pB",
+        "pAA",
+        "pBB",
+        "congruenceMarkAB",
+        "congruenceMarkAABB"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "sidesAB"
+    },
+    {
+      "id": "sidesac",
+      "label": "sidesAC",
+      "memberIds": [
+        "segAC",
+        "segAACC",
+        "congruenceMarkAACC",
+        "congruenceMarkAC"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "sidesAC"
+    },
+    {
+      "id": "anglesb",
+      "label": "anglesB",
+      "memberIds": [
+        "nonReflexAngleCBA",
+        "nonReflexAngleAABBCC"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "anglesB"
+    },
+    {
+      "id": "anglesc",
+      "label": "anglesC",
+      "memberIds": [
+        "nonReflexAngleACB",
+        "nonReflexAngleBBCCAA"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "anglesC"
+    },
+    {
+      "id": "sidesbc",
+      "label": "sidesBC",
+      "memberIds": [
+        "segBC",
+        "segBBCC",
+        "congruenceMarkBC",
+        "congruenceMarkBBCC"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "sidesBC"
+    },
+    {
+      "id": "groupTriangle1",
+      "label": "Triángulo ABC",
+      "memberIds": [
+        "pA",
+        "pB",
+        "pC",
+        "segAB",
+        "segAC",
+        "segBC",
+        "nonReflexAngleBAC",
+        "congruenceMarkAB",
+        "congruenceMarkAC"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "triangleABC"
+    },
+    {
+      "id": "groupTriangle2",
+      "label": "Triángulo A'B'C'",
+      "memberIds": [
+        "pAA",
+        "pBB",
+        "pCC",
+        "segAABB",
+        "segAACC",
+        "segBBCC",
+        "nonReflexAngleBBAACC",
+        "congruenceMarkAABB",
+        "congruenceMarkAACC"
+      ],
+      "visible": true,
+      "locked": false,
+      "selection": {
+        "selectable": true,
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "triangleAABBCC"
     }
   ],
   "objects": [
@@ -139,7 +275,8 @@ export const SASSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [
         "group1",
-        "group3"
+        "group3",
+        "sidesab"
       ],
       "selection": {
         "selectable": true,
@@ -151,8 +288,8 @@ export const SASSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -4.21,
-        "y": 2.47
+        "x": -1.79,
+        "y": 2.95
       },
       "mobility": {
         "type": "free"
@@ -174,7 +311,8 @@ export const SASSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [
         "group1",
-        "group3"
+        "group3",
+        "sidesab"
       ],
       "selection": {
         "selectable": true,
@@ -186,8 +324,8 @@ export const SASSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -6,
-        "y": -2.4
+        "x": -3.89,
+        "y": -2.1
       },
       "mobility": {
         "type": "free"
@@ -221,8 +359,8 @@ export const SASSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -1.53,
-        "y": -2
+        "x": -0.17,
+        "y": -1.25
       },
       "mobility": {
         "type": "free"
@@ -244,7 +382,8 @@ export const SASSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [
         "group1",
-        "group3"
+        "group3",
+        "sidesab"
       ],
       "selection": {
         "selectable": true,
@@ -256,8 +395,8 @@ export const SASSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 3.07,
-        "y": 2.76
+        "x": 2.18,
+        "y": 2.96
       },
       "mobility": {
         "type": "free"
@@ -279,7 +418,8 @@ export const SASSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [
         "group1",
-        "group3"
+        "group3",
+        "sidesab"
       ],
       "selection": {
         "selectable": true,
@@ -291,8 +431,8 @@ export const SASSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 1.7598904992544793,
-        "y": -2.2604196135439043
+        "x": 0.6708876746405754,
+        "y": -2.2969078353579944
       },
       "mobility": {
         "type": "constrained",
@@ -329,8 +469,8 @@ export const SASSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 6.17016740344622,
-        "y": -1.42954198816643
+        "x": 4.269374603223422,
+        "y": -1.0273441997656745
       },
       "mobility": {
         "type": "constrained",
@@ -356,7 +496,8 @@ export const SASSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [
         "group1",
-        "group3"
+        "group3",
+        "sidesab"
       ],
       "selection": {
         "selectable": true,
@@ -389,7 +530,8 @@ export const SASSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [
         "group1",
-        "group3"
+        "group3",
+        "sidesac"
       ],
       "selection": {
         "selectable": true,
@@ -421,7 +563,8 @@ export const SASSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [
-        "group3"
+        "group3",
+        "sidesbc"
       ],
       "selection": {
         "selectable": true,
@@ -490,7 +633,8 @@ export const SASSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [
         "group1",
-        "group3"
+        "group3",
+        "sidesab"
       ],
       "selection": {
         "selectable": true,
@@ -523,7 +667,8 @@ export const SASSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [
         "group1",
-        "group3"
+        "group3",
+        "sidesac"
       ],
       "selection": {
         "selectable": true,
@@ -556,7 +701,8 @@ export const SASSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [
-        "group3"
+        "group3",
+        "sidesbc"
       ],
       "selection": {
         "selectable": true,
@@ -625,7 +771,8 @@ export const SASSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [
         "group1",
-        "group3"
+        "group3",
+        "sidesab"
       ],
       "selection": {
         "selectable": true,
@@ -660,7 +807,8 @@ export const SASSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [
         "group1",
-        "group3"
+        "group3",
+        "sidesac"
       ],
       "selection": {
         "selectable": true,
@@ -695,7 +843,8 @@ export const SASSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [
         "group1",
-        "group3"
+        "group3",
+        "sidesab"
       ],
       "selection": {
         "selectable": true,
@@ -730,7 +879,8 @@ export const SASSpec = createDiagramSpec(
       "locked": false,
       "groupIds": [
         "group1",
-        "group3"
+        "group3",
+        "sidesac"
       ],
       "selection": {
         "selectable": true,
@@ -764,7 +914,8 @@ export const SASSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [
-        "group3"
+        "group3",
+        "anglesb"
       ],
       "selection": {
         "selectable": true,
@@ -797,7 +948,8 @@ export const SASSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [
-        "group3"
+        "group3",
+        "anglesc"
       ],
       "selection": {
         "selectable": true,
@@ -830,7 +982,8 @@ export const SASSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [
-        "group3"
+        "group3",
+        "anglesc"
       ],
       "selection": {
         "selectable": true,
@@ -863,7 +1016,8 @@ export const SASSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [
-        "group3"
+        "group3",
+        "anglesb"
       ],
       "selection": {
         "selectable": true,
@@ -896,7 +1050,8 @@ export const SASSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [
-        "group3"
+        "group3",
+        "sidesbc"
       ],
       "selection": {
         "selectable": true,
@@ -930,7 +1085,8 @@ export const SASSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [
-        "group3"
+        "group3",
+        "sidesbc"
       ],
       "selection": {
         "selectable": true,

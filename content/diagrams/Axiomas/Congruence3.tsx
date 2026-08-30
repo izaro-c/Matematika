@@ -130,7 +130,7 @@ export const Congruence3Spec = createDiagramSpec(
         "ariaLabel": "Punto A",
         "role": "primary"
       },
-      "target": false,
+      "target": true,
       "targetId": "pA",
       "objectType": "point",
       "definition": {
@@ -186,7 +186,7 @@ export const Congruence3Spec = createDiagramSpec(
     },
     {
       "id": "pD",
-      "label": "A'",
+      "label": "D",
       "color": "ocre",
       "layerId": "geometry",
       "order": 16000,
@@ -221,7 +221,7 @@ export const Congruence3Spec = createDiagramSpec(
     },
     {
       "id": "pE",
-      "label": "B'",
+      "label": "E",
       "color": "ocre",
       "layerId": "geometry",
       "order": 17000,
@@ -241,8 +241,8 @@ export const Congruence3Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 0.00015774136631785396,
-        "y": -1.879988169397526
+        "x": 0.00003858828314884377,
+        "y": -1.8784078331619127
       },
       "mobility": {
         "type": "constrained",
@@ -260,7 +260,7 @@ export const Congruence3Spec = createDiagramSpec(
     },
     {
       "id": "pF",
-      "label": "C'",
+      "label": "F",
       "color": "terracota",
       "layerId": "geometry",
       "order": 18000,
@@ -280,8 +280,8 @@ export const Congruence3Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 2,
-        "y": -1.73
+        "x": 2.09313481700028,
+        "y": -1.719762397733475
       },
       "mobility": {
         "type": "constrained",

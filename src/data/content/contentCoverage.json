@@ -144,7 +144,7 @@
     {
       "id": "axioma-congruencia-3",
       "type": "axioma",
-      "title": "III.3 axioma (Zuzenkien batuketa eta aditibitatea)",
+      "title": "III.3 axioma (Zuzenkien batuketa)",
       "filePath": "eu/axioms/axioma-congruencia-3.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -174,7 +174,7 @@
     {
       "id": "axioma-congruencia-5",
       "type": "axioma",
-      "title": "III.5 axioma (LAL kongruentzia-irizpidea)",
+      "title": "III.5 axioma (Aldea-Angelua-Aldea irizpidea)",
       "filePath": "eu/axioms/axioma-congruencia-5.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -324,7 +324,7 @@
     {
       "id": "axioma-orden-2",
       "type": "axioma",
-      "title": "II.2 axioma (Zuzenaren hedapen mugagabea)",
+      "title": "II.2 axioma (Zuzenaren hedapena)",
       "filePath": "eu/axioms/axioma-orden-2.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -339,7 +339,7 @@
     {
       "id": "axioma-orden-3",
       "type": "axioma",
-      "title": "II.3 axioma (Tartekotasun linealaren esklusibotasuna)",
+      "title": "II.3 axioma (Bitartekotasun linealaren esklusibotasuna)",
       "filePath": "eu/axioms/axioma-orden-3.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [
@@ -419,7 +419,7 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 2,
+      "sourcesCount": 1,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": []
@@ -455,7 +455,7 @@
     {
       "id": "congruencia",
       "type": "definicion",
-      "title": "Kongruentzia geometrikoa",
+      "title": "Kongruentzia",
       "filePath": "eu/definitions/congruencia.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],

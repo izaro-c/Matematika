@@ -2,45 +2,39 @@ export const metadata = {
   id: "axioma-orden-2",
   lang: "es",
   type: "axioma",
-  title: "Axioma II.2 (Extensión indefinida de la recta)",
+  title: "Axioma II.2 (Extensión de la recta)",
   description: "Dados dos puntos distintos A y B, siempre existe al menos un punto C tal que B está entre A y C.",
-  branch: "51M",
+  branch: "51A",
+  branches: ["51A", "03B"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "orden",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { Order2 } from '@content/diagrams/Axiomas/Order2';
 export const Simulation = Order2;
 
-<Capitular letra="D" />ados dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos cualesquiera $A$ y $B$, el segundo axioma de orden de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> garantiza que siempre es posible prolongar el <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$ más allá de $B$, encontrando un nuevo punto $C$ tal que $B$ quede en posición intermedia ($A\text{-}B\text{-}C$).
+<Capitular letra="D" />ados dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos cualesquiera, siempre existe al menos un tercer punto tal que el segundo se halla <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> el primero y dicho nuevo punto.
 
-<Definicion title="Enunciado formal">
-  Para cualesquiera dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos $A, B \in \mathcal{S}$, existe al menos un punto $C \in \mathcal{S}$ tal que $B$ está <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $C$:
-  $$
-  \forall A, B \in \mathcal{S} \ \bigl(A \neq B \implies \exists C \in \mathcal{S} \ (A\text{-}B\text{-}C)\bigr)
-  $$
+En el marco de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> y los fundamentos formulados por <ConceptLink targetId="david-hilbert">David Hilbert</ConceptLink>, este postulado garantiza que las <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> carecen de puntos terminales o límites extremos, permitiendo la prolongación ilimitada de cualquier par de puntos ordenados en la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>.
+
+<Definicion title="Axioma II.2 (Extensión de la recta)">
+Para cualquier par de <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$, existe al menos un punto <VisualBind element="pC" color="ocre">$C$</VisualBind> $\in \mathcal{P}$ tal que <VisualBind element="pB" color="terracota">$B$</VisualBind> está entre <VisualBind element="pA" color="ocre">$A$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind>:
+
+$$
+\forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists C \in \mathcal{P} \ (A * B * C)\bigr)
+$$
 </Definicion>
 
-<Separador />
-
-### Representación visual e interacción
-
-En la simulación interactiva, los puntos <VisualBind element="pA" color="ocre">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> delimitan el segmento inicial. La prolongación rectilínea sobre la recta <VisualBind element="lineDC" color="carbon">$l$</VisualBind> genera el punto extendido <VisualBind element="pC" color="ocre">$C$</VisualBind>, verificando que $B$ yace estrictamente en el interior del intervalo determinado por $A$ y $C$.
-
-<Separador />
-
-### Significado geométrico y alcance
-
-Este axioma asegura que las rectas son ilimitadas en ambas direcciones y no poseen puntos terminales o bordes intrínsecos. Junto con los axiomas de incidencia, permite demostrar que toda recta contiene un número infinito de puntos ordenados sin finitud espacial.
-
-<Separador />
-
-### Propiedades
-
-- **Ilimitación lineal:** Ninguna recta se interrumpe ni posee un punto frontera final.
-- **Densidad y prolongación:** Permite extender cualquier segmento rectilíneo de manera ilimitada en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
-- **Infinidad de puntos:** Es el principio fundamental que excluye geometrías finitas en presencia de las relaciones de orden.
+<Nota>
+Este axioma asegura la naturaleza abierta y sin fronteras de la recta en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. Junto con el <ConceptLink targetId="axioma-orden-1">Axioma II.1</ConceptLink> y los axiomas de <ConceptLink targetId="incidencia">incidencia</ConceptLink>, garantiza que la <ConceptLink targetId="traza">traza puntual</ConceptLink> $\operatorname{tr}(\ell)$ de toda recta es un <ConceptLink targetId="conjunto-infinito">conjunto infinito</ConceptLink> de puntos, excluyendo la existencia de <ConceptLink targetId="geometria-finita">geometrías finitas</ConceptLink> dotadas de una relación de <ConceptLink targetId="orden-lineal">orden lineal</ConceptLink>.
+</Nota>

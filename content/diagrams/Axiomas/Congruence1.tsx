@@ -176,8 +176,8 @@ export const Congruence1Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 0.03,
-        "y": 4.36
+        "x": -1.66,
+        "y": 3.95
       },
       "mobility": {
         "type": "free"
@@ -246,8 +246,8 @@ export const Congruence1Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 2.582735168797865,
-        "y": -0.31015019990538195
+        "x": 0.04766845144672405,
+        "y": 0.526567500897891
       },
       "mobility": {
         "type": "constrained",
@@ -280,12 +280,12 @@ export const Congruence1Spec = createDiagramSpec(
         "role": "primary"
       },
       "target": true,
-      "targetId": "pE",
+      "targetId": "pDir",
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 5.61,
-        "y": 0.45
+        "x": 0.93,
+        "y": 1.79
       },
       "mobility": {
         "type": "free"

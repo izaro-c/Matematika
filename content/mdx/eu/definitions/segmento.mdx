@@ -2,58 +2,76 @@ export const metadata = {
   id: "segmento",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Zuzenkia",
-  description: "Zuzen baten zati mugatua, mutur gisa hartutako bi punturen artean kokatutako puntu guztiek osatua.",
-  branch: "51M",
+  description: "Zuzen baten bi mutur-puntuk eta haien artean dauden puntu guztiek osatutako multzoa.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, Nozio Komunak", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §3", role: "primary" }
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. liburua, Nozio Orokorrak",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { Segmento } from '@content/diagrams/Definiciones/Segmento';
 export const Simulation = Segmento;
 
-<Capitular letra="Z" />uzenkia <ConceptLink targetId="recta">zuzen</ConceptLink> baten azpimultzo mugatu, konexu eta ganbila da, mutur izeneko bi <ConceptLink targetId="punto">puntuk</ConceptLink> mugatua. Zuzen mugagabeak ez bezala, luzera metriko ondo zehaztua du eta <ConceptLink targetId="poligono">poligonoak</ConceptLink> zein <ConceptLink targetId="triangulo">triangeluak</ConceptLink> eratzeko oinarrizko entitate geometrikoa da.
+<Capitular letra="Z" />uzenkia <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> batean <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinek (muturrak deituak) eta haien <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> dauden puntu guztiek osatzen duten <ConceptLink targetId="conjunto">multzoa</ConceptLink> da.
 
-<Definicion title="">
-  <VisualBind element="lineL" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bateko <VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pB" color="musgo">$B$</VisualBind> bi puntu desberdin emanda, <VisualBind element="segmentAB" color="musgo">$\overline{AB}$</VisualBind> zuzenki itxia $A$, $B$ <ConceptLink targetId="punto" isDependency={true}>puntuek</ConceptLink> eta $A$ eta $B$-ren <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> dauden $P \in \ell$ puntu guztiek osatutako multzoa da:
-  $$
-  \overline{AB} = \{ P \in \ell \mid P = A \lor P = B \lor A * P * B \}
-  $$
-  $\mathbb{R}^n$ espazio bektorialean, konbinazio ganbil gisa adierazten da:
-  $$
-  \overline{AB} = \{ P \in \mathbb{R}^n \mid P = (1 - t)A + tB, \, t \in [0, 1] \}
-  $$
+<ConceptLink targetId="geometria-sintetica">Geometria sintetikoaren</ConceptLink> oinarri deduktiboetan, zuzenkia ez da oinarrizko kontzeptua, <ConceptLink targetId="estar-entre" isDependency={true}>bitartekotasunaren</ConceptLink> oinarrizko erlaziotik eta <ConceptLink targetId="axioma-orden-1" isDependency={true}>II.1 axiomatik</ConceptLink> modu formalean eratorritako objektua baizik. Figura geometriko mugatu elemental bat da, eta haren gainean eraikitzen dira <ConceptLink targetId="poligono">poligonoak</ConceptLink>, <ConceptLink targetId="triangulo">triangeluak</ConceptLink> eta <ConceptLink targetId="congruencia">zuzenkien kongruentzia</ConceptLink>.
+
+<Definicion title="Zuzenkiaren definizio formala">
+$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> bi <VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pB" color="musgo">$B$</VisualBind> puntu desberdinetarako, <VisualBind element="lineL" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzenean</ConceptLink> <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutenak, $\operatorname{seg}(AB)$ **zuzenki irekia** $A$ eta $B$-ren artean dauden $P \in \mathcal{P}$ puntu guztien multzoa da:
+
+$$
+\operatorname{seg}(AB) = \{ P \in \mathcal{P} \mid A * P * B \}
+$$
+
+<VisualBind element="segmentAB" color="musgo">$\overline{AB}$</VisualBind> **zuzenki itxia** multzo horren eta $A$ zein $B$ muturren bildura da:
+
+$$
+\overline{AB} = \operatorname{seg}(AB) \cup \{A, B\} = \{ P \in \mathcal{P} \mid P = A \lor P = B \lor A * P * B \}
+$$
 </Definicion>
 
 <Separador />
 
-### Geometria sintetiko eta axiomatikoa
-
-Hilberten formulazioan:
-- **Zuzenki irekia**: $(AB) = \{ P \in \ell \mid A * P * B \}$ gisa definitzen da, $A$ eta $B$ muturrak kanpoan utzita.
-- **Zuzenkien kongruentzia**: $\overline{AB} \cong \overline{CD}$ jatorrizko erlazioak distantziak deformaziorik gabe garraiatzeko aukera bermatzen du.
-- **Erdiko puntua**: Edozein $\overline{AB}$ zuzenkirentzat, barneko $M \in (AB)$ puntu bakar bat existitzen da non $\overline{AM} \cong \overline{MB}$ den.
-
-### Geometria metriko eta analitikoa
-
-Zuzenkiaren luzera eskalarra bere muturren arteko distantzia euklidearraren berdina da:
-$$
-\|\overline{AB}\| = d(A, B) = \sqrt{\sum_{i=1}^n (b_i - a_i)^2}
-$$
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Propietate metrikoak eta egiturazkoak">
-    <PropiedadItem id="axioma-congruencia-1" title="Garraioa eta kongruentzia">
-      Edozein zuzenki era bakarrean garraia daiteke emandako zuzenerdi baten gainean bere luzera gordez.
+  <PropiedadesGrupo title="Egiturazko eta ordenako propietateak">
+    <PropiedadItem 
+      id="simetria-extremos" 
+      title="Muturren simetria"
+      formula="\overline{AB} = \overline{BA} \land \operatorname{seg}(AB) = \operatorname{seg}(BA)"
+    >
+      <ConceptLink targetId="axioma-orden-1">II.1 axiomaren</ConceptLink> simetriari esker ($A * P * B \iff B * P * A$), zuzenkia ez dago muturrak aipatzen diren ordenaren mende: $\overline{AB} = \overline{BA}$ eta $\operatorname{seg}(AB) = \operatorname{seg}(BA)$, multzo-<ConceptLink targetId="igualdad-matematica">berdintza</ConceptLink> betez.
     </PropiedadItem>
-    <PropiedadItem id="axioma-orden-3" title="Ganbiltasun lineala">
-      Edozein $\overline{AB}$ zuzenki multzo ganbila da espazio afinean.
+
+    <PropiedadItem 
+      id="convexidad-segmento" 
+      title="Linealtasun-ganbiltasuna"
+      formula="P, Q \in \overline{AB} \land P * X * Q \implies X \in \overline{AB}"
+    >
+      Zuzenki itxi bakoitza <ConceptLink targetId="conjunto-convexo">multzo ganbil</ConceptLink> lineala da: baldin eta $P, Q \in \overline{AB}$ badira, orduan $P * X * Q$ bitartekotasun-erlazioa betetzen duen edozein $X \in \mathcal{P}$ puntutarako, $X \in \overline{AB}$ betetzen da nahitaez.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="unicidad-soporte" 
+      title="Zuzen euskarriaren bakartasuna"
+      formula="\exists! \ell \in \mathcal{L} : \overline{AB} \subset \operatorname{tr}(\ell) \quad (\ell = \overleftrightarrow{AB})"
+    >
+      <ConceptLink targetId="axioma-incidencia-1">I.1 axiomaren</ConceptLink> bidez, $A \neq B$ muturrek modu unibokoan zehazten dute $\overleftrightarrow{AB}$ <ConceptLink targetId="recta">zuzen euskarria</ConceptLink>, $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$ trazen barneratzea betez.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

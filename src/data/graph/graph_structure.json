@@ -243,18 +243,18 @@
       "id": "axioma-congruencia-1",
       "type": "axioma",
       "title": "III.1 axioma (Zuzenkien garraioa)",
-      "description": "Zuzenki bat eta jatorri finkodun erdi-zuzen bat emanda, erdi-zuzenean puntu bakar bat existitzen da emandakoarekin kongruentea den zuzenki bat zehazten duena.",
+      "description": "Edozein zuzenki eta jatorri jakin bateko zuzenerdi bat emanda, zuzenerdi horretan puntu bakar bat existitzen da jatorrizkoaren kongruentea den zuzenki bat zehazten duena.",
       "proofs": [],
       "directDependencies": [
-        "congruencia",
-        "punto"
+        "punto",
+        "congruencia"
       ]
     },
     "axioma-congruencia-2": {
       "id": "axioma-congruencia-2",
       "type": "axioma",
       "title": "III.2 axioma (Zuzenkien kongruentziaren iragankortasuna)",
-      "description": "Bi zuzenki hirugarren zuzenki berarekin kongruenteak badira, elkarren artean ere kongruenteak dira.",
+      "description": "Bi zuzenki hirugarren zuzenki beraren kongruenteak badira, elkarren artean ere kongruenteak dira.",
       "proofs": [],
       "directDependencies": [
         "congruencia"
@@ -263,19 +263,19 @@
     "axioma-congruencia-3": {
       "id": "axioma-congruencia-3",
       "type": "axioma",
-      "title": "III.3 axioma (Zuzenkien batuketa eta aditibitatea)",
-      "description": "Ondoko zuzenki kongruenteen bikoteak kateatzean, lortutako zuzenki osoak ere kongruenteak dira.",
+      "title": "III.3 axioma (Zuzenkien batuketa)",
+      "description": "Zuzen bereko zein zuzen desberdinetako ondoz ondoko bi zuzenki-pare elkarren artean kongruenteak badira, lortutako zuzenki osoak ere kongruenteak dira elkarren artean.",
       "proofs": [],
       "directDependencies": [
         "congruencia",
-        "punto"
+        "estar-entre"
       ]
     },
     "axioma-congruencia-4": {
       "id": "axioma-congruencia-4",
       "type": "axioma",
       "title": "III.4 axioma (Angeluen garraioa)",
-      "description": "Angelu bat, erdi-zuzen bat eta erdi-plano finkatu bat emanda, erdi-plano horretan erdi-zuzen bakarra existitzen da emandakoarekin kongruentea den angelu bat eratzen duena.",
+      "description": "Edozein angelu, plano bateko zuzen baten gaineko jatorri jakin bateko zuzenerdi bat eta zuzen horrek mugatutako erdi-plano bat emanda, zuzenerdi bakar bat existitzen da erdi-plano horretan jatorrizkoarekiko kongruentea den angelu bat osatzen duena.",
       "proofs": [],
       "directDependencies": [
         "congruencia"
@@ -284,8 +284,8 @@
     "axioma-congruencia-5": {
       "id": "axioma-congruencia-5",
       "type": "axioma",
-      "title": "III.5 axioma (LAL kongruentzia-irizpidea)",
-      "description": "Bi triangeluk bi alde eta bien arteko angelua hurrenez hurren kongruenteak badituzte, gainerako angelu eta aldeak ere kongruenteak dira.",
+      "title": "III.5 axioma (Aldea-Angelua-Aldea irizpidea)",
+      "description": "Bi hirukik bi alde eta haien arteko angelua hurrenez hurren kongruenteak badituzte, orduan alde horiei aurrez aurreko gainerako angeluak ere kongruenteak dira elkarren artean.",
       "proofs": [],
       "directDependencies": [
         "congruencia"
@@ -405,19 +405,8 @@
     "axioma-orden-2": {
       "id": "axioma-orden-2",
       "type": "axioma",
-      "title": "II.2 axioma (Zuzenaren hedapen mugagabea)",
-      "description": "Edozein A eta B puntu desberdinetarako, beti existitzen da gutxienez C puntu bat non B puntua A eta C artean dagoen.",
-      "proofs": [],
-      "directDependencies": [
-        "punto",
-        "estar-entre"
-      ]
-    },
-    "axioma-orden-3": {
-      "id": "axioma-orden-3",
-      "type": "axioma",
-      "title": "II.3 axioma (Tartekotasun linealaren esklusibotasuna)",
-      "description": "Zuzen bereko hiru puntu desberdinetatik, gehienez puntu bat dago beste bien artean.",
+      "title": "II.2 axioma (Zuzenaren hedapena)",
+      "description": "Edozein A eta B puntu desberdin emanda, beti existitzen da gutxienez C puntu bat non B puntua A eta C-ren artean dagoen.",
       "proofs": [],
       "directDependencies": [
         "punto",
@@ -425,15 +414,28 @@
         "recta"
       ]
     },
+    "axioma-orden-3": {
+      "id": "axioma-orden-3",
+      "type": "axioma",
+      "title": "II.3 axioma (Bitartekotasun linealaren esklusibotasuna)",
+      "description": "Zuzen bereko edozein hiru puntu desberdinetatik, gehienez bat dago beste biren artean.",
+      "proofs": [],
+      "directDependencies": [
+        "punto",
+        "estar-entre"
+      ]
+    },
     "axioma-orden-4": {
       "id": "axioma-orden-4",
       "type": "axioma",
       "title": "II.4 axioma (Paschen axioma)",
-      "description": "Triangelu baten plano bereko zuzen batek haren alde bat ebakitzen badu erpinetatik igaro gabe, nahitaez ebakitzen du beste bi aldeetako bat.",
+      "description": "Triangelu baten plano berean dagoen zuzen batek bere alde bat erpinetatik igaro gabe ebakitzen badu, nahitaez beste bi aldeetako bat ebakitzen du.",
       "proofs": [],
       "directDependencies": [
-        "recta",
+        "plano",
         "punto",
+        "recta",
+        "incidencia",
         "estar-entre"
       ]
     },
@@ -466,24 +468,29 @@
     "angulo": {
       "id": "angulo",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Angelua",
-      "description": "Erpin izeneko jatorri bera partekatzen duten bi zuzenerdi ez-lerrokaturen elkarketaz osatutako irudi laua.",
+      "description": "Erpin izeneko jatorri-puntu bera partekatzen duten eta zuzen berekoak ez diren bi zuzenerdiren bikote ez-ordenatuz osatutako figura geometrikoa.",
       "proofs": [],
       "directDependencies": [
-        "punto",
         "semirrecta"
       ]
     },
     "angulos-suplementarios": {
       "id": "angulos-suplementarios",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Angelu gehigarriak",
-      "description": "Beren neurri angeluarren batura angelu lau baten (180 gradu) baliokidea den bi angelu koplanarren bikotea.",
+      "description": "Beren batasunak kongruentzia bidez euskarri-zuzen bereko aurkako zuzenerdien angelu-pare lineal baten egitura erreproduzitzen duen angelu-bikotea.",
       "proofs": [],
       "directDependencies": [
-        "angulo"
+        "angulo",
+        "congruencia",
+        "recta",
+        "estar-entre",
+        "plano",
+        "punto",
+        "semirrecta"
       ]
     },
     "circunferencia": {
@@ -511,8 +518,8 @@
       "id": "congruencia",
       "type": "definicion",
       "subtype": "primitivo",
-      "title": "Kongruentzia geometrikoa",
-      "description": "Dimentsioak, distantziak eta angelu-irekidurak kontserbatzen dituzten konfigurazio geometrikoa lotzen dituen baliokidetasun- eta zurruntasun-erlazio primitiboa.",
+      "title": "Kongruentzia",
+      "description": "Zuzenkien zein angeluen arteko zurruntasuna eta tamaina- zein forma-baliokidetasuna ezartzen dituen oinarrizko erlazioa.",
       "proofs": [],
       "directDependencies": []
     },
@@ -711,14 +718,15 @@
     "segmento": {
       "id": "segmento",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Zuzenkia",
-      "description": "Zuzen baten zati mugatua, mutur gisa hartutako bi punturen artean kokatutako puntu guztiek osatua.",
+      "description": "Zuzen baten bi mutur-puntuk eta haien artean dauden puntu guztiek osatutako multzoa.",
       "proofs": [],
       "directDependencies": [
         "recta",
         "punto",
-        "estar-entre"
+        "estar-entre",
+        "axioma-orden-1"
       ]
     },
     "semejanza": {
@@ -749,13 +757,15 @@
     "semirrecta": {
       "id": "semirrecta",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Zuzenerdia",
-      "description": "Zuzen baten zatia, jatorrizko puntu finko batek eta noranzko bakarrean hedatzen diren puntu guztiek osatua.",
+      "description": "Zuzen baten jatorri-puntu batek eta noranzko berean hedatzen diren puntu guztiek osatutako multzoa.",
       "proofs": [],
       "directDependencies": [
         "recta",
         "punto",
+        "axioma-orden-1",
+        "axioma-orden-2",
         "estar-entre"
       ]
     },
@@ -792,12 +802,11 @@
     "triangulo": {
       "id": "triangulo",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Triangelua",
-      "description": "Lerrokatu gabeko hiru puntu lotzen dituzten hiru zuzenkiren elkarketaz osatutako oinarrizko poligono laua.",
+      "description": "Erpin izeneko hiru puntu ez-kolinealek eta haiek binaka lotzen dituzten hiru zuzenkiek osatutako figura geometriko laua.",
       "proofs": [],
       "directDependencies": [
-        "punto",
         "segmento"
       ]
     },

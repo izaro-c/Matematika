@@ -40,28 +40,61 @@ El plano de Fano se formaliza como una tupla $\mathcal{M}_{\text{Fano}} = (\math
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Satisfacción de axiomas de incidencia">
-    <PropiedadItem id="axioma-incidencia-1" title="Determinación unívoca de la recta">
+    <PropiedadItem 
+      id="axioma-incidencia-1" 
+      title="Determinación unívoca de la recta"
+      formula="\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L})"
+    >
       Para cualquier par de puntos distintos en $\mathcal{P}$, existe exactamente una recta en $\mathcal{L}$ incidente con ambos ($\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L} \ (P \, \mathbf{I} \, \ell \land Q \, \mathbf{I} \, \ell))$), satisfaciendo el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-2" title="Puntos incidentes por recta">
+
+    <PropiedadItem 
+      id="axioma-incidencia-2" 
+      title="Puntos incidentes por recta"
+      formula="|\operatorname{tr}(\ell)| = 3 \ge 2"
+    >
       Toda recta $\ell \in \mathcal{L}$ incide con al menos dos puntos distintos; en este modelo, cada recta incide con exactamente 3 puntos ($\lvert \operatorname{tr}(\ell) \rvert = 3 \ge 2$), satisfaciendo el <ConceptLink targetId="axioma-incidencia-2">Axioma I.2</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-3" title="Existencia de puntos no colineales">
+
+    <PropiedadItem 
+      id="axioma-incidencia-3" 
+      title="Existencia de puntos no colineales"
+      formula="|\operatorname{tr}(\ell)| = 3 < 7 \implies \exists \{P, Q, R\} \text{ no colineales}"
+    >
       Ninguna recta contiene en su traza a la totalidad de los puntos ($\lvert \operatorname{tr}(\ell) \rvert = 3 < 7$); por consiguiente, existen ternas de puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink> (por ejemplo, $\{1, 2, 3\}$), satisfaciendo el <ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 
   <PropiedadesGrupo title="Propiedades proyectivas, algebraicas y combinatorias">
-    <PropiedadItem id="configuracion-simetrica" title="Configuración simétrica y regularidad">
+    <PropiedadItem 
+      id="configuracion-simetrica" 
+      title="Configuración simétrica y regularidad"
+      formula="(7_3, 7_3)"
+    >
       La estructura forma una configuración simétrica de tipo $(7_3, 7_3)$: contiene $\lvert \mathcal{P} \rvert = 7$ puntos y $\lvert \mathcal{L} \rvert = 7$ rectas, donde cada recta contiene exactamente 3 puntos y por cada punto concurren exactamente 3 rectas.
     </PropiedadItem>
-    <PropiedadItem id="ausencia-paralelas" title="Intersección proyectiva universal">
+
+    <PropiedadItem 
+      id="ausencia-paralelas" 
+      title="Intersección proyectiva universal"
+      formula="\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset \quad (\forall i \neq j)"
+    >
       Dos rectas distintas cualesquiera en $\mathcal{L}$ tienen trazas no disjuntas ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), cortándose siempre en un único punto común; por tanto, el modelo carece de <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="autodualidad" title="Autodualidad">
+
+    <PropiedadItem 
+      id="autodualidad" 
+      title="Autodualidad"
+      formula="\mathcal{P} \cong \mathcal{L}, \quad \mathbf{I} \cong \mathbf{I}^T"
+    >
       La estructura es <ConceptLink targetId="dualidad">autodual</ConceptLink>: el intercambio formal de los dominios $\mathcal{P}$ y $\mathcal{L}$ junto con la <ConceptLink targetId="transposicion">transposición</ConceptLink> de la relación $\mathbf{I}$ produce una estructura de incidencia estrictamente <ConceptLink targetId="isomorfismo">isomorfa</ConceptLink> a la original.
     </PropiedadItem>
-    <PropiedadItem id="construccion-algebraica" title="Construcción sobre el cuerpo finito F2">
+
+    <PropiedadItem 
+      id="construccion-algebraica" 
+      title="Construcción sobre el cuerpo finito F2"
+      formula="\mathrm{PG}(2, \mathbb{F}_2) \cong (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim"
+    >
       Se define algebraicamente como el plano proyectivo $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ sobre el <ConceptLink targetId="cuerpo-finito">cuerpo finito</ConceptLink> $\mathbb{F}_2$ bajo la <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink> proporcional. Los puntos del plano corresponden a los 7 <ConceptLink targetId="subespacio">subespacios</ConceptLink> de <ConceptLink targetId="dimension">dimensión</ConceptLink> 1 del <ConceptLink targetId="espacio-vectorial">espacio vectorial</ConceptLink> $\mathbb{F}_2^3$, y las rectas corresponden a los 7 subespacios de dimensión 2.
     </PropiedadItem>
   </PropiedadesGrupo>

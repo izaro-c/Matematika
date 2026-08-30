@@ -108,7 +108,7 @@ export const Congruence4Spec = createDiagramSpec(
       "label": "A",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 13000,
+      "order": 9,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -140,7 +140,7 @@ export const Congruence4Spec = createDiagramSpec(
       "label": "B",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 12000,
+      "order": 8,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -172,7 +172,7 @@ export const Congruence4Spec = createDiagramSpec(
       "label": "O",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 14000,
+      "order": 10,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -204,7 +204,7 @@ export const Congruence4Spec = createDiagramSpec(
       "label": "A'",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 15000,
+      "order": 11,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -236,7 +236,7 @@ export const Congruence4Spec = createDiagramSpec(
       "label": "B'",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 16000,
+      "order": 12,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -250,8 +250,8 @@ export const Congruence4Spec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 0.8024285065547914,
-        "y": -0.5431469981193691
+        "x": 1.451980406249219,
+        "y": -0.042567554581359524
       },
       "mobility": {
         "type": "constrained",
@@ -271,7 +271,7 @@ export const Congruence4Spec = createDiagramSpec(
       "label": "O'",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 5000,
+      "order": 1,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -303,7 +303,7 @@ export const Congruence4Spec = createDiagramSpec(
       "label": "Semirrecta",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 6000,
+      "order": 2,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -332,7 +332,7 @@ export const Congruence4Spec = createDiagramSpec(
       "label": "Semirrecta",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 7000,
+      "order": 3,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -359,7 +359,7 @@ export const Congruence4Spec = createDiagramSpec(
       "label": "Semirrecta",
       "color": "pavo",
       "layerId": "geometry",
-      "order": 8000,
+      "order": 4,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -389,7 +389,7 @@ export const Congruence4Spec = createDiagramSpec(
       "label": "Semirrecta",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 9000,
+      "order": 5,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -418,7 +418,7 @@ export const Congruence4Spec = createDiagramSpec(
       "label": "$\\alpha$",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 10000,
+      "order": 6,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -449,7 +449,7 @@ export const Congruence4Spec = createDiagramSpec(
       "label": "$\\alpha '$",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 11000,
+      "order": 7,
       "visible": true,
       "locked": false,
       "groupIds": [],
@@ -472,6 +472,78 @@ export const Congruence4Spec = createDiagramSpec(
         "radius": 1,
         "fillOpacity": 0.2,
         "highlightFillOpacity": 0.4,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "Semiplano",
+      "label": "Semiplano",
+      "color": "mora",
+      "layerId": "geometry",
+      "order": 13,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "highlightable": false,
+        "ariaLabel": "Semiplano",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "Semiplano",
+      "objectType": "area",
+      "geometry": {
+        "type": "half-plane",
+        "boundary": [
+          "pAA",
+          "pOO"
+        ],
+        "side": "pBB"
+      },
+      "appearance": {
+        "strokeWidth": 0,
+        "fillOpacity": 0,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "r",
+      "label": "$r'$",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 0,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "r",
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pOO",
+            "pAA"
+          ]
+        }
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "labelVisible": true,
+        "labelOffset": [
+          0,
+          12
+        ],
+        "labelPosition": 0.31,
+        "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
     }

@@ -106,8 +106,8 @@ export const enLanguage: LanguageConfig = {
       exploreByTypeAria: 'Explore by type',
     },
     timeline: {
-      title: 'Biographical Index',
-      eyebrow: 'Universal Chronicle',
+      title: 'Biographical index',
+      eyebrow: 'Mathematicians timeline',
       subtitle: '{count} mathematicians · {from} BC — present',
       all: 'All periods',
       noEntries: 'No mathematicians in this period',

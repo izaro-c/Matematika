@@ -2,55 +2,76 @@ export const metadata = {
   id: "angulo",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Ángulo",
-  description: "Figura plana formada por dos semirrectas no colineales que comparten un mismo origen denominado vértice.",
-  branch: "51M",
+  description: "Figura geométrica constituida por un par no ordenado de semirrectas no colineales que comparten el mismo origen puntual denominado vértice.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "congruencia", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 8 y 9", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definiciones 8 y 9",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §4",
+      role: "primary"
+    }
   ]
 };
 
 import { Angulo } from '@content/diagrams/Definiciones/Angulo';
 export const Simulation = Angulo;
 
-<Capitular letra="E" />l ángulo es la figura geométrica constituida por la unión de dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> que comparten un origen o <ConceptLink targetId="vertice">vértice</ConceptLink> común. Constituye la noción fundamental para cuantificar la divergencia angular entre direcciones y sustentar la trigonometría en el <ConceptLink targetId="plano">plano</ConceptLink>.
+<Capitular letra="U" />n ángulo es el <ConceptLink targetId="conjunto">par no ordenado</ConceptLink> de dos <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> distintas que comparten el mismo <ConceptLink targetId="punto">origen</ConceptLink> y cuyas <ConceptLink targetId="recta">rectas</ConceptLink> soporte son distintas.
 
-<Definicion title="">
-  Dadas dos <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> distintas <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> y <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> con origen común en un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> <VisualBind element="pA" color="carbon">$O$</VisualBind>, el ángulo <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> es la figura plana formada por la unión de ambas semirrectas:
-  $$
-  \angle AOB = \overrightarrow{OA} \cup \overrightarrow{OB}
-  $$
-  Su apertura métrica $\theta \in [0, \pi]$ radianes se relaciona con el producto escalar de sus vectores unitarios $\vec{u}, \vec{v}$:
-  $$
-  \cos \theta = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \|\vec{v}\|}
-  $$
+En la fundamentación de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, el ángulo no es una magnitud numérica ni una medida métrica, sino un objeto formal construido a partir de la noción de <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> y la no <ConceptLink targetId="colinealidad" isDependency={true}>colinealidad</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
+
+<Definicion title="Definición formal de ángulo">
+Dado un <ConceptLink targetId="punto">punto</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ y dos puntos distintos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ tales que la terna $\{O, A, B\}$ no es <ConceptLink targetId="colinealidad">colineal</ConceptLink>, el **ángulo** <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> (denotado también $\angle(h, k)$) es el <ConceptLink targetId="conjunto">par</ConceptLink> constituido por las dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> y <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind>:
+
+$$
+\angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}
+$$
+
+Las semirrectas $h$ y $k$ se denominan los <ConceptLink targetId="lado">lados</ConceptLink> del ángulo, y el punto común $O$ recibe el nombre de <ConceptLink targetId="vertice">vértice</ConceptLink>. Su **traza puntual** asociada $\operatorname{tr}(\angle AOB) \subset \mathcal{P}$ es la unión de las trazas de sus lados:
+
+$$
+\operatorname{tr}(\angle AOB) = \operatorname{tr}(\overrightarrow{OA}) \cup \operatorname{tr}(\overrightarrow{OB})
+$$
 </Definicion>
 
 <Separador />
 
-### Clasificación según la amplitud angular
-
-En el plano euclidiano, los ángulos convexos se clasifican según su medida angular $\theta$:
-
-| Tipo de ángulo | Medida en radianes | Medida en grados sexagesimales |
-|---|---|---|
-| <ConceptLink targetId="angulo-agudo">Agudo</ConceptLink> | $0 < \theta < \frac{\pi}{2}$ | $0^\circ < \theta < 90^\circ$ |
-| <ConceptLink targetId="angulo-recto">Recto</ConceptLink> | $\theta = \frac{\pi}{2}$ | $\theta = 90^\circ$ |
-| <ConceptLink targetId="angulo-obtuso">Obtuso</ConceptLink> | $\frac{\pi}{2} < \theta < \pi$ | $90^\circ < \theta < 180^\circ$ |
-| <ConceptLink targetId="angulo-llano">Llano</ConceptLink> | $\theta = \pi$ | $\theta = 180^\circ$ |
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Congruencia y aditividad angular">
-    <PropiedadItem id="axioma-congruencia-4" title="Transporte de ángulos">
-      Todo ángulo puede transportarse de manera única a un semiplano respecto a una semirrecta dada.
+  <PropiedadesGrupo title="Propiedades estructurales y de orden">
+    <PropiedadItem 
+      id="simetria-lados" 
+      title="Simetría de los lados"
+      formula="\angle AOB = \angle BOA \iff \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{ \overrightarrow{OB}, \overrightarrow{OA} \}"
+    >
+      Al definirse formalmente como el par no ordenado de dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> no alineadas con origen común ($\angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}$), el ángulo es estrictamente simétrico respecto al orden de sus lados: $\angle AOB = \angle BOA$ y $\angle(h, k) = \angle(k, h)$, cumpliendo la <ConceptLink targetId="igualdad-matematica">igualdad de conjuntos</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="teorema-angulos-opuestos-verticales" title="Ángulos opuestos por el vértice">
-      Las parejas de ángulos formados por dos rectas secantes son congruentes entre sí.
+
+    <PropiedadItem 
+      id="coplanaridad-soporte" 
+      title="Coplanaridad y plano soporte único"
+      formula="\exists! \pi \in \Pi : \operatorname{tr}(\angle AOB) \subset \operatorname{tr}(\pi)"
+    >
+      En virtud de los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> de la terna $\{O, A, B\}$ determina de forma unívoca un único <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$ que contiene íntegramente a la traza puntual del ángulo: $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="interior-angular" 
+      title="Interior angular como región convexa"
+      formula="\operatorname{Int}(\angle AOB) = \mathcal{H}_{\overleftrightarrow{OA}}(B) \cap \mathcal{H}_{\overleftrightarrow{OB}}(A)"
+    >
+      Todo ángulo $\angle AOB$ en un plano $\pi$ determina una región abierta y no acotada denominada **interior del ángulo** ($\operatorname{Int}(\angle AOB)$), formalmente definida como la <ConceptLink targetId="interseccion">intersección</ConceptLink> del <ConceptLink targetId="semiplano">semiplano</ConceptLink> abierto respecto a $\overleftrightarrow{OA}$ que contiene a $B$ y el semiplano abierto respecto a $\overleftrightarrow{OB}$ que contiene a $A$. Esta región es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

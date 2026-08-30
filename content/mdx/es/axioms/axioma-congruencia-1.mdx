@@ -3,44 +3,42 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma III.1 (Transporte de segmentos)",
-  description: "Dado un segmento y una semirrecta con origen prefijado, existe un único punto sobre la semirrecta que determina un segmento congruente al dado.",
-  branch: "51M",
+  description: "Dado un segmento cualquiera y una semirrecta con un origen dado, existe un único punto sobre la semirrecta que determina un segmento congruente al primero.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5",
+      role: "primary"
+    }
   ]
 };
 
 import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
 export const Simulation = Congruence1;
 
-<Capitular letra="E" />l primer axioma de congruencia de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> formaliza la posibilidad de trasladar magnitudes lineales rígidas a lo largo de una dirección en el espacio. Dado un <ConceptLink targetId="segmento">segmento</ConceptLink> cualquiera $\overline{AB}$ y una semirrecta con origen $C$, existe un único <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $E$ sobre dicha semirrecta que conforma un segmento $\overline{CE}$ congruente con $\overline{AB}$.
+<Capitular letra="D" />ado un <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> cualquiera y una <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink> con un <ConceptLink targetId="punto" isDependency={true}>origen</ConceptLink> dado, existe exactamente un <ConceptLink targetId="punto">punto</ConceptLink> sobre dicha semirrecta que conforma un segmento <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> con el segmento original.
 
-<Definicion title="Enunciado formal">
-  Dado un <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$ y una semirrecta $r$ con origen en un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $C$ y dirección hacia $D$, existe un único punto $E \in r$ tal que $\overline{AB}$ es <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> con $\overline{CE}$:
-  $$
-  \forall \overline{AB}, \forall r = \overrightarrow{CD}, \ \exists! E \in r \ (\overline{AB} \cong \overline{CE})
-  $$
+En la fundamentación de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, este postulado formaliza la posibilidad de trasladar longitudes de manera unívoca a lo largo de cualquier dirección en el <ConceptLink targetId="espacio">espacio</ConceptLink>, sin apelar a escalas métricas numéricas ni a sistemas de coordenadas.
+
+<Definicion title="Axioma III.1 (Transporte de segmentos)">
+Dados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ que determinan el <ConceptLink targetId="segmento">segmento</ConceptLink> <VisualBind element="segAB" color="ocre">$\overline{AB}$</VisualBind>, y dada una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> <VisualBind element="rayCDir" color="pavo">$r = \overrightarrow{C\,\text{dir}}$</VisualBind> con origen en <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ orientada hacia el punto <VisualBind element="pDir" color="pavo">$\text{dir}$</VisualBind> $\in \mathcal{P} \setminus \{C\}$, existe un único punto <VisualBind element="pD" color="terracota">$D$</VisualBind> en la semirrecta $r \setminus \{C\}$ tal que el segmento <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> es <ConceptLink targetId="congruencia">congruente</ConceptLink> con $\overline{AB}$:
+
+$$
+\forall A, B \in \mathcal{P} \ \Biggl( A \neq B \implies \forall C, \text{dir} \in \mathcal{P} \ \Bigl( C \neq \text{dir} \implies \exists! D \in \operatorname{tr}(\overrightarrow{C\,\text{dir}}) \setminus \{C\} \ (\overline{AB} \cong \overline{CD}) \Bigr) \Biggr)
+$$
+
+Asimismo, todo segmento es congruente consigo mismo: $\overline{AB} \cong \overline{AB}$ y $\overline{AB} \cong \overline{BA}$.
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
-
-En la simulación interactiva, el segmento fuente <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> definido por los puntos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind> se traslada sobre la semirrecta <VisualBind element="rayCDir" color="carbon">$r$</VisualBind> con origen en <VisualBind element="pC" color="carbon">$C$</VisualBind>. La circunferencia virtual <VisualBind element="circleCD" color="carbon">$\mathcal{C}(C, AB)$</VisualBind> interseca a la semirrecta en el punto único <VisualBind element="pE" color="terracota">$E$</VisualBind>, fijando el segmento imagen <VisualBind element="segCD" color="terracota">$\overline{CE}$</VisualBind>.
-
-<Separador />
-
-### Significado geométrico y alcance
-
-Este postulado fundamenta matemáticamente la construcción clásica euclidiana con compás rígido: permite "medir" y transportar longitudes de manera sintética sin recurrir a escalas métricas numéricas externas en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
-
-<Separador />
-
-### Propiedades
-
-- **Unicidad del transporte:** Sobre cada semirrecta existe un único punto terminal que satisface la relación de congruencia.
-- **Invarianza por simetría:** Todo segmento es congruente consigo mismo con inversión de extremos ($\overline{AB} \cong \overline{BA}$).
-- **Base métrica sintética:** Permite definir la comparación de longitudes relativas entre segmentos ($\overline{AB} < \overline{CD}$).
+<Nota>
+El Axioma III.1 constituye el análogo sintético y riguroso del compás rígido en las construcciones euclidianas, garantizando la existencia y unicidad del traslado métrico en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+</Nota>

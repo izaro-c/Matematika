@@ -2,57 +2,84 @@ export const metadata = {
   id: "triangulo",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Triangelua",
-  description: "Lerrokatu gabeko hiru puntu lotzen dituzten hiru zuzenkiren elkarketaz osatutako oinarrizko poligono laua.",
-  branch: "51M",
+  description: "Erpin izeneko hiru puntu ez-kolinealek eta haiek binaka lotzen dituzten hiru zuzenkiek osatutako figura geometriko laua.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "congruencia", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 19. Definizioa", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. liburua, 19. definizioa",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §4",
+      role: "primary"
+    }
   ]
 };
 
 import { Triangulo } from '@content/diagrams/Definiciones/Triangulo';
 export const Simulation = Triangulo;
 
-<Capitular letra="T" />riangelua geometria lauaren <ConceptLink targetId="poligono">poligono</ConceptLink> sinpleena da, eta trigonometriaren zein zurruntasun-irizpideen oinarrizko egitura osatzen du. Lerrokatu gabeko hiru <ConceptLink targetId="punto">puntu</ConceptLink> lotuz eratzen da, <ConceptLink targetId="plano">planoan</ConceptLink> eskualde ganbil mugatu bat zedarrituz.
+<Capitular letra="T" />riangelua <ConceptLink targetId="colinealidad" isDependency={true}>kolinealak</ConceptLink> ez diren hiru <ConceptLink targetId="punto">puntuk</ConceptLink> eta puntu horiek binaka lotzen dituzten hiru <ConceptLink targetId="segmento" isDependency={true}>zuzenkiek</ConceptLink> osatutako figura geometriko laua da.
 
-<Definicion title="">
-  $\mathcal{P}$ plano batean lerrokatu gabeko <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> eta <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> emanda, <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> triangelua <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> eta <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind> hiru <ConceptLink targetId="segmento" isDependency={true}>zuzenkien</ConceptLink> elkarketaz definitutako irudi laua da:
-  $$
-  \triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}
-  $$
-  $A, B, C$ puntuak <ConceptLink targetId="vertice">erpinak</ConceptLink> dira eta $\overline{AB}, \overline{BC}, \overline{CA}$ zuzenkiak triangeluaren aldeak.
+<ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> garatutako <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> oinarrietan, triangelua ez da azalera-neurri bat ezta magnitude metriko bat ere, <ConceptLink targetId="estar-entre">bitartekotasun-erlaziotik</ConceptLink> eta <ConceptLink targetId="plano">planoko</ConceptLink> ez-<ConceptLink targetId="colinealidad">kolinealtasunetik</ConceptLink> abiatuta eraikitako egitura formala baizik.
+
+<Definicion title="Triangeluaren definizio formala">
+$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> eta <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> hiru <ConceptLink targetId="punto">puntutarako</ConceptLink>, non $\{A, B, C\}$ hirukotea ez den <ConceptLink targetId="colinealidad">kolineala</ConceptLink>, <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> **triangelua** <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> zein <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind> hiru <ConceptLink targetId="segmento">zuzenkiek</ConceptLink> osatzen duten <ConceptLink targetId="conjunto">multzoa</ConceptLink> da:
+
+$$
+\triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}
+$$
+
+$\overline{AB}$, $\overline{BC}$ eta $\overline{CA}$ zuzenkiei triangeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> deritze, eta haien mutur-puntu $A$, $B$ eta $C$-ri <ConceptLink targetId="vertice">erpinak</ConceptLink>. Haren lotutako $\operatorname{tr}(\triangle ABC) \subset \mathcal{P}$ **puntu-traza** aldeen <ConceptLink targetId="traza">trazen</ConceptLink> bildura da:
+
+$$
+\operatorname{tr}(\triangle ABC) = \operatorname{tr}(\overline{AB}) \cup \operatorname{tr}(\overline{BC}) \cup \operatorname{tr}(\overline{CA})
+$$
 </Definicion>
 
 <Separador />
 
-### Sailkapen metriko eta angeluarra
-
-Triangeluen ezaugarritze metrikoak aldeen arteko <ConceptLink targetId="congruencia">kongruentzia-</ConceptLink>erlazioak eta barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> zabalera hartzen ditu kontuan:
-
-| Aldeen araberako sailkapena | Baldintza geometrikoa | Angeluen araberako sailkapena | Baldintza angeluarra |
-|---|---|---|---|
-| Aldekidea | $\overline{AB} \cong \overline{BC} \cong \overline{CA}$ | Zorrotza (akutangelua) | Hiru angelu <ConceptLink targetId="angulo-agudo">zorrotz</ConceptLink> |
-| Isoszelea | Gutxienez bi alde kongruente | <ConceptLink targetId="triangulo-rectangulo">Angeluzuzena</ConceptLink> | <ConceptLink targetId="angulo-recto">Angelu zuzen</ConceptLink> bat |
-| Eskalenoa | Alde-bikote kongruenterik gabea | Kamutsa (obtusangelua) | <ConceptLink targetId="angulo-obtuso">Angelu kamuts</ConceptLink> bat |
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Metrikoak eta angeluarrak">
-    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Angelu-batura">
-      $\alpha + \beta + \gamma = 180^\circ$ ($\pi\text{ rad}$) $\mathcal{P}$ planoan.
+  <PropiedadesGrupo title="Egiturazko eta ordenako propietateak">
+    <PropiedadItem 
+      id="simetria-vertices" 
+      title="Erpinen permutazioekiko aldaezintasuna"
+      formula="\triangle ABC = \triangle \sigma(A)\sigma(B)\sigma(C) \quad (\forall \sigma \in S_3)"
+    >
+      Aldeen ordenatu gabeko multzotik abiatuta definitzen denez ($\triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}$), triangelua ez dago erpinak aipatzen diren ordenaren mende: $\triangle ABC = \triangle BCA = \triangle CAB = \triangle BAC = \triangle ACB = \triangle CBA$ multzo-<ConceptLink targetId="igualdad-matematica">berdintzak</ConceptLink> betez.
     </PropiedadItem>
-    <PropiedadItem id="teorema-triangulo-isosceles" title="Triangelu isoszelearen teorema">
-      Triangelu isoszele batean, alde kongruenteen aurkako angeluak kongruenteak dira elkarren artean.
-    </PropiedadItem>
-  </PropiedadesGrupo>
 
-  <PropiedadesGrupo title="Zurruntasuna eta kongruentzia">
-    <PropiedadItem id="teorema-congruencia-ala" title="Kongruentzia-irizpideak">
-      $\triangle ABC \cong \triangle A'B'C' \iff \text{AL-A} \lor \text{An-Al-An} \lor \text{Al-Al-Al}$.
+    <PropiedadItem 
+      id="coplanaridad-soporte" 
+      title="Koplanartasuna eta plano euskarri bakarra"
+      formula="\exists! \pi \in \Pi : \operatorname{tr}(\triangle ABC) \subset \operatorname{tr}(\pi)"
+    >
+      <ConceptLink targetId="axioma-incidencia-4">I.4 axiomaren</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5 axiomaren</ConceptLink> bidez, $\{A, B, C\}$ erpinen ez-<ConceptLink targetId="colinealidad">kolinealtasunak</ConceptLink> triangeluaren traza barne hartzen duen $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> bakar bat zehazten du: $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="interior-triangular" 
+      title="Barrualde triangeluarra eskualde ganbil gisa"
+      formula="\operatorname{Int}(\triangle ABC) = \mathcal{H}_{\overleftrightarrow{AB}}(C) \cap \mathcal{H}_{\overleftrightarrow{BC}}(A) \cap \mathcal{H}_{\overleftrightarrow{CA}}(B)"
+    >
+      $\pi$ plano bateko $\triangle ABC$ triangelu orok eskualde ireki eta mugatu bat zehazten du, **triangeluaren barrualdea** ($\operatorname{Int}(\triangle ABC)$) deitua, bere <ConceptLink targetId="recta">zuzen</ConceptLink> euskarriek zehaztutako hiru <ConceptLink targetId="semiplano">planoerdi</ConceptLink> irekien <ConceptLink targetId="interseccion">ebakidura</ConceptLink> gisa formalki definitua: $\overleftrightarrow{AB}$ zuzenarekiko $C$ barne hartzen duen planoerdia, $\overleftrightarrow{BC}$ zuzenarekiko $A$ barne hartzen duen planoerdia, eta $\overleftrightarrow{CA}$ zuzenarekiko $B$ barne hartzen duen planoerdia. Eskualde hori <ConceptLink targetId="conjunto-convexo">multzo ganbila</ConceptLink> da.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="axioma-orden-4" 
+      title="Paschen ebakidura planarra"
+      formula="\ell \cap \operatorname{seg}(AB) \neq \emptyset \land C \notin \ell \implies (\ell \cap \operatorname{seg}(BC) \neq \emptyset \veebar \ell \cap \operatorname{seg}(CA) \neq \emptyset)"
+    >
+      <ConceptLink targetId="axioma-orden-4">II.4 axiomaren</ConceptLink> bidez (Paschen axioma), triangelu baten alde baten barrualdea ebakitzen duen eta erpinetatik igarotzen ez den edozein zuzen koplanarrek nahitaez ebakitzen du beste bi aldeetako baten barrualdea, bere <ConceptLink targetId="frontera">mugaren</ConceptLink> osotasuna bermatuz.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

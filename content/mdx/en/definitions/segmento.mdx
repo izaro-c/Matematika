@@ -2,58 +2,76 @@ export const metadata = {
   id: "segmento",
   lang: "en",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Line Segment",
-  description: "Bounded portion of a line consisting of two distinct endpoint points and all points lying between them.",
-  branch: "51M",
+  description: "Set consisting of two endpoint vertices on a line and all points lying between them.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Elements", author: "Euclid", locator: "Book I, Common Notions", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Common Notions",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { Segmento } from '@content/diagrams/Definiciones/Segmento';
 export const Simulation = Segmento;
 
-<Capitular letra="A" /> line segment is the bounded, connected, and convex subset of a <ConceptLink targetId="recta">line</ConceptLink> delimited by two <ConceptLink targetId="punto">points</ConceptLink> called endpoints. Unlike the infinite line, it possesses a well-defined metric length and forms the basic constituent entity for constructing <ConceptLink targetId="poligono">polygons</ConceptLink> and <ConceptLink targetId="triangulo">triangles</ConceptLink>.
+<Capitular letra="A" /> line segment is the <ConceptLink targetId="conjunto">set</ConceptLink> consisting of two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, called endpoints, together with all points lying <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> them.
 
-<Definicion title="">
-  Given two distinct points <VisualBind element="pA" color="musgo">$A$</VisualBind> and <VisualBind element="pB" color="musgo">$B$</VisualBind> on a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> <VisualBind element="lineL" color="carbon">$\ell$</VisualBind>, the closed line segment <VisualBind element="segmentAB" color="musgo">$\overline{AB}$</VisualBind> is the set consisting of the <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A$, $B$ and all points $P \in \ell$ lying <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $B$:
-  $$
-  \overline{AB} = \{ P \in \ell \mid P = A \lor P = B \lor A * P * B \}
-  $$
-  In the vector space $\mathbb{R}^n$, it is expressed as the convex combination:
-  $$
-  \overline{AB} = \{ P \in \mathbb{R}^n \mid P = (1 - t)A + tB, \, t \in [0, 1] \}
-  $$
+In the deductive foundation of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, the segment is not a primitive concept, but an object formally derived from the primitive <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink> relation and <ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiom II.1</ConceptLink>. It constitutes the basic bounded geometric figure upon which <ConceptLink targetId="poligono">polygons</ConceptLink>, <ConceptLink targetId="triangulo">triangles</ConceptLink>, and <ConceptLink targetId="congruencia">segment congruence</ConceptLink> are established.
+
+<Definicion title="Formal Definition of Line Segment">
+Given two distinct points <VisualBind element="pA" color="musgo">$A$</VisualBind> and <VisualBind element="pB" color="musgo">$B$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineL" color="carbon">$\ell$</VisualBind>, the **open segment** $\operatorname{seg}(AB)$ is the set of all points $P \in \mathcal{P}$ lying between $A$ and $B$:
+
+$$
+\operatorname{seg}(AB) = \{ P \in \mathcal{P} \mid A * P * B \}
+$$
+
+The **closed segment** <VisualBind element="segmentAB" color="musgo">$\overline{AB}$</VisualBind> is the union of this set with the endpoints $A$ and $B$:
+
+$$
+\overline{AB} = \operatorname{seg}(AB) \cup \{A, B\} = \{ P \in \mathcal{P} \mid P = A \lor P = B \lor A * P * B \}
+$$
 </Definicion>
 
 <Separador />
 
-### Synthetic and axiomatic geometry
-
-In Hilbert's framework:
-- **Open segment**: Defined as $(AB) = \{ P \in \ell \mid A * P * B \}$, omitting endpoints $A$ and $B$.
-- **Segment congruence**: The primitive relation $\overline{AB} \cong \overline{CD}$ ensures rigid translation of distances without distortion.
-- **Midpoint**: For every segment $\overline{AB}$, there exists a unique interior point $M \in (AB)$ such that $\overline{AM} \cong \overline{MB}$.
-
-### Metric and analytic geometry
-
-The scalar length of the segment is the Euclidean distance between its endpoints:
-$$
-\|\overline{AB}\| = d(A, B) = \sqrt{\sum_{i=1}^n (b_i - a_i)^2}
-$$
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Metric and structural properties">
-    <PropiedadItem id="axioma-congruencia-1" title="Transport and congruence">
-      Every segment can be uniquely transported onto a given ray preserving its length.
+  <PropiedadesGrupo title="Structural and Order Properties">
+    <PropiedadItem 
+      id="simetria-extremos" 
+      title="Symmetry of Endpoints"
+      formula="\overline{AB} = \overline{BA} \land \operatorname{seg}(AB) = \operatorname{seg}(BA)"
+    >
+      By the symmetry of <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink> ($A * P * B \iff B * P * A$), a segment does not depend on the order in which its endpoints are stated: $\overline{AB} = \overline{BA}$ and $\operatorname{seg}(AB) = \operatorname{seg}(BA)$, satisfying <ConceptLink targetId="igualdad-matematica">set equality</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="axioma-orden-3" title="Linear convexity">
-      Every line segment $\overline{AB}$ is a convex set in affine space.
+
+    <PropiedadItem 
+      id="convexidad-segmento" 
+      title="Linear Convexity"
+      formula="P, Q \in \overline{AB} \land P * X * Q \implies X \in \overline{AB}"
+    >
+      Every closed segment $\overline{AB}$ is a linear <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if $P, Q \in \overline{AB}$, then for any point $X \in \mathcal{P}$ satisfying the betweenness relation $P * X * Q$, it necessarily holds that $X \in \overline{AB}$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="unicidad-soporte" 
+      title="Uniqueness of the Supporting Line"
+      formula="\exists! \ell \in \mathcal{L} : \overline{AB} \subset \operatorname{tr}(\ell) \quad (\ell = \overleftrightarrow{AB})"
+    >
+      By <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>, the distinct endpoints $A \neq B$ uniquely determine the supporting <ConceptLink targetId="recta">line</ConceptLink> $\overleftrightarrow{AB}$, satisfying the trace inclusion $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

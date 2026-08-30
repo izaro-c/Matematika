@@ -2,46 +2,41 @@ export const metadata = {
   id: "axioma-congruencia-5",
   lang: "en",
   type: "axioma",
-  title: "Axiom III.5 (SAS Congruence Criterion)",
-  description: "If two triangles have two sides and the included angle respectively congruent, then the remaining corresponding angles are congruent.",
-  branch: "51M",
+  title: "Axiom III.5 (Side-Angle-Side Criterion)",
+  description: "If two triangles have two sides and the included angle respectively congruent, then the remaining angles opposite those sides are also congruent to each other.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "triangulo", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §5",
+      role: "primary"
+    }
   ]
 };
 
 import { SAS } from '@content/diagrams/Axiomas/SAS';
 export const Simulation = SAS;
 
-<Capitular letra="T" />he fifth congruence axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> rigorously formalizes the Side-Angle-Side (SAS) criterion for <ConceptLink targetId="congruencia" isDependency={true}>triangle congruence</ConceptLink>. In contrast to Euclid's reliance upon the physical superposition of figures, Hilbert posits intrinsic triangular rigidity as a fundamental axiomatic principle.
+<Capitular letra="I" />f two <ConceptLink targetId="triangulo" isDependency={true}>triangles</ConceptLink> have two <ConceptLink targetId="lado">sides</ConceptLink> and the included <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> respectively <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>, then the remaining angles opposite those sides are also congruent to each other.
 
-<Definicion title="Formal statement">
-  Let $\triangle ABC$ and $\triangle A'B'C'$ be two <ConceptLink targetId="triangulo">triangles</ConceptLink>. If $\overline{AB} \cong \overline{A'B'}$, $\overline{AC} \cong \overline{A'C'}$, and $\angle BAC \cong \angle B'A'C'$, then the remaining corresponding angle congruences hold:
-  $$
-  (\overline{AB} \cong \overline{A'B'} \land \overline{AC} \cong \overline{A'C'} \land \angle BAC \cong \angle B'A'C') \implies (\angle ABC \cong \angle A'B'C' \land \angle ACB \cong \angle A'C'B')
-  $$
-  Consequently, the third sides are congruent ($\overline{BC} \cong \overline{B'C'}$) and the two triangles are fully congruent ($\triangle ABC \cong \triangle A'B'C'$).
+In the foundation of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, this <ConceptLink targetId="axioma">postulate</ConceptLink> serves as the foundation of rigidity in the <ConceptLink targetId="plano">plane</ConceptLink>. Unlike the classical approach of <ConceptLink targetId="euclides">Euclid</ConceptLink> —based on superposition via <ConceptLink targetId="movimiento-rigido">rigid motion</ConceptLink>—, Hilbert establishes it as an axiom of relational consistency between <ConceptLink targetId="segmento" isDependency={true}>line segments</ConceptLink> and angles.
+
+<Definicion title="Axiom III.5 (Side-Angle-Side Criterion)">
+Let <VisualBind element="triangleABC" color="ocre">$\triangle ABC$</VisualBind> and <VisualBind element="triangleAABBCC" color="mora">$\triangle A'B'C'$</VisualBind> be two <ConceptLink targetId="triangulo">triangles</ConceptLink> determined by <ConceptLink targetId="colinealidad">non-collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$, with <ConceptLink targetId="vertice">vertices</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, <VisualBind element="pC" color="ocre">$C$</VisualBind> and <VisualBind element="pAA" color="mora">$A'$</VisualBind>, <VisualBind element="pBB" color="mora">$B'$</VisualBind>, <VisualBind element="pCC" color="mora">$C'$</VisualBind>. If the congruences of the <ConceptLink targetId="lado">sides</ConceptLink> <VisualBind element="sidesAB" color="ocre">$\overline{AB} \cong \overline{A'B'}$</VisualBind> and <VisualBind element="sidesAC" color="pavo">$\overline{AC} \cong \overline{A'C'}$</VisualBind> hold, together with the congruence of the included <ConceptLink targetId="angulo">angle</ConceptLink> <VisualBind element="angles" color="terracota">$\angle BAC \cong \angle B'A'C'$</VisualBind>, then the angular congruences <VisualBind element="anglesB" color="ocre">$\angle ABC \cong \angle A'B'C'$</VisualBind> and <VisualBind element="anglesC" color="pavo">$\angle ACB \cong \angle A'C'B'$</VisualBind> necessarily hold:
+
+$$
+\forall A, B, C, A', B', C' \in \mathcal{P} \ \Biggl( (\neg\operatorname{Col}(A,B,C) \land \neg\operatorname{Col}(A',B',C')) \implies \Bigl( (\overline{AB} \cong \overline{A'B'} \land \overline{AC} \cong \overline{A'C'} \land \angle BAC \cong \angle B'A'C') \implies (\angle ABC \cong \angle A'B'C' \land \angle ACB \cong \angle A'C'B') \Bigr) \Biggr)
+$$
 </Definicion>
 
 <Separador />
 
-### Visual representation and interaction
-
-In the interactive simulation, triangles <VisualBind element="pA" color="carbon">$\triangle ABC$</VisualBind> and <VisualBind element="pAA" color="carbon">$\triangle A'B'C'$</VisualBind> exhibit congruent side pairs <VisualBind element="segAB" color="terracota">$\overline{AB} \cong \overline{A'B'}$</VisualBind> and <VisualBind element="segAC" color="terracota">$\overline{AC} \cong \overline{A'C'}$</VisualBind> alongside the included angle <VisualBind element="nonReflexAngleBAC" color="ocre">$\angle A \cong \angle A'$</VisualBind>. Visual correspondence locks the geometry of the second triangle, ensuring full metric identity.
-
-<Separador />
-
-### Geometric significance and scope
-
-This axiom bypasses the logical ambiguities of "rigid motion" of figures across abstract space. It provides the essential deductive foundation for proving subsequent congruence criteria (<ConceptLink targetId="teorema-congruencia-ala">ASA</ConceptLink>, SSS) and the <ConceptLink targetId="teorema-triangulo-isosceles">isosceles triangle theorem</ConceptLink> in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
-
-<Separador />
-
-### Properties
-
-- **Triangular rigidity:** Three independent elements uniquely determine the totality of a triangle's geometric dimensions.
-- **Deductive bedrock:** Directly yields the ASA, AAS, and SSS congruence criteria without supplemental axioms.
-- **Universal validity:** Holds equally across <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink> and <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>.
+<Nota>
+In conjunction with the axioms of <ConceptLink targetId="axioma-congruencia-1">segment transport</ConceptLink> and <ConceptLink targetId="axioma-congruencia-4">angle transport</ConceptLink>, <ConceptLink targetId="axioma">Axiom III.5</ConceptLink> enables the proof by contradiction of the <ConceptLink targetId="teorema-congruencia-sas">full SAS congruence theorem</ConceptLink> —guaranteeing third-side congruence (<VisualBind element="sidesBC" color="carbon">$\overline{BC} \cong \overline{B'C'}$</VisualBind>) and full <ConceptLink targetId="congruencia-triangulos">triangle congruence ($\triangle ABC \cong \triangle A'B'C'$)</ConceptLink>—, from which the remaining <ConceptLink targetId="criterio-congruencia">congruence criteria</ConceptLink> in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> are derived: <ConceptLink targetId="criterio-ala">Angle-Side-Angle (ASA)</ConceptLink> and <ConceptLink targetId="criterio-lll">Side-Side-Side (SSS)</ConceptLink>.
+</Nota>

@@ -2,58 +2,76 @@ export const metadata = {
   id: "segmento",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Segmento",
-  description: "Porción acotada de una recta comprendida entre dos puntos extremos incluidos.",
-  branch: "51M",
+  description: "Conjunto formado por dos puntos extremos de una recta y todos los puntos situados entre ellos.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Nociones Comunes", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Nociones Comunes",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { Segmento } from '@content/diagrams/Definiciones/Segmento';
 export const Simulation = Segmento;
 
-<Capitular letra="E" />l segmento de recta es el subconjunto acotado, conexo y convexo de una <ConceptLink targetId="recta">recta</ConceptLink> delimitado por dos <ConceptLink targetId="punto">puntos</ConceptLink> denominados extremos. A diferencia de la recta ilimitada, posee una longitud métrica bien definida y constituye la entidad geométrica básica para la formación de <ConceptLink targetId="poligono">polígonos</ConceptLink> y <ConceptLink targetId="triangulo">triángulos</ConceptLink>.
+<Capitular letra="U" />n segmento es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> constituido por dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos que <ConceptLink targetId="incidencia">inciden</ConceptLink> en una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink>, denominados extremos, junto con todos los puntos que se encuentran <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> ambos.
 
-<Definicion title="">
-  Dados dos puntos distintos <VisualBind element="pA" color="musgo">$A$</VisualBind> y <VisualBind element="pB" color="musgo">$B$</VisualBind> pertenecientes a una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> <VisualBind element="lineL" color="carbon">$\ell$</VisualBind>, el segmento cerrado <VisualBind element="segmentAB" color="musgo">$\overline{AB}$</VisualBind> es el conjunto constituido por los <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> $A$, $B$ y todos los puntos $P \in \ell$ que se encuentran <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $B$:
-  $$
-  \overline{AB} = \{ P \in \ell \mid P = A \lor P = B \lor A * P * B \}
-  $$
-  En el espacio vectorial $\mathbb{R}^n$, se expresa como la combinación convexa:
-  $$
-  \overline{AB} = \{ P \in \mathbb{R}^n \mid P = (1 - t)A + tB, \, t \in [0, 1] \}
-  $$
+En la fundamentación deductiva de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, el segmento no es una entidad primitiva, sino un objeto derivado formalmente a partir de la relación primitiva de <ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink> y el <ConceptLink targetId="axioma-orden-1" isDependency={true}>Axioma II.1</ConceptLink>. Constituye la figura geométrica acotada elemental sobre la cual se edifican los <ConceptLink targetId="poligono">polígonos</ConceptLink>, los <ConceptLink targetId="triangulo">triángulos</ConceptLink> y la noción de <ConceptLink targetId="congruencia">congruencia de segmentos</ConceptLink>.
+
+<Definicion title="Definición formal de segmento">
+Dados dos puntos distintos <VisualBind element="pA" color="musgo">$A$</VisualBind> y <VisualBind element="pB" color="musgo">$B$</VisualBind> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ que <ConceptLink targetId="incidencia">inciden</ConceptLink> en una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineL" color="carbon">$\ell$</VisualBind>, el **segmento abierto** $\operatorname{seg}(AB)$ es el conjunto de todos los puntos $P \in \mathcal{P}$ situados entre $A$ y $B$:
+
+$$
+\operatorname{seg}(AB) = \{ P \in \mathcal{P} \mid A * P * B \}
+$$
+
+El **segmento cerrado** <VisualBind element="segmentAB" color="musgo">$\overline{AB}$</VisualBind> es la unión de dicho conjunto con los puntos extremos $A$ y $B$:
+
+$$
+\overline{AB} = \operatorname{seg}(AB) \cup \{A, B\} = \{ P \in \mathcal{P} \mid P = A \lor P = B \lor A * P * B \}
+$$
 </Definicion>
 
 <Separador />
 
-### Geometría sintética y axiomática
-
-En la formulación de Hilbert:
-- **Segmento abierto**: Se define como $(AB) = \{ P \in \ell \mid A * P * B \}$, excluyendo los extremos $A$ y $B$.
-- **Congruencia de segmentos**: La relación primitiva $\overline{AB} \cong \overline{CD}$ asegura la posibilidad de trasladar distancias sin deformación.
-- **Punto medio**: Para todo segmento $\overline{AB}$, existe un único punto interior $M \in (AB)$ tal que $\overline{AM} \cong \overline{MB}$.
-
-### Geometría métrica y analítica
-
-La longitud escalar del segmento equivale a la distancia euclídea entre sus extremos:
-$$
-\|\overline{AB}\| = d(A, B) = \sqrt{\sum_{i=1}^n (b_i - a_i)^2}
-$$
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Propiedades métricas y estructurales">
-    <PropiedadItem id="axioma-congruencia-1" title="Transporte y congruencia">
-      Todo segmento puede transportarse unívocamente sobre una semirrecta dada conservando su longitud.
+  <PropiedadesGrupo title="Propiedades estructurales y de orden">
+    <PropiedadItem 
+      id="simetria-extremos" 
+      title="Simetría de los extremos"
+      formula="\overline{AB} = \overline{BA} \land \operatorname{seg}(AB) = \operatorname{seg}(BA)"
+    >
+      En virtud de la simetría del <ConceptLink targetId="axioma-orden-1">Axioma II.1</ConceptLink> ($A * P * B \iff B * P * A$), el segmento no depende del orden de enunciación de sus extremos: $\overline{AB} = \overline{BA}$ y $\operatorname{seg}(AB) = \operatorname{seg}(BA)$, satisfaciendo la <ConceptLink targetId="igualdad-matematica">igualdad de conjuntos</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="axioma-orden-3" title="Convexidad lineal">
-      Todo segmento $\overline{AB}$ es un conjunto convexo en el espacio afín.
+
+    <PropiedadItem 
+      id="convexidad-segmento" 
+      title="Convexidad lineal"
+      formula="P, Q \in \overline{AB} \land P * X * Q \implies X \in \overline{AB}"
+    >
+      Todo segmento cerrado $\overline{AB}$ es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink> lineal: si $P, Q \in \overline{AB}$, entonces para cualquier punto $X \in \mathcal{P}$ que satisfaga la relación de intermediación $P * X * Q$, se cumple necesariamente que $X \in \overline{AB}$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="unicidad-soporte" 
+      title="Unicidad de la recta soporte"
+      formula="\exists! \ell \in \mathcal{L} : \overline{AB} \subset \operatorname{tr}(\ell) \quad (\ell = \overleftrightarrow{AB})"
+    >
+      En virtud del <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>, los extremos distintos $A \neq B$ determinan unívocamente la <ConceptLink targetId="recta">recta soporte</ConceptLink> $\overleftrightarrow{AB}$, cumpliendo la inclusión $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

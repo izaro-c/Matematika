@@ -2,57 +2,76 @@ export const metadata = {
   id: "semirrecta",
   lang: "en",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Ray",
-  description: "Portion of a line originating at a fixed point and extending indefinitely in a single direction.",
-  branch: "51M",
+  description: "Set consisting of an origin point on a line and all points extending in a single direction.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Elements", author: "Euclid", locator: "Book I, Common Notions", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Definition",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §4",
+      role: "primary"
+    }
   ]
 };
 
 import { Semirrecta } from '@content/diagrams/Definiciones/Semirrecta';
 export const Simulation = Semirrecta;
 
-<Capitular letra="A" /> ray (or half-line) is a continuous one-dimensional portion of a <ConceptLink targetId="recta">line</ConceptLink> starting from a fixed origin and extending without bound in a single direction. It constitutes an indispensable geometric construct for defining <ConceptLink targetId="angulo">angles</ConceptLink> and setting directions in the <ConceptLink targetId="plano">plane</ConceptLink>.
+<Capitular letra="A" /> ray (or half-line) is the <ConceptLink targetId="conjunto">set</ConceptLink> consisting of a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> fixed as an origin on a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> and all points of that line extending unboundedly from it in a single <ConceptLink targetId="sentido">sense</ConceptLink>.
 
-<Definicion title="">
-  Given an origin point <VisualBind element="pA" color="musgo">$O$</VisualBind> and a distinct point $A$ on a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> <VisualBind element="lineOA" color="carbon">$\ell$</VisualBind>, the closed ray <VisualBind element="rayOA" color="musgo">$\overrightarrow{OA}$</VisualBind> is the set comprising the <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $O$, the point $A$, and all points $P \in \ell$ such that $O$ is not <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $P$:
-  $$
-  \overrightarrow{OA} = \{ P \in \ell \mid P = O \lor \neg(A * O * P) \}
-  $$
-  In terms of affine combinations on the vector space $\mathbb{R}^n$:
-  $$
-  \overrightarrow{OA} = \{ P \in \mathbb{R}^n \mid P = O + t(A - O), \, t \ge 0 \}
-  $$
+In the axiomatic foundation of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, the ray is a derived concept formally built from order relations (<ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiom II.1</ConceptLink> and <ConceptLink targetId="axioma-orden-2" isDependency={true}>Axiom II.2</ConceptLink>). It constitutes the fundamental building block for defining <ConceptLink targetId="angulo">angles</ConceptLink> and setting <ConceptLink targetId="orientacion">orientations</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+
+<Definicion title="Formal Definition of Ray">
+Given an origin point <VisualBind element="pB" color="carbon">$O$</VisualBind> and a distinct point <VisualBind element="pA" color="terracota">$A$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineOA" color="mora">$\ell$</VisualBind>, the **open ray** $\operatorname{sem}(OA)$ is the set of all points $P \in \mathcal{P}$ incident with $\ell$ such that $P \neq O$ and $O$ is not <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $P$:
+
+$$
+\operatorname{sem}(OA) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \land P \neq O \land \neg(A * O * P) \}
+$$
+
+The **closed ray** <VisualBind element="rayOA" color="musgo">$\overrightarrow{OA}$</VisualBind> is the union of the open ray with the origin point $O$:
+
+$$
+\overrightarrow{OA} = \operatorname{sem}(OA) \cup \{O\} = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \land (P = O \lor P = A \lor O * P * A \lor O * A * P) \}
+$$
 </Definicion>
 
 <Separador />
 
-### Synthetic geometry
-
-In Hilbert's axiomatic system:
-- **Line separation**: Every point $O \in \ell$ partitions the line $\ell$ into two disjoint opposite rays with common origin $O$.
-- **Opposite rays**: If $A * O * B$, the rays $\overrightarrow{OA}$ and $\overrightarrow{OB}$ are opposite and satisfy $\overrightarrow{OA} \cap \overrightarrow{OB} = \{O\}$ and $\overrightarrow{OA} \cup \overrightarrow{OB} = \ell$.
-
-### Analytic geometry
-
-Given a unit direction vector $\vec{u} = \frac{A - O}{\|A - O\|}$, the ray is parameterized as:
-$$
-\vec{r}(t) = \vec{x}_O + t\vec{u}, \quad t \in [0, +\infty)
-$$
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Partition and linear orientation">
-    <PropiedadItem id="axioma-orden-2" title="Line partition">
-      A point on a line partitions the remaining points into exactly two convex equivalence classes.
+  <PropiedadesGrupo title="Structural and Order Properties">
+    <PropiedadItem 
+      id="particion-recta" 
+      title="Partition of a Line into Opposite Rays"
+      formula="\operatorname{tr}(\ell) \setminus \{O\} = \operatorname{sem}(OA) \sqcup \operatorname{sem}(OB) \quad (A * O * B)"
+    >
+      Any point $O \in \mathcal{P}$ on a line $\ell$ partitions the set of remaining points $\operatorname{tr}(\ell) \setminus \{O\}$ into two open, <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> <ConceptLink targetId="semirrectas-opuestas">opposite rays</ConceptLink>, $\operatorname{sem}(OA)$ and $\operatorname{sem}(OB)$, such that $A * O * B$.
     </PropiedadItem>
-    <PropiedadItem id="axioma-orden-3" title="Ray convexity">
-      Every ray $\overrightarrow{OA}$ is a connected and convex set.
+
+    <PropiedadItem 
+      id="convexidad-semirrecta" 
+      title="Linear Convexity"
+      formula="P, Q \in \overrightarrow{OA} \land P * X * Q \implies X \in \overrightarrow{OA}"
+    >
+      Every closed ray $\overrightarrow{OA}$ is a linear <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if $P, Q \in \overrightarrow{OA}$, then for any point $X \in \mathcal{P}$ satisfying the betweenness relation $P * X * Q$, it necessarily holds that $X \in \overrightarrow{OA}$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="orden-lineal-semirrecta" 
+      title="Induced Linear Order with Minimum Element"
+      formula="(\overrightarrow{OA}, \le) \implies \min(\overrightarrow{OA}) = O"
+    >
+      The betweenness relation on the closed ray $\overrightarrow{OA}$ induces a strict <ConceptLink targetId="orden-total">linear order</ConceptLink> ($\le$) on its points ($P \le Q \iff P = O \lor P = Q \lor O * P * Q$), where the origin $O$ serves as the unique <ConceptLink targetId="elemento-minimo">minimum element</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

@@ -2,46 +2,39 @@ export const metadata = {
   id: "axioma-orden-3",
   lang: "eu",
   type: "axioma",
-  title: "II.3 axioma (Tartekotasun linealaren esklusibotasuna)",
-  description: "Zuzen bereko hiru puntu desberdinetatik, gehienez puntu bat dago beste bien artean.",
-  branch: "51M",
+  title: "II.3 axioma (Bitartekotasun linealaren esklusibotasuna)",
+  description: "Zuzen bereko edozein hiru puntu desberdinetatik, gehienez bat dago beste biren artean.",
+  branch: "51A",
+  branches: ["51A", "03B"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "orden",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §3", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { Order3 } from '@content/diagrams/Axiomas/Order3';
 export const Simulation = Order3;
 
-<Capitular letra="Z" />uzen bereko hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinetatik, <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> ordenako hirugarren axiomak ezartzen du gehienez puntu bat egon daitekeela beste bien <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink>. Baldintza honek eragotzi egiten du zuzen geometrikoaren ordenan konfigurazio zirkularrak edo ziklikoak agertzea.
+<Capitular letra="Z" />uzen bereko edozein hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinetatik, gehienez bat dago beste biren <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink>.
 
-<Definicion title="Enuntziatu formala">
-  $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bereko hiru $A, B, C$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinetarako, ezin da tartekotasun-erlazio bat baino gehiago aldi berean bete:
-  $$
-  \forall A, B, C \in l \ \bigl(A\text{-}B\text{-}C \implies (\neg B\text{-}A\text{-}C \land \neg A\text{-}C\text{-}B)\bigr)
-  $$
-  Gainerako ordena-axiomekin batera, hiru puntuetatik bat eta bakarra dago beste bien artean.
+<ConceptLink targetId="david-hilbert">David Hilbertek</ConceptLink> proposatutako <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> formalizazioan, postulatu honek bitartekotasun-erlazio linealen elkarrekiko bazterketa ezartzen du, zuzen baten gaineko <ConceptLink targetId="orden">ordena</ConceptLink> ziklikoa izatea edo <ConceptLink targetId="circunferencia">zirkunferentzia</ConceptLink> batean bezala bere gainean ixtea eragotziz.
+
+<Definicion title="II.3 axioma (Bitartekotasun linealaren esklusibotasuna)">
+$\mathcal{P}$-ko <VisualBind element="lineDE" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> berean <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> <ConceptLink targetId="punto">puntu</ConceptLink> desberdinen edozein <ConceptLink targetId="terna">hirukoterako</ConceptLink>, $A * B * C$, $B * A * C$ edo $A * C * B$ bitartekotasun-erlaziotatik gehienez bat da egiazkoa:
+
+$$
+\forall A, B, C \in \mathcal{P} \ \Biggl( \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\Bigr) \implies \neg\Bigl( (A * B * C \land B * A * C) \lor (A * B * C \land A * C * B) \lor (B * A * C \land A * C * B) \Bigr) \Biggr)
+$$
 </Definicion>
 
-<Separador />
-
-### Ikus-irudikapena eta elkarrekintza
-
-Simulazio interaktiboan, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntuak <VisualBind element="lineDE" color="carbon">$l$</VisualBind> zuzenean kokatuta daude. Puntuak zuzenean zehar ordenatzean edo arrastatzean, tartekotasun-erlazioa modu esklusiboan aldatzen da, une bakoitzean posizio bakarrak erdiko lekua betetzen duela bermatuz.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Zuzen geometrikoen linealtasun zorrotza eta izaera irekia bermatzen ditu. Ordena-erlazioa bere buruaren gainean ixtea saihesten du (zirkunferentzia bateko ordena zikliko proiektiboa bezala), ordena oso eta zorrotzeko egitura ezarriz <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
-
-<Separador />
-
-### Propietateak
-
-- **Elkarrekiko bazterketa:** $A\text{-}B\text{-}C$ egiazkoa izateak automatikoki ezeztatzen ditu $B\text{-}A\text{-}C$ eta $A\text{-}C\text{-}B$.
-- **Ordena lineal osoa:** Zuzen bereko puntuen edozein multzo finitu $A_1\text{-}A_2\text{-}\dots\text{-}A_n$ sekuentzia unibokoan ordenatzea ahalbidetzen du.
-- **Ziklikotasunik eza:** Zuzen sintetikoa bere buruaren gainean topologikoki ixtea debekatzen du infinituko punturik gabe.
+<Nota>
+<ConceptLink targetId="axioma-orden-1">II.1 axiomarekin</ConceptLink> eta <ConceptLink targetId="axioma-orden-2">II.2 axiomarekin</ConceptLink> batera, <ConceptLink targetId="teorema-orden-tres-puntos">hiru punturen orden linealaren teorema</ConceptLink> ondorioztatzen da, zeinaren arabera hiru puntu <ConceptLink targetId="colinealidad">kolineal</ConceptLink> desberdinetatik zehazki bat beste biren artean dagoen. Propietate honek bitartekotasun lineal zorrotzaren egitura ematen dio <ConceptLink targetId="sistema-absoluto">geometria absolutuko</ConceptLink> zuzen bakoitzari, eta hartatik <ConceptLink targetId="orden-total">ordena oso</ConceptLink> bat eragiten da <ConceptLink targetId="orientacion">orientazio</ConceptLink> edo <ConceptLink targetId="sentido">noranzko</ConceptLink> bat finkatzean.
+</Nota>

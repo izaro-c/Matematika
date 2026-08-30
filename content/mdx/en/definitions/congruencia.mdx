@@ -3,58 +3,41 @@ export const metadata = {
   lang: "en",
   type: "definicion",
   subtype: "primitivo",
-  title: "Geometric Congruence",
-  description: "Primitive equivalence and rigidity relation between geometric configurations preserving dimensions, distances, and angular amplitudes.",
-  branch: "51M",
+  title: "Geometric",
+  description: "Primitive relation in synthetic geometry formalizing rigidity and equivalence of size and shape between segments and between angles.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "hilbert", "rigidez"],
   hasSimulation: false,
   sources: [
-    { title: "Elements", author: "Euclid", locator: "Book I, Common Notion 4", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Common Notions 4",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §5",
+      role: "primary"
+    }
   ]
 };
 
-<Capitular letra="G" />eometric congruence is the primitive relation of rigidity and equivalence in synthetic geometry that formalizes the notion of equal size and shape between figures. In Hilbert's axiomatic system, congruence is postulated as a primitive relation for pairs of <ConceptLink targetId="segmento">segments</ConceptLink> ($\overline{AB} \cong \overline{CD}$) and pairs of <ConceptLink targetId="angulo">angles</ConceptLink> ($\angle ABC \cong \angle DEF$).
+<Capitular letra="G" />eometric congruence is a primitive <ConceptLink targetId="relacion">relation</ConceptLink> of formal rigidity establishing the equivalence of size and shape between pairs of <ConceptLink targetId="segmento">line segments</ConceptLink> and between pairs of <ConceptLink targetId="angulo">angles</ConceptLink>.
 
-<Definicion title="">
-  Congruence ($\cong$) is a primitive equivalence relation on pairs of geometric configurations in a space $\mathcal{E}$. In analytic Euclidean geometry, two subsets $F_1, F_2 \subset \mathcal{E}$ are congruent if and only if there exists a bijective isometry $f: \mathcal{E} \to \mathcal{E}$ such that $f(F_1) = F_2$ and for all pairs of points $A, B \in \mathcal{E}$:
-  $$
-  d(f(A), f(B)) = d(A, B)
-  $$
+In the deductive foundation of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, congruence is postulated as a primitive relation in the formal <ConceptLink targetId="signatura">signature</ConceptLink> of the <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink>, and its deductive behavior is governed by Hilbert's third group of <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink> through <ConceptLink targetId="axioma-congruencia-5">Axiom III.5</ConceptLink>).
+
+<Definicion title="Formalization of Synthetic Congruence">
+In the signature of <ConceptLink targetId="geometria-hilbertiana">Hilbertian geometry</ConceptLink>, **congruence** ($\cong$) comprises two independent primitive <ConceptLink targetId="relacion-binaria">binary relations</ConceptLink>:
+
+1. **Segment Congruence**: A binary relation $\cong_{\text{seg}}$ on the <ConceptLink targetId="conjunto">set</ConceptLink> of <ConceptLink targetId="segmento">segments</ConceptLink> determined by pairs of distinct <ConceptLink targetId="punto">points</ConceptLink> in the <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$, denoted $\overline{AB} \cong \overline{CD}$ for endpoints $A \neq B$ and $C \neq D$.
+2. **Angle Congruence**: A binary relation $\cong_{\angle}$ on the set of <ConceptLink targetId="angulo">angles</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, denoted $\angle AOB \cong \angle A'O'B'$ for pairs of non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="semirrecta">rays</ConceptLink> coplanar in some <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$.
 </Definicion>
 
 <Separador />
 
-### Hilbert's congruence axioms (Group III)
-
-The behavior of the congruence relation is governed by the six axioms of Group III:
-- **Segment transport**: Given a segment $\overline{AB}$ and a ray originating at $A'$, there exists a unique point $B'$ on the ray such that $\overline{AB} \cong \overline{A'B'}$.
-- **Transitivity of segments**: If $\overline{AB} \cong \overline{CD}$ and $\overline{AB} \cong \overline{EF}$, then $\overline{CD} \cong \overline{EF}$.
-- **Addition of segments**: If $A * B * C$, $A' * B' * C'$, $\overline{AB} \cong \overline{A'B'}$, and $\overline{BC} \cong \overline{B'C'}$, then $\overline{AC} \cong \overline{A'C'}$.
-- **Angle transport**: Given an angle $\angle ABC$ and a reference ray on a given half-plane, there exists a unique congruent angle.
-- **SAS criterion**: If two triangles have two sides and the included angle respectively congruent, then their remaining corresponding angles are congruent.
-
-### Triangle congruence criteria
-
-In the Euclidean plane, congruence between two <ConceptLink targetId="triangulo">triangles</ConceptLink> is established through the standard criteria:
-- **SAS** (Side-Angle-Side): Two sides and the included angle are congruent.
-- **ASA** (Angle-Side-Angle): One side and both adjacent angles are congruent.
-- **SSS** (Side-Side-Side): All three corresponding side pairs are congruent.
-
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Axiomatic structure of congruence">
-    <PropiedadItem id="axioma-congruencia-1" title="Segment transport">
-      Existence and uniqueness of congruent segments on a given ray.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-congruencia-2" title="Segment transitivity">
-      Segment congruence satisfies symmetry and formal transitivity.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-congruencia-4" title="Angle transport">
-      Existence and uniqueness of angle transport with respect to a reference ray.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-congruencia-5" title="SAS congruence axiom">
-      If two triangles agree on two sides and the included angle, they agree on all corresponding parts.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
+<Nota>
+From the primitive congruence relations on segments and angles, the notion formally extends to composite figures such as <ConceptLink targetId="triangulo">triangles</ConceptLink> and <ConceptLink targetId="poligono">polygons</ConceptLink>: two figures are congruent if there exists a bijection between their <ConceptLink targetId="vertice">vertices</ConceptLink> that preserves the congruence of all corresponding <ConceptLink targetId="lado">sides</ConceptLink> and <ConceptLink targetId="angulo">angles</ConceptLink>.
+</Nota>

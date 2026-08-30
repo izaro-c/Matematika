@@ -29,12 +29,21 @@ En la <ConceptLink targetId="geometria-sintetica">geometría sintética</Concept
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Propiedades Geométricas Fundamentales">
-    <PropiedadItem id="conjunto-convexo" title="Convexidad">
-      Todo semiplano es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>: si contiene dos puntos cualesquiera $A$ y $B$, contiene enteramente al segmento abierto $\operatorname{seg}(AB)$ que los une.
+  <PropiedadesGrupo title="Propiedades geométricas y convexidad">
+    <PropiedadItem 
+      id="conjunto-convexo" 
+      title="Convexidad del semiplano"
+      formula="A, B \in \mathcal{H} \implies \operatorname{seg}(AB) \subset \mathcal{H}"
+    >
+      Todo semiplano abierto $\mathcal{H}$ es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>: si contiene dos puntos distintos $A, B \in \mathcal{H}$, entonces el <ConceptLink targetId="segmento">segmento</ConceptLink> abierto completo $\operatorname{seg}(AB)$ que los une está íntegramente contenido en $\mathcal{H}$, como consecuencia directa del Teorema de Separación del Plano y del <ConceptLink targetId="axioma-orden-4">Axioma de Pasch</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="angulo" title="Regiones interiores poligonales">
-      La intersección finita de semiplanos cuyos bordes se cortan permite definir formalmente la región interior de un <ConceptLink targetId="angulo">ángulo</ConceptLink>, de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> y de cualquier <ConceptLink targetId="poligono">polígono convexo</ConceptLink>.
+
+    <PropiedadItem 
+      id="generacion-interiores-poligonales" 
+      title="Generación de regiones interiores poligonales"
+      formula="\operatorname{Int}(\mathcal{P}_n) = \bigcap_{i=1}^n \mathcal{H}_{\ell_i}"
+    >
+      La intersección finita de semiplanos abiertos determinados por las <ConceptLink targetId="recta">rectas</ConceptLink> soporte de una configuración planar permite definir formalmente la región interior de un <ConceptLink targetId="angulo">ángulo</ConceptLink> ($\operatorname{Int}(\angle AOB) = \mathcal{H}_1 \cap \mathcal{H}_2$), de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> y de cualquier <ConceptLink targetId="poligono">polígono convexo</ConceptLink>, preservando la convexidad por clausura bajo intersección.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

@@ -3,58 +3,41 @@ export const metadata = {
   lang: "es",
   type: "definicion",
   subtype: "primitivo",
-  title: "Congruencia geométrica",
-  description: "Relación primitiva de equivalencia y rigidez entre configuraciones geométricas que conservan dimensiones, distancias y amplitudes angulares.",
-  branch: "51M",
+  title: "Congruencia",
+  description: "Relación primitiva en la geometría sintética que formaliza la rigidez y la equivalencia de tamaño y forma entre segmentos y entre ángulos.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "hilbert", "rigidez"],
   hasSimulation: false,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Nociones Comunes 4", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §3", role: "primary" }
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Nociones Comunes 4",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5",
+      role: "primary"
+    }
   ]
 };
 
-<Capitular letra="L" />a congruencia geométrica es la relación primitiva de rigidez y equivalencia en la geometría sintética que formaliza la noción de igualdad de forma y tamaño entre figuras. En el sistema axiomático de Hilbert, la congruencia se postula primitivamente tanto para pares de <ConceptLink targetId="segmento">segmentos</ConceptLink> ($\overline{AB} \cong \overline{CD}$) como para pares de <ConceptLink targetId="angulo">ángulos</ConceptLink> ($\angle ABC \cong \angle DEF$).
+<Capitular letra="L" />a congruencia geométrica es una <ConceptLink targetId="relacion">relación primitiva</ConceptLink> de rigidez formal que establece la equivalencia de tamaño y forma entre pares de <ConceptLink targetId="segmento">segmentos</ConceptLink> y entre pares de <ConceptLink targetId="angulo">ángulos</ConceptLink>.
 
-<Definicion title="">
-  La congruencia ($\cong$) es una relación de equivalencia primitiva sobre pares de configuraciones geométricas en un espacio $\mathcal{E}$. En la geometría euclídea analítica, dos figuras $F_1, F_2 \subset \mathcal{E}$ son congruentes si y solo si existe una isometría biyectiva $f: \mathcal{E} \to \mathcal{E}$ tal que $f(F_1) = F_2$ y para todo par de puntos $A, B \in \mathcal{E}$:
-  $$
-  d(f(A), f(B)) = d(A, B)
-  $$
+En la fundamentación deductiva de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, la congruencia se postula como una relación primitiva en la <ConceptLink targetId="signatura">signatura formal</ConceptLink> de la <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink>, y su comportamiento deductivo queda regido por el tercer grupo de <ConceptLink targetId="axioma">axiomas</ConceptLink> de Hilbert (<ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink> a <ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink>).
+
+<Definicion title="Formalización de la congruencia sintética">
+En la signatura de la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>, la **congruencia** ($\cong$) comprende dos <ConceptLink targetId="relacion-binaria">relaciones binarias</ConceptLink> primitivas independientes:
+
+1. **Congruencia de segmentos**: Relación binaria $\cong_{\text{seg}}$ sobre el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> determinados por pares de <ConceptLink targetId="punto">puntos</ConceptLink> distintos en el <ConceptLink targetId="dominio">dominio</ConceptLink> $\mathcal{P}$, denotada $\overline{AB} \cong \overline{CD}$ para extremos $A \neq B$ y $C \neq D$.
+2. **Congruencia de ángulos**: Relación binaria $\cong_{\angle}$ sobre el conjunto de <ConceptLink targetId="angulo">ángulos</ConceptLink> en el <ConceptLink targetId="espacio">espacio</ConceptLink>, denotada $\angle AOB \cong \angle A'O'B'$ para pares de <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> coplanares en algún <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$.
 </Definicion>
 
 <Separador />
 
-### Axiomas de congruencia de Hilbert (Grupo III)
-
-El comportamiento de la relación de congruencia se rige por los seis axiomas del Grupo III:
-- **Transporte de segmentos**: Dado un segmento $\overline{AB}$ y un punto $A'$ en una semirrecta con origen en $A'$, existe un único punto $B'$ tal que $\overline{AB} \cong \overline{A'B'}$.
-- **Transitividad de segmentos**: Si $\overline{AB} \cong \overline{CD}$ y $\overline{AB} \cong \overline{EF}$, entonces $\overline{CD} \cong \overline{EF}$.
-- **Adición de segmentos**: Si $A * B * C$, $A' * B' * C'$, $\overline{AB} \cong \overline{A'B'}$ y $\overline{BC} \cong \overline{B'C'}$, entonces $\overline{AC} \cong \overline{A'C'}$.
-- **Transporte de ángulos**: Dado un ángulo $\angle ABC$ y una semirrecta en un semiplano dado, existe un único ángulo congruente.
-- **Criterio LAL**: Si dos triángulos tienen dos lados y el ángulo comprendido respectivamente congruentes, entonces los restantes ángulos correspondientes son congruentes.
-
-### Criterios de congruencia de triángulos
-
-En el plano euclidiano, la congruencia global entre dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> se deduce a través de los criterios fundamentales:
-- **LAL** (Lado-Ángulo-Lado): Dos lados y el ángulo comprendido congruentes.
-- **ALA** (Ángulo-Lado-Ángulo): Un lado y los dos ángulos adyacentes congruentes.
-- **LLL** (Lado-Lado-Lado): Los tres pares de lados correspondientes congruentes.
-
-<Separador />
-
-<SeccionPropiedades>
-  <PropiedadesGrupo title="Estructura axiomática de la congruencia">
-    <PropiedadItem id="axioma-congruencia-1" title="Transporte de segmentos">
-      Existencia y unicidad de segmentos congruentes sobre una semirrecta dada.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-congruencia-2" title="Transitividad segmental">
-      La congruencia de segmentos satisface simetría y transitividad formal.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-congruencia-4" title="Transporte de ángulos">
-      Existencia y unicidad del transporte de un ángulo respecto a una semirrecta de referencia.
-    </PropiedadItem>
-    <PropiedadItem id="axioma-congruencia-5" title="Axioma LAL de congruencia">
-      Si dos triángulos coinciden en dos lados y el ángulo comprendido, coinciden en sus restantes elementos.
-    </PropiedadItem>
-  </PropiedadesGrupo>
-</SeccionPropiedades>
+<Nota>
+A partir de las relaciones primitivas de congruencia sobre segmentos y ángulos, la noción se extiende formalmente a figuras compuestas como los <ConceptLink targetId="triangulo">triángulos</ConceptLink> y <ConceptLink targetId="poligono">polígonos</ConceptLink>: dos figuras son congruentes si existe una biyección entre sus <ConceptLink targetId="vertice">vértices</ConceptLink> que preserva la congruencia de todos sus <ConceptLink targetId="lado">lados</ConceptLink> y <ConceptLink targetId="angulo">ángulos</ConceptLink> correspondientes.
+</Nota>

@@ -12,9 +12,9 @@
   --content-top: 5.5rem;                 /* offset bajo la cabecera (móvil) */
   --content-shell-max: 112rem;           /* ancho máximo de la página */
   --content-diagram-share: 50%;          /* % de pantalla del diagrama (escritorio) */
-  --content-reading-measure: 125ch;       /* tope tipográfico del texto (con diagrama) */
+  --content-reading-measure: 110ch;       /* tope tipográfico del texto (con diagrama) */
   --content-reading-measure-solo: 140ch; /* sin diagrama: tope más ancho */
-  --content-reading-inset: clamp(2.5rem, 7vw, 10rem); /* margen lateral amplio y proporcional */
+  --content-reading-inset: clamp(0rem, 5vw, 10rem); /* margen lateral amplio y proporcional */
   --content-theorem-reading-measure: 125ch; /* teorema: tope tipográfico */
   --content-diagram-height: clamp(18rem, 46svh, 28rem);        /* altura diagrama (base) */
   --content-diagram-mobile-height: clamp(14rem, 36svh, 20rem); /* altura diagrama (móvil) */

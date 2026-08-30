@@ -41,26 +41,54 @@ The model is defined as a tuple $\mathcal{M} = (\mathcal{P}, \mathcal{L}, \mathb
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Incidence Axiom Satisfaction">
-    <PropiedadItem id="axioma-incidencia-1" title="Unique Line Determination">
-      For any pair of distinct points in $\mathcal{P}$, there exists exactly one line in $\mathcal{L}$ incident with both ($\{A, B\}$ determines $\ell_{AB}$, $\{B, C\}$ determines $\ell_{BC}$, and $\{C, A\}$ determines $\ell_{CA}$), satisfying <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>.
+    <PropiedadItem 
+      id="axioma-incidencia-1" 
+      title="Unique Line Determination"
+      formula="\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L})"
+    >
+      For any two distinct points in $\mathcal{P}$, there exists a unique line in $\mathcal{L}$ incident with both ($\{A, B\}$ determines $\ell_{AB}$, $\{B, C\}$ determines $\ell_{BC}$, and $\{C, A\}$ determines $\ell_{CA}$), satisfying <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-2" title="Incident Points per Line">
+
+    <PropiedadItem 
+      id="axioma-incidencia-2" 
+      title="Incident Points per Line"
+      formula="|\operatorname{tr}(\ell)| = 2 \ge 2"
+    >
       Every line $\ell \in \mathcal{L}$ is incident with exactly two distinct points ($\lvert \operatorname{tr}(\ell) \rvert = 2 \ge 2$), satisfying <ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="axioma-incidencia-3" title="Existence of Non-Collinear Points">
-      No line contains all three points simultaneously in its trace ($C \notin \operatorname{tr}(\ell_{AB})$, $A \notin \operatorname{tr}(\ell_{BC})$, $B \notin \operatorname{tr}(\ell_{CA})$); thus, there exist three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points, satisfying <ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>.
+
+    <PropiedadItem 
+      id="axioma-incidencia-3" 
+      title="Existence of Non-Collinear Points"
+      formula="|\operatorname{tr}(\ell)| = 2 < 3 \implies \exists \{A, B, C\} \text{ non-collinear}"
+    >
+      No line contains all three points simultaneously in its trace ($C \notin \operatorname{tr}(\ell_{AB})$, $A \notin \operatorname{tr}(\ell_{BC})$, $B \notin \operatorname{tr}(\ell_{CA})$); consequently, there exist triples of non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points, satisfying <ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 
   <PropiedadesGrupo title="Structural and Combinatorial Properties">
-    <PropiedadItem id="regularidad-combinatoria" title="Configuration Regularity">
-      The structure is homogeneous and regular: it has a <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> of $\lvert \mathcal{P} \rvert = 3$ and $\lvert \mathcal{L} \rvert = 3$, where each line contains exactly 2 points and each point is incident with exactly 2 lines.
+    <PropiedadItem 
+      id="regularidad-combinatoria" 
+      title="Symmetric Configuration and Regularity"
+      formula="(3_2, 3_2)"
+    >
+      The structure is homogeneous and regular, forming a configuration of type $(3_2, 3_2)$: it has cardinality $\lvert \mathcal{P} \rvert = 3$ and $\lvert \mathcal{L} \rvert = 3$, where every line contains exactly 2 points and through every point pass exactly 2 lines.
     </PropiedadItem>
-    <PropiedadItem id="ausencia-paralelas" title="Absence of Parallelism">
-      Any two lines in $\mathcal{L}$ have non-disjoint traces ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), intersecting at exactly one point; consequently, the model lacks <ConceptLink targetId="paralelas">parallel lines</ConceptLink>.
+
+    <PropiedadItem 
+      id="ausencia-paralelas" 
+      title="Absence of Parallelism"
+      formula="\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset \quad (\forall i \neq j)"
+    >
+      Any two distinct lines in $\mathcal{L}$ have non-disjoint traces ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), always intersecting at a unique common point; therefore, the model contains no <ConceptLink targetId="paralelas">parallel lines</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="autodualidad" title="Self-Duality">
-      The structure is <ConceptLink targetId="dualidad">self-dual</ConceptLink>: formally swapping domains $\mathcal{P}$ and $\mathcal{L}$ together with the <ConceptLink targetId="transposicion">transposition</ConceptLink> of relation $\mathbf{I}$ yields an incidence structure strictly <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink> to the original.
+
+    <PropiedadItem 
+      id="autodualidad" 
+      title="Self-Duality"
+      formula="\mathcal{P} \cong \mathcal{L}, \quad \mathbf{I} \cong \mathbf{I}^T"
+    >
+      The structure is <ConceptLink targetId="dualidad">self-dual</ConceptLink>: formally interchanging the domains $\mathcal{P}$ and $\mathcal{L}$ along with the <ConceptLink targetId="transposicion">transposition</ConceptLink> of the relation $\mathbf{I}$ yields an incidence structure strictly <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink> to the original.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

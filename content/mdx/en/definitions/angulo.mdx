@@ -2,55 +2,62 @@ export const metadata = {
   id: "angulo",
   lang: "en",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Angle",
-  description: "Planar figure formed by two non-collinear rays sharing a common origin point called the vertex.",
-  branch: "51M",
+  description: "Geometric figure constituted by an unordered pair of non-collinear rays sharing the same origin point called the vertex.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "congruencia", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Elements", author: "Euclid", locator: "Book I, Definitions 8 & 9", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Definitions 8 and 9",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §4",
+      role: "primary"
+    }
   ]
 };
 
 import { Angulo } from '@content/diagrams/Definiciones/Angulo';
 export const Simulation = Angulo;
 
-<Capitular letra="A" />n angle is the geometric figure constituted by the union of two <ConceptLink targetId="semirrecta">rays</ConceptLink> sharing a common origin or <ConceptLink targetId="vertice">vertex</ConceptLink>. It is the fundamental concept for measuring angular divergence between directions and laying the groundwork for trigonometry in the <ConceptLink targetId="plano">plane</ConceptLink>.
+<Capitular letra="A" />n angle is the <ConceptLink targetId="conjunto">unordered pair</ConceptLink> of two distinct <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> sharing a common <ConceptLink targetId="punto">origin</ConceptLink> whose carrier <ConceptLink targetId="recta">lines</ConceptLink> are distinct.
 
-<Definicion title="">
-  Given two distinct <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> and <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> originating at a common <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> <VisualBind element="pA" color="carbon">$O$</VisualBind>, the angle <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> is the planar figure formed by their union:
-  $$
-  \angle AOB = \overrightarrow{OA} \cup \overrightarrow{OB}
-  $$
-  Its metric aperture $\theta \in [0, \pi]$ radians is related to the dot product of the unit direction vectors $\vec{u}, \vec{v}$:
-  $$
-  \cos \theta = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \|\vec{v}\|}
-  $$
+In the foundation of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, the angle is neither a numerical magnitude nor a metric measure, but a formal object constructed from the notion of a <ConceptLink targetId="semirrecta">ray</ConceptLink> and non-<ConceptLink targetId="colinealidad" isDependency={true}>collinearity</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+
+<Definicion title="Formal Definition of Angle">
+Given a <ConceptLink targetId="punto">point</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ and two distinct points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ such that the triple $\{O, A, B\}$ is not <ConceptLink targetId="colinealidad">collinear</ConceptLink>, the **angle** <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> (also denoted $\angle(h, k)$) is the <ConceptLink targetId="conjunto">pair</ConceptLink> formed by the two <ConceptLink targetId="semirrecta">rays</ConceptLink> <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> and <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind>:
+
+$$
+\angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}
+$$
+
+The rays $h$ and $k$ are called the <ConceptLink targetId="lado">sides</ConceptLink> of the angle, and the common point $O$ is called the <ConceptLink targetId="vertice">vertex</ConceptLink>. Its associated **point trace** $\operatorname{tr}(\angle AOB) \subset \mathcal{P}$ is the set union of the traces of its sides:
+
+$$
+\operatorname{tr}(\angle AOB) = \operatorname{tr}(\overrightarrow{OA}) \cup \operatorname{tr}(\overrightarrow{OB})
+$$
 </Definicion>
 
 <Separador />
 
-### Classification by angular measure
-
-In the Euclidean plane, convex angles are classified according to their angular measure $\theta$:
-
-| Angle type | Measure in radians | Measure in sexagesimal degrees |
-|---|---|---|
-| <ConceptLink targetId="angulo-agudo">Acute</ConceptLink> | $0 < \theta < \frac{\pi}{2}$ | $0^\circ < \theta < 90^\circ$ |
-| <ConceptLink targetId="angulo-recto">Right</ConceptLink> | $\theta = \frac{\pi}{2}$ | $\theta = 90^\circ$ |
-| <ConceptLink targetId="angulo-obtuso">Obtuse</ConceptLink> | $\frac{\pi}{2} < \theta < \pi$ | $90^\circ < \theta < 180^\circ$ |
-| <ConceptLink targetId="angulo-llano">Straight</ConceptLink> | $\theta = \pi$ | $\theta = 180^\circ$ |
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Congruence and angular additivity">
-    <PropiedadItem id="axioma-congruencia-4" title="Angle transport">
-      Every angle can be uniquely transported to a half-plane relative to a given reference ray.
+  <PropiedadesGrupo title="Structural and Order Properties">
+    <PropiedadItem id="simetria-lados" title="Symmetry of Sides">
+      Being defined as an unordered pair of rays, the angle is symmetric with respect to its sides: $\angle AOB = \angle BOA$ and $\angle(h, k) = \angle(k, h)$.
     </PropiedadItem>
-    <PropiedadItem id="teorema-angulos-opuestos-verticales" title="Vertical angles">
-      Pairs of vertical angles formed by intersecting lines are congruent.
+    <PropiedadItem id="coplanaridad-soporte" title="Coplanarity and Unique Carrier Plane">
+      By <ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">Axiom I.5</ConceptLink>, the non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> of the triple $\{O, A, B\}$ uniquely determines a <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$ that contains the trace of the angle: $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
+    </PropiedadItem>
+    <PropiedadItem id="interior-angular" title="Angular Interior as Convex Region">
+      Every angle $\angle AOB$ in a plane $\pi$ determines an open and <ConceptLink targetId="conjunto-convexo">convex</ConceptLink> region called the **interior of the angle** ($\operatorname{Int}(\angle AOB)$), formally defined as the <ConceptLink targetId="interseccion">intersection</ConceptLink> of the open <ConceptLink targetId="semiplano">half-plane</ConceptLink> with respect to the <ConceptLink targetId="recta">line</ConceptLink> $\overleftrightarrow{OA}$ containing $B$ and the open half-plane with respect to the line $\overleftrightarrow{OB}$ containing $A$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

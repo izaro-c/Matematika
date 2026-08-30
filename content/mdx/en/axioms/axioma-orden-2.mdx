@@ -2,45 +2,39 @@ export const metadata = {
   id: "axioma-orden-2",
   lang: "en",
   type: "axioma",
-  title: "Axiom II.2 (Indefinite Extension of the Line)",
-  description: "Given any two distinct points A and B, there always exists at least one point C such that B lies between A and C.",
-  branch: "51M",
+  title: "Axiom II.2 (Extension of the Line)",
+  description: "Given any two distinct points A and B, there exists at least one point C such that B is between A and C.",
+  branch: "51A",
+  branches: ["51A", "03B"],
+  tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "orden",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §3", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §3",
+      role: "primary"
+    }
   ]
 };
 
 import { Order2 } from '@content/diagrams/Axiomas/Order2';
 export const Simulation = Order2;
 
-<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A$ and $B$, the second order axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> guarantees that the line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ can always be extended beyond $B$, locating a new point $C$ such that $B$ occupies an intermediate position ($A\text{-}B\text{-}C$).
+<Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>, there always exists at least a third point such that the second lies <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> the first and this new point.
 
-<Definicion title="Formal statement">
-  For any two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $A, B \in \mathcal{S}$, there exists at least one point $C \in \mathcal{S}$ such that $B$ lies <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $C$:
-  $$
-  \forall A, B \in \mathcal{S} \ \bigl(A \neq B \implies \exists C \in \mathcal{S} \ (A\text{-}B\text{-}C)\bigr)
-  $$
+Within the framework of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> and the foundations established by <ConceptLink targetId="david-hilbert">David Hilbert</ConceptLink>, this postulate guarantees that <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> have no endpoints or boundary limits, allowing the unbounded extension of any pair of ordered points in <ConceptLink targetId="geometria-hilbertiana">Hilbertian geometry</ConceptLink>.
+
+<Definicion title="Axiom II.2 (Extension of the Line)">
+For any pair of distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$, there exists at least one point <VisualBind element="pC" color="ocre">$C$</VisualBind> $\in \mathcal{P}$ such that <VisualBind element="pB" color="terracota">$B$</VisualBind> lies between <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pC" color="ocre">$C$</VisualBind>:
+
+$$
+\forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists C \in \mathcal{P} \ (A * B * C)\bigr)
+$$
 </Definicion>
 
-<Separador />
-
-### Visual representation and interaction
-
-In the interactive simulation, points <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> delimit the initial segment. Rectilinear extension along line <VisualBind element="lineDC" color="carbon">$l$</VisualBind> produces the extended point <VisualBind element="pC" color="ocre">$C$</VisualBind>, confirming that $B$ lies strictly inside the open interval determined by $A$ and $C$.
-
-<Separador />
-
-### Geometric significance and scope
-
-This axiom ensures that geometric lines are unbounded in both directions and possess no intrinsic endpoints or borders. Together with incidence axioms, it proves that every line contains infinitely many ordered points without spatial finiteness.
-
-<Separador />
-
-### Properties
-
-- **Linear unboundedness:** No line terminates or possesses an extreme boundary point.
-- **Segment extendibility:** Enables extending any rectilinear segment without limitation in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
-- **Infinitude of points:** Constitutes the primary principle excluding finite geometric systems in the presence of order relations.
+<Nota>
+This axiom ensures the open and boundary-free nature of the line in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. Together with <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink> and the axioms of <ConceptLink targetId="incidencia">incidence</ConceptLink>, it guarantees that the <ConceptLink targetId="traza">point trace</ConceptLink> $\operatorname{tr}(\ell)$ of every line is an <ConceptLink targetId="conjunto-infinito">infinite set</ConceptLink> of points, precluding the existence of <ConceptLink targetId="geometria-finita">finite geometries</ConceptLink> endowed with a <ConceptLink targetId="orden-lineal">linear order</ConceptLink> relation.
+</Nota>

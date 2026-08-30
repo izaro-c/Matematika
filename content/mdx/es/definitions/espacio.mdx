@@ -36,12 +36,21 @@ En un <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLin
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Fundamentos Lógicos y Estructurales">
-    <PropiedadItem id="universo-vs-dominios" title="Universo del discurso frente a dominios">
-      El espacio global constituye el universo del discurso total ($\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$), mientras que $\mathcal{P}$, $\mathcal{L}$ y $\Pi$ son los <ConceptLink targetId="dominio">dominios</ConceptLink> (sorts) tipados <ConceptLink targetId="conjunto-disjunto">mutuamente disjuntos</ConceptLink> sobre los que operan los cuantificadores de la teoría.
+  <PropiedadesGrupo title="Fundamentos lógicos y estructurales">
+    <PropiedadItem 
+      id="universo-vs-dominios" 
+      title="Universo del discurso vs. dominios tipados"
+      formula="\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi \implies \mathcal{P} \cap \mathcal{L} = \emptyset \land \mathcal{P} \cap \Pi = \emptyset \land \mathcal{L} \cap \Pi = \emptyset"
+    >
+      El espacio global constituye el universo del discurso completo ($\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$), donde $\mathcal{P}$, $\mathcal{L}$ y $\Pi$ son los <ConceptLink targetId="dominio">dominios</ConceptLink> tipados (<ConceptLink targetId="sort">sorts</ConceptLink>) sobre los que operan los cuantificadores de la teoría, siendo <ConceptLink targetId="conjunto-disjunto">mutuamente disjuntos</ConceptLink> dos a dos.
     </PropiedadItem>
-    <PropiedadItem id="teorema-interseccion-planos" title="Teorema de intersección planar">
-      El <ConceptLink targetId="axioma-incidencia-7">Axioma I.7</ConceptLink> postula la existencia de un segundo punto común $B \neq A$; la conjunción con el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink> (recta $\overleftrightarrow{AB}$) y el <ConceptLink targetId="axioma-incidencia-6">Axioma I.6</ConceptLink> establece la inclusión de trazas $\operatorname{tr}(\overleftrightarrow{AB}) \subseteq \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$. La igualdad estricta ($\operatorname{tr}(\overleftrightarrow{AB}) = \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$ para planos distintos $\pi_1 \neq \pi_2$) se completa mediante los axiomas de unicidad del plano (<ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>), pues un punto exterior común no <ConceptLink targetId="colinealidad">colineal</ConceptLink> forzaría la coincidencia $\pi_1 = \pi_2$.
+
+    <PropiedadItem 
+      id="teorema-interseccion-planos" 
+      title="Teorema de intersección de planos"
+      formula="\pi_1 \neq \pi_2 \land \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) \neq \emptyset \implies \exists! \ell \in \mathcal{L} : \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \operatorname{tr}(\ell)"
+    >
+      El <ConceptLink targetId="axioma-incidencia-7">Axioma I.7</ConceptLink> postula la existencia de un segundo punto común ($B \neq A$); al combinarlo con el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink> (recta $\overleftrightarrow{AB}$) y el <ConceptLink targetId="axioma-incidencia-6">Axioma I.6</ConceptLink>, se establece la inclusión de trazas $\operatorname{tr}(\overleftrightarrow{AB}) \subseteq \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$. La igualdad estricta ($\operatorname{tr}(\overleftrightarrow{AB}) = \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$ para planos distintos $\pi_1 \neq \pi_2$) queda asegurada por los axiomas de unicidad del plano (<ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>), ya que un punto común no <ConceptLink targetId="colinealidad">colineal</ConceptLink> obligaría a que $\pi_1 = \pi_2$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

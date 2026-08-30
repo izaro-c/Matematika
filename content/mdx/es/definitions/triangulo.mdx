@@ -2,57 +2,84 @@ export const metadata = {
   id: "triangulo",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Triángulo",
-  description: "Polígono plano fundamental formado por la unión de los tres segmentos de recta que unen tres puntos no colineales.",
-  branch: "51M",
+  description: "Figura geométrica plana constituida por tres puntos no colineales denominados vértices y los tres segmentos que los unen.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "orden", "congruencia", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 19", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 19",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §4",
+      role: "primary"
+    }
   ]
 };
 
 import { Triangulo } from '@content/diagrams/Definiciones/Triangulo';
 export const Simulation = Triangulo;
 
-<Capitular letra="E" />l triángulo es el <ConceptLink targetId="poligono">polígono</ConceptLink> más simple en la geometría plana y constituye la base estructural de la trigonometría y de los criterios de rigidez en el plano. Formado al conectar tres <ConceptLink targetId="punto">puntos</ConceptLink> no colineales, delimita una región convexa acotada en el <ConceptLink targetId="plano">plano</ConceptLink>.
+<Capitular letra="U" />n triángulo es la figura geométrica plana constituida por tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad" isDependency={true}>colineales</ConceptLink> y los tres <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> que los unen dos a dos.
 
-<Definicion title="">
-  Dados tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no colineales <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> y <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> pertenecientes a un plano $\mathcal{P}$, el triángulo <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> es la figura plana definida por la unión de los tres <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> de recta <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> y <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
-  $$
-  \triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}
-  $$
-  Los puntos $A, B, C$ son los <ConceptLink targetId="vertice">vértices</ConceptLink> y los segmentos $\overline{AB}, \overline{BC}, \overline{CA}$ son los lados del triángulo.
+En la fundamentación de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> desarrollada por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el triángulo no es una magnitud métrica ni una medida de área, sino una estructura formal construida a partir de la relación de <ConceptLink targetId="estar-entre">intermediación</ConceptLink> y la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
+
+<Definicion title="Definición formal de triángulo">
+Dados tres <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> y <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ tales que la terna $\{A, B, C\}$ no es <ConceptLink targetId="colinealidad">colineal</ConceptLink>, el **triángulo** <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> constituido por los tres <ConceptLink targetId="segmento">segmentos</ConceptLink> <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> y <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
+
+$$
+\triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}
+$$
+
+Los segmentos $\overline{AB}$, $\overline{BC}$ y $\overline{CA}$ se denominan los <ConceptLink targetId="lado">lados</ConceptLink> del triángulo, y sus puntos extremos $A$, $B$ y $C$ reciben el nombre de <ConceptLink targetId="vertice">vértices</ConceptLink>. Su **traza puntual** asociada $\operatorname{tr}(\triangle ABC) \subset \mathcal{P}$ es la unión conjuntista de las <ConceptLink targetId="traza">trazas</ConceptLink> de sus lados:
+
+$$
+\operatorname{tr}(\triangle ABC) = \operatorname{tr}(\overline{AB}) \cup \operatorname{tr}(\overline{BC}) \cup \operatorname{tr}(\overline{CA})
+$$
 </Definicion>
 
 <Separador />
 
-### Clasificación métrica y angular
-
-La caracterización métrica de los triángulos atiende a las relaciones de <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre sus lados y a la amplitud de sus <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores:
-
-| Clasificación por lados | Condición geométrica | Clasificación por ángulos | Condición angular |
-|---|---|---|---|
-| Equilátero | $\overline{AB} \cong \overline{BC} \cong \overline{CA}$ | Acutángulo | Tres ángulos <ConceptLink targetId="angulo-agudo">agudos</ConceptLink> |
-| Isósceles | Al menos dos lados congruentes | <ConceptLink targetId="triangulo-rectangulo">Rectángulo</ConceptLink> | Un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> |
-| Escaleno | Ningún par de lados congruentes | Obtusángulo | Un <ConceptLink targetId="angulo-obtuso">ángulo obtuso</ConceptLink> |
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Métricas y angulares">
-    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Suma angular">
-      $\alpha + \beta + \gamma = 180^\circ$ ($\pi\text{ rad}$) en $\mathcal{P}$.
+  <PropiedadesGrupo title="Propiedades estructurales y de orden">
+    <PropiedadItem 
+      id="simetria-vertices" 
+      title="Invarianza bajo permutaciones de vértices"
+      formula="\triangle ABC = \triangle \sigma(A)\sigma(B)\sigma(C) \quad (\forall \sigma \in S_3)"
+    >
+      Al definirse a partir del conjunto no ordenado de sus lados ($\triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}$), el triángulo es estrictamente invariante respecto al orden en que se enuncien sus vértices: $\triangle ABC = \triangle BCA = \triangle CAB = \triangle BAC = \triangle ACB = \triangle CBA$, satisfaciendo la <ConceptLink targetId="igualdad-matematica">igualdad de conjuntos</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="teorema-triangulo-isosceles" title="Teorema del triángulo isósceles">
-      En un triángulo isósceles, los ángulos opuestos a los lados congruentes son congruentes.
-    </PropiedadItem>
-  </PropiedadesGrupo>
 
-  <PropiedadesGrupo title="Rigidez y congruencia">
-    <PropiedadItem id="teorema-congruencia-ala" title="Criterios de congruencia">
-      $\triangle ABC \cong \triangle A'B'C' \iff \text{LAL} \lor \text{ALA} \lor \text{LLL}$.
+    <PropiedadItem 
+      id="coplanaridad-soporte" 
+      title="Coplanaridad y plano soporte único"
+      formula="\exists! \pi \in \Pi : \operatorname{tr}(\triangle ABC) \subset \operatorname{tr}(\pi)"
+    >
+      En virtud de los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> del conjunto de vértices $\{A, B, C\}$ determina de forma unívoca un único <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$ que contiene íntegramente a la traza puntual del triángulo: $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="interior-triangular" 
+      title="Interior triangular como región convexa"
+      formula="\operatorname{Int}(\triangle ABC) = \mathcal{H}_{\overleftrightarrow{AB}}(C) \cap \mathcal{H}_{\overleftrightarrow{BC}}(A) \cap \mathcal{H}_{\overleftrightarrow{CA}}(B)"
+    >
+      Todo triángulo $\triangle ABC$ en un plano $\pi$ determina una región abierta y acotada denominada **interior del triángulo** ($\operatorname{Int}(\triangle ABC)$), definida formalmente como la <ConceptLink targetId="interseccion">intersección</ConceptLink> de los tres <ConceptLink targetId="semiplano">semiplanos</ConceptLink> abiertos determinados por sus <ConceptLink targetId="recta">rectas</ConceptLink> soporte: el semiplano respecto a $\overleftrightarrow{AB}$ que contiene a $C$, el semiplano respecto a $\overleftrightarrow{BC}$ que contiene a $A$, y el semiplano respecto a $\overleftrightarrow{CA}$ que contiene a $B$. Dicha región es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="axioma-orden-4" 
+      title="Intersección planar de Pasch"
+      formula="\ell \cap \operatorname{seg}(AB) \neq \emptyset \land C \notin \ell \implies (\ell \cap \operatorname{seg}(BC) \neq \emptyset \veebar \ell \cap \operatorname{seg}(CA) \neq \emptyset)"
+    >
+      En virtud del <ConceptLink targetId="axioma-orden-4">Axioma II.4</ConceptLink> (Axioma de Pasch), toda recta coplanar que interseca el interior de uno de los lados de un triángulo y no pasa por ninguno de sus vértices, interseca necesariamente el interior de exactamente uno de los otros dos lados, garantizando la continuidad y cierre topológico de su <ConceptLink targetId="frontera">frontera</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

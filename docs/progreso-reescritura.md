@@ -6,13 +6,14 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 > Un documento se considera **Aprobado con Visto Bueno Oficial** únicamente tras la revisión y confirmación explícita del usuario.
 
 **Resumen de Estado:**
-- **Aprobados con Visto Bueno:** 26 documentos
-- **Pendientes de Reescritura / Revisión:** 85 documentos
+- **Aprobados con Visto Bueno:** 33 documentos
+- **Reescritos en Espera de Revisión:** 0 documentos
+- **Pendientes de Reescritura:** 78 documentos
 - **Total de Nodos en el Grafo:** 111 documentos
 
 ---
 
-## 1. Documentos con Visto Bueno Oficial (Aprobados: 27)
+## 1. Documentos con Visto Bueno Oficial (Aprobados: 42)
 
 | ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Fecha Aprobación |
 | :--- | :--- | :--- | :--- | :--- | :---: |
@@ -43,45 +44,42 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 | [`modelo-fano`](../content/mdx/es/models/modelo-fano.mdx) | Plano de Fano | Fanoren planoa | Fano plane | `modelo` | ✅ 2026-08-29 |
 | [`fano`](../content/mdx/es/mathematicians/fano.mdx) | Gino Fano | Gino Fano | Gino Fano | `matematico` | ✅ 2026-08-29 |
 | [`estar-entre`](../content/mdx/es/definitions/estar-entre.mdx) | Estar entre | Bitartekotasuna (Artean egotea) | Betweenness Relation | `definicion` | ✅ 2026-08-29 |
+| [`axioma-orden-1`](../content/mdx/es/axioms/axioma-orden-1.mdx) | Axioma II.1 (Simetría y colinealidad de la entreidad) | II.1 axioma (Tartean egotearen simetria eta kolinealtasuna) | Axiom II.1 (Symmetry and Collinearity of Betweenness) | `axioma` | ✅ 2026-08-30 |
+| [`axioma-orden-2`](../content/mdx/es/axioms/axioma-orden-2.mdx) | Axioma II.2 (Extensión de la recta) | II.2 axioma (Zuzenaren hedapena) | Axiom II.2 (Extension of the Line) | `axioma` | ✅ 2026-08-30 |
+| [`axioma-orden-3`](../content/mdx/es/axioms/axioma-orden-3.mdx) | Axioma II.3 (Exclusividad de la intermediación lineal) | II.3 axioma (Bitartekotasun linealaren esklusibotasuna) | Axiom II.3 (Exclusivity of Linear Betweenness) | `axioma` | ✅ 2026-08-30 |
+| [`axioma-orden-4`](../content/mdx/es/axioms/axioma-orden-4.mdx) | Axioma II.4 (Axioma de Pasch) | II.4 axioma (Paschen axioma) | Axiom II.4 (Pasch's Axiom) | `axioma` | ✅ 2026-08-30 |
+| [`segmento`](../content/mdx/es/definitions/segmento.mdx) | Segmento | Zuzenkia | Line Segment | Definición (`derivado`) | ✅ 2026-08-30 |
+| [`semirrecta`](../content/mdx/es/definitions/semirrecta.mdx) | Semirrecta | Zuzenerdia | Ray | Definición (`derivado`) | ✅ 2026-08-30 |
+| [`angulo`](../content/mdx/es/definitions/angulo.mdx) | Ángulo | Angelua | Angle | `definicion` | ✅ 2026-08-30 |
+| [`triangulo`](../content/mdx/es/definitions/triangulo.mdx) | Triángulo | Triangelua | Triangle | `definicion` | ✅ 2026-08-30 |
+| [`pasch`](../content/mdx/es/mathematicians/pasch.mdx) | Moritz Pasch | Moritz Pasch | Moritz Pasch | `matematico` | ✅ 2026-08-30 |
+| [`congruencia`](../content/mdx/es/definitions/congruencia.mdx) | Congruencia geométrica | Kongruentzia geometrikoa | Geometric Congruence | `definicion` | ✅ 2026-08-30 |
+| [`axioma-congruencia-1`](../content/mdx/es/axioms/axioma-congruencia-1.mdx) | Axioma III.1 (Transporte de segmentos) | III.1 axioma (Zuzenkien garraioa) | Axiom III.1 (Segment Transport) | `axioma` | ✅ 2026-08-30 |
+| [`axioma-congruencia-2`](../content/mdx/es/axioms/axioma-congruencia-2.mdx) | Axioma III.2 (Transitividad de la congruencia de segmentos) | III.2 axioma (Zuzenkien kongruentziaren iragankortasuna) | Axiom III.2 (Transitivity of Segment Congruence) | `axioma` | ✅ 2026-08-30 |
+| [`axioma-congruencia-3`](../content/mdx/es/axioms/axioma-congruencia-3.mdx) | Axioma III.3 (Aditividad de segmentos congruentes) | III.3 axioma (Zuzenkien batuketa eta aditibitatea) | Axiom III.3 (Additivity of Segment Congruence) | `axioma` | ✅ 2026-08-30 |
+| [`axioma-congruencia-4`](../content/mdx/es/axioms/axioma-congruencia-4.mdx) | Axioma III.4 (Transporte de ángulos) | III.4 axioma (Angeluen garraioa) | Axiom III.4 (Angle Transport) | `axioma` | ✅ 2026-08-30 |
+| [`axioma-congruencia-5`](../content/mdx/es/axioms/axioma-c ongruencia-5.mdx) | Axioma III.5 (Criterio de congruencia LAL) | III.5 axioma (LAL kongruentzia-irizpidea) | Axiom III.5 (SAS Congruence Criterion) | `axioma` | ✅ 2026-08-30 |
+
+
+
 ---
 
-## 2. Documentos Reescritos con Skill Actualizada (En Espera de Revisión)
+## 2. Documentos Reescritos con Skill Actualizada (En Espera de Revisión: 0)
 
-*Actualmente no hay documentos en espera de revisión (todos los reescritos han sido aprobados).* 
+*Actualmente no hay documentos pendientes de revisión.*
 
 ---
 
-## 3. Plan de Reescritura Ordenado por Prioridad Epistemológica (84 pendientes)
+## 3. Plan de Reescritura Ordenado por Prioridad Epistemológica (70 pendientes)
 
 El orden de los siguientes bloques sigue la secuencia lógica rigurosa de Hilbert y los fundamentos del grafo de conocimiento: desde los axiomas y conceptos de orden (Grupo II), pasando por congruencia (Grupo III), paralelismo (Grupo IV), continuidad (Grupo V), sistemas globales, teoremas mayores y demostraciones, hasta modelos, didáctica y biografías complementarias.
 
-### Fase 1: Prioridad 1: Fundamentos de Orden e Intermediación (Hilbert Grupo II) (9)
-*Estructuras lineales primitivas, axiomas II.1-II.4 y nociones derivadas básicas (segmento, semirrecta, ángulo, triángulo y Moritz Pasch).*
-
-| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-
-| [`axioma-orden-1`](../content/mdx/es/axioms/axioma-orden-1.mdx) | Axioma II.1 (Simetría y colinealidad de la entreidad) | II.1 axioma (Tartean egotearen simetria eta kolinealtasuna) | Axiom II.1 (Symmetry and Collinearity of Betweenness) | `axioma` | ⏳ Pendiente |
-| [`axioma-orden-2`](../content/mdx/es/axioms/axioma-orden-2.mdx) | Axioma II.2 (Extensión indefinida de la recta) | II.2 axioma (Zuzenaren hedapen mugagabea) | Axiom II.2 (Indefinite Extension of the Line) | `axioma` | ⏳ Pendiente |
-| [`axioma-orden-3`](../content/mdx/es/axioms/axioma-orden-3.mdx) | Axioma II.3 (Exclusividad de la entreidad lineal) | II.3 axioma (Tartekotasun linealaren esklusibotasuna) | Axiom II.3 (Exclusivity of Linear Betweenness) | `axioma` | ⏳ Pendiente |
-| [`axioma-orden-4`](../content/mdx/es/axioms/axioma-orden-4.mdx) | Axioma II.4 (Axioma de Pasch) | II.4 axioma (Paschen axioma) | Axiom II.4 (Pasch's Axiom) | `axioma` | ⏳ Pendiente |
-| [`segmento`](../content/mdx/es/definitions/segmento.mdx) | Segmento | Zuzenkia | Line Segment | `definicion` | ⏳ Pendiente |
-| [`semirrecta`](../content/mdx/es/definitions/semirrecta.mdx) | Semirrecta | Zuzenerdia | Ray | `definicion` | ⏳ Pendiente |
-| [`angulo`](../content/mdx/es/definitions/angulo.mdx) | Ángulo | Angelua | Angle | `definicion` | ⏳ Pendiente |
-| [`triangulo`](../content/mdx/es/definitions/triangulo.mdx) | Triángulo | Triangelua | Triangle | `definicion` | ⏳ Pendiente |
-| [`pasch`](../content/mdx/es/mathematicians/pasch.mdx) | Moritz Pasch | Moritz Pasch | Moritz Pasch | `matematico` | ⏳ Pendiente |
-
-### Fase 2: Prioridad 2: Congruencia y Rigidez Sintética (Hilbert Grupo III) (15)
+### Fase 2: Prioridad 2: Congruencia y Rigidez Sintética (Hilbert Grupo III) (9)
 *Relación de congruencia, axiomas III.1-III.5, ángulos suplementarios, perpendicularidad, triángulos rectángulos, teoremas iniciales y sus demostraciones.*
 
 | ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
 | :--- | :--- | :--- | :--- | :--- | :---: |
-| [`congruencia`](../content/mdx/es/definitions/congruencia.mdx) | Congruencia geométrica | Kongruentzia geometrikoa | Geometric Congruence | `definicion` | ⏳ Pendiente |
-| [`axioma-congruencia-1`](../content/mdx/es/axioms/axioma-congruencia-1.mdx) | Axioma III.1 (Transporte de segmentos) | III.1 axioma (Zuzenkien garraioa) | Axiom III.1 (Segment Transport) | `axioma` | ⏳ Pendiente |
-| [`axioma-congruencia-2`](../content/mdx/es/axioms/axioma-congruencia-2.mdx) | Axioma III.2 (Transitividad de la congruencia de segmentos) | III.2 axioma (Zuzenkien kongruentziaren iragankortasuna) | Axiom III.2 (Transitivity of Segment Congruence) | `axioma` | ⏳ Pendiente |
-| [`axioma-congruencia-3`](../content/mdx/es/axioms/axioma-congruencia-3.mdx) | Axioma III.3 (Aditividad de segmentos congruentes) | III.3 axioma (Zuzenkien batuketa eta aditibitatea) | Axiom III.3 (Additivity of Segment Congruence) | `axioma` | ⏳ Pendiente |
-| [`axioma-congruencia-4`](../content/mdx/es/axioms/axioma-congruencia-4.mdx) | Axioma III.4 (Transporte de ángulos) | III.4 axioma (Angeluen garraioa) | Axiom III.4 (Angle Transport) | `axioma` | ⏳ Pendiente |
-| [`axioma-congruencia-5`](../content/mdx/es/axioms/axioma-congruencia-5.mdx) | Axioma III.5 (Criterio de congruencia LAL) | III.5 axioma (LAL kongruentzia-irizpidea) | Axiom III.5 (SAS Congruence Criterion) | `axioma` | ⏳ Pendiente |
+
 | [`angulos-suplementarios`](../content/mdx/es/definitions/angulos-suplementarios.mdx) | Ángulos suplementarios | Angelu gehigarriak | Supplementary Angles | `definicion` | ⏳ Pendiente |
 | [`perpendicular`](../content/mdx/es/definitions/perpendicular.mdx) | Perpendicularidad | Perpendikulartasuna | Perpendicular Lines | `definicion` | ⏳ Pendiente |
 | [`triangulo-rectangulo`](../content/mdx/es/definitions/triangulo-rectangulo.mdx) | Triángulo rectángulo | Triangelu angeluzuzena | Right Triangle | `definicion` | ⏳ Pendiente |

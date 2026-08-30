@@ -3,44 +3,42 @@ export const metadata = {
   lang: "en",
   type: "axioma",
   title: "Axiom III.1 (Segment Transport)",
-  description: "Given a line segment and a ray with a given origin, there exists a unique point on the ray that determines a segment congruent to the given one.",
-  branch: "51M",
+  description: "Given any segment and a ray with a specified origin, there exists a unique point on the ray determining a segment congruent to the given one.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §5",
+      role: "primary"
+    }
   ]
 };
 
 import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
 export const Simulation = Congruence1;
 
-<Capitular letra="T" />he first congruence axiom of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> formalizes the capacity to transport rigid linear quantities along any given direction in space. Given any line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ and a ray with origin $C$, there exists a unique <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $E$ on that ray defining a segment $\overline{CE}$ <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to $\overline{AB}$.
+<Capitular letra="G" />iven any <ConceptLink targetId="segmento" isDependency={true}>line segment</ConceptLink> and a <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink> with a specified <ConceptLink targetId="punto" isDependency={true}>origin</ConceptLink>, there exists exactly one <ConceptLink targetId="punto">point</ConceptLink> on that ray that forms a segment <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to the original one.
 
-<Definicion title="Formal statement">
-  Given a line <ConceptLink targetId="segmento">segment</ConceptLink> $\overline{AB}$ and a ray $r = \overrightarrow{CD}$ with origin at <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $C$, there exists a unique point $E \in r$ such that $\overline{AB} \cong \overline{CE}$:
-  $$
-  \forall \overline{AB}, \forall r = \overrightarrow{CD}, \ \exists! E \in r \ (\overline{AB} \cong \overline{CE})
-  $$
+In the foundation of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, this postulate formalizes the unique transport of lengths along any direction in <ConceptLink targetId="espacio">space</ConceptLink>, without appealing to numerical metric scales or coordinate systems.
+
+<Definicion title="Axiom III.1 (Segment Transport)">
+Given two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ determining the <ConceptLink targetId="segmento">segment</ConceptLink> <VisualBind element="segAB" color="ocre">$\overline{AB}$</VisualBind>, and a <ConceptLink targetId="semirrecta">ray</ConceptLink> <VisualBind element="rayCDir" color="pavo">$r = \overrightarrow{C\,\text{dir}}$</VisualBind> with origin at <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ directed toward the point <VisualBind element="pDir" color="pavo">$\text{dir}$</VisualBind> $\in \mathcal{P} \setminus \{C\}$, there exists a unique point <VisualBind element="pD" color="terracota">$D$</VisualBind> on the ray $r \setminus \{C\}$ such that the segment <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> is <ConceptLink targetId="congruencia">congruent</ConceptLink> to $\overline{AB}$:
+
+$$
+\forall A, B \in \mathcal{P} \ \Biggl( A \neq B \implies \forall C, \text{dir} \in \mathcal{P} \ \Bigl( C \neq \text{dir} \implies \exists! D \in \operatorname{tr}(\overrightarrow{C\,\text{dir}}) \setminus \{C\} \ (\overline{AB} \cong \overline{CD}) \Bigr) \Biggr)
+$$
+
+Furthermore, every segment is congruent to itself: $\overline{AB} \cong \overline{AB}$ and $\overline{AB} \cong \overline{BA}$.
 </Definicion>
 
 <Separador />
 
-### Visual representation and interaction
-
-In the interactive simulation, source segment <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> delimited by points <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> is transported onto ray <VisualBind element="rayCDir" color="carbon">$r$</VisualBind> emanating from <VisualBind element="pC" color="carbon">$C$</VisualBind>. Virtual circle <VisualBind element="circleCD" color="carbon">$\mathcal{C}(C, AB)$</VisualBind> intersects the ray at the unique point <VisualBind element="pE" color="terracota">$E$</VisualBind>, fixing target segment <VisualBind element="segCD" color="terracota">$\overline{CE}$</VisualBind>.
-
-<Separador />
-
-### Geometric significance and scope
-
-This postulate provides mathematical rigor to classical compass-and-straightedge constructions, allowing lengths to be transported synthetically without external metric coordinate systems in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
-
-<Separador />
-
-### Properties
-
-- **Uniqueness of transport:** On every ray there is exactly one endpoint satisfying the congruence relation.
-- **Symmetric invariance:** Every segment is congruent to itself under endpoint reversal ($\overline{AB} \cong \overline{BA}$).
-- **Synthetic metric foundation:** Enables defining relative length comparisons between segments ($\overline{AB} < \overline{CD}$).
+<Nota>
+Axiom III.1 constitutes the rigorous synthetic equivalent of the rigid compass in Euclidean constructions, guaranteeing the existence and uniqueness of metric transport in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+</Nota>

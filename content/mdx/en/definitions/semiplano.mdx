@@ -29,12 +29,21 @@ In <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>,
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Fundamental Geometric Properties">
-    <PropiedadItem id="conjunto-convexo" title="Convexity">
-      Every half-plane is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if it contains any two points $A$ and $B$, it entirely contains the open segment $\operatorname{seg}(AB)$ joining them.
+  <PropiedadesGrupo title="Geometric Properties and Convexity">
+    <PropiedadItem 
+      id="conjunto-convexo" 
+      title="Convexity of the Half-Plane"
+      formula="A, B \in \mathcal{H} \implies \operatorname{seg}(AB) \subset \mathcal{H}"
+    >
+      Every open half-plane $\mathcal{H}$ is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if it contains two points $A, B \in \mathcal{H}$, then the entire open <ConceptLink targetId="segmento">segment</ConceptLink> $\operatorname{seg}(AB)$ connecting them is strictly contained in $\mathcal{H}$, as a direct consequence of the Plane Separation Theorem and <ConceptLink targetId="axioma-orden-4">Pasch's Axiom</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="angulo" title="Interior polygonal regions">
-      The finite intersection of half-planes whose boundaries cross allows the formal definition of the interior region of an <ConceptLink targetId="angulo">angle</ConceptLink>, a <ConceptLink targetId="triangulo">triangle</ConceptLink>, and any <ConceptLink targetId="poligono">convex polygon</ConceptLink>.
+
+    <PropiedadItem 
+      id="generacion-interiores-poligonales" 
+      title="Generation of Polygonal Interiors"
+      formula="\operatorname{Int}(\mathcal{P}_n) = \bigcap_{i=1}^n \mathcal{H}_{\ell_i}"
+    >
+      The finite intersection of open half-planes determined by the supporting <ConceptLink targetId="recta">lines</ConceptLink> of a planar configuration formally defines the interior region of an <ConceptLink targetId="angulo">angle</ConceptLink> ($\operatorname{Int}(\angle AOB) = \mathcal{H}_1 \cap \mathcal{H}_2$), a <ConceptLink targetId="triangulo">triangle</ConceptLink>, and any convex <ConceptLink targetId="poligono">polygon</ConceptLink>, preserving convexity under arbitrary intersection closures.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

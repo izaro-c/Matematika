@@ -3,45 +3,40 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "III.2 axioma (Zuzenkien kongruentziaren iragankortasuna)",
-  description: "Bi zuzenki hirugarren zuzenki berarekin kongruenteak badira, elkarren artean ere kongruenteak dira.",
-  branch: "51M",
+  description: "Bi zuzenki hirugarren zuzenki beraren kongruenteak badira, elkarren artean ere kongruenteak dira.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "hilbert"],
   axiomSystem: "sistema-absoluto",
   axiomFamily: "congruencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §5",
+      role: "primary"
+    }
   ]
 };
 
 import { Congruence2 } from '@content/diagrams/Axiomas/Congruence2';
 export const Simulation = Congruence2;
 
-<Capitular letra="D" />avid Hilberten bigarren kongruentzia-axiomak baliokidetasun-erlazio formal baten izaera ematen dio <ConceptLink targetId="segmento">zuzenkien</ConceptLink> arteko kongruentziari. Bi $\overline{CD}$ eta $\overline{EF}$ zuzenki $\overline{AB}$ zuzenki berarekin kongruenteak badira, elkarren artean ere <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> dira nahitaez.
+<Capitular letra="B" />i <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink> hirugarren zuzenki beraren <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badira, elkarren artean ere kongruenteak dira.
 
-<Definicion title="Enuntziatu formala">
-  Edozein hiru $\overline{AB}, \overline{CD}, \overline{EF}$ <ConceptLink targetId="segmento">zuzenkitarako</ConceptLink>, $\overline{AB} \cong \overline{CD}$ eta $\overline{AB} \cong \overline{EF}$ badira, orduan $\overline{CD} \cong \overline{EF}$ betetzen da:
-  $$
-  (\overline{AB} \cong \overline{CD} \land \overline{AB} \cong \overline{EF}) \implies \overline{CD} \cong \overline{EF}
-  $$
-  Era berean, edozein zuzenki bere buruarekin kongruentea da: $\overline{AB} \cong \overline{AB}$.
+<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoan</ConceptLink>, postulatu honek, <ConceptLink targetId="axioma-congruencia-1">III.1 axioman</ConceptLink> ezarritako erreflexibitatearekin batera, zuzenkien kongruentziari <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioaren</ConceptLink> egitura formala ematen dio.
+
+<Definicion title="III.2 axioma (Zuzenkien kongruentziaren iragankortasuna)">
+$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <ConceptLink targetId="punto">puntuek</ConceptLink> zehaztutako edozein <VisualBind element="segAB" color="ocre">$\overline{AB}$</VisualBind>, <VisualBind element="segCD" color="mora">$\overline{CD}$</VisualBind> eta <VisualBind element="segEF" color="terracota">$\overline{EF}$</VisualBind> <ConceptLink targetId="segmento">zuzenkitarako</ConceptLink>, baldin eta <VisualBind element="ABCD" color="mora">$\overline{AB} \cong \overline{CD}$</VisualBind> eta <VisualBind element="ABEF" color="terracota">$\overline{AB} \cong \overline{EF}$</VisualBind> badira, orduan <VisualBind element="CDEF" color="pavo">$\overline{CD} \cong \overline{EF}$</VisualBind> da:
+
+$$
+\forall A, B, C, D, E, F \in \mathcal{P} \ \Biggl( (A \neq B \land C \neq D \land E \neq F) \implies \Bigl( (\overline{AB} \cong \overline{CD} \land \overline{AB} \cong \overline{EF}) \implies \overline{CD} \cong \overline{EF} \Bigr) \Biggr)
+$$
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
-
-Simulazio interaktiboan, hiru <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> eta <VisualBind element="segEF" color="terracota">$\overline{EF}$</VisualBind> zuzenki independente erakusten dira. <VisualBind element="tickssegAB" color="terracota">$\cong$</VisualBind> kongruentzia-markek ikusiz egiaztatzen dute $\overline{AB}$ zuzenkia $\overline{CD}$ eta $\overline{EF}$-rekin berdintzean berdintza metrikoaren erlazioa zehazki transferitzen dela $\overline{CD}$ eta $\overline{EF}$ artean.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Bermatzen du zuzenkien kongruentziak espazioko zuzenki guztien multzoa ondo mugatutako baliokidetasun-klasetan banatzen duela. Baliokidetasun-klase bakoitzak "luzeraren" kontzeptu sintetikoa definitzen du modu abstraktuan <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
-
-<Separador />
-
-### Propietateak
-
-- **Baliokidetasun-erlazioa:** Erreflexibitatea ($\overline{AB} \cong \overline{AB}$), simetria ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) eta iragankortasuna betetzen ditu.
-- **Luzera sintetikoaren definizioa:** $[\overline{AB}]$ baliokidetasun-klase bakoitzak translazio eta isometrien pean aldaezina den luzera-neurri gisa jokatzen du.
-- **Sendotasun metrikoa:** Kateatutako dedukzio geometrikoetan luzera-desbideratze metakorik gertatzea saihesten du.
+<Nota>
+<ConceptLink targetId="axioma-congruencia-1">III.1 axiomako</ConceptLink> $\overline{AB} \cong \overline{AB}$ erreflexibitatetik eta postulatu honetatik abiatuta, <ConceptLink targetId="teorema">teorema</ConceptLink> gisa formalki ondorioztatzen dira <ConceptLink targetId="simetria">simetria</ConceptLink> ($\overline{AB} \cong \overline{CD} \implies \overline{CD} \cong \overline{AB}$) eta <ConceptLink targetId="transitividad">iragankortasun</ConceptLink> kanonikoa ($\overline{AB} \cong \overline{CD} \land \overline{CD} \cong \overline{EF} \implies \overline{AB} \cong \overline{EF}$), zuzenkien multzoa <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> <ConceptLink targetId="longitud">luzeraren</ConceptLink> nozio sintetikoa oinarritzen duten <ConceptLink targetId="clase-equivalencia">baliokidetasun-klasetan</ConceptLink> banatzea ahalbidetuz.
+</Nota>

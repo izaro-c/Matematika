@@ -722,8 +722,17 @@
       "lang": "en",
       "type": "axioma",
       "title": "Axiom III.1 (Segment Transport)",
-      "description": "Given a line segment and a ray with a given origin, there exists a unique point on the ray that determines a segment congruent to the given one.",
-      "branch": "51M",
+      "description": "Given any segment and a ray with a specified origin, there exists a unique point on the ray determining a segment congruent to the given one.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -731,7 +740,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Chapter I, §4",
+          "locator": "Chapter I, §5",
           "role": "primary"
         }
       ],
@@ -758,8 +767,17 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma III.1 (Transporte de segmentos)",
-      "description": "Dado un segmento y una semirrecta con origen prefijado, existe un único punto sobre la semirrecta que determina un segmento congruente al dado.",
-      "branch": "51M",
+      "description": "Dado un segmento cualquiera y una semirrecta con un origen dado, existe un único punto sobre la semirrecta que determina un segmento congruente al primero.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -767,7 +785,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §4",
+          "locator": "Capítulo I, §5",
           "role": "primary"
         }
       ],
@@ -794,8 +812,17 @@
       "lang": "en",
       "type": "axioma",
       "title": "Axiom III.2 (Transitivity of Segment Congruence)",
-      "description": "If two line segments are congruent to a third segment, they are congruent to each other.",
-      "branch": "51M",
+      "description": "If two segments are congruent to the same third segment, then they are congruent to each other.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -803,7 +830,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Chapter I, §4",
+          "locator": "Chapter I, §5",
           "role": "primary"
         }
       ],
@@ -830,8 +857,17 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma III.2 (Transitividad de la congruencia de segmentos)",
-      "description": "Si dos segmentos son congruentes a un mismo tercer segmento, son congruentes entre sí.",
-      "branch": "51M",
+      "description": "Si dos segmentos son congruentes con un mismo tercer segmento, entonces son congruentes entre sí.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -839,7 +875,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §4",
+          "locator": "Capítulo I, §5",
           "role": "primary"
         }
       ],
@@ -865,9 +901,19 @@
       "id": "axioma-congruencia-3",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom III.3 (Additivity of Segment Congruence)",
-      "description": "Concatenating pairs of mutually congruent adjacent segments yields congruent total segments.",
-      "branch": "51M",
+      "title": "Axiom III.3 (Segment Addition)",
+      "description": "If two pairs of adjacent segments on the same line or on distinct lines are respectively congruent, then the resulting composite segments are congruent to each other.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "orden",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -875,7 +921,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Chapter I, §4",
+          "locator": "Chapter I, §5",
           "role": "primary"
         }
       ],
@@ -901,9 +947,19 @@
       "id": "axioma-congruencia-3",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma III.3 (Aditividad de segmentos congruentes)",
-      "description": "La concatenación de pares de segmentos adyacentes congruentes produce segmentos totales congruentes.",
-      "branch": "51M",
+      "title": "Axioma III.3 (Adición de segmentos)",
+      "description": "Si dos pares de segmentos adyacentes sobre una misma recta o sobre rectas distintas son respectivamente congruentes, entonces los segmentos totales resultantes son congruentes entre sí.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "orden",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -911,7 +967,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §4",
+          "locator": "Capítulo I, §5",
           "role": "primary"
         }
       ],
@@ -938,8 +994,17 @@
       "lang": "en",
       "type": "axioma",
       "title": "Axiom III.4 (Angle Transport)",
-      "description": "Given an angle, a ray, and a specified half-plane, there exists a unique ray in that half-plane forming an angle congruent to the given one.",
-      "branch": "51M",
+      "description": "Given any angle, a ray with a specified origin on a line in a plane, and a half-plane determined by that line, there exists a unique ray in that half-plane forming an angle congruent to the given one.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -947,7 +1012,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Chapter I, §4",
+          "locator": "Chapter I, §5",
           "role": "primary"
         }
       ],
@@ -974,8 +1039,17 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma III.4 (Transporte de ángulos)",
-      "description": "Dado un ángulo, una semirrecta y un semiplano prefijado, existe una única semirrecta en dicho semiplano que forma un ángulo congruente con el dado.",
-      "branch": "51M",
+      "description": "Dado un ángulo cualquiera, una semirrecta con un origen dado sobre una recta en un plano y un semiplano determinado por dicha recta, existe una única semirrecta en dicho semiplano que conforma un ángulo congruente con el original.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -983,7 +1057,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §4",
+          "locator": "Capítulo I, §5",
           "role": "primary"
         }
       ],
@@ -1009,9 +1083,19 @@
       "id": "axioma-congruencia-5",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom III.5 (SAS Congruence Criterion)",
-      "description": "If two triangles have two sides and the included angle respectively congruent, then the remaining corresponding angles are congruent.",
-      "branch": "51M",
+      "title": "Axiom III.5 (Side-Angle-Side Criterion)",
+      "description": "If two triangles have two sides and the included angle respectively congruent, then the remaining angles opposite those sides are also congruent to each other.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "triangulo",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -1019,7 +1103,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Chapter I, §4",
+          "locator": "Chapter I, §5",
           "role": "primary"
         }
       ],
@@ -1045,9 +1129,19 @@
       "id": "axioma-congruencia-5",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma III.5 (Criterio de congruencia LAL)",
-      "description": "Si dos triángulos tienen dos lados y el ángulo comprendido respectivamente congruentes, entonces los restantes ángulos correspondientes son congruentes.",
-      "branch": "51M",
+      "title": "Axioma III.5 (Criterio Lado-Ángulo-Lado)",
+      "description": "Si dos triángulos tienen respectivamente congruentes dos lados y el ángulo comprendido entre ellos, entonces los ángulos restantes opuestos a dichos lados son también congruentes entre sí.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "triangulo",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -1055,7 +1149,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §4",
+          "locator": "Capítulo I, §5",
           "role": "primary"
         }
       ],
@@ -1797,9 +1891,19 @@
       "id": "axioma-orden-2",
       "lang": "en",
       "type": "axioma",
-      "title": "Axiom II.2 (Indefinite Extension of the Line)",
-      "description": "Given any two distinct points A and B, there always exists at least one point C such that B lies between A and C.",
-      "branch": "51M",
+      "title": "Axiom II.2 (Extension of the Line)",
+      "description": "Given any two distinct points A and B, there exists at least one point C such that B is between A and C.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -1833,9 +1937,19 @@
       "id": "axioma-orden-2",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma II.2 (Extensión indefinida de la recta)",
+      "title": "Axioma II.2 (Extensión de la recta)",
       "description": "Dados dos puntos distintos A y B, siempre existe al menos un punto C tal que B está entre A y C.",
-      "branch": "51M",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -1871,7 +1985,17 @@
       "type": "axioma",
       "title": "Axiom II.3 (Exclusivity of Linear Betweenness)",
       "description": "Of any three distinct points on a line, at most one lies between the other two.",
-      "branch": "51M",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -1905,9 +2029,19 @@
       "id": "axioma-orden-3",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma II.3 (Exclusividad de la entreidad lineal)",
+      "title": "Axioma II.3 (Exclusividad de la intermediación lineal)",
       "description": "De tres puntos distintos cualesquiera situados en una misma recta, a lo sumo uno está entre los otros dos.",
-      "branch": "51M",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -1942,8 +2076,18 @@
       "lang": "en",
       "type": "axioma",
       "title": "Axiom II.4 (Pasch's Axiom)",
-      "description": "If a line coplanar with a triangle intersects one of its sides without passing through its vertices, it must intersect one of the other two sides.",
-      "branch": "51M",
+      "description": "If a line coplanar with a triangle intersects one of its sides without passing through its vertices, it necessarily intersects one of the other two sides.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "pasch",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -1985,7 +2129,17 @@
       "type": "axioma",
       "title": "Axioma II.4 (Axioma de Pasch)",
       "description": "Si una recta coplanar a un triángulo corta a uno de sus lados sin pasar por sus vértices, entonces corta necesariamente a uno de los otros dos lados.",
-      "branch": "51M",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "pasch",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -2197,16 +2351,26 @@
       "id": "angulo",
       "lang": "en",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Angle",
-      "description": "Planar figure formed by two non-collinear rays sharing a common origin point called the vertex.",
-      "branch": "51M",
+      "description": "Geometric figure constituted by an unordered pair of non-collinear rays sharing the same origin point called the vertex.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "congruencia",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elements",
           "author": "Euclid",
-          "locator": "Book I, Definitions 8 & 9",
+          "locator": "Book I, Definitions 8 and 9",
           "role": "primary"
         },
         {
@@ -2238,16 +2402,26 @@
       "id": "angulo",
       "lang": "es",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Ángulo",
-      "description": "Figura plana formada por dos semirrectas no colineales que comparten un mismo origen denominado vértice.",
-      "branch": "51M",
+      "description": "Figura geométrica constituida por un par no ordenado de semirrectas no colineales que comparten el mismo origen puntual denominado vértice.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "congruencia",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elementos",
           "author": "Euclides",
-          "locator": "Libro I, Definición 8 y 9",
+          "locator": "Libro I, Definiciones 8 y 9",
           "role": "primary"
         },
         {
@@ -2279,18 +2453,23 @@
       "id": "angulos-suplementarios",
       "lang": "en",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Supplementary Angles",
-      "description": "Pair of coplanar angles whose sum of angular measures equals a straight angle or 180 degrees.",
-      "branch": "51M",
+      "description": "A pair of angles whose union under congruence reproduces the configuration of a linear pair along opposite rays of a supporting line.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "angulos",
+        "orden",
+        "hilbert"
+      ],
       "hasSimulation": false,
       "sources": [
-        {
-          "title": "Elements",
-          "author": "Euclid",
-          "locator": "Book I, Proposition 13",
-          "role": "primary"
-        },
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
@@ -2320,18 +2499,23 @@
       "id": "angulos-suplementarios",
       "lang": "es",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Ángulos suplementarios",
-      "description": "Par de ángulos coplanares cuya adición de amplitudes angulares es equivalente a un ángulo llano o 180 grados.",
-      "branch": "51M",
+      "description": "Par de ángulos cuya unión por congruencia reproduce la configuración de un par lineal sobre semirrectas opuestas de una misma recta soporte.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "angulos",
+        "orden",
+        "hilbert"
+      ],
       "hasSimulation": false,
       "sources": [
-        {
-          "title": "Elementos",
-          "author": "Euclides",
-          "locator": "Libro I, Proposición 13",
-          "role": "primary"
-        },
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
@@ -2514,21 +2698,31 @@
       "lang": "en",
       "type": "definicion",
       "subtype": "primitivo",
-      "title": "Geometric Congruence",
-      "description": "Primitive equivalence and rigidity relation between geometric configurations preserving dimensions, distances, and angular amplitudes.",
-      "branch": "51M",
+      "title": "Geometric",
+      "description": "Primitive relation in synthetic geometry formalizing rigidity and equivalence of size and shape between segments and between angles.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert",
+        "rigidez"
+      ],
       "hasSimulation": false,
       "sources": [
         {
           "title": "Elements",
           "author": "Euclid",
-          "locator": "Book I, Common Notion 4",
+          "locator": "Book I, Common Notions 4",
           "role": "primary"
         },
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Chapter I, §3",
+          "locator": "Chapter I, §5",
           "role": "primary"
         }
       ],
@@ -2555,9 +2749,19 @@
       "lang": "es",
       "type": "definicion",
       "subtype": "primitivo",
-      "title": "Congruencia geométrica",
-      "description": "Relación primitiva de equivalencia y rigidez entre configuraciones geométricas que conservan dimensiones, distancias y amplitudes angulares.",
-      "branch": "51M",
+      "title": "Congruencia",
+      "description": "Relación primitiva en la geometría sintética que formaliza la rigidez y la equivalencia de tamaño y forma entre segmentos y entre ángulos.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert",
+        "rigidez"
+      ],
       "hasSimulation": false,
       "sources": [
         {
@@ -2569,7 +2773,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §3",
+          "locator": "Capítulo I, §5",
           "role": "primary"
         }
       ],
@@ -4137,10 +4341,20 @@
       "id": "segmento",
       "lang": "en",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Line Segment",
-      "description": "Bounded portion of a line consisting of two distinct endpoint points and all points lying between them.",
-      "branch": "51M",
+      "description": "Set consisting of two endpoint vertices on a line and all points lying between them.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
@@ -4178,10 +4392,20 @@
       "id": "segmento",
       "lang": "es",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Segmento",
-      "description": "Porción acotada de una recta comprendida entre dos puntos extremos incluidos.",
-      "branch": "51M",
+      "description": "Conjunto formado por dos puntos extremos de una recta y todos los puntos situados entre ellos.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
@@ -4371,16 +4595,26 @@
       "id": "semirrecta",
       "lang": "en",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Ray",
-      "description": "Portion of a line originating at a fixed point and extending indefinitely in a single direction.",
-      "branch": "51M",
+      "description": "Set consisting of an origin point on a line and all points extending in a single direction.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elements",
           "author": "Euclid",
-          "locator": "Book I, Common Notions",
+          "locator": "Book I, Definition",
           "role": "primary"
         },
         {
@@ -4412,16 +4646,26 @@
       "id": "semirrecta",
       "lang": "es",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Semirrecta",
-      "description": "Parte de una recta formada por un punto de origen y todos los puntos que se extienden en un único sentido.",
-      "branch": "51M",
+      "description": "Conjunto formado por un punto origen de una recta y todos los puntos que se extienden en un mismo sentido.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elementos",
           "author": "Euclides",
-          "locator": "Libro I, Nociones",
+          "locator": "Libro I, Definición",
           "role": "primary"
         },
         {
@@ -4699,10 +4943,20 @@
       "id": "triangulo",
       "lang": "en",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Triangle",
-      "description": "Fundamental planar polygon formed by the union of three line segments connecting three non-collinear points.",
-      "branch": "51M",
+      "description": "Planar geometric figure constituted by three non-collinear points called vertices and the three segments joining them pairwise.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "congruencia",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
@@ -4740,10 +4994,20 @@
       "id": "triangulo",
       "lang": "es",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Triángulo",
-      "description": "Polígono plano fundamental formado por la unión de los tres segmentos de recta que unen tres puntos no colineales.",
-      "branch": "51M",
+      "description": "Figura geométrica plana constituida por tres puntos no colineales denominados vértices y los tres segmentos que los unen.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "congruencia",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
@@ -6260,6 +6524,7 @@
       "deathYear": 1952,
       "country": "Italy",
       "branch": "01A",
+      "image": "/images/mathematicians/Gino_Fano.jpg",
       "availableLangs": [
         "en",
         "es",
@@ -6289,6 +6554,7 @@
       "deathYear": 1952,
       "country": "Italia",
       "branch": "01A",
+      "image": "/images/mathematicians/Gino_Fano.jpg",
       "availableLangs": [
         "en",
         "es",
@@ -6666,6 +6932,7 @@
       "title": "Moritz Pasch",
       "description": "German mathematician, pioneer of modern axiomatic foundations of geometry and discoverer of the axioms of order.",
       "branch": "01A",
+      "image": "/images/mathematicians/Moritz_Pasch.jpg",
       "availableLangs": [
         "en",
         "es",
@@ -6695,6 +6962,7 @@
       "title": "Moritz Pasch",
       "description": "Matemático alemán pionero en la fundamentación axiomática rigurosa de la geometría y descubridor de los axiomas de orden.",
       "branch": "01A",
+      "image": "/images/mathematicians/Moritz_Pasch.jpg",
       "availableLangs": [
         "en",
         "es",
@@ -6782,6 +7050,7 @@
       "title": "Pythagoras of Samos",
       "description": "Ancient Greek philosopher and mathematician, founder of the Pythagorean brotherhood, famous for the fundamental theorem on right-angled triangles.",
       "branch": "01A",
+      "image": "/images/mathematicians/Pythagoras.jpg",
       "availableLangs": [
         "en",
         "es",
@@ -6811,6 +7080,7 @@
       "title": "Pitágoras de Samos",
       "description": "Filósofo y matemático griego de la antigüedad clásica, fundador de la escuela pitagórica y del teorema fundamental sobre triángulos rectángulos.",
       "branch": "01A",
+      "image": "/images/mathematicians/Pythagoras.jpg",
       "availableLangs": [
         "en",
         "es",
@@ -9086,8 +9356,17 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma III.1 (Transporte de segmentos)",
-      "description": "Dado un segmento y una semirrecta con origen prefijado, existe un único punto sobre la semirrecta que determina un segmento congruente al dado.",
-      "branch": "51M",
+      "description": "Dado un segmento cualquiera y una semirrecta con un origen dado, existe un único punto sobre la semirrecta que determina un segmento congruente al primero.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -9095,7 +9374,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §4",
+          "locator": "Capítulo I, §5",
           "role": "primary"
         }
       ],
@@ -9122,8 +9401,17 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma III.2 (Transitividad de la congruencia de segmentos)",
-      "description": "Si dos segmentos son congruentes a un mismo tercer segmento, son congruentes entre sí.",
-      "branch": "51M",
+      "description": "Si dos segmentos son congruentes con un mismo tercer segmento, entonces son congruentes entre sí.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -9131,7 +9419,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §4",
+          "locator": "Capítulo I, §5",
           "role": "primary"
         }
       ],
@@ -9157,9 +9445,19 @@
       "id": "axioma-congruencia-3",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma III.3 (Aditividad de segmentos congruentes)",
-      "description": "La concatenación de pares de segmentos adyacentes congruentes produce segmentos totales congruentes.",
-      "branch": "51M",
+      "title": "Axioma III.3 (Adición de segmentos)",
+      "description": "Si dos pares de segmentos adyacentes sobre una misma recta o sobre rectas distintas son respectivamente congruentes, entonces los segmentos totales resultantes son congruentes entre sí.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "orden",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -9167,7 +9465,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §4",
+          "locator": "Capítulo I, §5",
           "role": "primary"
         }
       ],
@@ -9194,8 +9492,17 @@
       "lang": "es",
       "type": "axioma",
       "title": "Axioma III.4 (Transporte de ángulos)",
-      "description": "Dado un ángulo, una semirrecta y un semiplano prefijado, existe una única semirrecta en dicho semiplano que forma un ángulo congruente con el dado.",
-      "branch": "51M",
+      "description": "Dado un ángulo cualquiera, una semirrecta con un origen dado sobre una recta en un plano y un semiplano determinado por dicha recta, existe una única semirrecta en dicho semiplano que conforma un ángulo congruente con el original.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -9203,7 +9510,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §4",
+          "locator": "Capítulo I, §5",
           "role": "primary"
         }
       ],
@@ -9229,9 +9536,19 @@
       "id": "axioma-congruencia-5",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma III.5 (Criterio de congruencia LAL)",
-      "description": "Si dos triángulos tienen dos lados y el ángulo comprendido respectivamente congruentes, entonces los restantes ángulos correspondientes son congruentes.",
-      "branch": "51M",
+      "title": "Axioma III.5 (Criterio Lado-Ángulo-Lado)",
+      "description": "Si dos triángulos tienen respectivamente congruentes dos lados y el ángulo comprendido entre ellos, entonces los ángulos restantes opuestos a dichos lados son también congruentes entre sí.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "triangulo",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -9239,7 +9556,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §4",
+          "locator": "Capítulo I, §5",
           "role": "primary"
         }
       ],
@@ -9623,9 +9940,19 @@
       "id": "axioma-orden-2",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma II.2 (Extensión indefinida de la recta)",
+      "title": "Axioma II.2 (Extensión de la recta)",
       "description": "Dados dos puntos distintos A y B, siempre existe al menos un punto C tal que B está entre A y C.",
-      "branch": "51M",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -9659,9 +9986,19 @@
       "id": "axioma-orden-3",
       "lang": "es",
       "type": "axioma",
-      "title": "Axioma II.3 (Exclusividad de la entreidad lineal)",
+      "title": "Axioma II.3 (Exclusividad de la intermediación lineal)",
       "description": "De tres puntos distintos cualesquiera situados en una misma recta, a lo sumo uno está entre los otros dos.",
-      "branch": "51M",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -9697,7 +10034,17 @@
       "type": "axioma",
       "title": "Axioma II.4 (Axioma de Pasch)",
       "description": "Si una recta coplanar a un triángulo corta a uno de sus lados sin pasar por sus vértices, entonces corta necesariamente a uno de los otros dos lados.",
-      "branch": "51M",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "pasch",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -9823,16 +10170,26 @@
       "id": "angulo",
       "lang": "es",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Ángulo",
-      "description": "Figura plana formada por dos semirrectas no colineales que comparten un mismo origen denominado vértice.",
-      "branch": "51M",
+      "description": "Figura geométrica constituida por un par no ordenado de semirrectas no colineales que comparten el mismo origen puntual denominado vértice.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "congruencia",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elementos",
           "author": "Euclides",
-          "locator": "Libro I, Definición 8 y 9",
+          "locator": "Libro I, Definiciones 8 y 9",
           "role": "primary"
         },
         {
@@ -9864,18 +10221,23 @@
       "id": "angulos-suplementarios",
       "lang": "es",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Ángulos suplementarios",
-      "description": "Par de ángulos coplanares cuya adición de amplitudes angulares es equivalente a un ángulo llano o 180 grados.",
-      "branch": "51M",
+      "description": "Par de ángulos cuya unión por congruencia reproduce la configuración de un par lineal sobre semirrectas opuestas de una misma recta soporte.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "angulos",
+        "orden",
+        "hilbert"
+      ],
       "hasSimulation": false,
       "sources": [
-        {
-          "title": "Elementos",
-          "author": "Euclides",
-          "locator": "Libro I, Proposición 13",
-          "role": "primary"
-        },
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
@@ -9982,9 +10344,19 @@
       "lang": "es",
       "type": "definicion",
       "subtype": "primitivo",
-      "title": "Congruencia geométrica",
-      "description": "Relación primitiva de equivalencia y rigidez entre configuraciones geométricas que conservan dimensiones, distancias y amplitudes angulares.",
-      "branch": "51M",
+      "title": "Congruencia",
+      "description": "Relación primitiva en la geometría sintética que formaliza la rigidez y la equivalencia de tamaño y forma entre segmentos y entre ángulos.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert",
+        "rigidez"
+      ],
       "hasSimulation": false,
       "sources": [
         {
@@ -9996,7 +10368,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo I, §3",
+          "locator": "Capítulo I, §5",
           "role": "primary"
         }
       ],
@@ -10793,10 +11165,20 @@
       "id": "segmento",
       "lang": "es",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Segmento",
-      "description": "Porción acotada de una recta comprendida entre dos puntos extremos incluidos.",
-      "branch": "51M",
+      "description": "Conjunto formado por dos puntos extremos de una recta y todos los puntos situados entre ellos.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
@@ -10910,16 +11292,26 @@
       "id": "semirrecta",
       "lang": "es",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Semirrecta",
-      "description": "Parte de una recta formada por un punto de origen y todos los puntos que se extienden en un único sentido.",
-      "branch": "51M",
+      "description": "Conjunto formado por un punto origen de una recta y todos los puntos que se extienden en un mismo sentido.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elementos",
           "author": "Euclides",
-          "locator": "Libro I, Nociones",
+          "locator": "Libro I, Definición",
           "role": "primary"
         },
         {
@@ -11074,10 +11466,20 @@
       "id": "triangulo",
       "lang": "es",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Triángulo",
-      "description": "Polígono plano fundamental formado por la unión de los tres segmentos de recta que unen tres puntos no colineales.",
-      "branch": "51M",
+      "description": "Figura geométrica plana constituida por tres puntos no colineales denominados vértices y los tres segmentos que los unen.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "congruencia",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
@@ -11858,6 +12260,7 @@
       "deathYear": 1952,
       "country": "Italia",
       "branch": "01A",
+      "image": "/images/mathematicians/Gino_Fano.jpg",
       "availableLangs": [
         "en",
         "es",
@@ -12061,6 +12464,7 @@
       "title": "Moritz Pasch",
       "description": "Matemático alemán pionero en la fundamentación axiomática rigurosa de la geometría y descubridor de los axiomas de orden.",
       "branch": "01A",
+      "image": "/images/mathematicians/Moritz_Pasch.jpg",
       "availableLangs": [
         "en",
         "es",
@@ -12119,6 +12523,7 @@
       "title": "Pitágoras de Samos",
       "description": "Filósofo y matemático griego de la antigüedad clásica, fundador de la escuela pitagórica y del teorema fundamental sobre triángulos rectángulos.",
       "branch": "01A",
+      "image": "/images/mathematicians/Pythagoras.jpg",
       "availableLangs": [
         "en",
         "es",
@@ -13446,8 +13851,17 @@
       "lang": "eu",
       "type": "axioma",
       "title": "III.1 axioma (Zuzenkien garraioa)",
-      "description": "Zuzenki bat eta jatorri finkodun erdi-zuzen bat emanda, erdi-zuzenean puntu bakar bat existitzen da emandakoarekin kongruentea den zuzenki bat zehazten duena.",
-      "branch": "51M",
+      "description": "Edozein zuzenki eta jatorri jakin bateko zuzenerdi bat emanda, zuzenerdi horretan puntu bakar bat existitzen da jatorrizkoaren kongruentea den zuzenki bat zehazten duena.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -13455,7 +13869,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §4",
+          "locator": "I. kapitulua, §5",
           "role": "primary"
         }
       ],
@@ -13482,8 +13896,17 @@
       "lang": "eu",
       "type": "axioma",
       "title": "III.2 axioma (Zuzenkien kongruentziaren iragankortasuna)",
-      "description": "Bi zuzenki hirugarren zuzenki berarekin kongruenteak badira, elkarren artean ere kongruenteak dira.",
-      "branch": "51M",
+      "description": "Bi zuzenki hirugarren zuzenki beraren kongruenteak badira, elkarren artean ere kongruenteak dira.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -13491,7 +13914,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §4",
+          "locator": "I. kapitulua, §5",
           "role": "primary"
         }
       ],
@@ -13517,9 +13940,19 @@
       "id": "axioma-congruencia-3",
       "lang": "eu",
       "type": "axioma",
-      "title": "III.3 axioma (Zuzenkien batuketa eta aditibitatea)",
-      "description": "Ondoko zuzenki kongruenteen bikoteak kateatzean, lortutako zuzenki osoak ere kongruenteak dira.",
-      "branch": "51M",
+      "title": "III.3 axioma (Zuzenkien batuketa)",
+      "description": "Zuzen bereko zein zuzen desberdinetako ondoz ondoko bi zuzenki-pare elkarren artean kongruenteak badira, lortutako zuzenki osoak ere kongruenteak dira elkarren artean.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "orden",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -13527,7 +13960,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §4",
+          "locator": "I. kapitulua, §5",
           "role": "primary"
         }
       ],
@@ -13554,8 +13987,17 @@
       "lang": "eu",
       "type": "axioma",
       "title": "III.4 axioma (Angeluen garraioa)",
-      "description": "Angelu bat, erdi-zuzen bat eta erdi-plano finkatu bat emanda, erdi-plano horretan erdi-zuzen bakarra existitzen da emandakoarekin kongruentea den angelu bat eratzen duena.",
-      "branch": "51M",
+      "description": "Edozein angelu, plano bateko zuzen baten gaineko jatorri jakin bateko zuzenerdi bat eta zuzen horrek mugatutako erdi-plano bat emanda, zuzenerdi bakar bat existitzen da erdi-plano horretan jatorrizkoarekiko kongruentea den angelu bat osatzen duena.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -13563,7 +14005,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §4",
+          "locator": "I. kapitulua, §5",
           "role": "primary"
         }
       ],
@@ -13589,9 +14031,19 @@
       "id": "axioma-congruencia-5",
       "lang": "eu",
       "type": "axioma",
-      "title": "III.5 axioma (LAL kongruentzia-irizpidea)",
-      "description": "Bi triangeluk bi alde eta bien arteko angelua hurrenez hurren kongruenteak badituzte, gainerako angelu eta aldeak ere kongruenteak dira.",
-      "branch": "51M",
+      "title": "III.5 axioma (Aldea-Angelua-Aldea irizpidea)",
+      "description": "Bi hirukik bi alde eta haien arteko angelua hurrenez hurren kongruenteak badituzte, orduan alde horiei aurrez aurreko gainerako angeluak ere kongruenteak dira elkarren artean.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "triangulo",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "congruencia",
       "hasSimulation": true,
@@ -13599,7 +14051,7 @@
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. kapitulua, §4",
+          "locator": "I. kapitulua, §5",
           "role": "primary"
         }
       ],
@@ -13983,9 +14435,19 @@
       "id": "axioma-orden-2",
       "lang": "eu",
       "type": "axioma",
-      "title": "II.2 axioma (Zuzenaren hedapen mugagabea)",
-      "description": "Edozein A eta B puntu desberdinetarako, beti existitzen da gutxienez C puntu bat non B puntua A eta C artean dagoen.",
-      "branch": "51M",
+      "title": "II.2 axioma (Zuzenaren hedapena)",
+      "description": "Edozein A eta B puntu desberdin emanda, beti existitzen da gutxienez C puntu bat non B puntua A eta C-ren artean dagoen.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -14019,9 +14481,19 @@
       "id": "axioma-orden-3",
       "lang": "eu",
       "type": "axioma",
-      "title": "II.3 axioma (Tartekotasun linealaren esklusibotasuna)",
-      "description": "Zuzen bereko hiru puntu desberdinetatik, gehienez puntu bat dago beste bien artean.",
-      "branch": "51M",
+      "title": "II.3 axioma (Bitartekotasun linealaren esklusibotasuna)",
+      "description": "Zuzen bereko edozein hiru puntu desberdinetatik, gehienez bat dago beste biren artean.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -14056,8 +14528,18 @@
       "lang": "eu",
       "type": "axioma",
       "title": "II.4 axioma (Paschen axioma)",
-      "description": "Triangelu baten plano bereko zuzen batek haren alde bat ebakitzen badu erpinetatik igaro gabe, nahitaez ebakitzen du beste bi aldeetako bat.",
-      "branch": "51M",
+      "description": "Triangelu baten plano berean dagoen zuzen batek bere alde bat erpinetatik igaro gabe ebakitzen badu, nahitaez beste bi aldeetako bat ebakitzen du.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "03B"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "pasch",
+        "hilbert"
+      ],
       "axiomSystem": "sistema-absoluto",
       "axiomFamily": "orden",
       "hasSimulation": true,
@@ -14183,22 +14665,32 @@
       "id": "angulo",
       "lang": "eu",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Angelua",
-      "description": "Erpin izeneko jatorri bera partekatzen duten bi zuzenerdi ez-lerrokaturen elkarketaz osatutako irudi laua.",
-      "branch": "51M",
+      "description": "Erpin izeneko jatorri-puntu bera partekatzen duten eta zuzen berekoak ez diren bi zuzenerdiren bikote ez-ordenatuz osatutako figura geometrikoa.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "congruencia",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elementuak",
           "author": "Euklides",
-          "locator": "I. Liburukia, 8. eta 9. Definizioak",
+          "locator": "I. liburua, 8 eta 9. definizioak",
           "role": "primary"
         },
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. Kapitulua, §4",
+          "locator": "I. kapitulua, §4",
           "role": "primary"
         }
       ],
@@ -14224,18 +14716,23 @@
       "id": "angulos-suplementarios",
       "lang": "eu",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Angelu gehigarriak",
-      "description": "Beren neurri angeluarren batura angelu lau baten (180 gradu) baliokidea den bi angelu koplanarren bikotea.",
-      "branch": "51M",
+      "description": "Beren batasunak kongruentzia bidez euskarri-zuzen bereko aurkako zuzenerdien angelu-pare lineal baten egitura erreproduzitzen duen angelu-bikotea.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "angulos",
+        "orden",
+        "hilbert"
+      ],
       "hasSimulation": false,
       "sources": [
-        {
-          "title": "Elementuak",
-          "author": "Euklides",
-          "locator": "I. Liburukia, 13. Proposizioa",
-          "role": "primary"
-        },
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
@@ -14342,21 +14839,31 @@
       "lang": "eu",
       "type": "definicion",
       "subtype": "primitivo",
-      "title": "Kongruentzia geometrikoa",
-      "description": "Dimentsioak, distantziak eta angelu-irekidurak kontserbatzen dituzten konfigurazio geometrikoa lotzen dituen baliokidetasun- eta zurruntasun-erlazio primitiboa.",
-      "branch": "51M",
+      "title": "Kongruentzia",
+      "description": "Zuzenkien zein angeluen arteko zurruntasuna eta tamaina- zein forma-baliokidetasuna ezartzen dituen oinarrizko erlazioa.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "congruencia",
+        "hilbert",
+        "rigidez"
+      ],
       "hasSimulation": false,
       "sources": [
         {
           "title": "Elementuak",
           "author": "Euklides",
-          "locator": "I. Liburukia, 4. Nozio Komuna",
+          "locator": "I. liburua, Nozio Orokorrak 4",
           "role": "primary"
         },
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. Kapitulua, §3",
+          "locator": "I. kapitulua, §5",
           "role": "primary"
         }
       ],
@@ -15153,22 +15660,32 @@
       "id": "segmento",
       "lang": "eu",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Zuzenkia",
-      "description": "Zuzen baten zati mugatua, mutur gisa hartutako bi punturen artean kokatutako puntu guztiek osatua.",
-      "branch": "51M",
+      "description": "Zuzen baten bi mutur-puntuk eta haien artean dauden puntu guztiek osatutako multzoa.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elementuak",
           "author": "Euklides",
-          "locator": "I. Liburukia, Nozio Komunak",
+          "locator": "I. liburua, Nozio Orokorrak",
           "role": "primary"
         },
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. Kapitulua, §3",
+          "locator": "I. kapitulua, §3",
           "role": "primary"
         }
       ],
@@ -15270,22 +15787,32 @@
       "id": "semirrecta",
       "lang": "eu",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Zuzenerdia",
-      "description": "Zuzen baten zatia, jatorrizko puntu finko batek eta noranzko bakarrean hedatzen diren puntu guztiek osatua.",
-      "branch": "51M",
+      "description": "Zuzen baten jatorri-puntu batek eta noranzko berean hedatzen diren puntu guztiek osatutako multzoa.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "intermediacion",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elementuak",
           "author": "Euklides",
-          "locator": "I. Liburukia, Nozioak",
+          "locator": "I. liburua, Definizioa",
           "role": "primary"
         },
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. Kapitulua, §4",
+          "locator": "I. kapitulua, §4",
           "role": "primary"
         }
       ],
@@ -15434,22 +15961,32 @@
       "id": "triangulo",
       "lang": "eu",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Triangelua",
-      "description": "Lerrokatu gabeko hiru puntu lotzen dituzten hiru zuzenkiren elkarketaz osatutako oinarrizko poligono laua.",
-      "branch": "51M",
+      "description": "Erpin izeneko hiru puntu ez-kolinealek eta haiek binaka lotzen dituzten hiru zuzenkiek osatutako figura geometriko laua.",
+      "branch": "51A",
+      "branches": [
+        "51A",
+        "51M"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "orden",
+        "congruencia",
+        "hilbert"
+      ],
       "hasSimulation": true,
       "sources": [
         {
           "title": "Elementuak",
           "author": "Euklides",
-          "locator": "I. Liburukia, 19. Definizioa",
+          "locator": "I. liburua, 19. definizioa",
           "role": "primary"
         },
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "I. Kapitulua, §4",
+          "locator": "I. kapitulua, §4",
           "role": "primary"
         }
       ],
@@ -16218,6 +16755,7 @@
       "deathYear": 1952,
       "country": "Italia",
       "branch": "01A",
+      "image": "/images/mathematicians/Gino_Fano.jpg",
       "availableLangs": [
         "en",
         "es",
@@ -16421,6 +16959,7 @@
       "title": "Moritz Pasch",
       "description": "Matematikari alemaniarra, geometriaren oinarri axiomatiko zorrotzen aitzindaria eta ordenaren axiomen aurkitzailea.",
       "branch": "01A",
+      "image": "/images/mathematicians/Moritz_Pasch.jpg",
       "availableLangs": [
         "en",
         "es",
@@ -16479,6 +17018,7 @@
       "title": "Samosko Pitagoras",
       "description": "Antzinate klasikoko filosofo eta matematikari greziarra, eskola pitagorikoaren fundatzailea eta triangelu angeluzuzenei buruzko teorema nagusiaren sortzailea.",
       "branch": "01A",
+      "image": "/images/mathematicians/Pythagoras.jpg",
       "availableLangs": [
         "en",
         "es",

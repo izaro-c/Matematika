@@ -2,48 +2,67 @@ export const metadata = {
   id: "angulos-suplementarios",
   lang: "en",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Supplementary Angles",
-  description: "Pair of coplanar angles whose sum of angular measures equals a straight angle or 180 degrees.",
-  branch: "51M",
+  description: "A pair of adjacent angles that share a common side while their other two sides form opposite rays along the same supporting line.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "congruencia", "angulos", "orden", "hilbert"],
   hasSimulation: false,
   sources: [
-    { title: "Elements", author: "Euclid", locator: "Book I, Proposition 13", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §4",
+      role: "primary"
+    }
   ]
 };
 
-<Capitular letra="T" />wo coplanar angles are called supplementary when the sum of their angular measures equals a <ConceptLink targetId="angulo-llano">straight angle</ConceptLink> ($180^\circ$ or $\pi\text{ rad}$). This relation is fundamental for the synthetic characterization of <ConceptLink targetId="angulo-recto">right angles</ConceptLink> and the study of intersecting lines.
+<Capitular letra="T" />wo <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> are adjacent supplementary angles if they share their <ConceptLink targetId="vertice">vertex</ConceptLink> and a common <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink>, while their remaining two rays constitute <ConceptLink targetId="semirrecta">opposite rays</ConceptLink> along the same supporting <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>.
 
-<Definicion title="">
-  Two coplanar <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> $\alpha$ and $\beta$ in a plane $\mathcal{P}$ are supplementary if and only if the sum of their angular measures satisfies:
-  $$
-  \mu(\alpha) + \mu(\beta) = \pi \quad (180^\circ)
-  $$
+In <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, the notion of supplement does not presuppose the assignment of <ConceptLink targetId="distancia">numerical measures</ConceptLink> or a <ConceptLink targetId="espacio-metrico">metric sum</ConceptLink> of $180^\circ$, but is rigorously grounded in the primitive relation of linear <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink> on the line and the <ConceptLink targetId="conjunto-disjunto">partition</ConceptLink> into opposite rays induced by an origin <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink>.
+
+<Definicion title="Formal Definition of Adjacent Supplementary Angles">
+Let $\ell \in \mathcal{L}$ be a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \Pi$ and let <VisualBind element="pO" color="carbon">$O$</VisualBind> $\in \operatorname{tr}(\ell)$ be an origin <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink>. Let <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \operatorname{tr}(\ell) \setminus \{O\}$ be two points such that $O$ is between $A$ and $B$ (<ConceptLink targetId="estar-entre" isDependency={true}>$A * O * B$</ConceptLink>), and let <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$ be a point exterior to the <ConceptLink targetId="traza">point trace</ConceptLink> $\operatorname{tr}(\ell)$, guaranteeing the non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> of the triples $\{O, A, C\}$ and $\{O, B, C\}$.
+
+Define the <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> <VisualBind element="rayH" color="pavo">$h = \overrightarrow{OA}$</VisualBind>, <VisualBind element="rayHPrime" color="pavo">$h' = \overrightarrow{OB}$</VisualBind>, and <VisualBind element="rayK" color="pavo">$k = \overrightarrow{OC}$</VisualBind>. The angles:
+
+$$
+\angle(h, k) = \{ \overrightarrow{OA}, \overrightarrow{OC} \} = \angle AOC \quad \text{and} \quad \angle(h', k) = \{ \overrightarrow{OB}, \overrightarrow{OC} \} = \angle BOC
+$$
+
+formed by their respective <ConceptLink targetId="lado">sides</ConceptLink> are called **adjacent supplementary angles** (*Nebenwinkel*). Two arbitrary angles $\angle \alpha$ and $\angle \beta$ in the plane are said to be **supplementary** if $\angle \beta$ is <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to the adjacent supplement of $\angle \alpha$.
 </Definicion>
 
 <Separador />
 
-### Adjacent supplementary angles
-
-In synthetic geometry, if two adjacent angles share a common side and their non-common sides form a pair of opposite <ConceptLink targetId="semirrecta">rays</ConceptLink> along a single <ConceptLink targetId="recta">line</ConceptLink>, the sum of their apertures is necessarily equal to two right angles.
-
-### Characterization of the right angle
-
-In Hilbert's axiomatization, a <ConceptLink targetId="angulo-recto">right angle</ConceptLink> is defined axiomatically as an angle congruent to its own adjacent supplementary angle:
-$$
-\alpha \cong \beta \land \mu(\alpha) + \mu(\beta) = 180^\circ \implies \mu(\alpha) = 90^\circ
-$$
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Properties of supplementary angles">
-    <PropiedadItem id="teorema-angulos-opuestos-verticales" title="Congruence of supplements">
-      Angles supplementary to the same angle (or to congruent angles) are congruent to each other.
+  <PropiedadesGrupo title="Congruence Invariants and Synthetic Rigidity">
+    <PropiedadItem 
+      id="congruencia-angulos-suplementarios" 
+      title="Supplementary Angles Congruence Theorem"
+      formula="\angle(h_1, k_1) \cong \angle(h_2, k_2) \implies \angle(h'_1, k_1) \cong \angle(h'_2, k_2)"
+    >
+      If two angles are mutually <ConceptLink targetId="congruencia">congruent</ConceptLink>, their respective adjacent supplementary angles are congruent to each other (Hilbert's *Satz 12*). This <ConceptLink targetId="teorema">theorem</ConceptLink> is formally derived using <ConceptLink targetId="segmento">segment</ConceptLink> transport (<ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink>), collinear segment additivity (<ConceptLink targetId="axioma-congruencia-3">Axiom III.3</ConceptLink>), and the Side-Angle-Side congruence criterion (<ConceptLink targetId="axioma-congruencia-5">Axiom III.5</ConceptLink>).
     </PropiedadItem>
-    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Angular supplementarity">
-      In any triangle, each exterior angle is supplementary to its adjacent interior angle.
+
+    <PropiedadItem 
+      id="caracterizacion-angulo-recto" 
+      title="Formal Definition of Right Angle and Orthogonality"
+      formula="\operatorname{Recto}(\angle(h, k)) \iff \angle(h, k) \cong \angle(h', k) \iff \overleftrightarrow{OA} \perp \overleftrightarrow{OC}"
+    >
+      An angle is formally defined as a right angle if and only if it is congruent to its own adjacent supplement. Consequently, the supporting lines $\overleftrightarrow{OA}$ and $\overleftrightarrow{OC}$ are <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> if and only if they form a linear pair of congruent angles at their point of intersection.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Order and Betweenness Properties">
+    <PropiedadItem 
+      id="particion-semirrectas-opuestas" 
+      title="Partition of a Line into Opposite Rays"
+      formula="\forall O \in \operatorname{tr}(\ell) \; \exists! \{h, h'\} \; (\operatorname{tr}(\ell) \setminus \{O\} = \operatorname{tr}(h) \sqcup \operatorname{tr}(h'))"
+    >
+      Every point $O$ on a line $\ell$ partitions the remaining point trace of the line into exactly two <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> and opposite <ConceptLink targetId="semirrecta">rays</ConceptLink> $h$ and $h'$, ensuring the existence and uniqueness of the adjacent supplement for any secant ray $k$ projected into a <ConceptLink targetId="semiplano">half-plane</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
