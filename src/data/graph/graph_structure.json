@@ -479,18 +479,12 @@
     "angulos-suplementarios": {
       "id": "angulos-suplementarios",
       "type": "definicion",
-      "subtype": "derivado",
-      "title": "Angelu gehigarriak",
-      "description": "Beren batasunak kongruentzia bidez euskarri-zuzen bereko aurkako zuzenerdien angelu-pare lineal baten egitura erreproduzitzen duen angelu-bikotea.",
+      "title": "Angelu betegarriak",
+      "description": "Elkarren ondokoak izanik alde ez-komunek aurkako zuzenerdiak osatzen dituzten bi angeluren pare batekiko kongruenteak diren bi angeluren arteko erlazio geometrikoa.",
       "proofs": [],
       "directDependencies": [
         "angulo",
-        "congruencia",
-        "recta",
-        "estar-entre",
-        "plano",
-        "punto",
-        "semirrecta"
+        "congruencia"
       ]
     },
     "circunferencia": {
