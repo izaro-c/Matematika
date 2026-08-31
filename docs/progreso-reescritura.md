@@ -6,14 +6,14 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 > Un documento se considera **Aprobado con Visto Bueno Oficial** únicamente tras la revisión y confirmación explícita del usuario.
 
 **Resumen de Estado:**
-- **Aprobados con Visto Bueno:** 33 documentos
+- **Aprobados con Visto Bueno:** 46 documentos
 - **Reescritos en Espera de Revisión:** 0 documentos
-- **Pendientes de Reescritura:** 78 documentos
-- **Total de Nodos en el Grafo:** 111 documentos
+- **Pendientes de Reescritura:** 66 documentos
+- **Total de Nodos en el Grafo:** 112 documentos
 
 ---
 
-## 1. Documentos con Visto Bueno Oficial (Aprobados: 42)
+## 1. Documentos con Visto Bueno Oficial (Aprobados: 46)
 
 | ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Fecha Aprobación |
 | :--- | :--- | :--- | :--- | :--- | :---: |
@@ -58,31 +58,27 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 | [`axioma-congruencia-2`](../content/mdx/es/axioms/axioma-congruencia-2.mdx) | Axioma III.2 (Transitividad de la congruencia de segmentos) | III.2 axioma (Zuzenkien kongruentziaren iragankortasuna) | Axiom III.2 (Transitivity of Segment Congruence) | `axioma` | ✅ 2026-08-30 |
 | [`axioma-congruencia-3`](../content/mdx/es/axioms/axioma-congruencia-3.mdx) | Axioma III.3 (Aditividad de segmentos congruentes) | III.3 axioma (Zuzenkien batuketa eta aditibitatea) | Axiom III.3 (Additivity of Segment Congruence) | `axioma` | ✅ 2026-08-30 |
 | [`axioma-congruencia-4`](../content/mdx/es/axioms/axioma-congruencia-4.mdx) | Axioma III.4 (Transporte de ángulos) | III.4 axioma (Angeluen garraioa) | Axiom III.4 (Angle Transport) | `axioma` | ✅ 2026-08-30 |
-| [`axioma-congruencia-5`](../content/mdx/es/axioms/axioma-c ongruencia-5.mdx) | Axioma III.5 (Criterio de congruencia LAL) | III.5 axioma (LAL kongruentzia-irizpidea) | Axiom III.5 (SAS Congruence Criterion) | `axioma` | ✅ 2026-08-30 |
-
-
+| [`traza`](../content/mdx/es/definitions/traza.mdx) | Traza puntual | Puntu-trazadura | Point trace | Definición (`nominal`) | ✅ 2026-08-31 |
+| [`axioma-congruencia-5`](../content/mdx/es/axioms/axioma-congruencia-5.mdx) | Axioma III.5 (Criterio de congruencia LAL) | III.5 axioma (LAL kongruentzia-irizpidea) | Axiom III.5 (SAS Congruence Criterion) | `axioma` | ✅ 2026-08-30 |
+| [`angulos-suplementarios`](../content/mdx/es/definitions/angulos-suplementarios.mdx) | Ángulos suplementarios | Angelu betegarriak | Supplementary Angles | Definición (`derivado`) | ✅ 2026-08-31 |
+| [`perpendicular`](../content/mdx/es/definitions/perpendicular.mdx) | Perpendicularidad | Perpendikulartasuna | Perpendicular Lines | Definición (`derivado`) | ✅ 2026-08-31 |
+| [`triangulo-rectangulo`](../content/mdx/es/definitions/triangulo-rectangulo.mdx) | Triángulo rectángulo | Triangelu angeluzuzena | Right Triangle | Definición (`derivado`) | ✅ 2026-08-31 |
 
 ---
 
 ## 2. Documentos Reescritos con Skill Actualizada (En Espera de Revisión: 0)
 
-*Actualmente no hay documentos pendientes de revisión.*
+*Actualmente no hay documentos en espera de revisión.*
 
----
-
-## 3. Plan de Reescritura Ordenado por Prioridad Epistemológica (70 pendientes)
+## 3. Plan de Reescritura Ordenado por Prioridad Epistemológica (66 pendientes)
 
 El orden de los siguientes bloques sigue la secuencia lógica rigurosa de Hilbert y los fundamentos del grafo de conocimiento: desde los axiomas y conceptos de orden (Grupo II), pasando por congruencia (Grupo III), paralelismo (Grupo IV), continuidad (Grupo V), sistemas globales, teoremas mayores y demostraciones, hasta modelos, didáctica y biografías complementarias.
 
-### Fase 2: Prioridad 2: Congruencia y Rigidez Sintética (Hilbert Grupo III) (9)
+### Fase 2: Prioridad 2: Congruencia y Rigidez Sintética (Hilbert Grupo III) (6 pendientes)
 *Relación de congruencia, axiomas III.1-III.5, ángulos suplementarios, perpendicularidad, triángulos rectángulos, teoremas iniciales y sus demostraciones.*
 
 | ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
 | :--- | :--- | :--- | :--- | :--- | :---: |
-
-| [`angulos-suplementarios`](../content/mdx/es/definitions/angulos-suplementarios.mdx) | Ángulos suplementarios | Angelu gehigarriak | Supplementary Angles | `definicion` | ⏳ Pendiente |
-| [`perpendicular`](../content/mdx/es/definitions/perpendicular.mdx) | Perpendicularidad | Perpendikulartasuna | Perpendicular Lines | `definicion` | ⏳ Pendiente |
-| [`triangulo-rectangulo`](../content/mdx/es/definitions/triangulo-rectangulo.mdx) | Triángulo rectángulo | Triangelu angeluzuzena | Right Triangle | `definicion` | ⏳ Pendiente |
 | [`teorema-triangulo-isosceles`](../content/mdx/es/theorems/teorema-triangulo-isosceles.mdx) | Teorema del triángulo isósceles | Triangelu isoszelearen teorema | Isosceles Triangle Theorem | `teorema` | ⏳ Pendiente |
 | [`demo-triangulo-isosceles`](../content/mdx/es/demonstrations/demo-triangulo-isosceles.mdx) | Demostración: Teorema del triángulo isósceles | Frogapena: Triangelu isoszelearen teorema | Proof: Isosceles Triangle Theorem | `demostracion` | ⏳ Pendiente |
 | [`teorema-angulos-opuestos-verticales`](../content/mdx/es/theorems/teorema-angulos-opuestos-verticales.mdx) | Teorema de los ángulos opuestos por el vértice | Erpinez aurkako angeluen teorema | Vertical Angles Theorem | `teorema` | ⏳ Pendiente |

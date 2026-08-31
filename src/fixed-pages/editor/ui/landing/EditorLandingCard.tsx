@@ -177,8 +177,16 @@ export const EditorLandingCard: React.FC<EditorLandingCardProps> = ({
   return (
     <div
       ref={cardRef}
+      role="button"
+      tabIndex={0}
       onClick={() => onOpenFile(file.path)}
-      className="group relative flex flex-col justify-between rounded-xl border p-4 shadow-2xs hover:shadow-md transition-all cursor-pointer overflow-hidden"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onOpenFile(file.path);
+        }
+      }}
+      className="group relative flex flex-col justify-between rounded-xl border p-4 shadow-2xs hover:shadow-md transition-all cursor-pointer overflow-hidden focus:outline-hidden focus:ring-2 focus:ring-ocre/40"
       style={{
         borderColor: `color-mix(in srgb, ${primaryColorVar} 45%, transparent)`,
         backgroundColor: `color-mix(in srgb, ${primaryColorVar} 8%, var(--color-lienzo, transparent))`,

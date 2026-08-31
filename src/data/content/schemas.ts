@@ -16,6 +16,12 @@ const BaseContentSchemaFields = {
   branches: z.array(z.string()).optional(),
   /** Etiquetas temáticas para búsqueda y clasificación secundaria. */
   tags: z.array(z.string()).optional(),
+  /** Enlaces a otros contenidos */
+  links: z.array(z.string()).optional(),
+  /** Referencias 'ver también' */
+  seeAlso: z.array(z.string()).optional(),
+  /** Menciones extraídas de ConceptLink o componentes de contenido */
+  conceptLinks: z.array(z.string()).optional(),
   /** Referencias que fijan la definición, el enunciado o la formalización. */
   sources: z.array(MathematicalSourceSchema).optional(),
 };
@@ -77,8 +83,6 @@ export const MethodSchema = z.object({
   title: z.string(),
   description: z.string(),
   authors: z.array(z.string()).optional(),
-  links: z.array(z.string()).optional(),
-  seeAlso: z.array(z.string()).optional(),
   requires: z.array(z.string()).optional(),
   difficulty: z.enum(['básico', 'intermedio', 'avanzado']).optional(),
   hasSimulation: z.boolean().optional(),

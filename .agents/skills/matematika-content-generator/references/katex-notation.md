@@ -8,11 +8,20 @@ Toda fórmula y notación matemática en Matematika debe seguir rigurosamente lo
 
 - **Universalidad y modernidad:** Utilizar **siempre** los símbolos matemáticos contemporáneos e internacionalmente estandarizados.
 - **Cero notaciones arcaicas o ambiguas:**
-  - **Congruencia geométrica:** Utilizar **siempre `\cong` ($\cong$)** para figuras, segmentos y ángulos ($\overline{AB} \cong \overline{CD}$, $\angle ABC \cong \angle DEF$). Prohibido usar `\equiv` ($\equiv$) para congruencia geométrica (salvo citas textuales históricas con aclaración), ya que colisiona con la aritmética modular y la equivalencia lógica.
-  - **Congruencia angular y aridad formal:** En Hilbert §1, los ángulos se definen por pares de semirrectas no colineales concurrentes (o ternas de puntos con vértice común). La congruencia angular se denota $\angle ABC \cong \angle DEF$ o $\angle(h,k) \cong \angle(h',k')$, y su aridad de primer orden es $\cong_{\angle} \, \subseteq \mathcal{P}^6$. Prohibido $\angle A \cong \angle B$.
+  - **Congruencia geométrica:** Utilizar **siempre `\cong` ($\cong$)** para figuras, segmentos y ángulos ($\overline{AB} \cong \overline{CD}$, $\angle ABC \cong \angle DEF$, $\triangle ABC \cong \triangle A'B'C'$). Prohibido usar `\equiv` ($\equiv$) para congruencia geométrica.
+  - **Identidad vs. Congruencia:** Reservar $=$ para identidad extensional de conjuntos ($\overline{AB} = \overline{BA}$) o valores escalares ($d(A,B) = 5$). Para equivalencia geométrica sintética, emplear exclusivamente $\cong$.
+  - **Congruencia angular y aridad formal:** Los ángulos se definen por pares de semirrectas no colineales concurrentes o ternas con vértice intermedio. La congruencia angular se denota $\angle ABC \cong \angle DEF$ o $\angle(h,k) \cong \angle(h',k')$.
   - **Segmento abierto vs. cerrado:** Emplear $\operatorname{seg}(AB)$ para el segmento abierto (excluyendo extremos $A$ y $B$), y $\overline{AB}$ para el segmento cerrado o clausura geométrica.
   - **Semejanza geométrica:** Utilizar **`\sim` ($\sim$)** ($\triangle ABC \sim \triangle DEF$).
   - **Paralelismo y perpendicularidad:** Utilizar **`\parallel` ($\parallel$)** y **`\perp` ($\perp$)**.
+  - **Signaturas funcionales alineadas:** Para aplicaciones y operadores, usar la estructura en dos líneas con `\begin{aligned}`:
+    $$
+    \begin{aligned}
+    f\colon A &\longrightarrow B \\
+    x &\longmapsto f(x)
+    \end{aligned}
+    $$
+- **Interactividad KaTeX con Glosario (`texSymbolMap`):** Toda macro registrada en `content/glossary/dictionary.ts` es inspeccionable interactivamente en la interfaz mediante `MarginaliaPanel`. Queda prohibido incrustar etiquetas JSX dentro de delimitadores `$` de KaTeX.
 
 ---
 
@@ -27,6 +36,9 @@ Toda fórmula y notación matemática en Matematika debe seguir rigurosamente lo
 | **Perpendicularidad** | $\perp$ | `\perp` | $\ell \perp m$ | $\top$, $\bot$ *(reservado a lógica: falsedad)* |
 | **Incidencia sintética** | $\mathbf{I}$ | `\mathbf{I}` | $P \, \mathbf{I} \, \ell$, $P \, \mathbf{I} \, \pi$ | $I$ cursiva ambigua, $\in$ (entre primitivos) |
 | **Traza de incidencia puntual** | $\operatorname{tr}$ | `\operatorname{tr}` | $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$ | $\ell \subseteq \pi$ *(colapso de tipos)* |
+| **Conjunto potencia** | $\mathcal{P}(A)$ | `\mathcal{P}(A)` | $\operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} \to \mathcal{P}(\mathcal{P})$ | $2^A$ *(en contextos sintéticos)* |
+| **Aplicación funcional** | $\longrightarrow$ | `\longrightarrow` | $f\colon A \longrightarrow B$ | `->`, $\to$ sin espaciado |
+| **Asignación de elemento** | $\longmapsto$ | `\longmapsto` | $x \longmapsto f(x)$ | $\to$ para elementos |
 | **Pertenencia conjuntista** | $\in$ | `\in` | $P \in \mathcal{P}$, $x \in X$ | $\epsilon$ (letra griega épsilon) |
 | **Intermediación / Orden** | $*$ o $\mathbf{B}$ | `*` o `\mathbf{B}` | $A * B * C$, $\mathbf{B}(A, B, C)$ | $B(A,B,C)$ sin negrita |
 | **Segmento abierto** | $\operatorname{seg}(AB)$ | `\operatorname{seg}(AB)` | $\operatorname{seg}(AB) \cap \ell = \emptyset$ | $(A,B)$ *(ambiguo con pares ordenados)* |
@@ -40,5 +52,5 @@ Toda fórmula y notación matemática en Matematika debe seguir rigurosamente lo
 | **Implicación directa** | $\implies$ | `\implies` | $P \implies Q$ | `->`, $\to$ *(reservado a funciones)* |
 | **Conjunto vacío** | $\emptyset$ | `\emptyset` | $A \cap B = \emptyset$ | $\Phi$, $\phi$, $\{\}$ |
 | **Conjuntos numéricos** | $\mathbb{N}, \mathbb{Z}, \mathbb{Q}, \mathbb{R}, \mathbb{C}$ | `\mathbb{R}`, etc. | $x \in \mathbb{R}^n$ | $\mathbf{R}$, $R$ cursiva |
-| **Cardinalidad** | $\lvert S \rvert$ o $\text{card}(S)$ | `\lvert S \rvert` | $\dim(V) = \lvert B \rvert$ | `\card`, $|S|$ *(sin balanceo de barras)* |
+| **Cardinalidad** | $\lvert S \rvert$ o $\text{card}(S)$ | `\lvert S \rvert` | $\dim(V) = \lvert B \rvert$ | $\text{card}$, $|S|$ *(sin balanceo de barras)* |
 | **Tablas KaTeX** | $\mid$ o $\lvert \dots \rvert$ | `\mid` | $S = \{ x \in \mathbb{R} \mid x > 0 \}$ | `|` directo *(rompe el parser Markdown)* |

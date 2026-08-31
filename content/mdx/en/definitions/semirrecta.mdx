@@ -30,7 +30,7 @@ export const Simulation = Semirrecta;
 
 <Capitular letra="A" /> ray (or half-line) is the <ConceptLink targetId="conjunto">set</ConceptLink> consisting of a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> fixed as an origin on a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> and all points of that line extending unboundedly from it in a single <ConceptLink targetId="sentido">sense</ConceptLink>.
 
-In the axiomatic foundation of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, the ray is a derived concept formally built from order relations (<ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiom II.1</ConceptLink> and <ConceptLink targetId="axioma-orden-2" isDependency={true}>Axiom II.2</ConceptLink>). It constitutes the fundamental building block for defining <ConceptLink targetId="angulo">angles</ConceptLink> and setting <ConceptLink targetId="orientacion">orientations</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+The ray (or half-line) is a derived concept formally built from order relations (<ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiom II.1</ConceptLink> and <ConceptLink targetId="axioma-orden-2" isDependency={true}>Axiom II.2</ConceptLink>), constituting the fundamental building block for defining <ConceptLink targetId="angulo">angles</ConceptLink> and setting <ConceptLink targetId="orientacion">orientations</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
 
 <Definicion title="Formal Definition of Ray">
 Given an origin point <VisualBind element="pB" color="carbon">$O$</VisualBind> and a distinct point <VisualBind element="pA" color="terracota">$A$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineOA" color="mora">$\ell$</VisualBind>, the **open ray** $\operatorname{sem}(OA)$ is the set of all points $P \in \mathcal{P}$ incident with $\ell$ such that $P \neq O$ and $O$ is not <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $P$:
@@ -55,7 +55,7 @@ $$
       title="Partition of a Line into Opposite Rays"
       formula="\operatorname{tr}(\ell) \setminus \{O\} = \operatorname{sem}(OA) \sqcup \operatorname{sem}(OB) \quad (A * O * B)"
     >
-      Any point $O \in \mathcal{P}$ on a line $\ell$ partitions the set of remaining points $\operatorname{tr}(\ell) \setminus \{O\}$ into two open, <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> <ConceptLink targetId="semirrectas-opuestas">opposite rays</ConceptLink>, $\operatorname{sem}(OA)$ and $\operatorname{sem}(OB)$, such that $A * O * B$.
+      Any point $O \in \mathcal{P}$ on a line $\ell$ partitions the remaining <ConceptLink targetId="traza">point trace</ConceptLink> $\operatorname{tr}(\ell) \setminus \{O\}$ into two open, <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> <ConceptLink targetId="semirrectas-opuestas">opposite rays</ConceptLink>, $\operatorname{sem}(OA)$ and $\operatorname{sem}(OB)$, such that $A * O * B$.
     </PropiedadItem>
 
     <PropiedadItem 

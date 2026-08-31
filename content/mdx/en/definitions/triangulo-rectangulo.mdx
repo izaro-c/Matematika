@@ -2,44 +2,79 @@ export const metadata = {
   id: "triangulo-rectangulo",
   lang: "en",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Right Triangle",
-  description: "Planar triangle possessing an interior right angle (90 degrees), bounded by two perpendicular legs and an opposite hypotenuse.",
-  branch: "51M",
+  description: "Triangle characterized by having an interior right angle, bounded by two meeting legs and an opposite hypotenuse.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "triangulo", "perpendicularidad", "congruencia", "hilbert"],
   hasSimulation: false,
   sources: [
-    { title: "Elements", author: "Euclid", locator: "Book I, Definition 21", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Definition 21",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §4",
+      role: "primary"
+    }
   ]
 };
 
-<Capitular letra="A" /> right triangle is a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> having one of its interior angles congruent to a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> ($90^\circ$ or $\frac{\pi}{2}\text{ rad}$). It constitutes the foundational geometric figure for Euclidean trigonometry and the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>.
+<Capitular letra="A" /> **right triangle** is a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> characterized by having one of its <ConceptLink targetId="angulo">interior angles</ConceptLink> congruent to a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink>, bounded by two meeting <ConceptLink targetId="cateto">legs</ConceptLink> and an opposite <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink>.
 
-<Definicion title="">
-  A triangle $\triangle ABC$ in a plane $\mathcal{P}$ is a right triangle at vertex $C$ if and only if its sides $\overline{AC}$ and $\overline{BC}$ are <ConceptLink targetId="perpendicular" isDependency={true}>perpendicular</ConceptLink>, making the interior angle $\angle C$ a right angle:
-  $$
-  \overline{AC} \perp \overline{BC} \iff \angle C \cong 90^\circ
-  $$
-  The side opposite the right angle $\overline{AB}$ is the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> ($c = \|\overline{AB}\|$), and the orthogonal sides $\overline{BC}$ and $\overline{CA}$ are the <ConceptLink targetId="cateto">legs</ConceptLink> ($a = \|\overline{BC}\|, b = \|\overline{CA}\|$).
+This figure is established within <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> without relying on metric angle measures, providing the structural basis for specialized right triangle congruence criteria and the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>.
+
+<Definicion title="Formal Definition of Right Triangle">
+Let $A, B, C \in \mathcal{P}$ be three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \Pi$, determining the <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> $\triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}$.
+
+The triangle $\triangle ABC$ is said to be a **right triangle** with right <ConceptLink targetId="vertice">vertex</ConceptLink> at $C$ if and only if the <ConceptLink targetId="secante">secant</ConceptLink> supporting <ConceptLink targetId="recta">lines</ConceptLink> $\overleftrightarrow{CA}$ and $\overleftrightarrow{CB}$ are <ConceptLink targetId="perpendicular" isDependency={true}>perpendicular</ConceptLink>:
+
+$$
+\triangle ABC \text{ is a right triangle at } C \iff \overleftrightarrow{CA} \perp \overleftrightarrow{CB} \iff \operatorname{Recto}(\angle BCA)
+$$
+
+The side opposite the right vertex, $\overline{AB}$, is called the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink>, and the two sides meeting at $C$, $\overline{CA}$ and $\overline{CB}$, are called <ConceptLink targetId="cateto">legs</ConceptLink>.
 </Definicion>
 
 <Separador />
 
-### Constituent elements and metric relations
-
-- **Hypotenuse**: The side opposite the right angle. It is strictly the longest side of the triangle.
-- **Legs**: The pair of mutually perpendicular sides enclosing the right angle.
-- **Complementary acute angles**: The remaining two acute angles satisfy $\alpha + \beta = 90^\circ$ ($\frac{\pi}{2}\text{ rad}$).
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Metric and trigonometric relations">
-    <PropiedadItem id="teorema-pitagoras" title="Pythagorean theorem">
-      In every planar right triangle, the fundamental metric relation $a^2 + b^2 = c^2$ holds.
+  <PropiedadesGrupo title="Angular Properties and Synthetic Invariants">
+    <PropiedadItem 
+      id="unicidad-angulo-recto" 
+      title="Uniqueness of the Interior Right Angle"
+      formula="\triangle ABC \text{ right-angled at } C \implies (\angle CAB \not\cong \angle BCA \land \angle ABC \not\cong \angle BCA)"
+    >
+      In <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, by virtue of the exterior angle theorem, no triangle can have more than one <ConceptLink targetId="angulo-recto">right angle</ConceptLink> nor any interior obtuse angles; consequently, the remaining two interior angles with <ConceptLink targetId="vertice">vertices</ConceptLink> at $A$ and $B$ are strictly acute.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-triangulo" title="Area formula">
-      The area of a right triangle equals half the product of its legs: $\mu(\triangle ABC) = \frac{a \cdot b}{2}$.
+
+    <PropiedadItem 
+      id="angulos-agudos-complementarios" 
+      title="Complementarity of Interior Acute Angles"
+      formula="\operatorname{Compl}(\angle CAB, \angle ABC)"
+    >
+      In <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>, the two acute angles of a right triangle are mutually complementary, directly following from the <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Euclidean Metric Relations">
+    <PropiedadItem 
+      id="relacion-pitagorica" 
+      title="Metric Relation of the Pythagorean Theorem"
+      formula="\overline{AC}^2 + \overline{BC}^2 = \overline{AB}^2"
+    >
+      In every planar Euclidean right triangle, the sum of the areas of the squares constructed on the legs equals the area of the square constructed on the hypotenuse (<ConceptLink targetId="teorema-pitagoras">Pythagorean Theorem</ConceptLink>).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+In <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, right triangles satisfy specialized <ConceptLink targetId="congruencia">congruence</ConceptLink> criteria compared to the general case: the Leg-Leg criterion (a consequence of <ConceptLink targetId="axioma-congruencia-5">SAS</ConceptLink>) and the Hypotenuse-Leg criterion, both valid independently of any parallel axiom.
+</Nota>

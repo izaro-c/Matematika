@@ -26,12 +26,6 @@ type ResolvedGraphLink = KnowledgeGraphLink & {
   source: KnowledgeGraphNode;
   target: KnowledgeGraphNode;
 };
-type ChargeForce = {
-  strength: (strength: number) => unknown;
-};
-type LinkForce = {
-  distance: (distance: (link: ResolvedGraphLink) => number) => unknown;
-};
 
 /**
  * Página Explorador (Knowledge Graph).
@@ -119,6 +113,12 @@ export const GraphPage: React.FC = () => {
       }
     } else if (node.group === 'modelo') {
       setLocation(`/modelo/${node.id}`);
+    } else if (node.group === 'metodo') {
+      setLocation(`/metodo/${node.id}`);
+    } else if (node.group === 'caso-de-uso') {
+      setLocation(`/caso-de-uso/${node.id}`);
+    } else if (node.group === 'sistema-axiomatico') {
+      setLocation(`/sistema/${node.id}`);
     } else {
       openTerm(node.id);
     }
@@ -194,19 +194,17 @@ export const GraphPage: React.FC = () => {
 
     // Configuración base
     const radius = node.val / 2;
-    let color = getNodeColor(node);
+    const color = getNodeColor(node);
 
-    // Si está completado, dibujar un anillo concéntrico de estilo astrolabio/diagrama clásico
+    // Si está completado, dibujar un anillo concéntrico de estilo astrolabio clásico sin alterar el color del nodo
     if (isCompleted && node.group !== 'central' && node.group !== 'branch') {
-      const completedColor = theme.getHex('corolario');
-      color = completedColor;
+      const ringColor = isHighlighted ? theme.carbon : theme.carbon + '80';
       ctx.beginPath();
       ctx.arc(node.x, node.y, radius + (3 / globalScale), 0, 2 * Math.PI, false);
-      ctx.strokeStyle = completedColor;
-      ctx.lineWidth = 1 / globalScale;
+      ctx.strokeStyle = ringColor;
+      ctx.lineWidth = 1.2 / globalScale;
       ctx.stroke();
     }
-
 
     // Dibujar Círculo
     ctx.beginPath();
@@ -216,27 +214,45 @@ export const GraphPage: React.FC = () => {
 
     // Borde de tinta clásico
     ctx.strokeStyle = theme.carbon;
-
-    ctx.lineWidth = (isHighlighted ? 1.5 : 0.5) / globalScale;
+    ctx.lineWidth = (isHighlighted ? 1.5 : 0.6) / globalScale;
     ctx.stroke();
 
     drawNodeLabel(ctx, node, globalScale, isHighlighted, hoverNode, highlightNodes, radius);
   }, [hoverNode, highlightNodes, drawNodeLabel, getNodeColor, theme]);
 
-  // Ajustar cámara inicial
+  // Ajustar cámara y física del grafo
   useEffect(() => {
     if (graphRef.current) {
       setTimeout(() => {
-        graphRef.current?.zoomToFit(400, 50);
+        const fg = graphRef.current;
+        if (!fg) return;
 
-        // Ajustes de física (expandir la red de forma controlada)
-        (graphRef.current?.d3Force('charge') as ChargeForce | undefined)?.strength(-120); // Repulsión más suave para mantener los nodos juntos
-        (graphRef.current?.d3Force('link') as LinkForce | undefined)?.distance((link) => {
-          if (link.source.group === 'central' || link.target.group === 'central') return 100;
-          if (link.source.group === 'branch' || link.target.group === 'branch') return 60;
-          return 30;
+        // Ajustes de repulsión gravitatoria por tipo de nodo
+        (fg.d3Force('charge') as { strength: (fn: (d: GraphNode) => number) => unknown } | undefined)?.strength((node: GraphNode) => {
+          if (node.group === 'central') return -1200;
+          if (node.group === 'branch') return node.id?.startsWith('rama-') ? -700 : -400;
+          if (node.group === 'sistema-axiomatico') return -300;
+          return -220;
         });
-      }, 500);
+
+        // Distancias de enlaces jerárquicos armónicos
+        (fg.d3Force('link') as { distance: (fn: (l: ResolvedGraphLink) => number) => unknown } | undefined)?.distance((link: ResolvedGraphLink) => {
+          const isCentral = link.source.group === 'central' || link.target.group === 'central';
+          if (isCentral) return 180;
+
+          const isBranch = link.source.group === 'branch' || link.target.group === 'branch';
+          if (isBranch) {
+            const isSubToMainBranch = (link.source.id?.startsWith('subrama-') && link.target.id?.startsWith('rama-')) ||
+                                      (link.target.id?.startsWith('subrama-') && link.source.id?.startsWith('rama-'));
+            return isSubToMainBranch ? 110 : 70;
+          }
+
+          return 55;
+        });
+
+        fg.d3ReheatSimulation();
+        fg.zoomToFit(400, 60);
+      }, 300);
     }
   }, []);
 
@@ -266,16 +282,18 @@ export const GraphPage: React.FC = () => {
           width={dimensions.width}
           height={dimensions.height}
           graphData={graphData}
-          nodeLabel={() => ''} // El label nativo lo desactivamos
+          nodeLabel={() => ''}
           nodeCanvasObject={drawNode}
           nodeCanvasObjectMode={() => 'replace'}
           onNodeHover={handleNodeHover}
-          linkColor={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? theme.getHex('teorema') : theme.carbon + '15'}
-
+          linkColor={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? theme.getHex('teorema') : theme.carbon + '18'}
           linkWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 2 : 1}
           linkDirectionalParticles={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 4 : 1}
-          linkDirectionalParticleWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 6 : 2}
+          linkDirectionalParticleWidth={(link: KnowledgeGraphLink) => highlightLinks.has(link) ? 5 : 1.5}
           linkDirectionalParticleSpeed={0.005}
+          d3VelocityDecay={0.3}
+          warmupTicks={40}
+          cooldownTicks={150}
           onNodeClick={handleNodeClick}
           backgroundColor="transparent"
         />

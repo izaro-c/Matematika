@@ -4,12 +4,18 @@ export const metadata = {
   type: "definicion",
   subtype: "derivado",
   title: "Ángulos suplementarios",
-  description: "Par de ángulos adyacentes que comparten un lado común mientras que sus otros dos lados forman semirrectas opuestas sobre una misma recta soporte.",
+  description: "Par de ángulos adyacentes que comparten un vértice y un lado común mientras que sus otros dos lados forman semirrectas opuestas sobre una misma recta soporte.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "congruencia", "angulos", "orden", "hilbert"],
   hasSimulation: false,
   sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 13",
+      role: "primary"
+    },
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
@@ -19,20 +25,20 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="D" />os <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> son adyacentes suplementarios si comparten su <ConceptLink targetId="vertice">vértice</ConceptLink> y una <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink> común, mientras que sus otras dos semirrectas constituyen <ConceptLink targetId="semirrecta">semirrectas opuestas</ConceptLink> sobre una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> soporte.
+<Capitular letra="D" />os <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> son <ConceptLink targetId="angulos-adyacentes">adyacentes</ConceptLink> suplementarios si comparten su <ConceptLink targetId="vertice">vértice</ConceptLink> y un <ConceptLink targetId="lado">lado</ConceptLink> común, mientras que sus otros dos lados forman <ConceptLink targetId="semirrectas-opuestas">semirrectas opuestas</ConceptLink> sobre una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> soporte.
 
-En la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, la noción de suplemento no presupone la asignación de <ConceptLink targetId="distancia">medidas numéricas</ConceptLink> ni una <ConceptLink targetId="espacio-metrico">suma métrica</ConceptLink> de $180^\circ$, sino que se fundamenta rigurosamente en la relación primitiva de <ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink> lineal sobre la recta y en la <ConceptLink targetId="conjunto-disjunto">partición</ConceptLink> en semirrectas opuestas inducida por un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> origen.
+La noción de suplemento no presupone la asignación de <ConceptLink targetId="distancia">medidas numéricas</ConceptLink> ni una suma métrica de $180^\circ$, sino que se fundamenta rigurosamente en la relación primitiva de <ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink> lineal sobre la recta y en la <ConceptLink targetId="conjunto-disjunto">partición</ConceptLink> en semirrectas opuestas inducida por un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> origen.
 
 <Definicion title="Definición formal de ángulos suplementarios adyacentes">
-Sea $\ell \in \mathcal{L}$ una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$ y sea <VisualBind element="pO" color="carbon">$O$</VisualBind> $\in \operatorname{tr}(\ell)$ un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> origen. Sean <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \operatorname{tr}(\ell) \setminus \{O\}$ dos puntos tales que $O$ está entre $A$ y $B$ (<ConceptLink targetId="estar-entre" isDependency={true}>$A * O * B$</ConceptLink>), y sea <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$ un punto exterior a la <ConceptLink targetId="traza">traza puntual</ConceptLink> $\operatorname{tr}(\ell)$, garantizando la no-<ConceptLink targetId="colinealidad">colinealidad</ConceptLink> de las ternas $\{O, A, C\}$ y $\{O, B, C\}$.
+Sea $\ell \in \mathcal{L}$ una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$ y sea $O \in \operatorname{tr}(\ell)$ un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> origen. Sean $A, B \in \operatorname{tr}(\ell) \setminus \{O\}$ dos puntos tales que $O$ <ConceptLink targetId="estar-entre" isDependency={true}>está entre</ConceptLink> $A$ y $B$ ($A * O * B$), y sea $C \in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$ un punto exterior a la <ConceptLink targetId="traza">traza puntual</ConceptLink> $\operatorname{tr}(\ell)$, garantizando la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> de las ternas $\{O, A, C\}$ y $\{O, B, C\}$.
 
-Se definen las <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> <VisualBind element="rayH" color="pavo">$h = \overrightarrow{OA}$</VisualBind>, <VisualBind element="rayHPrime" color="pavo">$h' = \overrightarrow{OB}$</VisualBind> y <VisualBind element="rayK" color="pavo">$k = \overrightarrow{OC}$</VisualBind>. Los ángulos:
+Se definen las <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> $h = \overrightarrow{OA}$, $h' = \overrightarrow{OB}$ y $k = \overrightarrow{OC}$. Los ángulos:
 
 $$
 \angle(h, k) = \{ \overrightarrow{OA}, \overrightarrow{OC} \} = \angle AOC \quad \text{y} \quad \angle(h', k) = \{ \overrightarrow{OB}, \overrightarrow{OC} \} = \angle BOC
 $$
 
-formados por sus respectivos <ConceptLink targetId="lado">lados</ConceptLink> se denominan **ángulos adyacentes suplementarios** (*Nebenwinkel*). Dos ángulos arbitrarios $\angle \alpha$ y $\angle \beta$ en el plano se dicen **suplementarios** si $\angle \beta$ es <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> con el adyacente suplementario de $\angle \alpha$.
+formados por sus respectivos <ConceptLink targetId="lado">lados</ConceptLink> se denominan **ángulos adyacentes suplementarios**. Dos ángulos arbitrarios $\angle \alpha$ y $\angle \beta$ en el plano se dicen **suplementarios** si $\angle \beta$ es <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> con el adyacente suplementario de $\angle \alpha$.
 </Definicion>
 
 <Separador />
@@ -44,7 +50,7 @@ formados por sus respectivos <ConceptLink targetId="lado">lados</ConceptLink> se
       title="Teorema de congruencia de ángulos suplementarios"
       formula="\angle(h_1, k_1) \cong \angle(h_2, k_2) \implies \angle(h'_1, k_1) \cong \angle(h'_2, k_2)"
     >
-      Si dos ángulos son mutuamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>, sus respectivos ángulos adyacentes suplementarios son congruentes entre sí (*Satz 12* de Hilbert). Este <ConceptLink targetId="teorema">teorema</ConceptLink> se deduce formalmente a partir del transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink>), la aditividad de segmentos colineales (<ConceptLink targetId="axioma-congruencia-3">Axioma III.3</ConceptLink>) y el criterio de congruencia Lado-Ángulo-Lado (<ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink>).
+      Si dos <ConceptLink targetId="angulo">ángulos</ConceptLink> son mutuamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>, sus respectivos ángulos adyacentes suplementarios son congruentes entre sí (*Satz 12* de Hilbert). Este <ConceptLink targetId="teorema">teorema</ConceptLink> se deduce formalmente a partir del transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink>), la aditividad de segmentos colineales (<ConceptLink targetId="axioma-congruencia-3">Axioma III.3</ConceptLink>) y el criterio de congruencia Lado-Ángulo-Lado (<ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink>).
     </PropiedadItem>
 
     <PropiedadItem 
@@ -52,7 +58,7 @@ formados por sus respectivos <ConceptLink targetId="lado">lados</ConceptLink> se
       title="Definición formal del ángulo recto y ortogonalidad"
       formula="\operatorname{Recto}(\angle(h, k)) \iff \angle(h, k) \cong \angle(h', k) \iff \overleftrightarrow{OA} \perp \overleftrightarrow{OC}"
     >
-      Un ángulo se define formalmente como un ángulo recto si y solo si es congruente con su propio adyacente suplementario. En consecuencia, las rectas soporte $\overleftrightarrow{OA}$ y $\overleftrightarrow{OC}$ son <ConceptLink targetId="perpendicular">perpendiculares</ConceptLink> si y solo si determinan un par lineal de ángulos congruentes en su punto de intersección.
+      Un ángulo se define formalmente como un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> si y solo si es congruente con su propio adyacente suplementario. En consecuencia, las rectas soporte $\overleftrightarrow{OA}$ y $\overleftrightarrow{OC}$ son <ConceptLink targetId="perpendicular">perpendiculares</ConceptLink> si y solo si determinan un par lineal de ángulos congruentes en su <ConceptLink targetId="punto">punto</ConceptLink> de <ConceptLink targetId="secante">intersección secante</ConceptLink>, fundamentando la noción sintética de <ConceptLink targetId="ortogonalidad">ortogonalidad</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 
@@ -62,7 +68,13 @@ formados por sus respectivos <ConceptLink targetId="lado">lados</ConceptLink> se
       title="Partición de la recta en semirrectas opuestas"
       formula="\forall O \in \operatorname{tr}(\ell) \; \exists! \{h, h'\} \; (\operatorname{tr}(\ell) \setminus \{O\} = \operatorname{tr}(h) \sqcup \operatorname{tr}(h'))"
     >
-      Todo punto $O$ perteneciente a una recta $\ell$ particiona a la traza puntual restante de la recta en exactamente dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink> y opuestas $h$ y $h'$, garantizando la existencia y unicidad del adyacente suplementario para cualquier semirrecta secante $k$ proyectada sobre un <ConceptLink targetId="semiplano">semiplano</ConceptLink>.
+      Todo punto $O$ perteneciente a una recta $\ell$ particiona a la traza puntual restante de la recta en exactamente dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink> y opuestas $h$ y $h'$, garantizando la existencia y unicidad del adyacente suplementario para cualquier semirrecta <ConceptLink targetId="secante">secante</ConceptLink> $k$ proyectada sobre un <ConceptLink targetId="semiplano">semiplano</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+En la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, la propiedad de que los suplementos de ángulos congruentes son a su vez congruentes permite fundamentar de manera unívoca la demostración del <ConceptLink targetId="teorema-angulos-opuestos-verticales">teorema de los ángulos opuestos por el vértice</ConceptLink>, prescindiendo de toda medida métrica angular.
+</Nota>

@@ -19,6 +19,7 @@ export interface BaseContent {
   tags?: string[];
   links?: string[];
   seeAlso?: string[];
+  conceptLinks?: string[];
   sources?: MathematicalSource[];
 }
 

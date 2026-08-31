@@ -2,47 +2,82 @@ export const metadata = {
   id: "perpendicular",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Perpendicularidad",
-  description: "Relación geométrica entre dos rectas secantes que se cortan formando cuatro ángulos rectos congruentes.",
-  branch: "51M",
+  description: "Relación geométrica entre dos rectas secantes coplanares cuya intersección determina ángulos rectos.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "perpendicularidad", "ortogonalidad", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 10", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 10",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §4",
+      role: "primary"
+    }
   ]
 };
 
 import { Perpendicular } from '@content/diagrams/Definiciones/Perpendicular';
 export const Simulation = Perpendicular;
 
-<Capitular letra="D" />os <ConceptLink targetId="recta">rectas</ConceptLink> secantes en un <ConceptLink targetId="plano">plano</ConceptLink> se denominan perpendiculares cuando su intersección genera cuatro <ConceptLink targetId="angulo">ángulos</ConceptLink> adyacentes congruentes entre sí. Constituye la noción fundamental de ortogonalidad en la geometría euclídea y sirve como base para los sistemas de coordenadas cartesianas y las proyecciones ortogonales.
+<Capitular letra="D" />os <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> <ConceptLink targetId="secante">secantes</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> son **perpendiculares** si su <ConceptLink targetId="punto">punto</ConceptLink> de intersección determina <ConceptLink targetId="angulo-recto" isDependency={true}>ángulos rectos</ConceptLink>.
 
-<Definicion title="">
-  Dadas dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> coplanares <VisualBind element="lineAB" color="musgo">$L_1$</VisualBind> y <VisualBind element="perpABP" color="pavo">$L_2$</VisualBind> en un plano $\mathcal{P}$ que se cortan en un punto $P = L_1 \cap L_2$, se dice que $L_1$ y $L_2$ son perpendiculares ($L_1 \perp L_2$) si y solo si los cuatro ángulos determinados por su intersección son <ConceptLink targetId="angulo-recto" isDependency={true}>ángulos rectos</ConceptLink> de medida $\frac{\pi}{2}$ radianes ($90^\circ$):
-  $$
-  L_1 \perp L_2 \iff \forall i \in \{1, 2, 3, 4\}, \; \theta_i \cong 90^\circ
-  $$
-  En términos vectoriales, si $\vec{u}$ y $\vec{v}$ son vectores directores no nulos de $L_1$ y $L_2$, equivale al producto escalar nulo $\vec{u} \cdot \vec{v} = 0$.
+La relación de perpendicularidad formaliza la rigidez posicional entre rectas secantes en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, constituyendo la base para el estudio de los <ConceptLink targetId="triangulo-rectangulo">triángulos rectángulos</ConceptLink> y las construcciones ortogonales.
+
+<Definicion title="Definición formal de rectas perpendiculares">
+Sean <VisualBind element="lineAB" color="terracota">$\ell_1$</VisualBind>, <VisualBind element="perpABP" color="musgo">$\ell_2$</VisualBind> $\in \mathcal{L}$ dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> coplanares en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$ ($\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi)$) que son <ConceptLink targetId="secante">secantes</ConceptLink> en un único <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> de intersección <VisualBind element="pP" color="musgo">$P$</VisualBind> $\in \mathcal{P}$ ($\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$).
+
+Sean <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \operatorname{tr}(\ell_1) \setminus \{P\}$ dos puntos tales que $P$ <ConceptLink targetId="estar-entre" isDependency={true}>está entre</ConceptLink> $A$ y $B$ ($A * P * B$), determinando las <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> opuestas <VisualBind element="rayPA" color="terracota">$h_1 = \overrightarrow{PA}$</VisualBind> y <VisualBind element="rayPB" color="terracota">$h_1' = \overrightarrow{PB}$</VisualBind> sobre $\ell_1$. Sean <VisualBind element="pC" color="musgo">$C$</VisualBind>, <VisualBind element="pD" color="musgo">$D$</VisualBind> $\in \operatorname{tr}(\ell_2) \setminus \{P\}$ dos puntos tales que $P$ está entre $C$ y $D$ ($C * P * D$), determinando las semirrectas opuestas <VisualBind element="rayPC" color="musgo">$h_2 = \overrightarrow{PC}$</VisualBind> y <VisualBind element="rayPD" color="musgo">$h_2' = \overrightarrow{PD}$</VisualBind> sobre $\ell_2$.
+
+Las rectas $\ell_1$ y $\ell_2$ son **perpendiculares** ($\ell_1 \perp \ell_2$) si y solo si el <ConceptLink targetId="angulo">ángulo</ConceptLink> <VisualBind element="angleAPC" color="ocre">$\angle(h_1, h_2) = \angle APC$</VisualBind> formado en el <ConceptLink targetId="vertice">vértice</ConceptLink> $P$ es un <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink>:
+
+$$
+\ell_1 \perp \ell_2 \iff \operatorname{Recto}(\angle(h_1, h_2))
+$$
 </Definicion>
 
 <Separador />
 
-### Criterios y representaciones geométricas
-
-- **Geometría sintética**: Dos rectas son perpendiculares si determinan ángulos adyacentes suplementarios congruentes.
-- **Geometría analítica**: En $\mathbb{R}^2$, dos rectas con pendientes $m_1, m_2 \in \mathbb{R}$ son perpendiculares si y solo si $m_1 \cdot m_2 = -1$.
-- **Geometría vectorial**: Dos subespacios afines unidimensionales son ortogonales si sus vectores directores satisfacen $\langle \vec{u}, \vec{v} \rangle = 0$.
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Ortogonalidad y paralelismo">
-    <PropiedadItem id="axioma-congruencia-4" title="Existencia y unicidad de la perpendicular">
-      Dado un punto $P$ y una recta $L$, existe una única recta perpendicular a $L$ que pasa por $P$.
+  <PropiedadesGrupo title="Propiedades de simetría e invariancia sintética">
+    <PropiedadItem 
+      id="simetria-perpendicularidad" 
+      title="Simetría de la relación de perpendicularidad"
+      formula="\ell_1 \perp \ell_2 \iff \ell_2 \perp \ell_1"
+    >
+      La relación de perpendicularidad entre <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="secante">secantes</ConceptLink> es estrictamente simétrica: si una recta es perpendicular a otra, la segunda es perpendicular a la primera.
     </PropiedadItem>
-    <PropiedadItem id="teorema-angulos-alternos-internos" title="Perpendicular a paralelas">
-      Toda recta perpendicular a una de dos rectas paralelas es perpendicular a la otra.
+
+    <PropiedadItem 
+      id="congruencia-cuatro-angulos" 
+      title="Congruencia simultánea de los cuatro ángulos rectos"
+      formula="\ell_1 \perp \ell_2 \implies \angle(h_1, h_2) \cong \angle(h_1', h_2) \cong \angle(h_1', h_2') \cong \angle(h_1, h_2')"
+    >
+      La intersección de dos rectas perpendiculares divide el plano en cuatro <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink> mutuamente <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí: <VisualBind element="angleAPC" color="ocre">$\angle APC$</VisualBind> $\cong$ <VisualBind element="angleBPC" color="ocre">$\angle BPC$</VisualBind> $\cong$ <VisualBind element="angleBPD" color="ocre">$\angle BPD$</VisualBind> $\cong$ <VisualBind element="angleAPD" color="ocre">$\angle APD$</VisualBind>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Existencia y unicidad en geometría absoluta">
+    <PropiedadItem 
+      id="existencia-unicidad-perpendicular" 
+      title="Existencia y unicidad de la perpendicular en el plano"
+      formula="\forall \ell \in \mathcal{L}, \; \forall P \in \operatorname{tr}(\pi) \; \exists! \ell' \in \mathcal{L} \; (\operatorname{tr}(\ell') \subseteq \operatorname{tr}(\pi) \land P \in \operatorname{tr}(\ell') \land \ell' \perp \ell)"
+    >
+      En cualquier plano $\pi$, por cada punto $P \in \operatorname{tr}(\pi)$ —pertenezca o no a la recta $\ell$— existe exactamente una única recta $\ell'$ coplanar con $\ell$ que incide con $P$ y es perpendicular a $\ell$. Este teorema es válido en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> sin requerir ningún <ConceptLink targetId="axioma-paralelas-euclides">axioma de paralelas</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+En la jerarquía axiomática, la perpendicularidad es un concepto puramente sintético perteneciente a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, anterior e independiente de cualquier <ConceptLink targetId="axioma-paralelas-euclides">axioma de paralelas</ConceptLink>. A diferencia del paralelismo único, la existencia y unicidad de la perpendicular por un punto no depende de la curvatura del espacio.
+</Nota>

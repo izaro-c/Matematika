@@ -30,7 +30,7 @@ export const Simulation = Angulo;
 
 <Capitular letra="U" />n ángulo es el <ConceptLink targetId="conjunto">par no ordenado</ConceptLink> de dos <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> distintas que comparten el mismo <ConceptLink targetId="punto">origen</ConceptLink> y cuyas <ConceptLink targetId="recta">rectas</ConceptLink> soporte son distintas.
 
-En la fundamentación de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, el ángulo no es una magnitud numérica ni una medida métrica, sino un objeto formal construido a partir de la noción de <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> y la no <ConceptLink targetId="colinealidad" isDependency={true}>colinealidad</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
+El ángulo no es una magnitud numérica ni una medida métrica, sino un objeto formal construido a partir de la noción de <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> y la no <ConceptLink targetId="colinealidad" isDependency={true}>colinealidad</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Definicion title="Definición formal de ángulo">
 Dado un <ConceptLink targetId="punto">punto</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ y dos puntos distintos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ tales que la terna $\{O, A, B\}$ no es <ConceptLink targetId="colinealidad">colineal</ConceptLink>, el **ángulo** <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> (denotado también $\angle(h, k)$) es el <ConceptLink targetId="conjunto">par</ConceptLink> constituido por las dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> y <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind>:
@@ -39,7 +39,7 @@ $$
 \angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}
 $$
 
-Las semirrectas $h$ y $k$ se denominan los <ConceptLink targetId="lado">lados</ConceptLink> del ángulo, y el punto común $O$ recibe el nombre de <ConceptLink targetId="vertice">vértice</ConceptLink>. Su **traza puntual** asociada $\operatorname{tr}(\angle AOB) \subset \mathcal{P}$ es la unión de las trazas de sus lados:
+Las semirrectas $h$ y $k$ se denominan los <ConceptLink targetId="lado">lados</ConceptLink> del ángulo, y el punto común $O$ recibe el nombre de <ConceptLink targetId="vertice">vértice</ConceptLink>. Su <ConceptLink targetId="traza">**traza puntual**</ConceptLink> asociada $\operatorname{tr}(\angle AOB) \subset \mathcal{P}$ es la unión de las <ConceptLink targetId="traza">trazas</ConceptLink> de sus lados:
 
 $$
 \operatorname{tr}(\angle AOB) = \operatorname{tr}(\overrightarrow{OA}) \cup \operatorname{tr}(\overrightarrow{OB})
@@ -49,7 +49,7 @@ $$
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Propiedades estructurales y de orden">
+  <PropiedadesGrupo title="Propiedades Estructurales y Topológicas">
     <PropiedadItem 
       id="simetria-lados" 
       title="Simetría de los lados"
@@ -63,7 +63,7 @@ $$
       title="Coplanaridad y plano soporte único"
       formula="\exists! \pi \in \Pi : \operatorname{tr}(\angle AOB) \subset \operatorname{tr}(\pi)"
     >
-      En virtud de los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> de la terna $\{O, A, B\}$ determina de forma unívoca un único <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$ que contiene íntegramente a la traza puntual del ángulo: $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
+      En virtud de los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> de la terna $\{O, A, B\}$ determina de forma unívoca un único <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$ que contiene íntegramente a la <ConceptLink targetId="traza">traza puntual</ConceptLink> del ángulo: $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 

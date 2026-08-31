@@ -46,6 +46,8 @@ export default defineConfig({
   base: "/Matematika/",
   server: {
     host: true,
+    hmr: process.env.MATEMATIKA_EDITOR_SRC_ROOT ? false : undefined,
+    watch: process.env.MATEMATIKA_EDITOR_SRC_ROOT ? { ignored: ['**'] } : undefined,
   },
   build: {
     target: 'es2020',

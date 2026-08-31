@@ -15,17 +15,17 @@ export const SEMANTIC_COLOR_ROLES = {
   warningAccent:      THEME_COLOR_VARS.terracota,
 
   // Roles editoriales resueltos con los nueve tokens canónicos.
-  axiomAccent:        THEME_COLOR_VARS.ocre,       // ocre
-  definitionAccent:   THEME_COLOR_VARS.musgo,
-  lemmaAccent:        THEME_COLOR_VARS.granada,
-  theoremAccent:      THEME_COLOR_VARS.terracota,  // terracota
-  corollaryAccent:    THEME_COLOR_VARS.canela,
+  axiomAccent:        THEME_COLOR_VARS.ocre,       // ocre (oro)
+  definitionAccent:   THEME_COLOR_VARS.musgo,      // musgo (verde)
+  lemmaAccent:        THEME_COLOR_VARS.granada,    // granada (burdeos)
+  theoremAccent:      THEME_COLOR_VARS.terracota,  // terracota (rojizo cálido)
+  corollaryAccent:    THEME_COLOR_VARS.canela,     // canela (naranja)
   proofAccent:        THEME_COLOR_VARS.granada,    // granada
-  methodAccent:       THEME_COLOR_VARS.ocre,
-  modelAccent:        THEME_COLOR_VARS.pavo,       // pavo
-  exampleAccent:      THEME_COLOR_VARS.mora,    // mora
-  exerciseAccent:     THEME_COLOR_VARS.granada,
-  biographyAccent:    THEME_COLOR_VARS.mora,
+  methodAccent:       THEME_COLOR_VARS.granada,    // granada (carmín / demostración)
+  modelAccent:        THEME_COLOR_VARS.pavo,       // pavo (azul)
+  exampleAccent:      THEME_COLOR_VARS.canela,     // canela (naranja / aplicación)
+  exerciseAccent:     THEME_COLOR_VARS.terracota,  // terracota
+  biographyAccent:    THEME_COLOR_VARS.mora,       // mora (púrpura / historia)
 
   // Editorial secundario y roles de utilidad
   conceptAccent:      THEME_COLOR_VARS.carbon,

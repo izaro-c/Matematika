@@ -1,103 +1,108 @@
 ---
 name: matematika-content-generator
-description: Estándar técnico, epistemológico y editorial para la creación, formalización, hiperenlace y verificación de nodos MDX en la Enciclopedia Matematika (Castellano, Euskara Batua, Inglés).
+description: Use when creating, formalizing, translating, or refactoring MDX content nodes in the Matematika encyclopedia (Castellano, Euskara Batua, English) to ensure strict deductive rigor, correct DAG causality, and trilingual parity.
 ---
 
 # Generador y Estándar de Contenido — Matematika
 
-Guía ejecutiva y estándar metodológico para la creación, formalización y refactorización de nodos de contenido en formato MDX dentro de la enciclopedia matemática **Matematika**.
-
-El sistema modela el conocimiento como un **grafo acíclico dirigido (DAG) de nodos atómicos hiperenlazados** con interactividad visual y paridad trilingüe estricta (**Castellano**, **Euskara Batua** e **Inglés**).
+Grafo acíclico dirigido (DAG) de nodos atómicos hiperenlazados, con paridad trilingüe estricta (**Castellano · Euskara Batua · Inglés**).
 
 ---
 
-## Flujo de Trabajo para Creación / Edición de Nodos (Runbook)
+## Los Tres Pilares Innegociables
 
-```mermaid
-flowchart LR
-    A["1. Ontología y Tipado"] --> B["2. Metadatos y MDX"]
-    B --> C["3. DAG y Paridad Trilingüe"]
-    C --> D["4. Auditoría y Verificación"]
+| Pilar | Regla ejecutiva |
+|---|---|
+| **1. Rigor deductivo** | Lógica de primer orden. Cero pasos informales. Tipado multisort estricto: $\mathcal{P}\cap\mathcal{L}=\emptyset$, $\mathcal{P}\cap\Pi=\emptyset$, $\mathcal{L}\cap\Pi=\emptyset$. Usar incidencia sintética o $\operatorname{tr}(\ell)$, nunca $\ell\subseteq\pi$. |
+| **2. Grafo abierto** | Todo concepto matemático → `<ConceptLink targetId="...">`. Los `targetId` son kebab-case en castellano/neutro y **nunca se traducen**. Si la página no existe, el enlace se pone igualmente. |
+| **3. Causalidad DAG** | `isDependency={true}` solo en antecedentes sin los cuales el nodo no puede existir. En definiciones: solo conceptos primitivos constitutivos. En axiomas: primitivos de signatura. En demostraciones: axiomas, lemas y método. **Nunca desde un teorema hacia su demostración.** |
+
+→ Detalles y casos borde: [editorial-epistemology.md](./references/editorial-epistemology.md)
+
+---
+
+## Flujo de Trabajo
+
+```
+1. Ontología y tipo  →  2. Metadatos y prosa MDX  →  3. Grafo + paridad trilingüe  →  4. Validación
 ```
 
-### 1. Ontología y Disciplina de Tipos
-- Determinar el tipo de entidad formal (`definicion`, `axioma`, `teorema`, `modelo`, `sistema-axiomatico`, etc.).
-- Respetar la frontera epistémica y el orden deductivo real: no usar conceptos derivados en primitivos, ni nociones métricas o de orden en incidencia pura.
-- Evitar colapsos de tipos en estructuras multisort ($\mathcal{P} \cap \mathcal{L} = \emptyset \implies \ell \not\subseteq \pi$; usar incidencia $P \, \mathbf{I} \, \ell$ o trazas $\operatorname{tr}(\ell)$).
-- Consultar: [Filosofía Editorial y Principios Epistemológicos](./references/editorial-epistemology.md).
+**1. Tipo de entidad:** `definicion` · `axioma` · `teorema` · `lema` · `corolario` · `demostracion` · `modelo` · `sistema-axiomatico` · `metodo` · `ejercicio` · `ejemplo` · `caso-de-uso` · `matematico`
 
-### 2. Metadatos y Redacción MDX
-- Configurar `export const metadata` con `id` kebab-case, `type`, `branch` MSC2020 válido (2 dígitos o 2 dígitos + letra, e.g. `"51A"`).
-- Redactar con apertura descriptiva pura e inmediata (cero fórmulas introductorias redundantes o defensivas).
-- Usar componentes JSX nativos (`<Definicion>`, `<Formula>`, `<VisualBind>`, `<SeccionPropiedades>`).
-- Mantener KaTeX conforme a ISO 80000-2 y aislado léxicamente del AST de JSX (nunca JSX dentro de `$`).
-- Consultar:
-  - [Esquema de Metadatos](./references/metadata-schema.md)
-  - [Catálogo de Componentes MDX](./references/mdx-components.md)
-  - [Estándares de Notación KaTeX](./references/katex-notation.md)
+**2. Metadatos y redacción:**
+- `id` kebab-case universal, `type`, `branch` MSC2020 (e.g. `"51A"`).
+- Primera oración: definición o enunciado directo. **Cero muletillas del marco axiomático** (→ ver abajo).
+- JSX disponibles: `<Definicion>` `<VisualBind>` `<SeccionPropiedades>` `<Capitular>` `<Nota>` `<Separador>`
+- KaTeX conforme ISO 80000-2. **Nunca JSX dentro de `$`.**
+- Refs: [metadata-schema.md](./references/metadata-schema.md) · [mdx-components.md](./references/mdx-components.md) · [katex-notation.md](./references/katex-notation.md)
 
-### 3. Grafo, Hiperenlaces y Paridad Trilingüe
-- **Grafo Abierto:** Enlazar con `<ConceptLink targetId="...">` a todo concepto relevante, incluso si su archivo aún no existe en el repositorio.
-- **Causalidad DAG (`isDependency`):** Marcar `isDependency={true}` **únicamente** en dependencias lógicas deductivas directas (obligatorio en términos primitivos de axiomas y antecedentes de teoremas; prohibido en definiciones primitivas, modelos o biografías).
-- **Paridad 1:1:** Replicar exactamente la misma estructura de enlaces, dependencias y bindings visuales en `es/`, `en/` y `eu/`.
-- Consultar:
-  - [Grafo Lógico y Catálogo de targetId](./references/dag-and-hyperlinks.md)
-  - [Glosario Técnico de Euskara Batua](./references/euskara-glossary.md)
+**3. Grafo y paridad:**
+- Paridad 1:1 entre `es/` `en/` `eu/`. Mismos `<ConceptLink>`, mismos `isDependency`, mismas fórmulas.
+- Teorema declara `demos: ["demo-..."]`; demostración declara `parentTheorem: "teorema-..."`.
+- Refs: [dag-and-hyperlinks.md](./references/dag-and-hyperlinks.md) · [euskara-glossary.md](./references/euskara-glossary.md)
 
-### 4. Auditoría y Verificación
-- Ejecutar la suite automatizada antes de finalizar cambios:
-  ```bash
-  npm run validate-references   # Esquemas y referencias cruzadas
-  npm run validate-graph        # Aciclicidad y dependencias del DAG
-  npm run typecheck             # Tipos TypeScript / MDX
-  ```
+**4. Validación** (tras cada lote de 3 nodos / 9 archivos MDX):
+```bash
+npm run validate-references && npm run validate-graph && npm run typecheck
+```
 
 ---
 
-## Tabla Rápida de Tipos de Contenido
+## Reglas de Redacción
 
-| Tipo (`type`) | Rol Epistemológico | `isDependency` | `<SeccionPropiedades>` | Referencia |
-| :--- | :--- | :---: | :---: | :--- |
-| **`definicion`** | Noción base o derivada | `true` en constitutivos (omitir en primitivos) | ✅ Permitido | [metadata-schema.md](./references/metadata-schema.md) |
-| **`axioma`** | Postulado atómico indecomponible | `true` en primitivos de signatura | ❌ Prohibido | [metadata-schema.md](./references/metadata-schema.md) |
-| **`teorema`** / **`lema`** | Proposición demostrada | `true` en axiomas/teoremas usados | Opcional | [metadata-schema.md](./references/metadata-schema.md) |
-| **`demostracion`** | Deducción formal paso a paso | `true` en justificaciones lógicas | N/A | [metadata-schema.md](./references/metadata-schema.md) |
-| **`sistema-axiomatico`** | Formalización $(\mathcal{S}, \sigma, \mathcal{T})$ | N/A (usa campo `axiomas`) | ❌ Prohibido | [metadata-schema.md](./references/metadata-schema.md) |
-| **`modelo`** | Estructura de satisfacción | Omitir (`false` por defecto) | ✅ Requerido (Satisfacción + Invariantes) | [metadata-schema.md](./references/metadata-schema.md) |
-| **`matematico`** | Entrada biográfica / histórica | ❌ Prohibido | ❌ Prohibido | [metadata-schema.md](./references/metadata-schema.md) |
+### Contexto presuposicional — sin muletillas
+
+El marco hilbertiano es global. **Prohibido** comenzar párrafos con:
+*«En la geometría sintética...»* / *«En la fundamentación de Hilbert...»* / *«Dentro del sistema axiomático...»*
+
+El segundo párrafo expone la esencia conceptual, la motivación deductiva o la conexión con otros nodos — nunca anuncia el marco.
+
+**Excepción:** Nombrar a Hilbert/geometría sintética es válido cuando se describe ese concepto directamente, se contrasta con otro sistema formal, o el valor histórico es no redundante.
+
+### Estructura libre — adaptar al objeto
+
+No hay plantilla obligatoria. La estructura emerge de la naturaleza del nodo:
+- Un axioma simple puede ser solo `<Capitular>` + `<Definicion>`.
+- Una definición rica puede añadir `<SeccionPropiedades>` y `<Nota>`.
+- Una entrada biográfica es solo prosa con `<ConceptLink>`.
+
+> *¿Qué necesita el lector para entender este objeto y navegar el grafo?* Quita lo que sobre. Añade lo que falte.
+
+### Terminología canónica en euskara
+
+| ❌ Incorrecto | ✅ Canónico |
+|---|---|
+| `sortutako zuzenak` (rectas soporte) | `zuzen euskarriak` |
+| confundir betegarria / osagarria | suplementario → `betegarria`; complementario → `osagarria` |
+
+→ Glosario completo: [euskara-glossary.md](./references/euskara-glossary.md)
 
 ---
 
-## Reglas Críticas Innegociables (Golden Rules)
+## Tabla de Tipos de Contenido
 
-1. **Aislamiento Léxico KaTeX / JSX:** Nunca colocar etiquetas JSX dentro de delimitadores matemáticos (`$` o `$$`).
-   - ❌ `$\mathcal{P} = \{ \text{<VisualBind ...>A</VisualBind>} \}$`
-   - ✅ `$\mathcal{P} = \{$ <VisualBind ...>$A$</VisualBind> $\}$`
-2. **Sin type mismatch entre primitivos:** Una recta no es un subconjunto de un plano ($\ell \not\subseteq \pi$). Usar incidencia $P \, \mathbf{I} \, \ell$ o trazas $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$.
-3. **Sin `<SeccionPropiedades>` en axiomas:** Los axiomas son atómicos. Sus consecuencias son teoremas en `theorems/`.
-4. **Paridad trilingüe 1:1:** Todo `<ConceptLink targetId="..." isDependency={...}>` en `es/` debe existir idéntico en `en/` y `eu/`.
-5. **Grafo abierto obligatorio:** Todo concepto matemático debe llevar `<ConceptLink targetId="...">`, existan o no las páginas de destino.
+| Tipo | `isDependency` | `<SeccionPropiedades>` |
+| :--- | :---: | :---: |
+| `definicion` | Conceptos primitivos constitutivos | ✅ Permitido |
+| `axioma` | Primitivos de signatura | ❌ Prohibido |
+| `teorema` / `lema` | Axiomas/teoremas antecedentes | Opcional |
+| `demostracion` | Axiomas, lemas y método | — |
+| `sistema-axiomatico` | N/A (campo `axiomas`) | ❌ Prohibido |
+| `modelo` | Omitir | ✅ Requerido |
+| `metodo` / `ejercicio` / `caso-de-uso` | Según aplique | ❌ Prohibido |
+| `matematico` | ❌ Prohibido | ❌ Prohibido |
+
+→ Esquema completo: [metadata-schema.md](./references/metadata-schema.md)
 
 ---
 
-## Directorio de Módulos de Referencia
+## Golden Rules (resumen ejecutivo)
 
-Para consultar especificaciones detalladas, ejemplos completos y tablas normativas, acceder a los módulos temáticos correspondientes:
-
-1. 🏛️ **[Filosofía Editorial y Principios Epistemológicos](./references/editorial-epistemology.md)**  
-   *Inmediación ontológica, disciplina de tipos multisort, deslinde semántica-metalógica, frontera epistémica, cadenas deductivas y estratificación condicional.*
-
-2. 📋 **[Esquema de Metadatos (`export const metadata`)](./references/metadata-schema.md)**  
-   *Definición formal de campos, compatibilidad taxonómica MSC 2020 y especificación por tipo de nodo.*
-
-3. 🕸️ **[Grafo Lógico, Enlaces Hipertextuales y Catálogo de `targetId`](./references/dag-and-hyperlinks.md)**  
-   *Principio de grafo abierto, matriz de reglas para `isDependency`, paridad trilingüe y catálogo kebab-case canónico.*
-
-4. 🧩 **[Catálogo de Componentes MDX](./references/mdx-components.md)**  
-   *Componentes JSX (`<Definicion>`, `<VisualBind>`, `<Formula>`, etc.), paleta de colores semánticos, aislamiento AST y restricciones de `<SeccionPropiedades>`.*
-
-5. 📐 **[Estándares de Notación KaTeX (ISO 80000-2)](./references/katex-notation.md)**  
-   *Tabla canónica de símbolos matemáticos modernos, comandos KaTeX admitidos y notaciones prohibidas/desaconsejadas.*
-
-6. 🌐 **[Glosario Técnico y Estándar de Euskara Batua](./references/euskara-glossary.md)**  
-   *Diccionario de términos normalizados, expresiones desaconsejadas y pautas de traducción académica rigurosa.*
+1. Nunca JSX dentro de `$` / `$$`.
+2. Dominios primitivos disjuntos: nunca $\ell\subseteq\pi$; usar $P\,\mathbf{I}\,\ell$ o $\operatorname{tr}(\ell)$.
+3. $\operatorname{tr}$ solo a objetos no puntuales ($\mathcal{L}$, $\Pi$). Las figuras compuestas son subconjuntos de $\mathcal{P}$ por definición.
+4. Paralelismo: coplanaridad + reflexividad. Rectas no coplanares = *cruzadas/alabeadas*, no paralelas.
+5. Sin `<SeccionPropiedades>` en `axioma`. Sus consecuencias son teoremas.
+6. Paridad trilingüe 1:1 en todos los `<ConceptLink isDependency>`.
+7. Aciclicidad: ningún nodo depende de sí mismo.
+8. Cero definiciones inline de conceptos externos — siempre `<ConceptLink>`.

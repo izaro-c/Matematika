@@ -2,44 +2,79 @@ export const metadata = {
   id: "triangulo-rectangulo",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Triángulo rectángulo",
-  description: "Triángulo plano que posee un ángulo interior recto (90 grados), delimitado por dos catetos ortogonales y una hipotenusa opuesta.",
-  branch: "51M",
+  description: "Triángulo caracterizado por poseer un ángulo interior recto, delimitado por dos catetos concurrentes y una hipotenusa opuesta.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "triangulo", "perpendicularidad", "congruencia", "hilbert"],
   hasSimulation: false,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 21", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Definición 21",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §4",
+      role: "primary"
+    }
   ]
 };
 
-<Capitular letra="E" />l triángulo rectángulo es un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> caracterizado por tener uno de sus ángulos interiores congruente con un <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink> ($90^\circ$ o $\frac{\pi}{2}\text{ rad}$). Constituye la figura geométrica central sobre la que se fundamenta la trigonometría euclidiana y el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>.
+<Capitular letra="U" />n **triángulo rectángulo** es un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> caracterizado por poseer un <ConceptLink targetId="angulo">ángulo interior</ConceptLink> congruente con un <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink>, cuyos <ConceptLink targetId="lado">lados</ConceptLink> concurrentes en dicho <ConceptLink targetId="vertice">vértice</ConceptLink> se denominan <ConceptLink targetId="cateto">catetos</ConceptLink> y cuyo lado opuesto constituye la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink>.
 
-<Definicion title="">
-  Un triángulo $\triangle ABC$ en un plano $\mathcal{P}$ es rectángulo en el vértice $C$ si y solo si sus lados $\overline{AC}$ y $\overline{BC}$ son <ConceptLink targetId="perpendicular" isDependency={true}>perpendiculares</ConceptLink>, de modo que el ángulo interior $\angle C$ es recto:
-  $$
-  \overline{AC} \perp \overline{BC} \iff \angle C \cong 90^\circ
-  $$
-  El lado opuesto al ángulo recto $\overline{AB}$ es la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> ($c = \|\overline{AB}\|$), y los lados ortogonales $\overline{BC}$ y $\overline{CA}$ son los <ConceptLink targetId="cateto">catetos</ConceptLink> ($a = \|\overline{BC}\|, b = \|\overline{CA}\|$).
+Esta figura se estudia en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> sin recurrir a medidas métricas angulares, constituyendo la base estructural sobre la que se desarrollan los criterios específicos de congruencia de triángulos rectángulos y el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>.
+
+<Definicion title="Definición formal de triángulo rectángulo">
+Sean $A, B, C \in \mathcal{P}$ tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$, determinando el <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> $\triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}$.
+
+Se dice que $\triangle ABC$ es un **triángulo rectángulo** con <ConceptLink targetId="vertice">vértice</ConceptLink> recto en $C$ si y solo si las <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="secante">secantes</ConceptLink> soporte $\overleftrightarrow{CA}$ y $\overleftrightarrow{CB}$ son <ConceptLink targetId="perpendicular" isDependency={true}>perpendiculares</ConceptLink>:
+
+$$
+\triangle ABC \text{ es rectángulo en } C \iff \overleftrightarrow{CA} \perp \overleftrightarrow{CB} \iff \operatorname{Recto}(\angle BCA)
+$$
+
+El lado opuesto al vértice recto, $\overline{AB}$, se denomina <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink>, y los dos lados concurrentes en $C$, $\overline{CA}$ y $\overline{CB}$, se denominan <ConceptLink targetId="cateto">catetos</ConceptLink>.
 </Definicion>
 
 <Separador />
 
-### Elementos constitutivos y relaciones métricas
-
-- **Hipotenusa**: Lado opuesto al ángulo recto. Es estrictamente el lado de mayor longitud del triángulo.
-- **Catetos**: Par de lados perpendiculares entre sí que forman el ángulo recto.
-- **Ángulos agudos complementarios**: Los dos ángulos restantes satisfacen $\alpha + \beta = 90^\circ$ ($\frac{\pi}{2}\text{ rad}$).
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Relaciones métricas y trigonométricas">
-    <PropiedadItem id="teorema-pitagoras" title="Teorema de Pitágoras">
-      En todo triángulo rectángulo plano, se cumple la relación fundamental $a^2 + b^2 = c^2$.
+  <PropiedadesGrupo title="Propiedades angulares y de rigidez sintética">
+    <PropiedadItem 
+      id="unicidad-angulo-recto" 
+      title="Unicidad del ángulo recto interior"
+      formula="\triangle ABC \text{ rectángulo en } C \implies (\angle CAB \not\cong \angle BCA \land \angle ABC \not\cong \angle BCA)"
+    >
+      En la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, como consecuencia del teorema del ángulo exterior, ningún triángulo puede poseer más de un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> ni ángulos obtusos; en consecuencia, los dos ángulos interiores restantes con <ConceptLink targetId="vertice">vértice</ConceptLink> en $A$ y $B$ son estrictamente agudos.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-triangulo" title="Cálculo del área">
-      El área de un triángulo rectángulo equivale al semiproducto de sus catetos: $\mu(\triangle ABC) = \frac{a \cdot b}{2}$.
+
+    <PropiedadItem 
+      id="angulos-agudos-complementarios" 
+      title="Complementariedad de los ángulos interiores agudos"
+      formula="\operatorname{Compl}(\angle CAB, \angle ABC)"
+    >
+      En la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>, los dos ángulos agudos de un triángulo rectángulo son mutuamente complementarios, deduciéndose formalmente del <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de los ángulos de un triángulo</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Relaciones métricas euclidianas">
+    <PropiedadItem 
+      id="relacion-pitagorica" 
+      title="Relación métrica del teorema de Pitágoras"
+      formula="\overline{AC}^2 + \overline{BC}^2 = \overline{AB}^2"
+    >
+      En todo triángulo rectángulo sobre el plano euclidiano, la suma de las áreas de los cuadrados construidos sobre los catetos equivale al área del cuadrado construido sobre la hipotenusa (<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+En la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, los triángulos rectángulos satisfacen criterios de <ConceptLink targetId="congruencia">congruencia</ConceptLink> simplificados respecto al caso general: el criterio Cateto-Cateto (consecuencia de <ConceptLink targetId="axioma-congruencia-5">LAL</ConceptLink>) y el criterio Hipotenusa-Cateto, válidos con independencia del axioma de paralelas.
+</Nota>

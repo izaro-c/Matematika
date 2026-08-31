@@ -1,0 +1,120 @@
+export const metadata = {
+  id: "traza",
+  lang: "es",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Traza puntual",
+  description: "Asignación conjuntista que asocia a cada recta o plano del dominio primitivo el conjunto exacto de puntos que inciden formalmente con él.",
+  branch: "51A",
+  branches: ["51A", "03B", "51M"],
+  tags: ["geometria-sintetica", "incidencia", "teoria-modelos", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §1",
+      role: "primary"
+    },
+    {
+      title: "Geometry: Euclid and Beyond",
+      author: "Robin Hartshorne",
+      locator: "Capítulo 2, §6",
+      role: "secondary"
+    }
+  ]
+};
+
+<Capitular letra="L" />a **traza puntual** es la asignación conjuntista que asocia a cada <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> o <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> del <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> el <ConceptLink targetId="conjunto">conjunto</ConceptLink> exacto de <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> que mantienen una relación formal de <ConceptLink targetId="incidencia" isDependency={true}>incidencia sintética</ConceptLink> con dicha entidad.
+
+Dado que los <ConceptLink targetId="concepto-primitivo">conceptos primitivos</ConceptLink> de punto ($\mathcal{P}$), recta ($\mathcal{L}$) y plano ($\Pi$) son dominios ontológicos con <ConceptLink targetId="conjunto-disjunto">intersecciones vacías por pares</ConceptLink> ($\mathcal{P} \cap \mathcal{L} = \emptyset$, $\mathcal{P} \cap \Pi = \emptyset$, $\mathcal{L} \cap \Pi = \emptyset$) en la <ConceptLink targetId="logica">lógica politipada</ConceptLink>, la traza puntual $\operatorname{tr}$ actúa como el <ConceptLink targetId="operador">operador</ConceptLink> canónico de mediación que permite aplicar operaciones de la teoría de conjuntos (intersección, inclusión o <ConceptLink targetId="cardinalidad">cardinalidad</ConceptLink>) sin incurrir en colapso de tipos.
+
+<Definicion title="Operador de traza puntual">
+Dada una <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink> $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$ con <ConceptLink targetId="signatura">signatura politipada</ConceptLink>, el <ConceptLink targetId="operador">operador</ConceptLink> **traza** ($\operatorname{tr}$) asigna a cada elemento de los dominios primitivos lineal ($\mathcal{L}$) y planar ($\Pi$) su correspondiente subconjunto en el <ConceptLink targetId="conjunto-potencia">conjunto potencia</ConceptLink> de puntos $\mathcal{P}(\mathcal{P})$:
+
+1. **Traza puntual de una recta**:
+   $$
+   \begin{aligned}
+   \operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} &\longrightarrow \mathcal{P}(\mathcal{P}) \\
+   \ell &\longmapsto \operatorname{tr}(\ell) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \}
+   \end{aligned}
+   $$
+
+2. **Traza puntual de un plano**:
+   $$
+   \begin{aligned}
+   \operatorname{tr}_{\Pi}\colon \Pi &\longrightarrow \mathcal{P}(\mathcal{P}) \\
+   \pi &\longmapsto \operatorname{tr}(\pi) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \pi \}
+   \end{aligned}
+   $$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Unicidad e inyectividad en los dominios primitivos">
+    <PropiedadItem 
+      id="inyectividad-lineal" 
+      title="Inyectividad y determinación unívoca de rectas"
+      formula="\forall \ell_1, \ell_2 \in \mathcal{L} \ (\operatorname{tr}(\ell_1) = \operatorname{tr}(\ell_2) \iff \ell_1 = \ell_2)"
+    >
+      Dos rectas distintas nunca tienen la misma colección de puntos incidentes. Por el <ConceptLink targetId="axioma-incidencia-2">Axioma I.2</ConceptLink> (existencia de al menos dos puntos en la recta) y el <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink> (determinación unívoca por dos puntos), la aplicación $\operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} \to \mathcal{P}(\mathcal{P})$ es estrictamente <ConceptLink targetId="inyectividad">inyectiva</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="inyectividad-planar" 
+      title="Inyectividad y determinación unívoca de planos"
+      formula="\forall \pi_1, \pi_2 \in \Pi \ (\operatorname{tr}(\pi_1) = \operatorname{tr}(\pi_2) \iff \pi_1 = \pi_2)"
+    >
+      Dos planos distintos no pueden compartir exactamente la misma traza de puntos. Por el <ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink> y el <ConceptLink targetId="axioma-incidencia-5">Axioma I.5</ConceptLink> (determinación y unicidad del plano por tres puntos no colineales), la aplicación $\operatorname{tr}_{\Pi}\colon \Pi \to \mathcal{P}(\mathcal{P})$ es estrictamente <ConceptLink targetId="inyectividad">inyectiva</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Relaciones de incidencia y posiciones relativas">
+    <PropiedadItem 
+      id="inclusion-recta-plano" 
+      title="Inclusión de una recta en un plano"
+      formula="\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \iff \forall P \in \mathcal{P} \ (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)"
+    >
+      Una recta $\ell$ está contenida en un plano $\pi$ si y solo si su traza está incluida en la del plano ($\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$). Por el <ConceptLink targetId="axioma-incidencia-6">Axioma I.6</ConceptLink>, basta comprobar que dos puntos distintos de la recta pertenezcan al plano para asegurar la inclusión completa.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="interseccion-planos" 
+      title="Intersección de planos secantes"
+      formula="\pi_1 \neq \pi_2 \land \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) \neq \emptyset \implies \exists! \ell \in \mathcal{L} \ (\operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \operatorname{tr}(\ell))"
+    >
+      Cuando dos planos distintos se cortan en al menos un punto común (<ConceptLink targetId="axioma-incidencia-7">Axioma I.7</ConceptLink>), la intersección conjuntista de sus trazas puntuales coincide unívocamente con la traza de una única recta secante común (<ConceptLink targetId="teorema-interseccion-planos">teorema de la recta de intersección</ConceptLink>).
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="paralelismo-planos" 
+      title="Planos paralelos en el espacio"
+      formula="\pi_1 \parallel \pi_2 \iff (\pi_1 = \pi_2 \lor \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \emptyset)"
+    >
+      Dos planos en el espacio son <ConceptLink targetId="planos-paralelos">paralelos</ConceptLink> si y solo si son idénticos o sus trazas puntuales son conjuntos disjuntos, garantizando la reflexividad de la relación.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="posicion-rectas-coplanares" 
+      title="Rectas coplanares: paralelismo y secancia"
+      formula="\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi) \implies (\ell_1 \parallel \ell_2 \iff \ell_1 = \ell_2 \lor \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset)"
+    >
+      Para dos rectas con <ConceptLink targetId="coplanaridad">coplanaridad</ConceptLink> asegurada en un plano $\pi$, la relación de <ConceptLink targetId="paralelas">paralelismo</ConceptLink> ($\ell_1 \parallel \ell_2$) es reflexiva y equivale a que sean idénticas o no compartan ningún punto; si son distintas y no paralelas, son <ConceptLink targetId="secante">secantes</ConceptLink> con $\lvert \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) \rvert = 1$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="rectas-cruzadas" 
+      title="Caracterización de rectas que se cruzan (alabeadas)"
+      formula="\forall \pi \in \Pi \ (\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \not\subseteq \operatorname{tr}(\pi)) \implies \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset"
+    >
+      Dos rectas en el espacio son <ConceptLink targetId="rectas-cruzadas">rectas que se cruzan</ConceptLink> si ningún plano común contiene simultáneamente a ambas, lo que implica necesariamente que sus trazas puntuales son disjuntas sin ser paralelas.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+El uso de la traza puntual $\operatorname{tr}$ permite unir la pureza de la geometría sintética basada en axiomas con la comodidad del álgebra y los <ConceptLink targetId="modelo-cartesiano">modelos analíticos</ConceptLink> en coordenadas.
+</Nota>

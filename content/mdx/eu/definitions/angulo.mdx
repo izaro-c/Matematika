@@ -30,7 +30,7 @@ export const Simulation = Angulo;
 
 <Capitular letra="A" />ngelua <ConceptLink targetId="punto">jatorri</ConceptLink> bera partekatzen duten eta <ConceptLink targetId="recta">zuzen</ConceptLink> euskarri desberdinak dituzten bi <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdiren</ConceptLink> <ConceptLink targetId="conjunto">bikote ez-ordenatua</ConceptLink> da.
 
-<ConceptLink targetId="geometria-sintetica">Geometria sintetikoaren</ConceptLink> oinarrietan, angelua ez da zenbakizko magnitude bat ezta neurri metriko bat ere, <ConceptLink targetId="semirrecta">zuzenerdiaren</ConceptLink> noziotik eta <ConceptLink targetId="plano">planoko</ConceptLink> ez-<ConceptLink targetId="colinealidad" isDependency={true}>kolinealtasunetik</ConceptLink> abiatuta eraikitako objektu formala baizik.
+Angelua ez da zenbakizko magnitude bat ezta neurri metriko bat ere, <ConceptLink targetId="semirrecta">zuzenerdiaren</ConceptLink> noziotik eta <ConceptLink targetId="plano">planoko</ConceptLink> ez-<ConceptLink targetId="colinealidad" isDependency={true}>kolinealtasunetik</ConceptLink> abiatuta eraikitako objektu formala baizik.
 
 <Definicion title="Angeluaren definizio formala">
 $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> <ConceptLink targetId="punto">puntu</ConceptLink> baterako eta $\{O, A, B\}$ hirukotea <ConceptLink targetId="colinealidad">kolineala</ConceptLink> ez izatea betetzen duten <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ bi puntu desberdinetarako, <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> (edo $\angle(h, k)$) **angelua** <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> eta <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind> bi <ConceptLink targetId="semirrecta">zuzenerdiek</ConceptLink> osatzen duten <ConceptLink targetId="conjunto">bikotea</ConceptLink> da:
@@ -39,7 +39,7 @@ $$
 \angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}
 $$
 
-$h$ eta $k$ zuzenerdiei angeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> deritze, eta $O$ puntu komunari <ConceptLink targetId="vertice">erpin</ConceptLink>. Haren lotutako $\operatorname{tr}(\angle AOB) \subset \mathcal{P}$ **puntu-traza** aldeen trazen bildura da:
+$h$ eta $k$ zuzenerdiei angeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> deritze, eta $O$ puntu komunari <ConceptLink targetId="vertice">erpin</ConceptLink>. Haren lotutako $\operatorname{tr}(\angle AOB) \subset \mathcal{P}$ <ConceptLink targetId="traza">**puntu-trazadura**</ConceptLink> aldeen <ConceptLink targetId="traza">trazen</ConceptLink> bildura da:
 
 $$
 \operatorname{tr}(\angle AOB) = \operatorname{tr}(\overrightarrow{OA}) \cup \operatorname{tr}(\overrightarrow{OB})
@@ -63,7 +63,7 @@ $$
       title="Coplanarity and Unique Supporting Plane"
       formula="\exists! \pi \in \Pi : \operatorname{tr}(\angle AOB) \subset \operatorname{tr}(\pi)"
     >
-      By Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, the non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> of the vertex triple $\{O, A, B\}$ uniquely determines a single <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$ that contains the entire point trace of the angle: $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
+      By Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, the non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> of the vertex triple $\{O, A, B\}$ uniquely determines a single <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$ that contains the entire <ConceptLink targetId="traza">point trace</ConceptLink> of the angle: $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 

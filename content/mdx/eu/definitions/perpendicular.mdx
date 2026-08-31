@@ -2,47 +2,82 @@ export const metadata = {
   id: "perpendicular",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Perpendikulartasuna",
-  description: "Lau angelu zuzen kongruente eratuz elkar ebakitzen duten bi zuzen ebakitzaileren arteko erlazio geometrikoa.",
-  branch: "51M",
+  description: "Elkar ebakitzen duten bi zuzen koplanarren arteko erlazio geometrikoa, beren ebakidurak angeluzuzenak zehazten dituenean.",
+  branch: "51A",
+  branches: ["51A", "51M"],
+  tags: ["geometria-sintetica", "perpendicularidad", "ortogonalidad", "hilbert"],
   hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 10. Definizioa", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. Liburukia, 10. Definizioa",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. Kapitulua, §4",
+      role: "primary"
+    }
   ]
 };
 
 import { Perpendicular } from '@content/diagrams/Definiciones/Perpendicular';
 export const Simulation = Perpendicular;
 
-<Capitular letra="P" />lano bateko bi <ConceptLink targetId="recta">zuzen</ConceptLink> ebakitzaileri perpendikular deritze haien ebakidurak elkarren artean kongruenteak diren lau <ConceptLink targetId="angulo">angelu</ConceptLink> sortzen dituenean. Geometria euklidearreko ortogonaltasunaren oinarrizko nozioa da, eta koordenatu kartesiarren sistemen zein proiekzio ortogonalen oinarri gisa balio du.
+<Capitular letra="P" />lano bateko bi <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> <ConceptLink targetId="secante">ebakitzaile</ConceptLink> **perpendikularrak** dira baldin eta beren <ConceptLink targetId="punto">ebakidura-puntuak</ConceptLink> <ConceptLink targetId="angulo-recto" isDependency={true}>angeluzuzenak</ConceptLink> zehazten baditu.
 
-<Definicion title="">
-  $\mathcal{P}$ plano bereko <VisualBind element="lineAB" color="musgo">$L_1$</VisualBind> eta <VisualBind element="perpABP" color="pavo">$L_2$</VisualBind> bi <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> emanda, $P = L_1 \cap L_2$ puntuan elkar ebakitzen dutenak, $L_1$ eta $L_2$ perpendikularrak dira ($L_1 \perp L_2$) baldin eta soilik baldin ebakidurak zehaztutako lau angeluak $\frac{\pi}{2}$ radianeko ($90^\circ$) <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzenak</ConceptLink> badira:
-  $$
-  L_1 \perp L_2 \iff \forall i \in \{1, 2, 3, 4\}, \; \theta_i \cong 90^\circ
-  $$
-  Termino bektorialetan, $L_1$ eta $L_2$-ren $\vec{u}, \vec{v}$ bektore zuzentzaile ez-nuluentzat, biderketa eskalar nulua izatearen baliokidea da: $\vec{u} \cdot \vec{v} = 0$.
+Perpendikulartasun-erlazioak zuzen ebakitzaileen arteko sendotasun posizionala formalizatzen du <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>, <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzenen</ConceptLink> eta eraikuntza ortogonalen azterketarako oinarria ezarriz.
+
+<Definicion title="Zuzen perpendikularren definizio formala">
+Izan bitez <VisualBind element="lineAB" color="terracota">$\ell_1$</VisualBind>, <VisualBind element="perpABP" color="musgo">$\ell_2$</VisualBind> $\in \mathcal{L}$ bi <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> koplanar $\pi \in \Pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> batean ($\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi)$), <VisualBind element="pP" color="musgo">$P$</VisualBind> $\in \mathcal{P}$ <ConceptLink targetId="punto" isDependency={true}>ebakidura-puntu</ConceptLink> bakar batean <ConceptLink targetId="secante">ebakitzen</ConceptLink> direnak ($\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$).
+
+Izan bitez <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \operatorname{tr}(\ell_1) \setminus \{P\}$ bi puntu non $P$ puntua $A$ eta $B$-ren <ConceptLink targetId="estar-entre" isDependency={true}>artean dagoen</ConceptLink> ($A * P * B$), $\ell_1$-en gaineko <VisualBind element="rayPA" color="terracota">$h_1 = \overrightarrow{PA}$</VisualBind> eta <VisualBind element="rayPB" color="terracota">$h_1' = \overrightarrow{PB}$</VisualBind> <ConceptLink targetId="semirrecta" isDependency={true}>aurkako zuzenerdiak</ConceptLink> zehaztuz. Izan bitez <VisualBind element="pC" color="musgo">$C$</VisualBind>, <VisualBind element="pD" color="musgo">$D$</VisualBind> $\in \operatorname{tr}(\ell_2) \setminus \{P\}$ bi puntu non $P$ puntua $C$ eta $D$-ren artean dagoen ($C * P * D$), $\ell_2$-ren gaineko <VisualBind element="rayPC" color="musgo">$h_2 = \overrightarrow{PC}$</VisualBind> eta <VisualBind element="rayPD" color="musgo">$h_2' = \overrightarrow{PD}$</VisualBind> aurkako zuzenerdiak zehaztuz.
+
+$\ell_1$ eta $\ell_2$ zuzenak **perpendikularrak** dira ($\ell_1 \perp \ell_2$) baldin eta soilik baldin $P$ <ConceptLink targetId="vertice">erpinean</ConceptLink> eratutako <ConceptLink targetId="angulo">angelua</ConceptLink> <VisualBind element="angleAPC" color="ocre">$\angle(h_1, h_2) = \angle APC$</VisualBind> <ConceptLink targetId="angulo-recto" isDependency={true}>angeluzuzena</ConceptLink> bada:
+
+$$
+\ell_1 \perp \ell_2 \iff \operatorname{Recto}(\angle(h_1, h_2))
+$$
 </Definicion>
 
 <Separador />
 
-### Irizpideak eta adierazpen geometrikoak
-
-- **Geometria sintetikoa**: Bi zuzen perpendikularrak dira baldin eta aldameneko angelu gehigarri kongruenteak eratzen badituzte.
-- **Geometria analitikoa**: $\mathbb{R}^2$-n, $m_1, m_2 \in \mathbb{R}$ maldak dituzten bi zuzen perpendikularrak dira baldin eta soilik baldin $m_1 \cdot m_2 = -1$ bada.
-- **Geometria bektoriala**: Dimentsio bakarreko bi azpiespazio afin ortogonalak dira haien bektore zuzentzaileek $\langle \vec{u}, \vec{v} \rangle = 0$ betetzen badute.
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Ortogonaltasuna eta paralelotasuna">
-    <PropiedadItem id="axioma-congruencia-4" title="Perpendikularraren existentzia eta bakartasuna">
-      $P$ puntu bat eta $L$ zuzen bat emanda, $P$-tik igarotzen den eta $L$-rekiko perpendikularra den zuzen bakar bat existitzen da.
+  <PropiedadesGrupo title="Simetria-propietateak eta aldaezin sintetikoak">
+    <PropiedadItem 
+      id="simetria-perpendicularidad" 
+      title="Perpendikulartasun-erlazioaren simetria"
+      formula="\ell_1 \perp \ell_2 \iff \ell_2 \perp \ell_1"
+    >
+      <ConceptLink targetId="recta">Zuzen</ConceptLink> <ConceptLink targetId="secante">ebakitzaileen</ConceptLink> arteko perpendikulartasun-erlazioa zorrozki simetrikoa da: zuzen bat beste bati perpendikularra bazaio, bigarrena lehenengoari perpendikularra zaio nahitaez.
     </PropiedadItem>
-    <PropiedadItem id="teorema-angulos-alternos-internos" title="Perpendikularra paraleloekiko">
-      Bi zuzen paralelotako bati perpendikularra zaion edozein zuzen bestearekiko ere perpendikularra da nahitaez.
+
+    <PropiedadItem 
+      id="congruencia-cuatro-angulos" 
+      title="Lau angeluzuzenen aldi bereko kongruentzia"
+      formula="\ell_1 \perp \ell_2 \implies \angle(h_1, h_2) \cong \angle(h_1', h_2) \cong \angle(h_1', h_2') \cong \angle(h_1, h_2')"
+    >
+      Bi zuzen perpendikularren ebakidurak planoa elkarren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> diren lau <ConceptLink targetId="angulo-recto">angeluzuzentan</ConceptLink> banatzen du: <VisualBind element="angleAPC" color="ocre">$\angle APC$</VisualBind> $\cong$ <VisualBind element="angleBPC" color="ocre">$\angle BPC$</VisualBind> $\cong$ <VisualBind element="angleBPD" color="ocre">$\angle BPD$</VisualBind> $\cong$ <VisualBind element="angleAPD" color="ocre">$\angle APD$</VisualBind>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Existentzia eta bakartasuna geometria absolutuan">
+    <PropiedadItem 
+      id="existencia-unicidad-perpendicular" 
+      title="Planoan perpendikularraren existentzia eta bakartasuna"
+      formula="\forall \ell \in \mathcal{L}, \; \forall P \in \operatorname{tr}(\pi) \; \exists! \ell' \in \mathcal{L} \; (\operatorname{tr}(\ell') \subseteq \operatorname{tr}(\pi) \land P \in \operatorname{tr}(\ell') \land \ell' \perp \ell)"
+    >
+      Edozein $\pi$ planotan, $\operatorname{tr}(\pi)$ planoko $P$ puntu bakoitzeko —$\ell$ zuzenekoa izan ala ez— $\ell$-rekin koplanarra den, $P$-rekin intziditzen duen eta $\ell$-rekiko perpendikularra den $\ell'$ zuzen bakar bat existitzen da. Teorema hau <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> da baliozkoa, <ConceptLink targetId="axioma-paralelas-euclides">paraleloen inolako axiomarik</ConceptLink> behar izan gabe.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+Hierarkia axiomatikoan, perpendikulartasuna <ConceptLink targetId="sistema-absoluto">geometria absolutuari</ConceptLink> dagokion kontzeptu guztiz sintetikoa da, <ConceptLink targetId="axioma-paralelas-euclides">paraleloen edozein axioma</ConceptLink> baino lehenagokoa eta independentea. Paralelotasun unibokoan ez bezala, puntu batetik igarotzen den perpendikularraren existentzia eta bakartasuna ez dago espazioaren kurbaduraren mende.
+</Nota>
