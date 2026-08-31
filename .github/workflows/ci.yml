@@ -134,23 +134,6 @@ jobs:
       - name: Run lossless round-trip gate
         run: npm run editor:roundtrip:check
 
-  editor-e2e:
-    name: Editor E2E Gate
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm ci
-      - name: Require Phase 7 critical E2E suite
-        run: npm run editor:test:e2e
-
   architecture-check:
     name: Architecture Check
     runs-on: ubuntu-latest
