@@ -45,9 +45,14 @@ async function waitForServer(url: string, timeoutMs = 20_000): Promise<void> {
 }
 
 function startPreviewServer(): ChildProcess {
+  // Invocamos el binario local de vite directamente (no vía `npx`), que es un
+  // proceso envoltorio que arranca a su vez otro proceso hijo. Si matamos el
+  // envoltorio, el `vite preview` real puede quedar huérfano y seguir vivo,
+  // manteniendo ocupado el event loop de Node y colgando el job de CI.
+  const vitePath = path.resolve('./node_modules/.bin/vite');
   const proc = spawn(
-    'npx',
-    ['vite', 'preview', '--port', String(PORT), '--strictPort'],
+    vitePath,
+    ['preview', '--port', String(PORT), '--strictPort'],
     { stdio: 'pipe' }
   );
   proc.stderr?.on('data', (d) => {
@@ -167,7 +172,7 @@ async function prerender() {
     });
   } finally {
     await browser?.close();
-    server.kill();
+    server.kill('SIGKILL'); // servidor desechable de CI: no hace falta cierre elegante
   }
 
   if (failures.length > 0) {
@@ -184,5 +189,15 @@ async function prerender() {
 }
 
 if (process.argv[1] && process.argv[1].endsWith('prerender.ts')) {
-  prerender();
+  prerender()
+    .then(() => {
+      // Salida explícita: no confiamos en que el event loop se vacíe solo tras
+      // matar subprocesos (vite preview, Chrome de Puppeteer). Un handle
+      // residual cualquiera bastaría para colgar el job de CI indefinidamente.
+      process.exit(process.exitCode ?? 0);
+    })
+    .catch((err) => {
+      console.error('❌ Error inesperado en el prerenderizado:', err);
+      process.exit(1);
+    });
 }
