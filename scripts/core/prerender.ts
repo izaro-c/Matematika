@@ -29,7 +29,6 @@ const PORT = 4174; // puerto dedicado para no chocar con `vite preview` en desar
 const HOST = `http://localhost:${PORT}`;
 const CONCURRENCY = 5;
 const NAV_TIMEOUT_MS = 60_000; // subido de 30s: hay páginas con jsxgraph/three.js que tardan más en montar
-const LOADING_SELECTOR = '.page-loading';
 
 async function waitForServer(url: string, timeoutMs = 20_000): Promise<void> {
   const start = Date.now();
@@ -65,17 +64,33 @@ function outputFileFor(routePath: string): string {
   return path.join(DIST_DIR, clean, 'index.html');
 }
 
-async function prerenderRoute(browser: Browser, routePath: string): Promise<{ path: string; ok: boolean; error?: string }> {
+async function prerenderRoute(browser: Browser, routePath: string, attempt = 1): Promise<{ path: string; ok: boolean; error?: string }> {
   const page = await browser.newPage();
   try {
     const url = `${HOST}${BASE_PATH.slice(0, -1)}${routePath}`;
-    await page.goto(url, { waitUntil: 'networkidle0', timeout: NAV_TIMEOUT_MS });
+    // 'domcontentloaded' en vez de 'networkidle0': no dependemos de que TODAS las
+    // peticiones de red terminen (p. ej. Google Fonts externas), solo de que el
+    // HTML inicial llegue. La señal real de "la app ya está pintada" es la
+    // comprobación de #root + .page-loading de abajo.
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT_MS });
 
-    // Esperar a que desaparezca la pantalla de carga (Suspense) si llegó a mostrarse.
+    // Esperar a que React haya montado contenido real Y a que ya no esté la
+    // pantalla de carga. Ojo: NO basta con esperar a que .page-loading
+    // desaparezca por sí solo — waitForSelector(hidden:true) se cumple también
+    // si el elemento nunca llegó a existir, y justo tras domcontentloaded
+    // #root todavía puede estar vacío (React aún no montó). Por eso exigimos
+    // ambas condiciones a la vez.
     try {
-      await page.waitForSelector(LOADING_SELECTOR, { hidden: true, timeout: 15_000 });
+      await page.waitForFunction(
+        () => {
+          const root = document.getElementById('root');
+          if (!root || root.children.length === 0) return false;
+          return !document.querySelector('.page-loading');
+        },
+        { timeout: 20_000 }
+      );
     } catch {
-      console.warn(`  ⚠ ${routePath}: la pantalla de carga no desapareció a tiempo, se captura igualmente`);
+      console.warn(`  ⚠ ${routePath}: no se confirmó el render completo a tiempo, se captura igualmente`);
     }
 
     // Pequeño margen extra para efectos posteriores al primer paint (SeoHead, KaTeX, etc.)
@@ -87,9 +102,15 @@ async function prerenderRoute(browser: Browser, routePath: string): Promise<{ pa
     fs.writeFileSync(outFile, html, 'utf-8');
     return { path: routePath, ok: true };
   } catch (err) {
+    if (attempt < 2) {
+      // Reintento único: cubre timeouts puntuales por contención de red/CPU
+      // entre las páginas headless concurrentes, no fallos reales de la ruta.
+      await page.close();
+      return prerenderRoute(browser, routePath, attempt + 1);
+    }
     return { path: routePath, ok: false, error: err instanceof Error ? err.message : String(err) };
   } finally {
-    await page.close();
+    await page.close().catch(() => {});
   }
 }
 
