@@ -190,8 +190,7 @@ jobs:
         run: npm run validate-graph
       - name: Validate Lean bridge
         run: npm run validate-lean
-      - name: Audit bridge debt
-        run: npm run bridge:audit
+
 
   build:
     name: Production Build

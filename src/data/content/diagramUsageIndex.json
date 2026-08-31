@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "ca2439a968ada7425aabe4fca1d64c5e1b433e5804e8f019a95f3ef3d4e08fd3",
+  "corpusHash": "c414da57c0c55a39def23538be2248fb78f90d788af3527bd56fe4692f860642",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -134,8 +134,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-congruencia-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 600,
-          "end": 637
+          "start": 712,
+          "end": 749
         },
         "blockId": "axioma-congruencia-1:diagram:Congruence1"
       },
@@ -144,8 +144,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-congruencia-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 607,
-          "end": 644
+          "start": 734,
+          "end": 771
         },
         "blockId": "axioma-congruencia-1:diagram:Congruence1"
       },
@@ -154,8 +154,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 619,
-          "end": 656
+          "start": 746,
+          "end": 783
         },
         "blockId": "axioma-congruencia-1:diagram:Congruence1"
       }
@@ -166,8 +166,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-congruencia-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 561,
-          "end": 598
+          "start": 683,
+          "end": 720
         },
         "blockId": "axioma-congruencia-2:diagram:Congruence2"
       },
@@ -176,8 +176,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-congruencia-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 571,
-          "end": 608
+          "start": 697,
+          "end": 734
         },
         "blockId": "axioma-congruencia-2:diagram:Congruence2"
       },
@@ -186,8 +186,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 583,
-          "end": 620
+          "start": 696,
+          "end": 733
         },
         "blockId": "axioma-congruencia-2:diagram:Congruence2"
       }
@@ -198,8 +198,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-congruencia-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 563,
-          "end": 600
+          "start": 745,
+          "end": 782
         },
         "blockId": "axioma-congruencia-3:diagram:Congruence3"
       },
@@ -208,8 +208,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-congruencia-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 576,
-          "end": 613
+          "start": 770,
+          "end": 807
         },
         "blockId": "axioma-congruencia-3:diagram:Congruence3"
       },
@@ -218,8 +218,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 573,
-          "end": 610
+          "start": 752,
+          "end": 789
         },
         "blockId": "axioma-congruencia-3:diagram:Congruence3"
       }
@@ -230,8 +230,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-congruencia-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 594,
-          "end": 631
+          "start": 769,
+          "end": 806
         },
         "blockId": "axioma-congruencia-4:diagram:Congruence4"
       },
@@ -240,8 +240,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-congruencia-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 609,
-          "end": 646
+          "start": 807,
+          "end": 844
         },
         "blockId": "axioma-congruencia-4:diagram:Congruence4"
       },
@@ -250,8 +250,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 631,
-          "end": 668
+          "start": 823,
+          "end": 860
         },
         "blockId": "axioma-congruencia-4:diagram:Congruence4"
       }
@@ -326,8 +326,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-incidencia-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 562,
-          "end": 598
+          "start": 581,
+          "end": 617
         },
         "blockId": "axioma-incidencia-1:diagram:Incidence1"
       },
@@ -336,8 +336,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 565,
-          "end": 601
+          "start": 594,
+          "end": 630
         },
         "blockId": "axioma-incidencia-1:diagram:Incidence1"
       },
@@ -346,8 +346,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 569,
-          "end": 605
+          "start": 603,
+          "end": 639
         },
         "blockId": "axioma-incidencia-1:diagram:Incidence1"
       }
@@ -358,8 +358,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-incidencia-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 522,
-          "end": 558
+          "start": 560,
+          "end": 596
         },
         "blockId": "axioma-incidencia-2:diagram:Incidence2"
       },
@@ -368,8 +368,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 531,
-          "end": 567
+          "start": 577,
+          "end": 613
         },
         "blockId": "axioma-incidencia-2:diagram:Incidence2"
       },
@@ -378,8 +378,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 535,
-          "end": 571
+          "start": 573,
+          "end": 609
         },
         "blockId": "axioma-incidencia-2:diagram:Incidence2"
       }
@@ -390,8 +390,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-incidencia-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 553,
-          "end": 589
+          "start": 578,
+          "end": 614
         },
         "blockId": "axioma-incidencia-3:diagram:Incidence3"
       },
@@ -400,8 +400,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 555,
-          "end": 591
+          "start": 578,
+          "end": 614
         },
         "blockId": "axioma-incidencia-3:diagram:Incidence3"
       },
@@ -410,8 +410,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 548,
-          "end": 584
+          "start": 578,
+          "end": 614
         },
         "blockId": "axioma-incidencia-3:diagram:Incidence3"
       }
@@ -422,8 +422,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-incidencia-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 567,
-          "end": 603
+          "start": 598,
+          "end": 634
         },
         "blockId": "axioma-incidencia-4:diagram:Incidence4"
       },
@@ -432,8 +432,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 568,
-          "end": 604
+          "start": 590,
+          "end": 626
         },
         "blockId": "axioma-incidencia-4:diagram:Incidence4"
       },
@@ -442,8 +442,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 576,
-          "end": 612
+          "start": 598,
+          "end": 634
         },
         "blockId": "axioma-incidencia-4:diagram:Incidence4"
       }
@@ -454,8 +454,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-incidencia-5.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 558,
-          "end": 594
+          "start": 549,
+          "end": 585
         },
         "blockId": "axioma-incidencia-5:diagram:Incidence5"
       },
@@ -464,8 +464,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-5.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 562,
-          "end": 598
+          "start": 537,
+          "end": 573
         },
         "blockId": "axioma-incidencia-5:diagram:Incidence5"
       },
@@ -474,8 +474,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-5.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 553,
-          "end": 589
+          "start": 562,
+          "end": 598
         },
         "blockId": "axioma-incidencia-5:diagram:Incidence5"
       }
@@ -486,8 +486,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-incidencia-6.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 568,
-          "end": 604
+          "start": 602,
+          "end": 638
         },
         "blockId": "axioma-incidencia-6:diagram:Incidence6"
       },
@@ -496,8 +496,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-6.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 576,
-          "end": 612
+          "start": 602,
+          "end": 638
         },
         "blockId": "axioma-incidencia-6:diagram:Incidence6"
       },
@@ -506,8 +506,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-6.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 559,
-          "end": 595
+          "start": 625,
+          "end": 661
         },
         "blockId": "axioma-incidencia-6:diagram:Incidence6"
       }
@@ -518,8 +518,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-incidencia-7.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 541,
-          "end": 577
+          "start": 581,
+          "end": 617
         },
         "blockId": "axioma-incidencia-7:diagram:Incidence7"
       },
@@ -528,8 +528,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-7.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 557,
-          "end": 593
+          "start": 582,
+          "end": 618
         },
         "blockId": "axioma-incidencia-7:diagram:Incidence7"
       },
@@ -538,8 +538,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-7.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 538,
-          "end": 574
+          "start": 578,
+          "end": 614
         },
         "blockId": "axioma-incidencia-7:diagram:Incidence7"
       }
@@ -550,8 +550,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-incidencia-8.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 551,
-          "end": 587
+          "start": 553,
+          "end": 589
         },
         "blockId": "axioma-incidencia-8:diagram:Incidence8"
       },
@@ -560,8 +560,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-incidencia-8.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 558,
-          "end": 594
+          "start": 553,
+          "end": 589
         },
         "blockId": "axioma-incidencia-8:diagram:Incidence8"
       },
@@ -570,8 +570,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-incidencia-8.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 557,
-          "end": 593
+          "start": 552,
+          "end": 588
         },
         "blockId": "axioma-incidencia-8:diagram:Incidence8"
       }
@@ -582,8 +582,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-orden-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 576,
-          "end": 608
+          "start": 704,
+          "end": 736
         },
         "blockId": "axioma-orden-1:diagram:Order1"
       },
@@ -592,8 +592,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-orden-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 572,
-          "end": 604
+          "start": 711,
+          "end": 743
         },
         "blockId": "axioma-orden-1:diagram:Order1"
       },
@@ -602,8 +602,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-orden-1.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 586,
-          "end": 618
+          "start": 729,
+          "end": 761
         },
         "blockId": "axioma-orden-1:diagram:Order1"
       }
@@ -614,8 +614,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-orden-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 561,
-          "end": 593
+          "start": 668,
+          "end": 700
         },
         "blockId": "axioma-orden-2:diagram:Order2"
       },
@@ -624,8 +624,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-orden-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 546,
-          "end": 578
+          "start": 662,
+          "end": 694
         },
         "blockId": "axioma-orden-2:diagram:Order2"
       },
@@ -634,8 +634,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-orden-2.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 563,
-          "end": 595
+          "start": 685,
+          "end": 717
         },
         "blockId": "axioma-orden-2:diagram:Order2"
       }
@@ -646,8 +646,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-orden-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 528,
-          "end": 560
+          "start": 655,
+          "end": 687
         },
         "blockId": "axioma-orden-3:diagram:Order3"
       },
@@ -656,8 +656,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-orden-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 559,
-          "end": 591
+          "start": 691,
+          "end": 723
         },
         "blockId": "axioma-orden-3:diagram:Order3"
       },
@@ -666,8 +666,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-orden-3.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 542,
-          "end": 574
+          "start": 674,
+          "end": 706
         },
         "blockId": "axioma-orden-3:diagram:Order3"
       }
@@ -678,8 +678,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-orden-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 683,
-          "end": 714
+          "start": 837,
+          "end": 868
         },
         "blockId": "axioma-orden-4:diagram:Pasch"
       },
@@ -688,8 +688,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-orden-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 690,
-          "end": 721
+          "start": 836,
+          "end": 867
         },
         "blockId": "axioma-orden-4:diagram:Pasch"
       },
@@ -698,8 +698,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-orden-4.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 682,
-          "end": 713
+          "start": 834,
+          "end": 865
         },
         "blockId": "axioma-orden-4:diagram:Pasch"
       }
@@ -710,8 +710,8 @@
         "contentPath": "content/mdx/en/axioms/axioma-congruencia-5.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 580,
-          "end": 609
+          "start": 735,
+          "end": 764
         },
         "blockId": "axioma-congruencia-5:diagram:SAS"
       },
@@ -720,8 +720,8 @@
         "contentPath": "content/mdx/es/axioms/axioma-congruencia-5.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 604,
-          "end": 633
+          "start": 766,
+          "end": 795
         },
         "blockId": "axioma-congruencia-5:diagram:SAS"
       },
@@ -730,8 +730,8 @@
         "contentPath": "content/mdx/eu/axioms/axioma-congruencia-5.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 589,
-          "end": 618
+          "start": 759,
+          "end": 788
         },
         "blockId": "axioma-congruencia-5:diagram:SAS"
       }
@@ -774,8 +774,8 @@
         "contentPath": "content/mdx/en/definitions/angulo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 567,
-          "end": 599
+          "start": 747,
+          "end": 779
         },
         "blockId": "angulo:diagram:Angulo"
       },
@@ -784,8 +784,8 @@
         "contentPath": "content/mdx/es/definitions/angulo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 581,
-          "end": 613
+          "start": 771,
+          "end": 803
         },
         "blockId": "angulo:diagram:Angulo"
       },
@@ -794,8 +794,8 @@
         "contentPath": "content/mdx/eu/definitions/angulo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 597,
-          "end": 629
+          "start": 785,
+          "end": 817
         },
         "blockId": "angulo:diagram:Angulo"
       }
@@ -870,8 +870,8 @@
         "contentPath": "content/mdx/en/definitions/estar-entre.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 513,
-          "end": 549
+          "start": 617,
+          "end": 653
         },
         "blockId": "estar-entre:diagram:EstarEntre"
       },
@@ -880,8 +880,8 @@
         "contentPath": "content/mdx/es/definitions/estar-entre.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 517,
-          "end": 553
+          "start": 623,
+          "end": 659
         },
         "blockId": "estar-entre:diagram:EstarEntre"
       },
@@ -890,8 +890,8 @@
         "contentPath": "content/mdx/eu/definitions/estar-entre.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 543,
-          "end": 579
+          "start": 635,
+          "end": 671
         },
         "blockId": "estar-entre:diagram:EstarEntre"
       }
@@ -998,8 +998,8 @@
         "contentPath": "content/mdx/en/definitions/plano.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 567,
-          "end": 598
+          "start": 634,
+          "end": 665
         },
         "blockId": "plano:diagram:Plano"
       },
@@ -1008,8 +1008,8 @@
         "contentPath": "content/mdx/es/definitions/plano.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 578,
-          "end": 609
+          "start": 631,
+          "end": 662
         },
         "blockId": "plano:diagram:Plano"
       },
@@ -1018,8 +1018,8 @@
         "contentPath": "content/mdx/eu/definitions/plano.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 582,
-          "end": 613
+          "start": 632,
+          "end": 663
         },
         "blockId": "plano:diagram:Plano"
       }
@@ -1030,8 +1030,8 @@
         "contentPath": "content/mdx/en/definitions/punto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 583,
-          "end": 614
+          "start": 627,
+          "end": 658
         },
         "blockId": "punto:diagram:Punto"
       },
@@ -1040,8 +1040,8 @@
         "contentPath": "content/mdx/es/definitions/punto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 495,
-          "end": 526
+          "start": 642,
+          "end": 673
         },
         "blockId": "punto:diagram:Punto"
       },
@@ -1050,8 +1050,8 @@
         "contentPath": "content/mdx/eu/definitions/punto.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 594,
-          "end": 625
+          "start": 641,
+          "end": 672
         },
         "blockId": "punto:diagram:Punto"
       }
@@ -1062,8 +1062,8 @@
         "contentPath": "content/mdx/en/definitions/recta.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 574,
-          "end": 605
+          "start": 632,
+          "end": 663
         },
         "blockId": "recta:diagram:Recta"
       },
@@ -1072,8 +1072,8 @@
         "contentPath": "content/mdx/es/definitions/recta.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 624,
-          "end": 655
+          "start": 636,
+          "end": 667
         },
         "blockId": "recta:diagram:Recta"
       },
@@ -1082,8 +1082,8 @@
         "contentPath": "content/mdx/eu/definitions/recta.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 600,
-          "end": 631
+          "start": 654,
+          "end": 685
         },
         "blockId": "recta:diagram:Recta"
       }
@@ -1094,8 +1094,8 @@
         "contentPath": "content/mdx/en/definitions/segmento.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 585,
-          "end": 619
+          "start": 722,
+          "end": 756
         },
         "blockId": "segmento:diagram:Segmento"
       },
@@ -1104,8 +1104,8 @@
         "contentPath": "content/mdx/es/definitions/segmento.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 562,
-          "end": 596
+          "start": 735,
+          "end": 769
         },
         "blockId": "segmento:diagram:Segmento"
       },
@@ -1114,8 +1114,8 @@
         "contentPath": "content/mdx/eu/definitions/segmento.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 588,
-          "end": 622
+          "start": 730,
+          "end": 764
         },
         "blockId": "segmento:diagram:Segmento"
       }
@@ -1126,8 +1126,8 @@
         "contentPath": "content/mdx/en/definitions/semirrecta.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 575,
-          "end": 611
+          "start": 722,
+          "end": 758
         },
         "blockId": "semirrecta:diagram:Semirrecta"
       },
@@ -1136,8 +1136,8 @@
         "contentPath": "content/mdx/es/definitions/semirrecta.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 591,
-          "end": 627
+          "start": 749,
+          "end": 785
         },
         "blockId": "semirrecta:diagram:Semirrecta"
       },
@@ -1146,8 +1146,8 @@
         "contentPath": "content/mdx/eu/definitions/semirrecta.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 599,
-          "end": 635
+          "start": 748,
+          "end": 784
         },
         "blockId": "semirrecta:diagram:Semirrecta"
       }
@@ -1158,8 +1158,8 @@
         "contentPath": "content/mdx/en/definitions/triangulo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 588,
-          "end": 623
+          "start": 760,
+          "end": 795
         },
         "blockId": "triangulo:diagram:Triangulo"
       },
@@ -1168,8 +1168,8 @@
         "contentPath": "content/mdx/es/definitions/triangulo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 600,
-          "end": 635
+          "start": 760,
+          "end": 795
         },
         "blockId": "triangulo:diagram:Triangulo"
       },
@@ -1178,8 +1178,8 @@
         "contentPath": "content/mdx/eu/definitions/triangulo.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 602,
-          "end": 637
+          "start": 767,
+          "end": 802
         },
         "blockId": "triangulo:diagram:Triangulo"
       }
@@ -1670,8 +1670,8 @@
         "contentPath": "content/mdx/en/models/modelo-fano.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 431,
-          "end": 464
+          "start": 643,
+          "end": 676
         },
         "blockId": "modelo-fano:diagram:ModeloFano"
       },
@@ -1680,8 +1680,8 @@
         "contentPath": "content/mdx/es/models/modelo-fano.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 441,
-          "end": 474
+          "start": 655,
+          "end": 688
         },
         "blockId": "modelo-fano:diagram:ModeloFano"
       },
@@ -1690,8 +1690,8 @@
         "contentPath": "content/mdx/eu/models/modelo-fano.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 431,
-          "end": 464
+          "start": 647,
+          "end": 680
         },
         "blockId": "modelo-fano:diagram:ModeloFano"
       }
@@ -1734,8 +1734,8 @@
         "contentPath": "content/mdx/en/models/modelo-tres-puntos.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 475,
-          "end": 514
+          "start": 612,
+          "end": 651
         },
         "blockId": "modelo-tres-puntos:diagram:ModeloTresPuntos"
       },
@@ -1744,8 +1744,8 @@
         "contentPath": "content/mdx/es/models/modelo-tres-puntos.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 489,
-          "end": 528
+          "start": 626,
+          "end": 665
         },
         "blockId": "modelo-tres-puntos:diagram:ModeloTresPuntos"
       },
@@ -1754,8 +1754,8 @@
         "contentPath": "content/mdx/eu/models/modelo-tres-puntos.mdx",
         "referenceKind": "Diagram",
         "sourceRange": {
-          "start": 489,
-          "end": 528
+          "start": 623,
+          "end": 662
         },
         "blockId": "modelo-tres-puntos:diagram:ModeloTresPuntos"
       }

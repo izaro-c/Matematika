@@ -97,8 +97,12 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
   const [activeDemoBlockId, setActiveDemoBlockId] = useState<string | null>(null);
   const [focusedSurfaceId, setFocusedSurfaceId] = useState<string | null>(null);
   const [formatHint, setFormatHint] = useState<string | null>(null);
+  const [pendingDeleteStepId, setPendingDeleteStepId] = useState<string | null>(null);
+  const pendingDeleteTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pendingRenumber = useRef(false);
+
   const commandSearchRef = useRef<HTMLInputElement>(null);
+
   const closeCommand = () => setCommandOpen(false);
   const commandDialogRef = useModalFocus<HTMLDivElement>(commandOpen, closeCommand, commandSearchRef);
   const showStatement = ['teorema', 'lema', 'corolario', 'definicion', 'axioma'].includes(String(metadata.type));
@@ -351,10 +355,19 @@ export const VisualEditorPanel: React.FC<VisualEditorPanelProps> = ({
         }}
         onDeleteStep={() => {
           const id = api().activeDemoBlockId;
-          if (id && window.confirm('¿Eliminar este paso?')) {
+          if (!id) return;
+          if (pendingDeleteStepId === id) {
+            // Segunda acción: confirmar eliminación
+            if (pendingDeleteTimer.current) clearTimeout(pendingDeleteTimer.current);
+            setPendingDeleteStepId(null);
             api().removeBlock(id);
             setActiveDemoBlockId(null);
             api().requestRenumber();
+          } else {
+            // Primera acción: marcar como pendiente durante 3 s
+            if (pendingDeleteTimer.current) clearTimeout(pendingDeleteTimer.current);
+            setPendingDeleteStepId(id);
+            pendingDeleteTimer.current = setTimeout(() => setPendingDeleteStepId(null), 3000);
           }
         }}
         onInsertPreset={preset => api().insertPresetNearSelection(preset)}

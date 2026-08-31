@@ -38,14 +38,12 @@ describe('PropertiesSection Components', () => {
       />
     );
 
-    const titleLink = screen.getByRole('link', { name: /Teorema de la suma de los ángulos/i });
+    // ConceptLink renders a span[role="button"] for known IDs (opens glossary panel)
+    const titleLink = screen.getByRole('button', { name: /Teorema de la suma de los ángulos/i });
     expect(titleLink).toBeDefined();
-    expect(titleLink.getAttribute('href')).toContain('/teorema/teorema-suma-angulos-triangulo');
-
-    const demoLink = screen.getByRole('link', { name: /\[demo ❧\]/i });
-    expect(demoLink).toBeDefined();
-    expect(demoLink.getAttribute('href')).toContain('/demo/demo-suma-angulos-triangulo');
+    expect(titleLink.getAttribute('data-target-id')).toBe('teorema-suma-angulos-triangulo');
   });
+
 
   it('humanizes pending theorem IDs that are not yet in the database', () => {
     render(

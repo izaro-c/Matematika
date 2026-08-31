@@ -1,50 +1,21 @@
 import fs from 'fs';
 import path from 'path';
+import { execSync } from 'child_process';
 import { generateContentIndex } from './generate-content-index';
+import { SUPPORTED_LANGUAGES } from '../../src/i18n/config';
 
 const PUBLIC_DIR = path.resolve('./public');
 const DIST_DIR = path.resolve('./dist');
 
-const routeSegments: Record<string, Record<string, string>> = {
-  es: {
-    teorema: 'teorema',
-    definicion: 'definicion',
-    ejemplo: 'ejemplo',
-    ejercicio: 'ejercicio',
-    axioma: 'axioma',
-    modelo: 'modelo',
-    sistema: 'sistema',
-    metodo: 'metodo',
-    demo: 'demo',
-    bio: 'bio',
-    rama: 'rama',
-    plan: 'plan',
-    caso: 'caso',
-    historia: 'historia',
-    diccionario: 'diccionario',
-    grafo: 'grafo',
-    axiomas: 'axiomas',
-  },
-  eu: {
-    teorema: 'teorema',
-    definicion: 'definizioa',
-    ejemplo: 'adibidea',
-    ejercicio: 'ariketa',
-    axioma: 'axioma',
-    modelo: 'eredua',
-    sistema: 'sistema',
-    metodo: 'metodoa',
-    demo: 'frogapena',
-    bio: 'bio',
-    rama: 'adarra',
-    plan: 'plana',
-    caso: 'erabilera-kasua',
-    historia: 'historia',
-    diccionario: 'hiztegia',
-    grafo: 'grafoa',
-    axiomas: 'axiomak',
-  },
-};
+// Fuente única de verdad: los segmentos de ruta salen de src/i18n, igual que
+// los usa AppRouter.tsx en tiempo de ejecución. Así el sitemap nunca puede
+// desincronizarse de las URLs reales de la app, y añadir un idioma nuevo en
+// src/i18n/languages/ lo propaga aquí automáticamente sin tocar este archivo.
+const LANG_CODES = SUPPORTED_LANGUAGES.map((l) => l.code);
+
+const routeSegments: Record<string, Record<string, string>> = Object.fromEntries(
+  SUPPORTED_LANGUAGES.map((l) => [l.code, l.routeSegments as Record<string, string>])
+);
 
 const contentTypeToCanonical: Record<string, string> = {
   matematico: 'bio',
@@ -80,85 +51,113 @@ export function getSiteUrl(): string {
   return url.endsWith('/') ? url.slice(0, -1) : url;
 }
 
-export function generateSitemapAndRobots() {
-  const baseUrl = getSiteUrl();
-  console.log(`📡 Generando sitemap.xml y robots.txt usando URL base: ${baseUrl}`);
+/** Idioma por defecto para x-default y como fallback de contenido no traducido. */
+const DEFAULT_LANG = 'es';
 
-  // Asegurar que el índice de contenido está actualizado
+/** Última fecha de commit real de un archivo fuente (YYYY-MM-DD), o `undefined` si no se puede determinar. */
+function gitLastModified(filePath: string): string | undefined {
+  try {
+    // eslint-disable-next-line sonarjs/os-command -- ruta viene del índice de contenido interno, no de input externo
+    const out = execSync(`git log -1 --format=%cs -- "${filePath}"`, { encoding: 'utf-8' }).trim();
+    return out || undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+export interface SitemapRoute {
+  /** Ruta absoluta, ej. "/es/definicion/triangulo" */
+  path: string;
+  lastmod: string;
+  changefreq: 'weekly' | 'monthly';
+  priority: string;
+  alternates: { hreflang: string; path: string }[];
+}
+
+/**
+ * Calcula la lista completa de rutas del sitio (páginas estáticas + contenido MDX),
+ * en todos los idiomas soportados. Es la ÚNICA fuente de verdad de "qué rutas existen":
+ * la usa tanto el generador de sitemap.xml como el script de prerenderizado, para que
+ * nunca puedan desincronizarse entre sí ni respecto a src/i18n/AppRouter.tsx.
+ */
+export function getAllRoutes(): SitemapRoute[] {
   const contentIndex = generateContentIndex();
-
   const today = new Date().toISOString().split('T')[0];
+  const routes: SitemapRoute[] = [];
 
-  // 1. Páginas estáticas principales por idioma
-  const staticPages = [
-    { canonicalKey: 'root', pathEs: '/es', pathEu: '/eu' },
-    { canonicalKey: 'diccionario', pathEs: '/es/diccionario', pathEu: '/eu/hiztegia' },
-    { canonicalKey: 'historia', pathEs: '/es/historia', pathEu: '/eu/historia' },
-    { canonicalKey: 'grafo', pathEs: '/es/grafo', pathEu: '/eu/grafoa' },
-    { canonicalKey: 'axiomas', pathEs: '/es/axiomas', pathEu: '/eu/axiomak' },
-    { canonicalKey: 'metodos', pathEs: '/es/metodo', pathEu: '/eu/metodoak' },
+  // 1. Páginas estáticas principales, una por idioma soportado
+  const staticPages: { canonicalKey: string; priority: string }[] = [
+    { canonicalKey: 'root', priority: '1.0' },
+    { canonicalKey: 'diccionario', priority: '0.8' },
+    { canonicalKey: 'historia', priority: '0.8' },
+    { canonicalKey: 'grafo', priority: '0.8' },
+    { canonicalKey: 'axiomas', priority: '0.8' },
+    { canonicalKey: 'metodo', priority: '0.8' },
   ];
 
-  const xmlEntries: string[] = [];
-
-  // Agregar páginas estáticas al sitemap
   for (const page of staticPages) {
-    for (const lang of ['es', 'eu']) {
-      const pagePath = lang === 'es' ? page.pathEs : page.pathEu;
-      const altLang = lang === 'es' ? 'eu' : 'es';
-      const altPath = lang === 'es' ? page.pathEu : page.pathEs;
+    const pathFor = (lang: string) =>
+      page.canonicalKey === 'root' ? `/${lang}` : `/${lang}/${routeSegments[lang]?.[page.canonicalKey] || page.canonicalKey}`;
 
-      xmlEntries.push(`  <url>
-    <loc>${baseUrl}${pagePath}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>${page.canonicalKey === 'root' ? '1.0' : '0.8'}</priority>
-    <xhtml:link rel="alternate" hreflang="${lang}" href="${baseUrl}${pagePath}" />
-    <xhtml:link rel="alternate" hreflang="${altLang}" href="${baseUrl}${altPath}" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}${page.pathEs}" />
-  </url>`);
+    for (const lang of LANG_CODES) {
+      routes.push({
+        path: pathFor(lang),
+        lastmod: today,
+        changefreq: 'weekly',
+        priority: page.priority,
+        alternates: [
+          ...LANG_CODES.map((l) => ({ hreflang: l, path: pathFor(l) })),
+          { hreflang: 'x-default', path: pathFor(DEFAULT_LANG) },
+        ],
+      });
     }
   }
 
-  // 2. Procesar artículos MDX del índice de contenido
+  // 2. Artículos MDX del índice de contenido
   const processedKeys = new Set<string>();
 
   for (const entry of Object.values(contentIndex)) {
-    const { id, lang, contentType, availableLangs = [lang] } = entry;
+    const { id, lang, contentType, availableLangs = [lang], filePath } = entry;
     const entryKey = `${lang}:${id}`;
-
     if (processedKeys.has(entryKey)) continue;
     processedKeys.add(entryKey);
 
     const canonicalType = contentTypeToCanonical[contentType] || contentType;
-    const seg = routeSegments[lang]?.[canonicalType] || canonicalType;
-    const itemPath = `/${lang}/${seg}/${id}`;
+    const segFor = (l: string) => routeSegments[l]?.[canonicalType] || canonicalType;
+    const itemPath = `/${lang}/${segFor(lang)}/${id}`;
 
-    const alternateLinks: string[] = [];
+    const alternates = LANG_CODES
+      .filter((l) => availableLangs.includes(l))
+      .map((l) => ({ hreflang: l, path: `/${l}/${segFor(l)}/${id}` }));
 
-    // hreflang SOLO si el artículo realmente existe en ambos idiomas
-    for (const l of ['es', 'eu']) {
-      if (availableLangs.includes(l)) {
-        const altSeg = routeSegments[l]?.[canonicalType] || canonicalType;
-        const altPath = `/${l}/${altSeg}/${id}`;
-        alternateLinks.push(`    <xhtml:link rel="alternate" hreflang="${l}" href="${baseUrl}${altPath}" />`);
-      }
-    }
+    const defaultLang = availableLangs.includes(DEFAULT_LANG) ? DEFAULT_LANG : lang;
+    alternates.push({ hreflang: 'x-default', path: `/${defaultLang}/${segFor(defaultLang)}/${id}` });
 
-    // x-default siempre apunta a la versión en español si existe, o al idioma actual
-    const defaultLang = availableLangs.includes('es') ? 'es' : lang;
-    const defaultSeg = routeSegments[defaultLang]?.[canonicalType] || canonicalType;
-    const defaultPath = `/${defaultLang}/${defaultSeg}/${id}`;
-    alternateLinks.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}${defaultPath}" />`);
-
-    xmlEntries.push(`  <url>
-    <loc>${baseUrl}${itemPath}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-${alternateLinks.join('\n')}
-  </url>`);
+    routes.push({
+      path: itemPath,
+      lastmod: gitLastModified(path.join('content/mdx', filePath)) || today,
+      changefreq: 'monthly',
+      priority: '0.7',
+      alternates,
+    });
   }
+
+  return routes;
+}
+
+export function generateSitemapAndRobots() {
+  const baseUrl = getSiteUrl();
+  console.log(`📡 Generando sitemap.xml y robots.txt usando URL base: ${baseUrl}`);
+
+  const routes = getAllRoutes();
+
+  const xmlEntries = routes.map((r) => `  <url>
+    <loc>${baseUrl}${r.path}</loc>
+    <lastmod>${r.lastmod}</lastmod>
+    <changefreq>${r.changefreq}</changefreq>
+    <priority>${r.priority}</priority>
+${r.alternates.map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${baseUrl}${a.path}" />`).join('\n')}
+  </url>`);
 
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

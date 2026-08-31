@@ -2,7 +2,8 @@ import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useI18n } from '@/i18n';
 import { db } from '@/data/content';
 import { KatexText } from '@/components/ui/KatexText';
-import { ConceptLink } from '@/fixed-pages/glossary/ui/ConceptLink';
+import { ConceptLink } from '@/components/ui/ConceptLink';
+
 
 // ============================================================================
 // Tipos e Interfaces

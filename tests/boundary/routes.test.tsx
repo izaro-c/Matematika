@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeAll } from 'vitest';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { Router } from 'wouter';
 import { memoryLocation } from 'wouter/memory-location';
 import { MDXProvider } from '@mdx-js/react';
@@ -80,6 +80,10 @@ vi.mock('@/data/content', () => ({
     getUseCasesByConcept: () => [],
     getItemsByBranch: () => [],
     getBranchTaxonomy: () => ({ breadcrumbs: [], name: '', id: '', slug: '', subBranches: [], directItems: [] }),
+    getBreadcrumbs: () => [],
+    getAxiomaticSystem: () => undefined,
+    getMethod: () => undefined,
+
     theorems: new Map(),
     definitions: new Map(),
     examples: new Map(),
@@ -141,38 +145,44 @@ describe('AppRouter integration', () => {
   });
 
   it('renders construction page in Spanish at /es/construccion/teorema-test', async () => {
-    const { findByText } = renderWithRouter('/es/construccion/teorema-test');
-    expect(await findByText('En Construcción')).toBeDefined();
-    expect(await findByText(/teorema test/i)).toBeDefined();
+    let result: ReturnType<typeof renderWithRouter>;
+    await act(async () => { result = renderWithRouter('/es/construccion/teorema-test'); });
+    expect(await result!.findByText('En Construcción')).toBeDefined();
+    expect(await result!.findByText(/teorema test/i)).toBeDefined();
   });
 
   it('renders construction page in Basque at /eu/eraikuntzan/teorema-test', async () => {
-    const { findByText } = renderWithRouter('/eu/eraikuntzan/teorema-test');
-    expect(await findByText('Eraikuntzan')).toBeDefined();
-    expect(await findByText(/teorema test/i)).toBeDefined();
+    let result: ReturnType<typeof renderWithRouter>;
+    await act(async () => { result = renderWithRouter('/eu/eraikuntzan/teorema-test'); });
+    expect(await result!.findByText('Eraikuntzan')).toBeDefined();
+    expect(await result!.findByText(/teorema test/i)).toBeDefined();
   });
 
   it('renders construction page in English at /en/construction/teorema-test', async () => {
-    const { findByText } = renderWithRouter('/en/construction/teorema-test');
-    expect(await findByText('Under Construction')).toBeDefined();
-    expect(await findByText(/teorema test/i)).toBeDefined();
+    let result: ReturnType<typeof renderWithRouter>;
+    await act(async () => { result = renderWithRouter('/en/construction/teorema-test'); });
+    expect(await result!.findByText('Under Construction')).toBeDefined();
+    expect(await result!.findByText(/teorema test/i)).toBeDefined();
   });
 
   it('normalizes cross-language construction segment from /eu/construccion/teorema-test to Basque', async () => {
-    const { findByText } = renderWithRouter('/eu/construccion/teorema-test');
-    expect(await findByText('Eraikuntzan')).toBeDefined();
-    expect(await findByText(/teorema test/i)).toBeDefined();
+    let result: ReturnType<typeof renderWithRouter>;
+    await act(async () => { result = renderWithRouter('/eu/construccion/teorema-test'); });
+    expect(await result!.findByText('Eraikuntzan')).toBeDefined();
+    expect(await result!.findByText(/teorema test/i)).toBeDefined();
   });
 
   it('normalizes cross-language construction segment from /en/construccion/teorema-test to English', async () => {
-    const { findByText } = renderWithRouter('/en/construccion/teorema-test');
-    expect(await findByText('Under Construction')).toBeDefined();
-    expect(await findByText(/teorema test/i)).toBeDefined();
+    let result: ReturnType<typeof renderWithRouter>;
+    await act(async () => { result = renderWithRouter('/en/construccion/teorema-test'); });
+    expect(await result!.findByText('Under Construction')).toBeDefined();
+    expect(await result!.findByText(/teorema test/i)).toBeDefined();
   });
 
   it('normalizes legacy 2-segment construction route from /construccion/teorema-test', async () => {
-    const { findByText } = renderWithRouter('/construccion/teorema-test');
-    expect(await findByText(/Construcción|Eraikuntzan|Under Construction/i)).toBeDefined();
-    expect(await findByText(/teorema test/i)).toBeDefined();
+    let result: ReturnType<typeof renderWithRouter>;
+    await act(async () => { result = renderWithRouter('/construccion/teorema-test'); });
+    expect(await result!.findByText(/Construcción|Eraikuntzan|Under Construction/i)).toBeDefined();
+    expect(await result!.findByText(/teorema test/i)).toBeDefined();
   });
 });
