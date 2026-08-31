@@ -23,7 +23,7 @@ export const Diagram = ModeloFano;
 
 <Capitular letra="F" />anoren planoa ($\mathrm{PG}(2, \mathbb{F}_2)$ ikurrez adierazia) <ConceptLink targetId="espacio-proyectivo">plano proiektibo</ConceptLink> minimala osatzen duen eta <ConceptLink targetId="sistema-incidencia">intzidentzia-sistemako</ConceptLink> planoko intzidentzia-axiomak betetzen dituen <ConceptLink targetId="estructura-geometrica">egitura geometriko</ConceptLink> finitu bat da.
 
-<ConceptLink targetId="gino-fano">Gino Fano</ConceptLink> matematikariak 1892an aurkeztua, ahalik eta <ConceptLink targetId="cardinalidad">kardinalitate</ConceptLink> txikieneko espazio proiektiboa da, <ConceptLink targetId="geometria-discreta">geometria diskretuko</ConceptLink> <ConceptLink targetId="simetria">simetria-propietateak</ConceptLink> eta <ConceptLink targetId="cuerpo-finito">gorputz finituen</ConceptLink> gaineko <ConceptLink targetId="algebra-lineal">aljebra lineala</ConceptLink> bateratuz.
+<ConceptLink targetId="fano">Gino Fano</ConceptLink> matematikariak 1892an aurkeztua, ahalik eta <ConceptLink targetId="cardinalidad">kardinalitate</ConceptLink> txikieneko espazio proiektiboa da, <ConceptLink targetId="geometria-discreta">geometria diskretuko</ConceptLink> <ConceptLink targetId="simetria">simetria-propietateak</ConceptLink> eta <ConceptLink targetId="cuerpo-finito">gorputz finituen</ConceptLink> gaineko <ConceptLink targetId="algebra-lineal">aljebra lineala</ConceptLink> bateratuz.
 
 <Definicion title="Ereduaren egitura formala">
 Fanoren planoa $\mathcal{M}_{\text{Fano}} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$ tupla gisa definitzen da, <ConceptLink targetId="conjunto-disjunto">multzo disjuntu</ConceptLink> eta finituez osatua ($\mathcal{P} \cap \mathcal{L} = \emptyset$):
@@ -61,7 +61,7 @@ Fanoren planoa $\mathcal{M}_{\text{Fano}} = (\mathcal{P}, \mathcal{L}, \mathbf{I
       title="Puntu ez-kolinealen existentzia"
       formula="|\operatorname{tr}(\ell)| = 3 < 7 \implies \exists \{P, Q, R\} \text{ ez-kolineal}"
     >
-      Inolako zuzenek ez ditu puntu guztiak bere trazan barne hartzen ($|\operatorname{tr}(\ell)| = 3 < 7$); ondorioz, <ConceptLink targetId="kolinealitate">kolinealak</ConceptLink> ez diren hiru puntu existitzen dira (adibidez, $\{1, 2, 3\}$), <ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink> betez.
+      Inolako zuzenek ez ditu puntu guztiak bere <ConceptLink targetId="traza">trazan</ConceptLink> barne hartzen ($|\operatorname{tr}(\ell)| = 3 < 7$); ondorioz, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru puntu existitzen dira (adibidez, $\{1, 2, 3\}$), <ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink> betez.
     </PropiedadItem>
   </PropiedadesGrupo>
 
@@ -79,7 +79,7 @@ Fanoren planoa $\mathcal{M}_{\text{Fano}} = (\mathcal{P}, \mathcal{L}, \mathbf{I
       title="Ebakidura proiektibo unibertsala"
       formula="\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset \quad (\forall i \neq j)"
     >
-      $\mathcal{L}$-ko edozein bi zuzen desberdinek traza ez-disjuntuak dituzte ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), beti puntu komun bakar batean elkar ebakiz; beraz, ereduak ez du <ConceptLink targetId="paraleloak">zuzen paraleloric</ConceptLink>.
+      $\mathcal{L}$-ko edozein bi zuzen desberdinek traza ez-disjuntuak dituzte ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), beti puntu komun bakar batean elkar ebakiz; beraz, ereduak ez du <ConceptLink targetId="paralelas">zuzen paraleloric</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -87,7 +87,7 @@ Fanoren planoa $\mathcal{M}_{\text{Fano}} = (\mathcal{P}, \mathcal{L}, \mathbf{I
       title="Autodualtasuna"
       formula="\mathcal{P} \cong \mathcal{L}, \quad \mathbf{I} \cong \mathbf{I}^T"
     >
-      Egitura <ConceptLink targetId="dualtasun">autoduala</ConceptLink> da: $\mathcal{P}$ eta $\mathcal{L}$ domeinuen elkarren arteko truke formalak eta $\mathbf{I}$ erlazioaren <ConceptLink targetId="transposizio">transposizioak</ConceptLink> jatorrizko egiturarekiko hertsiki <ConceptLink targetId="isomorfismo">isomorfoa</ConceptLink> den intzidentzia-egitura bat sortzen dute.
+      Egitura <ConceptLink targetId="dualidad">autoduala</ConceptLink> da: $\mathcal{P}$ eta $\mathcal{L}$ domeinuen elkarren arteko truke formalak eta $\mathbf{I}$ erlazioaren <ConceptLink targetId="transposicion">transposizioak</ConceptLink> jatorrizko egiturarekiko hertsiki <ConceptLink targetId="isomorfismo">isomorfoa</ConceptLink> den intzidentzia-egitura bat sortzen dute.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -95,7 +95,7 @@ Fanoren planoa $\mathcal{M}_{\text{Fano}} = (\mathcal{P}, \mathcal{L}, \mathbf{I
       title="F2 gorputz finituaren gaineko eraikuntza"
       formula="\mathrm{PG}(2, \mathbb{F}_2) \cong (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim"
     >
-      Aljebraikoki $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ plano proiektibo gisa definitzen da $\mathbb{F}_2$ <ConceptLink targetId="gorputz-finitu">gorputz finituaren</ConceptLink> gainean, erlazio proportzionalaren baliokidetasun-klaseen bidez. Planoko puntuak $\mathbb{F}_2^3$ <ConceptLink targetId="bektore-espazio">bektore-espazioko</ConceptLink> 1 <ConceptLink targetId="dimentsio">dimentsioko</ConceptLink> 7 <ConceptLink targetId="azpiespazio">azpiespazioei</ConceptLink> dagozkie, eta zuzenak 2 dimentsioko 7 azpiespazioei.
+      Aljebraikoki $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ plano proiektibo gisa definitzen da $\mathbb{F}_2$ <ConceptLink targetId="cuerpo-finito">gorputz finituaren</ConceptLink> gainean, erlazio proportzionalaren baliokidetasun-klaseen bidez. Planoko puntuak $\mathbb{F}_2^3$ <ConceptLink targetId="espacio-vectorial">bektore-espazioko</ConceptLink> 1 <ConceptLink targetId="dimension">dimentsioko</ConceptLink> 7 <ConceptLink targetId="subespacio">azpiespazioei</ConceptLink> dagozkie, eta zuzenak 2 dimentsioko 7 azpiespazioei.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

@@ -1,0 +1,120 @@
+export const metadata = {
+  id: "traza",
+  lang: "eu",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Puntu-trazadura",
+  description: "Oinarrizko domeinuko zuzen edo plano bakoitzari berarekin formalki intziditzen duten puntuen multzo zehatza esleitzen dion multzo-esleipena.",
+  branch: "51A",
+  branches: ["51A", "03B", "51M"],
+  tags: ["geometria-sintetica", "incidencia", "teoria-modelos", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §1",
+      role: "primary"
+    },
+    {
+      title: "Geometry: Euclid and Beyond",
+      author: "Robin Hartshorne",
+      locator: "2. kapitulua, §6",
+      role: "secondary"
+    }
+  ]
+};
+
+<Capitular letra="P" />untu-trazadura <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> edo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bakoitzari entitate horrekin <ConceptLink targetId="incidencia" isDependency={true}>intzidentzia sintetikoaren</ConceptLink> erlazio formala mantentzen duten <ConceptLink targetId="punto" isDependency={true}>puntuen</ConceptLink> <ConceptLink targetId="conjunto">multzo</ConceptLink> zehatza esleitzen dion eragiketa multzo-teorikoa da.
+
+<ConceptLink targetId="logica">Mota anitzeko logikan</ConceptLink> puntuaren ($\mathcal{P}$), zuzenaren ($\mathcal{L}$) eta planoaren ($\Pi$) <ConceptLink targetId="concepto-primitivo">oinarrizko kontzeptuak</ConceptLink> <ConceptLink targetId="conjunto-disjunto">bikoteka ebakidura hutseko</ConceptLink> domeinu ontologikoak direnez ($\mathcal{P} \cap \mathcal{L} = \emptyset$, $\mathcal{P} \cap \Pi = \emptyset$, $\mathcal{L} \cap \Pi = \emptyset$), puntu-trazadurak ($\operatorname{tr}$) bitartekaritza-<ConceptLink targetId="operador">eragile</ConceptLink> kanoniko gisa jokatzen du, multzo-teoriaren eragiketak (ebakidura, inklusioa edo <ConceptLink targetId="cardinalidad">kardinalitatea</ConceptLink>) mota-kolapsorik gabe aplikatzea ahalbidetuz.
+
+<Definicion title="Puntu-trazadura eragilea">
+$\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$ <ConceptLink targetId="signatura">sinadura politipatuko</ConceptLink> <ConceptLink targetId="estructura-geometrica">egitura geometrikoa</ConceptLink> emanda, **traza** <ConceptLink targetId="operador">eragileak</ConceptLink> ($\operatorname{tr}$) domeinu lineal ($\mathcal{L}$) eta planar ($\Pi$) <ConceptLink targetId="dominio">oinarrizkoetako</ConceptLink> elementu bakoitzari puntuen $\mathcal{P}(\mathcal{P})$ <ConceptLink targetId="conjunto-potencia">potentzia-multzoko</ConceptLink> dagokion azpimultzoa esleitzen dio:
+
+1. **Zuzen baten puntu-trazadura**:
+   $$
+   \begin{aligned}
+   \operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} &\longrightarrow \mathcal{P}(\mathcal{P}) \\
+   \ell &\longmapsto \operatorname{tr}(\ell) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \}
+   \end{aligned}
+   $$
+
+2. **Plano baten puntu-trazadura**:
+   $$
+   \begin{aligned}
+   \operatorname{tr}_{\Pi}\colon \Pi &\longrightarrow \mathcal{P}(\mathcal{P}) \\
+   \pi &\longmapsto \operatorname{tr}(\pi) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \pi \}
+   \end{aligned}
+   $$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Bakartasuna eta injektibotasuna oinarrizko domeinuetan">
+    <PropiedadItem 
+      id="inyectividad-lineal" 
+      title="Zuzenen injektibotasuna eta determinazio bakarra"
+      formula="\forall \ell_1, \ell_2 \in \mathcal{L} \ (\operatorname{tr}(\ell_1) = \operatorname{tr}(\ell_2) \iff \ell_1 = \ell_2)"
+    >
+      Bi zuzen desberdinek ezin dute inoiz puntu intzidente berdinen bilduma bera izan. <ConceptLink targetId="axioma-incidencia-2">I.2 axiomaren</ConceptLink> (zuzen batean gutxienez bi puntu existitzea) eta <ConceptLink targetId="axioma-incidencia-1">I.1 axiomaren</ConceptLink> (bi puntuk zuzena unibokoki zehaztea) ondorioz, $\operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} \to \mathcal{P}(\mathcal{P})$ aplikazioa zorrozki <ConceptLink targetId="inyectividad">injektiboa</ConceptLink> da.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="inyectividad-planar" 
+      title="Planoen injektibotasuna eta determinazio bakarra"
+      formula="\forall \pi_1, \pi_2 \in \Pi \ (\operatorname{tr}(\pi_1) = \operatorname{tr}(\pi_2) \iff \pi_1 = \pi_2)"
+    >
+      Bi plano desberdinek ezin dute puntu-trazadura bera partekatu. <ConceptLink targetId="axioma-incidencia-4">I.4 axiomaren</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5 axiomaren</ConceptLink> (kolinealak ez diren hiru puntuk planoa zehaztea eta bakartasuna) ondorioz, $\operatorname{tr}_{\Pi}\colon \Pi \to \mathcal{P}(\mathcal{P})$ aplikazioa zorrozki <ConceptLink targetId="inyectividad">injektiboa</ConceptLink> da.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Intzidentzia-erlazioak eta erlatibozko kokapen espazialak">
+    <PropiedadItem 
+      id="inclusion-recta-plano" 
+      title="Zuzen baten inklusioa planoan"
+      formula="\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \iff \forall P \in \mathcal{P} \ (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)"
+    >
+      Zuzen bat plano baten barnean dagoela baieztatzea bere traza planoarenaren barnean dagoela esatea da ($\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$). <ConceptLink targetId="axioma-incidencia-6">I.6 axiomaren</ConceptLink> arabera, nahikoa da zuzenaren bi puntu desberdin planoan daudela egiaztatzea zuzen osoa planoan sartuta dagoela bermatzeko.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="interseccion-planos" 
+      title="Plano ebakitzaileen ebakidura"
+      formula="\pi_1 \neq \pi_2 \land \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) \neq \emptyset \implies \exists! \ell \in \mathcal{L} \ (\operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \operatorname{tr}(\ell))"
+    >
+      Bi plano desberdinek elkar ebakitzen dutenean puntu batean gutxienez (<ConceptLink targetId="axioma-incidencia-7">I.7 axioma</ConceptLink>), haien puntu-trazen ebakidura multzo-teorikoa ebakitzaile komun den zuzen bakar baten traza puntualarekin bat dator unibokoki (<ConceptLink targetId="teorema-interseccion-planos">planoen ebakidura-zuzenaren teorema</ConceptLink>).
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="paralelismo-planos" 
+      title="Plano paraleloak espazioan"
+      formula="\pi_1 \parallel \pi_2 \iff (\pi_1 = \pi_2 \lor \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \emptyset)"
+    >
+      Espazioko bi plano <ConceptLink targetId="planos-paralelos">paraleloak</ConceptLink> dira berdinak badira edo haien puntu-trazak multzo disjuntuak badira, erlazioaren erreflexibitatea bermatuz.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="posicion-rectas-coplanares" 
+      title="Zuzen koplanarrak: paralelotasuna eta ebakitzailetasuna"
+      formula="\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi) \implies (\ell_1 \parallel \ell_2 \iff \ell_1 = \ell_2 \lor \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset)"
+    >
+      $\pi$ plano berean <ConceptLink targetId="coplanaridad">koplanartasuna</ConceptLink> duten bi zuzenetarako, <ConceptLink targetId="paralelas">paralelotasun</ConceptLink>-erlazioa ($\ell_1 \parallel \ell_2$) erreflexiboa da eta berdinak izatearen edo punturik ez partekatzearen baliokidea da; desberdinak eta paraleloak ez badira, zuzen <ConceptLink targetId="secante">ebakitzaileak</ConceptLink> dira $\lvert \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) \rvert = 1$ izanik.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="rectas-cruzadas" 
+      title="Zuzen gurutzatuen (alabeatuen) karakterizazioa"
+      formula="\forall \pi \in \Pi \ (\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \not\subseteq \operatorname{tr}(\pi)) \implies \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset"
+    >
+      Espazioko bi zuzen <ConceptLink targetId="rectas-cruzadas">zuzen gurutzatuak</ConceptLink> dira plano bakar batek ere biak batera biltzen ez baditu; horrek nahitaez dakar haien puntu-trazak disjuntuak izatea zentzu klasikoan paraleloak izan gabe.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+Puntu-trazaduraren ($\operatorname{tr}$) erabilerak axiometan oinarritutako geometria sintetikoaren zorroztasuna eta koordenatu bidezko <ConceptLink targetId="modelo-cartesiano">eredu analitikoen</ConceptLink> aljebra bateratzen ditu.
+</Nota>

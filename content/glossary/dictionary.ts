@@ -385,6 +385,42 @@ export const dictionary: Record<string, GlossaryEntry> = {
   },
 
   // GEOMETRÍA
+  traza: {
+    title: "Traza Puntual ( tr )",
+    definition: "Conjunto de puntos de un dominio primitivo que inciden con un elemento geométrico (recta o plano) en una estructura sintética politipada.",
+    equation: "\\operatorname{tr}(\\ell) = \\{ P \\in \\mathcal{P} \\mid P \\, \\mathbf{I} \\, \\ell \\}",
+    category: "Geometría"
+  },
+  incidencia: {
+    title: "Incidencia ( I )",
+    definition: "Relación primitiva de enlace o pertenencia posicional entre puntos, rectas y planos en una estructura sintética.",
+    equation: "P \\, \\mathbf{I} \\, \\ell, \\quad P \\, \\mathbf{I} \\, \\pi",
+    category: "Geometría"
+  },
+  congruencia: {
+    title: "Congruencia ( ≅ )",
+    definition: "Relación primitiva de rigidez formal que establece la equivalencia de tamaño y forma entre segmentos y entre ángulos.",
+    equation: "\\overline{AB} \\cong \\overline{CD}, \\quad \\angle ABC \\cong \\angle DEF",
+    category: "Geometría"
+  },
+  perpendicular: {
+    title: "Perpendicularidad ( ⊥ )",
+    definition: "Relación geométrica entre rectas secantes que determinan ángulos rectos congruentes entre sí.",
+    equation: "\\ell_1 \\perp \\ell_2",
+    category: "Geometría"
+  },
+  paralelas: {
+    title: "Paralelismo ( ∥ )",
+    definition: "Relación entre rectas coplanares que no comparten ningún punto común (trazas puntuales disjuntas).",
+    equation: "\\ell \\parallel m \\iff \\operatorname{tr}(\\ell) \\cap \\operatorname{tr}(m) = \\emptyset",
+    category: "Geometría"
+  },
+  estar_entre: {
+    title: "Intermediación / Estar Entre ( * )",
+    definition: "Relación primitiva ternaria que formaliza el orden lineal y la colinealidad de tres puntos sobre una recta.",
+    equation: "A * B * C",
+    category: "Geometría"
+  },
   hipotenusa: {
     title: "Hipotenusa",
     definition: "El lado de mayor longitud de un triángulo rectángulo, y el lado opuesto al ángulo recto.",
@@ -477,6 +513,24 @@ export const dictionary: Record<string, GlossaryEntry> = {
     equation: "A = \\{ 1, 2, 3 \\}",
     category: "Teoría de Conjuntos"
   },
+  conjunto_potencia: {
+    title: "Conjunto Potencia / Partes de un Conjunto ( 𝒫 )",
+    definition: "Conjunto formado por todos los subconjuntos posibles de un conjunto dado A, incluyendo el conjunto vacío y el propio conjunto A.",
+    equation: "\\mathcal{P}(A) = \\{ S \\mid S \\subseteq A \\}",
+    category: "Teoría de Conjuntos"
+  },
+  mapeo_funcion: {
+    title: "Función / Aplicación ( f: A → B )",
+    definition: "Correspondencia matemática que asocia a cada elemento de un dominio A exactamente un único elemento de un codominio B.",
+    equation: "f\\colon A \\to B",
+    category: "Teoría de Conjuntos"
+  },
+  mapsto: {
+    title: "Asignación / Mapeo de Elementos ( ↦ )",
+    definition: "Símbolo que describe la regla explícita de correspondencia que transforma un elemento individual x del dominio en su valor f(x) en el codominio.",
+    equation: "x \\mapsto f(x)",
+    category: "Teoría de Conjuntos"
+  },
 
   // ÁLGEBRA LINEAL
   sistema_lineal: {
@@ -555,6 +609,11 @@ export const texSymbolMap: Record<string, string> = {
   // "\\times": 'producto_cruz',
   
   // Geometría
+  '\\operatorname{tr}': 'traza',
+  '\\mathbf{I}': 'incidencia',
+  '\\cong': 'congruencia',
+  '\\perp': 'perpendicular',
+  '\\parallel': 'paralelas',
   '\\pi': 'pi',
   
   // Conjuntos
@@ -575,6 +634,11 @@ export const texSymbolMap: Record<string, string> = {
   '\\setminus': 'setminus',
   '\\{': 'set_brackets',
   '\\}': 'set_brackets',
+  '\\mathcal{P}': 'conjunto_potencia',
+  '\\wp': 'conjunto_potencia',
+  '\\mapsto': 'mapsto',
+  '\\longmapsto': 'mapsto',
+  '\\longrightarrow': 'mapeo_funcion',
   
   // Varios
   '\\blacksquare': 'qed',

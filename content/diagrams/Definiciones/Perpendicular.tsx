@@ -66,8 +66,8 @@ export const PerpendicularSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -3.05,
-        "y": -1.11
+        "x": -3,
+        "y": -1
       },
       "mobility": {
         "type": "free"
@@ -99,8 +99,8 @@ export const PerpendicularSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 3.25,
-        "y": 1.14
+        "x": 3,
+        "y": 1
       },
       "mobility": {
         "type": "free"
@@ -124,84 +124,50 @@ export const PerpendicularSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto 3",
+        "ariaLabel": "Punto P",
         "role": "primary"
       },
       "target": true,
-      "targetId": "p3",
-      "objectType": "point",
-      "definition": {
-        "type": "coordinates",
-        "x": 0.17000000000000037,
-        "y": 0.040000000000000036
-      },
-      "mobility": {
-        "type": "on-support",
-        "support": "lineAB"
-      },
-      "appearance": {
-        "size": 7,
-        "labelVisible": true,
-        "highlightSize": 10,
-        "preserveColorOnHighlight": true
-      },
-      "interaction": {}
-    },
-    {
-      "id": "p4",
-      "label": "4",
-      "color": "ocre",
-      "layerId": "geometry",
-      "order": 5000,
-      "visible": false,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Punto 4",
-        "role": "primary"
-      },
-      "target": false,
-      "targetId": "p4",
-      "objectType": "point",
-      "definition": {
-        "type": "coordinates",
-        "x": -31.625443586631,
-        "y": -50
-      },
-      "mobility": {
-        "type": "on-support",
-        "support": "perpABP"
-      },
-      "appearance": {
-        "size": 7,
-        "labelVisible": true,
-        "highlightSize": 10,
-        "preserveColorOnHighlight": true
-      },
-      "interaction": {}
-    },
-    {
-      "id": "p5",
-      "label": "5",
-      "color": "ocre",
-      "layerId": "geometry",
-      "order": 6000,
-      "visible": false,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Punto 5",
-        "role": "primary"
-      },
-      "target": false,
-      "targetId": "p5",
+      "targetId": "pP",
       "objectType": "point",
       "definition": {
         "type": "coordinates",
         "x": 0,
-        "y": 50
+        "y": 0
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "lineAB"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "pC",
+      "label": "C",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 5000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto C",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pC",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -1,
+        "y": 3
       },
       "mobility": {
         "type": "on-support",
@@ -216,64 +182,30 @@ export const PerpendicularSpec = createDiagramSpec(
       "interaction": {}
     },
     {
-      "id": "p6",
-      "label": "6",
-      "color": "ocre",
+      "id": "pD",
+      "label": "D",
+      "color": "musgo",
       "layerId": "geometry",
-      "order": 11000,
+      "order": 6000,
       "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto 6",
+        "ariaLabel": "Punto D",
         "role": "primary"
       },
       "target": true,
-      "targetId": "p6",
+      "targetId": "pD",
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 30,
-        "y": 0.08384592179283312
+        "x": 1,
+        "y": -3
       },
       "mobility": {
         "type": "on-support",
-        "support": "lineAB"
-      },
-      "appearance": {
-        "size": 7,
-        "labelVisible": true,
-        "highlightSize": 10,
-        "preserveColorOnHighlight": true
-      },
-      "interaction": {}
-    },
-    {
-      "id": "p7",
-      "label": "7",
-      "color": "ocre",
-      "layerId": "geometry",
-      "order": 12000,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Punto 7",
-        "role": "primary"
-      },
-      "target": true,
-      "targetId": "p7",
-      "objectType": "point",
-      "definition": {
-        "type": "coordinates",
-        "x": -30,
-        "y": 0.9323477112952232
-      },
-      "mobility": {
-        "type": "on-support",
-        "support": "lineAB"
+        "support": "perpABP"
       },
       "appearance": {
         "size": 7,
@@ -285,7 +217,7 @@ export const PerpendicularSpec = createDiagramSpec(
     },
     {
       "id": "lineAB",
-      "label": "Recta",
+      "label": "Recta ℓ₁",
       "color": "terracota",
       "layerId": "geometry",
       "order": 2000,
@@ -294,7 +226,7 @@ export const PerpendicularSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Recta",
+        "ariaLabel": "Recta l1",
         "role": "secondary"
       },
       "target": true,
@@ -311,14 +243,15 @@ export const PerpendicularSpec = createDiagramSpec(
         }
       },
       "appearance": {
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
+        "dashed": true,
+        "strokeWidth": 1.6,
+        "highlightStrokeWidth": 2.4,
         "preserveColorOnHighlight": true
       }
     },
     {
       "id": "perpABP",
-      "label": "Perpendicular",
+      "label": "Recta ℓ₂",
       "color": "musgo",
       "layerId": "geometry",
       "order": 4000,
@@ -327,7 +260,7 @@ export const PerpendicularSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Perpendicular",
+        "ariaLabel": "Recta perpendicular l2",
         "role": "secondary"
       },
       "target": true,
@@ -345,14 +278,135 @@ export const PerpendicularSpec = createDiagramSpec(
         }
       },
       "appearance": {
+        "dashed": true,
+        "strokeWidth": 1.6,
+        "highlightStrokeWidth": 2.4,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayPA",
+      "label": "Semirrecta h₁",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 6100,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta h1 (PA)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayPA",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pP",
+          "pA"
+        ]
+      },
+      "appearance": {
         "strokeWidth": 2.4,
         "highlightStrokeWidth": 3,
         "preserveColorOnHighlight": true
       }
     },
     {
-      "id": "perpendicularMarkBP4",
-      "label": "Marca de perpendicularidad",
+      "id": "rayPB",
+      "label": "Semirrecta h₁'",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 6200,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta h1' (PB)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayPB",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pP",
+          "pB"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayPC",
+      "label": "Semirrecta h₂",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 6300,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta h2 (PC)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayPC",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pP",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rayPD",
+      "label": "Semirrecta h₂'",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 6400,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Semirrecta h2' (PD)",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rayPD",
+      "objectType": "path",
+      "geometry": {
+        "type": "ray",
+        "points": [
+          "pP",
+          "pD"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.4,
+        "highlightStrokeWidth": 3,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "angleAPC",
+      "label": "Ángulo recto APC",
       "color": "ocre",
       "layerId": "geometry",
       "order": 7000,
@@ -361,28 +415,28 @@ export const PerpendicularSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Marca de perpendicularidad",
+        "ariaLabel": "Ángulo recto APC",
         "role": "secondary"
       },
       "target": true,
-      "targetId": "perpendicularMarkBP4",
+      "targetId": "angleAPC",
       "objectType": "angle",
       "points": [
-        "p6",
+        "pA",
         "pP",
-        "p4"
+        "pC"
       ],
       "sweep": "non-reflex",
       "marker": "square",
-      "perpendicularRelationId": "perpendicularMarkBP4-perpendicular",
+      "perpendicularRelationId": "angleAPC-perpendicular",
       "appearance": {
-        "radius": 1,
+        "radius": 0.8,
         "preserveColorOnHighlight": true
       }
     },
     {
-      "id": "perpendicularMarkBP5",
-      "label": "Marca de perpendicularidad",
+      "id": "angleBPC",
+      "label": "Ángulo recto BPC",
       "color": "ocre",
       "layerId": "geometry",
       "order": 8000,
@@ -391,28 +445,28 @@ export const PerpendicularSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Marca de perpendicularidad",
+        "ariaLabel": "Ángulo recto BPC",
         "role": "secondary"
       },
       "target": true,
-      "targetId": "perpendicularMarkBP5",
+      "targetId": "angleBPC",
       "objectType": "angle",
       "points": [
-        "p6",
+        "pB",
         "pP",
-        "p5"
+        "pC"
       ],
       "sweep": "non-reflex",
       "marker": "square",
-      "perpendicularRelationId": "perpendicularMarkBP5-perpendicular",
+      "perpendicularRelationId": "angleBPC-perpendicular",
       "appearance": {
-        "radius": 1,
+        "radius": 0.8,
         "preserveColorOnHighlight": true
       }
     },
     {
-      "id": "perpendicularMarkAP5",
-      "label": "Marca de perpendicularidad",
+      "id": "angleBPD",
+      "label": "Ángulo recto BPD",
       "color": "ocre",
       "layerId": "geometry",
       "order": 9000,
@@ -421,28 +475,28 @@ export const PerpendicularSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Marca de perpendicularidad",
+        "ariaLabel": "Ángulo recto BPD",
         "role": "secondary"
       },
       "target": true,
-      "targetId": "perpendicularMarkAP5",
+      "targetId": "angleBPD",
       "objectType": "angle",
       "points": [
-        "p7",
+        "pB",
         "pP",
-        "p5"
+        "pD"
       ],
       "sweep": "non-reflex",
       "marker": "square",
-      "perpendicularRelationId": "perpendicularMarkAP5-perpendicular",
+      "perpendicularRelationId": "angleBPD-perpendicular",
       "appearance": {
-        "radius": 1,
+        "radius": 0.8,
         "preserveColorOnHighlight": true
       }
     },
     {
-      "id": "perpendicularMarkAP4",
-      "label": "Marca de perpendicularidad",
+      "id": "angleAPD",
+      "label": "Ángulo recto APD",
       "color": "ocre",
       "layerId": "geometry",
       "order": 10000,
@@ -451,94 +505,94 @@ export const PerpendicularSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Marca de perpendicularidad",
+        "ariaLabel": "Ángulo recto APD",
         "role": "secondary"
       },
       "target": true,
-      "targetId": "perpendicularMarkAP4",
+      "targetId": "angleAPD",
       "objectType": "angle",
       "points": [
-        "p7",
+        "pA",
         "pP",
-        "p4"
+        "pD"
       ],
       "sweep": "non-reflex",
       "marker": "square",
-      "perpendicularRelationId": "perpendicularMarkAP4-perpendicular",
+      "perpendicularRelationId": "angleAPD-perpendicular",
       "appearance": {
-        "radius": 1,
+        "radius": 0.8,
         "preserveColorOnHighlight": true
       }
     }
   ],
   "relations": [
     {
-      "id": "perpendicularMarkBP4-perpendicular",
-      "label": "Perpendicularidad de Marca de perpendicularidad",
+      "id": "angleAPC-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto APC",
       "enabled": true,
       "type": "perpendicular",
       "supports": [
         [
           "pP",
-          "p6"
+          "pA"
         ],
         [
           "pP",
-          "p4"
+          "pC"
         ]
       ]
     },
     {
-      "id": "perpendicularMarkBP5-perpendicular",
-      "label": "Perpendicularidad de Marca de perpendicularidad",
+      "id": "angleBPC-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto BPC",
       "enabled": true,
       "type": "perpendicular",
       "supports": [
         [
           "pP",
-          "p6"
+          "pB"
         ],
         [
           "pP",
-          "p5"
+          "pC"
         ]
       ]
     },
     {
-      "id": "perpendicularMarkAP5-perpendicular",
-      "label": "Perpendicularidad de Marca de perpendicularidad",
+      "id": "angleBPD-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto BPD",
       "enabled": true,
       "type": "perpendicular",
       "supports": [
         [
           "pP",
-          "p7"
+          "pB"
         ],
         [
           "pP",
-          "p5"
+          "pD"
         ]
       ]
     },
     {
-      "id": "perpendicularMarkAP4-perpendicular",
-      "label": "Perpendicularidad de Marca de perpendicularidad",
+      "id": "angleAPD-perpendicular",
+      "label": "Perpendicularidad de Ángulo recto APD",
       "enabled": true,
       "type": "perpendicular",
       "supports": [
         [
           "pP",
-          "p7"
+          "pA"
         ],
         [
           "pP",
-          "p4"
+          "pD"
         ]
       ]
     }
   ],
   "steps": [],
-  "note": "Arrastra A, B y P"
+  "note": "Arrastra A, B, C, D o P"
 }
 );
 /* @matematika-diagram-spec:end */

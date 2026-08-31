@@ -29,9 +29,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="T" />he **incidence system** constitutes the foundational deductive layer of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> formulated by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>. It establishes the formal rules of containment and mutual determination among the <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> of <ConceptLink targetId="espacio">space</ConceptLink> (<ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>), setting aside metric notions of <ConceptLink targetId="distancia">distance</ConceptLink>, <ConceptLink targetId="angulo">angle</ConceptLink>, or <ConceptLink targetId="estar-entre">order</ConceptLink> relations.
+<Capitular letra="T" />he **incidence system** constitutes the foundational deductive layer of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>. It establishes the formal rules of containment and mutual determination among the <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> of <ConceptLink targetId="espacio">space</ConceptLink> (<ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>), setting aside metric notions of <ConceptLink targetId="distancia">distance</ConceptLink>, <ConceptLink targetId="angulo">angle</ConceptLink>, or <ConceptLink targetId="estar-entre">order</ConceptLink> relations.
 
-Within this framework, lines and planes are not defined as sets of points, but as independent primitive entities connected by <ConceptLink targetId="incidencia">incidence relations</ConceptLink>. The points incident with a geometric object form its trace in <ConceptLink targetId="espacio">space</ConceptLink>.
+Within this framework, lines and planes are not defined as sets of points, but as independent primitive entities connected by <ConceptLink targetId="incidencia">incidence relations</ConceptLink>. The points incident with a geometric object form its <ConceptLink targetId="traza">trace</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>.
 
 <Definicion title="Formal structure">
   In <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, an **incidence space** is a <ConceptLink targetId="estructura-geometrica">multi-sorted relational structure</ConceptLink> $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$ over a <ConceptLink targetId="universo-discurso">universe of discourse</ConceptLink> $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ consisting of three <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> <ConceptLink targetId="dominio">domains</ConceptLink>:
@@ -40,7 +40,7 @@ Within this framework, lines and planes are not defined as sets of points, but a
   - $\Pi$: primitive domain of <ConceptLink targetId="plano">planes</ConceptLink>.
   - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ and $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$: point-line and point-plane <ConceptLink targetId="incidencia">incidence relations</ConceptLink> (commonly denoted by $\mathbf{I}$).
 
-  The structure satisfies Hilbert's Group I theory ($\mathcal{S}_{\text{inc}} \models \mathcal{T}_{\text{incidence}}$), where the point trace of a line $\ell \in \mathcal{L}$ or plane $\pi \in \Pi$ is:
+  The structure satisfies Hilbert's Group I theory ($\mathcal{S}_{\text{inc}} \models \mathcal{T}_{\text{incidence}}$), where the <ConceptLink targetId="traza">point trace</ConceptLink> of a line $\ell \in \mathcal{L}$ or plane $\pi \in \Pi$ is:
   $$
   \operatorname{tr}(\ell) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \}, \quad \operatorname{tr}(\pi) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \pi \}
   $$

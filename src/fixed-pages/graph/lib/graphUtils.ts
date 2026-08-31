@@ -6,6 +6,9 @@ export const NODE_URL_PREFIX: Record<string, string> = {
   definicion: 'definicion',
   concepto: 'definicion',
   modelo: 'modelo',
+  'sistema-axiomatico': 'sistema',
+  metodo: 'metodo',
+  'caso-de-uso': 'caso-de-uso',
 };
 
 const KNOWLEDGE_GRAPH_GROUP_TYPES: Record<string, string> = {
@@ -21,6 +24,12 @@ const KNOWLEDGE_GRAPH_GROUP_TYPES: Record<string, string> = {
   corolario: 'corolario',
   modelo: 'modelo',
   model: 'modelo',
+  'sistema-axiomatico': 'sistema-axiomatico',
+  'axiomatic-system': 'sistema-axiomatico',
+  metodo: 'metodo',
+  method: 'metodo',
+  'caso-de-uso': 'caso-de-uso',
+  usecase: 'caso-de-uso',
   mathematician: 'matematico',
   matematico: 'matematico',
 };
@@ -31,12 +40,15 @@ const KNOWLEDGE_GRAPH_SPECIAL_GROUPS: Record<string, { label: string; colorType:
 };
 
 const KNOWLEDGE_GRAPH_LEGEND_ORDER = [
+  'axioma',
+  'sistema-axiomatico',
+  'definicion',
   'teorema',
   'lema',
   'corolario',
-  'axioma',
-  'definicion',
   'modelo',
+  'metodo',
+  'caso-de-uso',
   'matematico',
 ] as const;
 

@@ -30,7 +30,7 @@ export const Simulation = Triangulo;
 
 <Capitular letra="A" /> triangle is the planar geometric figure constituted by three non-<ConceptLink targetId="colinealidad" isDependency={true}>collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> and the three <ConceptLink targetId="segmento" isDependency={true}>segments</ConceptLink> joining them pairwise.
 
-In the foundation of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> developed by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, the triangle is neither a metric magnitude nor an area measure, but a formal structure constructed from the <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation and non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+The triangle is neither a metric magnitude nor an area measure, but a formal structure constructed from the <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation and non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
 
 <Definicion title="Formal Definition of Triangle">
 Given three <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind>, and <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ such that the triple $\{A, B, C\}$ is not <ConceptLink targetId="colinealidad">collinear</ConceptLink>, the **triangle** <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> is the <ConceptLink targetId="conjunto">set</ConceptLink> constituted by the three <ConceptLink targetId="segmento">segments</ConceptLink> <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind>, and <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
@@ -39,7 +39,7 @@ $$
 \triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}
 $$
 
-The segments $\overline{AB}$, $\overline{BC}$, and $\overline{CA}$ are called the <ConceptLink targetId="lado">sides</ConceptLink> of the triangle, and their endpoints $A$, $B$, and $C$ are called the <ConceptLink targetId="vertice">vertices</ConceptLink>. Its associated **point trace** $\operatorname{tr}(\triangle ABC) \subset \mathcal{P}$ is the set union of the <ConceptLink targetId="traza">traces</ConceptLink> of its sides:
+The segments $\overline{AB}$, $\overline{BC}$, and $\overline{CA}$ are called the <ConceptLink targetId="lado">sides</ConceptLink> of the triangle, and their endpoints $A$, $B$, and $C$ are called the <ConceptLink targetId="vertice">vertices</ConceptLink>. Its associated <ConceptLink targetId="traza">**point trace**</ConceptLink> $\operatorname{tr}(\triangle ABC) \subset \mathcal{P}$ is the set union of the <ConceptLink targetId="traza">traces</ConceptLink> of its sides:
 
 $$
 \operatorname{tr}(\triangle ABC) = \operatorname{tr}(\overline{AB}) \cup \operatorname{tr}(\overline{BC}) \cup \operatorname{tr}(\overline{CA})
@@ -63,7 +63,7 @@ $$
       title="Coplanarity and Unique Supporting Plane"
       formula="\exists! \pi \in \Pi : \operatorname{tr}(\triangle ABC) \subset \operatorname{tr}(\pi)"
     >
-      By Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, the non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> of the vertex set $\{A, B, C\}$ uniquely determines a single <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$ that contains the entire point trace of the triangle: $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
+      By Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, the non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> of the vertex set $\{A, B, C\}$ uniquely determines a single <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$ that contains the entire <ConceptLink targetId="traza">point trace</ConceptLink> of the triangle: $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 

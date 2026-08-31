@@ -30,7 +30,7 @@ export const Simulation = Segmento;
 
 <Capitular letra="A" /> line segment is the <ConceptLink targetId="conjunto">set</ConceptLink> consisting of two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, called endpoints, together with all points lying <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> them.
 
-In the deductive foundation of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, the segment is not a primitive concept, but an object formally derived from the primitive <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink> relation and <ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiom II.1</ConceptLink>. It constitutes the basic bounded geometric figure upon which <ConceptLink targetId="poligono">polygons</ConceptLink>, <ConceptLink targetId="triangulo">triangles</ConceptLink>, and <ConceptLink targetId="congruencia">segment congruence</ConceptLink> are established.
+The line segment is a formally derived object constructed from the primitive <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink> relation and <ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiom II.1</ConceptLink>, constituting the fundamental bounded geometric figure upon which <ConceptLink targetId="poligono">polygons</ConceptLink>, <ConceptLink targetId="triangulo">triangles</ConceptLink>, and <ConceptLink targetId="congruencia">segment congruence</ConceptLink> are established.
 
 <Definicion title="Formal Definition of Line Segment">
 Given two distinct points <VisualBind element="pA" color="musgo">$A$</VisualBind> and <VisualBind element="pB" color="musgo">$B$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineL" color="carbon">$\ell$</VisualBind>, the **open segment** $\operatorname{seg}(AB)$ is the set of all points $P \in \mathcal{P}$ lying between $A$ and $B$:
@@ -71,7 +71,7 @@ $$
       title="Uniqueness of the Supporting Line"
       formula="\exists! \ell \in \mathcal{L} : \overline{AB} \subset \operatorname{tr}(\ell) \quad (\ell = \overleftrightarrow{AB})"
     >
-      By <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>, the distinct endpoints $A \neq B$ uniquely determine the supporting <ConceptLink targetId="recta">line</ConceptLink> $\overleftrightarrow{AB}$, satisfying the trace inclusion $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$.
+      By <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>, the distinct endpoints $A \neq B$ uniquely determine the supporting <ConceptLink targetId="recta">line</ConceptLink> $\overleftrightarrow{AB}$, satisfying the <ConceptLink targetId="traza">trace</ConceptLink> inclusion $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

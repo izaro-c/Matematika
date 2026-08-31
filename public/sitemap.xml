@@ -1282,6 +1282,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/teoria-medida-area" />
   </url>
   <url>
+    <loc>https://izaro-c.github.io/Matematika/en/definition/traza</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/traza" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/traza" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/traza" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/traza" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/es/definicion/traza</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/traza" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/traza" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/traza" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/traza" />
+  </url>
+  <url>
     <loc>https://izaro-c.github.io/Matematika/en/definition/triangulo-rectangulo</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
@@ -2950,6 +2970,16 @@
     <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/teoria-medida-area" />
     <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/teoria-medida-area" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/teoria-medida-area" />
+  </url>
+  <url>
+    <loc>https://izaro-c.github.io/Matematika/eu/definizioa/traza</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://izaro-c.github.io/Matematika/es/definicion/traza" />
+    <xhtml:link rel="alternate" hreflang="eu" href="https://izaro-c.github.io/Matematika/eu/definizioa/traza" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://izaro-c.github.io/Matematika/en/definition/traza" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://izaro-c.github.io/Matematika/es/definicion/traza" />
   </url>
   <url>
     <loc>https://izaro-c.github.io/Matematika/eu/definizioa/triangulo-rectangulo</loc>

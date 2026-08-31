@@ -2,62 +2,73 @@ export const metadata = {
   id: "angulos-suplementarios",
   lang: "eu",
   type: "definicion",
+  subtype: "derivado",
   title: "Angelu betegarriak",
-  description: "Elkarren ondokoak izanik alde ez-komunek aurkako zuzenerdiak osatzen dituzten bi angeluren pare batekiko kongruenteak diren bi angeluren arteko erlazio geometrikoa.",
+  description: "Erpin eta alde komun bat partekatzen duten eta beste bi aldeek zuzen bereko aurkako zuzenerdiak osatzen dituzten aldameneko bi angeluk eratutako erlazio geometrikoa.",
   branch: "51A",
   branches: ["51A", "51M"],
-  tags: ["geometria-sintetica", "congruencia", "angulo", "hilbert"],
+  tags: ["geometria-sintetica", "congruencia", "angulos", "orden", "hilbert"],
   hasSimulation: false,
   sources: [
     {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. Liburukia, 13. Proposizioa",
+      role: "primary"
+    },
+    {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "I. kapitulua, §5",
+      locator: "I. kapitulua, §4",
       role: "primary"
     }
   ]
 };
 
-<Capitular letra="B" />i <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> **betegarriak** dira baldin eta <ConceptLink targetId="lado">alde</ConceptLink> komun bat partekatzen badute eta haien beste bi aldeek <ConceptLink targetId="recta">zuzen</ConceptLink> bereko <ConceptLink targetId="semirrectas-opuestas" isDependency={true}>aurkako zuzenerdiak</ConceptLink> osatzen badituzte, edota konfigurazio hori betetzen duen angelu-pare batekiko hurrenez hurren <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badira.
+<Capitular letra="B" />i <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> <ConceptLink targetId="angulos-adyacentes">aldameneko</ConceptLink> betegarriak dira baldin eta beren <ConceptLink targetId="vertice">erpina</ConceptLink> eta <ConceptLink targetId="lado">alde</ConceptLink> komun bat partekatzen badute, eta haien beste bi aldeek <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> euskarri bereko <ConceptLink targetId="semirrectas-opuestas">aurkako zuzenerdiak</ConceptLink> osatzen badituzte.
 
-<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> oinarrietan, angelu betegarriak modu posizional hutsean definitzen dira <ConceptLink targetId="estar-entre">bitartekotasun-erlazioaren</ConceptLink> bidez, neurri angeluarren batuketa aritmetikora ($180^\circ$ edo $\pi\text{ rad}$) jo gabe. Nozio honi esker, <ConceptLink targetId="angulo-recto">angelu zuzenaren</ConceptLink> kontzeptua zorroztasun osoz formalizatzen da, bere <ConceptLink targetId="angulos-adyacentes">ondoko angelu betegarriarekiko</ConceptLink> <ConceptLink targetId="congruencia">kongruentea</ConceptLink> den angelu gisa definituz.
+Angelu betegarrien nozioak ez du aldez aurretik <ConceptLink targetId="distancia">zenbakizko neurririk</ConceptLink> ez eta $180^\circ$-ko batura metrikorik aurresuposatzen; aitzitik, zuzenaren gaineko <ConceptLink targetId="estar-entre" isDependency={true}>bitartekotasun-erlazio</ConceptLink> primitiboan eta jatorri-<ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> batek eragindako aurkako zuzenerdien <ConceptLink targetId="conjunto-disjunto">partizioan</ConceptLink> oinarritzen da zorrozki.
 
-<Definicion title="Angelu betegarriak">
-$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> hiru <ConceptLink targetId="punto">puntu</ConceptLink> <ConceptLink targetId="colinealidad">kolineal</ConceptLink> $A, B, C$ emanda, non $B$ puntua $A$ eta $C$-ren <ConceptLink targetId="estar-entre">artean dagoen</ConceptLink> ($A * B * C$), eta $D \notin \operatorname{recta}(A, C)$ <ConceptLink targetId="punto">puntu</ConceptLink> bat izanik, $\angle ABD = \angle(\overrightarrow{BA}, \overrightarrow{BD})$ eta $\angle CBD = \angle(\overrightarrow{BC}, \overrightarrow{BD})$ <ConceptLink targetId="angulo">angeluei</ConceptLink> <ConceptLink targetId="angulos-adyacentes">ondoko angelu betegarriak</ConceptLink> deritze.
+<Definicion title="Aldameneko angelu betegarrien definizio formala">
+Izan bedi $\ell \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat $\pi \in \Pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> batean eta izan bedi $O \in \operatorname{tr}(\ell)$ jatorri-<ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat. Izan bitez $A, B \in \operatorname{tr}(\ell) \setminus \{O\}$ bi puntu non $O$ puntua $A$ eta $B$-ren <ConceptLink targetId="estar-entre" isDependency={true}>artean dagoen</ConceptLink> ($A * O * B$), eta izan bedi $C \in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$ puntu bat $\operatorname{tr}(\ell)$ <ConceptLink targetId="traza">puntu-trazaduratik</ConceptLink> kanpo, $\{O, A, C\}$ eta $\{O, B, C\}$ hirukoteen ez-<ConceptLink targetId="colinealidad">kolinealtasuna</ConceptLink> bermatuz.
 
-Modu orokorrean, bi $\alpha$ eta $\beta$ <ConceptLink targetId="angulo">angelu</ConceptLink> **betegarriak** dira ($\operatorname{Supl}(\alpha, \beta)$) baldin eta ondoko bi angelu betegarriren <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira:
+Har bitez $h = \overrightarrow{OA}$, $h' = \overrightarrow{OB}$ eta $k = \overrightarrow{OC}$ <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdiak</ConceptLink>. Beren <ConceptLink targetId="lado">aldeek</ConceptLink> osatutako angeluei:
 
 $$
-\operatorname{Supl}(\alpha, \beta) \iff \exists A, B, C, D \in \mathcal{P} \ \Biggl( A * B * C \ \land \ D \notin \operatorname{recta}(A, C) \ \land \ \alpha \cong \angle(\overrightarrow{BA}, \overrightarrow{BD}) \ \land \ \beta \cong \angle(\overrightarrow{BC}, \overrightarrow{BD}) \Biggr)
+\angle(h, k) = \{ \overrightarrow{OA}, \overrightarrow{OC} \} = \angle AOC \quad \text{eta} \quad \angle(h', k) = \{ \overrightarrow{OB}, \overrightarrow{OC} \} = \angle BOC
 $$
+
+**aldameneko angelu betegarriak** deritze. Planoko bi $\angle \alpha$ eta $\angle \beta$ angelu arbitrario **betegarriak** direla esaten da baldin eta $\angle \beta$ angelua $\angle \alpha$-ren aldameneko angelu betegarriarekiko <ConceptLink targetId="congruencia" isDependency={true}>kongruentea</ConceptLink> bada.
 </Definicion>
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Propietate aljebraikoak eta kongruentziazkoak">
+  <PropiedadesGrupo title="Kongruentziaren aldaezinak eta sendotasun sintetikoa">
     <PropiedadItem 
-      id="erlazioaren-simetria" 
-      title="Erlazioaren simetria" 
-      formula="\operatorname{Supl}(\alpha, \beta) \iff \operatorname{Supl}(\beta, \alpha)"
+      id="congruencia-angulos-suplementarios" 
+      title="Angelu betegarrien kongruentzia-teorema"
+      formula="\angle(h_1, k_1) \cong \angle(h_2, k_2) \implies \angle(h'_1, k_1) \cong \angle(h'_2, k_2)"
     >
-      Betegarritasun-erlazioa simetrikoa da <ConceptLink targetId="estar-entre">ordenaren</ConceptLink> <ConceptLink targetId="axioma-orden-1">II.1 axiomaren</ConceptLink> ondorio zuzen gisa ($A * B * C \iff C * B * A$), bikoteko <ConceptLink targetId="angulo">angeluen</ConceptLink> hurrenkerak eraginik ez duela bermatuz.
+      Bi <ConceptLink targetId="angulo">angelu</ConceptLink> elkarren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira, haien aldameneko angelu betegarriak ere kongruenteak dira elkarren artean (Hilberten *12. Teorema / Satz 12*). <ConceptLink targetId="teorema">Teorema</ConceptLink> hau formalki ondorioztatzen da <ConceptLink targetId="segmento">zuzenkien</ConceptLink> garraiotik (<ConceptLink targetId="axioma-congruencia-1">III.1 axioma</ConceptLink>), zuzenki kolinealen aditibitatetik (<ConceptLink targetId="axioma-congruencia-3">III.3 axioma</ConceptLink>) eta Alde-Angelu-Alde kongruentzia-irizpidetik (<ConceptLink targetId="axioma-congruencia-5">III.5 axioma</ConceptLink>).
     </PropiedadItem>
 
     <PropiedadItem 
-      id="kongruentziarekiko-aldaezintasuna" 
-      title="Kongruentziarekiko aldaezintasuna" 
-      formula="\operatorname{Supl}(\alpha, \beta) \land \alpha \cong \alpha' \land \beta \cong \beta' \implies \operatorname{Supl}(\alpha', \beta')"
+      id="caracterizacion-angulo-recto" 
+      title="Angeluzuzenaren eta ortogonaltasunaren definizio formala"
+      formula="\operatorname{Recto}(\angle(h, k)) \iff \angle(h, k) \cong \angle(h', k) \iff \overleftrightarrow{OA} \perp \overleftrightarrow{OC}"
     >
-      Betegarritasuna <ConceptLink targetId="congruencia">kongruentzia-erlazioaren</ConceptLink> pean mantentzen da; beraz, angelu-pareen kokapen espazialarekiko independentea den berezko propietate geometrikoa da.
+      Angelu bat <ConceptLink targetId="angulo-recto">angeluzuzena</ConceptLink> dela definitzen da baldin eta soilik baldin bere aldameneko angelu betegarriarekiko kongruentea bada. Ondorioz, $\overleftrightarrow{OA}$ eta $\overleftrightarrow{OC}$ zuzen euskarriak <ConceptLink targetId="perpendicular">perpendikularrak</ConceptLink> dira baldin eta soilik baldin beren <ConceptLink targetId="secante">ebakidura-puntuan</ConceptLink> angelu kongruenteen bikote lineal bat eratzen badute, <ConceptLink targetId="ortogonalidad">ortogonaltasunaren</ConceptLink> nozio sintetikoa finkatuz.
     </PropiedadItem>
+  </PropiedadesGrupo>
 
+  <PropiedadesGrupo title="Ordenaren eta bitartekotasunaren propietateak">
     <PropiedadItem 
-      id="betegarriaren-bakartasuna" 
-      title="Betegarri modularraren bakartasuna" 
-      formula="\operatorname{Supl}(\alpha, \beta) \land \operatorname{Supl}(\alpha', \beta') \land \alpha \cong \alpha' \implies \beta \cong \beta'"
+      id="particion-semirrectas-opuestas" 
+      title="Zuzenaren partizioa aurkako zuzenerditan"
+      formula="\forall O \in \operatorname{tr}(\ell) \; \exists! \{h, h'\} \; (\operatorname{tr}(\ell) \setminus \{O\} = \operatorname{tr}(h) \sqcup \operatorname{tr}(h'))"
     >
-      Angelu kongruenteen betegarriak nahitaez kongruenteak dira elkarren artean <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>; hortaz, betegarritasuna eragiketa uniboko ondo definitua da angeluen <ConceptLink targetId="clase-equivalencia">baliokidetasun-klaseen</ConceptLink> artean.
+      $\ell$ zuzen bateko edozein $O$ puntuk zuzenaren gainerako puntu-trazadura bi <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntu</ConceptLink> eta aurkakotan ($h$ eta $h'$) partizionatzen du, <ConceptLink targetId="semiplano">planoerdira</ConceptLink> proiektatutako $k$ zuzenerdi <ConceptLink targetId="secante">ebakitzaile</ConceptLink> ororentzat aldameneko angelu betegarriaren existentzia eta bakartasuna bermatuz.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
@@ -65,5 +76,5 @@ $$
 <Separador />
 
 <Nota>
-<ConceptLink targetId="sistema-absoluto">Geometria absolutuan</ConceptLink>, betegarriaren bakartasunak <ConceptLink targetId="teorema-angulos-opuestos-vertice">Erpinez aurkako angeluen teorema</ConceptLink> formalki frogatzea ahalbidetzen du —aurkako bi angeluk ondoko betegarri bera partekatzen dutela ikusita—, eta planoan <ConceptLink targetId="rectas-perpendiculares">zuzen perpendikularrak</ConceptLink> existitzea bermatzen du.
+<ConceptLink targetId="sistema-absoluto">Geometria absolutuan</ConceptLink>, angelu kongruenteen betegarriak ere kongruenteak izateak neurri angeluar metrikorik gabe <ConceptLink targetId="teorema-angulos-opuestos-verticales">erpinez aurkako angeluen teorema</ConceptLink> modu unibokoan frogatzea ahalbidetzen du.
 </Nota>

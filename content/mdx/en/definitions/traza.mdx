@@ -1,0 +1,120 @@
+export const metadata = {
+  id: "traza",
+  lang: "en",
+  type: "definicion",
+  subtype: "nominal",
+  title: "Point Trace",
+  description: "Set-theoretic assignment associating each line or plane in the primitive domain with the exact set of points formally incident with it.",
+  branch: "51A",
+  branches: ["51A", "03B", "51M"],
+  tags: ["geometria-sintetica", "incidencia", "teoria-modelos", "hilbert"],
+  hasSimulation: false,
+  sources: [
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §1",
+      role: "primary"
+    },
+    {
+      title: "Geometry: Euclid and Beyond",
+      author: "Robin Hartshorne",
+      locator: "Chapter 2, §6",
+      role: "secondary"
+    }
+  ]
+};
+
+<Capitular letra="T" />he **point trace** is the set-theoretic assignment associating each <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> or <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> in the <ConceptLink targetId="dominio">primitive domain</ConceptLink> with the exact <ConceptLink targetId="conjunto">set</ConceptLink> of <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> maintaining a formal relation of <ConceptLink targetId="incidencia" isDependency={true}>synthetic incidence</ConceptLink> with that entity.
+
+Since the <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> of point ($\mathcal{P}$), line ($\mathcal{L}$), and plane ($\Pi$) are ontological domains with <ConceptLink targetId="conjunto-disjunto">pairwise empty intersections</ConceptLink> ($\mathcal{P} \cap \mathcal{L} = \emptyset$, $\mathcal{P} \cap \Pi = \emptyset$, $\mathcal{L} \cap \Pi = \emptyset$) in <ConceptLink targetId="logica">many-sorted logic</ConceptLink>, the point trace $\operatorname{tr}$ acts as the canonical mediation <ConceptLink targetId="operador">operator</ConceptLink> allowing set-theoretic operations (intersection, inclusion, or <ConceptLink targetId="cardinalidad">cardinality</ConceptLink>) without incurring type collapse.
+
+<Definicion title="Point trace operator">
+Given a <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink> $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$ with a <ConceptLink targetId="signatura">many-sorted signature</ConceptLink>, the **trace** <ConceptLink targetId="operador">operator</ConceptLink> ($\operatorname{tr}$) maps each element in the primitive linear ($\mathcal{L}$) and planar ($\Pi$) <ConceptLink targetId="dominio">domains</ConceptLink> to its corresponding subset in the <ConceptLink targetId="conjunto-potencia">power set</ConceptLink> of points $\mathcal{P}(\mathcal{P})$:
+
+1. **Point trace of a line**:
+   $$
+   \begin{aligned}
+   \operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} &\longrightarrow \mathcal{P}(\mathcal{P}) \\
+   \ell &\longmapsto \operatorname{tr}(\ell) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \}
+   \end{aligned}
+   $$
+
+2. **Point trace of a plane**:
+   $$
+   \begin{aligned}
+   \operatorname{tr}_{\Pi}\colon \Pi &\longrightarrow \mathcal{P}(\mathcal{P}) \\
+   \pi &\longmapsto \operatorname{tr}(\pi) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \pi \}
+   \end{aligned}
+   $$
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Uniqueness and injectivity in primitive domains">
+    <PropiedadItem 
+      id="inyectividad-lineal" 
+      title="Injectivity and unique line determination"
+      formula="\forall \ell_1, \ell_2 \in \mathcal{L} \ (\operatorname{tr}(\ell_1) = \operatorname{tr}(\ell_2) \iff \ell_1 = \ell_2)"
+    >
+      Two distinct lines never share the exact same set of incident points. By <ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink> (existence of at least two points on a line) and <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink> (unique line determination), the mapping $\operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} \to \mathcal{P}(\mathcal{P})$ is strictly <ConceptLink targetId="inyectividad">injective</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="inyectividad-planar" 
+      title="Injectivity and unique plane determination"
+      formula="\forall \pi_1, \pi_2 \in \Pi \ (\operatorname{tr}(\pi_1) = \operatorname{tr}(\pi_2) \iff \pi_1 = \pi_2)"
+    >
+      Two distinct planes cannot share the exact same point trace. By <ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">Axiom I.5</ConceptLink> (plane determination and uniqueness by three non-collinear points), the mapping $\operatorname{tr}_{\Pi}\colon \Pi \to \mathcal{P}(\mathcal{P})$ is strictly <ConceptLink targetId="inyectividad">injective</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Incidence relations and relative spatial positions">
+    <PropiedadItem 
+      id="inclusion-recta-plano" 
+      title="Inclusion of a line in a plane"
+      formula="\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \iff \forall P \in \mathcal{P} \ (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)"
+    >
+      A line $\ell$ lies in a plane $\pi$ if and only if its trace is contained in that of the plane ($\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$). By <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink>, verifying that two distinct points of the line belong to the plane suffices to ensure total inclusion.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="interseccion-planos" 
+      title="Intersection of secant planes"
+      formula="\pi_1 \neq \pi_2 \land \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) \neq \emptyset \implies \exists! \ell \in \mathcal{L} \ (\operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \operatorname{tr}(\ell))"
+    >
+      When two distinct planes intersect at least at one common point (<ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink>), the set-theoretic intersection of their point traces coincides uniquely with the trace of a single common secant line (<ConceptLink targetId="teorema-interseccion-planos">plane intersection line theorem</ConceptLink>).
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="paralelismo-planos" 
+      title="Parallel planes in space"
+      formula="\pi_1 \parallel \pi_2 \iff (\pi_1 = \pi_2 \lor \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \emptyset)"
+    >
+      Two planes in space are <ConceptLink targetId="planos-paralelos">parallel</ConceptLink> if and only if they are identical or their point traces are mutually disjoint sets, ensuring the reflexivity of the relation.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="posicion-rectas-coplanares" 
+      title="Coplanar lines: parallelism and secancy"
+      formula="\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi) \implies (\ell_1 \parallel \ell_2 \iff \ell_1 = \ell_2 \lor \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset)"
+    >
+      For two lines with guaranteed <ConceptLink targetId="coplanaridad">coplanarity</ConceptLink> in a plane $\pi$, the relation of <ConceptLink targetId="paralelas">parallelism</ConceptLink> ($\ell_1 \parallel \ell_2$) is reflexive and equivalent to them being identical or disjoint; if distinct and not parallel, they are <ConceptLink targetId="secante">secant</ConceptLink> with $\lvert \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) \rvert = 1$.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="rectas-cruzadas" 
+      title="Characterization of skew lines in space"
+      formula="\forall \pi \in \Pi \ (\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \not\subseteq \operatorname{tr}(\pi)) \implies \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset"
+    >
+      Two lines in space are <ConceptLink targetId="rectas-cruzadas">skew lines</ConceptLink> if no common plane contains both simultaneously, which necessarily implies that their point traces are disjoint without being parallel.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
+
+<Separador />
+
+<Nota>
+The use of the point trace $\operatorname{tr}$ bridges the purity of axiomatic synthetic geometry with the convenience of algebra and coordinate <ConceptLink targetId="modelo-cartesiano">analytic models</ConceptLink>.
+</Nota>

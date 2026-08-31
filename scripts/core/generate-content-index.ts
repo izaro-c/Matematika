@@ -15,6 +15,38 @@ export interface ContentEntry {
   metadata: Record<string, unknown>;
 }
 
+function extractBodyMentions(content: string): string[] {
+  const mentions = new Set<string>();
+
+  // 1. ConceptLink targetId="..." or targetId={'...'} or targetId={["...", "..."]}
+  const conceptLinkRegex = /<ConceptLink\b([^>]*)>/g;
+  let match: RegExpExecArray | null;
+  while ((match = conceptLinkRegex.exec(content)) !== null) {
+    const attrsStr = match[1];
+    const singleMatch = attrsStr.match(/\btargetId=(?:["']([^"']+)["']|\{["']([^"']+)["']\})/);
+    if (singleMatch) {
+      const id = singleMatch[1] || singleMatch[2];
+      if (id) mentions.add(id);
+      continue;
+    }
+    const arrayMatch = attrsStr.match(/\btargetId=\{\[(.*?)\]\}/);
+    if (arrayMatch) {
+      const idMatches = arrayMatch[1].matchAll(/["']([^"']+)["']/g);
+      for (const m of idMatches) {
+        if (m[1]) mentions.add(m[1]);
+      }
+    }
+  }
+
+  // 2. PropiedadItem id="..." or theoremId="..."
+  const propRegex = /<PropiedadItem\b[^>]*(?:\bid|\btheoremId)=["']([^"']+)["']/g;
+  while ((match = propRegex.exec(content)) !== null) {
+    if (match[1]) mentions.add(match[1]);
+  }
+
+  return Array.from(mentions);
+}
+
 function parseMetadata(content: string, filePath: string): Record<string, unknown> | null {
   const metadataRegex = /export\s+const\s+metadata\s*=\s*(\{[\s\S]*?\n\});?/;
   const match = content.match(metadataRegex);
@@ -95,6 +127,10 @@ export function generateContentIndex(options: GenerateContentIndexOptions = {}):
     }
 
     meta.lang = lang;
+    const bodyMentions = extractBodyMentions(content);
+    if (bodyMentions.length > 0) {
+      meta.conceptLinks = bodyMentions;
+    }
 
     const contentType = contentTypes[dirName] || (meta.type as string) || 'unknown';
     const slug = path.basename(file, '.mdx').toLowerCase();

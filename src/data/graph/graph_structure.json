@@ -55,6 +55,7 @@
     "semiplano",
     "signatura",
     "teoria-medida-area",
+    "traza",
     "triangulo",
     "triangulo-rectangulo",
     "demo-angulos-alternos-internos",
@@ -479,11 +480,17 @@
     "angulos-suplementarios": {
       "id": "angulos-suplementarios",
       "type": "definicion",
+      "subtype": "derivado",
       "title": "Angelu betegarriak",
-      "description": "Elkarren ondokoak izanik alde ez-komunek aurkako zuzenerdiak osatzen dituzten bi angeluren pare batekiko kongruenteak diren bi angeluren arteko erlazio geometrikoa.",
+      "description": "Erpin eta alde komun bat partekatzen duten eta beste bi aldeek zuzen bereko aurkako zuzenerdiak osatzen dituzten aldameneko bi angeluk eratutako erlazio geometrikoa.",
       "proofs": [],
       "directDependencies": [
         "angulo",
+        "recta",
+        "estar-entre",
+        "punto",
+        "plano",
+        "semirrecta",
         "congruencia"
       ]
     },
@@ -674,12 +681,16 @@
     "perpendicular": {
       "id": "perpendicular",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Perpendikulartasuna",
-      "description": "Lau angelu zuzen kongruente eratuz elkar ebakitzen duten bi zuzen ebakitzaileren arteko erlazio geometrikoa.",
+      "description": "Elkar ebakitzen duten bi zuzen koplanarren arteko erlazio geometrikoa, beren ebakidurak angeluzuzenak zehazten dituenean.",
       "proofs": [],
       "directDependencies": [
-        "recta"
+        "recta",
+        "plano",
+        "punto",
+        "estar-entre",
+        "semirrecta"
       ]
     },
     "plano": {
@@ -781,15 +792,31 @@
       "proofs": [],
       "directDependencies": []
     },
+    "traza": {
+      "id": "traza",
+      "type": "definicion",
+      "subtype": "nominal",
+      "title": "Puntu-trazadura",
+      "description": "Oinarrizko domeinuko zuzen edo plano bakoitzari berarekin formalki intziditzen duten puntuen multzo zehatza esleitzen dion multzo-esleipena.",
+      "proofs": [],
+      "directDependencies": [
+        "recta",
+        "plano",
+        "incidencia",
+        "punto"
+      ]
+    },
     "triangulo-rectangulo": {
       "id": "triangulo-rectangulo",
       "type": "definicion",
-      "subtype": "nominal",
+      "subtype": "derivado",
       "title": "Triangelu angeluzuzena",
-      "description": "Barne-angelu zuzen bat (90 gradu) duen triangelu laua, bi kateto ortogonalek eta aurkako hipotenusak mugatua.",
+      "description": "Barne-angelu zuzen bat duen triangelua, bi kateto elkartuk eta aurkako hipotenusa batek mugatua.",
       "proofs": [],
       "directDependencies": [
         "triangulo",
+        "punto",
+        "plano",
         "perpendicular"
       ]
     },

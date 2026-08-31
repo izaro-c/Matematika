@@ -30,7 +30,7 @@ export const Simulation = Triangulo;
 
 <Capitular letra="T" />riangelua <ConceptLink targetId="colinealidad" isDependency={true}>kolinealak</ConceptLink> ez diren hiru <ConceptLink targetId="punto">puntuk</ConceptLink> eta puntu horiek binaka lotzen dituzten hiru <ConceptLink targetId="segmento" isDependency={true}>zuzenkiek</ConceptLink> osatutako figura geometriko laua da.
 
-<ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> garatutako <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> oinarrietan, triangelua ez da azalera-neurri bat ezta magnitude metriko bat ere, <ConceptLink targetId="estar-entre">bitartekotasun-erlaziotik</ConceptLink> eta <ConceptLink targetId="plano">planoko</ConceptLink> ez-<ConceptLink targetId="colinealidad">kolinealtasunetik</ConceptLink> abiatuta eraikitako egitura formala baizik.
+Triangelua ez da azalera-neurri bat ezta magnitude metriko bat ere, <ConceptLink targetId="estar-entre">bitartekotasun-erlaziotik</ConceptLink> eta <ConceptLink targetId="plano">planoko</ConceptLink> ez-<ConceptLink targetId="colinealidad">kolinealtasunetik</ConceptLink> abiatuta eraikitako egitura formala baizik.
 
 <Definicion title="Triangeluaren definizio formala">
 $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> eta <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> hiru <ConceptLink targetId="punto">puntutarako</ConceptLink>, non $\{A, B, C\}$ hirukotea ez den <ConceptLink targetId="colinealidad">kolineala</ConceptLink>, <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> **triangelua** <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> zein <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind> hiru <ConceptLink targetId="segmento">zuzenkiek</ConceptLink> osatzen duten <ConceptLink targetId="conjunto">multzoa</ConceptLink> da:
@@ -39,7 +39,7 @@ $$
 \triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}
 $$
 
-$\overline{AB}$, $\overline{BC}$ eta $\overline{CA}$ zuzenkiei triangeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> deritze, eta haien mutur-puntu $A$, $B$ eta $C$-ri <ConceptLink targetId="vertice">erpinak</ConceptLink>. Haren lotutako $\operatorname{tr}(\triangle ABC) \subset \mathcal{P}$ **puntu-traza** aldeen <ConceptLink targetId="traza">trazen</ConceptLink> bildura da:
+$\overline{AB}$, $\overline{BC}$ eta $\overline{CA}$ zuzenkiei triangeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> deritze, eta haien mutur-puntu $A$, $B$ eta $C$-ri <ConceptLink targetId="vertice">erpinak</ConceptLink>. Haren lotutako $\operatorname{tr}(\triangle ABC) \subset \mathcal{P}$ <ConceptLink targetId="traza">**puntu-trazadura**</ConceptLink> aldeen <ConceptLink targetId="traza">trazen</ConceptLink> bildura da:
 
 $$
 \operatorname{tr}(\triangle ABC) = \operatorname{tr}(\overline{AB}) \cup \operatorname{tr}(\overline{BC}) \cup \operatorname{tr}(\overline{CA})
@@ -63,7 +63,7 @@ $$
       title="Koplanartasuna eta plano euskarri bakarra"
       formula="\exists! \pi \in \Pi : \operatorname{tr}(\triangle ABC) \subset \operatorname{tr}(\pi)"
     >
-      <ConceptLink targetId="axioma-incidencia-4">I.4 axiomaren</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5 axiomaren</ConceptLink> bidez, $\{A, B, C\}$ erpinen ez-<ConceptLink targetId="colinealidad">kolinealtasunak</ConceptLink> triangeluaren traza barne hartzen duen $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> bakar bat zehazten du: $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
+      <ConceptLink targetId="axioma-incidencia-4">I.4 axiomaren</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5 axiomaren</ConceptLink> bidez, $\{A, B, C\}$ erpinen ez-<ConceptLink targetId="colinealidad">kolinealtasunak</ConceptLink> triangeluaren <ConceptLink targetId="traza">traza</ConceptLink> barne hartzen duen $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> bakar bat zehazten du: $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 

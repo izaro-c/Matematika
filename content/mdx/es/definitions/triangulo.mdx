@@ -30,7 +30,7 @@ export const Simulation = Triangulo;
 
 <Capitular letra="U" />n triángulo es la figura geométrica plana constituida por tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad" isDependency={true}>colineales</ConceptLink> y los tres <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> que los unen dos a dos.
 
-En la fundamentación de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> desarrollada por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el triángulo no es una magnitud métrica ni una medida de área, sino una estructura formal construida a partir de la relación de <ConceptLink targetId="estar-entre">intermediación</ConceptLink> y la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
+El triángulo no es una magnitud métrica ni una medida de área, sino una estructura formal construida a partir de la relación de <ConceptLink targetId="estar-entre">intermediación</ConceptLink> y la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Definicion title="Definición formal de triángulo">
 Dados tres <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> y <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ tales que la terna $\{A, B, C\}$ no es <ConceptLink targetId="colinealidad">colineal</ConceptLink>, el **triángulo** <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> constituido por los tres <ConceptLink targetId="segmento">segmentos</ConceptLink> <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> y <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
@@ -39,7 +39,7 @@ $$
 \triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}
 $$
 
-Los segmentos $\overline{AB}$, $\overline{BC}$ y $\overline{CA}$ se denominan los <ConceptLink targetId="lado">lados</ConceptLink> del triángulo, y sus puntos extremos $A$, $B$ y $C$ reciben el nombre de <ConceptLink targetId="vertice">vértices</ConceptLink>. Su **traza puntual** asociada $\operatorname{tr}(\triangle ABC) \subset \mathcal{P}$ es la unión conjuntista de las <ConceptLink targetId="traza">trazas</ConceptLink> de sus lados:
+Los segmentos $\overline{AB}$, $\overline{BC}$ y $\overline{CA}$ se denominan los <ConceptLink targetId="lado">lados</ConceptLink> del triángulo, y sus puntos extremos $A$, $B$ y $C$ reciben el nombre de <ConceptLink targetId="vertice">vértices</ConceptLink>. Su <ConceptLink targetId="traza">**traza puntual**</ConceptLink> asociada $\operatorname{tr}(\triangle ABC) \subset \mathcal{P}$ es la unión conjuntista de las <ConceptLink targetId="traza">trazas</ConceptLink> de sus lados:
 
 $$
 \operatorname{tr}(\triangle ABC) = \operatorname{tr}(\overline{AB}) \cup \operatorname{tr}(\overline{BC}) \cup \operatorname{tr}(\overline{CA})
@@ -63,7 +63,7 @@ $$
       title="Coplanaridad y plano soporte único"
       formula="\exists! \pi \in \Pi : \operatorname{tr}(\triangle ABC) \subset \operatorname{tr}(\pi)"
     >
-      En virtud de los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> del conjunto de vértices $\{A, B, C\}$ determina de forma unívoca un único <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$ que contiene íntegramente a la traza puntual del triángulo: $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
+      En virtud de los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> del conjunto de vértices $\{A, B, C\}$ determina de forma unívoca un único <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$ que contiene íntegramente a la <ConceptLink targetId="traza">traza puntual</ConceptLink> del triángulo: $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 

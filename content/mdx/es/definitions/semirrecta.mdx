@@ -30,7 +30,7 @@ export const Simulation = Semirrecta;
 
 <Capitular letra="U" />na semirrecta es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> constituido por un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> fijado como origen sobre una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> y todos los puntos de dicha recta que se extienden ilimitadamente a partir de él en un único <ConceptLink targetId="sentido">sentido</ConceptLink>.
 
-En la fundamentación axiomática de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, la semirrecta (o rayo) es un concepto derivado construido formalmente a partir de las relaciones de orden (<ConceptLink targetId="axioma-orden-1" isDependency={true}>Axioma II.1</ConceptLink> y <ConceptLink targetId="axioma-orden-2" isDependency={true}>Axioma II.2</ConceptLink>). Constituye el elemento básico para la definición de los <ConceptLink targetId="angulo">ángulos</ConceptLink> y la fijación de <ConceptLink targetId="orientacion">orientaciones</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
+La semirrecta (o rayo) es un concepto derivado construido formalmente a partir de las relaciones de orden (<ConceptLink targetId="axioma-orden-1" isDependency={true}>Axioma II.1</ConceptLink> y <ConceptLink targetId="axioma-orden-2" isDependency={true}>Axioma II.2</ConceptLink>), constituyendo el elemento básico para la definición de los <ConceptLink targetId="angulo">ángulos</ConceptLink> y la fijación de <ConceptLink targetId="orientacion">orientaciones</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Definicion title="Definición formal de semirrecta">
 Dado un punto origen <VisualBind element="pB" color="carbon">$O$</VisualBind> y un punto distinto <VisualBind element="pA" color="terracota">$A$</VisualBind> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ que <ConceptLink targetId="incidencia">inciden</ConceptLink> en una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineOA" color="mora">$\ell$</VisualBind>, la **semirrecta abierta** $\operatorname{sem}(OA)$ es el conjunto de todos los puntos $P \in \mathcal{P}$ incidentes con $\ell$ tales que $P \neq O$ y $O$ no está <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $P$:
@@ -55,7 +55,7 @@ $$
       title="Partición de la recta en semirrectas opuestas"
       formula="\operatorname{tr}(\ell) \setminus \{O\} = \operatorname{sem}(OA) \sqcup \operatorname{sem}(OB) \quad (A * O * B)"
     >
-      Cualquier punto $O \in \mathcal{P}$ sobre una recta $\ell$ divide el conjunto de los puntos restantes $\operatorname{tr}(\ell) \setminus \{O\}$ en dos <ConceptLink targetId="semirrectas-opuestas">semirrectas opuestas</ConceptLink> abiertas y <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink>, $\operatorname{sem}(OA)$ y $\operatorname{sem}(OB)$, tales que $A * O * B$.
+      Cualquier punto $O \in \mathcal{P}$ sobre una recta $\ell$ divide la <ConceptLink targetId="traza">traza puntual</ConceptLink> restante $\operatorname{tr}(\ell) \setminus \{O\}$ en dos <ConceptLink targetId="semirrectas-opuestas">semirrectas opuestas</ConceptLink> abiertas y <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink>, $\operatorname{sem}(OA)$ y $\operatorname{sem}(OB)$, tales que $A * O * B$.
     </PropiedadItem>
 
     <PropiedadItem 

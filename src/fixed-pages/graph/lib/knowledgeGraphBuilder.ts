@@ -1,5 +1,5 @@
 import { db } from '@/data/content';
-import { mscHierarchy, mscNames, getItemBranchCodes, getAllDescendantCodes } from '@/data/content/msc2020';
+import { mscNames, getItemBranchCodes, mscParent, getMscName } from '@/data/content/msc2020';
 import type { BaseContent } from '@/data/content/types';
 
 export interface GraphNode {
@@ -17,160 +17,278 @@ export interface GraphLink {
   target: string | GraphNode;
 }
 
+const TOP_LEVEL_ROOTS = new Set([
+  'metadatos-y-divulgacion',
+  'fundamentos-y-logica',
+  'algebra-y-teoria-de-numeros',
+  'analisis-matematico',
+  'geometria-y-topologia',
+  'matematica-discreta-y-computacional',
+  'probabilidad-estadistica-y-aplicaciones',
+]);
+
 export function buildKnowledgeGraphData(lang: string = 'es'): { nodes: GraphNode[]; links: GraphLink[] } {
   const nodes: GraphNode[] = [];
   const links: GraphLink[] = [];
+  const idAliasMap = new Map<string, string>();
 
-  // Las 7 ramas raíz de la jerarquía MSC2020
-  const ROOT_BRANCHES = Object.keys(mscHierarchy).filter(
-    key => !/^\d/.test(key) && key.includes('-')
-  );
+  // Helper para registrar alias de IDs y slugs
+  const registerAlias = (id: string, slug?: string) => {
+    idAliasMap.set(id, id);
+    if (slug && slug !== id) {
+      idAliasMap.set(slug, id);
+    }
+  };
 
-  // Nodo Central
-  nodes.push({ id: 'matematicas', name: 'MATEMÁTICAS', group: 'central', val: 50 });
+  // 1. Recolectar todos los contenidos a renderizar
+  const axioms = db.getAllAxioms(lang);
+  const definitions = db.getAllDefinitions(lang);
+  const theorems = db.getAllTheorems(lang);
+  const axiomaticSystems = db.getAllAxiomaticSystems(lang);
+  const models = db.getAllModels(lang);
+  const methods = db.getAllMethods(lang);
+  const useCases = db.getAllUseCases(lang);
+  const mathematicians = db.getAllMathematicians(lang);
 
-  // Ramas raíz
-  ROOT_BRANCHES.forEach(branchSlug => {
-    nodes.push({ id: `rama-${branchSlug}`, name: (mscNames[branchSlug] || branchSlug).toUpperCase(), group: 'branch', val: 25, url: `/rama/${branchSlug}` });
-    links.push({ source: `rama-${branchSlug}`, target: 'matematicas' });
+  // Registrar aliases de todos los contenidos
+  axioms.forEach(a => registerAlias(a.id, a.slug));
+  definitions.forEach(d => registerAlias(d.id, d.slug));
+  theorems.forEach(t => registerAlias(t.id, t.slug));
+  axiomaticSystems.forEach(s => registerAlias(s.id, s.slug));
+  models.forEach(m => registerAlias(m.id, m.slug));
+  methods.forEach(m => registerAlias(m.id, m.slug));
+  useCases.forEach(u => registerAlias(u.id, u.slug));
+  mathematicians.forEach(m => registerAlias(m.id, m.slug));
 
-    // Sub-ramas (hijas)
-    const children = mscHierarchy[branchSlug] || [];
-    children.forEach(childCode => {
-      const childName = mscNames[childCode] || childCode;
-      nodes.push({ id: `subrama-${childCode}`, name: childName.toUpperCase(), group: 'branch', val: 15, url: `/rama/${childCode}` });
-      links.push({ source: `subrama-${childCode}`, target: `rama-${branchSlug}` });
-    });
+  // 2. Identificar ramas y subramas MSC2020 activas (que contienen contenido)
+  const allContentItems: BaseContent[] = [
+    ...axioms,
+    ...definitions,
+    ...theorems,
+    ...axiomaticSystems,
+    ...models,
+    ...methods,
+    ...useCases,
+  ];
+
+  const usedBranchCodes = new Set<string>();
+
+  allContentItems.forEach(item => {
+    const codes = getItemBranchCodes(item as BaseContent & Record<string, unknown>);
+    for (const code of codes) {
+      if (!code) continue;
+      // Añadir el código y toda su cadena de ancestros
+      let current: string | undefined = code;
+      const visited = new Set<string>();
+      while (current && !visited.has(current)) {
+        visited.add(current);
+        usedBranchCodes.add(current);
+        if (TOP_LEVEL_ROOTS.has(current)) break;
+        current = mscParent[current];
+      }
+    }
   });
 
-  // Resolver el nodo rama de un item a partir de sus propiedades de rama o tags
+  // Asegurar que las 7 ramas raíz siempre estén presentes para estructura del cosmos
+  TOP_LEVEL_ROOTS.forEach(root => usedBranchCodes.add(root));
+
+  // 3. Nodo Central: MATEMÁTICAS
+  nodes.push({ id: 'matematicas', name: 'MATEMÁTICAS', group: 'central', val: 40 });
+  registerAlias('matematicas');
+
+  // 4. Crear Nodos de Ramas y Sub-ramas con sus conexiones jerárquicas
+  usedBranchCodes.forEach(code => {
+    const isRoot = TOP_LEVEL_ROOTS.has(code);
+    const nodeId = isRoot ? `rama-${code}` : `subrama-${code}`;
+    const branchTitle = (getMscName(code, lang) || mscNames[code] || code).toUpperCase();
+
+    nodes.push({
+      id: nodeId,
+      name: branchTitle,
+      group: 'branch',
+      val: isRoot ? 24 : 14,
+      url: `/rama/${code}`,
+    });
+    registerAlias(nodeId);
+
+    if (isRoot) {
+      links.push({ source: nodeId, target: 'matematicas' });
+    } else {
+      const parentCode = mscParent[code];
+      if (parentCode && usedBranchCodes.has(parentCode)) {
+        const parentNodeId = TOP_LEVEL_ROOTS.has(parentCode) ? `rama-${parentCode}` : `subrama-${parentCode}`;
+        links.push({ source: nodeId, target: parentNodeId });
+      } else {
+        links.push({ source: nodeId, target: 'matematicas' });
+      }
+    }
+  });
+
+  // Helper para resolver el nodo rama de un item
   const resolveItemBranch = (item: BaseContent): string | null => {
     const itemCodes = getItemBranchCodes(item as BaseContent & Record<string, unknown>);
-    for (const mscCode of itemCodes) {
-      for (const root of ROOT_BRANCHES) {
-        if (mscCode === root) return `rama-${root}`;
-        if (getAllDescendantCodes(root).includes(mscCode)) return `subrama-${mscCode}`;
+    for (const code of itemCodes) {
+      if (!code) continue;
+      if (TOP_LEVEL_ROOTS.has(code) && usedBranchCodes.has(code)) {
+        return `rama-${code}`;
+      }
+      if (usedBranchCodes.has(code)) {
+        return `subrama-${code}`;
+      }
+      // Buscar ancestro más cercano que esté en usedBranchCodes
+      let current: string | undefined = mscParent[code];
+      while (current) {
+        if (usedBranchCodes.has(current)) {
+          return TOP_LEVEL_ROOTS.has(current) ? `rama-${current}` : `subrama-${current}`;
+        }
+        current = mscParent[current];
       }
     }
     return null;
   };
 
-  // Helper to add links from any array field
+  // Helper para añadir enlaces a arrays de referencias
   const addLinks = (source: string, targetIds: string[] | undefined) => {
-    if (targetIds) targetIds.forEach(tid => links.push({ source, target: tid }));
+    if (Array.isArray(targetIds)) {
+      for (const tid of targetIds) {
+        if (tid && typeof tid === 'string') {
+          links.push({ source, target: tid });
+        }
+      }
+    }
   };
 
+  // 5. Poblar nodos de contenido y sus aristas
+
   // Axiomas
-  db.getAllAxioms(lang).forEach((ax) => {
-    const slug = ax.slug || ax.id;
-    nodes.push({ id: slug, name: ax.title, group: 'axioma', val: 10 });
+  axioms.forEach(ax => {
+    nodes.push({ id: ax.id, name: ax.title, group: 'axioma', val: 10, url: `/axioma/${ax.slug || ax.id}` });
     const branchNode = resolveItemBranch(ax);
-    if (branchNode) links.push({ source: slug, target: branchNode });
-    addLinks(slug, ax.links);
-    addLinks(slug, ax.seeAlso);
+    if (branchNode) links.push({ source: ax.id, target: branchNode });
+    addLinks(ax.id, ax.links);
+    addLinks(ax.id, ax.seeAlso);
+    addLinks(ax.id, ax.conceptLinks);
+    if (ax.authors) ax.authors.forEach(aId => links.push({ source: aId, target: ax.id }));
   });
 
   // Definiciones
-  db.getAllDefinitions(lang).forEach((def) => {
-    const slug = def.slug || def.id;
-    nodes.push({ id: slug, name: def.title, group: 'definition', val: 8 });
+  definitions.forEach(def => {
+    nodes.push({ id: def.id, name: def.title, group: 'definition', val: 8, url: `/definicion/${def.slug || def.id}` });
     const branchNode = resolveItemBranch(def);
-    if (branchNode) links.push({ source: slug, target: branchNode });
-    addLinks(slug, def.links);
-    addLinks(slug, def.seeAlso);
+    if (branchNode) links.push({ source: def.id, target: branchNode });
+    addLinks(def.id, def.links);
+    addLinks(def.id, def.seeAlso);
+    addLinks(def.id, def.conceptLinks);
+    if (def.authors) def.authors.forEach(aId => links.push({ source: aId, target: def.id }));
   });
 
   // Teoremas
-  db.getAllTheorems(lang).forEach((thm) => {
-    const slug = thm.slug || thm.id;
-    nodes.push({ id: slug, name: thm.title, group: thm.type || 'theorem', val: 10 });
+  theorems.forEach(thm => {
+    nodes.push({ id: thm.id, name: thm.title, group: thm.type || 'theorem', val: 10, url: `/teorema/${thm.slug || thm.id}` });
     const branchNode = resolveItemBranch(thm);
-    if (branchNode) links.push({ source: slug, target: branchNode });
-    addLinks(slug, thm.requires);
-    addLinks(slug, thm.links);
-    addLinks(slug, thm.lemmas);
-    addLinks(slug, thm.demos);
-    addLinks(slug, thm.corollaries);
-    addLinks(slug, thm.seeAlso);
-    if (thm.parentTheorem) links.push({ source: slug, target: thm.parentTheorem });
+    if (branchNode) links.push({ source: thm.id, target: branchNode });
+    addLinks(thm.id, thm.requires);
+    addLinks(thm.id, thm.links);
+    addLinks(thm.id, thm.lemmas);
+    addLinks(thm.id, thm.demos);
+    addLinks(thm.id, thm.corollaries);
+    addLinks(thm.id, thm.seeAlso);
+    addLinks(thm.id, thm.conceptLinks);
+    if (thm.parentTheorem) links.push({ source: thm.id, target: thm.parentTheorem });
+    if (thm.authors) thm.authors.forEach(aId => links.push({ source: aId, target: thm.id }));
   });
 
   // Sistemas axiomáticos
-  db.getAllAxiomaticSystems(lang).forEach((sys) => {
-    const slug = sys.slug || sys.id;
-    nodes.push({ id: slug, name: sys.title, group: 'modelo', val: 10 });
+  axiomaticSystems.forEach(sys => {
+    nodes.push({ id: sys.id, name: sys.title, group: 'sistema-axiomatico', val: 12, url: `/sistema/${sys.slug || sys.id}` });
     const branchNode = resolveItemBranch(sys);
-    if (branchNode) links.push({ source: slug, target: branchNode });
-    addLinks(slug, sys.axiomas);
-    addLinks(slug, sys.models);
+    if (branchNode) links.push({ source: sys.id, target: branchNode });
+    addLinks(sys.id, sys.axiomas);
+    addLinks(sys.id, sys.models);
+    addLinks(sys.id, sys.links);
+    addLinks(sys.id, sys.seeAlso);
+    addLinks(sys.id, sys.conceptLinks);
+    if (sys.authors) sys.authors.forEach(aId => links.push({ source: aId, target: sys.id }));
   });
 
   // Modelos
-  db.getAllModels(lang).forEach((model) => {
-    const slug = model.slug || model.id;
-    nodes.push({ id: slug, name: model.title, group: 'modelo', val: 7 });
+  models.forEach(model => {
+    nodes.push({ id: model.id, name: model.title, group: 'modelo', val: 9, url: `/modelo/${model.slug || model.id}` });
+    const branchNode = resolveItemBranch(model);
+    if (branchNode) links.push({ source: model.id, target: branchNode });
     if (model.satisfies) {
       if (Array.isArray(model.satisfies)) {
-        for (const sysId of model.satisfies) {
-          links.push({ source: slug, target: sysId });
-        }
+        model.satisfies.forEach(sysId => links.push({ source: model.id, target: sysId }));
       } else {
-        links.push({ source: slug, target: model.satisfies });
+        links.push({ source: model.id, target: model.satisfies });
       }
     }
-    addLinks(slug, model.links);
-    addLinks(slug, model.axioms_verified);
-    addLinks(slug, model.seeAlso);
+    addLinks(model.id, model.links);
+    addLinks(model.id, model.axioms_verified);
+    addLinks(model.id, model.seeAlso);
+    addLinks(model.id, model.conceptLinks);
   });
 
-  // Conexiones desde demostraciones hacia su parentTheorem (sin nodos demo)
+  // Métodos
+  methods.forEach(method => {
+    nodes.push({ id: method.id, name: method.title, group: 'metodo', val: 9, url: `/metodo/${method.slug || method.id}` });
+    const branchNode = resolveItemBranch(method);
+    if (branchNode) links.push({ source: method.id, target: branchNode });
+    addLinks(method.id, method.requires);
+    addLinks(method.id, method.links);
+    addLinks(method.id, method.seeAlso);
+    addLinks(method.id, method.conceptLinks);
+    if (method.authors) method.authors.forEach(aId => links.push({ source: aId, target: method.id }));
+  });
+
+  // Casos de uso
+  useCases.forEach(uc => {
+    nodes.push({ id: uc.id, name: uc.title, group: 'caso-de-uso', val: 7, url: `/caso-de-uso/${uc.slug || uc.id}` });
+    const branchNode = resolveItemBranch(uc);
+    if (branchNode) links.push({ source: uc.id, target: branchNode });
+    if (uc.concept) links.push({ source: uc.id, target: uc.concept });
+    addLinks(uc.id, uc.links);
+    addLinks(uc.id, uc.seeAlso);
+    addLinks(uc.id, uc.conceptLinks);
+  });
+
+  // Conexiones desde demostraciones hacia su parentTheorem y métodos de demostración
   db.getAllDemos(lang).forEach(demo => {
     if (!demo.parentTheorem) return;
     if (demo.dependencias) demo.dependencias.forEach(dep => links.push({ source: dep, target: demo.parentTheorem! }));
     if (demo.lemmas) demo.lemmas.forEach(lem => links.push({ source: lem, target: demo.parentTheorem! }));
     if (demo.links) demo.links.forEach((l: string) => links.push({ source: l, target: demo.parentTheorem! }));
     if (demo.seeAlso) demo.seeAlso.forEach(s => links.push({ source: s, target: demo.parentTheorem! }));
+    if (demo.conceptLinks) demo.conceptLinks.forEach(cl => links.push({ source: cl, target: demo.parentTheorem! }));
+    if (demo.proofMethod) links.push({ source: demo.proofMethod, target: demo.parentTheorem! });
   });
 
-  // Matemáticos
-  db.getAllMathematicians(lang).forEach((math) => {
-    const slug = math.slug || math.id;
-    nodes.push({ id: slug, name: math.name, group: 'mathematician', val: 6 });
+  // Matemáticos (Biografías)
+  mathematicians.forEach(math => {
+    nodes.push({ id: math.id, name: math.name, group: 'mathematician', val: 6, url: `/historia` });
   });
 
-  // Enlaces desde sistemas que mencionan matemáticos
-  db.getAllAxiomaticSystems(lang).forEach(sys => {
-    if (sys.authors) {
-      sys.authors.forEach((mId: string) => {
-        links.push({ source: mId, target: sys.id });
-      });
-    }
-  });
-  db.getAllAxioms(lang).forEach(ax => {
-    if (ax.authors) {
-      ax.authors.forEach(aId => {
-        links.push({ source: aId, target: ax.id });
-      });
-    }
-  });
-  db.getAllTheorems(lang).forEach(thm => {
-    if (thm.authors) {
-      thm.authors.forEach(aId => {
-        links.push({ source: aId, target: thm.id });
-      });
-    }
-  });
-  db.getAllDefinitions(lang).forEach(def => {
-    if (def.authors) {
-      def.authors.forEach(aId => {
-        links.push({ source: aId, target: def.id });
-      });
-    }
-  });
-
-  // Filtrar enlaces rotos (react-force-graph explota si un target no existe en nodes)
+  // 6. Normalización y filtrado de enlaces válidos
   const nodeIds = new Set(nodes.map(n => n.id));
-  const validLinks = links.filter(l => nodeIds.has(l.source as string) && nodeIds.has(l.target as string));
+  const seenLinks = new Set<string>();
+  const validLinks: GraphLink[] = [];
+
+  for (const link of links) {
+    const rawSource = typeof link.source === 'object' ? link.source.id : link.source;
+    const rawTarget = typeof link.target === 'object' ? link.target.id : link.target;
+
+    const resolvedSource = idAliasMap.get(rawSource) || rawSource;
+    const resolvedTarget = idAliasMap.get(rawTarget) || rawTarget;
+
+    if (resolvedSource === resolvedTarget) continue;
+    if (!nodeIds.has(resolvedSource) || !nodeIds.has(resolvedTarget)) continue;
+
+    const linkKey = `${resolvedSource}->${resolvedTarget}`;
+    if (seenLinks.has(linkKey)) continue;
+    seenLinks.add(linkKey);
+
+    validLinks.push({ source: resolvedSource, target: resolvedTarget });
+  }
 
   return { nodes, links: validLinks };
 }

@@ -330,6 +330,36 @@ export const dictionaryEu: Record<string, Partial<GlossaryEntry>> = {
   },
 
   // GEOMETRIA
+  traza: {
+    title: 'Puntu-Trazadura ( tr )',
+    definition: 'Egitura sintetiko politipatu batean elementu geometriko batekin (zuzen edo plano) intziditzen duten oinarrizko domeinuko puntuen multzoa.',
+    category: 'Geometria' as any,
+  },
+  incidencia: {
+    title: 'Intzidentzia ( I )',
+    definition: 'Egitura geometriko sintetiko batean puntu, zuzen eta planoen arteko posizio-erlazio primitiboa.',
+    category: 'Geometria' as any,
+  },
+  congruencia: {
+    title: 'Kongruentzia ( ≅ )',
+    definition: 'Zuzenkien artean zein angeluen artean tamaina eta forma baliokidetasuna formalizatzen duen zurruntasun-erlazio primitiboa.',
+    category: 'Geometria' as any,
+  },
+  perpendicular: {
+    title: 'Perpendikulartasuna ( ⊥ )',
+    definition: 'Elkarren artean angelu zuzen kongruenteak osatzen dituzten zuzen ebakitzaileen arteko erlazioa.',
+    category: 'Geometria' as any,
+  },
+  paralelas: {
+    title: 'Paralelotasuna ( ∥ )',
+    definition: 'Puntu komunik partekatzen ez duten plano bereko zuzenen arteko erlazioa (traza disjuntuak).',
+    category: 'Geometria' as any,
+  },
+  estar_entre: {
+    title: 'Bitartekotasuna ( * )',
+    definition: 'Zuzen bereko hiru punturen ordena lineala formalizatzen duen hiru aldagaiko oinarrizko erlazioa.',
+    category: 'Geometria' as any,
+  },
   producto_cruz: {
     title: 'Biderketa Bektoriala ( × )',
     definition: 'R³-ko eragiketa geometrikoa, bi bektore hartu eta biekiko ortogonala den hirugarren bat ematen duena.',
@@ -410,6 +440,21 @@ export const dictionaryEu: Record<string, Partial<GlossaryEntry>> = {
   set_brackets: {
     title: 'Multzo-Giltzak ( { } )',
     definition: 'Multzo bat osatzen duten elementuak esplizituki zerrendatzeko erabiltzen diren mugatzaileak.',
+    category: 'Multzo-Teoria' as any,
+  },
+  conjunto_potencia: {
+    title: 'Potentzia-Multzoa / Multzoaren Parteak ( 𝒫 )',
+    definition: 'Emandako A multzo baten azpimultzo posible guztien multzoa, multzo hutsa eta A bera barne.',
+    category: 'Multzo-Teoria' as any,
+  },
+  mapeo_funcion: {
+    title: 'Funtzioa / Aplikazioa ( f: A → B )',
+    definition: 'Hasierako A multzoko (domeinuko) elementu bakoitzari amaierako B multzoko (kodomeinuko) elementu bakar bat esleitzen dion korrespondentzia matematikoa.',
+    category: 'Multzo-Teoria' as any,
+  },
+  mapsto: {
+    title: 'Esleipena / Mapeatzea ( ↦ )',
+    definition: 'Domeinuko elementu jakin bati (x) kodomeinuko balio zehatz bat (f(x)) esleitzen dion korrespondentzia-arau esplizitua adierazten du.',
     category: 'Multzo-Teoria' as any,
   },
 };

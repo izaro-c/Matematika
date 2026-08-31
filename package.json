@@ -55,7 +55,9 @@
     "depcruise": "depcruise src content/diagrams",
     "depcruise:graph": "depcruise src content/diagrams --output-type dot | dot -T svg > docs/dependency_graph.svg",
     "depcruise:report": "depcruise src content/diagrams --output-type err-html > docs/dependency_report.html",
-    "prepare": "husky"
+    "prepare": "husky",
+    "audit:security": "semgrep scan --config auto",
+    "audit:deps": "osv-scanner --lockfile=package-lock.json"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",
