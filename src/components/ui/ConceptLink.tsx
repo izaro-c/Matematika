@@ -1,0 +1,132 @@
+import React from 'react';
+import { Link } from 'wouter';
+import { useGlossaryStore, getGlossaryDictionary } from '@/lib/stores/GlossaryStore';
+import { db } from '@/data/content';
+import { useProgressStore } from '@/lib/stores/UserProgressStore';
+import { useMathStore } from '@/lib/page-context/MathStoreContext';
+import { useI18n } from '@/i18n';
+
+interface ConceptLinkProps {
+  targetId: string | string[];
+  isDependency?: boolean;
+  children: React.ReactNode;
+  /** ID del elemento gráfico en el diagrama lateral a resaltar (opcional) */
+  highlightTarget?: string;
+  /** Token de la paleta Arts & Crafts para colorear el subrayado/fondo de interactividad (opcional) */
+  highlightColor?: string;
+}
+
+const isIdValid = (id: string, lang?: string): boolean => {
+  const dict = lang ? getGlossaryDictionary(lang) : getGlossaryDictionary('es');
+  return !!(  
+    dict[id] || dict[id.replace(/-/g, '_')] || dict[id.replace(/_/g, '-')] ||
+    db.getTheorem(id, lang) || db.getDefinition(id, lang) || db.getMathematicianById(id, lang) ||
+    db.methods.get(id) || db.getMethod(id, lang) || db.examples.get(id) || db.exercises.get(id) ||
+    db.usecases.get(id) || db.axioms.get(id) || db.getAxiom(id, lang) || db.getAxiomaticSystem(id, lang) ||
+    db.models.get(id) || db.getModel(id, lang) || db.demos.get(id) || db.getDemo(id, lang)
+  );
+};
+
+const COLOR_MAP: Record<string, string> = {
+  'terracota': 'var(--theme-terracota)',
+  'canela': 'var(--theme-canela)',
+  'mora': 'var(--theme-mora)',
+  'carbon': 'var(--theme-carbon)',
+  'granada': 'var(--theme-granada)',
+  'ocre': 'var(--theme-ocre)',
+  'pavo': 'var(--theme-pavo)',
+  'musgo': 'var(--theme-musgo)',
+};
+
+
+export const ConceptLink: React.FC<ConceptLinkProps> = ({
+  targetId,
+  children,
+  highlightTarget,
+  highlightColor
+}) => {
+  const { lang, t, getLocalizedPath } = useI18n();
+  const { openTerm, activeTerms } = useGlossaryStore();
+  const setVariable = useMathStore((state) => state.setVariable);
+
+  const targetIds = Array.isArray(targetId) ? targetId : [targetId];
+  const isRead = useProgressStore(state => targetIds.every(id => state.isRead(id)));
+  
+  const validIds = targetIds.filter(id => isIdValid(id, lang));
+  const allValid = validIds.length === targetIds.length;
+  const dataAttr = validIds.length > 0 ? validIds.join(',') : undefined;
+  const isActive = activeTerms ? targetIds.some(id => activeTerms.includes(id)) : false;
+
+  // Manejadores para la interactividad del gráfico
+  const handleMouseEnter = () => {
+    if (highlightTarget) setVariable('highlight', highlightTarget);
+  };
+  const handleMouseLeave = () => {
+    if (highlightTarget) setVariable('highlight', null);
+  };
+  const handleClickHighlight = () => {
+    if (highlightTarget) setVariable('highlight', highlightTarget);
+  };
+
+  // Estilos visuales de interactividad si tiene highlightTarget
+  const cssColor = highlightColor ? (COLOR_MAP[highlightColor] ?? COLOR_MAP['canela']) : undefined;
+  const highlightStyles: React.CSSProperties = cssColor ? {
+    borderColor: cssColor,
+    backgroundColor: `color-mix(in srgb, ${cssColor} 12%, transparent)`,
+  } : {};
+
+  if (!allValid) {
+    const firstInvalid = targetIds.find(id => !isIdValid(id, lang)) || targetIds[0];
+
+    return (
+      <Link
+        href={getLocalizedPath(`/construccion/${firstInvalid}`)}
+        data-target-id={dataAttr}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClickHighlight}
+        style={highlightStyles}
+        className={[
+          // Pending: no bold — contraste tipográfico vs enlace válido
+          "page-accent-link--pending underline decoration-dashed decoration-1 underline-offset-4 transition-colors duration-150 rounded-none cursor-pointer",
+          highlightTarget ? "border-b-2 box-decoration-clone px-[2px] py-[1px]" : ""
+        ].join(' ')}
+        title={t('construction', 'pendingTitle', { id: firstInvalid })}
+      >
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <span
+      role="button"
+      tabIndex={0}
+      onClick={() => {
+        openTerm(targetIds);
+        handleClickHighlight();
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openTerm(targetIds);
+          handleClickHighlight();
+        }
+      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      data-target-id={targetIds.join(',')}
+      title={t('common', 'relatedContent')}
+      style={highlightStyles}
+      className={[
+        'page-accent-link font-bold cursor-pointer transition-all duration-150 rounded-none inline',
+        'underline decoration-2 underline-offset-4',
+        isActive ? 'is-active' : '',
+        highlightTarget ? "border-b-2 box-decoration-clone px-[2px] py-[1px]" : ""
+      ].filter(Boolean).join(' ')}
+    >
+      {children}
+      {isRead && <span className="ml-[2px] text-canela opacity-80" style={{ fontSize: '0.85em' }}>✓</span>}
+    </span>
+  );
+};

@@ -181,16 +181,8 @@ export function RichProseSurface({
       const currentStep = parseInt(chip.dataset.step || '1', 10);
       if (onEditStepLink) {
         onEditStepLink(isNaN(currentStep) ? 1 : currentStep, chip);
-      } else {
-        const nextStep = window.prompt('Editar número de paso referenciado:', String(currentStep));
-        if (nextStep !== null) {
-          const parsed = parseInt(nextStep.trim(), 10);
-          const valid = isNaN(parsed) || parsed < 1 ? 1 : parsed;
-          chip.dataset.step = String(valid);
-          chip.textContent = `Paso ${valid}`;
-          emit();
-        }
       }
+      // Si no hay onEditStepLink el chip no es interactivo (solo lectura)
       return;
     }
     if (!onEditChip) return;

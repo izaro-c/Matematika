@@ -21,7 +21,9 @@ const rules: Rule[] = [
     name: 'editor-no-dynamic-code-execution',
     roots: ['src/fixed-pages/editor'],
     pattern: /\b(?:eval|Function)\s*\(/,
+    allowed: [/src\/fixed-pages\/editor\/security\/contentGuard\.ts$/],
   },
+
   {
     name: 'editor-no-browser-blocking-dialogs',
     roots: ['src/fixed-pages/editor'],

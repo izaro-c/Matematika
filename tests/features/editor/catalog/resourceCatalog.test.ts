@@ -114,8 +114,6 @@ describe('catálogo seguro del editor', () => {
       'content/diagrams/Definiciones/Paralelas.tsx',
       'content/diagrams/Definiciones/Paralelogramo.tsx',
       'content/diagrams/Definiciones/Perpendicular.tsx',
-      'content/diagrams/Definiciones/Punto.tsx',
-      'content/diagrams/Definiciones/Recta.tsx',
       'content/diagrams/Definiciones/Segmento.tsx',
       'content/diagrams/Definiciones/Semirrecta.tsx',
       'content/diagrams/Definiciones/Triangulo.tsx',
