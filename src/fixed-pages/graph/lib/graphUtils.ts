@@ -1,5 +1,6 @@
 import { CONTENT_TYPE_CONFIG } from '@/lib/theme/constants';
 import { CONTENT_TYPE_COLORS } from '@/design/contentTypeColors';
+import { getLanguage } from '@/i18n/config';
 
 export const NODE_URL_PREFIX: Record<string, string> = {
   axioma: 'axioma',
@@ -106,10 +107,13 @@ export const AXIOM_GROUPS = [
   { test: (id: string) => ['axioma-paralelas-euclides', 'axioma-paralelas-hiperbolico'].includes(id), color: CONTENT_TYPE_COLORS.axioma.cssVar, label: 'Paralelas' },
 ];
 
-export function getAxiomGroup(id: string): { color: string; label: string } | null {
-  for (const g of AXIOM_GROUPS) {
-    if (g.test(id)) return { color: g.color, label: g.label };
-  }
+export function getAxiomGroup(id: string, lang?: string): { color: string; label: string; familyKey: string } | null {
+  const dict = getLanguage(lang).dictionary.axiomFamilies;
+  if (id.startsWith('axioma-incidencia')) return { color: CONTENT_TYPE_COLORS.teorema.cssVar, label: dict.incidencia, familyKey: 'incidencia' };
+  if (id.startsWith('axioma-orden')) return { color: CONTENT_TYPE_COLORS.lema.cssVar, label: dict.orden, familyKey: 'orden' };
+  if (id.startsWith('axioma-congruencia')) return { color: CONTENT_TYPE_COLORS.definicion.cssVar, label: dict.congruencia, familyKey: 'congruencia' };
+  if (['axioma-paralelas-euclides', 'axioma-paralelas-hiperbolico'].includes(id)) return { color: CONTENT_TYPE_COLORS.axioma.cssVar, label: dict.paralelas, familyKey: 'paralelas' };
+  if (id === 'axioma-arquimedes' || id === 'axioma-completitud') return { color: CONTENT_TYPE_COLORS.axioma.cssVar, label: dict.continuidad, familyKey: 'continuidad' };
   return null;
 }
 

@@ -1,16 +1,18 @@
 export const metadata = {
-  "id": "demo-angulos-opuestos-verticales",
-  "type": "demostracion",
-  "title": "Frogapena: Erpinez aurkako angeluak",
-  "description": "Zuzen baten gaineko alboko angelu osagarrien izaeran eta kongruentzien kenketa-propietatean oinarritutako frogapen zuzena.",
-  "parentTheorem": "teorema-angulos-opuestos-verticales",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides"],
-  "tags": ["geometria", "congruencia", "angulos"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 15", role: "primary" }
+  id: "demo-angulos-opuestos-verticales",
+  lang: "eu",
+  type: "demostracion",
+  title: "Frogapena: Erpinez aurkako angeluak",
+  description: "Dedukzio-froga zuzena, zuzen ebakitzaileen gaineko alboko angelu betegarrien kongruentzian oinarritua.",
+  parentTheorem: "teorema-angulos-opuestos-verticales",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria", "congruencia", "angulos"],
+  layout: "split",
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 15", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "secondary" }
   ]
 };
 
@@ -18,54 +20,50 @@ import { DemoAngulosOpuestos } from "@content/diagrams/Demos/DemoAngulosOpuestos
 
 <DemonstrationSection diagram={<DemoAngulosOpuestos />}>
 
-<Capitular letra="I" />zan bitez <VisualBind element="lineL" color="carbon">$l$</VisualBind> eta <VisualBind element="lineM" color="carbon">$m$</VisualBind> $O$ <ConceptLink targetId="punto">puntuan</ConceptLink> elkar ebakitzen duten bi <ConceptLink targetId="recta">zuzen</ConceptLink> ebakitzaile. <ConceptLink targetId="teorema-angulos-opuestos-verticales">Erpinez aurkako angeluen teorema</ConceptLink> frogatzen da: elkarguneak sortutako erpinez aurkako edozein angelu bikote elkarren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira.
+<Capitular letra="E" />rpinez aurkako <ConceptLink targetId="teorema-angulos-opuestos-verticales">angeluen teoremaren</ConceptLink> dedukzio formala <ConceptLink targetId="metodo-directo" isDependency={true}>metodo zuzenean</ConceptLink> oinarritzen da, alboko <ConceptLink targetId="angulos-suplementarios" isDependency={true}>angelu betegarrien</ConceptLink> definizio sintitikoa eta <ConceptLink targetId="congruencia" isDependency={true}>kongruentzia</ConceptLink> angeluarraren propietate erreflexiboa (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>) aplikatuz.
 
 <Separador />
 
-### Froga urratsez urrats
+### Froga formala urratsez urrats
 
-<ProofStep number={1} target="supp12" title="Lehen zuzenaren gaineko alboko angelu osagarriak">
-$l$ eta $m$ zuzen ebakitzaileek lau <ConceptLink targetId="angulo">angelu</ConceptLink> zehazten dituzte $O$ ebakidura-erpinaren inguruan. <VisualBind element="angle1" color="terracota">$\angle 1$</VisualBind> eta <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> angeluak $l$ zuzenean elkarren ondoan kokatzen dira, <ConceptLink targetId="angulos-suplementarios">angelu lau</ConceptLink> bat osatuz:
+<ProofStep number={1} target="supp12" title="Alboko lehen angelu betegarrien bikotea">
+$O$ <ConceptLink targetId="punto" isDependency={true}>puntuan</ConceptLink> <VisualBind element="O" color="carbon">$O$</VisualBind> elkar ebakitzen duten <VisualBind element="lineL" color="carbon">$l$</VisualBind> eta <VisualBind element="lineM" color="carbon">$m$</VisualBind> <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> ebakitzaileak emanda, $l$ zuzeneko <VisualBind element="A" color="carbon">$A$</VisualBind> eta <VisualBind element="Ap" color="carbon">$A'$</VisualBind> <ConceptLink targetId="punto">puntuek</ConceptLink> $A * O * A'$ <ConceptLink targetId="estar-entre" isDependency={true}>artekotasun-erlazioa</ConceptLink> betetzen dute, $\overrightarrow{OA}$ eta $\overrightarrow{OA'}$ kontrako <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdiak</ConceptLink> zehaztuz. $m$ zuzeneko <VisualBind element="B" color="carbon">$B$</VisualBind> puntuak definitutako $\overrightarrow{OB}$ zuzenerdiak alboko bi <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> mugatzen ditu: <VisualBind element="angle1" color="pavo">$\alpha = \angle AOB = \angle(\overrightarrow{OA}, \overrightarrow{OB})$</VisualBind> eta <VisualBind element="angle2" color="musgo">$\beta = \angle BOA' = \angle(\overrightarrow{OB}, \overrightarrow{OA'})$</VisualBind>. $\overrightarrow{OB}$ zuzenerdi komuna partekatzeagatik eta gainerako bi aldeak $l$ zuzeneko kontrako zuzenerdiak izateagatik, $\alpha$ eta $\beta$ alboko <ConceptLink targetId="angulos-suplementarios" isDependency={true}>betegarriak</ConceptLink> dira:
 
-<Formula>
-  $$ m(\angle 1) + m(\angle 2) = 180^\circ $$
-</Formula>
+$$
+\alpha \text{ angelua } \beta\text{-(r)en alboko betegarria da}
+$$
 </ProofStep>
 
-<ProofStep number={2} target="supp23" title="Bigarren zuzenaren gaineko alboko angelu osagarriak">
-Era berean, $m$ zuzenaren gainean, alboko <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> eta <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> angeluak <ConceptLink targetId="angulos-suplementarios">osagarriak</ConceptLink> dira:
+<ProofStep number={2} target="supp23" title="Alboko bigarren angelu betegarrien bikotea">
+Orain $m$ zuzena kontuan hartuta, <VisualBind element="B" color="carbon">$B$</VisualBind> eta <VisualBind element="Bp" color="carbon">$B'$</VisualBind> puntuek $B * O * B'$ betetzen dute, $\overrightarrow{OB}$ eta $\overrightarrow{OB'}$ kontrako <ConceptLink targetId="semirrecta">zuzenerdiak</ConceptLink> zehaztuz. $l$ zuzeneko $\overrightarrow{OA'}$ zuzenerdiak alboko <VisualBind element="angle2" color="musgo">$\beta = \angle BOA' = \angle(\overrightarrow{OB}, \overrightarrow{OA'})$</VisualBind> eta <VisualBind element="angle3" color="pavo">$\alpha' = \angle A'OB' = \angle(\overrightarrow{OA'}, \overrightarrow{OB'})$</VisualBind> <ConceptLink targetId="angulo">angeluak</ConceptLink> osatzen ditu haiekin. $\overrightarrow{OA'}$ komuna partekatzeagatik eta beste bi aldeak $m$ zuzeneko kontrako zuzenerdiak izateagatik, $\alpha'$ eta $\beta$ alboko <ConceptLink targetId="angulos-suplementarios" isDependency={true}>betegarriak</ConceptLink> dira:
 
-<Formula>
-  $$ m(\angle 2) + m(\angle 3) = 180^\circ $$
-</Formula>
+$$
+\alpha' \text{ angelua } \beta\text{-(r)en alboko betegarria da}
+$$
 </ProofStep>
 
-<ProofStep number={3} target="angle2" title="Batura angeluarren berdintasuna">
-Bi batura angeluarrak angelu lau baten baliokideak direnez ($180^\circ$), anplitude errealen berdintza-propietateagatik baliokidetasun hau lortzen da:
+<ProofStep number={3} target="angle2" title="Angelu albokide komunaren erreflexibitatea">
+Angelu-kongruentziaren axiomagatik (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>), edozein <ConceptLink targetId="angulo">angelu</ConceptLink> bere buruarekin kongruentea da. Bereziki, <VisualBind element="angle2" color="musgo">$\beta$</VisualBind> angelu komunak <ConceptLink targetId="reflexividad">erreflexibitatea</ConceptLink> betetzen du:
 
-<Formula>
-  $$ m(\angle 1) + m(\angle 2) = m(\angle 2) + m(\angle 3) $$
-</Formula>
+$$
+\beta \cong \beta
+$$
 </ProofStep>
 
-<ProofStep number={4} target="congruence13" title="Angelu komunaren kenketa">
-<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Angelu-garraioaren axiomen</ConceptLink> bidez, ekuazioko bi kideetatik <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> angelu komuna kenduz lehen erpinez aurkako angelu bikotearen kongruentzia lortzen da:
+<ProofStep number={4} target="alpha" title="Angelu betegarrien kongruentzia">
+<VisualBind element="angle1" color="pavo">$\alpha$</VisualBind> eta <VisualBind element="angle3" color="pavo">$\alpha'$</VisualBind> <ConceptLink targetId="angulo">angeluak</ConceptLink> biak <VisualBind element="angle2" color="musgo">$\beta$</VisualBind> angelu beraren alboko betegarriak direnez, eta $\beta \cong \beta$ denez, <ConceptLink targetId="angulos-suplementarios" isDependency={true}>angelu betegarrien kongruentzia-teoremak</ConceptLink> (*Satz 13* de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>) bermatzen du haien betegarriak elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> direla:
 
-<Formula>
-  $$ \angle 1 \cong \angle 3 $$
-</Formula>
+$$
+\alpha \cong \alpha'
+$$
 </ProofStep>
 
-<ProofStep number={5} target="angle4" title="Bikote osagarrirako frogapena">
-<VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> eta <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind> angeluek osatutako alboko bikoteari arrazoibide berbera aplikatuz, bigarren erpinez aurkako bikoteak <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> $\cong$ <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind> betetzen duela ondorioztatzen da.
+<ProofStep number={5} target="beta" title="Erpinez aurkako bikote osagarrira hedatzea">
+Gainerako zuzenerdietako alboko angeluei arrazoibide analogoa aplikatuz <VisualBind element="angle3" color="pavo">$\alpha'$</VisualBind> angelu betegarriarekiko, erpinez aurkako bigarren <ConceptLink targetId="angulo">angelu-bikoteak</ConceptLink> (<VisualBind element="angle2" color="musgo">$\beta = \angle BOA'$</VisualBind> eta <VisualBind element="angle4" color="musgo">$\beta' = \angle B'OA$</VisualBind>) honako hau betetzen duela ondorioztatzen da <ConceptLink targetId="vertice">erpinean</ConceptLink>:
+
+$$
+\beta \cong \beta'
+$$
 </ProofStep>
-
-<Separador />
-
-### Azterketa deduktiboa
-
-<Nota>
-  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.15 Proposizioa. Arrazoibide hau <ConceptLink targetId="sistema-absoluto">geometria absolutuaren sisteman</ConceptLink> sartzen da, ez baitu <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> hipotesirik behar.
-</Nota>
 
 </DemonstrationSection>

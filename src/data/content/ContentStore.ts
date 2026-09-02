@@ -445,7 +445,32 @@ export class ContentStore {
     return this.getAllUseCases(lang).filter(u => u.concept === conceptId);
   }
 
-  // ── Helpers ──────────────────────────────────────────────────────────────
+  getItemById(id: string, lang?: string): (BaseContent & { title?: string; name?: string; description?: string }) | undefined {
+    return (
+      this.getTheorem(id, lang) ??
+      this.getAxiom(id, lang) ??
+      this.getDefinition(id, lang) ??
+      this.getMethod(id, lang) ??
+      this.getModel(id, lang) ??
+      this.getAxiomaticSystem(id, lang) ??
+      this.getUseCase(id, lang) ??
+      this.getExample(id, lang) ??
+      this.getExercise(id, lang) ??
+      this.getStudyPlan(id, lang) ??
+      this.getMathematicianById(id, lang) ??
+      this.getDemo(id, lang)
+    );
+  }
+
+  getNodeTranslation(id: string, lang?: string): { title: string; description?: string } | undefined {
+    const item = this.getItemById(id, lang);
+    if (!item) return undefined;
+    const title = item.title ?? item.name ?? item.id;
+    return {
+      title,
+      description: item.description,
+    };
+  }
 
   static slugify(text: string): string {
     return text.toString().toLowerCase()

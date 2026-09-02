@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import { CONTENT_TYPE_COLORS } from '@/design/contentTypeColors';
 import { getAxiomGroup } from '../../lib/graphUtils';
-import { useI18n } from '@/i18n';
+import { useI18n, getLanguage } from '@/i18n';
 
 export interface AxiomOption {
   id: string;
@@ -25,24 +25,26 @@ interface AxiomGroup {
   axioms: AxiomOption[];
 }
 
-function groupAxioms(axioms: AxiomOption[]): AxiomGroup[] {
+function groupAxioms(axioms: AxiomOption[], lang?: string): AxiomGroup[] {
   const groups = new Map<string, AxiomGroup>();
   const groupOrder = ['Incidencia', 'Orden', 'Congruencia', 'Paralelas', 'Continuidad'];
 
   for (const axiom of axioms) {
-    const presentation = getAxiomGroup(axiom.id);
-    const isContinuityAxiom = axiom.id === 'axioma-arquimedes' || axiom.id === 'axioma-completitud';
-    const label = axiom.axiomFamily
-      ?? presentation?.label
-      ?? (isContinuityAxiom ? 'Continuidad' : 'Otros axiomas');
-    const group = groups.get(label) ?? {
-      label,
-      color: presentation?.color ?? CONTENT_TYPE_COLORS.axioma.cssVar,
-      axioms: [],
-    };
-    group.axioms.push(axiom);
-    groups.set(label, group);
-  }
+  const dict = getLanguage(lang).dictionary.axiomFamilies;
+  const presentation = getAxiomGroup(axiom.id, lang);
+  const familyKey = axiom.axiomFamily as keyof typeof dict | undefined;
+  const label =
+    (familyKey && dict[familyKey])   
+    ?? presentation?.label            
+    ?? (presentation?.familyKey === 'continuidad' ? dict.continuidad : dict.otros);
+  const group = groups.get(label) ?? {
+    label,
+    color: presentation?.color ?? CONTENT_TYPE_COLORS.axioma.cssVar,
+    axioms: [],
+  };
+  group.axioms.push(axiom);
+  groups.set(label, group);
+}
 
   return [...groups.values()].sort((left, right) => {
     const leftIndex = groupOrder.indexOf(left.label);
@@ -67,9 +69,9 @@ export function AxiomaticAxiomPicker({
   onRestoreBaseline,
   onDeactivateAll,
 }: AxiomaticAxiomPickerProps) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const activeCount = axioms.length - disabledAxioms.size;
-  const groups = groupAxioms(axioms);
+  const groups = groupAxioms(axioms, lang);
   const activeAxiomIds = new Set(axioms.filter((axiom) => !disabledAxioms.has(axiom.id)).map((axiom) => axiom.id));
   const baselineIds = new Set(baselineAxiomIds);
   const isBaselineActive = activeAxiomIds.size === baselineIds.size
@@ -123,7 +125,6 @@ export function AxiomaticAxiomPicker({
             alternatives.set(axiom.alternativeGroup, options);
           }
           const showAlternativeLabels = independentAxioms.length > 0 || alternatives.size > 1;
-
           return (
             <details key={group.label} className="group border-b border-carbon/10" style={groupStyle}>
               <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2.5 py-2 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-terracota [&::-webkit-details-marker]:hidden">

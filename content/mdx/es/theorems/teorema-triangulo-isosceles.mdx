@@ -1,46 +1,69 @@
 export const metadata = {
   id: "teorema-triangulo-isosceles",
+  lang: "es",
   type: "teorema",
   title: "Teorema del triángulo isósceles",
-  description: "En todo triángulo isósceles, los ángulos opuestos a los lados congruentes son congruentes entre sí.",
-  statement: "Dado un triángulo △ABC con AB ≅ AC, se cumple de forma necesaria que ∠ABC ≅ ∠ACB.",
+  description: "En todo triángulo con dos lados congruentes, los ángulos opuestos a dichos lados son mutuamente congruentes.",
+  statement: "En todo triángulo △ABC, si dos lados son congruentes (AB ≅ AC), entonces los ángulos opuestos a dichos lados son congruentes (∠ABC ≅ ∠ACB).",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta"],
   hasSimulation: true,
   authors: ["tales", "euclides"],
   demos: ["demo-triangulo-isosceles"],
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 5 y 6", role: "primary" }
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 5",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5 (Satz 11)",
+      role: "primary"
+    }
   ]
 };
 
 import { TrianguloIsosceles } from '@content/diagrams/Teoremas/TrianguloIsosceles';
 export const Simulation = TrianguloIsosceles;
 
-<Capitular letra="E" />l teorema del triángulo isósceles, conocido históricamente en los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> como el *Pons Asinorum* (puente de los asnos), establece la simetría angular fundamental que caracteriza a los <ConceptLink targetId="triangulo">triángulos</ConceptLink> con dos lados de igual medida en el plano euclidiano.
+<Capitular letra="E" />n todo <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink>, si dos <ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink> son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> entre sí, los <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> opuestos a dichos lados son mutuamente congruentes.
+
+Este resultado, atribuido tradicionalmente a <ConceptLink targetId="tales">Tales de Mileto</ConceptLink> y formalizado por <ConceptLink targetId="euclides">Euclides</ConceptLink> como la Proposición I.5 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> (conocida históricamente como el *Pons Asinorum*), constituye el primer gran <ConceptLink targetId="teorema">teorema</ConceptLink> de rigidez y <ConceptLink targetId="simetria">simetría</ConceptLink> angular en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. Su deducción es enteramente independiente del <ConceptLink targetId="axioma-paralelas-euclides">postulado de las paralelas</ConceptLink>, requiriendo únicamente los <ConceptLink targetId="sistema-incidencia">axiomas de incidencia</ConceptLink>, <ConceptLink targetId="estar-entre">orden</ConceptLink> y congruencia (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink> y <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5</ConceptLink>).
+
+<Definicion title="Enunciado formal del teorema del triángulo isósceles">
+Sean <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$, determinando el <VisualBind element="polyABC" color="carbon"><ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink></VisualBind> $\triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}$.
+
+Si el <ConceptLink targetId="lado" isDependency={true}>lado</ConceptLink> lateral <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind> es <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> con el lado lateral <VisualBind element="segAC" color="carbon">$\overline{AC}$</VisualBind>, entonces el <ConceptLink targetId="angulo-base">ángulo de la base</ConceptLink> <VisualBind element="anguloB" color="mora">$\angle ABC$</VisualBind> es congruente con el ángulo de la base <VisualBind element="anguloC" color="mora">$\angle ACB$</VisualBind>:
+
+$$
+\overline{AB} \cong \overline{AC} \implies \angle ABC \cong \angle ACB
+$$
+
+El <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> restante <VisualBind element="segBC" color="carbon">$\overline{BC}$</VisualBind> constituye la <ConceptLink targetId="base">base</ConceptLink> del <ConceptLink targetId="triangulo-isosceles" isDependency={true}>triángulo isósceles</ConceptLink>, y el <ConceptLink targetId="angulo">ángulo</ConceptLink> $\angle BAC$ es el ángulo en el <ConceptLink targetId="vertice">vértice</ConceptLink>.
+</Definicion>
 
 <Separador />
 
-### Enunciado formal
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias deductivas y recíprocos">
+    <PropiedadItem 
+      id="teorema-reciproco-isosceles" 
+      title="Teorema recíproco del triángulo isósceles"
+      formula="\angle ABC \cong \angle ACB \implies \overline{AB} \cong \overline{AC}"
+    >
+      Si en un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$ dos <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores son <ConceptLink targetId="congruencia">congruentes</ConceptLink>, los <ConceptLink targetId="lado">lados</ConceptLink> opuestos a dichos ángulos son congruentes entre sí (Proposición I.6 de <ConceptLink targetId="euclides">Euclides</ConceptLink>, Satz 12 en <ConceptLink targetId="hilbert">Hilbert</ConceptLink>).
+    </PropiedadItem>
 
-Sea $\triangle ABC$ un <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo">triángulo</ConceptLink></VisualBind> tal que sus lados <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind> y <VisualBind element="lado-ac" color="terracota">$\overline{AC}$</VisualBind> son <ConceptLink targetId="congruencia">congruentes</ConceptLink> ($\overline{AB} \cong \overline{AC}$). Se verifica de manera indispensable que los <VisualBind element="angulos-base" color="ocre">ángulos de la base</VisualBind> $\angle ABC$ y $\angle ACB$ son congruentes:
-
-<Formula>
-  $$ \overline{AB} \cong \overline{AC} \quad \Longrightarrow \quad \angle ABC \cong \angle ACB $$
-</Formula>
-
-Es decir, en todo triángulo isósceles, a lados congruentes se oponen ángulos rigurosamente congruentes.
-
-<Separador />
-
-### Demostración y fundamentación axiomática
-
-El teorema admite múltiples vías deductivas clásicas:
-- **Demostración de Pappus**: Considera la correspondencia entre el triángulo $\triangle ABC$ y el triángulo reflejado $\triangle ACB$. Dado que $\overline{AB} \cong \overline{AC}$, $\angle BAC \cong \angle CAB$ y $\overline{AC} \cong \overline{AB}$, por el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>criterio de congruencia LAL</ConceptLink> (Lado-Ángulo-Lado) se deduce $\triangle ABC \cong \triangle ACB$, implicando directamente $\angle ABC \cong \angle ACB$.
-- **Demostración de la bisectriz**: Trazando la <ConceptLink targetId="demo-existencia-bisectriz">bisectriz</ConceptLink> del ángulo en el vértice $A$, esta divide al triángulo original en dos triángulos congruentes.
-
-<Separador />
-
-### Carácter recíproco y corolario equilátero
-
-- **Teorema recíproco**: Si en un triángulo $\triangle ABC$ los ángulos $\angle ABC$ y $\angle ACB$ son congruentes, entonces los lados opuestos son necesariamente congruentes ($\overline{AB} \cong \overline{AC}$).
-- **Corolario del triángulo equilátero**: Un triángulo es equilátero si y solo si es equiángulo (sus tres ángulos interiores miden exactamente $60^\circ$).
+    <PropiedadItem 
+      id="corolario-triangulo-equilatero" 
+      title="Equiangularidad del triángulo equilátero"
+      formula="\overline{AB} \cong \overline{BC} \cong \overline{CA} \iff \angle ABC \cong \angle BCA \cong \angle CAB"
+    >
+      Un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es <ConceptLink targetId="triangulo-equilatero">equilátero</ConceptLink> si y solo si es equiángulo, deduciéndose mediante la aplicación reiterada del <ConceptLink targetId="teorema">teorema</ConceptLink> y su recíproco a cada par de <ConceptLink targetId="lado">lados</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

@@ -110,19 +110,26 @@
 }
 
 /* Los controles de React Flow traen superficies blancas en su CSS de origen. */
+.axiomatic-graph {
+  /* Contenedor de controles */
+  --xy-controls-background-color: var(--theme-lienzo);
+  --xy-controls-border-color: color-mix(in srgb, var(--theme-carbon) 20%, transparent);
+
+  /* Botones en estado normal */
+  --xy-controls-button-background-color: var(--theme-lienzo);
+  --xy-controls-button-background-color-default: var(--theme-lienzo);
+  --xy-controls-button-border-color: color-mix(in srgb, var(--theme-carbon) 15%, transparent);
+  --xy-controls-button-color: var(--theme-carbon);
+  --xy-controls-button-color-default: var(--theme-carbon);
+
+  /* Botones en estado :hover */
+  --xy-controls-button-background-color-hover: color-mix(in srgb, var(--theme-carbon) 8%, var(--theme-lienzo));
+  --xy-controls-button-color-hover: var(--theme-carbon);
+}
+
+/* Ajustes de borde estructural e icono */
 .axiomatic-graph .react-flow__controls {
   border: 1px solid color-mix(in srgb, var(--theme-carbon) 20%, transparent);
-  box-shadow: var(--theme-shadow-classic);
-}
-
-.axiomatic-graph .react-flow__controls-button {
-  background: var(--theme-lienzo);
-  border-bottom-color: color-mix(in srgb, var(--theme-carbon) 15%, transparent);
-  color: var(--theme-carbon);
-}
-
-.axiomatic-graph .react-flow__controls-button:hover {
-  background: color-mix(in srgb, var(--theme-carbon) 8%, var(--theme-lienzo));
 }
 
 .axiomatic-graph .react-flow__controls-button svg {

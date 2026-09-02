@@ -15,7 +15,7 @@ Grafo acíclico dirigido (DAG) de nodos atómicos hiperenlazados, con paridad tr
 |---|---|
 | **1. Rigor deductivo** | Lógica de primer orden. Cero pasos informales. Tipado multisort estricto: $\mathcal{P}\cap\mathcal{L}=\emptyset$, $\mathcal{P}\cap\Pi=\emptyset$, $\mathcal{L}\cap\Pi=\emptyset$. Usar incidencia sintética o $\operatorname{tr}(\ell)$, nunca $\ell\subseteq\pi$. |
 | **2. Grafo abierto** | Todo concepto matemático → `<ConceptLink targetId="...">`. Los `targetId` son kebab-case en castellano/neutro y **nunca se traducen**. Si la página no existe, el enlace se pone igualmente. |
-| **3. Causalidad DAG** | `isDependency={true}` solo en antecedentes sin los cuales el nodo no puede existir. En definiciones: solo conceptos primitivos constitutivos. En axiomas: primitivos de signatura. En demostraciones: axiomas, lemas y método. **Nunca desde un teorema hacia su demostración.** |
+| **3. Causalidad DAG** | `isDependency={true}` en antecedentes lógicos y conceptuales constitutivos (axiomas, lemas, teoremas previos, conceptos primitivos y definiciones derivadas sobre las que se formula o demuestra el enunciado). En demostraciones: axiomas, lemas, método y conceptos de prueba. **Nunca desde un teorema hacia su propia demostración.** |
 
 → Detalles y casos borde: [editorial-epistemology.md](./references/editorial-epistemology.md)
 
@@ -83,10 +83,10 @@ No hay plantilla obligatoria. La estructura emerge de la naturaleza del nodo:
 
 | Tipo | `isDependency` | `<SeccionPropiedades>` |
 | :--- | :---: | :---: |
-| `definicion` | Conceptos primitivos constitutivos | ✅ Permitido |
+| `definicion` | Conceptos primitivos o derivados constitutivos | ✅ Permitido |
 | `axioma` | Primitivos de signatura | ❌ Prohibido |
-| `teorema` / `lema` | Axiomas/teoremas antecedentes | Opcional |
-| `demostracion` | Axiomas, lemas y método | — |
+| `teorema` / `lema` | Axiomas, teoremas y conceptos constitutivos (primitivos/derivados) | Opcional |
+| `demostracion` | Axiomas, lemas, método y conceptos de inferencia | — |
 | `sistema-axiomatico` | N/A (campo `axiomas`) | ❌ Prohibido |
 | `modelo` | Omitir | ✅ Requerido |
 | `metodo` / `ejercicio` / `caso-de-uso` | Según aplique | ❌ Prohibido |
@@ -98,11 +98,19 @@ No hay plantilla obligatoria. La estructura emerge de la naturaleza del nodo:
 
 ## Golden Rules (resumen ejecutivo)
 
-1. Nunca JSX dentro de `$` / `$$`.
-2. Dominios primitivos disjuntos: nunca $\ell\subseteq\pi$; usar $P\,\mathbf{I}\,\ell$ o $\operatorname{tr}(\ell)$.
-3. $\operatorname{tr}$ solo a objetos no puntuales ($\mathcal{L}$, $\Pi$). Las figuras compuestas son subconjuntos de $\mathcal{P}$ por definición.
-4. Paralelismo: coplanaridad + reflexividad. Rectas no coplanares = *cruzadas/alabeadas*, no paralelas.
-5. Sin `<SeccionPropiedades>` en `axioma`. Sus consecuencias son teoremas.
-6. Paridad trilingüe 1:1 en todos los `<ConceptLink isDependency>`.
-7. Aciclicidad: ningún nodo depende de sí mismo.
-8. Cero definiciones inline de conceptos externos — siempre `<ConceptLink>`.
+1. **KaTeX y JSX:** Nunca JSX dentro de `$` ni `$$`. `<VisualBind>` solo puede envolver expresiones KaTeX inline en la prosa (`<VisualBind element="...">$...$</VisualBind>`). Los bloques desplegados `$$ ... $$` son LaTeX puro.
+2. **Criterio para `<Nota>`:** Pensar bien cuándo añadirla y cuándo no. La nota debe ser la excepción y no la norma: reservarla para aspectos verdaderamente relevantes e importantes, evitando sobrecorrecciones o justificaciones accesorias.
+3. **Diagramas interactivos por pasos (`steps`):** No ocultar la figura base para aislar elementos de un paso. Mantener siempre visible la estructura base completa en `visibleTargets` y dirigir el foco mediante resaltes de énfasis (`objectStates: { id: { emphasis: 'primary' } }`).
+4. **Hiperenlaces conceptuales exhaustivos:** Todo concepto matemático formal, relacional o abstracto (e.g. `biyeccion`, `simetria`, `reflexividad`, `teorema`) debe tener `<ConceptLink targetId="...">`, exista o no el archivo en el repositorio.
+5. **Causalidad DAG:** `parentTheorem` NUNCA lleva `isDependency={true}` en su propia demostración (es el consecuente demostrado, no un antecedente lógico).
+6. **Dominios primitivos disjuntos:** Nunca $\ell\subseteq\pi$; usar $P\,\mathbf{I}\,\ell$ o $\operatorname{tr}(\ell)$.
+7. **Traza puntual:** $\operatorname{tr}$ solo a objetos no puntuales ($\mathcal{L}$, $\Pi$). Las figuras compuestas son subconjuntos de $\mathcal{P}$ por definición.
+8. **Paralelismo:** Coplanaridad + reflexividad. Rectas no coplanares = *cruzadas/alabeadas*, no paralelas.
+9. **Sin `<SeccionPropiedades>` en `axioma`:** Sus consecuencias son teoremas.
+10. **Paridad trilingüe 1:1:** Idénticos `<ConceptLink isDependency>`, componentes y fórmulas en `es`, `eu` y `en`.
+11. **Aciclicidad:** Ningún nodo depende de sí mismo ni crea ciclos causales.
+12. **Cero definiciones inline de conceptos externos:** Siempre delegar a `<ConceptLink>`.
+13. **Citas de Hilbert (§5 *Grundlagen*):** Satz 11 (isósceles), Satz 12 (LLL), Satz 13 (congruencia de ángulos suplementarios adyacentes), Satz 14 (ángulos opuestos por el vértice). Citar con estricta exactitud.
+14. **Fundamentación de semirrectas opuestas:** Explicitar siempre la relación de intermediación ($A * O * A'$, $B * O * B'$) mediante `<ConceptLink targetId="estar-entre" isDependency={true}>` (Axiomas de Orden, Grupo II).
+15. **Definición sintética de ángulos suplementarios:** Se definen por incidencia y orden (comparten un lado y los otros dos son semirrectas opuestas de una misma recta), nunca mediante medida métrica angular ($180^\circ$).
+16. **Metadatos obligatorios de idioma:** Todo archivo MDX debe incluir explícitamente `lang: "es" | "eu" | "en"` en su objeto `metadata`.

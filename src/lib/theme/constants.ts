@@ -61,6 +61,7 @@ export interface ContentTypeConfig {
 }
 
 import { CONTENT_TYPE_COLORS, CONTENT_TYPE_ALIASES } from '@/design/contentTypeColors';
+import { getLanguage } from '@/i18n/config';
 
 // Shorthand helpers
 const c = (type: keyof typeof CONTENT_TYPE_COLORS) => CONTENT_TYPE_COLORS[type];
@@ -290,46 +291,6 @@ const NON_CONTENT_CATEGORY_LABELS_EN: Record<string, { singular: string; plural:
   triangulos: { singular: 'Triangle', plural: 'Triangles' },
 };
 
-const CONTENT_TYPE_LABELS_EU: Record<string, { singular: string; plural: string }> = {
-  axioma: { singular: 'Axioma', plural: 'Axiomak' },
-  'sistema-axiomatico': { singular: 'Sistema axiomatikoa', plural: 'Sistema axiomatikoak' },
-  concepto: { singular: 'Kontzeptua', plural: 'Kontzeptuak' },
-  definicion: { singular: 'Definizioa', plural: 'Definizioak' },
-  lema: { singular: 'Lema', plural: 'Lemak' },
-  teorema: { singular: 'Teorema', plural: 'Teoremak' },
-  corolario: { singular: 'Korolarioa', plural: 'Korolarioak' },
-  demostracion: { singular: 'Frogapena', plural: 'Frogapenak' },
-  ejemplo: { singular: 'Adibidea', plural: 'Adibideak' },
-  ejercicio: { singular: 'Ariketa', plural: 'Ariketak' },
-  'caso-de-uso': { singular: 'Erabilera-kasua', plural: 'Erabilera-kasuak' },
-  matematico: { singular: 'Matematikaria', plural: 'Matematikariak' },
-  metodo: { singular: 'Metodoa', plural: 'Metodoak' },
-  modelo: { singular: 'Eredua', plural: 'Ereduak' },
-  'plan-de-estudio': { singular: 'Ikasketa-plana', plural: 'Ikasketa-planak' },
-  glosario: { singular: 'Glosarioa', plural: 'Glosarioa' },
-  msc2020: { singular: 'MSC2020 sailkapena', plural: 'MSC2020 sailkapena' },
-};
-
-const CONTENT_TYPE_LABELS_EN: Record<string, { singular: string; plural: string }> = {
-  axioma: { singular: 'Axiom', plural: 'Axioms' },
-  'sistema-axiomatico': { singular: 'Axiomatic system', plural: 'Axiomatic systems' },
-  concepto: { singular: 'Concept', plural: 'Concepts' },
-  definicion: { singular: 'Definition', plural: 'Definitions' },
-  lema: { singular: 'Lemma', plural: 'Lemmas' },
-  teorema: { singular: 'Theorem', plural: 'Theorems' },
-  corolario: { singular: 'Corollary', plural: 'Corollaries' },
-  demostracion: { singular: 'Proof', plural: 'Proofs' },
-  ejemplo: { singular: 'Example', plural: 'Examples' },
-  ejercicio: { singular: 'Exercise', plural: 'Exercises' },
-  'caso-de-uso': { singular: 'Use case', plural: 'Use cases' },
-  matematico: { singular: 'Mathematician', plural: 'Mathematicians' },
-  metodo: { singular: 'Method', plural: 'Methods' },
-  modelo: { singular: 'Model', plural: 'Models' },
-  'plan-de-estudio': { singular: 'Study plan', plural: 'Study plans' },
-  glosario: { singular: 'Glossary', plural: 'Glossaries' },
-  msc2020: { singular: 'MSC2020 classification', plural: 'MSC2020 classification' },
-};
-
 export const CONTENT_TYPE_LABELS_SINGULAR: Record<string, string> = {
   ...Object.fromEntries(
     Object.entries(CONTENT_TYPE_CONFIG).map(([id, cfg]) => [id, cfg.labelSingular]),
@@ -349,30 +310,53 @@ export const CONTENT_TYPE_LABELS_PLURAL: Record<string, string> = {
 };
 
 export function getContentTypeLabel(rawKey?: string | null, form: 'singular' | 'plural' = 'singular', lang?: string): string {
+  const langConfig = getLanguage(lang);
   if (typeof rawKey !== 'string' || !rawKey.trim()) {
-    if (lang === 'eu') return form === 'plural' ? 'Teoremak' : 'Teorema';
-    if (lang === 'en') return form === 'plural' ? 'Theorems' : 'Theorem';
-    return form === 'plural' ? 'Teoremas' : 'Teorema';
+    const fallbackEntry = langConfig.dictionary.contentTypes.teorema;
+    return form === 'plural' ? fallbackEntry.plural : fallbackEntry.singular;
   }
   const cleanKey = rawKey.startsWith('diagram-') ? rawKey.slice('diagram-'.length) : rawKey;
   const normalized = cleanKey.toLowerCase().trim();
   const canonical = CONTENT_TYPE_ALIASES[normalized] ?? normalized;
 
-  if (lang === 'eu') {
-    const euEntry = CONTENT_TYPE_LABELS_EU[canonical] || CONTENT_TYPE_LABELS_EU[normalized] || NON_CONTENT_CATEGORY_LABELS_EU[canonical] || NON_CONTENT_CATEGORY_LABELS_EU[normalized];
-    if (euEntry) return form === 'plural' ? euEntry.plural : euEntry.singular;
+  const typeEntry = langConfig.dictionary.contentTypes[canonical] || langConfig.dictionary.contentTypes[normalized];
+  if (typeEntry) {
+    return form === 'plural' ? typeEntry.plural : typeEntry.singular;
   }
 
-  if (lang === 'en') {
-    const enEntry = CONTENT_TYPE_LABELS_EN[canonical] || CONTENT_TYPE_LABELS_EN[normalized] || NON_CONTENT_CATEGORY_LABELS_EN[canonical] || NON_CONTENT_CATEGORY_LABELS_EN[normalized];
-    if (enEntry) return form === 'plural' ? enEntry.plural : enEntry.singular;
+  // Fallback para categorías no-contenido (ej. geometria, calculo)
+  const normalizedLang = lang?.toLowerCase();
+  if (normalizedLang === 'eu') {
+    const euCat = NON_CONTENT_CATEGORY_LABELS_EU[canonical] || NON_CONTENT_CATEGORY_LABELS_EU[normalized];
+    if (euCat) return form === 'plural' ? euCat.plural : euCat.singular;
+  } else if (normalizedLang === 'en') {
+    const enCat = NON_CONTENT_CATEGORY_LABELS_EN[canonical] || NON_CONTENT_CATEGORY_LABELS_EN[normalized];
+    if (enCat) return form === 'plural' ? enCat.plural : enCat.singular;
+  } else {
+    const esCat = NON_CONTENT_CATEGORY_LABELS[canonical] || NON_CONTENT_CATEGORY_LABELS[normalized];
+    if (esCat) return form === 'plural' ? esCat.plural : esCat.singular;
   }
 
   const dict = form === 'plural' ? CONTENT_TYPE_LABELS_PLURAL : CONTENT_TYPE_LABELS_SINGULAR;
-
   if (dict[canonical]) return dict[canonical];
   if (dict[normalized]) return dict[normalized];
   return cleanKey.replace(/-/g, ' ').replace(/^\p{L}/u, v => v.toUpperCase());
+}
+
+export function getContentTypeBadge(rawKey?: string | null, lang?: string): string {
+  const langConfig = getLanguage(lang);
+  if (typeof rawKey !== 'string' || !rawKey.trim()) {
+    return langConfig.dictionary.contentTypes.teorema?.badge ?? 'TEOREMA';
+  }
+  const cleanKey = rawKey.startsWith('diagram-') ? rawKey.slice('diagram-'.length) : rawKey;
+  const normalized = cleanKey.toLowerCase().trim();
+  const canonical = CONTENT_TYPE_ALIASES[normalized] ?? normalized;
+
+  const typeEntry = langConfig.dictionary.contentTypes[canonical] || langConfig.dictionary.contentTypes[normalized];
+  if (typeEntry?.badge) {
+    return typeEntry.badge;
+  }
+  return CONTENT_TYPE_CONFIG[canonical]?.nodeStyle.badge ?? cleanKey.toUpperCase();
 }
 
 export function getContentTypeRoutePrefix(rawKey?: string | null): string {

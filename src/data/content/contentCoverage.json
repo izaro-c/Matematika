@@ -872,7 +872,7 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 1,
+      "sourcesCount": 2,
       "proofSteps": 5,
       "parentTheorem": "teorema-angulos-opuestos-verticales",
       "demos": []
@@ -989,7 +989,7 @@
       "hasDeclaredDiagram": false,
       "diagramExports": [],
       "diagramStatus": "none",
-      "sourcesCount": 1,
+      "sourcesCount": 2,
       "proofSteps": 4,
       "parentTheorem": "teorema-triangulo-isosceles",
       "demos": []
@@ -1453,7 +1453,7 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "sourcesCount": 1,
+      "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": [
@@ -1584,7 +1584,7 @@
         "Simulation"
       ],
       "diagramStatus": "exported",
-      "sourcesCount": 1,
+      "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
       "demos": [

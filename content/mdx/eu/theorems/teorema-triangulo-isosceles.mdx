@@ -1,46 +1,69 @@
 export const metadata = {
   id: "teorema-triangulo-isosceles",
+  lang: "eu",
   type: "teorema",
   title: "Triangelu isoszelearen teorema",
-  description: "Edozein triangelu isoszeletan, alde kongruenteei aurrez aurre dauden angeluak elkarren artean kongruenteak dira.",
-  statement: "AB ≅ AC betetzen duen △ABC triangelu orotan, nahitaez betetzen da ∠ABC ≅ ∠ACB dela.",
+  description: "Bi alde kongruente dituen edozein triangelutan, alde horiei aurrez aurreko angeluak elkarren artean kongruenteak dira.",
+  statement: "Edozein △ABC triangelutan, bi alde kongruenteak badira (AB ≅ AC), orduan alde horiei aurrez aurreko angeluak ere kongruenteak dira (∠ABC ≅ ∠ACB).",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetikoa", "triangelua", "kongruentzia", "geometria-absolutua"],
   hasSimulation: true,
   authors: ["tales", "euclides"],
   demos: ["demo-triangulo-isosceles"],
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 5 y 6", role: "primary" }
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 5",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5 (Satz 11)",
+      role: "primary"
+    }
   ]
 };
 
 import { TrianguloIsosceles } from '@content/diagrams/Teoremas/TrianguloIsosceles';
 export const Simulation = TrianguloIsosceles;
 
-<Capitular letra="T" />riangelu isoszelearen teoremak, historikoki <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> lanean *Pons Asinorum* (astoen zubia) izenez ezagunak, bi alde berdin dituzten <ConceptLink targetId="triangulo">triangeluen</ConceptLink> oinarrizko simetria angeluarra ezartzen du plano euklidetarrean.
+<Capitular letra="E" />dozein <ConceptLink targetId="triangulo" isDependency={true}>triangelutan</ConceptLink>, bi <ConceptLink targetId="lado" isDependency={true}>alde</ConceptLink> elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badira, alde horiei aurrez aurreko <ConceptLink targetId="angulo" isDependency={true}>angeluak</ConceptLink> elkarren artean kongruenteak dira.
+
+Emaitza hau tradizionalki <ConceptLink targetId="tales">Tales Miletokoari</ConceptLink> egozten zaio eta <ConceptLink targetId="euclides">Euklidesek</ConceptLink> formalizatu zuen <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.5 Proposizioan (*Pons Asinorum* edo astoen zubia izenez ezaguna historikoki). <ConceptLink targetId="sistema-absoluto">Geometria absolutuaren</ConceptLink> egiturazko lehen <ConceptLink targetId="teorema">teorema</ConceptLink> da eta angelu-<ConceptLink targetId="simetria">simetria</ConceptLink> ezartzen du. Haren dedukzioa <ConceptLink targetId="axioma-paralelas-euclides">paraleloen postulatuarekiko</ConceptLink> erabat independentea da, <ConceptLink targetId="sistema-incidencia">inzidentzia-axiometan</ConceptLink>, <ConceptLink targetId="estar-entre">ordenan</ConceptLink> eta kongruentzian soilik oinarritzen delarik (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 Axioma</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 Axioma</ConceptLink>).
+
+<Definicion title="Triangelu isoszelearen teoremaren enuntziatu formala">
+Izan bitez <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko $\pi \in \Pi$ hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> ez-<ConceptLink targetId="colinealidad">kolineal</ConceptLink>, <VisualBind element="polyABC" color="carbon"><ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink></VisualBind> $\triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}$ zehaztuz.
+
+<VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind> aldameneko <ConceptLink targetId="lado" isDependency={true}>aldea</ConceptLink> <VisualBind element="segAC" color="carbon">$\overline{AC}$</VisualBind> aldameneko aldearekin <ConceptLink targetId="congruencia" isDependency={true}>kongruentea</ConceptLink> bada, orduan <VisualBind element="anguloB" color="mora">$\angle ABC$</VisualBind> <ConceptLink targetId="angulo-base">oinarriko angelua</ConceptLink> <VisualBind element="anguloC" color="mora">$\angle ACB$</VisualBind> oinarriko angeluarekin kongruentea da:
+
+$$
+\overline{AB} \cong \overline{AC} \implies \angle ABC \cong \angle ACB
+$$
+
+Gainerako <VisualBind element="segBC" color="carbon">$\overline{BC}$</VisualBind> <ConceptLink targetId="segmento" isDependency={true}>zuzenkiak</ConceptLink> <ConceptLink targetId="triangulo-isosceles" isDependency={true}>triangelu isoszelearen</ConceptLink> <ConceptLink targetId="base">oinarria</ConceptLink> osatzen du, eta $\angle BAC$ <ConceptLink targetId="angulo">angelua</ConceptLink> <ConceptLink targetId="vertice">erpineko</ConceptLink> angelua da.
+</Definicion>
 
 <Separador />
 
-### Enuntziatu formala
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorio deduktiboak eta alderantzizkoak">
+    <PropiedadItem 
+      id="teorema-reciproco-isosceles" 
+      title="Triangelu isoszelearen alderantzizko teorema"
+      formula="\angle ABC \cong \angle ACB \implies \overline{AB} \cong \overline{AC}"
+    >
+      $\triangle ABC$ <ConceptLink targetId="triangulo">triangelu</ConceptLink> batean bi barne-<ConceptLink targetId="angulo">angelu</ConceptLink> <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira, angelu horiei aurrez aurreko <ConceptLink targetId="lado">aldeak</ConceptLink> elkarren artean kongruenteak dira (<ConceptLink targetId="euclides">Euklidesen</ConceptLink> I.6 Proposizioa, <ConceptLink targetId="hilbert">Hilberten</ConceptLink> Satz 12).
+    </PropiedadItem>
 
-Izan bedi $\triangle ABC$ <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo">triangelu</ConceptLink></VisualBind> bat, non <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind> eta <VisualBind element="lado-ac" color="terracota">$\overline{AC}$</VisualBind> aldeak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> diren ($\overline{AB} \cong \overline{AC}$). Nahitaez egiaztatzen da <VisualBind element="angulos-base" color="ocre">oinarriko angeluak</VisualBind> $\angle ABC$ eta $\angle ACB$ kongruenteak direla:
-
-<Formula>
-  $$ \overline{AB} \cong \overline{AC} \quad \Longrightarrow \quad \angle ABC \cong \angle ACB $$
-</Formula>
-
-Hau da, triangelu isoszele orotan, alde kongruenteei angelu zorrozki kongruenteak kontrajartzen zaizkie.
-
-<Separador />
-
-### Froga eta oinarritze axiomatikoa
-
-Teoremak dedukzio bide klasiko anitz onartzen ditu:
-- **Papusen froga**: $\triangle ABC$ triangeluaren eta bere ispilu-kopia den $\triangle ACB$ triangeluaren arteko erlazioa aztertzen du. $\overline{AB} \cong \overline{AC}$, $\angle BAC \cong \angle CAB$ eta $\overline{AC} \cong \overline{AB}$ direnez, <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>AL-A (Aldea-Angelua-Aldea) kongruentzia-irizpidearen</ConceptLink> bidez $\triangle ABC \cong \triangle ACB$ lortzen da, eta zuzenean ondorioztatzen da $\angle ABC \cong \angle ACB$.
-- **Erdibitzailearen bidezko froga**: $A$ erpineko angeluaren <ConceptLink targetId="demo-existencia-bisectriz">bisektorea</ConceptLink> marraztuz, honek jatorrizko triangelua bi triangelu kongruentetan banatzen du.
-
-<Separador />
-
-### Alderantzizko teorema eta korolarioak
-
-- **Alderantzizko teorema**: $\triangle ABC$ triangelu batean $\angle ABC$ eta $\angle ACB$ angeluak kongruenteak badira, orduan aurrez aurreko aldeak nahitaez kongruenteak dira ($\overline{AB} \cong \overline{AC}$).
-- **Triangelu aldekidearen korolarioa**: Triangelu bat aldekidea da baldin eta soilik baldin angelukidea bada (bere hiru barne-angeluek $60^\circ$ neurtzen dute).
+    <PropiedadItem 
+      id="corolario-triangulo-equilatero" 
+      title="Triangelu aldekidearen angelukidetasuna"
+      formula="\overline{AB} \cong \overline{BC} \cong \overline{CA} \iff \angle ABC \cong \angle BCA \cong \angle CAB"
+    >
+      <ConceptLink targetId="triangulo">Triangelu</ConceptLink> bat <ConceptLink targetId="triangulo-equilatero">aldekidea</ConceptLink> da baldin eta soilik baldin angelukidea bada, <ConceptLink targetId="teorema">teorema</ConceptLink> hau eta bere alderantzizkoa <ConceptLink targetId="lado">alde</ConceptLink> bikote bakoitzari behin eta berriz aplikatuz lortzen dena.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

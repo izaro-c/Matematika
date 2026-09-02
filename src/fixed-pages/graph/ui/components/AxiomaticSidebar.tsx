@@ -1,4 +1,4 @@
-import { useState, type KeyboardEvent } from 'react';
+import { useState, useMemo, type KeyboardEvent } from 'react';
 import { db } from '@/data/content';
 import { useGraphStore } from '@/fixed-pages/graph/GraphStore';
 import { GraphExplorerLink } from './GraphExplorerLink';
@@ -29,7 +29,7 @@ export function AxiomaticSidebar({
   typeColors,
 }: AxiomaticSidebarProps) {
   const [activeView, setActiveView] = useState<SidebarView>('logic');
-  const { t } = useI18n();
+  const { lang, t } = useI18n();
   const {
     systems,
     inactiveSystems,
@@ -47,7 +47,21 @@ export function AxiomaticSidebar({
     setActiveAxioms,
   } = useGraphStore();
 
-  const axiomPages = db.getAllAxioms();
+  const localizedSystems = useMemo(() => {
+    return systems.map(s => ({
+      ...s,
+      title: db.getAxiomaticSystem(s.id, lang)?.title || s.title,
+    }));
+  }, [systems, lang]);
+
+  const localizedModels = useMemo(() => {
+    return models.map(m => ({
+      ...m,
+      title: db.getModel(m.id, lang)?.title || m.title,
+    }));
+  }, [models, lang]);
+
+  const axiomPages = useMemo(() => db.getAllAxioms(lang), [lang]);
   const disabledAxiomIds = new Set(disabledAxioms);
   const activeAxiomCount = axioms.length - disabledAxioms.length;
   const neutralAxiomIds = axiomPages
@@ -58,8 +72,8 @@ export function AxiomaticSidebar({
     && axioms.every((id) => disabledAxiomIds.has(id) || neutralAxiomIdSet.has(id));
   const validNodeCount = Object.values(activeStates).filter(Boolean).length;
   const evaluatedNodeCount = Object.keys(activeStates).length;
-  const activeSystem = systems.find(system => !inactiveSystems.includes(system.id));
-  const activeModel = models.find(model => !inactiveModels.includes(model.id));
+  const activeSystem = localizedSystems.find(system => !inactiveSystems.includes(system.id));
+  const activeModel = localizedModels.find(model => !inactiveModels.includes(model.id));
   const activeContext = activeSystem?.title
     ?? activeModel?.title
     ?? (isNeutralBase ? t('graph', 'neutralBase') : t('graph', 'manualSelection'));
@@ -203,10 +217,10 @@ export function AxiomaticSidebar({
         className="px-5 py-5"
       >
         <AxiomaticUniversePicker
-          systems={systems}
+          systems={localizedSystems}
           inactiveSystems={inactiveSystems}
           onToggleSystem={toggleSystem}
-          models={models}
+          models={localizedModels}
           inactiveModels={inactiveModels}
           onToggleModel={toggleModel}
         />

@@ -1,48 +1,63 @@
 export const metadata = {
   id: "teorema-angulos-opuestos-verticales",
+  lang: "es",
   type: "teorema",
   title: "Teorema de los ángulos opuestos por el vértice",
-  description: "Si dos rectas secantes se intersectan en un punto, los ángulos opuestos por el vértice formados son respectivamente congruentes entre sí.",
-  statement: "Dadas dos rectas secantes r y s que se cortan en un punto O, si α y α' son ángulos opuestos por el vértice, entonces α ≅ α'.",
+  description: "Si dos rectas secantes se intersecan en un punto, los ángulos opuestos por el vértice formados por sus semirrectas son mutuamente congruentes.",
+  statement: "Dadas dos rectas secantes l y m que se cortan en un punto O, cualquier par de ángulos opuestos por el vértice satisface que son mutuamente congruentes.",
   branch: "51M",
   hasSimulation: true,
-  authors: ["tales", "euclides"],
+  authors: ["tales", "euclides", "hilbert"],
   demos: ["demo-angulos-opuestos-verticales"],
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 15", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 15", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "secondary" }
   ]
 };
 
 import { AngulosOpuestos } from '@content/diagrams/Teoremas/AngulosOpuestos';
 export const Simulation = AngulosOpuestos;
 
-<Capitular letra="E" />l teorema de los ángulos opuestos por el vértice constituye una de las propiedades de simetría angular más elementales y rigurosas de la <ConceptLink targetId="geometria-euclidiana">geometría euclidiana</ConceptLink> plana. Garantiza que la intersección de dos <ConceptLink targetId="recta">rectas secantes</ConceptLink> genera parejas de <ConceptLink targetId="angulo">ángulos</ConceptLink> de igual medida geométrica.
+<Capitular letra="S" />i dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> <ConceptLink targetId="secante">secantes</ConceptLink> se cortan en un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink>, los <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> opuestos por el <ConceptLink targetId="vertice">vértice</ConceptLink> formados por sus <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> son mutuamente <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>.
+
+Este resultado, atribuido originalmente a <ConceptLink targetId="tales">Tales de Mileto</ConceptLink> y formalizado por <ConceptLink targetId="euclides">Euclides</ConceptLink> en la Proposición I.15 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink>, constituye un <ConceptLink targetId="teorema">teorema</ConceptLink> fundamental de <ConceptLink targetId="simetria">simetría</ConceptLink> y rigidez angular en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. Su validez se deduce directamente de los axiomas de congruencia (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>) y de la noción de <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulos suplementarios</ConceptLink>, con total independencia del <ConceptLink targetId="axioma-paralelas-euclides">postulado de las paralelas</ConceptLink>.
+
+<Definicion title="Enunciado formal del teorema de los ángulos opuestos por el vértice">
+Sean <VisualBind element="lineL" color="carbon">$l$</VisualBind> y <VisualBind element="lineM" color="carbon">$m$</VisualBind> dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> coplanares en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi$ que se intersecan en un único <VisualBind element="O" color="carbon"><ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $O$</VisualBind>.
+
+Los <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="A" color="carbon">$A$</VisualBind> y <VisualBind element="Ap" color="carbon">$A'$</VisualBind> sobre la recta $l$ satisfacen la relación de <ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink> $A * O * A'$, determinando las <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> opuestas $\overrightarrow{OA}$ y $\overrightarrow{OA'}$. Análogamente, los puntos <VisualBind element="B" color="carbon">$B$</VisualBind> y <VisualBind element="Bp" color="carbon">$B'$</VisualBind> sobre la recta $m$ satisfacen $B * O * B'$, determinando las semirrectas opuestas $\overrightarrow{OB}$ y $\overrightarrow{OB'}$.
+
+Si <VisualBind element="angle1" color="pavo">$\alpha = \angle AOB = \angle(\overrightarrow{OA}, \overrightarrow{OB})$</VisualBind> y <VisualBind element="angle3" color="pavo">$\alpha' = \angle A'OB' = \angle(\overrightarrow{OA'}, \overrightarrow{OB'})$</VisualBind> son los <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> opuestos por el <ConceptLink targetId="vertice">vértice</ConceptLink>, entonces son mutuamente <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>:
+
+$$
+\alpha \cong \alpha'
+$$
+
+Análogamente, para el segundo par de ángulos opuestos formado por <VisualBind element="angle2" color="musgo">$\beta = \angle BOA' = \angle(\overrightarrow{OB}, \overrightarrow{OA'})$</VisualBind> y <VisualBind element="angle4" color="musgo">$\beta' = \angle B'OA = \angle(\overrightarrow{OB'}, \overrightarrow{OA})$</VisualBind>, se cumple:
+
+$$
+\beta \cong \beta'
+$$
+</Definicion>
 
 <Separador />
 
-### Enunciado formal
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias e invariantes geométricos">
+    <PropiedadItem 
+      id="invariancia-simetria-central" 
+      title="Invariancia bajo simetría central"
+      formula="\sigma_O(\alpha) = \alpha'"
+    >
+      La congruencia entre ángulos opuestos por el <ConceptLink targetId="vertice">vértice</ConceptLink> expresa la <ConceptLink targetId="simetria">simetría</ConceptLink> puntual respecto al punto de intersección $O$, que intercambia cada <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> con su semirrecta opuesta preservando la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink>.
+    </PropiedadItem>
 
-Sean $r$ y $s$ dos <ConceptLink targetId="recta">rectas secantes</ConceptLink> en el plano $\mathcal{P}$ que se intersectan en el <VisualBind element="punto-interseccion" color="musgo">punto $O$</VisualBind>. Sean $\alpha$ y $\alpha'$ un par de <VisualBind element="angulos-opuestos" color="pavo">ángulos opuestos por el vértice</VisualBind> determinados por la intersección de las semirrectas. Se verifica de manera indispensable la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
-
-<Formula>
-  $$ \alpha \cong \alpha' $$
-</Formula>
-
-Métricamente, las amplitudes angulares de ambos ángulos resultan rigurosamente idénticas: $|\alpha| = |\alpha'|$.
-
-<Separador />
-
-### Demostración y fundamentación axiomática
-
-La deducción formal se apoya en el carácter adyacente de los <ConceptLink targetId="angulos-suplementarios">ángulos suplementarios</ConceptLink> sobre una misma recta y en los <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>axiomas de congruencia angular</ConceptLink>:
-1. Sea $\beta$ el ángulo adyacente común a $\alpha$ y $\alpha'$.
-2. Al yacer sobre la misma línea recta $r$, $\alpha$ y $\beta$ forman un <ConceptLink targetId="angulos-suplementarios">ángulo llano</ConceptLink>, luego $\alpha + \beta = 180^\circ$.
-3. Del mismo modo, sobre la recta $s$, $\beta$ y $\alpha'$ componen un ángulo llano, por lo que $\alpha' + \beta = 180^\circ$.
-4. Restando $\beta$ a ambas igualdades mediante las propiedades de sustracción de congruencias se obtiene $\alpha = 180^\circ - \beta = \alpha'$, demostrando la congruencia requerida $\alpha \cong \alpha'$.
-
-<Separador />
-
-### Propiedades y trascendencia
-
-- **Independencia del paralelismo**: La congruencia de los ángulos opuestos por el vértice es un resultado de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> que no requiere el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>.
-- **Invariancia rotacional**: Corresponde a la simetría central de $180^\circ$ ($\pi$ radianes) alrededor del punto de corte $O$.
+    <PropiedadItem 
+      id="suplementariedad-pares-adyacentes" 
+      title="Suplementariedad de los pares adyacentes"
+      formula="\alpha \text{ suplementario de } \beta \land \alpha' \text{ suplementario de } \beta \implies \alpha \cong \alpha'"
+    >
+      Dos ángulos que comparten un mismo ángulo adyacente <ConceptLink targetId="angulos-suplementarios">suplementario</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí (*Satz 13* de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>).
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

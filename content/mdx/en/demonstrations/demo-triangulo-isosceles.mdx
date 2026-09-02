@@ -1,16 +1,29 @@
 export const metadata = {
-  "id": "demo-triangulo-isosceles",
-  "type": "demostracion",
-  "title": "Proof: Isosceles Triangle Theorem",
-  "description": "Classical proof based on constructing the angle bisector and establishing triangle congruence via the SAS criterion.",
-  "parentTheorem": "teorema-triangulo-isosceles",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides"],
-  "tags": ["geometria", "triangulos", "congruencia"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elements", author: "Euclides", locator: "Book I, Proposition 5", role: "primary" }
+  id: "demo-triangulo-isosceles",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Isosceles Triangle Theorem",
+  description: "Formal synthetic proof via Pappus's reflexive correspondence and direct application of Hilbert's Axiom III.5.",
+  parentTheorem: "teorema-triangulo-isosceles",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["synthetic-geometry", "triangle", "congruence", "absolute-geometry"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elements",
+      author: "Euclides",
+      locator: "Book I, Proposition 5",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §5 (Satz 11)",
+      role: "primary"
+    }
   ]
 };
 
@@ -18,55 +31,53 @@ import { DemoTrianguloIsosceles } from "@content/diagrams/Demos/DemoTrianguloIso
 
 <DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
 
-<Capitular letra="G" />iven a <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ having two <ConceptLink targetId="congruencia">congruent</ConceptLink> sides, the <ConceptLink targetId="teorema-triangulo-isosceles">isosceles triangle theorem</ConceptLink> is demonstrated. The proof establishes that the <ConceptLink targetId="angulo">angles</ConceptLink> opposite those congruent sides (the base angles) are mutually congruent.
+<Capitular letra="T" />he <ConceptLink targetId="metodo-directo" isDependency={true}>direct deductive proof</ConceptLink> of the <ConceptLink targetId="teorema-triangulo-isosceles">isosceles triangle theorem</ConceptLink> attributed to <ConceptLink targetId="pappus">Pappus of Alexandria</ConceptLink> (formally adopted by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §5, Satz 11, of the *Grundlagen der Geometrie*) establishes the equality of the <ConceptLink targetId="angulo-base">base angles</ConceptLink> by comparing the <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> with itself under a transposition of its <ConceptLink targetId="vertice">vertices</ConceptLink>.
+
+This reasoning highlights the intrinsic <ConceptLink targetId="simetria">symmetry</ConceptLink> of the figure and directly applies <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Hilbert's Axiom III.5</ConceptLink> of angular <ConceptLink targetId="congruencia">congruence</ConceptLink> without requiring auxiliary constructions.
 
 <Separador />
 
-### Step-by-step proof
+### Step-by-step formal proof
 
-<ProofStep number={1} target="step-triangulo" title="Isosceles triangle hypothesis">
-Let $\triangle ABC$ be an isosceles triangle with sides $\overline{AB}$ and $\overline{AC}$ of equal metric length:
+<ProofStep number={1} target="step-triangulo" title="Hypothesis of lateral congruence">
+We consider <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind>, in which the two lateral <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> <VisualBind element="ladoAB" color="carbon">$\overline{AB}$</VisualBind> and <VisualBind element="ladoAC" color="carbon">$\overline{AC}$</VisualBind> are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> by initial hypothesis:
 
-<Formula>
-  $$ \overline{AB} \cong \overline{AC} $$
-</Formula>
+$$
+\overline{AB} \cong \overline{AC}
+$$
+
+The bottom <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> <VisualBind element="ladoBC" color="carbon">$\overline{BC}$</VisualBind> acts as the <ConceptLink targetId="base">base</ConceptLink> of the triangle between <ConceptLink targetId="vertice">vertices</ConceptLink> <VisualBind element="pB" color="carbon">$B$</VisualBind> and <VisualBind element="pC" color="carbon">$C$</VisualBind>.
 </ProofStep>
 
-<ProofStep number={2} target="step-bisectriz" title="Construction of the vertex angle bisector">
-Draw the angle bisector ray from vertex $A$, intersecting the base side $\overline{BC}$ at point $D$. By definition of <ConceptLink targetId="demo-existencia-bisectriz">angle bisector</ConceptLink>, it divides $\angle BAC$ into two congruent angles:
+<ProofStep number={2} target="step-angulo-vertice" title="Reflexivity of the vertex angle">
+At the upper <ConceptLink targetId="vertice">vertex</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, the interior <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> <VisualBind element="anguloA" color="ocre">$\angle BAC$</VisualBind> coincides with itself. By the axiom of angle congruence and transport (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>), every angle satisfies the <ConceptLink targetId="reflexividad">reflexivity</ConceptLink> of congruence when the order of its bounding <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> is reversed:
 
-<Formula>
-  $$ \angle BAD \cong \angle CAD $$
-</Formula>
+$$
+\angle BAC \cong \angle CAB
+$$
 </ProofStep>
 
-<ProofStep number={3} target="step-congruencia" title="Triangle congruence via the SAS criterion">
-Comparing subtriangles $\triangle ABD$ and $\triangle ACD$:
-1. $\overline{AB} \cong \overline{AC}$ by the initial hypothesis.
-2. $\angle BAD \cong \angle CAD$ by construction of the bisector.
-3. The segment $\overline{AD}$ is common to both triangles ($\overline{AD} \cong \overline{AD}$).
+<ProofStep number={3} target="step-correspondencia" title="Pappus correspondence and satisfaction of III.5">
+We establish a <ConceptLink targetId="biyeccion">one-to-one correspondence</ConceptLink> between the <ConceptLink targetId="vertice">vertices</ConceptLink> of <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> and those of its transposed version $\triangle ACB$, swapping the <ConceptLink targetId="base">base</ConceptLink> endpoints (<VisualBind element="pB" color="carbon">$B \leftrightarrow C$</VisualBind>, <VisualBind element="pC" color="carbon">$C \leftrightarrow B$</VisualBind>) and keeping the upper <ConceptLink targetId="vertice">vertex</ConceptLink> fixed (<VisualBind element="pA" color="terracota">$A \leftrightarrow A$</VisualBind>):
 
-By the SAS congruence axiom (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink>), triangle congruence is established:
+$$
+A \longleftrightarrow A, \quad B \longleftrightarrow C, \quad C \longleftrightarrow B
+$$
 
-<Formula>
-  $$ \triangle ABD \cong \triangle ACD $$
-</Formula>
+Under this correspondence, the three conditions of <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Hilbert's Axiom III.5</ConceptLink> are immediately satisfied:
+1. First pair of corresponding <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink>: <VisualBind element="ladoAB" color="carbon">$\overline{AB}$</VisualBind> $\cong$ <VisualBind element="ladoAC" color="carbon">$\overline{AC}$</VisualBind> (by initial hypothesis).
+2. Included <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> between them: <VisualBind element="anguloA" color="ocre">$\angle BAC$</VisualBind> $\cong$ <VisualBind element="anguloA" color="ocre">$\angle CAB$</VisualBind> (by <ConceptLink targetId="reflexividad">reflexivity</ConceptLink> of the angle at <VisualBind element="pA" color="terracota">$A$</VisualBind>, <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>).
+3. Second pair of corresponding sides: <VisualBind element="ladoAC" color="carbon">$\overline{AC}$</VisualBind> $\cong$ <VisualBind element="ladoAB" color="carbon">$\overline{AB}$</VisualBind> (by the <ConceptLink targetId="simetria">symmetry</ConceptLink> of segment <ConceptLink targetId="congruencia" isDependency={true}>congruence</ConceptLink>, derived from <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink> and <ConceptLink targetId="axioma-congruencia-2" isDependency={true}>Axiom III.2</ConceptLink>).
 </ProofStep>
 
-<ProofStep number={4} target="step-angulos-base" title="Equality of the base angles">
-Since both triangles are congruent, all corresponding homologous elements are congruent. In particular, the angles at the base vertices satisfy:
+<ProofStep number={4} target="step-angulos-base" title="Deduction of base angle congruence">
+Because two <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> and their included <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>, <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Hilbert's Axiom III.5</ConceptLink> directly implies that the remaining angles opposite those sides are congruent. In particular, for the <ConceptLink targetId="angulo-base">base angles</ConceptLink> <VisualBind element="anguloB" color="mora">$\angle ABC$</VisualBind> and <VisualBind element="anguloC" color="mora">$\angle ACB$</VisualBind> at <ConceptLink targetId="vertice">vertices</ConceptLink> <VisualBind element="pB" color="carbon">$B$</VisualBind> and <VisualBind element="pC" color="carbon">$C$</VisualBind>:
 
-<Formula>
-  $$ \angle ABC \cong \angle ACB $$
-</Formula>
+$$
+\angle ABC \cong \angle ACB
+$$
+
+It is formally proven that in any <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> with two congruent <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink>, the <ConceptLink targetId="angulo-base">base angles</ConceptLink> are mutually congruent.
 </ProofStep>
-
-<Separador />
-
-### Deductive analysis
-
-<Nota>
-  Book I, Proposition 5 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, historically known as the *Pons Asinorum*. This proof is valid in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> without reliance on the parallel postulate.
-</Nota>
 
 </DemonstrationSection>

@@ -1,11 +1,10 @@
 import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';
 
 /* @matematika-diagram-spec:start */
-export const DemoTrianguloIsoscelesSpec = createDiagramSpec(
-{
+export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
   "version": 3,
   "renderer": "matematika-diagram-renderer-v3",
-  "title": "Teorema del triángulo isósceles",
+  "title": "Demostración de Pappus: Teorema del triángulo isósceles",
   "componentId": "demo-triangulo-isosceles",
   "category": "Demos",
   "mode": "simulation",
@@ -77,26 +76,6 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec(
       "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
     },
     {
-      "id": "pD",
-      "label": "D",
-      "color": "mora",
-      "layerId": "geometry",
-      "order": 33,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Punto medio D de la base BC", "role": "primary" },
-      "target": true,
-      "targetId": "pD",
-      "objectType": "point",
-      "definition": {
-        "type": "midpoint",
-        "points": ["pB", "pC"]
-      },
-      "mobility": { "type": "fixed" },
-      "appearance": { "size": 5, "labelVisible": true, "preserveColorOnHighlight": true }
-    },
-    {
       "id": "ladoAB",
       "label": "Lado AB",
       "color": "carbon",
@@ -154,25 +133,6 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec(
       "appearance": { "strokeWidth": 2.5, "preserveColorOnHighlight": true }
     },
     {
-      "id": "bisectriz",
-      "label": "Bisectriz / Mediana AD",
-      "color": "mora",
-      "layerId": "geometry",
-      "order": 15,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Segmento AD (Bisectriz y Mediana)", "role": "secondary" },
-      "target": true,
-      "targetId": "bisectriz",
-      "objectType": "path",
-      "geometry": {
-        "type": "segment",
-        "points": ["pA", "pD"]
-      },
-      "appearance": { "dashed": true, "strokeWidth": 2, "preserveColorOnHighlight": true }
-    },
-    {
       "id": "polyABC",
       "label": "Triángulo ABC",
       "color": "canela",
@@ -189,49 +149,73 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec(
         "type": "polygon",
         "points": ["pA", "pB", "pC"]
       },
-      "appearance": { "fillOpacity": 0.1, "strokeWidth": 1, "preserveColorOnHighlight": true }
+      "appearance": { "fillOpacity": 0.12, "strokeWidth": 1, "preserveColorOnHighlight": true }
     },
     {
-      "id": "polyABD",
-      "label": "Triángulo ABD",
+      "id": "congruenceMarkAB",
+      "label": "Marca AB",
       "color": "terracota",
       "layerId": "geometry",
-      "order": 6,
+      "order": 25,
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Subtriángulo izquierdo ABD", "role": "secondary" },
+      "selection": { "selectable": true, "ariaLabel": "Marca de congruencia en AB", "role": "secondary" },
       "target": true,
-      "targetId": "polyABD",
-      "objectType": "path",
-      "geometry": {
-        "type": "polygon",
-        "points": ["pA", "pB", "pD"]
+      "targetId": "congruenceMarkAB",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": ["pA", "pB"]
       },
-      "appearance": { "fillOpacity": 0.25, "strokeWidth": 1, "preserveColorOnHighlight": true }
+      "count": 2,
+      "height": 0.5,
+      "appearance": { "preserveColorOnHighlight": true }
     },
     {
-      "id": "polyACD",
-      "label": "Triángulo ACD",
-      "color": "canela",
+      "id": "congruenceMarkAC",
+      "label": "Marca AC",
+      "color": "terracota",
       "layerId": "geometry",
-      "order": 7,
+      "order": 26,
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Subtriángulo derecho ACD", "role": "secondary" },
+      "selection": { "selectable": true, "ariaLabel": "Marca de congruencia en AC", "role": "secondary" },
       "target": true,
-      "targetId": "polyACD",
-      "objectType": "path",
-      "geometry": {
-        "type": "polygon",
-        "points": ["pA", "pC", "pD"]
+      "targetId": "congruenceMarkAC",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": ["pA", "pC"]
       },
-      "appearance": { "fillOpacity": 0.25, "strokeWidth": 1, "preserveColorOnHighlight": true }
+      "count": 2,
+      "height": 0.5,
+      "appearance": { "preserveColorOnHighlight": true }
+    },
+    {
+      "id": "anguloA",
+      "label": "Ángulo α en A",
+      "color": "ocre",
+      "layerId": "geometry",
+      "order": 22,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": { "selectable": true, "ariaLabel": "Ángulo en el vértice A", "role": "secondary" },
+      "target": true,
+      "targetId": "anguloA",
+      "objectType": "angle",
+      "points": ["pB", "pA", "pC"],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": { "radius": 0.9, "preserveColorOnHighlight": true }
     },
     {
       "id": "anguloB",
-      "label": "Ángulo β en B",
+      "label": "Ángulo en B",
       "color": "mora",
       "layerId": "geometry",
       "order": 20,
@@ -249,7 +233,7 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec(
     },
     {
       "id": "anguloC",
-      "label": "Ángulo γ en C",
+      "label": "Ángulo en C",
       "color": "mora",
       "layerId": "geometry",
       "order": 21,
@@ -270,56 +254,175 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec(
   "steps": [
     {
       "id": "step-triangulo",
-      "label": "Triángulo isósceles con AB = AC",
-      "description": "En un triángulo isósceles ABC, los lados AB y AC son congruentes.",
-      "visibleTargets": ["polyABC", "ladoAB", "ladoAC"],
-      "durationMs": 1000
+      "label": "Triángulo isósceles con AB ≅ AC",
+      "description": "Sea △ABC un triángulo donde los lados AB y AC son congruentes por hipótesis.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "ladoAB",
+        "ladoAC",
+        "ladoBC",
+        "polyABC",
+        "congruenceMarkAB",
+        "congruenceMarkAC"
+      ],
+      "durationMs": 1000,
+      "objectStates": {
+        "ladoAB": { "emphasis": "primary" },
+        "ladoAC": { "emphasis": "primary" },
+        "congruenceMarkAB": { "emphasis": "primary" },
+        "congruenceMarkAC": { "emphasis": "primary" },
+        "polyABC": { "emphasis": "secondary" },
+        "pA": { "emphasis": "secondary" },
+        "pB": { "emphasis": "secondary" },
+        "pC": { "emphasis": "secondary" },
+        "ladoBC": { "emphasis": "none" }
+      }
     },
     {
-      "id": "step-bisectriz",
-      "label": "Construcción de la bisectriz AD",
-      "description": "Se traza la bisectriz del ángulo en A, que corta a la base en el punto D.",
-      "visibleTargets": ["bisectriz", "pD"],
-      "durationMs": 1000
+      "id": "step-angulo-vertice",
+      "label": "Reflexividad del ángulo en el vértice (Axioma III.4)",
+      "description": "El ángulo interior en el vértice A es idéntico a sí mismo y satisface ∠BAC ≅ ∠CAB por reflexividad de la congruencia angular.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "ladoAB",
+        "ladoAC",
+        "ladoBC",
+        "polyABC",
+        "congruenceMarkAB",
+        "congruenceMarkAC",
+        "anguloA"
+      ],
+      "durationMs": 1000,
+      "objectStates": {
+        "anguloA": { "emphasis": "primary" },
+        "pA": { "emphasis": "primary" },
+        "ladoAB": { "emphasis": "secondary" },
+        "ladoAC": { "emphasis": "secondary" },
+        "congruenceMarkAB": { "emphasis": "secondary" },
+        "congruenceMarkAC": { "emphasis": "secondary" },
+        "polyABC": { "emphasis": "none" },
+        "ladoBC": { "emphasis": "none" },
+        "pB": { "emphasis": "none" },
+        "pC": { "emphasis": "none" }
+      }
     },
     {
-      "id": "step-congruencia",
-      "label": "Congruencia de triángulos (ABD ≅ ACD)",
-      "description": "Por el criterio LAL (AB=AC, ∠BAD=∠CAD, AD=AD), los triángulos ABD y ACD son congruentes.",
-      "visibleTargets": ["polyABD", "polyACD"],
-      "durationMs": 1000
+      "id": "step-correspondencia",
+      "label": "Correspondencia de Pappus y verificación de III.5",
+      "description": "Al comparar △ABC con su permutación △ACB (A↔A, B↔C, C↔B), se cumple AB ≅ AC, ∠BAC ≅ ∠CAB y AC ≅ AB (por simetría).",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "ladoAB",
+        "ladoAC",
+        "ladoBC",
+        "polyABC",
+        "congruenceMarkAB",
+        "congruenceMarkAC",
+        "anguloA"
+      ],
+      "durationMs": 1000,
+      "objectStates": {
+        "ladoAB": { "emphasis": "primary" },
+        "ladoAC": { "emphasis": "primary" },
+        "congruenceMarkAB": { "emphasis": "primary" },
+        "congruenceMarkAC": { "emphasis": "primary" },
+        "anguloA": { "emphasis": "primary" },
+        "pA": { "emphasis": "primary" },
+        "pB": { "emphasis": "secondary" },
+        "pC": { "emphasis": "secondary" },
+        "polyABC": { "emphasis": "secondary" },
+        "ladoBC": { "emphasis": "none" }
+      }
     },
     {
       "id": "step-angulos-base",
-      "label": "Igualdad de los ángulos de la base",
-      "description": "Como consecuencia de la congruencia, los ángulos de la base β y γ son congruentes.",
-      "visibleTargets": ["anguloB", "anguloC"],
-      "durationMs": 1000
+      "label": "Congruencia de los ángulos de la base (Axioma III.5)",
+      "description": "Por aplicación directa del Axioma III.5 de Hilbert, los ángulos homólogos opuestos son congruentes: ∠ABC ≅ ∠ACB.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "ladoAB",
+        "ladoAC",
+        "ladoBC",
+        "polyABC",
+        "congruenceMarkAB",
+        "congruenceMarkAC",
+        "anguloA",
+        "anguloB",
+        "anguloC"
+      ],
+      "durationMs": 1000,
+      "objectStates": {
+        "anguloB": { "emphasis": "primary" },
+        "anguloC": { "emphasis": "primary" },
+        "pB": { "emphasis": "primary" },
+        "pC": { "emphasis": "primary" },
+        "ladoBC": { "emphasis": "secondary" },
+        "ladoAB": { "emphasis": "secondary" },
+        "ladoAC": { "emphasis": "secondary" },
+        "congruenceMarkAB": { "emphasis": "none" },
+        "congruenceMarkAC": { "emphasis": "none" },
+        "anguloA": { "emphasis": "none" },
+        "polyABC": { "emphasis": "none" },
+        "pA": { "emphasis": "none" }
+      }
     }
   ],
   "note": "Arrastra el vértice A a lo largo del eje de simetría para cambiar la altura del triángulo.",
   "translations": {
     "eu": {
-      "title": "Triangelu isoszelearen teorema",
+      "title": "Triangelu isoszelearen teorema (Papusen frogapena)",
       "note": "Arrastatu A erpina simetria-ardatzean zehar triangeluaren altuera aldatzeko.",
       "steps": {
         "step-triangulo": {
-          "label": "AB = AC dituen triangelu isoszelea",
-          "description": "ABC triangelu isoszele batean, AB eta AC aldeak kongruenteak dira."
+          "label": "AB ≅ AC alde kongruenteak dituen triangelu isoszelea",
+          "description": "Izan bedi △ABC triangelua, non AB eta AC aldeak kongruenteak diren hasierako hipotesiz."
         },
-        "step-bisectriz": {
-          "label": "AD erdibitzailearen eraikuntza",
-          "description": "A-ko angeluaren erdibitzailea marrazten da, oinarria D puntuan ebakiz."
+        "step-angulo-vertice": {
+          "label": "Erpineko angeluaren erreflexibotasuna (III.4 Axioma)",
+          "description": "A erpineko barne-angelua bere buruaren berdina da eta ∠BAC ≅ ∠CAB betetzen du erreflexibotasunez."
+        },
+        "step-correspondencia": {
+          "label": "Papusen korrespondentzia eta III.5-aren egiaztapena",
+          "description": "△ABC eta bere △ACB permutazioa alderatuz (A↔A, B↔C, C↔B), AB ≅ AC, ∠BAC ≅ ∠CAB eta AC ≅ AB betetzen dira."
         },
         "step-angulos-base": {
-          "label": "Oinarriko angeluen berdintasuna",
-          "description": "Kongruentziaren ondorioz, oinarriko β eta γ angeluak kongruenteak dira."
+          "label": "Oinarriko angeluen kongruentzia (III.5 Axioma)",
+          "description": "Hilbert-en III.5 Axioma zuzenean aplikatuz, B eta C erpinetako angelu homologoak kongruenteak dira: ∠ABC ≅ ∠ACB."
+        }
+      }
+    },
+    "en": {
+      "title": "Isosceles Triangle Theorem (Pappus's Proof)",
+      "note": "Drag vertex A along the symmetry axis to adjust the triangle height.",
+      "steps": {
+        "step-triangulo": {
+          "label": "Isosceles triangle with congruent sides AB ≅ AC",
+          "description": "Let △ABC be a triangle where sides AB and AC are congruent by hypothesis."
+        },
+        "step-angulo-vertice": {
+          "label": "Reflexivity of the vertex angle (Axiom III.4)",
+          "description": "The interior angle at vertex A is identical to itself and satisfies ∠BAC ≅ ∠CAB by reflexivity."
+        },
+        "step-correspondencia": {
+          "label": "Pappus correspondence and verification of III.5",
+          "description": "Comparing △ABC with its permutation △ACB (A↔A, B↔C, C↔B), we have AB ≅ AC, ∠BAC ≅ ∠CAB, and AC ≅ AB."
+        },
+        "step-angulos-base": {
+          "label": "Congruence of base angles (Axiom III.5)",
+          "description": "By direct application of Hilbert's Axiom III.5, the corresponding homologous angles are congruent: ∠ABC ≅ ∠ACB."
         }
       }
     }
   }
-}
-);
+});
 /* @matematika-diagram-spec:end */
 
 export const DemoTrianguloIsosceles = () => (

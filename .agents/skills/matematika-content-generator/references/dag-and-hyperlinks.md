@@ -32,8 +32,8 @@ El atributo `isDependency={true}` en `<ConceptLink>` se reserva **estrictamente*
 | **Axiomas (`type: "axioma"`)** | **Obligatorio en primitivos de signatura** | Se aplica a los términos primitivos de su signatura (`punto`, `recta`, `plano`) y a las relaciones primitivas que postula (`incidencia`, `estar-entre`, `congruencia`), actuando como Grado $-1$ del DAG. |
 | **Concepto derivado** (`subtype: "derivado"`) | **`true` en conceptos y axiomas constitutivos** | Elementos esenciales sin los cuales el concepto no puede definirse (e.g. `semiplano` $\to$ `recta`, `plano`, `segmento`, `axioma-orden-4`; `triangulo-rectangulo` $\to$ `triangulo`, `angulo`, `perpendicular`). |
 | **Conceptos nominales / Meta-conceptos** | **Omitir o `false`** | Nociones estructurales o de teoría de modelos (`dimension`, `signatura`, `estructura-geometrica`, `dominio`, `conjunto-disjunto`) que no actúan como cuellos de botella en el DAG deductivo. |
-| **Teoremas (`type: "teorema"` / `type: "lema"`)** | **`true` en axiomas, teoremas y lemas antecedentes** | Justifica los fundamentos lógicos del enunciado. **Prohibido marcar `isDependency={true}` hacia su propia demostración**. |
-| **Demostraciones (`type: "demostracion"`)** | **`true` en axiomas, lemas y método de prueba** | Enlaza con `isDependency={true}` a los axiomas o lemas utilizados como pasos de inferencia y al método formal (`metodo-contradiccion`, `metodo-directo`). |
+| **Teoremas (`type: "teorema"` / `type: "lema"`)** | **`true` en axiomas, teoremas, lemas y conceptos (primitivos o derivados) constitutivos** | Justifica los fundamentos lógicos y ontológicos del enunciado. Abarca axiomas antecedentes, lemas previos y los conceptos geométricos (tanto primitivos como definiciones derivadas: e.g. `triangulo`, `segmento`, `triangulo-rectangulo`, `triangulo-isosceles`, `angulos-suplementarios`, `paralelas`) sobre los que se formula la hipótesis o la tesis. **Prohibido marcar `isDependency={true}` hacia su propia demostración** (las demostraciones cuelgan de sus teoremas y aportan sus propias dependencias de prueba). |
+| **Demostraciones (`type: "demostracion"`)** | **`true` en axiomas, lemas, método y conceptos de inferencia** | Enlaza con `isDependency={true}` a los axiomas o lemas utilizados como pasos de inferencia, al método formal (`metodo-contradiccion`, `metodo-directo`) y a los conceptos geométricos que intervienen en la deducción. **Prohibido marcar `isDependency={true}` hacia el teorema demostrado (`parentTheorem`)**, pues el teorema es el resultado probado, no un antecedente lógico de su demostración. |
 | **Modelos (`type: "modelo"`)** | **Omitir** (`false` por defecto) | Un modelo es una estructura semántica de satisfacción, no un nodo deductivo antecedente. |
 | **Ejercicios y Ejemplos** (`type: "ejercicio"`, `"ejemplo"`) | **`true` en el teorema/definición evaluada** | Conecta la aplicación práctica con su fundamento teórico. |
 | **Biografías históricas (`type: "matematico"`)** | **Prohibido** | Las entradas biográficas no intervienen en las cadenas de inferencia lógica. |
@@ -109,11 +109,13 @@ Para asegurar la uniformidad absoluta en todo el corpus documental, se deben emp
 | **Lógica y Fundamentos** | Lógica matemática / Teoría de modelos / Consistencia lógica | `logica`, `teoria-modelos`, `consistencia-logica` |
 | | Signatura formal / Estructura matemática / Dominio primitivo | `signatura`, `estructura-geometrica`, `dominio` |
 | | Relación binaria / Relación de equivalencia / Clase de equivalencia | `relacion-binaria`, `relacion-equivalencia`, `clase-equivalencia` |
-| | Función / Operador / Aplicación / Inyectividad | `funcion`, `operador`, `aplicacion`, `inyectividad` |
+| | Función / Operador / Aplicación / Inyectividad / Biyección | `funcion`, `operador`, `aplicacion`, `inyectividad`, `biyeccion` |
+| | Propiedades relacionales: Simetría / Reflexividad / Transitividad | `simetria`, `reflexividad`, `transitividad` |
+| | Estructuras lógicas: Teorema / Demostración / Hipótesis / Tesis | `teorema`, `demostracion`, `hipotesis`, `tesis` |
 | | Conjunto potencia / Conjunto disjunto / Conjunto convexo / Partición | `conjunto-potencia`, `conjunto-disjunto`, `conjunto-convexo`, `particion` |
 | **Álgebra y Cuadriláteros** | Cuadrilátero / Paralelogramo / Rectángulo / Cuadrado | `cuadrilatero`, `paralelogramo`, `rectangulo`, `cuadrado` |
 | | Circunferencia / Radio / Diámetro | `circunferencia`, `radio`, `diametro` |
 | | Grupo / Cuerpo / Espacio vectorial / Isomorfismo | `grupo`, `cuerpo`, `espacio-vectorial`, `isomorfismo` |
-| **Matemáticos Históricos** | Euclides / Hilbert / Pasch / Fano / Pitágoras / Tales | `euclides`, `hilbert`, `pasch`, `fano`, `pitagoras`, `tales` |
+| **Matemáticos Históricos** | Euclides / Hilbert / Pasch / Fano / Pitágoras / Tales / Pappus | `euclides`, `hilbert`, `pasch`, `fano`, `pitagoras`, `tales`, `pappus` |
 | | Arquímedes / Dedekind / Descartes / Peano / Bolyai / Lobachevski | `arquimedes`, `dedekind`, `descartes`, `peano`, `bolyai`, `lobachevski` |
 | | Fermat / Poncelet / Staudt / Steiner / Menger / Lebesgue / Hurewicz / Urysón / Wallman | `fermat`, `poncelet`, `staudt`, `steiner`, `menger`, `lebesgue`, `hurewicz`, `urysohn`, `wallman` |

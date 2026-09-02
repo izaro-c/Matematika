@@ -6,14 +6,14 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 > Un documento se considera **Aprobado con Visto Bueno Oficial** únicamente tras la revisión y confirmación explícita del usuario.
 
 **Resumen de Estado:**
-- **Aprobados con Visto Bueno:** 46 documentos
+- **Aprobados con Visto Bueno:** 50 documentos
 - **Reescritos en Espera de Revisión:** 0 documentos
-- **Pendientes de Reescritura:** 66 documentos
+- **Pendientes de Reescritura:** 60 documentos
 - **Total de Nodos en el Grafo:** 112 documentos
 
 ---
 
-## 1. Documentos con Visto Bueno Oficial (Aprobados: 46)
+## 1. Documentos con Visto Bueno Oficial (Aprobados: 50)
 
 | ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Fecha Aprobación |
 | :--- | :--- | :--- | :--- | :--- | :---: |
@@ -23,7 +23,7 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 | [`concepto-primitivo`](../content/mdx/es/definitions/concepto-primitivo.mdx) | Concepto primitivo | Oinarrizko kontzeptua | Primitive concept | Definición (`primitivo`) | ✅ 2026-08-29 |
 | [`incidencia`](../content/mdx/es/definitions/incidencia.mdx) | Incidencia | Intzidentzia | Incidence | Definición (`primitivo`) | ✅ 2026-08-29 |
 | [`dimension`](../content/mdx/es/definitions/dimension.mdx) | Dimensión | Dimentsioa | Dimension | Definición (`nominal`) | ✅ 2026-08-29 |
-| [`estructura-geometrica`](../content/mdx/es/definitions/estructura-geometrica.mdx) | Estructura geométrica | Egitura geometrikoa | Geometric structure | Definición (`nominal`) | ✅ 2026-08-29 |
+| [`estructura-geometrica`](../content/mdx/es/estructura-geometrica.mdx) | Estructura geométrica | Egitura geometrikoa | Geometric structure | Definición (`nominal`) | ✅ 2026-08-29 |
 | [`signatura`](../content/mdx/es/definitions/signatura.mdx) | Signatura | Sinadura | Signature | Definición (`nominal`) | ✅ 2026-08-29 |
 | [`semiplano`](../content/mdx/es/definitions/semiplano.mdx) | Semiplano | Planoerdia | Half-plane | Definición (`derivado`) | ✅ 2026-08-29 |
 | [`dominio`](../content/mdx/es/definitions/dominio.mdx) | Dominio | Domeinua | Domain | Definición (`nominal`) | ✅ 2026-08-29 |
@@ -63,26 +63,28 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 | [`angulos-suplementarios`](../content/mdx/es/definitions/angulos-suplementarios.mdx) | Ángulos suplementarios | Angelu betegarriak | Supplementary Angles | Definición (`derivado`) | ✅ 2026-08-31 |
 | [`perpendicular`](../content/mdx/es/definitions/perpendicular.mdx) | Perpendicularidad | Perpendikulartasuna | Perpendicular Lines | Definición (`derivado`) | ✅ 2026-08-31 |
 | [`triangulo-rectangulo`](../content/mdx/es/definitions/triangulo-rectangulo.mdx) | Triángulo rectángulo | Triangelu angeluzuzena | Right Triangle | Definición (`derivado`) | ✅ 2026-08-31 |
+| [`teorema-triangulo-isosceles`](../content/mdx/es/theorems/teorema-triangulo-isosceles.mdx) | Teorema del triángulo isósceles | Triangelu isoszelearen teorema | Isosceles Triangle Theorem | `teorema` | ✅ 2026-09-02 |
+| [`demo-triangulo-isosceles`](../content/mdx/es/demonstrations/demo-triangulo-isosceles.mdx) | Demostración: Teorema del triángulo isósceles | Frogapena: Triangelu isoszelearen teorema | Proof: Isosceles Triangle Theorem | `demostracion` | ✅ 2026-09-02 |
+| [`teorema-angulos-opuestos-verticales`](../content/mdx/es/theorems/teorema-angulos-opuestos-verticales.mdx) | Teorema de los ángulos opuestos por el vértice | Erpinez aurkako angeluen teorema | Vertical Angles Theorem | `teorema` | ✅ 2026-09-02 |
+| [`demo-angulos-opuestos-verticales`](../content/mdx/es/demonstrations/demo-angulos-opuestos-verticales.mdx) | Demostración: Ángulos opuestos por el vértice | Frogapena: Erpinez aurkako angeluak | Proof: Vertical Angles Theorem | `demostracion` | ✅ 2026-09-02 |
 
 ---
 
 ## 2. Documentos Reescritos con Skill Actualizada (En Espera de Revisión: 0)
 
-*Actualmente no hay documentos en espera de revisión.*
+*No hay documentos en espera de revisión.*
 
-## 3. Plan de Reescritura Ordenado por Prioridad Epistemológica (66 pendientes)
+---
+
+## 3. Plan de Reescritura Ordenado por Prioridad Epistemológica (60 pendientes)
 
 El orden de los siguientes bloques sigue la secuencia lógica rigurosa de Hilbert y los fundamentos del grafo de conocimiento: desde los axiomas y conceptos de orden (Grupo II), pasando por congruencia (Grupo III), paralelismo (Grupo IV), continuidad (Grupo V), sistemas globales, teoremas mayores y demostraciones, hasta modelos, didáctica y biografías complementarias.
 
-### Fase 2: Prioridad 2: Congruencia y Rigidez Sintética (Hilbert Grupo III) (6 pendientes)
+### Fase 2: Prioridad 2: Congruencia y Rigidez Sintética (Hilbert Grupo III) (2 pendientes restantes)
 *Relación de congruencia, axiomas III.1-III.5, ángulos suplementarios, perpendicularidad, triángulos rectángulos, teoremas iniciales y sus demostraciones.*
 
 | ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
 | :--- | :--- | :--- | :--- | :--- | :---: |
-| [`teorema-triangulo-isosceles`](../content/mdx/es/theorems/teorema-triangulo-isosceles.mdx) | Teorema del triángulo isósceles | Triangelu isoszelearen teorema | Isosceles Triangle Theorem | `teorema` | ⏳ Pendiente |
-| [`demo-triangulo-isosceles`](../content/mdx/es/demonstrations/demo-triangulo-isosceles.mdx) | Demostración: Teorema del triángulo isósceles | Frogapena: Triangelu isoszelearen teorema | Proof: Isosceles Triangle Theorem | `demostracion` | ⏳ Pendiente |
-| [`teorema-angulos-opuestos-verticales`](../content/mdx/es/theorems/teorema-angulos-opuestos-verticales.mdx) | Teorema de los ángulos opuestos por el vértice | Erpinez aurkako angeluen teorema | Vertical Angles Theorem | `teorema` | ⏳ Pendiente |
-| [`demo-angulos-opuestos-verticales`](../content/mdx/es/demonstrations/demo-angulos-opuestos-verticales.mdx) | Demostración: Ángulos opuestos por el vértice | Frogapena: Erpinez aurkako angeluak | Proof: Vertical Angles Theorem | `demostracion` | ⏳ Pendiente |
 | [`teorema-congruencia-ala`](../content/mdx/es/theorems/teorema-congruencia-ala.mdx) | Teorema de congruencia Ángulo-Lado-Ángulo (ALA) | Angelua-Aldea-Angelua (AnAlAn) kongruentzia-teorema | Angle-Side-Angle (ASA) Congruence Theorem | `teorema` | ⏳ Pendiente |
 | [`demo-existencia-bisectriz`](../content/mdx/es/demonstrations/demo-existencia-bisectriz.mdx) | Demostración: Existencia y unicidad de la bisectriz | Frogapena: Bisektorearen existentzia eta bakartasuna | Proof: Existence and Uniqueness of the Angle Bisector | `demostracion` | ⏳ Pendiente |
 

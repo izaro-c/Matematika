@@ -169,6 +169,68 @@ describe('i18n system', () => {
     expect(eu.dictionary.construction.description).not.toContain('{title}');
     expect(es.dictionary.construction.pageFor).toBe('La página para');
   });
+
+  it('provides complete contentTypes dictionary for all supported languages', () => {
+    for (const lang of SUPPORTED_LANGUAGES) {
+      const types = lang.dictionary.contentTypes;
+      expect(types).toBeDefined();
+      expect(types.teorema.singular).toBeTruthy();
+      expect(types.teorema.plural).toBeTruthy();
+      expect(types.teorema.badge).toBeTruthy();
+
+      expect(types.axioma.singular).toBeTruthy();
+      expect(types.axioma.plural).toBeTruthy();
+      expect(types.axioma.badge).toBeTruthy();
+
+      expect(types.definicion.singular).toBeTruthy();
+      expect(types.definicion.plural).toBeTruthy();
+      expect(types.definicion.badge).toBeTruthy();
+
+      expect(types['caso-de-uso'].singular).toBeTruthy();
+      expect(types['sistema-axiomatico'].singular).toBeTruthy();
+      expect(types['plan-de-estudio'].singular).toBeTruthy();
+    }
+  });
+
+  it('translates content type labels and badges correctly across languages', async () => {
+    const { getContentTypeLabel, getContentTypeBadge } = await import('@/lib/theme/constants');
+
+    // Spanish
+    expect(getContentTypeLabel('teorema', 'singular', 'es')).toBe('Teorema');
+    expect(getContentTypeLabel('teorema', 'plural', 'es')).toBe('Teoremas');
+    expect(getContentTypeBadge('teorema', 'es')).toBe('TEOREMA');
+    expect(getContentTypeBadge('caso-de-uso', 'es')).toBe('USO');
+    expect(getContentTypeBadge('demostracion', 'es')).toBe('DEMO');
+
+    // English
+    expect(getContentTypeLabel('teorema', 'singular', 'en')).toBe('Theorem');
+    expect(getContentTypeLabel('teorema', 'plural', 'en')).toBe('Theorems');
+    expect(getContentTypeBadge('teorema', 'en')).toBe('THEOREM');
+    expect(getContentTypeBadge('caso-de-uso', 'en')).toBe('USE');
+    expect(getContentTypeBadge('demostracion', 'en')).toBe('PROOF');
+
+    // Basque
+    expect(getContentTypeLabel('teorema', 'singular', 'eu')).toBe('Teorema');
+    expect(getContentTypeLabel('teorema', 'plural', 'eu')).toBe('Teoremak');
+    expect(getContentTypeBadge('teorema', 'eu')).toBe('TEOREMA');
+    expect(getContentTypeBadge('caso-de-uso', 'eu')).toBe('ERABILERA');
+    expect(getContentTypeBadge('demostracion', 'eu')).toBe('FROGAPENA');
+  });
+
+  it('retrieves localized node translations via db.getNodeTranslation', () => {
+    const pitagorasEs = db.getNodeTranslation('teorema-pitagoras', 'es');
+    const pitagorasEu = db.getNodeTranslation('teorema-pitagoras', 'eu');
+    const pitagorasEn = db.getNodeTranslation('teorema-pitagoras', 'en');
+
+    expect(pitagorasEs?.title).toBe('Teorema de Pitágoras');
+    expect(pitagorasEu?.title).toBe('Pitagorasen teorema');
+    // If EN exists or falls back
+    expect(pitagorasEn?.title).toBeDefined();
+
+    const trianguloEu = db.getNodeTranslation('triangulo', 'eu');
+    expect(trianguloEu?.title).toBe('Triangelua');
+    expect(trianguloEu?.description).toContain('Erpin izeneko hiru puntu');
+  });
 });
 
 
