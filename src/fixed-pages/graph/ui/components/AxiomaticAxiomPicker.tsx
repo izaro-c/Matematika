@@ -27,24 +27,25 @@ interface AxiomGroup {
 
 function groupAxioms(axioms: AxiomOption[], lang?: string): AxiomGroup[] {
   const groups = new Map<string, AxiomGroup>();
-  const groupOrder = ['Incidencia', 'Orden', 'Congruencia', 'Paralelas', 'Continuidad'];
+  const dict = getLanguage(lang).dictionary.axiomFamilies;
+  const groupOrder = [dict.incidencia, dict.orden, dict.congruencia, dict.paralelas, dict.continuidad];
 
   for (const axiom of axioms) {
-  const dict = getLanguage(lang).dictionary.axiomFamilies;
-  const presentation = getAxiomGroup(axiom.id, lang);
-  const familyKey = axiom.axiomFamily as keyof typeof dict | undefined;
-  const label =
-    (familyKey && dict[familyKey])   
-    ?? presentation?.label            
-    ?? (presentation?.familyKey === 'continuidad' ? dict.continuidad : dict.otros);
-  const group = groups.get(label) ?? {
-    label,
-    color: presentation?.color ?? CONTENT_TYPE_COLORS.axioma.cssVar,
-    axioms: [],
-  };
-  group.axioms.push(axiom);
-  groups.set(label, group);
-}
+    const presentation = getAxiomGroup(axiom.id, lang);
+    const familyKey = axiom.axiomFamily ? (axiom.axiomFamily.toLowerCase() as keyof typeof dict) : undefined;
+    const label =
+      (familyKey && dict[familyKey])
+      ?? axiom.axiomFamily
+      ?? presentation?.label
+      ?? (presentation?.familyKey === 'continuidad' ? dict.continuidad : dict.otros);
+    const group = groups.get(label) ?? {
+      label,
+      color: presentation?.color ?? CONTENT_TYPE_COLORS.axioma.cssVar,
+      axioms: [],
+    };
+    group.axioms.push(axiom);
+    groups.set(label, group);
+  }
 
   return [...groups.values()].sort((left, right) => {
     const leftIndex = groupOrder.indexOf(left.label);
@@ -52,7 +53,7 @@ function groupAxioms(axioms: AxiomOption[], lang?: string): AxiomGroup[] {
     if (leftIndex >= 0 && rightIndex >= 0) return leftIndex - rightIndex;
     if (leftIndex >= 0) return -1;
     if (rightIndex >= 0) return 1;
-    return left.label.localeCompare(right.label, 'es');
+    return left.label.localeCompare(right.label, lang ?? 'es');
   });
 }
 

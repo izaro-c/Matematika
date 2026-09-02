@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/editor/generate-diagram-usages.ts",
-  "corpusHash": "c414da57c0c55a39def23538be2248fb78f90d788af3527bd56fe4692f860642",
+  "corpusHash": "4df02386fe4d48f1ca24ef056607de2bfb50c9a058ceadfef3f1fc2981a3906a",
   "paths": {
     "AxiomaArquimedes": "content/diagrams/Axiomas/AxiomaArquimedes.tsx",
     "AxiomaDedekind": "content/diagrams/Axiomas/AxiomaDedekind.tsx",
@@ -966,8 +966,8 @@
         "contentPath": "content/mdx/en/definitions/perpendicular.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 588,
-          "end": 627
+          "start": 761,
+          "end": 800
         },
         "blockId": "perpendicular:diagram:Perpendicular"
       },
@@ -976,8 +976,8 @@
         "contentPath": "content/mdx/es/definitions/perpendicular.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 609,
-          "end": 648
+          "start": 773,
+          "end": 812
         },
         "blockId": "perpendicular:diagram:Perpendicular"
       },
@@ -986,8 +986,8 @@
         "contentPath": "content/mdx/eu/definitions/perpendicular.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 625,
-          "end": 664
+          "start": 805,
+          "end": 844
         },
         "blockId": "perpendicular:diagram:Perpendicular"
       }
@@ -1222,8 +1222,8 @@
         "contentPath": "content/mdx/en/demonstrations/demo-angulos-opuestos-verticales.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 743,
-          "end": 764
+          "start": 840,
+          "end": 861
         },
         "blockId": "demo-angulos-opuestos-verticales:diagram:DemoAngulosOpuestos"
       },
@@ -1232,8 +1232,8 @@
         "contentPath": "content/mdx/es/demonstrations/demo-angulos-opuestos-verticales.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 773,
-          "end": 794
+          "start": 862,
+          "end": 883
         },
         "blockId": "demo-angulos-opuestos-verticales:diagram:DemoAngulosOpuestos"
       },
@@ -1242,8 +1242,8 @@
         "contentPath": "content/mdx/eu/demonstrations/demo-angulos-opuestos-verticales.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 740,
-          "end": 761
+          "start": 835,
+          "end": 856
         },
         "blockId": "demo-angulos-opuestos-verticales:diagram:DemoAngulosOpuestos"
       }
@@ -1414,8 +1414,8 @@
         "contentPath": "content/mdx/en/demonstrations/demo-triangulo-isosceles.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 722,
-          "end": 746
+          "start": 948,
+          "end": 972
         },
         "blockId": "demo-triangulo-isosceles:diagram:DemoTrianguloIsosceles"
       },
@@ -1424,8 +1424,8 @@
         "contentPath": "content/mdx/es/demonstrations/demo-triangulo-isosceles.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 733,
-          "end": 757
+          "start": 988,
+          "end": 1012
         },
         "blockId": "demo-triangulo-isosceles:diagram:DemoTrianguloIsosceles"
       },
@@ -1434,8 +1434,8 @@
         "contentPath": "content/mdx/eu/demonstrations/demo-triangulo-isosceles.mdx",
         "referenceKind": "Component",
         "sourceRange": {
-          "start": 732,
-          "end": 756
+          "start": 961,
+          "end": 985
         },
         "blockId": "demo-triangulo-isosceles:diagram:DemoTrianguloIsosceles"
       }
@@ -1766,8 +1766,8 @@
         "contentPath": "content/mdx/en/theorems/teorema-angulos-opuestos-verticales.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 717,
-          "end": 758
+          "start": 844,
+          "end": 885
         },
         "blockId": "teorema-angulos-opuestos-verticales:diagram:AngulosOpuestos"
       },
@@ -1776,8 +1776,8 @@
         "contentPath": "content/mdx/es/theorems/teorema-angulos-opuestos-verticales.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 766,
-          "end": 807
+          "start": 937,
+          "end": 978
         },
         "blockId": "teorema-angulos-opuestos-verticales:diagram:AngulosOpuestos"
       },
@@ -1786,8 +1786,8 @@
         "contentPath": "content/mdx/eu/theorems/teorema-angulos-opuestos-verticales.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 761,
-          "end": 802
+          "start": 919,
+          "end": 960
         },
         "blockId": "teorema-angulos-opuestos-verticales:diagram:AngulosOpuestos"
       }
@@ -1926,8 +1926,8 @@
         "contentPath": "content/mdx/en/theorems/teorema-triangulo-isosceles.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 646,
-          "end": 690
+          "start": 992,
+          "end": 1036
         },
         "blockId": "teorema-triangulo-isosceles:diagram:TrianguloIsosceles"
       },
@@ -1936,8 +1936,8 @@
         "contentPath": "content/mdx/es/theorems/teorema-triangulo-isosceles.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 665,
-          "end": 709
+          "start": 1029,
+          "end": 1073
         },
         "blockId": "teorema-triangulo-isosceles:diagram:TrianguloIsosceles"
       },
@@ -1946,8 +1946,8 @@
         "contentPath": "content/mdx/eu/theorems/teorema-triangulo-isosceles.mdx",
         "referenceKind": "Simulation",
         "sourceRange": {
-          "start": 679,
-          "end": 723
+          "start": 1048,
+          "end": 1092
         },
         "blockId": "teorema-triangulo-isosceles:diagram:TrianguloIsosceles"
       }
