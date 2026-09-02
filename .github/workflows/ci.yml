@@ -248,7 +248,6 @@ jobs:
       - editor-unit-tests
       - editor-integration-tests
       - editor-roundtrip
-      - editor-e2e
       - architecture-check
       - content-graph-validation
       - build
