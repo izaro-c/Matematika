@@ -4,17 +4,17 @@ El informe ejecuta apertura, proyección, cambios de modo y tres ciclos sobre el
 
 ## Resultado
 
-- Total de MDX: 333
-- Exactos: 333
+- Total de MDX: 336
+- Exactos: 336
 - No idempotentes: 0
 - Envelope alterado: 0
 - Body alterado: 0
-- Metadata legible y válida: 333/333
+- Metadata legible y válida: 336/336
 - Regiones opacas: 0
 
 | Compatibilidad | Documentos |
 | --- | ---: |
-| fully-editable | 333 |
+| fully-editable | 336 |
 | partially-editable | 0 |
 | read-only | 0 |
 | unsupported | 0 |
