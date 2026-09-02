@@ -1,16 +1,29 @@
 export const metadata = {
-  "id": "demo-triangulo-isosceles",
-  "type": "demostracion",
-  "title": "Frogapena: Triangelu isoszelearen teorema",
-  "description": "Bisektorearen eraikuntzan eta AlAnAl irizpidearen bidezko triangeluen kongruentzian oinarritutako frogapen klasikoa.",
-  "parentTheorem": "teorema-triangulo-isosceles",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides"],
-  "tags": ["geometria", "triangulos", "congruencia"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 5", role: "primary" }
+  id: "demo-triangulo-isosceles",
+  lang: "eu",
+  type: "demostracion",
+  title: "Frogapena: Triangelu isoszelearen teorema",
+  description: "Papusen korrespondentzia erreflexiboaren eta Hilberten III.5 Axiomaren bidezko froga sintetiko formala.",
+  parentTheorem: "teorema-triangulo-isosceles",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetikoa", "triangelua", "kongruentzia", "geometria-absolutua"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 5",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5 (Satz 11)",
+      role: "primary"
+    }
   ]
 };
 
@@ -18,55 +31,53 @@ import { DemoTrianguloIsosceles } from "@content/diagrams/Demos/DemoTrianguloIso
 
 <DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
 
-<Capitular letra="B" />i alde <ConceptLink targetId="congruencia">kongruente</ConceptLink> dituen $\triangle ABC$ <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat emanda, <ConceptLink targetId="teorema-triangulo-isosceles">triangelu isoszelearen teorema</ConceptLink> frogatzen da. Frogapenak ezartzen du alde kongruente horiei aurrez aurre dauden <ConceptLink targetId="angulo">angeluak</ConceptLink> (oinarriko angeluak) elkarren artean kongruenteak direla.
+<Capitular letra="A" />lexandriako <ConceptLink targetId="pappus">Papusek</ConceptLink> proposatutako eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> *Grundlagen der Geometrie* laneko §5ean (Satz 11) formalki bere gain hartutako <ConceptLink targetId="teorema-triangulo-isosceles">triangelu isoszelearen teoremaren</ConceptLink> <ConceptLink targetId="metodo-directo" isDependency={true}>dedukzio-froga zuzenak</ConceptLink> <ConceptLink targetId="angulo-base">oinarriko angeluen</ConceptLink> berdintasuna ezartzen du, <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink> bere buruarekin alderatuz bere <ConceptLink targetId="vertice">erpinen</ConceptLink> transposizio baten pean.
+
+Arrazoibide honek irudiaren berezko <ConceptLink targetId="simetria">simetria</ConceptLink> agerian uzten du eta zuzenean aplikatzen du <ConceptLink targetId="congruencia">angelu-kongruentziarako</ConceptLink> <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Hilberten III.5 Axioma</ConceptLink>, eraikuntza laguntzailerik behar izan gabe.
 
 <Separador />
 
-### Froga urratsez urrats
+### Froga formala urratsez urrats
 
-<ProofStep number={1} target="step-triangulo" title="Triangelu isoszelearen hipotesia">
-Izan bedi $\triangle ABC$ triangelu isoszelea, non $\overline{AB}$ eta $\overline{AC}$ aldeek luzera metriko bera duten:
+<ProofStep number={1} target="step-triangulo" title="Alboko aldeen kongruentziaren hipotesia">
+<ConceptLink targetId="triangulo" isDependency={true}>Triangelua</ConceptLink> <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> hartzen dugu abiapuntutzat, non hasierako hipotesiz <VisualBind element="ladoAB" color="carbon">$\overline{AB}$</VisualBind> eta <VisualBind element="ladoAC" color="carbon">$\overline{AC}$</VisualBind> aldameneko bi <ConceptLink targetId="lado" isDependency={true}>aldeak</ConceptLink> elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> diren:
 
-<Formula>
-  $$ \overline{AB} \cong \overline{AC} $$
-</Formula>
+$$
+\overline{AB} \cong \overline{AC}
+$$
+
+Beheko <VisualBind element="ladoBC" color="carbon">$\overline{BC}$</VisualBind> <ConceptLink targetId="segmento" isDependency={true}>zuzenkiak</ConceptLink> triangeluaren <ConceptLink targetId="base">oinarri</ConceptLink> gisa jokatzen du <VisualBind element="pB" color="carbon">$B$</VisualBind> eta <VisualBind element="pC" color="carbon">$C$</VisualBind> <ConceptLink targetId="vertice">erpinen</ConceptLink> artean.
 </ProofStep>
 
-<ProofStep number={2} target="step-bisectriz" title="Erpineko angeluaren bisektorearen eraikuntza">
-$A$ erpineko angeluaren erdi-zuzen bisektorea marrazten da, $\overline{BC}$ oinarria $D$ puntuan ebakitzen duena. <ConceptLink targetId="demo-existencia-bisectriz">Bisektorearen</ConceptLink> definizioz, $\angle BAC$ angelua bi zati kongruentetan banatzen du:
+<ProofStep number={2} target="step-angulo-vertice" title="Erpineko angeluaren erreflexibotasuna">
+Goiko <ConceptLink targetId="vertice">erpinean</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, barneko <ConceptLink targetId="angulo" isDependency={true}>angelua</ConceptLink> <VisualBind element="anguloA" color="ocre">$\angle BAC$</VisualBind> bere buruarekin bat dator. Angeluen garraio eta kongruentziaren axiomaren bidez (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>), edozein angeluk kongruentziaren <ConceptLink targetId="reflexividad">erreflexibitatea</ConceptLink> betetzen du hura mugatzen duten <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdien</ConceptLink> ordena alderantzikatzean:
 
-<Formula>
-  $$ \angle BAD \cong \angle CAD $$
-</Formula>
+$$
+\angle BAC \cong \angle CAB
+$$
 </ProofStep>
 
-<ProofStep number={3} target="step-congruencia" title="Triangeluen kongruentzia AlAnAl irizpidearen bidez">
-$\triangle ABD$ eta $\triangle ACD$ azpi-triangeluak alderatzen dira:
-1. $\overline{AB} \cong \overline{AC}$ hasierako hipotesiz.
-2. $\angle BAD \cong \angle CAD$ bisektorearen eraikuntzaz.
-3. $\overline{AD}$ zuzenkia bi triangeluen alde komuna da ($\overline{AD} \cong \overline{AD}$).
+<ProofStep number={3} target="step-correspondencia" title="Papusen korrespondentzia eta III.5-aren egiaztapena">
+<ConceptLink targetId="biyeccion">Bijekzio</ConceptLink> bat ezartzen dugu <ConceptLink targetId="triangulo" isDependency={true}>triangeluaren</ConceptLink> <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> <ConceptLink targetId="vertice">erpinen</ConceptLink> eta bere $\triangle ACB$ bertsio irauliaren artean, <ConceptLink targetId="base">oinarriko</ConceptLink> muturrak ordenan trukatuz (<VisualBind element="pB" color="carbon">$B \leftrightarrow C$</VisualBind>, <VisualBind element="pC" color="carbon">$C \leftrightarrow B$</VisualBind>) eta goiko <ConceptLink targetId="vertice">erpina</ConceptLink> finko mantenduz (<VisualBind element="pA" color="terracota">$A \leftrightarrow A$</VisualBind>):
 
-AlAnAl kongruentzia-axiomaren bidez (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 Axioma</ConceptLink>), kongruentzia lortzen da:
+$$
+A \longleftrightarrow A, \quad B \longleftrightarrow C, \quad C \longleftrightarrow B
+$$
 
-<Formula>
-  $$ \triangle ABD \cong \triangle ACD $$
-</Formula>
+Korrespondentzia honen pean, zuzenean betetzen dira <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Hilberten III.5 Axiomaren</ConceptLink> hiru baldintzak:
+1. Dagozkion <ConceptLink targetId="lado" isDependency={true}>aldeen</ConceptLink> lehen bikotea: <VisualBind element="ladoAB" color="carbon">$\overline{AB}$</VisualBind> $\cong$ <VisualBind element="ladoAC" color="carbon">$\overline{AC}$</VisualBind> (hasierako hipotesiz).
+2. Haien arteko <ConceptLink targetId="angulo" isDependency={true}>angelua</ConceptLink>: <VisualBind element="anguloA" color="ocre">$\angle BAC$</VisualBind> $\cong$ <VisualBind element="anguloA" color="ocre">$\angle CAB$</VisualBind> (<VisualBind element="pA" color="terracota">$A$</VisualBind> erpineko <ConceptLink targetId="reflexividad">erreflexibitateagatik</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>).
+3. Dagozkion aldeen bigarren bikotea: <VisualBind element="ladoAC" color="carbon">$\overline{AC}$</VisualBind> $\cong$ <VisualBind element="ladoAB" color="carbon">$\overline{AB}$</VisualBind> (zuzenkien <ConceptLink targetId="congruencia" isDependency={true}>kongruentziaren</ConceptLink> <ConceptLink targetId="simetria">simetriagatik</ConceptLink>, <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 Axioma</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-2" isDependency={true}>III.2 Axioma</ConceptLink> erabiliz).
 </ProofStep>
 
-<ProofStep number={4} target="step-angulos-base" title="Oinarriko angeluen berdintasuna">
-Bi triangeluak kongruenteak direnez, haien elementu homologo guztiak kongruenteak dira. Bereziki, oinarriko erpinetako angeluek honako hau betetzen dute:
+<ProofStep number={4} target="step-angulos-base" title="Oinarriko angeluen kongruentziaren dedukzioa">
+Bi <ConceptLink targetId="lado" isDependency={true}>alde</ConceptLink> eta haien arteko <ConceptLink targetId="angulo" isDependency={true}>angelua</ConceptLink> <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> direnez, <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Hilberten III.5 Axiomak</ConceptLink> zuzenean ezartzen du alde horiei aurrez aurreko gainerako angeluak kongruenteak direla. Bereziki, <ConceptLink targetId="angulo-base">oinarriko</ConceptLink> <VisualBind element="anguloB" color="mora">$\angle ABC$</VisualBind> eta <VisualBind element="anguloC" color="mora">$\angle ACB$</VisualBind> angeluentzat <VisualBind element="pB" color="carbon">$B$</VisualBind> eta <VisualBind element="pC" color="carbon">$C$</VisualBind> <ConceptLink targetId="vertice">erpinetan</ConceptLink>:
 
-<Formula>
-  $$ \angle ABC \cong \angle ACB $$
-</Formula>
+$$
+\angle ABC \cong \angle ACB
+$$
+
+Formalzki frogatuta geratzen da bi <ConceptLink targetId="lado" isDependency={true}>alde</ConceptLink> kongruente dituen edozein <ConceptLink targetId="triangulo" isDependency={true}>triangelutan</ConceptLink>, <ConceptLink targetId="angulo-base">oinarriko angeluak</ConceptLink> elkarren artean kongruenteak direla.
 </ProofStep>
-
-<Separador />
-
-### Azterketa deduktiboa
-
-<Nota>
-  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.5 Proposizioa, historikoki *Pons Asinorum* izenez ezaguna. Frogapen hau <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> barruan dago eta paraleloen axiomatik at mantentzen da.
-</Nota>
 
 </DemonstrationSection>

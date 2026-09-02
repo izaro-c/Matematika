@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CONTENT_TYPE_CONFIG } from '@/lib/theme/constants';
+import { CONTENT_TYPE_CONFIG, getContentTypeLabel } from '@/lib/theme/constants';
 import { getKnowledgeGraphLegendTypes } from '../../lib/graphUtils';
 import { GraphExplorerLink } from './GraphExplorerLink';
 import { useI18n } from '@/i18n';
@@ -17,7 +17,7 @@ interface GraphLegendProps {
  */
 export function GraphLegend({ nodeGroups }: GraphLegendProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const { t } = useI18n();
+  const { lang, t } = useI18n();
   const legendTypes = getKnowledgeGraphLegendTypes(nodeGroups);
 
   return (
@@ -67,7 +67,7 @@ export function GraphLegend({ nodeGroups }: GraphLegendProps) {
                     className="w-3.5 h-3.5 rounded-sm border border-carbon/30 block"
                     style={{ backgroundColor: config.graphColor }}
                   />
-                  <span>{config.labelPlural}</span>
+                  <span>{getContentTypeLabel(type, 'plural', lang)}</span>
                 </div>
               );
             })}

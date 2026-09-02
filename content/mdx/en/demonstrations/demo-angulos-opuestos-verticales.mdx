@@ -1,16 +1,18 @@
 export const metadata = {
-  "id": "demo-angulos-opuestos-verticales",
-  "type": "demostracion",
-  "title": "Proof: Vertical Angles Theorem",
-  "description": "Direct proof based on the supplementary nature of adjacent angles along a straight line and the subtraction property of congruences.",
-  "parentTheorem": "teorema-angulos-opuestos-verticales",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides"],
-  "tags": ["geometria", "congruencia", "angulos"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elements", author: "Euclides", locator: "Book I, Proposition 15", role: "primary" }
+  id: "demo-angulos-opuestos-verticales",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Vertical Angles Theorem",
+  description: "Direct deductive proof based on the congruence of adjacent supplementary angles across intersecting straight lines.",
+  parentTheorem: "teorema-angulos-opuestos-verticales",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria", "congruencia", "angulos"],
+  layout: "split",
+  sources: [
+    { title: "Elements", author: "Euclides", locator: "Book I, Proposition 15", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §5", role: "secondary" }
   ]
 };
 
@@ -18,54 +20,50 @@ import { DemoAngulosOpuestos } from "@content/diagrams/Demos/DemoAngulosOpuestos
 
 <DemonstrationSection diagram={<DemoAngulosOpuestos />}>
 
-<Capitular letra="L" />et <VisualBind element="lineL" color="carbon">$l$</VisualBind> and <VisualBind element="lineM" color="carbon">$m$</VisualBind> be two <ConceptLink targetId="recta">lines</ConceptLink> intersecting at <ConceptLink targetId="punto">point</ConceptLink> $O$. The <ConceptLink targetId="teorema-angulos-opuestos-verticales">vertical angles theorem</ConceptLink> is demonstrated: any pair of vertically opposite angles formed by the intersection are <ConceptLink targetId="congruencia">congruent</ConceptLink> to each other.
+<Capitular letra="T" />he formal deduction of the <ConceptLink targetId="teorema-angulos-opuestos-verticales">vertical angles theorem</ConceptLink> is established by the <ConceptLink targetId="metodo-directo" isDependency={true}>direct method</ConceptLink>, applying the synthetic definition of adjacent <ConceptLink targetId="angulos-suplementarios" isDependency={true}>supplementary angles</ConceptLink> and the reflexive property of angular <ConceptLink targetId="congruencia" isDependency={true}>congruence</ConceptLink> (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>).
 
 <Separador />
 
-### Step-by-step proof
+### Step-by-step formal proof
 
-<ProofStep number={1} target="supp12" title="Supplementary adjacent angles on the first line">
-The intersecting lines $l$ and $m$ determine four <ConceptLink targetId="angulo">angles</ConceptLink> around the intersection vertex $O$. The angles <VisualBind element="angle1" color="terracota">$\angle 1$</VisualBind> and <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> lie adjacently on line $l$, forming a <ConceptLink targetId="angulos-suplementarios">straight angle</ConceptLink>:
+<ProofStep number={1} target="supp12" title="First pair of adjacent supplementary angles">
+Given the intersecting <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> <VisualBind element="lineL" color="carbon">$l$</VisualBind> and <VisualBind element="lineM" color="carbon">$m$</VisualBind> meeting at the <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> <VisualBind element="O" color="carbon">$O$</VisualBind>, the <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="A" color="carbon">$A$</VisualBind> and <VisualBind element="Ap" color="carbon">$A'$</VisualBind> on line $l$ satisfy the <ConceptLink targetId="estar-entre" isDependency={true}>betweenness relation</ConceptLink> $A * O * A'$, determining the opposite <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> $\overrightarrow{OA}$ and $\overrightarrow{OA'}$. The ray $\overrightarrow{OB}$ determined by point <VisualBind element="B" color="carbon">$B$</VisualBind> on line $m$ forms two adjacent <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink>: <VisualBind element="angle1" color="pavo">$\alpha = \angle AOB = \angle(\overrightarrow{OA}, \overrightarrow{OB})$</VisualBind> and <VisualBind element="angle2" color="musgo">$\beta = \angle BOA' = \angle(\overrightarrow{OB}, \overrightarrow{OA'})$</VisualBind>. By sharing the common ray $\overrightarrow{OB}$ while their remaining sides are opposite rays along line $l$, $\alpha$ and $\beta$ form an adjacent <ConceptLink targetId="angulos-suplementarios" isDependency={true}>supplementary</ConceptLink> pair:
 
-<Formula>
-  $$ m(\angle 1) + m(\angle 2) = 180^\circ $$
-</Formula>
+$$
+\alpha \text{ is an adjacent supplement to } \beta
+$$
 </ProofStep>
 
-<ProofStep number={2} target="supp23" title="Supplementary adjacent angles on the second line">
-Analogously, along line $m$, the adjacent angles <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> and <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> are <ConceptLink targetId="angulos-suplementarios">supplementary</ConceptLink>:
+<ProofStep number={2} target="supp23" title="Second pair of adjacent supplementary angles">
+Considering line $m$, points <VisualBind element="B" color="carbon">$B$</VisualBind> and <VisualBind element="Bp" color="carbon">$B'$</VisualBind> satisfy $B * O * B'$, determining the opposite <ConceptLink targetId="semirrecta">rays</ConceptLink> $\overrightarrow{OB}$ and $\overrightarrow{OB'}$. The ray $\overrightarrow{OA'}$ on line $l$ forms with them the adjacent <ConceptLink targetId="angulo">angles</ConceptLink> <VisualBind element="angle2" color="musgo">$\beta = \angle BOA' = \angle(\overrightarrow{OB}, \overrightarrow{OA'})$</VisualBind> and <VisualBind element="angle3" color="pavo">$\alpha' = \angle A'OB' = \angle(\overrightarrow{OA'}, \overrightarrow{OB'})$</VisualBind>. Since they share ray $\overrightarrow{OA'}$ and their other sides are opposite rays along line $m$, $\alpha'$ and $\beta$ are adjacent <ConceptLink targetId="angulos-suplementarios" isDependency={true}>supplements</ConceptLink>:
 
-<Formula>
-  $$ m(\angle 2) + m(\angle 3) = 180^\circ $$
-</Formula>
+$$
+\alpha' \text{ is an adjacent supplement to } \beta
+$$
 </ProofStep>
 
-<ProofStep number={3} target="angle2" title="Equality of angular sums">
-Since both angular sums equal a straight angle ($180^\circ$), the equality of real numbers yields:
+<ProofStep number={3} target="angle2" title="Reflexivity of the common adjacent angle">
+By the angle congruence axiom (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>), every <ConceptLink targetId="angulo">angle</ConceptLink> is congruent to itself. In particular, for the common angle <VisualBind element="angle2" color="musgo">$\beta$</VisualBind>, <ConceptLink targetId="reflexividad">reflexivity</ConceptLink> holds:
 
-<Formula>
-  $$ m(\angle 1) + m(\angle 2) = m(\angle 2) + m(\angle 3) $$
-</Formula>
+$$
+\beta \cong \beta
+$$
 </ProofStep>
 
-<ProofStep number={4} target="congruence13" title="Subtraction of the common angle">
-Applying the <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>angle congruence axioms</ConceptLink>, subtracting the common angle <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> from both sides yields the congruence of the first pair:
+<ProofStep number={4} target="alpha" title="Congruence of supplementary angles">
+Since both <ConceptLink targetId="angulo">angles</ConceptLink> <VisualBind element="angle1" color="pavo">$\alpha$</VisualBind> and <VisualBind element="angle3" color="pavo">$\alpha'$</VisualBind> are adjacent supplements to the same angle <VisualBind element="angle2" color="musgo">$\beta$</VisualBind>, and $\beta \cong \beta$, the <ConceptLink targetId="angulos-suplementarios" isDependency={true}>supplementary angle congruence theorem</ConceptLink> (*Satz 13* of <ConceptLink targetId="hilbert">Hilbert</ConceptLink>) guarantees that their supplements are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>:
 
-<Formula>
-  $$ \angle 1 \cong \angle 3 $$
-</Formula>
+$$
+\alpha \cong \alpha'
+$$
 </ProofStep>
 
-<ProofStep number={5} target="angle4" title="Proof for the complementary opposite pair">
-Applying the identical argument to the adjacent pair formed by <VisualBind element="angle3" color="terracota">$\angle 3$</VisualBind> and <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind> establishes that the second opposite pair satisfies <VisualBind element="angle2" color="pavo">$\angle 2$</VisualBind> $\cong$ <VisualBind element="angle4" color="pavo">$\angle 4$</VisualBind>.
+<ProofStep number={5} target="beta" title="Extension to the complementary opposite pair">
+Applying symmetric reasoning to the remaining adjacent angles with respect to the supplementary angle <VisualBind element="angle3" color="pavo">$\alpha'$</VisualBind>, it follows that the second pair of <ConceptLink targetId="angulo">angles</ConceptLink> vertically opposite at the <ConceptLink targetId="vertice">vertex</ConceptLink> formed by <VisualBind element="angle2" color="musgo">$\beta = \angle BOA'$</VisualBind> and <VisualBind element="angle4" color="musgo">$\beta' = \angle B'OA$</VisualBind> satisfies:
+
+$$
+\beta \cong \beta'
+$$
 </ProofStep>
-
-<Separador />
-
-### Deductive analysis
-
-<Nota>
-  Book I, Proposition 15 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>. This proof falls within <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, as it does not rely on the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>.
-</Nota>
 
 </DemonstrationSection>

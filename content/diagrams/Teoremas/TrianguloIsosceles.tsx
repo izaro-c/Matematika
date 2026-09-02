@@ -5,7 +5,7 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
 {
   "version": 3,
   "renderer": "matematika-diagram-renderer-v3",
-  "title": "Triangulo Isósceles",
+  "title": "Triángulo Isósceles",
   "componentId": "triangulo-isosceles",
   "category": "Teoremas",
   "mode": "simulation",
@@ -15,15 +15,15 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
   "viewport": {
     "bounds": [
       -5,
+      6,
       5,
-      5,
-      -5
+      -4
     ],
     "home": [
       -5,
+      6,
       5,
-      5,
-      -5
+      -4
     ],
     "minZoom": 0.2,
     "maxZoom": 12,
@@ -38,8 +38,8 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       "locked": false
     },
     {
-      "id": "controls",
-      "label": "Controles",
+      "id": "annotations",
+      "label": "Anotaciones",
       "order": 1,
       "visible": true,
       "locked": false
@@ -47,39 +47,6 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
   ],
   "groups": [],
   "objects": [
-    {
-      "id": "pA",
-      "label": "A",
-      "color": "terracota",
-      "layerId": "geometry",
-      "order": 9000,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Punto A",
-        "role": "primary"
-      },
-      "target": true,
-      "targetId": "pA",
-      "objectType": "point",
-      "definition": {
-        "type": "coordinates",
-        "x": -3.35,
-        "y": -2.79
-      },
-      "mobility": {
-        "type": "free"
-      },
-      "appearance": {
-        "size": 7,
-        "labelVisible": true,
-        "highlightSize": 10,
-        "preserveColorOnHighlight": true
-      },
-      "interaction": {}
-    },
     {
       "id": "pB",
       "label": "B",
@@ -91,7 +58,7 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto B",
+        "ariaLabel": "Vértice B",
         "role": "primary"
       },
       "target": true,
@@ -99,11 +66,11 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": 3.83,
-        "y": -0.7
+        "x": -3,
+        "y": -2
       },
       "mobility": {
-        "type": "free"
+        "type": "fixed"
       },
       "appearance": {
         "size": 7,
@@ -114,26 +81,59 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       "interaction": {}
     },
     {
-      "id": "pP",
-      "label": "P",
-      "color": "musgo",
+      "id": "pC",
+      "label": "C",
+      "color": "terracota",
       "layerId": "geometry",
-      "order": 10000,
+      "order": 8001,
       "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto P",
+        "ariaLabel": "Vértice C",
         "role": "primary"
       },
       "target": true,
-      "targetId": "pP",
+      "targetId": "pC",
       "objectType": "point",
       "definition": {
         "type": "coordinates",
-        "x": -1.1933190511529765,
-        "y": 3.1790338695111826
+        "x": 3,
+        "y": -2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "highlightSize": 10,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 9000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértice A",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 3.5
       },
       "mobility": {
         "type": "on-support",
@@ -148,45 +148,105 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       "interaction": {}
     },
     {
-      "id": "p4",
-      "label": "4",
-      "color": "ocre",
+      "id": "midBC",
+      "label": "M",
+      "color": "musgo",
       "layerId": "geometry",
-      "order": 2000,
+      "order": 7000,
       "visible": false,
       "locked": false,
       "groupIds": [],
       "selection": {
-        "selectable": true,
-        "ariaLabel": "Punto 4",
-        "role": "primary"
+        "selectable": false,
+        "ariaLabel": "Punto medio de BC",
+        "role": "secondary"
       },
       "target": false,
-      "targetId": "p4",
+      "targetId": "midBC",
       "objectType": "point",
       "definition": {
-        "type": "coordinates",
-        "x": 0.2802461930667155,
-        "y": 0.5189181708510687
+        "type": "midpoint",
+        "points": [
+          "pB",
+          "pC"
+        ]
       },
       "mobility": {
-        "type": "constrained",
-        "relationIds": [
-          "p4-coincident-midAB"
+        "type": "fixed"
+      },
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "lineMediatriz",
+      "label": "Eje de simetría",
+      "color": "musgo",
+      "layerId": "geometry",
+      "order": 1000,
+      "visible": false,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": false,
+        "ariaLabel": "Mediatriz de BC",
+        "role": "secondary"
+      },
+      "target": false,
+      "targetId": "lineMediatriz",
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "perpendicular",
+          "linePoints": [
+            "pB",
+            "pC"
+          ],
+          "through": "midBC"
+        }
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "polyABC",
+      "label": "Triángulo ABC",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 500,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo isósceles ABC",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "polyABC",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA",
+          "pB",
+          "pC"
         ]
       },
       "appearance": {
-        "size": 7,
-        "labelVisible": true,
-        "highlightSize": 10,
+        "strokeWidth": 1,
+        "fillOpacity": 0.12,
         "preserveColorOnHighlight": true
-      },
-      "interaction": {}
+      }
     },
     {
-      "id": "segAB",
-      "label": "Segmento AB",
-      "color": "terracota",
+      "id": "segBC",
+      "label": "Base BC",
+      "color": "carbon",
       "layerId": "geometry",
       "order": 1000,
       "visible": true,
@@ -194,7 +254,37 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Segmento AB",
+        "ariaLabel": "Base BC",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "segBC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.5,
+        "highlightStrokeWidth": 3.2,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segAB",
+      "label": "Lado AB",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 1001,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado AB",
         "role": "secondary"
       },
       "target": true,
@@ -208,142 +298,44 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
         ]
       },
       "appearance": {
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
+        "strokeWidth": 2.5,
+        "highlightStrokeWidth": 3.2,
         "preserveColorOnHighlight": true
       }
     },
     {
-      "id": "midAB",
-      "label": "M",
-      "color": "musgo",
+      "id": "segAC",
+      "label": "Lado AC",
+      "color": "carbon",
       "layerId": "geometry",
-      "order": 7000,
-      "visible": false,
+      "order": 1002,
+      "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto medio de AB",
+        "ariaLabel": "Lado AC",
         "role": "secondary"
       },
       "target": true,
-      "targetId": "midAB",
-      "objectType": "point",
-      "definition": {
-        "type": "midpoint",
+      "targetId": "segAC",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
         "points": [
           "pA",
-          "pB"
-        ]
-      },
-      "mobility": {
-        "type": "fixed"
-      },
-      "appearance": {
-        "preserveColorOnHighlight": true
-      }
-    },
-    {
-      "id": "lineMediatriz",
-      "label": "Mediatriz de AB",
-      "color": "musgo",
-      "layerId": "geometry",
-      "order": 1000,
-      "visible": false,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Mediatriz de AB",
-        "role": "secondary"
-      },
-      "target": true,
-      "targetId": "lineMediatriz",
-      "objectType": "path",
-      "geometry": {
-        "type": "line",
-        "construction": {
-          "type": "perpendicular",
-          "linePoints": [
-            "pA",
-            "pB"
-          ],
-          "through": "midAB"
-        }
-      },
-      "appearance": {
-        "dashed": true,
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
-        "preserveColorOnHighlight": true
-      }
-    },
-    {
-      "id": "segPA",
-      "label": "Distancia PA",
-      "color": "canela",
-      "layerId": "geometry",
-      "order": 1000,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Distancia PA",
-        "role": "secondary"
-      },
-      "target": true,
-      "targetId": "segPA",
-      "objectType": "path",
-      "geometry": {
-        "type": "segment",
-        "points": [
-          "pP",
-          "pA"
+          "pC"
         ]
       },
       "appearance": {
-        "dashed": false,
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
+        "strokeWidth": 2.5,
+        "highlightStrokeWidth": 3.2,
         "preserveColorOnHighlight": true
       }
     },
     {
-      "id": "segPB",
-      "label": "Distancia PB",
-      "color": "canela",
-      "layerId": "geometry",
-      "order": 1000,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": {
-        "selectable": true,
-        "ariaLabel": "Distancia PB",
-        "role": "secondary"
-      },
-      "target": true,
-      "targetId": "segPB",
-      "objectType": "path",
-      "geometry": {
-        "type": "segment",
-        "points": [
-          "pP",
-          "pB"
-        ]
-      },
-      "appearance": {
-        "dashed": false,
-        "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
-        "preserveColorOnHighlight": true
-      }
-    },
-    {
-      "id": "congruenceMarkPB",
-      "label": "Marca de congruencia",
+      "id": "congruenceMarkAB",
+      "label": "Marca AB",
       "color": "ocre",
       "layerId": "geometry",
       "order": 11000,
@@ -352,17 +344,17 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Marca de congruencia",
+        "ariaLabel": "Marca de congruencia en AB",
         "role": "secondary"
       },
       "target": true,
-      "targetId": "congruenceMarkPB",
+      "targetId": "congruenceMarkAB",
       "objectType": "mark",
       "variant": "congruence",
       "anchor": {
         "type": "between-points",
         "points": [
-          "pP",
+          "pA",
           "pB"
         ]
       },
@@ -373,28 +365,28 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       }
     },
     {
-      "id": "congruenceMarkAP",
-      "label": "Marca de congruencia",
+      "id": "congruenceMarkAC",
+      "label": "Marca AC",
       "color": "ocre",
       "layerId": "geometry",
-      "order": 12000,
+      "order": 11001,
       "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Marca de congruencia",
+        "ariaLabel": "Marca de congruencia en AC",
         "role": "secondary"
       },
       "target": true,
-      "targetId": "congruenceMarkAP",
+      "targetId": "congruenceMarkAC",
       "objectType": "mark",
       "variant": "congruence",
       "anchor": {
         "type": "between-points",
         "points": [
           "pA",
-          "pP"
+          "pC"
         ]
       },
       "count": 2,
@@ -404,36 +396,94 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       }
     },
     {
-      "id": "measurementPB",
-      "label": "Medición",
+      "id": "anguloB",
+      "label": "Ángulo en B",
       "color": "mora",
       "layerId": "geometry",
+      "order": 12000,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo en el vértice B",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "anguloB",
+      "objectType": "angle",
+      "points": [
+        "pC",
+        "pB",
+        "pA"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.9,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "anguloC",
+      "label": "Ángulo en C",
+      "color": "mora",
+      "layerId": "geometry",
+      "order": 12001,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo en el vértice C",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "anguloC",
+      "objectType": "angle",
+      "points": [
+        "pA",
+        "pC",
+        "pB"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.9,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "measurementSides",
+      "label": "Medición de lados",
+      "color": "carbon",
+      "layerId": "annotations",
       "order": 13000,
       "visible": true,
       "locked": false,
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Medición",
+        "ariaLabel": "Medición de lados",
         "role": "annotation"
       },
       "target": true,
-      "targetId": "measurementPB",
+      "targetId": "measurementSides",
       "objectType": "annotation",
       "variant": "measurement",
       "content": {
-        "text": "PA = PB = {value}",
-        "expression": "segPB.length",
+        "text": "AB = AC = {value}",
+        "expression": "segAB.length",
         "unit": "u",
         "precision": 2
       },
       "anchor": {
         "type": "object",
-        "object": "pP"
+        "object": "pA"
       },
       "measurement": {
         "refs": [
-          "pP",
+          "pA",
           "pB"
         ],
         "mode": "distance"
@@ -443,20 +493,19 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
       }
     }
   ],
-  "relations": [
-    {
-      "id": "p4-coincident-midAB",
-      "label": "4 coincide con M",
-      "enabled": true,
-      "type": "coincident",
-      "points": [
-        "p4",
-        "midAB"
-      ]
-    }
-  ],
+  "relations": [],
   "steps": [],
-  "note": "Arrastra P sobre la mediatriz"
+  "note": "Arrastra el vértice A a lo largo del eje para modificar la altura del triángulo manteniendo AB ≅ AC.",
+  "translations": {
+    "eu": {
+      "title": "Triangelu Isoszelea",
+      "note": "Arrastatu A erpina ardatzean zehar triangeluaren altuera aldatzeko, AB ≅ AC mantenduz."
+    },
+    "en": {
+      "title": "Isosceles Triangle",
+      "note": "Drag vertex A along the axis to change the height while maintaining AB ≅ AC."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

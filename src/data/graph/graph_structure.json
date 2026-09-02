@@ -843,7 +843,7 @@
       "id": "demo-angulos-opuestos-verticales",
       "type": "demostracion",
       "title": "Frogapena: Erpinez aurkako angeluak",
-      "description": "Zuzen baten gaineko alboko angelu osagarrien izaeran eta kongruentzien kenketa-propietatean oinarritutako frogapen zuzena.",
+      "description": "Dedukzio-froga zuzena, zuzen ebakitzaileen gaineko alboko angelu betegarrien kongruentzian oinarritua.",
       "proofs": [],
       "directDependencies": []
     },
@@ -915,7 +915,7 @@
       "id": "demo-triangulo-isosceles",
       "type": "demostracion",
       "title": "Frogapena: Triangelu isoszelearen teorema",
-      "description": "Bisektorearen eraikuntzan eta AlAnAl irizpidearen bidezko triangeluen kongruentzian oinarritutako frogapen klasikoa.",
+      "description": "Papusen korrespondentzia erreflexiboaren eta Hilberten III.5 Axiomaren bidezko froga sintetiko formala.",
       "proofs": [],
       "directDependencies": []
     },
@@ -1213,17 +1213,32 @@
       "id": "teorema-angulos-opuestos-verticales",
       "type": "teorema",
       "title": "Erpinez aurkako angeluen teorema",
-      "description": "Bi zuzen ebakitzailek puntu batean elkar ebakitzen badute, sortutako erpinez aurkako angeluak elkarren artean kongruenteak dira.",
+      "description": "Bi zuzen ebakitzailek puntu batean elkar ebakitzen badute, haien zuzenerdiek sortutako erpinez aurkako angeluak elkarren artean kongruenteak dira.",
       "proofs": [
         {
           "id": "demo-angulos-opuestos-verticales",
           "dependencies": [
-            "axioma-congruencia-4"
+            "angulos-suplementarios",
+            "congruencia",
+            "axioma-congruencia-4",
+            "punto",
+            "recta",
+            "estar-entre",
+            "semirrecta",
+            "angulo"
           ]
         }
       ],
       "directDependencies": [
-        "axioma-congruencia-4"
+        "recta",
+        "punto",
+        "semirrecta",
+        "angulo",
+        "congruencia",
+        "axioma-congruencia-4",
+        "angulos-suplementarios",
+        "plano",
+        "estar-entre"
       ]
     },
     "teorema-area-aditividad": {
@@ -1371,17 +1386,33 @@
       "id": "teorema-triangulo-isosceles",
       "type": "teorema",
       "title": "Triangelu isoszelearen teorema",
-      "description": "Edozein triangelu isoszeletan, alde kongruenteei aurrez aurre dauden angeluak elkarren artean kongruenteak dira.",
+      "description": "Bi alde kongruente dituen edozein triangelutan, alde horiei aurrez aurreko angeluak elkarren artean kongruenteak dira.",
       "proofs": [
         {
           "id": "demo-triangulo-isosceles",
           "dependencies": [
-            "axioma-congruencia-5"
+            "triangulo",
+            "axioma-congruencia-5",
+            "congruencia",
+            "segmento",
+            "angulo",
+            "axioma-congruencia-4",
+            "semirrecta",
+            "axioma-congruencia-1",
+            "axioma-congruencia-2"
           ]
         }
       ],
       "directDependencies": [
-        "axioma-congruencia-5"
+        "triangulo",
+        "congruencia",
+        "angulo",
+        "axioma-congruencia-1",
+        "axioma-congruencia-4",
+        "axioma-congruencia-5",
+        "plano",
+        "punto",
+        "segmento"
       ]
     },
     "caso-gps-trilateracion": {

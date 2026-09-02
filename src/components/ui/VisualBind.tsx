@@ -25,6 +25,9 @@ export const VisualBind: React.FC<VisualBindProps> = ({ element, color = 'canela
   const cssColor = COLOR_MAP[color] ?? COLOR_MAP['canela'];
   const activate = () => setVariable('highlight', targetRegistry.resolve(element));
 
+  const bgColor = `color-mix(in srgb, ${cssColor} 20%, var(--theme-lienzo) 80%)`;
+  const lateralSpread = 2; // Píxeles que ensanchas a cada lado (cámbialo si usas otro valor)
+
   return (
     <span
       onClick={activate}
@@ -40,10 +43,20 @@ export const VisualBind: React.FC<VisualBindProps> = ({ element, color = 'canela
       role="button"
       tabIndex={0}
       aria-label={`Resaltar ${element} en el diagrama`}
-      className="cursor-pointer border-b-2 transition-colors rounded-none px-[2px] py-[1px] font-bold text-carbon shadow-sm box-decoration-clone"
+      className="cursor-pointer transition-colors rounded-none py-[1px] font-bold text-carbon shadow-sm box-decoration-clone"
       style={{
-        borderColor: cssColor,
-        backgroundColor: `color-mix(in srgb, ${cssColor} 20%, transparent)`,
+        backgroundColor: bgColor,
+        // 1. El fondo se ensancha lateralSpread píxeles a izquierda y derecha
+        boxShadow: [
+          // Ala izquierda (fondo)
+          `-${lateralSpread}px 0 0 0 ${bgColor}`,
+          // Ala derecha (fondo)
+          `${lateralSpread}px 0 0 0 ${bgColor}`,
+          // Prolongación borde abajo a la izquierda (offset-x negativo, offset-y hacia el borde)
+          `-${lateralSpread}px 1.5px 0 0 ${cssColor}`,
+          // Prolongación borde abajo a la derecha
+          `${lateralSpread}px 1.5px 0 0 ${cssColor}`,
+        ].join(', '),
       }}
       title={`Resaltar '${element}' en el gráfico`}
     >

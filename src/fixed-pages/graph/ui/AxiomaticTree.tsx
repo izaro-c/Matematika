@@ -15,9 +15,10 @@ import '@xyflow/react/dist/style.css';
 import { useGraphStore } from '@/fixed-pages/graph/GraphStore';
 import { MathNode } from '@/fixed-pages/graph/ui/CustomNode';
 import type { MathNodeData } from '@/fixed-pages/graph/ui/CustomNode';
-import { TYPE_STYLES, CONTENT_TYPE_CONFIG } from '@/lib/theme/constants';
+import { TYPE_STYLES, CONTENT_TYPE_CONFIG, getContentTypeLabel } from '@/lib/theme/constants';
 import { useThemeColors } from '@/lib/theme/useThemeColors';
-
+import { useI18n } from '@/i18n';
+import { db } from '@/data/content';
 
 import { GroupBraceNode } from './components/GroupBraceNode';
 import { AxiomaticSidebar } from './components/AxiomaticSidebar';
@@ -27,6 +28,7 @@ import { getAxiomGroup, computeDependencyChain } from '../lib/graphUtils';
 
 // ── Componente principal ──────────────────────────────────────────────────────
 function FlowContent() {
+  const { lang, t } = useI18n();
   const theme = useThemeColors();
   const graphBackgroundStyle = {
     '--graph-light-background': `url("${publicAsset('/images/backgrounds/bg-arts-crafts-1.webp')}")`,
@@ -72,14 +74,14 @@ function FlowContent() {
     });
   }, []);
 
-  // Type labels from config
+  // Type labels from config & i18n
   const typeLabel: Record<string, string> = useMemo(() => {
     const labels: Record<string, string> = {};
-    for (const [key, cfg] of Object.entries(CONTENT_TYPE_CONFIG)) {
-      labels[key] = cfg.labelPlural;
+    for (const key of Object.keys(CONTENT_TYPE_CONFIG)) {
+      labels[key] = getContentTypeLabel(key, 'plural', lang);
     }
     return labels;
-  }, []);
+  }, [lang]);
 
   // Dynamic type colors from TYPE_STYLES
   const typeColors: Record<string, string> = useMemo(() => {
@@ -98,10 +100,20 @@ function FlowContent() {
   // ── Sync baseNodes → rfNodes ────────────────────────────────────────────────
   useEffect(() => {
     if (baseNodes.length === 0) return;
-    const nodes: Node[] = baseNodes.map((n) => ({
-      ...n,
-      data: { ...n.data, scale: 1, isHighlighted: false },
-    } as Node));
+    const nodes: Node[] = baseNodes.map((n) => {
+      const translation = db.getNodeTranslation(n.id, lang);
+      const originalData = n.data as unknown as MathNodeData;
+      return {
+        ...n,
+        data: {
+          ...originalData,
+          label: translation?.title || originalData.label,
+          description: translation?.description || originalData.description,
+          scale: 1,
+          isHighlighted: false,
+        },
+      } as Node;
+    });
 
     const hilbertAxioms = nodes.filter(n => {
       const d = n.data as unknown as MathNodeData;
@@ -122,7 +134,7 @@ function FlowContent() {
         id: 'hilbert-brace',
         type: 'groupBrace',
         position: { x: minX, y: -60 },
-        data: { label: 'Axiomática de Hilbert', width: maxX - minX },
+        data: { label: t('graph', 'hilbertBrace') || 'Axiomática de Hilbert', width: maxX - minX },
         draggable: false, selectable: false, zIndex: -1, style: {},
       } as unknown as Node);
     }
@@ -131,7 +143,7 @@ function FlowContent() {
     requestAnimationFrame(() => {
       setTimeout(() => fitView({ padding: 0.12, duration: 500 }), 30);
     });
-  }, [baseNodes, baseEdges, fitView, setRfNodes]);
+  }, [baseNodes, baseEdges, fitView, setRfNodes, lang, t]);
 
   // ── Selected chain ──────────────────────────────────────────────────────────
   const selectedChain = useMemo(() => {

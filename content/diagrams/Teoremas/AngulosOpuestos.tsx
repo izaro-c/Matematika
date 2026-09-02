@@ -61,7 +61,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "alpha",
-      "color": "terracota"
+      "color": "pavo"
     },
     {
       "id": "gBeta",
@@ -79,7 +79,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "beta",
-      "color": "mora"
+      "color": "musgo"
     },
     {
       "id": "gSupp12",
@@ -97,7 +97,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "supp12",
-      "color": "terracota"
+      "color": "pavo"
     },
     {
       "id": "gSupp23",
@@ -115,7 +115,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "supp23",
-      "color": "mora"
+      "color": "musgo"
     },
     {
       "id": "gCongruence13",
@@ -134,7 +134,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "target": true,
       "targetId": "congruence13",
-      "color": "terracota"
+      "color": "pavo"
     }
   ],
   "objects": [
@@ -149,10 +149,11 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto fijo O",
+        "ariaLabel": "Punto de corte O",
         "role": "secondary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "O",
       "objectType": "point",
       "definition": {
         "type": "coordinates",
@@ -173,7 +174,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "A",
       "label": "A",
-      "color": "terracota",
+      "color": "carbon",
       "layerId": "geometry",
       "order": 2000,
       "visible": true,
@@ -181,10 +182,11 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Mover el punto A",
+        "ariaLabel": "Punto A sobre la recta l",
         "role": "primary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "A",
       "objectType": "point",
       "definition": {
         "type": "coordinates",
@@ -208,7 +210,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "B",
       "label": "B",
-      "color": "mora",
+      "color": "carbon",
       "layerId": "geometry",
       "order": 4000,
       "visible": true,
@@ -216,10 +218,11 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Mover el punto B",
+        "ariaLabel": "Punto B sobre la recta m",
         "role": "primary"
       },
-      "target": false,
+      "target": true,
+      "targetId": "B",
       "objectType": "point",
       "definition": {
         "type": "coordinates",
@@ -243,7 +246,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "Ap",
       "label": "A'",
-      "color": "terracota",
+      "color": "carbon",
       "layerId": "geometry",
       "order": 3000,
       "visible": true,
@@ -251,10 +254,11 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto construido A'",
+        "ariaLabel": "Punto opuesto A' sobre la recta l",
         "role": "construction"
       },
-      "target": false,
+      "target": true,
+      "targetId": "Ap",
       "objectType": "point",
       "definition": {
         "type": "expression",
@@ -279,7 +283,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "Bp",
       "label": "B'",
-      "color": "mora",
+      "color": "carbon",
       "layerId": "geometry",
       "order": 5000,
       "visible": true,
@@ -287,10 +291,11 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       "groupIds": [],
       "selection": {
         "selectable": true,
-        "ariaLabel": "Punto construido B'",
+        "ariaLabel": "Punto opuesto B' sobre la recta m",
         "role": "construction"
       },
-      "target": false,
+      "target": true,
+      "targetId": "Bp",
       "objectType": "point",
       "definition": {
         "type": "expression",
@@ -314,7 +319,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
     },
     {
       "id": "lineL",
-      "label": "Recta l",
+      "label": "$l$",
       "color": "carbon",
       "layerId": "geometry",
       "order": 950,
@@ -341,13 +346,14 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "appearance": {
         "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
+        "labelVisible": true,
+        "highlightStrokeWidth": 3.5,
         "preserveColorOnHighlight": true
       }
     },
     {
       "id": "lineM",
-      "label": "Recta m",
+      "label": "$m$",
       "color": "carbon",
       "layerId": "geometry",
       "order": 960,
@@ -374,14 +380,15 @@ export const AngulosOpuestosSpec = createDiagramSpec(
       },
       "appearance": {
         "strokeWidth": 2.4,
-        "highlightStrokeWidth": 3,
+        "labelVisible": true,
+        "highlightStrokeWidth": 3.5,
         "preserveColorOnHighlight": true
       }
     },
     {
       "id": "angle1",
       "label": "α",
-      "color": "terracota",
+      "color": "pavo",
       "layerId": "geometry",
       "order": 970,
       "visible": true,
@@ -415,7 +422,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "angle2",
       "label": "β",
-      "color": "mora",
+      "color": "musgo",
       "layerId": "geometry",
       "order": 980,
       "visible": true,
@@ -450,7 +457,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "angle3",
       "label": "α'",
-      "color": "terracota",
+      "color": "pavo",
       "layerId": "geometry",
       "order": 990,
       "visible": true,
@@ -484,7 +491,7 @@ export const AngulosOpuestosSpec = createDiagramSpec(
     {
       "id": "angle4",
       "label": "β'",
-      "color": "mora",
+      "color": "musgo",
       "layerId": "geometry",
       "order": 1000,
       "visible": true,

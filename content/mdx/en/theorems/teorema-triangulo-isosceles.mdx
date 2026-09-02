@@ -1,46 +1,69 @@
 export const metadata = {
   id: "teorema-triangulo-isosceles",
+  lang: "en",
   type: "teorema",
   title: "Isosceles Triangle Theorem",
-  description: "In any isosceles triangle, the angles opposite the congruent sides are congruent to each other.",
-  statement: "Given a triangle △ABC with AB ≅ AC, it holds necessarily that ∠ABC ≅ ∠ACB.",
+  description: "In any triangle with two congruent sides, the angles opposite those sides are mutually congruent.",
+  statement: "In any triangle △ABC, if two sides are congruent (AB ≅ AC), then the angles opposite those sides are congruent (∠ABC ≅ ∠ACB).",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["synthetic-geometry", "triangle", "congruence", "absolute-geometry"],
   hasSimulation: true,
   authors: ["tales", "euclides"],
   demos: ["demo-triangulo-isosceles"],
   sources: [
-    { title: "Elements", author: "Euclides", locator: "Book I, Propositions 5 & 6", role: "primary" }
+    {
+      title: "Elements",
+      author: "Euclides",
+      locator: "Book I, Proposition 5",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §5 (Satz 11)",
+      role: "primary"
+    }
   ]
 };
 
 import { TrianguloIsosceles } from '@content/diagrams/Teoremas/TrianguloIsosceles';
 export const Simulation = TrianguloIsosceles;
 
-<Capitular letra="T" />he isosceles triangle theorem, known historically in <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> as the *Pons Asinorum* (bridge of asses), establishes the fundamental angular symmetry characterizing <ConceptLink targetId="triangulo">triangles</ConceptLink> with two sides of equal measure in the Euclidean plane.
+<Capitular letra="I" />n any <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink>, if two <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>, the <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> opposite those sides are mutually congruent.
+
+This result, traditionally attributed to <ConceptLink targetId="tales">Thales of Miletus</ConceptLink> and formalized by <ConceptLink targetId="euclides">Euclid</ConceptLink> as Proposition I.5 in the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> (historically known as the *Pons Asinorum*), constitutes the first foundational <ConceptLink targetId="teorema">theorem</ConceptLink> of angular rigidity and <ConceptLink targetId="simetria">symmetry</ConceptLink> in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. Its derivation is completely independent of the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>, requiring only the <ConceptLink targetId="sistema-incidencia">axioms of incidence</ConceptLink>, <ConceptLink targetId="estar-entre">order</ConceptLink>, and congruence (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>, and <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink>).
+
+<Definicion title="Formal statement of the isosceles triangle theorem">
+Let <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ be three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \Pi$, determining the <VisualBind element="polyABC" color="carbon"><ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink></VisualBind> $\triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}$.
+
+If the lateral <ConceptLink targetId="lado" isDependency={true}>side</ConceptLink> <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind> is <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to the lateral side <VisualBind element="segAC" color="carbon">$\overline{AC}$</VisualBind>, then the <ConceptLink targetId="angulo-base">base angle</ConceptLink> <VisualBind element="anguloB" color="mora">$\angle ABC$</VisualBind> is congruent to the base angle <VisualBind element="anguloC" color="mora">$\angle ACB$</VisualBind>:
+
+$$
+\overline{AB} \cong \overline{AC} \implies \angle ABC \cong \angle ACB
+$$
+
+The remaining <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> <VisualBind element="segBC" color="carbon">$\overline{BC}$</VisualBind> constitutes the <ConceptLink targetId="base">base</ConceptLink> of the <ConceptLink targetId="triangulo-isosceles" isDependency={true}>isosceles triangle</ConceptLink>, and $\angle BAC$ is the <ConceptLink targetId="angulo">angle</ConceptLink> at the <ConceptLink targetId="vertice">vertex</ConceptLink>.
+</Definicion>
 
 <Separador />
 
-### Formal statement
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Deductive consequences and converses">
+    <PropiedadItem 
+      id="teorema-reciproco-isosceles" 
+      title="Converse isosceles triangle theorem"
+      formula="\angle ABC \cong \angle ACB \implies \overline{AB} \cong \overline{AC}"
+    >
+      If two interior <ConceptLink targetId="angulo">angles</ConceptLink> in a <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ are <ConceptLink targetId="congruencia">congruent</ConceptLink>, the <ConceptLink targetId="lado">sides</ConceptLink> opposite those angles are mutually congruent (<ConceptLink targetId="euclides">Euclid's</ConceptLink> Proposition I.6, <ConceptLink targetId="hilbert">Hilbert's</ConceptLink> Satz 12).
+    </PropiedadItem>
 
-Let $\triangle ABC$ be a <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo">triangle</ConceptLink></VisualBind> whose sides <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind> and <VisualBind element="lado-ac" color="terracota">$\overline{AC}$</VisualBind> are <ConceptLink targetId="congruencia">congruent</ConceptLink> ($\overline{AB} \cong \overline{AC}$). The <VisualBind element="angulos-base" color="ocre">base angles</VisualBind> $\angle ABC$ and $\angle ACB$ are necessarily congruent:
-
-<Formula>
-  $$ \overline{AB} \cong \overline{AC} \quad \Longrightarrow \quad \angle ABC \cong \angle ACB $$
-</Formula>
-
-In any isosceles triangle, angles opposite congruent sides are strictly congruent.
-
-<Separador />
-
-### Proof and axiomatic foundations
-
-The theorem admits several classical deductive proofs:
-- **Pappus's proof**: Considers the correspondence between $\triangle ABC$ and its reflected copy $\triangle ACB$. Since $\overline{AB} \cong \overline{AC}$, $\angle BAC \cong \angle CAB$, and $\overline{AC} \cong \overline{AB}$, the <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>SAS congruence axiom</ConceptLink> yields $\triangle ABC \cong \triangle ACB$, directly implying $\angle ABC \cong \angle ACB$.
-- **Angle bisector proof**: Drawing the <ConceptLink targetId="demo-existencia-bisectriz">angle bisector</ConceptLink> from vertex $A$ partitions the original triangle into two congruent triangles.
-
-<Separador />
-
-### Converse and equilateral corollary
-
-- **Converse theorem**: If in a triangle $\triangle ABC$ the angles $\angle ABC$ and $\angle ACB$ are congruent, then the opposite sides are necessarily congruent ($\overline{AB} \cong \overline{AC}$).
-- **Equilateral triangle corollary**: A triangle is equilateral if and only if it is equiangular (all three interior angles measure $60^\circ$).
+    <PropiedadItem 
+      id="corolario-triangulo-equilatero" 
+      title="Equiangularity of the equilateral triangle"
+      formula="\overline{AB} \cong \overline{BC} \cong \overline{CA} \iff \angle ABC \cong \angle BCA \cong \angle CAB"
+    >
+      A <ConceptLink targetId="triangulo">triangle</ConceptLink> is <ConceptLink targetId="triangulo-equilatero">equilateral</ConceptLink> if and only if it is equiangular, derived by repeatedly applying this <ConceptLink targetId="teorema">theorem</ConceptLink> and its converse to each pair of <ConceptLink targetId="lado">sides</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

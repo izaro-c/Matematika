@@ -13,7 +13,8 @@ La enciclopedia modela el conocimiento matemático como un **grafo acíclico dir
   - **En demostraciones (`type: "demostracion"`):** Declarar de entrada el objetivo de deducción y el método formal de inferencia (e.g. *«Demostración formal del teorema del triángulo isósceles mediante la aplicación del criterio de congruencia LAL...»*).
   - **En modelos (`type: "modelo"`):** Declarar de entrada la estructura formal y el marco de satisfacción.
 - **Accesibilidad universal y cero jerga burocrática:** La prosa debe ser limpia, fluida y transparente, sin exigir formación especializada previa para comprender las ideas fundamentales. Reemplazar verbos rebuscados por verbos funcionales directos: *«establece»*, *«describe»*, *«permite»*, *«determina»*, *«garantiza»*, *«satisface»*, *«induce»*.
-- **Tono asertivo y no defensivo:** Presentar las definiciones directamente por lo que son, sin caer en sobre-correcciones o explicaciones negativas innecesarias.
+- **Tono asertivo y no defensivo:** Presentar las definiciones y demostraciones directamente por lo que son, sin caer en sobre-correcciones o explicaciones negativas innecesarias.
+- **Criterio para el uso de `<Nota>`:** Pensar bien cuándo añadir una nota y cuándo no. La nota debe ser la excepción y no la norma: se reserva para observaciones genuinamente relevantes e importantes que enriquezcan la comprensión del objeto o resultado, evitando añadir notas para sobrecorrecciones o justificaciones defensivas innecesarias.
 - **Modularidad y no duplicación con fórmulas:** No sobre-explicar en párrafos de prosa redundante lo que una signatura o fórmula matemática ya declara con exactitud. El visor interactivo de KaTeX (`SymbolDictionaryManager`) asume la labor pedagógica de inspección de símbolos.
 
 ### Muletillas del Marco Axiomático — Prohibición Total
@@ -80,11 +81,16 @@ El marco axiomático hilbertiano es el **contexto presuposicional global** de la
 
 ## 4. Epistemología de Dependencias en el DAG (`isDependency={true}`)
 
-- **Definiciones Nominales:**
-  - Las definiciones nominales dependen **única y exclusivamente de los conceptos primitivos o términos base** necesarios para formular el objeto (e.g. `traza` depende de `punto`, `recta`, `plano`, `incidencia`).
-  - No deben colocarse axiomas como dependencias (`isDependency={true}`) en definiciones nominales, pues ello ataría conceptualmente la definición a un sistema formal específico, impidiendo su reutilización en geometrías no euclidianas o finitas.
-- **Teoremas y Demostraciones:**
-  - Las demostraciones (`type: "demostracion"`) sí declaran con `isDependency={true}` los axiomas, definiciones previas y lemas específicos que justifican las deducciones formales.
+- **Definiciones Primitivas y Nominales:**
+  - Las definiciones primitivas (`subtype: "primitivo"`) son el grado 0 absoluto del DAG y no propagan dependencias.
+  - Las definiciones nominales dependen de los conceptos primitivos o términos base necesarios para formular el objeto (e.g. `traza` depende de `punto`, `recta`, `plano`, `incidencia`).
+- **Definiciones Derivadas:**
+  - Dependen con `isDependency={true}` de los conceptos primitivos, axiomas generadores y de otras **definiciones derivadas previas** constitutivas (e.g. `triangulo-rectangulo` $\to$ `triangulo`, `angulo`, `perpendicular`; `semiplano` $\to$ `recta`, `plano`, `segmento`, `axioma-orden-4`).
+- **Teoremas y Lemas (`type: "teorema"`, `"lema"`):**
+  - Declaran con `isDependency={true}` los axiomas antecedentes, lemas previos y los **conceptos geométricos constitutivos (tanto primitivos como derivados)** sobre los que se formula la hipótesis o la tesis (e.g. `triangulo`, `triangulo-rectangulo`, `triangulo-isosceles`, `angulos-suplementarios`, `paralelas`).
+  - **Prohibido marcar `isDependency={true}` hacia su propia demostración:** Las demostraciones se asocian al teorema mediante metadatos (`parentTheorem` / `demos`) y aportan sus propias dependencias específicas de prueba.
+- **Demostraciones (`type: "demostracion"`):**
+  - Declaran con `isDependency={true}` los axiomas y lemas utilizados como pasos de inferencia, el método formal de prueba (`metodo-directo`, `metodo-contradiccion`, etc.) y los conceptos geométricos que intervienen en la deducción.
 
 ---
 
@@ -177,3 +183,50 @@ Las siguientes traducciones son **términos canónicos fijados** en el glosario 
 | Perpendicularidad | cualquier variante libre | `perpendikulartasuna` |
 
 > Ver el glosario completo en [euskara-glossary.md](./euskara-glossary.md).
+
+---
+
+## 11. Diagramas Interactivos: Visibilidad Continua de la Figura Base y Resaltes
+
+En los diagramas interactivos dinámicos vinculados a demostraciones o teoremas por pasos (`steps`):
+- **Prohibido desvanecer u ocultar la figura base:** No dejar únicamente visibles los elementos aislados sobre los que actúa el paso actual (por ejemplo, ocultar dos lados y la base para mostrar solo un ángulo). Dicho comportamiento descontextualiza espacialmente al usuario y dificulta gravemente la comprensión geométrica.
+- **Visibilidad estructural continua:** La figura geométrica de partida (el triángulo, polígono, puntos y lados delimitadores) debe mantenerse siempre visible en `visibleTargets` a través de todos los pasos.
+- **Focalización pedagógica mediante resaltes:** La atención del paso se dirige exclusivamente mediante resaltes de énfasis visual en `objectStates`:
+  ```tsx
+  objectStates: {
+    ladoAB: { emphasis: 'primary' },
+    ladoAC: { emphasis: 'primary' },
+  }
+  ```
+- **Coordinación bidireccional con `<VisualBind>`:** Los elementos resaltados en el paso deben sincronizarse con las llamadas `<VisualBind element="..." color="...">` presentes en el texto del paso correspondiente.
+
+---
+
+## 12. Fundamentación Axiomática en Geometría Sintética: Orden, Citas de Hilbert y Definiciones No Métricas
+
+1. **Estructura Canónica de Teoremas en Hilbert (§5 *Grundlagen der Geometrie*):**
+   - **Satz 11:** Teorema del triángulo isósceles.
+   - **Satz 12:** Criterio de congruencia Lado-Lado-Lado (LLL).
+   - **Satz 13:** Teorema de congruencia de los ángulos suplementarios adyacentes: si dos ángulos son congruentes, sus adyacentes suplementarios son mutuamente congruentes.
+   - **Satz 14:** Teorema de los ángulos opuestos por el vértice.
+   *Regla:* Al citar el teorema de suplementarios que fundamenta la igualdad de ángulos opuestos, citar estrictamente **Satz 13**.
+
+2. **Fundamentación de Semirrectas Opuestas mediante Axiomas de Orden (Grupo II):**
+   - En la geometría sintética de Hilbert no se da por supuesta la posición relativa de puntos en una recta.
+   - La afirmación de que $\overrightarrow{OA}$ y $\overrightarrow{OA'}$ son semirrectas opuestas sobre una recta $l$ exige explicitar la relación primitiva de intermediación:
+     $$A * O * A' \quad (\text{o } (A, O, A'))$$
+     vinculada a `<ConceptLink targetId="estar-entre" isDependency={true}>`.
+   - Idéntica condición rige para una secante $m$: $B * O * B'$.
+
+3. **Definición Sintética de Ángulos Suplementarios Adyacentes:**
+   - No se definen métricamente mediante la suma a $180^\circ$ o $\pi$ rad.
+   - Se definen puramente por incidencia y orden (§4 de Hilbert): dos ángulos forman un par de suplementarios adyacentes si comparten un lado (semirrecta común) y sus otros dos lados son semirrectas opuestas de una misma recta soporte ($A * O * A'$).
+
+4. **Homogeneidad de Notación Angular y Orientación Cíclica:**
+   - Mantener consistencia entre la notación de vértices $\angle AOB$ y el par de semirrectas $\angle(\overrightarrow{OA}, \overrightarrow{OB})$.
+   - Fijar una orientación cíclica consistente (e.g. antihoraria) alrededor del vértice para todos los ángulos adyacentes y opuestos: $\angle AOB$, $\angle BOA'$, $\angle A'OB'$, $\angle B'OA$.
+
+5. **Metadatos de Idioma:**
+   - Todo archivo MDX debe incluir obligatoriamente el campo `lang: "es" | "eu" | "en"` en su objeto `metadata`.
+
+

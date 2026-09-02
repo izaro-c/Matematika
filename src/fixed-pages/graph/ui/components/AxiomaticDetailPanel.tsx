@@ -1,5 +1,6 @@
 import { Link } from 'wouter';
 import { getNodeTypeColor, getDependencyDotColor, getNodeUrlPrefix } from '@/fixed-pages/graph/lib/graphUtils';
+import { getContentTypeLabel } from '@/lib/theme/constants';
 import { useI18n } from '@/i18n';
 
 interface AxiomaticDetailPanelProps {
@@ -21,7 +22,7 @@ export function AxiomaticDetailPanel({
   dependencyList,
   onDependencyClick,
 }: AxiomaticDetailPanelProps) {
-  const { t, getLocalizedPath } = useI18n();
+  const { lang, t, getLocalizedPath } = useI18n();
 
   if (!selectedNodeData) return null;
 
@@ -51,7 +52,7 @@ export function AxiomaticDetailPanel({
                 color: color,
               }}
             >
-              {selectedNodeData.nodeType}
+              {getContentTypeLabel(selectedNodeData.nodeType, 'singular', lang)}
             </span>
           );
         })()}

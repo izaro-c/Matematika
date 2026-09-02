@@ -1,6 +1,7 @@
 import { Handle, Position } from '@xyflow/react';
 import type { NodeProps } from '@xyflow/react';
-import { CONTENT_TYPE_CONFIG } from '@/lib/theme/constants';
+import { CONTENT_TYPE_CONFIG, getContentTypeBadge } from '@/lib/theme/constants';
+import { useI18n } from '@/i18n';
 
 /**
  * Definición de los datos que almacena cada nodo del grafo lógico interactivo.
@@ -17,6 +18,7 @@ export interface MathNodeData {
   inChain?: boolean;
   axiomGroupColor?: string;
   axiomGroupLabel?: string;
+  badge?: string;
 }
 
 /**
@@ -25,8 +27,10 @@ export interface MathNodeData {
  * Muestra el estado activo/inactivo (validación lógica) manejando su opacidad.
  */
 export function MathNode({ data }: NodeProps) {
-  const { label, nodeType, isActive, scale, isHighlighted, isDimmed, inChain, axiomGroupColor } = (data as unknown) as MathNodeData;
+  const { lang } = useI18n();
+  const { label, nodeType, isActive, scale, isHighlighted, isDimmed, inChain, axiomGroupColor, badge } = (data as unknown) as MathNodeData;
   const nodeConfig = CONTENT_TYPE_CONFIG[nodeType] ?? CONTENT_TYPE_CONFIG.teorema;
+  const badgeLabel = badge || getContentTypeBadge(nodeType, lang);
   const nodeColor = nodeConfig.graphColor;
   const nodeBorder = `color-mix(in srgb, ${nodeColor} 68%, var(--theme-carbon))`;
 
@@ -133,7 +137,7 @@ export function MathNode({ data }: NodeProps) {
               userSelect: 'none',
             }}
           >
-            {nodeConfig.nodeStyle.badge}
+            {badgeLabel}
           </span>
 
           {/* Título del nodo */}

@@ -92,8 +92,9 @@ export function buildKnowledgeGraphData(lang: string = 'es'): { nodes: GraphNode
   // Asegurar que las 7 ramas raíz siempre estén presentes para estructura del cosmos
   TOP_LEVEL_ROOTS.forEach(root => usedBranchCodes.add(root));
 
-  // 3. Nodo Central: MATEMÁTICAS
-  nodes.push({ id: 'matematicas', name: 'MATEMÁTICAS', group: 'central', val: 40 });
+  // 3. Nodo Central: MATEMÁTICAS / MATHEMATICS / MATEMATIKA
+  const centralNodeName = lang === 'eu' ? 'MATEMATIKA' : lang === 'en' ? 'MATHEMATICS' : 'MATEMÁTICAS';
+  nodes.push({ id: 'matematicas', name: centralNodeName, group: 'central', val: 40 });
   registerAlias('matematicas');
 
   // 4. Crear Nodos de Ramas y Sub-ramas con sus conexiones jerárquicas

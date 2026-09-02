@@ -1,9 +1,8 @@
-- [] Propietatek txukundu
-- [] Axiomen dependentziak konpondu DAGen
-- [] Link ez ebatziak bigilatu (idk inbentatuk die ta igual kontzeptu desberdinetarako id berdina erabili da)
-- [] VisualBindek lerro salton aurretik uzten dun zatitxoa kendu
+- [] Axiomen dependentziak konpondu DAGen (ezin dituzte definiziok euki dependentzia gixa)
+- [] Link ez ebatziak bigilatu (id-k inbentatuk die ta igual kontzeptu desberdinetarako id berdina erabili da)
 - [] Latexeko linketan orrialdeak ahalbidetu
 - [] Latexeko linketan elementu ezberdinak erreferentziatzea ahalbidetu
+- [] Bisita estatistikak
 
 - [] Erabiltzailek
 - [] Marko teoriko desberdinak

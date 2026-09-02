@@ -19,7 +19,41 @@ export interface RouteSegmentMap {
   construccion: string;
 }
 
+export interface ContentTypeI18n {
+  singular: string;
+  plural: string;
+  badge: string;
+}
+
 export interface TranslationDictionary {
+  contentTypes: {
+    axioma: ContentTypeI18n;
+    'sistema-axiomatico': ContentTypeI18n;
+    concepto: ContentTypeI18n;
+    definicion: ContentTypeI18n;
+    lema: ContentTypeI18n;
+    teorema: ContentTypeI18n;
+    corolario: ContentTypeI18n;
+    demostracion: ContentTypeI18n;
+    ejemplo: ContentTypeI18n;
+    ejercicio: ContentTypeI18n;
+    'caso-de-uso': ContentTypeI18n;
+    matematico: ContentTypeI18n;
+    metodo: ContentTypeI18n;
+    modelo: ContentTypeI18n;
+    'plan-de-estudio': ContentTypeI18n;
+    glosario: ContentTypeI18n;
+    msc2020: ContentTypeI18n;
+    [key: string]: ContentTypeI18n | undefined;
+  };
+  axiomFamilies: {
+    incidencia: string;
+    orden: string;
+    congruencia: string;
+    paralelas: string;
+    continuidad: string;
+    otros: string;
+  };
   topbar: {
     backToLibrary: string;
     search: string;
@@ -231,6 +265,8 @@ export interface TranslationDictionary {
     mapLegendTitle: string;
     showLegendAria: string;
     closeLegendAria: string;
+    hilbertBrace: string;
+    mathCentralNode: string;
   };
   marginalia: {
     statement: string;

@@ -7366,14 +7366,16 @@
     "contentType": "demostracion",
     "metadata": {
       "id": "demo-angulos-opuestos-verticales",
+      "lang": "en",
       "type": "demostracion",
       "title": "Proof: Vertical Angles Theorem",
-      "description": "Direct proof based on the supplementary nature of adjacent angles along a straight line and the subtraction property of congruences.",
+      "description": "Direct deductive proof based on the congruence of adjacent supplementary angles across intersecting straight lines.",
       "parentTheorem": "teorema-angulos-opuestos-verticales",
       "branch": "51M",
       "proofMethod": "metodo-directo",
       "authors": [
-        "euclides"
+        "euclides",
+        "hilbert"
       ],
       "tags": [
         "geometria",
@@ -7387,21 +7389,28 @@
           "author": "Euclides",
           "locator": "Book I, Proposition 15",
           "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I, §5",
+          "role": "secondary"
         }
       ],
-      "lang": "en",
       "conceptLinks": [
+        "teorema-angulos-opuestos-verticales",
+        "metodo-directo",
+        "angulos-suplementarios",
+        "congruencia",
+        "axioma-congruencia-4",
         "recta",
         "punto",
-        "teorema-angulos-opuestos-verticales",
-        "congruencia",
+        "estar-entre",
+        "semirrecta",
         "angulo",
-        "angulos-suplementarios",
-        "axioma-congruencia-4",
-        "euclides",
-        "elementos-euclides",
-        "sistema-absoluto",
-        "axioma-paralelas-euclides"
+        "reflexividad",
+        "hilbert",
+        "vertice"
       ],
       "availableLangs": [
         "en",
@@ -7423,14 +7432,16 @@
     "contentType": "demostracion",
     "metadata": {
       "id": "demo-angulos-opuestos-verticales",
+      "lang": "es",
       "type": "demostracion",
       "title": "Demostración: Ángulos opuestos por el vértice",
-      "description": "Demostración directa basada en el carácter suplementario de los ángulos adyacentes sobre una recta y la propiedad de sustracción de congruencias.",
+      "description": "Demostración deductiva directa basada en la congruencia de los ángulos suplementarios adyacentes sobre rectas secantes.",
       "parentTheorem": "teorema-angulos-opuestos-verticales",
       "branch": "51M",
       "proofMethod": "metodo-directo",
       "authors": [
-        "euclides"
+        "euclides",
+        "hilbert"
       ],
       "tags": [
         "geometria",
@@ -7444,21 +7455,28 @@
           "author": "Euclides",
           "locator": "Libro I, Proposición 15",
           "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5",
+          "role": "secondary"
         }
       ],
-      "lang": "es",
       "conceptLinks": [
+        "teorema-angulos-opuestos-verticales",
+        "metodo-directo",
+        "angulos-suplementarios",
+        "congruencia",
+        "axioma-congruencia-4",
         "recta",
         "punto",
-        "teorema-angulos-opuestos-verticales",
-        "congruencia",
+        "estar-entre",
+        "semirrecta",
         "angulo",
-        "angulos-suplementarios",
-        "axioma-congruencia-4",
-        "elementos-euclides",
-        "euclides",
-        "sistema-absoluto",
-        "axioma-paralelas-euclides"
+        "reflexividad",
+        "hilbert",
+        "vertice"
       ],
       "availableLangs": [
         "en",
@@ -8390,19 +8408,26 @@
     "contentType": "demostracion",
     "metadata": {
       "id": "demo-triangulo-isosceles",
+      "lang": "en",
       "type": "demostracion",
       "title": "Proof: Isosceles Triangle Theorem",
-      "description": "Classical proof based on constructing the angle bisector and establishing triangle congruence via the SAS criterion.",
+      "description": "Formal synthetic proof via Pappus's reflexive correspondence and direct application of Hilbert's Axiom III.5.",
       "parentTheorem": "teorema-triangulo-isosceles",
       "branch": "51M",
+      "branches": [
+        "51M",
+        "51A"
+      ],
       "proofMethod": "metodo-directo",
       "authors": [
-        "euclides"
+        "euclides",
+        "hilbert"
       ],
       "tags": [
-        "geometria",
-        "triangulos",
-        "congruencia"
+        "synthetic-geometry",
+        "triangle",
+        "congruence",
+        "absolute-geometry"
       ],
       "layout": "split",
       "sources": [
@@ -8411,19 +8436,35 @@
           "author": "Euclides",
           "locator": "Book I, Proposition 5",
           "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I, §5 (Satz 11)",
+          "role": "primary"
         }
       ],
-      "lang": "en",
       "conceptLinks": [
-        "triangulo",
-        "congruencia",
+        "metodo-directo",
         "teorema-triangulo-isosceles",
-        "angulo",
-        "demo-existencia-bisectriz",
+        "pappus",
+        "hilbert",
+        "angulo-base",
+        "triangulo",
+        "vertice",
+        "simetria",
         "axioma-congruencia-5",
-        "euclides",
-        "elementos-euclides",
-        "sistema-absoluto"
+        "congruencia",
+        "lado",
+        "segmento",
+        "base",
+        "angulo",
+        "axioma-congruencia-4",
+        "reflexividad",
+        "semirrecta",
+        "biyeccion",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2"
       ],
       "availableLangs": [
         "en",
@@ -8445,19 +8486,26 @@
     "contentType": "demostracion",
     "metadata": {
       "id": "demo-triangulo-isosceles",
+      "lang": "es",
       "type": "demostracion",
       "title": "Demostración: Teorema del triángulo isósceles",
-      "description": "Demostración clásica mediante la construcción de la bisectriz y la congruencia de triángulos por el criterio LAL.",
+      "description": "Demostración sintética formal mediante la correspondencia reflexiva de Pappus y la aplicación directa del Axioma III.5 de Hilbert.",
       "parentTheorem": "teorema-triangulo-isosceles",
       "branch": "51M",
+      "branches": [
+        "51M",
+        "51A"
+      ],
       "proofMethod": "metodo-directo",
       "authors": [
-        "euclides"
+        "euclides",
+        "hilbert"
       ],
       "tags": [
-        "geometria",
-        "triangulos",
-        "congruencia"
+        "geometria-sintetica",
+        "triangulo",
+        "congruencia",
+        "geometria-absoluta"
       ],
       "layout": "split",
       "sources": [
@@ -8466,19 +8514,35 @@
           "author": "Euclides",
           "locator": "Libro I, Proposición 5",
           "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5 (Satz 11)",
+          "role": "primary"
         }
       ],
-      "lang": "es",
       "conceptLinks": [
-        "triangulo",
-        "congruencia",
+        "metodo-directo",
         "teorema-triangulo-isosceles",
-        "angulo",
-        "demo-existencia-bisectriz",
+        "pappus",
+        "hilbert",
+        "angulo-base",
+        "triangulo",
+        "vertice",
+        "simetria",
         "axioma-congruencia-5",
-        "elementos-euclides",
-        "euclides",
-        "sistema-absoluto"
+        "congruencia",
+        "lado",
+        "segmento",
+        "base",
+        "angulo",
+        "axioma-congruencia-4",
+        "reflexividad",
+        "semirrecta",
+        "biyeccion",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2"
       ],
       "availableLangs": [
         "en",
@@ -11107,15 +11171,17 @@
     "contentType": "teorema",
     "metadata": {
       "id": "teorema-angulos-opuestos-verticales",
+      "lang": "en",
       "type": "teorema",
       "title": "Vertical Angles Theorem",
-      "description": "If two straight lines intersect at a point, the vertically opposite angles formed are respectively congruent to one another.",
-      "statement": "Given two intersecting lines r and s meeting at point O, if α and α' are vertically opposite angles, then α ≅ α'.",
+      "description": "If two intersecting lines cross at a point, the vertical angles formed by their opposite rays are mutually congruent.",
+      "statement": "Given two intersecting lines l and m meeting at a point O, any pair of vertical angles is mutually congruent.",
       "branch": "51M",
       "hasSimulation": true,
       "authors": [
         "tales",
-        "euclides"
+        "euclides",
+        "hilbert"
       ],
       "demos": [
         "demo-angulos-opuestos-verticales"
@@ -11126,18 +11192,36 @@
           "author": "Euclides",
           "locator": "Book I, Proposition 15",
           "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I, §5",
+          "role": "secondary"
         }
       ],
-      "lang": "en",
       "conceptLinks": [
-        "geometria-euclidiana",
+        "secante",
         "recta",
+        "punto",
         "angulo",
+        "semirrecta",
+        "vertice",
         "congruencia",
-        "angulos-suplementarios",
-        "axioma-congruencia-4",
+        "tales",
+        "euclides",
+        "elementos-euclides",
+        "teorema",
+        "simetria",
         "sistema-absoluto",
-        "axioma-paralelas-euclides"
+        "axioma-congruencia-4",
+        "angulos-suplementarios",
+        "axioma-paralelas-euclides",
+        "plano",
+        "estar-entre",
+        "hilbert",
+        "invariancia-simetria-central",
+        "suplementariedad-pares-adyacentes"
       ],
       "availableLangs": [
         "en",
@@ -11159,15 +11243,17 @@
     "contentType": "teorema",
     "metadata": {
       "id": "teorema-angulos-opuestos-verticales",
+      "lang": "es",
       "type": "teorema",
       "title": "Teorema de los ángulos opuestos por el vértice",
-      "description": "Si dos rectas secantes se intersectan en un punto, los ángulos opuestos por el vértice formados son respectivamente congruentes entre sí.",
-      "statement": "Dadas dos rectas secantes r y s que se cortan en un punto O, si α y α' son ángulos opuestos por el vértice, entonces α ≅ α'.",
+      "description": "Si dos rectas secantes se intersecan en un punto, los ángulos opuestos por el vértice formados por sus semirrectas son mutuamente congruentes.",
+      "statement": "Dadas dos rectas secantes l y m que se cortan en un punto O, cualquier par de ángulos opuestos por el vértice satisface que son mutuamente congruentes.",
       "branch": "51M",
       "hasSimulation": true,
       "authors": [
         "tales",
-        "euclides"
+        "euclides",
+        "hilbert"
       ],
       "demos": [
         "demo-angulos-opuestos-verticales"
@@ -11178,18 +11264,36 @@
           "author": "Euclides",
           "locator": "Libro I, Proposición 15",
           "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5",
+          "role": "secondary"
         }
       ],
-      "lang": "es",
       "conceptLinks": [
-        "geometria-euclidiana",
         "recta",
+        "secante",
+        "punto",
         "angulo",
+        "vertice",
+        "semirrecta",
         "congruencia",
-        "angulos-suplementarios",
-        "axioma-congruencia-4",
+        "tales",
+        "euclides",
+        "elementos-euclides",
+        "teorema",
+        "simetria",
         "sistema-absoluto",
-        "axioma-paralelas-euclides"
+        "axioma-congruencia-4",
+        "angulos-suplementarios",
+        "axioma-paralelas-euclides",
+        "plano",
+        "estar-entre",
+        "hilbert",
+        "invariancia-simetria-central",
+        "suplementariedad-pares-adyacentes"
       ],
       "availableLangs": [
         "en",
@@ -11954,11 +12058,22 @@
     "contentType": "teorema",
     "metadata": {
       "id": "teorema-triangulo-isosceles",
+      "lang": "en",
       "type": "teorema",
       "title": "Isosceles Triangle Theorem",
-      "description": "In any isosceles triangle, the angles opposite the congruent sides are congruent to each other.",
-      "statement": "Given a triangle △ABC with AB ≅ AC, it holds necessarily that ∠ABC ≅ ∠ACB.",
+      "description": "In any triangle with two congruent sides, the angles opposite those sides are mutually congruent.",
+      "statement": "In any triangle △ABC, if two sides are congruent (AB ≅ AC), then the angles opposite those sides are congruent (∠ABC ≅ ∠ACB).",
       "branch": "51M",
+      "branches": [
+        "51M",
+        "51A"
+      ],
+      "tags": [
+        "synthetic-geometry",
+        "triangle",
+        "congruence",
+        "absolute-geometry"
+      ],
       "hasSimulation": true,
       "authors": [
         "tales",
@@ -11971,18 +12086,45 @@
         {
           "title": "Elements",
           "author": "Euclides",
-          "locator": "Book I, Propositions 5 & 6",
+          "locator": "Book I, Proposition 5",
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Chapter I, §5 (Satz 11)",
           "role": "primary"
         }
       ],
-      "lang": "en",
       "conceptLinks": [
+        "triangulo",
+        "lado",
+        "congruencia",
+        "angulo",
+        "tales",
         "euclides",
         "elementos-euclides",
-        "triangulo",
-        "congruencia",
+        "teorema",
+        "simetria",
+        "sistema-absoluto",
+        "axioma-paralelas-euclides",
+        "sistema-incidencia",
+        "estar-entre",
+        "axioma-congruencia-1",
+        "axioma-congruencia-4",
         "axioma-congruencia-5",
-        "demo-existencia-bisectriz"
+        "colinealidad",
+        "punto",
+        "plano",
+        "angulo-base",
+        "segmento",
+        "base",
+        "triangulo-isosceles",
+        "vertice",
+        "hilbert",
+        "triangulo-equilatero",
+        "teorema-reciproco-isosceles",
+        "corolario-triangulo-equilatero"
       ],
       "availableLangs": [
         "en",
@@ -12004,11 +12146,22 @@
     "contentType": "teorema",
     "metadata": {
       "id": "teorema-triangulo-isosceles",
+      "lang": "es",
       "type": "teorema",
       "title": "Teorema del triángulo isósceles",
-      "description": "En todo triángulo isósceles, los ángulos opuestos a los lados congruentes son congruentes entre sí.",
-      "statement": "Dado un triángulo △ABC con AB ≅ AC, se cumple de forma necesaria que ∠ABC ≅ ∠ACB.",
+      "description": "En todo triángulo con dos lados congruentes, los ángulos opuestos a dichos lados son mutuamente congruentes.",
+      "statement": "En todo triángulo △ABC, si dos lados son congruentes (AB ≅ AC), entonces los ángulos opuestos a dichos lados son congruentes (∠ABC ≅ ∠ACB).",
       "branch": "51M",
+      "branches": [
+        "51M",
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "triangulo",
+        "congruencia",
+        "geometria-absoluta"
+      ],
       "hasSimulation": true,
       "authors": [
         "tales",
@@ -12021,18 +12174,45 @@
         {
           "title": "Elementos",
           "author": "Euclides",
-          "locator": "Libro I, Proposiciones 5 y 6",
+          "locator": "Libro I, Proposición 5",
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5 (Satz 11)",
           "role": "primary"
         }
       ],
-      "lang": "es",
       "conceptLinks": [
-        "elementos-euclides",
-        "euclides",
         "triangulo",
+        "lado",
         "congruencia",
+        "angulo",
+        "tales",
+        "euclides",
+        "elementos-euclides",
+        "teorema",
+        "simetria",
+        "sistema-absoluto",
+        "axioma-paralelas-euclides",
+        "sistema-incidencia",
+        "estar-entre",
+        "axioma-congruencia-1",
+        "axioma-congruencia-4",
         "axioma-congruencia-5",
-        "demo-existencia-bisectriz"
+        "punto",
+        "colinealidad",
+        "plano",
+        "angulo-base",
+        "segmento",
+        "base",
+        "triangulo-isosceles",
+        "vertice",
+        "hilbert",
+        "triangulo-equilatero",
+        "teorema-reciproco-isosceles",
+        "corolario-triangulo-equilatero"
       ],
       "availableLangs": [
         "en",
@@ -15807,14 +15987,16 @@
     "contentType": "demostracion",
     "metadata": {
       "id": "demo-angulos-opuestos-verticales",
+      "lang": "es",
       "type": "demostracion",
       "title": "Demostración: Ángulos opuestos por el vértice",
-      "description": "Demostración directa basada en el carácter suplementario de los ángulos adyacentes sobre una recta y la propiedad de sustracción de congruencias.",
+      "description": "Demostración deductiva directa basada en la congruencia de los ángulos suplementarios adyacentes sobre rectas secantes.",
       "parentTheorem": "teorema-angulos-opuestos-verticales",
       "branch": "51M",
       "proofMethod": "metodo-directo",
       "authors": [
-        "euclides"
+        "euclides",
+        "hilbert"
       ],
       "tags": [
         "geometria",
@@ -15828,21 +16010,28 @@
           "author": "Euclides",
           "locator": "Libro I, Proposición 15",
           "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5",
+          "role": "secondary"
         }
       ],
-      "lang": "es",
       "conceptLinks": [
+        "teorema-angulos-opuestos-verticales",
+        "metodo-directo",
+        "angulos-suplementarios",
+        "congruencia",
+        "axioma-congruencia-4",
         "recta",
         "punto",
-        "teorema-angulos-opuestos-verticales",
-        "congruencia",
+        "estar-entre",
+        "semirrecta",
         "angulo",
-        "angulos-suplementarios",
-        "axioma-congruencia-4",
-        "elementos-euclides",
-        "euclides",
-        "sistema-absoluto",
-        "axioma-paralelas-euclides"
+        "reflexividad",
+        "hilbert",
+        "vertice"
       ],
       "availableLangs": [
         "en",
@@ -16320,19 +16509,26 @@
     "contentType": "demostracion",
     "metadata": {
       "id": "demo-triangulo-isosceles",
+      "lang": "es",
       "type": "demostracion",
       "title": "Demostración: Teorema del triángulo isósceles",
-      "description": "Demostración clásica mediante la construcción de la bisectriz y la congruencia de triángulos por el criterio LAL.",
+      "description": "Demostración sintética formal mediante la correspondencia reflexiva de Pappus y la aplicación directa del Axioma III.5 de Hilbert.",
       "parentTheorem": "teorema-triangulo-isosceles",
       "branch": "51M",
+      "branches": [
+        "51M",
+        "51A"
+      ],
       "proofMethod": "metodo-directo",
       "authors": [
-        "euclides"
+        "euclides",
+        "hilbert"
       ],
       "tags": [
-        "geometria",
-        "triangulos",
-        "congruencia"
+        "geometria-sintetica",
+        "triangulo",
+        "congruencia",
+        "geometria-absoluta"
       ],
       "layout": "split",
       "sources": [
@@ -16341,19 +16537,35 @@
           "author": "Euclides",
           "locator": "Libro I, Proposición 5",
           "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5 (Satz 11)",
+          "role": "primary"
         }
       ],
-      "lang": "es",
       "conceptLinks": [
-        "triangulo",
-        "congruencia",
+        "metodo-directo",
         "teorema-triangulo-isosceles",
-        "angulo",
-        "demo-existencia-bisectriz",
+        "pappus",
+        "hilbert",
+        "angulo-base",
+        "triangulo",
+        "vertice",
+        "simetria",
         "axioma-congruencia-5",
-        "elementos-euclides",
-        "euclides",
-        "sistema-absoluto"
+        "congruencia",
+        "lado",
+        "segmento",
+        "base",
+        "angulo",
+        "axioma-congruencia-4",
+        "reflexividad",
+        "semirrecta",
+        "biyeccion",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2"
       ],
       "availableLangs": [
         "en",
@@ -17684,15 +17896,17 @@
     "contentType": "teorema",
     "metadata": {
       "id": "teorema-angulos-opuestos-verticales",
+      "lang": "es",
       "type": "teorema",
       "title": "Teorema de los ángulos opuestos por el vértice",
-      "description": "Si dos rectas secantes se intersectan en un punto, los ángulos opuestos por el vértice formados son respectivamente congruentes entre sí.",
-      "statement": "Dadas dos rectas secantes r y s que se cortan en un punto O, si α y α' son ángulos opuestos por el vértice, entonces α ≅ α'.",
+      "description": "Si dos rectas secantes se intersecan en un punto, los ángulos opuestos por el vértice formados por sus semirrectas son mutuamente congruentes.",
+      "statement": "Dadas dos rectas secantes l y m que se cortan en un punto O, cualquier par de ángulos opuestos por el vértice satisface que son mutuamente congruentes.",
       "branch": "51M",
       "hasSimulation": true,
       "authors": [
         "tales",
-        "euclides"
+        "euclides",
+        "hilbert"
       ],
       "demos": [
         "demo-angulos-opuestos-verticales"
@@ -17703,18 +17917,36 @@
           "author": "Euclides",
           "locator": "Libro I, Proposición 15",
           "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5",
+          "role": "secondary"
         }
       ],
-      "lang": "es",
       "conceptLinks": [
-        "geometria-euclidiana",
         "recta",
+        "secante",
+        "punto",
         "angulo",
+        "vertice",
+        "semirrecta",
         "congruencia",
-        "angulos-suplementarios",
-        "axioma-congruencia-4",
+        "tales",
+        "euclides",
+        "elementos-euclides",
+        "teorema",
+        "simetria",
         "sistema-absoluto",
-        "axioma-paralelas-euclides"
+        "axioma-congruencia-4",
+        "angulos-suplementarios",
+        "axioma-paralelas-euclides",
+        "plano",
+        "estar-entre",
+        "hilbert",
+        "invariancia-simetria-central",
+        "suplementariedad-pares-adyacentes"
       ],
       "availableLangs": [
         "en",
@@ -18109,11 +18341,22 @@
     "contentType": "teorema",
     "metadata": {
       "id": "teorema-triangulo-isosceles",
+      "lang": "es",
       "type": "teorema",
       "title": "Teorema del triángulo isósceles",
-      "description": "En todo triángulo isósceles, los ángulos opuestos a los lados congruentes son congruentes entre sí.",
-      "statement": "Dado un triángulo △ABC con AB ≅ AC, se cumple de forma necesaria que ∠ABC ≅ ∠ACB.",
+      "description": "En todo triángulo con dos lados congruentes, los ángulos opuestos a dichos lados son mutuamente congruentes.",
+      "statement": "En todo triángulo △ABC, si dos lados son congruentes (AB ≅ AC), entonces los ángulos opuestos a dichos lados son congruentes (∠ABC ≅ ∠ACB).",
       "branch": "51M",
+      "branches": [
+        "51M",
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetica",
+        "triangulo",
+        "congruencia",
+        "geometria-absoluta"
+      ],
       "hasSimulation": true,
       "authors": [
         "tales",
@@ -18126,18 +18369,45 @@
         {
           "title": "Elementos",
           "author": "Euclides",
-          "locator": "Libro I, Proposiciones 5 y 6",
+          "locator": "Libro I, Proposición 5",
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5 (Satz 11)",
           "role": "primary"
         }
       ],
-      "lang": "es",
       "conceptLinks": [
-        "elementos-euclides",
-        "euclides",
         "triangulo",
+        "lado",
         "congruencia",
+        "angulo",
+        "tales",
+        "euclides",
+        "elementos-euclides",
+        "teorema",
+        "simetria",
+        "sistema-absoluto",
+        "axioma-paralelas-euclides",
+        "sistema-incidencia",
+        "estar-entre",
+        "axioma-congruencia-1",
+        "axioma-congruencia-4",
         "axioma-congruencia-5",
-        "demo-existencia-bisectriz"
+        "punto",
+        "colinealidad",
+        "plano",
+        "angulo-base",
+        "segmento",
+        "base",
+        "triangulo-isosceles",
+        "vertice",
+        "hilbert",
+        "triangulo-equilatero",
+        "teorema-reciproco-isosceles",
+        "corolario-triangulo-equilatero"
       ],
       "availableLangs": [
         "en",
@@ -21871,14 +22141,16 @@
     "contentType": "demostracion",
     "metadata": {
       "id": "demo-angulos-opuestos-verticales",
+      "lang": "eu",
       "type": "demostracion",
       "title": "Frogapena: Erpinez aurkako angeluak",
-      "description": "Zuzen baten gaineko alboko angelu osagarrien izaeran eta kongruentzien kenketa-propietatean oinarritutako frogapen zuzena.",
+      "description": "Dedukzio-froga zuzena, zuzen ebakitzaileen gaineko alboko angelu betegarrien kongruentzian oinarritua.",
       "parentTheorem": "teorema-angulos-opuestos-verticales",
       "branch": "51M",
       "proofMethod": "metodo-directo",
       "authors": [
-        "euclides"
+        "euclides",
+        "hilbert"
       ],
       "tags": [
         "geometria",
@@ -21892,21 +22164,28 @@
           "author": "Euclides",
           "locator": "Libro I, Proposición 15",
           "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5",
+          "role": "secondary"
         }
       ],
-      "lang": "eu",
       "conceptLinks": [
+        "teorema-angulos-opuestos-verticales",
+        "metodo-directo",
+        "angulos-suplementarios",
+        "congruencia",
+        "axioma-congruencia-4",
         "punto",
         "recta",
-        "teorema-angulos-opuestos-verticales",
-        "congruencia",
+        "estar-entre",
+        "semirrecta",
         "angulo",
-        "angulos-suplementarios",
-        "axioma-congruencia-4",
-        "euclides",
-        "elementos-euclides",
-        "sistema-absoluto",
-        "axioma-paralelas-euclides"
+        "reflexividad",
+        "hilbert",
+        "vertice"
       ],
       "availableLangs": [
         "en",
@@ -22380,19 +22659,26 @@
     "contentType": "demostracion",
     "metadata": {
       "id": "demo-triangulo-isosceles",
+      "lang": "eu",
       "type": "demostracion",
       "title": "Frogapena: Triangelu isoszelearen teorema",
-      "description": "Bisektorearen eraikuntzan eta AlAnAl irizpidearen bidezko triangeluen kongruentzian oinarritutako frogapen klasikoa.",
+      "description": "Papusen korrespondentzia erreflexiboaren eta Hilberten III.5 Axiomaren bidezko froga sintetiko formala.",
       "parentTheorem": "teorema-triangulo-isosceles",
       "branch": "51M",
+      "branches": [
+        "51M",
+        "51A"
+      ],
       "proofMethod": "metodo-directo",
       "authors": [
-        "euclides"
+        "euclides",
+        "hilbert"
       ],
       "tags": [
-        "geometria",
-        "triangulos",
-        "congruencia"
+        "geometria-sintetikoa",
+        "triangelua",
+        "kongruentzia",
+        "geometria-absolutua"
       ],
       "layout": "split",
       "sources": [
@@ -22401,19 +22687,35 @@
           "author": "Euclides",
           "locator": "Libro I, Proposición 5",
           "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5 (Satz 11)",
+          "role": "primary"
         }
       ],
-      "lang": "eu",
       "conceptLinks": [
-        "congruencia",
-        "triangulo",
+        "pappus",
+        "hilbert",
         "teorema-triangulo-isosceles",
-        "angulo",
-        "demo-existencia-bisectriz",
+        "metodo-directo",
+        "angulo-base",
+        "triangulo",
+        "vertice",
+        "simetria",
+        "congruencia",
         "axioma-congruencia-5",
-        "euclides",
-        "elementos-euclides",
-        "sistema-absoluto"
+        "lado",
+        "segmento",
+        "base",
+        "angulo",
+        "axioma-congruencia-4",
+        "reflexividad",
+        "semirrecta",
+        "biyeccion",
+        "axioma-congruencia-1",
+        "axioma-congruencia-2"
       ],
       "availableLangs": [
         "en",
@@ -23730,15 +24032,17 @@
     "contentType": "teorema",
     "metadata": {
       "id": "teorema-angulos-opuestos-verticales",
+      "lang": "eu",
       "type": "teorema",
       "title": "Erpinez aurkako angeluen teorema",
-      "description": "Bi zuzen ebakitzailek puntu batean elkar ebakitzen badute, sortutako erpinez aurkako angeluak elkarren artean kongruenteak dira.",
-      "statement": "O puntu batean elkar ebakitzen duten r eta s bi zuzen ebakitzaile emanda, α eta α' erpinez aurkako angeluak badira, orduan α ≅ α' betetzen da.",
+      "description": "Bi zuzen ebakitzailek puntu batean elkar ebakitzen badute, haien zuzenerdiek sortutako erpinez aurkako angeluak elkarren artean kongruenteak dira.",
+      "statement": "O puntu batean elkar ebakitzen duten l eta m bi zuzen ebakitzaile emanda, erpinez aurkako edozein angelu-bikote elkarren artean kongruentea da.",
       "branch": "51M",
       "hasSimulation": true,
       "authors": [
         "tales",
-        "euclides"
+        "euclides",
+        "hilbert"
       ],
       "demos": [
         "demo-angulos-opuestos-verticales"
@@ -23749,17 +24053,36 @@
           "author": "Euclides",
           "locator": "Libro I, Proposición 15",
           "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5",
+          "role": "secondary"
         }
       ],
-      "lang": "eu",
       "conceptLinks": [
         "recta",
+        "secante",
+        "punto",
+        "semirrecta",
         "angulo",
         "congruencia",
-        "angulos-suplementarios",
-        "axioma-congruencia-4",
+        "vertice",
+        "tales",
+        "euclides",
+        "elementos-euclides",
         "sistema-absoluto",
-        "axioma-paralelas-euclides"
+        "simetria",
+        "teorema",
+        "axioma-congruencia-4",
+        "angulos-suplementarios",
+        "axioma-paralelas-euclides",
+        "plano",
+        "estar-entre",
+        "hilbert",
+        "invariancia-simetria-central",
+        "suplementariedad-pares-adyacentes"
       ],
       "availableLangs": [
         "en",
@@ -24153,11 +24476,22 @@
     "contentType": "teorema",
     "metadata": {
       "id": "teorema-triangulo-isosceles",
+      "lang": "eu",
       "type": "teorema",
       "title": "Triangelu isoszelearen teorema",
-      "description": "Edozein triangelu isoszeletan, alde kongruenteei aurrez aurre dauden angeluak elkarren artean kongruenteak dira.",
-      "statement": "AB ≅ AC betetzen duen △ABC triangelu orotan, nahitaez betetzen da ∠ABC ≅ ∠ACB dela.",
+      "description": "Bi alde kongruente dituen edozein triangelutan, alde horiei aurrez aurreko angeluak elkarren artean kongruenteak dira.",
+      "statement": "Edozein △ABC triangelutan, bi alde kongruenteak badira (AB ≅ AC), orduan alde horiei aurrez aurreko angeluak ere kongruenteak dira (∠ABC ≅ ∠ACB).",
       "branch": "51M",
+      "branches": [
+        "51M",
+        "51A"
+      ],
+      "tags": [
+        "geometria-sintetikoa",
+        "triangelua",
+        "kongruentzia",
+        "geometria-absolutua"
+      ],
       "hasSimulation": true,
       "authors": [
         "tales",
@@ -24170,18 +24504,45 @@
         {
           "title": "Elementos",
           "author": "Euclides",
-          "locator": "Libro I, Proposiciones 5 y 6",
+          "locator": "Libro I, Proposición 5",
+          "role": "primary"
+        },
+        {
+          "title": "Grundlagen der Geometrie",
+          "author": "David Hilbert",
+          "locator": "Capítulo I, §5 (Satz 11)",
           "role": "primary"
         }
       ],
-      "lang": "eu",
       "conceptLinks": [
+        "triangulo",
+        "lado",
+        "congruencia",
+        "angulo",
+        "tales",
         "euclides",
         "elementos-euclides",
-        "triangulo",
-        "congruencia",
+        "sistema-absoluto",
+        "teorema",
+        "simetria",
+        "axioma-paralelas-euclides",
+        "sistema-incidencia",
+        "estar-entre",
+        "axioma-congruencia-1",
+        "axioma-congruencia-4",
         "axioma-congruencia-5",
-        "demo-existencia-bisectriz"
+        "plano",
+        "punto",
+        "colinealidad",
+        "angulo-base",
+        "segmento",
+        "triangulo-isosceles",
+        "base",
+        "vertice",
+        "hilbert",
+        "triangulo-equilatero",
+        "teorema-reciproco-isosceles",
+        "corolario-triangulo-equilatero"
       ],
       "availableLangs": [
         "en",

@@ -1,48 +1,63 @@
 export const metadata = {
   id: "teorema-angulos-opuestos-verticales",
+  lang: "eu",
   type: "teorema",
   title: "Erpinez aurkako angeluen teorema",
-  description: "Bi zuzen ebakitzailek puntu batean elkar ebakitzen badute, sortutako erpinez aurkako angeluak elkarren artean kongruenteak dira.",
-  statement: "O puntu batean elkar ebakitzen duten r eta s bi zuzen ebakitzaile emanda, α eta α' erpinez aurkako angeluak badira, orduan α ≅ α' betetzen da.",
+  description: "Bi zuzen ebakitzailek puntu batean elkar ebakitzen badute, haien zuzenerdiek sortutako erpinez aurkako angeluak elkarren artean kongruenteak dira.",
+  statement: "O puntu batean elkar ebakitzen duten l eta m bi zuzen ebakitzaile emanda, erpinez aurkako edozein angelu-bikote elkarren artean kongruentea da.",
   branch: "51M",
   hasSimulation: true,
-  authors: ["tales", "euclides"],
+  authors: ["tales", "euclides", "hilbert"],
   demos: ["demo-angulos-opuestos-verticales"],
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 15", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 15", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "secondary" }
   ]
 };
 
 import { AngulosOpuestos } from '@content/diagrams/Teoremas/AngulosOpuestos';
 export const Simulation = AngulosOpuestos;
 
-<Capitular letra="E" />rpinez aurkako angeluen teoremak plano euklidetarreko simetria angeluarraren oinarrizko ezaugarri zorrotz bat ezartzen du. Egiaztatzen du bi <ConceptLink targetId="recta">zuzen ebakitzaileren</ConceptLink> arteko elkarguneak neurri geometriko bereko <ConceptLink targetId="angulo">angelu</ConceptLink> bikoteak sortzen dituela.
+<Capitular letra="B" />i <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> <ConceptLink targetId="secante">ebakitzailek</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> batean elkar ebakitzen badute, haien <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdiek</ConceptLink> osatutako erpinez aurkako <ConceptLink targetId="angulo" isDependency={true}>angeluak</ConceptLink> elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> dira <ConceptLink targetId="vertice">erpinean</ConceptLink>.
+
+Emaitza hau, jatorriz <ConceptLink targetId="tales">Tales Miletokoari</ConceptLink> egotzia eta <ConceptLink targetId="euclides">Euklidesek</ConceptLink> bere <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> tratatuko I.15 Proposizioan formalizatua, <ConceptLink targetId="sistema-absoluto">geometria absolutuko</ConceptLink> <ConceptLink targetId="simetria">simetria</ConceptLink> eta zurruntasun angeluarraren oinarrizko <ConceptLink targetId="teorema">teorema</ConceptLink> bat da. Bere baliagarritasuna zuzenean ondorioztatzen da kongruentzia-axiometatik (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>) eta <ConceptLink targetId="angulos-suplementarios" isDependency={true}>angelu betegarrien</ConceptLink> noziotik, <ConceptLink targetId="axioma-paralelas-euclides">paraleloen postulatuarekiko</ConceptLink> erabateko independentziarekin.
+
+<Definicion title="Erpinez aurkako angeluen teoremaren enuntziatu formala">
+Izan bitez <VisualBind element="lineL" color="carbon">$l$</VisualBind> eta <VisualBind element="lineM" color="carbon">$m$</VisualBind> $\pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko bi <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> koplanar, <VisualBind element="O" color="carbon"><ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bakar batean ($O$)</VisualBind> elkar ebakitzen dutenak.
+
+$l$ zuzeneko <VisualBind element="A" color="carbon">$A$</VisualBind> eta <VisualBind element="Ap" color="carbon">$A'$</VisualBind> <ConceptLink targetId="punto">puntuek</ConceptLink> $A * O * A'$ <ConceptLink targetId="estar-entre" isDependency={true}>artekotasun-erlazioa</ConceptLink> betetzen dute, $\overrightarrow{OA}$ eta $\overrightarrow{OA'}$ kontrako <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdiak</ConceptLink> zehaztuz. Era berean, $m$ zuzeneko <VisualBind element="B" color="carbon">$B$</VisualBind> eta <VisualBind element="Bp" color="carbon">$B'$</VisualBind> puntuek $B * O * B'$ betetzen dute, $\overrightarrow{OB}$ eta $\overrightarrow{OB'}$ kontrako zuzenerdiak zehaztuz.
+
+Zuzenerdi horiek sortutako <VisualBind element="angle1" color="pavo">$\alpha = \angle AOB = \angle(\overrightarrow{OA}, \overrightarrow{OB})$</VisualBind> eta <VisualBind element="angle3" color="pavo">$\alpha' = \angle A'OB' = \angle(\overrightarrow{OA'}, \overrightarrow{OB'})$</VisualBind> erpinez aurkako <ConceptLink targetId="angulo" isDependency={true}>angeluak</ConceptLink> badira, orduan elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> dira <ConceptLink targetId="vertice">erpinean</ConceptLink>:
+
+$$
+\alpha \cong \alpha'
+$$
+
+Era berean, <VisualBind element="angle2" color="musgo">$\beta = \angle BOA' = \angle(\overrightarrow{OB}, \overrightarrow{OA'})$</VisualBind> eta <VisualBind element="angle4" color="musgo">$\beta' = \angle B'OA = \angle(\overrightarrow{OB'}, \overrightarrow{OA})$</VisualBind> erpinez aurkako bigarren bikotearentzat, honako hau betetzen da:
+
+$$
+\beta \cong \beta'
+$$
+</Definicion>
 
 <Separador />
 
-### Enuntziatu formala
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorioak eta inbariante geometrikoak">
+    <PropiedadItem 
+      id="invariancia-simetria-central" 
+      title="Erdialdeko simetriarekiko inbariantzia"
+      formula="\sigma_O(\alpha) = \alpha'"
+    >
+      Erpinez aurkako angeluen arteko kongruentziak $O$ ebakidura-puntuarekiko <ConceptLink targetId="simetria">simetria</ConceptLink> puntuala adierazten du, zeinak <ConceptLink targetId="semirrecta">zuzenerdi</ConceptLink> bakoitza bere kontrako zuzenerdiarekin trukatzen baitu <ConceptLink targetId="congruencia">kongruentzia-erlazioa</ConceptLink> mantenduz.
+    </PropiedadItem>
 
-Izan bitez $r$ eta $s$ planoan $O$ puntuan elkar ebakitzen duten bi <ConceptLink targetId="recta">zuzen ebakitzaile</ConceptLink>. Izan bitez $\alpha$ eta $\alpha'$ erdi-zuzenen ebakidurak sortutako <VisualBind element="angulos-opuestos" color="pavo">erpinez aurkako angeluak</VisualBind>. Nahitaez betetzen da honako <ConceptLink targetId="congruencia">kongruentzia-erlazio</ConceptLink> hau:
-
-<Formula>
-  $$ \alpha \cong \alpha' $$
-</Formula>
-
-Metrikoki, bi angeluen zabalera errealak berdin-berdinak dira: $|\alpha| = |\alpha'|$.
-
-<Separador />
-
-### Froga eta oinarritze axiomatikoa
-
-Dedukzio formala zuzen bereko <ConceptLink targetId="angulos-suplementarios">angelu osagarrien</ConceptLink> (angelu lauen) izaeran eta <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>angelu-garraioaren axiometan</ConceptLink> oinarritzen da:
-1. Izan bedi $\beta$ angelua $\alpha$ eta $\alpha'$ angeluen alboko angelu komuna.
-2. $r$ zuzen berean egonik, $\alpha$ eta $\beta$ angeluek angelu lau bat ($180^\circ$) osatzen dute; beraz, $\alpha + \beta = 180^\circ$.
-3. Era berean, $s$ zuzenean, $\beta$ eta $\alpha'$ angeluek angelu lau bat osatzen dute; beraz, $\alpha' + \beta = 180^\circ$.
-4. Bi berdintzetatik $\beta$ kenduz, $\alpha = 180^\circ - \beta = \alpha'$ lortzen da, eta ondorioz $\alpha \cong \alpha'$.
-
-<Separador />
-
-### Propietateak eta garrantzia
-
-- **Paralelotasunarekiko independentzia**: Erpinez aurkako angeluen kongruentzia <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> emaitza da, eta ez du <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> beharrik.
-- **Biraketa-inbariantzia**: $O$ ebakidura-puntuaren inguruko $180^\circ$-ko ($\pi$ radian) erdialdeko simetriari dagokio.
+    <PropiedadItem 
+      id="suplementariedad-pares-adyacentes" 
+      title="Bikote albokideen izaera betegarria"
+      formula="\alpha \text{ betegarria } \beta \land \alpha' \text{ betegarria } \beta \implies \alpha \cong \alpha'"
+    >
+      Albokide <ConceptLink targetId="angulos-suplementarios">betegarri</ConceptLink> bera partekatzen duten bi angelu elkarren artean <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira (<ConceptLink targetId="hilbert">Hilberten</ConceptLink> *Satz 13*).
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

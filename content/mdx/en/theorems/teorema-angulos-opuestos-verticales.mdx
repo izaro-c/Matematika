@@ -1,48 +1,63 @@
 export const metadata = {
   id: "teorema-angulos-opuestos-verticales",
+  lang: "en",
   type: "teorema",
   title: "Vertical Angles Theorem",
-  description: "If two straight lines intersect at a point, the vertically opposite angles formed are respectively congruent to one another.",
-  statement: "Given two intersecting lines r and s meeting at point O, if α and α' are vertically opposite angles, then α ≅ α'.",
+  description: "If two intersecting lines cross at a point, the vertical angles formed by their opposite rays are mutually congruent.",
+  statement: "Given two intersecting lines l and m meeting at a point O, any pair of vertical angles is mutually congruent.",
   branch: "51M",
   hasSimulation: true,
-  authors: ["tales", "euclides"],
+  authors: ["tales", "euclides", "hilbert"],
   demos: ["demo-angulos-opuestos-verticales"],
   sources: [
-    { title: "Elements", author: "Euclides", locator: "Book I, Proposition 15", role: "primary" }
+    { title: "Elements", author: "Euclides", locator: "Book I, Proposition 15", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §5", role: "secondary" }
   ]
 };
 
 import { AngulosOpuestos } from '@content/diagrams/Teoremas/AngulosOpuestos';
 export const Simulation = AngulosOpuestos;
 
-<Capitular letra="T" />he vertical angles theorem is one of the most fundamental and rigorous angular symmetry theorems in planar <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>. It guarantees that the intersection of two <ConceptLink targetId="recta">intersecting lines</ConceptLink> generates pairs of <ConceptLink targetId="angulo">angles</ConceptLink> of equal geometric measure.
+<Capitular letra="I" />f two <ConceptLink targetId="secante">intersecting</ConceptLink> <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> meet at a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink>, the opposite <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> formed by their <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> across the <ConceptLink targetId="vertice">vertex</ConceptLink> are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>.
+
+This result, originally attributed to <ConceptLink targetId="tales">Thales of Miletus</ConceptLink> and formalized by <ConceptLink targetId="euclides">Euclid</ConceptLink> in Proposition I.15 of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, constitutes a fundamental <ConceptLink targetId="teorema">theorem</ConceptLink> of angular <ConceptLink targetId="simetria">symmetry</ConceptLink> and rigidity in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. Its validity follows directly from the congruence axioms (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>) and the definition of <ConceptLink targetId="angulos-suplementarios" isDependency={true}>supplementary angles</ConceptLink>, with complete independence from the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>.
+
+<Definicion title="Formal statement of the vertical angles theorem">
+Let <VisualBind element="lineL" color="carbon">$l$</VisualBind> and <VisualBind element="lineM" color="carbon">$m$</VisualBind> be two coplanar <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi$ intersecting at a unique <VisualBind element="O" color="carbon"><ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $O$</VisualBind>.
+
+The <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="A" color="carbon">$A$</VisualBind> and <VisualBind element="Ap" color="carbon">$A'$</VisualBind> on line $l$ satisfy the <ConceptLink targetId="estar-entre" isDependency={true}>betweenness relation</ConceptLink> $A * O * A'$, determining the opposite <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> $\overrightarrow{OA}$ and $\overrightarrow{OA'}$. Similarly, the points <VisualBind element="B" color="carbon">$B$</VisualBind> and <VisualBind element="Bp" color="carbon">$B'$</VisualBind> on line $m$ satisfy $B * O * B'$, determining the opposite rays $\overrightarrow{OB}$ and $\overrightarrow{OB'}$.
+
+If <VisualBind element="angle1" color="pavo">$\alpha = \angle AOB = \angle(\overrightarrow{OA}, \overrightarrow{OB})$</VisualBind> and <VisualBind element="angle3" color="pavo">$\alpha' = \angle A'OB' = \angle(\overrightarrow{OA'}, \overrightarrow{OB'})$</VisualBind> are the vertical <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> formed across the <ConceptLink targetId="vertice">vertex</ConceptLink>, then they are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>:
+
+$$
+\alpha \cong \alpha'
+$$
+
+Similarly, for the second pair of vertical angles formed by <VisualBind element="angle2" color="musgo">$\beta = \angle BOA' = \angle(\overrightarrow{OB}, \overrightarrow{OA'})$</VisualBind> and <VisualBind element="angle4" color="musgo">$\beta' = \angle B'OA = \angle(\overrightarrow{OB'}, \overrightarrow{OA})$</VisualBind>, we have:
+
+$$
+\beta \cong \beta'
+$$
+</Definicion>
 
 <Separador />
 
-### Formal statement
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Geometric consequences and invariants">
+    <PropiedadItem 
+      id="invariancia-simetria-central" 
+      title="Invariance under point reflection"
+      formula="\sigma_O(\alpha) = \alpha'"
+    >
+      The congruence between vertical angles expresses point <ConceptLink targetId="simetria">symmetry</ConceptLink> with respect to the intersection point $O$, which maps each <ConceptLink targetId="semirrecta">ray</ConceptLink> to its opposite ray while preserving the <ConceptLink targetId="congruencia">congruence</ConceptLink> relation.
+    </PropiedadItem>
 
-Let $r$ and $s$ be two <ConceptLink targetId="recta">intersecting lines</ConceptLink> in the plane $\mathcal{P}$ intersecting at the <VisualBind element="punto-interseccion" color="musgo">point $O$</VisualBind>. Let $\alpha$ and $\alpha'$ be a pair of <VisualBind element="angulos-opuestos" color="pavo">vertically opposite angles</VisualBind> determined by the intersecting rays. The <ConceptLink targetId="congruencia">congruence</ConceptLink> relation holds necessarily:
-
-<Formula>
-  $$ \alpha \cong \alpha' $$
-</Formula>
-
-Metrically, their angular measures are identical: $|\alpha| = |\alpha'|$.
-
-<Separador />
-
-### Proof and axiomatic foundations
-
-The formal deduction is based on adjacent <ConceptLink targetId="angulos-suplementarios">supplementary angles</ConceptLink> along a straight line and the <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>angle congruence axioms</ConceptLink>:
-1. Let $\beta$ be the common adjacent angle between $\alpha$ and $\alpha'$.
-2. Lying on the same straight line $r$, $\alpha$ and $\beta$ form a <ConceptLink targetId="angulos-suplementarios">straight angle</ConceptLink>, so $\alpha + \beta = 180^\circ$.
-3. Similarly, on line $s$, $\beta$ and $\alpha'$ form a straight angle, so $\alpha' + \beta = 180^\circ$.
-4. Subtracting $\beta$ from both equations yields $\alpha = 180^\circ - \beta = \alpha'$, proving the required congruence $\alpha \cong \alpha'$.
-
-<Separador />
-
-### Properties and significance
-
-- **Independence from the parallel postulate**: The congruence of vertical angles is a theorem of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> and does not require the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>.
-- **Rotational invariance**: Corresponds to a central half-turn symmetry of $180^\circ$ ($\pi$ radians) about the intersection point $O$.
+    <PropiedadItem 
+      id="suplementariedad-pares-adyacentes" 
+      title="Supplementarity of adjacent pairs"
+      formula="\alpha \text{ supplementary to } \beta \land \alpha' \text{ supplementary to } \beta \implies \alpha \cong \alpha'"
+    >
+      Two angles that share the same adjacent <ConceptLink targetId="angulos-suplementarios">supplementary</ConceptLink> angle are mutually <ConceptLink targetId="congruencia">congruent</ConceptLink> (<ConceptLink targetId="hilbert">Hilbert's</ConceptLink> *Satz 13*).
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
