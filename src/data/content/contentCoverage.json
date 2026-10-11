@@ -17,8 +17,8 @@
       "caso-de-uso": 1
     },
     "diagrams": {
-      "none": 63,
-      "exported": 51
+      "none": 59,
+      "exported": 55
     },
     "theoremLike": {
       "total": 11,
@@ -416,9 +416,11 @@
       "type": "definicion",
       "title": "Angelu betegarriak",
       "filePath": "eu/definitions/angulos-suplementarios.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -483,9 +485,11 @@
       "type": "definicion",
       "title": "Karratua",
       "filePath": "eu/definitions/cuadrado.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -761,9 +765,11 @@
       "type": "definicion",
       "title": "Planoerdia",
       "filePath": "eu/definitions/semiplano.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 1,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -828,9 +834,11 @@
       "type": "definicion",
       "title": "Triangelu angeluzuzena",
       "filePath": "eu/definitions/triangulo-rectangulo.mdx",
-      "hasDeclaredDiagram": false,
-      "diagramExports": [],
-      "diagramStatus": "none",
+      "hasDeclaredDiagram": true,
+      "diagramExports": [
+        "Simulation"
+      ],
+      "diagramStatus": "exported",
       "sourcesCount": 2,
       "proofSteps": 0,
       "parentTheorem": null,
@@ -932,7 +940,7 @@
     {
       "id": "demo-existencia-bisectriz",
       "type": "demostracion",
-      "title": "Frogapena: Bisektorearen existentzia eta bakartasuna",
+      "title": "Frogapena: Erdikariaren existentzia eta bakartasuna",
       "filePath": "eu/demonstrations/demo-existencia-bisectriz.mdx",
       "hasDeclaredDiagram": false,
       "diagramExports": [],
@@ -1538,7 +1546,7 @@
     {
       "id": "teorema-existencia-bisectriz",
       "type": "teorema",
-      "title": "Bisektorearen existentzia eta bakartasunaren teorema",
+      "title": "Erdikariaren existentzia eta bakartasunaren teorema",
       "filePath": "eu/theorems/teorema-existencia-bisectriz.mdx",
       "hasDeclaredDiagram": true,
       "diagramExports": [

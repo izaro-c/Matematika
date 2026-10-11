@@ -8603,7 +8603,7 @@
       "sources": [
         {
           "title": "Elements",
-          "author": "Euclides",
+          "author": "Euclid",
           "locator": "Book I, Proposition 15",
           "role": "primary"
         },
@@ -9485,7 +9485,7 @@
       "sources": [
         {
           "title": "Elements",
-          "author": "Euclides",
+          "author": "Euclid",
           "locator": "Book I, Proposition 47 (Alternative dissection proof)",
           "role": "secondary"
         },
@@ -9618,7 +9618,7 @@
       "sources": [
         {
           "title": "Elements",
-          "author": "Euclides",
+          "author": "Euclid",
           "locator": "Book I, Proposition 47",
           "role": "primary"
         },
@@ -10030,7 +10030,7 @@
       "sources": [
         {
           "title": "Elements",
-          "author": "Euclides",
+          "author": "Euclid",
           "locator": "Book I, Proposition 5",
           "role": "primary"
         },
@@ -13759,7 +13759,7 @@
       "sources": [
         {
           "title": "Elements",
-          "author": "Euclides",
+          "author": "Euclid",
           "locator": "Book I, Proposition 15",
           "role": "primary"
         },
@@ -14740,7 +14740,7 @@
       "sources": [
         {
           "title": "Elements",
-          "author": "Euclides",
+          "author": "Euclid",
           "locator": "Book I, Propositions 47 and 48",
           "role": "primary"
         },
@@ -15196,7 +15196,7 @@
       "sources": [
         {
           "title": "Elements",
-          "author": "Euclides",
+          "author": "Euclid",
           "locator": "Book I, Proposition 5",
           "role": "primary"
         },
@@ -27475,7 +27475,7 @@
       "sources": [
         {
           "title": "Elementuak",
-          "author": "Euclides",
+          "author": "Euklides",
           "locator": "I. liburua, 15. proposizioa",
           "role": "primary"
         },
@@ -27816,7 +27816,7 @@
       "id": "demo-existencia-bisectriz",
       "lang": "eu",
       "type": "demostracion",
-      "title": "Frogapena: Bisektorearen existentzia eta bakartasuna",
+      "title": "Frogapena: Erdikariaren existentzia eta bakartasuna",
       "description": "Froga sintetiko formala Euklidesen I.9 Proposizioan oinarritua, zuzenki-garraioaren, triangelu ekilateroaren eraikuntzaren eta AlAlAl kongruentzia-irizpidearen bidez.",
       "parentTheorem": "teorema-existencia-bisectriz",
       "branch": "51M",
@@ -27915,9 +27915,9 @@
       "layout": "split",
       "sources": [
         {
-          "title": "Elementos",
-          "author": "Euclides",
-          "locator": "Libro I, Proposición 47 (Demostración alternativa por descomposición)",
+          "title": "Elementuak",
+          "author": "Euklides",
+          "locator": "I. liburua, 47. proposizioa (deskonposizio bidezko ordezko frogapena)",
           "role": "secondary"
         },
         {
@@ -27982,15 +27982,15 @@
       "layout": "split",
       "sources": [
         {
-          "title": "Elementos",
-          "author": "Euclides",
-          "locator": "Libro I, Proposición 47",
+          "title": "Elementuak",
+          "author": "Euklides",
+          "locator": "I. liburua, 47. proposizioa",
           "role": "primary"
         },
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo IV",
+          "locator": "IV. kapitulua",
           "role": "secondary"
         }
       ],
@@ -28191,7 +28191,7 @@
       "sources": [
         {
           "title": "Elementuak",
-          "author": "Euclides",
+          "author": "Euklides",
           "locator": "I. liburua, 5. proposizioa",
           "role": "primary"
         },
@@ -30052,7 +30052,7 @@
       "sources": [
         {
           "title": "Elementuak",
-          "author": "Euclides",
+          "author": "Euklides",
           "locator": "I. liburua, 15. proposizioa",
           "role": "primary"
         },
@@ -30440,7 +30440,7 @@
       "id": "teorema-existencia-bisectriz",
       "lang": "eu",
       "type": "teorema",
-      "title": "Bisektorearen existentzia eta bakartasunaren teorema",
+      "title": "Erdikariaren existentzia eta bakartasunaren teorema",
       "description": "Plano bateko edozein angelu konbexutarako, erpinean jatorria duen eta angeluaren barnean dagoen zuzenerdi bakar bat existitzen da, angelua bi angelu kongruentetan banatzen duena.",
       "statement": "Plano bateko edozein ∠AOB angelu konbexutarako, O erpinean jatorria duen eta haren barnean dagoen OC zuzenerdi bakar bat existitzen da non ∠AOC ≅ ∠BOC den.",
       "branch": "51M",
@@ -30545,15 +30545,15 @@
       ],
       "sources": [
         {
-          "title": "Elementos",
-          "author": "Euclides",
-          "locator": "Libro I, Proposiciones 47 y 48",
+          "title": "Elementuak",
+          "author": "Euklides",
+          "locator": "I. liburua, 47. eta 48. proposizioak",
           "role": "primary"
         },
         {
           "title": "Grundlagen der Geometrie",
           "author": "David Hilbert",
-          "locator": "Capítulo IV",
+          "locator": "IV. kapitulua",
           "role": "secondary"
         }
       ],
@@ -30608,8 +30608,8 @@
       "lang": "eu",
       "type": "teorema",
       "title": "Triangelu baten angeluen baturaren teorema",
-      "description": "Geometria euklidetarreko edozein triangelu planotan, haren hiru barne-angeluen neurrien batura bi angeluzuzenen berdina da (180° edo π radian).",
-      "statement": "Plano euklidetarrean α, β eta γ barne-angeluak dituen △ABC triangelu orotan, α + β + γ = 180° (edo bi angeluzuzen) betetzen da.",
+      "description": "Geometria euklidetarreko edozein triangelu planotan, haren hiru barne-angeluen neurrien batura bi angelu zuzenen neurriaren berdina da (180° edo π radian).",
+      "statement": "Plano euklidetarrean α, β eta γ barne-angeluak dituen △ABC triangelu orotan, α + β + γ = 180° (edo bi angelu zuzen) betetzen da.",
       "branch": "51M",
       "hasSimulation": true,
       "authors": [
@@ -30775,7 +30775,7 @@
       "sources": [
         {
           "title": "Elementuak",
-          "author": "Euclides",
+          "author": "Euklides",
           "locator": "I. liburua, 5. proposizioa",
           "role": "primary"
         },
