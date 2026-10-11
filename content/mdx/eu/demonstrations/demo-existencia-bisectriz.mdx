@@ -1,16 +1,29 @@
 export const metadata = {
-  "id": "demo-existencia-bisectriz",
-  "type": "demostracion",
-  "title": "Frogapena: Bisektorearen existentzia eta bakartasuna",
-  "description": "Angelu baten bisektorearen existentziaren eta bakartasunaren frogapen eraikitzaile formala, triangeluen kongruentzian eta zuzenki-garraioan oinarritua.",
-  "parentTheorem": "teorema-congruencia-ala",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides", "hilbert"],
-  "tags": ["geometria", "angulos", "bisectriz"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 9", role: "primary" }
+  id: "demo-existencia-bisectriz",
+  lang: "eu",
+  type: "demostracion",
+  title: "Frogapena: Erdikariaren existentzia eta bakartasuna",
+  description: "Froga sintetiko formala Euklidesen I.9 Proposizioan oinarritua, zuzenki-garraioaren, triangelu ekilateroaren eraikuntzaren eta AlAlAl kongruentzia-irizpidearen bidez.",
+  parentTheorem: "teorema-existencia-bisectriz",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetica", "angulo", "bisectriz", "congruencia", "geometria-absoluta"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. Liburukia, 9. Proposizioa",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. Kapitulua, §5 (Satz 12)",
+      role: "secondary"
+    }
   ]
 };
 
@@ -18,50 +31,67 @@ import { DemoExistenciaBisectriz } from "@content/diagrams/Demos/DemoExistenciaB
 
 <DemonstrationSection diagram={<DemoExistenciaBisectriz />}>
 
-<Capitular letra="O" /> erpinean sortutako $\angle AOB$ <ConceptLink targetId="angulo">angelu</ConceptLink> bat emanda, angelua bi zati <ConceptLink targetId="congruencia">kongruentetan</ConceptLink> banatzen duen $\overrightarrow{OM}$ barneko erdi-zuzenaren existentzia eta bakartasuna frogatzen dira, <ConceptLink targetId="teorema-congruencia-ala">triangeluen kongruentziaren teorian</ConceptLink> oinarrituta.
+<Capitular letra="A" />ngelu baten <ConceptLink targetId="bisectriz">erdikariaren</ConceptLink> existentzia eta bakartasunaren <ConceptLink targetId="metodo-directo" isDependency={true}>frogapen deduktibo zuzenak</ConceptLink> (<ConceptLink targetId="teorema-existencia-bisectriz">erdikariaren existentzia eta bakartasunaren teoreman</ConceptLink>) <ConceptLink targetId="euclides">Euklidesen</ConceptLink> eraikuntza klasikoa jarraitzen du (<ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.9 Proposizioa), zeina zuzenki kongruenteen garraioan, triangelu ekilatero laguntzaile baten eraikuntzan eta triangeluen <ConceptLink targetId="criterio-lll" isDependency={true}>AlAlAl kongruentzia-irizpidean</ConceptLink> oinarritzen baita.
 
 <Separador />
 
-### Froga urratsez urrats
+### Frogapen formala urratsez urrats
 
-<ProofStep number={1} target="rayOA" title="Zuzenkien garraioa angeluaren aldeen gainean">
-$OA$ aldearen erdi-zuzenean $O$-z bestelako $C$ <ConceptLink targetId="punto">puntu</ConceptLink> bat finkatzen dugu. <ConceptLink targetId="segmento">Zuzenkiak</ConceptLink> garraiatzeko axiomaren bidez (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 Axioma</ConceptLink>), $OB$ erdi-zuzenean $D$ puntu bat eraikitzen dugu jatorriarekiko distantziak kongruenteak izan daitezen:
+<ProofStep number={1} target="rayOA" title="Zuzenki kongruenteen garraioa aldeen gainean">
+Aztertzen dugu <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> konbexu bat, <VisualBind element="pO" color="carbon">$O$</VisualBind> <ConceptLink targetId="vertice">erpinean</ConceptLink> jatorria duten <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> eta <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdiek</ConceptLink> mugatua.
 
-<Formula>
-  $$ \overline{OC} \cong \overline{OD} $$
-</Formula>
+Aukeratzen dugu $O$-z bestelako <VisualBind element="pA" color="terracota">$A$</VisualBind> <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> arbitrario bat $\overrightarrow{OA}$ zuzenerdiaren gainean, $\overline{OA}$ <ConceptLink targetId="segmento" isDependency={true}>zuzenkia</ConceptLink> finkatuz. Zuzenkiak garraiatzeko axiomaren bidez (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 Axioma</ConceptLink>), $\overrightarrow{OB}$ zuzenerdian <VisualBind element="pB" color="terracota">$B$</VisualBind> puntu bakar bat existitzen da non $\overline{OB}$ zuzenkia $\overline{OA}$-rekin <ConceptLink targetId="congruencia" isDependency={true}>kongruentea</ConceptLink> den:
+
+$$
+\overline{OA} \cong \overline{OB}
+$$
 </ProofStep>
 
-<ProofStep number={2} target="p4" title="Laguntza-zuzenkia eta erdigunea">
-$\overline{CD}$ laguntza-zuzenkia marrazten dugu. Hurrenkera eta intzidentziaren axiomen arabera, $\overline{CD}$ zuzenkian $M$ erdigune bakarra existitzen da distantziakidetasuna betetzen duena:
+<ProofStep number={2} target="p6" title="Triangelu ekilatero laguntzailearen eraikuntza">
+Marrazten dugu $\overline{AB}$ <ConceptLink targetId="segmento" isDependency={true}>zuzenkia</ConceptLink>. Zuzenki hori <ConceptLink targetId="base">oinarritzat</ConceptLink> hartuta, <ConceptLink targetId="triangulo-equilatero" isDependency={true}>triangelu ekilateroaren</ConceptLink> eraikuntza euklidearra aplikatzen dugu (<ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.1 Proposizioa), $\overleftrightarrow{AB}$ zuzenarekiko $O$-ren aurkako <ConceptLink targetId="semiplano" isDependency={true}>planoerdian</ConceptLink> edo angeluaren barnean. Horrela, <VisualBind element="p6" color="ocre">$C$</VisualBind> <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat lortzen dugu non $\triangle ABC$ <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink> ekilateroa den:
 
-<Formula>
-  $$ \overline{CM} \cong \overline{DM} $$
-</Formula>
+$$
+\overline{AC} \cong \overline{BC} \cong \overline{AB}
+$$
+
+Bereziki, $\overline{AC}$ eta $\overline{BC}$ bi <ConceptLink targetId="lado" isDependency={true}>aldeak</ConceptLink> elkarrekiko kongruenteak dira ($\overline{AC} \cong \overline{BC}$).
 </ProofStep>
 
-<ProofStep number={3} target="bisAOB" title="Laguntza-triangeluen kongruentzia">
-$\triangle OCM$ eta $\triangle ODM$ triangeluak aztertzen ditugu. $\overline{OC} \cong \overline{OD}$, $\overline{CM} \cong \overline{DM}$ eta $\overline{OM}$ alde komuna denez, AlAnAl axiomaren (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 Axioma</ConceptLink>) ondoriozko kongruentzia-irizpideetatik bi triangeluak kongruenteak direla ondorioztatzen da:
+<ProofStep number={3} target="bisAOB" title="Zuzenerdiaren traza eta triangeluen kongruentzia AlAlAl irizpidearen bidez">
+Marrazten dugu <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdia</ConceptLink>, <VisualBind element="pO" color="carbon">$O$</VisualBind> erpina eta <VisualBind element="p6" color="ocre">$C$</VisualBind> puntua lotzen dituena.
 
-<Formula>
-  $$ \triangle OCM \cong \triangle ODM $$
-</Formula>
+Konparatzen ditugu $\triangle OAC$ eta $\triangle OBC$ <ConceptLink targetId="triangulo" isDependency={true}>triangeluak</ConceptLink>. Haietan <ConceptLink targetId="lado" isDependency={true}>aldeen</ConceptLink> hiru kongruentziak betetzen dira:
+1. $\overline{OA} \cong \overline{OB}$, hasierako zuzenki-garraioaren eraikuntzatik (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 Axioma</ConceptLink>).
+2. $\overline{AC} \cong \overline{BC}$, $\triangle ABC$ triangelu ekilateroaren aldeak direlako.
+3. $\overline{OC} \cong \overline{OC}$, zuzenkien <ConceptLink targetId="congruencia" isDependency={true}>kongruentziaren</ConceptLink> <ConceptLink targetId="reflexividad">erreflexibotasunagatik</ConceptLink>.
+ 
+<ConceptLink targetId="criterio-lll" isDependency={true}>AlAlAl</ConceptLink> <ConceptLink targetId="congruencia-triangulos" isDependency={true}>triangelu-kongruentziako irizpidearen</ConceptLink> arabera (<ConceptLink targetId="hilbert">Hilberten</ConceptLink> *Satz 12*, Euklides I.8), bi triangeluak kongruenteak dira:
+
+$$
+\triangle OAC \cong \triangle OBC
+$$
 </ProofStep>
 
-<ProofStep number={4} target="nonReflexAngleBO6" title="Barne-angeluen berdintasuna eta existentzia">
-Triangeluen kongruentziatik haien angelu homologoen kongruentzia eratortzen da: $\angle COM \cong \angle DOM$. Ondorioz, $\overrightarrow{OM}$ erdi-zuzena $\angle AOB$ angeluaren bisektore baliagarria da.
+<ProofStep number={4} target="nonReflexAngle6OA" title="Angelu-erdikaketaren existentzia">
+$\triangle OAC \cong \triangle OBC$ <ConceptLink targetId="congruencia-triangulos" isDependency={true}>triangeluen kongruentziatik</ConceptLink> haien elementu homologo guztien kongruentzia ondorioztatzen da. Bereziki, $O$ <ConceptLink targetId="vertice">erpinean</ConceptLink> dauden eta $\overline{AC}$ eta $\overline{BC}$ alde kongruenteen aurkakoak diren <ConceptLink targetId="angulo" isDependency={true}>angeluak</ConceptLink> elkarrekiko kongruenteak dira:
+
+$$
+\angle AOC \cong \angle BOC
+$$
+
+$C$ puntua $\angle AOB$ angeluaren barnean dagoenez, <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> zuzenerdiak angelua bi zati kongruentetan banatzen du, <ConceptLink targetId="bisectriz">erdikariaren</ConceptLink> existentzia formalki frogatuz.
 </ProofStep>
 
-<ProofStep number={5} target="nonReflexAngle6OA" title="Bakartasunaren frogapena">
-Beste $\overrightarrow{OM'}$ erdi-zuzen bisektore bat existituko balitz, $OA$ erdi-zuzenarekin angelu berdina osatuko luke. Erdi-plano jakin batean angeluak garraiatzearen bakartasunaren axiomagatik (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>), $\overrightarrow{OM'}$ eta $\overrightarrow{OM}$ erdi-zuzenek nahitaez bat etorri behar dute. Beraz, bisektorea bakarra da.
+<ProofStep number={5} target="bisAOB" title="Zuzenerdi erdikariaren bakartasuna III.4 Axiomaren bidez">
+Bakartasuna frogatzeko, demagun existitzen dela $O$-n jatorria duen eta $\angle AOB$-ren barnean dagoen beste $\overrightarrow{OC'}$ <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> bat, $\angle AOC' \cong \angle BOC'$ betetzen duena.
+
+Kongruentzia angeluarraren <ConceptLink targetId="transitividad">trantsitibotasunagatik</ConceptLink>, $\angle AOC \cong \angle AOC'$ betetzen da. Hala ere, angeluak garraiatzearen eta bakartasunaren axiomagatik (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>), $\overleftrightarrow{OA}$ zuzenarekiko $B$ barne hartzen duen <ConceptLink targetId="semiplano" isDependency={true}>planoerdian</ConceptLink>, $O$-n jatorria duen eta $\overrightarrow{OA}$-rekin $\angle AOC$-ren kongruentea den angelu bat osatzen duen zuzenerdi **bakar** bat existitzen da. Ondorioz:
+
+$$
+\overrightarrow{OC'} = \overrightarrow{OC}
+$$
+
+<ConceptLink targetId="bisectriz">Erdikariaren</ConceptLink> bakartasuna frogatuta geratzen da.
 </ProofStep>
-
-<Separador />
-
-### Azterketa deduktiboa
-
-<Nota>
-  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.9 Proposizioa. <ConceptLink targetId="hilbert">Hilberten</ConceptLink> sistema axiomatikoan, eraikuntza honek erakusten du angeluaren erdikaria kongruentzia-axiometatik eta <ConceptLink targetId="sistema-absoluto">geometria absolututik</ConceptLink> eratorritako ezaugarri unibertsala dela.
-</Nota>
 
 </DemonstrationSection>

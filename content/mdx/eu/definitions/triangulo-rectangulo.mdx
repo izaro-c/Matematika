@@ -4,11 +4,11 @@ export const metadata = {
   type: "definicion",
   subtype: "derivado",
   title: "Triangelu angeluzuzena",
-  description: "Barne-angelu zuzen bat duen triangelua, bi kateto elkartuk eta aurkako hipotenusa batek mugatua.",
+  description: "Angeluetako bat zuzena duen triangelua; haren aldeak bi kateto eta hipotenusa bat dira.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "triangulo", "perpendicularidad", "congruencia", "hilbert"],
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
     {
       title: "Elementuak",
@@ -19,56 +19,59 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "I. Kapitulua, §4",
+      locator: "I. kapitulua, §6",
       role: "primary"
     }
   ]
 };
 
-<Capitular letra="T" />riangelu angeluzuzena bere <ConceptLink targetId="angulo">barne-angeluetako</ConceptLink> bat <ConceptLink targetId="angulo-recto" isDependency={true}>angeluzuzena</ConceptLink> duen <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink> da, erpin horretan elkartzen diren bi <ConceptLink targetId="cateto">katetok</ConceptLink> eta aurrez aurreko <ConceptLink targetId="hipotenusa">hipotenusak</ConceptLink> mugatua.
+import { TrianguloRectangulo } from '@content/diagrams/Definiciones/TrianguloRectangulo';
+export const Simulation = TrianguloRectangulo;
 
-Figura hau <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> aztertzen da neurri angeluar metrikorik erabili gabe, kongruentzia-irizpide espezifikoak eta <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> garatzeko oinarri estrukturala eskainiz.
+<Capitular letra="T" />riangelu **angeluzuzena** bere <ConceptLink targetId="angulo" isDependency={true}>angeluetako</ConceptLink> bat <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzena</ConceptLink> duen <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink> da. Angelu hori osatzen duten bi <ConceptLink targetId="lado">aldeei</ConceptLink> <VisualBind element="catetos" color="terracota"><ConceptLink targetId="cateto">katetoak</ConceptLink></VisualBind> deritze, eta aurkako aldeari, <VisualBind element="segAB" color="pavo"><ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink></VisualBind>.
+
+Nozio hori <ConceptLink targetId="medida-angular">angelu-neurririk</ConceptLink> gabe formulatzen da, eta <ConceptLink targetId="sistema-absoluto">geometria absolutuari</ConceptLink> dagokio. Haren gainean garatzen dira triangelu angeluzuzenen kongruentzia-irizpide bereziak eta, geometria euklidearrean, <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>.
 
 <Definicion title="Triangelu angeluzuzenaren definizio formala">
-Izan bitez $A, B, C \in \mathcal{P}$ hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> ez-<ConceptLink targetId="colinealidad">kolineal</ConceptLink> $\pi \in \Pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> batean, $\triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}$ <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink> zehaztuz.
+Izan bitez <VisualBind element="pA" color="carbon">$A$</VisualBind>, <VisualBind element="pB" color="carbon">$B$</VisualBind>, <VisualBind element="pC" color="carbon">$C$</VisualBind> $\in \mathcal{P}$ $\pi \in \Pi$ <ConceptLink targetId="plano" isDependency={true}>planoko</ConceptLink> hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink>, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez direnak, <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> $= \{\overline{AB}, \overline{BC}, \overline{CA}\}$ <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink> zehazten dutenak.
 
-$\triangle ABC$ **triangelu angeluzuzena** dela esaten da $C$ <ConceptLink targetId="vertice">erpinean</ConceptLink> baldin eta soilik baldin $\overleftrightarrow{CA}$ eta $\overleftrightarrow{CB}$ aldeen <ConceptLink targetId="recta">zuzen</ConceptLink> <ConceptLink targetId="secante">ebakitzaile</ConceptLink> euskarriak <ConceptLink targetId="perpendicular" isDependency={true}>perpendikularrak</ConceptLink> badira:
+$\triangle ABC$ **triangelu angeluzuzena** da, angelu zuzena <VisualBind element="pC" color="carbon">$C$</VisualBind> <ConceptLink targetId="vertice">erpinean</ConceptLink> duela, baldin eta <VisualBind element="recta-CA" color="carbon">$\overleftrightarrow{CA}$</VisualBind> eta <VisualBind element="recta-CB" color="carbon">$\overleftrightarrow{CB}$</VisualBind> <ConceptLink targetId="recta-soporte">zuzen euskarriak</ConceptLink> <ConceptLink targetId="perpendicular" isDependency={true}>perpendikularrak</ConceptLink> badira, hau da, <VisualBind element="angBCA" color="ocre">$\angle BCA$</VisualBind> angelu zuzena bada:
 
 $$
-\triangle ABC \text{ angeluzuzena da } C\text{-n} \iff \overleftrightarrow{CA} \perp \overleftrightarrow{CB} \iff \operatorname{Recto}(\angle BCA)
+\triangle ABC \text{ angeluzuzena da } C \text{ erpinean} \iff \overleftrightarrow{CA} \perp \overleftrightarrow{CB}
 $$
 
-Erpin zuzenaren aurrez aurreko $\overline{AB}$ aldeari <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> deritzo, eta $C$ erpinean elkartzen diren $\overline{CA}$ eta $\overline{CB}$ bi aldeei <ConceptLink targetId="cateto">katetoak</ConceptLink> deritze.
+$C$ erpinaren aurkako <ConceptLink targetId="lado">aldeari</ConceptLink>, <VisualBind element="segAB" color="pavo">$\overline{AB}$</VisualBind> aldeari, <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> deritzo, eta $C$ erpinean elkartzen diren bi aldeei, <VisualBind element="segCA" color="terracota">$\overline{CA}$</VisualBind> eta <VisualBind element="segCB" color="terracota">$\overline{CB}$</VisualBind> aldeei, <VisualBind element="catetos" color="terracota"><ConceptLink targetId="cateto">katetoak</ConceptLink></VisualBind>.
 </Definicion>
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Angelu-propietateak eta sendotasun sintetikoa">
+  <PropiedadesGrupo title="Angelu-propietateak geometria absolutuan">
     <PropiedadItem 
       id="unicidad-angulo-recto" 
-      title="Barne-angeluzuzenaren bakartasuna"
-      formula="\triangle ABC \text{ angeluzuzena } C\text{-n} \implies (\angle CAB \not\cong \angle BCA \land \angle ABC \not\cong \angle BCA)"
+      title="Beste bi angeluak zorrotzak dira"
+      formula="\triangle ABC \text{ angeluzuzena } C \text{ erpinean} \implies \angle CAB < \angle BCA \land \angle ABC < \angle BCA"
     >
-      <ConceptLink targetId="sistema-absoluto">Geometria absolutuan</ConceptLink>, kanpo-angeluaren teoremaren ondorioz, triangelu batek ezin du <ConceptLink targetId="angulo-recto">angeluzuzen</ConceptLink> bat baino gehiago izan ez eta barne-angelu kamutsik ere; ondorioz, $A$ eta $B$ <ConceptLink targetId="vertice">erpinetako</ConceptLink> gainerako bi barne-angeluak zorrozki zorrotzak dira.
+      <ConceptLink targetId="angulo-recto">Angelu zuzen</ConceptLink> bat duen triangeluak ezin du beste angelu zuzenik ezta <ConceptLink targetId="angulo-obtuso">angelu kamutsik</ConceptLink> ere izan: $A$ eta $B$ erpinetako angeluak <ConceptLink targetId="angulo-agudo">zorrotzak</ConceptLink> dira. Izan ere, $C$ erpineko kanpo-angelua angelu zuzen baten betegarria da, eta, beraz, angelu zuzena ere bai; <ConceptLink targetId="teorema-angulo-exterior">kanpo-angeluaren teoremaren</ConceptLink> arabera, $A$ eta $B$ erpinetako barne-angeluak hura baino <ConceptLink targetId="orden-angulos">txikiagoak</ConceptLink> dira. Argudioak intzidentzia-, ordena- eta kongruentzia-axiomak baino ez ditu erabiltzen, eta <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> betetzen da.
     </PropiedadItem>
 
     <PropiedadItem 
       id="angulos-agudos-complementarios" 
-      title="Barne-angelu zorrotzen osagarritasuna"
-      formula="\operatorname{Compl}(\angle CAB, \angle ABC)"
+      title="Angelu zorrotzen osagarritasuna"
+      formula="|\angle CAB| + |\angle ABC| = 90^\circ"
     >
-      <ConceptLink targetId="sistema-euclidiano">Geometria euklidearrean</ConceptLink>, triangelu angeluzuzen baten bi angelu zorrotzak elkarren osagarriak dira nahitaez, <ConceptLink targetId="teorema-suma-angulos-triangulo">triangelu baten angeluen baturaren teoremaren</ConceptLink> ondorio zuzen gisa.
+      <ConceptLink targetId="sistema-euclidiano">Geometria euklidearrean</ConceptLink>, triangelu angeluzuzen baten bi angelu zorrotzak <ConceptLink targetId="angulos-complementarios">osagarriak</ConceptLink> dira: haien <ConceptLink targetId="medida-angular">neurrien</ConceptLink> batura $90^\circ$ da. <ConceptLink targetId="teorema-suma-angulos-triangulo">Triangeluaren angeluen baturaren teorematik</ConceptLink> ondorioztatzen da, eta teorema horrek <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axioma</ConceptLink> behar du.
     </PropiedadItem>
   </PropiedadesGrupo>
 
   <PropiedadesGrupo title="Erlazio metriko euklidearrak">
     <PropiedadItem 
       id="relacion-pitagorica" 
-      title="Pitagorasen teoremaren erlazio metrikoa"
-      formula="\overline{AC}^2 + \overline{BC}^2 = \overline{AB}^2"
+      title="Erlazio pitagorikoa"
+      formula="|AC|^2 + |BC|^2 = |AB|^2"
     >
-      Plano euklidearreko edozein triangelu angeluzuzenean, katetoen gainean eraikitako karratuen azaleren batura hipotenusaren gainean eraikitako karratuaren azaleraren berdina da (<ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>).
+      Plano euklidearreko triangelu angeluzuzen orotan, katetoen <ConceptLink targetId="longitud">luzeren</ConceptLink> karratuen batura hipotenusaren luzeraren karratuaren berdina da (<ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
@@ -76,5 +79,5 @@ Erpin zuzenaren aurrez aurreko $\overline{AB}$ aldeari <ConceptLink targetId="hi
 <Separador />
 
 <Nota>
-<ConceptLink targetId="sistema-absoluto">Geometria absolutuan</ConceptLink>, triangelu angeluzuzenek <ConceptLink targetId="congruencia">kongruentzia-irizpide</ConceptLink> sinplifikatuak betetzen dituzte kasu orokorrarekiko: Kateto-Kateto irizpidea (<ConceptLink targetId="axioma-congruencia-5">LAL</ConceptLink> irizpidearen ondorioa) eta Hipotenusa-Kateto irizpidea, biak ere paraleloen axiomatikotik at baliozkoak.
+<ConceptLink targetId="sistema-absoluto">Geometria absolutuan</ConceptLink>, triangelu angeluzuzenek <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-irizpide sinplifikatuak onartzen dituzte: kateto-kateto irizpidea, <ConceptLink targetId="teorema-congruencia-lal">LAL</ConceptLink> irizpidearen kasu berezia, eta hipotenusa-kateto irizpidea; biak paraleloen axiomarekiko independenteak dira.
 </Nota>

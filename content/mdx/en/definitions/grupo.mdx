@@ -4,56 +4,64 @@ export const metadata = {
   type: "definicion",
   subtype: "algebraico",
   title: "Group",
-  description: "Fundamental algebraic structure consisting of a set equipped with a binary operation satisfying associativity, identity, and inverse elements.",
+  description: "Algebraic structure formed by a set and an associative binary operation with an identity element in which every element has an inverse.",
   branch: "20",
   hasSimulation: false,
   sources: [
-    { title: "Traité des substitutions et des équations algébriques", author: "Camille Jordan", locator: "Livre I", role: "primary" },
-    { title: "Algebra", author: "Serge Lang", locator: "Chapter I, §1", role: "primary" }
+    { title: "On the theory of groups, as depending on the symbolic equation θⁿ = 1", author: "Arthur Cayley", locator: "Philosophical Magazine 7 (1854)", role: "primary" },
+    { title: "Algebra", author: "Serge Lang", locator: "Chapter I, §2", role: "secondary" }
   ]
 };
 
-<Capitular letra="A" /> group is the foundational algebraic structure that mathematically formalizes the concepts of symmetry, transformation, and invariance. It consists of a set equipped with an internal <ConceptLink targetId="operacion-binaria">binary operation</ConceptLink> that satisfies four fundamental axioms: closure, associativity, existence of an identity element, and existence of inverse elements.
+<Capitular letra="A" /> group is a <ConceptLink targetId="conjunto">set</ConceptLink> equipped with an <ConceptLink targetId="asociatividad">associative</ConceptLink> <ConceptLink targetId="operacion-binaria">binary operation</ConceptLink> that has an <ConceptLink targetId="elemento-neutro">identity element</ConceptLink> and in which every element has an <ConceptLink targetId="elemento-inverso">inverse</ConceptLink>. It is the <ConceptLink targetId="estructura-algebraica">algebraic structure</ConceptLink> that describes the composition of reversible <ConceptLink targetId="transformacion">transformations</ConceptLink>: the <ConceptLink targetId="isometria">isometries</ConceptLink> of the plane, the <ConceptLink targetId="simetria">symmetries</ConceptLink> of a figure and the <ConceptLink targetId="permutacion">permutations</ConceptLink> of a finite set all form groups.
 
-<Definicion title="">
-  A group $(G, \cdot)$ is an ordered pair consisting of a non-empty set $G$ and an internal <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink> $\cdot: G \times G \to G$ satisfying the following axioms for all elements $a, b, c \in G$:
-  1. **Closure**: $\forall a, b \in G, \; a \cdot b \in G$.
-  2. **Associativity**: $\forall a, b, c \in G, \; (a \cdot b) \cdot c = a \cdot (b \cdot c)$.
-  3. **Identity element**: $\exists e \in G \text{ such that } \forall a \in G, \; a \cdot e = e \cdot a = a$.
-  4. **Inverse element**: $\forall a \in G, \; \exists a^{-1} \in G \text{ such that } a \cdot a^{-1} = a^{-1} \cdot a = e$.
+<Definicion title="Group">
+  A group is a pair $(G, \cdot)$ consisting of a <ConceptLink targetId="conjunto" isDependency={true}>set</ConceptLink> $G$ and a <ConceptLink targetId="operacion-binaria" isDependency={true}>binary operation</ConceptLink>
+  $$
+  \begin{aligned}
+  \cdot\colon G \times G &\longrightarrow G \\
+  (a, b) &\longmapsto a \cdot b
+  \end{aligned}
+  $$
+  satisfying:
+  1. **<ConceptLink targetId="asociatividad" isDependency={true}>Associativity</ConceptLink>**: $\forall a, b, c \in G, \ (a \cdot b) \cdot c = a \cdot (b \cdot c)$.
+  2. **<ConceptLink targetId="elemento-neutro" isDependency={true}>Identity element</ConceptLink>**: $\exists e \in G \ \forall a \in G, \ a \cdot e = e \cdot a = a$.
+  3. **<ConceptLink targetId="elemento-inverso" isDependency={true}>Inverse element</ConceptLink>**: $\forall a \in G \ \exists a^{-1} \in G, \ a \cdot a^{-1} = a^{-1} \cdot a = e$.
 </Definicion>
+
+That the operation takes values in $G$ (so-called *closure*) is part of the definition of a binary operation on $G$; the identity axiom also guarantees that $G \neq \emptyset$.
 
 <Separador />
 
-### Structural classification of groups
+### Classification of Groups
 
-Groups are classified according to the commutativity of their operation and the cardinality of their underlying set:
+Groups are distinguished by the <ConceptLink targetId="conmutatividad">commutativity</ConceptLink> of the operation and the <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> of the set:
 
-| Group type | Algebraic condition | Representative example |
+| Type of group | Condition | Example |
 |---|---|---|
-| Abelian (Commutative) | $\forall a, b \in G, \; a \cdot b = b \cdot a$ | Integers $(\mathbb{Z}, +)$ under addition |
-| Non-abelian | $\exists a, b \in G \text{ such that } a \cdot b \neq b \cdot a$ | Invertible matrices $(\text{GL}_n(\mathbb{R}), \cdot)$ with $n \ge 2$ |
-| Finite | Cardinality $\lvert G \rvert$ is finite | Symmetric group $S_n$ on $n$ elements ($\lvert S_n \rvert = n!$) |
-| Infinite | Cardinality $\lvert G \rvert = \infty$ | Non-zero real numbers $(\mathbb{R} \setminus \{0\}, \cdot)$ |
+| <ConceptLink targetId="grupo-abeliano">Abelian</ConceptLink> (commutative) | $\forall a, b \in G, \ a \cdot b = b \cdot a$ | The <ConceptLink targetId="numero-entero">integers</ConceptLink> under addition, $(\mathbb{Z}, +)$ |
+| Non-abelian | $\exists a, b \in G, \ a \cdot b \neq b \cdot a$ | The <ConceptLink targetId="matriz-invertible">invertible matrices</ConceptLink> under multiplication, $(\mathrm{GL}_n(\mathbb{R}), \cdot)$, with $n \geq 2$ |
+| Finite | $\lvert G \rvert$ finite | The <ConceptLink targetId="grupo-simetrico">symmetric group</ConceptLink> $S_n$, with $\lvert S_n \rvert = n!$ |
+| Infinite | $G$ infinite | The nonzero <ConceptLink targetId="numero-real">real numbers</ConceptLink> under multiplication, $(\mathbb{R} \setminus \{0\}, \cdot)$ |
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Algebraic uniqueness">
-    <PropiedadItem id="unicidad-elemento-neutro" title="Uniqueness of identity element">
-      In any group $(G, \cdot)$, the identity element $e \in G$ is unique.
+  <PropiedadesGrupo title="Uniqueness">
+    <PropiedadItem id="unicidad-elemento-neutro" title="Uniqueness of the identity element">
+      In every group $(G, \cdot)$ the <ConceptLink targetId="elemento-neutro">identity element</ConceptLink> is unique: if $e$ and $e'$ are identities, $e = e \cdot e' = e'$.
     </PropiedadItem>
-    <PropiedadItem id="unicidad-elemento-inverso" title="Uniqueness of inverse element">
-      For each element $a \in G$, its inverse $a^{-1} \in G$ is unique.
+    <PropiedadItem id="unicidad-elemento-inverso" title="Uniqueness of the inverse element">
+      Each $a \in G$ has a unique <ConceptLink targetId="elemento-inverso">inverse</ConceptLink>: if $b$ and $c$ are inverses of $a$, by <ConceptLink targetId="asociatividad">associativity</ConceptLink> $b = b \cdot (a \cdot c) = (b \cdot a) \cdot c = c$.
     </PropiedadItem>
   </PropiedadesGrupo>
 
-  <PropiedadesGrupo title="Operational laws">
+  <PropiedadesGrupo title="Computation rules">
     <PropiedadItem id="leyes-cancelacion-grupo" title="Cancellation laws">
-      $(a \cdot b = a \cdot c \implies b = c) \land (b \cdot a = c \cdot a \implies b = c)$.
+      For all $a, b, c \in G$: $(a \cdot b = a \cdot c \implies b = c)$ and $(b \cdot a = c \cdot a \implies b = c)$; it suffices to multiply by $a^{-1}$ on the left or on the right.
     </PropiedadItem>
     <PropiedadItem id="inverso-producto-grupo" title="Inverse of a product">
-      $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$.
+      For all $a, b \in G$: $(a \cdot b)^{-1} = b^{-1} \cdot a^{-1}$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

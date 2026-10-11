@@ -2,51 +2,82 @@ export const metadata = {
   id: "cuadrilatero",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Laukia",
-  description: "Lau aldeko poligono laua, haietako hiruk lerrokatu gabe dauden plano bereko lau puntu lotzen dituzten lau zuzenkiren elkarketaz osatua.",
+  description: "Plano bateko lau puntu ziklikoki lotzen dituzten lau zuzenkik osatutako irudi laua, puntuetatik hiru kolinealak ez direla eta alde ez-auzokideak disjuntuak direla.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "poligono", "cuadrilatero", "orden"],
   hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 22. Definizioa", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. liburua, 19. eta 22. definizioak", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §4", role: "primary" }
   ]
 };
 
 import { Cuadrilatero } from '@content/diagrams/Definiciones/Cuadrilatero';
 export const Simulation = Cuadrilatero;
 
-<Capitular letra="L" />aukia geometria lauaren lau aldeko <ConceptLink targetId="poligono">poligonoa</ConceptLink> da, elkarren segidako lau <ConceptLink targetId="segmento">zuzenkiren</ConceptLink> elkarketaz mugatua. <ConceptLink targetId="plano">Planoan</ConceptLink> <ConceptLink targetId="congruencia">kongruentziak</ConceptLink> eta <ConceptLink targetId="teoria-medida-area">azaleraren</ConceptLink> deskonposizioak aztertzeko oinarrizko irudi poligonaletako bat da.
+<Capitular letra="L" />aukia <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko lau <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> ziklikoki lotzen dituzten lau <ConceptLink targetId="segmento" isDependency={true}>zuzenkik</ConceptLink> osatutako irudia da, puntuetatik hiru <ConceptLink targetId="colinealidad" isDependency={true}>kolinealak</ConceptLink> ez direla eta elkarren segidakoak ez diren aldeek elkar ebakitzen ez dutela.
 
-<Definicion title="">
-  $\mathcal{P}$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> batean lerrokatu gabeko <VisualBind element="vertices" color="musgo">$A, B, C, D$</VisualBind> lau <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> koplanar emanda, non haien arteko zuzenkiak muturretan soilik ebakitzen diren, <VisualBind element="poligono" color="musgo">$ABCD$</VisualBind> laukia bere lau <ConceptLink targetId="segmento" isDependency={true}>zuzenkien</ConceptLink> (<VisualBind element="lados" color="musgo">$\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$</VisualBind>) elkarketaz definitzen da:
-  $$
-  ABCD = \overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}
-  $$
-  $A, B, C, D$ puntuak <ConceptLink targetId="vertice">erpinak</ConceptLink> dira eta <VisualBind element="diagonales" color="musgo">$\overline{AC}, \overline{BD}$</VisualBind> zuzenkiak laukiaren diagonalak dira.
+Lau aldeko <ConceptLink targetId="poligono">poligonoa</ConceptLink> da, eta irudi ganbilen eta ez-ganbilen arteko bereizketa agertzen den lehena. Haren kasu bereziak (<ConceptLink targetId="trapecio">trapezioa</ConceptLink>, <ConceptLink targetId="paralelogramo">paralelogramoa</ConceptLink>, <ConceptLink targetId="rectangulo">laukizuzena</ConceptLink>, <ConceptLink targetId="rombo">erronboa</ConceptLink>, <ConceptLink targetId="cuadrado">karratua</ConceptLink>) haren elementuen arteko <ConceptLink targetId="paralelas">paralelotasun</ConceptLink>- eta <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-erlazioen bidez definitzen dira.
+
+<Definicion title="Laukiaren definizioa">
+Izan bitez <VisualBind element="vertices" color="terracota">$A, B, C, D$</VisualBind> $\sigma$ <ConceptLink targetId="plano">plano</ConceptLink> bateko lau <ConceptLink targetId="punto">puntu</ConceptLink>, haietako hirukote bat ere <ConceptLink targetId="colinealidad">kolineala</ConceptLink> ez dela eta elkarren segidakoak ez diren <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntuak</ConceptLink> direla:
+
+$$
+\overline{AB} \cap \overline{CD} = \emptyset, \qquad \overline{BC} \cap \overline{DA} = \emptyset.
+$$
+
+<VisualBind element="poligono" color="carbon">$ABCD$</VisualBind> **laukia** haren lau <ConceptLink targetId="lado">aldeen</ConceptLink> multzoa da, <VisualBind element="lados" color="carbon">$\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$</VisualBind>, eta haren <ConceptLink targetId="traza">puntu-trazadura</ConceptLink> aldeen bildura da:
+
+$$
+ABCD = \{\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}\}, \qquad \operatorname{tr}(ABCD) = \overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}.
+$$
+
+$A, B, C, D$ puntuak <ConceptLink targetId="vertice">erpinak</ConceptLink> dira; <VisualBind element="angulos" color="ocre">$\angle DAB$, $\angle ABC$, $\angle BCD$, $\angle CDA$</VisualBind> <ConceptLink targetId="angulo">angeluak</ConceptLink> haren angeluak dira, eta segidakoak ez diren erpinak lotzen dituzten <VisualBind element="diagonales" color="pavo">$\overline{AC}$ eta $\overline{BD}$</VisualBind> zuzenkiak haren <ConceptLink targetId="diagonal">diagonalak</ConceptLink> dira.
+
+Laukia **ganbila** da baldin eta, alde bakoitzerako, beste bi erpinak alde horren <ConceptLink targetId="recta">zuzen</ConceptLink> euskarriarekiko <ConceptLink targetId="semiplano">planoerdi</ConceptLink> berean badaude; adibidez, $\overline{AB}$ aldearentzat: $C, D \in \mathcal{H}_{\overleftrightarrow{AB}}(C)$.
 </Definicion>
 
-<Separador />
+### Sailkapena
 
-### Egiturazko sailkapena
-
-Planoan laukiak haien ganbiltasun-propietateen eta aldeen arteko <ConceptLink targetId="paralelas">paralelotasun-</ConceptLink>erlazioen arabera sailkatzen dira:
-
-| Mota | Ezaugarri geometrikoa | Azpimota nagusiak |
+| Mota | Baldintza | Baliozkotasuna |
 |---|---|---|
-| Ganbila | Bi diagonalek barneko puntu batean ebakitzen dute elkar | <ConceptLink targetId="paralelogramo">Paralelogramoa</ConceptLink>, Trapezioa, Trapezoidea |
-| Ahurra | Diagonal bat kanpoaldean geratzen da | Gezi-punta itxurako laukia |
-| <ConceptLink targetId="paralelogramo">Paralelogramoa</ConceptLink> | Aurkako aldeak paraleloak ($\overline{AB} \parallel \overline{CD} \land \overline{BC} \parallel \overline{DA}$) | Laukizuzena, Erronboa, <ConceptLink targetId="cuadrado">Karratua</ConceptLink> |
+| <ConceptLink targetId="trapecio">Trapezioa</ConceptLink> | Gutxienez aurkako alde-bikote batek zuzen euskarri paraleloak ditu | absolutua |
+| <ConceptLink targetId="paralelogramo">Paralelogramoa</ConceptLink> | Aurkako alde-bikote biek zuzen euskarri paraleloak dituzte | absolutua |
+| <ConceptLink targetId="rombo">Erronboa</ConceptLink> | Lau alde kongruente | absolutua |
+| <ConceptLink targetId="rectangulo">Laukizuzena</ConceptLink> | Lau angelu zuzen | euklidearra (ez dago geometria hiperbolikoan) |
+| <ConceptLink targetId="cuadrado">Karratua</ConceptLink> | Lau alde kongruente eta lau angelu zuzen | euklidearra (ez dago geometria hiperbolikoan) |
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Propietate angeluarrak eta deskonposizioa">
-    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Barne-angeluen batura">
-      Lauki ganbil baten barneko lau angeluen neurrien batura $360^\circ$ ($2\pi\text{ rad}$) da beti.
+  <PropiedadesGrupo title="Ordena-propietateak">
+    <PropiedadItem
+      id="convexidad-diagonales-cuadrilatero"
+      title="Ganbiltasuna eta diagonalak"
+      formula="ABCD \text{ ganbila} \iff \operatorname{seg}(AC) \cap \operatorname{seg}(BD) \neq \emptyset"
+    >
+      <ConceptLink targetId="cuadrilatero">Lauki</ConceptLink> bat ganbila da baldin eta soilik baldin haren bi <ConceptLink targetId="diagonal">diagonalek</ConceptLink> elkar ebakitzen badute bien barneko puntu batean. Frogapenak <ConceptLink targetId="axioma-orden-4">ordena-axiomak</ConceptLink> eta <ConceptLink targetId="teorema-separacion-plano">planoaren banaketa</ConceptLink> baino ez ditu erabiltzen; beraz, <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> betetzen da.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-aditividad" title="Triangeluen bidezko deskonposizioa">
-      Edozein lauki ganbil diagonal baten bidez bi triangelu disjuntotan deskonposatzen da: $\mu(ABCD) = \mu(\triangle ABC) + \mu(\triangle ACD)$.
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Propietate euklidearrak">
+    <PropiedadItem
+      id="suma-angulos-cuadrilatero"
+      title="Angeluen batura"
+      formula="|\angle DAB| + |\angle ABC| + |\angle BCD| + |\angle CDA| = 360^\circ"
+    >
+      <ConceptLink targetId="sistema-euclidiano">Sistema euklidearreko</ConceptLink> lauki ganbil batean, haren angeluen <ConceptLink targetId="medida-angular">angelu-neurrien</ConceptLink> batura $360^\circ$ da: $\overline{AC}$ diagonalak bi triangelutan zatitzen du, eta <ConceptLink targetId="teorema-suma-angulos-triangulo">triangeluaren angeluen baturaren teorema</ConceptLink> aplikatzen da. <ConceptLink targetId="sistema-hiperbolico">Geometria hiperbolikoan</ConceptLink> batura $360^\circ$ baino txikiagoa da.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="area-cuadrilatero-diagonal"
+      title="Diagonal baten bidezko deskonposizioa"
+      formula="\operatorname{A}(ABCD) = \operatorname{A}(\triangle ABC) + \operatorname{A}(\triangle ACD)"
+    >
+      Lauki ganbil baten diagonal batek barnealde disjuntuak dituzten bi <ConceptLink targetId="triangulo">triangelutan</ConceptLink> deskonposatzen du; <ConceptLink targetId="teorema-area-aditividad">azaleraren batukortasunagatik</ConceptLink>, mugatzen duen <ConceptLink targetId="region-poligonal">eskualde poligonalaren</ConceptLink> <ConceptLink targetId="teoria-medida-area">azalera</ConceptLink> bien azaleren batura da.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

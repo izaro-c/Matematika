@@ -5,7 +5,7 @@ export const metadata = {
   title: "Fano Plane",
   description: "Minimal finite projective geometry structure composed of 7 points and 7 lines.",
   branch: "51A",
-  satisfies: "sistema-incidencia",
+  satisfies: [],
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
   hasDiagram: true,
   sources: [
@@ -21,9 +21,9 @@ export const metadata = {
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
 export const Diagram = ModeloFano;
 
-<Capitular letra="T" />he **Fano plane** (denoted $\mathrm{PG}(2, \mathbb{F}_2)$) is a finite <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink> constituting the minimal <ConceptLink targetId="espacio-proyectivo">projective plane</ConceptLink> and satisfying the planar incidence axioms of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>.
+<Capitular letra="T" />he **Fano plane** (denoted $\mathrm{PG}(2, \mathbb{F}_2)$) is a finite <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink> constituting the minimal <ConceptLink targetId="espacio-proyectivo">projective plane</ConceptLink> and satisfying the planar incidence axioms I.1–I.3 of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>. It contains no planes, so it does not model the spatial axioms I.4–I.8.
 
-Introduced in 1892 by the mathematician <ConceptLink targetId="fano">Gino Fano</ConceptLink>, it represents the projective space of minimal possible <ConceptLink targetId="cardinalidad">cardinality</ConceptLink>, combining <ConceptLink targetId="simetria">symmetry</ConceptLink> properties from <ConceptLink targetId="geometria-discreta">discrete geometry</ConceptLink> with <ConceptLink targetId="algebra-lineal">linear algebra</ConceptLink> over <ConceptLink targetId="cuerpo-finito">finite fields</ConceptLink>.
+Introduced in 1892 by the mathematician <ConceptLink targetId="fano">Gino Fano</ConceptLink>, it is the projective plane of smallest possible <ConceptLink targetId="cardinalidad">cardinality</ConceptLink>, combining <ConceptLink targetId="simetria">symmetry</ConceptLink> properties from <ConceptLink targetId="geometria-discreta">discrete geometry</ConceptLink> with <ConceptLink targetId="algebra-lineal">linear algebra</ConceptLink> over <ConceptLink targetId="cuerpo-finito">finite fields</ConceptLink>.
 
 <Definicion title="Formal Structure of the Model">
 The Fano plane is formalized as a tuple $\mathcal{M}_{\text{Fano}} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$ consisting of finite and <ConceptLink targetId="conjunto-disjunto">disjoint sets</ConceptLink> ($\mathcal{P} \cap \mathcal{L} = \emptyset$):
@@ -41,25 +41,25 @@ The Fano plane is formalized as a tuple $\mathcal{M}_{\text{Fano}} = (\mathcal{P
 <SeccionPropiedades>
   <PropiedadesGrupo title="Incidence Axiom Satisfaction">
     <PropiedadItem 
-      id="axioma-incidencia-1" 
+      id="fano-verifica-i1" 
       title="Unique Line Determination"
-      formula="\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L})"
+      formula="\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L} \ (P \, \mathbf{I} \, \ell \land Q \, \mathbf{I} \, \ell))"
     >
       For any two distinct points in $\mathcal{P}$, there exists a unique line in $\mathcal{L}$ incident with both ($\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L} \ (P \, \mathbf{I} \, \ell \land Q \, \mathbf{I} \, \ell))$), satisfying <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="axioma-incidencia-2" 
+      id="fano-verifica-i2" 
       title="Incident Points per Line"
-      formula="|\operatorname{tr}(\ell)| = 3 \ge 2"
+      formula="\forall \ell \in \mathcal{L} \ \lvert \operatorname{tr}(\ell) \rvert = 3"
     >
       Every line $\ell \in \mathcal{L}$ is incident with at least two distinct points; in this model, each line contains exactly 3 points ($\lvert \operatorname{tr}(\ell) \rvert = 3 \ge 2$), satisfying <ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="axioma-incidencia-3" 
+      id="fano-verifica-i3" 
       title="Existence of Non-Collinear Points"
-      formula="|\operatorname{tr}(\ell)| = 3 < 7 \implies \exists \{P, Q, R\} \text{ non-collinear}"
+      formula="\neg \exists \ell \in \mathcal{L} \ (1 \, \mathbf{I} \, \ell \land 2 \, \mathbf{I} \, \ell \land 3 \, \mathbf{I} \, \ell)"
     >
       No single line contains all points of the space within its <ConceptLink targetId="traza">trace</ConceptLink> ($\lvert \operatorname{tr}(\ell) \rvert = 3 < 7$); consequently, there exist triples of non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points (e.g., $\{1, 2, 3\}$), satisfying <ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>.
     </PropiedadItem>
@@ -79,23 +79,23 @@ The Fano plane is formalized as a tuple $\mathcal{M}_{\text{Fano}} = (\mathcal{P
       title="Universal Projective Intersection"
       formula="\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset \quad (\forall i \neq j)"
     >
-      Any two distinct lines in $\mathcal{L}$ have non-disjoint traces ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), intersecting at exactly one common point; therefore, the model contains no <ConceptLink targetId="paralelas">parallel lines</ConceptLink>.
+      Any two distinct lines of $\mathcal{L}$ have exactly one common point ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$); therefore, regarding the model itself as a plane (the structure contains no planes), there are no two distinct <ConceptLink targetId="paralelas">parallel lines</ConceptLink>. It thus shows that the planar incidence axioms do not imply the existence of parallels.
     </PropiedadItem>
 
     <PropiedadItem 
       id="autodualidad" 
       title="Self-Duality"
-      formula="\mathcal{P} \cong \mathcal{L}, \quad \mathbf{I} \cong \mathbf{I}^T"
+      formula="(\mathcal{P}, \mathcal{L}, \mathbf{I}) \cong (\mathcal{L}, \mathcal{P}, \mathbf{I}^{T})"
     >
-      The structure is <ConceptLink targetId="dualidad">self-dual</ConceptLink>: formally interchanging the domains $\mathcal{P}$ and $\mathcal{L}$ along with the <ConceptLink targetId="transposicion">transposition</ConceptLink> of the relation $\mathbf{I}$ yields an incidence structure strictly <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink> to the original one.
+      The structure is <ConceptLink targetId="dualidad">self-dual</ConceptLink>: formally interchanging the domains $\mathcal{P}$ and $\mathcal{L}$ along with the <ConceptLink targetId="transposicion">transposition</ConceptLink> of the relation $\mathbf{I}$ yields an incidence structure <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink> to the original one.
     </PropiedadItem>
 
     <PropiedadItem 
       id="construccion-algebraica" 
       title="Construction over the Finite Field F2"
-      formula="\mathrm{PG}(2, \mathbb{F}_2) \cong (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim"
+      formula="\mathcal{P} \cong (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim"
     >
-      It is algebraically formalized as the projective plane $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ over the <ConceptLink targetId="cuerpo-finito">finite field</ConceptLink> $\mathbb{F}_2$ under proportional equivalence. Points correspond to the 7 1-dimensional <ConceptLink targetId="subespacio">subspaces</ConceptLink> of the <ConceptLink targetId="espacio-vectorial">vector space</ConceptLink> $\mathbb{F}_2^3$, while lines correspond to the 7 2-dimensional subspaces.
+      It is algebraically formalized as the projective plane $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ over the <ConceptLink targetId="cuerpo-finito">finite field</ConceptLink> $\mathbb{F}_2$ under the proportionality <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>. Points correspond to the 7 <ConceptLink targetId="subespacio">subspaces</ConceptLink> of <ConceptLink targetId="dimension">dimension</ConceptLink> 1 of the <ConceptLink targetId="espacio-vectorial">vector space</ConceptLink> $\mathbb{F}_2^3$, while lines correspond to the 7 subspaces of dimension 2.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

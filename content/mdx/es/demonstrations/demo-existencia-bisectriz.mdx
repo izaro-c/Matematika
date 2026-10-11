@@ -1,16 +1,29 @@
 export const metadata = {
-  "id": "demo-existencia-bisectriz",
-  "type": "demostracion",
-  "title": "Demostración: Existencia y unicidad de la bisectriz",
-  "description": "Demostración constructiva formal de la existencia y unicidad de la bisectriz de un ángulo mediante congruencia de triángulos y transporte de segmentos.",
-  "parentTheorem": "teorema-congruencia-ala",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides", "hilbert"],
-  "tags": ["geometria", "angulos", "bisectriz"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 9", role: "primary" }
+  id: "demo-existencia-bisectriz",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Existencia y unicidad de la bisectriz",
+  description: "Demostración sintética formal basada en la Proposición I.9 de Euclides mediante transporte de segmentos, construcción del triángulo equilátero y congruencia LLL.",
+  parentTheorem: "teorema-existencia-bisectriz",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetica", "angulo", "bisectriz", "congruencia", "geometria-absoluta"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 9",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5 (Satz 12)",
+      role: "secondary"
+    }
   ]
 };
 
@@ -18,50 +31,67 @@ import { DemoExistenciaBisectriz } from "@content/diagrams/Demos/DemoExistenciaB
 
 <DemonstrationSection diagram={<DemoExistenciaBisectriz />}>
 
-<Capitular letra="D" />ado un <ConceptLink targetId="angulo">ángulo</ConceptLink> $\angle AOB$ con vértice en $O$, se demuestra la existencia y unicidad de una semirrecta interior $\overrightarrow{OM}$ que divide al ángulo en dos partes <ConceptLink targetId="congruencia">congruentes</ConceptLink>, fundamentándose en la teoría de <ConceptLink targetId="teorema-congruencia-ala">congruencia de triángulos</ConceptLink>.
+<Capitular letra="L" />a <ConceptLink targetId="metodo-directo" isDependency={true}>demostración deductiva directa</ConceptLink> de la existencia y unicidad de la <ConceptLink targetId="bisectriz">bisectriz</ConceptLink> para el <ConceptLink targetId="teorema-existencia-bisectriz">teorema de existencia y unicidad de la bisectriz</ConceptLink> sigue la construcción clásica de <ConceptLink targetId="euclides">Euclides</ConceptLink> (Proposición I.9 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink>), fundamentada en el transporte de segmentos congruentes, la construcción de un triángulo equilátero auxiliar y el criterio de congruencia <ConceptLink targetId="criterio-lll" isDependency={true}>LLL</ConceptLink> de triángulos.
 
 <Separador />
 
-### Demostración paso a paso
+### Demostración formal paso a paso
 
-<ProofStep number={1} target="rayOA" title="Transporte de segmentos sobre los lados del ángulo">
-Sobre la semirrecta del lado $OA$, fijamos un <ConceptLink targetId="punto">punto</ConceptLink> $C$ distinto de $O$. Por el axioma de transporte de <ConceptLink targetId="segmento">segmentos</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>), construimos sobre la semirrecta del lado $OB$ un punto $D$ tal que las distancias desde el origen sean congruentes:
+<ProofStep number={1} target="rayOA" title="Transporte de segmentos congruentes sobre los lados">
+Consideramos un <ConceptLink targetId="angulo" isDependency={true}>ángulo</ConceptLink> convexo con <ConceptLink targetId="vertice">vértice</ConceptLink> en <VisualBind element="pO" color="carbon">$O$</VisualBind> delimitado por las <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> y <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind>.
 
-<Formula>
-  $$ \overline{OC} \cong \overline{OD} $$
-</Formula>
+Fijamos un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> arbitrario <VisualBind element="pA" color="terracota">$A$</VisualBind> sobre la semirrecta $\overrightarrow{OA}$ distinto de $O$, determinando el <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> $\overline{OA}$. Por el axioma de transporte de segmentos (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>), existe un único punto <VisualBind element="pB" color="terracota">$B$</VisualBind> sobre la semirrecta $\overrightarrow{OB}$ tal que el segmento $\overline{OB}$ es <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> con $\overline{OA}$:
+
+$$
+\overline{OA} \cong \overline{OB}
+$$
 </ProofStep>
 
-<ProofStep number={2} target="p4" title="Segmento auxiliar y punto medio">
-Trazamos el segmento auxiliar $\overline{CD}$. Por los axiomas de orden e incidencia, existe un único punto medio $M$ sobre el segmento $\overline{CD}$ que satisface la equidistancia:
+<ProofStep number={2} target="p6" title="Construcción del triángulo equilátero auxiliar">
+Trazamos el <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> $\overline{AB}$. Tomando este segmento como <ConceptLink targetId="base">base</ConceptLink>, aplicamos la construcción euclidiana del <ConceptLink targetId="triangulo-equilatero" isDependency={true}>triángulo equilátero</ConceptLink> (Proposición I.1 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink>) en el <ConceptLink targetId="semiplano" isDependency={true}>semiplano</ConceptLink> respecto a la recta $\overleftrightarrow{AB}$ opuesto a $O$, o en su interior. Obtenemos así un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> <VisualBind element="p6" color="ocre">$C$</VisualBind> tal que el <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> $\triangle ABC$ es equilátero:
 
-<Formula>
-  $$ \overline{CM} \cong \overline{DM} $$
-</Formula>
+$$
+\overline{AC} \cong \overline{BC} \cong \overline{AB}
+$$
+
+En particular, los dos <ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink> $\overline{AC}$ y $\overline{BC}$ son mutuamente congruentes ($\overline{AC} \cong \overline{BC}$).
 </ProofStep>
 
-<ProofStep number={3} target="bisAOB" title="Congruencia de triángulos auxiliares">
-Consideramos los triángulos $\triangle OCM$ y $\triangle ODM$. Dado que $\overline{OC} \cong \overline{OD}$, $\overline{CM} \cong \overline{DM}$ y el segmento $\overline{OM}$ es común a ambos, aplicando los criterios de congruencia derivados del axioma LAL (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5</ConceptLink>), se concluye la congruencia:
+<ProofStep number={3} target="bisAOB" title="Traza de la semirrecta y congruencia de triángulos por el criterio LLL">
+Trazamos la <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink> <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> que une el vértice <VisualBind element="pO" color="carbon">$O$</VisualBind> con el punto <VisualBind element="p6" color="ocre">$C$</VisualBind>.
 
-<Formula>
-  $$ \triangle OCM \cong \triangle ODM $$
-</Formula>
+Comparamos los <ConceptLink targetId="triangulo" isDependency={true}>triángulos</ConceptLink> $\triangle OAC$ y $\triangle OBC$. En ellos se satisfacen las tres congruencias de sus <ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink>:
+1. $\overline{OA} \cong \overline{OB}$, por construcción inicial mediante transporte de segmentos (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>).
+2. $\overline{AC} \cong \overline{BC}$, por ser lados del triángulo equilátero $\triangle ABC$.
+3. $\overline{OC} \cong \overline{OC}$, por la <ConceptLink targetId="reflexividad">reflexividad</ConceptLink> de la <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink> de segmentos.
+
+Por el <ConceptLink targetId="criterio-lll" isDependency={true}>criterio LLL</ConceptLink> de <ConceptLink targetId="congruencia-triangulos" isDependency={true}>congruencia de triángulos</ConceptLink> (*Satz 12* de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, Euclides I.8), ambos triángulos son congruentes:
+
+$$
+\triangle OAC \cong \triangle OBC
+$$
 </ProofStep>
 
-<ProofStep number={4} target="nonReflexAngleBO6" title="Igualdad de los ángulos interiores y existencia">
-De la congruencia de los triángulos se deduce la congruencia de sus ángulos homólogos correspondientes: $\angle COM \cong \angle DOM$. Por consiguiente, la semirrecta $\overrightarrow{OM}$ es una bisectriz válida del ángulo $\angle AOB$.
+<ProofStep number={4} target="nonReflexAngle6OA" title="Existencia de la bisección angular">
+De la <ConceptLink targetId="congruencia-triangulos" isDependency={true}>congruencia de triángulos</ConceptLink> $\triangle OAC \cong \triangle OBC$ se deduce la congruencia de todos sus elementos homólogos. En particular, los <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> con <ConceptLink targetId="vertice">vértice</ConceptLink> en $O$ opuestos a los lados congruentes $\overline{AC}$ y $\overline{BC}$ son mutuamente congruentes:
+
+$$
+\angle AOC \cong \angle BOC
+$$
+
+Puesto que el punto $C$ pertenece al interior del ángulo $\angle AOB$, la semirrecta <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> divide al ángulo en dos partes congruentes, demostrando la existencia de la <ConceptLink targetId="bisectriz">bisectriz</ConceptLink>.
 </ProofStep>
 
-<ProofStep number={5} target="nonReflexAngle6OA" title="Demostración de unicidad">
-Si existiera otra semirrecta bisectriz $\overrightarrow{OM'}$, formaría un ángulo idéntico con la semirrecta $OA$. Por el axioma de unicidad en el transporte de ángulos (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>) sobre un semiplano dado, las semirrectas $\overrightarrow{OM'}$ y $\overrightarrow{OM}$ deben coincidir necesariamente. Por tanto, la bisectriz es única.
+<ProofStep number={5} target="bisAOB" title="Unicidad de la semirrecta bisectriz por el Axioma III.4">
+Para demostrar la unicidad, supongamos la existencia de otra <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink> $\overrightarrow{OC'}$ con origen en $O$ y contenida en el interior de $\angle AOB$ que verifique $\angle AOC' \cong \angle BOC'$.
+
+Por la <ConceptLink targetId="transitividad">transitividad</ConceptLink> de la congruencia angular, se cumple $\angle AOC \cong \angle AOC'$. Sin embargo, por el axioma de transporte y unicidad de ángulos (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>), en el <ConceptLink targetId="semiplano" isDependency={true}>semiplano</ConceptLink> respecto a la recta $\overleftrightarrow{OA}$ que contiene a $B$, existe una **única** semirrecta con origen en $O$ que forma con $\overrightarrow{OA}$ un ángulo congruente con $\angle AOC$. Por consiguiente:
+
+$$
+\overrightarrow{OC'} = \overrightarrow{OC}
+$$
+
+Queda demostrada la unicidad de la <ConceptLink targetId="bisectriz">bisectriz</ConceptLink>.
 </ProofStep>
-
-<Separador />
-
-### Análisis deductivo
-
-<Nota>
-  Proposición I.9 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. En el sistema axiomático de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>, esta construcción demuestra que la división bisectriz es una propiedad universal derivada de los axiomas de congruencia en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
-</Nota>
 
 </DemonstrationSection>

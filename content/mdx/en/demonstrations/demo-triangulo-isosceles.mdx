@@ -3,7 +3,7 @@ export const metadata = {
   lang: "en",
   type: "demostracion",
   title: "Proof: Isosceles Triangle Theorem",
-  description: "Formal synthetic proof via Pappus's reflexive correspondence and direct application of Hilbert's Axiom III.5.",
+  description: "Synthetic proof that compares the triangle with itself via Pappus's correspondence and applies Axiom III.5.",
   parentTheorem: "teorema-triangulo-isosceles",
   branch: "51M",
   branches: ["51M", "51A"],
@@ -14,14 +14,14 @@ export const metadata = {
   sources: [
     {
       title: "Elements",
-      author: "Euclides",
+      author: "Euclid",
       locator: "Book I, Proposition 5",
       role: "primary"
     },
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Chapter I, §5 (Satz 11)",
+      locator: "Chapter I, §6",
       role: "primary"
     }
   ]
@@ -31,13 +31,13 @@ import { DemoTrianguloIsosceles } from "@content/diagrams/Demos/DemoTrianguloIso
 
 <DemonstrationSection diagram={<DemoTrianguloIsosceles />}>
 
-<Capitular letra="T" />he <ConceptLink targetId="metodo-directo" isDependency={true}>direct deductive proof</ConceptLink> of the <ConceptLink targetId="teorema-triangulo-isosceles">isosceles triangle theorem</ConceptLink> attributed to <ConceptLink targetId="pappus">Pappus of Alexandria</ConceptLink> (formally adopted by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §5, Satz 11, of the *Grundlagen der Geometrie*) establishes the equality of the <ConceptLink targetId="angulo-base">base angles</ConceptLink> by comparing the <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> with itself under a transposition of its <ConceptLink targetId="vertice">vertices</ConceptLink>.
+<Capitular letra="T" />he <ConceptLink targetId="metodo-directo" isDependency={true}>direct deductive proof</ConceptLink> of the <ConceptLink targetId="teorema-triangulo-isosceles">isosceles triangle theorem</ConceptLink> attributed to <ConceptLink targetId="pappus">Pappus of Alexandria</ConceptLink> (adopted by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in §6 of the *Grundlagen der Geometrie*) establishes the congruence of the <ConceptLink targetId="angulo-base">base angles</ConceptLink> by comparing the <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> with itself under a transposition of its <ConceptLink targetId="vertice">vertices</ConceptLink>.
 
-This reasoning highlights the intrinsic <ConceptLink targetId="simetria">symmetry</ConceptLink> of the figure and directly applies <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Hilbert's Axiom III.5</ConceptLink> of angular <ConceptLink targetId="congruencia">congruence</ConceptLink> without requiring auxiliary constructions.
+This reasoning highlights the intrinsic <ConceptLink targetId="simetria">symmetry</ConceptLink> of the figure and directly applies the <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink> of <ConceptLink targetId="congruencia">congruence</ConceptLink> without requiring auxiliary constructions.
 
 <Separador />
 
-### Step-by-step formal proof
+### Step-by-step proof
 
 <ProofStep number={1} target="step-triangulo" title="Hypothesis of lateral congruence">
 We consider <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind>, in which the two lateral <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> <VisualBind element="ladoAB" color="carbon">$\overline{AB}$</VisualBind> and <VisualBind element="ladoAC" color="carbon">$\overline{AC}$</VisualBind> are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> by initial hypothesis:
@@ -50,7 +50,7 @@ The bottom <ConceptLink targetId="segmento" isDependency={true}>segment</Concept
 </ProofStep>
 
 <ProofStep number={2} target="step-angulo-vertice" title="Reflexivity of the vertex angle">
-At the upper <ConceptLink targetId="vertice">vertex</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, the interior <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> <VisualBind element="anguloA" color="ocre">$\angle BAC$</VisualBind> coincides with itself. By the axiom of angle congruence and transport (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>), every angle satisfies the <ConceptLink targetId="reflexividad">reflexivity</ConceptLink> of congruence when the order of its bounding <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> is reversed:
+At the upper <ConceptLink targetId="vertice">vertex</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, the <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> <VisualBind element="anguloA" color="ocre">$\angle BAC$</VisualBind> is the unordered pair of <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> $\{\overrightarrow{AB}, \overrightarrow{AC}\}$, so that $\angle BAC = \angle CAB$. By the <ConceptLink targetId="reflexividad">reflexivity</ConceptLink> of angle congruence (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>):
 
 $$
 \angle BAC \cong \angle CAB
@@ -64,20 +64,20 @@ $$
 A \longleftrightarrow A, \quad B \longleftrightarrow C, \quad C \longleftrightarrow B
 $$
 
-Under this correspondence, the three conditions of <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Hilbert's Axiom III.5</ConceptLink> are immediately satisfied:
+Under this correspondence, the three conditions of <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink> are immediately satisfied:
 1. First pair of corresponding <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink>: <VisualBind element="ladoAB" color="carbon">$\overline{AB}$</VisualBind> $\cong$ <VisualBind element="ladoAC" color="carbon">$\overline{AC}$</VisualBind> (by initial hypothesis).
 2. Included <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> between them: <VisualBind element="anguloA" color="ocre">$\angle BAC$</VisualBind> $\cong$ <VisualBind element="anguloA" color="ocre">$\angle CAB$</VisualBind> (by <ConceptLink targetId="reflexividad">reflexivity</ConceptLink> of the angle at <VisualBind element="pA" color="terracota">$A$</VisualBind>, <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>).
 3. Second pair of corresponding sides: <VisualBind element="ladoAC" color="carbon">$\overline{AC}$</VisualBind> $\cong$ <VisualBind element="ladoAB" color="carbon">$\overline{AB}$</VisualBind> (by the <ConceptLink targetId="simetria">symmetry</ConceptLink> of segment <ConceptLink targetId="congruencia" isDependency={true}>congruence</ConceptLink>, derived from <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink> and <ConceptLink targetId="axioma-congruencia-2" isDependency={true}>Axiom III.2</ConceptLink>).
 </ProofStep>
 
 <ProofStep number={4} target="step-angulos-base" title="Deduction of base angle congruence">
-Because two <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> and their included <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>, <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Hilbert's Axiom III.5</ConceptLink> directly implies that the remaining angles opposite those sides are congruent. In particular, for the <ConceptLink targetId="angulo-base">base angles</ConceptLink> <VisualBind element="anguloB" color="mora">$\angle ABC$</VisualBind> and <VisualBind element="anguloC" color="mora">$\angle ACB$</VisualBind> at <ConceptLink targetId="vertice">vertices</ConceptLink> <VisualBind element="pB" color="carbon">$B$</VisualBind> and <VisualBind element="pC" color="carbon">$C$</VisualBind>:
+Because two <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> and their included <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>, <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink> directly implies that the remaining angles opposite those sides are congruent. In particular, for the <ConceptLink targetId="angulo-base">base angles</ConceptLink> <VisualBind element="anguloB" color="mora">$\angle ABC$</VisualBind> and <VisualBind element="anguloC" color="mora">$\angle ACB$</VisualBind> at <ConceptLink targetId="vertice">vertices</ConceptLink> <VisualBind element="pB" color="carbon">$B$</VisualBind> and <VisualBind element="pC" color="carbon">$C$</VisualBind>:
 
 $$
 \angle ABC \cong \angle ACB
 $$
 
-It is formally proven that in any <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> with two congruent <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink>, the <ConceptLink targetId="angulo-base">base angles</ConceptLink> are mutually congruent.
+It is thus proven that in any <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> with two congruent <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink>, the <ConceptLink targetId="angulo-base">base angles</ConceptLink> are mutually congruent.
 </ProofStep>
 
 </DemonstrationSection>

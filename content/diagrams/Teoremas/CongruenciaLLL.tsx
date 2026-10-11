@@ -1074,7 +1074,17 @@ export const CongruenciaLLLSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastra A, B y C"
+  "note": "Arrastra A, B y C para comprobar que tres lados congruentes determinan triángulos congruentes.",
+  "translations": {
+    "eu": {
+      "title": "LLL kongruentzia-irizpidea",
+      "note": "Arrastatu A, B eta C hiru alde kongruentek triangelu kongruenteak zehazten dituztela egiaztatzeko."
+    },
+    "en": {
+      "title": "SSS Congruence Criterion",
+      "note": "Drag A, B, and C to verify that three congruent sides determine congruent triangles."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

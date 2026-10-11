@@ -1,47 +1,52 @@
 export const metadata = {
   id: "teorema-pitagoras",
+  lang: "eu",
   type: "teorema",
   title: "Pitagorasen teorema",
-  description: "Edozein triangelu angeluzuzenetan, hipotenusaren gainean eraikitako karratuaren azalera katetoen gainean eraikitako karratuen azaleren baturaren berdina da.",
-  statement: "C erpinean angelu zuzena duen △ABC triangelu angeluzuzen orotan, katetoen karratuen batura hipotenusaren karratuaren berdina da: a² + b² = c².",
+  description: "Edozein triangelu angeluzuzenean, hipotenusaren luzeraren karratua katetoen luzeren karratuen baturaren berdina da.",
+  statement: "△ABC triangeluak C erpinean angelu zuzena badu, a = |BC|, b = |CA| eta c = |AB| izanik, orduan a² + b² = c².",
   branch: "51M",
+  tags: ["triangulo-rectangulo", "area", "longitud", "geometria-euclidiana"],
   hasSimulation: true,
-  authors: ["pitagoras", "euclides", "hilbert"],
+  difficulty: "intermedio",
+  authors: ["pitagoras", "euclides"],
   demos: ["demo-pitagoras-euclides", "demo-pitagoras-areas"],
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 47 y 48", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §21", role: "secondary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. liburua, 47. eta 48. proposizioak", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "IV. kapitulua", role: "secondary" }
   ]
 };
 
 import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras';
 export const Simulation = Pitagoras;
 
-<Capitular letra="P" />lanoko <ConceptLink targetId="geometria-euclidiana">geometria euklidetarrean</ConceptLink>, <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink></VisualBind> baten aldeen arteko erlazio metrikoak zuzenean lotzen ditu aldeen luzera linealak eta horien gainean marraztutako <ConceptLink targetId="cuadrado">karratuen</ConceptLink> <ConceptLink targetId="teoria-medida-area">azalerak</ConceptLink>.
+<Capitular letra="E" />dozein <VisualBind element="triangulo" color="carbon"><ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzenetan</ConceptLink></VisualBind>, <ConceptLink targetId="hipotenusa" isDependency={true}>hipotenusaren</ConceptLink> <ConceptLink targetId="longitud" isDependency={true}>luzeraren</ConceptLink> karratua <ConceptLink targetId="cateto" isDependency={true}>katetoen</ConceptLink> luzeren karratuen baturaren berdina da.
+
+<ConceptLink targetId="teoria-medida-area" isDependency={true}>Azalerari</ConceptLink> dagokionez, <ConceptLink targetId="euclides">Euklidesek</ConceptLink> adierazi zuen bezala (Elementuak I.47), hipotenusaren gainean eraikitako <ConceptLink targetId="cuadrado">karratuak</ConceptLink> bi katetoen gainean eraikitako karratuek batera duten azalera bera du. Entziklopedia honetako bi <ConceptLink targetId="demostracion">frogapenak</ConceptLink> azaleren bidezkoak dira: <ConceptLink targetId="demo-pitagoras-euclides">Euklidesenena</ConceptLink> hipotenusaren gaineko karratua bi laukizuzenetan banatzen du, eta <ConceptLink targetId="demo-pitagoras-areas">disekzioarena</ConceptLink> karratu beraren bi zatiketa alderatzen ditu; biek <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangeluaren azaleraren teoremari</ConceptLink>, <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>laukizuzenaren azaleraren teoremari</ConceptLink> eta <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>azaleraren aditibitateari</ConceptLink> jarraitzen diote. Hipotenusaren gaineko altuerak mugatzen dituen triangeluen <ConceptLink targetId="semejanza">antzekotasunaren</ConceptLink> bidez ere froga daiteke.
+
+<Definicion title="Pitagorasen teoremaren enuntziatu formala">
+Izan bedi $\triangle ABC$ <ConceptLink targetId="sistema-euclidiano">sistema euklidearreko</ConceptLink> $\sigma$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> bat, $C$ erpinean <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzena</ConceptLink> duena, eta izan bitez <VisualBind element="cuadrado-a" color="pavo">$a = |BC|$</VisualBind> eta <VisualBind element="cuadrado-b" color="terracota">$b = |CA|$</VisualBind> <ConceptLink targetId="cateto" isDependency={true}>katetoen</ConceptLink> <ConceptLink targetId="longitud" isDependency={true}>luzerak</ConceptLink> eta <VisualBind element="cuadrado-c" color="ocre">$c = |AB|$</VisualBind> <ConceptLink targetId="hipotenusa" isDependency={true}>hipotenusarena</ConceptLink>. Orduan:
+
+$$
+a^2 + b^2 = c^2
+$$
+
+Baliokideki, baldin eta $Q_a$, $Q_b$ eta $Q_c$ $\overline{BC}$, $\overline{CA}$ eta $\overline{AB}$ zuzenkien gainean eraikitako karratu-eskualdeak badira, orduan $\operatorname{A}(Q_a) + \operatorname{A}(Q_b) = \operatorname{A}(Q_c)$.
+</Definicion>
 
 <Separador />
 
-### Enuntziatu formala
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Alderantzizkoa eta hedadura">
+    <PropiedadItem id="teorema-reciproco-pitagoras" title="Pitagorasen teoremaren alderantzizkoa" formula="|BC|^2 + |CA|^2 = |AB|^2 \implies \angle ACB \text{ zuzena da}">
+      $\triangle ABC$ <ConceptLink targetId="triangulo">triangelu</ConceptLink> baten aldeen <ConceptLink targetId="longitud">luzerek</ConceptLink> $a^2 + b^2 = c^2$ betetzen badute, $\overline{AB}$ aldearen aurrez aurreko angelua <ConceptLink targetId="angulo-recto">zuzena</ConceptLink> da (Elementuak I.48; <ConceptLink targetId="teorema-reciproco-pitagoras">Pitagorasen teoremaren alderantzizkoa</ConceptLink>). Horrek aukera ematen du angelu zuzenak ezagutzeko $3, 4, 5$ bezalako <ConceptLink targetId="terna-pitagorica">hiruko pitagorikoetatik</ConceptLink> abiatuta.
+    </PropiedadItem>
+    <PropiedadItem id="pitagoras-equivalente-paralelas" title="Baliokidetasuna paraleloen axiomarekin">
+      <ConceptLink targetId="sistema-absoluto">Geometria absolutuaren</ConceptLink> gainean, teorema triangelu angeluzuzen ororentzat betetzea <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> baliokidea da: <ConceptLink targetId="sistema-hiperbolico">plano hiperbolikoan</ConceptLink> erlazioa ez da betetzen inongo triangelu angeluzuzenetan.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-Izan bedi plano euklidetarrean $C$ erpinean angelu zuzena duen $\triangle ABC$ <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzena</ConceptLink>. Izan bitez $a = |\overline{BC}|$ eta $b = |\overline{CA}|$ <VisualBind element="cateto-a" color="pavo">katetoen</VisualBind> neurri metrikoak, eta $c = |\overline{AB}|$ <VisualBind element="hipotenusa" color="terracota">hipotenusaren</VisualBind> neurri metrikoa. Ezinbestean betetzen da honako berdintza hau:
-
-<Formula>
-  $$ a^2 + b^2 = c^2 $$
-</Formula>
-
-Azalera poligonalen neurriari dagokionez, hipotenusaren gaineko <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">karratuaren</ConceptLink></VisualBind> $c^2$ azalera eta $a$ zein $b$ katetoen gaineko $a^2$ eta $b^2$ karratuen azaleren batura nahitaez berdinak dira.
-
-<Separador />
-
-### Azterketa eta oinarritze axiomatikoa
-
-Erlazio metriko honen froga nahitaez <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioman</ConceptLink> oinarritzen da. <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> garatutako eraikuntza formalean, emaitza hau planoaren deskonposagarritasunaren teoriatik eta <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>azaleraren aditibitate-teorematik</ConceptLink> deduzitzen da.
-
-Geometria ez-euklidetarretan (geometria hiperbolikoan edo esferikoan, esaterako), karratuen baturaren erlazio aljebraikoa ez da zuzenean mantentzen, funtzio trigonometriko hiperbolikoak edo esferikoak erabili behar baitira.
-
-<Separador />
-
-### Propietateak eta alderantzizkoa
-
-- **Izaera alderantzizkoa**: $\triangle ABC$ triangelu baten aldeen luzerek $a^2 + b^2 = c^2$ berdintza betetzen badute, orduan $\overline{AB}$ aldeari aurrez aurre dagoen angelua nahitaez angelu zuzena da.
-- **Antzekotasun bidezko froga**: Hipotenusarekiko altuera marraztean, jatorrizko triangelua bi triangelu <ConceptLink targetId="semejanza">antzekotan</ConceptLink> banatzen da, $a^2 = c \cdot p$ eta $b^2 = c \cdot q$ proportzioak lortuz.
+<Nota>
+Geometria ez-euklidearren eredu analitikoetan erlazioak beste itxura bat hartzen du. $-1$ kurbadura normalizatua duen plano hiperbolikoan (adibidez, <ConceptLink targetId="modelo-poincare">Poincareren ereduan</ConceptLink>), triangelu angeluzuzen batek $\cosh c = \cosh a \cosh b$ betetzen du; $1$ erradioko esfera baten gainean (<ConceptLink targetId="geometria-esferica">geometria esferikoa</ConceptLink>), $\cos c = \cos a \cos b$ betetzen du. Triangelu txikietarako, bi formulen bigarren ordenara arteko garapenak $a^2 + b^2 = c^2$ berreskuratzen du.
+</Nota>

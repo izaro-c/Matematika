@@ -1,16 +1,18 @@
 export const metadata = {
-  "id": "demo-pitagoras-euclides",
-  "type": "demostracion",
-  "title": "Proof: Pythagorean Theorem (Euclid's Method)",
-  "description": "Classic Euclidean proof dividing the hypotenuse square into two rectangles congruent in area to the cathetus squares.",
-  "parentTheorem": "teorema-pitagoras",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides", "hilbert"],
-  "tags": ["geometria", "triangulos", "areas", "hilbert"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elements", author: "Euclides", locator: "Book I, Proposition 47", role: "primary" }
+  id: "demo-pitagoras-euclides",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Pythagorean Theorem (Euclid's Method)",
+  description: "Classic Euclidean proof dividing the hypotenuse square into two rectangles congruent in area to the cathetus squares.",
+  parentTheorem: "teorema-pitagoras",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria", "triangulos", "areas", "hilbert"],
+  layout: "split",
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Proposition 47", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV", role: "secondary" }
   ]
 };
 
@@ -18,54 +20,54 @@ import { DemoPitagorasEuclides } from "@content/diagrams/Demos/DemoPitagorasEucl
 
 <DemonstrationSection diagram={<DemoPitagorasEuclides />}>
 
-<Capitular letra="G" />iven a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> $\triangle ABC$ with a right angle at vertex $C$, the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink> is formally demonstrated. The proof establishes that the area of the <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">square constructed on the hypotenuse</ConceptLink></VisualBind> is equal to the sum of the areas of the <VisualBind element="cuadrado-a" color="pavo">square on cathetus $a$</VisualBind> and the <VisualBind element="cuadrado-b" color="terracota">square on cathetus $b$</VisualBind>.
+<Capitular letra="G" />iven a <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink> $\triangle ABC$ with a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> at <ConceptLink targetId="vertice" isDependency={true}>vertex</ConceptLink> $C$, the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink> is formally demonstrated. The proof establishes that the <ConceptLink targetId="teoria-medida-area" isDependency={true}>area</ConceptLink> of the <VisualBind element="sqC" color="ocre"><ConceptLink targetId="cuadrado">square constructed on the hypotenuse</ConceptLink></VisualBind> is equal to the sum of the areas of the squares constructed on the <ConceptLink targetId="cateto" isDependency={true}>legs</ConceptLink>: the <VisualBind element="sqA" color="terracota">square on leg $a$</VisualBind> and the <VisualBind element="sqB" color="canela">square on leg $b$</VisualBind>.
 
 <Separador />
 
 ### Step-by-step proof
 
 <ProofStep number={1} target="triangulo" title="Configuration of the base right triangle">
-Let <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> be a right triangle with the right angle positioned at vertex $C$. The legs are denoted by <VisualBind element="cateto-a" color="pavo">$a = |\overline{BC}|$</VisualBind> and <VisualBind element="cateto-b" color="terracota">$b = |\overline{CA}|$</VisualBind>, and the hypotenuse by <VisualBind element="hipotenusa-c" color="ocre">$c = |\overline{AB}|$</VisualBind>.
+Let <VisualBind element="polyABC" color="granada">$\triangle ABC$</VisualBind> be the <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink> with the <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> <VisualBind element="rightAngle" color="carbon">$\angle ACB$</VisualBind> located at <ConceptLink targetId="vertice" isDependency={true}>vertex</ConceptLink> <VisualBind element="pC" color="carbon">$C$</VisualBind>. The <ConceptLink targetId="longitud" isDependency={true}>lengths</ConceptLink> of the <ConceptLink targetId="cateto" isDependency={true}>legs</ConceptLink> are denoted by $a = |BC|$ and $b = |CA|$, and the length of the <ConceptLink targetId="hipotenusa" isDependency={true}>hypotenuse</ConceptLink> by $c = |AB|$, with endpoints at <VisualBind element="pA" color="carbon">$A$</VisualBind> and <VisualBind element="pB" color="carbon">$B$</VisualBind>.
 </ProofStep>
 
 <ProofStep number={2} target="cuadrados" title="Construction of the three exterior squares">
-On each of the three sides of $\triangle ABC$, three squares exterior to the polygon are constructed: the <VisualBind element="cuadrado-b" color="terracota">square on $b$</VisualBind> with area $b^2$, the <VisualBind element="cuadrado-a" color="pavo">square on $a$</VisualBind> with area $a^2$, and the <VisualBind element="cuadrado-c" color="ocre">square on the hypotenuse</VisualBind> with area $c^2$.
+On each of the three sides of triangle $\triangle ABC$, three exterior <ConceptLink targetId="cuadrado">squares</ConceptLink> are constructed: the <VisualBind element="sqB" color="canela">square on $b$</VisualBind> of area $b^2$, the <VisualBind element="sqA" color="terracota">square on $a$</VisualBind> of area $a^2$, and the <VisualBind element="sqC" color="mora">square on the hypotenuse</VisualBind> of area $c^2$, with auxiliary vertices <VisualBind element="pK" color="canela">$K$</VisualBind>, <VisualBind element="pF" color="terracota">$F$</VisualBind>, <VisualBind element="pD" color="mora">$D$</VisualBind>, and <VisualBind element="pE" color="mora">$E$</VisualBind>.
 </ProofStep>
 
 <ProofStep number={3} target="altura" title="Division of the hypotenuse square by the altitude">
-From the right vertex $C$, the <VisualBind element="recta-altura" color="carbon"><ConceptLink targetId="perpendicular">perpendicular line</ConceptLink></VisualBind> to the hypotenuse $\overline{AB}$ is drawn. Extended through the square on the hypotenuse, this line partitions it into two rectangles: the <VisualBind element="rectangulo-izq" color="terracota">left rectangle</VisualBind> $R_L$ ($ADML$) and the <VisualBind element="rectangulo-der" color="pavo">right rectangle</VisualBind> $R_R$ ($BEML$).
+From the right vertex $C$, the <VisualBind element="altSegment" color="carbon"><ConceptLink targetId="perpendicular" isDependency={true}>perpendicular line</ConceptLink></VisualBind> to hypotenuse $\overline{AB}$ is drawn, with foot <VisualBind element="pL" color="carbon">$L$</VisualBind>. Extended through the square on the hypotenuse to <VisualBind element="pM" color="carbon">$M$</VisualBind>, this line partitions the square into two rectangles: the <VisualBind element="rectADML" color="canela">left rectangle</VisualBind> $R_L$ ($ADML$) and the <VisualBind element="rectBEML" color="terracota">right rectangle</VisualBind> $R_R$ ($BEML$).
 </ProofStep>
 
 <ProofStep number={4} target="triangulos-izq" title="Construction and congruence of the left triangles">
-Auxiliary <ConceptLink targetId="segmento">segments</ConceptLink> are drawn to form triangle <VisualBind element="triangulo-acd" color="terracota">$\triangle ACD$</VisualBind> and triangle <VisualBind element="triangulo-akb" color="terracota">$\triangle AKB$</VisualBind>. Applying the <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>SAS congruence axiom</ConceptLink> yields <ConceptLink targetId="congruencia">congruence</ConceptLink>:
+Auxiliary <ConceptLink targetId="segmento" isDependency={true}>segments</ConceptLink> $\overline{CD}$ and $\overline{KB}$ are drawn to define triangles $\triangle ACD$ and $\triangle AKB$. One observes that $\overline{AD} \cong \overline{AB}$ (sides of square $c^2$) and $\overline{AC} \cong \overline{AK}$ (sides of square $b^2$). Furthermore, angles $\angle CAD$ and $\angle KAB$ are each the sum of a right angle and $\angle CAB$, whence $\angle CAD \cong \angle KAB$. By the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink> (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink>), one has the <ConceptLink targetId="congruencia" isDependency={true}>congruence</ConceptLink>:
 
-<Formula>
-  $$ \triangle ACD \cong \triangle AKB $$
-</Formula>
+$$
+\triangle ACD \cong \triangle AKB
+$$
 </ProofStep>
 
 <ProofStep number={5} target="areas-izq" title="Area equivalence between the left triangle and rectangle">
-Triangle $\triangle ACD$ shares a base with the <VisualBind element="rectangulo-izq" color="terracota">left rectangle</VisualBind> $R_L$, so its area is exactly half of the area of $R_L$. Likewise, triangle $\triangle AKB$ shares a base with the <VisualBind element="cuadrado-b" color="terracota">square on $b$</VisualBind>, having an area equal to half of $b^2$. From the triangle congruence, it is deduced that:
+Triangle $\triangle ACD$ and the <VisualBind element="rectADML" color="canela">left rectangle</VisualBind> $R_L$ share base $\overline{AD}$ and have the same height $AL$; by the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink> and the <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink>, $\operatorname{A}(\triangle ACD) = \frac{1}{2} \operatorname{A}(R_L)$. Analogously, triangle $\triangle AKB$ and the <VisualBind element="sqB" color="canela">square on $b$</VisualBind> share base $\overline{AK}$ and height $AC$, so that $\operatorname{A}(\triangle AKB) = \frac{1}{2} b^2$. Since congruent triangles have equal area by the <ConceptLink targetId="teoria-medida-area" isDependency={true}>theory of area measure</ConceptLink>, it follows that:
 
-<Formula>
-  $$ \text{Area}(R_L) = b^2 $$
-</Formula>
+$$
+\operatorname{A}(R_L) = b^2
+$$
 </ProofStep>
 
 <ProofStep number={6} target="areas-der" title="Area equivalence for the right rectangle">
-Through a strictly symmetrical argument applied to the right sector using auxiliary triangles <VisualBind element="triangulo-bce" color="pavo">$\triangle BCE$</VisualBind> and <VisualBind element="triangulo-abf" color="pavo">$\triangle ABF$</VisualBind>, it is proven that the <VisualBind element="rectangulo-der" color="pavo">right rectangle</VisualBind> $R_R$ has an area identical to $a^2$:
+Through a strictly symmetrical construction applied to the right side with auxiliary triangles $\triangle BCE$ and $\triangle ABF$, congruence $\triangle BCE \cong \triangle ABF$ by the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS criterion</ConceptLink> and comparing bases and heights via the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink> and the <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink> prove that the <VisualBind element="rectBEML" color="terracota">right rectangle</VisualBind> $R_R$ has area identical to that of the <VisualBind element="sqA" color="terracota">square on leg $a$</VisualBind>:
 
-<Formula>
-  $$ \text{Area}(R_R) = a^2 $$
-</Formula>
+$$
+\operatorname{A}(R_R) = a^2
+$$
 </ProofStep>
 
 <ProofStep number={7} target="cuadrados-final" title="Area addition and formal conclusion">
-By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>, the total area of the <VisualBind element="cuadrado-c" color="ocre">square on the hypotenuse</VisualBind> is the sum of its two constituent rectangles $R_L$ and $R_R$:
+By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>, the total area of the <VisualBind element="sqC" color="mora">square on the hypotenuse</VisualBind> is the sum of its two disjoint rectangles $R_L$ and $R_R$:
 
-<Formula>
-  $$ a^2 + b^2 = c^2 $$
-</Formula>
+$$
+a^2 + b^2 = c^2
+$$
 </ProofStep>
 
 <Separador />
@@ -73,7 +75,7 @@ By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area 
 ### Deductive analysis
 
 <Nota>
-  Book I, Proposition 47 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>. This reasoning requires the <ConceptLink targetId="sistema-euclidiano">Euclidean axiomatic system</ConceptLink> and formalizes the decomposition within Hilbert's framework.
+Proposition I.47 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>. This reasoning relies on the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink> and formalizes the decomposition through <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> theory of area.
 </Nota>
 
 </DemonstrationSection>

@@ -6,24 +6,27 @@ export const metadata = {
   title: "Half-Plane",
   description: "Either of the two open regions into which a line divides the points of a plane.",
   branch: "51M",
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §2 (Axiom II.4)", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
   ]
 };
 
-<Capitular letra="A" /> **half-plane** is either of the two regions into which a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> divides the <ConceptLink targetId="punto">points</ConceptLink> of a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>. The dividing line is called the **boundary** or edge and is not part of the half-plane.
+import { Semiplano } from '@content/diagrams/Definiciones/Semiplano';
+export const Simulation = Semiplano;
 
-In <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>, the partition of the plane into exactly two <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> regions is a consequence of the Plane Separation Theorem, proven from <ConceptLink targetId="axioma-orden-4" isDependency={true}>Pasch's Axiom</ConceptLink> (Axiom II.4) and linear <ConceptLink targetId="estar-entre">order</ConceptLink> axioms.
+<Capitular letra="A" /> **half-plane** is either of the two regions into which a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> divides the <ConceptLink targetId="punto">points</ConceptLink> of a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> containing it. The dividing line is called the **edge** and is not part of the half-plane.
 
-<Definicion title="Formal Definition">
-  Let $\pi$ be a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> and let $\ell$ be a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> contained in $\pi$. On the set of <ConceptLink targetId="punto">points</ConceptLink> of the plane outside the line ($\pi \setminus \ell$), define the binary relation $\sim_\ell$:
+That the line divides the plane into exactly two <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> regions is the content of the <ConceptLink targetId="teorema-separacion-plano" isDependency={true}>plane separation theorem</ConceptLink>, which Hilbert derives from <ConceptLink targetId="axioma-orden-4" isDependency={true}>Pasch's Axiom</ConceptLink> (Axiom II.4) and the other <ConceptLink targetId="estar-entre" isDependency={true}>order</ConceptLink> axioms. The half-plane is thus the planar analogue of the <ConceptLink targetId="semirrecta">ray</ConceptLink>.
+
+<Definicion title="Formal Definition of Half-Plane">
+  Let $\pi$ be a plane and let <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> be a line with $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. On the set of points of the plane not incident with the line, $\operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$, define the <ConceptLink targetId="relacion-binaria">binary relation</ConceptLink> $\sim_\ell$:
   $$
-  A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \ell = \emptyset
+  A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset
   $$
-  where $\operatorname{seg}(AB)$ denotes the open <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> joining points $A$ and $B$ (excluding its endpoints).
+  where <VisualBind element="segAB" color="terracota">$\operatorname{seg}(AB)$</VisualBind> is the open <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> with endpoints <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind>.
 
-  By the Plane Separation Theorem, $\sim_\ell$ is an equivalence relation partitioning $\pi \setminus \ell$ into exactly two equivalence classes in the quotient space $(\pi \setminus \ell) / {\sim_\ell} = \{ \mathcal{H}_1, \mathcal{H}_2 \}$. Each of these classes $\mathcal{H}_1$ and $\mathcal{H}_2$ is an open **half-plane** determined by $\ell$.
+  By the plane separation theorem, $\sim_\ell$ is an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink> with exactly two <ConceptLink targetId="clase-equivalencia">equivalence classes</ConceptLink>: $(\operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)) / {\sim_\ell} = \{ \mathcal{H}_1, \mathcal{H}_2 \}$. Each of these classes is an open **half-plane** with edge <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind>: <VisualBind element="semiplano-1" color="terracota">$\mathcal{H}_1$</VisualBind> and <VisualBind element="semiplano-2" color="pavo">$\mathcal{H}_2$</VisualBind>. The half-plane containing a point $B$ is denoted $\mathcal{H}_\ell(B)$.
 </Definicion>
 
 <Separador />
@@ -31,19 +34,19 @@ In <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>,
 <SeccionPropiedades>
   <PropiedadesGrupo title="Geometric Properties and Convexity">
     <PropiedadItem 
-      id="conjunto-convexo" 
+      id="convexidad-semiplano" 
       title="Convexity of the Half-Plane"
-      formula="A, B \in \mathcal{H} \implies \operatorname{seg}(AB) \subset \mathcal{H}"
+      formula="A, B \in \mathcal{H} \implies \operatorname{seg}(AB) \subseteq \mathcal{H}"
     >
-      Every open half-plane $\mathcal{H}$ is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if it contains two points $A, B \in \mathcal{H}$, then the entire open <ConceptLink targetId="segmento">segment</ConceptLink> $\operatorname{seg}(AB)$ connecting them is strictly contained in $\mathcal{H}$, as a direct consequence of the Plane Separation Theorem and <ConceptLink targetId="axioma-orden-4">Pasch's Axiom</ConceptLink>.
+      Every open half-plane $\mathcal{H}$ is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in <VisualBind element="semiplano-1" color="terracota">\mathcal{H}_1</VisualBind>$, the open <ConceptLink targetId="segmento">segment</ConceptLink> <VisualBind element="segAB" color="terracota">$\operatorname{seg}(AB)$</VisualBind> is contained in $\mathcal{H}_1$. Conversely, for a point <VisualBind element="pC" color="pavo">$C \in \mathcal{H}_2$</VisualBind> in the opposite half-plane, the segment <VisualBind element="segAC" color="granada">$\operatorname{seg}(AC)$</VisualBind> crosses the edge line <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> at a point <VisualBind element="pX" color="granada">$X$</VisualBind>. This follows from the definition of $\sim_\ell$: if a point $X$ of $\operatorname{seg}(AB)$ were not in $\mathcal{H}$, either $X$ would be incident with $\ell$ or $\operatorname{seg}(AX)$ would meet $\ell$; in both cases $\operatorname{seg}(AB) \supseteq \operatorname{seg}(AX) \cup \{X\}$ would meet $\ell$, contradicting $A \sim_\ell B$.
     </PropiedadItem>
 
     <PropiedadItem 
       id="generacion-interiores-poligonales" 
-      title="Generation of Polygonal Interiors"
-      formula="\operatorname{Int}(\mathcal{P}_n) = \bigcap_{i=1}^n \mathcal{H}_{\ell_i}"
+      title="Interiors as Intersections of Half-Planes"
+      formula="\operatorname{Int}(A_1 A_2 \cdots A_n) = \bigcap_{i=1}^n \mathcal{H}_i"
     >
-      The finite intersection of open half-planes determined by the supporting <ConceptLink targetId="recta">lines</ConceptLink> of a planar configuration formally defines the interior region of an <ConceptLink targetId="angulo">angle</ConceptLink> ($\operatorname{Int}(\angle AOB) = \mathcal{H}_1 \cap \mathcal{H}_2$), a <ConceptLink targetId="triangulo">triangle</ConceptLink>, and any convex <ConceptLink targetId="poligono">polygon</ConceptLink>, preserving convexity under arbitrary intersection closures.
+      Finite intersections of open half-planes define the interior of an <ConceptLink targetId="angulo">angle</ConceptLink>, $\operatorname{Int}(\angle AOB) = \mathcal{H}_{\overleftrightarrow{OA}}(B) \cap \mathcal{H}_{\overleftrightarrow{OB}}(A)$, of a <ConceptLink targetId="triangulo">triangle</ConceptLink>, and of a <ConceptLink targetId="poligono-convexo">convex polygon</ConceptLink> $A_1 A_2 \cdots A_n$, where $\mathcal{H}_i$ is the half-plane whose edge is the <ConceptLink targetId="recta-soporte">supporting line</ConceptLink> $\overleftrightarrow{A_i A_{i+1}}$ (indices modulo $n$) and which contains the remaining vertices. These regions are convex, since the <ConceptLink targetId="interseccion">intersection</ConceptLink> of convex sets is convex.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

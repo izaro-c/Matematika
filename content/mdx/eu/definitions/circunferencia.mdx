@@ -2,55 +2,89 @@ export const metadata = {
   id: "circunferencia",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Zirkunferentzia",
-  description: "Zentro izeneko puntu finko batetik distantzia berera dauden planoko puntuen leku geometrikoa.",
+  description: "Plano bateko puntuen multzoa, puntu finko batekin (zentroarekin) lotzen dituen zuzenkia zuzenki jakin baten kongruentea izanik.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "circunferencia", "congruencia"],
   hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 15. Definizioa", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. liburua, 15.–17. definizioak", role: "primary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "2. kapitulua", role: "formalization" }
   ]
 };
 
 import { Circunferencia } from '@content/diagrams/Definiciones/Circunferencia';
 export const Simulation = Circunferencia;
 
-<Capitular letra="Z" />irkunferentzia zentro izeneko puntu finko batetik distantzia berera (erradiora) dauden planoko <ConceptLink targetId="punto">puntu</ConceptLink> guztien dimentsio bakarreko leku geometrikoa da. Geometria lauaren oinarrizko kurba itxia da, disko edo <VisualBind element="circulo" color="pavo">zirkulu</VisualBind> izeneko bi dimentsioko eskualde ganbila zedarritzen duena.
+<Capitular letra="Z" />entroa $O$ puntuan duen eta $A$ puntutik igarotzen den zirkunferentzia <ConceptLink targetId="plano" isDependency={true}>planoko</ConceptLink> $P$ <ConceptLink targetId="punto" isDependency={true}>puntuen</ConceptLink> multzoa da, non $\overline{OP}$ <ConceptLink targetId="segmento" isDependency={true}>zuzenkia</ConceptLink> $\overline{OA}$ zuzenkiaren <ConceptLink targetId="congruencia" isDependency={true}>kongruentea</ConceptLink> den.
 
-<Definicion title="">
-  $\mathcal{P}$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko <VisualBind element="centro" color="musgo">$O$</VisualBind> <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat eta $r > 0$ zenbaki erreal bat emanda, $O$ zentrodun eta $r$ <VisualBind element="radio" color="pavo">erradiodun</VisualBind> <VisualBind element="circunferencia" color="musgo">$\mathcal{C}(O, r)$</VisualBind> zirkunferentzia $O$-rekiko distantzia zehazki $r$ duten $P \in \mathcal{P}$ puntu guztien multzoa da:
-  $$
-  \mathcal{C}(O, r) = \{ P \in \mathcal{P} \mid d(O, P) = r \}
-  $$
-  $\mathbb{R}^2$-ko koordenatu kartesiarretan, zentroa $(x_0, y_0)$ puntuan izanik:
-  $$
-  (x - x_0)^2 + (y - y_0)^2 = r^2
-  $$
+Definizioak zuzenkien kongruentzia baino ez du erabiltzen, zenbakirik eta distantziarik gabe, eta horregatik du zentzua <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>. <ConceptLink targetId="longitud">Luzera</ConceptLink> erabilgarri dagoenean, ohiko deskribapen metrikoa onartzen du: zentrotik $r$ distantziara dauden puntuak.
+
+<Definicion title="Zirkunferentziaren definizioa">
+Izan bitez <VisualBind element="centro" color="terracota">$O$</VisualBind> eta $A$ $\sigma$ <ConceptLink targetId="plano">plano</ConceptLink> bateko bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin. $O$ zentroa duen eta $A$ puntutik igarotzen den **zirkunferentzia** hau da:
+
+$$
+\mathcal{C}(O, A) = \{\, P \in \operatorname{tr}(\sigma) \mid \overline{OP} \cong \overline{OA} \,\}.
+$$
+
+$P \in \mathcal{C}(O, A)$ izanik, $\overline{OP}$ zuzenki bakoitza <VisualBind element="radio" color="carbon"><ConceptLink targetId="radio">erradio</ConceptLink></VisualBind> bat da. <VisualBind element="circulo" color="pavo">$\mathcal{D}(O, A)$</VisualBind> **zirkulua** (edo **diskoa**) zirkunferentziak eta haren <ConceptLink targetId="interior">barnealdeak</ConceptLink> osatzen duten eskualdea da; barnealdea $\overline{OP} < \overline{OA}$ betetzen duten $P$ puntuek osatzen dute (<ConceptLink targetId="orden-segmentos">zuzenkien ordena</ConceptLink>).
+
+**Bertsio metrikoa.** $r = |OA|$ bada, <VisualBind element="circunferencia" color="carbon">zirkunferentzia</VisualBind> $\mathcal{C}(O, r) = \{\, P \in \operatorname{tr}(\sigma) \mid |OP| = r \,\}$ da.
+
+**Bertsio analitikoa.** $\mathbb{R}^2$ <ConceptLink targetId="modelo-cartesiano">eredu kartesiarrean</ConceptLink>, $(x_0, y_0)$ zentroarekin, ekuazio honen soluzioen multzoa da:
+
+$$
+(x - x_0)^2 + (y - y_0)^2 = r^2.
+$$
 </Definicion>
 
-<Separador />
+### Elementuak
 
-### Osagaiak eta posizio erlatiboak
-
-Zirkunferentziaren geometriari hainbat elementu zuzen eta angeluar lotzen zaizkio:
-
-| Elementua | Definizio geometrikoa | Adierazpena edo propietatea |
-|---|---|---|
-| <VisualBind element="cuerda" color="ocre">Korda</VisualBind> | Kurbako bi puntu lotzen dituen zuzenkia | $\overline{AB}$ non $A, B \in \mathcal{C}$ diren |
-| <VisualBind element="diametro" color="terracota">Diametroa</VisualBind> | Zentrotik igarotzen den korda handiena | $d = 2r$ |
-| <VisualBind element="arco" color="canela">Arkua</VisualBind> | Bi punturen arteko zirkunferentziaren zati jarraitua | $\widehat{AB} \subset \mathcal{C}$ |
-| <VisualBind element="tangente" color="mora">Zuzen ukitzailea</VisualBind> | Kurba puntu bakar batean ukitzen duen zuzena | Ukitze-puntuko erradioarekiko ortogonala |
+| Elementua | Definizioa |
+|---|---|
+| <VisualBind element="cuerda" color="ocre"><ConceptLink targetId="cuerda">Korda</ConceptLink></VisualBind> | Muturrak zirkunferentziako puntuak dituen $\overline{QR}$ zuzenkia |
+| <VisualBind element="diametro" color="terracota"><ConceptLink targetId="diametro">Diametroa</ConceptLink></VisualBind> | Zentrotik igarotzen den korda; haren luzera $2r$ da |
+| <VisualBind element="arco" color="musgo"><ConceptLink targetId="arco">Arkua</ConceptLink></VisualBind> | Zirkunferentziaren bi punturen arteko zatia, kordaren planoerdietako batean dagoena |
+| <VisualBind element="tangente" color="ocre"><ConceptLink targetId="recta-tangente">Zuzen ukitzailea</ConceptLink></VisualBind> | Zirkunferentziarekin puntu komun bakarra duen planoko zuzena |
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Propietate metrikoak eta simetria">
-    <PropiedadItem id="axioma-arquimedes" title="Perimetroa eta $\pi$ konstantea">
-      Kurba itxiaren luzerak $P = 2\pi r$ erlazio proportzionala betetzen du.
+  <PropiedadesGrupo title="Propietate absolutuak">
+    <PropiedadItem
+      id="interseccion-recta-circunferencia"
+      title="Zuzen batekiko ebakidura"
+      formula="\lvert \operatorname{tr}(\ell) \cap \mathcal{C}(O, A) \rvert \leq 2"
+    >
+      <ConceptLink targetId="recta">Zuzen</ConceptLink> batek gehienez bi puntutan ebakitzen du zirkunferentzia: hiru baleude, $O$ puntuak haietako bi bikoterekin oinarriko angelu kongruenteak dituzten <ConceptLink targetId="triangulo-isosceles">triangelu isoszeleak</ConceptLink> osatuko lituzke, <ConceptLink targetId="teorema-angulo-exterior">kanpo-angeluaren teoremaren</ConceptLink> aurka. Zuzena barneko puntu batetik igarotzen bada, zehazki bi puntutan ebakitzen du; existentzia hori <ConceptLink targetId="axioma-completitud">osotasun-axiomarekin</ConceptLink> frogatzen da.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-aditividad" title="Diskoaren azalera">
-      Zirkunferentziak mugatutako diskoaren azalera $\mu(D) = \pi r^2$ da.
+
+    <PropiedadItem
+      id="tangente-perpendicular-radio"
+      title="Ukitzailea eta erradioa"
+      formula="\ell \text{ ukitzailea } T\text{-n} \iff \ell \perp \overleftrightarrow{OT}"
+    >
+      Zirkunferentziako $T$ puntu batetik igarotzen den zuzena $T$ puntuan ukitzailea da baldin eta soilik baldin $\overline{OT}$ erradioarekiko <ConceptLink targetId="perpendicular">perpendikularra</ConceptLink> bada.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Propietate analitikoak">
+    <PropiedadItem
+      id="longitud-circunferencia"
+      title="Luzera"
+      formula="L = 2\pi r"
+    >
+      Zirkunferentziaren <ConceptLink targetId="longitud-curva">luzera</ConceptLink>, poligono inskribatuen perimetroen supremo gisa definitua, $2\pi r$ da; luzeraren eta diametroaren arteko arrazoia <ConceptLink targetId="numero-pi">$\pi$ zenbakia</ConceptLink> da.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="area-circulo"
+      title="Zirkuluaren azalera"
+      formula="\operatorname{A}(\mathcal{D}(O, r)) = \pi r^2"
+    >
+      Zirkulua ez da <ConceptLink targetId="region-poligonal">eskualde poligonala</ConceptLink>: haren <ConceptLink targetId="teoria-medida-area">azalera</ConceptLink> poligono inskribatu eta zirkunskribatuen azaleren limite gisa lortzen da, <ConceptLink targetId="arquimedes">Arkimedesen</ConceptLink> <ConceptLink targetId="metodo-exhaucion">agortze-metodoaren</ConceptLink> bidez, eta $\pi r^2$ balio du.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

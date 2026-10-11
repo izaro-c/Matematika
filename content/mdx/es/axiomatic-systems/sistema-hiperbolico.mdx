@@ -3,8 +3,10 @@ export const metadata = {
   lang: "es",
   type: "sistema-axiomatico",
   title: "Sistema de geometría hiperbólica",
-  description: "La estructura axiomática de Lobachevski, Bolyai y Gauss basada en la geometría absoluta y el axioma de múltiples paralelas hiperbólicas.",
+  description: "Sistema axiomático de la geometría hiperbólica: la geometría absoluta más el axioma según el cual por un punto exterior a una recta pasan al menos dos paralelas a ella.",
   branch: "51M",
+  branches: ["51M", "51A", "03B"],
+  tags: ["geometria-hiperbolica", "geometria-no-euclidiana", "paralelas", "fundamentos"],
   axiomas: [
     "axioma-incidencia-1",
     "axioma-incidencia-2",
@@ -34,41 +36,48 @@ export const metadata = {
   hasSimulation: false,
   sources: [
     { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolái Lobachevski", locator: "1840", role: "primary" },
-    { title: "Appendix scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "1832", role: "primary" }
+    { title: "Appendix scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "1832", role: "primary" },
+    { title: "Saggio di interpretazione della geometria non-euclidea", author: "Eugenio Beltrami", locator: "1868", role: "secondary" }
   ]
 };
 
-<Capitular letra="E" />l sistema de geometría hiperbólica —descubierto independientemente por <ConceptLink targetId="lobachevski">Nikolái Lobachevski</ConceptLink> y <ConceptLink targetId="bolyai">János Bolyai</ConceptLink>— constituye la primera teoría geométrica no euclidiana formalmente desarrollada. Se fundamenta en la adición del postulado de paralelas hiperbólicas sobre el marco de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, dotando al espacio de una métrica de curvatura Gaussiana negativa constante ($K < 0$).
+<Capitular letra="E" />l **sistema de geometría hiperbólica** es el <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> que resulta de añadir a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> el <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma de las paralelas hiperbólicas</ConceptLink>: por un <ConceptLink targetId="punto">punto</ConceptLink> exterior a una <ConceptLink targetId="recta">recta</ConceptLink> pasan, en el <ConceptLink targetId="plano">plano</ConceptLink> que ambos determinan, al menos dos rectas <ConceptLink targetId="paralelas">paralelas</ConceptLink> distintas a ella.
+
+Fue la primera <ConceptLink targetId="geometria-no-euclidiana">geometría no euclidiana</ConceptLink> desarrollada de forma sistemática, por <ConceptLink targetId="lobachevski">Nikolái Lobachevski</ConceptLink> (desde 1829) y <ConceptLink targetId="bolyai">János Bolyai</ConceptLink> (1832) de manera independiente; <ConceptLink targetId="gauss">Carl Friedrich Gauss</ConceptLink> había llegado a ideas similares sin publicarlas. Ninguno de ellos probó la consistencia del sistema: esta se obtuvo después, mediante modelos.
+
+<Definicion title="Estructura formal">
+  Una **estructura hiperbólica** es una estructura de geometría absoluta $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi; \ \mathbf{I}, \ *, \ \cong_{\mathrm{seg}}, \ \cong_{\angle})$ que satisface además el <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma de las paralelas hiperbólicas</ConceptLink>, de modo que $\mathcal{T}_{\text{hip}} = \mathrm{I} \cup \mathrm{II} \cup \mathrm{III} \cup \mathrm{IV}_{\text{hip}} \cup \mathrm{V}$. Con planos $\sigma \in \Pi$ y la <ConceptLink targetId="traza">traza</ConceptLink> para expresar la <ConceptLink targetId="coplanaridad">coplanaridad</ConceptLink>:
+  $$
+  \forall \sigma \in \Pi \ \forall \ell \in \mathcal{L} \ \forall P \in \mathcal{P} \ \Bigl( \bigl(\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\sigma) \land P \in \operatorname{tr}(\sigma) \setminus \operatorname{tr}(\ell)\bigr) \implies \exists m, n \in \mathcal{L} \ \bigl( m \neq n \land \operatorname{tr}(m) \cup \operatorname{tr}(n) \subseteq \operatorname{tr}(\sigma) \land P \,\mathbf{I}\, m \land P \,\mathbf{I}\, n \land m \parallel \ell \land n \parallel \ell \bigr) \Bigr)
+  $$
+</Definicion>
 
 <Separador />
 
-### Estructura axiomática
+### Teoremas característicos
 
-El sistema hiperbólico integra la totalidad del cuerpo deductivo neutro junto con el axioma de pluralidad de paralelas:
-
-1. **Base de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>**: Comprende los axiomas de <ConceptLink targetId="sistema-incidencia">incidencia</ConceptLink> (I.1-I.8), <ConceptLink targetId="axioma-orden-1">orden</ConceptLink> (II.1-II.4), <ConceptLink targetId="axioma-congruencia-1">congruencia</ConceptLink> (III.1-III.5) y continuidad (V.1-V.2).
-2. **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>Axioma de las paralelas hiperbólicas (Axioma de Lobachevski-Bolyai)</ConceptLink>**: Dada una <ConceptLink targetId="recta">recta</ConceptLink> $l$ y un <ConceptLink targetId="punto">punto</ConceptLink> exterior $P \notin l$ en un <ConceptLink targetId="plano">plano</ConceptLink> $\mathcal{P}$, existen al menos dos rectas distintas $l_1, l_2$ que pasan por $P$ y no intersecan a $l$:
-   $$
-   \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists l_1, l_2 \in \mathcal{L} \ \bigl(l_1 \neq l_2 \land P \in l_1 \cap l_2 \land l_1 \cap l = \emptyset \land l_2 \cap l = \emptyset\bigr)
-   $$
-
-<Separador />
-
-### Teoremas característicos de la geometría hiperbólica
-
-La curvatura negativa constante produce profundas divergencias respecto al modelo euclidiano:
-
-- **Defecto angular y cota triangular**: La suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de cualquier <ConceptLink targetId="triangulo">triángulo</ConceptLink> hiperbólico es estrictamente menor que $180^\circ$:
+- **Suma angular y defecto**: todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> tiene suma angular menor que dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>. Con <ConceptLink targetId="medida-angular">medida angular</ConceptLink>, su <ConceptLink targetId="defecto-angular">defecto</ConceptLink> es
   $$
-  \alpha + \beta + \gamma < 180^\circ \quad (\alpha + \beta + \gamma < \pi)
+  \delta(\triangle ABC) = 180^\circ - \bigl(|\alpha| + |\beta| + |\gamma|\bigr) > 0
   $$
-- **Proporcionalidad del área**: El área hiperbólica de un triángulo es directamente proporcional a su defecto angular $\delta(\triangle) = \pi - (\alpha + \beta + \gamma)$, lo que implica una cota superior universal para el área de cualquier triángulo ($\text{Área}(\triangle) < \pi R^2$).
-- **Inexistencia de rectángulos y semejanza estricta**: No existen cuadriláteros con cuatro ángulos rectos (los cuadriláteros de Saccheri y Lambert poseen ángulos agudos en la cúspide). Dos triángulos con los tres ángulos correspondientes congruentes son necesariamente congruentes (criterio AAA).
-- **Ángulo de paralelismo de Lobachevski**: El ángulo límite $\Pi(x)$ entre la perpendicular y la asíntota depende funcionalmente de la distancia $x$ según la fórmula $\tan(\Pi(x)/2) = e^{-x/k}$.
+- **Constante de longitud y área**: existe una <ConceptLink targetId="longitud">longitud</ConceptLink> característica $k > 0$, propia de cada plano hiperbólico (cambiar $k$ equivale a cambiar la unidad de longitud), tal que el <ConceptLink targetId="area">área</ConceptLink> de un triángulo es proporcional a su defecto:
+  $$
+  \operatorname{A}(\triangle ABC) = k^2 \cdot \frac{\pi}{180^\circ} \cdot \delta(\triangle ABC)
+  $$
+  Como $\delta < 180^\circ$, el área de todo triángulo es menor que $\pi k^2$, aunque sus lados sean arbitrariamente largos.
+- **<ConceptLink targetId="angulo-paralelismo">Ángulo de paralelismo</ConceptLink>**: sean $Q$ el pie de la <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> trazada desde $P$ hasta $\ell$ y $x = |PQ|$. Las dos <ConceptLink targetId="paralelas-limite">paralelas límite</ConceptLink> a $\ell$ por $P$ forman con $\overrightarrow{PQ}$ el mismo ángulo agudo $\theta(x)$, que depende solo de $x$ (fórmula de Lobachevski):
+  $$
+  \tan\frac{\theta(x)}{2} = e^{-x/k}
+  $$
+  Las demás paralelas a $\ell$ por $P$ son <ConceptLink targetId="ultraparalelas">ultraparalelas</ConceptLink> a ella: tienen con $\ell$ una única <ConceptLink targetId="perpendicular-comun">perpendicular común</ConceptLink>.
+- **Ausencia de semejanza**: dos triángulos con ángulos homólogos <ConceptLink targetId="congruencia">congruentes</ConceptLink> son congruentes (criterio AAA); no existen triángulos <ConceptLink targetId="semejanza">semejantes</ConceptLink> no congruentes.
+- **Ausencia de rectángulos**: ningún <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> tiene cuatro ángulos rectos; los ángulos superiores de un <ConceptLink targetId="cuadrilatero-saccheri">cuadrilátero de Saccheri</ConceptLink> son agudos.
+- **Paralelismo no transitivo**: dos rectas paralelas a una tercera no son, en general, paralelas entre sí.
 
 <Separador />
 
 ### Modelos y consistencia relativa
 
-- **<ConceptLink targetId="modelo-poincare">Disco de Poincaré $\mathbb{D}^2$</ConceptLink>**: Modelo conforme analítico en el disco unidad $\{z \in \mathbb{C} : |z| < 1\}$ con la métrica hiperbólica $ds^2 = \frac{4|dz|^2}{(1-|z|^2)^2}$.
-- **Consistencia equiconsistente**: Eugenio Beltrami, Henri Poincaré y Felix Klein demostraron que la consistencia del sistema hiperbólico es exactamente equivalente a la del sistema euclidiano y al análisis del cuerpo $\mathbb{R}$.
+<ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868) dio la primera interpretación de la geometría hiperbólica plana dentro de la euclidiana; <ConceptLink targetId="klein">Felix Klein</ConceptLink> (1871) y <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> (1882) construyeron los modelos proyectivo y conforme. El <ConceptLink targetId="modelo-poincare">disco de Poincaré</ConceptLink> $\mathbb{D}^2$ modela los axiomas planos; la bola de Poincaré o de Klein en $\mathbb{R}^3$ modela el sistema espacial completo. Estos modelos prueban que el sistema hiperbólico es <ConceptLink targetId="consistencia-logica">consistente</ConceptLink> si lo es la geometría euclidiana, y por tanto la aritmética de $\mathbb{R}$; en consecuencia, el <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink> es <ConceptLink targetId="independencia-axiomatica">independiente</ConceptLink> de los demás.
+
+En los modelos analíticos, el plano hiperbólico de constante $k$ es una superficie riemanniana de <ConceptLink targetId="curvatura">curvatura</ConceptLink> gaussiana constante $-1/k^2$. Esta es una propiedad del modelo diferencial, no un axioma del sistema sintético. Con los axiomas de continuidad, el sistema es <ConceptLink targetId="categoricidad">categórico</ConceptLink>: todos sus modelos son <ConceptLink targetId="isomorfismo">isomorfos</ConceptLink>.

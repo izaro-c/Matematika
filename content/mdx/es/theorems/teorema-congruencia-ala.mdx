@@ -1,52 +1,67 @@
 export const metadata = {
   id: "teorema-congruencia-ala",
+  lang: "es",
   type: "teorema",
   title: "Teorema de congruencia Ángulo-Lado-Ángulo (ALA)",
-  description: "Si dos triángulos tienen respectivamente congruentes dos ángulos y el lado comprendido entre ellos, entonces ambos triángulos son congruentes.",
-  statement: "Dados dos triángulos △ABC y △A'B'C', si ∠CAB ≅ ∠C'A'B', ∠ABC ≅ ∠A'B'C' y el lado comprendido AB ≅ A'B', entonces △ABC ≅ △A'B'C'.",
+  description: "Si dos triángulos tienen respectivamente congruentes un lado y los dos ángulos adyacentes a dicho lado, entonces ambos triángulos son mutuamente congruentes.",
+  statement: "En dos triángulos △ABC y △A'B'C', si AB ≅ A'B', ∠CAB ≅ ∠C'A'B' y ∠ABC ≅ ∠A'B'C', entonces △ABC ≅ △A'B'C'.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta"],
   hasSimulation: true,
   authors: ["euclides", "hilbert"],
-  demos: ["demo-existencia-bisectriz"],
+  demos: ["demo-congruencia-ala"],
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 26", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "secondary" }
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 26",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
   ]
 };
 
 import { CongruenciaALA } from '@content/diagrams/Teoremas/CongruenciaALA';
 export const Simulation = CongruenciaALA;
 
-<Capitular letra="E" />l teorema de congruencia Ángulo-Lado-Ángulo (ALA) establece uno de los criterios fundamentales para determinar la rigidez e igualdad métrica entre dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> en la geometría plana. Garantiza que fijar un <ConceptLink targetId="segmento">segmento</ConceptLink> y las inclinaciones de las dos semirrectas que parten de sus extremos determina de forma única la geometría del triángulo.
+<Capitular letra="S" />i dos <ConceptLink targetId="triangulo" isDependency={true}>triángulos</ConceptLink> tienen respectivamente <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> un <ConceptLink targetId="lado" isDependency={true}>lado</ConceptLink> y los dos <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> adyacentes a dicho lado, entonces los triángulos son congruentes.
+
+<ConceptLink targetId="euclides">Euclides</ConceptLink> lo enuncia en la Proposición I.26 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink>, y <ConceptLink targetId="hilbert">Hilbert</ConceptLink> lo demuestra en el §6 de los *Grundlagen der Geometrie* como segundo <ConceptLink targetId="criterio-congruencia">criterio de congruencia</ConceptLink> de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. Un <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> y los dos ángulos que se apoyan en sus extremos determinan el triángulo salvo congruencia. La prueba usa los <ConceptLink targetId="sistema-incidencia">axiomas de incidencia</ConceptLink> y de <ConceptLink targetId="estar-entre" isDependency={true}>orden</ConceptLink>, el transporte de segmentos (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>), la unicidad del transporte de ángulos (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>) y el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, consecuencia del <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5</ConceptLink>; no depende del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>.
+
+<Definicion title="Enunciado formal del teorema de congruencia ALA">
+Sean <VisualBind element="A1" color="canela">$A$</VisualBind>, <VisualBind element="B1" color="canela">$B$</VisualBind>, <VisualBind element="C1" color="canela">$C$</VisualBind> $\in \mathcal{P}$ y <VisualBind element="A2" color="pavo">$A'$</VisualBind>, <VisualBind element="B2" color="pavo">$B'$</VisualBind>, <VisualBind element="C2" color="pavo">$C'$</VisualBind> $\in \mathcal{P}$ dos ternas de <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, que determinan los <ConceptLink targetId="triangulo" isDependency={true}>triángulos</ConceptLink> $\triangle ABC$ y $\triangle A'B'C'$.
+
+Supóngase que se verifican las siguientes relaciones de <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink>:
+1. El <ConceptLink targetId="lado" isDependency={true}>lado</ConceptLink> comprendido es congruente:
+   <VisualBind element="lado-ab" color="terracota">$\overline{AB} \cong \overline{A'B'}$</VisualBind>
+2. Los <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> adyacentes a dicho lado son respectivamente congruentes:
+   <VisualBind element="angulo-a" color="terracota">$\angle CAB \cong \angle C'A'B'$</VisualBind> $\quad\text{y}\quad$ <VisualBind element="angulo-b" color="musgo">$\angle ABC \cong \angle A'B'C'$</VisualBind>
+
+Entonces los triángulos son congruentes (<ConceptLink targetId="congruencia-triangulos">congruencia de triángulos</ConceptLink>) respecto a la correspondencia $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+
+En particular, los lados y ángulos homólogos restantes son congruentes: <VisualBind element="globalmente-congruentes" color="terracota">$\overline{BC} \cong \overline{B'C'}$</VisualBind>, $\overline{CA} \cong \overline{C'A'}$ y $\angle BCA \cong \angle B'C'A'$.
+</Definicion>
 
 <Separador />
 
-### Enunciado formal
-
-Sean $\triangle ABC$ y $\triangle A'B'C'$ dos <VisualBind element="triangulos" color="musgo"><ConceptLink targetId="triangulo">triángulos</ConceptLink></VisualBind> en el plano euclidiano. Supóngase que se verifican las siguientes relaciones de <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
-1. El lado comprendido es congruente: $\overline{AB} \cong \overline{A'B'}$.
-2. Los ángulos adyacentes al segmento son respectivamente congruentes: $\angle CAB \cong \angle C'A'B'$ y $\angle ABC \cong \angle A'B'C'$.
-
-Entonces, se satisface de forma indispensable la congruencia global entre ambos triángulos:
-
-<Formula>
-  $$ \triangle ABC \cong \triangle A'B'C' $$
-</Formula>
-
-Como consecuencia, todos sus lados homólogos y sus terceros ángulos resultan ser respectivamente congruentes: $\overline{BC} \cong \overline{B'C'}$, $\overline{CA} \cong \overline{C'A'}$ y $\angle BCA \cong \angle B'C'A'$.
-
-<Separador />
-
-### Demostración y fundamentación axiomática
-
-En la axiomatización de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el criterio LAL (Lado-Ángulo-Lado) se asume como <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axioma de congruencia</ConceptLink>, mientras que el criterio ALA se demuestra rigurosamente mediante el método de <ConceptLink targetId="metodo-contradiccion" isDependency={true}>reducción al absurdo</ConceptLink>:
-- Si $\overline{AC}$ no fuera congruente a $\overline{A'C'}$, existiría un punto $D$ en la semirrecta correspondiente tal que $\overline{AD} \cong \overline{A'C'}$.
-- Por el axioma LAL, se tendría $\triangle ABD \cong \triangle A'B'C'$, lo que implicaría $\angle ABD \cong \angle A'B'C'$.
-- Esto contradiría el axioma de transporte de ángulos (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>) al existir dos ángulos distintos con la misma medida sobre un mismo semiplano.
-
-<Separador />
-
-### Criterios derivados
-
-- **Criterio LAA (Lado-Ángulo-Ángulo)**: Combinado con el <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de los ángulos de un triángulo</ConceptLink>, el criterio se extiende a cualquier par de ángulos y un lado no comprendido.
-- **Unicidad de construcciones**: Proporciona el fundamento lógico para la resolución de triángulos mediante trigonometría y triangulación geodésica.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias">
+    <PropiedadItem 
+      id="teorema-congruencia-laa" 
+      title="Criterio Lado-Ángulo-Ángulo (LAA)"
+      formula="\angle CAB \cong \angle C'A'B' \land \angle ABC \cong \angle A'B'C' \land \overline{BC} \cong \overline{B'C'} \implies \triangle ABC \cong \triangle A'B'C'"
+    >
+      Si dos <ConceptLink targetId="angulo">ángulos</ConceptLink> y el <ConceptLink targetId="lado">lado</ConceptLink> opuesto a uno de ellos son respectivamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>, los triángulos son congruentes (<ConceptLink targetId="teorema-congruencia-laa">criterio LAA</ConceptLink>, segunda parte de la Proposición I.26 de <ConceptLink targetId="euclides">Euclides</ConceptLink>). Vale en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>: se prueba con este teorema y el <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink>, sin el axioma de las paralelas.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

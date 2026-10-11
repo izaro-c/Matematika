@@ -1,46 +1,50 @@
 export const metadata = {
   id: "teorema-area-triangulo",
+  lang: "eu",
   type: "teorema",
   title: "Triangeluaren azaleraren teorema",
-  description: "Edozein eskualde triangeluarren azalera bere oinarrietako baten luzeraren eta dagokion altueraren biderkaduraren erdia da.",
-  statement: "b luzerako oinarria eta h altuera erlatiboa dituen △ABC triangelu orotan, Azalera(△ABC) = (1/2) · b · h betetzen da zorrozki.",
+  description: "Triangelu baten azalera alde baten luzeraren eta dagokion altueraren luzeraren biderkaduraren erdia da; altuera aurkako erpinetik perpendikularraren oineraino neurtzen da.",
+  statement: "H C-tik AB zuzenera marraztutako perpendikularraren oina bada, b = |AB| eta h = |CH| izanik, orduan A(△ABC) = b · h / 2.",
   branch: "51M",
+  tags: ["area", "triangulo", "altura", "geometria-euclidiana"],
   hasSimulation: false,
+  difficulty: "intermedio",
   authors: ["euclides"],
   demos: ["demo-area-triangulo"],
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 41", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. liburua, 41. proposizioa", role: "secondary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "IV. kapitulua", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "5. kapitulua", role: "formalization" }
   ]
 };
 
-<Capitular letra="T" />riangeluaren azaleraren teoremak plano euklidetarreko oinarrizko figura poligonalaren azalera-neurria zehazten du. Ezarri egiten du hiru zuzenkik mugatutako azaleraren neurria oinarri baten luzera linealaren eta aurrez aurreko erpinarekiko distantzia elkarzutaren menpekoa dela soilik.
+<Capitular letra="E" />dozein <ConceptLink targetId="triangulo" isDependency={true}>triangeluren</ConceptLink> <ConceptLink targetId="teoria-medida-area" isDependency={true}>azalera</ConceptLink> <ConceptLink targetId="base">oinarritzat</ConceptLink> hartutako <ConceptLink targetId="lado">alde</ConceptLink> baten <ConceptLink targetId="longitud" isDependency={true}>luzeraren</ConceptLink> eta dagokion <ConceptLink targetId="altura-triangulo" isDependency={true}>altueraren</ConceptLink> luzeraren biderkaduraren erdia da.
+
+Frogapena altueraren oinean oinarritzen da. $H$ $C$-tik $\overleftrightarrow{AB}$ zuzenera marraztutako <ConceptLink targetId="perpendicular" isDependency={true}>perpendikularraren</ConceptLink> oina bada eta $H$ $A$ eta $B$ puntuen artean badago, $\overline{CH}$ zuzenkiak triangelua bi <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzenetan</ConceptLink> deskonposatzen du, eta horietako bakoitza laukizuzen baten erdia da (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>laukizuzenaren azaleraren teorema</ConceptLink>); $H$ aldetik kanpo erortzen denean, hau da, triangeluak angelu kamuts bat duenean $A$ edo $B$ erpinean, triangelua bi triangelu angeluzuzenen diferentzia da. Bi kasuetan, <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>azaleraren batukortasunak</ConceptLink> ematen du formula (<ConceptLink targetId="demo-area-triangulo">frogapena</ConceptLink>). Emaitza hau <ConceptLink targetId="teorema-tales">Talesen teoremaren</ConceptLink> azalera bidezko frogapenaren eta <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremaren</ConceptLink> frogapen klasikoen oinarria da.
+
+<Definicion title="Triangeluaren azaleraren teoremaren enuntziatu formala">
+Izan bedi $\triangle ABC$ <ConceptLink targetId="sistema-euclidiano">sistema euklidearreko</ConceptLink> $\sigma$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink>, eta izan bedi $H$ $C$-tik igarotzen den eta $\overleftrightarrow{AB}$ <ConceptLink targetId="recta" isDependency={true}>zuzenarekiko</ConceptLink> <ConceptLink targetId="perpendicular" isDependency={true}>perpendikularra</ConceptLink> den zuzenaren oina. $b = |AB|$ eta $h = |CH|$ oinarriaren eta <ConceptLink targetId="altura-triangulo" isDependency={true}>altueraren</ConceptLink> <ConceptLink targetId="longitud" isDependency={true}>luzerak</ConceptLink> badira, $\triangle ABC$ triangeluak zehazten duen <ConceptLink targetId="region-triangular" isDependency={true}>eskualde triangeluarraren</ConceptLink> azalera hau da:
+
+$$
+\operatorname{A}(\triangle ABC) = \frac{1}{2}\, b \cdot h
+$$
+</Definicion>
 
 <Separador />
 
-### Enuntziatu formala
-
-Izan bedi $\triangle ABC$ plano euklidetarreko <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat. Izan bedi $b = |\overline{AB}|$ oinarri gisa hartutako alde baten luzera, eta izan bedi $h$ aurrez aurreko $C$ erpinetik $\overline{AB}$ aldearen zuzen euskarrira marraztutako <ConceptLink targetId="perpendicular">altuera elkarzuta</ConceptLink>. $\triangle ABC$ triangeluaren azalerak erlazio hau betetzen du:
-
-<Formula>
-  $$ \text{Azalera}(\triangle ABC) = \frac{1}{2} b \cdot h $$
-</Formula>
-
-Hau da, triangelu ororen azalera bere oinarriaren eta dagokion altueraren biderkaduraren erdia da.
-
-<Separador />
-
-### Froga eta deskonposizio baliokidea
-
-Dedukzio euklidetarra triangelua osatuz <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> bat eraikitzean oinarritzen da:
-1. $C$ erpinetik $\overline{AB}$-ri <ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink> bat marrazten da, eta $B$-tik $\overline{AC}$-ri zuzen paralelo bat, $D$ puntu batean elkar ebakiz.
-2. $ABDC$ laukia $b$ oinarria eta $h$ altuera dituen <ConceptLink targetId="paralelogramo">paralelogramoa</ConceptLink> da.
-3. $\overline{BC}$ diagonalak paralelogramoa bi triangelu <ConceptLink targetId="congruencia">kongruentetan</ConceptLink> banatzen du: $\triangle ABC \cong \triangle DCB$.
-4. <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren aditibitate-teorematik</ConceptLink>, $\text{Azalera}(ABDC) = \text{Azalera}(\triangle ABC) + \text{Azalera}(\triangle DCB) = 2 \cdot \text{Azalera}(\triangle ABC)$.
-5. <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>Angeluzuzenaren azaleraren teoremaren</ConceptLink> bidez $\text{Azalera}(ABDC) = b \cdot h$ denez, $\text{Azalera}(\triangle ABC) = \frac{1}{2} b \cdot h$ ondorioztatzen da.
-
-<Separador />
-
-### Azalera-formula baliokideak
-
-- **Heronen formula**: $a, b, c$ aldeak eta $s = \frac{a+b+c}{2}$ erdiperimetroa dituen triangelu baten azalera $\sqrt{s(s-a)(s-b)(s-c)}$ da.
-- **Formula trigonometrikoa**: Bi alderen eta tarteko angeluaren bidez: $\text{Azalera} = \frac{1}{2} a b \sin(\gamma)$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorioak eta formula baliokideak">
+    <PropiedadItem id="independencia-base-altura" title="Aukeratutako oinarriarekiko independentzia" formula="|BC| \cdot h_a = |CA| \cdot h_b = |AB| \cdot h_c">
+      Azalera aukeratutako aldearen menpe ez dagoenez, alde bakoitzaren eta haren <ConceptLink targetId="altura-triangulo">altueraren</ConceptLink> biderkadura bera da hiru aldeentzat ($h_a$, $h_b$ eta $h_c$ $A$, $B$ eta $C$ erpinetatik marraztutako altuerak dira).
+    </PropiedadItem>
+    <PropiedadItem id="area-triangulos-misma-altura" title="Altuera bera duten triangeluak" formula="\frac{\operatorname{A}(\triangle ABC)}{\operatorname{A}(\triangle A'B'C)} = \frac{|AB|}{|A'B'|}">
+      $\overline{AB}$ eta $\overline{A'B'}$ aldeak <ConceptLink targetId="recta">zuzen</ConceptLink> berean badaude eta $C$ puntuak ez badu harekin intziditzen, $\triangle ABC$ eta $\triangle A'B'C$ triangeluek altuera bera dute, eta haien azalerak oinarrien proportzionalak dira. Hori da <ConceptLink targetId="euclides">Euklidesek</ConceptLink> <ConceptLink targetId="teorema-tales">Talesen teorema</ConceptLink> frogatzeko erabiltzen duen lema (Elementuak VI.1–VI.2).
+    </PropiedadItem>
+    <PropiedadItem id="area-triangulo-trigonometrica" title="Formula trigonometrikoa" formula="\operatorname{A}(\triangle ABC) = \tfrac{1}{2}\, |CA| \cdot |CB| \cdot \operatorname{sen} |\angle ACB|">
+      $A$ erpinetik marraztutako altueraren luzera $|CA| \cdot \operatorname{sen} |\angle ACB|$ da; $\operatorname{sen}$ <ConceptLink targetId="seno">sinu</ConceptLink>-funtzioa da, eta $|\angle ACB|$, $C$ erpineko angeluaren <ConceptLink targetId="medida-angular">angelu-neurria</ConceptLink>.
+    </PropiedadItem>
+    <PropiedadItem id="formula-heron" title="Heronen formula" formula="\operatorname{A}(\triangle ABC) = \sqrt{s(s - a)(s - b)(s - c)}">
+      $a = |BC|$, $b = |CA|$, $c = |AB|$ badira eta $s = \tfrac{1}{2}(a + b + c)$ <ConceptLink targetId="semiperimetro">perimetroerdia</ConceptLink> bada, azalera aldeen luzeren menpe bakarrik dago (<ConceptLink targetId="formula-heron">Heronen formula</ConceptLink>); teorema honetatik eta <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorematik</ConceptLink> ondorioztatzen da.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

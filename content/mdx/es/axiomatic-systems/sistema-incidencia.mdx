@@ -3,7 +3,7 @@ export const metadata = {
   lang: "es",
   type: "sistema-axiomatico",
   title: "Sistema de incidencia",
-  description: "Estructura axiomática fundamental de la geometría sintética que establece las relaciones de pertenencia y determinación entre puntos, rectas y planos.",
+  description: "Estructura axiomática fundamental de la geometría sintética que establece las relaciones de incidencia y determinación entre puntos, rectas y planos.",
   branch: "51A",
   branches: ["51A", "51M", "03B"],
   tags: ["geometria", "incidencia", "hilbert", "fundamentos"],
@@ -18,29 +18,28 @@ export const metadata = {
     "axioma-incidencia-8"
   ],
   models: [
-    "modelo-tres-puntos",
-    "modelo-fano",
-    "modelo-cartesiano"
+    "modelo-tetraedro",
+    "modelo-cartesiano-espacial"
   ],
   authors: ["hilbert"],
   hasSimulation: false,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §2", role: "primary" }
   ]
 };
 
-<Capitular letra="E" />l **sistema de incidencia** constituye el primer estrato deductivo de la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>. Establece las reglas formales de pertenencia y determinación mutua entre los <ConceptLink targetId="concepto-primitivo">conceptos primitivos</ConceptLink> del <ConceptLink targetId="espacio">espacio</ConceptLink> (<ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>), prescindiendo de nociones métricas de <ConceptLink targetId="distancia">distancia</ConceptLink>, <ConceptLink targetId="angulo">ángulo</ConceptLink> o relaciones de <ConceptLink targetId="estar-entre">orden</ConceptLink>.
+<Capitular letra="E" />l **sistema de incidencia** es el primer grupo de axiomas de la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>, formado por los axiomas I.1–I.8. Regula la <ConceptLink targetId="incidencia">incidencia</ConceptLink> entre los <ConceptLink targetId="concepto-primitivo">conceptos primitivos</ConceptLink> <ConceptLink targetId="punto">punto</ConceptLink>, <ConceptLink targetId="recta">recta</ConceptLink> y <ConceptLink targetId="plano">plano</ConceptLink>, sin recurrir a la <ConceptLink targetId="estar-entre">intermediación</ConceptLink>, a la <ConceptLink targetId="congruencia">congruencia</ConceptLink> ni a nociones métricas como la <ConceptLink targetId="distancia">distancia</ConceptLink>.
 
-En este marco, las rectas y los planos no se definen como conjuntos de puntos, sino como entidades primitivas independientes vinculadas por relaciones de <ConceptLink targetId="incidencia">incidencia</ConceptLink>. Los puntos que inciden con un objeto conforman su <ConceptLink targetId="traza">traza</ConceptLink> en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
+Las rectas y los planos no se definen como conjuntos de puntos, sino como objetos primitivos de tipos distintos ligados a los puntos por la relación de incidencia. Los puntos que inciden con una recta o un plano forman su <ConceptLink targetId="traza">traza puntual</ConceptLink>, que permite usar el lenguaje de conjuntos sin confundir los tipos.
 
 <Definicion title="Estructura formal">
-  En <ConceptLink targetId="teoria-modelos">teoría de modelos</ConceptLink>, un **espacio de incidencia** es una <ConceptLink targetId="estructura-geometrica">estructura relacional politipada</ConceptLink> $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$ sobre un <ConceptLink targetId="universo-discurso">universo del discurso</ConceptLink> $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ formado por tres <ConceptLink targetId="dominio">dominios</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntos</ConceptLink>:
-  - $\mathcal{P}$: dominio primitivo de <ConceptLink targetId="punto">puntos</ConceptLink>.
-  - $\mathcal{L}$: dominio primitivo de <ConceptLink targetId="recta">rectas</ConceptLink>.
-  - $\Pi$: dominio primitivo de <ConceptLink targetId="plano">planos</ConceptLink>.
-  - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ e $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$: relaciones de <ConceptLink targetId="incidencia">incidencia</ConceptLink> punto-recta y punto-plano (notadas comúnmente como $\mathbf{I}$).
+  Un **espacio de incidencia** es una <ConceptLink targetId="estructura-geometrica">estructura relacional multisort</ConceptLink> $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, en el sentido de la <ConceptLink targetId="teoria-modelos">teoría de modelos</ConceptLink>, cuyo <ConceptLink targetId="universo-discurso">universo del discurso</ConceptLink> $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ está formado por tres <ConceptLink targetId="dominio">dominios</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntos</ConceptLink>:
+  - $\mathcal{P}$: dominio de <ConceptLink targetId="punto">puntos</ConceptLink>.
+  - $\mathcal{L}$: dominio de <ConceptLink targetId="recta">rectas</ConceptLink>.
+  - $\Pi$: dominio de <ConceptLink targetId="plano">planos</ConceptLink>.
+  - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ e $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$: relaciones de <ConceptLink targetId="incidencia">incidencia</ConceptLink> punto-recta y punto-plano, ambas denotadas $\mathbf{I}$.
 
-  La estructura satisface la teoría del Grupo I de Hilbert ($\mathcal{S}_{\text{inc}} \models \mathcal{T}_{\text{incidencia}}$), donde la <ConceptLink targetId="traza">traza</ConceptLink> de puntos incidentes de una recta $\ell \in \mathcal{L}$ o plano $\pi \in \Pi$ es:
+  La estructura satisface los axiomas I.1–I.8 ($\mathcal{S}_{\text{inc}} \models \mathcal{T}_{\text{inc}}$). La <ConceptLink targetId="traza">traza puntual</ConceptLink> de una recta $\ell \in \mathcal{L}$ o de un plano $\pi \in \Pi$ es:
   $$
   \operatorname{tr}(\ell) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \}, \quad \operatorname{tr}(\pi) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \pi \}
   $$
@@ -48,19 +47,17 @@ En este marco, las rectas y los planos no se definen como conjuntos de puntos, s
 
 <Separador />
 
-### Geometría plana y espacial
+### Parte plana y parte espacial
 
-El sistema de incidencia se formula en dos niveles dimensionales:
-
-- **Plano ($\dim = 2$):** Los axiomas <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink> e <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink> bastan para fundamentar la geometría bidimensional, asegurando la determinación de rectas por pares de puntos y la existencia de configuraciones no <ConceptLink targetId="colinealidad">colineales</ConceptLink>.
-- **Espacio ($\dim = 3$):** Los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> a <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink> incorporan los planos, su determinación y la no <ConceptLink targetId="coplanaridad">coplanaridad</ConceptLink> de cuatro puntos para fijar la tridimensionalidad del espacio.
+- **Parte plana:** los axiomas <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink> e <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink> solo hablan de puntos y rectas: determinan las rectas por pares de puntos y garantizan la existencia de puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink>.
+- **Parte espacial:** los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> a <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink> introducen los planos, su determinación, la relación entre rectas y planos y la existencia de cuatro puntos no <ConceptLink targetId="coplanaridad">coplanares</ConceptLink>; I.7 e I.8 fijan conjuntamente que el <ConceptLink targetId="espacio">espacio</ConceptLink> tiene <ConceptLink targetId="dimension">dimensión</ConceptLink> tres.
 
 <Separador />
 
 ### Modelos y consistencia
 
-La consistencia formal del sistema queda garantizada por la existencia de modelos de naturalezas diversas:
-- **Modelos finitos:** Geometrías combinatorias discretas como el <ConceptLink targetId="modelo-tres-puntos">modelo de tres puntos</ConceptLink> o el <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink>.
-- **Modelos continuos:** El espacio afín clásico $\mathbb{R}^3$ (<ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink>).
+La <ConceptLink targetId="consistencia-logica">consistencia</ConceptLink> del sistema se prueba exhibiendo modelos:
+- **Modelo finito:** el <ConceptLink targetId="modelo-tetraedro">modelo del tetraedro</ConceptLink>, con cuatro puntos, las seis rectas determinadas por sus pares y los cuatro planos determinados por sus ternas, satisface I.1–I.8. También lo satisface el <ConceptLink targetId="espacio-proyectivo">espacio proyectivo</ConceptLink> finito $\mathrm{PG}(3, 2)$, de 15 puntos.
+- **Modelo continuo:** el espacio cartesiano $\mathbb{R}^3$ (<ConceptLink targetId="modelo-cartesiano-espacial">modelo cartesiano espacial</ConceptLink>).
 
-Al no incluir axiomas de orden o continuidad, el sistema de incidencia puro no es categórico y admite estructuras con cardinalidades finitas o infinitas.
+El <ConceptLink targetId="modelo-tres-puntos">modelo de tres puntos</ConceptLink>, el <ConceptLink targetId="modelo-fano">plano de Fano</ConceptLink> y el <ConceptLink targetId="modelo-cartesiano">plano cartesiano</ConceptLink> no tienen planos: solo modelan la parte plana I.1–I.3. Al carecer de axiomas de orden y de continuidad, el sistema de incidencia no es <ConceptLink targetId="categoricidad">categórico</ConceptLink>: admite modelos finitos e infinitos no isomorfos.

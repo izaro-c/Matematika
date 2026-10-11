@@ -13,8 +13,8 @@ export const metadata = {
     {
       title: "Elementuak",
       author: "Euklides",
-      locator: "I. liburua, Nozio Orokorrak",
-      role: "primary"
+      locator: "I. liburua, 3. eta 4. definizioak",
+      role: "secondary"
     },
     {
       title: "Grundlagen der Geometrie",
@@ -30,10 +30,10 @@ export const Simulation = Segmento;
 
 <Capitular letra="Z" />uzenkia <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> batean <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinek (muturrak deituak) eta haien <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> dauden puntu guztiek osatzen duten <ConceptLink targetId="conjunto">multzoa</ConceptLink> da.
 
-Zuzenkia <ConceptLink targetId="estar-entre" isDependency={true}>bitartekotasunaren</ConceptLink> oinarrizko erlaziotik eta <ConceptLink targetId="axioma-orden-1" isDependency={true}>II.1 axiomatik</ConceptLink> modu formalean eratorritako objektua da, eta haren gainean eraikitzen dira <ConceptLink targetId="poligono">poligonoak</ConceptLink>, <ConceptLink targetId="triangulo">triangeluak</ConceptLink> eta <ConceptLink targetId="congruencia">zuzenkien kongruentzia</ConceptLink>.
+Zuzenkia <ConceptLink targetId="estar-entre" isDependency={true}>bitartekotasunaren</ConceptLink> oinarrizko erlaziotik eta <ConceptLink targetId="axioma-orden-1" isDependency={true}>II.1 axiomatik</ConceptLink> eratortzen da, eta irudi bornatu oinarrizkoa da: haren gainean eraikitzen dira <ConceptLink targetId="poligono">poligonoak</ConceptLink>, <ConceptLink targetId="triangulo">triangeluak</ConceptLink> eta <ConceptLink targetId="congruencia">zuzenkien kongruentzia</ConceptLink>.
 
 <Definicion title="Zuzenkiaren definizio formala">
-$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> bi <VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pB" color="musgo">$B$</VisualBind> puntu desberdinetarako, <VisualBind element="lineL" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzenean</ConceptLink> <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutenak, $\operatorname{seg}(AB)$ **zuzenki irekia** $A$ eta $B$-ren artean dauden $P \in \mathcal{P}$ puntu guztien multzoa da:
+$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> bi <VisualBind element="pA" color="musgo">$A$</VisualBind> eta <VisualBind element="pB" color="musgo">$B$</VisualBind> puntu desberdinetarako, <VisualBind element="lineL" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzenean</ConceptLink> <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutenak, $\operatorname{seg}(AB)$ **zuzenki irekia** $A$ eta $B$ puntuen artean dauden $P \in \mathcal{P}$ puntu guztien multzoa da:
 
 $$
 \operatorname{seg}(AB) = \{ P \in \mathcal{P} \mid A * P * B \}
@@ -55,23 +55,23 @@ $$
       title="Muturren simetria"
       formula="\overline{AB} = \overline{BA} \land \operatorname{seg}(AB) = \operatorname{seg}(BA)"
     >
-      <ConceptLink targetId="axioma-orden-1">II.1 axiomaren</ConceptLink> simetriari esker ($A * P * B \iff B * P * A$), zuzenkia ez dago muturrak aipatzen diren ordenaren mende: $\overline{AB} = \overline{BA}$ eta $\operatorname{seg}(AB) = \operatorname{seg}(BA)$, multzo-<ConceptLink targetId="igualdad-matematica">berdintza</ConceptLink> betez.
+      <ConceptLink targetId="axioma-orden-1">II.1 axiomaren</ConceptLink> simetriari esker ($A * P * B \iff B * P * A$), zuzenkia ez dago muturrak izendatzeko ordenaren mende: $\overline{AB} = \overline{BA}$ eta $\operatorname{seg}(AB) = \operatorname{seg}(BA)$, multzoen arteko <ConceptLink targetId="igualdad-matematica">berdintza</ConceptLink> gisa.
     </PropiedadItem>
 
     <PropiedadItem 
       id="convexidad-segmento" 
-      title="Linealtasun-ganbiltasuna"
+      title="Ganbiltasun lineala"
       formula="P, Q \in \overline{AB} \land P * X * Q \implies X \in \overline{AB}"
     >
-      Zuzenki itxi bakoitza <ConceptLink targetId="conjunto-convexo">multzo ganbil</ConceptLink> lineala da: baldin eta $P, Q \in \overline{AB}$ badira, orduan $P * X * Q$ bitartekotasun-erlazioa betetzen duen edozein $X \in \mathcal{P}$ puntutarako, $X \in \overline{AB}$ betetzen da nahitaez.
+      $\overline{AB}$ zuzenki itxi oro <ConceptLink targetId="conjunto-convexo">multzo ganbila</ConceptLink> da: $P, Q \in \overline{AB}$ badira, $P * X * Q$ betetzen duen $X \in \mathcal{P}$ puntu orok $X \in \overline{AB}$ betetzen du. Ez da definizioaren parte, <ConceptLink targetId="teorema">teorema</ConceptLink> bat baizik: zuzen bateko puntuen <ConceptLink targetId="orden">ordena linealetik</ConceptLink> ondorioztatzen da, eta Hilbertek ordenako <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-4">II.4</ConceptLink> axiometatik lortzen du ordena hori (§4).
     </PropiedadItem>
 
     <PropiedadItem 
       id="unicidad-soporte" 
       title="Zuzen euskarriaren bakartasuna"
-      formula="\exists! \ell \in \mathcal{L} : \overline{AB} \subset \operatorname{tr}(\ell) \quad (\ell = \overleftrightarrow{AB})"
+      formula="\exists! \ell \in \mathcal{L} : \overline{AB} \subseteq \operatorname{tr}(\ell) \quad (\ell = \overleftrightarrow{AB})"
     >
-      <ConceptLink targetId="axioma-incidencia-1">I.1 axiomaren</ConceptLink> bidez, $A \neq B$ muturrek modu unibokoan zehazten dute $\overleftrightarrow{AB}$ <ConceptLink targetId="recta">zuzen euskarria</ConceptLink>, $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$ <ConceptLink targetId="traza">trazen</ConceptLink> barneratzea betez.
+      <ConceptLink targetId="axioma-incidencia-1">I.1 axiomaren</ConceptLink> arabera, $A \neq B$ mutur desberdinek $\overleftrightarrow{AB}$ <ConceptLink targetId="recta-soporte">zuzen euskarri</ConceptLink> bakarra zehazten dute, eta zuzenkia haren <ConceptLink targetId="traza">puntu-trazaduran</ConceptLink> dago: $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$. Inklusio hori <ConceptLink targetId="axioma-orden-1">II.1 axiomatik</ConceptLink> dator: $A$ eta $B$ puntuen artean dagoen puntu oro haiekin kolineala da.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

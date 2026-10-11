@@ -1,16 +1,18 @@
 export const metadata = {
-  "id": "demo-tales",
-  "type": "demostracion",
-  "title": "Demostración: Teorema de Tales",
-  "description": "Demostración directa de la proporcionalidad de segmentos determinados por rectas paralelas mediante razones de áreas de triángulos.",
-  "parentTheorem": "teorema-tales",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["tales", "euclides"],
-  "tags": ["geometria", "proporcionalidad", "semejanza", "rectas"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro VI, Proposición 2", role: "primary" }
+  id: "demo-tales",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de Tales",
+  description: "Demostración por áreas (Euclides VI.2) del caso del triángulo y reducción del caso general de tres paralelas y dos transversales.",
+  parentTheorem: "teorema-tales",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides"],
+  tags: ["geometria-euclidiana", "proporcionalidad", "paralelas", "area"],
+  layout: "split",
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro VI, Proposición 2", role: "primary" }
   ]
 };
 
@@ -18,44 +20,70 @@ import { DemoTales } from "@content/diagrams/Demos/DemoTales";
 
 <DemonstrationSection diagram={<DemoTales />}>
 
-<Capitular letra="D" />ado un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$ cortado por una recta paralela a uno de sus lados, se demuestra el <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink>. La demostración prueba que la razón entre las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> determinados sobre un lado es idéntica a la razón entre los segmentos determinados sobre el otro lado.
+<Capitular letra="L" />a <ConceptLink targetId="metodo-directo" isDependency={true}>demostración directa</ConceptLink> del <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink> sigue a <ConceptLink targetId="euclides">Euclides</ConceptLink> (Elementos VI.2): primero se prueba el caso del <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> comparando <ConceptLink targetId="teoria-medida-area" isDependency={true}>áreas</ConceptLink> de triángulos con la misma <ConceptLink targetId="altura">altura</ConceptLink>, y después se reduce a él el caso general de tres <ConceptLink targetId="paralelas" isDependency={true}>paralelas</ConceptLink> y dos <ConceptLink targetId="secante">transversales</ConceptLink>.
+
+La herramienta central es el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>, $\operatorname{A}(\triangle XYZ) = \tfrac{1}{2}\,b\,h$: dos triángulos con la misma altura tienen áreas proporcionales a sus bases.
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} target="step1" title="Configuración del triángulo y la recta paralela">
-Consideramos el triángulo $\triangle ABC$ y una recta paralela al lado $\overline{BC}$ que interseca a los lados $\overline{AB}$ y $\overline{AC}$ en los puntos $D$ y $E$ respectivamente, determinando el segmento paralelo $\overline{DE} \parallel \overline{BC}$.
+<ProofStep number={1} target="step1" title="Configuración del caso del triángulo">
+Sea <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> y sea $\ell$ la <VisualBind element="parDBC" color="ocre">recta paralela</VisualBind> a $\overleftrightarrow{BC}$, distinta de ella, que corta al lado <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind> en <VisualBind element="pD" color="terracota">$D$</VisualBind> y al lado <VisualBind element="segCA" color="carbon">$\overline{CA}$</VisualBind> en <VisualBind element="pE" color="terracota">$E$</VisualBind>, con $A * D * B$ y $A * E * C$ (<ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink>). Hay que probar:
+
+$$
+\frac{|AD|}{|DB|} = \frac{|AE|}{|EC|}.
+$$
 </ProofStep>
 
-<ProofStep number={2} target="step2" title="Igualdad de áreas entre paralelas">
-Trazamos los segmentos auxiliares $\overline{BE}$ y $\overline{CD}$, formando los triángulos $\triangle BDE$ y $\triangle CDE$. Ambos triángulos comparten la misma base $\overline{DE}$ y están comprendidos entre las rectas paralelas $\overline{DE}$ y $\overline{BC}$. Por tener idéntica altura entre paralelas, el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink> garantiza la igualdad de sus áreas:
+<ProofStep number={2} target="step2" title="Los triángulos BDE y CDE tienen la misma área">
+Los triángulos <VisualBind element="polyBDE" color="ocre">$\triangle BDE$</VisualBind> y <VisualBind element="polyCDE" color="ocre">$\triangle CDE$</VisualBind> comparten la base <VisualBind element="segDE" color="ocre">$\overline{DE}$</VisualBind>. Sean $B_0$ y $C_0$ los pies de las <ConceptLink targetId="perpendicular" isDependency={true}>perpendiculares</ConceptLink> desde $B$ y $C$ a $\ell$. Las rectas $\overleftrightarrow{BB_0}$ y $\overleftrightarrow{CC_0}$ son perpendiculares a $\ell$ y, por tanto, paralelas entre sí (<ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>teorema de los ángulos alternos internos</ConceptLink>); además $\overleftrightarrow{BC} \parallel \ell$. Así $BB_0C_0C$ es un <ConceptLink targetId="paralelogramo" isDependency={true}>paralelogramo</ConceptLink> y sus lados opuestos son congruentes (<ConceptLink targetId="teorema-lados-opuestos-paralelogramo" isDependency={true}>teorema de los lados opuestos del paralelogramo</ConceptLink>, que usa el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink>): $|BB_0| = |CC_0| = h$. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>:
 
-<Formula>
-  $$ \text{Área}(\triangle BDE) = \text{Área}(\triangle CDE) $$
-</Formula>
+$$
+\operatorname{A}(\triangle BDE) = \tfrac{1}{2}\,|DE|\,h = \operatorname{A}(\triangle CDE).
+$$
 </ProofStep>
 
-<ProofStep number={3} target="step3" title="Razón de áreas y conclusión de proporcionalidad">
-Comparamos las áreas de estos triángulos con la del triángulo superior $\triangle ADE$:
-1. Los triángulos $\triangle ADE$ y $\triangle BDE$ comparten altura respecto a la recta $\overline{AB}$, por lo que la razón de sus áreas es proporcional a sus bases:
-$$ \frac{\text{Área}(\triangle ADE)}{\text{Área}(\triangle BDE)} = \frac{|\overline{AD}|}{|\overline{DB}|} $$
-2. Análogamente, $\triangle ADE$ y $\triangle CDE$ comparten altura respecto a $\overline{AC}$:
-$$ \frac{\text{Área}(\triangle ADE)}{\text{Área}(\triangle CDE)} = \frac{|\overline{AE}|}{|\overline{EC}|} $$
+<ProofStep number={3} target="step3" title="Razón entre ADE y BDE">
+Sea $H_1$ el pie de la perpendicular desde $E$ a $\overleftrightarrow{AB}$ y $h_1 = |EH_1|$. Como $A$, $D$ y $B$ están en $\overleftrightarrow{AB}$, la <ConceptLink targetId="altura" isDependency={true}>altura</ConceptLink> <VisualBind element="segH1" color="ocre">$\overline{EH_1}$</VisualBind> lo es a la vez de <VisualBind element="polyADE" color="ocre">$\triangle ADE$</VisualBind> (base $\overline{AD}$) y de <VisualBind element="polyBDE" color="ocre">$\triangle BDE$</VisualBind> (base $\overline{DB}$). Por el teorema del área del triángulo:
 
-Puesto que los denominadores son iguales por el paso anterior, se deduce la igualdad de razones:
-
-<Formula>
-  $$ \frac{|\overline{AD}|}{|\overline{DB}|} = \frac{|\overline{AE}|}{|\overline{EC}|} $$
-</Formula>
+$$
+\frac{\operatorname{A}(\triangle ADE)}{\operatorname{A}(\triangle BDE)} = \frac{\tfrac{1}{2}\,|AD|\,h_1}{\tfrac{1}{2}\,|DB|\,h_1} = \frac{|AD|}{|DB|}.
+$$
 </ProofStep>
 
-<Separador />
+<ProofStep number={4} target="step4" title="Razón entre ADE y CDE">
+Del mismo modo, sea $H_2$ el pie de la perpendicular desde $D$ a $\overleftrightarrow{AC}$ y $h_2 = |DH_2|$. La altura <VisualBind element="segH2" color="ocre">$\overline{DH_2}$</VisualBind> es común a <VisualBind element="polyADE" color="ocre">$\triangle ADE$</VisualBind> (base $\overline{AE}$) y a <VisualBind element="polyCDE" color="ocre">$\triangle CDE$</VisualBind> (base $\overline{EC}$). Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>:
 
-### Análisis deductivo
+$$
+\frac{\operatorname{A}(\triangle ADE)}{\operatorname{A}(\triangle CDE)} = \frac{\tfrac{1}{2}\,|AE|\,h_2}{\tfrac{1}{2}\,|EC|\,h_2} = \frac{|AE|}{|EC|}.
+$$
+</ProofStep>
 
-<Nota>
-  Proposición VI.2 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>, tradicionalmente atribuida a <ConceptLink targetId="tales">Tales de Mileto</ConceptLink>. Constituye el pilar fundamental de la teoría de la proporcionalidad y la <ConceptLink targetId="semejanza">semejanza de triángulos</ConceptLink> en el <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>.
-</Nota>
+<ProofStep number={5} target="step5" title="Conclusión en el triángulo">
+Los denominadores de los pasos 3 y 4 son iguales por el paso 2, y no nulos por la positividad del <ConceptLink targetId="teoria-medida-area" isDependency={true}>área</ConceptLink>. Igualando:
+
+$$
+\frac{|AD|}{|DB|} = \frac{|AE|}{|EC|}.
+$$
+
+Como $A * D * B$ y $A * E * C$, la <ConceptLink targetId="longitud" isDependency={true}>longitud</ConceptLink> es aditiva: $|AB| = |AD| + |DB|$ y $|AC| = |AE| + |EC|$. Sumando $1$ a los inversos de ambos miembros se obtiene también $|AB|/|AD| = |AC|/|AE|$, es decir, $|AD|/|AB| = |AE|/|AC|$.
+</ProofStep>
+
+<ProofStep number={6} target="step6" title="Caso general: tres paralelas y dos transversales">
+Sean ahora $\ell_1, \ell_2, \ell_3$ paralelas distintas que cortan a $t$ en $A, B, C$ y a $t'$ en $A', B', C'$, con $A * B * C$.
+
+*Orden en $t'$.* $A$ y $C$ están en distintos <ConceptLink targetId="semiplano" isDependency={true}>semiplanos</ConceptLink> respecto a $\ell_2$. El segmento $\overline{AA'}$ está contenido en $\operatorname{tr}(\ell_1)$, que no corta a $\ell_2$, luego $A'$ está en el semiplano de $A$; análogamente $C'$ está en el de $C$. Por tanto $\operatorname{seg}(A'C')$ corta a $\ell_2$, y el punto de corte es $B'$, único punto común de $t'$ y $\ell_2$: $A' * B' * C'$.
+
+*Si $t \parallel t'$*, los cuadriláteros $ABB'A'$ y $BCC'B'$ son paralelogramos, luego $|AB| = |A'B'|$ y $|BC| = |B'C'|$, y la proporción es inmediata.
+
+*Si $t$ y $t'$ se cortan*, sea $m$ la paralela a $t'$ por $A$, única por el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink> ($m = t'$ si $A = A'$). La recta $m$ corta a $\ell_2$ y $\ell_3$ en $B''$ y $C''$, y, por el argumento anterior, $A * B'' * C''$. Los cuadriláteros $AB''B'A'$ y $B''C''C'B'$ son paralelogramos (o degeneran en puntos coincidentes si $A = A'$), de modo que $|AB''| = |A'B'|$ y $|B''C''| = |B'C'|$. Como $m \neq t$, los puntos $A$, $C$, $C''$ no son colineales y $\ell_2$ es una paralela a $\overleftrightarrow{CC''} = \ell_3$ que corta a $\operatorname{seg}(AC)$ en $B$ y a $\operatorname{seg}(AC'')$ en $B''$. Por el caso del triángulo aplicado a $\triangle ACC''$:
+
+$$
+\frac{|AB|}{|BC|} = \frac{|AB''|}{|B''C''|} = \frac{|A'B'|}{|B'C'|}.
+$$
+
+La segunda proporción del enunciado se obtiene como en el paso 5.
+</ProofStep>
 
 </DemonstrationSection>

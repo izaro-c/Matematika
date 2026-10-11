@@ -12,7 +12,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Capítulo I, §1",
+      locator: "Capítulo I, §2",
       role: "primary"
     }
   ]
@@ -23,16 +23,12 @@ export const Simulation = Incidence5;
 
 <Capitular letra="P" />or tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> pasa a lo sumo un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>.
 
-En el <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>, este postulado complementa al <ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink>, fijando la unicidad del <ConceptLink targetId="plano">plano</ConceptLink> determinado por tres <ConceptLink targetId="punto">puntos</ConceptLink> que no pertenecen a una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
+Este axioma aporta la unicidad que completa al <ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink>: tres puntos que no inciden con una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> determinan un plano y solo uno. Es el análogo, para planos, de la parte de unicidad del <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>.
 
-<Definicion title="Axioma I.5 (Unicidad del plano)">
-Sean <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink>. Existe a lo sumo un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="azul">$\pi$</VisualBind> que <ConceptLink targetId="incidencia" isDependency={true}>incide</ConceptLink> con los tres:
+<Definicion title="Enunciado formal">
+Sean <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink>. Existe a lo sumo un <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="pavo">$\pi$</VisualBind> que <ConceptLink targetId="incidencia" isDependency={true}>incide</ConceptLink> con los tres:
 
 $$
-\forall A, B, C \in \mathcal{P}, \, \forall \pi_1, \pi_2 \in \Pi \ \Biggl(\Bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land A, B, C \, \mathbf{I} \, \pi_1 \land A, B, C \, \mathbf{I} \, \pi_2\Bigr) \implies \pi_1 = \pi_2\Biggr)
+\forall A, B, C \in \mathcal{P} \ \forall \pi_1, \pi_2 \in \Pi \ \Biggl(\Bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land \bigwedge_{X \in \{A, B, C\}} (X \, \mathbf{I} \, \pi_1 \land X \, \mathbf{I} \, \pi_2)\Bigr) \implies \pi_1 = \pi_2\Biggr)
 $$
 </Definicion>
-
-<Nota>
-Este axioma descarta la posibilidad de que una misma terna de <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> sirva como soporte de múltiples <ConceptLink targetId="plano">planos</ConceptLink> simultáneos, asegurando la rigidez bidimensional de cada plano dentro del <ConceptLink targetId="espacio">espacio</ConceptLink> de tres <ConceptLink targetId="dimension">dimensiones</ConceptLink>.
-</Nota>

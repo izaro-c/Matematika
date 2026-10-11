@@ -3,7 +3,7 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma I.8 (Espacio tridimensional)",
-  description: "Existen al menos cuatro puntos que no pertenecen a un mismo plano.",
+  description: "Existen al menos cuatro puntos que no inciden con un mismo plano.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
@@ -12,7 +12,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Capítulo I, §1",
+      locator: "Capítulo I, §2",
       role: "primary"
     }
   ]
@@ -23,16 +23,12 @@ export const Simulation = Incidence8;
 
 <Capitular letra="E" />xisten al menos cuatro <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no <ConceptLink targetId="coplanaridad">coplanares</ConceptLink>, es decir, tales que ningún <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> <ConceptLink targetId="incidencia" isDependency={true}>incide</ConceptLink> simultáneamente con los cuatro.
 
-En el <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>, este postulado fija la cota dimensional inferior del <ConceptLink targetId="espacio">espacio</ConceptLink>, impidiendo que la totalidad de los elementos geométricos quede confinada en un único <ConceptLink targetId="plano">plano</ConceptLink> bidimensional.
+Este axioma fija la cota inferior de la <ConceptLink targetId="dimension">dimensión</ConceptLink> del <ConceptLink targetId="espacio">espacio</ConceptLink>: impide que todos los puntos incidan con un único <ConceptLink targetId="plano">plano</ConceptLink>. Con la cota superior que aporta el <ConceptLink targetId="axioma-incidencia-7">Axioma I.7</ConceptLink>, el espacio de incidencia resulta tridimensional. Es el último de los axiomas de <ConceptLink targetId="incidencia">incidencia</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>.
 
-<Definicion title="Axioma I.8 (Espacio tridimensional)">
-Existen al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> y <VisualBind element="pD" color="carbon">$D$</VisualBind> que no pertenecen a un mismo <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano-pi" color="azul">$\pi$</VisualBind>:
+<Definicion title="Enunciado formal">
+Existen al menos cuatro <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> y <VisualBind element="pD" color="carbon">$D$</VisualBind> que no inciden con un mismo <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano-pi" color="pavo">$\pi$</VisualBind>:
 
 $$
 \exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi \land D \, \mathbf{I} \, \pi)
 $$
 </Definicion>
-
-<Nota>
-Este axioma garantiza la existencia de configuraciones genuinamente espaciales, fijando un mínimo de tres <ConceptLink targetId="dimension">dimensiones</ConceptLink> para el <ConceptLink targetId="espacio">espacio</ConceptLink>. Con este postulado concluye el grupo de axiomas de <ConceptLink targetId="incidencia">incidencia</ConceptLink> de Hilbert.
-</Nota>

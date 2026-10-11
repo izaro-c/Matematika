@@ -3,8 +3,10 @@ export const metadata = {
   lang: "es",
   type: "sistema-axiomatico",
   title: "Sistema axiomático euclidiano",
-  description: "La estructura axiomática canónica de la geometría plana estándar, formada por la geometría absoluta y el axioma de paralelas de Playfair.",
+  description: "Sistema axiomático de la geometría euclidiana: la geometría absoluta más el Axioma IV de las paralelas, en la forma de Playfair.",
   branch: "51M",
+  branches: ["51M", "51A", "03B"],
+  tags: ["geometria-euclidiana", "paralelas", "hilbert", "fundamentos"],
   axiomas: [
     "axioma-incidencia-1",
     "axioma-incidencia-2",
@@ -34,38 +36,40 @@ export const metadata = {
   hasSimulation: false,
   sources: [
     { title: "Elementos", author: "Euclides", locator: "Libro I, Postulado 5", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §7", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo II", role: "secondary" }
   ]
 };
 
-<Capitular letra="E" />l sistema axiomático euclidiano constituye el marco formal clásico de la geometría plana y espacial ordinaria. Se obtiene al incorporar el postulado de las paralelas de <ConceptLink targetId="euclides">Euclides</ConceptLink> (en la formulación de unicidad de Playfair) sobre la base de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, fijando la curvatura espacial nula y permitiendo la existencia de figuras semejantes a cualquier escala.
+<Capitular letra="E" />l **sistema axiomático euclidiano** es el <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> que resulta de añadir a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> el <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink> de las <ConceptLink targetId="paralelas">paralelas</ConceptLink>: por un <ConceptLink targetId="punto">punto</ConceptLink> exterior a una <ConceptLink targetId="recta">recta</ConceptLink> pasa, en el <ConceptLink targetId="plano">plano</ConceptLink> que ambos determinan, a lo sumo una paralela a ella.
+
+El quinto postulado de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> se enunciaba en términos de dos rectas cortadas por una <ConceptLink targetId="secante">secante</ConceptLink>; <ConceptLink targetId="hilbert">Hilbert</ConceptLink> adoptó la forma equivalente de unicidad divulgada por John Playfair (1795). Como la existencia de al menos una paralela ya es un <ConceptLink targetId="teorema">teorema</ConceptLink> de la geometría absoluta, el Axioma IV solo tiene que imponer la unicidad.
+
+<Definicion title="Estructura formal">
+  Una **estructura euclidiana** es una estructura de geometría absoluta $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi; \ \mathbf{I}, \ *, \ \cong_{\mathrm{seg}}, \ \cong_{\angle})$ que satisface además el <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>, de modo que $\mathcal{T}_{\text{euc}} = \mathrm{I} \cup \mathrm{II} \cup \mathrm{III} \cup \mathrm{IV} \cup \mathrm{V}$. Junto con el teorema absoluto de existencia de paralelas, el Axioma IV da existencia y unicidad: para todo plano $\pi \in \Pi$, toda recta $\ell \in \mathcal{L}$ con $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$ y todo punto $P \in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$,
+  $$
+  \exists! \, m \in \mathcal{L} \ \bigl( \operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land P \,\mathbf{I}\, m \land m \parallel \ell \bigr)
+  $$
+  donde la <ConceptLink targetId="traza">traza</ConceptLink> expresa la <ConceptLink targetId="coplanaridad">coplanaridad</ConceptLink> y $\parallel$ es el <ConceptLink targetId="paralelas">paralelismo</ConceptLink> (reflexivo) entre rectas coplanares.
+</Definicion>
 
 <Separador />
 
-### Constitución axiomática
+### Teoremas característicos
 
-El sistema euclidiano integra la totalidad de los grupos hilbertianos con el postulado de unicidad paralela:
+El Axioma IV es la fuente de los resultados que distinguen la geometría euclidiana de la hiperbólica:
 
-1. **Base de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>**: Reúne todos los axiomas de <ConceptLink targetId="sistema-incidencia">incidencia</ConceptLink> (I.1-I.8), <ConceptLink targetId="axioma-orden-1">orden</ConceptLink> (II.1-II.4), <ConceptLink targetId="axioma-congruencia-1">congruencia</ConceptLink> (III.1-III.5) y continuidad (V.1-V.2).
-2. **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axioma de las paralelas de Euclides (IV.1 / Playfair)</ConceptLink>**: Dada una <ConceptLink targetId="recta">recta</ConceptLink> $l$ y un <ConceptLink targetId="punto">punto</ConceptLink> exterior $P \notin l$ en un <ConceptLink targetId="plano">plano</ConceptLink> $\mathcal{P}$, existe exactamente una recta $l'$ que contiene a $P$ y no interseca a $l$:
-   $$
-   \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists! l' \in \mathcal{L} \ (P \in l' \land l \cap l' = \emptyset)
-   $$
-
-<Separador />
-
-### Teoremas fundamentales del sistema
-
-La presencia del axioma de paralelas euclidiano desencadena los teoremas centrales de la geometría sintética:
-
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Suma angular invariable</ConceptLink>**: La suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de cualquier <ConceptLink targetId="triangulo">triángulo</ConceptLink> es exactamente igual a $180^\circ$ ($\pi\text{ rad}$).
-- **<ConceptLink targetId="teorema-tales">Teorema de Tales y semejanza</ConceptLink>**: Un haz de rectas paralelas cortado por transversales determina <ConceptLink targetId="segmento">segmentos</ConceptLink> proporcionales, fundamentando la noción de figuras semejantes no congruentes.
-- **<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>**: En todo <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink>, el área del cuadrado construido sobre la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> es igual a la suma de las áreas de los cuadrados construidos sobre los <ConceptLink targetId="cateto">catetos</ConceptLink> ($a^2 + b^2 = c^2$).
-- **Existencia de paralelogramos y rectángulos**: Existen cuadriláteros con cuatro ángulos rectos y lados opuestos congruentes.
+- **Ángulos alternos internos**: si dos rectas paralelas distintas son cortadas por una secante, los <ConceptLink targetId="angulos-alternos-internos">ángulos alternos internos</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink>; es la implicación del <ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink> que requiere el Axioma IV.
+- **<ConceptLink targetId="transitividad">Transitividad</ConceptLink> del paralelismo**: en un mismo plano, dos rectas paralelas a una tercera son paralelas entre sí; el paralelismo es una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>.
+- **Suma angular**: los <ConceptLink targetId="angulo">ángulos</ConceptLink> de todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> suman dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>; con <ConceptLink targetId="medida-angular">medida angular</ConceptLink>, $|\alpha| + |\beta| + |\gamma| = 180^\circ$ (<ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de los ángulos de un triángulo</ConceptLink>).
+- **Rectángulos**: existen <ConceptLink targetId="cuadrilatero">cuadriláteros</ConceptLink> con cuatro ángulos rectos (<ConceptLink targetId="rectangulo">rectángulos</ConceptLink>), sobre los que se construye la <ConceptLink targetId="teoria-medida-area">teoría del área</ConceptLink>.
+- **Proporción y <ConceptLink targetId="semejanza">semejanza</ConceptLink>**: el <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink> y la existencia de triángulos semejantes no congruentes.
+- **<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>**: en un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> $\triangle ABC$ con el ángulo recto en $C$, y con <ConceptLink targetId="longitud">longitudes</ConceptLink> $a = |BC|$, $b = |CA|$ y $c = |AB|$, se cumple $a^2 + b^2 = c^2$.
 
 <Separador />
 
-### Modelo canónico y consistencia
+### Modelo, consistencia y categoricidad
 
-- **<ConceptLink targetId="modelo-cartesiano">Modelo cartesiano $\mathbb{R}^n$</ConceptLink>**: Constituye el modelo analítico canónico del sistema euclidiano, dotado del producto escalar euclídeo $\langle u, v \rangle = \sum u_i v_i$.
-- **Consistencia y categoricidad**: Hilbert demostró que la consistencia del sistema axiomático euclidiano equivale a la consistencia de la aritmética del cuerpo real $\mathbb{R}$. Al incluir los axiomas de continuidad, el sistema es categórico en cada dimensión fijada.
+El modelo canónico es el espacio cartesiano $\mathbb{R}^3$ (<ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink>), en el que los puntos son ternas de números reales, las rectas y los planos se describen mediante ecuaciones lineales y la congruencia se define con la <ConceptLink targetId="distancia">distancia</ConceptLink> euclídea; su versión plana $\mathbb{R}^2$ modela los axiomas planos. En el capítulo II de los *Grundlagen*, Hilbert construye modelos analíticos de este tipo sobre un <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> numérico y prueba así que el sistema es <ConceptLink targetId="consistencia-logica">consistente</ConceptLink> si lo es la aritmética de ese cuerpo (consistencia relativa).
+
+Con los axiomas de continuidad V.1 y V.2, el sistema es <ConceptLink targetId="categoricidad">categórico</ConceptLink>: todos sus modelos son <ConceptLink targetId="isomorfismo">isomorfos</ConceptLink> a $\mathbb{R}^3$ con su estructura usual. Sin el <ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink>, en cambio, existen modelos no isomorfos, como el espacio construido sobre el cuerpo de los números algebraicos reales.

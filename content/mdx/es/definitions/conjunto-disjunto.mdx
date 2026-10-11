@@ -12,7 +12,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="D" />os <ConceptLink targetId="conjunto">conjuntos</ConceptLink> $A$ y $B$ son **disjuntos** (o mutuamente excluyentes) si no poseen ningún elemento en común, es decir, si su intersección es el conjunto vacío:
+<Capitular letra="D" />os <ConceptLink targetId="conjunto">conjuntos</ConceptLink> $A$ y $B$ son **disjuntos** (o mutuamente excluyentes) si no poseen ningún elemento en común, es decir, si su <ConceptLink targetId="interseccion">intersección</ConceptLink> es el <ConceptLink targetId="conjunto-vacio">conjunto vacío</ConceptLink>:
 $$
 A \cap B = \emptyset \iff \forall x \ (x \in A \implies x \notin B)
 $$
@@ -31,9 +31,9 @@ $$
     <PropiedadItem 
       id="disjuncion-dos-a-dos-vs-global" 
       title="Disyunción dos a dos vs. intersección global vacía"
-      formula="\big(\forall i \neq j \, (A_i \cap A_j = \emptyset)\big) \implies \bigcap_{i \in I} A_i = \emptyset"
+      formula="\lvert I \rvert \ge 2 \land \forall i, j \in I \, (i \neq j \implies A_i \cap A_j = \emptyset) \implies \bigcap_{i \in I} A_i = \emptyset"
     >
-      Para $n \ge 3$ conjuntos, la condición de ser disjuntos dos a dos ($\forall i \neq j, \, A_i \cap A_j = \emptyset$) es estrictamente más restrictiva que tener intersección global vacía ($\bigcap_{i \in I} A_i = \emptyset$). Es posible que tres conjuntos no tengan ningún elemento común simultáneo a pesar de compartir elementos dos a dos.
+      Si la familia tiene al menos dos miembros ($\lvert I \rvert \ge 2$), ser disjunta dos a dos implica tener intersección global vacía. La recíproca falla a partir de tres conjuntos: $A_1 = \{1, 2\}$, $A_2 = \{2, 3\}$ y $A_3 = \{1, 3\}$ tienen intersección global vacía, pero se cortan dos a dos.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -41,7 +41,7 @@ $$
       title="Partición del universo del discurso en dominios"
       formula="\mathcal{P} \cap \mathcal{L} = \emptyset \land \mathcal{P} \cap \Pi = \emptyset \land \mathcal{L} \cap \Pi = \emptyset"
     >
-      En la <ConceptLink targetId="logica">lógica de varios tipos</ConceptLink> y en los fundamentos axiomáticos de la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>, los <ConceptLink targetId="dominio">dominios</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">rectas</ConceptLink> $\mathcal{L}$ y <ConceptLink targetId="plano">planos</ConceptLink> $\Pi$ son mutuamente disjuntos dos a dos y forman una partición del universo del discurso global $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ (<ConceptLink targetId="espacio">espacio</ConceptLink>).
+      En la <ConceptLink targetId="logica">lógica multitipo</ConceptLink> que formaliza la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>, los <ConceptLink targetId="dominio">dominios</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">rectas</ConceptLink> $\mathcal{L}$ y <ConceptLink targetId="plano">planos</ConceptLink> $\Pi$ son disjuntos dos a dos y forman una <ConceptLink targetId="particion">partición</ConceptLink> del <ConceptLink targetId="universo-discurso">universo del discurso</ConceptLink> $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

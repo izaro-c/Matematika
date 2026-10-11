@@ -553,7 +553,17 @@ export const Congruence2Spec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastra A, B, C, D, E y F"
+  "note": "Arrastra A, B, C, D, E y F para explorar la transitividad de la congruencia.",
+  "translations": {
+    "eu": {
+      "title": "II. Kongruentzia-axioma",
+      "note": "Arrastatu A, B, C, D, E eta F kongruentziaren iragankortasuna esploratzeko."
+    },
+    "en": {
+      "title": "Congruence Axiom II",
+      "note": "Drag A, B, C, D, E, and F to explore the transitivity of congruence."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

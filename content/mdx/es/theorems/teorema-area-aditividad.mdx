@@ -1,52 +1,47 @@
 export const metadata = {
   id: "teorema-area-aditividad",
+  lang: "es",
   type: "teorema",
   title: "Teorema de aditividad del área",
-  description: "Si una región poligonal plana se descompone en un número finito de subregiones poligonales disjuntas en sus interiores, el área de la región total es igual a la suma de las áreas de sus partes.",
-  statement: "Si R es la unión de n regiones poligonales R1, R2, ..., Rn disjuntas dos a dos en sus interiores, entonces Área(R) = ∑ Área(Ri).",
+  description: "Si una región poligonal es la unión de un número finito de regiones poligonales de interiores disjuntos dos a dos, su área es la suma de las áreas de las piezas.",
+  statement: "Si R = R₁ ∪ … ∪ Rₙ con R₁, …, Rₙ regiones poligonales de interiores disjuntos dos a dos, entonces A(R) = A(R₁) + … + A(Rₙ).",
   branch: "51M",
+  tags: ["area", "region-poligonal", "aditividad"],
   hasSimulation: false,
-  authors: ["euclides", "hilbert"],
+  difficulty: "básico",
+  authors: ["hilbert"],
   demos: ["demo-area-aditividad"],
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §19", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV", role: "primary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Capítulo 5", role: "formalization" }
   ]
 };
 
-<Capitular letra="E" />l teorema de aditividad del área constituye el pilar fundamental de la <ConceptLink targetId="teoria-medida-area">medición de superficies</ConceptLink> en la geometría plana. Garantiza que la función de medida de área asignada a regiones poligonales es una medida finitamente aditiva invariantiva frente a particiones.
+<Capitular letra="S" />i una <ConceptLink targetId="region-poligonal" isDependency={true}>región poligonal</ConceptLink> es la unión de un número finito de regiones poligonales de <ConceptLink targetId="interior-triangulo">interiores</ConceptLink> disjuntos dos a dos, su <ConceptLink targetId="teoria-medida-area" isDependency={true}>área</ConceptLink> es la suma de las áreas de las piezas.
+
+La definición de <ConceptLink targetId="teoria-medida-area" isDependency={true}>función área</ConceptLink> solo exige la aditividad para dos piezas; este <ConceptLink targetId="teorema">teorema</ConceptLink> la extiende a cualquier número finito de piezas, que es la forma en que se usa al descomponer un rectángulo en cuadrados, un triángulo en dos triángulos rectángulos o un cuadrado en rectángulos y triángulos. Es el paso que permite calcular áreas cortando y recomponiendo figuras.
+
+<Definicion title="Enunciado formal del teorema de aditividad del área">
+Sea $\operatorname{A}$ una <ConceptLink targetId="teoria-medida-area" isDependency={true}>función área</ConceptLink> sobre las <ConceptLink targetId="region-poligonal" isDependency={true}>regiones poligonales</ConceptLink> de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\sigma$, y sean $R_1, \dots, R_n \in \mathcal{R}_\sigma$, con $n \geq 1$, regiones de interiores disjuntos dos a dos: para $i \neq j$, $R_i \cap R_j$ está contenida en una unión finita de <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink>. Si $R = R_1 \cup \dots \cup R_n$, entonces
+
+$$
+\operatorname{A}(R) = \sum_{i=1}^{n} \operatorname{A}(R_i)
+$$
+</Definicion>
 
 <Separador />
 
-### Enunciado formal
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consecuencias">
+    <PropiedadItem id="area-regiones-equidescomponibles" title="Regiones equidescomponibles" formula="P = \bigcup_{i=1}^{n} T_i,\ Q = \bigcup_{i=1}^{n} T'_i,\ T_i \cong T'_i \implies \operatorname{A}(P) = \operatorname{A}(Q)">
+      Si dos <ConceptLink targetId="region-poligonal">regiones poligonales</ConceptLink> se descomponen en regiones triangulares de interiores disjuntos que son <ConceptLink targetId="congruencia-triangulos">congruentes</ConceptLink> dos a dos (<ConceptLink targetId="equidescomponibilidad">equidescomponibilidad</ConceptLink>), tienen la misma área: basta sumar las áreas de las piezas.
+    </PropiedadItem>
+    <PropiedadItem id="monotonia-area" title="Monotonía" formula="R' \subseteq R \implies \operatorname{A}(R') \leq \operatorname{A}(R)">
+      Si $R' \subseteq R$, la región $R$ es la unión de $R'$ y de la clausura de $R \setminus R'$, de interiores disjuntos; por la aditividad y la positividad del área, $\operatorname{A}(R') \leq \operatorname{A}(R)$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-Sea $R \subset \mathcal{P}$ una región poligonal plana. Supóngase que $R$ es la unión finita de regiones poligonales $R_1, R_2, \dots, R_n$:
-
-<Formula>
-  $$ R = \bigcup_{i=1}^n R_i $$
-</Formula>
-
-tales que para todo par $i \neq j$, el interior de $R_i$ y el interior de $R_j$ son disjuntos ($\text{Int}(R_i) \cap \text{Int}(R_j) = \emptyset$). Se verifica rigurosamente la propiedad aditiva de la función de medida de área:
-
-<Formula>
-  $$ \text{Área}(R) = \sum_{i=1}^n \text{Área}(R_i) $$
-</Formula>
-
-Es decir, la medida de la superficie total equivale a la suma escalar de las medidas de las áreas de cada subregión constituyente.
-
-<Separador />
-
-### Fundamentación axiomática y equidescomposición
-
-En la formalización de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, el concepto de área se construye para evitar el uso del cálculo infinitesimal mediante la noción de equidescomponibilidad:
-- Dos polígonos $P$ y $Q$ se dicen **equidescomponibles** si pueden dividirse en el mismo número finito de triángulos respectivamente <ConceptLink targetId="congruencia">congruentes</ConceptLink>.
-- Por el teorema de aditividad, dos polígonos equidescomponibles poseen necesariamente la misma área ($\text{Área}(P) = \text{Área}(Q)$).
-- El teorema de Bolyai-Gerwien establece que en el plano euclidiano, dos polígonos cualesquiera con la misma área son siempre equidescomponibles.
-
-<Separador />
-
-### Invariancia y normalización
-
-La función de medida de área satisface tres propiedades fundamentales:
-1. **Positividad**: $\text{Área}(R) > 0$ para toda región poligonal no vacía.
-2. **Invariancia por congruencia**: Si $R_1 \cong R_2$, entonces $\text{Área}(R_1) = \text{Área}(R_2)$.
-3. **Aditividad finita**: $\text{Área}(R_1 \cup R_2) = \text{Área}(R_1) + \text{Área}(R_2)$ para regiones con interiores disjuntos.
+<Nota>
+El recíproco de la primera consecuencia vale en el plano euclídeo: dos regiones poligonales de igual área son equidescomponibles (<ConceptLink targetId="teorema-bolyai-gerwien">teorema de Bolyai–Gerwien</ConceptLink>). En el espacio falla: <ConceptLink targetId="dehn">Max Dehn</ConceptLink> (1900) probó que existen <ConceptLink targetId="poliedro">poliedros</ConceptLink> de igual volumen que no son equidescomponibles, resolviendo así el <ConceptLink targetId="tercer-problema-hilbert">tercer problema de Hilbert</ConceptLink>; Sydler (1965) demostró el recíproco: dos poliedros de igual volumen e igual <ConceptLink targetId="invariante-dehn">invariante de Dehn</ConceptLink> son equidescomponibles.
+</Nota>

@@ -2,47 +2,65 @@ export const metadata = {
   id: "teoria-medida-area",
   lang: "eu",
   type: "definicion",
-  subtype: "fundamentada",
+  subtype: "derivado",
   title: "Azalera-neurriaren teoria",
-  description: "Poligonoen ekideskonposagarritasunean eta batukortasun finituan oinarritutako edukiaren eta azaleraren teoria formalaren eraikuntza.",
+  description: "Plano bateko eskualde poligonalen gaineko azalera-funtzioa: positiboa, kongruentziarekiko aldaezina, barnealde disjuntuko eskualdeentzat batukorra eta karratu unitarioaren bidez normalizatua; baliokide deskonposagarritasuna eta osaketazko baliokidetasuna.",
   branch: "51M",
+  tags: ["area", "region-poligonal", "equidescomponibilidad", "geometria-euclidiana"],
   hasSimulation: false,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, Nozio Komunak eta 35-41 Proposizioak", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "IV. Kapitulua, §17-§21", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "IV. kapitulua", role: "primary" },
+    { title: "Elementuak", author: "Euklides", locator: "I. liburua, Nozio komunak eta 35-41. proposizioak", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "5. kapitulua", role: "formalization" }
   ]
 };
 
-<Capitular letra="F" />undamentazio axiomatiko modernoan, azalera-neurriaren teoriak irudi geometriko lauek betetzen duten bi dimentsioko espazioaren kuantifikazioa formalizatzen du. David Hilbertek edukiaren teoria gisa garatua, Euklidesen intuiziozko nozioak ordezkatzen ditu <ConceptLink targetId="poligono">poligonoen</ConceptLink> ekideskonposagarritasunaren bidez, neurri jarraituaren teoria analitikoaren premiarik gabe.
+<Capitular letra="P" />lano baten gaineko azalera-<ConceptLink targetId="funcion">funtzio</ConceptLink> batek, $\sigma$ <ConceptLink targetId="plano" isDependency={true}>planoa</ConceptLink> izanik, $\sigma$-ko <ConceptLink targetId="region-poligonal" isDependency={true}>eskualde poligonal</ConceptLink> bakoitzari <ConceptLink targetId="numero-real">zenbaki erreal</ConceptLink> positibo bat esleitzen dio, honela: eskualde triangeluar <ConceptLink targetId="congruencia" isDependency={true}>kongruenteek</ConceptLink> azalera bera dute, barnealde disjuntuak dituzten bi eskualderen bilduraren azalera haien azaleren batura da, eta alde unitarioko <ConceptLink targetId="cuadrado" isDependency={true}>karratuaren</ConceptLink> azalera $1$ da.
 
-<Definicion title="">
-  Plano bateko <ConceptLink targetId="poligono" isDependency={true}>poligono</ConceptLink> guztien $\mathcal{P}_{\text{pol}}$ multzoaren gaineko $\mu: \mathcal{P}_{\text{pol}} \to \mathbb{R}^+$ azalera-neurriko funtzioak honakoak betetzen ditu:
-  1. **Positibotasuna**: $\forall P \in \mathcal{P}_{\text{pol}}, \; \mu(P) > 0$.
-  2. **Kongruentziarekiko aldaezintasuna**: Isometria baten bidez $P \cong Q$ bada, orduan $\mu(P) = \mu(Q)$.
-  3. **Batukortasun finitua**: $\text{int}(P_1) \cap \text{int}(P_2) = \emptyset$ izanik $P = P_1 \cup P_2$ bada, orduan $\mu(P) = \mu(P_1) + \mu(P_2)$.
-  4. **Normalizazio unitarioa**: $U$ alde unitarioko ($l = 1$) <ConceptLink targetId="cuadrado">karratua</ConceptLink> bada, $\mu(U) = 1$.
+Lau baldintzek <ConceptLink targetId="euclides">Euklidesen</ConceptLink> nozio komunak («elkarren gainean egokitzen diren gauzak berdinak dira», «osoa zatia baino handiagoa da») zenbaki bihurtzen dituzte, eta nahikoak dira formula klasikoak ondorioztatzeko: haietatik datoz <ConceptLink targetId="teorema-area-aditividad">batukortasun finitua</ConceptLink>, <ConceptLink targetId="teorema-area-rectangulo">laukizuzenaren azalera</ConceptLink> eta <ConceptLink targetId="teorema-area-triangulo">triangeluaren azalera</ConceptLink>, eta horien gainean eraikitzen dira <ConceptLink targetId="teorema-tales">Talesen teorema</ConceptLink> eta <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>. Propietate horiek dituen funtzio bat existitzea, eta bakarra izatea, ez da definizioaren parte: <ConceptLink targetId="hilbert">Hilbertek</ConceptLink> *Grundlagen der Geometrie* lanaren IV. kapituluan frogatutako <ConceptLink targetId="teorema-existencia-area">teorema</ConceptLink> bat da.
+
+<Definicion title="Eskualde poligonalen gaineko azalera-funtzioa">
+<ConceptLink targetId="region-triangular" isDependency={true}>Eskualde triangeluarra</ConceptLink> <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> baten trazaduraren eta haren <ConceptLink targetId="interior-triangulo" isDependency={true}>barnealdearen</ConceptLink> bildura da, $\operatorname{tr}(\triangle ABC) \cup \operatorname{Int}(\triangle ABC)$; <ConceptLink targetId="region-poligonal" isDependency={true}>eskualde poligonala</ConceptLink>, berriz, $\operatorname{tr}(\sigma)$ multzoan dauden eskualde triangeluar kopuru finitu baten bildura. Izan bedi $\mathcal{R}_\sigma$ $\sigma$ planoko eskualde poligonalen <ConceptLink targetId="conjunto">multzoa</ConceptLink>. $R_1, R_2 \in \mathcal{R}_\sigma$ bi eskualdek **barnealde disjuntuak** dituzte, baldin eta haien ebakidura <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink> kopuru finitu baten bilduran badago. $\operatorname{A}(\triangle ABC)$ idazten dugu $\triangle ABC$ triangeluak zehazten duen eskualde triangeluarraren azalerarako.
+
+**Azalera-funtzioa** honako aplikazio hau da:
+
+$$
+\begin{aligned}
+\operatorname{A}\colon \mathcal{R}_\sigma &\longrightarrow \mathbb{R}_{>0} \\
+R &\longmapsto \operatorname{A}(R)
+\end{aligned}
+$$
+
+eta baldintza hauek betetzen ditu:
+1. **Positibotasuna**: $\operatorname{A}(R) > 0$ edozein $R \in \mathcal{R}_\sigma$ eskualdetarako.
+2. **Kongruentziarekiko aldaezintasuna**: $\triangle ABC \cong \triangle A'B'C'$ bada (<ConceptLink targetId="congruencia-triangulos" isDependency={true}>triangelu kongruenteak</ConceptLink>), orduan $\operatorname{A}(\triangle ABC) = \operatorname{A}(\triangle A'B'C')$.
+3. **Batukortasuna**: $R = R_1 \cup R_2$ bada, $R_1$ eta $R_2$ barnealde disjuntukoak izanik, orduan $\operatorname{A}(R) = \operatorname{A}(R_1) + \operatorname{A}(R_2)$.
+4. **Normalizazioa**: $Q$ karratu baten eskualdea bada eta haren <ConceptLink targetId="lado">aldea</ConceptLink> <ConceptLink targetId="segmento-unidad" isDependency={true}>zuzenki unitarioarekin</ConceptLink> kongruentea bada, orduan $\operatorname{A}(Q) = 1$.
 </Definicion>
 
 <Separador />
 
-### Ekideskonposagarritasuna eta Hilberten edukia
+### Baliokide deskonposagarritasuna eta osaketazko baliokidetasuna
 
-Hilberten geometria sintetikoan:
-- **Eduki bereko poligonoak**: $P$ eta $Q$ bi poligono ekideskonposagarriak dira baldin eta $P = \bigcup_{i=1}^n T_i$ eta $Q = \bigcup_{i=1}^n T'_i$ partizio finituak existitzen badira non $T_i \cong T'_i$ den guztientzat.
-- **Osagarri bereko poligonoak**: Bi poligono edukiz baliokideak dira baldin eta poligono kongruenteen bidez osatu badaitezke irudi ekideskonposagarriak lortzeko.
+$P, Q \in \mathcal{R}_\sigma$ bi eskualde poligonal **<ConceptLink targetId="equidescomponibilidad">baliokide deskonposagarriak</ConceptLink>** dira, baldin eta $P = T_1 \cup \dots \cup T_n$ eta $Q = T'_1 \cup \dots \cup T'_n$ deskonposizioak onartzen badituzte, bikoteka barnealde disjuntuak dituzten eskualde triangeluarretan, $i$ bakoitzerako $T_i \cong T'_i$ izanik; hau da, pieza kongruenteetan zatitu daitezke. **Osaketaz baliokideak** dira, baldin eta $P'$ eta $Q'$ eskualde baliokide deskonposagarriak badaude, $P$-rekin eta $Q$-rekin, hurrenez hurren, barnealde disjuntuak dituztenak, eta $P \cup P'$ eta $Q \cup Q'$ baliokide deskonposagarriak badira.
+
+Aldaezintasunagatik eta batukortasunagatik, baliokide deskonposagarriak edo osaketaz baliokideak diren bi eskualdek azalera bera dute. Hilbertek IV. kapituluan edukiaren neurri bat eraikitzen du <ConceptLink targetId="continuidad">jarraitutasun-axiomak</ConceptLink> erabili gabe, eta frogatzen du bi eskualde osaketaz baliokideak direla baldin eta soilik baldin neurri bera badute; <ConceptLink targetId="axioma-arquimedes">Arkimedesen axiomarekin</ConceptLink>, osaketazko baliokidetasuna eta baliokide deskonposagarritasuna bat datoz (<ConceptLink targetId="teorema-bolyai-gerwien">Bolyai–Gerwienen teorema</ConceptLink>).
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Azaleraren oinarrizko teoremak">
-    <PropiedadItem id="teorema-area-aditividad" title="Azaleraren batukortasuna">
-      Bi poligonoren elkarketa disjuntuaren azalera banakako azaleren baturaren berdina da.
+  <PropiedadesGrupo title="Definizioaren ondorioak">
+    <PropiedadItem id="teorema-existencia-area" title="Azalera-funtzioaren existentzia eta bakartasuna">
+      <ConceptLink targetId="sistema-euclidiano">Plano euklidearrean</ConceptLink> azalera-funtzio bakarra dago <ConceptLink targetId="segmento-unidad">zuzenki unitarioaren</ConceptLink> aukeraketa bakoitzerako (<ConceptLink targetId="teorema-existencia-area">azaleraren existentzia-teorema</ConceptLink>).
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-rectangulo" title="Laukizuzenaren azalera">
-      $b$ oinarria eta $h$ altuera dituen laukizuzen baten azalera $\mu(R) = b \cdot h$ formulak ematen du era bakarrean.
+    <PropiedadItem id="teorema-area-aditividad" title="Batukortasun finitua" formula="\operatorname{A}(R_1 \cup \dots \cup R_n) = \sum_{i=1}^{n} \operatorname{A}(R_i)">
+      $R_1, \dots, R_n$ <ConceptLink targetId="region-poligonal">eskualde poligonalek</ConceptLink> bikoteka barnealde disjuntuak badituzte, haien bilduraren azalera haien azaleren batura da (<ConceptLink targetId="teorema-area-aditividad">azaleraren batukortasun-teorema</ConceptLink>).
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-triangulo" title="Triangeluaren azalera">
-      $b$ oinarria eta $h$ altuera dituen edozein triangeluren azalera $\mu(T) = \frac{b \cdot h}{2}$ da.
+    <PropiedadItem id="monotonia-area" title="Monotonia" formula="R' \subseteq R \implies \operatorname{A}(R') \leq \operatorname{A}(R)">
+      $R'$ <ConceptLink targetId="region-poligonal">eskualde poligonala</ConceptLink> beste $R$ eskualde batean badago, $R \setminus R'$ multzoaren itxidura hutsa da edo $R'$-rekin barnealde disjuntua duen eskualde poligonala; batukortasunagatik eta positibotasunagatik, $\operatorname{A}(R') \leq \operatorname{A}(R)$.
+    </PropiedadItem>
+    <PropiedadItem id="area-regiones-equidescomponibles" title="Eskualde baliokide deskonposagarrien azalera-berdintasuna">
+      <ConceptLink targetId="equidescomponibilidad">Baliokide deskonposagarriak</ConceptLink> diren bi eskualdek azalera bera dute, haien piezak bikoteka <ConceptLink targetId="congruencia-triangulos">triangelu kongruenteak</ConceptLink> baitira.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

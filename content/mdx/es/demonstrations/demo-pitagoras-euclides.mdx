@@ -1,16 +1,18 @@
 export const metadata = {
-  "id": "demo-pitagoras-euclides",
-  "type": "demostracion",
-  "title": "Demostración: Teorema de Pitágoras (Método de Euclides)",
-  "description": "Demostración euclidiana clásica mediante la división del cuadrado sobre la hipotenusa en dos rectángulos equivalentes a los cuadrados de los catetos.",
-  "parentTheorem": "teorema-pitagoras",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides", "hilbert"],
-  "tags": ["geometria", "triangulos", "areas", "hilbert"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 47", role: "primary" }
+  id: "demo-pitagoras-euclides",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de Pitágoras (Método de Euclides)",
+  description: "Demostración euclidiana clásica mediante la división del cuadrado sobre la hipotenusa en dos rectángulos equivalentes a los cuadrados de los catetos.",
+  parentTheorem: "teorema-pitagoras",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria", "triangulos", "areas", "hilbert"],
+  layout: "split",
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 47", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV", role: "secondary" }
   ]
 };
 
@@ -18,54 +20,54 @@ import { DemoPitagorasEuclides } from "@content/diagrams/Demos/DemoPitagorasEucl
 
 <DemonstrationSection diagram={<DemoPitagorasEuclides />}>
 
-<Capitular letra="D" />ado un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> $\triangle ABC$ con ángulo recto en el vértice $C$, se demuestra formalmente el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>. La demostración establece que el área del <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">cuadrado construido sobre la hipotenusa</ConceptLink></VisualBind> equivale a la suma de las áreas de los <VisualBind element="cuadrado-a" color="pavo">cuadrados sobre el cateto $a$</VisualBind> y el <VisualBind element="cuadrado-b" color="terracota">cateto $b$</VisualBind>.
+<Capitular letra="D" />ado un <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink> $\triangle ABC$ con <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink> en el <ConceptLink targetId="vertice" isDependency={true}>vértice</ConceptLink> $C$, se demuestra formalmente el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>. La demostración establece que el <ConceptLink targetId="teoria-medida-area" isDependency={true}>área</ConceptLink> del <VisualBind element="sqC" color="ocre"><ConceptLink targetId="cuadrado">cuadrado construido sobre la hipotenusa</ConceptLink></VisualBind> equivale a la suma de las áreas de los cuadrados construidos sobre los <ConceptLink targetId="cateto" isDependency={true}>catetos</ConceptLink>: el <VisualBind element="sqA" color="terracota">cuadrado sobre el cateto $a$</VisualBind> y el <VisualBind element="sqB" color="canela">cuadrado sobre el cateto $b$</VisualBind>.
 
 <Separador />
 
 ### Demostración paso a paso
 
 <ProofStep number={1} target="triangulo" title="Configuración del triángulo rectángulo base">
-Sea el triángulo rectángulo <VisualBind element="triangulo-base" color="carbon">$\triangle ABC$</VisualBind> con el ángulo recto ubicado en el vértice $C$. Se denominan los catetos mediante <VisualBind element="cateto-a" color="pavo">$a = |\overline{BC}|$</VisualBind> y <VisualBind element="cateto-b" color="terracota">$b = |\overline{CA}|$</VisualBind>, y la hipotenusa mediante <VisualBind element="hipotenusa-c" color="ocre">$c = |\overline{AB}|$</VisualBind>.
+Sea el <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink> <VisualBind element="polyABC" color="granada">$\triangle ABC$</VisualBind> con el <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink> <VisualBind element="rightAngle" color="carbon">$\angle ACB$</VisualBind> ubicado en el <ConceptLink targetId="vertice" isDependency={true}>vértice</ConceptLink> <VisualBind element="pC" color="carbon">$C$</VisualBind>. Se denominan las <ConceptLink targetId="longitud" isDependency={true}>longitudes</ConceptLink> de los <ConceptLink targetId="cateto" isDependency={true}>catetos</ConceptLink> mediante $a = |BC|$ y $b = |CA|$, y la longitud de la <ConceptLink targetId="hipotenusa" isDependency={true}>hipotenusa</ConceptLink> mediante $c = |AB|$, con extremos en <VisualBind element="pA" color="carbon">$A$</VisualBind> y <VisualBind element="pB" color="carbon">$B$</VisualBind>.
 </ProofStep>
 
 <ProofStep number={2} target="cuadrados" title="Construcción de los tres cuadrados exteriores">
-Sobre cada uno de los tres lados del triángulo $\triangle ABC$, se construyen tres cuadrados exteriores al polígono: el <VisualBind element="cuadrado-b" color="terracota">cuadrado sobre $b$</VisualBind> de área $b^2$, el <VisualBind element="cuadrado-a" color="pavo">cuadrado sobre $a$</VisualBind> de área $a^2$ y el <VisualBind element="cuadrado-c" color="ocre">cuadrado sobre la hipotenusa</VisualBind> de área $c^2$.
+Sobre cada uno de los tres lados del triángulo $\triangle ABC$, se construyen tres <ConceptLink targetId="cuadrado">cuadrados</ConceptLink> exteriores: el <VisualBind element="sqB" color="canela">cuadrado sobre $b$</VisualBind> de área $b^2$, el <VisualBind element="sqA" color="terracota">cuadrado sobre $a$</VisualBind> de área $a^2$ y el <VisualBind element="sqC" color="mora">cuadrado sobre la hipotenusa</VisualBind> de área $c^2$, con vértices auxiliares <VisualBind element="pK" color="canela">$K$</VisualBind>, <VisualBind element="pF" color="terracota">$F$</VisualBind>, <VisualBind element="pD" color="mora">$D$</VisualBind> y <VisualBind element="pE" color="mora">$E$</VisualBind>.
 </ProofStep>
 
 <ProofStep number={3} target="altura" title="División del cuadrado de la hipotenusa por la altura">
-Desde el vértice recto $C$, se traza la <VisualBind element="recta-altura" color="carbon"><ConceptLink targetId="perpendicular">recta perpendicular</ConceptLink></VisualBind> a la hipotenusa $\overline{AB}$. Al prolongarse a través del cuadrado sobre la hipotenusa, esta perpendicular lo escinde en dos rectángulos: el <VisualBind element="rectangulo-izq" color="terracota">rectángulo izquierdo</VisualBind> $R_L$ ($ADML$) y el <VisualBind element="rectangulo-der" color="pavo">rectángulo derecho</VisualBind> $R_R$ ($BEML$).
+Desde el vértice recto $C$, se traza la <VisualBind element="altSegment" color="carbon"><ConceptLink targetId="perpendicular" isDependency={true}>recta perpendicular</ConceptLink></VisualBind> a la hipotenusa $\overline{AB}$, cuyo pie es <VisualBind element="pL" color="carbon">$L$</VisualBind>. Al prolongarse a través del cuadrado sobre la hipotenusa hasta <VisualBind element="pM" color="carbon">$M$</VisualBind>, esta recta divide el cuadrado en dos rectángulos: el <VisualBind element="rectADML" color="canela">rectángulo izquierdo</VisualBind> $R_L$ ($ADML$) y el <VisualBind element="rectBEML" color="terracota">rectángulo derecho</VisualBind> $R_R$ ($BEML$).
 </ProofStep>
 
 <ProofStep number={4} target="triangulos-izq" title="Construcción y congruencia de los triángulos izquierdos">
-Se trazan los <ConceptLink targetId="segmento">segmentos</ConceptLink> auxiliares para definir el triángulo <VisualBind element="triangulo-acd" color="terracota">$\triangle ACD$</VisualBind> y el triángulo <VisualBind element="triangulo-akb" color="terracota">$\triangle AKB$</VisualBind>. Aplicando el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axioma de congruencia LAL</ConceptLink> (Lado-Ángulo-Lado), se obtiene la <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
+Se trazan los <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> auxiliares $\overline{CD}$ y $\overline{KB}$ para definir los triángulos $\triangle ACD$ y $\triangle AKB$. Se observa que $\overline{AD} \cong \overline{AB}$ (lados del cuadrado $c^2$) y $\overline{AC} \cong \overline{AK}$ (lados del cuadrado $b^2$). Además, los ángulos $\angle CAD$ y $\angle KAB$ son ambos suma de un ángulo recto más $\angle CAB$, luego $\angle CAD \cong \angle KAB$. Por el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink> (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5</ConceptLink>), se tiene la <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink>:
 
-<Formula>
-  $$ \triangle ACD \cong \triangle AKB $$
-</Formula>
+$$
+\triangle ACD \cong \triangle AKB
+$$
 </ProofStep>
 
 <ProofStep number={5} target="areas-izq" title="Equivalencia de áreas entre el triángulo y el rectángulo izquierdo">
-El triángulo $\triangle ACD$ comparte base con el <VisualBind element="rectangulo-izq" color="terracota">rectángulo izquierdo</VisualBind> $R_L$, de modo que su área es exactamente la mitad del área de $R_L$. Por otra parte, el triángulo $\triangle AKB$ comparte base con el <VisualBind element="cuadrado-b" color="terracota">cuadrado sobre $b$</VisualBind>, teniendo un área igual a la mitad de $b^2$. De la congruencia entre ambos triángulos se deduce:
+El triángulo $\triangle ACD$ y el <VisualBind element="rectADML" color="canela">rectángulo izquierdo</VisualBind> $R_L$ comparten la base $\overline{AD}$ y tienen la misma altura $AL$; por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink> y el <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>teorema del área del rectángulo</ConceptLink>, $\operatorname{A}(\triangle ACD) = \frac{1}{2} \operatorname{A}(R_L)$. Análogamente, el triángulo $\triangle AKB$ y el <VisualBind element="sqB" color="canela">cuadrado sobre $b$</VisualBind> comparten la base $\overline{AK}$ y la altura $AC$, de modo que $\operatorname{A}(\triangle AKB) = \frac{1}{2} b^2$. Como triángulos congruentes tienen igual área por la <ConceptLink targetId="teoria-medida-area" isDependency={true}>teoría de la medida del área</ConceptLink>, se deduce:
 
-<Formula>
-  $$ \text{Área}(R_L) = b^2 $$
-</Formula>
+$$
+\operatorname{A}(R_L) = b^2
+$$
 </ProofStep>
 
 <ProofStep number={6} target="areas-der" title="Equivalencia de áreas para el rectángulo derecho">
-Mediante un procedimiento estrictamente simétrico aplicado al sector derecho mediante los triángulos auxiliares <VisualBind element="triangulo-bce" color="pavo">$\triangle BCE$</VisualBind> y <VisualBind element="triangulo-abf" color="pavo">$\triangle ABF$</VisualBind>, se demuestra que el <VisualBind element="rectangulo-der" color="pavo">rectángulo derecho</VisualBind> $R_R$ posee un área idéntica a la del cuadrado sobre el cateto $a$:
+Mediante una construcción estrictamente simétrica aplicada al lado derecho con los triángulos auxiliares $\triangle BCE$ y $\triangle ABF$, la congruencia $\triangle BCE \cong \triangle ABF$ por el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>criterio LAL</ConceptLink> y la comparación de bases y alturas por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink> y el <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>teorema del área del rectángulo</ConceptLink> demuestran que el <VisualBind element="rectBEML" color="terracota">rectángulo derecho</VisualBind> $R_R$ tiene área idéntica a la del <VisualBind element="sqA" color="terracota">cuadrado sobre el cateto $a$</VisualBind>:
 
-<Formula>
-  $$ \text{Área}(R_R) = a^2 $$
-</Formula>
+$$
+\operatorname{A}(R_R) = a^2
+$$
 </ProofStep>
 
 <ProofStep number={7} target="cuadrados-final" title="Suma de áreas y conclusión formal">
-Por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink>, la superficie total del <VisualBind element="cuadrado-c" color="ocre">cuadrado sobre la hipotenusa</VisualBind> es la suma de sus dos rectángulos componentes $R_L$ y $R_R$:
+Por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink>, la superficie total del <VisualBind element="sqC" color="mora">cuadrado sobre la hipotenusa</VisualBind> es la suma de sus dos rectángulos disjuntos $R_L$ y $R_R$:
 
-<Formula>
-  $$ a^2 + b^2 = c^2 $$
-</Formula>
+$$
+a^2 + b^2 = c^2
+$$
 </ProofStep>
 
 <Separador />
@@ -73,7 +75,7 @@ Por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teore
 ### Análisis deductivo
 
 <Nota>
-  Proposición I.47 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. Este razonamiento requiere el <ConceptLink targetId="sistema-euclidiano">sistema axiomático euclidiano</ConceptLink> y formaliza la descomposición mediante el modelo de Hilbert.
+Proposición I.47 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. Este razonamiento se apoya en el <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink> y formaliza la descomposición mediante la teoría de áreas de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

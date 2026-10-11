@@ -377,7 +377,17 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve A, B, C y D"
+  "note": "Mueve A, B, C y D para explorar la intersección de dos rectas distintas.",
+  "translations": {
+    "eu": {
+      "title": "Bi zuzen desberdinek gehienez puntu bat partekatzen dute",
+      "note": "Mugitu A, B, C eta D bi zuzen desberdinen ebakidura esploratzeko."
+    },
+    "en": {
+      "title": "Two Distinct Lines Share at Most One Point",
+      "note": "Move A, B, C, and D to explore the intersection of two distinct lines."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

@@ -2,29 +2,29 @@ export const metadata = {
   id: "axioma-incidencia-3",
   lang: "eu",
   type: "axioma",
-  title: "I.3 Axioma (Puntu ez-kolinealak)",
-  description: "Zuzen berekoak ez diren gutxienez hiru puntu existitzen dira.",
+  title: "I.3 axioma (Puntu ez-kolinealak)",
+  description: "Zuzen berarekin intziditzen ez duten gutxienez hiru puntu existitzen dira.",
   branch: "51A",
   tags: ["geometria", "intzidentzia", "axioma", "planoa"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §2", role: "primary" }
   ]
 };
 
 import { Incidence3 } from '@content/diagrams/Axiomas/Incidence3';
 export const Simulation = Incidence3;
 
-<Capitular letra="Z" />**uzen** berean kokatuta ez dauden gutxienez hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> existitzen dira.
+<Capitular letra="Z" />uzen berean kokatuta ez dauden gutxienez hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> existitzen dira.
 
-Axioma honek geometria dimentsio lineal bakar batera ez kolapsatzea bermatzen du, bi dimentsioko konfigurazioak ahalbidetuz eta <ConceptLink targetId="espacio">espazioan</ConceptLink> <ConceptLink targetId="triangulo">triangelua</ConceptLink> bezalako irudietarako erpinen oinarria finkatuz.
+Axioma hau gabe, puntu guztiek zuzen bakar batekin intzidi lezakete, eta geometria <ConceptLink targetId="dimension">dimentsio</ConceptLink> bakarrera murriztuko litzateke. <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink> axiomekin batera, <ConceptLink targetId="sistema-incidencia">intzidentzia-sistemaren</ConceptLink> zati planoa osatzen du, eta zati horrek badu eredu finiturik, hala nola <ConceptLink targetId="modelo-tres-puntos">hiru puntuko eredua</ConceptLink>.
 
-<Definicion title="Enuntziatu Formala">
+<Definicion title="Enuntziatu formala">
   Gutxienez hiru <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen dira (<VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind>), non $\ell \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> batek ere ez dituen hirurak batera <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink>:
   $$
   \exists A, B, C \in \mathcal{P} \ \bigl(A \neq B \land B \neq C \land A \neq C \land \forall \ell \in \mathcal{L} \ \neg(A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\bigr)
   $$
-  Baldintza hau betetzen duen puntu-hirukoteari ez-<ConceptLink targetId="colinealidad">kolineal</ConceptLink> deritzo, eta <ConceptLink targetId="estar-entre">ordena lineala</ConceptLink> (II. taldea) txertatutakoan <ConceptLink targetId="triangulo">triangelua</ConceptLink> sortuko duen oinarrizko erpin-konfigurazioa osatzen du.
+  Baldintza hau betetzen duen puntu-hirukoteari ez-<ConceptLink targetId="colinealidad">kolineal</ConceptLink> deritzo; haren puntuak <ConceptLink targetId="triangulo">triangelu</ConceptLink> baten <ConceptLink targetId="vertice">erpinak</ConceptLink> izango dira, <ConceptLink targetId="estar-entre">ordena-axiomen</ConceptLink> (II. taldea) bidez <ConceptLink targetId="segmento">zuzenkiak</ConceptLink> definitu ondoren.
 </Definicion>

@@ -745,7 +745,17 @@ export const TalesSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve A, B, C y D"
+  "note": "Mueve A, B, C y D para comprobar la proporcionalidad de los segmentos entre paralelas.",
+  "translations": {
+    "eu": {
+      "title": "Talesen teorema",
+      "note": "Mugitu A, B, C eta D paraleloen arteko segmentuen proportzionaltasuna egiaztatzeko."
+    },
+    "en": {
+      "title": "Thales's Theorem",
+      "note": "Move A, B, C, and D to verify the proportionality of segments between parallel lines."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

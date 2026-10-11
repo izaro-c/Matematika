@@ -19,7 +19,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Chapter I, §4",
+      locator: "Chapter I, §6",
       role: "primary"
     }
   ]
@@ -30,17 +30,17 @@ export const Simulation = Perpendicular;
 
 <Capitular letra="T" />wo coplanar <ConceptLink targetId="secante">secant</ConceptLink> <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> are **perpendicular** if their <ConceptLink targetId="punto">point</ConceptLink> of intersection forms <ConceptLink targetId="angulo-recto" isDependency={true}>right angles</ConceptLink>.
 
-The perpendicularity relation formalizes positional rigidity between secant lines in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, establishing the foundation for the study of <ConceptLink targetId="triangulo-rectangulo">right triangles</ConceptLink> and geometric orthogonal constructions.
+Perpendicularity is defined without any measure, solely through angle <ConceptLink targetId="congruencia">congruence</ConceptLink>, and belongs to <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. It is the foundation for the study of <ConceptLink targetId="triangulo-rectangulo">right triangles</ConceptLink> and geometric orthogonal constructions.
 
 <Definicion title="Formal Definition of Perpendicular Lines">
 Let <VisualBind element="lineAB" color="terracota">$\ell_1$</VisualBind>, <VisualBind element="perpABP" color="musgo">$\ell_2$</VisualBind> $\in \mathcal{L}$ be two coplanar <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \Pi$ ($\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi)$) that are <ConceptLink targetId="secante">secant</ConceptLink> at a unique <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> of intersection <VisualBind element="pP" color="musgo">$P$</VisualBind> $\in \mathcal{P}$ ($\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$).
 
 Let <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \operatorname{tr}(\ell_1) \setminus \{P\}$ be two points such that $P$ <ConceptLink targetId="estar-entre" isDependency={true}>is between</ConceptLink> $A$ and $B$ ($A * P * B$), determining the opposite <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> <VisualBind element="rayPA" color="terracota">$h_1 = \overrightarrow{PA}$</VisualBind> and <VisualBind element="rayPB" color="terracota">$h_1' = \overrightarrow{PB}$</VisualBind> on $\ell_1$. Let <VisualBind element="pC" color="musgo">$C$</VisualBind>, <VisualBind element="pD" color="musgo">$D$</VisualBind> $\in \operatorname{tr}(\ell_2) \setminus \{P\}$ be two points such that $P$ is between $C$ and $D$ ($C * P * D$), determining the opposite rays <VisualBind element="rayPC" color="musgo">$h_2 = \overrightarrow{PC}$</VisualBind> and <VisualBind element="rayPD" color="musgo">$h_2' = \overrightarrow{PD}$</VisualBind> on $\ell_2$.
 
-The lines $\ell_1$ and $\ell_2$ are **perpendicular** ($\ell_1 \perp \ell_2$) if and only if the <ConceptLink targetId="angulo">angle</ConceptLink> <VisualBind element="angleAPC" color="ocre">$\angle(h_1, h_2) = \angle APC$</VisualBind> formed at the <ConceptLink targetId="vertice">vertex</ConceptLink> $P$ is a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink>:
+The lines $\ell_1$ and $\ell_2$ are **perpendicular** ($\ell_1 \perp \ell_2$) if and only if the <ConceptLink targetId="angulo">angle</ConceptLink> <VisualBind element="angleAPC" color="ocre">$\angle(h_1, h_2) = \angle APC$</VisualBind> formed at the <ConceptLink targetId="vertice">vertex</ConceptLink> $P$ is a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink>, that is, if it is congruent to its <ConceptLink targetId="angulos-suplementarios">adjacent supplement</ConceptLink> $\angle(h_1', h_2) = \angle BPC$:
 
 $$
-\ell_1 \perp \ell_2 \iff \operatorname{Recto}(\angle(h_1, h_2))
+\ell_1 \perp \ell_2 \iff \angle(h_1, h_2) \cong \angle(h_1', h_2)
 $$
 </Definicion>
 
@@ -53,7 +53,7 @@ $$
       title="Symmetry of the Perpendicularity Relation"
       formula="\ell_1 \perp \ell_2 \iff \ell_2 \perp \ell_1"
     >
-      The perpendicularity relation between <ConceptLink targetId="secante">secant</ConceptLink> <ConceptLink targetId="recta">lines</ConceptLink> is strictly symmetric: if one line is perpendicular to another, the second is perpendicular to the first.
+      The perpendicularity relation between <ConceptLink targetId="secante">secant</ConceptLink> <ConceptLink targetId="recta">lines</ConceptLink> is symmetric: if one line is perpendicular to another, the second is perpendicular to the first.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -61,7 +61,7 @@ $$
       title="Simultaneous Congruence of the Four Right Angles"
       formula="\ell_1 \perp \ell_2 \implies \angle(h_1, h_2) \cong \angle(h_1', h_2) \cong \angle(h_1', h_2') \cong \angle(h_1, h_2')"
     >
-      The intersection of two perpendicular lines divides the plane into four mutually <ConceptLink targetId="congruencia">congruent</ConceptLink> <ConceptLink targetId="angulo-recto">right angles</ConceptLink>: <VisualBind element="angleAPC" color="ocre">$\angle APC$</VisualBind> $\cong$ <VisualBind element="angleBPC" color="ocre">$\angle BPC$</VisualBind> $\cong$ <VisualBind element="angleBPD" color="ocre">$\angle BPD$</VisualBind> $\cong$ <VisualBind element="angleAPD" color="ocre">$\angle APD$</VisualBind>.
+      Two perpendicular lines determine at their intersection point four mutually <ConceptLink targetId="congruencia">congruent</ConceptLink> <ConceptLink targetId="angulo-recto">right angles</ConceptLink>, by the <ConceptLink targetId="teorema-congruencia-suplementos">congruence of supplements</ConceptLink> and the <ConceptLink targetId="teorema-angulos-opuestos-verticales">vertical angles theorem</ConceptLink>: <VisualBind element="angleAPC" color="ocre">$\angle APC$</VisualBind> $\cong$ <VisualBind element="angleBPC" color="ocre">$\angle BPC$</VisualBind> $\cong$ <VisualBind element="angleBPD" color="ocre">$\angle BPD$</VisualBind> $\cong$ <VisualBind element="angleAPD" color="ocre">$\angle APD$</VisualBind>.
     </PropiedadItem>
   </PropiedadesGrupo>
 
@@ -69,9 +69,9 @@ $$
     <PropiedadItem 
       id="existencia-unicidad-perpendicular" 
       title="Existence and Uniqueness of the Perpendicular in the Plane"
-      formula="\forall \ell \in \mathcal{L}, \; \forall P \in \operatorname{tr}(\pi) \; \exists! \ell' \in \mathcal{L} \; (\operatorname{tr}(\ell') \subseteq \operatorname{tr}(\pi) \land P \in \operatorname{tr}(\ell') \land \ell' \perp \ell)"
+      formula="\forall \pi \in \Pi \; \forall \ell \in \mathcal{L} \; \forall P \in \operatorname{tr}(\pi) \; \Bigl(\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \implies \exists! \ell' \in \mathcal{L} \; (\operatorname{tr}(\ell') \subseteq \operatorname{tr}(\pi) \land P \in \operatorname{tr}(\ell') \land \ell' \perp \ell)\Bigr)"
     >
-      In any plane $\pi$, for every point $P \in \operatorname{tr}(\pi)$ —whether $P$ belongs to the line $\ell$ or not— there exists a unique line $\ell'$ coplanar with $\ell$ that is incident with $P$ and perpendicular to $\ell$. This theorem holds in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> without requiring any <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink>.
+      In any plane $\pi$, for every point $P \in \operatorname{tr}(\pi)$ —whether $P$ belongs to the line $\ell$ or not— there exists a unique line $\ell'$ of $\pi$ that is incident with $P$ and perpendicular to $\ell$. This theorem (Hilbert, §6) holds in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> without requiring any <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
@@ -79,5 +79,5 @@ $$
 <Separador />
 
 <Nota>
-In the axiomatic hierarchy, perpendicularity is a purely synthetic concept belonging to <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, prior to and independent of any <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink>. Unlike unique parallelism, the existence and uniqueness of the perpendicular through a point does not depend on the curvature of space.
+Perpendicularity is a synthetic concept of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, prior to and independent of any <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink>. Unlike the uniqueness of the parallel, which requires Axiom IV, the existence and uniqueness of the perpendicular through a point is proved using only the axioms of incidence, order, and congruence.
 </Nota>

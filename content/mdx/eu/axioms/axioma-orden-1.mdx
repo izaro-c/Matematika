@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "II.1 axioma (Bitartekotasunaren simetria eta kolinealtasuna)",
-  description: "B puntua A eta C-ren artean badago, orduan A, B eta C zuzen bereko hiru puntu desberdin dira eta B puntua C eta A-ren artean ere badago.",
+  description: "B puntua A eta C puntuen artean badago, A, B eta C zuzen bereko hiru puntu desberdin dira, eta B puntua C eta A puntuen artean ere badago.",
   branch: "51A",
   branches: ["51A", "03B"],
   tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
@@ -25,10 +25,10 @@ export const Simulation = Order1;
 
 <Capitular letra="P" />untu bat beste biren <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> badago, hiru <ConceptLink targetId="punto" isDependency={true}>puntuak</ConceptLink> elkarren artean desberdinak dira, <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> berean <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> dute eta muturren <ConceptLink targetId="orden">ordena</ConceptLink> alderantzikatzean ere tarteko puntua haien artean dago.
 
-Postulatu honek ordena-erlazioaren oinarrizko <ConceptLink targetId="simetria">simetria</ConceptLink> ezartzen du, eta bitartekotasuna <ConceptLink targetId="colinealidad">kolinealtasunarekin</ConceptLink> eta <ConceptLink targetId="incidencia">intzidentziarekin</ConceptLink> lotzen du formalki.
+Axioma honek bitartekotasun-erlazioaren <ConceptLink targetId="simetria">simetria</ConceptLink> ezartzen du, eta erlazio hori <ConceptLink targetId="colinealidad">kolinealtasunarekin</ConceptLink> eta <ConceptLink targetId="incidencia">intzidentziarekin</ConceptLink> lotzen du.
 
-<Definicion title="II.1 axioma (Simetria eta kolinealtasuna)">
-Edozein <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind> <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="terna">hirukoterako</ConceptLink>, baldin eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntua <VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind>-ren artean badago, orduan $A, B$ eta $C$ elkarren artean desberdinak dira, <VisualBind element="lineDC" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> berean <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dute eta $C * B * A$ erlazio simetrikoa betetzen da:
+<Definicion title="Enuntziatu formala">
+Edozein <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind> <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="terna">hirukoterako</ConceptLink>, baldin eta <VisualBind element="pB" color="terracota">$B$</VisualBind> puntua <VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind> puntuen artean badago, orduan $A, B$ eta $C$ elkarren artean desberdinak dira, <VisualBind element="lineDC" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> berean <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dute eta $C * B * A$ erlazio simetrikoa betetzen da:
 
 $$
 \forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land C * B * A\Bigr)\Biggr)
@@ -36,5 +36,5 @@ $$
 </Definicion>
 
 <Nota>
-Axioma honek bitartekotasunaren nozioa zuzenaren <ConceptLink targetId="orientacion">orientazio</ConceptLink> pribilegiatu baten mende ez egotea bermatzen du. Era berean, puntu-berdintasunaren kasu degeneratuak ($A = B$, $B = C$ edo $A = C$) baztertzen ditu eta ordena-erlazioan dagoen edozein <ConceptLink targetId="terna">hirukote</ConceptLink> zorrozki kolineala dela ziurtatzen du.
+Axioma honek bitartekotasunaren nozioa zuzenaren <ConceptLink targetId="orientacion">orientazio</ConceptLink> pribilegiatu baten mende ez egotea bermatzen du. Era berean, puntu-berdintasunaren kasu degeneratuak ($A = B$, $B = C$ edo $A = C$) baztertzen ditu eta bitartekotasun-erlazioan dagoen edozein <ConceptLink targetId="terna">hirukote</ConceptLink> kolineala dela ziurtatzen du.
 </Nota>

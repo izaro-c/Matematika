@@ -1,45 +1,98 @@
 export const metadata = {
   id: "teorema-angulos-alternos-internos",
+  lang: "es",
   type: "teorema",
   title: "Teorema de los ángulos alternos internos",
-  description: "Si dos rectas paralelas en el plano son cortadas por una recta transversal, los ángulos alternos internos resultantes son respectivamente congruentes.",
-  statement: "Dadas dos rectas paralelas r y s cortadas por una transversal t, todo par de ángulos alternos internos α y α' satisface α ≅ α'.",
+  description: "Dos rectas de un plano cortadas por una secante son paralelas si y solo si los ángulos alternos internos son congruentes; la dirección «congruentes ⇒ paralelas» vale en geometría absoluta y la recíproca requiere el Axioma IV.",
+  statement: "Dos rectas de un plano cortadas por una secante en dos puntos distintos son paralelas si y solo si los ángulos alternos internos que determinan son congruentes.",
   branch: "51M",
+  branches: ["51M", "51A"],
   hasSimulation: false,
   authors: ["euclides"],
   demos: ["demo-angulos-alternos-internos"],
+  tags: ["paralelas", "angulos", "geometria-absoluta", "geometria-euclidiana", "teorema"],
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 27 y 29", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 27 y 29", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6 y §7", role: "secondary" }
   ]
 };
 
-<Capitular letra="E" />l teorema de los ángulos alternos internos establece la equivalencia métrica entre los <ConceptLink targetId="angulo">ángulos</ConceptLink> situados en lados opuestos de una <ConceptLink targetId="recta">recta secante</ConceptLink> o transversal que interseca a dos <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> en el plano euclidiano.
+<Capitular letra="D" />os <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>, cortadas por una <ConceptLink targetId="secante" isDependency={true}>secante</ConceptLink> en dos puntos distintos, son <ConceptLink targetId="paralelas" isDependency={true}>paralelas</ConceptLink> si y solo si los <ConceptLink targetId="angulos-alternos-internos" isDependency={true}>ángulos alternos internos</ConceptLink> que determinan son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>. La dirección «congruentes ⇒ paralelas» es un teorema de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>; la dirección «paralelas ⇒ congruentes» requiere el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axioma IV</ConceptLink> y es, por tanto, un teorema del <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>.
+
+Las dos direcciones tienen naturaleza deductiva distinta. La primera es la Proposición I.27 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>: se demuestra con el <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink>, sin axioma de las paralelas ni axiomas de continuidad, y proporciona la existencia de al menos una paralela por un punto exterior. La segunda es la Proposición I.29, la primera de los Elementos que usa el <ConceptLink targetId="quinto-postulado-euclides">quinto postulado</ConceptLink>; falla en el <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink>, donde una secante puede cortar a dos paralelas formando ángulos alternos internos no congruentes.
+
+<Definicion title="Enunciado formal">
+  Sean $\ell_1, \ell_2 \in \mathcal{L}$ dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$ y sea $t \in \mathcal{L}$ una recta de $\pi$, <ConceptLink targetId="secante" isDependency={true}>secante</ConceptLink> a ambas, que corta a $\ell_1$ en el <ConceptLink targetId="punto">punto</ConceptLink> $A$ y a $\ell_2$ en el punto $B$, con $A \neq B$ (en particular $\ell_1 \neq t$, $\ell_2 \neq t$ y $\ell_1 \neq \ell_2$).
+
+  Sean $P_1 \, \mathbf{I} \, \ell_1$ y $P_2 \, \mathbf{I} \, \ell_2$ dos puntos situados en <ConceptLink targetId="semiplano" isDependency={true}>semiplanos</ConceptLink> opuestos respecto a $t$, es decir, $P_2 \notin \mathcal{H}_t(P_1)$ y $\neg(P_2 \, \mathbf{I} \, t)$. Los <ConceptLink targetId="angulos-alternos-internos" isDependency={true}>ángulos alternos internos</ConceptLink> son:
+
+  $$
+  \alpha = \angle P_1AB, \quad \beta = \angle P_2BA
+  $$
+
+  Entonces:
+
+  $$
+  \ell_1 \parallel \ell_2 \iff \alpha \cong \beta
+  $$
+
+  La equivalencia se descompone en dos proposiciones:
+
+  1. **Dirección (⇐), Euclides I.27, <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>** (sin axiomas de continuidad):
+  $$
+  \alpha \cong \beta \implies \ell_1 \parallel \ell_2
+  $$
+
+  2. **Dirección (⇒), Euclides I.29, <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>** (usa el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axioma IV</ConceptLink>):
+  $$
+  \ell_1 \parallel \ell_2 \implies \alpha \cong \beta
+  $$
+</Definicion>
 
 <Separador />
 
-### Enunciado formal
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Criterios angulares equivalentes">
+    <PropiedadItem 
+      id="congruencia-angulos-correspondientes" 
+      title="Congruencia de ángulos correspondientes"
+      formula="\ell_1 \parallel \ell_2 \iff \angle P_1AB \cong \angle P_2'BC \qquad (P_2 * B * P_2',\ A * B * C)"
+    >
+      Dos rectas de un plano cortadas por una <ConceptLink targetId="secante">secante</ConceptLink> son paralelas si y solo si los <ConceptLink targetId="angulos-correspondientes">ángulos correspondientes</ConceptLink> son congruentes. En efecto, $\angle P_2'BC$ y $\beta = \angle P_2BA$ son <ConceptLink targetId="angulos-opuestos-vertice">opuestos por el vértice</ConceptLink> (por la <ConceptLink targetId="estar-entre">intermediación</ConceptLink> $P_2 * B * P_2'$ y $A * B * C$), luego congruentes por el <ConceptLink targetId="teorema-angulos-opuestos-verticales">teorema de los ángulos opuestos por el vértice</ConceptLink>.
+    </PropiedadItem>
 
-Sean $r$ y $s$ dos <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> en el plano $\mathcal{P}$ ($r \parallel s$), y sea $t$ una recta transversal secante a ambas en los puntos $A$ y $B$ respectivamente. Sean $\alpha$ y $\alpha'$ dos ángulos comprendidos entre las paralelas $r$ y $s$, y situados en semiplanos opuestos respecto de la transversal $t$. Se satisface la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink>:
+    <PropiedadItem 
+      id="congruencia-angulos-alternos-externos" 
+      title="Congruencia de ángulos alternos externos"
+      formula="\ell_1 \parallel \ell_2 \iff \angle P_1AD \cong \angle P_2BC \qquad (B * A * D,\ A * B * C)"
+    >
+      Dos rectas de un plano cortadas por una <ConceptLink targetId="secante">secante</ConceptLink> son paralelas si y solo si los <ConceptLink targetId="angulos-alternos-externos">ángulos alternos externos</ConceptLink> son congruentes. $\angle P_1AD$ y $\angle P_2BC$ son los <ConceptLink targetId="angulos-suplementarios">suplementos adyacentes</ConceptLink> de $\alpha$ y $\beta$, y dos ángulos son congruentes si y solo si lo son sus suplementos (<ConceptLink targetId="teorema-congruencia-suplementos">congruencia de suplementos</ConceptLink>).
+    </PropiedadItem>
 
-<Formula>
-  $$ \alpha \cong \alpha' $$
-</Formula>
+    <PropiedadItem 
+      id="suplementariedad-angulos-conjugados-internos" 
+      title="Suplementariedad de ángulos conjugados internos"
+      formula="\ell_1 \parallel \ell_2 \iff \operatorname{Supl}(\angle P_1AB, \angle P_2'BA) \qquad (P_2 * B * P_2')"
+    >
+      Dos rectas de un plano cortadas por una <ConceptLink targetId="secante">secante</ConceptLink> son paralelas si y solo si los <ConceptLink targetId="angulos-conjugados-internos">ángulos conjugados internos</ConceptLink> $\alpha = \angle P_1AB$ y $\delta = \angle P_2'BA$, situados en el mismo <ConceptLink targetId="semiplano">semiplano</ConceptLink> respecto a $t$, son <ConceptLink targetId="angulos-suplementarios">suplementarios</ConceptLink>, esto es, $\alpha$ es congruente con el suplemento adyacente de $\delta$, que es $\beta$. Es la forma en que el <ConceptLink targetId="quinto-postulado-euclides">quinto postulado</ConceptLink> de Euclides plantea la cuestión.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-Es decir, la amplitud angular de ambos ángulos alternos internos es estrictamente idéntica: $|\alpha| = |\alpha'|$.
+  <PropiedadesGrupo title="Consecuencias en el sistema euclidiano">
+    <PropiedadItem 
+      id="equivalencia-i29-playfair" 
+      title="Equivalencia de la dirección (⇒) con el axioma de las paralelas"
+      formula="\bigl(\ell_1 \parallel \ell_2 \implies \alpha \cong \beta\bigr) \iff \mathrm{IV}"
+    >
+      Sobre la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, la dirección (⇒) es <ConceptLink targetId="equivalencia-logica">equivalente</ConceptLink> al <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>. El Axioma IV implica (⇒), como se ve en la demostración. Recíprocamente, si vale (⇒), dados una recta $\ell$ y un punto $P$ exterior, sea $t$ la <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> a $\ell$ por $P$: toda paralela a $\ell$ por $P$ forma con $t$ un ángulo congruente con un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink>, y por la unicidad del <ConceptLink targetId="axioma-congruencia-4">Axioma III.4</ConceptLink> solo hay una recta así.
+    </PropiedadItem>
 
-<Separador />
-
-### Análisis axiomático y reciprocidad
-
-Euclides estructura el comportamiento de los ángulos formados por una transversal en dos proposiciones cardinales:
-- **Proposición I.27 (Carácter recíproco absoluto)**: Si dos rectas coplanares cortadas por una transversal forman ángulos alternos internos congruentes, entonces las dos rectas son <ConceptLink targetId="paralelas">paralelas</ConceptLink>. Este resultado es independiente del quinto postulado y pertenece a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
-- **Proposición I.29 (Directo euclidiano)**: Si dos rectas son <ConceptLink targetId="paralelas">paralelas</ConceptLink>, la congruencia de los ángulos alternos internos requiere indispensablemente el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas de Euclides</ConceptLink>.
-
-<Separador />
-
-### Relaciones angulares derivadas
-
-Dadas dos rectas paralelas cortadas por una transversal $t$:
-- **Ángulos correspondientes**: Son congruentes ($\alpha \cong \beta$).
-- **Ángulos alternos externos**: Son congruentes ($\gamma \cong \gamma'$).
-- **Ángulos conjugados internos**: Son <ConceptLink targetId="angulos-suplementarios">suplementarios</ConceptLink> ($\alpha + \beta' = 180^\circ$).
+    <PropiedadItem 
+      id="suma-angular-triangulo" 
+      title="Suma de los ángulos de un triángulo"
+      formula="|\alpha| + |\beta| + |\gamma| = 180^\circ"
+    >
+      Trazando por un vértice de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> la paralela a la recta del lado opuesto, la dirección (⇒) traslada los otros dos ángulos a posiciones contiguas en ese vértice; así se demuestra el <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de los ángulos de un triángulo</ConceptLink>, expresado con la <ConceptLink targetId="medida-angular">medida angular</ConceptLink> o, sintéticamente, como congruencia con la suma de dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

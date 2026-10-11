@@ -176,7 +176,17 @@ export const Incidence3Spec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra A, B, y C"
+  "note": "Arrastra A, B y C: existen al menos tres puntos no colineales en el plano.",
+  "translations": {
+    "eu": {
+      "title": "III. Intzidentzia-axioma",
+      "note": "Arrastatu A, B eta C: planoan lerrokatu gabeko gutxienez hiru puntu existitzen dira."
+    },
+    "en": {
+      "title": "Incidence Axiom III",
+      "note": "Drag A, B, and C: there exist at least three non-collinear points in the plane."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

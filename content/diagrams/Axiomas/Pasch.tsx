@@ -502,7 +502,17 @@ export const PaschSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastre los puntos para explorar la figura."
+  "note": "Arrastra los vértices del triángulo o la recta: si corta a un lado, corta a otro lado o pasa por un vértice.",
+  "translations": {
+    "eu": {
+      "title": "IV. Ordena-axioma (Paschena)",
+      "note": "Arrastatu triangeluaren erpinak edo zuzena: alde bat ebakitzen badu, beste alde bat ebakitzen du edo erpin batetik igarotzen da."
+    },
+    "en": {
+      "title": "Order Axiom IV (Pasch's Axiom)",
+      "note": "Drag the triangle vertices or the line: if it intersects one side, it intersects another side or passes through a vertex."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

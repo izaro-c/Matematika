@@ -12,23 +12,23 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="I" />n formal mathematics, a **primitive concept** (or undefined term) is a starting object or relation that is not defined in terms of prior concepts.
+<Capitular letra="A" /> **primitive concept** (or undefined term) is a starting notion of a <ConceptLink targetId="teoria-formal">formal theory</ConceptLink> —a sort of object or a relation— that is not defined in terms of prior concepts.
 
-Every mathematical theory requires starting terms. If one attempted to define every object using simpler concepts, one would fall into circular reasoning or an infinite regression. To avoid this, axiomatic systems select a basic set of primitive notions and establish their behavior through the rules or <ConceptLink targetId="axioma">axioms</ConceptLink> of the adopted <ConceptLink targetId="sistema-axiomatico">formal system</ConceptLink>.
+Every mathematical theory requires starting terms. If one attempted to define every notion through simpler ones, one would fall into a circle or an infinite regress. To avoid this, axiomatic systems select a basic set of primitive notions and establish their behavior through the <ConceptLink targetId="axioma">axioms</ConceptLink> of the adopted <ConceptLink targetId="sistema-axiomatico">formal system</ConceptLink>.
 
 <Definicion title="Epistemological Definition">
-  In a formal language specified by a <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})$, **primitive concepts** are the basic non-logical starting symbols (sorts/object types and relation or function symbols) that lack a prior definition within the theory:
+  In a formal language specified by a <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma$, **primitive concepts** are the basic non-logical starting symbols (sorts/object types and relation or function symbols) that lack a prior definition within the theory:
   $$
   \sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})
   $$
-  Their mathematical meaning does not lie in a physical or substantial description, but in the formal rules that the <ConceptLink targetId="axioma">axioms</ConceptLink> impose on their interpretations within a <ConceptLink targetId="estructura-geometrica">mathematical structure</ConceptLink> or model.
+  Their meaning does not lie in a physical description, but in the conditions that the <ConceptLink targetId="axioma">axioms</ConceptLink> impose on their interpretations within a <ConceptLink targetId="estructura-geometrica">mathematical structure</ConceptLink> or <ConceptLink targetId="teoria-modelos">model</ConceptLink>.
 </Definicion>
 
 <Separador />
 
 ### Primitive concepts in <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>
 
-In the foundations of geometry (such as <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> system), primitive concepts are divided into two categories:
+In <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> system, primitive concepts are divided into two categories:
 
-- **Object types (<ConceptLink targetId="dominio">primitive domains</ConceptLink>):** The three elementary sorts of entities: <ConceptLink targetId="punto">points</ConceptLink> ($\mathcal{P}$), <ConceptLink targetId="recta">lines</ConceptLink> ($\mathcal{L}$), and <ConceptLink targetId="plano">planes</ConceptLink> ($\Pi$). <ConceptLink targetId="espacio">Three-dimensional space</ConceptLink> serves as the global universe of the model rather than a primitive sort in the signature.
-- **Primitive relations:** Basic links between objects, such as <ConceptLink targetId="incidencia">incidence</ConceptLink> (positional membership), <ConceptLink targetId="estar-entre">betweenness</ConceptLink> (linear ordering), and <ConceptLink targetId="congruencia">congruence</ConceptLink> (of <ConceptLink targetId="segmento">segments</ConceptLink> and of <ConceptLink targetId="angulo">angles</ConceptLink>).
+- **Object types (<ConceptLink targetId="dominio">primitive domains</ConceptLink>):** The three elementary sorts of entities: <ConceptLink targetId="punto">points</ConceptLink> ($\mathcal{P}$), <ConceptLink targetId="recta">lines</ConceptLink> ($\mathcal{L}$), and <ConceptLink targetId="plano">planes</ConceptLink> ($\Pi$). <ConceptLink targetId="espacio">Space</ConceptLink> is not a primitive sort: it denotes the totality of these objects (the <ConceptLink targetId="universo-discurso">universe of discourse</ConceptLink>) or, as a figure, the set of all points.
+- **Primitive relations:** Basic links between objects, such as <ConceptLink targetId="incidencia">incidence</ConceptLink> (lying on), <ConceptLink targetId="estar-entre">betweenness</ConceptLink> (linear ordering), and <ConceptLink targetId="congruencia">congruence</ConceptLink> (of <ConceptLink targetId="segmento">segments</ConceptLink> and of <ConceptLink targetId="angulo">angles</ConceptLink>).

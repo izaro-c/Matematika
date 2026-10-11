@@ -2,13 +2,15 @@ export const metadata = {
   id: "cuadrilatero",
   lang: "en",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Quadrilateral",
-  description: "Planar four-sided polygon formed by the union of four line segments joining four coplanar points no three of which are collinear.",
+  description: "Plane figure formed by four segments joining cyclically four coplanar points, no three of them collinear and with disjoint non-adjacent sides.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "poligono", "cuadrilatero", "orden"],
   hasSimulation: true,
   sources: [
-    { title: "Elements", author: "Euclid", locator: "Book I, Definition 22", role: "primary" },
+    { title: "Elements", author: "Euclid", locator: "Book I, Definitions 19 and 22", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
   ]
 };
@@ -16,37 +18,66 @@ export const metadata = {
 import { Cuadrilatero } from '@content/diagrams/Definiciones/Cuadrilatero';
 export const Simulation = Cuadrilatero;
 
-<Capitular letra="A" /> quadrilateral is a four-sided <ConceptLink targetId="poligono">polygon</ConceptLink> in Euclidean planar geometry bounded by the union of four consecutive line <ConceptLink targetId="segmento">segments</ConceptLink>. It constitutes one of the foundational polygonal figures for studying geometric <ConceptLink targetId="congruencia">congruence</ConceptLink> and <ConceptLink targetId="teoria-medida-area">area</ConceptLink> decompositions in the <ConceptLink targetId="plano">plane</ConceptLink>.
+<Capitular letra="A" /> quadrilateral is the figure formed by four <ConceptLink targetId="segmento" isDependency={true}>segments</ConceptLink> joining cyclically four <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> of a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>, in such a way that no three of them are <ConceptLink targetId="colinealidad" isDependency={true}>collinear</ConceptLink> and non-consecutive sides do not meet.
 
-<Definicion title="">
-  Given four coplanar <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> <VisualBind element="vertices" color="musgo">$A, B, C, D$</VisualBind> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\mathcal{P}$ such that no three are collinear and the connecting segments intersect only at their endpoints, the quadrilateral <VisualBind element="poligono" color="musgo">$ABCD$</VisualBind> is defined by the union of its four <ConceptLink targetId="segmento" isDependency={true}>line segments</ConceptLink> <VisualBind element="lados" color="musgo">$\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$</VisualBind>:
-  $$
-  ABCD = \overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}
-  $$
-  The points $A, B, C, D$ are the <ConceptLink targetId="vertice">vertices</ConceptLink> and the segments <VisualBind element="diagonales" color="musgo">$\overline{AC}, \overline{BD}$</VisualBind> are the diagonals.
+It is the four-sided <ConceptLink targetId="poligono">polygon</ConceptLink> and the first one in which the distinction between convex and non-convex figures appears. Its special cases (<ConceptLink targetId="trapecio">trapezoid</ConceptLink>, <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink>, <ConceptLink targetId="rectangulo">rectangle</ConceptLink>, <ConceptLink targetId="rombo">rhombus</ConceptLink>, <ConceptLink targetId="cuadrado">square</ConceptLink>) are defined by relations of <ConceptLink targetId="paralelas">parallelism</ConceptLink> and <ConceptLink targetId="congruencia">congruence</ConceptLink> among its elements.
+
+<Definicion title="Definition of quadrilateral">
+Let <VisualBind element="vertices" color="terracota">$A, B, C, D$</VisualBind> be four <ConceptLink targetId="punto">points</ConceptLink> of a <ConceptLink targetId="plano">plane</ConceptLink> $\sigma$ such that no three of them are <ConceptLink targetId="colinealidad">collinear</ConceptLink> and the non-consecutive <ConceptLink targetId="segmento">segments</ConceptLink> are <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink>:
+
+$$
+\overline{AB} \cap \overline{CD} = \emptyset, \qquad \overline{BC} \cap \overline{DA} = \emptyset.
+$$
+
+The **quadrilateral** <VisualBind element="poligono" color="carbon">$ABCD$</VisualBind> is the set of its four <ConceptLink targetId="lado">sides</ConceptLink> <VisualBind element="lados" color="carbon">$\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$</VisualBind>, and its <ConceptLink targetId="traza">trace</ConceptLink> is their union:
+
+$$
+ABCD = \{\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}\}, \qquad \operatorname{tr}(ABCD) = \overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}.
+$$
+
+The points $A, B, C, D$ are the <ConceptLink targetId="vertice">vertices</ConceptLink>; the <ConceptLink targetId="angulo">angles</ConceptLink> <VisualBind element="angulos" color="ocre">$\angle DAB$, $\angle ABC$, $\angle BCD$, $\angle CDA$</VisualBind> are its angles, and the segments <VisualBind element="diagonales" color="pavo">$\overline{AC}$ and $\overline{BD}$</VisualBind> joining non-consecutive vertices are its <ConceptLink targetId="diagonal">diagonals</ConceptLink>.
+
+The quadrilateral is **convex** if, for each side, the other two vertices lie in the same <ConceptLink targetId="semiplano">half-plane</ConceptLink> with respect to the supporting <ConceptLink targetId="recta">line</ConceptLink> of that side; for instance, for $\overline{AB}$: $C, D \in \mathcal{H}_{\overleftrightarrow{AB}}(C)$.
 </Definicion>
 
-<Separador />
+### Classification
 
-### Structural classification
-
-Planar quadrilaterals are classified according to convexity and the <ConceptLink targetId="paralelas">parallelism</ConceptLink> relations among their sides:
-
-| Type | Characteristic geometric condition | Main subclasses |
+| Type | Condition | Validity |
 |---|---|---|
-| Convex | The two diagonals intersect at an interior point | <ConceptLink targetId="paralelogramo">Paralellogram</ConceptLink>, Trapezoid, Trapezium |
-| Concave | One diagonal lies entirely in the exterior | Dart (arrowhead) |
-| <ConceptLink targetId="paralelogramo">Parallelogram</ConceptLink> | Opposite sides parallel ($\overline{AB} \parallel \overline{CD} \land \overline{BC} \parallel \overline{DA}$) | Rectangle, Rhombus, <ConceptLink targetId="cuadrado">Square</ConceptLink> |
+| <ConceptLink targetId="trapecio">Trapezoid</ConceptLink> | At least one pair of opposite sides with parallel supporting lines | absolute |
+| <ConceptLink targetId="paralelogramo">Parallelogram</ConceptLink> | Both pairs of opposite sides with parallel supporting lines | absolute |
+| <ConceptLink targetId="rombo">Rhombus</ConceptLink> | Four congruent sides | absolute |
+| <ConceptLink targetId="rectangulo">Rectangle</ConceptLink> | Four right angles | Euclidean (does not exist in hyperbolic geometry) |
+| <ConceptLink targetId="cuadrado">Square</ConceptLink> | Four congruent sides and four right angles | Euclidean (does not exist in hyperbolic geometry) |
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Angular and decomposition properties">
-    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Interior angle sum">
-      The sum of the four interior angles of any convex quadrilateral is equal to $360^\circ$ ($2\pi\text{ rad}$).
+  <PropiedadesGrupo title="Order properties">
+    <PropiedadItem
+      id="convexidad-diagonales-cuadrilatero"
+      title="Convexity and diagonals"
+      formula="ABCD \text{ convex} \iff \operatorname{seg}(AC) \cap \operatorname{seg}(BD) \neq \emptyset"
+    >
+      A <ConceptLink targetId="cuadrilatero">quadrilateral</ConceptLink> is convex if and only if its two <ConceptLink targetId="diagonal">diagonals</ConceptLink> meet at a point interior to both. The proof uses only the <ConceptLink targetId="axioma-orden-4">order axioms</ConceptLink> and the <ConceptLink targetId="teorema-separacion-plano">plane separation</ConceptLink>; hence it holds in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-aditividad" title="Triangular decomposition">
-      Every convex quadrilateral is partitioned by a diagonal into two disjoint triangles: $\mu(ABCD) = \mu(\triangle ABC) + \mu(\triangle ACD)$.
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Euclidean properties">
+    <PropiedadItem
+      id="suma-angulos-cuadrilatero"
+      title="Angle sum"
+      formula="|\angle DAB| + |\angle ABC| + |\angle BCD| + |\angle CDA| = 360^\circ"
+    >
+      In a convex quadrilateral of the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink>, the sum of the <ConceptLink targetId="medida-angular">angle measures</ConceptLink> of its angles is $360^\circ$: the diagonal $\overline{AC}$ divides it into two triangles and the <ConceptLink targetId="teorema-suma-angulos-triangulo">angle sum theorem for triangles</ConceptLink> applies. In <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink> the sum is less than $360^\circ$.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="area-cuadrilatero-diagonal"
+      title="Decomposition by a diagonal"
+      formula="\operatorname{A}(ABCD) = \operatorname{A}(\triangle ABC) + \operatorname{A}(\triangle ACD)"
+    >
+      A diagonal of a convex quadrilateral decomposes it into two <ConceptLink targetId="triangulo">triangles</ConceptLink> with disjoint interiors; by <ConceptLink targetId="teorema-area-aditividad">additivity of area</ConceptLink>, the <ConceptLink targetId="teoria-medida-area">area</ConceptLink> of the <ConceptLink targetId="region-poligonal">polygonal region</ConceptLink> it bounds is the sum of the areas of both.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

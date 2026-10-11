@@ -2,55 +2,89 @@ export const metadata = {
   id: "circunferencia",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Circunferencia",
-  description: "Lugar geométrico de los puntos del plano que equidistan de un punto fijo denominado centro.",
+  description: "Conjunto de los puntos de un plano tales que el segmento que los une con un punto fijo, el centro, es congruente con un segmento dado.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "circunferencia", "congruencia"],
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 15", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definiciones 15–17", role: "primary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Capítulo 2", role: "formalization" }
   ]
 };
 
 import { Circunferencia } from '@content/diagrams/Definiciones/Circunferencia';
 export const Simulation = Circunferencia;
 
-<Capitular letra="L" />a circunferencia es el lugar geométrico unidimensional de todos los <ConceptLink targetId="punto">puntos</ConceptLink> de un plano que equidistan de un punto fijo denominado centro. Constituye la curva cerrada fundamental de la geometría plana, delimitando la región convexa bidimensional denominada disco o <VisualBind element="circulo" color="pavo">círculo</VisualBind>.
+<Capitular letra="L" />a circunferencia de centro $O$ que pasa por un punto $A$ es el conjunto de los <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> $P$ del <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> para los que el <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> $\overline{OP}$ es <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> con $\overline{OA}$.
 
-<Definicion title="">
-  Dado un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> <VisualBind element="centro" color="musgo">$O$</VisualBind> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\mathcal{P}$ y un número real $r > 0$, la circunferencia <VisualBind element="circunferencia" color="musgo">$\mathcal{C}(O, r)$</VisualBind> de centro $O$ y <VisualBind element="radio" color="pavo">radio</VisualBind> $r$ es el conjunto de puntos $P \in \mathcal{P}$ cuya distancia a $O$ es idéntica a $r$:
-  $$
-  \mathcal{C}(O, r) = \{ P \in \mathcal{P} \mid d(O, P) = r \}
-  $$
-  En coordenadas cartesianas sobre $\mathbb{R}^2$, con centro en $(x_0, y_0)$, se expresa mediante:
-  $$
-  (x - x_0)^2 + (y - y_0)^2 = r^2
-  $$
+La definición solo usa la congruencia de segmentos, sin números ni distancias, y por eso tiene sentido en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. Cuando se dispone de la <ConceptLink targetId="longitud">longitud</ConceptLink>, admite la descripción métrica habitual: puntos a distancia $r$ del centro.
+
+<Definicion title="Definición de circunferencia">
+Sean <VisualBind element="centro" color="terracota">$O$</VisualBind> y $A$ dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos de un <ConceptLink targetId="plano">plano</ConceptLink> $\sigma$. La **circunferencia** de centro $O$ por $A$ es
+
+$$
+\mathcal{C}(O, A) = \{\, P \in \operatorname{tr}(\sigma) \mid \overline{OP} \cong \overline{OA} \,\}.
+$$
+
+Cada segmento $\overline{OP}$ con $P \in \mathcal{C}(O, A)$ es un <VisualBind element="radio" color="carbon"><ConceptLink targetId="radio">radio</ConceptLink></VisualBind>. El **círculo** (o **disco**) <VisualBind element="circulo" color="pavo">$\mathcal{D}(O, A)$</VisualBind> es la región formada por la circunferencia y su <ConceptLink targetId="interior">interior</ConceptLink>, los puntos $P$ con $\overline{OP} < \overline{OA}$ (<ConceptLink targetId="orden-segmentos">orden de segmentos</ConceptLink>).
+
+**Versión métrica.** Si $r = |OA|$, la <VisualBind element="circunferencia" color="carbon">circunferencia</VisualBind> es $\mathcal{C}(O, r) = \{\, P \in \operatorname{tr}(\sigma) \mid |OP| = r \,\}$.
+
+**Versión analítica.** En el <ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink> $\mathbb{R}^2$, con centro $(x_0, y_0)$, es el conjunto de soluciones de
+
+$$
+(x - x_0)^2 + (y - y_0)^2 = r^2.
+$$
 </Definicion>
 
-<Separador />
+### Elementos
 
-### Elementos y posiciones relativas
-
-La geometría de la circunferencia involucra diversos elementos lineales y angulares:
-
-| Elemento | Definición geométrica | Expresión o propiedad |
-|---|---|---|
-| <VisualBind element="cuerda" color="ocre">Cuerda</VisualBind> | Segmento que une dos puntos de la curva | $\overline{AB} \text{ con } A, B \in \mathcal{C}$ |
-| <VisualBind element="diametro" color="terracota">Diámetro</VisualBind> | Cuerda máxima que pasa por el centro | $d = 2r$ |
-| <VisualBind element="arco" color="canela">Arco</VisualBind> | Porción continua de la circunferencia entre dos puntos | $\widehat{AB} \subset \mathcal{C}$ |
-| <VisualBind element="tangente" color="mora">Recta tangente</VisualBind> | Recta que interseca a la curva en un único punto | Ortogonal al radio en el punto de contacto |
+| Elemento | Definición |
+|---|---|
+| <VisualBind element="cuerda" color="ocre"><ConceptLink targetId="cuerda">Cuerda</ConceptLink></VisualBind> | Segmento $\overline{QR}$ cuyos extremos son puntos de la circunferencia |
+| <VisualBind element="diametro" color="terracota"><ConceptLink targetId="diametro">Diámetro</ConceptLink></VisualBind> | Cuerda que pasa por el centro; su longitud es $2r$ |
+| <VisualBind element="arco" color="musgo"><ConceptLink targetId="arco">Arco</ConceptLink></VisualBind> | Parte de la circunferencia comprendida entre dos de sus puntos y situada en uno de los semiplanos de la cuerda |
+| <VisualBind element="tangente" color="ocre"><ConceptLink targetId="recta-tangente">Recta tangente</ConceptLink></VisualBind> | Recta del plano con un único punto común con la circunferencia |
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Métricas y simetría">
-    <PropiedadItem id="axioma-arquimedes" title="Perímetro y constante $\pi$">
-      La longitud perimetral de la curva cerrada satisface la relación $P = 2\pi r$.
+  <PropiedadesGrupo title="Propiedades absolutas">
+    <PropiedadItem
+      id="interseccion-recta-circunferencia"
+      title="Corte con una recta"
+      formula="\lvert \operatorname{tr}(\ell) \cap \mathcal{C}(O, A) \rvert \leq 2"
+    >
+      Una <ConceptLink targetId="recta">recta</ConceptLink> corta a una circunferencia en a lo sumo dos puntos: si hubiera tres, $O$ formaría con dos pares de ellos <ConceptLink targetId="triangulo-isosceles">triángulos isósceles</ConceptLink> con ángulos en la base congruentes, en contradicción con el <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink>. Si la recta pasa por un punto interior, la corta exactamente en dos puntos; esta existencia se prueba con el <ConceptLink targetId="axioma-completitud">axioma de completitud</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-aditividad" title="Área del disco">
-      La medida del área del disco delimitado por la circunferencia es $\mu(D) = \pi r^2$.
+
+    <PropiedadItem
+      id="tangente-perpendicular-radio"
+      title="Tangente y radio"
+      formula="\ell \text{ tangente en } T \iff \ell \perp \overleftrightarrow{OT}"
+    >
+      Una recta que pasa por un punto $T$ de la circunferencia es tangente en $T$ si y solo si es <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> al radio $\overline{OT}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Propiedades analíticas">
+    <PropiedadItem
+      id="longitud-circunferencia"
+      title="Longitud"
+      formula="L = 2\pi r"
+    >
+      La <ConceptLink targetId="longitud-curva">longitud</ConceptLink> de la circunferencia, definida como supremo de los perímetros de los polígonos inscritos, es $2\pi r$; la razón entre la longitud y el diámetro es el <ConceptLink targetId="numero-pi">número $\pi$</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="area-circulo"
+      title="Área del círculo"
+      formula="\operatorname{A}(\mathcal{D}(O, r)) = \pi r^2"
+    >
+      El círculo no es una <ConceptLink targetId="region-poligonal">región poligonal</ConceptLink>: su <ConceptLink targetId="teoria-medida-area">área</ConceptLink> se obtiene como límite de áreas de polígonos inscritos y circunscritos, por el <ConceptLink targetId="metodo-exhaucion">método de exhaución</ConceptLink> de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink>, y vale $\pi r^2$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

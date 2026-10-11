@@ -13,15 +13,37 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
   "grid": false,
   "showLabels": true,
   "viewport": {
-    "bounds": [-8, 12, 13, -8],
-    "home": [-8, 12, 13, -8],
+    "bounds": [
+      -8,
+      12,
+      13,
+      -8
+    ],
+    "home": [
+      -8,
+      12,
+      13,
+      -8
+    ],
     "minZoom": 0.2,
     "maxZoom": 10,
     "padding": 0.16
   },
   "layers": [
-    { "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false },
-    { "id": "annotations", "label": "Anotaciones", "order": 1, "visible": true, "locked": false }
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Anotaciones",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
   ],
   "groups": [],
   "objects": [
@@ -34,13 +56,28 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Punto C (Ángulo recto)", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto C (Ángulo recto)",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "pC",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 0, "y": 0 },
-      "mobility": { "type": "fixed" },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "pA",
@@ -51,13 +88,29 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Punto A", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto A",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "pA",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 0, "y": 4 },
-      "mobility": { "type": "axis-y", "coordinate": 4 },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 4
+      },
+      "mobility": {
+        "type": "axis-y",
+        "coordinate": 0
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -68,50 +121,29 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Punto B", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto B",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "pB",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 5, "y": 0 },
-      "mobility": { "type": "axis-x", "coordinate": 5 },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
-    },
-    {
-      "id": "polyABC",
-      "label": "Triángulo ABC",
-      "color": "granada",
-      "layerId": "geometry",
-      "order": 5,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Triángulo rectángulo principal ABC", "role": "primary" },
-      "target": true,
-      "targetId": "polyABC",
-      "objectType": "path",
-      "geometry": {
-        "type": "polygon",
-        "points": ["pC", "pB", "pA"]
+      "definition": {
+        "type": "coordinates",
+        "x": 5,
+        "y": 0
       },
-      "appearance": { "fillOpacity": 0.1, "strokeWidth": 2.5, "preserveColorOnHighlight": true }
-    },
-    {
-      "id": "rightAngle",
-      "label": "Ángulo recto",
-      "color": "carbon",
-      "layerId": "geometry",
-      "order": 10,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Ángulo recto en C", "role": "secondary" },
-      "target": true,
-      "targetId": "rightAngle",
-      "objectType": "angle",
-      "points": ["pB", "pC", "pA"],
-      "sweep": "non-reflex",
-      "marker": "arc",
-      "appearance": { "radius": 0.8, "preserveColorOnHighlight": true }
+      "mobility": {
+        "type": "axis-x",
+        "coordinate": 0
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "pK",
@@ -122,13 +154,28 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Punto K", "role": "secondary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto K",
+        "role": "secondary"
+      },
       "target": true,
       "targetId": "pK",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": -4, "y": 4 },
-      "mobility": { "type": "fixed" },
-      "appearance": { "size": 5, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": -4,
+        "y": 4
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "pH",
@@ -139,30 +186,23 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": false,
       "locked": true,
       "groupIds": [],
-      "selection": { "selectable": false, "ariaLabel": "Punto H", "role": "construction" },
+      "selection": {
+        "selectable": false,
+        "ariaLabel": "Punto H",
+        "role": "construction"
+      },
       "target": false,
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": -4, "y": 0 },
-      "mobility": { "type": "fixed" }
-    },
-    {
-      "id": "sqB",
-      "label": "Cuadrado b²",
-      "color": "canela",
-      "layerId": "geometry",
-      "order": 6,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Cuadrado construido sobre el cateto b", "role": "primary" },
-      "target": true,
-      "targetId": "sqB",
-      "objectType": "path",
-      "geometry": {
-        "type": "polygon",
-        "points": ["pC", "pA", "pK", "pH"]
+      "definition": {
+        "type": "coordinates",
+        "x": -4,
+        "y": 0
       },
-      "appearance": { "fillOpacity": 0.15, "strokeWidth": 2, "preserveColorOnHighlight": true }
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "pF",
@@ -173,13 +213,28 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Punto F", "role": "secondary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto F",
+        "role": "secondary"
+      },
       "target": true,
       "targetId": "pF",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 5, "y": -5 },
-      "mobility": { "type": "fixed" },
-      "appearance": { "size": 5, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 5,
+        "y": -5
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "pG",
@@ -190,30 +245,23 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": false,
       "locked": true,
       "groupIds": [],
-      "selection": { "selectable": false, "ariaLabel": "Punto G", "role": "construction" },
+      "selection": {
+        "selectable": false,
+        "ariaLabel": "Punto G",
+        "role": "construction"
+      },
       "target": false,
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 0, "y": -5 },
-      "mobility": { "type": "fixed" }
-    },
-    {
-      "id": "sqA",
-      "label": "Cuadrado a²",
-      "color": "terracota",
-      "layerId": "geometry",
-      "order": 7,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Cuadrado construido sobre el cateto a", "role": "primary" },
-      "target": true,
-      "targetId": "sqA",
-      "objectType": "path",
-      "geometry": {
-        "type": "polygon",
-        "points": ["pC", "pB", "pF", "pG"]
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": -5
       },
-      "appearance": { "fillOpacity": 0.15, "strokeWidth": 2, "preserveColorOnHighlight": true }
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "pD",
@@ -224,13 +272,28 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Punto D", "role": "secondary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto D",
+        "role": "secondary"
+      },
       "target": true,
       "targetId": "pD",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 4, "y": 9 },
-      "mobility": { "type": "fixed" },
-      "appearance": { "size": 5, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 4,
+        "y": 9
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "pE",
@@ -241,32 +304,28 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Punto E", "role": "secondary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto E",
+        "role": "secondary"
+      },
       "target": true,
       "targetId": "pE",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 9, "y": 5 },
-      "mobility": { "type": "fixed" },
-      "appearance": { "size": 5, "labelVisible": true, "preserveColorOnHighlight": true }
-    },
-    {
-      "id": "sqC",
-      "label": "Cuadrado c²",
-      "color": "mora",
-      "layerId": "geometry",
-      "order": 8,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Cuadrado construido sobre la hipotenusa c", "role": "primary" },
-      "target": true,
-      "targetId": "sqC",
-      "objectType": "path",
-      "geometry": {
-        "type": "polygon",
-        "points": ["pA", "pB", "pE", "pD"]
+      "definition": {
+        "type": "coordinates",
+        "x": 9,
+        "y": 5
       },
-      "appearance": { "fillOpacity": 0.15, "strokeWidth": 2, "preserveColorOnHighlight": true }
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 5,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "pL",
@@ -277,13 +336,28 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Punto L (Pie de la altura)", "role": "construction" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto L (Pie de la altura)",
+        "role": "construction"
+      },
       "target": true,
       "targetId": "pL",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 1.95, "y": 2.44 },
-      "mobility": { "type": "fixed" },
-      "appearance": { "size": 4, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 1.95,
+        "y": 2.44
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 4,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "pM",
@@ -294,13 +368,184 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Punto M", "role": "construction" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto M",
+        "role": "construction"
+      },
       "target": true,
       "targetId": "pM",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 5.85, "y": 7.32 },
-      "mobility": { "type": "fixed" },
-      "appearance": { "size": 4, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 5.85,
+        "y": 7.32
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 4,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "polyABC",
+      "label": "Triángulo ABC",
+      "color": "granada",
+      "layerId": "geometry",
+      "order": 5,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo rectángulo principal ABC",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "polyABC",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pC",
+          "pB",
+          "pA"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.5,
+        "fillOpacity": 0.1,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "rightAngle",
+      "label": "Ángulo recto",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo recto en C",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "rightAngle",
+      "objectType": "angle",
+      "points": [
+        "pB",
+        "pC",
+        "pA"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.8,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "sqB",
+      "label": "Cuadrado b²",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 6,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Cuadrado construido sobre el cateto b",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "sqB",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pC",
+          "pA",
+          "pK",
+          "pH"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2,
+        "fillOpacity": 0.15,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "sqA",
+      "label": "Cuadrado a²",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 7,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Cuadrado construido sobre el cateto a",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "sqA",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pC",
+          "pB",
+          "pF",
+          "pG"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2,
+        "fillOpacity": 0.15,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "sqC",
+      "label": "Cuadrado c²",
+      "color": "mora",
+      "layerId": "geometry",
+      "order": 8,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Cuadrado construido sobre la hipotenusa c",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "sqC",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA",
+          "pB",
+          "pE",
+          "pD"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2,
+        "fillOpacity": 0.15,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "altSegment",
@@ -311,15 +556,26 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Segmento de la altura prolongado", "role": "secondary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento de la altura prolongado",
+        "role": "secondary"
+      },
       "target": true,
       "targetId": "altSegment",
       "objectType": "path",
       "geometry": {
         "type": "segment",
-        "points": ["pC", "pM"]
+        "points": [
+          "pC",
+          "pM"
+        ]
       },
-      "appearance": { "dashed": true, "strokeWidth": 2, "preserveColorOnHighlight": true }
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "rectADML",
@@ -330,15 +586,28 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Rectángulo ADML (Equivalente a b²)", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Rectángulo ADML (Equivalente a b²)",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "rectADML",
       "objectType": "path",
       "geometry": {
         "type": "polygon",
-        "points": ["pA", "pD", "pM", "pL"]
+        "points": [
+          "pA",
+          "pD",
+          "pM",
+          "pL"
+        ]
       },
-      "appearance": { "fillOpacity": 0.2, "strokeWidth": 2, "preserveColorOnHighlight": true }
+      "appearance": {
+        "strokeWidth": 2,
+        "fillOpacity": 0.2,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "rectBEML",
@@ -349,15 +618,28 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Rectángulo BEML (Equivalente a a²)", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Rectángulo BEML (Equivalente a a²)",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "rectBEML",
       "objectType": "path",
       "geometry": {
         "type": "polygon",
-        "points": ["pB", "pE", "pM", "pL"]
+        "points": [
+          "pB",
+          "pE",
+          "pM",
+          "pL"
+        ]
       },
-      "appearance": { "fillOpacity": 0.2, "strokeWidth": 2, "preserveColorOnHighlight": true }
+      "appearance": {
+        "strokeWidth": 2,
+        "fillOpacity": 0.2,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
   "relations": [],
@@ -366,56 +648,123 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "id": "triangulo",
       "label": "Triángulo rectángulo base",
       "description": "Partimos de un triángulo rectángulo ABC con ángulo recto en C.",
-      "visibleTargets": ["polyABC", "pC", "pA", "pB"],
+      "visibleTargets": [
+        "polyABC",
+        "pC",
+        "pA",
+        "pB"
+      ],
       "durationMs": 1000
     },
     {
       "id": "cuadrados",
       "label": "Construcción de los tres cuadrados",
       "description": "Se construyen cuadrados sobre los catetos (a² y b²) y sobre la hipotenusa (c²).",
-      "visibleTargets": ["sqA", "sqB", "sqC"],
+      "visibleTargets": [
+        "polyABC",
+        "pC",
+        "pA",
+        "pB",
+        "sqA",
+        "sqB",
+        "sqC"
+      ],
       "durationMs": 1000
     },
     {
       "id": "altura",
       "label": "Trazado de la altura",
       "description": "La recta perpendicular a la hipotenusa que pasa por C divide el cuadrado c² en dos rectángulos.",
-      "visibleTargets": ["altSegment", "rectADML", "rectBEML"],
+      "visibleTargets": [
+        "polyABC",
+        "pC",
+        "pA",
+        "pB",
+        "sqA",
+        "sqB",
+        "sqC",
+        "altSegment",
+        "rectADML",
+        "rectBEML"
+      ],
       "durationMs": 1000
     },
     {
       "id": "triangulos-izq",
       "label": "Congruencia izquierda (ACD ≅ AKB)",
       "description": "Los triángulos ACD y AKB son congruentes por el criterio LAL, teniendo igual área.",
-      "visibleTargets": ["sqB", "rectADML"],
+      "visibleTargets": [
+        "polyABC",
+        "pC",
+        "pA",
+        "pB",
+        "sqB",
+        "rectADML",
+        "altSegment"
+      ],
       "durationMs": 1000
     },
     {
       "id": "areas-izq",
       "label": "Igualdad de área: Cuadrado b² = Rectángulo ADML",
       "description": "El área del triángulo AKB es la mitad del cuadrado b², y el área de ACD es la mitad del rectángulo ADML.",
-      "visibleTargets": ["sqB", "rectADML"],
+      "visibleTargets": [
+        "polyABC",
+        "pC",
+        "pA",
+        "pB",
+        "sqB",
+        "rectADML",
+        "altSegment"
+      ],
       "durationMs": 1000
     },
     {
       "id": "triangulos-der",
       "label": "Congruencia derecha (BCE ≅ ABF)",
       "description": "De forma análoga, los triángulos BCE y ABF son congruentes por LAL.",
-      "visibleTargets": ["sqA", "rectBEML"],
+      "visibleTargets": [
+        "polyABC",
+        "pC",
+        "pA",
+        "pB",
+        "sqA",
+        "rectBEML",
+        "altSegment"
+      ],
       "durationMs": 1000
     },
     {
       "id": "areas-der",
       "label": "Igualdad de área: Cuadrado a² = Rectángulo BEML",
       "description": "El cuadrado a² tiene la misma área que el rectángulo BEML.",
-      "visibleTargets": ["sqA", "rectBEML"],
+      "visibleTargets": [
+        "polyABC",
+        "pC",
+        "pA",
+        "pB",
+        "sqA",
+        "rectBEML",
+        "altSegment"
+      ],
       "durationMs": 1000
     },
     {
       "id": "cuadrados-final",
       "label": "Conclusión: a² + b² = c²",
       "description": "Sumando ambas áreas, el cuadrado sobre la hipotenusa c² es la suma de los cuadrados sobre los catetos a² + b².",
-      "visibleTargets": ["sqA", "sqB", "sqC", "rectADML", "rectBEML"],
+      "visibleTargets": [
+        "polyABC",
+        "pC",
+        "pA",
+        "pB",
+        "sqA",
+        "sqB",
+        "sqC",
+        "rectADML",
+        "rectBEML",
+        "altSegment"
+      ],
       "durationMs": 1000
     }
   ],
@@ -437,9 +786,63 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
           "label": "Altueraren lerroa",
           "description": "C-tik igarotzen den hipotenusarekiko zutak c² karratua bi angeluzuzenetan banatzen du."
         },
+        "triangulos-izq": {
+          "label": "Ezkerreko kongruentzia (ACD ≅ AKB)",
+          "description": "ACD eta AKB triangeluak kongruenteak dira LAL irizpideagatik, azalera bera izanik."
+        },
+        "areas-izq": {
+          "label": "Azalera-berdintasuna: b² karratua = ADML angeluzuzena",
+          "description": "AKB triangeluaren azalera b² karratuaren erdia da, eta ACD-ren azalera ADML angeluzuzenaren erdia."
+        },
+        "triangulos-der": {
+          "label": "Eskuineko kongruentzia (BCE ≅ ABF)",
+          "description": "Modu analogoan, BCE eta ABF triangeluak kongruenteak dira LAL bidez."
+        },
+        "areas-der": {
+          "label": "Azalera-berdintasuna: a² karratua = BEML angeluzuzena",
+          "description": "a² karratuak BEML angeluzuzenaren azalera bera du."
+        },
         "cuadrados-final": {
           "label": "Ondorioa: a² + b² = c²",
           "description": "Bi azalerak batuz, hipotenusaren gaineko karratua katetoen gaineko karratuen batura da."
+        }
+      }
+    },
+    "en": {
+      "title": "Pythagorean Theorem: Euclid's Proof",
+      "note": "Interact with the steps to explore the proof from Book I (Proposition 47) of Euclid's Elements.",
+      "steps": {
+        "triangulo": {
+          "label": "Base right triangle",
+          "description": "We start with a right triangle ABC with right angle at C."
+        },
+        "cuadrados": {
+          "label": "Construction of the three squares",
+          "description": "Squares are constructed on the legs (a² and b²) and on the hypotenuse (c²)."
+        },
+        "altura": {
+          "label": "Drawing the altitude",
+          "description": "The perpendicular to the hypotenuse passing through C divides the square c² into two rectangles."
+        },
+        "triangulos-izq": {
+          "label": "Left congruence (ACD ≅ AKB)",
+          "description": "Triangles ACD and AKB are congruent by SAS, thus having equal area."
+        },
+        "areas-izq": {
+          "label": "Equal area: Square b² = Rectangle ADML",
+          "description": "The area of triangle AKB is half of square b², and the area of ACD is half of rectangle ADML."
+        },
+        "triangulos-der": {
+          "label": "Right congruence (BCE ≅ ABF)",
+          "description": "Similarly, triangles BCE and ABF are congruent by SAS."
+        },
+        "areas-der": {
+          "label": "Equal area: Square a² = Rectangle BEML",
+          "description": "Square a² has the same area as rectangle BEML."
+        },
+        "cuadrados-final": {
+          "label": "Conclusion: a² + b² = c²",
+          "description": "Summing both areas, the square on the hypotenuse c² is the sum of the squares on legs a² + b²."
         }
       }
     }

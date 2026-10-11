@@ -1,71 +1,79 @@
 export const metadata = {
-  "id": "demo-area-rectangulo",
-  "type": "demostracion",
-  "title": "Demostración: Teorema del área del rectángulo",
-  "description": "Demostración axiomática por subdivisión en cuadrados unitarios y extensión por densidad a dimensiones irracionales, fundamentada en la teoría de la medida de Hilbert.",
-  "parentTheorem": "teorema-area-rectangulo",
-  "lang": "es",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides", "hilbert"],
-  "tags": ["geometria", "areas", "rectangulo", "medida"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementos", "author": "Euclides", "locator": "Libro I, Proposición 35", "role": "primary" },
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "locator": "Capítulo V, §22", "role": "secondary" }
+  id: "demo-area-rectangulo",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema del área del rectángulo",
+  description: "Demostración en tres etapas: lados enteros (cuadrados unidad), lados racionales (cuadrados de lado 1/N) y lados reales, encerrando el área entre aproximaciones por defecto y por exceso mediante la monotonía del área y el axioma de Arquímedes.",
+  parentTheorem: "teorema-area-rectangulo",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["area", "rectangulo", "longitud", "arquimedes"],
+  layout: "split",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Capítulo 5", role: "formalization" }
   ]
 };
 
 <DemonstrationSection>
 
-<Capitular letra="L" />a fórmula del área del <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectángulo</ConceptLink> se deduce en tres etapas sucesivas que garantizan su validez para longitudes racionales e irracionales.
+<Capitular letra="D" />emostración <ConceptLink targetId="metodo-directo" isDependency={true}>directa</ConceptLink> del <ConceptLink targetId="teorema-area-rectangulo">teorema del área del rectángulo</ConceptLink>: se prueba primero que el área de un <ConceptLink targetId="rectangulo" isDependency={true}>rectángulo</ConceptLink> solo depende de las <ConceptLink targetId="longitud" isDependency={true}>longitudes</ConceptLink> de sus lados y es aditiva en cada una de ellas; de ahí se obtiene la fórmula para lados enteros, después para lados racionales y, por último, para lados reales mediante el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink>.
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} title="Normalización: el cuadrado unitario">
-Se fija axiomáticamente el cuadrado de lado $1$ como unidad de referencia:
-
-<Formula>
-  $$ \text{Área}(\text{cuadrado unitario}) = 1 $$
-</Formula>
-
-Esta convención queda garantizada por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>axioma de aditividad del área</ConceptLink>, que asigna valor $1$ al cuadrado unidad.
+<ProofStep number={1} title="El área solo depende de las longitudes de los lados">
+Sean $ABCD$ y $A'B'C'D'$ dos <ConceptLink targetId="rectangulo" isDependency={true}>rectángulos</ConceptLink> con $|AB| = |A'B'| = b$ y $|AD| = |A'D'| = h$. Los <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulos rectángulos</ConceptLink> $\triangle DAB$ y $\triangle D'A'B'$ tienen <ConceptLink targetId="angulo-recto" isDependency={true}>ángulos rectos</ConceptLink> en $A$ y $A'$ y catetos congruentes, luego $\triangle DAB \cong \triangle D'A'B'$ por el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>criterio LAL</ConceptLink>; lo mismo ocurre con $\triangle BCD$ y $\triangle B'C'D'$. Cada rectángulo es la unión de sus dos triángulos, de interiores disjuntos, así que la invariancia por congruencia y la aditividad de la <ConceptLink targetId="teoria-medida-area" isDependency={true}>función área</ConceptLink> dan $\operatorname{A}(ABCD) = \operatorname{A}(A'B'C'D')$. Podemos escribir, pues, $f(b, h)$ para el área de cualquier rectángulo de lados contiguos de longitudes $b$ y $h$.
 </ProofStep>
 
-<ProofStep number={2} title="Dimensiones enteras">
-Sea $R$ un rectángulo de base $m \in \mathbb{N}$ y altura $n \in \mathbb{N}$. Se divide $R$ en $m \times n$ cuadrados unitarios mediante <ConceptLink targetId="paralelas" isDependency={true}>rectas paralelas</ConceptLink> equidistantes. Por aditividad:
+<ProofStep number={2} title="Aditividad en cada lado">
+Sea $b = b_1 + b_2$ con $b_1, b_2 > 0$. Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink> existen $E \in \operatorname{seg}(AB)$ y $F \in \operatorname{seg}(DC)$ con $|AE| = |DF| = b_1$; como $\overline{AE}$ y $\overline{DF}$ son congruentes y están en rectas <ConceptLink targetId="paralelas" isDependency={true}>paralelas</ConceptLink>, $AEFD$ y $EBCF$ son rectángulos (<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink>) que solo comparten el <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> $\overline{EF}$. Por la <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>aditividad del área</ConceptLink>, y con el mismo argumento para el otro lado,
 
-<Formula>
-  $$ \text{Área}(R) = m \cdot n \cdot 1 = m \cdot n $$
-</Formula>
+$$
+f(b_1 + b_2, h) = f(b_1, h) + f(b_2, h), \qquad f(b, h_1 + h_2) = f(b, h_1) + f(b, h_2)
+$$
 </ProofStep>
 
-<ProofStep number={3} title="Dimensiones racionales">
-Sea $b = \frac{p}{q}$ y $h = \frac{m}{n}$ con $p, q, m, n \in \mathbb{N}$. Se subdivide cada lado en fracciones de longitud $\frac{1}{q}$ y $\frac{1}{n}$ respectivamente. Los $p \cdot m$ subcuadrados obtenidos tienen lado $\frac{1}{q \cdot n}$ y, por el caso entero aplicado al rectángulo de dimensiones $q \cdot n \times 1$, cada subcuadrado tiene área $\frac{1}{q^2 n^2}$. Por tanto:
+<ProofStep number={3} title="Lados enteros">
+Aplicando reiteradamente el paso anterior, para $m, n \in \mathbb{N}$ y $x, y > 0$ se tiene $f(m x, n y) = m \cdot n \cdot f(x, y)$: el rectángulo de lados $m x$ y $n y$ se divide en $m \cdot n$ rectángulos de lados $x$ e $y$. Con $x = y = 1$ y la normalización $f(1, 1) = 1$ del <ConceptLink targetId="cuadrado" isDependency={true}>cuadrado</ConceptLink> unidad, el rectángulo se divide en $m \cdot n$ cuadrados unidad y
 
-<Formula>
-  $$ \text{Área}(R) = p \cdot m \cdot \frac{1}{q \cdot n} \cdot \frac{1}{q \cdot n} \cdot q \cdot n = \frac{p}{q} \cdot \frac{m}{n} = b \cdot h $$
-</Formula>
+$$
+f(m, n) = m \cdot n
+$$
 </ProofStep>
 
-<ProofStep number={4} title="Extensión a reales por densidad y axioma de Arquímedes">
-Para $b, h \in \mathbb{R}^+$ irracionales, se construyen sucesiones de racionales $(b_k)_{k \geq 1} \nearrow b$ y $(h_k)_{k \geq 1} \nearrow h$. Por el <ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink> y la monotonía de la medida de área:
+<ProofStep number={4} title="Lados racionales">
+Sean $b = p/q$ y $h = m/n$ con $p, q, m, n \in \mathbb{N}$, y sea $N = q n$. Por las propiedades de la <ConceptLink targetId="longitud" isDependency={true}>longitud</ConceptLink>, que se apoyan en los axiomas de continuidad (<ConceptLink targetId="axioma-arquimedes" isDependency={true}>Axioma V.1</ConceptLink> y <ConceptLink targetId="axioma-completitud" isDependency={true}>Axioma V.2</ConceptLink>), existe un segmento de longitud $1/N$. El cuadrado unidad se divide en $N^2$ cuadrados de lado $1/N$, luego $1 = N^2 f(1/N, 1/N)$ y cada uno tiene área $1/N^2$. Como $b = (p n)/N$ y $h = (m q)/N$, el rectángulo se divide en $(p n) \cdot (m q)$ cuadrados de lado $1/N$, de modo que
 
-<Formula>
-  $$ \text{Área}(R) = \lim_{k \to \infty} b_k \cdot h_k = b \cdot h $$
-</Formula>
-
-La unicidad de este límite garantiza que no existe otra función de área continua y aditiva que asigne valor distinto al rectángulo.
+$$
+f(b, h) = \frac{(p n)(m q)}{(q n)^2} = \frac{p}{q} \cdot \frac{m}{n} = b \cdot h
+$$
 </ProofStep>
 
-<Separador />
+<ProofStep number={5} title="Monotonía">
+Si $0 < b' \leq b$ y $0 < h' \leq h$, por el paso 2 el rectángulo de lados $b, h$ se descompone en el de lados $b', h'$ y, a lo sumo, otros dos rectángulos; por la positividad del área,
 
-### Análisis deductivo
+$$
+f(b', h') \leq f(b, h)
+$$
+
+(es un caso de la <ConceptLink targetId="monotonia-area">monotonía del área</ConceptLink>).
+</ProofStep>
+
+<ProofStep number={6} title="Lados reales: aproximación por defecto y por exceso">
+Sean $b, h > 0$ arbitrarios y $k \in \mathbb{N}$. Por la propiedad arquimediana (<ConceptLink targetId="axioma-arquimedes" isDependency={true}>axioma de Arquímedes</ConceptLink>), existe un mayor entero $j \geq 0$ con $j/k \leq b$, y análogamente un mayor entero $i \geq 0$ con $i/k \leq h$; sean $b_k = j/k$ y $h_k = i/k$, de modo que $b_k \leq b < b_k + 1/k$ y $h_k \leq h < h_k + 1/k$. Para $k$ suficientemente grande, $b_k, h_k > 0$. Por los pasos 4 y 5 (los extremos son racionales), $f(b, h)$ y $b \cdot h$ están ambos en el intervalo $[\, b_k h_k,\ (b_k + 1/k)(h_k + 1/k) \,]$, cuya longitud es
+
+$$
+\left(b_k + \tfrac{1}{k}\right)\left(h_k + \tfrac{1}{k}\right) - b_k h_k = \frac{b_k + h_k}{k} + \frac{1}{k^2} \leq \frac{b + h + 1}{k}
+$$
+
+Así, $|f(b, h) - b \cdot h| \leq (b + h + 1)/k$ para todo $k$ suficientemente grande. Si fuera $f(b, h) \neq b \cdot h$, la propiedad arquimediana daría un $k$ con $(b + h + 1)/k < |f(b, h) - b \cdot h|$, lo cual es absurdo. Por tanto, $\operatorname{A}(ABCD) = f(b, h) = b \cdot h$.
+</ProofStep>
 
 <Nota>
-  La demostración ilustra el método clásico de <em>exhausción</em> de Eudoxo, reelaborado en lenguaje axiomático por Hilbert. La extensión del resultado de racionales a reales usa esencialmente la propiedad arquimediana del orden.
+El último paso es una versión del método de exhaución de <ConceptLink targetId="eudoxo">Eudoxo</ConceptLink>, que <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink> empleó sistemáticamente: una magnitud se determina encerrándola entre aproximaciones por defecto y por exceso cuya diferencia puede hacerse menor que cualquier cantidad dada. Sin el <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink>, Hilbert desarrolla igualmente la teoría del área (capítulo IV), pero con valores en un cuerpo de segmentos y no en $\mathbb{R}$.
 </Nota>
 
 </DemonstrationSection>

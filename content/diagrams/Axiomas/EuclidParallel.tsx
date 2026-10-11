@@ -200,7 +200,17 @@ export const EuclidParallelSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra el punto P"
+  "note": "Arrastra el punto P para verificar que solo existe una recta paralela que pasa por él.",
+  "translations": {
+    "eu": {
+      "title": "Euklidesen paraleloen axioma",
+      "note": "Arrastatu P puntua bertatik igarotzen den zuzen paralelo bakarra dagoela egiaztatzeko."
+    },
+    "en": {
+      "title": "Euclid's Parallel Postulate",
+      "note": "Drag point P to verify that there is a unique parallel line passing through it."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

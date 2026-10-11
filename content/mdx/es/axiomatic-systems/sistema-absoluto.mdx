@@ -3,8 +3,10 @@ export const metadata = {
   lang: "es",
   type: "sistema-axiomatico",
   title: "Sistema de geometría absoluta",
-  description: "Estructura axiomática fundada por János Bolyai y David Hilbert que reúne los axiomas de incidencia, orden, congruencia y continuidad sin postulado de paralelas.",
+  description: "Sistema axiomático formado por los grupos de incidencia, orden, congruencia y continuidad de Hilbert, sin ningún axioma de paralelas: el núcleo común de las geometrías euclidiana e hiperbólica.",
   branch: "51M",
+  branches: ["51M", "51A", "03B"],
+  tags: ["geometria-absoluta", "geometria-neutral", "hilbert", "fundamentos"],
   axiomas: [
     "axioma-incidencia-1",
     "axioma-incidencia-2",
@@ -34,38 +36,55 @@ export const metadata = {
   hasSimulation: false,
   sources: [
     { title: "Appendix scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "1832", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulos I-V", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §2–§6 y §8", role: "primary" }
   ]
 };
 
-<Capitular letra="E" />l sistema de geometría absoluta —denominado asimismo *geometría neutral*— comprende el núcleo deductivo común a las geometrías euclidiana e hiperbólica. Fundamentado en las investigaciones de <ConceptLink targetId="bolyai">János Bolyai</ConceptLink>, <ConceptLink targetId="lobachevski">Nikolái Lobachevski</ConceptLink> y sistematizado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, reúne todos los axiomas sintéticos de incidencia, ordenación, congruencia y continuidad, omitiendo deliberadamente cualquier hipótesis sobre el paralelismo.
+<Capitular letra="E" />l **sistema de geometría absoluta**, también llamado *geometría neutral*, es el <ConceptLink targetId="sistema-axiomatico">sistema axiomático</ConceptLink> formado por los grupos I (<ConceptLink targetId="sistema-incidencia">incidencia</ConceptLink>), II (<ConceptLink targetId="estar-entre">orden</ConceptLink>), III (<ConceptLink targetId="congruencia">congruencia</ConceptLink>) y V (<ConceptLink targetId="continuidad">continuidad</ConceptLink>) de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, sin ningún <ConceptLink targetId="axioma">axioma</ConceptLink> sobre las <ConceptLink targetId="paralelas">paralelas</ConceptLink>. Todo <ConceptLink targetId="teorema">teorema</ConceptLink> que se demuestra en él es válido a la vez en la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink> y en la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>.
+
+El nombre procede de <ConceptLink targetId="bolyai">János Bolyai</ConceptLink>, que en su *Appendix* (1832) llamó «ciencia absoluta del espacio» a la parte de la geometría que no depende del quinto postulado de <ConceptLink targetId="euclides">Euclides</ConceptLink>. <ConceptLink targetId="lobachevski">Nikolái Lobachevski</ConceptLink> desarrolló esa misma parte como base de su geometría, y Hilbert le dio forma axiomática completa en los *Grundlagen der Geometrie*.
+
+<Definicion title="Estructura formal">
+  Una **estructura de geometría absoluta** es una <ConceptLink targetId="estructura-geometrica">estructura</ConceptLink> sobre la <ConceptLink targetId="signatura">signatura</ConceptLink> de Hilbert
+  $$
+  \mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi; \ \mathbf{I}, \ *, \ \cong_{\mathrm{seg}}, \ \cong_{\angle})
+  $$
+  con <ConceptLink targetId="dominio">dominios</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntos</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">rectas</ConceptLink> $\mathcal{L}$ y <ConceptLink targetId="plano">planos</ConceptLink> $\Pi$, la relación de <ConceptLink targetId="incidencia">incidencia</ConceptLink> $\mathbf{I}$, la relación ternaria <ConceptLink targetId="estar-entre">estar entre</ConceptLink> ($A * B * C$) y las relaciones de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> y de <ConceptLink targetId="angulo">ángulos</ConceptLink>, que satisface la teoría
+  $$
+  \mathcal{T}_{\text{abs}} = \mathrm{I} \cup \mathrm{II} \cup \mathrm{III} \cup \mathrm{V}
+  $$
+  Ni el <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink> ni su negación pertenecen a $\mathcal{T}_{\text{abs}}$.
+</Definicion>
 
 <Separador />
 
-### Grupos axiomáticos constitutivos
+### Grupos de axiomas
 
-La geometría absoluta se articula sobre cuatro pilares axiomáticos fundamentales:
-
-1. **<ConceptLink targetId="sistema-incidencia" isDependency={true}>Axiomas de incidencia (I.1 a I.8)</ConceptLink>**: Rigen la pertenencia e intersección entre <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink> en el espacio.
-2. **<ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiomas de orden (II.1 a II.4)</ConceptLink>**: Formalizan la relación ternaria <ConceptLink targetId="estar-entre">estar entre</ConceptLink> ($A\text{-}B\text{-}C$), permitiendo definir el <ConceptLink targetId="segmento">segmento</ConceptLink> $\overline{AB}$, los semiplanos y el <ConceptLink targetId="axioma-orden-4">axioma de Pasch</ConceptLink>.
-3. **<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiomas de congruencia (III.1 a III.5)</ConceptLink>**: Establecen la noción de rigidez métrica para segmentos ($\overline{AB} \cong \overline{CD}$) y <ConceptLink targetId="angulo">ángulos</ConceptLink>, culminando en el criterio <ConceptLink targetId="axioma-congruencia-5">LAL de congruencia de triángulos</ConceptLink>.
-4. **<ConceptLink targetId="axioma-arquimedes" isDependency={true}>Axiomas de continuidad (V.1 y V.2)</ConceptLink>**: Comprenden el <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink> y el axioma de <ConceptLink targetId="axioma-completitud">completitud lineal</ConceptLink> (Dedekind), asegurando la correspondencia biyectiva entre la recta geométrica y el cuerpo $\mathbb{R}$.
+1. **Incidencia (I.1–I.8)**: del <ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink> al <ConceptLink targetId="axioma-incidencia-8">Axioma I.8</ConceptLink>. Los tres primeros son planos; del <ConceptLink targetId="axioma-incidencia-4">Axioma I.4</ConceptLink> en adelante regulan los planos y la tridimensionalidad del <ConceptLink targetId="espacio">espacio</ConceptLink>.
+2. **Orden (II.1–II.4)**: del <ConceptLink targetId="axioma-orden-1">Axioma II.1</ConceptLink> al <ConceptLink targetId="axioma-orden-4">Axioma II.4</ConceptLink> (axioma de <ConceptLink targetId="pasch">Pasch</ConceptLink>). Rigen la relación $A * B * C$ y permiten definir <ConceptLink targetId="segmento">segmentos</ConceptLink>, <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> y <ConceptLink targetId="semiplano">semiplanos</ConceptLink>.
+3. **Congruencia (III.1–III.5)**: del <ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink> al <ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink>. Rigen el transporte de segmentos y ángulos y culminan en la parte del criterio LAL que postula el Axioma III.5.
+4. **Continuidad (V.1–V.2)**: el <ConceptLink targetId="axioma-arquimedes">Axioma V.1 (Arquímedes)</ConceptLink> y el <ConceptLink targetId="axioma-completitud">Axioma V.2 (completitud lineal)</ConceptLink>. Juntos permiten asignar a cada segmento una <ConceptLink targetId="longitud">longitud</ConceptLink> $|AB| \in \mathbb{R}$ y a cada ángulo una <ConceptLink targetId="medida-angular">medida angular</ConceptLink>.
 
 <Separador />
 
-### Teoremas válidos en geometría absoluta
+### Teoremas de la geometría absoluta
 
-Cualquier proposición demostrada a partir de este núcleo conserva su validez universal con independencia de la curvatura del espacio:
+Muchos resultados clásicos solo necesitan los grupos I–III, es decir, son válidos incluso sin axiomas de continuidad:
 
-- **<ConceptLink targetId="teorema-triangulo-isosceles">Teorema del triángulo isósceles</ConceptLink>**: En todo triángulo con dos lados congruentes, los ángulos opuestos a dichos lados son congruentes.
-- **Teorema del ángulo exterior**: En cualquier <ConceptLink targetId="triangulo">triángulo</ConceptLink>, la amplitud de un ángulo exterior es estrictamente mayor que la de cualquiera de los dos ángulos interiores no adyacentes.
-- **<ConceptLink targetId="teorema-congruencia-ala">Criterios de congruencia ALA y LLL</ConceptLink>**: La determinación unívoca de triángulos a partir de tres elementos correspondientes.
-- **Existencia de rectas paralelas**: Por todo punto exterior a una recta dada pasa al menos una recta que no la interseca (demostrado constructivamente mediante la perpendicular común).
+- El <ConceptLink targetId="teorema-triangulo-isosceles">teorema del triángulo isósceles</ConceptLink> y los criterios de <ConceptLink targetId="congruencia-triangulos">congruencia de triángulos</ConceptLink> <ConceptLink targetId="teorema-congruencia-lal">LAL</ConceptLink>, <ConceptLink targetId="teorema-congruencia-ala">ALA</ConceptLink> y <ConceptLink targetId="teorema-congruencia-lll">LLL</ConceptLink>.
+- El <ConceptLink targetId="teorema-angulo-exterior">teorema del ángulo exterior</ConceptLink>: en todo <ConceptLink targetId="triangulo">triángulo</ConceptLink>, cada <ConceptLink targetId="angulo-exterior">ángulo exterior</ConceptLink> es mayor, en el sentido del <ConceptLink targetId="orden-angulos">orden de ángulos</ConceptLink>, que cada uno de los dos ángulos interiores no <ConceptLink targetId="angulos-adyacentes">adyacentes</ConceptLink> a él.
+- La existencia de paralelas: si una <ConceptLink targetId="secante">secante</ConceptLink> forma con dos rectas <ConceptLink targetId="angulos-alternos-internos">ángulos alternos internos</ConceptLink> congruentes, esas rectas son paralelas (implicación absoluta del <ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink>). En consecuencia, por todo punto $P$ exterior a una recta $\ell$ pasa al menos una paralela a $\ell$: la <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> por $P$ a la perpendicular trazada desde $P$ hasta $\ell$. Las dos rectas tienen así una <ConceptLink targetId="perpendicular-comun">perpendicular común</ConceptLink> (construcción de la doble perpendicular).
+
+Otros resultados usan la continuidad. El <ConceptLink targetId="teorema-saccheri-legendre">teorema de Saccheri–Legendre</ConceptLink> afirma que la suma de las medidas de los ángulos de todo triángulo cumple
+$$
+|\alpha| + |\beta| + |\gamma| \le 180^\circ
+$$
+y su demostración usa el <ConceptLink targetId="axioma-arquimedes">Axioma V.1</ConceptLink>. Sin el axioma de Arquímedes existen geometrías (no arquimedianas) que satisfacen los grupos I–III con triángulos cuya suma angular es mayor que dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>.
 
 <Separador />
 
-### Modelos y propiedades metamatemáticas
+### Extensiones, modelos y consistencia
 
-- **Neutralidad de la suma angular**: El sistema demuestra que la suma angular de un triángulo satisface $\sum_{i=1}^3 \alpha_i \le 180^\circ$, pero no puede determinar si la igualdad se cumple estrictamente sin un postulado de paralelas.
-- **Bifurcación geométrica**: Al añadir el <ConceptLink targetId="axioma-paralelas-euclides">axioma euclidiano</ConceptLink> se obtiene la <ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>; al añadir el <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma hiperbólico</ConceptLink> se obtiene la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>.
-- **Validez en modelos**: Tanto el <ConceptLink targetId="modelo-cartesiano">plano cartesiano $\mathbb{R}^2$</ConceptLink> como el <ConceptLink targetId="modelo-poincare">disco de Poincaré $\mathbb{D}^2$</ConceptLink> verifican plenamente el sistema absoluto.
+La geometría absoluta no decide si por un punto exterior a una recta pasa una sola paralela o más de una. Al añadir el <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink> se obtiene el <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>; al añadir el <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma de las paralelas hiperbólicas</ConceptLink>, el <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink>. Con los axiomas de continuidad, estas son las dos únicas posibilidades: o todo triángulo tiene suma angular igual a dos ángulos rectos, o todo triángulo la tiene menor.
+
+Como el sistema contiene los axiomas espaciales I.4–I.8, sus modelos son tridimensionales: el espacio cartesiano $\mathbb{R}^3$ (<ConceptLink targetId="modelo-cartesiano">modelo cartesiano</ConceptLink>) y la bola de Poincaré o de Klein en $\mathbb{R}^3$, versión espacial del <ConceptLink targetId="modelo-poincare">disco de Poincaré</ConceptLink>. Las versiones planas $\mathbb{R}^2$ y $\mathbb{D}^2$ solo satisfacen los axiomas planos (I.1–I.3 y los grupos II, III y V restringidos a un plano). La existencia de estos modelos prueba la <ConceptLink targetId="consistencia-logica">consistencia</ConceptLink> del sistema relativa a la aritmética de $\mathbb{R}$, y que de él no se puede deducir ni el Axioma IV ni su negación (<ConceptLink targetId="independencia-axiomatica">independencia</ConceptLink> del axioma de las paralelas).

@@ -6,7 +6,7 @@ export const BisectrizSpec = createDiagramSpec(
   "version": 3,
   "renderer": "matematika-diagram-renderer-v3",
   "title": "Bisectriz",
-  "componentId": "angulo",
+  "componentId": "bisectriz",
   "category": "Definiciones",
   "mode": "simulation",
   "axis": false,
@@ -473,7 +473,17 @@ export const BisectrizSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve A y B"
+  "note": "Mueve A y B",
+  "translations": {
+    "eu": {
+      "title": "Erdibitzailea",
+      "note": "Mugitu A eta B"
+    },
+    "en": {
+      "title": "Angle Bisector",
+      "note": "Move A and B"
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

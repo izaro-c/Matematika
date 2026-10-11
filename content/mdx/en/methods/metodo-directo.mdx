@@ -13,36 +13,38 @@ export const metadata = {
 import { DirectoSimulation } from '@content/diagrams/Metodos/DirectoSimulation';
 export const Simulation = DirectoSimulation;
 
-<Capitular letra="T" />he direct method is the fundamental deductive technique for establishing mathematical conditional statements of the form $P \implies Q$. Its procedure formally assumes the truth of the hypothesis $P$ and constructs a finite, rigorous sequence of valid logical inferences that inevitably concludes with the truth of the thesis $Q$.
+<Capitular letra="T" />he **direct method** is the form of <ConceptLink targetId="demostracion">proof</ConceptLink> that establishes an <ConceptLink targetId="implicacion" isDependency={true}>implication</ConceptLink> $P \implies Q$ by assuming the <ConceptLink targetId="hipotesis">hypothesis</ConceptLink> $P$ and deducing from it the <ConceptLink targetId="tesis">conclusion</ConceptLink> $Q$ through a finite sequence of steps, each of them justified.
+
+It is the basic pattern of every deduction: indirect methods, such as <ConceptLink targetId="metodo-contradiccion">proof by contradiction</ConceptLink> or proof of the <ConceptLink targetId="contraposicion">contrapositive</ConceptLink> $\neg Q \implies \neg P$, first transform the statement and then reason directly.
 
 <Separador />
 
-### Formal Logical Structure
+### Logical structure
 
-The deductive argument chains propositions via the classical *modus ponens* rule of inference: whenever proposition $A$ holds and $A \implies B$ is valid, proposition $B$ is necessarily true:
+Each step applies the rule of <ConceptLink targetId="modus-ponens" isDependency={true}>modus ponens</ConceptLink>: from $A$ and $A \implies B$ one infers $B$. Chaining steps gives
 
 <Formula>
   $$ P \implies P_1 \implies P_2 \implies \dots \implies P_n \implies Q $$
 </Formula>
 
-Each intermediate link $P_k \implies P_{k+1}$ in the deductive chain is justified solely by:
+and each implication $P_k \implies P_{k+1}$ is justified by one of these resources:
 
-- Foundational axioms of the deductive system.
-- Previously established theorems, lemmas, or corollaries.
-- Rigorous formal definitions of the mathematical objects involved.
-- Valid transformation rules of propositional and predicate logic.
-
-<Separador />
-
-### Paradigm Applications
-
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Sum of Angles in a Triangle</ConceptLink>**: Starting from the definition of a <ConceptLink targetId="triangulo">triangle</ConceptLink> and <ConceptLink targetId="axioma-paralelas-euclides">Euclid's parallel postulate</ConceptLink>, an auxiliary <ConceptLink targetId="paralelas">parallel line</ConceptLink> to the base is drawn through the opposite vertex to directly deduce that $\alpha + \beta + \gamma = 180^\circ$.
-- **<ConceptLink targetId="teorema-pitagoras">Pythagorean Theorem</ConceptLink>**: Using geometric <ConceptLink targetId="semejanza">similarity</ConceptLink> relations and area decomposition on a <ConceptLink targetId="triangulo-rectangulo">right-angled triangle</ConceptLink>, the algebraic relation $a^2 + b^2 = c^2$ is established directly.
+- the hypothesis $P$ or a statement already obtained in the chain;
+- an <ConceptLink targetId="axioma">axiom</ConceptLink> of the system;
+- a previously proved <ConceptLink targetId="teorema">theorem</ConceptLink>, <ConceptLink targetId="lema">lemma</ConceptLink> or <ConceptLink targetId="corolario">corollary</ConceptLink>;
+- a <ConceptLink targetId="definicion">definition</ConceptLink>;
+- a rule of <ConceptLink targetId="inferencia">inference</ConceptLink> of first-order <ConceptLink targetId="logica">logic</ConceptLink>.
 
 <Separador />
 
-### Methodological Properties
+### Examples in geometry
 
-- **Constructivity**: Provides an explicit, reproducible pathway converting initial assumptions into the target theorem.
-- **Local Verifiability**: Every intermediate deduction is logically self-contained and independently auditable.
-- **Epistemological Preference**: It represents the primary choice whenever the hypothesis provides explicit structural relationships directly accessible without indirect reduction.
+- **<ConceptLink targetId="teorema-triangulo-isosceles">Isosceles triangle theorem</ConceptLink>**: from the hypothesis $\overline{AB} \cong \overline{AC}$ one obtains, by applying <ConceptLink targetId="axioma-congruencia-5">Axiom III.5</ConceptLink> to the triangles $\triangle ABC$ and $\triangle ACB$, that $\angle ABC \cong \angle ACB$.
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Angle sum of a triangle</ConceptLink>**: through a vertex one draws the <ConceptLink targetId="paralelas">parallel</ConceptLink> to the opposite side, whose uniqueness is guaranteed by <ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>, and the congruence of <ConceptLink targetId="angulos-alternos-internos">alternate interior angles</ConceptLink> shows that the three angles add up to two <ConceptLink targetId="angulo-recto">right angles</ConceptLink>.
+- **<ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>**: in <ConceptLink targetId="demo-pitagoras-euclides">Euclid's proof</ConceptLink>, congruence criteria and comparisons of <ConceptLink targetId="area">areas</ConceptLink> lead directly from the hypothesis "the angle at $C$ is right" to the conclusion $a^2 + b^2 = c^2$.
+
+<Separador />
+
+### When to use it
+
+The direct method is suitable when the hypothesis provides data that can be transformed step by step into the conclusion. Each step can be checked in isolation, and when the proof asserts the existence of an object it usually constructs it explicitly. If the conclusion is a statement of impossibility or uniqueness, an indirect method is often more natural.

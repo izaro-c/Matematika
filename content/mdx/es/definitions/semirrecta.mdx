@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "derivado",
   title: "Semirrecta",
-  description: "Conjunto formado por un punto origen de una recta y todos los puntos que se extienden en un mismo sentido.",
+  description: "Conjunto formado por un punto origen de una recta y todos los puntos de la recta situados del mismo lado del origen.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
@@ -28,21 +28,27 @@ export const metadata = {
 import { Semirrecta } from '@content/diagrams/Definiciones/Semirrecta';
 export const Simulation = Semirrecta;
 
-<Capitular letra="U" />na semirrecta es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> constituido por un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> fijado como origen sobre una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> y todos los puntos de dicha recta que se extienden ilimitadamente a partir de él en un único <ConceptLink targetId="sentido">sentido</ConceptLink>.
+<Capitular letra="U" />na semirrecta es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> formado por un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> de una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink>, llamado origen, y todos los puntos de dicha recta situados del mismo lado del origen que un punto dado, es decir, en un mismo <ConceptLink targetId="sentido">sentido</ConceptLink> a partir de él.
 
-La semirrecta (o rayo) es un concepto derivado construido formalmente a partir de las relaciones de orden (<ConceptLink targetId="axioma-orden-1" isDependency={true}>Axioma II.1</ConceptLink> y <ConceptLink targetId="axioma-orden-2" isDependency={true}>Axioma II.2</ConceptLink>), constituyendo el elemento básico para la definición de los <ConceptLink targetId="angulo">ángulos</ConceptLink> y la fijación de <ConceptLink targetId="orientacion">orientaciones</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
+La semirrecta (o rayo) se construye a partir de la relación de orden y de los axiomas que la gobiernan (<ConceptLink targetId="axioma-orden-1" isDependency={true}>Axioma II.1</ConceptLink> y <ConceptLink targetId="axioma-orden-2" isDependency={true}>Axioma II.2</ConceptLink>), y es el elemento básico para definir los <ConceptLink targetId="angulo">ángulos</ConceptLink> y fijar <ConceptLink targetId="orientacion">orientaciones</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
 
 <Definicion title="Definición formal de semirrecta">
-Dado un punto origen <VisualBind element="pB" color="carbon">$O$</VisualBind> y un punto distinto <VisualBind element="pA" color="terracota">$A$</VisualBind> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ que <ConceptLink targetId="incidencia">inciden</ConceptLink> en una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineOA" color="mora">$\ell$</VisualBind>, la **semirrecta abierta** $\operatorname{sem}(OA)$ es el conjunto de todos los puntos $P \in \mathcal{P}$ incidentes con $\ell$ tales que $P \neq O$ y $O$ no está <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $P$:
+Dados un punto origen <VisualBind element="pB" color="carbon">$O$</VisualBind> y un punto distinto <VisualBind element="pA" color="terracota">$A$</VisualBind> del <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ que <ConceptLink targetId="incidencia">inciden</ConceptLink> con una <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineOA" color="mora">$\ell$</VisualBind>, la **semirrecta abierta** $\operatorname{sem}(OA)$ es el conjunto de los puntos $P \in \mathcal{P}$ incidentes con $\ell$ tales que $P \neq O$ y $O$ no está <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $P$:
 
 $$
 \operatorname{sem}(OA) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \land P \neq O \land \neg(A * O * P) \}
 $$
 
-La **semirrecta cerrada** <VisualBind element="rayOA" color="musgo">$\overrightarrow{OA}$</VisualBind> es la unión de la semirrecta abierta con el punto origen $O$:
+La **semirrecta cerrada** <VisualBind element="rayOA" color="musgo">$\overrightarrow{OA}$</VisualBind> es la unión de la semirrecta abierta con el origen $O$:
 
 $$
-\overrightarrow{OA} = \operatorname{sem}(OA) \cup \{O\} = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \land (P = O \lor P = A \lor O * P * A \lor O * A * P) \}
+\overrightarrow{OA} = \operatorname{sem}(OA) \cup \{O\}
+$$
+
+Esta definición admite una descripción equivalente por casos, que no es definitoria sino un <ConceptLink targetId="teorema">teorema</ConceptLink>: se deduce de que, entre tres puntos colineales distintos, exactamente uno está entre los otros dos (<ConceptLink targetId="axioma-orden-3">Axioma II.3</ConceptLink> y <ConceptLink targetId="axioma-orden-4">Axioma II.4</ConceptLink>):
+
+$$
+\overrightarrow{OA} = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \land (P = O \lor P = A \lor O * P * A \lor O * A * P) \}
 $$
 </Definicion>
 
@@ -55,23 +61,23 @@ $$
       title="Partición de la recta en semirrectas opuestas"
       formula="\operatorname{tr}(\ell) \setminus \{O\} = \operatorname{sem}(OA) \sqcup \operatorname{sem}(OB) \quad (A * O * B)"
     >
-      Cualquier punto $O \in \mathcal{P}$ sobre una recta $\ell$ divide la <ConceptLink targetId="traza">traza puntual</ConceptLink> restante $\operatorname{tr}(\ell) \setminus \{O\}$ en dos <ConceptLink targetId="semirrectas-opuestas">semirrectas opuestas</ConceptLink> abiertas y <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink>, $\operatorname{sem}(OA)$ y $\operatorname{sem}(OB)$, tales que $A * O * B$.
+      Todo punto $O \in \mathcal{P}$ de una recta $\ell$ <ConceptLink targetId="particion">divide</ConceptLink> el resto de su <ConceptLink targetId="traza">traza</ConceptLink>, $\operatorname{tr}(\ell) \setminus \{O\}$, en dos <ConceptLink targetId="semirrectas-opuestas">semirrectas opuestas</ConceptLink> abiertas y <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink>, $\operatorname{sem}(OA)$ y $\operatorname{sem}(OB)$, donde $A * O * B$ (un punto $B$ así existe por el <ConceptLink targetId="axioma-orden-2">Axioma II.2</ConceptLink>). Es un teorema de Hilbert (§4).
     </PropiedadItem>
 
     <PropiedadItem 
       id="convexidad-semirrecta" 
-      title="Convexidad lineal"
+      title="Convexidad"
       formula="P, Q \in \overrightarrow{OA} \land P * X * Q \implies X \in \overrightarrow{OA}"
     >
-      Toda semirrecta cerrada $\overrightarrow{OA}$ es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink> lineal: si $P, Q \in \overrightarrow{OA}$, entonces para cualquier punto $X \in \mathcal{P}$ que satisfaga la relación de intermediación $P * X * Q$, se cumple necesariamente que $X \in \overrightarrow{OA}$.
+      Toda semirrecta cerrada $\overrightarrow{OA}$ es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>: si $P, Q \in \overrightarrow{OA}$, todo punto $X \in \mathcal{P}$ con $P * X * Q$ cumple $X \in \overrightarrow{OA}$. Es consecuencia del <ConceptLink targetId="orden">orden lineal</ConceptLink> de los puntos de una recta.
     </PropiedadItem>
 
     <PropiedadItem 
       id="orden-lineal-semirrecta" 
-      title="Orden lineal inducido con elemento mínimo"
-      formula="(\overrightarrow{OA}, \le) \implies \min(\overrightarrow{OA}) = O"
+      title="Orden total con elemento mínimo"
+      formula="P \le Q \iff P = Q \lor P = O \lor O * P * Q, \qquad \forall P \in \overrightarrow{OA} \ (O \le P)"
     >
-      La relación de orden sobre la semirrecta cerrada $\overrightarrow{OA}$ induce un <ConceptLink targetId="orden-total">orden total lineal</ConceptLink> estricto ($\le$) sobre sus puntos ($P \le Q \iff P = O \lor P = Q \lor O * P * Q$), en el cual el origen $O$ actúa como <ConceptLink targetId="elemento-minimo">elemento mínimo</ConceptLink>.
+      La relación $\le$ definida sobre los puntos de la semirrecta cerrada $\overrightarrow{OA}$ por $P \le Q \iff P = Q \lor P = O \lor O * P * Q$ es un <ConceptLink targetId="orden-total">orden total</ConceptLink> (no estricto), en el que el origen $O$ es el <ConceptLink targetId="elemento-minimo">elemento mínimo</ConceptLink>. Que sea total se debe a que, si $P, Q \in \operatorname{sem}(OA)$ son distintos, $O$ no está entre ellos y, por tanto, se tiene $O * P * Q$ u $O * Q * P$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

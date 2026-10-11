@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "derivado",
   title: "Ray",
-  description: "Set consisting of an origin point on a line and all points extending in a single direction.",
+  description: "Set consisting of an origin point on a line and all points of the line on the same side of the origin.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
@@ -28,21 +28,27 @@ export const metadata = {
 import { Semirrecta } from '@content/diagrams/Definiciones/Semirrecta';
 export const Simulation = Semirrecta;
 
-<Capitular letra="A" /> ray (or half-line) is the <ConceptLink targetId="conjunto">set</ConceptLink> consisting of a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> fixed as an origin on a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> and all points of that line extending unboundedly from it in a single <ConceptLink targetId="sentido">sense</ConceptLink>.
+<Capitular letra="A" /> ray (or half-line) is the <ConceptLink targetId="conjunto">set</ConceptLink> formed by a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> of a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, called the origin, and all points of that line lying on the same side of the origin as a given point, that is, in one <ConceptLink targetId="sentido">sense</ConceptLink> from it.
 
-The ray (or half-line) is a derived concept formally built from order relations (<ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiom II.1</ConceptLink> and <ConceptLink targetId="axioma-orden-2" isDependency={true}>Axiom II.2</ConceptLink>), constituting the fundamental building block for defining <ConceptLink targetId="angulo">angles</ConceptLink> and setting <ConceptLink targetId="orientacion">orientations</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+The ray is built from the order relation and the axioms governing it (<ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiom II.1</ConceptLink> and <ConceptLink targetId="axioma-orden-2" isDependency={true}>Axiom II.2</ConceptLink>), and it is the basic element for defining <ConceptLink targetId="angulo">angles</ConceptLink> and fixing <ConceptLink targetId="orientacion">orientations</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
 
 <Definicion title="Formal Definition of Ray">
-Given an origin point <VisualBind element="pB" color="carbon">$O$</VisualBind> and a distinct point <VisualBind element="pA" color="terracota">$A$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineOA" color="mora">$\ell$</VisualBind>, the **open ray** $\operatorname{sem}(OA)$ is the set of all points $P \in \mathcal{P}$ incident with $\ell$ such that $P \neq O$ and $O$ is not <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $P$:
+Given an origin point <VisualBind element="pB" color="carbon">$O$</VisualBind> and a distinct point <VisualBind element="pA" color="terracota">$A$</VisualBind> of the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$, both <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineOA" color="mora">$\ell$</VisualBind>, the **open ray** $\operatorname{sem}(OA)$ is the set of points $P \in \mathcal{P}$ incident with $\ell$ such that $P \neq O$ and $O$ is not <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $P$:
 
 $$
 \operatorname{sem}(OA) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \land P \neq O \land \neg(A * O * P) \}
 $$
 
-The **closed ray** <VisualBind element="rayOA" color="musgo">$\overrightarrow{OA}$</VisualBind> is the union of the open ray with the origin point $O$:
+The **closed ray** <VisualBind element="rayOA" color="musgo">$\overrightarrow{OA}$</VisualBind> is the union of the open ray with the origin $O$:
 
 $$
-\overrightarrow{OA} = \operatorname{sem}(OA) \cup \{O\} = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \land (P = O \lor P = A \lor O * P * A \lor O * A * P) \}
+\overrightarrow{OA} = \operatorname{sem}(OA) \cup \{O\}
+$$
+
+This definition admits an equivalent description by cases, which is not definitional but a <ConceptLink targetId="teorema">theorem</ConceptLink>: it follows from the fact that, among three distinct collinear points, exactly one lies between the other two (<ConceptLink targetId="axioma-orden-3">Axiom II.3</ConceptLink> and <ConceptLink targetId="axioma-orden-4">Axiom II.4</ConceptLink>):
+
+$$
+\overrightarrow{OA} = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \land (P = O \lor P = A \lor O * P * A \lor O * A * P) \}
 $$
 </Definicion>
 
@@ -55,23 +61,23 @@ $$
       title="Partition of a Line into Opposite Rays"
       formula="\operatorname{tr}(\ell) \setminus \{O\} = \operatorname{sem}(OA) \sqcup \operatorname{sem}(OB) \quad (A * O * B)"
     >
-      Any point $O \in \mathcal{P}$ on a line $\ell$ partitions the remaining <ConceptLink targetId="traza">point trace</ConceptLink> $\operatorname{tr}(\ell) \setminus \{O\}$ into two open, <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> <ConceptLink targetId="semirrectas-opuestas">opposite rays</ConceptLink>, $\operatorname{sem}(OA)$ and $\operatorname{sem}(OB)$, such that $A * O * B$.
+      Every point $O \in \mathcal{P}$ of a line $\ell$ <ConceptLink targetId="particion">splits</ConceptLink> the rest of its <ConceptLink targetId="traza">trace</ConceptLink>, $\operatorname{tr}(\ell) \setminus \{O\}$, into two open, <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> <ConceptLink targetId="semirrectas-opuestas">opposite rays</ConceptLink>, $\operatorname{sem}(OA)$ and $\operatorname{sem}(OB)$, where $A * O * B$ (such a point $B$ exists by <ConceptLink targetId="axioma-orden-2">Axiom II.2</ConceptLink>). This is a theorem of Hilbert (§4).
     </PropiedadItem>
 
     <PropiedadItem 
       id="convexidad-semirrecta" 
-      title="Linear Convexity"
+      title="Convexity"
       formula="P, Q \in \overrightarrow{OA} \land P * X * Q \implies X \in \overrightarrow{OA}"
     >
-      Every closed ray $\overrightarrow{OA}$ is a linear <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if $P, Q \in \overrightarrow{OA}$, then for any point $X \in \mathcal{P}$ satisfying the betweenness relation $P * X * Q$, it necessarily holds that $X \in \overrightarrow{OA}$.
+      Every closed ray $\overrightarrow{OA}$ is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if $P, Q \in \overrightarrow{OA}$, every point $X \in \mathcal{P}$ with $P * X * Q$ satisfies $X \in \overrightarrow{OA}$. It is a consequence of the <ConceptLink targetId="orden">linear order</ConceptLink> of the points of a line.
     </PropiedadItem>
 
     <PropiedadItem 
       id="orden-lineal-semirrecta" 
-      title="Induced Linear Order with Minimum Element"
-      formula="(\overrightarrow{OA}, \le) \implies \min(\overrightarrow{OA}) = O"
+      title="Total Order with Minimum Element"
+      formula="P \le Q \iff P = Q \lor P = O \lor O * P * Q, \qquad \forall P \in \overrightarrow{OA} \ (O \le P)"
     >
-      The betweenness relation on the closed ray $\overrightarrow{OA}$ induces a strict <ConceptLink targetId="orden-total">linear order</ConceptLink> ($\le$) on its points ($P \le Q \iff P = O \lor P = Q \lor O * P * Q$), where the origin $O$ serves as the unique <ConceptLink targetId="elemento-minimo">minimum element</ConceptLink>.
+      The relation $\le$ defined on the points of the closed ray $\overrightarrow{OA}$ by $P \le Q \iff P = Q \lor P = O \lor O * P * Q$ is a (non-strict) <ConceptLink targetId="orden-total">total order</ConceptLink> in which the origin $O$ is the <ConceptLink targetId="elemento-minimo">minimum element</ConceptLink>. It is total because, if $P, Q \in \operatorname{sem}(OA)$ are distinct, $O$ is not between them and hence $O * P * Q$ or $O * Q * P$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

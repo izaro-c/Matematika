@@ -2,48 +2,95 @@ export const metadata = {
   id: "semejanza",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
-  title: "Semejanza geométrica",
-  description: "Relación de equivalencia entre figuras geométricas que conservan la forma y mantienen constante la razón de proporcionalidad entre distancias.",
+  subtype: "derivado",
+  title: "Semejanza",
+  description: "Dos triángulos son semejantes si, bajo una correspondencia de vértices, sus ángulos homólogos son congruentes y sus lados homólogos son proporcionales.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-euclidiana", "proporcionalidad", "triangulo", "semejanza"],
   hasSimulation: false,
   sources: [
     { title: "Elementos", author: "Euclides", locator: "Libro VI, Definición 1", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §20", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo III", role: "secondary" }
   ]
 };
 
-<Capitular letra="L" />a semejanza geométrica es una relación de equivalencia entre figuras del <ConceptLink targetId="plano">plano</ConceptLink> o del espacio que conservan idéntica forma pero pueden diferir en su tamaño o escala global. Dos figuras son semejantes si existe una transformación (composición de una <ConceptLink targetId="congruencia">isometría</ConceptLink> y una homotecia) que preserva la proporcionalidad de las distancias entre todos sus puntos y conserva los <ConceptLink targetId="angulo">ángulos</ConceptLink>.
+<Capitular letra="D" />os <ConceptLink targetId="triangulo" isDependency={true}>triángulos</ConceptLink> son semejantes si, bajo una correspondencia entre sus <ConceptLink targetId="vertice">vértices</ConceptLink>, los <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> homólogos son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> y los <ConceptLink targetId="lado">lados</ConceptLink> homólogos son <ConceptLink targetId="proporcionalidad">proporcionales</ConceptLink>.
 
-<Definicion title="">
-  Sean $F_1, F_2 \subset \mathcal{E}$ dos subconjuntos de puntos en un espacio métrico euclidiano $\mathcal{E}$. Se dice que $F_1$ y $F_2$ son semejantes ($F_1 \sim F_2$) si y solo si existe una constante de escala $k > 0$ y una biyección $g: \mathcal{E} \to \mathcal{E}$ tal que $g(F_1) = F_2$ y para todo par de puntos $A, B \in \mathcal{E}$:
-  $$
-  d(g(A), g(B)) = k \cdot d(A, B)
-  $$
-  Si $k = 1$, la semejanza se reduce a una <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink>.
+La semejanza separa la forma del tamaño: dos triángulos semejantes tienen los mismos ángulos y difieren a lo sumo en un factor de escala común a todas sus <ConceptLink targetId="longitud" isDependency={true}>longitudes</ConceptLink>. Es una noción propia del <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>: su teoría descansa en el <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink> y, por tanto, en el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>.
+
+<Definicion title="Semejanza de triángulos">
+Sean $\triangle ABC$ y $\triangle A'B'C'$ dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> del plano euclídeo, considerados con la correspondencia ordenada $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$. Se dice que $\triangle ABC$ es **semejante** a $\triangle A'B'C'$, y se escribe $\triangle ABC \sim \triangle A'B'C'$, si los tres pares de <ConceptLink targetId="angulo">ángulos</ConceptLink> homólogos son <ConceptLink targetId="congruencia">congruentes</ConceptLink> y existe un número real $k > 0$ tal que las <ConceptLink targetId="longitud">longitudes</ConceptLink> de los <ConceptLink targetId="lado">lados</ConceptLink> homólogos guardan la razón $k$:
+
+$$
+\triangle ABC \sim \triangle A'B'C' \iff
+\begin{cases}
+\angle CAB \cong \angle C'A'B', \quad \angle ABC \cong \angle A'B'C', \quad \angle BCA \cong \angle B'C'A', \\[4pt]
+\dfrac{|A'B'|}{|AB|} = \dfrac{|B'C'|}{|BC|} = \dfrac{|C'A'|}{|CA|} = k.
+\end{cases}
+$$
+
+El número $k$ es la **razón de semejanza**. Si $k = 1$, los lados homólogos son congruentes y los triángulos son <ConceptLink targetId="congruencia-triangulos">congruentes</ConceptLink>.
 </Definicion>
 
-<Separador />
+### Semejanza de figuras
 
-### Criterios de semejanza de triángulos
+Para figuras arbitrarias la noción se formula mediante transformaciones del plano euclídeo $\sigma$. Una **semejanza de razón $k > 0$** es una <ConceptLink targetId="biyeccion">biyección</ConceptLink> $f\colon \operatorname{tr}(\sigma) \longrightarrow \operatorname{tr}(\sigma)$ que multiplica todas las longitudes por $k$:
 
-En la geometría plana, la semejanza entre dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> se establece mediante las siguientes condiciones minimales:
+$$
+|f(P)f(Q)| = k\,|PQ| \qquad \text{para todo } P, Q \in \operatorname{tr}(\sigma).
+$$
 
-| Criterio | Formulación | Condición geométrica |
-|---|---|---|
-| AA | Ángulo-Ángulo | Dos pares de ángulos correspondientes son congruentes ($\alpha \cong \alpha' \land \beta \cong \beta'$) |
-| LAL | Lado-Ángulo-Lado | Un ángulo congruente y lados adyacentes en la misma proporción ($\frac{a'}{a} = \frac{b'}{b} = k$) |
-| LLL | Lado-Lado-Lado | Los tres pares de lados correspondientes guardan la misma razón $k$ |
+Toda semejanza es la <ConceptLink targetId="composicion-funciones">composición</ConceptLink> de una <ConceptLink targetId="homotecia">homotecia</ConceptLink> de razón $k$ y una <ConceptLink targetId="isometria">isometría</ConceptLink>, y conserva la congruencia de ángulos. Dos figuras $F, F' \subseteq \mathcal{P}$ son semejantes si existe una semejanza $f$ con $f(F) = F'$. Para triángulos ambas definiciones coinciden: una semejanza lleva $\triangle ABC$ a un triángulo semejante en el sentido anterior y, recíprocamente, dos triángulos semejantes son imagen uno del otro por una semejanza. Una isometría es una semejanza de razón $1$; no debe confundirse con la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink>, que es primitiva para segmentos y ángulos.
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Proporcionalidad y áreas">
-    <PropiedadItem id="teorema-tales" title="Teorema de Tales">
-      Rectas paralelas que cortan a dos transversales determinan segmentos proporcionales correspondientes.
+  <PropiedadesGrupo title="Criterios de semejanza de triángulos">
+    <PropiedadItem
+      id="criterio-semejanza-aa"
+      title="Criterio ángulo-ángulo (AA)"
+      formula="\angle CAB \cong \angle C'A'B' \land \angle ABC \cong \angle A'B'C' \implies \triangle ABC \sim \triangle A'B'C'"
+    >
+      Si dos <ConceptLink targetId="angulo">ángulos</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> son <ConceptLink targetId="congruencia">congruentes</ConceptLink> con dos ángulos de otro, los triángulos son semejantes. El tercer par de ángulos es congruente por el <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={true}>teorema de la suma de los ángulos del triángulo</ConceptLink>, y la proporcionalidad de los lados se obtiene del <ConceptLink targetId="teorema-tales" isDependency={true}>teorema de Tales</ConceptLink> tras transportar uno de los triángulos sobre el otro.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-triangulo" title="Escalado de áreas">
-      Si dos figuras bidimensionales son semejantes con razón $k$, la razón de sus áreas es $\mu(F_2) = k^2 \cdot \mu(F_1)$.
+
+    <PropiedadItem
+      id="criterio-semejanza-lal"
+      title="Criterio lado-ángulo-lado (LAL)"
+      formula="\angle CAB \cong \angle C'A'B' \land \frac{|A'B'|}{|AB|} = \frac{|A'C'|}{|AC|} \implies \triangle ABC \sim \triangle A'B'C'"
+    >
+      Si un <ConceptLink targetId="angulo">ángulo</ConceptLink> de un triángulo es congruente con un ángulo de otro y los <ConceptLink targetId="lado">lados</ConceptLink> que lo forman son <ConceptLink targetId="proporcionalidad">proporcionales</ConceptLink>, los triángulos son semejantes. La prueba aplica el recíproco del <ConceptLink targetId="teorema-tales" isDependency={true}>teorema de Tales</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="criterio-semejanza-lll"
+      title="Criterio lado-lado-lado (LLL)"
+      formula="\frac{|A'B'|}{|AB|} = \frac{|B'C'|}{|BC|} = \frac{|C'A'|}{|CA|} \implies \triangle ABC \sim \triangle A'B'C'"
+    >
+      Si los tres <ConceptLink targetId="lado">lados</ConceptLink> de un triángulo son proporcionales a los de otro, los triángulos son semejantes; se reduce al criterio LAL y al <ConceptLink targetId="teorema-congruencia-lll">criterio de congruencia LLL</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Propiedades estructurales">
+    <PropiedadItem
+      id="semejanza-relacion-equivalencia"
+      title="Relación de equivalencia"
+      formula="\triangle ABC \sim \triangle ABC, \quad \triangle ABC \sim \triangle A'B'C' \implies \triangle A'B'C' \sim \triangle ABC"
+    >
+      La semejanza es una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink>: es <ConceptLink targetId="reflexividad">reflexiva</ConceptLink> (razón $1$), <ConceptLink targetId="simetria">simétrica</ConceptLink> (razón $1/k$) y <ConceptLink targetId="transitividad">transitiva</ConceptLink> (las razones se multiplican).
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="razon-areas-semejanza"
+      title="Razón de las áreas"
+      formula="\triangle ABC \sim \triangle A'B'C' \implies \operatorname{A}(\triangle A'B'C') = k^2\,\operatorname{A}(\triangle ABC)"
+    >
+      Si dos triángulos son semejantes con razón $k$, la razón de sus <ConceptLink targetId="teoria-medida-area">áreas</ConceptLink> es $k^2$: base y altura quedan multiplicadas por $k$ en el <ConceptLink targetId="teorema-area-triangulo">teorema del área del triángulo</ConceptLink>. Por <ConceptLink targetId="teorema-area-aditividad">aditividad</ConceptLink>, lo mismo vale para dos <ConceptLink targetId="region-poligonal">regiones poligonales</ConceptLink> semejantes.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
+
+<Nota>
+En la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> dos triángulos con ángulos homólogos congruentes son congruentes: no existen triángulos semejantes de razón $k \neq 1$. <ConceptLink targetId="wallis">John Wallis</ConceptLink> propuso en 1663 la existencia de triángulos semejantes no congruentes como sustituto del quinto postulado; en presencia de los axiomas de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, ambas afirmaciones son equivalentes.
+</Nota>

@@ -25,9 +25,9 @@ export const Simulation = Order3;
 
 <Capitular letra="O" />f three distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> situated on the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, at most one lies <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> the other two.
 
-This postulate establishes the mutual exclusion of linear betweenness relations, preventing the <ConceptLink targetId="orden">order</ConceptLink> along a line from becoming cyclic or closing upon itself like a <ConceptLink targetId="circunferencia">circle</ConceptLink>.
+This axiom establishes the mutual exclusion of the three possible betweenness relations among three points of a line, preventing the <ConceptLink targetId="orden">order</ConceptLink> along a line from becoming cyclic or closing upon itself like a <ConceptLink targetId="circunferencia">circle</ConceptLink>.
 
-<Definicion title="Axiom II.3 (Exclusivity of Linear Betweenness)">
+<Definicion title="Formal statement">
 For any <ConceptLink targetId="terna">triple</ConceptLink> of mutually distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> in $\mathcal{P}$ <ConceptLink targetId="incidencia">incident</ConceptLink> with the same <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineDE" color="carbon">$\ell$</VisualBind>, at most one of the betweenness relations $A * B * C$, $B * A * C$, or $A * C * B$ holds true:
 
 $$
@@ -36,5 +36,5 @@ $$
 </Definicion>
 
 <Nota>
-In conjunction with <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink> and <ConceptLink targetId="axioma-orden-2">Axiom II.2</ConceptLink>, it is deduced as the <ConceptLink targetId="teorema-orden-tres-puntos">three-point linear order theorem</ConceptLink> that of three distinct <ConceptLink targetId="colinealidad">collinear</ConceptLink> points, exactly one lies between the other two. This property endows every line in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> with a strict linear betweenness structure, from which a <ConceptLink targetId="orden-total">total order</ConceptLink> is induced upon selecting an <ConceptLink targetId="orientacion">orientation</ConceptLink> or <ConceptLink targetId="sentido">sense</ConceptLink>.
+The axiom only asserts that at most one of the three points lies between the other two. That there is always one, that is, that of three distinct <ConceptLink targetId="colinealidad">collinear</ConceptLink> points exactly one lies between the other two, is the <ConceptLink targetId="teorema-orden-tres-puntos">three-point ordering theorem</ConceptLink>; its proof uses the incidence axioms, <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">Axiom II.2</ConceptLink>, this axiom and, essentially, Pasch's <ConceptLink targetId="axioma-orden-4">Axiom II.4</ConceptLink>. From that theorem, each line admits exactly two <ConceptLink targetId="orden-total">total orders</ConceptLink> compatible with betweenness, one for each <ConceptLink targetId="sentido">sense</ConceptLink>; choosing one of them amounts to fixing an <ConceptLink targetId="orientacion">orientation</ConceptLink> of the line.
 </Nota>

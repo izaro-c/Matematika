@@ -10,7 +10,7 @@ export const metadata = {
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §2", role: "primary" }
   ]
 };
 
@@ -19,13 +19,13 @@ export const Simulation = Incidence2;
 
 <Capitular letra="E" />very <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> is <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with at least two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>.
 
-This axiom guarantees that lines possess geometric content in <ConceptLink targetId="espacio">space</ConceptLink>, preventing lines from being empty or collapsing into a single isolated point.
+Together with <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>, this axiom makes every line determined by its set of points: if two lines had the same <ConceptLink targetId="traza">point trace</ConceptLink>, they would share two distinct points and, by the uniqueness in I.1, they would coincide. The assignment $\ell \longmapsto \operatorname{tr}(\ell)$ is therefore <ConceptLink targetId="inyectividad">injective</ConceptLink>.
 
-<Definicion title="Formal Statement">
+<Definicion title="Formal statement">
   For every <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind>, there exist at least two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> <ConceptLink targetId="incidencia">incident</ConceptLink> with $\ell$:
   $$
   \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)
   $$
-  In terms of the <ConceptLink targetId="traza">point trace</ConceptLink> of the line, this establishes that its cardinality satisfies $\lvert \operatorname{tr}(\ell) \rvert \ge 2$.
+  In terms of the <ConceptLink targetId="traza">point trace</ConceptLink> of the line, the axiom states that its <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> satisfies $\lvert \operatorname{tr}(\ell) \rvert \ge 2$.
 </Definicion>
 

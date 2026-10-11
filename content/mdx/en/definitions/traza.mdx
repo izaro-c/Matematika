@@ -27,15 +27,15 @@ export const metadata = {
 
 <Capitular letra="T" />he **point trace** is the set-theoretic assignment associating each <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> or <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> in the <ConceptLink targetId="dominio">primitive domain</ConceptLink> with the exact <ConceptLink targetId="conjunto">set</ConceptLink> of <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> maintaining a formal relation of <ConceptLink targetId="incidencia" isDependency={true}>synthetic incidence</ConceptLink> with that entity.
 
-Since the <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> of point ($\mathcal{P}$), line ($\mathcal{L}$), and plane ($\Pi$) are ontological domains with <ConceptLink targetId="conjunto-disjunto">pairwise empty intersections</ConceptLink> ($\mathcal{P} \cap \mathcal{L} = \emptyset$, $\mathcal{P} \cap \Pi = \emptyset$, $\mathcal{L} \cap \Pi = \emptyset$) in <ConceptLink targetId="logica">many-sorted logic</ConceptLink>, the point trace $\operatorname{tr}$ acts as the canonical mediation <ConceptLink targetId="operador">operator</ConceptLink> allowing set-theoretic operations (intersection, inclusion, or <ConceptLink targetId="cardinalidad">cardinality</ConceptLink>) without incurring type collapse.
+Since the <ConceptLink targetId="concepto-primitivo">primitive concepts</ConceptLink> of point ($\mathcal{P}$), line ($\mathcal{L}$), and plane ($\Pi$) are ontological domains with <ConceptLink targetId="conjunto-disjunto">pairwise empty intersections</ConceptLink> ($\mathcal{P} \cap \mathcal{L} = \emptyset$, $\mathcal{P} \cap \Pi = \emptyset$, $\mathcal{L} \cap \Pi = \emptyset$) in <ConceptLink targetId="logica">many-sorted logic</ConceptLink>, the point trace $\operatorname{tr}$ is the <ConceptLink targetId="operador">operator</ConceptLink> that allows set-theoretic operations (<ConceptLink targetId="interseccion">intersection</ConceptLink>, inclusion, or <ConceptLink targetId="cardinalidad">cardinality</ConceptLink>) to be applied to lines and planes without confusing sorts.
 
 <Definicion title="Point trace operator">
-Given a <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink> $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I})$ with a <ConceptLink targetId="signatura">many-sorted signature</ConceptLink>, the **trace** <ConceptLink targetId="operador">operator</ConceptLink> ($\operatorname{tr}$) maps each element in the primitive linear ($\mathcal{L}$) and planar ($\Pi$) <ConceptLink targetId="dominio">domains</ConceptLink> to its corresponding subset in the <ConceptLink targetId="conjunto-potencia">power set</ConceptLink> of points $\mathcal{P}(\mathcal{P})$:
+Given a <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink> $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$ with a <ConceptLink targetId="signatura">many-sorted signature</ConceptLink>, the **trace** <ConceptLink targetId="operador">operator</ConceptLink> ($\operatorname{tr}$) maps each element in the primitive linear ($\mathcal{L}$) and planar ($\Pi$) <ConceptLink targetId="dominio">domains</ConceptLink> to its corresponding subset in the <ConceptLink targetId="conjunto-potencia">power set</ConceptLink> of points $\wp(\mathcal{P})$:
 
 1. **Point trace of a line**:
    $$
    \begin{aligned}
-   \operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} &\longrightarrow \mathcal{P}(\mathcal{P}) \\
+   \operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} &\longrightarrow \wp(\mathcal{P}) \\
    \ell &\longmapsto \operatorname{tr}(\ell) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \ell \}
    \end{aligned}
    $$
@@ -43,7 +43,7 @@ Given a <ConceptLink targetId="estructura-geometrica">geometric structure</Conce
 2. **Point trace of a plane**:
    $$
    \begin{aligned}
-   \operatorname{tr}_{\Pi}\colon \Pi &\longrightarrow \mathcal{P}(\mathcal{P}) \\
+   \operatorname{tr}_{\Pi}\colon \Pi &\longrightarrow \wp(\mathcal{P}) \\
    \pi &\longmapsto \operatorname{tr}(\pi) = \{ P \in \mathcal{P} \mid P \, \mathbf{I} \, \pi \}
    \end{aligned}
    $$
@@ -58,7 +58,7 @@ Given a <ConceptLink targetId="estructura-geometrica">geometric structure</Conce
       title="Injectivity and unique line determination"
       formula="\forall \ell_1, \ell_2 \in \mathcal{L} \ (\operatorname{tr}(\ell_1) = \operatorname{tr}(\ell_2) \iff \ell_1 = \ell_2)"
     >
-      Two distinct lines never share the exact same set of incident points. By <ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink> (existence of at least two points on a line) and <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink> (unique line determination), the mapping $\operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} \to \mathcal{P}(\mathcal{P})$ is strictly <ConceptLink targetId="inyectividad">injective</ConceptLink>.
+      Two distinct lines never have the same incident points: if $\operatorname{tr}(\ell_1) = \operatorname{tr}(\ell_2)$, <ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink> gives two distinct points of $\ell_1$, which are also incident with $\ell_2$, and <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink> (uniqueness of the line through two points) gives $\ell_1 = \ell_2$. Hence $\operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} \to \wp(\mathcal{P})$ is <ConceptLink targetId="inyectividad">injective</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -66,7 +66,7 @@ Given a <ConceptLink targetId="estructura-geometrica">geometric structure</Conce
       title="Injectivity and unique plane determination"
       formula="\forall \pi_1, \pi_2 \in \Pi \ (\operatorname{tr}(\pi_1) = \operatorname{tr}(\pi_2) \iff \pi_1 = \pi_2)"
     >
-      Two distinct planes cannot share the exact same point trace. By <ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">Axiom I.5</ConceptLink> (plane determination and uniqueness by three non-collinear points), the mapping $\operatorname{tr}_{\Pi}\colon \Pi \to \mathcal{P}(\mathcal{P})$ is strictly <ConceptLink targetId="inyectividad">injective</ConceptLink>.
+      Two distinct planes do not have the same trace. The key step is that every plane $\pi$ is incident with three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points: the clause of <ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink> gives a point $A$ of $\pi$; <ConceptLink targetId="axioma-incidencia-8">Axiom I.8</ConceptLink> gives points outside $\pi$ and other planes, and applying <ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink> to two distinct planes through $A$ and through a point $B$ outside $\pi$ yields two points $D, F$ of $\pi$ distinct from $A$; <ConceptLink targetId="axioma-incidencia-5">Axioms I.5</ConceptLink> and <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink> prevent $A$, $D$, and $F$ from being collinear. Then, if $\operatorname{tr}(\pi_1) = \operatorname{tr}(\pi_2)$, three non-collinear points of $\pi_1$ are incident with $\pi_2$ and Axiom I.5 gives $\pi_1 = \pi_2$: $\operatorname{tr}_{\Pi}\colon \Pi \to \wp(\mathcal{P})$ is <ConceptLink targetId="inyectividad">injective</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 
@@ -76,15 +76,15 @@ Given a <ConceptLink targetId="estructura-geometrica">geometric structure</Conce
       title="Inclusion of a line in a plane"
       formula="\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \iff \forall P \in \mathcal{P} \ (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)"
     >
-      A line $\ell$ lies in a plane $\pi$ if and only if its trace is contained in that of the plane ($\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$). By <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink>, verifying that two distinct points of the line belong to the plane suffices to ensure total inclusion.
+      The line $\ell$ is said to lie in the plane $\pi$ when $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$, that is, when all its points are incident with $\pi$. By <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink>, it suffices to check this for two distinct points of the line.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="interseccion-planos" 
+      id="teorema-interseccion-planos" 
       title="Intersection of secant planes"
       formula="\pi_1 \neq \pi_2 \land \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) \neq \emptyset \implies \exists! \ell \in \mathcal{L} \ (\operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \operatorname{tr}(\ell))"
     >
-      When two distinct planes intersect at least at one common point (<ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink>), the set-theoretic intersection of their point traces coincides uniquely with the trace of a single common secant line (<ConceptLink targetId="teorema-interseccion-planos">plane intersection line theorem</ConceptLink>).
+      If two distinct planes have a common point, the intersection of their traces is the trace of a unique line (<ConceptLink targetId="teorema-interseccion-planos">plane intersection theorem</ConceptLink>, a consequence of <ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink> together with I.1, I.5, and I.6).
     </PropiedadItem>
 
     <PropiedadItem 
@@ -92,7 +92,7 @@ Given a <ConceptLink targetId="estructura-geometrica">geometric structure</Conce
       title="Parallel planes in space"
       formula="\pi_1 \parallel \pi_2 \iff (\pi_1 = \pi_2 \lor \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \emptyset)"
     >
-      Two planes in space are <ConceptLink targetId="planos-paralelos">parallel</ConceptLink> if and only if they are identical or their point traces are mutually disjoint sets, ensuring the reflexivity of the relation.
+      Two planes in space are <ConceptLink targetId="planos-paralelos">parallel</ConceptLink> if and only if they are identical or their traces are disjoint; the clause $\pi_1 = \pi_2$ makes the relation <ConceptLink targetId="reflexividad">reflexive</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -100,15 +100,15 @@ Given a <ConceptLink targetId="estructura-geometrica">geometric structure</Conce
       title="Coplanar lines: parallelism and secancy"
       formula="\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi) \implies (\ell_1 \parallel \ell_2 \iff \ell_1 = \ell_2 \lor \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset)"
     >
-      For two lines with guaranteed <ConceptLink targetId="coplanaridad">coplanarity</ConceptLink> in a plane $\pi$, the relation of <ConceptLink targetId="paralelas">parallelism</ConceptLink> ($\ell_1 \parallel \ell_2$) is reflexive and equivalent to them being identical or disjoint; if distinct and not parallel, they are <ConceptLink targetId="secante">secant</ConceptLink> with $\lvert \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) \rvert = 1$.
+      For two <ConceptLink targetId="coplanaridad">coplanar</ConceptLink> lines in a plane $\pi$, the relation of <ConceptLink targetId="paralelas">parallelism</ConceptLink> ($\ell_1 \parallel \ell_2$) is reflexive and equivalent to them being identical or disjoint; if distinct and not parallel, they are <ConceptLink targetId="secante">secant</ConceptLink> with $\lvert \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) \rvert = 1$.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="rectas-cruzadas" 
+      id="disjuncion-rectas-cruzadas" 
       title="Characterization of skew lines in space"
       formula="\forall \pi \in \Pi \ (\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \not\subseteq \operatorname{tr}(\pi)) \implies \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset"
     >
-      Two lines in space are <ConceptLink targetId="rectas-cruzadas">skew lines</ConceptLink> if no common plane contains both simultaneously, which necessarily implies that their point traces are disjoint without being parallel.
+      Two lines in space are <ConceptLink targetId="rectas-cruzadas">skew lines</ConceptLink> if no plane contains both. Their traces are then disjoint (if they shared a point, I.4 and I.6 would give a plane containing both), yet they are not parallel, since parallelism requires coplanarity.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
@@ -116,5 +116,5 @@ Given a <ConceptLink targetId="estructura-geometrica">geometric structure</Conce
 <Separador />
 
 <Nota>
-The use of the point trace $\operatorname{tr}$ bridges the purity of axiomatic synthetic geometry with the convenience of algebra and coordinate <ConceptLink targetId="modelo-cartesiano">analytic models</ConceptLink>.
+The trace adds no structure: it is defined from incidence. It allows $\cap$, $\subseteq$, and $\setminus$ to be used with lines and planes without identifying them with point sets, an identification that <ConceptLink targetId="modelo-cartesiano">analytic models</ConceptLink> do make.
 </Nota>

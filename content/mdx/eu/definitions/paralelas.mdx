@@ -2,51 +2,74 @@ export const metadata = {
   id: "paralelas",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Zuzen paraleloak",
-  description: "Puntu komunik partekatzen ez duten edo guztiz bat datozen plano bereko bi zuzenen arteko erlazio geometrikoa.",
+  description: "Berdinak diren edo intzidentziazko puntu-trazadura disjuntuak dituzten zuzen koplanarren arteko erlazioa.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria", "paraleloak", "intzidentzia", "koplanartasuna"],
   hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 23. Definizioa eta 5. Postulatua", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §5", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburua, 23. Definizioa eta 5. Postulatua", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §7", role: "primary" }
   ]
 };
 
 import { Paralelas } from '@content/diagrams/Definiciones/Paralelas';
 export const Simulation = Paralelas;
 
-<Capitular letra="G" />eometria planoan, plano bereko bi <ConceptLink targetId="recta">zuzeni</ConceptLink> paralelo deritze puntu komunik partekatzen ez dutenean edo guztiz bat datozenean. Paralelotasuna baliokidetasun-erlazio funtsezkoa da <ConceptLink targetId="plano">plano</ConceptLink> euklidearrean, eta geometria euklidearra geometria ez-euklidearretatik kualitatiboki bereizten du.
+<Capitular letra="B" />i <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> <ConceptLink targetId="coplanaridad" isDependency={true}>koplanar</ConceptLink> **paraleloak** dira baldin eta soilik baldin zuzen bera badira edo haien <ConceptLink targetId="incidencia" isDependency={true}>intzidentziazko</ConceptLink> <ConceptLink targetId="traza" isDependency={true}>puntu-trazadurak</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntuak</ConceptLink> badira.
 
-<Definicion title="">
-  $\mathcal{P}$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> berean dauden <VisualBind element="recta-base" color="musgo">$L_1$</VisualBind> eta <VisualBind element="recta-paralela" color="pavo">$L_2$</VisualBind> bi <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> emanda, $L_1$ eta $L_2$ paraleloak dira (<VisualBind element="paralelas" color="musgo">$L_1 \parallel L_2$</VisualBind>) baldin eta soilik baldin haien ebakidura hutsa bada edo bi zuzenak berdin-berdinak badira:
+<ConceptLink targetId="coplanaridad">Koplanartasunaren</ConceptLink> baldintzak bereizten ditu paralelotasuna eta <ConceptLink targetId="espacio">espazioko</ConceptLink> <ConceptLink targetId="rectas-cruzadas">zuzen gurutzatuen</ConceptLink> edo alabeatuen posizioa: zuzen gurutzatuek ez dute <ConceptLink targetId="punto">punturik</ConceptLink> partekatzen, baina ez daude <ConceptLink targetId="plano">plano</ConceptLink> komun batean ere. Identitatea barne hartzeak paralelotasuna <ConceptLink targetId="reflexividad">erreflexibotasuna</ConceptLink> duen <ConceptLink targetId="relacion-binaria">erlazio bitarra</ConceptLink> bihurtzen du.
+
+<Definicion title="Zuzen paraleloen definizio formala">
+  <ConceptLink targetId="espacio">Espazioko</ConceptLink> bi <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> emanik, desberdinak zein berdinak, <VisualBind element="recta-base" color="musgo">$\ell_1$</VisualBind> eta <VisualBind element="recta-paralela" color="musgo">$\ell_2$</VisualBind>, <ConceptLink targetId="coplanaridad" isDependency={true}>koplanarrak</ConceptLink> direla esaten da, baldin eta gutxienez $\pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bat badago non bien <ConceptLink targetId="traza" isDependency={true}>puntu-trazadurak</ConceptLink> $\pi$-ren trazaduran barnean dauden:
   $$
-  L_1 \parallel L_2 \iff (L_1 \subset \mathcal{P} \land L_2 \subset \mathcal{P}) \land (L_1 \cap L_2 = \emptyset \lor L_1 = L_2)
+  \operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi)
   $$
-  Plano afin euklidearrean, $d(P, L_2) = \inf_{Q \in L_2} \|P - Q\|$ distantzia perpendikularra konstantea da $L_1$-eko edozein $P$ punturentzat.
+  Koplanartasun-baldintza horretan, bi zuzenak **paraleloak** dira (<VisualBind element="paralelas" color="musgo">$\ell_1 \parallel \ell_2$</VisualBind>) baldin eta soilik baldin zuzen bera badira edo <ConceptLink targetId="incidencia" isDependency={true}>intzidentziazko</ConceptLink> <ConceptLink targetId="punto">punturik</ConceptLink> partekatzen ez badute:
+  $$
+  \operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi) \implies \bigl(\ell_1 \parallel \ell_2 \iff \ell_1 = \ell_2 \lor \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset\bigr)
+  $$
+  $\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi)$ betetzen duen <ConceptLink targetId="plano">plano</ConceptLink> komunik ez badago, zuzenei <ConceptLink targetId="rectas-cruzadas">zuzen gurutzatuak</ConceptLink> edo alabeatuak deritze; $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset$ betetzen dute, paraleloak izan gabe.
 </Definicion>
 
 <Separador />
 
-### Paralelotasuna sistema axiomatiko desberdinetan
-
-Kanpoko puntu batetik igarotzen den zuzen paraleloaren bakartasunak azpiko eredu geometrikoa zehazten du:
-
-| Sistema geometrikoa | Paraleloen postulatua | Kanpoko puntu batetik igarotzen den paralelo kopurua |
-|---|---|---|
-| <ConceptLink targetId="sistema-euclidiano">Geometria euklidearra</ConceptLink> | V. Postulatua / Playfair-en axioma | Paralelo bakarra existitzen da |
-| <ConceptLink targetId="sistema-hiperbolico">Geometria hiperbolikoa</ConceptLink> | Bolyai-Lobachevsky-ren axioma | Infinitu paralelo existitzen dira |
-| Geometria eliptikoa | Riemann-en axioma | Ez da paralelo bakar bat ere existitzen |
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Baliokidetasuna eta angeluak ebakitzaile batekin">
-    <PropiedadItem id="axioma-paralelas-euclides" title="Playfair-en axioma">
-      Zuzen baten kanpoko puntu batetik zuzen paralelo bakarra igarotzen da.
+  <PropiedadesGrupo title="Baliokidetasun-egitura">
+    <PropiedadItem 
+      id="reflexividad-simetria-paralelismo" 
+      title="Erlazioaren erreflexibotasuna eta simetria"
+      formula="\ell \parallel \ell \quad \land \quad (\ell_1 \parallel \ell_2 \implies \ell_2 \parallel \ell_1)"
+    >
+      <ConceptLink targetId="recta">Zuzen</ConceptLink> oro bere buruarekiko paraleloa da identitateagatik ($\ell = \ell$); hortik dator <ConceptLink targetId="reflexividad">erreflexibotasuna</ConceptLink>. <ConceptLink targetId="simetria">Simetria</ConceptLink> disjuntzioaren, bilduraren eta trazaduren <ConceptLink targetId="interseccion">ebakiduraren</ConceptLink> trukakortasunetik ondorioztatzen da: $\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \operatorname{tr}(\ell_2) \cap \operatorname{tr}(\ell_1)$. Bi propietateak <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomarik</ConceptLink> gabe betetzen dira.
     </PropiedadItem>
-    <PropiedadItem id="teorema-angulos-alternos-internos" title="Barne-angelu alternoak">
-      Bi zuzen paralelori ebakitzaile den zuzen batek barne-angelu alterno kongruenteak eratzen ditu.
+
+    <PropiedadItem 
+      id="transitividad-paralelismo-euclideo" 
+      title="Iragankortasuna geometria euklidearrean"
+      formula="(\ell_1 \parallel \ell_2 \land \ell_2 \parallel \ell_3) \implies \ell_1 \parallel \ell_3"
+    >
+      <ConceptLink targetId="sistema-euclidiano">Sistema euklidearrean</ConceptLink>, <ConceptLink targetId="axioma-paralelas-euclides">IV. axiomak</ConceptLink> bermatzen du <ConceptLink targetId="transitividad">iragankortasuna</ConceptLink>: <ConceptLink targetId="plano">planoan</ConceptLink>, $\ell_1$ eta $\ell_3$ desberdinak balira eta $P$ puntu batean ebakiko balute, $\ell_2$-ren bi paralelo desberdin igaroko lirateke $P$-tik. Iragankortasuna <ConceptLink targetId="espacio">espazioko</ConceptLink> zuzenetarako ere betetzen da: hirugarren baten paraleloak diren bi zuzen koplanarrak eta elkarren paraleloak dira. Ondorioz, paralelotasuna <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioa</ConceptLink> da $\mathcal{L}$ multzoan, eta haren <ConceptLink targetId="clase-equivalencia">baliokidetasun-klaseak</ConceptLink> <ConceptLink targetId="direccion">norabideak</ConceptLink> dira. <ConceptLink targetId="sistema-hiperbolico">Sistema hiperbolikoan</ConceptLink> iragankortasunak huts egiten du: bi zuzen ebakitzaile hirugarren baten paraleloak izan daitezke biak.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Paralelotasunaren hedapen espazialak">
+    <PropiedadItem 
+      id="planos-paralelos-espacio" 
+      title="Plano paraleloak espazioan"
+      formula="\pi_1 \parallel \pi_2 \iff \pi_1 = \pi_2 \lor \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \emptyset"
+    >
+      <ConceptLink targetId="espacio">Espazioko</ConceptLink> bi <ConceptLink targetId="plano">plano</ConceptLink> <ConceptLink targetId="planos-paralelos">plano paraleloak</ConceptLink> dira baldin eta soilik baldin plano bera badira edo haien <ConceptLink targetId="incidencia">intzidentziazko</ConceptLink> <ConceptLink targetId="traza">trazadurek</ConceptLink> ez badute <ConceptLink targetId="punto">punturik</ConceptLink> partekatzen. Erlazioa erreflexiboa eta simetrikoa da definizioz; haren <ConceptLink targetId="transitividad">iragankortasunak</ConceptLink>, berriz, <ConceptLink targetId="axioma-paralelas-euclides">IV. axioma</ConceptLink> behar du, eta axioma horretatik ondorioztatzen da plano batetik kanpoko puntu batetik plano horren paralelo bakar bat igarotzen dela.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="distincion-rectas-cruzadas" 
+      title="Trazadura disjuntuak paralelotasunik gabe (zuzen gurutzatuak)"
+      formula="\forall \pi \in \Pi \ \bigl(\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \not\subseteq \operatorname{tr}(\pi)\bigr) \implies \operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \emptyset \land \neg(\ell_1 \parallel \ell_2)"
+    >
+      <ConceptLink targetId="espacio">Espazioan</ConceptLink>, bi <ConceptLink targetId="recta">zuzen</ConceptLink> desberdinen trazadurak disjuntuak izatea ez da nahikoa paralelotasunerako. Bi zuzen <ConceptLink targetId="coplanaridad">koplanarrak</ConceptLink> ez badira, ezin dute punturik partekatu, puntu komun bat duten bi zuzen desberdin plano batean daudelako (<ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-6">I.6 axiomak</ConceptLink>); beraz, <ConceptLink targetId="rectas-cruzadas">zuzen gurutzatuak</ConceptLink> dira, eta ez paraleloak.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

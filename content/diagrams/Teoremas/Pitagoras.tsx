@@ -5,7 +5,7 @@ export const PitagorasSpec = createDiagramSpec(
 {
   "version": 3,
   "renderer": "matematika-diagram-renderer-v3",
-  "title": "Pitagorasen teorema",
+  "title": "Teorema de Pitágoras",
   "componentId": "Pitagoras",
   "category": "Teoremas",
   "mode": "simulation",
@@ -854,11 +854,11 @@ export const PitagorasSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Mugitu A eta B.",
+  "note": "Arrastre los vértices A y B para modificar los catetos y observar la relación a² + b² = c².",
   "translations": {
     "eu": {
       "title": "Pitagorasen teorema",
-      "note": "Mugitu A eta B.",
+      "note": "Mugitu A eta B erpinak katetoak aldatzeko eta a² + b² = c² erlazioa ikusteko.",
       "labels": {
         "triangulo": "ABC hirukia",
         "segBC": "a katetoa",
@@ -868,6 +868,20 @@ export const PitagorasSpec = createDiagramSpec(
         "cuadradoA": "karratua a-ren gainean",
         "cuadradoB": "karratua b-ren gainean",
         "cuadradoC": "karratua c-ren gainean"
+      }
+    },
+    "en": {
+      "title": "Pythagorean Theorem",
+      "note": "Move vertices A and B to modify the legs and observe the relation a² + b² = c².",
+      "labels": {
+        "triangulo": "Triangle ABC",
+        "segBC": "Leg a",
+        "segCA": "Leg b",
+        "segAB": "Hypotenuse c",
+        "anguloRecto": "Right angle at C",
+        "cuadradoA": "Square on a",
+        "cuadradoB": "Square on b",
+        "cuadradoC": "Square on c"
       }
     }
   }

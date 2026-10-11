@@ -1,7 +1,8 @@
 import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';
 
 /* @matematika-diagram-spec:start */
-export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
+export const DemoTrianguloIsoscelesSpec = createDiagramSpec(
+{
   "version": 3,
   "renderer": "matematika-diagram-renderer-v3",
   "title": "Demostración de Pappus: Teorema del triángulo isósceles",
@@ -12,15 +13,37 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
   "grid": false,
   "showLabels": true,
   "viewport": {
-    "bounds": [-5, 6, 5, -3],
-    "home": [-5, 6, 5, -3],
+    "bounds": [
+      -5,
+      6,
+      5,
+      -3
+    ],
+    "home": [
+      -5,
+      6,
+      5,
+      -3
+    ],
     "minZoom": 0.2,
     "maxZoom": 10,
     "padding": 0.16
   },
   "layers": [
-    { "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false },
-    { "id": "annotations", "label": "Anotaciones", "order": 1, "visible": true, "locked": false }
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Anotaciones",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
   ],
   "groups": [],
   "objects": [
@@ -33,13 +56,28 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Vértice B", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértice B",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "pB",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": -3, "y": -2 },
-      "mobility": { "type": "fixed" },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "pC",
@@ -50,13 +88,28 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Vértice C", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértice C",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "pC",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 3, "y": -2 },
-      "mobility": { "type": "fixed" },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 3,
+        "y": -2
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "pA",
@@ -67,13 +120,29 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Vértice A", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértice A",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "pA",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 0, "y": 4 },
-      "mobility": { "type": "axis-x", "coordinate": 0 },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 4
+      },
+      "mobility": {
+        "type": "axis-x",
+        "coordinate": 4
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "ladoAB",
@@ -84,15 +153,25 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Lado AB", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado AB",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "ladoAB",
       "objectType": "path",
       "geometry": {
         "type": "segment",
-        "points": ["pA", "pB"]
+        "points": [
+          "pA",
+          "pB"
+        ]
       },
-      "appearance": { "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+      "appearance": {
+        "strokeWidth": 2.5,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "ladoAC",
@@ -103,15 +182,25 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Lado AC", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado AC",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "ladoAC",
       "objectType": "path",
       "geometry": {
         "type": "segment",
-        "points": ["pA", "pC"]
+        "points": [
+          "pA",
+          "pC"
+        ]
       },
-      "appearance": { "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+      "appearance": {
+        "strokeWidth": 2.5,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "ladoBC",
@@ -122,15 +211,25 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Base BC", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Base BC",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "ladoBC",
       "objectType": "path",
       "geometry": {
         "type": "segment",
-        "points": ["pB", "pC"]
+        "points": [
+          "pB",
+          "pC"
+        ]
       },
-      "appearance": { "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+      "appearance": {
+        "strokeWidth": 2.5,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "polyABC",
@@ -141,15 +240,27 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Triángulo isósceles ABC", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo isósceles ABC",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "polyABC",
       "objectType": "path",
       "geometry": {
         "type": "polygon",
-        "points": ["pA", "pB", "pC"]
+        "points": [
+          "pA",
+          "pB",
+          "pC"
+        ]
       },
-      "appearance": { "fillOpacity": 0.12, "strokeWidth": 1, "preserveColorOnHighlight": true }
+      "appearance": {
+        "strokeWidth": 1,
+        "fillOpacity": 0.12,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "congruenceMarkAB",
@@ -160,18 +271,27 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Marca de congruencia en AB", "role": "secondary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia en AB",
+        "role": "secondary"
+      },
       "target": true,
       "targetId": "congruenceMarkAB",
       "objectType": "mark",
       "variant": "congruence",
       "anchor": {
         "type": "between-points",
-        "points": ["pA", "pB"]
+        "points": [
+          "pA",
+          "pB"
+        ]
       },
       "count": 2,
       "height": 0.5,
-      "appearance": { "preserveColorOnHighlight": true }
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "congruenceMarkAC",
@@ -182,18 +302,27 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Marca de congruencia en AC", "role": "secondary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia en AC",
+        "role": "secondary"
+      },
       "target": true,
       "targetId": "congruenceMarkAC",
       "objectType": "mark",
       "variant": "congruence",
       "anchor": {
         "type": "between-points",
-        "points": ["pA", "pC"]
+        "points": [
+          "pA",
+          "pC"
+        ]
       },
       "count": 2,
       "height": 0.5,
-      "appearance": { "preserveColorOnHighlight": true }
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "anguloA",
@@ -204,14 +333,25 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Ángulo en el vértice A", "role": "secondary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo en el vértice A",
+        "role": "secondary"
+      },
       "target": true,
       "targetId": "anguloA",
       "objectType": "angle",
-      "points": ["pB", "pA", "pC"],
+      "points": [
+        "pB",
+        "pA",
+        "pC"
+      ],
       "sweep": "non-reflex",
       "marker": "arc",
-      "appearance": { "radius": 0.9, "preserveColorOnHighlight": true }
+      "appearance": {
+        "radius": 0.9,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "anguloB",
@@ -222,14 +362,25 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Ángulo en el vértice B", "role": "secondary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo en el vértice B",
+        "role": "secondary"
+      },
       "target": true,
       "targetId": "anguloB",
       "objectType": "angle",
-      "points": ["pC", "pB", "pA"],
+      "points": [
+        "pC",
+        "pB",
+        "pA"
+      ],
       "sweep": "non-reflex",
       "marker": "arc",
-      "appearance": { "radius": 1, "preserveColorOnHighlight": true }
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "anguloC",
@@ -240,14 +391,25 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Ángulo en el vértice C", "role": "secondary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo en el vértice C",
+        "role": "secondary"
+      },
       "target": true,
       "targetId": "anguloC",
       "objectType": "angle",
-      "points": ["pA", "pC", "pB"],
+      "points": [
+        "pA",
+        "pC",
+        "pB"
+      ],
       "sweep": "non-reflex",
       "marker": "arc",
-      "appearance": { "radius": 1, "preserveColorOnHighlight": true }
+      "appearance": {
+        "radius": 1,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
   "relations": [],
@@ -269,15 +431,33 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       ],
       "durationMs": 1000,
       "objectStates": {
-        "ladoAB": { "emphasis": "primary" },
-        "ladoAC": { "emphasis": "primary" },
-        "congruenceMarkAB": { "emphasis": "primary" },
-        "congruenceMarkAC": { "emphasis": "primary" },
-        "polyABC": { "emphasis": "secondary" },
-        "pA": { "emphasis": "secondary" },
-        "pB": { "emphasis": "secondary" },
-        "pC": { "emphasis": "secondary" },
-        "ladoBC": { "emphasis": "none" }
+        "ladoAB": {
+          "emphasis": "primary"
+        },
+        "ladoAC": {
+          "emphasis": "primary"
+        },
+        "congruenceMarkAB": {
+          "emphasis": "primary"
+        },
+        "congruenceMarkAC": {
+          "emphasis": "primary"
+        },
+        "polyABC": {
+          "emphasis": "secondary"
+        },
+        "pA": {
+          "emphasis": "secondary"
+        },
+        "pB": {
+          "emphasis": "secondary"
+        },
+        "pC": {
+          "emphasis": "secondary"
+        },
+        "ladoBC": {
+          "emphasis": "none"
+        }
       }
     },
     {
@@ -298,16 +478,36 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       ],
       "durationMs": 1000,
       "objectStates": {
-        "anguloA": { "emphasis": "primary" },
-        "pA": { "emphasis": "primary" },
-        "ladoAB": { "emphasis": "secondary" },
-        "ladoAC": { "emphasis": "secondary" },
-        "congruenceMarkAB": { "emphasis": "secondary" },
-        "congruenceMarkAC": { "emphasis": "secondary" },
-        "polyABC": { "emphasis": "none" },
-        "ladoBC": { "emphasis": "none" },
-        "pB": { "emphasis": "none" },
-        "pC": { "emphasis": "none" }
+        "anguloA": {
+          "emphasis": "primary"
+        },
+        "pA": {
+          "emphasis": "primary"
+        },
+        "ladoAB": {
+          "emphasis": "secondary"
+        },
+        "ladoAC": {
+          "emphasis": "secondary"
+        },
+        "congruenceMarkAB": {
+          "emphasis": "secondary"
+        },
+        "congruenceMarkAC": {
+          "emphasis": "secondary"
+        },
+        "polyABC": {
+          "emphasis": "none"
+        },
+        "ladoBC": {
+          "emphasis": "none"
+        },
+        "pB": {
+          "emphasis": "none"
+        },
+        "pC": {
+          "emphasis": "none"
+        }
       }
     },
     {
@@ -328,16 +528,36 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       ],
       "durationMs": 1000,
       "objectStates": {
-        "ladoAB": { "emphasis": "primary" },
-        "ladoAC": { "emphasis": "primary" },
-        "congruenceMarkAB": { "emphasis": "primary" },
-        "congruenceMarkAC": { "emphasis": "primary" },
-        "anguloA": { "emphasis": "primary" },
-        "pA": { "emphasis": "primary" },
-        "pB": { "emphasis": "secondary" },
-        "pC": { "emphasis": "secondary" },
-        "polyABC": { "emphasis": "secondary" },
-        "ladoBC": { "emphasis": "none" }
+        "ladoAB": {
+          "emphasis": "primary"
+        },
+        "ladoAC": {
+          "emphasis": "primary"
+        },
+        "congruenceMarkAB": {
+          "emphasis": "primary"
+        },
+        "congruenceMarkAC": {
+          "emphasis": "primary"
+        },
+        "anguloA": {
+          "emphasis": "primary"
+        },
+        "pA": {
+          "emphasis": "primary"
+        },
+        "pB": {
+          "emphasis": "secondary"
+        },
+        "pC": {
+          "emphasis": "secondary"
+        },
+        "polyABC": {
+          "emphasis": "secondary"
+        },
+        "ladoBC": {
+          "emphasis": "none"
+        }
       }
     },
     {
@@ -360,18 +580,42 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       ],
       "durationMs": 1000,
       "objectStates": {
-        "anguloB": { "emphasis": "primary" },
-        "anguloC": { "emphasis": "primary" },
-        "pB": { "emphasis": "primary" },
-        "pC": { "emphasis": "primary" },
-        "ladoBC": { "emphasis": "secondary" },
-        "ladoAB": { "emphasis": "secondary" },
-        "ladoAC": { "emphasis": "secondary" },
-        "congruenceMarkAB": { "emphasis": "none" },
-        "congruenceMarkAC": { "emphasis": "none" },
-        "anguloA": { "emphasis": "none" },
-        "polyABC": { "emphasis": "none" },
-        "pA": { "emphasis": "none" }
+        "anguloB": {
+          "emphasis": "primary"
+        },
+        "anguloC": {
+          "emphasis": "primary"
+        },
+        "pB": {
+          "emphasis": "primary"
+        },
+        "pC": {
+          "emphasis": "primary"
+        },
+        "ladoBC": {
+          "emphasis": "secondary"
+        },
+        "ladoAB": {
+          "emphasis": "secondary"
+        },
+        "ladoAC": {
+          "emphasis": "secondary"
+        },
+        "congruenceMarkAB": {
+          "emphasis": "none"
+        },
+        "congruenceMarkAC": {
+          "emphasis": "none"
+        },
+        "anguloA": {
+          "emphasis": "none"
+        },
+        "polyABC": {
+          "emphasis": "none"
+        },
+        "pA": {
+          "emphasis": "none"
+        }
       }
     }
   ],
@@ -422,9 +666,8 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec({
       }
     }
   }
-});
+}
+);
 /* @matematika-diagram-spec:end */
 
-export const DemoTrianguloIsosceles = () => (
-  <DiagramRenderer spec={DemoTrianguloIsoscelesSpec} />
-);
+export const DemoTrianguloIsosceles = () => <DiagramRenderer spec={DemoTrianguloIsoscelesSpec} />;

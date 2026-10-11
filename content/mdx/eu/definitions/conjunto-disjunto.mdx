@@ -12,7 +12,7 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="B" />i $A$ eta $B$ <ConceptLink targetId="conjunto">multzo</ConceptLink> **disjuntuak** dira haien artean elementu komunik ez badute, hau da, haien ebakidura multzo hutsa bada:
+<Capitular letra="B" />i $A$ eta $B$ <ConceptLink targetId="conjunto">multzo</ConceptLink> **disjuntuak** dira haien artean elementu komunik ez badute, hau da, haien <ConceptLink targetId="interseccion">ebakidura</ConceptLink> <ConceptLink targetId="conjunto-vacio">multzo hutsa</ConceptLink> bada:
 $$
 A \cap B = \emptyset \iff \forall x \ (x \in A \implies x \notin B)
 $$
@@ -31,9 +31,9 @@ $$
     <PropiedadItem 
       id="disjuncion-dos-a-dos-vs-global" 
       title="Binaka disjuntuak izatea vs. ebakidura global hutsa"
-      formula="\big(\forall i \neq j \, (A_i \cap A_j = \emptyset)\big) \implies \bigcap_{i \in I} A_i = \emptyset"
+      formula="\lvert I \rvert \ge 2 \land \forall i, j \in I \, (i \neq j \implies A_i \cap A_j = \emptyset) \implies \bigcap_{i \in I} A_i = \emptyset"
     >
-      $n \ge 3$ multzotarako, binaka disjuntuak izatearen baldintza ($\forall i \neq j, \, A_i \cap A_j = \emptyset$) zorrotzagoa da ebakidura global hutsa izatea baino ($\bigcap_{i \in I} A_i = \emptyset$). Hiru multzok elkarrekin elementu komunik ez izatea gerta daiteke, binaka elementuak partekatzen dituzten arren.
+      Familiak gutxienez bi kide baditu ($\lvert I \rvert \ge 2$), binaka disjuntua izateak ebakidura global hutsa izatea dakar. Alderantzizkoa ez da betetzen hiru multzotik aurrera: $A_1 = \{1, 2\}$, $A_2 = \{2, 3\}$ eta $A_3 = \{1, 3\}$ multzoen ebakidura globala hutsa da, baina binaka ebakitzen dute elkar.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -41,7 +41,7 @@ $$
       title="Diskurtsoaren unibertsoaren partizioa domeinutan"
       formula="\mathcal{P} \cap \mathcal{L} = \emptyset \land \mathcal{P} \cap \Pi = \emptyset \land \mathcal{L} \cap \Pi = \emptyset"
     >
-      <ConceptLink targetId="logica">Mota anitzeko logikan</ConceptLink> eta <ConceptLink targetId="geometria-hilbertiana">geometria hilbertiarraren</ConceptLink> oinarri axiomatikoetan, <ConceptLink targetId="punto">puntuen</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">zuzenen</ConceptLink> $\mathcal{L}$ eta <ConceptLink targetId="plano">planoen</ConceptLink> $\Pi$ <ConceptLink targetId="dominio">domeinuak</ConceptLink> binaka disjuntuak dira elkarren artean eta $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ diskurtsoaren unibertso globalaren (<ConceptLink targetId="espacio">espazioaren</ConceptLink>) partizio bat osatzen dute.
+      <ConceptLink targetId="geometria-hilbertiana">Geometria hilbertiarra</ConceptLink> formalizatzen duen <ConceptLink targetId="logica">mota anitzeko logikan</ConceptLink>, <ConceptLink targetId="punto">puntuen</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">zuzenen</ConceptLink> $\mathcal{L}$ eta <ConceptLink targetId="plano">planoen</ConceptLink> $\Pi$ <ConceptLink targetId="dominio">domeinuak</ConceptLink> binaka disjuntuak dira eta $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ <ConceptLink targetId="universo-discurso">diskurtso-unibertsoaren</ConceptLink> <ConceptLink targetId="particion">partizio</ConceptLink> bat osatzen dute.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

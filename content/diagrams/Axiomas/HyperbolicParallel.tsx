@@ -494,7 +494,17 @@ export const HyperbolicParallelSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastre P: en cada posición exterior a l, las rectas m y n pasan por P sin cortar a l dentro del disco. El borde representa puntos ideales y no pertenece al plano."
+  "note": "Arrastre P: en cada posición exterior a l, las rectas m y n pasan por P sin cortar a l dentro del disco. El borde representa puntos ideales y no pertenece al plano.",
+  "translations": {
+    "eu": {
+      "title": "Lobachevskiren paraleloak",
+      "note": "Arrastatu P: l-tik kanpoko posizio bakoitzean, m eta n zuzenak P-tik igarotzen dira disko barruan l ebaki gabe. Ertzak puntu idealak adierazten ditu eta ez dagokio planoari."
+    },
+    "en": {
+      "title": "Lobachevskian Parallels",
+      "note": "Drag P: at each position outside l, lines m and n pass through P without intersecting l inside the disk. The boundary represents ideal points and does not belong to the plane."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

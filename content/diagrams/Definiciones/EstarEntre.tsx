@@ -419,6 +419,28 @@ export const EstarEntreSpec = createDiagramSpec(
           "description": "Hiru puntu lerrokide desberdinetatik, bat eta bakarra dago beste bien artean."
         }
       }
+    },
+    "en": {
+      "title": "Betweenness (Intermediacy)",
+      "note": "Drag points A and C to move the line, or slide B along it.",
+      "steps": {
+        "step-orden": {
+          "label": "Betweenness A * B * C",
+          "description": "Point B lies strictly within the segment bounded by A and C."
+        },
+        "step-simetria": {
+          "label": "Axiom II-1: Symmetry",
+          "description": "The relation is invariant under reversing endpoints: A * B * C and C * B * A are equivalent."
+        },
+        "step-extension": {
+          "label": "Axiom II-2: Extension",
+          "description": "For any two points A and C, there always exists at least one point D such that A * C * D."
+        },
+        "step-exclusividad": {
+          "label": "Axiom II-3: Exclusivity",
+          "description": "Out of any three distinct collinear points, exactly one lies between the other two."
+        }
+      }
     }
   }
 }

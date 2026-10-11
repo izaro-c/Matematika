@@ -1,45 +1,56 @@
 export const metadata = {
   id: "teorema-tales",
+  lang: "eu",
   type: "teorema",
   title: "Talesen teorema",
-  description: "Bi zuzen ebakitzaileri zuzen paraleloen familia batek ebakitzen badie, ebakitzaile batean zehaztutako zuzenkiak bestean zehaztutako zuzenkiekiko proportzionalak dira.",
-  statement: "r eta r' bi zuzen ebakitzaile L1, L2 eta L3 hiru zuzen paralelok ebakitzen badituzte hurrenez hurren A, B, C eta A', B', C' puntuetan, orduan |AB| / |BC| = |A'B'| / |B'C'| betetzen da.",
+  description: "Plano bateko hiru zuzen paralelok edozein bi zuzen ebakitzailetan zuzenki homologo proportzionalak zehazten dituzte.",
+  statement: "Izan bitez ℓ1, ℓ2, ℓ3 σ plano bateko hiru zuzen paralelo desberdin, eta t, t' σ planoko bi zuzen, haiekiko ebakitzaileak, haiek hurrenez hurren A, B, C eta A', B', C' puntuetan ebakitzen dituztenak, B puntua A eta C puntuen artean dagoela. Orduan |AB|/|BC| = |A'B'|/|B'C'|.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-euclidiana", "proporcionalidad", "paralelas", "semejanza"],
   hasSimulation: true,
   authors: ["tales", "euclides"],
   demos: ["demo-tales"],
+  difficulty: "intermedio",
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro VI, Proposición 2", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "VI. liburua, 2. proposizioa", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "III. kapitulua", role: "secondary" }
   ]
 };
 
 import { Tales } from '@content/diagrams/Teoremas/Tales';
 export const Simulation = Tales;
 
-<Capitular letra="T" />alesen teoremak antzekotasun geometrikoaren eta proportzionaltasunaren oinarria finkatzen du plano euklidetarrean. Ezarri egiten du <ConceptLink targetId="paralelas">zuzen paraleloen</ConceptLink> sistema batek bi <ConceptLink targetId="recta">zuzen ebakitzailerekin</ConceptLink> duen ebakidurak aldagabe mantentzen duela ebakitako <ConceptLink targetId="segmento">zuzenkien</ConceptLink> luzeren arteko erlazioa.
+<Capitular letra="H" />iru <ConceptLink targetId="paralelas" isDependency={true}>zuzen paralelok</ConceptLink>, <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> berean daudenean, edozein bi <ConceptLink targetId="secante" isDependency={true}>zuzen ebakitzailetan</ConceptLink> <ConceptLink targetId="proporcionalidad">proportzionalak</ConceptLink> diren <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink> homologoak zehazten dituzte.
 
-<Separador />
+Teoremak <ConceptLink targetId="paralelas">paralelotasuna</ConceptLink> <ConceptLink targetId="longitud" isDependency={true}>luzeren</ConceptLink> arteko erlazio bihurtzen du, eta <ConceptLink targetId="semejanza">antzekotasunaren</ConceptLink> teoriaren oinarria da. <ConceptLink targetId="sistema-euclidiano">Sistema euklidearreko</ConceptLink> emaitza da: <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axiomaren</ConceptLink> mende dago, eta, frogapen klasikoan, <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangeluaren azaleraren teoremaren</ConceptLink> mende.
 
-### Enuntziatu formala
+<Definicion title="Talesen teoremaren enuntziatua">
+Izan bitez $\ell_1, \ell_2, \ell_3$ $\sigma$ <ConceptLink targetId="plano">plano</ConceptLink> bateko hiru <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> <ConceptLink targetId="paralelas">paralelo</ConceptLink> desberdin, eta izan bitez $t, t'$ $\sigma$ planoko bi zuzen, haiekiko <ConceptLink targetId="secante">ebakitzaileak</ConceptLink>. Izan bitez $A, B, C$ $t$ zuzenak $\ell_1, \ell_2, \ell_3$ ebakitzen dituen <ConceptLink targetId="punto" isDependency={true}>puntuak</ConceptLink>, eta $A', B', C'$ $t'$ zuzenak ebakitzen dituen puntuak, $B$ puntua $A$ eta $C$ puntuen <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> dagoela:
 
-Izan bitez $r$ eta $r'$ planoko bi <ConceptLink targetId="recta">zuzen ebakitzaile</ConceptLink>. Izan bitez $L_1, L_2, L_3$ elkarren artean <VisualBind element="rectas-paralelas" color="musgo"><ConceptLink targetId="paralelas">paraleloak diren hiru zuzen</ConceptLink></VisualBind>, $r$ zuzena <VisualBind element="punto-a" color="pavo">$A$</VisualBind>, <VisualBind element="punto-b" color="terracota">$B$</VisualBind>, $C$ puntuetan eta $r'$ zuzena <VisualBind element="punto-a-primo" color="pavo">$A'$</VisualBind>, <VisualBind element="punto-b-primo" color="terracota">$B'$</VisualBind>, $C'$ puntuetan ebakitzen dutenak. Proportzionaltasun-arrazoien berdintza betetzen da:
+$$
+A * B * C, \quad \{A\} = \operatorname{tr}(t) \cap \operatorname{tr}(\ell_1), \ \dots, \ \{C'\} = \operatorname{tr}(t') \cap \operatorname{tr}(\ell_3).
+$$
 
-<Formula>
-  $$ \frac{|\overline{AB}|}{|\overline{BC}|} = \frac{|\overline{A'B'}|}{|\overline{B'C'}|} \quad \Longleftrightarrow \quad \frac{|\overline{AB}|}{|\overline{A'B'}|} = \frac{|\overline{BC}|}{|\overline{B'C'}|} $$
-</Formula>
+Orduan $A' * B' * C'$ betetzen da, eta zuzenki homologoak proportzionalak dira:
 
-Beste era batera esanda, $r$ zuzeneko edozein bi zuzenkiren neurrien arteko arrazoia $r'$ zuzeneko zuzenki homologoen neurrien arteko arrazoiaren berdina da.
+$$
+\frac{|AB|}{|BC|} = \frac{|A'B'|}{|B'C'|}, \qquad \frac{|AB|}{|AC|} = \frac{|A'B'|}{|A'C'|}.
+$$
 
-<Separador />
+$t$ eta $t'$ zuzenak paraleloak izan daitezke edo ebaki egin daitezke, baita $\ell_i$ zuzenetako baten puntu batean ere.
+</Definicion>
 
-### Triangeluetarako korolarioa
+### Triangeluaren korolarioa
 
-Edozein $\triangle ABC$ <ConceptLink targetId="triangulo">triangelutan</ConceptLink>, baldin $\overline{BC}$ aldeari <ConceptLink targetId="paralelas">paraleloa</ConceptLink> zaion $r$ zuzen batek $\overline{AB}$ eta $\overline{AC}$ aldeak $D$ eta $E$ puntuetan ebakitzen baditu:
-- Aldeetan zehaztutako zuzenkiak proportzionalak dira: $\frac{|\overline{AD}|}{|\overline{DB}|} = \frac{|\overline{AE}|}{|\overline{EC}|}$.
-- Sortutako $\triangle ADE$ triangelua eta jatorrizko $\triangle ABC$ triangelua <ConceptLink targetId="semejanza">antzekoak</ConceptLink> dira.
+Zuzen ebakitzaileak $\ell_1$ zuzeneko puntu batean ebakitzen direnean, teorema <ConceptLink targetId="triangulo">triangelu</ConceptLink> bati buruzkoa da. Izan bedi $\triangle ABC$, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind> erpinekin, eta izan bedi $\ell$ <VisualBind element="lineBC" color="carbon">$\overleftrightarrow{BC}$</VisualBind> zuzenaren <VisualBind element="parCBD" color="ocre">zuzen paraleloa</VisualBind>, hura ez dena, $\overline{AB}$ aldea <VisualBind element="pD" color="terracota">$D$</VisualBind> puntuan eta $\overline{AC}$ aldea <VisualBind element="intE" color="terracota">$E$</VisualBind> puntuan ebakitzen dituena, biak erpinetatik desberdinak. Orduan
 
-<Separador />
+$$
+\frac{|AD|}{|DB|} = \frac{|AE|}{|EC|}, \qquad \frac{|AD|}{|AB|} = \frac{|AE|}{|AC|}.
+$$
 
-### Froga eta oinarritze axiomatikoa
+<VisualBind element="segAD" color="carbon">$\overline{AD}$</VisualBind> eta <VisualBind element="segDB" color="carbon">$\overline{DB}$</VisualBind> zuzenkien arrazoia <VisualBind element="segAE" color="carbon">$\overline{AE}$</VisualBind> eta <VisualBind element="segEC" color="carbon">$\overline{EC}$</VisualBind> zuzenkiena bera da. Kasu hau <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko VI.2 proposizioa da, eta han <ConceptLink targetId="teorema-reciproco-tales">alderantzizkoa</ConceptLink> ere enuntziatzen da: $D \in \operatorname{seg}(AB)$, $E \in \operatorname{seg}(AC)$ eta $|AD|/|DB| = |AE|/|EC|$ badira, orduan $\overleftrightarrow{DE} \parallel \overleftrightarrow{BC}$.
 
-Frogapen euklidetarra paraleloen artean oinarri edo altuera bera duten <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangeluen azalerak</ConceptLink> alderatzean oinarritzen da. Egitura axiomatiko modernoan, <ConceptLink targetId="axioma-arquimedes">Arkimedesen axioma</ConceptLink> eta zuzen errealaren osotasuna beharrezkoak dira arrazoi arrazional zein neurtezinetarako baliagarritasuna bermatzeko.
+<Nota>
+Azaleren bidezko frogapen klasikoak azalera-funtzioa eta luzera erreala erabiltzen ditu, eta, beraz, <ConceptLink targetId="teorema-area-rectangulo">laukizuzenaren azaleraren teoreman</ConceptLink> parte hartzen duten <ConceptLink targetId="continuidad">jarraitutasun-axiomak</ConceptLink>. <ConceptLink targetId="hilbert">Hilbertek</ConceptLink> *Grundlagen der Geometrie* laneko III. kapituluan erakutsi zuen proportzioen teoria eta teorema hau jarraitutasunik gabe oinarri daitezkeela, <ConceptLink targetId="teorema-pascal">Pascalen teoreman</ConceptLink> oinarritutako <ConceptLink targetId="calculo-segmentos">zuzenki-kalkulu</ConceptLink> baten bidez. <ConceptLink targetId="sistema-hiperbolico">Geometria hiperbolikoan</ConceptLink> teorema ez da orokorrean betetzen.
+</Nota>

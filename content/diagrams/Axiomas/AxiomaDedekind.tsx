@@ -473,7 +473,17 @@ export const AxiomaDedekindSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra P sobre la recta: cambian L y R, pero la frontera sigue siendo única."
+  "note": "Arrastra P sobre la recta: cambian L y R, pero la frontera sigue siendo única.",
+  "translations": {
+    "eu": {
+      "title": "Osotasuna: Dedekinden ebakidura",
+      "note": "Arrastatu P zuzenean zehar: L eta R aldatzen dira, baina muga bakarra izaten jarraitzen du."
+    },
+    "en": {
+      "title": "Completeness: Dedekind Cut",
+      "note": "Drag P along the line: L and R change, but the boundary remains unique."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

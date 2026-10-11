@@ -1,52 +1,47 @@
 export const metadata = {
   id: "teorema-area-aditividad",
+  lang: "en",
   type: "teorema",
-  title: "Area Additivity Theorem",
-  description: "If a planar polygonal region is decomposed into a finite number of polygonal subregions with disjoint interiors, the area of the total region equals the sum of the areas of its parts.",
-  statement: "If R is the union of n pairwise interior-disjoint polygonal regions R1, R2, ..., Rn, then Area(R) = ∑ Area(Ri).",
+  title: "Area additivity theorem",
+  description: "If a polygonal region is the union of finitely many polygonal regions with pairwise disjoint interiors, its area is the sum of the areas of the pieces.",
+  statement: "If R = R₁ ∪ … ∪ Rₙ with R₁, …, Rₙ polygonal regions with pairwise disjoint interiors, then A(R) = A(R₁) + … + A(Rₙ).",
   branch: "51M",
+  tags: ["area", "region-poligonal", "aditividad"],
   hasSimulation: false,
-  authors: ["euclides", "hilbert"],
+  difficulty: "básico",
+  authors: ["hilbert"],
   demos: ["demo-area-aditividad"],
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV, §19", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV", role: "primary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Chapter 5", role: "formalization" }
   ]
 };
 
-<Capitular letra="T" />he area additivity theorem constitutes the fundamental pillar of <ConceptLink targetId="teoria-medida-area">surface measurement</ConceptLink> in planar geometry. It guarantees that the area measure function assigned to polygonal regions is a finitely additive measure invariant under finite partitions.
+<Capitular letra="I" />f a <ConceptLink targetId="region-poligonal" isDependency={true}>polygonal region</ConceptLink> is the union of finitely many polygonal regions with pairwise disjoint <ConceptLink targetId="interior-triangulo">interiors</ConceptLink>, its <ConceptLink targetId="teoria-medida-area" isDependency={true}>area</ConceptLink> is the sum of the areas of the pieces.
+
+The definition of an <ConceptLink targetId="teoria-medida-area" isDependency={true}>area function</ConceptLink> only requires additivity for two pieces; this <ConceptLink targetId="teorema">theorem</ConceptLink> extends it to any finite number of pieces, which is how it is used when a rectangle is decomposed into squares, a triangle into two right triangles, or a square into rectangles and triangles. It is the step that allows areas to be computed by cutting figures up and reassembling them.
+
+<Definicion title="Formal statement of the area additivity theorem">
+Let $\operatorname{A}$ be an <ConceptLink targetId="teoria-medida-area" isDependency={true}>area function</ConceptLink> on the <ConceptLink targetId="region-poligonal" isDependency={true}>polygonal regions</ConceptLink> of a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\sigma$, and let $R_1, \dots, R_n \in \mathcal{R}_\sigma$, with $n \geq 1$, be regions with pairwise disjoint interiors: for $i \neq j$, $R_i \cap R_j$ is contained in a finite union of <ConceptLink targetId="segmento" isDependency={true}>segments</ConceptLink>. If $R = R_1 \cup \dots \cup R_n$, then
+
+$$
+\operatorname{A}(R) = \sum_{i=1}^{n} \operatorname{A}(R_i)
+$$
+</Definicion>
 
 <Separador />
 
-### Formal statement
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consequences">
+    <PropiedadItem id="area-regiones-equidescomponibles" title="Equidecomposable regions" formula="P = \bigcup_{i=1}^{n} T_i,\ Q = \bigcup_{i=1}^{n} T'_i,\ T_i \cong T'_i \implies \operatorname{A}(P) = \operatorname{A}(Q)">
+      If two <ConceptLink targetId="region-poligonal">polygonal regions</ConceptLink> decompose into triangular regions with disjoint interiors that are pairwise <ConceptLink targetId="congruencia-triangulos">congruent</ConceptLink> (<ConceptLink targetId="equidescomponibilidad">equidecomposability</ConceptLink>), they have the same area: it suffices to add up the areas of the pieces.
+    </PropiedadItem>
+    <PropiedadItem id="monotonia-area" title="Monotonicity" formula="R' \subseteq R \implies \operatorname{A}(R') \leq \operatorname{A}(R)">
+      If $R' \subseteq R$, the region $R$ is the union of $R'$ and of the closure of $R \setminus R'$, which have disjoint interiors; by additivity and positivity of area, $\operatorname{A}(R') \leq \operatorname{A}(R)$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-Let $R \subset \mathcal{P}$ be a planar polygonal region. Suppose that $R$ is the finite union of polygonal regions $R_1, R_2, \dots, R_n$:
-
-<Formula>
-  $$ R = \bigcup_{i=1}^n R_i $$
-</Formula>
-
-such that for every pair $i \neq j$, the interior of $R_i$ and the interior of $R_j$ are disjoint ($\text{Int}(R_i) \cap \text{Int}(R_j) = \emptyset$). The additive property of the area measure function holds strictly:
-
-<Formula>
-  $$ \text{Area}(R) = \sum_{i=1}^n \text{Area}(R_i) $$
-</Formula>
-
-That is, the measure of the total region equals the sum of the area measures of each constituent subregion.
-
-<Separador />
-
-### Axiomatic foundations and equidecomposition
-
-In <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> formalization, the concept of area is constructed to bypass infinitesimal calculus via equidecomposability:
-- Two polygons $P$ and $Q$ are called **equidecomposable** (or scissors-congruent) if they can be partitioned into the same finite number of pairwise <ConceptLink targetId="congruencia">congruent</ConceptLink> triangles.
-- By the additivity theorem, any two equidecomposable polygons necessarily have the same area ($\text{Area}(P) = \text{Area}(Q)$).
-- The Bolyai-Gerwien theorem establishes that in the Euclidean plane, any two polygons with the same area are always equidecomposable.
-
-<Separador />
-
-### Invariance and normalization
-
-The area measure function satisfies three fundamental properties:
-1. **Positivity**: $\text{Area}(R) > 0$ for every non-empty polygonal region.
-2. **Congruence invariance**: If $R_1 \cong R_2$, then $\text{Area}(R_1) = \text{Area}(R_2)$.
-3. **Finite additivity**: $\text{Area}(R_1 \cup R_2) = \text{Area}(R_1) + \text{Area}(R_2)$ for interior-disjoint regions.
+<Nota>
+The converse of the first consequence holds in the Euclidean plane: two polygonal regions of equal area are equidecomposable (<ConceptLink targetId="teorema-bolyai-gerwien">Bolyai–Gerwien theorem</ConceptLink>). In space it fails: <ConceptLink targetId="dehn">Max Dehn</ConceptLink> (1900) proved that there are <ConceptLink targetId="poliedro">polyhedra</ConceptLink> of equal volume that are not equidecomposable, thereby solving <ConceptLink targetId="tercer-problema-hilbert">Hilbert's third problem</ConceptLink>; Sydler (1965) proved the converse: two polyhedra with equal volume and equal <ConceptLink targetId="invariante-dehn">Dehn invariant</ConceptLink> are equidecomposable.
+</Nota>

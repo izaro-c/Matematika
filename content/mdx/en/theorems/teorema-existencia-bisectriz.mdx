@@ -1,0 +1,69 @@
+export const metadata = {
+  id: "teorema-existencia-bisectriz",
+  lang: "en",
+  type: "teorema",
+  title: "Theorem of Existence and Uniqueness of the Angle Bisector",
+  description: "For every convex angle in a plane, there exists a unique ray originating at the vertex and contained in the interior of the angle that divides it into two congruent angles.",
+  statement: "For every convex angle ∠AOB in a plane, there exists a unique ray OC with origin at vertex O and lying in its interior such that ∠AOC ≅ ∠BOC.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "angulo", "bisectriz", "congruencia", "geometria-absoluta"],
+  hasSimulation: true,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-existencia-bisectriz"],
+  sources: [
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Proposition 9",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §5",
+      role: "primary"
+    }
+  ]
+};
+
+import { Bisectriz } from '@content/diagrams/Definiciones/Bisectriz';
+export const Simulation = Bisectriz;
+
+<Capitular letra="F" />or every convex <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>, there exists a unique <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink> originating at the <ConceptLink targetId="vertice" isDependency={true}>vertex</ConceptLink> and contained in the interior of the angle that divides it into two <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> angles.
+
+This fundamental <ConceptLink targetId="teorema">theorem</ConceptLink> of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, originally formalized and geometrically constructed by <ConceptLink targetId="euclides">Euclid</ConceptLink> in Proposition I.9 of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, establishes that symmetric angular partition is an invariant deductively guaranteed by the axioms of incidence, <ConceptLink targetId="estar-entre">order</ConceptLink>, and congruence (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink> and <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>), completely independent of the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>. Such a ray is defined as the <ConceptLink targetId="bisectriz">bisector</ConceptLink> of the angle.
+
+<Definicion title="Formal statement of the existence and uniqueness of the angle bisector">
+Let <VisualBind element="pO" color="carbon">$O \in \mathcal{P}$</VisualBind> be a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \Pi$, and let <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> and <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> be two non-opposite, non-coincident <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> sharing origin $O$, determining the convex <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> $\angle AOB = \overrightarrow{OA} \cup \overrightarrow{OB}$.
+
+There exists a unique <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink> <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> with origin at <ConceptLink targetId="vertice" isDependency={true}>vertex</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind>, contained in the <ConceptLink targetId="semiplano" isDependency={true}>half-plane</ConceptLink> bounded by line $\overleftrightarrow{OA}$ containing <VisualBind element="pB" color="terracota">$B$</VisualBind> and lying in the interior of angle $\angle AOB$, such that the two resulting angles are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>:
+
+$$
+\angle AOC \cong \angle BOC
+$$
+
+The <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink> <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> is called the <ConceptLink targetId="bisectriz">bisector</ConceptLink> of <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink> $\angle AOB$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Geometric properties and invariants">
+    <PropiedadItem 
+      id="caracterizacion-equidistancia-bisectriz" 
+      title="Equidistance to the supporting lines of the sides"
+      formula="P \in \overrightarrow{OC} \iff d(P, \overleftrightarrow{OA}) = d(P, \overleftrightarrow{OB})"
+    >
+      Every <ConceptLink targetId="punto">point</ConceptLink> $P$ belonging to the <ConceptLink targetId="bisectriz">bisector</ConceptLink> <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> is equidistant from the supporting <ConceptLink targetId="recta">lines</ConceptLink> $\overleftrightarrow{OA}$ and $\overleftrightarrow{OB}$ of the sides of the <ConceptLink targetId="angulo">angle</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="ortogonalidad-bisectrices-adyacentes" 
+      title="Orthogonality of the bisectors of adjacent supplementary angles"
+      formula="\overrightarrow{OC} \perp \overrightarrow{OD}"
+    >
+      The <ConceptLink targetId="bisectriz">bisectors</ConceptLink> of two adjacent <ConceptLink targetId="angulos-suplementarios">supplementary angles</ConceptLink> are mutually <ConceptLink targetId="perpendicular">perpendicular</ConceptLink>, forming a <ConceptLink targetId="angulo-recto">right angle</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

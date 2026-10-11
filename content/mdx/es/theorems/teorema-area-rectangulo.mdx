@@ -1,44 +1,44 @@
 export const metadata = {
   id: "teorema-area-rectangulo",
+  lang: "es",
   type: "teorema",
   title: "Teorema del área del rectángulo",
-  description: "El área de cualquier región rectangular es igual al producto escalar de la longitud de su base por la longitud de su altura.",
-  statement: "Dado un rectángulo R con base de longitud b y altura de longitud h, se satisface de forma única que Área(R) = b · h.",
+  description: "El área de la región de un rectángulo es el producto de las longitudes de dos lados contiguos.",
+  statement: "Si ABCD es un rectángulo con |AB| = b y |AD| = h, entonces el área de su región es A(ABCD) = b · h.",
   branch: "51M",
+  tags: ["area", "rectangulo", "longitud", "geometria-euclidiana"],
   hasSimulation: false,
-  authors: ["euclides"],
+  difficulty: "intermedio",
+  authors: ["euclides", "hilbert"],
   demos: ["demo-area-rectangulo"],
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 35", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV", role: "secondary" },
+    { title: "Elementos", author: "Euclides", locator: "Libro II, Definición 1", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Capítulo 5", role: "formalization" }
   ]
 };
 
-<Capitular letra="E" />l teorema del área del rectángulo proporciona la fórmula multiplicativa básica de la <ConceptLink targetId="teoria-medida-area">medida de áreas</ConceptLink> en el plano euclidiano. Constituye la norma de referencia a partir de la cual se deducen las fórmulas de área para todas las demás figuras poligonales.
+<Capitular letra="E" />l <ConceptLink targetId="teoria-medida-area" isDependency={true}>área</ConceptLink> de la región de un <ConceptLink targetId="rectangulo" isDependency={true}>rectángulo</ConceptLink> es el producto de las <ConceptLink targetId="longitud" isDependency={true}>longitudes</ConceptLink> de dos <ConceptLink targetId="lado">lados</ConceptLink> contiguos.
+
+La fórmula no es una definición: la <ConceptLink targetId="teoria-medida-area" isDependency={true}>función área</ConceptLink> solo fija el valor $1$ para el <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> unidad, y el producto $b \cdot h$ se deduce de la invariancia, la <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>aditividad finita</ConceptLink> y la <ConceptLink targetId="monotonia-area">monotonía</ConceptLink>. La <ConceptLink targetId="demo-area-rectangulo">demostración</ConceptLink> procede en tres etapas: lados enteros (el rectángulo se divide en $m \cdot n$ cuadrados unidad), lados racionales (se divide en cuadrados de lado $1/N$) y lados reales, donde las aproximaciones racionales por defecto y por exceso que proporciona el <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink> encierran el área entre cotas cada vez más próximas. Este resultado es el punto de partida del <ConceptLink targetId="teorema-area-triangulo">área del triángulo</ConceptLink>.
+
+<Definicion title="Enunciado formal del teorema del área del rectángulo">
+Sea $ABCD$ un <ConceptLink targetId="rectangulo" isDependency={true}>rectángulo</ConceptLink> de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\sigma$ del <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>, es decir, un <ConceptLink targetId="cuadrilatero" isDependency={true}>cuadrilátero</ConceptLink> cuyos cuatro <ConceptLink targetId="angulo">ángulos</ConceptLink> son <ConceptLink targetId="angulo-recto" isDependency={true}>rectos</ConceptLink>, y sean $b = |AB|$ y $h = |AD|$ las <ConceptLink targetId="longitud" isDependency={true}>longitudes</ConceptLink> de dos lados contiguos, medidas con el <ConceptLink targetId="segmento-unidad">segmento unidad</ConceptLink> que normaliza la función área. Entonces el área de la <ConceptLink targetId="region-poligonal" isDependency={true}>región poligonal</ConceptLink> limitada por $ABCD$ es
+
+$$
+\operatorname{A}(ABCD) = b \cdot h
+$$
+</Definicion>
 
 <Separador />
 
-### Enunciado formal
-
-Sea $R$ un rectángulo en el plano euclidiano $\mathcal{P}$ cuyos <ConceptLink targetId="perpendicular">lados perpendiculares</ConceptLink> miden $b = |\overline{AB}|$ (longitud de la base) y $h = |\overline{AD}|$ (longitud de la altura). La medida del área de la región rectangular $R$ satisface estrictamente la relación:
-
-<Formula>
-  $$ \text{Área}(R) = b \cdot h $$
-</Formula>
-
-Es decir, el área de una región rectangular equivale al producto aritmético de las medidas lineales de sus dos dimensiones ortogonales.
-
-<Separador />
-
-### Demostración y fundamentación axiomática
-
-La fundamentación rigurosa se construye en tres fases mediante el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink>:
-1. **Unidad patrón**: El área del <ConceptLink targetId="cuadrado">cuadrado unitario</ConceptLink> ($b=1, h=1$) se define axiomáticamente como $1$.
-2. **Dimensiones racionales**: Si $b = \frac{p}{q}$ y $h = \frac{m}{n}$ con $p, q, m, n \in \mathbb{N}$, se divide el rectángulo en $p \cdot m$ subcuadrados de lado $\frac{1}{q \cdot n}$. La suma aditiva de sus áreas demuestra que $\text{Área}(R) = \frac{p \cdot m}{q \cdot n} = b \cdot h$.
-3. **Dimensiones reales**: Mediante la propiedad de continuidad y el <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink>, el resultado se extiende a longitudes irracionales mediante aproximaciones por defecto y por exceso.
-
-<Separador />
-
-### Importancia como pivote geométrico
-
-- **Base de la fórmula del paralelogramo**: Todo <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> es equidescomponible con un rectángulo de igual base y altura.
-- **Base de la fórmula del triángulo**: Un rectángulo se divide por su diagonal en dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> <ConceptLink targetId="congruencia">congruentes</ConceptLink>, fundamentando que el <ConceptLink targetId="teorema-area-triangulo">área del triángulo</ConceptLink> sea $\frac{1}{2} b \cdot h$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Casos particulares y consecuencias">
+    <PropiedadItem id="area-cuadrado" title="Área del cuadrado" formula="\operatorname{A}(ABCD) = s^2">
+      Un <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> de lado de <ConceptLink targetId="longitud">longitud</ConceptLink> $s$ es un rectángulo con $b = h = s$; su área es $s^2$. Este es el sentido geométrico de la palabra «cuadrado» aplicada a un número.
+    </PropiedadItem>
+    <PropiedadItem id="area-triangulo-rectangulo-mitad" title="Mitad del rectángulo" formula="\operatorname{A}(\triangle ABD) = \tfrac{1}{2}\, b \cdot h">
+      La <ConceptLink targetId="diagonal">diagonal</ConceptLink> $\overline{BD}$ divide el rectángulo en dos <ConceptLink targetId="triangulo-rectangulo">triángulos rectángulos</ConceptLink> <ConceptLink targetId="congruencia-triangulos">congruentes</ConceptLink> de interiores disjuntos, así que cada uno tiene área $\tfrac{1}{2}\, b \cdot h$; es el primer paso del <ConceptLink targetId="teorema-area-triangulo">teorema del área del triángulo</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

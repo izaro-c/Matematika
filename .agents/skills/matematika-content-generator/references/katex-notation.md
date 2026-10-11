@@ -1,6 +1,8 @@
 # Estándares de Notación KaTeX y Símbolos Canónicos Modernos (ISO 80000-2)
 
-Toda fórmula y notación matemática en Matematika debe seguir rigurosamente los estándares internacionales contemporáneos fijados por la comunidad matemática global y la norma **ISO 80000-2**.
+Toda fórmula y notación matemática en Matematika debe seguir los estándares internacionales contemporáneos y la norma **ISO 80000-2**.
+
+> Las decisiones específicas del proyecto (nombres de planos, medidas, $\pi$, ángulo, triángulo, área, nomenclatura de axiomas) están en [convenciones-proyecto.md](./convenciones-proyecto.md) y prevalecen sobre esta tabla.
 
 ---
 
@@ -36,7 +38,7 @@ Toda fórmula y notación matemática en Matematika debe seguir rigurosamente lo
 | **Perpendicularidad** | $\perp$ | `\perp` | $\ell \perp m$ | $\top$, $\bot$ *(reservado a lógica: falsedad)* |
 | **Incidencia sintética** | $\mathbf{I}$ | `\mathbf{I}` | $P \, \mathbf{I} \, \ell$, $P \, \mathbf{I} \, \pi$ | $I$ cursiva ambigua, $\in$ (entre primitivos) |
 | **Traza de incidencia puntual** | $\operatorname{tr}$ | `\operatorname{tr}` | $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$ | $\ell \subseteq \pi$ *(colapso de tipos)* |
-| **Conjunto potencia** | $\mathcal{P}(A)$ | `\mathcal{P}(A)` | $\operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} \to \mathcal{P}(\mathcal{P})$ | $2^A$ *(en contextos sintéticos)* |
+| **Conjunto potencia** | $\wp(A)$ | `\wp(A)` | $\operatorname{tr}_{\mathcal{L}}\colon \mathcal{L} \to \wp(\mathcal{P})$ | $\mathcal{P}(A)$ *(colisiona con el dominio de puntos)*, $2^A$ |
 | **Aplicación funcional** | $\longrightarrow$ | `\longrightarrow` | $f\colon A \longrightarrow B$ | `->`, $\to$ sin espaciado |
 | **Asignación de elemento** | $\longmapsto$ | `\longmapsto` | $x \longmapsto f(x)$ | $\to$ para elementos |
 | **Pertenencia conjuntista** | $\in$ | `\in` | $P \in \mathcal{P}$, $x \in X$ | $\epsilon$ (letra griega épsilon) |

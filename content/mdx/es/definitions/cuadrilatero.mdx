@@ -2,13 +2,15 @@ export const metadata = {
   id: "cuadrilatero",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Cuadrilátero",
-  description: "Polígono plano de cuatro lados formado por la unión de cuatro segmentos que unen cuatro puntos coplanares no tres de ellos colineales.",
+  description: "Figura plana formada por cuatro segmentos que unen cíclicamente cuatro puntos coplanares, sin tres de ellos colineales y con lados no adyacentes disjuntos.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "poligono", "cuadrilatero", "orden"],
   hasSimulation: true,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 22", role: "primary" },
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Definiciones 19 y 22", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
   ]
 };
@@ -16,37 +18,66 @@ export const metadata = {
 import { Cuadrilatero } from '@content/diagrams/Definiciones/Cuadrilatero';
 export const Simulation = Cuadrilatero;
 
-<Capitular letra="U" />n cuadrilátero es un <ConceptLink targetId="poligono">polígono</ConceptLink> de cuatro lados en la geometría plana delimitado por la unión de cuatro <ConceptLink targetId="segmento">segmentos</ConceptLink> de recta consecutivos. Constituye una de las figuras poligonales fundamentales en el estudio de las <ConceptLink targetId="congruencia">congruencias</ConceptLink> y de las descomposiciones de <ConceptLink targetId="teoria-medida-area">área</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
+<Capitular letra="U" />n cuadrilátero es la figura formada por cuatro <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> que unen cíclicamente cuatro <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>, de modo que no hay tres de ellos <ConceptLink targetId="colinealidad" isDependency={true}>colineales</ConceptLink> y los lados no consecutivos no se cortan.
 
-<Definicion title="">
-  Dados cuatro <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> coplanares <VisualBind element="vertices" color="musgo">$A, B, C, D$</VisualBind> pertenecientes a un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\mathcal{P}$, tales que ningunos tres de ellos son colineales y los segmentos no se cruzan salvo en sus extremos, el cuadrilátero <VisualBind element="poligono" color="musgo">$ABCD$</VisualBind> es la figura definida por la unión de sus cuatro <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> <VisualBind element="lados" color="musgo">$\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$</VisualBind>:
-  $$
-  ABCD = \overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}
-  $$
-  Los puntos $A, B, C, D$ son los <ConceptLink targetId="vertice">vértices</ConceptLink> y los segmentos <VisualBind element="diagonales" color="musgo">$\overline{AC}, \overline{BD}$</VisualBind> son las diagonales del cuadrilátero.
+Es el <ConceptLink targetId="poligono">polígono</ConceptLink> de cuatro lados y el primero en el que aparece la distinción entre figuras convexas y no convexas. Sus casos particulares (<ConceptLink targetId="trapecio">trapecio</ConceptLink>, <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink>, <ConceptLink targetId="rectangulo">rectángulo</ConceptLink>, <ConceptLink targetId="rombo">rombo</ConceptLink>, <ConceptLink targetId="cuadrado">cuadrado</ConceptLink>) se definen por relaciones de <ConceptLink targetId="paralelas">paralelismo</ConceptLink> y de <ConceptLink targetId="congruencia">congruencia</ConceptLink> entre sus elementos.
+
+<Definicion title="Definición de cuadrilátero">
+Sean <VisualBind element="vertices" color="terracota">$A, B, C, D$</VisualBind> cuatro <ConceptLink targetId="punto">puntos</ConceptLink> de un <ConceptLink targetId="plano">plano</ConceptLink> $\sigma$ tales que ninguna terna de ellos es <ConceptLink targetId="colinealidad">colineal</ConceptLink> y los <ConceptLink targetId="segmento">segmentos</ConceptLink> no consecutivos son <ConceptLink targetId="conjunto-disjunto">disjuntos</ConceptLink>:
+
+$$
+\overline{AB} \cap \overline{CD} = \emptyset, \qquad \overline{BC} \cap \overline{DA} = \emptyset.
+$$
+
+El **cuadrilátero** <VisualBind element="poligono" color="carbon">$ABCD$</VisualBind> es el conjunto de sus cuatro <ConceptLink targetId="lado">lados</ConceptLink> <VisualBind element="lados" color="carbon">$\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}$</VisualBind>, y su <ConceptLink targetId="traza">traza</ConceptLink> es la unión de estos:
+
+$$
+ABCD = \{\overline{AB}, \overline{BC}, \overline{CD}, \overline{DA}\}, \qquad \operatorname{tr}(ABCD) = \overline{AB} \cup \overline{BC} \cup \overline{CD} \cup \overline{DA}.
+$$
+
+Los puntos $A, B, C, D$ son los <ConceptLink targetId="vertice">vértices</ConceptLink>; los <ConceptLink targetId="angulo">ángulos</ConceptLink> <VisualBind element="angulos" color="ocre">$\angle DAB$, $\angle ABC$, $\angle BCD$, $\angle CDA$</VisualBind> son sus ángulos, y los segmentos <VisualBind element="diagonales" color="pavo">$\overline{AC}$ y $\overline{BD}$</VisualBind> que unen vértices no consecutivos son sus <ConceptLink targetId="diagonal">diagonales</ConceptLink>.
+
+El cuadrilátero es **convexo** si, para cada lado, los otros dos vértices están en el mismo <ConceptLink targetId="semiplano">semiplano</ConceptLink> respecto a la <ConceptLink targetId="recta">recta</ConceptLink> soporte de ese lado; por ejemplo, para $\overline{AB}$: $C, D \in \mathcal{H}_{\overleftrightarrow{AB}}(C)$.
 </Definicion>
 
-<Separador />
+### Clasificación
 
-### Clasificación estructural
-
-Los cuadriláteros planos se clasifican según sus propiedades de convexidad y las relaciones de <ConceptLink targetId="paralelas">paralelismo</ConceptLink> entre sus lados:
-
-| Tipo | Condición geométrica característica | Subclases principales |
+| Tipo | Condición | Validez |
 |---|---|---|
-| Convexo | Las dos diagonales se intersecan en un punto interior | <ConceptLink targetId="paralelogramo">Paralelogramo</ConceptLink>, Trapecio, Trapezoide |
-| Cóncavo | Una diagonal queda contenida en el exterior | Cuadrilátero en dardo |
-| <ConceptLink targetId="paralelogramo">Paralelogramo</ConceptLink> | Lados opuestos paralelos ($\overline{AB} \parallel \overline{CD} \land \overline{BC} \parallel \overline{DA}$) | Rectángulo, Rombo, <ConceptLink targetId="cuadrado">Cuadrado</ConceptLink> |
+| <ConceptLink targetId="trapecio">Trapecio</ConceptLink> | Al menos un par de lados opuestos con rectas soporte paralelas | absoluta |
+| <ConceptLink targetId="paralelogramo">Paralelogramo</ConceptLink> | Ambos pares de lados opuestos con rectas soporte paralelas | absoluta |
+| <ConceptLink targetId="rombo">Rombo</ConceptLink> | Cuatro lados congruentes | absoluta |
+| <ConceptLink targetId="rectangulo">Rectángulo</ConceptLink> | Cuatro ángulos rectos | euclidiana (no existe en la geometría hiperbólica) |
+| <ConceptLink targetId="cuadrado">Cuadrado</ConceptLink> | Cuatro lados congruentes y cuatro ángulos rectos | euclidiana (no existe en la geometría hiperbólica) |
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Propiedades angulares y de descomposición">
-    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Suma de ángulos interiores">
-      La suma de las amplitudes de los cuatro ángulos interiores de un cuadrilátero convexo es igual a $360^\circ$ ($2\pi\text{ rad}$).
+  <PropiedadesGrupo title="Propiedades de orden">
+    <PropiedadItem
+      id="convexidad-diagonales-cuadrilatero"
+      title="Convexidad y diagonales"
+      formula="ABCD \text{ convexo} \iff \operatorname{seg}(AC) \cap \operatorname{seg}(BD) \neq \emptyset"
+    >
+      Un <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> es convexo si y solo si sus dos <ConceptLink targetId="diagonal">diagonales</ConceptLink> se cortan en un punto interior de ambas. La prueba usa solo los <ConceptLink targetId="axioma-orden-4">axiomas de orden</ConceptLink> y la <ConceptLink targetId="teorema-separacion-plano">separación del plano</ConceptLink>; vale, por tanto, en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-aditividad" title="Descomposición triangular">
-      Todo cuadrilátero convexo se descompone mediante una diagonal en dos triángulos disjuntos: $\mu(ABCD) = \mu(\triangle ABC) + \mu(\triangle ACD)$.
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Propiedades euclidianas">
+    <PropiedadItem
+      id="suma-angulos-cuadrilatero"
+      title="Suma de los ángulos"
+      formula="|\angle DAB| + |\angle ABC| + |\angle BCD| + |\angle CDA| = 360^\circ"
+    >
+      En un cuadrilátero convexo del <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>, la suma de las <ConceptLink targetId="medida-angular">medidas angulares</ConceptLink> de sus ángulos es $360^\circ$: la diagonal $\overline{AC}$ lo divide en dos triángulos y se aplica el <ConceptLink targetId="teorema-suma-angulos-triangulo">teorema de la suma de los ángulos del triángulo</ConceptLink>. En la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> la suma es menor que $360^\circ$.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="area-cuadrilatero-diagonal"
+      title="Descomposición por una diagonal"
+      formula="\operatorname{A}(ABCD) = \operatorname{A}(\triangle ABC) + \operatorname{A}(\triangle ACD)"
+    >
+      Una diagonal de un cuadrilátero convexo lo descompone en dos <ConceptLink targetId="triangulo">triángulos</ConceptLink> de interiores disjuntos; por la <ConceptLink targetId="teorema-area-aditividad">aditividad del área</ConceptLink>, el <ConceptLink targetId="teoria-medida-area">área</ConceptLink> de la <ConceptLink targetId="region-poligonal">región poligonal</ConceptLink> que encierra es la suma de las áreas de ambos.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

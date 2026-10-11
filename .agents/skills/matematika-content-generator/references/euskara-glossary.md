@@ -1,5 +1,7 @@
 # Glosario Técnico y Estándar de Euskara Batua
 
+**Fuente oficial: [Elhuyar Hiztegia](https://hiztegiak.elhuyar.eus/)** (es→eu, marca *Mat.*). Ante cualquier término dudoso, consultar Elhuyar; si no lo recoge, usar la forma más próxima que sí recoja y señalarlo.
+
 Para asegurar la máxima precisión sintáctica y un registro académico formal y riguroso en los nodos en euskera (`eu/`), es imperativo ceñirse al siguiente glosario técnico normalizado y a sus pautas de traducción:
 
 ---
@@ -17,7 +19,7 @@ Para asegurar la máxima precisión sintáctica y un registro académico formal 
 | **Ángulos suplementarios** | *angelu suplementarioak*, *angelu gehigarriak* | **`angelu betegarriak`** | Pareja de ángulos que forman un ángulo llano sobre una recta. |
 | **Ángulos complementarios** | *angelu konplementarioak* | **`angelu osagarriak`** | Pareja de ángulos que suman un ángulo recto. |
 | **Ángulos opuestos por el vértice** | *erpinezko aurkakoak* | **`erpinez aurkako angeluak`** | Ángulos determinados por dos rectas secantes con vértice común. |
-| **Ángulo recto** | *angelu zuzena* (ambiguo) | **`angeluzuzena`** / **`angelu zuzen`** | Ángulo congruente con su ángulo suplementario adyacente. |
+| **Ángulo recto** | *angeluzuzena* (= rectángulo) | **`angelu zuzena`** (Elhuyar) | Ángulo congruente con su ángulo suplementario adyacente. `angeluzuzen` solo como adjetivo «rectángulo» (*triangelu angeluzuzena*) o sustantivo «rectángulo» (*laukizuzena* para la figura). |
 | **Perpendicularidad** | *perpendikulartasun* | **`perpendikulartasuna`** | Relación entre rectas secantes que forman ángulos rectos. |
 | **Rectas perpendiculares** | *zuzen perpendikular* | **`zuzen perpendikularrak`** | $\ell_1 \perp \ell_2$. |
 | **Recta soporte** | *sortutako zuzen*, *euskarri zuzen* | **`zuzen euskarria`** (pl. **`zuzen euskarriak`**) | Segmentu edo alde bat barnean hartzen duen zuzena ($\overleftrightarrow{AB}$). |
@@ -27,9 +29,9 @@ Para asegurar la máxima precisión sintáctica y un registro académico formal 
 | **Triángulo escaleno** | *triangelu eskaleno* | **`triangelu eskalenoa`** | Triángulo sin pares de lados congruentes. |
 | **Hipotenusa** | *hipotenuse* | **`hipotenusa`** | Lado opuesto al ángulo recto en un triángulo rectángulo. |
 | **Cateto** | *katete* | **`katetoa`** | Cualquiera de los dos lados que forman el ángulo recto. |
-| **Bisectriz** | *bisektriz* | **`bisektorea`** | Semirrecta interior que divide un ángulo en dos ángulos congruentes. |
-| **Mediatriz** | *mediatriz* | **`erdibitzailea`** / **`mediatriza`** | Recta perpendicular a un segmento que pasa por su punto medio. |
-| **Punto medio** | *erdiko puntu* | **`erdigunea`** / **`erdi-puntua`** | Punto que divide un segmento en dos segmentos congruentes. |
+| **Bisectriz** | *bisektriz*, *bisektorea* | **`erdikaria`** (Elhuyar: *angeluaren erdikaria*) | Semirrecta interior que divide un ángulo en dos ángulos congruentes. |
+| **Mediatriz** | *mediatriza* | **`erdibitzailea`** (Elhuyar) | Recta perpendicular a un segmento que pasa por su punto medio. |
+| **Punto medio** | *erdigunea* (= centro) | **`erdiko puntua`** (*zuzenkiaren erdiko puntua*) | Punto que divide un segmento en dos segmentos congruentes. |
 | **Criterio LAL** | *LAL irizpide* | **`Alde-Angelu-Alde (AlAnAl) irizpidea`** / **`LAL irizpidea`** | Criterio de congruencia Lado-Ángulo-Lado. |
 | **Criterio ALA** | *ALA irizpide* | **`Angelu-Alde-Angelu (AnAlAn) irizpidea`** / **`ALA irizpidea`** | Criterio de congruencia Ángulo-Lado-Ángulo. |
 | **Criterio LLL** | *LLL irizpide* | **`Alde-Alde-Alde (AlAlAl) irizpidea`** / **`LLL irizpidea`** | Criterio de congruencia Lado-Lado-Lado. |
@@ -40,7 +42,21 @@ Para asegurar la máxima precisión sintáctica y un registro académico formal 
 | **Incidencia** | *barnean hartu* (contención) | **`intziditu`** / **`intzidentzia`** | $P$ puntuarekin intziditzen duen zuzena. |
 | **Convexo** | *konhexu* | **`konbexu`** / **`ganbil`** | Multzo konbexua. |
 | **Invertible** | *alderanzgarri* | **`alderantzizgarri`** | Eragiketa / matrize alderantzizgarria. |
-| **Transposición / Conversa** | *transposaketa* | **`transposizio`** | Erreazio conversua / transposizioa. |
+| **Transposición (de una relación)** | *transposaketa* | **`transposizioa`** | Erlazio baten transposizioa ($\mathbf{I}^{T}$). |
+| **Recíproco (teorema)** | *teorema elkarkaria* (*elkarkari* = inverso de una función: *funtzio elkarkaria*), *konbertsoa* | **`alderantzizkoa`** (*X teoremaren alderantzizkoa*) | Uso atestiguado (eu.wikipedia, «Pitagorasen teoremaren alderantzizkoa»); Elhuyar: *inverso* → *alderantzizko*. Elhuyar no recoge la locución «teorema recíproco». |
+| **Ángulos adyacentes** | *angelu adjazenteak* | **`angelu auzokideak`** (Elhuyar) | Comparten vértice y un lado. |
+| **Ángulo llano** | — | **`angelu laua`** | No existe como ángulo en el marco de Hilbert; solo en contextos métricos/históricos. |
+| **Segmento** | *segmentu* | **`zuzenkia`** | $\overline{AB}$. |
+| **Semirrecta** | *erdizuzen* | **`zuzenerdia`** (Elhuyar) | $\overrightarrow{OA}$. |
+| **Semiplano** | *erdiplano* | **`planoerdia`** | $\mathcal{H}_\ell(B)$. |
+| **Vértice / Lado** | *bertize* | **`erpina`** / **`aldea`** | Triángulo, ángulo. |
+| **Colineal / Coplanar** | *lerrozko* | **`kolineala`** / **`koplanarra`** | Puntos en una misma recta / plano. |
+| **Estar entre (intermediación)** | *tartean egon* (coloquial, inconsistente) | **`artean egotea`** / **`bitartekotasuna`** | $A * B * C$: «$B$ puntua $A$ eta $C$ puntuen artean dago». |
+| **Congruente** | *berdina* (en sentido sintético) | **`kongruentea`** | $\cong$. |
+| **Teorema / Demostración / Lema / Corolario** | *frogaketa* | **`teorema`** / **`frogapena`** / **`lema`** / **`korolarioa`** | |
+| **Axioma de las paralelas** | *paraleloen postulatua* (aceptable histórico) | **`paraleloen axioma`** | |
+| **Equidescomponible** | *ekideskonposagarri* | **`zatiketa baliokidea duten`** / **`baliokide deskonposagarriak`** | Explicar en la primera aparición. |
+| **Área / Longitud / Medida angular** | *eremua* (= dominio, campo) | **`azalera`** / **`luzera`** / **`angelu-neurria`** | Unificar: **azalera** (nunca *eremua* para área). |
 
 ---
 

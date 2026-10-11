@@ -2,48 +2,95 @@ export const metadata = {
   id: "semejanza",
   lang: "en",
   type: "definicion",
-  subtype: "nominal",
-  title: "Geometric Similarity",
-  description: "Equivalence relation between geometric figures preserving shape and maintaining a constant ratio of proportionality between distances.",
+  subtype: "derivado",
+  title: "Similarity",
+  description: "Two triangles are similar if, under a correspondence of vertices, their corresponding angles are congruent and their corresponding sides are proportional.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-euclidiana", "proporcionalidad", "triangulo", "semejanza"],
   hasSimulation: false,
   sources: [
     { title: "Elements", author: "Euclid", locator: "Book VI, Definition 1", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV, §20", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter III", role: "secondary" }
   ]
 };
 
-<Capitular letra="G" />eometric similarity is an equivalence relation between figures in the <ConceptLink targetId="plano">plane</ConceptLink> or space that preserve identical shape while possibly differing in overall scale. Two figures are similar if there exists a similarity transformation (the composition of an <ConceptLink targetId="congruencia">isometry</ConceptLink> and a homothety) that preserves the proportionality of all distances between points and preserves all <ConceptLink targetId="angulo">angles</ConceptLink>.
+<Capitular letra="T" />wo <ConceptLink targetId="triangulo" isDependency={true}>triangles</ConceptLink> are similar if, under a correspondence between their <ConceptLink targetId="vertice">vertices</ConceptLink>, corresponding <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> and corresponding <ConceptLink targetId="lado">sides</ConceptLink> are <ConceptLink targetId="proporcionalidad">proportional</ConceptLink>.
 
-<Definicion title="">
-  Let $F_1, F_2 \subset \mathcal{E}$ be subsets of points in a Euclidean metric space $\mathcal{E}$. $F_1$ and $F_2$ are similar ($F_1 \sim F_2$) if and only if there exists a scale factor $k > 0$ and a bijection $g: \mathcal{E} \to \mathcal{E}$ such that $g(F_1) = F_2$ and for all pairs $A, B \in \mathcal{E}$:
-  $$
-  d(g(A), g(B)) = k \cdot d(A, B)
-  $$
-  When $k = 1$, similarity reduces to <ConceptLink targetId="congruencia" isDependency={true}>geometric congruence</ConceptLink>.
+Similarity separates shape from size: two similar triangles have the same angles and differ at most by a scale factor common to all their <ConceptLink targetId="longitud" isDependency={true}>lengths</ConceptLink>. It is a notion proper to the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink>: its theory rests on <ConceptLink targetId="teorema-tales">Thales's theorem</ConceptLink> and hence on the <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink>.
+
+<Definicion title="Similarity of triangles">
+Let $\triangle ABC$ and $\triangle A'B'C'$ be two <ConceptLink targetId="triangulo">triangles</ConceptLink> of the Euclidean plane, taken with the ordered correspondence $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$. We say that $\triangle ABC$ is **similar** to $\triangle A'B'C'$, written $\triangle ABC \sim \triangle A'B'C'$, if the three pairs of corresponding <ConceptLink targetId="angulo">angles</ConceptLink> are <ConceptLink targetId="congruencia">congruent</ConceptLink> and there is a real number $k > 0$ such that the <ConceptLink targetId="longitud">lengths</ConceptLink> of corresponding <ConceptLink targetId="lado">sides</ConceptLink> are in the ratio $k$:
+
+$$
+\triangle ABC \sim \triangle A'B'C' \iff
+\begin{cases}
+\angle CAB \cong \angle C'A'B', \quad \angle ABC \cong \angle A'B'C', \quad \angle BCA \cong \angle B'C'A', \\[4pt]
+\dfrac{|A'B'|}{|AB|} = \dfrac{|B'C'|}{|BC|} = \dfrac{|C'A'|}{|CA|} = k.
+\end{cases}
+$$
+
+The number $k$ is the **ratio of similarity**. If $k = 1$, corresponding sides are congruent and the triangles are <ConceptLink targetId="congruencia-triangulos">congruent</ConceptLink>.
 </Definicion>
 
-<Separador />
+### Similarity of figures
 
-### Triangle similarity criteria
+For arbitrary figures the notion is formulated through transformations of the Euclidean plane $\sigma$. A **similarity of ratio $k > 0$** is a <ConceptLink targetId="biyeccion">bijection</ConceptLink> $f\colon \operatorname{tr}(\sigma) \longrightarrow \operatorname{tr}(\sigma)$ that multiplies all lengths by $k$:
 
-In planar Euclidean geometry, similarity between two <ConceptLink targetId="triangulo">triangles</ConceptLink> is established through the following minimal criteria:
+$$
+|f(P)f(Q)| = k\,|PQ| \qquad \text{for all } P, Q \in \operatorname{tr}(\sigma).
+$$
 
-| Criterion | Formulation | Geometric condition |
-|---|---|---|
-| AA | Angle-Angle | Two pairs of corresponding angles are congruent ($\alpha \cong \alpha' \land \beta \cong \beta'$) |
-| SAS | Side-Angle-Side | One congruent angle and adjacent sides in the same ratio ($\frac{a'}{a} = \frac{b'}{b} = k$) |
-| SSS | Side-Side-Side | All three pairs of corresponding sides share the same ratio $k$ |
+Every similarity is the <ConceptLink targetId="composicion-funciones">composition</ConceptLink> of a <ConceptLink targetId="homotecia">homothety</ConceptLink> of ratio $k$ and an <ConceptLink targetId="isometria">isometry</ConceptLink>, and it preserves congruence of angles. Two figures $F, F' \subseteq \mathcal{P}$ are similar if there is a similarity $f$ with $f(F) = F'$. For triangles both definitions agree: a similarity maps $\triangle ABC$ onto a triangle similar in the previous sense and, conversely, two similar triangles are images of each other under a similarity. An isometry is a similarity of ratio $1$; it should not be confused with the <ConceptLink targetId="congruencia">congruence</ConceptLink> relation, which is primitive for segments and angles.
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Proportionality and areas">
-    <PropiedadItem id="teorema-tales" title="Thales's theorem">
-      Parallel lines intersecting two transversals cut off proportional corresponding segments.
+  <PropiedadesGrupo title="Similarity criteria for triangles">
+    <PropiedadItem
+      id="criterio-semejanza-aa"
+      title="Angle-angle criterion (AA)"
+      formula="\angle CAB \cong \angle C'A'B' \land \angle ABC \cong \angle A'B'C' \implies \triangle ABC \sim \triangle A'B'C'"
+    >
+      If two <ConceptLink targetId="angulo">angles</ConceptLink> of a <ConceptLink targetId="triangulo">triangle</ConceptLink> are <ConceptLink targetId="congruencia">congruent</ConceptLink> to two angles of another, the triangles are similar. The third pair of angles is congruent by the <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={true}>angle sum theorem for triangles</ConceptLink>, and proportionality of the sides follows from <ConceptLink targetId="teorema-tales" isDependency={true}>Thales's theorem</ConceptLink> after laying one triangle off on the other.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-triangulo" title="Area scaling">
-      If two planar figures are similar with ratio $k$, their areas satisfy $\mu(F_2) = k^2 \cdot \mu(F_1)$.
+
+    <PropiedadItem
+      id="criterio-semejanza-lal"
+      title="Side-angle-side criterion (SAS)"
+      formula="\angle CAB \cong \angle C'A'B' \land \frac{|A'B'|}{|AB|} = \frac{|A'C'|}{|AC|} \implies \triangle ABC \sim \triangle A'B'C'"
+    >
+      If an <ConceptLink targetId="angulo">angle</ConceptLink> of one triangle is congruent to an angle of another and the <ConceptLink targetId="lado">sides</ConceptLink> forming it are <ConceptLink targetId="proporcionalidad">proportional</ConceptLink>, the triangles are similar. The proof uses the converse of <ConceptLink targetId="teorema-tales" isDependency={true}>Thales's theorem</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="criterio-semejanza-lll"
+      title="Side-side-side criterion (SSS)"
+      formula="\frac{|A'B'|}{|AB|} = \frac{|B'C'|}{|BC|} = \frac{|C'A'|}{|CA|} \implies \triangle ABC \sim \triangle A'B'C'"
+    >
+      If the three <ConceptLink targetId="lado">sides</ConceptLink> of one triangle are proportional to those of another, the triangles are similar; it reduces to the SAS criterion and the <ConceptLink targetId="teorema-congruencia-lll">SSS congruence criterion</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Structural properties">
+    <PropiedadItem
+      id="semejanza-relacion-equivalencia"
+      title="Equivalence relation"
+      formula="\triangle ABC \sim \triangle ABC, \quad \triangle ABC \sim \triangle A'B'C' \implies \triangle A'B'C' \sim \triangle ABC"
+    >
+      Similarity is an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>: it is <ConceptLink targetId="reflexividad">reflexive</ConceptLink> (ratio $1$), <ConceptLink targetId="simetria">symmetric</ConceptLink> (ratio $1/k$) and <ConceptLink targetId="transitividad">transitive</ConceptLink> (the ratios multiply).
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="razon-areas-semejanza"
+      title="Ratio of areas"
+      formula="\triangle ABC \sim \triangle A'B'C' \implies \operatorname{A}(\triangle A'B'C') = k^2\,\operatorname{A}(\triangle ABC)"
+    >
+      If two triangles are similar with ratio $k$, the ratio of their <ConceptLink targetId="teoria-medida-area">areas</ConceptLink> is $k^2$: base and height are both multiplied by $k$ in the <ConceptLink targetId="teorema-area-triangulo">triangle area theorem</ConceptLink>. By <ConceptLink targetId="teorema-area-aditividad">additivity</ConceptLink>, the same holds for two similar <ConceptLink targetId="region-poligonal">polygonal regions</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
+
+<Nota>
+In <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink> two triangles with congruent corresponding angles are congruent: there are no similar triangles with ratio $k \neq 1$. <ConceptLink targetId="wallis">John Wallis</ConceptLink> proposed in 1663 the existence of similar non-congruent triangles as a substitute for the fifth postulate; given the axioms of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, the two statements are equivalent.
+</Nota>

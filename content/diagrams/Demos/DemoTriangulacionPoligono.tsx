@@ -13,15 +13,37 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
   "grid": false,
   "showLabels": true,
   "viewport": {
-    "bounds": [-1, 6, 7, -1],
-    "home": [-1, 6, 7, -1],
+    "bounds": [
+      -1,
+      6,
+      7,
+      -1
+    ],
+    "home": [
+      -1,
+      6,
+      7,
+      -1
+    ],
     "minZoom": 0.2,
     "maxZoom": 10,
     "padding": 0.16
   },
   "layers": [
-    { "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false },
-    { "id": "annotations", "label": "Anotaciones", "order": 1, "visible": true, "locked": false }
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Anotaciones",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
   ],
   "groups": [],
   "objects": [
@@ -34,13 +56,28 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Vértice P1", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértice P1",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "p1",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 0, "y": 0 },
-      "mobility": { "type": "free" },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "p2",
@@ -51,13 +88,28 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Vértice P2", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértice P2",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "p2",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 4, "y": 0 },
-      "mobility": { "type": "free" },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 4,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "p3",
@@ -68,13 +120,28 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Vértice P3", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértice P3",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "p3",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 6, "y": 3 },
-      "mobility": { "type": "free" },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 6,
+        "y": 3
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "p4",
@@ -85,13 +152,28 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Vértice P4 (Oreja)", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértice P4 (Oreja)",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "p4",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 3, "y": 2 },
-      "mobility": { "type": "free" },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 3,
+        "y": 2
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "p5",
@@ -102,13 +184,28 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Vértice P5", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértice P5",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "p5",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 1, "y": 5 },
-      "mobility": { "type": "free" },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 1,
+        "y": 5
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "poly",
@@ -119,15 +216,29 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Polígono completo de 5 vértices", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Polígono completo de 5 vértices",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "poly",
       "objectType": "path",
       "geometry": {
         "type": "polygon",
-        "points": ["p1", "p2", "p3", "p4", "p5"]
+        "points": [
+          "p1",
+          "p2",
+          "p3",
+          "p4",
+          "p5"
+        ]
       },
-      "appearance": { "fillOpacity": 0.1, "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+      "appearance": {
+        "strokeWidth": 2.5,
+        "fillOpacity": 0.1,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "diag",
@@ -138,15 +249,26 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Diagonal interior P3-P5", "role": "secondary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Diagonal interior P3-P5",
+        "role": "secondary"
+      },
       "target": true,
       "targetId": "diag",
       "objectType": "path",
       "geometry": {
         "type": "segment",
-        "points": ["p3", "p5"]
+        "points": [
+          "p3",
+          "p5"
+        ]
       },
-      "appearance": { "dashed": true, "strokeWidth": 2, "preserveColorOnHighlight": true }
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "oreja",
@@ -157,15 +279,27 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Triángulo oreja P3-P4-P5", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo oreja P3-P4-P5",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "oreja",
       "objectType": "path",
       "geometry": {
         "type": "polygon",
-        "points": ["p3", "p4", "p5"]
+        "points": [
+          "p3",
+          "p4",
+          "p5"
+        ]
       },
-      "appearance": { "fillOpacity": 0.3, "strokeWidth": 1.5, "preserveColorOnHighlight": true }
+      "appearance": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.3,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "resto",
@@ -176,15 +310,28 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Subpolígono restante P1-P2-P3-P5", "role": "secondary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Subpolígono restante P1-P2-P3-P5",
+        "role": "secondary"
+      },
       "target": true,
       "targetId": "resto",
       "objectType": "path",
       "geometry": {
         "type": "polygon",
-        "points": ["p1", "p2", "p3", "p5"]
+        "points": [
+          "p1",
+          "p2",
+          "p3",
+          "p5"
+        ]
       },
-      "appearance": { "fillOpacity": 0.2, "strokeWidth": 1.5, "preserveColorOnHighlight": true }
+      "appearance": {
+        "strokeWidth": 1.5,
+        "fillOpacity": 0.2,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
   "relations": [],
@@ -193,24 +340,46 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
       "id": "step1",
       "label": "Identificación de una oreja",
       "description": "Todo polígono simple de al menos 4 vértices posee una oreja (triángulo formado por tres vértices consecutivos con diagonal interior).",
-      "visibleTargets": ["oreja", "diag"],
+      "visibleTargets": [
+        "oreja",
+        "diag"
+      ],
       "durationMs": 1000,
       "objectStates": {
-        "oreja": { "visible": true, "emphasis": "primary" },
-        "resto": { "visible": false },
-        "diag": { "visible": true, "emphasis": "primary" }
+        "oreja": {
+          "visible": true,
+          "emphasis": "primary"
+        },
+        "resto": {
+          "visible": false
+        },
+        "diag": {
+          "visible": true,
+          "emphasis": "primary"
+        }
       }
     },
     {
       "id": "step2",
       "label": "Paso inductivo",
       "description": "Al retirar la oreja se reduce el número de vértices a n-1, permitiendo la triangulación completa por inducción.",
-      "visibleTargets": ["resto", "diag"],
+      "visibleTargets": [
+        "resto",
+        "diag"
+      ],
       "durationMs": 1000,
       "objectStates": {
-        "oreja": { "visible": false },
-        "resto": { "visible": true, "emphasis": "primary" },
-        "diag": { "visible": true, "emphasis": "primary" }
+        "oreja": {
+          "visible": false
+        },
+        "resto": {
+          "visible": true,
+          "emphasis": "primary"
+        },
+        "diag": {
+          "visible": true,
+          "emphasis": "primary"
+        }
       }
     }
   ],
@@ -235,6 +404,4 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
 );
 /* @matematika-diagram-spec:end */
 
-export const DemoTriangulacionPoligono = () => (
-  <DiagramRenderer spec={DemoTriangulacionPoligonoSpec} />
-);
+export const DemoTriangulacionPoligono = () => <DiagramRenderer spec={DemoTriangulacionPoligonoSpec} />;

@@ -2,43 +2,68 @@ export const metadata = {
   id: "cuadrado",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Karratua",
-  description: "Lau aldeko poligono erregularra, lau alde kongruenteak eta barneko lau angelu zuzenak dituena.",
+  description: "Lau aldeak kongruenteak eta lau angeluak zuzenak dituen laukia.",
   branch: "51M",
-  hasSimulation: false,
+  branches: ["51M", "51A"],
+  tags: ["geometria-euclidiana", "cuadrilatero", "angulo-recto"],
+  hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 22. Definizioa", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. liburua, 22. definizioa", role: "primary" },
+    { title: "Elementuak", author: "Euklides", locator: "I. liburua, 46. proposizioa", role: "secondary" }
   ]
 };
 
-<Capitular letra="K" />arratua plano euklidearreko lau aldeko poligono erregularra da. Erronboaren propietate metrikoak (lau alde kongruente) eta laukizuzenarenak (lau angelu zuzen) bateratzen dituenez, simetria handiena duen figura da <ConceptLink targetId="cuadrilatero">laukien</ConceptLink> familian.
+import { Cuadrado } from '@content/diagrams/Definiciones/Cuadrado';
+export const Simulation = Cuadrado;
 
-<Definicion title="">
-  $ABCD$ <ConceptLink targetId="cuadrilatero" isDependency={true}>lauki</ConceptLink> ganbila karratua da baldin eta soilik baldin bere lau aldeak elkarren artean <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badira eta barneko lau angeluak <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzenak</ConceptLink> badira:
-  $$
-  (\overline{AB} \cong \overline{BC} \cong \overline{CD} \cong \overline{DA}) \land (\angle A \cong \angle B \cong \angle C \cong \angle D \cong 90^\circ)
-  $$
+<Capitular letra="K" />arratua lau <VisualBind element="lados" color="terracota"><ConceptLink targetId="lado" isDependency={true}>aldeak</ConceptLink></VisualBind> <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> eta lau <VisualBind element="angulos-rectos" color="ocre"><ConceptLink targetId="angulo">angeluak</ConceptLink></VisualBind> <ConceptLink targetId="angulo-recto" isDependency={true}>zuzenak</ConceptLink> dituen <ConceptLink targetId="cuadrilatero" isDependency={true}>laukia</ConceptLink> da.
+
+<ConceptLink targetId="rombo">Erronboa</ConceptLink> eta <ConceptLink targetId="rectangulo">laukizuzena</ConceptLink> da aldi berean, eta, beraz, <ConceptLink targetId="paralelogramo">paralelogramoa</ConceptLink>. Alde unitarioko karratuak <ConceptLink targetId="teoria-medida-area">azalera</ConceptLink>-unitatea finkatzen du; haren existentzia <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> mende dago, eta Euklidesek zuzenki jakin baten gainean karratu bat eraikiz ezartzen du (Elementuak I.46).
+
+<Definicion title="Karratuaren definizioa">
+<VisualBind element="cuadrilatero" color="canela">$ABCD$</VisualBind> <ConceptLink targetId="cuadrilatero">laukia</ConceptLink> **karratua** da baldin eta bere lau aldeak (<VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind>, <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind>, <VisualBind element="segDA" color="terracota">$\overline{DA}$</VisualBind>) kongruenteak eta bere lau angeluak (<VisualBind element="angDAB" color="ocre">$\angle DAB$</VisualBind>, <VisualBind element="angABC" color="ocre">$\angle ABC$</VisualBind>, <VisualBind element="angBCD" color="ocre">$\angle BCD$</VisualBind>, <VisualBind element="angCDA" color="ocre">$\angle CDA$</VisualBind>) zuzenak badira:
+
+$$
+\overline{AB} \cong \overline{BC} \cong \overline{CD} \cong \overline{DA}
+\quad \text{eta} \quad
+\angle DAB,\ \angle ABC,\ \angle BCD,\ \angle CDA \ \text{zuzenak badira}.
+$$
+
+Baliokideki, lau <VisualBind element="angulos-rectos" color="ocre"><ConceptLink targetId="angulo">angeluetako</ConceptLink></VisualBind> bakoitza bere ondoko <ConceptLink targetId="angulos-suplementarios">angelu betegarriaren</ConceptLink> kongruentea da; angelu-neurrian, $|\angle DAB| = |\angle ABC| = |\angle BCD| = |\angle CDA| = 90^\circ$.
 </Definicion>
 
 <Separador />
 
-### Propietate geometrikoak eta simetria
-
-- **Diagonalak**: Bi diagonalek luzera bera dute ($d = l\sqrt{2}$), elkar erdibitzen dute eta <ConceptLink targetId="perpendicular">perpendikularrak</ConceptLink> dira elkarren artean.
-- **Simetria-taldea**: Karratuaren automorfismo euklidearren taldea $D_4$ talde diedrikoa da, 4 errotazioz eta 4 islapenez osatua.
-- **Inskripzioa eta zirkunskripzioa**: Zirkunferentzia inskribatu kontzentrikoa ($r = \frac{l}{2}$) eta zirkunskribatua ($R = \frac{l\sqrt{2}}{2}$) ditu.
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Neurriak eta azalera">
-    <PropiedadItem id="teorema-area-rectangulo" title="Karratuaren azalera">
-      $l$ alboko karratu baten azalera bere luzeraren karratuaren berdina da: $\mu(ABCD) = l^2$.
+  <PropiedadesGrupo title="Propietate euklidearrak">
+    <PropiedadItem
+      id="diagonales-cuadrado"
+      title="Diagonalak"
+      formula="\overline{AC} \cong \overline{BD}, \quad \overleftrightarrow{AC} \perp \overleftrightarrow{BD}, \quad |AC| = \sqrt{2}\,|AB|"
+    >
+      Karratu baten <VisualBind element="diagonales" color="mora"><ConceptLink targetId="diagonal">diagonalak</ConceptLink></VisualBind> (<VisualBind element="diagAC" color="mora">$\overline{AC}$</VisualBind> eta <VisualBind element="diagBD" color="mora">$\overline{BD}$</VisualBind>) kongruenteak eta <ConceptLink targetId="perpendicular">perpendikularrak</ConceptLink> dira, eta elkar erdibitzen dute. $\triangle ABC$ katetoak kongruenteak dituen <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzena</ConceptLink> denez, <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremak</ConceptLink> $|AC|^2 = |AB|^2 + |BC|^2 = 2\,|AB|^2$ ematen du.
     </PropiedadItem>
-    <PropiedadItem id="teorema-pitagoras" title="Diagonalaren erlazioa">
-      Diagonalaren luzerak $d^2 = l^2 + l^2 = 2l^2 \implies d = l\sqrt{2}$ betetzen du.
+
+    <PropiedadItem
+      id="area-cuadrado"
+      title="Azalera"
+      formula="\operatorname{A}(ABCD) = |AB|^2"
+    >
+      $|AB|$ aldeko karratu baten <ConceptLink targetId="teoria-medida-area">azalera</ConceptLink> $|AB|^2$ da, <ConceptLink targetId="teorema-area-rectangulo">laukizuzenaren azaleraren teoremaren</ConceptLink> kasu berezia.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="simetrias-cuadrado"
+      title="Simetriak"
+      formula="|D_4| = 8"
+    >
+      Karratu bat aldaezin uzten duten planoko <ConceptLink targetId="isometria">isometriek</ConceptLink> $D_4$ <ConceptLink targetId="grupo-diedral">talde diedrikoa</ConceptLink> osatzen dute, $8$ ordenakoa: zentroaren inguruko lau <ConceptLink targetId="rotacion">biraketa</ConceptLink>, eta aldeen bi <ConceptLink targetId="mediatriz">erdibitzaileekiko</ConceptLink> eta bi zuzen diagonalekiko lau <ConceptLink targetId="reflexion">islapen</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
+
+<Nota>
+<ConceptLink targetId="sistema-absoluto">Geometria absolutuan</ConceptLink>, <ConceptLink targetId="rectangulo">laukizuzen</ConceptLink> bakar bat existitzea paraleloen axiomaren baliokidea da (Saccheri, Legendre). Horregatik, <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoan</ConceptLink> ez dago karraturik: lau alde kongruente eta lau angelu kongruente dituen lauki baten angeluak zorrotzak dira.
+</Nota>

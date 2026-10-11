@@ -598,7 +598,17 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastra P sobre la mediatriz"
+  "note": "Arrastra P sobre la mediatriz para comprobar que equidista de los extremos A y B.",
+  "translations": {
+    "eu": {
+      "title": "Erdibitzailea",
+      "note": "Arrastatu P erdibitzailean zehar A eta B muturretatik distantzia berera dagoela egiaztatzeko."
+    },
+    "en": {
+      "title": "Perpendicular Bisector",
+      "note": "Drag P along the perpendicular bisector to verify it is equidistant from endpoints A and B."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

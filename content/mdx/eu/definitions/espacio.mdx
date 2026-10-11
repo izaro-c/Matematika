@@ -4,34 +4,38 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Espazioa",
-  description: "Teoria dimentsional bateko puntu, zuzen eta planoen domeinuak biltzen dituen diskurtso-unibertso orokorra eta eremu geometrikoa.",
+  description: "Geometriaren diskurtso-unibertsoa (puntuak, zuzenak eta planoak) eta, irudi gisa, puntu guztien multzoa; hiru dimentsiokoa I.7 eta I.8 axiomengatik.",
   branch: "51M",
   hasSimulation: false,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1–§2", role: "primary" },
     { title: "Elementuak", author: "Euklides", locator: "XI. Liburukia", role: "secondary" }
   ]
 };
 
-<Capitular letra="E" />**spazioa** teoria matematiko bateko erlazio guztiak interpretatzen diren diskurtso-unibertso orokorra eta eremu geometrikoa da. Geometriaren oinarrizko dimentsio-hierarkiaren goiko maila da: <ConceptLink targetId="punto">puntua</ConceptLink> (0 <ConceptLink targetId="dimension">dimentsioa</ConceptLink>), <ConceptLink targetId="recta">zuzena</ConceptLink> (1 <ConceptLink targetId="dimension">dimentsioa</ConceptLink>), <ConceptLink targetId="plano">planoa</ConceptLink> (2 <ConceptLink targetId="dimension">dimentsioa</ConceptLink>) eta **espazioa** (3 <ConceptLink targetId="dimension">dimentsioa</ConceptLink> edo handiagoa).
+<Capitular letra="E" />**spazioa** terminoak elkarren artean lotutako bi nozio izendatzen ditu, eta komeni da bereiztea. Zentzu logikoan, geometriaren <ConceptLink targetId="universo-discurso">diskurtso-unibertsoa</ConceptLink> da: <ConceptLink targetId="punto">puntu</ConceptLink>, <ConceptLink targetId="recta">zuzen</ConceptLink> eta <ConceptLink targetId="plano">plano</ConceptLink> guztien multzoa, Hilbertek «espazioaren geometriaren elementuak» deitzen dituenak. Irudi gisa, puntu guztien multzoa da, eta gainerako irudiak haren azpimultzoak dira.
 
-<ConceptLink targetId="sistema-axiomatico">Sistema axiomatiko</ConceptLink> batean, espazioak ez du aldez aurretik emandako berezko propietaterik; bere portaera eta bere geometria hautatutako <ConceptLink targetId="axioma">axiomek</ConceptLink> finkatzen dute guztiz.
+Espazioa oinarrizko <ConceptLink targetId="dimension">dimentsio</ConceptLink>-hierarkiaren goiko maila da: puntua (0), zuzena (1), planoa (2) eta espazioa (3). Bere propietateak ez dira aurresuposatzen; hautatutako <ConceptLink targetId="sistema-axiomatico">sistema axiomatikoko</ConceptLink> <ConceptLink targetId="axioma">axiomek</ConceptLink> finkatzen dituzte.
 
-<Definicion title="Definizio Geometrikoa eta Diskurtso-Unibertsoa">
-  <ConceptLink targetId="geometria-sintetica">Geometria sintetikoan</ConceptLink>, hiru dimentsioko **espazioa** <ConceptLink targetId="punto" isDependency={true}>puntuen</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta" isDependency={true}>zuzenen</ConceptLink> $\mathcal{L}$ eta <ConceptLink targetId="plano" isDependency={true}>planoen</ConceptLink> $\Pi$ <ConceptLink targetId="dominio">domeinuen</ConceptLink> bilkura disjuntuak osatutako $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$ diskurtso-unibertsoa da, <ConceptLink targetId="incidencia">intzidentziaren</ConceptLink> bi baldintza nagusik ezaugarritua:
-  1. **Hiru dimentsioko izaera:** <ConceptLink targetId="coplanaridad">Plano berean</ConceptLink> ez dauden gutxienez lau puntu existitzen dira (<ConceptLink targetId="axioma-incidencia-8" isDependency={true}>I.8 Axioma</ConceptLink>).
-  2. **Planoen ebakidura:** Bi plano desberdinek puntu bat partekatzen badute, gutxienez bigarren puntu komun bat partekatzen dute (<ConceptLink targetId="axioma-incidencia-7" isDependency={true}>I.7 Axioma</ConceptLink>), haien ebakidura osoa zuzen bakar bat izatea eragiten duena (I.7, I.1, I.6 eta I.4-I.5 axiometatik eratorritako teorema).
+<Definicion title="Diskurtso-unibertsoa eta espazioa irudi gisa">
+  <ConceptLink targetId="punto" isDependency={true}>Puntuen</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta" isDependency={true}>zuzenen</ConceptLink> $\mathcal{L}$ eta <ConceptLink targetId="plano" isDependency={true}>planoen</ConceptLink> $\Pi$ <ConceptLink targetId="dominio">domeinuak</ConceptLink> dituen <ConceptLink targetId="estructura-geometrica">egitura geometriko</ConceptLink> batean:
+  1. **Diskurtso-unibertsoa:** $\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$, teoriak kuantifikatzen dituen objektu guztien multzoa.
+  2. **Espazioa irudi gisa:** puntu guztien $\mathcal{P}$ multzoa; zuzenak eta planoak bertan kokatzen dira beren <ConceptLink targetId="traza">puntu-trazaduren</ConceptLink> bidez: $\operatorname{tr}(\ell), \operatorname{tr}(\pi) \subseteq \mathcal{P}$.
+
+  Espazioaren hiru dimentsioko izaera <ConceptLink targetId="incidencia">intzidentziaren</ConceptLink> bi baldintzak finkatzen dute:
+  - **Behe-muga:** <ConceptLink targetId="coplanaridad">koplanarrak</ConceptLink> ez diren gutxienez lau puntu existitzen dira (<ConceptLink targetId="axioma-incidencia-8" isDependency={true}>I.8 axioma</ConceptLink>).
+  - **Goi-muga:** bi plano desberdinek puntu bat partekatzen badute, gutxienez beste bat ere partekatzen dute (<ConceptLink targetId="axioma-incidencia-7" isDependency={true}>I.7 axioma</ConceptLink>); beraz, elkar ebakitzen duten bi plano desberdinek zuzen batean ebakitzen dute elkar, ez puntu bakar batean, eta horrek laugarren dimentsio bat baztertzen du.
 </Definicion>
 
 <Separador />
 
-### Espazio geometriko motak eta haien sinadurak
+### Espazio geometriko motak eta haien signaturak
 
-- <ConceptLink targetId="espacio-incidencia">**Intzidentzia-espazioa**</ConceptLink>: $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, kokapen-erlazioek soilik gobernatutako gutxieneko egitura (<ConceptLink targetId="sistema-incidencia">intzidentzia-sistema</ConceptLink>).
-- <ConceptLink targetId="espacio-absoluto">**Espazio absolutua**</ConceptLink>: $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \equiv_{\text{seg}}, \equiv_{\angle})$, <ConceptLink targetId="estar-entre">ordena</ConceptLink>, <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> eta <ConceptLink targetId="continuidad">jarraitutasuna</ConceptLink> barneratzen dituena (<ConceptLink targetId="sistema-absoluto">geometria absolutua</ConceptLink>).
-- <ConceptLink targetId="espacio-euclidiano">**Espazio euklidearra**</ConceptLink>: $\mathcal{S}_{\text{euc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \equiv_{\text{seg}}, \equiv_{\angle})$ non $\mathcal{S}_{\text{euc}} \models \mathcal{T}_{\text{abs}} \cup \{\text{IV. Axioma}\}$, <ConceptLink targetId="axioma-paralelas-euclides">Euklidesen paraleloen postulatuak</ConceptLink> finkatutako zero kurbadurako espazio laua.
-- <ConceptLink targetId="espacio-hiperbolico">**Espazio hiperbolikoa**</ConceptLink>: $\mathcal{S}_{\text{hip}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \equiv_{\text{seg}}, \equiv_{\angle})$ non $\mathcal{S}_{\text{hip}} \models \mathcal{T}_{\text{abs}} \cup \{\text{IV}_{\text{hip}}\text{ Axioma}\}$, <ConceptLink targetId="axioma-paralelas-hiperbolico">postulatu hiperbolikoak</ConceptLink> finkatutako kurbadura negatiboko espazio homogeneoa.
-- <ConceptLink targetId="espacio-proyectivo">**Espazio proiektiboa**</ConceptLink>: $\mathcal{S}_{\text{proy}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, <ConceptLink targetId="coplanaridad">koplanarrak</ConceptLink> diren bi zuzenek elkar beti puntu komun batean ebakitzen duten hedadura geometrikoa.
+- <ConceptLink targetId="espacio-incidencia">**Intzidentzia-espazioa**</ConceptLink>: $\mathcal{S}_{\text{inc}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, intzidentziak soilik arautzen duen gutxieneko egitura (<ConceptLink targetId="sistema-incidencia">intzidentzia-sistema</ConceptLink>).
+- <ConceptLink targetId="espacio-absoluto">**Espazio absolutua**</ConceptLink>: $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})$, <ConceptLink targetId="estar-entre">ordenaren</ConceptLink>, <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> eta <ConceptLink targetId="continuidad">jarraitutasunaren</ConceptLink> axiomak ere betetzen dituena (<ConceptLink targetId="sistema-absoluto">geometria absolutua</ConceptLink>).
+- <ConceptLink targetId="espacio-euclidiano">**Espazio euklidearra**</ConceptLink>: $\mathcal{S}_{\text{euc}}$ espazio absolutua, non $\mathcal{S}_{\text{euc}} \models \mathcal{T}_{\text{abs}} \cup \{\text{IV}\}$: zuzen batetik kanpoko puntu batetik gehienez paralelo bakarra igarotzen da (<ConceptLink targetId="axioma-paralelas-euclides">IV. axioma</ConceptLink>).
+- <ConceptLink targetId="espacio-hiperbolico">**Espazio hiperbolikoa**</ConceptLink>: $\mathcal{S}_{\text{hip}}$ espazio absolutua, non $\mathcal{S}_{\text{hip}} \models \mathcal{T}_{\text{abs}} \cup \{\text{IV}_{\text{hip}}\}$: zuzen batetik kanpoko puntu batetik gutxienez bi paralelo igarotzen dira (<ConceptLink targetId="axioma-paralelas-hiperbolico">IV<sub>hip</sub> axioma</ConceptLink>).
+- <ConceptLink targetId="espacio-proyectivo">**Espazio proiektiboa**</ConceptLink>: $\mathcal{S}_{\text{proy}} = (\mathcal{P}, \mathcal{L}, \Pi; \, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, intzidentzia-egitura bat, non bi zuzen <ConceptLink targetId="coplanaridad">koplanar</ConceptLink> desberdinek beti ebakitzen duten elkar puntu batean.
 
 <Separador />
 
@@ -39,10 +43,10 @@ export const metadata = {
   <PropiedadesGrupo title="Oinarri logiko eta egiturazkoak">
     <PropiedadItem 
       id="universo-vs-dominios" 
-      title="Diskurtso-unibertsoa vs. domeinuak"
+      title="Diskurtso-unibertsoa vs. domeinu tipatuak"
       formula="\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi \implies \mathcal{P} \cap \mathcal{L} = \emptyset \land \mathcal{P} \cap \Pi = \emptyset \land \mathcal{L} \cap \Pi = \emptyset"
     >
-      Espazio globalak diskurtso-unibertso osoa osatzen du ($\mathcal{U} = \mathcal{P} \sqcup \mathcal{L} \sqcup \Pi$), eta $\mathcal{P}$, $\mathcal{L}$ zein $\Pi$ teoriako kuantifikatzaileek jarduten duten <ConceptLink targetId="conjunto-disjunto">binaka disjuntuak diren</ConceptLink> <ConceptLink targetId="dominio">domeinu</ConceptLink> tipatuak (sort-ak) dira.
+      $\mathcal{U}$ diskurtso-unibertsoan, $\mathcal{P}$, $\mathcal{L}$ eta $\Pi$ multzoak teoriako kuantifikatzaileen <ConceptLink targetId="dominio">domeinu</ConceptLink> tipatuak (<ConceptLink targetId="sort">sort-ak</ConceptLink>) dira, eta <ConceptLink targetId="conjunto-disjunto">binaka disjuntuak</ConceptLink> dira. $\mathcal{P}$ bakarrik da espazioa irudi gisa.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -50,8 +54,7 @@ export const metadata = {
       title="Planoen ebakiduraren teorema"
       formula="\pi_1 \neq \pi_2 \land \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) \neq \emptyset \implies \exists! \ell \in \mathcal{L} : \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \operatorname{tr}(\ell)"
     >
-      <ConceptLink targetId="axioma-incidencia-7">I.7 Axiomak</ConceptLink> bigarren puntu komun bat ($B \neq A$) existitzen dela postulatzen du; <ConceptLink targetId="axioma-incidencia-1">I.1 Axiomarekin</ConceptLink> ($\overleftrightarrow{AB}$ zuzena) eta <ConceptLink targetId="axioma-incidencia-6">I.6 Axiomarekin</ConceptLink> lotzean, <ConceptLink targetId="traza">trazen</ConceptLink> barneratzea ezartzen da: $\operatorname{tr}(\overleftrightarrow{AB}) \subseteq \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$. Berdintza zorrotza ($\operatorname{tr}(\overleftrightarrow{AB}) = \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$ plano desberdinetarako $\pi_1 \neq \pi_2$) planoaren bakartasun-axiomek (<ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>) osatzen dute, <ConceptLink targetId="colinealidad">kolineala</ConceptLink> ez den kanpoko puntu komun batek $\pi_1 = \pi_2$ izatera behartuko bailuke.
+      Izan bedi $A$ puntu komun bat. <ConceptLink targetId="axioma-incidencia-7">I.7 axiomak</ConceptLink> bigarren puntu komun bat ematen du, $B \neq A$; <ConceptLink targetId="axioma-incidencia-1">I.1 axiomaren</ConceptLink> arabera $\overleftrightarrow{AB}$ zuzena existitzen da, eta <ConceptLink targetId="axioma-incidencia-6">I.6 axiomaren</ConceptLink> arabera, $\operatorname{tr}(\overleftrightarrow{AB}) \subseteq \operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2)$. $A$ eta $B$ puntuekin <ConceptLink targetId="colinealidad">kolineala</ConceptLink> ez den $C$ puntu komun bat balego, <ConceptLink targetId="axioma-incidencia-5">I.5 axiomak</ConceptLink> $\pi_1 = \pi_2$ emango luke; beraz, berdintza betetzen da, eta zuzena bakarra da I.1 dela eta.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
-

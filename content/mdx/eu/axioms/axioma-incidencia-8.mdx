@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "I.8 axioma (Hiru dimentsioko espazioa)",
-  description: "Plano berekoak ez diren lau puntu existitzen dira gutxienez.",
+  description: "Plano berarekin intziditzen ez duten lau puntu existitzen dira gutxienez.",
   branch: "51A",
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
@@ -12,7 +12,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "I. kapitulua, §1",
+      locator: "I. kapitulua, §2",
       role: "primary"
     }
   ]
@@ -21,18 +21,14 @@ export const metadata = {
 import { Incidence8 } from '@content/diagrams/Axiomas/Incidence8';
 export const Simulation = Incidence8;
 
-<Capitular letra="G" />utxienez lau <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> ez-<ConceptLink targetId="coplanaridad">koplanar</ConceptLink> existitzen dira, hau da, inolako <ConceptLink targetId="plano" isDependency={true}>planok</ConceptLink> ez du laurekin aldi berean <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink>.
+<Capitular letra="G" />utxienez lau <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> ez-<ConceptLink targetId="coplanaridad">koplanar</ConceptLink> existitzen dira; hau da, ezein <ConceptLink targetId="plano" isDependency={true}>planok</ConceptLink> ez du laurekin aldi berean <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink>.
 
-<ConceptLink targetId="sistema-incidencia">Intzidentzia-sisteman</ConceptLink>, postulatu honek <ConceptLink targetId="espacio">espazioaren</ConceptLink> behe-dimentsioa finkatzen du, elementu geometriko guztiak bi dimentsioko <ConceptLink targetId="plano">plano</ConceptLink> bakar batera mugatuta gera ez daitezen.
+Axioma honek <ConceptLink targetId="espacio">espazioaren</ConceptLink> <ConceptLink targetId="dimension">dimentsioaren</ConceptLink> behe-bornea finkatzen du: puntu guztiek <ConceptLink targetId="plano">plano</ConceptLink> bakar batekin intziditzea eragozten du. <ConceptLink targetId="axioma-incidencia-7">I.7 axiomak</ConceptLink> ematen duen goi-bornearekin batera, intzidentzia-espazioa hiru dimentsiokoa da. <ConceptLink targetId="hilbert">Hilberten</ConceptLink> <ConceptLink targetId="incidencia">intzidentzia</ConceptLink>-axiometako azkena da.
 
-<Definicion title="I.8 axioma (Hiru dimentsioko espazioa)">
-Elkarren artean desberdinak diren lau <ConceptLink targetId="punto">puntu</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> eta <VisualBind element="pD" color="carbon">$D$</VisualBind> existitzen dira, <VisualBind element="plano-pi" color="azul">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> berekoak ez direnak:
+<Definicion title="Enuntziatu formala">
+Gutxienez lau <ConceptLink targetId="punto">puntu</ConceptLink> existitzen dira, <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> eta <VisualBind element="pD" color="carbon">$D$</VisualBind>, <VisualBind element="plano-pi" color="pavo">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> berarekin intziditzen ez dutenak:
 
 $$
 \exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi \land D \, \mathbf{I} \, \pi)
 $$
 </Definicion>
-
-<Nota>
-Axioma honek konfigurazio espazial errealen existentzia bermatzen du, <ConceptLink targetId="espacio">espaziorako</ConceptLink> gutxienez hiru <ConceptLink targetId="dimension">dimentsio</ConceptLink> ezarriz. Postulatu honekin osatzen da Hilberten <ConceptLink targetId="incidencia">intzidentzia</ConceptLink>-axiomen taldea.
-</Nota>

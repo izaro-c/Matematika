@@ -606,7 +606,17 @@ export const CircunferenciaSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve O y P. Enfoca los enlaces del texto para revelar cada elemento notable sin recargar la figura."
+  "note": "Mueve O y P. Enfoca los enlaces del texto para revelar cada elemento notable sin recargar la figura.",
+  "translations": {
+    "eu": {
+      "title": "Zirkunferentzia eta bere elementu nabarmenak",
+      "note": "Mugitu O eta P. Jarri fokua testuko esteketan elementu nabarmen bakoitza bistaratzeko figura berriz kargatu gabe."
+    },
+    "en": {
+      "title": "Circle and Its Key Elements",
+      "note": "Move O and P. Focus on the text links to reveal each key element without reloading the diagram."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

@@ -1,64 +1,68 @@
 export const metadata = {
-  "id": "demo-area-triangulo",
-  "type": "demostracion",
-  "title": "Proof: Triangle Area Theorem",
-  "description": "Geometric proof that the area of a triangle equals half the area of its circumscribed rectangle, using diagonal congruence and the additivity of area.",
-  "parentTheorem": "teorema-area-triangulo",
-  "lang": "en",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides"],
-  "tags": ["geometry", "areas", "triangle", "measure"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 41", "role": "primary" }
+  id: "demo-area-triangulo",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Triangle area theorem",
+  description: "Proof through the foot of the altitude: a right triangle is half of a rectangle; if the foot lies between the endpoints of the base, the triangle is the sum of two right triangles, and if it falls outside, their difference.",
+  parentTheorem: "teorema-area-triangulo",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["euclides"],
+  tags: ["area", "triangulo", "altura", "geometria-euclidiana"],
+  layout: "split",
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Proposition 41", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Chapter 5", role: "formalization" }
   ]
 };
 
 <DemonstrationSection>
 
-<Capitular letra="L" />et $\triangle ABC$ be a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> with base $b = |\overline{AB}|$ and height $h$ (the perpendicular distance from vertex $C$ to the line through $\overline{AB}$). The proof constructs an auxiliary rectangle that contains exactly twice the area of the triangle.
+<Capitular letra="D" />irect <ConceptLink targetId="metodo-directo" isDependency={true}>proof</ConceptLink> of the <ConceptLink targetId="teorema-area-triangulo">triangle area theorem</ConceptLink> through the foot of the <ConceptLink targetId="altura-triangulo" isDependency={true}>altitude</ConceptLink>: we first prove that a <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink> is half of a <ConceptLink targetId="rectangulo" isDependency={true}>rectangle</ConceptLink>; then three cases are distinguished according to the position of the foot of the altitude with respect to the base.
 
 <Separador />
 
-### Proof step by step
+### Step-by-step proof
 
-<ProofStep number={1} title="Construction of the circumscribed rectangle">
-Construct rectangle $ABDE$ with base $\overline{AB}$ of length $b$ and height $h$, by drawing <ConceptLink targetId="perpendicular" isDependency={true}>perpendiculars</ConceptLink> through $A$ and $B$ and the <ConceptLink targetId="paralelas" isDependency={true}>parallel</ConceptLink> through $C$ to $AB$. By the <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink>:
-
-<Formula>
-  $$ \text{Area}(ABDE) = b \cdot h $$
-</Formula>
+<ProofStep number={1} title="The foot of the altitude and the three cases">
+Let $\triangle ABC$ be a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> in a plane $\sigma$. By the <ConceptLink targetId="teorema-existencia-perpendicular" isDependency={true}>existence and uniqueness theorem for the perpendicular</ConceptLink>, there is exactly one line through $C$ <ConceptLink targetId="perpendicular" isDependency={true}>perpendicular</ConceptLink> to $\overleftrightarrow{AB}$; let $H$ be its intersection point with $\overleftrightarrow{AB}$. Since $C$ is not incident with $\overleftrightarrow{AB}$, $H \neq C$ and $h = |CH| > 0$. Let $b = |AB|$. By the <ConceptLink targetId="axioma-orden-3" isDependency={true}>order axioms</ConceptLink> applied to the points $A$, $B$, $H$ of the line $\overleftrightarrow{AB}$, one of these cases occurs:
+1. $H = A$ or $H = B$;
+2. $A * H * B$, that is, $H$ lies <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> $A$ and $B$;
+3. $A * B * H$ or $H * A * B$.
 </ProofStep>
 
-<ProofStep number={2} title="Division by diagonal AC">
-Diagonal $\overline{AC}$ divides rectangle $ABDE$ into two triangles. By the <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>AAS congruence criterion</ConceptLink> applied to triangles $\triangle ABC$ and $\triangle CAE$ (right angles at $B$ and $E$, common side $\overline{AC}$, equal sides $|\overline{AB}| = |\overline{CE}|$), both triangles are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>.
+<ProofStep number={2} title="Lemma: a right triangle is half of a rectangle">
+Let $\triangle PQR$ be a triangle with a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> at $P$, $u = |PQ|$ and $v = |PR|$. The perpendicular to $\overleftrightarrow{PQ}$ through $Q$ and the <ConceptLink targetId="paralelas" isDependency={true}>parallel</ConceptLink> to $\overleftrightarrow{PQ}$ through $R$ meet at a point $S$, and $PQSR$ is a rectangle (<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel axiom</ConceptLink>) whose opposite sides are congruent. Then $\triangle QPR \cong \triangle RSQ$ by the <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>SSS criterion</ConceptLink> ($\overline{QP} \cong \overline{RS}$, $\overline{PR} \cong \overline{SQ}$ and $\overline{QR}$ shared). Since $P$ and $S$ lie in opposite <ConceptLink targetId="semiplano" isDependency={true}>half-planes</ConceptLink> with respect to $\overleftrightarrow{QR}$, the two triangular regions only share $\overline{QR}$ and their union is the region of the rectangle. By the invariance of the <ConceptLink targetId="teoria-medida-area" isDependency={true}>area function</ConceptLink>, <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>additivity</ConceptLink> and the <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink>, $u \cdot v = 2 \operatorname{A}(\triangle PQR)$, that is,
+
+$$
+\operatorname{A}(\triangle PQR) = \frac{1}{2}\, u \cdot v
+$$
 </ProofStep>
 
-<ProofStep number={3} title="Application of area additivity">
-Since the two triangles are congruent, they have equal area. By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>, the area of the rectangle equals the sum of the areas of the two triangles:
-
-<Formula>
-  $$ \text{Area}(ABDE) = \text{Area}(\triangle ABC) + \text{Area}(\triangle CAE) = 2 \cdot \text{Area}(\triangle ABC) $$
-</Formula>
+<ProofStep number={3} title="Case 1: the foot coincides with a vertex">
+If $H = A$, the angle $\angle BAC$ is a right angle and, by the preceding lemma (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink>), $\operatorname{A}(\triangle ABC) = \tfrac{1}{2}\, |AB| \cdot |AC| = \tfrac{1}{2}\, b \cdot h$. The case $H = B$ is analogous.
 </ProofStep>
 
-<ProofStep number={4} title="Conclusion">
-Solving for the triangle's area:
+<ProofStep number={4} title="Case 2: the foot lies between A and B">
+If $A * H * B$, the <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> $\overline{CH}$ divides the <ConceptLink targetId="region-triangular" isDependency={true}>triangular region</ConceptLink> of $\triangle ABC$ into those of $\triangle AHC$ and $\triangle HBC$, which have a right angle at $H$ and only share $\overline{CH}$, since $A$ and $B$ lie in opposite half-planes with respect to $\overleftrightarrow{CH}$. By additivity, the lemma and the additivity of <ConceptLink targetId="longitud" isDependency={true}>length</ConceptLink> ($|AH| + |HB| = |AB|$),
 
-<Formula>
-  $$ \text{Area}(\triangle ABC) = \frac{1}{2} \cdot b \cdot h $$
-</Formula>
-
-This equality holds for any triangle — acute, right, or obtuse — since in all three cases the triangle can be inscribed in a rectangle of equal base and height.
+$$
+\operatorname{A}(\triangle ABC) = \frac{1}{2}\, |AH| \cdot h + \frac{1}{2}\, |HB| \cdot h = \frac{1}{2}\, (|AH| + |HB|) \cdot h = \frac{1}{2}\, b \cdot h
+$$
 </ProofStep>
 
-<Separador />
+<ProofStep number={5} title="Case 3: the foot falls outside the base">
+If $A * B * H$ (the angle at $B$ is obtuse), the region of $\triangle AHC$ is the union of the regions of $\triangle ABC$ and $\triangle BHC$, which only share $\overline{BC}$. Both $\triangle AHC$ and $\triangle BHC$ have a right angle at $H$, and $|AH| = |AB| + |BH|$. By <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity</ConceptLink> and the lemma,
 
-### Deductive analysis
+$$
+\frac{1}{2}\, (b + |BH|) \cdot h = \operatorname{A}(\triangle ABC) + \frac{1}{2}\, |BH| \cdot h
+$$
+
+hence $\operatorname{A}(\triangle ABC) = \tfrac{1}{2}\, b \cdot h$. The case $H * A * B$ is the same with the roles of $A$ and $B$ exchanged. In all three cases, $\operatorname{A}(\triangle ABC) = \tfrac{1}{2}\, b \cdot h$.
+</ProofStep>
 
 <Nota>
-  For an obtuse triangle, the rectangle must be extended beyond the base, but the congruence and additivity argument remains intact. This proof operates strictly within the <ConceptLink targetId="sistema-euclidiano">Euclidean axiomatic system</ConceptLink>.
+<ConceptLink targetId="euclides">Euclid</ConceptLink> obtains the result differently (Elements I.41): a <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink> with the same base as a triangle and lying between the same parallels is double the triangle. The proof through the foot of the altitude avoids the theory of parallelograms and only uses rectangles.
 </Nota>
 
 </DemonstrationSection>

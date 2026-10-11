@@ -1,0 +1,95 @@
+export const metadata = {
+  id: "demo-congruencia-ala",
+  lang: "eu",
+  type: "demostracion",
+  title: "Frogapena: Angelu-Alde-Angelu (ALA) kongruentzia-irizpidea",
+  description: "Frogapen zuzena: zuzenki laguntzaile bat garraiatzen da, LAL teorema aplikatzen da, eta angeluen garraioaren bakartasunak erpinak bat etortzera behartzen ditu.",
+  parentTheorem: "teorema-congruencia-ala",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetikoa", "triangelua", "kongruentzia", "geometria-absolutua"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. liburua, 26. proposizioa",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { DemoCongruenciaALA } from "@content/diagrams/Demos/DemoCongruenciaALA";
+
+<DemonstrationSection diagram={<DemoCongruenciaALA />}>
+
+<Capitular letra="F" />rogapen honek <ConceptLink targetId="hilbert">Hilberten</ConceptLink> <ConceptLink targetId="metodo-directo" isDependency={true}>metodo zuzena</ConceptLink> (§6) darabil <ConceptLink targetId="teorema-congruencia-ala">ALA kongruentzia-teorema</ConceptLink> egiaztatzeko: $\overrightarrow{A'C'}$ <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdian</ConceptLink> $\overline{A'C^*} \cong \overline{AC}$ betetzen duen $C^*$ <ConceptLink targetId="punto" isDependency={true}>puntua</ConceptLink> eraikitzen da, eta $C^* = C'$ dela frogatzen da. Zuzenkien garraioa (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axioma</ConceptLink>), <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teorema</ConceptLink> eta angeluen garraioaren bakartasuna (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axioma</ConceptLink>) erabiltzen dira.
+
+<Separador />
+
+### Frogapena urratsez urrats
+
+<ProofStep number={1} target="step1" title="Hipotesiak eta zuzenki laguntzailearen garraioa">
+Izan bitez hipotesi hauek betetzen dituzten <VisualBind element="triangle1" color="granada">$\triangle ABC$</VisualBind> eta <VisualBind element="triangle2" color="granada">$\triangle A'B'C'$</VisualBind> <ConceptLink targetId="triangulo" isDependency={true}>triangeluak</ConceptLink>:
+1. Angeluen arteko <ConceptLink targetId="lado" isDependency={true}>aldearen</ConceptLink> kongruentzia: <VisualBind element="sideAB" color="granada">$\overline{AB} \cong \overline{A'B'}$</VisualBind>.
+2. Alde horren ondoko <ConceptLink targetId="angulo" isDependency={true}>angeluen</ConceptLink> kongruentzia: <VisualBind element="angleA" color="granada">$\angle CAB \cong \angle C'A'B'$</VisualBind> eta <VisualBind element="angleB" color="granada">$\angle ABC \cong \angle A'B'C'$</VisualBind>.
+
+<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axiomagatik</ConceptLink>, <VisualBind element="rayAC" color="mora">$\overrightarrow{A'C'}$</VisualBind> <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdian</ConceptLink> bada <VisualBind element="pointC" color="mora">$C^*$</VisualBind> <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat, jatorriaren desberdina ($C^* \neq A'$), non <VisualBind element="A2Cstar" color="mora">$\overline{A'C^*}$</VisualBind> <ConceptLink targetId="segmento" isDependency={true}>zuzenkia</ConceptLink> <VisualBind element="AC" color="granada">$\overline{AC}$</VisualBind> zuzenkiarekiko <ConceptLink targetId="congruencia" isDependency={true}>kongruentea</ConceptLink> baita:
+
+$$
+C^* \in \overrightarrow{A'C'} \setminus \{A'\}, \qquad \overline{A'C^*} \cong \overline{AC}
+$$
+
+$C^*$ puntuak $\overleftrightarrow{A'C'}$ <ConceptLink targetId="recta" isDependency={true}>zuzenarekin</ConceptLink> intziditzen du eta $A'$ puntuaren desberdina da, eta $B'$ puntuak ez du zuzen horrekin intziditzen ($\neg\operatorname{Col}(A',B',C')$); beraz, $A'$, $B'$, $C^*$ puntuak ez dira <ConceptLink targetId="colinealidad">kolinealak</ConceptLink>, eta <VisualBind element="triConstructed" color="mora">$\triangle A'B'C^*$</VisualBind> triangelua zehazten dute.
+</ProofStep>
+
+<ProofStep number={2} target="step2" title="LAL teoremaren aplikazioa">
+<VisualBind element="triangle1" color="granada">$\triangle ABC$</VisualBind> eta <VisualBind element="triConstructed" color="mora">$\triangle A'B'C^*$</VisualBind> alderatuko ditugu:
+1. <VisualBind element="sideAB" color="granada">$\overline{AB} \cong \overline{A'B'}$</VisualBind> (hipotesia).
+2. $C^* \in \overrightarrow{A'C'} \setminus \{A'\}$ denez, $\overrightarrow{A'C^*}$ zuzenerdia $\overrightarrow{A'C'}$ zuzenerdiaren berdina da; beraz, $\angle C^*A'B' = \angle C'A'B'$ eta, hipotesiagatik, <VisualBind element="angleA" color="granada">$\angle CAB \cong \angle C^*A'B'$</VisualBind>.
+3. <VisualBind element="A2Cstar" color="mora">$\overline{AC} \cong \overline{A'C^*}$</VisualBind> (1. urratsa, zuzenkien kongruentziaren <ConceptLink targetId="simetria">simetriarekin</ConceptLink>).
+
+<ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teoremagatik</ConceptLink>, <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 axiomaren</ConceptLink> ondorioa denez, $\triangle ABC \cong \triangle A'B'C^*$ (<ConceptLink targetId="congruencia-triangulos">triangeluen kongruentzia</ConceptLink>). Bereziki:
+
+$$
+\angle ABC \cong \angle A'B'C^*
+$$
+</ProofStep>
+
+<ProofStep number={3} target="step3" title="Angeluen garraioaren bakartasuna: C* = C'">
+Hipotesiagatik, <VisualBind element="angleB" color="granada">$\angle ABC \cong \angle A'B'C'$</VisualBind>. Angeluen kongruentziaren <ConceptLink targetId="simetria">simetriagatik</ConceptLink> eta <ConceptLink targetId="transitividad">iragankortasunagatik</ConceptLink> (<ConceptLink targetId="teorema-congruencia-angulos-equivalencia" isDependency={true}>angeluen kongruentziaren baliokidetasun-teorema</ConceptLink>, Hilbert, §6):
+
+$$
+\angle A'B'C^* \cong \angle A'B'C'
+$$
+
+$C^*$ eta $C'$ puntuak $\overleftrightarrow{A'B'}$ zuzenarekiko <ConceptLink targetId="semiplano" isDependency={true}>planoerdi</ConceptLink> berean daude: biak $\overrightarrow{A'C'} \setminus \{A'\}$ multzokoak dira; beraz, zuzenerdiaren definizioagatik eta <ConceptLink targetId="estar-entre" isDependency={true}>bitartekotasunagatik</ConceptLink>, $A' \notin \overline{C^*C'}$; eta $\overleftrightarrow{A'C'}$ eta $\overleftrightarrow{A'B'}$ zuzenek $A'$ puntua baino ez dutenez komunean, $\overline{C^*C'} \cap \operatorname{tr}(\overleftrightarrow{A'B'}) = \emptyset$, hau da, $C^* \in \mathcal{H}_{\overleftrightarrow{A'B'}}(C')$.
+
+Hortaz, $\overrightarrow{B'C^*}$ eta $\overrightarrow{B'C'}$ zuzenerdiek $\overrightarrow{B'A'}$ zuzenerdiarekin $\angle ABC$ angeluarekiko kongruenteak diren angeluak osatzen dituzte, eta planoerdi berean daude. <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axiomaren</ConceptLink> bakartasunagatik:
+
+$$
+\overrightarrow{B'C^*} = \overrightarrow{B'C'}
+$$
+
+Orduan, $C^*$ eta $C'$ puntuek $\overleftrightarrow{A'C'}$ eta $\overleftrightarrow{B'C'}$ <ConceptLink targetId="recta" isDependency={true}>zuzenekin</ConceptLink> intziditzen dute, eta zuzen horiek desberdinak dira, $A'$, $B'$, $C'$ kolinealak ez direlako. <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>I.1 axiomagatik</ConceptLink>, bi zuzen desberdinek gehienez puntu komun bat dute; beraz:
+
+$$
+C^* = C'
+$$
+
+2. urratsean ordezkatuz, $\triangle ABC \cong \triangle A'B'C^* = \triangle A'B'C'$, hau da:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+</ProofStep>
+
+</DemonstrationSection>

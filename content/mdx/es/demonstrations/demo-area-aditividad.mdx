@@ -1,72 +1,67 @@
 export const metadata = {
-  "id": "demo-area-aditividad",
-  "type": "demostracion",
-  "title": "Demostración: Teorema de aditividad del área",
-  "description": "Verificación de que la medida de área satisface los axiomas de Hilbert-Dehn para magnitudes aditivas: la función Área es aditiva sobre descomposiciones en subregiones poligonales interiormente disjuntas.",
-  "parentTheorem": "teorema-area-aditividad",
-  "lang": "es",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["hilbert"],
-  "tags": ["geometria", "areas", "aditividad", "medida"],
-  "layout": "split",
-  "sources": [
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "locator": "Capítulo IV, §20", "role": "primary" },
-    { "title": "Über den Rauminhalt", "author": "Max Dehn", "locator": "Mathematische Annalen 55 (1901)", "role": "secondary" }
+  id: "demo-area-aditividad",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de aditividad del área",
+  description: "Demostración por inducción sobre el número de piezas: la unión de las n primeras piezas es una región poligonal de interior disjunto con la siguiente, y se aplica la aditividad para dos piezas.",
+  parentTheorem: "teorema-area-aditividad",
+  branch: "51M",
+  proofMethod: "metodo-induccion",
+  authors: ["hilbert"],
+  tags: ["area", "region-poligonal", "aditividad", "induccion"],
+  layout: "split",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV", role: "primary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Capítulo 5", role: "formalization" }
   ]
 };
 
 <DemonstrationSection>
 
-<Capitular letra="E" />l <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink> establece que la función de medida de área sobre polígonos satisface la propiedad de extensión: el área de la reunión de dos regiones interiormente disjuntas iguala la suma de sus áreas individuales.
+<Capitular letra="D" />emostración del <ConceptLink targetId="teorema-area-aditividad">teorema de aditividad del área</ConceptLink> por <ConceptLink targetId="metodo-induccion" isDependency={true}>inducción</ConceptLink> sobre el número $n$ de piezas, a partir de la aditividad para dos piezas que forma parte de la definición de <ConceptLink targetId="teoria-medida-area" isDependency={true}>función área</ConceptLink>.
+
+La única observación geométrica necesaria es que, al reunir las $n$ primeras piezas, se obtiene de nuevo una <ConceptLink targetId="region-poligonal" isDependency={true}>región poligonal</ConceptLink> que no se solapa con la pieza siguiente; así el caso de $n + 1$ piezas se reduce al de dos.
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} title="Definición axiomática de la medida de área">
-Siguiendo a Hilbert, se postula que existe una función $\mu: \mathcal{P} \to \mathbb{R}^+$ definida sobre el conjunto $\mathcal{P}$ de regiones poligonales que satisface:
-- $\mu(\text{cuadrado de lado } 1) = 1$ (normalización).
-- Si dos polígonos $P \cong Q$ son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>, entonces $\mu(P) = \mu(Q)$ (invarianza isométrica).
-- (Aditividad) Si $P = P_1 \cup P_2$ con $P_1 \cap P_2$ de área nula, entonces $\mu(P) = \mu(P_1) + \mu(P_2)$.
+<ProofStep number={1} title="Enunciado que se prueba por inducción">
+Para cada $n \geq 1$, sea $P(n)$ la afirmación: si $R_1, \dots, R_n$ son <ConceptLink targetId="region-poligonal" isDependency={true}>regiones poligonales</ConceptLink> de un <ConceptLink targetId="plano">plano</ConceptLink> $\sigma$ con interiores disjuntos dos a dos, entonces
 
-La aditividad es un axioma, no un teorema: el teorema afirma que la función $b \cdot h$ para rectángulos y sus derivadas son la única extensión coherente.
+$$
+\operatorname{A}(R_1 \cup \dots \cup R_n) = \sum_{i=1}^{n} \operatorname{A}(R_i)
+$$
+
+Por el <ConceptLink targetId="metodo-induccion" isDependency={true}>principio de inducción</ConceptLink>, basta probar $P(1)$ y que $P(n)$ implica $P(n + 1)$ para todo $n \geq 1$.
 </ProofStep>
 
-<ProofStep number={2} title="Partición de un polígono genérico en triángulos">
-Todo <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> $\triangle$ tiene área bien definida por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>: $\mu(\triangle) = \frac{1}{2} b h$. Todo polígono convexo de $n$ lados admite una triangulación en $n-2$ triángulos interiormente disjuntos. Por inducción sobre $n$:
-
-<Formula>
-  $$ \mu(P) = \sum_{k=1}^{n-2} \mu(\triangle_k) $$
-</Formula>
+<ProofStep number={2} title="Caso base">
+$P(1)$ se reduce a la igualdad $\operatorname{A}(R_1) = \operatorname{A}(R_1)$. (El caso $n = 2$ es exactamente la condición de aditividad de la <ConceptLink targetId="teoria-medida-area" isDependency={true}>función área</ConceptLink>.)
 </ProofStep>
 
-<ProofStep number={3} title="Independencia de la triangulación">
-Si $P = \bigsqcup_i \triangle_i = \bigsqcup_j \triangle_j'$ son dos triangulaciones distintas del mismo polígono, la superposición de ambas produce una triangulación común de $P$. Como cada triángulo resultante aparece en ambas subdivisiones, la aditividad implica que la suma es la misma para las dos triangulaciones originales:
-
-<Formula>
-  $$ \sum_i \mu(\triangle_i) = \sum_k \mu(\triangle_k^*) = \sum_j \mu(\triangle_j') $$
-</Formula>
-
-donde $\{\triangle_k^*\}$ es la triangulación refinada común.
+<ProofStep number={3} title="La unión de las n primeras piezas es una región poligonal">
+Supongamos $P(n)$ y sean $R_1, \dots, R_{n+1}$ regiones poligonales de interiores disjuntos dos a dos. Sea $S = R_1 \cup \dots \cup R_n$. Cada $R_i$ es una unión finita de <ConceptLink targetId="region-triangular" isDependency={true}>regiones triangulares</ConceptLink>; por tanto, $S$ también lo es y, por definición, $S$ es una <ConceptLink targetId="region-poligonal" isDependency={true}>región poligonal</ConceptLink>.
 </ProofStep>
 
-<ProofStep number={4} title="Aditividad para descomposiciones finitas">
-Sean $R_1, R_2$ dos regiones poligonales con $R_1 \cap R_2$ de área nula (intersección en a lo sumo un segmento o un punto). Tomando triangulaciones compatibles de $R_1$, $R_2$ y $R_1 \cup R_2$, el paso anterior garantiza:
+<ProofStep number={4} title="S y la pieza siguiente tienen interiores disjuntos">
+Por la <ConceptLink targetId="distributividad">distributividad</ConceptLink> de la intersección respecto de la unión,
 
-<Formula>
-  $$ \mu(R_1 \cup R_2) = \mu(R_1) + \mu(R_2) $$
-</Formula>
+$$
+S \cap R_{n+1} = \bigcup_{i=1}^{n} \left( R_i \cap R_{n+1} \right)
+$$
 
-Por inducción, la propiedad se extiende a reuniones finitas arbitrarias.
+Por hipótesis, cada $R_i \cap R_{n+1}$ con $i \leq n$ está contenida en una unión finita de <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink>; una unión de $n$ uniones finitas de segmentos es una unión finita de segmentos. Luego $S$ y $R_{n+1}$ tienen interiores disjuntos.
 </ProofStep>
 
-<Separador />
+<ProofStep number={5} title="Aditividad para dos piezas e hipótesis de inducción">
+Como $R_1 \cup \dots \cup R_{n+1} = S \cup R_{n+1}$, la aditividad de la <ConceptLink targetId="teoria-medida-area" isDependency={true}>función área</ConceptLink> para dos piezas da $\operatorname{A}(S \cup R_{n+1}) = \operatorname{A}(S) + \operatorname{A}(R_{n+1})$. Las regiones $R_1, \dots, R_n$ tienen interiores disjuntos dos a dos, así que la hipótesis de inducción $P(n)$ da $\operatorname{A}(S) = \sum_{i=1}^{n} \operatorname{A}(R_i)$. Por tanto,
 
-### Análisis deductivo
+$$
+\operatorname{A}(R_1 \cup \dots \cup R_{n+1}) = \sum_{i=1}^{n} \operatorname{A}(R_i) + \operatorname{A}(R_{n+1}) = \sum_{i=1}^{n+1} \operatorname{A}(R_i)
+$$
 
-<Nota>
-  El resultado es exclusivo de la geometría bidimensional. En tres dimensiones, el teorema de Dehn-Sydler muestra que la aditividad del volumen no es suficiente para resolver la equidescomposición: existen poliedros de igual volumen que no son equidescomponibles, lo que ilustra la profundidad del Tercer Problema de Hilbert.
-</Nota>
+que es $P(n + 1)$. Por <ConceptLink targetId="metodo-induccion" isDependency={true}>inducción</ConceptLink>, $P(n)$ vale para todo $n \geq 1$.
+</ProofStep>
 
 </DemonstrationSection>

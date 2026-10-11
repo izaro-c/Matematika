@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Estar entre",
-  description: "Relación ternaria primitiva de orden lineal que formaliza la intermediación de puntos sobre una recta.",
+  description: "Relación ternaria primitiva que formaliza la intermediación de puntos sobre una recta.",
   branch: "51A",
   branches: ["51A", "03B"],
   tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
@@ -22,26 +22,26 @@ export const metadata = {
 import { EstarEntre } from '@content/diagrams/Definiciones/EstarEntre';
 export const Simulation = EstarEntre;
 
-<Capitular letra="L" />a relación de **estar entre** (o intermediación) es una <ConceptLink targetId="relacion-ternaria">relación ternaria</ConceptLink> <ConceptLink targetId="concepto-primitivo">primitiva</ConceptLink> que formaliza el <ConceptLink targetId="orden">orden lineal</ConceptLink> estricto de los <ConceptLink targetId="punto">puntos</ConceptLink> sobre una <ConceptLink targetId="recta">recta</ConceptLink>.
+<Capitular letra="L" />a relación de **estar entre** (o intermediación) es una <ConceptLink targetId="relacion-ternaria">relación ternaria</ConceptLink> <ConceptLink targetId="concepto-primitivo">primitiva</ConceptLink> entre <ConceptLink targetId="punto">puntos</ConceptLink> que expresa que un punto se encuentra situado entre otros dos sobre una <ConceptLink targetId="recta">recta</ConceptLink>.
 
-En la <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink>, su comportamiento formal está gobernado por el grupo de <ConceptLink targetId="axioma">axiomas</ConceptLink> de orden (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> y <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>).
+Sus propiedades no se definen: las fijan los <ConceptLink targetId="axioma">axiomas</ConceptLink> de orden (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> y <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>). De ellos se deduce que los puntos de cada recta admiten un <ConceptLink targetId="orden">orden lineal</ConceptLink>, de modo que la intermediación es la base de toda la teoría de la <ConceptLink targetId="separacion">separación</ConceptLink> en rectas y planos.
 
 <Definicion title="Relación primitiva de intermediación">
-En la <ConceptLink targetId="signatura">signatura</ConceptLink> de Hilbert $\sigma_{\text{Hil}}$, la intermediación es un símbolo de relación ternaria $\mathbf{B}$ con <ConceptLink targetId="aridad">aridad</ConceptLink> $\text{ar}(\mathbf{B}) = \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ sobre el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> de puntos $\mathcal{P}$.
+En la <ConceptLink targetId="signatura">signatura</ConceptLink> de Hilbert $\sigma_{\text{Hil}}$, la intermediación es un símbolo de relación de <ConceptLink targetId="aridad">aridad</ConceptLink> 3 cuya interpretación es un subconjunto $\mathbf{B} \subseteq \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ del <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> de puntos $\mathcal{P}$.
 
-Para cualquier <ConceptLink targetId="terna">terna</ConceptLink> de puntos <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> de una misma recta <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, la relación se denota formalmente como:
+Para cualquier <ConceptLink targetId="terna">terna</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> de una misma recta <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, la relación se denota:
 
 $$
 A * B * C \quad \text{o bien} \quad \mathbf{B}(A, B, C)
 $$
 
-y expresa el predicado «el punto $B$ está entre $A$ y $C$». La relación exige formalmente que los tres puntos sean distintos entre sí y mutuamente <ConceptLink targetId="colinealidad">colineales</ConceptLink> mediante <ConceptLink targetId="incidencia">incidencia</ConceptLink>:
+y expresa el predicado «el punto $B$ está entre $A$ y $C$». La definición no impone por sí misma ninguna condición sobre la terna: es el <ConceptLink targetId="axioma-orden-1">Axioma II.1</ConceptLink> el que garantiza que, si $A * B * C$, los tres puntos son distintos, <ConceptLink targetId="colinealidad">colineales</ConceptLink> por <ConceptLink targetId="incidencia">incidencia</ConceptLink> con una misma recta, y que $B$ también está entre $C$ y $A$:
 
 $$
-\forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\Bigr)\Biggr)
+\forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land C * B * A\Bigr)\Biggr)
 $$
 </Definicion>
 
 <Nota>
-Esta relación primitiva constituye el fundamento formal para definir el <ConceptLink targetId="segmento">segmento</ConceptLink>, la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink>, el <ConceptLink targetId="semiplano">semiplano</ConceptLink> y la separación lineal de la recta.
+Esta relación primitiva es el fundamento para definir el <ConceptLink targetId="segmento">segmento</ConceptLink>, la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink>, el <ConceptLink targetId="semiplano">semiplano</ConceptLink> y la separación de la recta por uno de sus puntos.
 </Nota>

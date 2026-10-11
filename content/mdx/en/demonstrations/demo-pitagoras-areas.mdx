@@ -1,16 +1,18 @@
 export const metadata = {
-  "id": "demo-pitagoras-areas",
-  "type": "demostracion",
-  "title": "Proof: Pythagorean Theorem (Area Dissection Method)",
-  "description": "Algebraic and geometric proof by decomposing the area of a square of side (a+b) into four right triangles and a central square.",
-  "parentTheorem": "teorema-pitagoras",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["pitagoras"],
-  "tags": ["geometria", "triangulos", "areas", "algebra"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elements", author: "Euclides", locator: "Book I, Proposition 47 (Alternative dissection proof)", role: "primary" }
+  id: "demo-pitagoras-areas",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Pythagorean Theorem (Area Dissection Method)",
+  description: "Geometric proof by decomposing the area of a square of side (a+b) into four right triangles and a central square of area c².",
+  parentTheorem: "teorema-pitagoras",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["pitagoras"],
+  tags: ["geometria", "triangulos", "areas", "algebra"],
+  layout: "split",
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Proposition 47 (Alternative dissection proof)", role: "secondary" },
+    { title: "Zhoubi suanjing", author: "Classical Chinese Tradition", locator: "Commentary of Zhao Shuang (c. 3rd century)", role: "primary" }
   ]
 };
 
@@ -18,46 +20,46 @@ import { DemoPitagorasAreas } from "@content/diagrams/Demos/DemoPitagorasAreas";
 
 <DemonstrationSection diagram={<DemoPitagorasAreas />}>
 
-<Capitular letra="I" />n a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> with legs $a, b$ and hypotenuse $c$, the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink> is proven through the equidecomposition of an <VisualBind element="outerSquare" color="carbon"><ConceptLink targetId="cuadrado">outer square</ConceptLink></VisualBind> of side length $(a+b)$.
+<Capitular letra="I" />n every <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink> with <ConceptLink targetId="cateto" isDependency={true}>legs</ConceptLink> of <ConceptLink targetId="longitud" isDependency={true}>lengths</ConceptLink> $a, b$ and <ConceptLink targetId="hipotenusa" isDependency={true}>hypotenuse</ConceptLink> $c$, the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink> is demonstrated by decomposing the <ConceptLink targetId="teoria-medida-area" isDependency={true}>area</ConceptLink> of an <VisualBind element="outerSquare" color="carbon"><ConceptLink targetId="cuadrado">outer square</ConceptLink></VisualBind> of side $(a+b)$.
 
 <Separador />
 
 ### Step-by-step proof
 
 <ProofStep number={1} target="outerSquare" title="Construction of the bounding outer square">
-Construct an enclosing <ConceptLink targetId="cuadrado">square</ConceptLink> of side length $(a+b)$. The total area of this outer square is given by algebraic expansion:
+An enclosing exterior <ConceptLink targetId="cuadrado">square</ConceptLink> of side $(a+b)$ is constructed. By the definition of the area of a square (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink>), its total area satisfies the algebraic identity:
 
-<Formula>
-  $$ \text{Total Area} = (a+b)^2 = a^2 + 2ab + b^2 $$
-</Formula>
+$$
+\operatorname{A}(\text{exterior}) = (a+b)^2 = a^2 + 2ab + b^2
+$$
 </ProofStep>
 
 <ProofStep number={2} target="t1" title="Placement of the four right triangles">
-In each of the four corners of the outer square, place a right triangle with legs $a$ and $b$. By the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>area of a triangle theorem</ConceptLink>, the combined area of the four congruent triangles is:
+In each of the four corners of the outer square, a <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink> with legs $a$ and $b$ is placed (<VisualBind element="t1" color="carbon">$T_1$</VisualBind>, <VisualBind element="t2" color="carbon">$T_2$</VisualBind>, <VisualBind element="t3" color="carbon">$T_3$</VisualBind>, <VisualBind element="t4" color="carbon">$T_4$</VisualBind>). By the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, the four triangles are mutually congruent. By the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>, the sum of the areas of the four triangles is:
 
-<Formula>
-  $$ 4 \times \left( \frac{1}{2} a b \right) = 2ab $$
-</Formula>
+$$
+4 \cdot \left(\frac{1}{2} a b\right) = 2ab
+$$
 </ProofStep>
 
 <ProofStep number={3} target="emptyC" title="Characterization of the interior square">
-The four hypotenuses of the triangles form the boundary of a central region of side length $c$. Because the acute angles of each right triangle sum to $90^\circ$, the interior angle at each vertex of the central quadrilateral is $180^\circ - 90^\circ = 90^\circ$. Thus, it is an interior square of area $c^2$.
+The four hypotenuses of the triangles form the boundary of a central quadrilateral region <VisualBind element="emptyC" color="ocre">$Q_c$</VisualBind> with sides of length $c$. Since the two acute <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> of each right triangle are <ConceptLink targetId="angulos-suplementarios" isDependency={true}>complementary</ConceptLink> and sum to $90^\circ$, the interior angle at each vertex of the central quadrilateral measures $180^\circ - 90^\circ = 90^\circ$. Having all four sides congruent and all four angles right, $Q_c$ is an interior <ConceptLink targetId="cuadrado">square</ConceptLink> of area $c^2$.
 </ProofStep>
 
-<ProofStep number={4} target="emptyA" title="Application of the area additivity principle">
-By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>, the area of the outer square equals the sum of the central interior square's area and the areas of the four triangles:
+<ProofStep number={4} target="emptyA" title="Application of the area additivity theorem">
+By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>, the area of the outer square equals the area of the central interior square plus the sum of the areas of the four corner triangles:
 
-<Formula>
-  $$ (a+b)^2 = c^2 + 4 \cdot \left( \frac{1}{2} a b \right) $$
-</Formula>
+$$
+(a+b)^2 = \operatorname{A}(Q_c) + 2ab = c^2 + 2ab
+$$
 </ProofStep>
 
 <ProofStep number={5} target="emptyB" title="Algebraic simplification and conclusion">
-Expanding the left-hand side and cancelling the $2ab$ term on both sides yields:
+Subtracting the term $2ab$ from both sides of the equality, or alternatively rearranging the four triangles into two rectangles of dimensions $a \times b$ (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink>) that leave exposed two interior <ConceptLink targetId="cuadrado">squares</ConceptLink> <VisualBind element="emptyA" color="terracota">$Q_a$</VisualBind> (of area $a^2$) and <VisualBind element="emptyB" color="canela">$Q_b$</VisualBind> (of area $b^2$), one formally concludes:
 
-<Formula>
-  $$ a^2 + 2ab + b^2 = c^2 + 2ab \implies a^2 + b^2 = c^2 $$
-</Formula>
+$$
+a^2 + b^2 = c^2
+$$
 </ProofStep>
 
 <Separador />
@@ -65,7 +67,7 @@ Expanding the left-hand side and cancelling the $2ab$ term on both sides yields:
 ### Deductive analysis
 
 <Nota>
-  Visual and algebraic dissection proof historically attributed to Pythagorean and Indian mathematicians (Bhaskara). It is founded on the isometry invariance of area and the <ConceptLink targetId="teoria-medida-area">theory of area measurement</ConceptLink>.
+This geometric proof by dissection and rearrangement of areas is attested with great antiquity in the Chinese mathematical tradition (in the *Gougu* figure of the *Zhoubi suanjing*, with commentary by Zhao Shuang in the 3rd century) and in several classical Mediterranean and Indian traditions. Its rigorous validity rests on the invariance of area under congruence and the <ConceptLink targetId="teorema-area-aditividad">area additivity theorem</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

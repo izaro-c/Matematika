@@ -3,37 +3,37 @@ export const metadata = {
   lang: "en",
   type: "teorema",
   title: "Vertical Angles Theorem",
-  description: "If two intersecting lines cross at a point, the vertical angles formed by their opposite rays are mutually congruent.",
-  statement: "Given two intersecting lines l and m meeting at a point O, any pair of vertical angles is mutually congruent.",
+  description: "If two intersecting lines cross at a point, the vertical angles formed by their opposite rays are congruent.",
+  statement: "Given two intersecting lines ℓ and m meeting at a point O, any pair of vertical angles consists of congruent angles.",
   branch: "51M",
   hasSimulation: true,
   authors: ["tales", "euclides", "hilbert"],
   demos: ["demo-angulos-opuestos-verticales"],
   sources: [
-    { title: "Elements", author: "Euclides", locator: "Book I, Proposition 15", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §5", role: "secondary" }
+    { title: "Elements", author: "Euclid", locator: "Book I, Proposition 15", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §6", role: "secondary" }
   ]
 };
 
 import { AngulosOpuestos } from '@content/diagrams/Teoremas/AngulosOpuestos';
 export const Simulation = AngulosOpuestos;
 
-<Capitular letra="I" />f two <ConceptLink targetId="secante">intersecting</ConceptLink> <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> meet at a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink>, the opposite <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> formed by their <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> across the <ConceptLink targetId="vertice">vertex</ConceptLink> are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>.
+<Capitular letra="I" />f two <ConceptLink targetId="secante">intersecting</ConceptLink> <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> meet at a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink>, the <ConceptLink targetId="angulos-opuestos-vertice" isDependency={true}>vertical angles</ConceptLink> formed by their <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>.
 
-This result, originally attributed to <ConceptLink targetId="tales">Thales of Miletus</ConceptLink> and formalized by <ConceptLink targetId="euclides">Euclid</ConceptLink> in Proposition I.15 of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, constitutes a fundamental <ConceptLink targetId="teorema">theorem</ConceptLink> of angular <ConceptLink targetId="simetria">symmetry</ConceptLink> and rigidity in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. Its validity follows directly from the congruence axioms (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>) and the definition of <ConceptLink targetId="angulos-suplementarios" isDependency={true}>supplementary angles</ConceptLink>, with complete independence from the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>.
+<ConceptLink targetId="euclides">Euclid</ConceptLink> proves it in Proposition I.15 of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, and tradition attributes it to <ConceptLink targetId="tales">Thales of Miletus</ConceptLink>. It is a <ConceptLink targetId="teorema">theorem</ConceptLink> of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, independent of the <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink>: it follows from the definition of <ConceptLink targetId="angulos-suplementarios" isDependency={true}>supplementary angles</ConceptLink>, the <ConceptLink targetId="reflexividad">reflexivity</ConceptLink> of angle congruence (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>) and the <ConceptLink targetId="teorema-congruencia-suplementos" isDependency={true}>supplement congruence theorem</ConceptLink>, which in turn is proved from axioms <ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink> and <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>.
 
 <Definicion title="Formal statement of the vertical angles theorem">
-Let <VisualBind element="lineL" color="carbon">$l$</VisualBind> and <VisualBind element="lineM" color="carbon">$m$</VisualBind> be two coplanar <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi$ intersecting at a unique <VisualBind element="O" color="carbon"><ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $O$</VisualBind>.
+Let <VisualBind element="lineL" color="carbon">$\ell$</VisualBind> and <VisualBind element="lineM" color="carbon">$m$</VisualBind> be two distinct <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> of a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi$ meeting at the <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> <VisualBind element="O" color="carbon">$O$</VisualBind>.
 
-The <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="A" color="carbon">$A$</VisualBind> and <VisualBind element="Ap" color="carbon">$A'$</VisualBind> on line $l$ satisfy the <ConceptLink targetId="estar-entre" isDependency={true}>betweenness relation</ConceptLink> $A * O * A'$, determining the opposite <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> $\overrightarrow{OA}$ and $\overrightarrow{OA'}$. Similarly, the points <VisualBind element="B" color="carbon">$B$</VisualBind> and <VisualBind element="Bp" color="carbon">$B'$</VisualBind> on line $m$ satisfy $B * O * B'$, determining the opposite rays $\overrightarrow{OB}$ and $\overrightarrow{OB'}$.
+The <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="A" color="carbon">$A$</VisualBind> and <VisualBind element="Ap" color="carbon">$A'$</VisualBind> of $\ell$ satisfy the <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink> relation $A * O * A'$, so that $\overrightarrow{OA}$ and $\overrightarrow{OA'}$ are <ConceptLink targetId="semirrectas-opuestas">opposite rays</ConceptLink>. Likewise, the points <VisualBind element="B" color="carbon">$B$</VisualBind> and <VisualBind element="Bp" color="carbon">$B'$</VisualBind> of $m$ satisfy $B * O * B'$, so that $\overrightarrow{OB}$ and $\overrightarrow{OB'}$ are opposite rays.
 
-If <VisualBind element="angle1" color="pavo">$\alpha = \angle AOB = \angle(\overrightarrow{OA}, \overrightarrow{OB})$</VisualBind> and <VisualBind element="angle3" color="pavo">$\alpha' = \angle A'OB' = \angle(\overrightarrow{OA'}, \overrightarrow{OB'})$</VisualBind> are the vertical <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> formed across the <ConceptLink targetId="vertice">vertex</ConceptLink>, then they are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>:
+If <VisualBind element="angle1" color="pavo">$\alpha = \angle AOB$</VisualBind> and <VisualBind element="angle3" color="pavo">$\alpha' = \angle A'OB'$</VisualBind> are the <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> opposite at the <ConceptLink targetId="vertice">vertex</ConceptLink> $O$, then they are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>:
 
 $$
 \alpha \cong \alpha'
 $$
 
-Similarly, for the second pair of vertical angles formed by <VisualBind element="angle2" color="musgo">$\beta = \angle BOA' = \angle(\overrightarrow{OB}, \overrightarrow{OA'})$</VisualBind> and <VisualBind element="angle4" color="musgo">$\beta' = \angle B'OA = \angle(\overrightarrow{OB'}, \overrightarrow{OA})$</VisualBind>, we have:
+Likewise, for the second pair of opposite angles, <VisualBind element="angle2" color="musgo">$\beta = \angle BOA'$</VisualBind> and <VisualBind element="angle4" color="musgo">$\beta' = \angle B'OA$</VisualBind>:
 
 $$
 \beta \cong \beta'
@@ -43,21 +43,13 @@ $$
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Geometric consequences and invariants">
+  <PropiedadesGrupo title="Consequences">
     <PropiedadItem 
-      id="invariancia-simetria-central" 
-      title="Invariance under point reflection"
-      formula="\sigma_O(\alpha) = \alpha'"
+      id="cuatro-angulos-rectos-perpendiculares" 
+      title="Four right angles at perpendicular lines"
+      formula="\alpha \cong \beta \implies \alpha \cong \beta \cong \alpha' \cong \beta'"
     >
-      The congruence between vertical angles expresses point <ConceptLink targetId="simetria">symmetry</ConceptLink> with respect to the intersection point $O$, which maps each <ConceptLink targetId="semirrecta">ray</ConceptLink> to its opposite ray while preserving the <ConceptLink targetId="congruencia">congruence</ConceptLink> relation.
-    </PropiedadItem>
-
-    <PropiedadItem 
-      id="suplementariedad-pares-adyacentes" 
-      title="Supplementarity of adjacent pairs"
-      formula="\alpha \text{ supplementary to } \beta \land \alpha' \text{ supplementary to } \beta \implies \alpha \cong \alpha'"
-    >
-      Two angles that share the same adjacent <ConceptLink targetId="angulos-suplementarios">supplementary</ConceptLink> angle are mutually <ConceptLink targetId="congruencia">congruent</ConceptLink> (<ConceptLink targetId="hilbert">Hilbert's</ConceptLink> *Satz 13*).
+      If two <ConceptLink targetId="angulos-adyacentes">adjacent angles</ConceptLink> of the crossing, $\alpha$ and $\beta$, are <ConceptLink targetId="congruencia">congruent</ConceptLink>, all four angles are congruent by this theorem and the <ConceptLink targetId="teorema-congruencia-angulos-equivalencia">transitivity of angle congruence</ConceptLink>; since $\alpha$ and $\beta$ are <ConceptLink targetId="angulos-suplementarios">supplementary</ConceptLink>, all four are <ConceptLink targetId="angulo-recto">right angles</ConceptLink> and the lines are <ConceptLink targetId="perpendicular">perpendicular</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "derivado",
   title: "Line Segment",
-  description: "Set consisting of two endpoint vertices on a line and all points lying between them.",
+  description: "Set consisting of two endpoints on a line and all points lying between them.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
@@ -13,8 +13,8 @@ export const metadata = {
     {
       title: "Elements",
       author: "Euclid",
-      locator: "Book I, Common Notions",
-      role: "primary"
+      locator: "Book I, Definitions 3 and 4",
+      role: "secondary"
     },
     {
       title: "Grundlagen der Geometrie",
@@ -30,7 +30,7 @@ export const Simulation = Segmento;
 
 <Capitular letra="A" /> line segment is the <ConceptLink targetId="conjunto">set</ConceptLink> consisting of two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, called endpoints, together with all points lying <ConceptLink targetId="estar-entre" isDependency={true}>between</ConceptLink> them.
 
-The line segment is a formally derived object constructed from the primitive <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink> relation and <ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiom II.1</ConceptLink>, constituting the fundamental bounded geometric figure upon which <ConceptLink targetId="poligono">polygons</ConceptLink>, <ConceptLink targetId="triangulo">triangles</ConceptLink>, and <ConceptLink targetId="congruencia">segment congruence</ConceptLink> are established.
+The line segment is derived from the primitive <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink> relation and <ConceptLink targetId="axioma-orden-1" isDependency={true}>Axiom II.1</ConceptLink>, and is the elementary bounded figure upon which <ConceptLink targetId="poligono">polygons</ConceptLink>, <ConceptLink targetId="triangulo">triangles</ConceptLink>, and <ConceptLink targetId="congruencia">segment congruence</ConceptLink> are built.
 
 <Definicion title="Formal Definition of Line Segment">
 Given two distinct points <VisualBind element="pA" color="musgo">$A$</VisualBind> and <VisualBind element="pB" color="musgo">$B$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineL" color="carbon">$\ell$</VisualBind>, the **open segment** $\operatorname{seg}(AB)$ is the set of all points $P \in \mathcal{P}$ lying between $A$ and $B$:
@@ -55,7 +55,7 @@ $$
       title="Symmetry of Endpoints"
       formula="\overline{AB} = \overline{BA} \land \operatorname{seg}(AB) = \operatorname{seg}(BA)"
     >
-      By the symmetry of <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink> ($A * P * B \iff B * P * A$), a segment does not depend on the order in which its endpoints are stated: $\overline{AB} = \overline{BA}$ and $\operatorname{seg}(AB) = \operatorname{seg}(BA)$, satisfying <ConceptLink targetId="igualdad-matematica">set equality</ConceptLink>.
+      By the symmetry of <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink> ($A * P * B \iff B * P * A$), a segment does not depend on the order in which its endpoints are named: $\overline{AB} = \overline{BA}$ and $\operatorname{seg}(AB) = \operatorname{seg}(BA)$ as an <ConceptLink targetId="igualdad-matematica">equality of sets</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -63,15 +63,15 @@ $$
       title="Linear Convexity"
       formula="P, Q \in \overline{AB} \land P * X * Q \implies X \in \overline{AB}"
     >
-      Every closed segment $\overline{AB}$ is a linear <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if $P, Q \in \overline{AB}$, then for any point $X \in \mathcal{P}$ satisfying the betweenness relation $P * X * Q$, it necessarily holds that $X \in \overline{AB}$.
+      Every closed segment $\overline{AB}$ is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>: if $P, Q \in \overline{AB}$, every point $X \in \mathcal{P}$ with $P * X * Q$ satisfies $X \in \overline{AB}$. This is not part of the definition but a <ConceptLink targetId="teorema">theorem</ConceptLink>: it follows from the <ConceptLink targetId="orden">linear order</ConceptLink> of the points of a line, which Hilbert derives from the order axioms <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-4">II.4</ConceptLink> (§4).
     </PropiedadItem>
 
     <PropiedadItem 
       id="unicidad-soporte" 
       title="Uniqueness of the Supporting Line"
-      formula="\exists! \ell \in \mathcal{L} : \overline{AB} \subset \operatorname{tr}(\ell) \quad (\ell = \overleftrightarrow{AB})"
+      formula="\exists! \ell \in \mathcal{L} : \overline{AB} \subseteq \operatorname{tr}(\ell) \quad (\ell = \overleftrightarrow{AB})"
     >
-      By <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>, the distinct endpoints $A \neq B$ uniquely determine the supporting <ConceptLink targetId="recta">line</ConceptLink> $\overleftrightarrow{AB}$, satisfying the <ConceptLink targetId="traza">trace</ConceptLink> inclusion $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$.
+      By <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>, the distinct endpoints $A \neq B$ determine a unique <ConceptLink targetId="recta-soporte">supporting line</ConceptLink> $\overleftrightarrow{AB}$, and the segment is contained in its <ConceptLink targetId="traza">trace</ConceptLink>: $\overline{AB} \subseteq \operatorname{tr}(\overleftrightarrow{AB})$. The inclusion holds because, by <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink>, every point between $A$ and $B$ is collinear with them.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

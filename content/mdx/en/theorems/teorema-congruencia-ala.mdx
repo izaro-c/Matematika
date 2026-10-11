@@ -1,52 +1,67 @@
 export const metadata = {
   id: "teorema-congruencia-ala",
+  lang: "en",
   type: "teorema",
   title: "Angle-Side-Angle (ASA) Congruence Theorem",
-  description: "If two triangles have two angles and the included side respectively congruent, then the triangles are congruent.",
-  statement: "Given two triangles △ABC and △A'B'C', if ∠CAB ≅ ∠C'A'B', ∠ABC ≅ ∠A'B'C', and AB ≅ A'B', then △ABC ≅ △A'B'C'.",
+  description: "If two triangles have one side and the two angles adjacent to that side respectively congruent, then both triangles are mutually congruent.",
+  statement: "Given two triangles △ABC and △A'B'C', if AB ≅ A'B', ∠CAB ≅ ∠C'A'B', and ∠ABC ≅ ∠A'B'C', then △ABC ≅ △A'B'C'.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["synthetic-geometry", "triangle", "congruence", "absolute-geometry"],
   hasSimulation: true,
   authors: ["euclides", "hilbert"],
-  demos: ["demo-existencia-bisectriz"],
+  demos: ["demo-congruencia-ala"],
   sources: [
-    { title: "Elements", author: "Euclides", locator: "Book I, Proposition 26", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §6", role: "secondary" }
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Proposition 26",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §6",
+      role: "primary"
+    }
   ]
 };
 
 import { CongruenciaALA } from '@content/diagrams/Teoremas/CongruenciaALA';
 export const Simulation = CongruenciaALA;
 
-<Capitular letra="T" />he Angle-Side-Angle (ASA) congruence theorem establishes one of the foundational criteria for geometric rigidity and metric equivalence between <ConceptLink targetId="triangulo">triangles</ConceptLink> in planar geometry. It guarantees that fixing a <ConceptLink targetId="segmento">segment</ConceptLink> and the inclinations of the two rays extending from its endpoints uniquely determines the triangle's geometry.
+<Capitular letra="I" />f two <ConceptLink targetId="triangulo" isDependency={true}>triangles</ConceptLink> have one <ConceptLink targetId="lado" isDependency={true}>side</ConceptLink> and the two <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> adjacent to that side respectively <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>, then the triangles are congruent.
+
+<ConceptLink targetId="euclides">Euclid</ConceptLink> states it as Proposition I.26 of the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, and <ConceptLink targetId="hilbert">Hilbert</ConceptLink> proves it in §6 of the *Grundlagen der Geometrie* as the second <ConceptLink targetId="criterio-congruencia">congruence criterion</ConceptLink> of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. A <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> and the two angles resting on its endpoints determine the triangle up to congruence. The proof uses the <ConceptLink targetId="sistema-incidencia">axioms of incidence</ConceptLink> and <ConceptLink targetId="estar-entre" isDependency={true}>order</ConceptLink>, segment transport (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink>), the uniqueness of angle transport (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>) and the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, a consequence of <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink>; it does not depend on the <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink>.
+
+<Definicion title="Formal statement of the ASA congruence theorem">
+Let <VisualBind element="A1" color="canela">$A$</VisualBind>, <VisualBind element="B1" color="canela">$B$</VisualBind>, <VisualBind element="C1" color="canela">$C$</VisualBind> $\in \mathcal{P}$ and <VisualBind element="A2" color="pavo">$A'$</VisualBind>, <VisualBind element="B2" color="pavo">$B'$</VisualBind>, <VisualBind element="C2" color="pavo">$C'$</VisualBind> $\in \mathcal{P}$ be two triples of non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>, determining the <ConceptLink targetId="triangulo" isDependency={true}>triangles</ConceptLink> $\triangle ABC$ and $\triangle A'B'C'$.
+
+Suppose the following <ConceptLink targetId="congruencia" isDependency={true}>congruence</ConceptLink> relations hold:
+1. The included <ConceptLink targetId="lado" isDependency={true}>side</ConceptLink> is congruent:
+   <VisualBind element="lado-ab" color="terracota">$\overline{AB} \cong \overline{A'B'}$</VisualBind>
+2. The <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> adjacent to that side are respectively congruent:
+   <VisualBind element="angulo-a" color="terracota">$\angle CAB \cong \angle C'A'B'$</VisualBind> $\quad\text{and}\quad$ <VisualBind element="angulo-b" color="musgo">$\angle ABC \cong \angle A'B'C'$</VisualBind>
+
+Then the triangles are congruent (<ConceptLink targetId="congruencia-triangulos">triangle congruence</ConceptLink>) under the correspondence $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+
+In particular, the remaining corresponding sides and angles are congruent: <VisualBind element="globalmente-congruentes" color="terracota">$\overline{BC} \cong \overline{B'C'}$</VisualBind>, $\overline{CA} \cong \overline{C'A'}$ and $\angle BCA \cong \angle B'C'A'$.
+</Definicion>
 
 <Separador />
 
-### Formal statement
-
-Let $\triangle ABC$ and $\triangle A'B'C'$ be two <VisualBind element="triangulos" color="musgo"><ConceptLink targetId="triangulo">triangles</ConceptLink></VisualBind> in the Euclidean plane. Suppose the following <ConceptLink targetId="congruencia">congruence</ConceptLink> relations hold:
-1. The included side is congruent: $\overline{AB} \cong \overline{A'B'}$.
-2. The adjacent angles to the segment are respectively congruent: $\angle CAB \cong \angle C'A'B'$ and $\angle ABC \cong \angle A'B'C'$.
-
-Then, overall triangle congruence holds necessarily:
-
-<Formula>
-  $$ \triangle ABC \cong \triangle A'B'C' $$
-</Formula>
-
-Consequently, all corresponding homologous sides and the third angles are congruent: $\overline{BC} \cong \overline{B'C'}$, $\overline{CA} \cong \overline{C'A'}$, and $\angle BCA \cong \angle B'C'A'$.
-
-<Separador />
-
-### Proof and axiomatic foundations
-
-In <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> axiomatic framework, the SAS criterion is taken as an <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>axiom of congruence</ConceptLink>, while the ASA criterion is rigorously proven by <ConceptLink targetId="metodo-contradiccion" isDependency={true}>contradiction</ConceptLink>:
-- If $\overline{AC}$ were not congruent to $\overline{A'C'}$, there would exist a point $D$ on the corresponding ray such that $\overline{AD} \cong \overline{A'C'}$.
-- By the SAS axiom, $\triangle ABD \cong \triangle A'B'C'$, implying $\angle ABD \cong \angle A'B'C'$.
-- This would contradict the uniqueness of angle transport (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>) by producing two distinct angles of the same measure on the same half-plane.
-
-<Separador />
-
-### Derived criteria
-
-- **AAS Criterion (Angle-Angle-Side)**: Combined with the <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink>, the criterion extends to any two angles and a non-included side.
-- **Geodetic triangulation**: Forms the mathematical underpinning of triangulation and surveying to compute inaccessible distances.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consequences">
+    <PropiedadItem 
+      id="teorema-congruencia-laa" 
+      title="Angle-Angle-Side (AAS) criterion"
+      formula="\angle CAB \cong \angle C'A'B' \land \angle ABC \cong \angle A'B'C' \land \overline{BC} \cong \overline{B'C'} \implies \triangle ABC \cong \triangle A'B'C'"
+    >
+      If two <ConceptLink targetId="angulo">angles</ConceptLink> and the <ConceptLink targetId="lado">side</ConceptLink> opposite one of them are respectively <ConceptLink targetId="congruencia">congruent</ConceptLink>, the triangles are congruent (<ConceptLink targetId="teorema-congruencia-laa">AAS criterion</ConceptLink>, second part of <ConceptLink targetId="euclides">Euclid's</ConceptLink> Proposition I.26). It holds in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>: it is proved from this theorem and the <ConceptLink targetId="teorema-angulo-exterior">exterior angle theorem</ConceptLink>, without the parallel axiom.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

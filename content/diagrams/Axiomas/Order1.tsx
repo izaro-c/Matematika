@@ -280,7 +280,17 @@ export const Order1Spec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra B"
+  "note": "Arrastra B: si B está entre A y C, entonces B está entre C y A.",
+  "translations": {
+    "eu": {
+      "title": "I. Ordena-axioma",
+      "note": "Arrastatu B: B A-ren eta C-ren artean badago, orduan B C-ren eta A-ren artean dago."
+    },
+    "en": {
+      "title": "Order Axiom I",
+      "note": "Drag B: if B is between A and C, then B is between C and A."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

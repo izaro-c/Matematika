@@ -2,44 +2,126 @@ export const metadata = {
   id: "modelo-cartesiano",
   lang: "eu",
   type: "modelo",
-  title: "Plano kartesiarra",
-  description: "Bi dimentsioko geometria euklidearraren eredu analitiko kanonikoa, zenbaki errealen bikote ordenatuetan oinarritua.",
+  title: "Eredu kartesiarra",
+  description: "Geometria euklidearraren eredu analitikoa: ℝ² planoak Hilberten axioma lauak betetzen ditu, eta ℝ³ espazioak sistema euklidear osoa.",
   branch: "51M",
+  branches: ["51M", "51A"],
   satisfies: ["sistema-euclidiano", "sistema-absoluto"],
-  axioms_verified: ["axioma-incidencia-1", "axioma-paralelas-euclides"],
-  hasSimulation: true
+  axioms_verified: [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-orden-1",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-4",
+    "axioma-congruencia-1",
+    "axioma-congruencia-2",
+    "axioma-congruencia-3",
+    "axioma-congruencia-4",
+    "axioma-congruencia-5",
+    "axioma-paralelas-euclides",
+    "axioma-arquimedes",
+    "axioma-completitud"
+  ],
+  hasSimulation: true,
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "II. kapitulua", role: "primary" },
+    { title: "La Géométrie", author: "René Descartes", locator: "1637", role: "secondary" }
+  ]
 };
 
 import { ModeloCartesiano } from '@content/diagrams/Models/ModeloCartesiano';
 export const Simulation = ModeloCartesiano;
 
-<Capitular letra="P" />lano kartesiarra $\mathbb{R}^2$ bi dimentsioko geometria euklidearraren eredu analitiko estandarra da. Elementu geometriko sintetikoak zenbaki errealen $\mathbb{R}$ gorputzeko bikote ordenatuen egitura aljebraikoetara zehaztasunez itzuliz, geometria sintetikoaren trinkotasuna analisi matematikoan eta aritmetikan finkatzen du.
+<Capitular letra="E" />**redu kartesiarrak** geometriaren termino primitiboak zenbaki errealen bidez interpretatzen ditu: $\mathbb{R}^2$ planoak, ekuazio linealen bidez emandako zuzenekin eta <ConceptLink targetId="distancia">distantzia</ConceptLink> euklidearraren bidez definitutako kongruentziarekin, <ConceptLink targetId="sistema-euclidiano">sistema euklidearraren</ConceptLink> axioma lauak betetzen ditu (I.1–I.3, II, III, IV eta V), eta $\mathbb{R}^3$ espazioak, bere planoekin, sistema osoa betetzen du.
+
+<ConceptLink targetId="descartes">René Descartesen</ConceptLink> eta <ConceptLink targetId="fermat">Pierre de Fermaten</ConceptLink> <ConceptLink targetId="geometria-analitica">geometria analitikoak</ConceptLink> problema geometrikoak ekuazio bihurtzen zituen; <ConceptLink targetId="hilbert">Hilbertek</ConceptLink> ikuspegia alderantzikatu, eta eredu hau erabili zuen, *Grundlagen* lanaren II. kapituluan, bere axiomen <ConceptLink targetId="consistencia-logica">sendotasunaren</ConceptLink> lekuko gisa: $\mathbb{R}$ multzoaren aritmetika sendoa bada, geometria euklidearra ere sendoa da.
+
+<Definicion title="Eredu lauaren egitura">
+  Eredua honela definitutako $\mathcal{M} = (\mathcal{P}, \mathcal{L}; \ \mathbf{I}, \ *, \ \cong_{\mathrm{seg}}, \ \cong_{\angle})$ <ConceptLink targetId="estructura-geometrica">egitura</ConceptLink> da:
+
+  - **<ConceptLink targetId="punto">Puntuak</ConceptLink>**: $\mathcal{P} = \mathbb{R}^2$, zenbaki errealen bikote ordenatuak; adibidez, <VisualBind element="A" color="terracota">$A = (x_A, y_A)$</VisualBind>, <VisualBind element="B" color="terracota">$B = (x_B, y_B)$</VisualBind> edo <VisualBind element="P" color="ocre">$P = (x_P, y_P)$</VisualBind>.
+  - **<ConceptLink targetId="recta">Zuzenak</ConceptLink>**: $(a, b) \neq (0, 0)$ betetzen duen $(a, b, c) \in \mathbb{R}^3$ hirukote bakoitzak $\ell_{a,b,c}$ zuzen bat zehazten du; bi hirukote proportzionalek zuzen bera zehazten dute. Irudian, <VisualBind element="lineAB" color="musgo">$\ell$</VisualBind> $A$ eta $B$ puntuetatik igarotzen den zuzena da, eta <VisualBind element="parallelP" color="canela">$\ell'$</VisualBind>, berriz, $P$ puntutik igarotzen den $\ell$ zuzenaren paraleloa.
+  - **<ConceptLink targetId="incidencia">Intzidentzia</ConceptLink>**: $P \,\mathbf{I}\, \ell_{a,b,c} \iff a x_P + b y_P + c = 0$; beraz, $\operatorname{tr}(\ell_{a,b,c}) = \{(x, y) \in \mathbb{R}^2 \mid ax + by + c = 0\}$ da haren <ConceptLink targetId="traza">puntu-trazadura</ConceptLink>.
+  - **<ConceptLink targetId="estar-entre">Bitartekotasuna</ConceptLink>**: $A * B * C$ baldin eta soilik baldin $A$, $B$ eta $C$ hiru puntu desberdin badira eta $0 < t < 1$ betetzen duen $t \in \mathbb{R}$ batentzat $B = (1 - t)A + tC$ bada.
+  - **Zuzenkien <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>**: $\overline{AB} \cong \overline{CD}$ baldin eta soilik baldin $d(A, B) = d(C, D)$ bada, non
+    $$
+    d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}
+    $$
+  - **Angeluen kongruentzia**: $\angle AOB \cong \angle A'O'B'$ baldin eta soilik baldin bi angeluen kosinuak berdinak badira, <ConceptLink targetId="producto-escalar">biderkadura eskalarraren</ConceptLink> bidez kalkulatuta: $\cos \angle AOB = \dfrac{\langle A - O, \, B - O \rangle}{d(O, A) \, d(O, B)}$.
+
+  Eredu espaziala modu berean lortzen da, $\mathcal{P} = \mathbb{R}^3$ hartuta: <ConceptLink targetId="plano">planoak</ConceptLink> $(a, b, c) \neq (0, 0, 0)$ betetzen duten $ax + by + cz + e = 0$ ekuazioen soluzio-multzoak dira, eta zuzenak paraleloak ez diren bi planoren ebakidurak.
+</Definicion>
 
 <Separador />
 
-### Ereduaren definizioa
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Sistema euklidearraren axiomen betetzea">
+    <PropiedadItem
+      id="cartesiano-incidencia"
+      title="Intzidentzia-axioma lauak"
+      formula="(y_B - y_A)(x - x_A) - (x_B - x_A)(y - y_A) = 0"
+    >
+      $A$ eta $B$ bi puntu desberdin emanda, goiko ekuazioak bietatik igarotzen den zuzen bakarra definitzen du (<ConceptLink targetId="axioma-incidencia-1">I.1 axioma</ConceptLink>); zuzen orok gutxienez bi puntu ditu (<ConceptLink targetId="axioma-incidencia-2">I.2 axioma</ConceptLink>), eta $(0,0)$, $(1,0)$ eta $(0,1)$ ez dira <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> (<ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink>).
+    </PropiedadItem>
 
-Bi dimentsioko $\mathbb{R}^2 = \{(x, y) \mid x, y \in \mathbb{R}\}$ espazioan, geometriako oinarrizko elementuak multzo-teoriaren eta aljebra linealaren bidez definitzen dira:
+    <PropiedadItem
+      id="cartesiano-orden"
+      title="Ordena-axiomak"
+      formula="f(x, y) = ax + by + c"
+    >
+      $t \mapsto (1 - t)A + tC$ parametrizazioak zuzen bakoitzeko puntuak zenbaki errealak bezala ordenatzen ditu, eta hortik datoz <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink> eta <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> axiomak. $\ell_{a,b,c}$ zuzen bakoitzak planoa $f > 0$ eta $f < 0$ bi <ConceptLink targetId="semiplano">planoerdietan</ConceptLink> banatzen du; $f$ afina denez, <ConceptLink targetId="segmento">zuzenki</ConceptLink> batek $\ell$ ebakitzen du, hain zuzen, $f$ funtzioak zeinua aldatzen duenean muturren artean, eta hortik ondorioztatzen da <ConceptLink targetId="axioma-orden-4">Paschen axioma</ConceptLink>.
+    </PropiedadItem>
 
-- **<ConceptLink targetId="punto">Puntuak</ConceptLink>**: $\mathbb{R}^2$-ko banakako elementuak dira, beren koordenatuen bidez adieraziak: <VisualBind element="A" color="terracota">$A(x_A, y_A)$</VisualBind>, <VisualBind element="B" color="terracota">$B(x_B, y_B)$</VisualBind> eta <VisualBind element="P" color="ocre">$P(x_P, y_P)$</VisualBind>.
-- **<ConceptLink targetId="recta">Zuzenak</ConceptLink>**: $ax + by + c = 0$ motako ekuazio lineala betetzen duten puntuen azpimultzoak dira, non $(a, b) \neq (0, 0)$. <VisualBind element="lineAB" color="musgo">$l$ zuzenak</VisualBind> $A$ eta $B$ puntuak ditu barne, eta <VisualBind element="parallelP" color="canela">$l'$ zuzen paraleloa</VisualBind> $P$ kanpoko puntutik igarotzen da.
-- **Intzidentzia**: $A(x_A, y_A)$ puntua $l: ax + by + c = 0$ zuzenarekiko intzidentea da baldin eta soilik baldin $a x_A + b y_A + c = 0$ bada.
-- **Distantzia euklidearra**: Edozein bi $A$ eta $B$ punturen artean, distantzia euklidearra <ConceptLink targetId="teorema-pitagoras">Pitagorasen</ConceptLink> formulak ematen du:
-  $$ d(A, B) = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2} $$
+    <PropiedadItem
+      id="cartesiano-congruencia"
+      title="Kongruentzia-axiomak"
+      formula="d(A, B)^2 = d(A, C)^2 + d(C, B)^2 - 2\, d(A, C)\, d(C, B) \cos \angle ACB"
+    >
+      Translazioek eta biraketek $d$ eta angeluen kosinua kontserbatzen dituzte; horri esker, zuzenkiak eta angeluak garraia daitezke (<ConceptLink targetId="axioma-congruencia-1">III.1 axioma</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4">III.4 axioma</ConceptLink>). Zenbaki errealen berdintzak iragankortasuna ematen du (<ConceptLink targetId="axioma-congruencia-2">III.2 axioma</ConceptLink>), eta puntu lerrokatuetan $d$ batukorra izateak <ConceptLink targetId="axioma-congruencia-3">III.3 axioma</ConceptLink>. Goiko <ConceptLink targetId="teorema-coseno">kosinuaren teoremak</ConceptLink> hirugarren aldea eta gainerako angeluak zehazten ditu bi aldetatik eta haien arteko angelutik abiatuta (<ConceptLink targetId="axioma-congruencia-5">III.5 axioma</ConceptLink>).
+    </PropiedadItem>
 
-<Separador />
+    <PropiedadItem
+      id="cartesiano-paralelas"
+      title="Paraleloen axioma"
+      formula="\ell' : \ ax + by - (a x_P + b y_P) = 0"
+    >
+      $\ell_{a,b,c}$ zuzena eta harekin intziditzen ez duen $P$ puntu bat emanda, $P$ puntutik igarotzen diren eta $\ell$ ebakitzen ez duten zuzenak $(a, b)$ koefiziente berberak dituztenak dira; bakarra dago, goiko $\ell'$ zuzena, eta, beraz, <ConceptLink targetId="axioma-paralelas-euclides">IV. axioma</ConceptLink> betetzen da.
+    </PropiedadItem>
 
-### Axiomen egiaztapena
+    <PropiedadItem
+      id="cartesiano-continuidad"
+      title="Jarraitutasun-axiomak"
+      formula="t \longmapsto A + t\,(B - A)"
+    >
+      Goiko aplikazioa ordena kontserbatzen duen <ConceptLink targetId="biyeccion">bijekzio</ConceptLink> bat da $\mathbb{R}$ multzoaren eta $AB$ zuzenaren puntu-trazaduraren artean. Horregatik, $\mathbb{R}$ multzoaren propietate arkimedestarrak <ConceptLink targetId="axioma-arquimedes">V.1 axioma</ConceptLink> ematen du, eta <ConceptLink targetId="completitud-reales">$\mathbb{R}$ multzoaren osotasunak</ConceptLink> <ConceptLink targetId="axioma-completitud">V.2 axioma</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-Plano kartesiarrak <ConceptLink targetId="sistema-euclidiano">sistema axiomatiko euklidear</ConceptLink> osoa betetzen du:
+  <PropiedadesGrupo title="Propietate estrukturalak eta aljebraikoak">
+    <PropiedadItem
+      id="cartesiano-modelo-espacial"
+      title="Eredu espaziala"
+      formula="\mathbb{R}^3 \models \mathcal{T}_{\text{euc}}"
+    >
+      $\mathbb{R}^2$ planoak ez du planorik, eta, horregatik, ezin ditu bete <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>–<ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink> axioma espazialak. $\mathbb{R}^3$ espazioak, aldiz, betetzen ditu, eta <ConceptLink targetId="sistema-euclidiano">sistema euklidear</ConceptLink> osoaren eredua da, eta, bereziki, <ConceptLink targetId="sistema-absoluto">sistema absolutuarena</ConceptLink>.
+    </PropiedadItem>
 
-- **<ConceptLink targetId="axioma-incidencia-1">I-1 intzidentzia-axioma</ConceptLink>**: Edozein bi $A(x_A, y_A)$ eta $B(x_B, y_B)$ puntu ezberdinetarako, $\det \begin{pmatrix} x & y & 1 \\ x_A & y_A & 1 \\ x_B & y_B & 1 \end{pmatrix} = 0$ ekuazioak definitutako zuzen bakarra existitzen da.
-- **Ordenaren axiomak**: <ConceptLink targetId="estar-entre">Artean egotearen</ConceptLink> erlazioa ($B$ puntua $A$-ren eta $C$-ren artean dago) modu metrikoan $d(A, B) + d(B, C) = d(A, C)$ berdintzaren bidez egiaztatzen da, $A \neq B \neq C$ izanik.
-- **<ConceptLink targetId="axioma-paralelas-euclides">Euklidesen paraleloen axioma</ConceptLink>**: $l: ax + by + c = 0$ zuzen bat eta bertan ez dagoen $P(x_P, y_P) \notin l$ puntu bat emanda, $P$-tik igarotzen den <ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink> bakar bat existitzen da, $l': ax + by - (ax_P + by_P) = 0$.
+    <PropiedadItem
+      id="cartesiano-isometrias"
+      title="Isometrien taldea"
+      formula="\operatorname{E}(2) = \mathbb{R}^2 \rtimes \operatorname{O}(2)"
+    >
+      Planoaren <ConceptLink targetId="isometria">isometriek</ConceptLink> (translazioek, biraketek, simetriek eta haien konposizioek) $\operatorname{E}(2)$ <ConceptLink targetId="grupo">talde</ConceptLink> euklidearra osatzen dute. Ereduaren bi irudi kongruenteak dira baldin eta soilik baldin bata bestearen gainera eramaten duen isometria bat badago.
+    </PropiedadItem>
 
-<Separador />
-
-### Oinarrizko propietateak
-
-- **Osotasun metrikoa**: $\mathbb{R}$ gorputz errealaren osotasun topologikoa eta ordenaren jarraitutasuna oinordetzen ditu.
-- **Inbariantza isometrikoa**: Isometriek (translazioek, errotazioek eta erreflexioek) distantziak, <ConceptLink targetId="angulo">angeluak</ConceptLink> eta <ConceptLink targetId="triangulo">triangeluen</ConceptLink> arteko <ConceptLink targetId="congruencia">kongruentzia-erlazioak</ConceptLink> kontserbatzen dituzte.
+    <PropiedadItem
+      id="cartesiano-categoricidad"
+      title="Bakartasuna, isomorfismoa salbu"
+      formula="\mathcal{M} \models \mathcal{T} \implies \mathcal{M} \cong \mathbb{R}^3"
+    >
+      Sistema euklidear osoaren eredu oro, jarraitutasun-axiomekin, <ConceptLink targetId="isomorfismo">isomorfoa</ConceptLink> da deskribatutako egitura duen $\mathbb{R}^3$ espazioarekin (<ConceptLink targetId="categoricidad">kategoritasuna</ConceptLink>); era berean, axioma lauen eredu oro isomorfoa da $\mathbb{R}^2$ planoarekin.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

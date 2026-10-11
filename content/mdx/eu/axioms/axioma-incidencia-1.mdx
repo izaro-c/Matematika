@@ -2,29 +2,29 @@ export const metadata = {
   id: "axioma-incidencia-1",
   lang: "eu",
   type: "axioma",
-  title: "I.1 Axioma (Zuzenaren determinazioa)",
-  description: "Edozein bi puntu desberdinek biekiko intzidente den zuzen bakar bat zehazten dute.",
+  title: "I.1 axioma (Zuzenaren determinazioa)",
+  description: "Edozein bi puntu desberdinek biekin intziditzen duen zuzen bakar bat zehazten dute.",
   branch: "51A",
   tags: ["geometria", "intzidentzia", "axioma", "zuzena"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §2", role: "primary" }
   ]
 };
 
 import { Incidence1 } from '@content/diagrams/Axiomas/Incidence1';
 export const Simulation = Incidence1;
 
-<Capitular letra="E" />dozein bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdin emanda, biekiko <ConceptLink targetId="incidencia" isDependency={true}>intzidente</ConceptLink> den <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bakar bat existitzen da zehazki.
+<Capitular letra="E" />dozein bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdin emanda, biekin <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> duen <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat eta bakarra existitzen da.
 
-Postulatu honek geometriaren oinarrizko lotura lineala ezartzen du: bi puntu desberdinek lerro zuzen bakar baten posizioa zehazten dute <ConceptLink targetId="espacio">espazioan</ConceptLink>.
+Axiomak bi puntutatik igarotzen den zuzenaren existentzia eta bakartasuna biltzen ditu; <ConceptLink targetId="hilbert">Hilbertek</ConceptLink> bereizita ematen ditu bi horiek, bere lehen bi <ConceptLink targetId="incidencia">intzidentzia</ConceptLink>-axiometan. Bakartasunari esker, zuzena bere edozein bi punturen bidez izenda daiteke, eta <ConceptLink targetId="colinealidad">kolinealtasunaren</ConceptLink> nozioak zentzua du: hiru puntu kolinealak dira hirugarrenak beste biek zehaztutako zuzenarekin intziditzen duenean.
 
-<Definicion title="Enuntziatu Formala">
-  Edozein bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako (<VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pB" color="ocre">$B$</VisualBind>, $A \neq B$), <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bakar bat existitzen da, non $A$ eta $B$ $\ell$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten:
+<Definicion title="Enuntziatu formala">
+  Edozein bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako (<VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pB" color="ocre">$B$</VisualBind>, $A \neq B$), <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta">zuzen</ConceptLink> bakar bat existitzen da, $A$ eta $B$ puntuek $\ell$ zuzenarekin <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutela:
   $$
   \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)\bigr)
   $$
-  $A$ eta $B$ puntuek zehaztutako zuzena $\overleftrightarrow{AB}$ gisa idatzi ohi da.
+  $A$ eta $B$ puntuek zehaztutako zuzena $\overleftrightarrow{AB}$ idazten da.
 </Definicion>

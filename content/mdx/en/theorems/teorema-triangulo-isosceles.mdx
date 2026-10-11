@@ -14,14 +14,14 @@ export const metadata = {
   sources: [
     {
       title: "Elements",
-      author: "Euclides",
+      author: "Euclid",
       locator: "Book I, Proposition 5",
       role: "primary"
     },
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Chapter I, §5 (Satz 11)",
+      locator: "Chapter I, §6",
       role: "primary"
     }
   ]
@@ -32,10 +32,10 @@ export const Simulation = TrianguloIsosceles;
 
 <Capitular letra="I" />n any <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink>, if two <ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink> are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>, the <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> opposite those sides are mutually congruent.
 
-This result, traditionally attributed to <ConceptLink targetId="tales">Thales of Miletus</ConceptLink> and formalized by <ConceptLink targetId="euclides">Euclid</ConceptLink> as Proposition I.5 in the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> (historically known as the *Pons Asinorum*), constitutes the first foundational <ConceptLink targetId="teorema">theorem</ConceptLink> of angular rigidity and <ConceptLink targetId="simetria">symmetry</ConceptLink> in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. Its derivation is completely independent of the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>, requiring only the <ConceptLink targetId="sistema-incidencia">axioms of incidence</ConceptLink>, <ConceptLink targetId="estar-entre">order</ConceptLink>, and congruence (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>, and <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink>).
+This result, traditionally attributed to <ConceptLink targetId="tales">Thales of Miletus</ConceptLink> and formalized by <ConceptLink targetId="euclides">Euclid</ConceptLink> as Proposition I.5 in the <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> (historically known as the *Pons Asinorum*), is one of the first <ConceptLink targetId="teorema">theorems</ConceptLink> of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> and expresses the <ConceptLink targetId="simetria">symmetry</ConceptLink> of a triangle with two congruent sides. It does not depend on the <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink>: its proof uses <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink>, the <ConceptLink targetId="reflexividad">reflexivity</ConceptLink> of angle congruence (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>) and the symmetry of segment congruence, a consequence of axioms <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1</ConceptLink> and <ConceptLink targetId="axioma-congruencia-2" isDependency={true}>III.2</ConceptLink>.
 
 <Definicion title="Formal statement of the isosceles triangle theorem">
-Let <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ be three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \Pi$, determining the <VisualBind element="polyABC" color="carbon"><ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink></VisualBind> $\triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}$.
+Let <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ be three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \Pi$, determining the <VisualBind element="polyABC" color="carbon"><ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink></VisualBind> $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$.
 
 If the lateral <ConceptLink targetId="lado" isDependency={true}>side</ConceptLink> <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind> is <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to the lateral side <VisualBind element="segAC" color="carbon">$\overline{AC}$</VisualBind>, then the <ConceptLink targetId="angulo-base">base angle</ConceptLink> <VisualBind element="anguloB" color="mora">$\angle ABC$</VisualBind> is congruent to the base angle <VisualBind element="anguloC" color="mora">$\angle ACB$</VisualBind>:
 
@@ -55,7 +55,7 @@ The remaining <ConceptLink targetId="segmento" isDependency={true}>segment</Conc
       title="Converse isosceles triangle theorem"
       formula="\angle ABC \cong \angle ACB \implies \overline{AB} \cong \overline{AC}"
     >
-      If two interior <ConceptLink targetId="angulo">angles</ConceptLink> in a <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ are <ConceptLink targetId="congruencia">congruent</ConceptLink>, the <ConceptLink targetId="lado">sides</ConceptLink> opposite those angles are mutually congruent (<ConceptLink targetId="euclides">Euclid's</ConceptLink> Proposition I.6, <ConceptLink targetId="hilbert">Hilbert's</ConceptLink> Satz 12).
+      If two interior <ConceptLink targetId="angulo">angles</ConceptLink> in a <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ are <ConceptLink targetId="congruencia">congruent</ConceptLink>, the <ConceptLink targetId="lado">sides</ConceptLink> opposite those angles are mutually congruent (<ConceptLink targetId="euclides">Euclid's</ConceptLink> Proposition I.6; <ConceptLink targetId="hilbert">Hilbert</ConceptLink> proves it in §6).
     </PropiedadItem>
 
     <PropiedadItem 
@@ -63,7 +63,7 @@ The remaining <ConceptLink targetId="segmento" isDependency={true}>segment</Conc
       title="Equiangularity of the equilateral triangle"
       formula="\overline{AB} \cong \overline{BC} \cong \overline{CA} \iff \angle ABC \cong \angle BCA \cong \angle CAB"
     >
-      A <ConceptLink targetId="triangulo">triangle</ConceptLink> is <ConceptLink targetId="triangulo-equilatero">equilateral</ConceptLink> if and only if it is equiangular, derived by repeatedly applying this <ConceptLink targetId="teorema">theorem</ConceptLink> and its converse to each pair of <ConceptLink targetId="lado">sides</ConceptLink>.
+      A <ConceptLink targetId="triangulo">triangle</ConceptLink> is <ConceptLink targetId="triangulo-equilatero">equilateral</ConceptLink> if and only if it is equiangular; this follows by repeatedly applying this <ConceptLink targetId="teorema">theorem</ConceptLink> and its converse to each pair of <ConceptLink targetId="lado">sides</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

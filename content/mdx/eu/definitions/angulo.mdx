@@ -19,7 +19,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "I. kapitulua, §4",
+      locator: "I. kapitulua, §5",
       role: "primary"
     }
   ]
@@ -28,50 +28,50 @@ export const metadata = {
 import { Angulo } from '@content/diagrams/Definiciones/Angulo';
 export const Simulation = Angulo;
 
-<Capitular letra="A" />ngelua <ConceptLink targetId="punto">jatorri</ConceptLink> bera partekatzen duten eta <ConceptLink targetId="recta">zuzen</ConceptLink> euskarri desberdinak dituzten bi <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdiren</ConceptLink> <ConceptLink targetId="conjunto">bikote ez-ordenatua</ConceptLink> da.
+<Capitular letra="A" />ngelua <ConceptLink targetId="punto">jatorri</ConceptLink> bera duten eta <ConceptLink targetId="recta-soporte">zuzen euskarri</ConceptLink> desberdinak dituzten bi <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdiren</ConceptLink> <ConceptLink targetId="par-no-ordenado">bikote ez-ordenatua</ConceptLink> da.
 
-Angelua ez da zenbakizko magnitude bat ezta neurri metriko bat ere, <ConceptLink targetId="semirrecta">zuzenerdiaren</ConceptLink> noziotik eta <ConceptLink targetId="plano">planoko</ConceptLink> ez-<ConceptLink targetId="colinealidad" isDependency={true}>kolinealtasunetik</ConceptLink> abiatuta eraikitako objektu formala baizik.
+Angelua ez da zenbakizko magnitude bat, ezta neurri bat ere: <ConceptLink targetId="semirrecta">zuzenerdiaren</ConceptLink> noziotik eta ez-<ConceptLink targetId="colinealidad" isDependency={true}>kolinealtasunetik</ConceptLink> eraikitako objektua da. Definizioz, ez dago angelu lau edo nulurik: angelu ororen bi aldeak zuzen desberdinetan daude. Angeluak <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> bidez alderatzen dira, ez zenbakien bidez.
 
 <Definicion title="Angeluaren definizio formala">
-$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> <ConceptLink targetId="punto">puntu</ConceptLink> baterako eta $\{O, A, B\}$ hirukotea <ConceptLink targetId="colinealidad">kolineala</ConceptLink> ez izatea betetzen duten <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ bi puntu desberdinetarako, <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> (edo $\angle(h, k)$) **angelua** <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> eta <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind> bi <ConceptLink targetId="semirrecta">zuzenerdiek</ConceptLink> osatzen duten <ConceptLink targetId="conjunto">bikotea</ConceptLink> da:
+Izan bitez $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> <ConceptLink targetId="punto">puntua</ConceptLink> eta <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ bi puntu desberdin, $O$, $A$ eta $B$ <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez izanik. <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> **angelua** (edo $\angle(h, k)$) <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> eta <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind> bi <ConceptLink targetId="semirrecta">zuzenerdiek</ConceptLink> osatzen duten <ConceptLink targetId="par-no-ordenado">bikotea</ConceptLink> da:
 
 $$
 \angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}
 $$
 
-$h$ eta $k$ zuzenerdiei angeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> deritze, eta $O$ puntu komunari <ConceptLink targetId="vertice">erpin</ConceptLink>. Haren lotutako $\operatorname{tr}(\angle AOB) \subset \mathcal{P}$ <ConceptLink targetId="traza">**puntu-trazadura**</ConceptLink> aldeen <ConceptLink targetId="traza">trazen</ConceptLink> bildura da:
+$h$ eta $k$ zuzenerdiei angeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> deritze, eta $O$ puntu komunari <ConceptLink targetId="vertice">erpina</ConceptLink>. Zuzenerdiak dagoeneko puntu-multzoak direnez, angeluaren **trazadura**, $\operatorname{tr}(\angle AOB) \subseteq \mathcal{P}$, haren aldeen bildura besterik ez da:
 
 $$
-\operatorname{tr}(\angle AOB) = \operatorname{tr}(\overrightarrow{OA}) \cup \operatorname{tr}(\overrightarrow{OB})
+\operatorname{tr}(\angle AOB) = \overrightarrow{OA} \cup \overrightarrow{OB}
 $$
 </Definicion>
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Structural and Order Properties">
+  <PropiedadesGrupo title="Egiturazko propietateak">
     <PropiedadItem 
       id="simetria-lados" 
-      title="Symmetry of Sides"
-      formula="\angle AOB = \angle BOA \iff \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{ \overrightarrow{OB}, \overrightarrow{OA} \}"
+      title="Aldeen simetria"
+      formula="\angle AOB = \angle BOA, \qquad \angle(h, k) = \angle(k, h)"
     >
-      Formally defined as the unordered pair of two non-collinear <ConceptLink targetId="semirrecta">rays</ConceptLink> sharing a common origin ($\angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}$), an angle is strictly symmetric with respect to the order of its sides: $\angle AOB = \angle BOA$ and $\angle(h, k) = \angle(k, h)$, satisfying <ConceptLink targetId="igualdad-matematica">set equality</ConceptLink>.
+      <ConceptLink targetId="semirrecta">Zuzenerdien</ConceptLink> bikote ez-ordenatua denez, angelua ez dago aldeak izendatzeko ordenaren mende: $\angle AOB = \angle BOA$ eta $\angle(h, k) = \angle(k, h)$, multzoen arteko <ConceptLink targetId="igualdad-matematica">berdintza</ConceptLink> gisa.
     </PropiedadItem>
 
     <PropiedadItem 
       id="coplanaridad-soporte" 
-      title="Coplanarity and Unique Supporting Plane"
-      formula="\exists! \pi \in \Pi : \operatorname{tr}(\angle AOB) \subset \operatorname{tr}(\pi)"
+      title="Plano euskarri bakarra"
+      formula="\exists! \pi \in \Pi : \operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)"
     >
-      By Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, the non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> of the vertex triple $\{O, A, B\}$ uniquely determines a single <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$ that contains the entire <ConceptLink targetId="traza">point trace</ConceptLink> of the angle: $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
+      <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink> axiomen arabera, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren $O$, $A$ eta $B$ puntuek $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> bakarra zehazten dute; <ConceptLink targetId="axioma-incidencia-6">I.6 axiomaren</ConceptLink> arabera, $\overleftrightarrow{OA}$ eta $\overleftrightarrow{OB}$ zuzenak plano horretan daude, eta, beraz, $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 
       id="interior-angular" 
-      title="Angular Interior as a Convex Region"
+      title="Angeluaren barnealdea"
       formula="\operatorname{Int}(\angle AOB) = \mathcal{H}_{\overleftrightarrow{OA}}(B) \cap \mathcal{H}_{\overleftrightarrow{OB}}(A)"
     >
-      Every angle $\angle AOB$ in a plane $\pi$ determines an open and unbounded region termed the **interior of the angle** ($\operatorname{Int}(\angle AOB)$), formally defined as the <ConceptLink targetId="interseccion">intersection</ConceptLink> of the open <ConceptLink targetId="semiplano">half-plane</ConceptLink> with respect to $\overleftrightarrow{OA}$ containing $B$ and the open half-plane with respect to $\overleftrightarrow{OB}$ containing $A$. This region forms a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>.
+      $\pi$ planoko $\angle AOB$ angelu orok bere **<ConceptLink targetId="interior-angulo">barnealdea</ConceptLink>** zehazten du, $\operatorname{Int}(\angle AOB)$: $\overleftrightarrow{OA}$ ertzeko eta $B$ daukan <ConceptLink targetId="semiplano">planoerdi</ConceptLink> irekiaren eta $\overleftrightarrow{OB}$ ertzeko eta $A$ daukan planoerdi irekiaren <ConceptLink targetId="interseccion">ebakidura</ConceptLink>. <ConceptLink targetId="conjunto-convexo">Multzo ganbila</ConceptLink> da, bi planoerdi ganbilen ebakidura baita.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

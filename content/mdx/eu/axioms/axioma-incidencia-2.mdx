@@ -2,7 +2,7 @@ export const metadata = {
   id: "axioma-incidencia-2",
   lang: "eu",
   type: "axioma",
-  title: "I.2 Axioma (Puntuak zuzenean)",
+  title: "I.2 axioma (Puntuak zuzenean)",
   description: "Zuzen orok gutxienez bi puntu desberdinekin intziditzen du.",
   branch: "51A",
   tags: ["geometria", "intzidentzia", "axioma", "zuzena"],
@@ -10,22 +10,22 @@ export const metadata = {
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §2", role: "primary" }
   ]
 };
 
 import { Incidence2 } from '@content/diagrams/Axiomas/Incidence2';
 export const Simulation = Incidence2;
 
-<Capitular letra="Z" />**uzen** orok gutxienez bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinekin <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> du.
+<Capitular letra="Z" />uzen orok gutxienez bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdinekin <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> du.
 
-Axioma honek zuzenek <ConceptLink targetId="espacio">espazioan</ConceptLink> eduki geometrikoa izatea bermatzen du, punturik gabeko lerroak edo puntu isolatu bakar batera murriztutakoak saihestuz.
+<ConceptLink targetId="axioma-incidencia-1">I.1 axiomarekin</ConceptLink> batera, axioma honen ondorioz zuzen bakoitza bere puntuen multzoak zehazten du: bi zuzenek <ConceptLink targetId="traza">puntu-trazadura</ConceptLink> bera balute, bi puntu desberdin izango lituzkete komunean, eta I.1 axiomaren bakartasunagatik berdinak izango lirateke. Beraz, $\ell \longmapsto \operatorname{tr}(\ell)$ esleipena <ConceptLink targetId="inyectividad">injektiboa</ConceptLink> da.
 
-<Definicion title="Enuntziatu Formala">
-  Edozein <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta" isDependency={true}>zuzenetarako</ConceptLink>, gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen dira (<VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pB" color="ocre">$B$</VisualBind>) $\ell$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutenak:
+<Definicion title="Enuntziatu formala">
+  Edozein <VisualBind element="lineCD" color="carbon">$\ell$</VisualBind> <ConceptLink targetId="recta" isDependency={true}>zuzenetarako</ConceptLink>, $\ell$ zuzenarekin <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten gutxienez bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin existitzen dira, <VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind>:
   $$
   \forall \ell \in \mathcal{L} \ \exists A, B \in \mathcal{P} \ (A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)
   $$
-  Zuzenaren <ConceptLink targetId="traza">puntu-trazaren</ConceptLink> ikuspegitik, horrek bere kardinalak $\lvert \operatorname{tr}(\ell) \rvert \ge 2$ betetzen duela ezartzen du.
+  Zuzenaren <ConceptLink targetId="traza">puntu-trazaduraren</ConceptLink> bidez adierazita, axiomak dio haren <ConceptLink targetId="cardinalidad">kardinalak</ConceptLink> $\lvert \operatorname{tr}(\ell) \rvert \ge 2$ betetzen duela.
 </Definicion>
 

@@ -1,10 +1,10 @@
 export const metadata = {
-  id: "camino-teorema-pitagoras",
+  id: "plan-de-estudio-camino-teorema-pitagoras",
   lang: "eu",
   type: "plan-de-estudio",
   title: "Pitagorasen teoremaren bidea",
   subtitle: "Ibilbide axiomatiko eta geometrikoa",
-  description: "Arakatu geometria euklidearraren erlaziorik ospetsuenaren atzean dagoen zorroztasun logikoa, oinarrizko definizioetatik hasi eta satelite bidezko geokokapeneraino.",
+  description: "Pitagorasen teoremarainoko ibilbide deduktiboa: kontzeptu primitiboetatik eta kongruentziatik abiatuta, paraleloen axiomatik eta Talesen teorematik igaroz, satelite bidezko kokapenean duen aplikazioraino.",
   branch: "51M",
   requiredNodes: [
     "punto",
@@ -23,15 +23,13 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="E" />gia matematiko bat eraikitzeak justifikazio-kate zorrotz eta akasgabe bat eskatzen du. <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> ez da isolatutako formula bat, baizik eta espazio euklidearreko jatorrizko kontzeptu, axioma eta teoremen sare egituratu baten ezinbesteko ondorioa.
-
-Ikasketa-plan honek oinarrizko egia hori berreraikitzeko, ulertzeko eta aplikatzeko beharrezkoak diren bost etapa logikoetan zehar gidatuko zaitu urratsez urrats.
+<Capitular letra="P" />itagorasen <ConceptLink targetId="teorema-pitagoras">teorema</ConceptLink> ez da formula isolatu bat: <ConceptLink targetId="sistema-euclidiano">sistema euklidearreko</ConceptLink> <ConceptLink targetId="concepto-primitivo">kontzeptu primitiboen</ConceptLink>, <ConceptLink targetId="axioma">axiomen</ConceptLink> eta <ConceptLink targetId="teorema">teoremen</ConceptLink> kate baten helmuga da. Ikasketa-plan honek kate hori bost fasetan aztertzen du, oinarrizko objektuetatik aplikazio teknologiko bateraino.
 
 <Separador />
 
-### 1. Fasea: Oinarrizko eraikuntza-blokeak
+### 1. fasea: Oinarrizko eraikuntza-blokeak
 
-Irudi edo azaleren gaineko propietateak frogatu aurretik, espazioa gobernatzen duten jatorrizko objektuak eta ordenaren erlazioak definitu behar ditugu. Hilberten geometria axiomatikoan, oinarrizko kontzeptu primitiboa <ConceptLink targetId="punto">puntua</ConceptLink> da eta ordenaren espazio-erlazioa <ConceptLink targetId="estar-entre">artean egotea</ConceptLink>.
+Irudien edo azaleren propietateak frogatu aurretik, abiapuntuko objektuak eta erlazioak finkatu behar dira. <ConceptLink targetId="punto">Puntua</ConceptLink> kontzeptu primitiboa da, eta <ConceptLink targetId="estar-entre">artean egotearen</ConceptLink> erlazioak ($A * B * C$) <ConceptLink targetId="recta">zuzen</ConceptLink> bateko puntuak ordenatzen ditu, <ConceptLink targetId="axiomas-orden">ordena-axiomen</ConceptLink> arabera.
 
 <StudyTask
   id="punto"
@@ -42,14 +40,14 @@ Irudi edo azaleren gaineko propietateak frogatu aurretik, espazioa gobernatzen d
 <StudyTask
   id="estar-entre"
   type="definicion"
-  title="Ordenaren erlazioa (artean egotea)"
+  title="Ordena-erlazioa (artean egotea)"
 />
 
 <Separador />
 
-### 2. Fasea: Irudien eraikuntza eta kongruentzia
+### 2. fasea: Irudiak eta kongruentzia
 
-Zuzen berean ez dauden hiru puntu segmentuen bidez lotzean planoko oinarrizko irudi geometrikoa lortzen dugu: <ConceptLink targetId="triangulo">triangelua</ConceptLink>. Triangeluak elkarren artean konparatzeko, <ConceptLink targetId="congruencia">kongruentzia-axiomak</ConceptLink> aplikatzen ditugu, bereziki <ConceptLink targetId="axioma-congruencia-5">ALD / SAS axioma</ConceptLink>. Bere lehen aplikazio handia triangelu isoszelen teorema da.
+<ConceptLink targetId="colinealidad">Kolinealak</ConceptLink> ez diren hiru puntu <ConceptLink targetId="segmento">zuzenkien</ConceptLink> bidez lotuz <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat osatzen da. Triangeluak intuiziora jo gabe alderatzeko, <ConceptLink targetId="axiomas-congruencia">kongruentzia-axiomak</ConceptLink> erabiltzen dira, bereziki <ConceptLink targetId="axioma-congruencia-5">III.5 axioma</ConceptLink>, alde-angelu-alde (AlAnAl) irizpidearen oinarrizko forma ematen baitu. Haren lehen aplikazioa <ConceptLink targetId="teorema-triangulo-isosceles">triangelu isoszelearen teorema</ConceptLink> da.
 
 <StudyTask
   id="triangulo"
@@ -60,81 +58,81 @@ Zuzen berean ez dauden hiru puntu segmentuen bidez lotzean planoko oinarrizko ir
 <StudyTask
   id="axioma-congruencia-5"
   type="axioma"
-  title="III-5 kongruentzia-axioma (ALD / SAS)"
+  title="III.5 axioma (AlAnAl)"
 />
 
 <StudyTask
   id="teorema-triangulo-isosceles"
   type="teorema"
-  title="Triangelu isoszelen teorema (Pons Asinorum)"
+  title="Triangelu isoszelearen teorema (pons asinorum)"
 />
 
 <StudyPlanCheckpoint
   id="checkpoint-pitagoras-congruencia"
-  explanation="Triangelu isoszelen teorema Alde-Angelu-Alde (ALD / SAS) irizpidearen bidezko kongruentziaz frogatzen da, oinarriko angelu konformeak berdinak izatera behartuz."
+  explanation="Triangelu isoszelearen teorema frogatzeko, alde-angelu-alde irizpidea (III.5 axioma) aplikatzen zaio triangeluari eta oinarriko erpinak trukatuta dituen triangelu berari; hortik ondorioztatzen da oinarriko angeluak kongruenteak direla."
 >
   <Pregunta
     id="checkpoint-pitagoras-congruencia"
-    question="Zein kongruentzia-irizpidek ahalbidetzen digu triangelu isoszel baten oinarriko angeluak berdinak direla formalki frogatzea?"
+    question="Zein kongruentzia-irizpidek ahalbidetzen du triangelu isoszele baten oinarriko angeluak kongruenteak direla frogatzea?"
     options={[
-      "Angelu-Alde-Angelu (ALA)",
-      "Alde-Angelu-Alde (ALD / SAS)",
-      "Alde-Alde-Alde (AAA / LLL)",
-      "Angelu-Angelu-Alde (AAL)"
+      "Angelu-alde-angelu (AnAlAn)",
+      "Alde-angelu-alde (AlAnAl)",
+      "Alde-alde-alde (AlAlAl)",
+      "Alde-angelu-angelu (AlAnAn)"
     ]}
-    correct="Alde-Angelu-Alde (ALD / SAS)"
+    correct="Alde-angelu-alde (AlAnAl)"
   />
 </StudyPlanCheckpoint>
 
 <Separador />
 
-### 3. Fasea: Paralelotasuna eta angeluen batura
+### 3. fasea: Paralelotasuna eta angeluen batura
 
-Pitagorasen teorema geometria euklidear lauaren berezko emaitza da. Izan ere, <ConceptLink targetId="axioma-paralelas-euclides">Euklidesen bosgarren postulatuaren</ConceptLink> menpekoa da erabat. Axioma hori gabe ezinezkoa da frogatzea triangelu baten barne-angeluen batura zehazki $180^\circ$ dela.
+Pitagorasen teorema teorema euklidearra da: <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> (IV. axioma, <ConceptLink targetId="euclides">Euklidesen</ConceptLink> bosgarren postulatuaren oinordekoa) mende dago, eta faltsua da <ConceptLink targetId="sistema-hiperbolico">sistema hiperbolikoan</ConceptLink>. <ConceptLink targetId="sistema-absoluto">Sistema absolutuan</ConceptLink>, axioma hori gabe, ezin da frogatu triangelu baten <ConceptLink targetId="angulo-interior">barne-angeluen</ConceptLink> batura bi <ConceptLink targetId="angulo-recto">angelu zuzenen</ConceptLink> ($180^\circ$) kongruentea denik.
 
 <StudyTask
   id="axioma-paralelas-euclides"
   type="axioma"
-  title="Bosgarren postulatua (paraleloen axioma)"
+  title="IV. axioma (paraleloen axioma)"
 />
 
 <StudyTask
   id="teorema-suma-angulos-triangulo"
   type="teorema"
-  title="Triangelu baten angeluen baturaren teorema"
+  title="Triangeluaren angeluen baturaren teorema"
 />
 
 <StudyPlanCheckpoint
   id="checkpoint-pitagoras-paralelas"
-  explanation="Angeluen batura 180° dela frogatzeko, oinarriarekiko zuzen paralelo bat marrazten da kontrako erpinetik. Honek Bosgarren Postulatua behar du barne-angelu alternoen berdintasuna bermatzeko."
+  explanation="Angeluen batura 180° dela frogatzeko, aurkako erpinetik oinarriaren paraleloa marrazten da. Paralelo horren existentzia paraleloen axiomarik gabe frogatzen da (barne-angelu alternoen teoremaren bidez), baina paralelo horrek osatzen dituen barne-angelu alternoak kongruenteak direla ondorioztatzeko, paraleloak bakarra izan behar du; hau da, IV. axioma behar da."
 >
   <Emparejar
     id="checkpoint-pitagoras-paralelas"
-    pregunta="Lotu propietate geometrikoa bere 3. faseko funtsezko oinarriarekin:"
+    pregunta="Lotu frogapeneko urrats bakoitza bere oinarriarekin:"
     pairs={[
-      { left: "Angeluen batura (180°)", right: "Paraleloen Bosgarren Postulatua" },
-      { left: "Barne-angelu alternoak", right: "Erpinetik igarotzen den lerro paralelo laguntzailea" }
+      { left: "Aurkako erpinetik oinarriaren paraleloa existitzea", right: "Barne-angelu alternoen teorema" },
+      { left: "Paralelo horrek osatzen dituen barne-angelu alternoen kongruentzia", right: "IV. axioma (paraleloaren bakartasuna)" }
     ]}
   />
 </StudyPlanCheckpoint>
 
 <Separador />
 
-### 4. Fasea: Proportzionaltasuna eta antzekotasuna
+### 4. fasea: Proportzionaltasuna eta antzekotasuna
 
-Angeluen batura finkoa ($180^\circ$) izanik, <ConceptLink targetId="semejanza">antzekotasun</ConceptLink> geometrikoaren kontzeptua sortzen da. <ConceptLink targetId="teorema-tales">Talesen teoremak</ConceptLink> triangelu antzekoen aldeen proportzionaltasuna ezartzen du, arrazoiekin kalkuluak egiteko tresna aljebraikoa eskainiz.
+Sistema euklidearrean badira angelu berak eta tamaina desberdina dituzten triangeluak, eta horiek alderatzeko zuzenkien <ConceptLink targetId="proporcionalidad">proportzionaltasuna</ConceptLink> behar da. <ConceptLink targetId="teorema-tales">Talesen teorema</ConceptLink> <ConceptLink targetId="semejanza">antzekotasunaren</ConceptLink> teoriaren oinarria da: triangelu baten alde batekiko <ConceptLink targetId="paralelas">paraleloa</ConceptLink> den zuzen batek zuzenki proportzionalak zehazten ditu beste bi aldeetan. <ConceptLink targetId="teorema-area-triangulo">Triangeluaren azaleratik</ConceptLink> abiatuta frogatzen da.
 
 <StudyTask
   id="teorema-tales"
   type="teorema"
-  title="Talesen teorema antzekotasunari buruz"
+  title="Talesen teorema"
 />
 
 <Separador />
 
-### 5. Fasea: Pitagorasen teorema eta bere aplikazioa
+### 5. fasea: Pitagorasen teorema eta haren aplikazioa
 
-Kongruentzia, paralelotasuna eta antzekotasuna bateratuz, $a^2 + b^2 = c^2$ oinarrizko erlazioa frogatzen dugu. Emaitza teoriko hau katetoaren ariketan eta <ConceptLink targetId="caso-gps-trilateracion">GPSaren erabilera-kasuan</ConceptLink> finkatuko dugu.
+Kongruentziarekin, paralelotasunarekin eta <ConceptLink targetId="teoria-medida-area">azaleraren</ConceptLink> teoriarekin, <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink> baten <ConceptLink targetId="cateto">katetoen</ConceptLink> eta <ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink> arteko $a^2 + b^2 = c^2$ erlazioa frogatzen da. Emaitza <ConceptLink targetId="ejercicio-pitagoras-cateto">kalkulu-ariketa</ConceptLink> batekin eta <ConceptLink targetId="caso-gps-trilateracion">GPSaren erabilera-kasuarekin</ConceptLink> sendotzen da.
 
 <StudyTask
   id="teorema-pitagoras"
@@ -145,7 +143,7 @@ Kongruentzia, paralelotasuna eta antzekotasuna bateratuz, $a^2 + b^2 = c^2$ oina
 <StudyTask
   id="ejercicio-pitagoras-cateto"
   type="ejercicio"
-  title="Ariketa: kateto ezezagunaren kalkulua"
+  title="Ariketa: kateto baten kalkulua"
 />
 
 <StudyTask

@@ -12,23 +12,23 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="E" />n la matemática formal, un **concepto primitivo** (o término no definido) es un objeto o relación de partida que no se define mediante conceptos anteriores.
+<Capitular letra="U" />n **concepto primitivo** (o término no definido) es una noción de partida de una <ConceptLink targetId="teoria-formal">teoría formal</ConceptLink> —un tipo de objeto o una relación— que no se define mediante conceptos anteriores.
 
-Toda teoría matemática necesita términos iniciales para comenzar. Si intentáramos definir cada objeto usando conceptos más simples, caeríamos en un razonamiento circular o en una cadena interminable hacia atrás. Para evitar esto, los sistemas axiomáticos eligen un conjunto básico de nociones primitivas y fijan su comportamiento a través de las reglas o <ConceptLink targetId="axioma">axiomas</ConceptLink> del <ConceptLink targetId="sistema-axiomatico">sistema formal</ConceptLink>.
+Toda teoría matemática necesita términos iniciales para comenzar. Si se intentara definir cada noción mediante otras más simples, se caería en un círculo o en un regreso infinito. Para evitarlo, los sistemas axiomáticos eligen un conjunto básico de nociones primitivas y fijan su comportamiento a través de los <ConceptLink targetId="axioma">axiomas</ConceptLink> del <ConceptLink targetId="sistema-axiomatico">sistema formal</ConceptLink>.
 
 <Definicion title="Definición Epistemológica">
-  En un lenguaje formal especificado por una <ConceptLink targetId="signatura">signatura</ConceptLink> $\sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})$, los **conceptos primitivos** son los símbolos no lógicos básicos de partida (tipos de objetos y símbolos de relación u operación) que carecen de definición previa dentro de la teoría:
+  En un lenguaje formal especificado por una <ConceptLink targetId="signatura">signatura</ConceptLink> $\sigma$, los **conceptos primitivos** son los símbolos no lógicos básicos de partida (tipos de objetos y símbolos de relación u operación) que carecen de definición previa dentro de la teoría:
   $$
   \sigma = (\mathcal{S}_{\text{sorts}}, \mathcal{F}, \mathcal{R}, \text{ar})
   $$
-  Su significado matemático no reside en una descripción física o sustancial, sino en las reglas formales que los <ConceptLink targetId="axioma">axiomas</ConceptLink> imponen sobre sus interpretaciones en una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> o modelo.
+  Su significado no reside en una descripción física, sino en las condiciones que los <ConceptLink targetId="axioma">axiomas</ConceptLink> imponen sobre sus interpretaciones en una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> o <ConceptLink targetId="teoria-modelos">modelo</ConceptLink>.
 </Definicion>
 
 <Separador />
 
 ### Conceptos primitivos en la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>
 
-En los fundamentos de la geometría (como el sistema de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>), los conceptos primitivos se dividen en dos categorías:
+En el sistema de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, los conceptos primitivos se dividen en dos categorías:
 
-- **Tipos de objetos (<ConceptLink targetId="dominio">dominios primitivos</ConceptLink>):** Las tres clases elementales de entes: <ConceptLink targetId="punto">puntos</ConceptLink> ($\mathcal{P}$), <ConceptLink targetId="recta">rectas</ConceptLink> ($\mathcal{L}$) y <ConceptLink targetId="plano">planos</ConceptLink> ($\Pi$). El <ConceptLink targetId="espacio">espacio tridimensional</ConceptLink> constituye el universo global del modelo y no un objeto primitivo de la signatura.
-- **Relaciones primitivas:** Vínculos básicos entre objetos, como la <ConceptLink targetId="incidencia">incidencia</ConceptLink> (pertenencia posicional), la <ConceptLink targetId="estar-entre">intermediación</ConceptLink> (orden lineal) y la <ConceptLink targetId="congruencia">congruencia</ConceptLink> (de <ConceptLink targetId="segmento">segmentos</ConceptLink> y de <ConceptLink targetId="angulo">ángulos</ConceptLink>).
+- **Tipos de objetos (<ConceptLink targetId="dominio">dominios primitivos</ConceptLink>):** Las tres clases elementales de entes: <ConceptLink targetId="punto">puntos</ConceptLink> ($\mathcal{P}$), <ConceptLink targetId="recta">rectas</ConceptLink> ($\mathcal{L}$) y <ConceptLink targetId="plano">planos</ConceptLink> ($\Pi$). El <ConceptLink targetId="espacio">espacio</ConceptLink> no es un tipo primitivo: designa la totalidad de estos objetos (el <ConceptLink targetId="universo-discurso">universo del discurso</ConceptLink>) o, como figura, el conjunto de todos los puntos.
+- **Relaciones primitivas:** Vínculos básicos entre objetos, como la <ConceptLink targetId="incidencia">incidencia</ConceptLink> (estar sobre), la <ConceptLink targetId="estar-entre">intermediación</ConceptLink> (orden lineal) y la <ConceptLink targetId="congruencia">congruencia</ConceptLink> (de <ConceptLink targetId="segmento">segmentos</ConceptLink> y de <ConceptLink targetId="angulo">ángulos</ConceptLink>).

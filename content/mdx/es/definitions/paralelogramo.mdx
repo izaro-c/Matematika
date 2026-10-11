@@ -2,52 +2,82 @@ export const metadata = {
   id: "paralelogramo",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Paralelogramo",
-  description: "Cuadrilátero convexo cuyos pares de lados opuestos son paralelos dos a dos.",
+  description: "Cuadrilátero cuyos dos pares de lados opuestos están sobre rectas paralelas.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "cuadrilatero", "paralelas"],
   hasSimulation: true,
   sources: [
     { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 34", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "secondary" }
   ]
 };
 
 import { Paralelogramo } from '@content/diagrams/Definiciones/Paralelogramo';
 export const Simulation = Paralelogramo;
 
-<Capitular letra="U" />n paralelogramo es un <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> convexo en la geometría plana cuyos pares de lados opuestos discurren sobre <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink>. Constituye el modelo geométrico canónico para el cálculo de áreas y la adición vectorial en el <ConceptLink targetId="plano">plano</ConceptLink>.
+<Capitular letra="U" />n paralelogramo es un <ConceptLink targetId="cuadrilatero" isDependency={true}>cuadrilátero</ConceptLink> cuyos dos pares de <ConceptLink targetId="lado">lados</ConceptLink> opuestos están sobre <ConceptLink targetId="paralelas" isDependency={true}>rectas paralelas</ConceptLink>.
 
-<Definicion title="">
-  Dado un <ConceptLink targetId="cuadrilatero" isDependency={true}>cuadrilátero</ConceptLink> convexo <VisualBind element="poligono" color="musgo">$ABCD$</VisualBind> en un plano $\mathcal{P}$, se define como paralelogramo si y solo si sus lados opuestos son <ConceptLink targetId="paralelas" isDependency={true}>paralelos</ConceptLink> dos a dos:
-  $$
-  ABCD \text{ es paralelogramo} \iff (\overline{AB} \parallel \overline{CD}) \land (\overline{BC} \parallel \overline{DA})
-  $$
-  Como consecuencia de los axiomas de congruencia y paralelismo, los lados opuestos son congruentes (<VisualBind element="lados-iguales" color="pavo">$\overline{AB} \cong \overline{CD}$</VisualBind> y $\overline{BC} \cong \overline{DA}$).
+El paralelismo se exige a las <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> soporte de los lados, no a los <ConceptLink targetId="segmento">segmentos</ConceptLink>. La definición tiene sentido en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, pero las propiedades métricas que caracterizan al paralelogramo (lados opuestos congruentes, diagonales que se bisecan) dependen del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>.
+
+<Definicion title="Definición de paralelogramo">
+Un <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> <VisualBind element="poligono" color="carbon">$ABCD$</VisualBind> de un plano $\sigma$ es un **paralelogramo** si las rectas soporte de sus <VisualBind element="lados-opuestos" color="carbon">lados opuestos</VisualBind> son <ConceptLink targetId="paralelas">paralelas</ConceptLink>:
+
+$$
+ABCD \text{ es paralelogramo} \iff \overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \ \land \ \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}.
+$$
+
+Como los lados opuestos de un cuadrilátero son disjuntos, ambas rectas de cada par son distintas y sus <ConceptLink targetId="traza">trazas</ConceptLink> no se cortan.
 </Definicion>
 
-<Separador />
+### Casos particulares
 
-### Clasificación de la subfamilia
+| Figura | Condición adicional |
+|---|---|
+| <ConceptLink targetId="rombo">Rombo</ConceptLink> | Cuatro <VisualBind element="lados-iguales" color="pavo">lados congruentes</VisualBind> |
+| <ConceptLink targetId="rectangulo">Rectángulo</ConceptLink> | Cuatro <VisualBind element="angulos-rectos" color="ocre">ángulos rectos</VisualBind> (<ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink>) |
+| <ConceptLink targetId="cuadrado">Cuadrado</ConceptLink> | Rombo y rectángulo a la vez |
 
-Los paralelogramos se subdividen según la medida de sus ángulos y la congruencia de sus lados:
-
-| Subfamilia | Condición angular | Condición en los lados |
-|---|---|---|
-| Rectángulo | Cuatro <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink> | Lados opuestos congruentes dos a dos |
-| Rombo | <VisualBind element="angulos-opuestos" color="pavo">Ángulos opuestos congruentes</VisualBind> | Cuatro lados estrictamente congruentes |
-| <ConceptLink targetId="cuadrado">Cuadrado</ConceptLink> | Cuatro ángulos rectos | Cuatro lados estrictamente congruentes |
-| Romboide | Ángulos opuestos no rectos | Lados adyacentes de diferente longitud |
+Todo cuadrilátero con cuatro lados congruentes es un paralelogramo, incluso sin el axioma de las paralelas: por el <ConceptLink targetId="teorema-congruencia-lll">criterio LLL</ConceptLink> la diagonal $\overline{AC}$ da $\triangle ABC \cong \triangle CDA$, y la congruencia de los ángulos alternos internos implica el paralelismo (<ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink>).
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Diagonales y relaciones métricas">
-    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Bisecado de diagonales">
-      Las dos diagonales de todo paralelogramo se intersecan en su punto medio común.
+  <PropiedadesGrupo title="Propiedades absolutas">
+    <PropiedadItem
+      id="convexidad-paralelogramo"
+      title="Convexidad"
+      formula="\operatorname{seg}(AC) \cap \operatorname{seg}(BD) \neq \emptyset"
+    >
+      Todo paralelogramo es <ConceptLink targetId="cuadrilatero">convexo</ConceptLink>: como $\overleftrightarrow{CD}$ no corta a $\overleftrightarrow{AB}$, los puntos $C$ y $D$ están en el mismo <ConceptLink targetId="semiplano">semiplano</ConceptLink> respecto a $\overleftrightarrow{AB}$, y lo mismo ocurre con los demás lados. En consecuencia, sus <VisualBind element="diagonales" color="musgo">diagonales</VisualBind> se cortan.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-rectangulo" title="Cálculo del área">
-      El área encerrada viene dada por el producto de la base por su altura perpendicular: $\mu(ABCD) = b \cdot h$.
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Propiedades euclidianas">
+    <PropiedadItem
+      id="teorema-lados-opuestos-paralelogramo"
+      title="Lados y ángulos opuestos congruentes"
+      formula="\overline{AB} \cong \overline{CD}, \quad \overline{BC} \cong \overline{DA}, \quad \angle DAB \cong \angle BCD, \quad \angle ABC \cong \angle CDA"
+    >
+      En el <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>, los lados opuestos de un paralelogramo son <ConceptLink targetId="congruencia">congruentes</ConceptLink> y también sus <VisualBind element="angulos-opuestos" color="ocre">ángulos opuestos</VisualBind> (Euclides I.34). La diagonal $\overline{AC}$ forma con las paralelas ángulos alternos internos congruentes, lo que exige el <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>, y el <ConceptLink targetId="teorema-congruencia-ala">criterio ALA</ConceptLink> da $\triangle ABC \cong \triangle CDA$.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="diagonales-paralelogramo"
+      title="Las diagonales se bisecan"
+      formula="\operatorname{seg}(AC) \cap \operatorname{seg}(BD) = \{M\}, \quad \overline{AM} \cong \overline{MC}, \quad \overline{BM} \cong \overline{MD}"
+    >
+      Las diagonales de un paralelogramo euclidiano se cortan en su <ConceptLink targetId="punto-medio">punto medio</ConceptLink> común <VisualBind element="M" color="terracota">$M$</VisualBind>: los triángulos $\triangle ABM$ y $\triangle CDM$ son congruentes por el criterio ALA.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="area-paralelogramo"
+      title="Área"
+      formula="\operatorname{A}(ABCD) = b\,h"
+    >
+      El <ConceptLink targetId="teoria-medida-area">área</ConceptLink> de un paralelogramo es el producto de la <ConceptLink targetId="longitud">longitud</ConceptLink> $b$ de un lado por la <ConceptLink targetId="altura">altura</ConceptLink> $h$ correspondiente: equivale por complementos a un <ConceptLink targetId="rectangulo">rectángulo</ConceptLink> de la misma base y altura, cuyo área da el <ConceptLink targetId="teorema-area-rectangulo">teorema del área del rectángulo</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

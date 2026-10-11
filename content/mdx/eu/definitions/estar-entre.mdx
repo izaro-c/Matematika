@@ -3,8 +3,8 @@ export const metadata = {
   lang: "eu",
   type: "definicion",
   subtype: "primitivo",
-  title: "Tartean egotea",
-  description: "Zuzen baten gaineko puntuen bitartekotasuna formalizatzen duen oinarrizko ordena linealeko erlazio hirutarra.",
+  title: "Artean egotea",
+  description: "Zuzen baten gaineko puntuen bitartekotasuna formalizatzen duen oinarrizko erlazio hirutarra.",
   branch: "51A",
   branches: ["51A", "03B"],
   tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
@@ -22,26 +22,26 @@ export const metadata = {
 import { EstarEntre } from '@content/diagrams/Definiciones/EstarEntre';
 export const Simulation = EstarEntre;
 
-<Capitular letra="T" />**artean egotearen** erlazioa (edo bitartekotasuna) <ConceptLink targetId="recta">zuzen</ConceptLink> baten gaineko <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="orden">ordena lineal</ConceptLink> hertsia formalizatzen duen <ConceptLink targetId="concepto-primitivo">oinarrizko</ConceptLink> <ConceptLink targetId="relacion-ternaria">erlazio hirutarra</ConceptLink> da.
+<Capitular letra="B" />itartekotasuna edo **artean egotea** <ConceptLink targetId="punto">puntuen</ConceptLink> arteko <ConceptLink targetId="concepto-primitivo">oinarrizko</ConceptLink> <ConceptLink targetId="relacion-ternaria">erlazio hirutarra</ConceptLink> da, eta <ConceptLink targetId="recta">zuzen</ConceptLink> batean puntu bat beste bien artean dagoela adierazten du.
 
-<ConceptLink targetId="estructura-geometrica">Egitura geometrikoan</ConceptLink>, bere portaera formala ordena-<ConceptLink targetId="axioma">axiomen</ConceptLink> taldeak (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> eta <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>) arautzen du.
+Haren propietateak ez dira definitzen: ordenako <ConceptLink targetId="axioma">axiomek</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink> eta <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>) finkatzen dituzte. Horietatik ondorioztatzen da zuzen bakoitzeko puntuek <ConceptLink targetId="orden">ordena lineal</ConceptLink> bat onartzen dutela; beraz, bitartekotasuna da zuzenetako eta planoetako <ConceptLink targetId="separacion">banaketaren</ConceptLink> teoria osoaren oinarria.
 
 <Definicion title="Bitartekotasunaren oinarrizko erlazioa">
-Hilberten $\sigma_{\text{Hil}}$ <ConceptLink targetId="signatura">signaturan</ConceptLink>, bitartekotasuna $\mathbf{B}$ erlazio-ikur hirutarra da, puntuen $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuaren</ConceptLink> gainean $\text{ar}(\mathbf{B}) = \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ <ConceptLink targetId="aridad">aritatea</ConceptLink> duena.
+Hilberten $\sigma_{\text{Hil}}$ <ConceptLink targetId="signatura">signaturan</ConceptLink>, bitartekotasuna 3 <ConceptLink targetId="aridad">aritateko</ConceptLink> erlazio-ikurra da, eta haren interpretazioa puntuen $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuaren</ConceptLink> azpimultzo bat da: $\mathbf{B} \subseteq \mathcal{P} \times \mathcal{P} \times \mathcal{P}$.
 
-<VisualBind element="lineAC" color="carbon">$\ell$</VisualBind> zuzen bereko edozein <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind> <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="terna">hirukoterako</ConceptLink>, erlazioa formalki honela adierazten da:
+<VisualBind element="lineAC" color="carbon">$\ell$</VisualBind> zuzen bereko edozein <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind> <ConceptLink targetId="punto">puntuen</ConceptLink> <ConceptLink targetId="terna">hirukoterako</ConceptLink>, erlazioa honela adierazten da:
 
 $$
 A * B * C \quad \text{edo} \quad \mathbf{B}(A, B, C)
 $$
 
-eta formalki «$B$ puntua $A$ eta $C$-ren artean dago» predikatua adierazten du. Erlazioa betetzeak formalki eskatzen du hiru puntuak elkarren artean desberdinak eta elkarrekin <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> izatea <ConceptLink targetId="incidencia">intzidentziaren</ConceptLink> bidez:
+eta «$B$ puntua $A$ eta $C$ puntuen artean dago» predikatua adierazten du. Definizioak berak ez dio baldintzarik ezartzen hirukoteari: <ConceptLink targetId="axioma-orden-1">II.1 axiomak</ConceptLink> bermatzen du, $A * B * C$ bada, hiru puntuak desberdinak direla, zuzen berarekin <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutelako <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> direla, eta $B$ ere $C$ eta $A$ puntuen artean dagoela:
 
 $$
-\forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\Bigr)\Biggr)
+\forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land C * B * A\Bigr)\Biggr)
 $$
 </Definicion>
 
 <Nota>
-Oinarrizko erlazio honek oinarri formala ematen du <ConceptLink targetId="segmento">zuzenki</ConceptLink>, <ConceptLink targetId="semirrecta">semizuzen</ConceptLink>, <ConceptLink targetId="semiplano">planoerdi</ConceptLink> eta zuzenaren bereizketa linealaren nozioak definitzeko.
+Oinarrizko erlazio hori da <ConceptLink targetId="segmento">zuzenkia</ConceptLink>, <ConceptLink targetId="semirrecta">zuzenerdia</ConceptLink>, <ConceptLink targetId="semiplano">planoerdia</ConceptLink> eta zuzen bat bere puntu batek bi zatitan banatzea definitzeko oinarria.
 </Nota>

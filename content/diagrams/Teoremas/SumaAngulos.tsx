@@ -571,7 +571,17 @@ export const SumaAngulosSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Mueve A, B y C"
+  "note": "Mueve A, B y C para verificar que la suma de los ángulos interiores es siempre 180°.",
+  "translations": {
+    "eu": {
+      "title": "Triangelu baten angeluen batura",
+      "note": "Mugitu A, B eta C barne-angeluen batura beti 180° dela egiaztatzeko."
+    },
+    "en": {
+      "title": "Sum of Angles in a Triangle",
+      "note": "Move A, B, and C to verify that the sum of interior angles is always 180°."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

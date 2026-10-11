@@ -2,47 +2,133 @@ export const metadata = {
   id: "modelo-poincare",
   lang: "en",
   type: "modelo",
-  title: "Poincaré Disk",
-  description: "Conformal model for two-dimensional hyperbolic geometry inside the unit disk where lines are circular arcs orthogonal to the boundary.",
+  title: "Poincaré disk",
+  description: "Conformal model of the hyperbolic plane in the open unit disk, whose lines are diameters and circular arcs orthogonal to the boundary; it satisfies the planar axioms of the hyperbolic system.",
   branch: "51M",
+  branches: ["51M", "51A"],
   satisfies: ["sistema-hiperbolico", "sistema-absoluto"],
-  axioms_verified: ["axioma-incidencia-1", "axioma-paralelas-hiperbolico"],
-  hasDiagram: true
+  axioms_verified: [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-orden-1",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-4",
+    "axioma-congruencia-1",
+    "axioma-congruencia-2",
+    "axioma-congruencia-3",
+    "axioma-congruencia-4",
+    "axioma-congruencia-5",
+    "axioma-paralelas-hiperbolico",
+    "axioma-arquimedes",
+    "axioma-completitud"
+  ],
+  hasDiagram: true,
+  sources: [
+    { title: "Théorie des groupes fuchsiens", author: "Henri Poincaré", locator: "Acta Mathematica 1 (1882)", role: "primary" },
+    { title: "Saggio di interpretazione della geometria non-euclidea", author: "Eugenio Beltrami", locator: "1868", role: "secondary" }
+  ]
 };
 
 import { ModeloPoincare } from '@content/diagrams/Models/ModeloPoincare';
 export const Diagram = ModeloPoincare;
 
-<Capitular letra="T" />he Poincaré disk model $\mathbb{D}^2$ provides a conformal analytic representation of two-dimensional <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>. By embedding the hyperbolic plane within the open unit disk of the complex plane, it enables a rigorous visualization of the negation of Euclid's parallel postulate while faithfully preserving local Euclidean angles.
+<Capitular letra="T" />he **Poincaré disk** is an analytic model of the hyperbolic plane: its <ConceptLink targetId="punto">points</ConceptLink> are those of the open unit disk $\mathbb{D}^2$, its <ConceptLink targetId="recta">lines</ConceptLink> are the diameters and the <ConceptLink targetId="circunferencia">circle</ConceptLink> arcs orthogonal to the boundary, and it satisfies the planar axioms of the <ConceptLink targetId="sistema-hiperbolico">hyperbolic system</ConceptLink> (I.1–I.3, II, III, the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic parallel axiom</ConceptLink> and V).
+
+Since it is built inside Euclidean geometry, the model proves that plane hyperbolic geometry is <ConceptLink targetId="consistencia-logica">consistent</ConceptLink> if Euclidean geometry is. <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> introduced it in 1882, after the models of <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868) and <ConceptLink targetId="klein">Felix Klein</ConceptLink> (1871). It is <ConceptLink targetId="aplicacion-conforme">conformal</ConceptLink>: the measure of hyperbolic angles coincides with that of the Euclidean angles formed by the curves.
+
+<Definicion title="Structure of the model">
+  The model is the <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> $\mathcal{M} = (\mathcal{P}, \mathcal{L}; \ \mathbf{I}, \ *, \ \cong_{\mathrm{seg}}, \ \cong_{\angle})$ defined as follows:
+
+  - **Points**: $\mathcal{P} = \mathbb{D}^2 = \{(x, y) \in \mathbb{R}^2 \mid x^2 + y^2 < 1\}$. The points of the <VisualBind element="frontera" color="carbon">boundary circle $\partial \mathbb{D}^2$</VisualBind> do not belong to the model; they are called *ideal points*.
+  - **Lines**: the intersections with $\mathbb{D}^2$ of the diameters of the disk and of the Euclidean circles that meet $\partial \mathbb{D}^2$ <ConceptLink targetId="perpendicular">perpendicularly</ConceptLink>, such as the line <VisualBind element="geodesica-principal" color="terracota">$\ell$</VisualBind>. <ConceptLink targetId="incidencia">Incidence</ConceptLink> is membership in that arc or diameter.
+  - **<ConceptLink targetId="estar-entre">Betweenness</ConceptLink>**: $A * B * C$ if $A$, $B$ and $C$ are distinct points of the same line and $B$ lies on the Euclidean arc with endpoints $A$ and $C$.
+  - **<ConceptLink targetId="congruencia">Congruence</ConceptLink>**: $\overline{AB} \cong \overline{CD}$ if $d(A, B) = d(C, D)$ for the hyperbolic <ConceptLink targetId="distancia">distance</ConceptLink>
+    $$
+    d(A, B) = \operatorname{arcosh}\!\left( 1 + \frac{2\,\lVert A - B \rVert^2}{(1 - \lVert A \rVert^2)(1 - \lVert B \rVert^2)} \right)
+    $$
+    and two <ConceptLink targetId="angulo">angles</ConceptLink> are congruent if the Euclidean angles between the tangents to their sides have the same measure.
+
+  The distance comes from the line element $ds = \dfrac{2\sqrt{dx^2 + dy^2}}{1 - (x^2 + y^2)}$; as a point approaches the boundary, its distance to any fixed point of the disk tends to $+\infty$.
+</Definicion>
 
 <Separador />
 
-### Model Definition
+### Parallelism in the model
 
-The geometric domain is restricted to the open unit disk $\mathbb{D}^2 = \{(x, y) \in \mathbb{R}^2 \mid x^2 + y^2 < 1\}$:
+Let <VisualBind element="geodesica-principal" color="terracota">$\ell$</VisualBind> be a line and <VisualBind element="P" color="terracota">$P$</VisualBind> a point not incident with it. The lines through $P$ fall into three classes:
 
-- **<ConceptLink targetId="punto">Points</ConceptLink>**: Points belonging to the interior of the open disk. The <VisualBind element="frontera" color="carbon">boundary circle $\partial \mathbb{D}^2$</VisualBind> represents the absolute horizon (ideal points at infinity).
-- **<ConceptLink targetId="recta">Hyperbolic Lines (Geodesics)</ConceptLink>**: Intersections with $\mathbb{D}^2$ formed by:
-  - Euclidean diameters passing through the center.
-  - Euclidean circular arcs that intersect the <VisualBind element="frontera" color="carbon">boundary circle</VisualBind> strictly <ConceptLink targetId="perpendicular">orthogonally</ConceptLink>, such as the <VisualBind element="geodesica-principal" color="terracota">principal line $l$</VisualBind>.
-- **Conformal Hyperbolic Metric**: The Riemannian line element is defined by the Poincaré tensor:
-  $$ ds = \frac{2\sqrt{dx^2 + dy^2}}{1 - (x^2 + y^2)} $$
-  As a point approaches the boundary circle, its intrinsic metric distance diverges to $+\infty$.
+- those meeting $\ell$ at a point of $\mathbb{D}^2$;
+- two <ConceptLink targetId="paralelas-limite">limiting parallels</ConceptLink>, such as <VisualBind element="limite1" color="ocre">the one shown in the figure</VisualBind>, which share an ideal point of $\partial \mathbb{D}^2$ with $\ell$ but no point of the model;
+- infinitely many <ConceptLink targetId="ultraparalelas">ultraparallels</ConceptLink>, such as <VisualBind element="ultra1" color="canela">this one</VisualBind>, which have no point in common with $\ell$ either in $\mathbb{D}^2$ or in $\partial \mathbb{D}^2$, and have a unique <ConceptLink targetId="perpendicular-comun">common perpendicular</ConceptLink> with it.
+
+Limiting parallels and ultraparallels are <ConceptLink targetId="paralelas">parallel</ConceptLink> to $\ell$, so infinitely many parallels to $\ell$ pass through $P$.
 
 <Separador />
 
-### Verification of Hyperbolic Parallelism
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Satisfaction of the axioms of the hyperbolic system">
+    <PropiedadItem
+      id="poincare-incidencia"
+      title="Planar incidence axioms"
+    >
+      Through two distinct points of $\mathbb{D}^2$ there passes a unique diameter or a unique circle orthogonal to $\partial \mathbb{D}^2$ (<ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>); every line has infinitely many points (<ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink>), and there are three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points (<ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>).
+    </PropiedadItem>
 
-The Poincaré disk satisfies the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic parallel axiom</ConceptLink>:
+    <PropiedadItem
+      id="poincare-orden"
+      title="Order axioms"
+    >
+      Each line is an open arc ordered like an interval of $\mathbb{R}$, which yields axioms <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>; each line separates the disk into two regions, the <ConceptLink targetId="semiplano">half-planes</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">Pasch's axiom</ConceptLink> holds.
+    </PropiedadItem>
 
-- Given a <VisualBind element="geodesica-principal" color="terracota">hyperbolic line $l$</VisualBind> and an <VisualBind element="P" color="terracota">external point $P \notin l$</VisualBind>, there exist infinitely many coplanar hyperbolic lines passing through $P$ that do not intersect $l$.
-- **Limiting (Asymptotic) Parallels**: There exist exactly two bounding geodesics, such as the <VisualBind element="limite1" color="ocre">limiting parallel</VisualBind>, which share an ideal boundary point at infinity with $l$.
-- **Ultraparallels (Divergent Lines)**: Any geodesic strictly between the two limiting rays, such as the <VisualBind element="ultra1" color="canela">ultraparallel line</VisualBind>, never intersects $l$ in the disk or at infinity, and admits a unique common perpendicular.
+    <PropiedadItem
+      id="poincare-congruencia"
+      title="Congruence axioms"
+      formula="z \longmapsto e^{i\varphi}\,\frac{z - a}{1 - \bar{a}\,z}, \quad |a| < 1"
+    >
+      The Möbius transformations above (and their compositions with conjugation) are the <ConceptLink targetId="isometria">isometries</ConceptLink> of the model: they preserve $d$ and angles, and act transitively on points and directions. They transport segments and angles (<ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4">Axiom III.4</ConceptLink>), and <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink> and <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink> are verified.
+    </PropiedadItem>
 
-<Separador />
+    <PropiedadItem
+      id="poincare-paralelas"
+      title="Hyperbolic parallel axiom"
+    >
+      As shown above, infinitely many parallels to a line pass through a point not on it; in particular at least two, which satisfies the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic parallel axiom</ConceptLink> and refutes <ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>.
+    </PropiedadItem>
 
-### Geometric Properties
+    <PropiedadItem
+      id="poincare-continuidad"
+      title="Continuity axioms"
+    >
+      Hyperbolic distance measured from a fixed point of a line establishes an order-preserving <ConceptLink targetId="biyeccion">bijection</ConceptLink> between that line and $\mathbb{R}$; the Archimedean property and completeness of $\mathbb{R}$ yield <ConceptLink targetId="axioma-arquimedes">Axiom V.1</ConceptLink> and <ConceptLink targetId="axioma-completitud">Axiom V.2</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-- **Conformality**: The hyperbolic angle between two intersecting geodesics matches the standard Euclidean angle between their tangent vectors.
-- **Angular Defect and Area**: In any <ConceptLink targetId="triangulo">hyperbolic triangle</ConceptLink> with interior angles $\alpha, \beta, \gamma$, the angle sum satisfies $\alpha + \beta + \gamma < \pi$, with its area directly proportional to the angular defect:
-  $$ \text{Area}(\triangle) = \pi - (\alpha + \beta + \gamma) $$
+  <PropiedadesGrupo title="Structural and metric properties">
+    <PropiedadItem
+      id="poincare-area-defecto"
+      title="Area and angular defect"
+      formula="\operatorname{A}(\triangle ABC) = \pi - (\alpha + \beta + \gamma)"
+    >
+      If $\alpha$, $\beta$ and $\gamma$ are the radian measures of the angles of a <ConceptLink targetId="triangulo">triangle</ConceptLink>, their sum is less than $\pi$ and the hyperbolic <ConceptLink targetId="area">area</ConceptLink> of the triangle equals its <ConceptLink targetId="defecto-angular">defect</ConceptLink>. Hence no triangle has area greater than or equal to $\pi$.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="poincare-curvatura"
+      title="Constant curvature"
+      formula="K = -1"
+    >
+      With the line element $ds$, the disk is a Riemannian surface of constant Gaussian <ConceptLink targetId="curvatura">curvature</ConceptLink> $-1$; it corresponds to the hyperbolic plane with length constant $k = 1$.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="poincare-modelo-espacial"
+      title="Spatial model"
+      formula="\mathbb{B}^3 = \{ x \in \mathbb{R}^3 \mid \lVert x \rVert < 1 \}"
+    >
+      The disk has no planes and therefore cannot satisfy the spatial axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>–<ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>. The Poincaré ball $\mathbb{B}^3$, whose planes are the discs and spherical caps orthogonal to its boundary, is a model of the whole <ConceptLink targetId="sistema-hiperbolico">hyperbolic system</ConceptLink> and, in particular, of the <ConceptLink targetId="sistema-absoluto">absolute system</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

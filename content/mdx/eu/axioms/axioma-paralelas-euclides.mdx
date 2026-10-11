@@ -3,47 +3,51 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "Euklidesen paraleloen axioma",
-  description: "Zuzen batetik kanpoko puntu batetik zuzen paralelo bakarra igarotzen da plano berean.",
+  description: "Plano batean zuzen bat eta harekin intziditzen ez duen puntu bat emanda, puntu horretatik emandako zuzenarekiko gehienez zuzen paralelo bat igarotzen da plano berean.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria", "paraleloak", "axioma", "euclides", "hilbert"],
   axiomSystem: "sistema-euclidiano",
   axiomFamily: "paralelas",
   alternativeGroup: "paralelismo",
   hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euclides", locator: "I. liburua, 5. postulua", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §5", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. Liburua, 5. Postulatua", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §7 (IV. axioma)", role: "primary" }
   ]
 };
 
 import { EuclidParallel } from '@content/diagrams/Axiomas/EuclidParallel';
 export const Simulation = EuclidParallel;
 
-<Capitular letra="E" />uklidesen paraleloen axioma —John Playfair-en bakartasun-formulazio baliokidean eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> formalizatua— geometria euklidear klasikoaren postulatua da. Ezarri egiten du emandako <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> batekoa ez den <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> batetik <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> berean <ConceptLink targetId="paralelas">paraleloa</ConceptLink> den zuzen bakarra igarotzen dela.
+<Capitular letra="P" />lano batean <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat eta harekin <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> ez duen <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat emanik, puntu horretatik gehienez emandako zuzenaren <ConceptLink targetId="paralelas" isDependency={true}>paraleloa</ConceptLink> den zuzen bat igarotzen da <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> berean.
 
-<Definicion title="Enuntziatu formala">
-  $\mathcal{P}$ plano bateko edozein $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzenetarako</ConceptLink> eta bertatik kanpoko edozein $P \notin l$ <ConceptLink targetId="punto" isDependency={true}>puntutarako</ConceptLink>, $P$ puntutik igarotzen den eta $l$ ebakitzen ez duen $l' \subset \mathcal{P}$ zuzen bakarra existitzen da:
+Gutxienez paralelo bat egotea ez da postulatu behar: <ConceptLink targetId="sistema-absoluto">geometria absolutuko</ConceptLink> <ConceptLink targetId="teorema">teorema</ConceptLink> bat da, <ConceptLink targetId="teorema-angulos-alternos-internos">barne-angelu alternoen teoremaren</ConceptLink> alderantzizko norabidearen ondorioa, eta <ConceptLink targetId="incidencia">intzidentziako</ConceptLink>, <ConceptLink targetId="estar-entre">ordenako</ConceptLink> eta <ConceptLink targetId="congruencia">kongruentziako</ConceptLink> axiomak baino ez ditu erabiltzen. Axiomak goiko muga besterik ez du ezartzen: bakartasuna finkatzen du, eta <ConceptLink targetId="sistema-euclidiano">sistema euklidearra</ConceptLink> <ConceptLink targetId="sistema-hiperbolico">sistema hiperbolikotik</ConceptLink> bereizten du.
+
+<Definicion title="Enuntziatu formala (Hilberten IV. axioma, Playfairren forma)">
+  Izan bitez $\pi \in \Pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bat, <VisualBind element="lineBC" color="carbon">$\ell \in \mathcal{L}$</VisualBind> zuzen bat, zeinaren <ConceptLink targetId="traza">trazadurak</ConceptLink> $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$ betetzen baitu, eta <VisualBind element="pA" color="ocre">$P \in \mathcal{P}$</VisualBind> $\pi$-ko <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat, $\ell$ <ConceptLink targetId="recta" isDependency={true}>zuzenarekin</ConceptLink> <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> ez duena, hots, $P \in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$. $\pi$-n gehienez <VisualBind element="parBCP" color="ocre">$\ell' \in \mathcal{L}$</VisualBind> zuzen bat dago $P$-tik igarotzen dena eta $\ell$-ren <ConceptLink targetId="paralelas" isDependency={true}>paraleloa</ConceptLink> dena:
   $$
-  \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists! l' \subset \mathcal{P} \ (P \in l' \land l \cap l' = \emptyset)
+  \forall \ell'_1, \ell'_2 \in \mathcal{L} \ \Bigl(\bigl(\operatorname{tr}(\ell'_1) \cup \operatorname{tr}(\ell'_2) \subseteq \operatorname{tr}(\pi) \land P \, \mathbf{I} \, \ell'_1 \land P \, \mathbf{I} \, \ell'_2 \land \ell'_1 \parallel \ell \land \ell'_2 \parallel \ell\bigr) \implies \ell'_1 = \ell'_2\Bigr)
+  $$
+  <ConceptLink targetId="sistema-absoluto">Geometria absolutuko</ConceptLink> existentzia-<ConceptLink targetId="teorema">teoremarekin</ConceptLink> batera, axiomak paraleloaren existentzia eta bakartasuna ematen ditu:
+  $$
+  \exists! \ell' \in \mathcal{L} \ \bigl(\operatorname{tr}(\ell') \subseteq \operatorname{tr}(\pi) \land P \, \mathbf{I} \, \ell' \land \ell' \parallel \ell\bigr)
   $$
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
+### Irudikapen bisuala eta interakzioa
 
-Simulazio interaktiboan, <VisualBind element="pB" color="carbon">$B$</VisualBind> eta <VisualBind element="pC" color="carbon">$C$</VisualBind> puntuek zehaztutako <VisualBind element="lineBC" color="carbon">$l$</VisualBind> oinarrizko zuzenarekin batera kanpoko <VisualBind element="pA" color="terracota">$P$</VisualBind> puntua agertzen da. Eraikuntza geometrikoak <VisualBind element="parBCP" color="terracota">$l'$</VisualBind> zuzen paralelo bakarra marrazten du. $P$ aske mugitzean edo oinarrizko zuzena biratzean, birkalkulatutako paraleloak zorrozki mantentzen ditu distantzia eta planoan ebakidura-eza osoa.
-
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Axioma honek espazioaren kurbadura nulua ($K = 0$) finkatzen du. Horren ondorio zuzena da <ConceptLink targetId="triangulo">triangelu</ConceptLink> baten barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $180^\circ$ izatea zehazki, laukizuzen perfektuak existitzea eta edozein eskalatan irudi antzekoen teoria garatzea.
+Irudi interaktiboan, <VisualBind element="lineBC" color="carbon">$\ell$</VisualBind> oinarri-zuzena <ConceptLink targetId="plano">planoko</ConceptLink> bere bi puntuk zehazten dute, eta <VisualBind element="pA" color="ocre">$P$</VisualBind> kanpoko puntua libreki mugi daiteke. Eraikuntzak $P$-rekin intziditzen duen <ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink> bakarra marrazten du, <VisualBind element="parBCP" color="ocre">$\ell'$</VisualBind>. $P$-ren posizioa edo $\ell$-ren orientazioa aldatzean, postulatutako bakartasunak bermatzen du $P$-rekin intziditzen duen beste ezein <ConceptLink targetId="recta">zuzen</ConceptLink> <ConceptLink targetId="coplanaridad">koplanarren</ConceptLink> trazadura ez dela $\ell$-renarekiko <ConceptLink targetId="conjunto-disjunto">disjuntua</ConceptLink>.
 
 <Separador />
 
-### Propietateak
+### Irismena eta zeregina sistema deduktiboan
 
-- **Playfair-en baliokidetasuna:** Euklidesen jatorrizko bosgarren postuluarekin logikoki baliokidea da.
-- **Angelu-batura euklidearra:** <ConceptLink targetId="teorema-suma-angulos-triangulo">Triangeluaren angeluen baturaren teoremara</ConceptLink> eramaten du modu unibokoan ($\alpha + \beta + \gamma = 180^\circ$).
-- **Paralelotasunaren iragankortasuna:** Geometria euklidearrean paralelotasuna baliokidetasun-erlazioa da ($l_1 \parallel l_2 \land l_2 \parallel l_3 \implies l_1 \parallel l_3$).
-- **Oinarri metrikoa:** <ConceptLink targetId="teorema-tales">Talesen teorema</ConceptLink> eta <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> frogatzea ahalbidetzen du.
+Euklidesek beste era batera formulatu zuen <ConceptLink targetId="quinto-postulado-euclides">bosgarren postulatua</ConceptLink>: zuzen <ConceptLink targetId="secante">ebakitzaile</ConceptLink> batek bi zuzenekin alde berean bi <ConceptLink targetId="angulo">barne-angelu</ConceptLink> eratzen baditu eta haien batura bi <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> baino txikiagoa bada, bi zuzen horiek alde horretan ebakitzen dira. <ConceptLink targetId="sistema-absoluto">Geometria absolutuaren</ConceptLink> gainean bi formulazioak <ConceptLink targetId="equivalencia-logica">baliokideak</ConceptLink> dira: bata bestetik ondorioztatzen da <ConceptLink targetId="teorema-angulos-alternos-internos">barne-angelu alternoen teoremaren</ConceptLink> laguntzaz. Hilbertek hartutako bakartasun-forma <ConceptLink targetId="playfair">Playfairrena</ConceptLink> da (1795), eta <ConceptLink targetId="axioma-playfair">Playfairren axioma</ConceptLink> deritzo. Haren ondorioen artean, dagozkien <ConceptLink targetId="teorema">teoremetan</ConceptLink> garatuak, hauek nabarmentzen dira:
+
+- Paralelotasunaren <ConceptLink targetId="transitividad">iragankortasuna</ConceptLink>; horri esker, paralelotasuna <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioa</ConceptLink> da <ConceptLink targetId="recta">zuzenen</ConceptLink> multzoan.
+- <ConceptLink targetId="teorema-angulos-alternos-internos">Barne-angelu alternoen teoremaren</ConceptLink> norabide zuzena: bi zuzen paralelo ebakitzen dituen zuzen <ConceptLink targetId="secante">ebakitzaile</ConceptLink> batek <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> diren <ConceptLink targetId="angulos-alternos-internos">barne-angelu alternoak</ConceptLink> eratzen ditu.
+- <ConceptLink targetId="teorema-suma-angulos-triangulo">Triangelu baten angeluen baturaren teorema</ConceptLink>: edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barne-angeluen batura bi <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> da.
+- <ConceptLink targetId="triangulo">Triangeluen</ConceptLink> <ConceptLink targetId="semejanza">antzekotasunaren</ConceptLink>, <ConceptLink targetId="teorema-tales">Talesen teoremaren</ConceptLink> eta <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremaren</ConceptLink> oinarritzea.

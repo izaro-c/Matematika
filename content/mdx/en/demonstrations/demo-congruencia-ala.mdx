@@ -1,0 +1,95 @@
+export const metadata = {
+  id: "demo-congruencia-ala",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Angle-Side-Angle (ASA) Congruence Criterion",
+  description: "Direct proof: an auxiliary segment is transported, the SAS theorem is applied, and the uniqueness of angle transport forces the vertices to coincide.",
+  parentTheorem: "teorema-congruencia-ala",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["synthetic-geometry", "triangle", "congruence", "absolute-geometry"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elements",
+      author: "Euclid",
+      locator: "Book I, Proposition 26",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Chapter I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { DemoCongruenciaALA } from "@content/diagrams/Demos/DemoCongruenciaALA";
+
+<DemonstrationSection diagram={<DemoCongruenciaALA />}>
+
+<Capitular letra="T" />he proof of the <ConceptLink targetId="teorema-congruencia-ala">ASA congruence theorem</ConceptLink> follows <ConceptLink targetId="hilbert">Hilbert's</ConceptLink> <ConceptLink targetId="metodo-directo" isDependency={true}>direct method</ConceptLink> (§6): a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $C^*$ with $\overline{A'C^*} \cong \overline{AC}$ is constructed on the <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink> $\overrightarrow{A'C'}$, and it is shown that $C^* = C'$. The ingredients are segment transport (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink>), the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink> and the uniqueness of angle transport (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>).
+
+<Separador />
+
+### Step-by-step proof
+
+<ProofStep number={1} target="step1" title="Hypotheses and auxiliary segment transport">
+Let <VisualBind element="triangle1" color="granada">$\triangle ABC$</VisualBind> and <VisualBind element="triangle2" color="granada">$\triangle A'B'C'$</VisualBind> be two <ConceptLink targetId="triangulo" isDependency={true}>triangles</ConceptLink> satisfying by hypothesis:
+1. Congruence of the included <ConceptLink targetId="lado" isDependency={true}>side</ConceptLink>: <VisualBind element="sideAB" color="granada">$\overline{AB} \cong \overline{A'B'}$</VisualBind>.
+2. Congruence of the adjacent <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink>: <VisualBind element="angleA" color="granada">$\angle CAB \cong \angle C'A'B'$</VisualBind> and <VisualBind element="angleB" color="granada">$\angle ABC \cong \angle A'B'C'$</VisualBind>.
+
+By <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink>, there is a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> <VisualBind element="pointC" color="mora">$C^*$</VisualBind> of the <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink> <VisualBind element="rayAC" color="mora">$\overrightarrow{A'C'}$</VisualBind>, distinct from its origin ($C^* \neq A'$), such that the <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> <VisualBind element="A2Cstar" color="mora">$\overline{A'C^*}$</VisualBind> is <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to <VisualBind element="AC" color="granada">$\overline{AC}$</VisualBind>:
+
+$$
+C^* \in \overrightarrow{A'C'} \setminus \{A'\}, \qquad \overline{A'C^*} \cong \overline{AC}
+$$
+
+Since $C^*$ is incident with the <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $\overleftrightarrow{A'C'}$ and distinct from $A'$, while $B'$ is not incident with it ($\neg\operatorname{Col}(A',B',C')$), the points $A'$, $B'$, $C^*$ are not <ConceptLink targetId="colinealidad">collinear</ConceptLink> and determine the triangle <VisualBind element="triConstructed" color="mora">$\triangle A'B'C^*$</VisualBind>.
+</ProofStep>
+
+<ProofStep number={2} target="step2" title="Application of the SAS theorem">
+We compare <VisualBind element="triangle1" color="granada">$\triangle ABC$</VisualBind> with <VisualBind element="triConstructed" color="mora">$\triangle A'B'C^*$</VisualBind>:
+1. <VisualBind element="sideAB" color="granada">$\overline{AB} \cong \overline{A'B'}$</VisualBind> (hypothesis).
+2. Since $C^* \in \overrightarrow{A'C'} \setminus \{A'\}$, the ray $\overrightarrow{A'C^*}$ coincides with $\overrightarrow{A'C'}$; hence $\angle C^*A'B' = \angle C'A'B'$ and, by hypothesis, <VisualBind element="angleA" color="granada">$\angle CAB \cong \angle C^*A'B'$</VisualBind>.
+3. <VisualBind element="A2Cstar" color="mora">$\overline{AC} \cong \overline{A'C^*}$</VisualBind> (step 1, with the <ConceptLink targetId="simetria">symmetry</ConceptLink> of segment congruence).
+
+By the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, a consequence of <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axiom III.5</ConceptLink>, $\triangle ABC \cong \triangle A'B'C^*$ (<ConceptLink targetId="congruencia-triangulos">triangle congruence</ConceptLink>). In particular:
+
+$$
+\angle ABC \cong \angle A'B'C^*
+$$
+</ProofStep>
+
+<ProofStep number={3} target="step3" title="Uniqueness of angle transport: C* = C'">
+By hypothesis, <VisualBind element="angleB" color="granada">$\angle ABC \cong \angle A'B'C'$</VisualBind>. By the <ConceptLink targetId="simetria">symmetry</ConceptLink> and <ConceptLink targetId="transitividad">transitivity</ConceptLink> of angle congruence (<ConceptLink targetId="teorema-congruencia-angulos-equivalencia" isDependency={true}>equivalence theorem for angle congruence</ConceptLink>, Hilbert, §6):
+
+$$
+\angle A'B'C^* \cong \angle A'B'C'
+$$
+
+The points $C^*$ and $C'$ lie in the same <ConceptLink targetId="semiplano" isDependency={true}>half-plane</ConceptLink> with respect to $\overleftrightarrow{A'B'}$: both belong to $\overrightarrow{A'C'} \setminus \{A'\}$, so $A' \notin \overline{C^*C'}$ by the definition of a ray and <ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink>; since $\overleftrightarrow{A'C'}$ and $\overleftrightarrow{A'B'}$ share only the point $A'$, we get $\overline{C^*C'} \cap \operatorname{tr}(\overleftrightarrow{A'B'}) = \emptyset$, that is, $C^* \in \mathcal{H}_{\overleftrightarrow{A'B'}}(C')$.
+
+Thus $\overrightarrow{B'C^*}$ and $\overrightarrow{B'C'}$ form with $\overrightarrow{B'A'}$ angles congruent to $\angle ABC$ and lie in the same half-plane. By the uniqueness in <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>:
+
+$$
+\overrightarrow{B'C^*} = \overrightarrow{B'C'}
+$$
+
+Then $C^*$ and $C'$ are incident with both <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> $\overleftrightarrow{A'C'}$ and $\overleftrightarrow{B'C'}$, which are distinct because $A'$, $B'$, $C'$ are not collinear. By <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>Axiom I.1</ConceptLink>, two distinct lines have at most one common point; therefore:
+
+$$
+C^* = C'
+$$
+
+Substituting into step 2, $\triangle ABC \cong \triangle A'B'C^* = \triangle A'B'C'$, that is:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+</ProofStep>
+
+</DemonstrationSection>

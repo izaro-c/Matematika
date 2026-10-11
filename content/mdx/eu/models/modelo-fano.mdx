@@ -5,7 +5,7 @@ export const metadata = {
   title: "Fanoren planoa",
   description: "Geometria proiektiboko egitura finitu minimala, 7 puntuz eta 7 zuzenez osatua.",
   branch: "51A",
-  satisfies: "sistema-incidencia",
+  satisfies: [],
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
   hasDiagram: true,
   sources: [
@@ -21,16 +21,16 @@ export const metadata = {
 import { ModeloFano } from '@content/diagrams/Models/ModeloFano';
 export const Diagram = ModeloFano;
 
-<Capitular letra="F" />anoren planoa ($\mathrm{PG}(2, \mathbb{F}_2)$ ikurrez adierazia) <ConceptLink targetId="espacio-proyectivo">plano proiektibo</ConceptLink> minimala osatzen duen eta <ConceptLink targetId="sistema-incidencia">intzidentzia-sistemako</ConceptLink> planoko intzidentzia-axiomak betetzen dituen <ConceptLink targetId="estructura-geometrica">egitura geometriko</ConceptLink> finitu bat da.
+<Capitular letra="F" />anoren planoa ($\mathrm{PG}(2, \mathbb{F}_2)$ ikurrez adierazia) <ConceptLink targetId="espacio-proyectivo">plano proiektibo</ConceptLink> minimala osatzen duen eta <ConceptLink targetId="sistema-incidencia">intzidentzia-sistemako</ConceptLink> I.1–I.3 intzidentzia plano-axiomak betetzen dituen <ConceptLink targetId="estructura-geometrica">egitura geometriko</ConceptLink> finitu bat da. Ez du planorik; beraz, ez ditu I.4–I.8 axioma espazialak modelatzen.
 
-<ConceptLink targetId="fano">Gino Fano</ConceptLink> matematikariak 1892an aurkeztua, ahalik eta <ConceptLink targetId="cardinalidad">kardinalitate</ConceptLink> txikieneko espazio proiektiboa da, <ConceptLink targetId="geometria-discreta">geometria diskretuko</ConceptLink> <ConceptLink targetId="simetria">simetria-propietateak</ConceptLink> eta <ConceptLink targetId="cuerpo-finito">gorputz finituen</ConceptLink> gaineko <ConceptLink targetId="algebra-lineal">aljebra lineala</ConceptLink> bateratuz.
+<ConceptLink targetId="fano">Gino Fano</ConceptLink> matematikariak 1892an aurkeztua, ahalik eta <ConceptLink targetId="cardinalidad">kardinalitate</ConceptLink> txikieneko plano proiektiboa da, <ConceptLink targetId="geometria-discreta">geometria diskretuko</ConceptLink> <ConceptLink targetId="simetria">simetria-propietateak</ConceptLink> eta <ConceptLink targetId="cuerpo-finito">gorputz finituen</ConceptLink> gaineko <ConceptLink targetId="algebra-lineal">aljebra lineala</ConceptLink> bateratuz.
 
 <Definicion title="Ereduaren egitura formala">
 Fanoren planoa $\mathcal{M}_{\text{Fano}} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$ tupla gisa definitzen da, <ConceptLink targetId="conjunto-disjunto">multzo disjuntu</ConceptLink> eta finituez osatua ($\mathcal{P} \cap \mathcal{L} = \emptyset$):
 
 - **<ConceptLink targetId="punto">Puntuen</ConceptLink> <ConceptLink targetId="dominio">domeinua</ConceptLink>**: $\mathcal{P} = \{$ <VisualBind element="p1" color="terracota">$1$</VisualBind>, <VisualBind element="p2" color="terracota">$2$</VisualBind>, <VisualBind element="p3" color="terracota">$3$</VisualBind>, <VisualBind element="p4" color="terracota">$4$</VisualBind>, <VisualBind element="p5" color="terracota">$5$</VisualBind>, <VisualBind element="p6" color="terracota">$6$</VisualBind>, <VisualBind element="p7" color="musgo">$7$</VisualBind> $\}$.
 - **<ConceptLink targetId="recta">Zuzenen</ConceptLink> <ConceptLink targetId="dominio">domeinua</ConceptLink>**: $\mathcal{L} = \{$ <VisualBind element="l1" color="carbon">$\ell_1$</VisualBind>, <VisualBind element="l2" color="carbon">$\ell_2$</VisualBind>, <VisualBind element="l3" color="carbon">$\ell_3$</VisualBind>, <VisualBind element="l4" color="carbon">$\ell_4$</VisualBind>, <VisualBind element="l5" color="carbon">$\ell_5$</VisualBind>, <VisualBind element="l6" color="carbon">$\ell_6$</VisualBind>, <VisualBind element="l7" color="musgo">$\ell_7$</VisualBind> $\}$.
-- **<ConceptLink targetId="incidencia">Intzidentzia</ConceptLink>-<ConceptLink targetId="relacion">erlazioa</ConceptLink>** $\mathbf{I} \subseteq \mathcal{P} \times \mathcal{L}$, zuzen bakoitzaren <ConceptLink targetId="traza">puntu-trazen</ConceptLink> bidez definitua puntuen <ConceptLink targetId="conjunto">multzoan</ConceptLink>:
+- **<ConceptLink targetId="incidencia">Intzidentzia</ConceptLink>-<ConceptLink targetId="relacion">erlazioa</ConceptLink>** $\mathbf{I} \subseteq \mathcal{P} \times \mathcal{L}$, zuzen bakoitzaren <ConceptLink targetId="traza">puntu-trazaduren</ConceptLink> bidez definitua puntuen <ConceptLink targetId="conjunto">multzoan</ConceptLink>:
   - Kanpoko <ConceptLink targetId="triangulo">triangeluaren</ConceptLink> aldeak: $\operatorname{tr}(\ell_1) = \{1, 2, 4\}$, $\operatorname{tr}(\ell_2) = \{2, 3, 5\}$, $\operatorname{tr}(\ell_3) = \{3, 1, 6\}$.
   - Erdiko lerro konkurrentak: $\operatorname{tr}(\ell_4) = \{1, 5, 7\}$, $\operatorname{tr}(\ell_5) = \{2, 6, 7\}$, $\operatorname{tr}(\ell_6) = \{3, 4, 7\}$.
   - Barruko zirkulua (zuzen proiektiboa): $\operatorname{tr}(\ell_7) = \{4, 5, 6\}$.
@@ -41,27 +41,27 @@ Fanoren planoa $\mathcal{M}_{\text{Fano}} = (\mathcal{P}, \mathcal{L}, \mathbf{I
 <SeccionPropiedades>
   <PropiedadesGrupo title="Intzidentzia-axiomen betetzea">
     <PropiedadItem 
-      id="axioma-incidencia-1" 
+      id="fano-verifica-i1" 
       title="Zuzenaren zehaztapen bakarra"
-      formula="\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L})"
+      formula="\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L} \ (P \, \mathbf{I} \, \ell \land Q \, \mathbf{I} \, \ell))"
     >
       $\mathcal{P}$-ko edozein bi puntu desberdinetarako, biekiko intziditzen duen $\mathcal{L}$-ko zuzen bakar bat existitzen da ($\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L} \ (P \, \mathbf{I} \, \ell \land Q \, \mathbf{I} \, \ell))$), <ConceptLink targetId="axioma-incidencia-1">I.1 axioma</ConceptLink> betez.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="axioma-incidencia-2" 
+      id="fano-verifica-i2" 
       title="Puntu intzidenteak zuzeneko"
-      formula="|\operatorname{tr}(\ell)| = 3 \ge 2"
+      formula="\forall \ell \in \mathcal{L} \ \lvert \operatorname{tr}(\ell) \rvert = 3"
     >
       $\ell \in \mathcal{L}$ zuzen bakoitzak gutxienez bi puntu desberdinekin intziditzen du; eredu honetan, zuzen bakoitzak zehazki 3 puntu ditu ($|\operatorname{tr}(\ell)| = 3 \ge 2$), <ConceptLink targetId="axioma-incidencia-2">I.2 axioma</ConceptLink> betez.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="axioma-incidencia-3" 
+      id="fano-verifica-i3" 
       title="Puntu ez-kolinealen existentzia"
-      formula="|\operatorname{tr}(\ell)| = 3 < 7 \implies \exists \{P, Q, R\} \text{ ez-kolineal}"
+      formula="\neg \exists \ell \in \mathcal{L} \ (1 \, \mathbf{I} \, \ell \land 2 \, \mathbf{I} \, \ell \land 3 \, \mathbf{I} \, \ell)"
     >
-      Inolako zuzenek ez ditu puntu guztiak bere <ConceptLink targetId="traza">trazan</ConceptLink> barne hartzen ($|\operatorname{tr}(\ell)| = 3 < 7$); ondorioz, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru puntu existitzen dira (adibidez, $\{1, 2, 3\}$), <ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink> betez.
+      Ezein zuzenek ez ditu puntu guztiak bere <ConceptLink targetId="traza">puntu-trazaduran</ConceptLink> biltzen ($|\operatorname{tr}(\ell)| = 3 < 7$); ondorioz, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru puntu existitzen dira (adibidez, $\{1, 2, 3\}$), <ConceptLink targetId="axioma-incidencia-3">I.3 axioma</ConceptLink> betez.
     </PropiedadItem>
   </PropiedadesGrupo>
 
@@ -79,23 +79,23 @@ Fanoren planoa $\mathcal{M}_{\text{Fano}} = (\mathcal{P}, \mathcal{L}, \mathbf{I
       title="Ebakidura proiektibo unibertsala"
       formula="\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset \quad (\forall i \neq j)"
     >
-      $\mathcal{L}$-ko edozein bi zuzen desberdinek traza ez-disjuntuak dituzte ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), beti puntu komun bakar batean elkar ebakiz; beraz, ereduak ez du <ConceptLink targetId="paralelas">zuzen paraleloric</ConceptLink>.
+      $\mathcal{L}$ multzoko edozein bi zuzen desberdinek puntu komun bakarra dute ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$); beraz, eredua bera plano gisa hartuta (egiturak ez du planorik), ez dago bi <ConceptLink targetId="paralelas">zuzen paralelo</ConceptLink> desberdinik. Horrela erakusten du intzidentzia plano-axiomek ez dutela paraleloen existentzia inplikatzen.
     </PropiedadItem>
 
     <PropiedadItem 
       id="autodualidad" 
       title="Autodualtasuna"
-      formula="\mathcal{P} \cong \mathcal{L}, \quad \mathbf{I} \cong \mathbf{I}^T"
+      formula="(\mathcal{P}, \mathcal{L}, \mathbf{I}) \cong (\mathcal{L}, \mathcal{P}, \mathbf{I}^{T})"
     >
-      Egitura <ConceptLink targetId="dualidad">autoduala</ConceptLink> da: $\mathcal{P}$ eta $\mathcal{L}$ domeinuen elkarren arteko truke formalak eta $\mathbf{I}$ erlazioaren <ConceptLink targetId="transposicion">transposizioak</ConceptLink> jatorrizko egiturarekiko hertsiki <ConceptLink targetId="isomorfismo">isomorfoa</ConceptLink> den intzidentzia-egitura bat sortzen dute.
+      Egitura <ConceptLink targetId="dualidad">autoduala</ConceptLink> da: $\mathcal{P}$ eta $\mathcal{L}$ domeinuen elkarren arteko truke formalak eta $\mathbf{I}$ erlazioaren <ConceptLink targetId="transposicion">transposizioak</ConceptLink> jatorrizko egiturarekiko <ConceptLink targetId="isomorfismo">isomorfoa</ConceptLink> den intzidentzia-egitura bat sortzen dute.
     </PropiedadItem>
 
     <PropiedadItem 
       id="construccion-algebraica" 
       title="F2 gorputz finituaren gaineko eraikuntza"
-      formula="\mathrm{PG}(2, \mathbb{F}_2) \cong (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim"
+      formula="\mathcal{P} \cong (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim"
     >
-      Aljebraikoki $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ plano proiektibo gisa definitzen da $\mathbb{F}_2$ <ConceptLink targetId="cuerpo-finito">gorputz finituaren</ConceptLink> gainean, erlazio proportzionalaren baliokidetasun-klaseen bidez. Planoko puntuak $\mathbb{F}_2^3$ <ConceptLink targetId="espacio-vectorial">bektore-espazioko</ConceptLink> 1 <ConceptLink targetId="dimension">dimentsioko</ConceptLink> 7 <ConceptLink targetId="subespacio">azpiespazioei</ConceptLink> dagozkie, eta zuzenak 2 dimentsioko 7 azpiespazioei.
+      Aljebraikoki $\mathrm{PG}(2, \mathbb{F}_2) = (\mathbb{F}_2^3 \setminus \{\mathbf{0}\}) / \sim$ plano proiektibo gisa definitzen da $\mathbb{F}_2$ <ConceptLink targetId="cuerpo-finito">gorputz finituaren</ConceptLink> gainean, proportzionaltasunaren <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioaren</ConceptLink> bidez. Planoko puntuak $\mathbb{F}_2^3$ <ConceptLink targetId="espacio-vectorial">bektore-espazioko</ConceptLink> 1 <ConceptLink targetId="dimension">dimentsioko</ConceptLink> 7 <ConceptLink targetId="subespacio">azpiespazioei</ConceptLink> dagozkie, eta zuzenak 2 dimentsioko 7 azpiespazioei.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

@@ -19,7 +19,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Capítulo I, §4",
+      locator: "Capítulo I, §5",
       role: "primary"
     }
   ]
@@ -28,50 +28,50 @@ export const metadata = {
 import { Angulo } from '@content/diagrams/Definiciones/Angulo';
 export const Simulation = Angulo;
 
-<Capitular letra="U" />n ángulo es el <ConceptLink targetId="conjunto">par no ordenado</ConceptLink> de dos <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> distintas que comparten el mismo <ConceptLink targetId="punto">origen</ConceptLink> y cuyas <ConceptLink targetId="recta">rectas</ConceptLink> soporte son distintas.
+<Capitular letra="U" />n ángulo es el <ConceptLink targetId="par-no-ordenado">par no ordenado</ConceptLink> de dos <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> que comparten el mismo <ConceptLink targetId="punto">origen</ConceptLink> y cuyas <ConceptLink targetId="recta-soporte">rectas soporte</ConceptLink> son distintas.
 
-El ángulo no es una magnitud numérica ni una medida métrica, sino un objeto formal construido a partir de la noción de <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> y la no <ConceptLink targetId="colinealidad" isDependency={true}>colinealidad</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
+El ángulo no es una magnitud numérica ni una medida, sino un objeto construido a partir de la noción de <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> y de la no <ConceptLink targetId="colinealidad" isDependency={true}>colinealidad</ConceptLink>. Por definición no existen ángulos llanos ni nulos: todo ángulo tiene sus dos lados en rectas distintas. La comparación de ángulos se hace mediante la <ConceptLink targetId="congruencia">congruencia</ConceptLink>, no mediante números.
 
 <Definicion title="Definición formal de ángulo">
-Dado un <ConceptLink targetId="punto">punto</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ y dos puntos distintos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ tales que la terna $\{O, A, B\}$ no es <ConceptLink targetId="colinealidad">colineal</ConceptLink>, el **ángulo** <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> (denotado también $\angle(h, k)$) es el <ConceptLink targetId="conjunto">par</ConceptLink> constituido por las dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> y <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind>:
+Dados un <ConceptLink targetId="punto">punto</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> del <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ y dos puntos distintos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ tales que $O$, $A$ y $B$ no son <ConceptLink targetId="colinealidad">colineales</ConceptLink>, el **ángulo** <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> (denotado también $\angle(h, k)$) es el <ConceptLink targetId="par-no-ordenado">par</ConceptLink> formado por las dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> y <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind>:
 
 $$
 \angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}
 $$
 
-Las semirrectas $h$ y $k$ se denominan los <ConceptLink targetId="lado">lados</ConceptLink> del ángulo, y el punto común $O$ recibe el nombre de <ConceptLink targetId="vertice">vértice</ConceptLink>. Su <ConceptLink targetId="traza">**traza puntual**</ConceptLink> asociada $\operatorname{tr}(\angle AOB) \subset \mathcal{P}$ es la unión de las <ConceptLink targetId="traza">trazas</ConceptLink> de sus lados:
+Las semirrectas $h$ y $k$ se denominan <ConceptLink targetId="lado">lados</ConceptLink> del ángulo, y el punto común $O$ recibe el nombre de <ConceptLink targetId="vertice">vértice</ConceptLink>. Como las semirrectas ya son conjuntos de puntos, la **traza** del ángulo, $\operatorname{tr}(\angle AOB) \subseteq \mathcal{P}$, es simplemente la unión de sus lados:
 
 $$
-\operatorname{tr}(\angle AOB) = \operatorname{tr}(\overrightarrow{OA}) \cup \operatorname{tr}(\overrightarrow{OB})
+\operatorname{tr}(\angle AOB) = \overrightarrow{OA} \cup \overrightarrow{OB}
 $$
 </Definicion>
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Propiedades Estructurales y Topológicas">
+  <PropiedadesGrupo title="Propiedades estructurales">
     <PropiedadItem 
       id="simetria-lados" 
       title="Simetría de los lados"
-      formula="\angle AOB = \angle BOA \iff \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{ \overrightarrow{OB}, \overrightarrow{OA} \}"
+      formula="\angle AOB = \angle BOA, \qquad \angle(h, k) = \angle(k, h)"
     >
-      Al definirse formalmente como el par no ordenado de dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> no alineadas con origen común ($\angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}$), el ángulo es estrictamente simétrico respecto al orden de sus lados: $\angle AOB = \angle BOA$ y $\angle(h, k) = \angle(k, h)$, cumpliendo la <ConceptLink targetId="igualdad-matematica">igualdad de conjuntos</ConceptLink>.
+      Al ser un par no ordenado de <ConceptLink targetId="semirrecta">semirrectas</ConceptLink>, el ángulo no depende del orden en que se nombran sus lados: $\angle AOB = \angle BOA$ y $\angle(h, k) = \angle(k, h)$ como <ConceptLink targetId="igualdad-matematica">igualdad de conjuntos</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
       id="coplanaridad-soporte" 
-      title="Coplanaridad y plano soporte único"
-      formula="\exists! \pi \in \Pi : \operatorname{tr}(\angle AOB) \subset \operatorname{tr}(\pi)"
+      title="Plano soporte único"
+      formula="\exists! \pi \in \Pi : \operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)"
     >
-      En virtud de los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> de la terna $\{O, A, B\}$ determina de forma unívoca un único <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$ que contiene íntegramente a la <ConceptLink targetId="traza">traza puntual</ConceptLink> del ángulo: $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
+      Por los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, los tres puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink> $O$, $A$ y $B$ determinan un único <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$; por el <ConceptLink targetId="axioma-incidencia-6">Axioma I.6</ConceptLink>, las rectas $\overleftrightarrow{OA}$ y $\overleftrightarrow{OB}$ están en él, de modo que $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 
       id="interior-angular" 
-      title="Interior angular como región convexa"
+      title="Interior del ángulo"
       formula="\operatorname{Int}(\angle AOB) = \mathcal{H}_{\overleftrightarrow{OA}}(B) \cap \mathcal{H}_{\overleftrightarrow{OB}}(A)"
     >
-      Todo ángulo $\angle AOB$ en un plano $\pi$ determina una región abierta y no acotada denominada **interior del ángulo** ($\operatorname{Int}(\angle AOB)$), formalmente definida como la <ConceptLink targetId="interseccion">intersección</ConceptLink> del <ConceptLink targetId="semiplano">semiplano</ConceptLink> abierto respecto a $\overleftrightarrow{OA}$ que contiene a $B$ y el semiplano abierto respecto a $\overleftrightarrow{OB}$ que contiene a $A$. Esta región es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>.
+      Todo ángulo $\angle AOB$ de un plano $\pi$ determina su **<ConceptLink targetId="interior-angulo">interior</ConceptLink>** $\operatorname{Int}(\angle AOB)$, definido como la <ConceptLink targetId="interseccion">intersección</ConceptLink> del <ConceptLink targetId="semiplano">semiplano</ConceptLink> abierto de borde $\overleftrightarrow{OA}$ que contiene a $B$ y del semiplano abierto de borde $\overleftrightarrow{OB}$ que contiene a $A$. Es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>, por ser intersección de dos semiplanos convexos.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

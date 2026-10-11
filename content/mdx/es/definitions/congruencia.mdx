@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Congruencia",
-  description: "Relación primitiva en la geometría sintética que formaliza la rigidez y la equivalencia de tamaño y forma entre segmentos y entre ángulos.",
+  description: "Relación primitiva en la geometría sintética que expresa la igualdad de tamaño entre segmentos y entre ángulos.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "congruencia", "hilbert", "rigidez"],
@@ -25,19 +25,23 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="L" />a congruencia geométrica es una <ConceptLink targetId="relacion">relación primitiva</ConceptLink> de rigidez formal que establece la equivalencia de tamaño y forma entre pares de <ConceptLink targetId="segmento">segmentos</ConceptLink> y entre pares de <ConceptLink targetId="angulo">ángulos</ConceptLink>.
+<Capitular letra="L" />a congruencia geométrica es una <ConceptLink targetId="relacion">relación</ConceptLink> <ConceptLink targetId="concepto-primitivo">primitiva</ConceptLink> que expresa cuándo dos <ConceptLink targetId="segmento">segmentos</ConceptLink>, o dos <ConceptLink targetId="angulo">ángulos</ConceptLink>, son iguales en tamaño aunque sean objetos distintos.
 
-La congruencia se postula como una relación primitiva en la <ConceptLink targetId="signatura">signatura formal</ConceptLink> de la <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink>, y su comportamiento deductivo queda regido por el tercer grupo de <ConceptLink targetId="axioma">axiomas</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink> a <ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink>).
+No se define a partir de ninguna medida: se postula en la <ConceptLink targetId="signatura">signatura</ConceptLink> de la <ConceptLink targetId="estructura-geometrica">estructura geométrica</ConceptLink>, y sus propiedades las fija el tercer grupo de <ConceptLink targetId="axioma">axiomas</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink> a <ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink>). Las nociones de <ConceptLink targetId="longitud">longitud</ConceptLink> y de <ConceptLink targetId="medida-angular">medida angular</ConceptLink> se construyen después, a partir de ella y de los axiomas de continuidad.
 
 <Definicion title="Formalización de la congruencia sintética">
-En la signatura de la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>, la **congruencia** ($\cong$) comprende dos <ConceptLink targetId="relacion-binaria">relaciones binarias</ConceptLink> primitivas independientes:
+En la signatura de la <ConceptLink targetId="geometria-hilbertiana">geometría hilbertiana</ConceptLink>, la **congruencia** ($\cong$) comprende dos <ConceptLink targetId="relacion-binaria">relaciones binarias</ConceptLink> primitivas distintas:
 
-1. **Congruencia de segmentos**: Relación binaria $\cong_{\text{seg}}$ sobre el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> determinados por pares de <ConceptLink targetId="punto">puntos</ConceptLink> distintos en el <ConceptLink targetId="dominio">dominio</ConceptLink> $\mathcal{P}$, denotada $\overline{AB} \cong \overline{CD}$ para extremos $A \neq B$ y $C \neq D$.
-2. **Congruencia de ángulos**: Relación binaria $\cong_{\angle}$ sobre el conjunto de <ConceptLink targetId="angulo">ángulos</ConceptLink> en el <ConceptLink targetId="espacio">espacio</ConceptLink>, denotada $\angle AOB \cong \angle A'O'B'$ para pares de <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> coplanares en algún <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$.
+1. **Congruencia de segmentos**: relación binaria $\cong_{\mathrm{seg}}$ sobre el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> determinados por pares de <ConceptLink targetId="punto">puntos</ConceptLink> distintos del <ConceptLink targetId="dominio">dominio</ConceptLink> $\mathcal{P}$, denotada $\overline{AB} \cong \overline{CD}$ para extremos $A \neq B$ y $C \neq D$.
+2. **Congruencia de ángulos**: relación binaria $\cong_{\angle}$ sobre el conjunto de <ConceptLink targetId="angulo">ángulos</ConceptLink> del <ConceptLink targetId="espacio">espacio</ConceptLink>, denotada $\angle AOB \cong \angle A'O'B'$; cada ángulo está formado por dos <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> de origen común, contenidas en un <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$, aunque los dos ángulos comparados pueden estar en planos distintos.
 </Definicion>
 
 <Separador />
 
 <Nota>
-A partir de las relaciones primitivas de congruencia sobre segmentos y ángulos, la noción se extiende formalmente a figuras compuestas como los <ConceptLink targetId="triangulo">triángulos</ConceptLink> y <ConceptLink targetId="poligono">polígonos</ConceptLink>: dos figuras son congruentes si existe una biyección entre sus <ConceptLink targetId="vertice">vértices</ConceptLink> que preserva la congruencia de todos sus <ConceptLink targetId="lado">lados</ConceptLink> y <ConceptLink targetId="angulo">ángulos</ConceptLink> correspondientes.
+A partir de las relaciones primitivas sobre segmentos y ángulos, la noción se extiende a figuras compuestas como los <ConceptLink targetId="triangulo">triángulos</ConceptLink> y los <ConceptLink targetId="poligono">polígonos</ConceptLink>: dos figuras son congruentes si existe una <ConceptLink targetId="biyeccion">biyección</ConceptLink> entre sus <ConceptLink targetId="vertice">vértices</ConceptLink> que hace congruentes todos sus <ConceptLink targetId="lado">lados</ConceptLink> y <ConceptLink targetId="angulo">ángulos</ConceptLink> homólogos. Para triángulos, $\triangle ABC \cong \triangle A'B'C'$ significa siempre la <ConceptLink targetId="congruencia-triangulos">congruencia</ConceptLink> respecto a la correspondencia ordenada $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$:
+
+$$
+\triangle ABC \cong \triangle A'B'C' \iff \overline{AB} \cong \overline{A'B'} \land \overline{BC} \cong \overline{B'C'} \land \overline{CA} \cong \overline{C'A'} \land \angle CAB \cong \angle C'A'B' \land \angle ABC \cong \angle A'B'C' \land \angle BCA \cong \angle B'C'A'
+$$
 </Nota>

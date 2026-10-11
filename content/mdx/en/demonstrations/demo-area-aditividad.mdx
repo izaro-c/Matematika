@@ -1,72 +1,67 @@
 export const metadata = {
-  "id": "demo-area-aditividad",
-  "type": "demostracion",
-  "title": "Proof: Area Additivity Theorem",
-  "description": "Verification that the area measure satisfies the Hilbert-Dehn axioms for additive magnitudes: the Area function is additive over decompositions into interiorly disjoint polygonal regions.",
-  "parentTheorem": "teorema-area-aditividad",
-  "lang": "en",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["hilbert"],
-  "tags": ["geometry", "areas", "additivity", "measure"],
-  "layout": "split",
-  "sources": [
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "locator": "Chapter IV, §20", "role": "primary" },
-    { "title": "Über den Rauminhalt", "author": "Max Dehn", "locator": "Mathematische Annalen 55 (1901)", "role": "secondary" }
+  id: "demo-area-aditividad",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Area additivity theorem",
+  description: "Proof by induction on the number of pieces: the union of the first n pieces is a polygonal region whose interior is disjoint from that of the next one, and additivity for two pieces is applied.",
+  parentTheorem: "teorema-area-aditividad",
+  branch: "51M",
+  proofMethod: "metodo-induccion",
+  authors: ["hilbert"],
+  tags: ["area", "region-poligonal", "aditividad", "induccion"],
+  layout: "split",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV", role: "primary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Chapter 5", role: "formalization" }
   ]
 };
 
 <DemonstrationSection>
 
-<Capitular letra="T" />he <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink> establishes that the area measure function over polygons satisfies the extensional property: the area of the union of two interiorly disjoint regions equals the sum of their individual areas.
+<Capitular letra="P" />roof of the <ConceptLink targetId="teorema-area-aditividad">area additivity theorem</ConceptLink> by <ConceptLink targetId="metodo-induccion" isDependency={true}>induction</ConceptLink> on the number $n$ of pieces, starting from additivity for two pieces, which is part of the definition of an <ConceptLink targetId="teoria-medida-area" isDependency={true}>area function</ConceptLink>.
+
+The only geometric observation needed is that joining the first $n$ pieces yields again a <ConceptLink targetId="region-poligonal" isDependency={true}>polygonal region</ConceptLink> that does not overlap the next piece; thus the case of $n + 1$ pieces reduces to the case of two.
 
 <Separador />
 
-### Proof step by step
+### Step-by-step proof
 
-<ProofStep number={1} title="Axiomatic definition of the area measure">
-Following Hilbert, one postulates a function $\mu: \mathcal{P} \to \mathbb{R}^+$ on the set $\mathcal{P}$ of polygonal regions satisfying:
-- $\mu(\text{unit square}) = 1$ (normalization).
-- If $P \cong Q$ are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> polygons, then $\mu(P) = \mu(Q)$ (isometric invariance).
-- (Additivity) If $P = P_1 \cup P_2$ with $P_1 \cap P_2$ of zero area, then $\mu(P) = \mu(P_1) + \mu(P_2)$.
+<ProofStep number={1} title="Statement proved by induction">
+For each $n \geq 1$, let $P(n)$ be the statement: if $R_1, \dots, R_n$ are <ConceptLink targetId="region-poligonal" isDependency={true}>polygonal regions</ConceptLink> of a <ConceptLink targetId="plano">plane</ConceptLink> $\sigma$ with pairwise disjoint interiors, then
 
-Additivity is an axiom; the theorem asserts that the formula $b \cdot h$ for rectangles and its derivatives yield the unique coherent extension.
+$$
+\operatorname{A}(R_1 \cup \dots \cup R_n) = \sum_{i=1}^{n} \operatorname{A}(R_i)
+$$
+
+By the <ConceptLink targetId="metodo-induccion" isDependency={true}>principle of induction</ConceptLink>, it suffices to prove $P(1)$ and that $P(n)$ implies $P(n + 1)$ for every $n \geq 1$.
 </ProofStep>
 
-<ProofStep number={2} title="Decomposition of a generic polygon into triangles">
-Every <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> $\triangle$ has a well-defined area by the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>: $\mu(\triangle) = \frac{1}{2} b h$. Every convex $n$-gon admits a triangulation into $n-2$ interiorly disjoint triangles. By induction on $n$:
-
-<Formula>
-  $$ \mu(P) = \sum_{k=1}^{n-2} \mu(\triangle_k) $$
-</Formula>
+<ProofStep number={2} title="Base case">
+$P(1)$ reduces to the equality $\operatorname{A}(R_1) = \operatorname{A}(R_1)$. (The case $n = 2$ is exactly the additivity condition of the <ConceptLink targetId="teoria-medida-area" isDependency={true}>area function</ConceptLink>.)
 </ProofStep>
 
-<ProofStep number={3} title="Independence of the triangulation">
-If $P = \bigsqcup_i \triangle_i = \bigsqcup_j \triangle_j'$ are two distinct triangulations of the same polygon, their superposition produces a common refined triangulation. Since each resulting triangle appears in both decompositions, additivity implies that the sums are the same for both original triangulations:
-
-<Formula>
-  $$ \sum_i \mu(\triangle_i) = \sum_k \mu(\triangle_k^*) = \sum_j \mu(\triangle_j') $$
-</Formula>
-
-where $\{\triangle_k^*\}$ is the common refined triangulation.
+<ProofStep number={3} title="The union of the first n pieces is a polygonal region">
+Assume $P(n)$ and let $R_1, \dots, R_{n+1}$ be polygonal regions with pairwise disjoint interiors. Let $S = R_1 \cup \dots \cup R_n$. Each $R_i$ is a finite union of <ConceptLink targetId="region-triangular" isDependency={true}>triangular regions</ConceptLink>; hence so is $S$ and, by definition, $S$ is a <ConceptLink targetId="region-poligonal" isDependency={true}>polygonal region</ConceptLink>.
 </ProofStep>
 
-<ProofStep number={4} title="Additivity for finite decompositions">
-Let $R_1, R_2$ be two polygonal regions with $R_1 \cap R_2$ of zero area (intersection in at most a segment or point). Taking compatible triangulations of $R_1$, $R_2$, and $R_1 \cup R_2$, the previous step guarantees:
+<ProofStep number={4} title="S and the next piece have disjoint interiors">
+By the <ConceptLink targetId="distributividad">distributivity</ConceptLink> of intersection over union,
 
-<Formula>
-  $$ \mu(R_1 \cup R_2) = \mu(R_1) + \mu(R_2) $$
-</Formula>
+$$
+S \cap R_{n+1} = \bigcup_{i=1}^{n} \left( R_i \cap R_{n+1} \right)
+$$
 
-By induction, the property extends to arbitrary finite unions.
+By hypothesis, each $R_i \cap R_{n+1}$ with $i \leq n$ is contained in a finite union of <ConceptLink targetId="segmento" isDependency={true}>segments</ConceptLink>; a union of $n$ finite unions of segments is a finite union of segments. Hence $S$ and $R_{n+1}$ have disjoint interiors.
 </ProofStep>
 
-<Separador />
+<ProofStep number={5} title="Additivity for two pieces and induction hypothesis">
+Since $R_1 \cup \dots \cup R_{n+1} = S \cup R_{n+1}$, additivity of the <ConceptLink targetId="teoria-medida-area" isDependency={true}>area function</ConceptLink> for two pieces gives $\operatorname{A}(S \cup R_{n+1}) = \operatorname{A}(S) + \operatorname{A}(R_{n+1})$. The regions $R_1, \dots, R_n$ have pairwise disjoint interiors, so the induction hypothesis $P(n)$ gives $\operatorname{A}(S) = \sum_{i=1}^{n} \operatorname{A}(R_i)$. Therefore,
 
-### Deductive analysis
+$$
+\operatorname{A}(R_1 \cup \dots \cup R_{n+1}) = \sum_{i=1}^{n} \operatorname{A}(R_i) + \operatorname{A}(R_{n+1}) = \sum_{i=1}^{n+1} \operatorname{A}(R_i)
+$$
 
-<Nota>
-  This result is specific to two-dimensional geometry. In three dimensions, the Dehn–Sydler theorem shows that volume additivity is insufficient to resolve equidecomposability: there exist polyhedra of equal volume that are not equidecomposable, illustrating the depth of Hilbert's Third Problem.
-</Nota>
+which is $P(n + 1)$. By <ConceptLink targetId="metodo-induccion" isDependency={true}>induction</ConceptLink>, $P(n)$ holds for every $n \geq 1$.
+</ProofStep>
 
 </DemonstrationSection>

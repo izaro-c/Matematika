@@ -3,7 +3,7 @@ export const metadata = {
   lang: "en",
   type: "axioma",
   title: "Axiom III.4 (Angle Transport)",
-  description: "Given any angle, a ray with a specified origin on a line in a plane, and a half-plane determined by that line, there exists a unique ray in that half-plane forming an angle congruent to the given one.",
+  description: "Given an angle, a ray, and one of the half-planes that the supporting line of that ray determines in a plane, there exists exactly one ray with the same origin, in that half-plane, forming with the first an angle congruent to the given one.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "congruencia", "hilbert"],
@@ -23,22 +23,29 @@ export const metadata = {
 import { Congruence4 } from '@content/diagrams/Axiomas/Congruence4';
 export const Simulation = Congruence4;
 
-<Capitular letra="G" />iven any <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink>, a <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink> lying on a <ConceptLink targetId="recta">line</ConceptLink> in a given <ConceptLink targetId="plano">plane</ConceptLink>, and a <ConceptLink targetId="semiplano" isDependency={true}>half-plane</ConceptLink> bounded by that line, there exists exactly one ray forming an angle <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to the given angle in that half-plane.
+<Capitular letra="G" />iven an <ConceptLink targetId="angulo" isDependency={true}>angle</ConceptLink>, a <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink>, and one of the two <ConceptLink targetId="semiplano" isDependency={true}>half-planes</ConceptLink> that the supporting <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> of that ray determines in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>, there exists exactly one ray with the same <ConceptLink targetId="origen-semirrecta">origin</ConceptLink>, lying in that half-plane, that forms with the first an angle <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to the given one. Moreover, every angle is congruent to itself.
 
-This postulate formalizes the unique transport of angular openings to any position and orientation in <ConceptLink targetId="espacio">space</ConceptLink>, without relying on numerical metric scales or trigonometric functions.
+This axiom makes it possible to transport angles to any position in <ConceptLink targetId="espacio">space</ConceptLink> without resorting to numerical measures or trigonometric functions.
 
 <Definicion title="Axiom III.4 (Angle Transport)">
-Given an <ConceptLink targetId="angulo">angle</ConceptLink> <VisualBind element="angleAOB" color="terracota">$\angle(\overrightarrow{OA}, \overrightarrow{OB})$</VisualBind> with <ConceptLink targetId="vertice">vertex</ConceptLink> at <ConceptLink targetId="punto">point</ConceptLink> <VisualBind element="pO" color="terracota">$O$</VisualBind> determined by <ConceptLink targetId="colinealidad">non-collinear</ConceptLink> <ConceptLink targetId="semirrecta">rays</ConceptLink> <VisualBind element="rayOA" color="ocre">$\overrightarrow{OA}$</VisualBind> and <VisualBind element="rayOB" color="ocre">$\overrightarrow{OB}$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$, a ray <VisualBind element="rayOOAA" color="ocre">$\overrightarrow{O'A'}$</VisualBind> with <ConceptLink targetId="punto">origin</ConceptLink> at <VisualBind element="pOO" color="terracota">$O'$</VisualBind> on a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="r" color="pizarra">$r'$</VisualBind> in a <ConceptLink targetId="plano">plane</ConceptLink> $\alpha'$, and a <ConceptLink targetId="semiplano">half-plane</ConceptLink> <VisualBind element="Semiplano" color="mora">$\mathcal{H} \subset \alpha'$</VisualBind> bounded by $r'$, there exists a unique ray <VisualBind element="rayOOBB" color="pavo">$\overrightarrow{O'B'}$</VisualBind> with origin at $O'$ such that $\operatorname{tr}(\overrightarrow{O'B'}) \setminus \{O'\} \subset \mathcal{H}$ and the angle <VisualBind element="angleAOBPrime" color="terracota">$\angle(\overrightarrow{O'A'}, \overrightarrow{O'B'})$</VisualBind> is <ConceptLink targetId="congruencia">congruent</ConceptLink> to the original angle (<VisualBind element="angles" color="terracota">$\angle AOB \cong \angle A'O'B'$</VisualBind>):
+Let <VisualBind element="nonReflexAngleAOB" color="terracota">$\angle AOB = \{\overrightarrow{OA}, \overrightarrow{OB}\}$</VisualBind> be an <ConceptLink targetId="angulo">angle</ConceptLink> with <ConceptLink targetId="vertice">vertex</ConceptLink> <VisualBind element="pO" color="terracota">$O$</VisualBind> and sides the <ConceptLink targetId="semirrecta">rays</ConceptLink> <VisualBind element="rayOA" color="ocre">$\overrightarrow{OA}$</VisualBind> and <VisualBind element="rayOB" color="ocre">$\overrightarrow{OB}$</VisualBind>; let $\sigma$ be a <ConceptLink targetId="plano">plane</ConceptLink>, <VisualBind element="r" color="carbon">$r'$</VisualBind> a <ConceptLink targetId="recta">line</ConceptLink> with $\operatorname{tr}(r') \subseteq \operatorname{tr}(\sigma)$, <VisualBind element="rayOOAA" color="ocre">$\overrightarrow{O'A'}$</VisualBind> a ray with origin <VisualBind element="pOO" color="terracota">$O'$</VisualBind> and $O', A' \in \operatorname{tr}(r')$, and <VisualBind element="Semiplano" color="mora">$\mathcal{H}$</VisualBind> a <ConceptLink targetId="semiplano">half-plane</ConceptLink> of $\sigma$ bounded by $r'$. Then there exists a unique ray <VisualBind element="rayOOBB" color="pavo">$\overrightarrow{O'B'}$</VisualBind> with $\overrightarrow{O'B'} \setminus \{O'\} \subseteq \mathcal{H}$ such that the angle <VisualBind element="nonReflexAngleAAOOBB" color="terracota">$\angle A'O'B'$</VisualBind> is <ConceptLink targetId="congruencia">congruent</ConceptLink> to $\angle AOB$ (<VisualBind element="equalAnglenonReflexAngleAAOOBB" color="terracota">$\angle AOB \cong \angle A'O'B'$</VisualBind>). Writing $\mathcal{H} = \mathcal{H}_{r'}(C)$ for a <ConceptLink targetId="punto">point</ConceptLink> $C$ of $\sigma$ not <ConceptLink targetId="incidencia">incident</ConceptLink> with $r'$:
 
 $$
-\forall \angle AOB, \ \forall \overrightarrow{O'A'} \subset r' \subset \alpha', \ \forall \mathcal{H} \in \operatorname{Semiplanos}(r', \alpha') \ \Biggl( \exists! \overrightarrow{O'B'} \subset (\mathcal{H} \cup \{O'\}) \ \Bigl( \angle AOB \cong \angle A'O'B' \Bigr) \Biggr)
+\begin{aligned}
+&\forall O, A, B, O', A', C \in \mathcal{P} \ \forall \sigma \in \Pi \ \Bigl( \bigl( \neg\operatorname{Col}(A,O,B) \land \neg\operatorname{Col}(A',O',C) \land O' \,\mathbf{I}\, \sigma \land A' \,\mathbf{I}\, \sigma \land C \,\mathbf{I}\, \sigma \bigr) \implies \\
+&\quad \exists B' \in \mathcal{H}_{r'}(C) \ \bigl( \angle AOB \cong \angle A'O'B' \land \forall B'' \in \mathcal{H}_{r'}(C) \ (\angle AOB \cong \angle A'O'B'' \implies B'' \in \overrightarrow{O'B'}) \bigr) \Bigr), \qquad r' = \overleftrightarrow{O'A'}
+\end{aligned}
 $$
 
-Furthermore, every angle satisfies the <ConceptLink targetId="reflexividad">reflexivity</ConceptLink> of congruence: $\angle AOB \cong \angle AOB$ and $\angle(\overrightarrow{OA}, \overrightarrow{OB}) \cong \angle(\overrightarrow{OB}, \overrightarrow{OA})$.
+Furthermore, every angle is congruent to itself (<ConceptLink targetId="reflexividad">reflexivity</ConceptLink>); since an angle is an unordered pair of rays, $\angle AOB = \angle BOA$:
+
+$$
+\forall O, A, B \in \mathcal{P} \ \bigl( \neg\operatorname{Col}(A,O,B) \implies \angle AOB \cong \angle AOB \bigr)
+$$
 </Definicion>
 
 <Separador />
 
 <Nota>
-Axiom III.4 constitutes the synthetic counterpart of the rigid protractor in Euclidean constructions, guaranteeing the existence and uniqueness of angular transport in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> and establishing the <ConceptLink targetId="particion">partition</ConceptLink> of angles into <ConceptLink targetId="clase-equivalencia">equivalence classes</ConceptLink>.
+Axiom III.4 is the synthetic counterpart of the protractor: it guarantees the existence and uniqueness of angle transport in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. The <ConceptLink targetId="simetria">symmetry</ConceptLink> and <ConceptLink targetId="transitividad">transitivity</ConceptLink> of angle congruence are not postulated: they form a <ConceptLink targetId="teorema-congruencia-angulos-equivalencia">theorem</ConceptLink> of Hilbert (§6) whose proof uses <ConceptLink targetId="axioma-congruencia-5">Axiom III.5</ConceptLink>. Only from that theorem on is angle congruence an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>, so that angles fall into <ConceptLink targetId="clase-equivalencia">equivalence classes</ConceptLink>.
 </Nota>

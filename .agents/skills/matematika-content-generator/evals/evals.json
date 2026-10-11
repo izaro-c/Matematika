@@ -1,0 +1,8 @@
+{
+  "skill_name": "matematika-content-generator",
+  "evals": [
+    {"id": 1, "prompt": "Hay demasiadas páginas 'En construcción' en la web. ¿Cuál es el hueco más importante del grafo ahora mismo? Escríbelo en los tres idiomas.", "expected_output": "Identifica el ID ausente de mayor impacto (ranking) y crea es/en/eu con paridad completa que pasa los validadores.", "files": []},
+    {"id": 2, "prompt": "Escribe el nodo colinealidad en castellano, euskera e inglés.", "expected_output": "definicion de colinealidad coherente con los 26 nodos que la enlazan, paridad trilingüe, sin JSX dentro de $, lang correcto.", "files": []},
+    {"id": 3, "prompt": "Falta la página de ángulo recto (angulo-recto). Créala en los tres idiomas.", "expected_output": "definicion sintética (ángulo congruente con su suplementario adyacente, sin 90° como definición), dependencias correctas, paridad trilingüe.", "files": []}
+  ]
+}

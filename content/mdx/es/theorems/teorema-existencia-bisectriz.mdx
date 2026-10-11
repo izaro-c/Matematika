@@ -1,0 +1,69 @@
+export const metadata = {
+  id: "teorema-existencia-bisectriz",
+  lang: "es",
+  type: "teorema",
+  title: "Teorema de existencia y unicidad de la bisectriz",
+  description: "Para todo ángulo convexo en un plano, existe una única semirrecta con origen en el vértice y contenida en el interior del ángulo que lo divide en dos ángulos congruentes.",
+  statement: "Para todo ángulo convexo ∠AOB en un plano, existe una única semirrecta OC con origen en el vértice O y contenida en su interior tal que ∠AOC ≅ ∠BOC.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "angulo", "bisectriz", "congruencia", "geometria-absoluta"],
+  hasSimulation: true,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-existencia-bisectriz"],
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 9",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §5",
+      role: "primary"
+    }
+  ]
+};
+
+import { Bisectriz } from '@content/diagrams/Definiciones/Bisectriz';
+export const Simulation = Bisectriz;
+
+<Capitular letra="P" />ara todo <ConceptLink targetId="angulo" isDependency={true}>ángulo</ConceptLink> convexo en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>, existe una única <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink> con origen en el <ConceptLink targetId="vertice" isDependency={true}>vértice</ConceptLink> y contenida en el interior del ángulo que lo divide en dos ángulos <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>.
+
+Este <ConceptLink targetId="teorema">teorema</ConceptLink> fundamental de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, formalizado y construido originalmente por <ConceptLink targetId="euclides">Euclides</ConceptLink> en la Proposición I.9 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink>, establece que la partición simétrica angular es un invariante garantizado deductivamente por los axiomas de incidencia, <ConceptLink targetId="estar-entre">orden</ConceptLink> y congruencia (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink> y <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>), con total independencia del <ConceptLink targetId="axioma-paralelas-euclides">postulado de las paralelas</ConceptLink>. Dicha semirrecta se denomina <ConceptLink targetId="bisectriz">bisectriz</ConceptLink> del ángulo.
+
+<Definicion title="Enunciado formal de la existencia y unicidad de la bisectriz">
+Sea <VisualBind element="pO" color="carbon">$O \in \mathcal{P}$</VisualBind> un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$, y sean <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> y <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> dos <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> no opuestas ni coincidentes con origen común en $O$, que determinan el <ConceptLink targetId="angulo" isDependency={true}>ángulo</ConceptLink> convexo $\angle AOB = \overrightarrow{OA} \cup \overrightarrow{OB}$.
+
+Existe una única <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink> <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> con origen en el <ConceptLink targetId="vertice" isDependency={true}>vértice</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind>, contenida en el <ConceptLink targetId="semiplano" isDependency={true}>semiplano</ConceptLink> respecto a la recta $\overleftrightarrow{OA}$ que contiene a <VisualBind element="pB" color="terracota">$B$</VisualBind> y en el interior del ángulo $\angle AOB$, tal que los dos ángulos determinados son mutuamente <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>:
+
+$$
+\angle AOC \cong \angle BOC
+$$
+
+A la <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink> <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> se le denomina <ConceptLink targetId="bisectriz">bisectriz</ConceptLink> del <ConceptLink targetId="angulo" isDependency={true}>ángulo</ConceptLink> $\angle AOB$.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Propiedades geométricas e invariantes">
+    <PropiedadItem 
+      id="caracterizacion-equidistancia-bisectriz" 
+      title="Equidistancia a las rectas soporte de los lados"
+      formula="P \in \overrightarrow{OC} \iff d(P, \overleftrightarrow{OA}) = d(P, \overleftrightarrow{OB})"
+    >
+      Todo <ConceptLink targetId="punto">punto</ConceptLink> $P$ perteneciente a la <ConceptLink targetId="bisectriz">bisectriz</ConceptLink> <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> equidista de las <ConceptLink targetId="recta">rectas</ConceptLink> soporte $\overleftrightarrow{OA}$ y $\overleftrightarrow{OB}$ de los lados del <ConceptLink targetId="angulo">ángulo</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="ortogonalidad-bisectrices-adyacentes" 
+      title="Ortogonalidad de las bisectrices de ángulos adyacentes suplementarios"
+      formula="\overrightarrow{OC} \perp \overrightarrow{OD}"
+    >
+      Las <ConceptLink targetId="bisectriz">bisectrices</ConceptLink> de dos <ConceptLink targetId="angulos-suplementarios">ángulos adyacentes suplementarios</ConceptLink> son mutuamente <ConceptLink targetId="perpendicular">perpendiculares</ConceptLink>, formando un <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

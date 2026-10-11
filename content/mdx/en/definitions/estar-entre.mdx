@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Betweenness",
-  description: "Primitive ternary relation of linear order formalizing the intermediation of points along a line.",
+  description: "Primitive ternary relation formalizing the intermediation of points along a line.",
   branch: "51A",
   branches: ["51A", "03B"],
   tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
@@ -22,26 +22,26 @@ export const metadata = {
 import { EstarEntre } from '@content/diagrams/Definiciones/EstarEntre';
 export const Simulation = EstarEntre;
 
-<Capitular letra="T" />he **betweenness** relation (or intermediation) is a <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> <ConceptLink targetId="relacion-ternaria">ternary relation</ConceptLink> that formalizes the strict <ConceptLink targetId="orden">linear order</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink> along a <ConceptLink targetId="recta">line</ConceptLink>.
+<Capitular letra="T" />he **betweenness** relation (or intermediation) is a <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> <ConceptLink targetId="relacion-ternaria">ternary relation</ConceptLink> among <ConceptLink targetId="punto">points</ConceptLink> expressing that one point lies between two others on a <ConceptLink targetId="recta">line</ConceptLink>.
 
-In the <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink>, its formal behavior is governed by the group of order <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>).
+Its properties are not defined: they are fixed by the order <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>, <ConceptLink targetId="axioma-orden-2">II.2</ConceptLink>, <ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>, and <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>). From them it follows that the points of each line admit a <ConceptLink targetId="orden">linear order</ConceptLink>, so betweenness underlies the whole theory of <ConceptLink targetId="separacion">separation</ConceptLink> in lines and planes.
 
 <Definicion title="Primitive betweenness relation">
-In Hilbert's <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma_{\text{Hil}}$, betweenness is a ternary relation symbol $\mathbf{B}$ with <ConceptLink targetId="aridad">arity</ConceptLink> $\text{ar}(\mathbf{B}) = \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ over the <ConceptLink targetId="dominio">primitive domain</ConceptLink> of points $\mathcal{P}$.
+In Hilbert's <ConceptLink targetId="signatura">signature</ConceptLink> $\sigma_{\text{Hil}}$, betweenness is a relation symbol of <ConceptLink targetId="aridad">arity</ConceptLink> 3 whose interpretation is a subset $\mathbf{B} \subseteq \mathcal{P} \times \mathcal{P} \times \mathcal{P}$ of the <ConceptLink targetId="dominio">primitive domain</ConceptLink> of points $\mathcal{P}$.
 
-For any <ConceptLink targetId="terna">triplet</ConceptLink> of points <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> lying on the same line <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, the relation is formally denoted as:
+For any <ConceptLink targetId="terna">triple</ConceptLink> of <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> on the same line <VisualBind element="lineAC" color="carbon">$\ell$</VisualBind>, the relation is denoted:
 
 $$
 A * B * C \quad \text{or} \quad \mathbf{B}(A, B, C)
 $$
 
-and expresses the predicate "point $B$ lies between $A$ and $C$". Satisfying the relation formally requires all three points to be distinct and mutually <ConceptLink targetId="colinealidad">collinear</ConceptLink> via <ConceptLink targetId="incidencia">incidence</ConceptLink>:
+and expresses the predicate "point $B$ lies between $A$ and $C$". The definition itself imposes no condition on the triple: it is <ConceptLink targetId="axioma-orden-1">Axiom II.1</ConceptLink> that guarantees that, if $A * B * C$, the three points are distinct, <ConceptLink targetId="colinealidad">collinear</ConceptLink> by <ConceptLink targetId="incidencia">incidence</ConceptLink> with one line, and that $B$ also lies between $C$ and $A$:
 
 $$
-\forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\Bigr)\Biggr)
+\forall A, B, C \in \mathcal{P} \ \Biggl(A * B * C \implies \Bigl(A \neq B \land B \neq C \land A \neq C \land \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land C * B * A\Bigr)\Biggr)
 $$
 </Definicion>
 
 <Nota>
-This primitive relation provides the formal foundation for defining <ConceptLink targetId="segmento">segments</ConceptLink>, <ConceptLink targetId="semirrecta">rays</ConceptLink>, <ConceptLink targetId="semiplano">half-planes</ConceptLink>, and the linear separation of the line.
+This primitive relation is the foundation for defining <ConceptLink targetId="segmento">segments</ConceptLink>, <ConceptLink targetId="semirrecta">rays</ConceptLink>, <ConceptLink targetId="semiplano">half-planes</ConceptLink>, and the separation of a line by one of its points.
 </Nota>

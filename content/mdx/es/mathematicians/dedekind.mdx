@@ -5,25 +5,33 @@ export const metadata = {
   name: "Richard Dedekind",
   birthYear: 1831,
   deathYear: 1916,
-  country: "Alemania",
+  country: "Brunswick (Alemania)",
   title: "Richard Dedekind",
-  description: "Matemático alemán que formalizó rigurosamente los números reales mediante cortaduras y revolucionó el álgebra abstracta con la teoría de ideales.",
+  description: "Matemático alemán que construyó los números reales mediante cortaduras, creó la teoría de ideales y fundamentó conjuntistamente los números naturales.",
   branch: "01A"
 };
 
-<Capitular letra="R" />ichard Dedekind (1831–1916) fue un matemático y algebrista alemán cuya formalización analítica transformó definitivamente la comprensión del continuo, la aritmética y las estructuras algebraicas modernas.
+<Capitular letra="R" />ichard Dedekind (1831–1916) fue un matemático alemán nacido y fallecido en Brunswick. Se doctoró en Gotinga en 1852 bajo la dirección de <ConceptLink targetId="gauss">Carl Friedrich Gauss</ConceptLink> y se formó después junto a <ConceptLink targetId="dirichlet">Peter Gustav Lejeune Dirichlet</ConceptLink> y <ConceptLink targetId="riemann">Bernhard Riemann</ConceptLink>. Tras enseñar en el Politécnico de Zúrich (1858–1862), fue profesor en la Escuela Técnica Superior de Brunswick durante el resto de su vida. Su obra contribuyó de forma decisiva a la aritmetización del análisis y al enfoque estructural del álgebra moderna.
 
 <Separador />
 
 ### Contribuciones principales
 
-- **Cortaduras de Dedekind**: En su obra *Stetigkeit und irrationale Zahlen* (Continuidad y números irracionales, 1872), construyó de manera puramente conjuntista y aritmética el cuerpo de los números reales $\mathbb{R}$ a partir de los números racionales $\mathbb{Q}$. Cada número real se define como una partición $(A, B)$ de $\mathbb{Q}$ que preserva el orden lineal y satisface el <ConceptLink targetId="axioma-completitud">axioma de completitud</ConceptLink>.
-- **Teoría de ideales**: Introdujo el concepto de *ideal* en anillos conmutativos para restaurar la factorización única en cuerpos de números algebraicos, fundando el álgebra conmutativa y la teoría algebraica de números contemporánea.
-- **Fundamentación de los números naturales**: En *Was sind und was sollen die Zahlen?* (¿Qué son y qué deben ser los números?, 1888), ofreció la primera definición conjuntista rigurosa de conjunto infinito y el principio de inducción matemática mediante cadenas deductivas, anticipando los axiomas de Peano.
-- **Teoría de retículos y estructuras**: Pionero en el estudio formal de módulos, retículos (*Dualgruppen*) y homomorfismos algebraicos.
+- **Cortaduras y números reales**: En *Stetigkeit und irrationale Zahlen* (1872) construyó el <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> de los números reales a partir de los racionales. Una cortadura es una <ConceptLink targetId="particion">partición</ConceptLink> de los racionales en dos clases no vacías $(A, B)$ tal que todo elemento de $A$ es menor que todo elemento de $B$; cada número real corresponde a una cortadura. Dedekind tomó como esencia de la <ConceptLink targetId="continuidad">continuidad</ConceptLink> de la <ConceptLink targetId="recta">recta</ConceptLink> la propiedad de que toda cortadura de sus puntos está producida por un único punto. En la axiomática de <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, esa propiedad de Dedekind no es el <ConceptLink targetId="axioma-completitud">axioma de completitud</ConceptLink> (Axioma V.2) por sí solo: en presencia de los axiomas de <ConceptLink targetId="estar-entre">orden</ConceptLink>, equivale a la conjunción del <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink> (Axioma V.1) y del axioma de completitud.
+- **Teoría de ideales**: En los suplementos a las *Vorlesungen über Zahlentheorie* de Dirichlet, que editó (1871, 1879 y 1894), introdujo los <ConceptLink targetId="ideal">ideales</ConceptLink> para recuperar la factorización única en los anillos de enteros algebraicos. Con ello dio forma a nociones como <ConceptLink targetId="cuerpo">cuerpo</ConceptLink> (el término *Körper* es suyo), <ConceptLink targetId="anillo">anillo</ConceptLink> y <ConceptLink targetId="modulo">módulo</ConceptLink>, y utilizó sistemáticamente el concepto de <ConceptLink targetId="grupo">grupo</ConceptLink> en la teoría de Galois.
+- **Fundamentación de los números naturales**: En *Was sind und was sollen die Zahlen?* (1888) definió un <ConceptLink targetId="conjunto-infinito">conjunto infinito</ConceptLink> como aquel que admite una <ConceptLink targetId="biyeccion">biyección</ConceptLink> con un subconjunto propio, caracterizó los números naturales mediante la noción de cadena y justificó el principio de <ConceptLink targetId="metodo-induccion">inducción matemática</ConceptLink> y las definiciones recursivas. Los axiomas que <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink> publicó en 1889 reconocen esta obra como fuente.
+- **Retículos**: En 1897 y 1900 estudió las estructuras que llamó *Dualgruppen*, hoy <ConceptLink targetId="reticulo">retículos</ConceptLink>, incluida la ley modular, décadas antes de que la teoría se desarrollara de forma sistemática.
 
 <Separador />
 
 ### Influencia y legado
 
-Dedekind eliminó la dependencia que el análisis matemático mantenía respecto a la intuición geométrica espacial para definir el continuo, logrando la *aritmetización completa del análisis*. Sus conceptos algebraicos estructurales ejercieron una influencia directa y decisiva en Emmy Noether, David Hilbert y la escuela Bourbaki.
+Dedekind mostró que la continuidad puede definirse sin apelar a la intuición geométrica. Sus ideales fueron el punto de partida del álgebra de <ConceptLink targetId="noether">Emmy Noether</ConceptLink>, que solía decir «todo está ya en Dedekind», y su correspondencia con <ConceptLink targetId="cantor">Georg Cantor</ConceptLink> acompañó el nacimiento de la teoría de conjuntos.
+
+<Separador />
+
+### Obras destacadas
+
+- *Stetigkeit und irrationale Zahlen* (1872) — Construcción de los números reales mediante cortaduras.
+- Suplementos a las *Vorlesungen über Zahlentheorie* de Dirichlet (1871–1894) y *Sur la théorie des nombres entiers algébriques* (1876–1877) — Teoría de <ConceptLink targetId="ideal">ideales</ConceptLink>.
+- *Was sind und was sollen die Zahlen?* (1888) — Definición de conjunto infinito y fundamentación de la aritmética.

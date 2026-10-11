@@ -1,16 +1,18 @@
 export const metadata = {
-  "id": "demo-tales",
-  "type": "demostracion",
-  "title": "Proof: Thales's Theorem",
-  "description": "Direct proof of the proportionality of segments intercepted by parallel lines using ratios of triangle areas.",
-  "parentTheorem": "teorema-tales",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["tales", "euclides"],
-  "tags": ["geometria", "proporcionalidad", "semejanza", "rectas"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elements", author: "Euclides", locator: "Book VI, Proposition 2", role: "primary" }
+  id: "demo-tales",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Thales's Theorem",
+  description: "Proof by areas (Euclid VI.2) of the triangle case and reduction of the general case of three parallels and two transversals.",
+  parentTheorem: "teorema-tales",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides"],
+  tags: ["geometria-euclidiana", "proporcionalidad", "paralelas", "area"],
+  layout: "split",
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book VI, Proposition 2", role: "primary" }
   ]
 };
 
@@ -18,44 +20,70 @@ import { DemoTales } from "@content/diagrams/Demos/DemoTales";
 
 <DemonstrationSection diagram={<DemoTales />}>
 
-<Capitular letra="G" />iven a <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ intersected by a line parallel to one of its sides, <ConceptLink targetId="teorema-tales">Thales's theorem</ConceptLink> is proven. The proof shows that the ratio of segment lengths on one side equals the ratio of corresponding segment lengths on the other side.
+<Capitular letra="T" />he <ConceptLink targetId="metodo-directo" isDependency={true}>direct proof</ConceptLink> of <ConceptLink targetId="teorema-tales">Thales's theorem</ConceptLink> follows <ConceptLink targetId="euclides">Euclid</ConceptLink> (Elements VI.2): the <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> case is proved first by comparing <ConceptLink targetId="teoria-medida-area" isDependency={true}>areas</ConceptLink> of triangles with the same <ConceptLink targetId="altura">height</ConceptLink>, and the general case of three <ConceptLink targetId="paralelas" isDependency={true}>parallels</ConceptLink> and two <ConceptLink targetId="secante">transversals</ConceptLink> is then reduced to it.
+
+The central tool is the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>, $\operatorname{A}(\triangle XYZ) = \tfrac{1}{2}\,b\,h$: two triangles with the same height have areas proportional to their bases.
 
 <Separador />
 
 ### Step-by-step proof
 
-<ProofStep number={1} target="step1" title="Configuration of the triangle and parallel line">
-Consider triangle $\triangle ABC$ and a line parallel to side $\overline{BC}$ intersecting sides $\overline{AB}$ and $\overline{AC}$ at points $D$ and $E$ respectively, forming parallel segment $\overline{DE} \parallel \overline{BC}$.
+<ProofStep number={1} target="step1" title="Setting of the triangle case">
+Let <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> be a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> and let $\ell$ be the <VisualBind element="parDBC" color="ocre">line parallel</VisualBind> to $\overleftrightarrow{BC}$, distinct from it, that meets the side <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind> at <VisualBind element="pD" color="terracota">$D$</VisualBind> and the side <VisualBind element="segCA" color="carbon">$\overline{CA}$</VisualBind> at <VisualBind element="pE" color="terracota">$E$</VisualBind>, with $A * D * B$ and $A * E * C$ (<ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink>). We must prove:
+
+$$
+\frac{|AD|}{|DB|} = \frac{|AE|}{|EC|}.
+$$
 </ProofStep>
 
-<ProofStep number={2} target="step2" title="Equality of areas between parallel lines">
-Draw auxiliary segments $\overline{BE}$ and $\overline{CD}$ to form triangles $\triangle BDE$ and $\triangle CDE$. Both triangles share base $\overline{DE}$ and lie between parallel lines $\overline{DE}$ and $\overline{BC}$. Sharing equal altitude between parallels, the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>area of a triangle theorem</ConceptLink> guarantees equality of their areas:
+<ProofStep number={2} target="step2" title="Triangles BDE and CDE have the same area">
+The triangles <VisualBind element="polyBDE" color="ocre">$\triangle BDE$</VisualBind> and <VisualBind element="polyCDE" color="ocre">$\triangle CDE$</VisualBind> share the base <VisualBind element="segDE" color="ocre">$\overline{DE}$</VisualBind>. Let $B_0$ and $C_0$ be the feet of the <ConceptLink targetId="perpendicular" isDependency={true}>perpendiculars</ConceptLink> from $B$ and $C$ to $\ell$. The lines $\overleftrightarrow{BB_0}$ and $\overleftrightarrow{CC_0}$ are perpendicular to $\ell$ and hence parallel to each other (<ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>alternate interior angles theorem</ConceptLink>); moreover $\overleftrightarrow{BC} \parallel \ell$. So $BB_0C_0C$ is a <ConceptLink targetId="paralelogramo" isDependency={true}>parallelogram</ConceptLink> and its opposite sides are congruent (<ConceptLink targetId="teorema-lados-opuestos-paralelogramo" isDependency={true}>opposite sides of a parallelogram theorem</ConceptLink>, which uses the <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel axiom</ConceptLink>): $|BB_0| = |CC_0| = h$. By the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>:
 
-<Formula>
-  $$ \text{Area}(\triangle BDE) = \text{Area}(\triangle CDE) $$
-</Formula>
+$$
+\operatorname{A}(\triangle BDE) = \tfrac{1}{2}\,|DE|\,h = \operatorname{A}(\triangle CDE).
+$$
 </ProofStep>
 
-<ProofStep number={3} target="step3" title="Area ratios and proportionality conclusion">
-Comparing these triangle areas with the upper triangle $\triangle ADE$:
-1. Triangles $\triangle ADE$ and $\triangle BDE$ share altitude with respect to line $\overline{AB}$, so their area ratio equals the ratio of their bases:
-$$ \frac{\text{Area}(\triangle ADE)}{\text{Area}(\triangle BDE)} = \frac{|\overline{AD}|}{|\overline{DB}|} $$
-2. Similarly, $\triangle ADE$ and $\triangle CDE$ share altitude with respect to line $\overline{AC}$:
-$$ \frac{\text{Area}(\triangle ADE)}{\text{Area}(\triangle CDE)} = \frac{|\overline{AE}|}{|\overline{EC}|} $$
+<ProofStep number={3} target="step3" title="Ratio of ADE to BDE">
+Let $H_1$ be the foot of the perpendicular from $E$ to $\overleftrightarrow{AB}$ and $h_1 = |EH_1|$. Since $A$, $D$ and $B$ lie on $\overleftrightarrow{AB}$, the <ConceptLink targetId="altura" isDependency={true}>height</ConceptLink> <VisualBind element="segH1" color="ocre">$\overline{EH_1}$</VisualBind> is at the same time a height of <VisualBind element="polyADE" color="ocre">$\triangle ADE$</VisualBind> (base $\overline{AD}$) and of <VisualBind element="polyBDE" color="ocre">$\triangle BDE$</VisualBind> (base $\overline{DB}$). By the triangle area theorem:
 
-Because denominators are equal by the previous step, the ratio equality follows:
-
-<Formula>
-  $$ \frac{|\overline{AD}|}{|\overline{DB}|} = \frac{|\overline{AE}|}{|\overline{EC}|} $$
-</Formula>
+$$
+\frac{\operatorname{A}(\triangle ADE)}{\operatorname{A}(\triangle BDE)} = \frac{\tfrac{1}{2}\,|AD|\,h_1}{\tfrac{1}{2}\,|DB|\,h_1} = \frac{|AD|}{|DB|}.
+$$
 </ProofStep>
 
-<Separador />
+<ProofStep number={4} target="step4" title="Ratio of ADE to CDE">
+Likewise, let $H_2$ be the foot of the perpendicular from $D$ to $\overleftrightarrow{AC}$ and $h_2 = |DH_2|$. The height <VisualBind element="segH2" color="ocre">$\overline{DH_2}$</VisualBind> is common to <VisualBind element="polyADE" color="ocre">$\triangle ADE$</VisualBind> (base $\overline{AE}$) and <VisualBind element="polyCDE" color="ocre">$\triangle CDE$</VisualBind> (base $\overline{EC}$). By the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>:
 
-### Deductive analysis
+$$
+\frac{\operatorname{A}(\triangle ADE)}{\operatorname{A}(\triangle CDE)} = \frac{|AE|}{|EC|}.
+$$
+</ProofStep>
 
-<Nota>
-  Book VI, Proposition 2 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>, traditionally attributed to <ConceptLink targetId="tales">Thales of Miletus</ConceptLink>. It provides the foundation for proportionality and <ConceptLink targetId="semejanza">triangle similarity</ConceptLink> in the <ConceptLink targetId="sistema-euclidiano">Euclidean axiomatic framework</ConceptLink>.
-</Nota>
+<ProofStep number={5} target="step5" title="Conclusion in the triangle">
+The denominators in steps 3 and 4 are equal by step 2, and non-zero by positivity of <ConceptLink targetId="teoria-medida-area" isDependency={true}>area</ConceptLink>. Equating:
+
+$$
+\frac{|AD|}{|DB|} = \frac{|AE|}{|EC|}.
+$$
+
+Since $A * D * B$ and $A * E * C$, <ConceptLink targetId="longitud" isDependency={true}>length</ConceptLink> is additive: $|AB| = |AD| + |DB|$ and $|AC| = |AE| + |EC|$. Adding $1$ to the reciprocals of both sides also gives $|AB|/|AD| = |AC|/|AE|$, that is, $|AD|/|AB| = |AE|/|AC|$.
+</ProofStep>
+
+<ProofStep number={6} target="step6" title="General case: three parallels and two transversals">
+Now let $\ell_1, \ell_2, \ell_3$ be distinct parallels meeting $t$ at $A, B, C$ and $t'$ at $A', B', C'$, with $A * B * C$.
+
+*Order on $t'$.* $A$ and $C$ lie in different <ConceptLink targetId="semiplano" isDependency={true}>half-planes</ConceptLink> with respect to $\ell_2$. The segment $\overline{AA'}$ is contained in $\operatorname{tr}(\ell_1)$, which does not meet $\ell_2$, so $A'$ lies in the half-plane of $A$; likewise $C'$ lies in that of $C$. Hence $\operatorname{seg}(A'C')$ meets $\ell_2$, and the intersection point is $B'$, the only common point of $t'$ and $\ell_2$: $A' * B' * C'$.
+
+*If $t \parallel t'$*, the quadrilaterals $ABB'A'$ and $BCC'B'$ are parallelograms, so $|AB| = |A'B'|$ and $|BC| = |B'C'|$, and the proportion is immediate.
+
+*If $t$ and $t'$ meet*, let $m$ be the parallel to $t'$ through $A$, unique by the <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel axiom</ConceptLink> ($m = t'$ if $A = A'$). The line $m$ meets $\ell_2$ and $\ell_3$ at $B''$ and $C''$ and, by the previous argument, $A * B'' * C''$. The quadrilaterals $AB''B'A'$ and $B''C''C'B'$ are parallelograms (or degenerate into coinciding points if $A = A'$), so that $|AB''| = |A'B'|$ and $|B''C''| = |B'C'|$. Since $m \neq t$, the points $A$, $C$, $C''$ are not collinear and $\ell_2$ is a parallel to $\overleftrightarrow{CC''} = \ell_3$ meeting $\operatorname{seg}(AC)$ at $B$ and $\operatorname{seg}(AC'')$ at $B''$. By the triangle case applied to $\triangle ACC''$:
+
+$$
+\frac{|AB|}{|BC|} = \frac{|AB''|}{|B''C''|} = \frac{|A'B'|}{|B'C'|}.
+$$
+
+The second proportion of the statement follows as in step 5.
+</ProofStep>
 
 </DemonstrationSection>

@@ -2,47 +2,65 @@ export const metadata = {
   id: "teoria-medida-area",
   lang: "es",
   type: "definicion",
-  subtype: "fundamentada",
+  subtype: "derivado",
   title: "Teoría de la medida del área",
-  description: "Construcción formal de la teoría del contenido y del área basada en la equidescomponibilidad poligonal y la aditividad finita.",
+  description: "Función área sobre las regiones poligonales de un plano: positiva, invariante por congruencia, aditiva para regiones de interiores disjuntos y normalizada por el cuadrado unidad; equidescomponibilidad y equicomplementabilidad.",
   branch: "51M",
+  tags: ["area", "region-poligonal", "equidescomponibilidad", "geometria-euclidiana"],
   hasSimulation: false,
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Nociones Comunes y Proposiciones 35-41", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §17-§21", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV", role: "primary" },
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Nociones comunes y Proposiciones 35-41", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Capítulo 5", role: "formalization" }
   ]
 };
 
-<Capitular letra="E" />n la fundamentación axiomática moderna, la teoría de la medida de áreas formaliza la cuantificación bidimensional del espacio ocupado por figuras geométricas planas. Desarrollada por David Hilbert como una teoría del contenido, reemplaza las nociones intuitivas euclidianas mediante la equidescomponibilidad de <ConceptLink targetId="poligono">polígonos</ConceptLink> sin requerir la teoría analítica de la medida continua.
+<Capitular letra="U" />na <ConceptLink targetId="funcion">función</ConceptLink> área sobre un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\sigma$ asigna a cada <ConceptLink targetId="region-poligonal" isDependency={true}>región poligonal</ConceptLink> de $\sigma$ un <ConceptLink targetId="numero-real">número real</ConceptLink> positivo, de modo que regiones triangulares <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> tienen la misma área, el área de la unión de dos regiones de interiores disjuntos es la suma de sus áreas y el <ConceptLink targetId="cuadrado" isDependency={true}>cuadrado</ConceptLink> de lado unidad tiene área $1$.
 
-<Definicion title="">
-  Una función de medida de área $\mu: \mathcal{P}_{\text{pol}} \to \mathbb{R}^+$ sobre el conjunto de todos los <ConceptLink targetId="poligono" isDependency={true}>polígonos</ConceptLink> planos es una asignación que satisface:
-  1. **Positividad**: $\forall P \in \mathcal{P}_{\text{pol}}, \; \mu(P) > 0$.
-  2. **Invarianza por congruencia**: Si $P \cong Q$ bajo una isometría, entonces $\mu(P) = \mu(Q)$.
-  3. **Aditividad finita**: Si $P = P_1 \cup P_2$ con $\text{int}(P_1) \cap \text{int}(P_2) = \emptyset$, entonces $\mu(P) = \mu(P_1) + \mu(P_2)$.
-  4. **Normalización unitaria**: Si $U$ es un <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> de lado unitario ($l = 1$), $\mu(U) = 1$.
+Las cuatro condiciones traducen a números las nociones comunes de <ConceptLink targetId="euclides">Euclides</ConceptLink> («las cosas que coinciden entre sí son iguales», «el todo es mayor que la parte») y bastan para deducir las fórmulas clásicas: de ellas se siguen la <ConceptLink targetId="teorema-area-aditividad">aditividad finita</ConceptLink>, el <ConceptLink targetId="teorema-area-rectangulo">área del rectángulo</ConceptLink> y el <ConceptLink targetId="teorema-area-triangulo">área del triángulo</ConceptLink>, sobre las que descansan el <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink> y el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink>. Que exista una función con estas propiedades, y que sea única, no forma parte de la definición: es un <ConceptLink targetId="teorema-existencia-area">teorema</ConceptLink> que <ConceptLink targetId="hilbert">Hilbert</ConceptLink> demostró en el capítulo IV de los *Grundlagen der Geometrie*.
+
+<Definicion title="Función área sobre las regiones poligonales">
+Una <ConceptLink targetId="region-triangular" isDependency={true}>región triangular</ConceptLink> es la unión de la traza de un <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> y de su <ConceptLink targetId="interior-triangulo" isDependency={true}>interior</ConceptLink>, $\operatorname{tr}(\triangle ABC) \cup \operatorname{Int}(\triangle ABC)$; una <ConceptLink targetId="region-poligonal" isDependency={true}>región poligonal</ConceptLink> es una unión finita de regiones triangulares contenidas en $\operatorname{tr}(\sigma)$. Sea $\mathcal{R}_\sigma$ el <ConceptLink targetId="conjunto">conjunto</ConceptLink> de las regiones poligonales de $\sigma$. Dos regiones $R_1, R_2 \in \mathcal{R}_\sigma$ tienen **interiores disjuntos** si su intersección está contenida en una unión finita de <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink>. Escribimos $\operatorname{A}(\triangle ABC)$ para el área de la región triangular determinada por $\triangle ABC$.
+
+Una **función área** es una aplicación
+
+$$
+\begin{aligned}
+\operatorname{A}\colon \mathcal{R}_\sigma &\longrightarrow \mathbb{R}_{>0} \\
+R &\longmapsto \operatorname{A}(R)
+\end{aligned}
+$$
+
+que satisface:
+1. **Positividad**: $\operatorname{A}(R) > 0$ para toda $R \in \mathcal{R}_\sigma$.
+2. **Invariancia por congruencia**: si $\triangle ABC \cong \triangle A'B'C'$ (<ConceptLink targetId="congruencia-triangulos" isDependency={true}>triángulos congruentes</ConceptLink>), entonces $\operatorname{A}(\triangle ABC) = \operatorname{A}(\triangle A'B'C')$.
+3. **Aditividad**: si $R = R_1 \cup R_2$ con $R_1$ y $R_2$ de interiores disjuntos, entonces $\operatorname{A}(R) = \operatorname{A}(R_1) + \operatorname{A}(R_2)$.
+4. **Normalización**: si $Q$ es la región de un cuadrado cuyo <ConceptLink targetId="lado">lado</ConceptLink> es congruente con el <ConceptLink targetId="segmento-unidad" isDependency={true}>segmento unidad</ConceptLink>, entonces $\operatorname{A}(Q) = 1$.
 </Definicion>
 
 <Separador />
 
-### Equidescomponibilidad y contenido de Hilbert
+### Equidescomponibilidad y equicomplementabilidad
 
-En la geometría sintética de Hilbert:
-- **Polígonos de igual contenido**: Dos polígonos $P$ y $Q$ son equidescomponibles si existen particiones finitas $P = \bigcup_{i=1}^n T_i$ y $Q = \bigcup_{i=1}^n T'_i$ tales que $T_i \cong T'_i$ para todo $i$.
-- **Polígonos de igual complemento**: Dos polígonos son equivalentes en contenido si pueden completarse mediante polígonos congruentes para formar figuras equidescomponibles.
+Dos regiones poligonales $P, Q \in \mathcal{R}_\sigma$ son **<ConceptLink targetId="equidescomponibilidad">equidescomponibles</ConceptLink>** si admiten descomposiciones $P = T_1 \cup \dots \cup T_n$ y $Q = T'_1 \cup \dots \cup T'_n$ en regiones triangulares de interiores disjuntos dos a dos tales que $T_i \cong T'_i$ para cada $i$. Son **equicomplementables** si existen regiones equidescomponibles $P'$ y $Q'$, de interiores disjuntos con $P$ y con $Q$ respectivamente, tales que $P \cup P'$ y $Q \cup Q'$ son equidescomponibles.
+
+Por la invariancia y la aditividad, dos regiones equidescomponibles o equicomplementables tienen la misma área. Hilbert construye en el capítulo IV una medida del contenido sin usar los <ConceptLink targetId="continuidad">axiomas de continuidad</ConceptLink> y prueba que dos regiones son equicomplementables si y solo si tienen la misma medida; con el <ConceptLink targetId="axioma-arquimedes">axioma de Arquímedes</ConceptLink>, equicomplementabilidad y equidescomponibilidad coinciden (<ConceptLink targetId="teorema-bolyai-gerwien">teorema de Bolyai–Gerwien</ConceptLink>).
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Teoremas fundamentales del área">
-    <PropiedadItem id="teorema-area-aditividad" title="Aditividad del área">
-      El área de la unión disjunta de dos polígonos equivale a la suma de sus áreas individuales.
+  <PropiedadesGrupo title="Consecuencias de la definición">
+    <PropiedadItem id="teorema-existencia-area" title="Existencia y unicidad de la función área">
+      En el <ConceptLink targetId="sistema-euclidiano">plano euclídeo</ConceptLink> existe una única función área para cada elección del <ConceptLink targetId="segmento-unidad">segmento unidad</ConceptLink> (<ConceptLink targetId="teorema-existencia-area">teorema de existencia del área</ConceptLink>).
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-rectangulo" title="Área del rectángulo">
-      El área de un rectángulo de base $b$ y altura $h$ viene dada unívocamente por $\mu(R) = b \cdot h$.
+    <PropiedadItem id="teorema-area-aditividad" title="Aditividad finita" formula="\operatorname{A}(R_1 \cup \dots \cup R_n) = \sum_{i=1}^{n} \operatorname{A}(R_i)">
+      Si las <ConceptLink targetId="region-poligonal">regiones poligonales</ConceptLink> $R_1, \dots, R_n$ tienen interiores disjuntos dos a dos, el área de su unión es la suma de sus áreas (<ConceptLink targetId="teorema-area-aditividad">teorema de aditividad del área</ConceptLink>).
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-triangulo" title="Área del triángulo">
-      El área de todo triángulo de base $b$ y altura $h$ satisface $\mu(T) = \frac{b \cdot h}{2}$.
+    <PropiedadItem id="monotonia-area" title="Monotonía" formula="R' \subseteq R \implies \operatorname{A}(R') \leq \operatorname{A}(R)">
+      Si una <ConceptLink targetId="region-poligonal">región poligonal</ConceptLink> $R'$ está contenida en otra $R$, la clausura de $R \setminus R'$ es vacía o es una región poligonal de interior disjunto con $R'$; por la aditividad y la positividad, $\operatorname{A}(R') \leq \operatorname{A}(R)$.
+    </PropiedadItem>
+    <PropiedadItem id="area-regiones-equidescomponibles" title="Igualdad de área de regiones equidescomponibles">
+      Dos regiones <ConceptLink targetId="equidescomponibilidad">equidescomponibles</ConceptLink> tienen la misma área, pues sus piezas son <ConceptLink targetId="congruencia-triangulos">triángulos congruentes</ConceptLink> dos a dos.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

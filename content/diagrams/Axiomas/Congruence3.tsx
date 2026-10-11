@@ -761,7 +761,17 @@ export const Congruence3Spec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Añada puntos y construcciones para reconstruir visualmente el diagrama."
+  "note": "Arrastra los puntos A, B y C para comprobar la suma de segmentos congruentes (AC ≅ DF).",
+  "translations": {
+    "eu": {
+      "title": "III. Kongruentzia-axioma",
+      "note": "Arrastatu A, B eta C puntuak segmentu kongruenteen batura egiaztatzeko (AC ≅ DF)."
+    },
+    "en": {
+      "title": "Congruence Axiom III",
+      "note": "Drag points A, B, and C to verify the addition of congruent segments (AC ≅ DF)."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

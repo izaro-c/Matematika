@@ -3,12 +3,13 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "Paralelo hiperbolikoen axioma",
-  description: "Zuzen batetik kanpoko puntu batetik gutxienez bi zuzen desberdin igarotzen dira harekin ebakitzen ez direnak plano berean.",
+  description: "Plano batean zuzen bat eta kanpoko puntu bat emanik, plano horretako gutxienez bi zuzen desberdin igarotzen dira puntu horretatik emandako zuzena ebaki gabe.",
   branch: "51M",
   axiomSystem: "sistema-hiperbolico",
   axiomFamily: "paralelas",
   alternativeGroup: "paralelismo",
   hasSimulation: true,
+  tags: ["geometria-hiperbolikoa", "paraleloak", "axioma", "geometria-ez-euklidearra"],
   sources: [
     { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolái Lobachevski", locator: "1840", role: "primary" },
     { title: "Appendix scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "1832", role: "primary" }
@@ -18,32 +19,39 @@ export const metadata = {
 import { HyperbolicParallel } from '@content/diagrams/Axiomas/HyperbolicParallel';
 export const Simulation = HyperbolicParallel;
 
-<Capitular letra="P" />aralelo hiperbolikoen axioma —<ConceptLink targetId="lobachevski">Nikolái Lobachevskik</ConceptLink> eta <ConceptLink targetId="bolyai">János Bolyaik</ConceptLink> formulatua— geometria hiperbolikoaren oinarrizko postulatua da. Bakartasun euklidearraren ordez, emandako <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat ebakitzen ez duten zuzen anitzen existentzia ezartzen du kanpoko <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> batetik <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> berean.
+<Capitular letra="P" />lano batean <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat eta harekin <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> ez duen <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat emanik, plano horretako gutxienez bi zuzen desberdin igarotzen dira puntu horretatik emandako zuzena ebaki gabe; biak dira, beraz, haren <ConceptLink targetId="paralelas" isDependency={true}>paraleloak</ConceptLink> <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> horretan.
 
-<Definicion title="Enuntziatu formala">
-  $\mathcal{P}$ plano bateko edozein $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzenetarako</ConceptLink> eta bertatik kanpoko edozein $P \notin l$ <ConceptLink targetId="punto" isDependency={true}>puntutarako</ConceptLink>, $P$ puntutik igarotzen diren eta $l$ ebakitzen ez duten gutxienez bi $l_1, l_2 \subset \mathcal{P}$ zuzen desberdin existitzen dira:
+<ConceptLink targetId="lobachevski">Nikolai Lobatxevskik</ConceptLink> eta <ConceptLink targetId="bolyai">János Bolyaik</ConceptLink> elkarrengandik independenteki formulatu zuten axioma hau, eta paraleloaren bakartasunari buruzko <ConceptLink targetId="axioma-paralelas-euclides">IV. axiomaren</ConceptLink> ordez hartzen da. <ConceptLink targetId="sistema-absoluto">Geometria absolutuaren</ConceptLink> axiomei (<ConceptLink targetId="hilbert">Hilberten</ConceptLink> I., II., III. eta V. taldeei) gehituta, <ConceptLink targetId="sistema-hiperbolico">sistema hiperbolikoa</ConceptLink> oinarritzen du. Haren <ConceptLink targetId="consistencia-logica">sendotasun</ConceptLink> erlatiboa ez zuten aurkitzaileek frogatu: <ConceptLink targetId="beltrami">Beltramiren</ConceptLink> (1868), <ConceptLink targetId="klein">Kleinen</ConceptLink> eta <ConceptLink targetId="poincare">Poincaréren</ConceptLink> ereduek ezartzen dute.
+
+<Definicion title="Paralelo hiperbolikoen axiomaren enuntziatu formala">
+  Edozein <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$ emanik, <ConceptLink targetId="traza">puntu-trazadura</ConceptLink> $\pi$-renean barne duen edozein <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> <VisualBind element="lineL" color="pavo">$\ell \in \mathcal{L}$</VisualBind> ($\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$) eta $\pi$-rekin bai baina $\ell$-rekin <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> ez duen edozein <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> <VisualBind element="pP" color="terracota">$P \in \mathcal{P}$</VisualBind> ($P \, \mathbf{I} \, \pi \land \neg(P \, \mathbf{I} \, \ell)$), $\pi$-ko bi zuzen desberdin daude, <VisualBind element="lineM" color="terracota">$m \in \mathcal{L}$</VisualBind> eta <VisualBind element="lineN" color="carbon">$n \in \mathcal{L}$</VisualBind>, $P$-rekin intziditzen dutenak eta trazadura $\ell$-renarekiko <ConceptLink targetId="conjunto-disjunto">disjuntua</ConceptLink> dutenak:
+
   $$
-  \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists l_1, l_2 \subset \mathcal{P} \ \bigl(l_1 \neq l_2 \land P \in l_1 \cap l_2 \land l_1 \cap l = \emptyset \land l_2 \cap l = \emptyset\bigr)
+  \forall \pi \in \Pi, \ \forall \ell \in \mathcal{L}, \ \forall P \in \mathcal{P} \ \Biggl( \Bigl( \operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \land P \, \mathbf{I} \, \pi \land \neg(P \, \mathbf{I} \, \ell) \Bigr) \implies \exists m, n \in \mathcal{L} \ \Bigl( m \neq n \land \operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land \operatorname{tr}(n) \subseteq \operatorname{tr}(\pi) \land P \, \mathbf{I} \, m \land P \, \mathbf{I} \, n \land \operatorname{tr}(m) \cap \operatorname{tr}(\ell) = \emptyset \land \operatorname{tr}(n) \cap \operatorname{tr}(\ell) = \emptyset \Bigr) \Biggr)
+  $$
+
+  Bi zuzenak $\ell$-rekin <ConceptLink targetId="coplanaridad">koplanarrak</ConceptLink> direnez eta ez dutenez ebakitzen, haren paraleloak dira:
+
+  $$
+  m \parallel \ell \quad \land \quad n \parallel \ell \quad \land \quad m \neq n
   $$
 </Definicion>
 
 <Separador />
 
-### Ikus-irudikapena eta elkarrekintza
+### Poincaréren diskoaren ereduko irudikapena
 
-Poincaréren diskoaren simulazio interaktiboan, <VisualBind element="pP" color="terracota">$P$</VisualBind> puntutik bi <VisualBind element="lineM" color="carbon">$l_1$</VisualBind> eta <VisualBind element="lineN" color="carbon">$l_2$</VisualBind> paralelo asintotiko mugatzaileak igarotzen dira. Bien arteko barne-angeluan kokatutako zuzen-sorta osoak oinarrizko zuzena ebakitzen ez duten zuzen ultraparaleloen jarraitutasun infinitua osatzen du.
+Simulazio interaktiboan, plano hiperbolikoa <ConceptLink targetId="modelo-poincare">Poincaréren diskoaren</ConceptLink> bidez irudikatzen da; haren zuzenak diametroak eta diskoaren mugarekiko ortogonalak diren <ConceptLink targetId="circunferencia">zirkunferentzia</ConceptLink>-arkuak dira.
 
-<Separador />
-
-### Esanahi geometrikoa eta esparrua
-
-Axioma honek kurbadura gaussiar negatibo konstantea ($K < 0$) ematen dio planoari. Ondorioz, edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $180^\circ$ baino txikiagoa da zorrozki, eta poligonoen azalera angelu-defektuaren bidez mugatuta geratzen da.
+<VisualBind element="lineL" color="pavo">$\ell$</VisualBind> zuzenetik kanpoko <VisualBind element="pP" color="terracota">$P$</VisualBind> puntutik bi <ConceptLink targetId="paralelas-limite">paralelo limite</ConceptLink> igarotzen dira, <VisualBind element="lineM" color="terracota">$m$</VisualBind> eta <VisualBind element="lineN" color="carbon">$n$</VisualBind>; asintotikoki hurbiltzen zaizkio $\ell$-ri, eta mugako puntu idealetan «ukitzen» dute. Bien artean, <ConceptLink targetId="angulos-opuestos-vertice">erpinez aurkako angeluen</ConceptLink> bi bikote zehazten dituzte $P$-n. $P$-tik $\ell$-ra marraztutako <ConceptLink targetId="perpendicular">perpendikularra</ConceptLink> barnean duen bikotean dauden $P$-ko zuzenek $\ell$ ebakitzen dute; beste bikotean daudenek ez dute ebakitzen, ez eta puntu idealik partekatzen ere, eta <ConceptLink targetId="ultraparalelas">zuzen ultraparaleloak</ConceptLink> dira. Paralelo limite bakoitzak perpendikular horrekin eratzen duen angelua <ConceptLink targetId="angulo-paralelismo">paralelotasun-angelua</ConceptLink> da, $\theta(d)$, beti <ConceptLink targetId="angulo-agudo">zorrotza</ConceptLink>; $d$ zuzenki perpendikularraren <ConceptLink targetId="longitud">luzera</ConceptLink> da.
 
 <Separador />
 
-### Propietateak
+### Ondorio deduktiboak eta irismen geometrikoa
 
-- **Paralelotasun-angelua:** Zuzen ebakitzaileak eta ez-ebakitzaileak bereizten dituen $\Pi(x) < 90^\circ$ angelu zorrotz bereizgarria existitzen da.
-- **Angelu-defektua:** Edozein triangelu hiperbolikotan, $\alpha + \beta + \gamma < 180^\circ$.
-- **Paralelotasunaren ez-iragankortasuna:** Hirugarren zuzen batekiko paraleloak diren bi zuzen ez dira nahitaez paraleloak elkarren artean.
-- **Laukizuzenik eza:** Ezin da lau angelu zuzen dituen laukirik existitu.
+Puntu batetik paralelo bat baino gehiago igarotzeak geometriaren egitura deduktiboa aldatzen du:
+
+- **Triangeluen angelu-defektua:** edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> <ConceptLink targetId="medida-angular">neurrien</ConceptLink> batura bi <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> baino txikiagoa da: $|\alpha| + |\beta| + |\gamma| < 180^\circ$. $180^\circ - (|\alpha| + |\beta| + |\gamma|)$ diferentzia <ConceptLink targetId="defecto-angular">angelu-defektua</ConceptLink> da, triangeluaren <ConceptLink targetId="area">azaleraren</ConceptLink> proportzionala.
+- **Kongruenteak ez diren triangelu antzekorik ez dago:** angeluak banan-banan kongruenteak dituzten bi triangelu <ConceptLink targetId="congruencia-triangulos">kongruenteak</ConceptLink> dira (AAA irizpidea); ez dago eskala-aldaketadun <ConceptLink targetId="semejanza">antzekotasunik</ConceptLink>.
+- **Paralelotasunaren <ConceptLink targetId="transitividad">iragankortasunak</ConceptLink> huts egiten du:** hirugarren baten paraleloak diren bi zuzen ez dira nahitaez elkarren paraleloak.
+- **Laukizuzenik ez dago:** ez dago lau <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> dituen <ConceptLink targetId="cuadrilatero">laukirik</ConceptLink>; <ConceptLink targetId="cuadrilatero-saccheri">Saccheriren laukien</ConceptLink> gailurreko angeluak eta <ConceptLink targetId="cuadrilatero-lambert">Lamberten</ConceptLink> laukien laugarren angelua zorrotzak dira.

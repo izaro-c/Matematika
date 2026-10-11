@@ -19,7 +19,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Chapter I, §4",
+      locator: "Chapter I, §5",
       role: "primary"
     }
   ]
@@ -28,36 +28,50 @@ export const metadata = {
 import { Angulo } from '@content/diagrams/Definiciones/Angulo';
 export const Simulation = Angulo;
 
-<Capitular letra="A" />n angle is the <ConceptLink targetId="conjunto">unordered pair</ConceptLink> of two distinct <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> sharing a common <ConceptLink targetId="punto">origin</ConceptLink> whose carrier <ConceptLink targetId="recta">lines</ConceptLink> are distinct.
+<Capitular letra="A" />n angle is the <ConceptLink targetId="par-no-ordenado">unordered pair</ConceptLink> of two <ConceptLink targetId="semirrecta" isDependency={true}>rays</ConceptLink> sharing the same <ConceptLink targetId="punto">origin</ConceptLink> whose <ConceptLink targetId="recta-soporte">supporting lines</ConceptLink> are distinct.
 
-The angle is neither a numerical magnitude nor a metric measure, but a formal object constructed from the notion of a <ConceptLink targetId="semirrecta">ray</ConceptLink> and non-<ConceptLink targetId="colinealidad" isDependency={true}>collinearity</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+The angle is neither a numerical magnitude nor a measure, but an object built from the notion of a <ConceptLink targetId="semirrecta">ray</ConceptLink> and from non-<ConceptLink targetId="colinealidad" isDependency={true}>collinearity</ConceptLink>. By definition there are no straight or null angles: the two sides of every angle lie on distinct lines. Angles are compared through <ConceptLink targetId="congruencia">congruence</ConceptLink>, not through numbers.
 
 <Definicion title="Formal Definition of Angle">
-Given a <ConceptLink targetId="punto">point</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ and two distinct points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ such that the triple $\{O, A, B\}$ is not <ConceptLink targetId="colinealidad">collinear</ConceptLink>, the **angle** <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> (also denoted $\angle(h, k)$) is the <ConceptLink targetId="conjunto">pair</ConceptLink> formed by the two <ConceptLink targetId="semirrecta">rays</ConceptLink> <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> and <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind>:
+Given a <ConceptLink targetId="punto">point</ConceptLink> <VisualBind element="pO" color="carbon">$O$</VisualBind> of the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ and two distinct points <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \mathcal{P} \setminus \{O\}$ such that $O$, $A$, and $B$ are not <ConceptLink targetId="colinealidad">collinear</ConceptLink>, the **angle** <VisualBind element="angleBOA" color="musgo">$\angle AOB$</VisualBind> (also denoted $\angle(h, k)$) is the <ConceptLink targetId="par-no-ordenado">pair</ConceptLink> formed by the two <ConceptLink targetId="semirrecta">rays</ConceptLink> <VisualBind element="rayOA" color="pavo">$h = \overrightarrow{OA}$</VisualBind> and <VisualBind element="rayOB" color="pavo">$k = \overrightarrow{OB}$</VisualBind>:
 
 $$
 \angle AOB = \{ \overrightarrow{OA}, \overrightarrow{OB} \} = \{h, k\}
 $$
 
-The rays $h$ and $k$ are called the <ConceptLink targetId="lado">sides</ConceptLink> of the angle, and the common point $O$ is called the <ConceptLink targetId="vertice">vertex</ConceptLink>. Its associated <ConceptLink targetId="traza">**point trace**</ConceptLink> $\operatorname{tr}(\angle AOB) \subset \mathcal{P}$ is the set union of the <ConceptLink targetId="traza">traces</ConceptLink> of its sides:
+The rays $h$ and $k$ are called the <ConceptLink targetId="lado">sides</ConceptLink> of the angle, and the common point $O$ is called its <ConceptLink targetId="vertice">vertex</ConceptLink>. Since rays are already sets of points, the **trace** of the angle, $\operatorname{tr}(\angle AOB) \subseteq \mathcal{P}$, is simply the union of its sides:
 
 $$
-\operatorname{tr}(\angle AOB) = \operatorname{tr}(\overrightarrow{OA}) \cup \operatorname{tr}(\overrightarrow{OB})
+\operatorname{tr}(\angle AOB) = \overrightarrow{OA} \cup \overrightarrow{OB}
 $$
 </Definicion>
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Structural and Order Properties">
-    <PropiedadItem id="simetria-lados" title="Symmetry of Sides">
-      Being defined as an unordered pair of rays, the angle is symmetric with respect to its sides: $\angle AOB = \angle BOA$ and $\angle(h, k) = \angle(k, h)$.
+  <PropiedadesGrupo title="Structural Properties">
+    <PropiedadItem 
+      id="simetria-lados" 
+      title="Symmetry of Sides"
+      formula="\angle AOB = \angle BOA, \qquad \angle(h, k) = \angle(k, h)"
+    >
+      Being an unordered pair of <ConceptLink targetId="semirrecta">rays</ConceptLink>, the angle does not depend on the order in which its sides are named: $\angle AOB = \angle BOA$ and $\angle(h, k) = \angle(k, h)$ as an <ConceptLink targetId="igualdad-matematica">equality of sets</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="coplanaridad-soporte" title="Coplanarity and Unique Carrier Plane">
-      By <ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">Axiom I.5</ConceptLink>, the non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> of the triple $\{O, A, B\}$ uniquely determines a <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$ that contains the <ConceptLink targetId="traza">trace</ConceptLink> of the angle: $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
+
+    <PropiedadItem 
+      id="coplanaridad-soporte" 
+      title="Unique Supporting Plane"
+      formula="\exists! \pi \in \Pi : \operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)"
+    >
+      By Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, the three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points $O$, $A$, and $B$ determine a unique <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$; by <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink>, the lines $\overleftrightarrow{OA}$ and $\overleftrightarrow{OB}$ lie in it, so that $\operatorname{tr}(\angle AOB) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
-    <PropiedadItem id="interior-angular" title="Angular Interior as Convex Region">
-      Every angle $\angle AOB$ in a plane $\pi$ determines an open and <ConceptLink targetId="conjunto-convexo">convex</ConceptLink> region called the **interior of the angle** ($\operatorname{Int}(\angle AOB)$), formally defined as the <ConceptLink targetId="interseccion">intersection</ConceptLink> of the open <ConceptLink targetId="semiplano">half-plane</ConceptLink> with respect to the <ConceptLink targetId="recta">line</ConceptLink> $\overleftrightarrow{OA}$ containing $B$ and the open half-plane with respect to the line $\overleftrightarrow{OB}$ containing $A$.
+
+    <PropiedadItem 
+      id="interior-angular" 
+      title="Interior of the Angle"
+      formula="\operatorname{Int}(\angle AOB) = \mathcal{H}_{\overleftrightarrow{OA}}(B) \cap \mathcal{H}_{\overleftrightarrow{OB}}(A)"
+    >
+      Every angle $\angle AOB$ in a plane $\pi$ determines its **<ConceptLink targetId="interior-angulo">interior</ConceptLink>** $\operatorname{Int}(\angle AOB)$, defined as the <ConceptLink targetId="interseccion">intersection</ConceptLink> of the open <ConceptLink targetId="semiplano">half-plane</ConceptLink> with edge $\overleftrightarrow{OA}$ containing $B$ and the open half-plane with edge $\overleftrightarrow{OB}$ containing $A$. It is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>, being the intersection of two convex half-planes.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

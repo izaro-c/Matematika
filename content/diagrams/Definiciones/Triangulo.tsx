@@ -1411,7 +1411,17 @@ export const TrianguloSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Mueve A, B o C"
+  "note": "Mueve A, B o C",
+  "translations": {
+    "eu": {
+      "title": "Hirukia",
+      "note": "Mugitu A, B edo C"
+    },
+    "en": {
+      "title": "Triangle",
+      "note": "Move A, B, or C"
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

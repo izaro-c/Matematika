@@ -1,44 +1,44 @@
 export const metadata = {
   id: "teorema-area-rectangulo",
+  lang: "en",
   type: "teorema",
-  title: "Area of a Rectangle Theorem",
-  description: "The area of any rectangular region is equal to the product of the length of its base and the length of its altitude.",
-  statement: "Given a rectangle R with base of length b and height of length h, it holds uniquely that Area(R) = b · h.",
+  title: "Rectangle area theorem",
+  description: "The area of the region of a rectangle is the product of the lengths of two adjacent sides.",
+  statement: "If ABCD is a rectangle with |AB| = b and |AD| = h, then the area of its region is A(ABCD) = b · h.",
   branch: "51M",
+  tags: ["area", "rectangulo", "longitud", "geometria-euclidiana"],
   hasSimulation: false,
-  authors: ["euclides"],
+  difficulty: "intermedio",
+  authors: ["euclides", "hilbert"],
   demos: ["demo-area-rectangulo"],
   sources: [
-    { title: "Elements", author: "Euclides", locator: "Book I, Proposition 35", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV", role: "secondary" },
+    { title: "Elements", author: "Euclid", locator: "Book II, Definition 1", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Chapter 5", role: "formalization" }
   ]
 };
 
-<Capitular letra="T" />he area of a rectangle theorem provides the foundational multiplicative formula for planar <ConceptLink targetId="teoria-medida-area">area measurement</ConceptLink> in Euclidean geometry. It serves as the baseline benchmark from which area formulas for all other polygonal figures are derived.
+<Capitular letra="T" />he <ConceptLink targetId="teoria-medida-area" isDependency={true}>area</ConceptLink> of the region of a <ConceptLink targetId="rectangulo" isDependency={true}>rectangle</ConceptLink> is the product of the <ConceptLink targetId="longitud" isDependency={true}>lengths</ConceptLink> of two adjacent <ConceptLink targetId="lado">sides</ConceptLink>.
+
+The formula is not a definition: the <ConceptLink targetId="teoria-medida-area" isDependency={true}>area function</ConceptLink> only fixes the value $1$ for the unit <ConceptLink targetId="cuadrado">square</ConceptLink>, and the product $b \cdot h$ is derived from invariance, <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>finite additivity</ConceptLink> and <ConceptLink targetId="monotonia-area">monotonicity</ConceptLink>. The <ConceptLink targetId="demo-area-rectangulo">proof</ConceptLink> proceeds in three stages: integer sides (the rectangle is divided into $m \cdot n$ unit squares), rational sides (it is divided into squares of side $1/N$) and real sides, where the rational approximations from below and from above provided by the <ConceptLink targetId="axioma-arquimedes">Archimedean axiom</ConceptLink> trap the area between ever closer bounds. This result is the starting point of the <ConceptLink targetId="teorema-area-triangulo">area of the triangle</ConceptLink>.
+
+<Definicion title="Formal statement of the rectangle area theorem">
+Let $ABCD$ be a <ConceptLink targetId="rectangulo" isDependency={true}>rectangle</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\sigma$ of the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink>, that is, a <ConceptLink targetId="cuadrilatero" isDependency={true}>quadrilateral</ConceptLink> whose four <ConceptLink targetId="angulo">angles</ConceptLink> are <ConceptLink targetId="angulo-recto" isDependency={true}>right angles</ConceptLink>, and let $b = |AB|$ and $h = |AD|$ be the <ConceptLink targetId="longitud" isDependency={true}>lengths</ConceptLink> of two adjacent sides, measured with the <ConceptLink targetId="segmento-unidad">unit segment</ConceptLink> that normalises the area function. Then the area of the <ConceptLink targetId="region-poligonal" isDependency={true}>polygonal region</ConceptLink> bounded by $ABCD$ is
+
+$$
+\operatorname{A}(ABCD) = b \cdot h
+$$
+</Definicion>
 
 <Separador />
 
-### Formal statement
-
-Let $R$ be a rectangle in the Euclidean plane $\mathcal{P}$ whose adjacent <ConceptLink targetId="perpendicular">perpendicular sides</ConceptLink> measure $b = |\overline{AB}|$ (base length) and $h = |\overline{AD}|$ (height length). The area measure of the rectangular region $R$ strictly satisfies:
-
-<Formula>
-  $$ \text{Area}(R) = b \cdot h $$
-</Formula>
-
-That is, the area of a rectangular region equals the arithmetic product of the linear measures of its two orthogonal dimensions.
-
-<Separador />
-
-### Proof and axiomatic foundations
-
-The rigorous axiomatic foundation is developed in three stages using the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>:
-1. **Unit standard**: The area of the <ConceptLink targetId="cuadrado">unit square</ConceptLink> ($b=1, h=1$) is axiomatically set to $1$.
-2. **Rational dimensions**: If $b = \frac{p}{q}$ and $h = \frac{m}{n}$ with $p, q, m, n \in \mathbb{N}$, the rectangle is partitioned into $p \cdot m$ sub-squares of side length $\frac{1}{q \cdot n}$. The additive sum of their areas proves that $\text{Area}(R) = \frac{p \cdot m}{q \cdot n} = b \cdot h$.
-3. **Real dimensions**: Via continuity and the <ConceptLink targetId="axioma-arquimedes">Archimedean axiom</ConceptLink>, the result extends to irrational side lengths through standard limiting approximations.
-
-<Separador />
-
-### Geometric significance
-
-- **Base of the parallelogram formula**: Any <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink> is equidecomposable with a rectangle of equal base and height.
-- **Base of the triangle formula**: A rectangle is split along its diagonal into two congruent <ConceptLink targetId="triangulo">triangles</ConceptLink>, establishing that the <ConceptLink targetId="teorema-area-triangulo">area of a triangle</ConceptLink> is $\frac{1}{2} b \cdot h$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Special cases and consequences">
+    <PropiedadItem id="area-cuadrado" title="Area of the square" formula="\operatorname{A}(ABCD) = s^2">
+      A <ConceptLink targetId="cuadrado">square</ConceptLink> whose side has <ConceptLink targetId="longitud">length</ConceptLink> $s$ is a rectangle with $b = h = s$; its area is $s^2$. This is the geometric meaning of the word "square" applied to a number.
+    </PropiedadItem>
+    <PropiedadItem id="area-triangulo-rectangulo-mitad" title="Half of the rectangle" formula="\operatorname{A}(\triangle ABD) = \tfrac{1}{2}\, b \cdot h">
+      The <ConceptLink targetId="diagonal">diagonal</ConceptLink> $\overline{BD}$ divides the rectangle into two <ConceptLink targetId="congruencia-triangulos">congruent</ConceptLink> <ConceptLink targetId="triangulo-rectangulo">right triangles</ConceptLink> with disjoint interiors, so each one has area $\tfrac{1}{2}\, b \cdot h$; this is the first step of the <ConceptLink targetId="teorema-area-triangulo">triangle area theorem</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

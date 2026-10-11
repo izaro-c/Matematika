@@ -3,8 +3,8 @@ export const metadata = {
   lang: "en",
   type: "definicion",
   subtype: "primitivo",
-  title: "Geometric",
-  description: "Primitive relation in synthetic geometry formalizing rigidity and equivalence of size and shape between segments and between angles.",
+  title: "Congruence",
+  description: "Primitive relation in synthetic geometry expressing equality in size between segments and between angles.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "congruencia", "hilbert", "rigidez"],
@@ -25,19 +25,23 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="G" />eometric congruence is a primitive <ConceptLink targetId="relacion">relation</ConceptLink> of formal rigidity establishing the equivalence of size and shape between pairs of <ConceptLink targetId="segmento">line segments</ConceptLink> and between pairs of <ConceptLink targetId="angulo">angles</ConceptLink>.
+<Capitular letra="G" />eometric congruence is a <ConceptLink targetId="concepto-primitivo">primitive</ConceptLink> <ConceptLink targetId="relacion">relation</ConceptLink> expressing when two <ConceptLink targetId="segmento">segments</ConceptLink>, or two <ConceptLink targetId="angulo">angles</ConceptLink>, are equal in size even though they are distinct objects.
 
-Congruence is postulated as a primitive relation in the formal <ConceptLink targetId="signatura">signature</ConceptLink> of the <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink>, and its deductive behavior is governed by the third group of <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink> through <ConceptLink targetId="axioma-congruencia-5">Axiom III.5</ConceptLink>).
+It is not defined from any measure: it is postulated in the <ConceptLink targetId="signatura">signature</ConceptLink> of the <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink>, and its properties are fixed by the third group of <ConceptLink targetId="axioma">axioms</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">Axiom III.1</ConceptLink> through <ConceptLink targetId="axioma-congruencia-5">Axiom III.5</ConceptLink>). The notions of <ConceptLink targetId="longitud">length</ConceptLink> and <ConceptLink targetId="medida-angular">angle measure</ConceptLink> are built later, from it and the axioms of continuity.
 
 <Definicion title="Formalization of Synthetic Congruence">
-In the signature of <ConceptLink targetId="geometria-hilbertiana">Hilbertian geometry</ConceptLink>, **congruence** ($\cong$) comprises two independent primitive <ConceptLink targetId="relacion-binaria">binary relations</ConceptLink>:
+In the signature of <ConceptLink targetId="geometria-hilbertiana">Hilbertian geometry</ConceptLink>, **congruence** ($\cong$) comprises two distinct primitive <ConceptLink targetId="relacion-binaria">binary relations</ConceptLink>:
 
-1. **Segment Congruence**: A binary relation $\cong_{\text{seg}}$ on the <ConceptLink targetId="conjunto">set</ConceptLink> of <ConceptLink targetId="segmento">segments</ConceptLink> determined by pairs of distinct <ConceptLink targetId="punto">points</ConceptLink> in the <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$, denoted $\overline{AB} \cong \overline{CD}$ for endpoints $A \neq B$ and $C \neq D$.
-2. **Angle Congruence**: A binary relation $\cong_{\angle}$ on the set of <ConceptLink targetId="angulo">angles</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>, denoted $\angle AOB \cong \angle A'O'B'$ for pairs of non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="semirrecta">rays</ConceptLink> coplanar in some <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$.
+1. **Segment congruence**: a binary relation $\cong_{\mathrm{seg}}$ on the <ConceptLink targetId="conjunto">set</ConceptLink> of <ConceptLink targetId="segmento">segments</ConceptLink> determined by pairs of distinct <ConceptLink targetId="punto">points</ConceptLink> of the <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$, denoted $\overline{AB} \cong \overline{CD}$ for endpoints $A \neq B$ and $C \neq D$.
+2. **Angle congruence**: a binary relation $\cong_{\angle}$ on the set of <ConceptLink targetId="angulo">angles</ConceptLink> of <ConceptLink targetId="espacio">space</ConceptLink>, denoted $\angle AOB \cong \angle A'O'B'$; each angle consists of two non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="semirrecta">rays</ConceptLink> with a common origin, lying in a <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$, although the two angles compared may lie in different planes.
 </Definicion>
 
 <Separador />
 
 <Nota>
-From the primitive congruence relations on segments and angles, the notion formally extends to composite figures such as <ConceptLink targetId="triangulo">triangles</ConceptLink> and <ConceptLink targetId="poligono">polygons</ConceptLink>: two figures are congruent if there exists a bijection between their <ConceptLink targetId="vertice">vertices</ConceptLink> that preserves the congruence of all corresponding <ConceptLink targetId="lado">sides</ConceptLink> and <ConceptLink targetId="angulo">angles</ConceptLink>.
+From the primitive relations on segments and angles, the notion extends to composite figures such as <ConceptLink targetId="triangulo">triangles</ConceptLink> and <ConceptLink targetId="poligono">polygons</ConceptLink>: two figures are congruent if there is a <ConceptLink targetId="biyeccion">bijection</ConceptLink> between their <ConceptLink targetId="vertice">vertices</ConceptLink> making all corresponding <ConceptLink targetId="lado">sides</ConceptLink> and <ConceptLink targetId="angulo">angles</ConceptLink> congruent. For triangles, $\triangle ABC \cong \triangle A'B'C'$ always means <ConceptLink targetId="congruencia-triangulos">congruence</ConceptLink> with respect to the ordered correspondence $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$:
+
+$$
+\triangle ABC \cong \triangle A'B'C' \iff \overline{AB} \cong \overline{A'B'} \land \overline{BC} \cong \overline{B'C'} \land \overline{CA} \cong \overline{C'A'} \land \angle CAB \cong \angle C'A'B' \land \angle ABC \cong \angle A'B'C' \land \angle BCA \cong \angle B'C'A'
+$$
 </Nota>

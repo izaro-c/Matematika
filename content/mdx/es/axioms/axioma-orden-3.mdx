@@ -25,9 +25,9 @@ export const Simulation = Order3;
 
 <Capitular letra="D" />e tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos situados sobre una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink>, a lo sumo uno se encuentra <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> los otros dos.
 
-Este postulado establece la exclusión mutua de las relaciones de intermediación lineal, impidiendo que el <ConceptLink targetId="orden">orden</ConceptLink> sobre una recta sea cíclico o se cierre sobre sí mismo como en una <ConceptLink targetId="circunferencia">circunferencia</ConceptLink>.
+Este axioma establece la exclusión mutua de las tres posibles relaciones de intermediación entre tres puntos de una recta, impidiendo que el <ConceptLink targetId="orden">orden</ConceptLink> sobre una recta sea cíclico o se cierre sobre sí mismo como en una <ConceptLink targetId="circunferencia">circunferencia</ConceptLink>.
 
-<Definicion title="Axioma II.3 (Exclusividad de la intermediación lineal)">
+<Definicion title="Enunciado formal">
 Para cualquier <ConceptLink targetId="terna">terna</ConceptLink> de <ConceptLink targetId="punto">puntos</ConceptLink> mutuamente distintos <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind> en $\mathcal{P}$ que <ConceptLink targetId="incidencia">inciden</ConceptLink> en una misma <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineDE" color="carbon">$\ell$</VisualBind>, a lo sumo una de las relaciones de intermediación $A * B * C$, $B * A * C$ o $A * C * B$ es verdadera:
 
 $$
@@ -36,5 +36,5 @@ $$
 </Definicion>
 
 <Nota>
-En conjunción con el <ConceptLink targetId="axioma-orden-1">Axioma II.1</ConceptLink> y el <ConceptLink targetId="axioma-orden-2">Axioma II.2</ConceptLink>, se deduce el <ConceptLink targetId="teorema-orden-tres-puntos">teorema de ordenación lineal de tres puntos</ConceptLink>, según el cual de tres puntos distintos <ConceptLink targetId="colinealidad">colineales</ConceptLink>, exactamente uno se halla entre los otros dos. Esta propiedad confiere a cada recta en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> una estructura de intermediación lineal estricta, a partir de la cual se induce un <ConceptLink targetId="orden-total">orden total</ConceptLink> al fijar una <ConceptLink targetId="orientacion">orientación</ConceptLink> o <ConceptLink targetId="sentido">sentido</ConceptLink>.
+El axioma solo afirma que a lo sumo uno de los tres puntos está entre los otros dos. Que siempre haya uno, es decir, que de tres puntos <ConceptLink targetId="colinealidad">colineales</ConceptLink> distintos exactamente uno esté entre los otros dos, es el <ConceptLink targetId="teorema-orden-tres-puntos">teorema de ordenación de tres puntos</ConceptLink>; su demostración usa los axiomas de incidencia, el <ConceptLink targetId="axioma-orden-1">Axioma II.1</ConceptLink>, el <ConceptLink targetId="axioma-orden-2">Axioma II.2</ConceptLink>, este axioma y, de modo esencial, el <ConceptLink targetId="axioma-orden-4">Axioma II.4</ConceptLink> de Pasch. A partir de ese teorema, cada recta admite exactamente dos <ConceptLink targetId="orden-total">órdenes totales</ConceptLink> compatibles con la intermediación, uno por cada <ConceptLink targetId="sentido">sentido</ConceptLink>; elegir uno de ellos es fijar una <ConceptLink targetId="orientacion">orientación</ConceptLink> de la recta.
 </Nota>

@@ -3,7 +3,7 @@ export const metadata = {
   lang: "es",
   type: "demostracion",
   title: "Demostración: Ángulos opuestos por el vértice",
-  description: "Demostración deductiva directa basada en la congruencia de los ángulos suplementarios adyacentes sobre rectas secantes.",
+  description: "Demostración directa basada en el teorema de congruencia de suplementos aplicado a los ángulos que forman dos rectas secantes.",
   parentTheorem: "teorema-angulos-opuestos-verticales",
   branch: "51M",
   proofMethod: "metodo-directo",
@@ -12,7 +12,7 @@ export const metadata = {
   layout: "split",
   sources: [
     { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 15", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §5", role: "secondary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "secondary" }
   ]
 };
 
@@ -20,46 +20,38 @@ import { DemoAngulosOpuestos } from "@content/diagrams/Demos/DemoAngulosOpuestos
 
 <DemonstrationSection diagram={<DemoAngulosOpuestos />}>
 
-<Capitular letra="L" />a deducción formal del <ConceptLink targetId="teorema-angulos-opuestos-verticales">teorema de los ángulos opuestos por el vértice</ConceptLink> se fundamenta en el <ConceptLink targetId="metodo-directo" isDependency={true}>método directo</ConceptLink>, aplicando la definición sintética de <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulos suplementarios</ConceptLink> adyacentes y la propiedad reflexiva de la <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink> angular (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>).
+<Capitular letra="L" />a prueba del <ConceptLink targetId="teorema-angulos-opuestos-verticales">teorema de los ángulos opuestos por el vértice</ConceptLink> sigue el <ConceptLink targetId="metodo-directo" isDependency={true}>método directo</ConceptLink>: cada ángulo de un par opuesto es <ConceptLink targetId="angulos-suplementarios" isDependency={true}>suplementario</ConceptLink> de un mismo ángulo, y el <ConceptLink targetId="teorema-congruencia-suplementos" isDependency={true}>teorema de congruencia de suplementos</ConceptLink>, junto con la <ConceptLink targetId="reflexividad">reflexividad</ConceptLink> de la <ConceptLink targetId="congruencia" isDependency={true}>congruencia</ConceptLink> de ángulos (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>), da la congruencia.
 
 <Separador />
 
-### Demostración formal paso a paso
+### Demostración paso a paso
 
-<ProofStep number={1} target="supp12" title="Primer par de ángulos adyacentes suplementarios">
-Dadas las <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> secantes <VisualBind element="lineL" color="carbon">$l$</VisualBind> y <VisualBind element="lineM" color="carbon">$m$</VisualBind> que se cortan en el <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> <VisualBind element="O" color="carbon">$O$</VisualBind>, los <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="A" color="carbon">$A$</VisualBind> y <VisualBind element="Ap" color="carbon">$A'$</VisualBind> sobre la recta $l$ satisfacen la relación de <ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink> $A * O * A'$, determinando las <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> opuestas $\overrightarrow{OA}$ y $\overrightarrow{OA'}$. La semirrecta $\overrightarrow{OB}$ sobre la recta $m$ determina dos <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> adyacentes <VisualBind element="angle1" color="pavo">$\alpha = \angle AOB = \angle(\overrightarrow{OA}, \overrightarrow{OB})$</VisualBind> y <VisualBind element="angle2" color="musgo">$\beta = \angle BOA' = \angle(\overrightarrow{OB}, \overrightarrow{OA'})$</VisualBind>. Al compartir la semirrecta $\overrightarrow{OB}$ y ser sus otros lados semirrectas opuestas sobre la recta $l$, $\alpha$ y $\beta$ forman un par de <ConceptLink targetId="angulos-suplementarios" isDependency={true}>suplementarios</ConceptLink> adyacentes:
-
-$$
-\alpha \text{ es suplementario adyacente de } \beta
-$$
+<ProofStep number={1} target="supp12" title="Primer par de ángulos suplementarios">
+Sean <VisualBind element="lineL" color="carbon">$\ell$</VisualBind> y <VisualBind element="lineM" color="carbon">$m$</VisualBind> dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> <ConceptLink targetId="secante">secantes</ConceptLink> que se cortan en el <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> <VisualBind element="O" color="carbon">$O$</VisualBind>. Los puntos <VisualBind element="A" color="carbon">$A$</VisualBind> y <VisualBind element="Ap" color="carbon">$A'$</VisualBind> de $\ell$ satisfacen la relación de <ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink> $A * O * A'$, de modo que $\overrightarrow{OA}$ y $\overrightarrow{OA'}$ son <ConceptLink targetId="semirrectas-opuestas" isDependency={true}>semirrectas opuestas</ConceptLink>. Los <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> <VisualBind element="angle1" color="pavo">$\alpha = \angle AOB$</VisualBind> y <VisualBind element="angle2" color="musgo">$\beta = \angle BOA'$</VisualBind> comparten la <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink> $\overrightarrow{OB}$ y sus otros lados son semirrectas opuestas; por la definición de <ConceptLink targetId="angulos-suplementarios" isDependency={true}>ángulos suplementarios</ConceptLink>, $\alpha$ y $\beta$ son suplementarios.
 </ProofStep>
 
-<ProofStep number={2} target="supp23" title="Segundo par de ángulos adyacentes suplementarios">
-Considerando ahora la recta $m$, los puntos <VisualBind element="B" color="carbon">$B$</VisualBind> y <VisualBind element="Bp" color="carbon">$B'$</VisualBind> satisfacen $B * O * B'$, determinando las <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> opuestas $\overrightarrow{OB}$ y $\overrightarrow{OB'}$. La semirrecta $\overrightarrow{OA'}$ sobre la recta $l$ forma con ellas los <ConceptLink targetId="angulo">ángulos</ConceptLink> adyacentes <VisualBind element="angle2" color="musgo">$\beta = \angle BOA' = \angle(\overrightarrow{OB}, \overrightarrow{OA'})$</VisualBind> y <VisualBind element="angle3" color="pavo">$\alpha' = \angle A'OB' = \angle(\overrightarrow{OA'}, \overrightarrow{OB'})$</VisualBind>. Al compartir la semirrecta $\overrightarrow{OA'}$ y ser sus otros lados semirrectas opuestas sobre la recta $m$, $\alpha'$ y $\beta$ son <ConceptLink targetId="angulos-suplementarios" isDependency={true}>suplementarios</ConceptLink> adyacentes:
-
-$$
-\alpha' \text{ es suplementario adyacente de } \beta
-$$
+<ProofStep number={2} target="supp23" title="Segundo par de ángulos suplementarios">
+Los puntos <VisualBind element="B" color="carbon">$B$</VisualBind> y <VisualBind element="Bp" color="carbon">$B'$</VisualBind> de $m$ satisfacen $B * O * B'$, de modo que $\overrightarrow{OB}$ y $\overrightarrow{OB'}$ son <ConceptLink targetId="semirrectas-opuestas">semirrectas opuestas</ConceptLink>. Los <ConceptLink targetId="angulo">ángulos</ConceptLink> <VisualBind element="angle2" color="musgo">$\beta = \angle BOA'$</VisualBind> y <VisualBind element="angle3" color="pavo">$\alpha' = \angle A'OB'$</VisualBind> comparten la semirrecta $\overrightarrow{OA'}$ y sus otros lados son opuestos; por tanto, $\alpha'$ y $\beta$ son <ConceptLink targetId="angulos-suplementarios">suplementarios</ConceptLink>.
 </ProofStep>
 
-<ProofStep number={3} target="angle2" title="Reflexividad del ángulo adyacente común">
-Por el axioma de congruencia angular (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>), todo <ConceptLink targetId="angulo">ángulo</ConceptLink> es congruente consigo mismo. En particular, para el ángulo común <VisualBind element="angle2" color="musgo">$\beta$</VisualBind> se cumple la <ConceptLink targetId="reflexividad">reflexividad</ConceptLink>:
+<ProofStep number={3} target="angle2" title="Reflexividad del ángulo común">
+Por la <ConceptLink targetId="reflexividad">reflexividad</ConceptLink> de la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de ángulos (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>), el ángulo común <VisualBind element="angle2" color="musgo">$\beta$</VisualBind> es congruente consigo mismo:
 
 $$
 \beta \cong \beta
 $$
 </ProofStep>
 
-<ProofStep number={4} target="alpha" title="Congruencia de los ángulos suplementarios">
-Dado que los <ConceptLink targetId="angulo">ángulos</ConceptLink> <VisualBind element="angle1" color="pavo">$\alpha$</VisualBind> y <VisualBind element="angle3" color="pavo">$\alpha'$</VisualBind> son ambos suplementarios adyacentes del mismo ángulo <VisualBind element="angle2" color="musgo">$\beta$</VisualBind>, y $\beta \cong \beta$, el <ConceptLink targetId="angulos-suplementarios" isDependency={true}>teorema de congruencia de ángulos suplementarios</ConceptLink> (*Satz 13* de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>) garantiza que sus suplementos son mutuamente <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>:
+<ProofStep number={4} target="alpha" title="Congruencia del primer par opuesto">
+<VisualBind element="angle1" color="pavo">$\alpha$</VisualBind> es suplementario de <VisualBind element="angle2" color="musgo">$\beta$</VisualBind> (paso 1), <VisualBind element="angle3" color="pavo">$\alpha'$</VisualBind> es suplementario de $\beta$ (paso 2) y $\beta \cong \beta$ (paso 3). Por el <ConceptLink targetId="teorema-congruencia-suplementos" isDependency={true}>teorema de congruencia de suplementos</ConceptLink> (<ConceptLink targetId="hilbert">Hilbert</ConceptLink>, §6), los suplementarios de ángulos congruentes son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>:
 
 $$
 \alpha \cong \alpha'
 $$
 </ProofStep>
 
-<ProofStep number={5} target="beta" title="Extensión al par opuesto complementario">
-Aplicando un razonamiento análogo a los ángulos adyacentes sobre las semirrectas restantes respecto al ángulo suplementario <VisualBind element="angle3" color="pavo">$\alpha'$</VisualBind>, se deduce que el segundo par de <ConceptLink targetId="angulo">ángulos</ConceptLink> opuestos por el <ConceptLink targetId="vertice">vértice</ConceptLink> formado por <VisualBind element="angle2" color="musgo">$\beta = \angle BOA'$</VisualBind> y <VisualBind element="angle4" color="musgo">$\beta' = \angle B'OA$</VisualBind> satisface:
+<ProofStep number={5} target="beta" title="Congruencia del segundo par opuesto">
+Los ángulos <VisualBind element="angle2" color="musgo">$\beta = \angle BOA'$</VisualBind> y <VisualBind element="angle4" color="musgo">$\beta' = \angle B'OA$</VisualBind> son ambos <ConceptLink targetId="angulos-suplementarios">suplementarios</ConceptLink> de <VisualBind element="angle1" color="pavo">$\alpha = \angle AOB$</VisualBind>: $\beta$ por el paso 1, y $\beta'$ porque comparte con $\alpha$ la semirrecta $\overrightarrow{OA}$ y sus otros lados, $\overrightarrow{OB'}$ y $\overrightarrow{OB}$, son opuestos ($B * O * B'$). Como $\alpha \cong \alpha$ (<ConceptLink targetId="axioma-congruencia-4">Axioma III.4</ConceptLink>), el <ConceptLink targetId="teorema-congruencia-suplementos">teorema de congruencia de suplementos</ConceptLink> da:
 
 $$
 \beta \cong \beta'

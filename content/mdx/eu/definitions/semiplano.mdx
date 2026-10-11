@@ -6,24 +6,27 @@ export const metadata = {
   title: "Planoerdia",
   description: "Zuzen batek plano bateko puntuak banatzean sortzen diren bi eskualde irekietako bakoitza.",
   branch: "51M",
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §2 (II.4 Axioma)", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §4", role: "primary" }
   ]
 };
 
-<Capitular letra="P" />**lanoerdi** bat <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> batek <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko <ConceptLink targetId="punto">puntuak</ConceptLink> banatzean sortzen diren bi eskualdeetako bakoitza da. Zuzen zatitzaileari planoerdiaren **ertz** edo mugalde deitzen zaio eta ez da planoerdiaren parte.
+import { Semiplano } from '@content/diagrams/Definiciones/Semiplano';
+export const Simulation = Semiplano;
 
-<ConceptLink targetId="geometria-sintetica">Geometria sintetikoan</ConceptLink>, planoa zehazki bi eskualde <ConceptLink targetId="conjunto-disjunto">disjuntotan</ConceptLink> banatzea Planoa Bereizteko Teoremaren ondorioa da, <ConceptLink targetId="axioma-orden-4" isDependency={true}>Paschen Axiomatik</ConceptLink> (II.4 Axioma) eta <ConceptLink targetId="estar-entre">ordenako axiometatik</ConceptLink> frogatua.
+<Capitular letra="P" />**lanoerdia** <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> batek bera daukan <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko <ConceptLink targetId="punto">puntuak</ConceptLink> banatzean sortzen diren bi eskualdeetako bakoitza da. Zuzen banatzaileari **ertz** deritzo, eta ez da planoerdiaren parte.
 
-<Definicion title="Definizio Formala">
-  Izan bedi $\pi$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bat eta $\ell$ bertan kokatutako <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat. Zuzenetik kanpoko planoko <ConceptLink targetId="punto">puntuen</ConceptLink> multzoaren gainean ($\pi \setminus \ell$), $\sim_\ell$ erlazio bitarra definitzen da:
+Zuzen batek planoa zehazki bi eskualde <ConceptLink targetId="conjunto-disjunto">disjuntutan</ConceptLink> banatzea da <ConceptLink targetId="teorema-separacion-plano" isDependency={true}>planoaren banaketa-teoremaren</ConceptLink> edukia; Hilbertek <ConceptLink targetId="axioma-orden-4" isDependency={true}>Paschen axiomatik</ConceptLink> (II.4 axioma) eta gainerako <ConceptLink targetId="estar-entre" isDependency={true}>ordena</ConceptLink>-axiometatik ondorioztatzen du. Planoerdia, beraz, <ConceptLink targetId="semirrecta">zuzenerdiaren</ConceptLink> baliokide planarra da.
+
+<Definicion title="Planoerdiaren definizio formala">
+  Izan bitez $\pi$ plano bat eta <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> zuzen bat, $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$ izanik. Zuzenarekin intziditzen ez duten planoko puntuen multzoan, $\operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$ multzoan, $\sim_\ell$ <ConceptLink targetId="relacion-binaria">erlazio bitarra</ConceptLink> definitzen da:
   $$
-  A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \ell = \emptyset
+  A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset
   $$
-  non $\operatorname{seg}(AB)$ $A$ eta $B$ puntuak lotzen dituen <ConceptLink targetId="segmento" isDependency={true}>segmentu</ConceptLink> irekia den (bere muturrak kanpo utzita).
+  non <VisualBind element="segAB" color="terracota">$\operatorname{seg}(AB)$</VisualBind> <VisualBind element="pA" color="terracota">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> muturrak dituen <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink> irekia den.
 
-  Planoa Bereizteko Teoremaren arabera, $\sim_\ell$ baliokidetasun-erlazio bat da eta $\pi \setminus \ell$ zehazki bi baliokidetasun-klasetan partizionatzen du $(\pi \setminus \ell) / {\sim_\ell} = \{ \mathcal{H}_1, \mathcal{H}_2 \}$ zatidura-espazioan. $\mathcal{H}_1$ eta $\mathcal{H}_2$ klase horietako bakoitza $\ell$-k mugatutako **planoerdi** ireki bat da.
+  Planoaren banaketa-teoremaren arabera, $\sim_\ell$ <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioa</ConceptLink> da, eta zehazki bi <ConceptLink targetId="clase-equivalencia">baliokidetasun-klase</ConceptLink> ditu: $(\operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)) / {\sim_\ell} = \{ \mathcal{H}_1, \mathcal{H}_2 \}$. Klase horietako bakoitza <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> ertzeko **planoerdi** ireki bat da: <VisualBind element="semiplano-1" color="terracota">$\mathcal{H}_1$</VisualBind> eta <VisualBind element="semiplano-2" color="pavo">$\mathcal{H}_2$</VisualBind>. $B$ puntua daukan planoerdia $\mathcal{H}_\ell(B)$ idazten da.
 </Definicion>
 
 <Separador />
@@ -31,19 +34,19 @@ export const metadata = {
 <SeccionPropiedades>
   <PropiedadesGrupo title="Propietate geometrikoak eta ganbiltasuna">
     <PropiedadItem 
-      id="conjunto-convexo" 
+      id="convexidad-semiplano" 
       title="Planoerdiaren ganbiltasuna"
-      formula="A, B \in \mathcal{H} \implies \operatorname{seg}(AB) \subset \mathcal{H}"
+      formula="A, B \in \mathcal{H} \implies \operatorname{seg}(AB) \subseteq \mathcal{H}"
     >
-      $\mathcal{H}$ planoerdi ireki oro <ConceptLink targetId="conjunto-convexo">multzo ganbila</ConceptLink> da: edozein bi $A, B \in \mathcal{H}$ puntu baditu, haiek lotzen dituen $\operatorname{seg}(AB)$ <ConceptLink targetId="segmento">segmentu</ConceptLink> ireki osoa $\mathcal{H}$-ren barnean kokatzen da, Planoa Bereizteko Teoremaren eta <ConceptLink targetId="axioma-orden-4">Paschen Axiomaren</ConceptLink> ondorio zuzen gisa.
+      $\mathcal{H}$ planoerdi ireki oro <ConceptLink targetId="conjunto-convexo">multzo ganbila</ConceptLink> da: <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in <VisualBind element="semiplano-1" color="terracota">\mathcal{H}_1</VisualBind>$ badira, <VisualBind element="segAB" color="terracota">$\operatorname{seg}(AB)$</VisualBind> <ConceptLink targetId="segmento">zuzenki</ConceptLink> irekia $\mathcal{H}_1$ multzoan dago. Aitzitik, kontrako planoerdiko <VisualBind element="pC" color="pavo">$C \in \mathcal{H}_2$</VisualBind> puntu baterako, <VisualBind element="segAC" color="granada">$\operatorname{seg}(AC)$</VisualBind> zuzenkiak <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> ertz-zuzena ebakitzen du <VisualBind element="pX" color="granada">$X$</VisualBind> puntu batean. $\sim_\ell$ erlazioaren definiziotik ondorioztatzen da: $\operatorname{seg}(AB)$ zuzenkiko $X$ puntu bat $\mathcal{H}$ multzoan ez balego, edo $X$ puntuak $\ell$ zuzenarekin intzidituko luke, edo $\operatorname{seg}(AX)$ zuzenkiak $\ell$ ebakiko luke; bi kasuetan, $\operatorname{seg}(AB) \supseteq \operatorname{seg}(AX) \cup \{X\}$ multzoak $\ell$ ebakiko luke, $A \sim_\ell B$ baldintzaren aurka.
     </PropiedadItem>
 
     <PropiedadItem 
       id="generacion-interiores-poligonales" 
-      title="Poligonoen barne-eskualdeen sorkuntza"
-      formula="\operatorname{Int}(\mathcal{P}_n) = \bigcap_{i=1}^n \mathcal{H}_{\ell_i}"
+      title="Barnealdeak planoerdien ebakidura gisa"
+      formula="\operatorname{Int}(A_1 A_2 \cdots A_n) = \bigcap_{i=1}^n \mathcal{H}_i"
     >
-      Konfigurazio planarreko <ConceptLink targetId="recta">zuzen</ConceptLink> euskarriek mugatutako planoerdi irekien ebakidura finituak <ConceptLink targetId="angulo">angelu</ConceptLink> baten barne-eskualdea ($\operatorname{Int}(\angle AOB) = \mathcal{H}_1 \cap \mathcal{H}_2$), <ConceptLink targetId="triangulo">triangelu</ConceptLink> baten barrualdea zein edozein <ConceptLink targetId="poligono">poligono ganbilen</ConceptLink> barnealdea formalki definitzea ahalbidetzen du, ganbiltasuna ebakidurarekiko itxieraz mantenduz.
+      Planoerdi irekien ebakidura finituen bidez definitzen dira <ConceptLink targetId="angulo">angelu</ConceptLink> baten barnealdea, $\operatorname{Int}(\angle AOB) = \mathcal{H}_{\overleftrightarrow{OA}}(B) \cap \mathcal{H}_{\overleftrightarrow{OB}}(A)$, <ConceptLink targetId="triangulo">triangelu</ConceptLink> batena eta $A_1 A_2 \cdots A_n$ <ConceptLink targetId="poligono-convexo">poligono ganbil</ConceptLink> batena; azken horretan, $\mathcal{H}_i$ da $\overleftrightarrow{A_i A_{i+1}}$ <ConceptLink targetId="recta-soporte">zuzen euskarria</ConceptLink> ertz duen eta gainerako erpinak dauzkan planoerdia (indizeak $n$ moduluan). Eskualde horiek ganbilak dira, multzo ganbilen <ConceptLink targetId="interseccion">ebakidura</ConceptLink> ganbila baita.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

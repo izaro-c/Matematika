@@ -99,7 +99,7 @@ export const Congruence4Spec = createDiagramSpec(
         "role": "secondary"
       },
       "target": true,
-      "targetId": "angles"
+      "targetId": "equalAnglenonReflexAngleAAOOBB"
     }
   ],
   "objects": [
@@ -562,7 +562,17 @@ export const Congruence4Spec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastra A, B, O, A' y O'"
+  "note": "Arrastra A, B, O, A' y O' para observar el transporte del ángulo.",
+  "translations": {
+    "eu": {
+      "title": "IV. Kongruentzia-axioma",
+      "note": "Arrastatu A, B, O, A' eta O' angeluaren garraioa ikusteko."
+    },
+    "en": {
+      "title": "Congruence Axiom IV",
+      "note": "Drag A, B, O, A', and O' to observe angle transport."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

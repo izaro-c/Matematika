@@ -274,7 +274,17 @@ export const Order2Spec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra A, B y C"
+  "note": "Arrastra A, B y C para explorar la existencia de puntos intermedios y exteriores.",
+  "translations": {
+    "eu": {
+      "title": "II. Ordena-axioma",
+      "note": "Arrastatu A, B eta C tarteko eta kanpoko puntuen existentzia esploratzeko."
+    },
+    "en": {
+      "title": "Order Axiom II",
+      "note": "Drag A, B, and C to explore the existence of intermediate and outer points."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

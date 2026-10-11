@@ -13,9 +13,9 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="I" />n <ConceptLink targetId="logica">mathematical logic</ConceptLink>, <ConceptLink targetId="algebra">universal algebra</ConceptLink>, and <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, a **signature** (or formal language $\mathcal{L}$) is the collection of non-logical symbols specifying the sorts of objects, <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink>, and operations involved in a mathematical theory.
+<Capitular letra="I" />n <ConceptLink targetId="logica">mathematical logic</ConceptLink>, <ConceptLink targetId="algebra-universal">universal algebra</ConceptLink>, and <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, a **signature** $\sigma$ is the collection of non-logical symbols specifying the sorts of objects, <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink>, and operations involved in a mathematical theory.
 
-A signature establishes the syntax of a theory without yet attaching a semantics or concrete interpretation (which occurs when constructing a <ConceptLink targetId="estructura-geometrica">mathematical structure</ConceptLink> or model).
+A signature determines the <ConceptLink targetId="lenguaje-formal">formal language</ConceptLink> $\mathcal{L}_\sigma$ of the theory (the formulas buildable from its symbols) without yet attaching an interpretation, which is fixed when constructing a <ConceptLink targetId="estructura-geometrica">mathematical structure</ConceptLink> or model.
 
 <Definicion title="Formal Definition">
   A **signature** $\sigma$ is a tuple:
@@ -24,8 +24,8 @@ A signature establishes the syntax of a theory without yet attaching a semantics
   $$
   where:
   - $\mathcal{S}_{\text{sorts}}$ is the <ConceptLink targetId="conjunto">set</ConceptLink> of sorts or object <ConceptLink targetId="dominio">domains</ConceptLink> (e.g. <ConceptLink targetId="punto">points</ConceptLink> $\mathcal{P}$, <ConceptLink targetId="recta">lines</ConceptLink> $\mathcal{L}$, and <ConceptLink targetId="plano">planes</ConceptLink> $\Pi$).
-  - $\mathcal{F}$ is the set of function or <ConceptLink targetId="operacion-binaria">operation</ConceptLink> symbols.
-  - $\mathcal{R}$ is the set of primitive relation symbols (such as <ConceptLink targetId="incidencia">incidence</ConceptLink> $\mathbf{I}_{\mathcal{P}\mathcal{L}}$, <ConceptLink targetId="estar-entre">order</ConceptLink> $\mathbf{B}$, or the <ConceptLink targetId="congruencia">congruence</ConceptLink> relations $\cong_{\text{seg}}$ and $\cong_{\angle}$).
+  - $\mathcal{F}$ is the set of <ConceptLink targetId="funcion">function</ConceptLink> or operation symbols.
+  - $\mathcal{R}$ is the set of primitive <ConceptLink targetId="relacion">relation</ConceptLink> symbols (such as <ConceptLink targetId="incidencia">incidence</ConceptLink> $\mathbf{I}_{\mathcal{P}\mathcal{L}}$, <ConceptLink targetId="estar-entre">order</ConceptLink> $\mathbf{B}$, or the <ConceptLink targetId="congruencia">congruence</ConceptLink> relations $\cong_{\text{seg}}$ and $\cong_{\angle}$).
   - $\text{ar}$ is the arity function assigning to each symbol its number and type of arguments.
 </Definicion>
 
@@ -34,5 +34,5 @@ A signature establishes the syntax of a theory without yet attaching a semantics
 ### Examples in geometry and algebra
 
 - **Pure incidence signature:** $\sigma_{\text{inc}} = ( \{\mathcal{P}, \mathcal{L}\}, \emptyset, \{\mathbf{I}_{\mathcal{P}\mathcal{L}}\}, \text{ar} )$, featuring a single binary relation with $\text{ar}(\mathbf{I}_{\mathcal{P}\mathcal{L}}) = \mathcal{P} \times \mathcal{L}$ (<ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>).
-- **Hilbert's synthetic signature:** $\sigma_{\text{Hil}} = ( \{\mathcal{P}, \mathcal{L}, \Pi\}, \emptyset, \{\mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle}\}, \text{ar} )$, with typed arities $\text{ar}(\mathbf{I}_{\mathcal{P}\mathcal{L}}) = \mathcal{P} \times \mathcal{L}$, $\text{ar}(\mathbf{I}_{\mathcal{P}\Pi}) = \mathcal{P} \times \Pi$, $\text{ar}(\mathbf{B}) = \mathcal{P}^3$, $\text{ar}(\cong_{\text{seg}}) = \mathcal{P}^4$, and $\text{ar}(\cong_{\angle})$ on pairs of <ConceptLink targetId="angulo">angular figures</ConceptLink> (<ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>).
-- **Group signature:** $\sigma_{\text{grp}} = ( \{G\}, \{\cdot, ^{-1}, e\}, \emptyset, \text{ar} )$, containing one <ConceptLink targetId="operacion-binaria">binary operation</ConceptLink> ($\text{ar}(\cdot) = G \times G \to G$), one unary operation ($\text{ar}(^{-1}) = G \to G$), and a constant syntactically formalized as a 0-ary function ($\text{ar}(e) = \emptyset \to G$, with sort $\text{sort}(e) = G$) (<ConceptLink targetId="grupo">group</ConceptLink>).
+- **Hilbert's synthetic signature:** $\sigma_{\text{Hil}} = ( \{\mathcal{P}, \mathcal{L}, \Pi\}, \emptyset, \{\mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle}\}, \text{ar} )$, with typed arities $\text{ar}(\mathbf{I}_{\mathcal{P}\mathcal{L}}) = \mathcal{P} \times \mathcal{L}$, $\text{ar}(\mathbf{I}_{\mathcal{P}\Pi}) = \mathcal{P} \times \Pi$, $\text{ar}(\mathbf{B}) = \mathcal{P}^3$, $\text{ar}(\cong_{\text{seg}}) = \mathcal{P}^4$, and $\text{ar}(\cong_{\angle}) = \mathcal{P}^6$ (congruence of <ConceptLink targetId="angulo">angles</ConceptLink> $\angle ABC \cong \angle DEF$) (<ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>).
+- **Group signature:** $\sigma_{\text{grp}} = ( \{G\}, \{\cdot, ^{-1}, e\}, \emptyset, \text{ar} )$, containing one <ConceptLink targetId="operacion-binaria">binary operation</ConceptLink> ($\text{ar}(\cdot) = G \times G \to G$), one unary operation ($\text{ar}(^{-1}) = G \to G$), and a constant, treated as a 0-ary function symbol ($\text{ar}(e) = G^{0} \to G$) (<ConceptLink targetId="grupo">group</ConceptLink>).

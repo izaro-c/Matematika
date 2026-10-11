@@ -1,16 +1,19 @@
 export const metadata = {
-  "id": "demo-angulos-alternos-internos",
-  "type": "demostracion",
-  "title": "Demostración: Teorema de los ángulos alternos internos",
-  "description": "Demostración por reducción al absurdo del criterio de paralelismo mediante la igualdad de ángulos alternos internos.",
-  "parentTheorem": "teorema-angulos-alternos-internos",
-  "branch": "51M",
-  "proofMethod": "metodo-contradiccion",
-  "authors": ["euclides"],
-  "tags": ["geometria", "paralelas", "angulos"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 27", role: "primary" }
+  id: "demo-angulos-alternos-internos",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de los ángulos alternos internos",
+  description: "Demostración de las dos direcciones: la congruencia de los ángulos alternos internos implica el paralelismo (Euclides I.27, por contradicción con el teorema del ángulo exterior, en geometría absoluta) y el paralelismo implica la congruencia (Euclides I.29, mediante el transporte de ángulos y el Axioma IV).",
+  parentTheorem: "teorema-angulos-alternos-internos",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-contradiccion",
+  authors: ["euclides"],
+  tags: ["geometria", "paralelas", "angulos"],
+  layout: "split",
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposiciones 27 y 29", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6 y §7", role: "secondary" }
   ]
 };
 
@@ -18,38 +21,46 @@ import { DemoAngulosAlternosInternos } from "@content/diagrams/Demos/DemoAngulos
 
 <DemonstrationSection diagram={<DemoAngulosAlternosInternos />}>
 
-<Capitular letra="D" />adas dos <ConceptLink targetId="recta">rectas</ConceptLink> coplanares $l$ y $m$ cortadas por una secante transversal $t$, se demuestra el <ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink>. La demostración prueba por <ConceptLink targetId="metodo-contradiccion" isDependency={true}>reducción al absurdo</ConceptLink> que si los ángulos alternos internos son <ConceptLink targetId="congruencia">congruentes</ConceptLink>, las rectas son necesariamente <ConceptLink targetId="paralelas">paralelas</ConceptLink>.
+<Capitular letra="S" />e demuestran las dos direcciones del <ConceptLink targetId="teorema-angulos-alternos-internos">teorema de los ángulos alternos internos</ConceptLink>. La dirección (⇐) se prueba por el <ConceptLink targetId="metodo-contradiccion" isDependency={true}>método de contradicción</ConceptLink> con el <ConceptLink targetId="teorema-angulo-exterior" isDependency={true}>teorema del ángulo exterior</ConceptLink>, sin axioma de las paralelas ni axiomas de continuidad; la dirección (⇒) se prueba por el <ConceptLink targetId="metodo-directo" isDependency={true}>método directo</ConceptLink>, combinando el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>, la dirección (⇐) y el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axioma IV</ConceptLink>.
 
 <Separador />
 
 ### Demostración paso a paso
 
-<ProofStep number={1} target="config" title="Hipótesis de partida">
-Consideramos dos rectas coplanares <VisualBind element="lineL" color="carbon">$l$</VisualBind> y <VisualBind element="lineM" color="carbon">$m$</VisualBind> intersecadas por la secante transversal <VisualBind element="lineT" color="carbon">$t$</VisualBind> en los puntos $A$ y $B$. Se asume como hipótesis que los <ConceptLink targetId="angulo">ángulos</ConceptLink> alternos internos <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> y <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> son congruentes:
+<ProofStep number={1} target="config" diagramStep="step1" title="Hipótesis y notación">
+Sean <VisualBind element="lineL1" color="carbon">$\ell_1$</VisualBind> y <VisualBind element="lineL2" color="carbon">$\ell_2$</VisualBind> dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi$ y <VisualBind element="lineT" color="carbon">$t$</VisualBind> una <ConceptLink targetId="secante" isDependency={true}>secante</ConceptLink> que las corta en los <ConceptLink targetId="punto">puntos</ConceptLink> $A$ y $B$, con $A \neq B$. Sean $P_1 \, \mathbf{I} \, \ell_1$ y $P_2 \, \mathbf{I} \, \ell_2$ puntos situados en <ConceptLink targetId="semiplano" isDependency={true}>semiplanos</ConceptLink> opuestos respecto a $t$, y sean <VisualBind element="angleAlpha" color="terracota">$\alpha = \angle P_1AB$</VisualBind> y <VisualBind element="angleBeta" color="pavo">$\beta = \angle P_2BA$</VisualBind> los <ConceptLink targetId="angulos-alternos-internos" isDependency={true}>ángulos alternos internos</ConceptLink>. Como $t$ corta a $\ell_1$ solo en $A$ y a $\ell_2$ solo en $B$, se tiene $\neg(B \, \mathbf{I} \, \ell_1)$ y $\neg(A \, \mathbf{I} \, \ell_2)$; en particular, $\ell_1 \neq \ell_2$.
+</ProofStep>
+
+<ProofStep number={2} target="trianguloABX" diagramStep="step2" title="Dirección (⇐): hipótesis de contradicción">
+Supongamos $\alpha \cong \beta$ y, por contradicción, que $\ell_1$ y $\ell_2$ no son <ConceptLink targetId="paralelas" isDependency={true}>paralelas</ConceptLink>. Como son coplanares y distintas, sus <ConceptLink targetId="traza">trazas</ConceptLink> comparten un punto, único por el <ConceptLink targetId="axioma-incidencia-2" isDependency={true}>Axioma I.2</ConceptLink>. Ese punto no incide con $t$: si lo hiciera, sería a la vez $A$ y $B$. Por la <ConceptLink targetId="axioma-orden-4" isDependency={true}>separación del plano</ConceptLink>, el punto de corte está en $\mathcal{H}_t(P_2)$ o en $\mathcal{H}_t(P_1)$. Llamémoslo <VisualBind element="pointX" color="ocre">$X$</VisualBind> en el primer caso e <VisualBind element="pointY" color="ocre">$Y$</VisualBind> en el segundo.
+</ProofStep>
+
+<ProofStep number={3} target="angleABX" diagramStep="step3" title="Caso X en el semiplano de P₂">
+$P_1$ y $X$ son puntos de $\ell_1$ en semiplanos opuestos respecto a $t$, luego $\operatorname{seg}(P_1X)$ corta a $t$, y lo hace en $A$, único punto común de $\ell_1$ y $t$: $P_1 * A * X$ (<ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink>). Así, $\alpha$ y $\angle XAB$ son <ConceptLink targetId="angulos-suplementarios" isDependency={true}>suplementarios adyacentes</ConceptLink>, y $\alpha$ es un <ConceptLink targetId="angulo-exterior">ángulo exterior</ConceptLink> en $A$ del <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink> <VisualBind element="trianguloABX" color="ocre">$\triangle ABX$</VisualBind>. Además, $X$ y $P_2$ son puntos de $\ell_2$ en el mismo semiplano respecto a $t$, de modo que $\overrightarrow{BX} = \overrightarrow{BP_2}$ (<ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink>) y el ángulo interior no adyacente <VisualBind element="angleABX" color="ocre">$\angle ABX$</VisualBind> es $\beta$. El teorema del ángulo exterior y el <ConceptLink targetId="orden-angulos" isDependency={true}>orden de ángulos</ConceptLink> dan:
 
 <Formula>
-  $$ \alpha \cong \beta $$
+  $$ \beta = \angle ABX < \alpha $$
 </Formula>
+
+Pero $\alpha \cong \beta$, y un ángulo no puede ser a la vez congruente con otro y menor que él (tricotomía del orden de ángulos): contradicción.
 </ProofStep>
 
-<ProofStep number={2} target="absurdo" title="Hipótesis de contradicción">
-Para demostrar que $l$ y $m$ son paralelas, supongamos por el <ConceptLink targetId="metodo-contradiccion" isDependency={true}>método de contradicción</ConceptLink> que las rectas $l$ y $m$ no son paralelas. Por consiguiente, se intersecan en algún punto <VisualBind element="pointP" color="ocre">$P$</VisualBind> del plano.
+<ProofStep number={4} target="trianguloABY" diagramStep="step4" title="Caso Y en el semiplano de P₁">
+El caso es simétrico, intercambiando los papeles de $A$ y $B$. $P_2$ e $Y$ son puntos de $\ell_2$ en semiplanos opuestos respecto a $t$, luego $P_2 * B * Y$, y $\beta$ es un ángulo exterior en $B$ del triángulo <VisualBind element="trianguloABY" color="ocre">$\triangle ABY$</VisualBind>. Como $\overrightarrow{AY} = \overrightarrow{AP_1}$, el ángulo interior no adyacente <VisualBind element="angleBAY" color="ocre">$\angle BAY$</VisualBind> es $\alpha$, y el <ConceptLink targetId="teorema-angulo-exterior" isDependency={true}>teorema del ángulo exterior</ConceptLink> da $\alpha < \beta$, de nuevo en contradicción con $\alpha \cong \beta$. Por tanto, $\ell_1 \parallel \ell_2$.
 </ProofStep>
 
-<ProofStep number={3} target="triangulo" title="Construcción del triángulo auxiliar">
-La intersección en $P$ genera un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABP$ formado por los vértices $A, B, P$. En este triángulo, el ángulo <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> en el vértice $A$ constituye un ángulo exterior respecto al lado $\overline{AP}$, mientras que <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> en el vértice $B$ es un ángulo interior no adyacente.
+<ProofStep number={5} target="lineL2" diagramStep="step5" title="Dirección (⇒): transporte del ángulo">
+Supongamos ahora $\ell_1 \parallel \ell_2$. Por el <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>, existe una única semirrecta $\overrightarrow{BQ}$ con $Q \in \mathcal{H}_t(P_2)$ tal que $\angle QBA \cong \alpha$. Sea $m = \overleftrightarrow{BQ}$, recta de $\pi$. Respecto a la secante $t$, las rectas $\ell_1$ y $m$ forman los ángulos alternos internos $\alpha$ y $\angle QBA$, que son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink>; por la dirección (⇐) ya demostrada, $m \parallel \ell_1$.
 </ProofStep>
 
-<ProofStep number={4} target="desigualdad" title="Aplicación del teorema del ángulo exterior">
-Por el teorema del ángulo exterior en <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, todo ángulo exterior de un triángulo es estrictamente mayor que cualquiera de los ángulos interiores no adyacentes. Aplicado a $\triangle ABP$:
+<ProofStep number={6} target="lineL2" diagramStep="step5" title="Conclusión con el Axioma IV">
+Las rectas $m$ y <VisualBind element="lineL2" color="carbon">$\ell_2$</VisualBind> pasan por $B$, que no incide con $\ell_1$, y ambas son paralelas a $\ell_1$ en $\pi$. Por el <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axioma IV</ConceptLink>, $m = \ell_2$. Entonces $Q$ es un punto de $\ell_2$ en el mismo semiplano que $P_2$ respecto a $t$, luego $\overrightarrow{BQ} = \overrightarrow{BP_2}$ y $\angle QBA = \beta$. En consecuencia:
 
 <Formula>
-  $$ \alpha > \beta $$
+  $$ \beta = \angle QBA \cong \alpha $$
 </Formula>
-</ProofStep>
 
-<ProofStep number={5} target="conclusion" title="Contradicción y conclusión formal">
-La desigualdad $\alpha > \beta$ contradice directamente la hipótesis de partida $\alpha \cong \beta$. Puesto que la suposición de intersección conduce a una contradicción lógica, las rectas $l$ y $m$ no pueden encontrarse en ningún punto y son necesariamente <ConceptLink targetId="paralelas">paralelas</ConceptLink> ($l \parallel m$).
+Las dos direcciones juntas dan $\ell_1 \parallel \ell_2 \iff \alpha \cong \beta$.
 </ProofStep>
 
 <Separador />
@@ -57,7 +68,7 @@ La desigualdad $\alpha > \beta$ contradice directamente la hipótesis de partida
 ### Análisis deductivo
 
 <Nota>
-  Proposición I.27 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink>. Esta demostración no recurre al <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>, por lo que es válida en toda la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+  La dirección (⇐) es la Proposición I.27 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> de <ConceptLink targetId="euclides">Euclides</ConceptLink> y solo usa los axiomas de <ConceptLink targetId="incidencia">incidencia</ConceptLink>, <ConceptLink targetId="estar-entre">orden</ConceptLink> y <ConceptLink targetId="congruencia">congruencia</ConceptLink>: es válida en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> sin axiomas de continuidad. La dirección (⇒), Proposición I.29, usa el Axioma IV únicamente en el paso 6; en el <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink> ese paso falla, porque por $B$ pasan varias paralelas a $\ell_1$.
 </Nota>
 
 </DemonstrationSection>

@@ -2,29 +2,32 @@ export const metadata = {
   id: "axioma-incidencia-4",
   lang: "eu",
   type: "axioma",
-  title: "I.4 Axioma (Planoaren determinazioa)",
-  description: "Kolinealak ez diren edozein hiru puntutatik gutxienez plano bat igarotzen da.",
+  title: "I.4 axioma (Planoaren determinazioa)",
+  description: "Kolinealak ez diren edozein hiru puntutatik gutxienez plano bat igarotzen da, eta plano orok gutxienez puntu batekin intziditzen du.",
   branch: "51A",
   tags: ["geometria", "intzidentzia", "axioma", "planoa"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §2", role: "primary" }
   ]
 };
 
 import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 
-<Capitular letra="K" />olinealak ez diren edozein hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> emanda, hirurekin <ConceptLink targetId="incidencia" isDependency={true}>intzidente</ConceptLink> den gutxienez <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bat existitzen da.
+<Capitular letra="K" />olinealak ez diren edozein hiru <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> emanda, hirurekin <ConceptLink targetId="incidencia" isDependency={true}>intzidente</ConceptLink> den gutxienez <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bat existitzen da. Plano orok gutxienez puntu batekin intziditzen du.
 
-Postulatu honek determinazio linealaren printzipioa bi dimentsioko espaziora eramaten du: bi puntuk zuzen bat finkatzen duten bezala, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru puntuk plano baten existentzia ziurtatzen dute <ConceptLink targetId="espacio">espazioan</ConceptLink>.
+Lehen klausula <ConceptLink targetId="axioma-incidencia-1">I.1 axiomaren</ConceptLink> existentzia-zatiaren baliokidea da planoetarako: bi puntu desberdinek zuzen komun bat duten bezala, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru puntuk plano komun bat dute; plano horren bakartasuna <ConceptLink targetId="axioma-incidencia-5">I.5 axiomak</ConceptLink> ematen du. Bigarren klausulak punturik gabeko planoak baztertzen ditu, eta, horrela, ez dago <ConceptLink targetId="traza">puntu-trazadura</ConceptLink> hutsa duen planorik.
 
-<Definicion title="Enuntziatu Formala">
-  <ConceptLink targetId="colinealidad">Kolinealak</ConceptLink> ez diren edozein hiru <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako (<VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind>), gutxienez <VisualBind element="polyTriangulo" color="canela">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> bat existitzen da, non hirurek $\pi$-n <ConceptLink targetId="incidencia">intziditzen</ConceptLink> duten:
+<Definicion title="Enuntziatu formala">
+  <ConceptLink targetId="colinealidad">Kolinealak</ConceptLink> ez diren edozein hiru <ConceptLink targetId="punto">puntutarako</ConceptLink> (<VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind>), gutxienez <VisualBind element="polyTriangulo" color="canela">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> bat existitzen da, hiru puntuek $\pi$ planoarekin <ConceptLink targetId="incidencia">intziditzen</ConceptLink> dutela. Gainera, edozein $\pi$ planotarako, $\pi$ planoarekin intziditzen duen $P$ puntu bat existitzen da:
   $$
-  \forall A, B, C \in \mathcal{P} \ \bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \implies \exists \pi \in \Pi \ (A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi)\bigr)
+  \begin{aligned}
+  &\forall A, B, C \in \mathcal{P} \ \bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \implies \exists \pi \in \Pi \ (A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi)\bigr) \\
+  &\land \ \forall \pi \in \Pi \ \exists P \in \mathcal{P} \ (P \, \mathbf{I} \, \pi)
+  \end{aligned}
   $$
 </Definicion>
 

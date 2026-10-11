@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "caso-de-uso",
   title: "Satelite bidezko kokapena (GPS) eta trilaterazioa",
-  description: "Distantzia euklidearren eta Pitagorasen teoremaren aplikazioa lurreko hartzaileen hiru dimentsioko kokapen zehatza kalkulatzeko.",
+  description: "Distantzia euklidearraren eta Pitagorasen teoremaren aplikazioa hartzaile bat kokatzeko, posizio ezaguneko sateliteetarainoko distantzietatik abiatuta.",
   branch: "51M",
   concept: "teorema-pitagoras",
   domain: "ingeniería",
@@ -14,44 +14,44 @@ export const metadata = {
 import { GpsTrilateracion } from '@content/diagrams/CasosUso/GpsTrilateracion';
 export const Simulation = GpsTrilateracion;
 
-<Capitular letra="K" />okatze Globaleko Sistemaren (GPS) teknologia geometria analitikoaren eta <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremaren</ConceptLink> aplikazio teknologiko hedatuenetako bat da. Prozedura matematiko honek, *trilaterazioa* izenekoak, hartzaile baten espazio-koordenatu absolutuak zehazten ditu orbitan dauden erreferentziazko sateliteek igorritako seinale elektromagnetikoen hedapen-denborak neurtuz.
+<Capitular letra="K" />okapen Globaleko Sistemak (GPS) *<ConceptLink targetId="trilateracion">trilaterazio</ConceptLink>* bidez kokatzen du hartzaile bat: posizio ezaguneko sateliteek igorritako seinaleen hedapen-denboretatik abiatuta, hartzaileak satelite bakoitzerainoko <ConceptLink targetId="distancia">distantzia</ConceptLink> kalkulatzen du, eta bere koordenatuak ekuazio-sistema bat ebatziz lortzen ditu. Tresna matematiko nagusia <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pitagorasen teorema</ConceptLink> da, <ConceptLink targetId="geometria-analitica">geometria analitikoan</ConceptLink> bi punturen arteko <ConceptLink targetId="metrica-euclidiana">distantzia euklidearraren</ConceptLink> adierazpena ematen baitu.
 
 <Separador />
 
-### Printzipio metrikoa eta distantziaren ekuazioa
+### Distantziaren ekuazioa
 
-<VisualBind element="R" color="mora">$R(x, y)$ hartzaileak</VisualBind> <ConceptLink targetId="modelo-cartesiano">plano kartesiarrean</ConceptLink> duen posizioa kalkulatzen du $S_i$ satelite bakoitzera duen distantzia geometrikoa neurtuz. <VisualBind element="s1" color="mora">$S_1(x_1, y_1)$ sateliterako</VisualBind>, ardatzen gaineko proiekzioek <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink> baten katetoak osatzen dituzte:
+Lehenik, <ConceptLink targetId="modelo-cartesiano">plano kartesiarrean</ConceptLink> lan egiten da, $\mathbb{R}^2$-n. Izan bitez <VisualBind element="R" color="mora">$R = (x, y)$</VisualBind> hartzailearen posizio ezezaguna eta <VisualBind element="s1" color="mora">$S_1 = (x_1, y_1)$</VisualBind> satelite batena, eta $d_1 = d(R, S_1)$ neurtutako distantzia. Koordenatuen diferentziak <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink> baten <ConceptLink targetId="cateto">katetoak</ConceptLink> dira, eta haren <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> $\overline{RS_1}$ <ConceptLink targetId="segmento">zuzenkia</ConceptLink> da:
 
-- <VisualBind element="catH1" color="mora">Kateto horizontala</VisualBind>: $\Delta x = |x - x_1|$
-- <VisualBind element="catV1" color="mora">Kateto bertikala</VisualBind>: $\Delta y = |y - y_1|$
-- <VisualBind element="rad1" color="mora">Hipotenusa (distantzia euklidearra)</VisualBind>: $d_1$
+- <VisualBind element="catH1" color="mora">Kateto horizontala</VisualBind>: $|x - x_1|$
+- <VisualBind element="catV1" color="mora">Kateto bertikala</VisualBind>: $|y - y_1|$
+- <VisualBind element="rad1" color="mora">Hipotenusa</VisualBind>: $d_1$
 
-Pitagorasen teoremaren arabera, distantzia euklidearrak $S_1$ zentroa duen <ConceptLink targetId="circunferencia">zirkunferentziaren</ConceptLink> ekuazio koadratikoa ezartzen du:
+Pitagorasen teoremaren arabera, hartzailea $S_1$ <ConceptLink targetId="centro">zentroko</ConceptLink> eta $d_1$ <ConceptLink targetId="radio">erradioko</ConceptLink> <ConceptLink targetId="circunferencia">zirkunferentzian</ConceptLink> dago:
 
 <Formula>
-  $$ d_1^2 = (x - x_1)^2 + (y - y_1)^2 $$
+  $$ (x - x_1)^2 + (y - y_1)^2 = d_1^2 $$
 </Formula>
 
 <Separador />
 
-### Zirkunferentzien ebakidura eta ebazpena
+### Zirkunferentzien ebakidura
 
-Hartzailearen $(x, y)$ koordenatu ezezagunak modu bakarrean kalkulatzeko, aldi bereko ekuazio koadratikoen sistema bat ebazten da:
+Satelite bakoitzak mota bereko ekuazio bat gehitzen du:
 
-- **Satelite bat ($S_1$)**: <VisualBind element="rad1" color="mora">$d_1$ erradioko</VisualBind> <VisualBind element="circ1" color="mora">lehen zirkunferentzia</VisualBind> bat definitzen du, non hartzailea kokatuta dagoen.
-- **Bi satelite ($S_1$ eta $S_2$)**: <VisualBind element="s2" color="ocre">$S_2(x_2, y_2)$ satelitea</VisualBind> gehitzeak <VisualBind element="rad2" color="ocre">$d_2$ erradioko</VisualBind> <VisualBind element="circ2" color="ocre">bigarren zirkunferentzia</VisualBind> sartzen du:
+- **Satelite bat ($S_1$)**: hartzailea <VisualBind element="rad1" color="mora">$d_1$</VisualBind> erradioko <VisualBind element="circ1" color="mora">zirkunferentziako</VisualBind> puntu batean dago.
+- **Bi satelite ($S_1$ eta $S_2$)**: <VisualBind element="s2" color="ocre">$S_2 = (x_2, y_2)$</VisualBind> sateliteak <VisualBind element="rad2" color="ocre">$d_2$</VisualBind> erradioko <VisualBind element="circ2" color="ocre">bigarren zirkunferentzia</VisualBind> ematen du:
   <Formula>
-    $$ d_2^2 = (x - x_2)^2 + (y - y_2)^2 $$
+    $$ (x - x_2)^2 + (y - y_2)^2 = d_2^2 $$
   </Formula>
-  Bi zirkunferentzien ebakidurak posizio posibleak planoko bi puntutara mugatzen ditu.
-- **Hiru satelite ($S_1$, $S_2$ eta $S_3$)**: <VisualBind element="s3" color="pavo">$S_3(x_3, y_3)$ satelitea</VisualBind> gehitzean <VisualBind element="rad3" color="pavo">$d_3$ erradioko</VisualBind> <VisualBind element="circ3" color="pavo">hirugarren zirkunferentzia</VisualBind> lortzen da:
+  Bi ekuazioak kenduz gero, $x^2$ eta $y^2$ gaiak desagertzen dira eta ekuazio lineal bat geratzen da: $\overleftrightarrow{S_1S_2}$ zuzenarekiko <ConceptLink targetId="perpendicular">perpendikularra</ConceptLink> den <ConceptLink targetId="recta">zuzen</ConceptLink> batena (<ConceptLink targetId="eje-radical">ardatz erradikala</ConceptLink>). Zuzen batek zirkunferentzia bat gehienez bi puntutan ebakitzen duenez, zentro desberdineko bi zirkunferentziak gehienez bi puntutan ebakitzen dira: bi sateliteren neurketek, oro har, bi posizio posible uzten dituzte.
+- **Hiru satelite ($S_1$, $S_2$ eta $S_3$)**: <VisualBind element="s3" color="pavo">$S_3 = (x_3, y_3)$</VisualBind> sateliteak <VisualBind element="rad3" color="pavo">$d_3$</VisualBind> erradioko <VisualBind element="circ3" color="pavo">hirugarren zirkunferentzia</VisualBind> ematen du:
   <Formula>
-    $$ d_3^2 = (x - x_3)^2 + (y - y_3)^2 $$
+    $$ (x - x_3)^2 + (y - y_3)^2 = d_3^2 $$
   </Formula>
-  Hiru zirkunferentzien aldi bereko ebakidurak zalantza guztiak ezabatzen ditu, <VisualBind element="R" color="mora">$R(x, y)$ hartzailearen</VisualBind> posizio zehatza finkatuz.
+  Lehen ekuazioa bigarrenari eta hirugarrenari kenduz, bi ekuazio lineal lortzen dira, eta haien zuzenak $\overleftrightarrow{S_1S_2}$ eta $\overleftrightarrow{S_1S_3}$ zuzenekiko perpendikularrak dira. $S_1, S_2, S_3$ zentroak lerrokatuta ez badaude (<ConceptLink targetId="colinealidad">kolinealak ez badira</ConceptLink>), zuzen horiek ez dira <ConceptLink targetId="paralelas">paraleloak</ConceptLink>, eta puntu bakar batean ebakitzen dira: <VisualBind element="R" color="mora">$R$</VisualBind> hartzailearen posizioa zehaztuta geratzen da. Hiru zentroak lerrokatuta badaude, zentroen zuzenarekiko simetrikoak diren bi punturen arteko anbiguotasunak bere horretan dirau.
 
 <Separador />
 
-### Hiru dimentsioko hedapena eta erlojuen sinkronizazioa
+### Espaziorako hedapena eta erlojuaren zuzenketa
 
-Hiru dimentsioko $\mathbb{R}^3$ espazioan, satelite bakoitzak esfera bat sortzen du: $d_i = \sqrt{(x - x_i)^2 + (y - y_i)^2 + (z - z_i)^2}$. Hartzailearen barne-erlojuaren $\Delta t$ denbora-desbiderapena zuzentzeko, laugarren $S_4$ satelite bat beharrezkoa da, lau ezezaguneko $(x, y, z, \Delta t)$ sistema ez-lineala ebatziz.
+$\mathbb{R}^3$ espazioan, neurketa bakoitzak $S_i = (x_i, y_i, z_i)$ zentroko eta $d_i$ erradioko <ConceptLink targetId="esfera">esfera</ConceptLink> batean kokatzen du hartzailea, non $d_i^2 = (x - x_i)^2 + (y - y_i)^2 + (z - z_i)^2$ den. Gainera, hartzailearen erlojua ez dago sateliteen erloju atomikoekin sinkronizatuta: neurtutako distantziek errore komun bat dute, $\Delta t$ desfase ezezagun baten ondorioz. Horregatik, gutxienez lau satelite behar dira, eta horiek lau ezezaguneko $(x, y, z, \Delta t)$ lau ekuazio ez-linealeko <ConceptLink targetId="sistema-ecuaciones">sistema</ConceptLink> ematen dute.

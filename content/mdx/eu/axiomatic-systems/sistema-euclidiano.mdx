@@ -3,8 +3,10 @@ export const metadata = {
   lang: "eu",
   type: "sistema-axiomatico",
   title: "Sistema axiomatiko euklidearra",
-  description: "Plano-geometria estandarraren egitura axiomatiko kanonikoa, geometria absolutuak eta Playfair-en paraleloen axiomak osatua.",
+  description: "Geometria euklidearraren sistema axiomatikoa: geometria absolutua gehi paraleloei buruzko IV. axioma, Playfairren forman.",
   branch: "51M",
+  branches: ["51M", "51A", "03B"],
+  tags: ["geometria-euclidiana", "paralelas", "hilbert", "fundamentos"],
   axiomas: [
     "axioma-incidencia-1",
     "axioma-incidencia-2",
@@ -33,39 +35,41 @@ export const metadata = {
   authors: ["euclides", "hilbert"],
   hasSimulation: false,
   sources: [
-    { title: "Elementuak", author: "Euclides", locator: "I. liburua, 5. postulua", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §5", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. liburua, 5. postulatua", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §7", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "II. kapitulua", role: "secondary" }
   ]
 };
 
-<Capitular letra="S" />istema axiomatiko euklidearra plano eta espazio arruntaren geometria klasikoaren esparru formala da. <ConceptLink targetId="euclides">Euklidesen</ConceptLink> paraleloen postulua (Playfair-en bakartasun-formulazioan) <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> gainean txertatzean lortzen da; ondorioz, espazioaren kurbadura nulua finkatzen da eta edozein eskalatan irudi antzekoak existitzea ahalbidetzen da.
+<Capitular letra="S" />**istema axiomatiko euklidearra** <ConceptLink targetId="sistema-absoluto">geometria absolutuari</ConceptLink> <ConceptLink targetId="paralelas">paraleloei</ConceptLink> buruzko <ConceptLink targetId="axioma-paralelas-euclides">IV. axioma</ConceptLink> gehituz lortzen den <ConceptLink targetId="sistema-axiomatico">sistema axiomatikoa</ConceptLink> da: <ConceptLink targetId="recta">zuzen</ConceptLink> batetik kanpoko <ConceptLink targetId="punto">puntu</ConceptLink> batetik, biek zehazten duten <ConceptLink targetId="plano">planoan</ConceptLink>, gehienez zuzen horren paralelo bat igarotzen da.
+
+<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> lanaren bosgarren postulatua <ConceptLink targetId="secante">zuzen ebakitzaile</ConceptLink> batek ebakitako bi zuzenen bidez enuntziatzen zen; <ConceptLink targetId="hilbert">Hilbertek</ConceptLink> John Playfairrek (1795) zabaldutako bakartasun-forma baliokidea hartu zuen. Gutxienez paralelo bat existitzea geometria absolutuaren <ConceptLink targetId="teorema">teorema</ConceptLink> bat denez, IV. axiomak bakartasuna baino ez du ezarri behar.
+
+<Definicion title="Egitura formala">
+  **Egitura euklidear** bat <ConceptLink targetId="axioma-paralelas-euclides">IV. axioma</ConceptLink> ere betetzen duen $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi; \ \mathbf{I}, \ *, \ \cong_{\mathrm{seg}}, \ \cong_{\angle})$ geometria absolutuaren egitura bat da; beraz, $\mathcal{T}_{\text{euc}} = \mathrm{I} \cup \mathrm{II} \cup \mathrm{III} \cup \mathrm{IV} \cup \mathrm{V}$. Paraleloen existentziari buruzko teorema absolutuarekin batera, IV. axiomak existentzia eta bakartasuna ematen ditu: $\pi \in \Pi$ plano orotarako, $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$ betetzen duen $\ell \in \mathcal{L}$ zuzen orotarako eta $P \in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$ puntu orotarako,
+  $$
+  \exists! \, m \in \mathcal{L} \ \bigl( \operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land P \,\mathbf{I}\, m \land m \parallel \ell \bigr)
+  $$
+  non <ConceptLink targetId="traza">trazak</ConceptLink> <ConceptLink targetId="coplanaridad">koplanartasuna</ConceptLink> adierazten duen eta $\parallel$ zuzen koplanarren arteko <ConceptLink targetId="paralelas">paralelotasuna</ConceptLink> (bihurkorra) den.
+</Definicion>
 
 <Separador />
 
-### Eraketa axiomatikoa
+### Teorema bereizgarriak
 
-Sistema euklidearrak Hilberten talde guztiak biltzen ditu paraleloen bakartasun-postuluarekin batera:
+IV. axioma da geometria euklidearra hiperbolikotik bereizten duten emaitzen iturria:
 
-1. **<ConceptLink targetId="sistema-absoluto">Geometria absolutuaren</ConceptLink> oinarria**: <ConceptLink targetId="sistema-incidencia">Intzidentzia-</ConceptLink> (I.1-I.8), <ConceptLink targetId="axioma-orden-1">ordena-</ConceptLink> (II.1-II.4), <ConceptLink targetId="axioma-congruencia-1">kongruentzia-</ConceptLink> (III.1-III.5) eta jarraitutasun-axioma (V.1-V.2) guztiak biltzen ditu.
-2. **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euklidesen paraleloen axioma (IV.1 / Playfair)</ConceptLink>**: $\mathcal{P}$ plano bateko edozein $l$ <ConceptLink targetId="recta">zuzenetarako</ConceptLink> eta bertatik kanpoko edozein $P \notin l$ <ConceptLink targetId="punto">puntutarako</ConceptLink>, $P$ puntutik igarotzen den eta $l$ ebakitzen ez duen $l'$ zuzen bakarra existitzen da:
-   $$
-   \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists! l' \in \mathcal{L} \ (P \in l' \land l \cap l' = \emptyset)
-   $$
-
-<Separador />
-
-### Sistemaren funtsezko teoremak
-
-Paraleloen axioma euklidearra gehitzeak geometria sintetikoaren emaitza nagusiak sortzen ditu:
-
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Angelu-batura aldaezina</ConceptLink>**: Edozein <ConceptLink targetId="triangulo">triangeluren</ConceptLink> barne-<ConceptLink targetId="angulo">angeluen</ConceptLink> batura $180^\circ$ ($\pi\text{ rad}$) da zehazki.
-- **<ConceptLink targetId="teorema-tales">Talesen teorema eta antzekotasuna</ConceptLink>**: Zuzen ebakitzaileek ebakitako zuzen paraleloen sortak <ConceptLink targetId="segmento">zuzenki</ConceptLink> proportzionalak eratzen ditu, kongruenteak ez diren irudi antzekoen existentzia ahalbidetuz.
-- **<ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>**: Edozein <ConceptLink targetId="triangulo-rectangulo">triangelu laukizuzenean</ConceptLink>, <ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink> gaineko karratuaren azalera <ConceptLink targetId="cateto">katetoen</ConceptLink> gaineko karratuen azaleren baturaren berdina da ($a^2 + b^2 = c^2$).
-- **Paralelogramo eta laukizuzenen existentzia**: Lau angelu zuzen eta aurkako alde kongruenteak dituzten laukiak existitzen dira.
+- **Barne-angelu txandakakoak**: bi zuzen paralelo desberdin zuzen ebakitzaile batek ebakitzen baditu, <ConceptLink targetId="angulos-alternos-internos">barne-angelu txandakakoak</ConceptLink> <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira; hori da <ConceptLink targetId="teorema-angulos-alternos-internos">barne-angelu txandakakoen teoremaren</ConceptLink> IV. axioma behar duen inplikazioa.
+- **Paralelotasunaren <ConceptLink targetId="transitividad">iragankortasuna</ConceptLink>**: plano batean, hirugarren baten paraleloak diren bi zuzen elkarren paraleloak dira; paralelotasuna <ConceptLink targetId="relacion-equivalencia">baliokidetza-erlazioa</ConceptLink> da.
+- **Angeluen batura**: <ConceptLink targetId="triangulo">triangelu</ConceptLink> ororen <ConceptLink targetId="angulo">angeluen</ConceptLink> batura bi <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> da; <ConceptLink targetId="medida-angular">angelu-neurriarekin</ConceptLink>, $|\alpha| + |\beta| + |\gamma| = 180^\circ$ (<ConceptLink targetId="teorema-suma-angulos-triangulo">triangeluaren angeluen baturaren teorema</ConceptLink>).
+- **Laukizuzenak**: lau angelu zuzen dituzten <ConceptLink targetId="cuadrilatero">laukiak</ConceptLink> (<ConceptLink targetId="rectangulo">laukizuzenak</ConceptLink>) badaude, eta horien gainean eraikitzen da <ConceptLink targetId="teoria-medida-area">azaleraren teoria</ConceptLink>.
+- **Proportzioa eta <ConceptLink targetId="semejanza">antzekotasuna</ConceptLink>**: <ConceptLink targetId="teorema-tales">Talesen teorema</ConceptLink> eta kongruenteak ez diren triangelu antzekoen existentzia.
+- **<ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink>**: angelu zuzena $C$ erpinean duen $\triangle ABC$ <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink> batean, $a = |BC|$, $b = |CA|$ eta $c = |AB|$ <ConceptLink targetId="longitud">luzerekin</ConceptLink>, $a^2 + b^2 = c^2$ betetzen da.
 
 <Separador />
 
-### Eredu kanonikoa eta sendotasuna
+### Eredua, sendotasuna eta kategoritasuna
 
-- **<ConceptLink targetId="modelo-cartesiano">Eredu kartesiarra $\mathbb{R}^n$</ConceptLink>**: Sistema euklidearraren eredu analitiko kanonikoa da, biderkadura eskalar euklidearraz hornitua.
-- **Sendotasuna eta kategoriazkotasuna**: Hilbertek frogatu zuen sistema axiomatiko euklidearraren sendotasuna $\mathbb{R}$ gorputz errealaren aritmetikaren sendotasunaren baliokidea dela. Jarraitutasun-axiomak barne hartuta, sistema kategoriala da finkatutako dimentsio bakoitzean.
+Eredu kanonikoa $\mathbb{R}^3$ espazio kartesiarra da (<ConceptLink targetId="modelo-cartesiano">eredu kartesiarra</ConceptLink>): bertan, puntuak zenbaki errealen hirukoteak dira, zuzenak eta planoak ekuazio linealen bidez deskribatzen dira, eta kongruentzia <ConceptLink targetId="distancia">distantzia</ConceptLink> euklidearraren bidez definitzen da; haren $\mathbb{R}^2$ bertsio lauak axioma lauak modelatzen ditu. *Grundlagen* lanaren II. kapituluan, Hilbertek mota horretako eredu analitikoak eraikitzen ditu zenbaki-<ConceptLink targetId="cuerpo">gorputz</ConceptLink> baten gainean, eta horrela frogatzen du sistema <ConceptLink targetId="consistencia-logica">sendoa</ConceptLink> dela gorputz horren aritmetika sendoa bada (sendotasun erlatiboa).
+
+V.1 eta V.2 jarraitutasun-axiomekin, sistema <ConceptLink targetId="categoricidad">kategorikoa</ConceptLink> da: haren eredu guztiak <ConceptLink targetId="isomorfismo">isomorfoak</ConceptLink> dira egitura arrunta duen $\mathbb{R}^3$ espazioarekin. <ConceptLink targetId="axioma-completitud">V.2 axiomarik</ConceptLink> gabe, aldiz, eredu ez-isomorfoak badaude, hala nola zenbaki aljebraiko errealen gorputzaren gainean eraikitako espazioa.

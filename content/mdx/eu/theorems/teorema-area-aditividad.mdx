@@ -1,52 +1,47 @@
 export const metadata = {
   id: "teorema-area-aditividad",
+  lang: "eu",
   type: "teorema",
-  title: "Azaleraren aditibitate-teorema",
-  description: "Planoko eskualde poligonal bat barnealde disjuntuko azpi-eskualde poligonal kopuru finitu batean banatzen bada, eskualde osoaren azalera bere zatien azaleren baturaren berdina da.",
-  statement: "R eskualdea binaka barnealde disjuntuko R1, R2, ..., Rn n eskualde poligonalen batasuna bada, orduan Azalera(R) = ∑ Azalera(Ri) betetzen da.",
+  title: "Azaleraren batukortasun-teorema",
+  description: "Eskualde poligonal bat bikoteka barnealde disjuntuak dituzten eskualde poligonal kopuru finitu baten bildura bada, haren azalera piezen azaleren batura da.",
+  statement: "R = R₁ ∪ … ∪ Rₙ bada, R₁, …, Rₙ bikoteka barnealde disjuntuko eskualde poligonalak izanik, orduan A(R) = A(R₁) + … + A(Rₙ).",
   branch: "51M",
+  tags: ["area", "region-poligonal", "aditividad"],
   hasSimulation: false,
-  authors: ["euclides", "hilbert"],
+  difficulty: "básico",
+  authors: ["hilbert"],
   demos: ["demo-area-aditividad"],
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo IV, §19", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "IV. kapitulua", role: "primary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "5. kapitulua", role: "formalization" }
   ]
 };
 
-<Capitular letra="A" />zaleraren aditibitate-teorema plano euklidetarreko <ConceptLink targetId="teoria-medida-area">azalera-neurketaren</ConceptLink> teoriaren zutabe nagusia da. Bermatzen du eskualde poligonalei esleitutako azalera-neurriaren funtzioa partizioekiko inbariantea den neurri finituki aditiboa dela.
+<Capitular letra="E" />skualde poligonal bat bikoteka <ConceptLink targetId="interior-triangulo">barnealde</ConceptLink> disjuntuak dituzten <ConceptLink targetId="region-poligonal" isDependency={true}>eskualde poligonal</ConceptLink> kopuru finitu baten bildura bada, haren <ConceptLink targetId="teoria-medida-area" isDependency={true}>azalera</ConceptLink> piezen azaleren batura da.
+
+<ConceptLink targetId="teoria-medida-area" isDependency={true}>Azalera-funtzioaren</ConceptLink> definizioak bi piezatarako baino ez du eskatzen batukortasuna; <ConceptLink targetId="teorema">teorema</ConceptLink> honek edozein pieza kopuru finitutara zabaltzen du, eta horrela erabiltzen da laukizuzen bat karratuetan, triangelu bat bi triangelu angeluzuzenetan edo karratu bat laukizuzen eta triangeluetan deskonposatzean. Irudiak zatituz eta berriro osatuz azalerak kalkulatzea ahalbidetzen duen urratsa da.
+
+<Definicion title="Azaleraren batukortasun-teoremaren enuntziatu formala">
+Izan bedi $\operatorname{A}$ $\sigma$ <ConceptLink targetId="plano" isDependency={true}>planoko</ConceptLink> <ConceptLink targetId="region-poligonal" isDependency={true}>eskualde poligonalen</ConceptLink> gaineko <ConceptLink targetId="teoria-medida-area" isDependency={true}>azalera-funtzio</ConceptLink> bat, eta izan bitez $R_1, \dots, R_n \in \mathcal{R}_\sigma$, $n \geq 1$ izanik, bikoteka barnealde disjuntuak dituzten eskualdeak: $i \neq j$ denean, $R_i \cap R_j$ <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink> kopuru finitu baten bilduran dago. $R = R_1 \cup \dots \cup R_n$ bada, orduan
+
+$$
+\operatorname{A}(R) = \sum_{i=1}^{n} \operatorname{A}(R_i)
+$$
+</Definicion>
 
 <Separador />
 
-### Enuntziatu formala
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorioak">
+    <PropiedadItem id="area-regiones-equidescomponibles" title="Eskualde baliokide deskonposagarriak" formula="P = \bigcup_{i=1}^{n} T_i,\ Q = \bigcup_{i=1}^{n} T'_i,\ T_i \cong T'_i \implies \operatorname{A}(P) = \operatorname{A}(Q)">
+      Bi <ConceptLink targetId="region-poligonal">eskualde poligonal</ConceptLink> bikoteka <ConceptLink targetId="congruencia-triangulos">kongruenteak</ConceptLink> diren eta barnealde disjuntuak dituzten eskualde triangeluarretan deskonposatzen badira (<ConceptLink targetId="equidescomponibilidad">baliokide deskonposagarritasuna</ConceptLink>), azalera bera dute: nahikoa da piezen azalerak batzea.
+    </PropiedadItem>
+    <PropiedadItem id="monotonia-area" title="Monotonia" formula="R' \subseteq R \implies \operatorname{A}(R') \leq \operatorname{A}(R)">
+      $R' \subseteq R$ bada, $R$ eskualdea $R'$ eskualdearen eta $R \setminus R'$ multzoaren itxiduraren bildura da, eta biek barnealde disjuntuak dituzte; azaleraren batukortasunagatik eta positibotasunagatik, $\operatorname{A}(R') \leq \operatorname{A}(R)$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-Izan bedi $R \subset \mathcal{P}$ planoko eskualde poligonal bat. Demagun $R$ eskualdea $R_1, R_2, \dots, R_n$ eskualde poligonalen batasun finitua dela:
-
-<Formula>
-  $$ R = \bigcup_{i=1}^n R_i $$
-</Formula>
-
-non $i \neq j$ bikote orotarako $R_i$-ren barnealdea eta $R_j$-ren barnealdea disjuntuak diren ($\text{Int}(R_i) \cap \text{Int}(R_j) = \emptyset$). Azalera-neurriaren funtzioaren propietate aditiboa zorrozki egiaztatzen da:
-
-<Formula>
-  $$ \text{Azalera}(R) = \sum_{i=1}^n \text{Azalera}(R_i) $$
-</Formula>
-
-Hau da, azalera osoaren neurria azpi-eskualde osagarri bakoitzaren azaleren batura eskalarraren berdina da.
-
-<Separador />
-
-### Oinarritze axiomatikoa eta deskonposagarritasuna
-
-<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> formalizazioan, azaleraren kontzeptua kalkulu infinitesimala saihesteko eraikitzen da, deskonposagarritasun baliokidearen bidez:
-- Bi poligono $P$ eta $Q$ **bateragarriki deskonposagarriak** direla esaten da baldin eta hurrenez hurren <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> diren triangelu kopuru finitu berean bana badaitezke.
-- Aditibitate-teoremaren ondorioz, bateragarriki deskonposagarriak diren bi poligonok nahitaez azalera bera dute ($\text{Azalera}(P) = \text{Azalera}(Q)$).
-- Bolyai-Gerwienen teoremak ezartzen du plano euklidetarrean azalera bera duten edozein bi poligono beti direla bateragarriki deskonposagarriak.
-
-<Separador />
-
-### Inbariantzia eta normalizazioa
-
-Azalera-neurriaren funtzioak oinarrizko hiru propietate betetzen ditu:
-1. **Positibotasuna**: $\text{Azalera}(R) > 0$ eskualde poligonal ez-huts orotarako.
-2. **Kongruentzia-inbariantzia**: $R_1 \cong R_2$ bada, orduan $\text{Azalera}(R_1) = \text{Azalera}(R_2)$.
-3. **Aditibitate finitua**: $\text{Azalera}(R_1 \cup R_2) = \text{Azalera}(R_1) + \text{Azalera}(R_2)$ barnealde disjuntuko eskualdeetarako.
+<Nota>
+Lehen ondorioaren alderantzizkoa betetzen da plano euklidearrean: azalera bereko bi eskualde poligonal baliokide deskonposagarriak dira (<ConceptLink targetId="teorema-bolyai-gerwien">Bolyai–Gerwienen teorema</ConceptLink>). Espazioan, ordea, ez da betetzen: <ConceptLink targetId="dehn">Max Dehnek</ConceptLink> (1900) frogatu zuen badirela bolumen bereko <ConceptLink targetId="poliedro">poliedroak</ConceptLink> baliokide deskonposagarriak ez direnak, eta horrela ebatzi zuen <ConceptLink targetId="tercer-problema-hilbert">Hilberten hirugarren problema</ConceptLink>; Sydlerrek (1965) alderantzizkoa frogatu zuen: bolumen bera eta <ConceptLink targetId="invariante-dehn">Dehnen inbariante</ConceptLink> bera dituzten bi poliedro baliokide deskonposagarriak dira.
+</Nota>

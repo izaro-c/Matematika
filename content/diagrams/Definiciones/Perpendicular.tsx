@@ -592,7 +592,17 @@ export const PerpendicularSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastra A, B, C, D o P"
+  "note": "Arrastra A, B, C, D o P",
+  "translations": {
+    "eu": {
+      "title": "Perpendikularra",
+      "note": "Arrastatu A, B, C, D edo P"
+    },
+    "en": {
+      "title": "Perpendicular",
+      "note": "Drag A, B, C, D, or P"
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

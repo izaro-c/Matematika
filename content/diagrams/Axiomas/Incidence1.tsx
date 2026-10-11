@@ -145,7 +145,17 @@ export const Incidence1Spec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra los puntos A, B"
+  "note": "Arrastra los puntos A y B: determinan una única recta que pasa por ambos.",
+  "translations": {
+    "eu": {
+      "title": "1. Intzidentzia-axioma",
+      "note": "Arrastatu A eta B puntuak: bietatik igarotzen den zuzen bakar bat zehazten dute."
+    },
+    "en": {
+      "title": "Incidence Axiom 1",
+      "note": "Drag points A and B: they determine a unique line passing through both."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

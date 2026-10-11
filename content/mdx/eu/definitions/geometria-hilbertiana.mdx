@@ -4,62 +4,63 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Geometria hilbertiarra",
-  description: "David Hilbertek 1899an proposatutako geometria euklidearraren refundazio axiomatiko zorrotza, bost talde independentetan banatutako 20 axiomatan oinarritua.",
+  description: "David Hilbertek 1899an argitaratutako geometria euklidearraren axiomatizazioa; forma kanonikoan (7. argitalpena, 1930) bost taldetan banatutako 20 axiomak ditu.",
   branch: "51M",
   hasSimulation: false,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua", role: "primary" },
-    { title: "Hilbert's Foundations of Geometry", author: "Howard Eves", locator: "5. Kapitulua", role: "secondary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "II. Kapitulua", role: "primary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "2. Kapitulua", role: "secondary" }
   ]
 };
 
-<Capitular letra="G" />**eometria hilbertiarra** <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> bere *Grundlagen der Geometrie* (1899) lan nagusian garatutako <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> sistema axiomatiko formala da.
+<Capitular letra="G" />**eometria hilbertiarra** <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> *Grundlagen der Geometrie* (1899) lanean garatutako <ConceptLink targetId="geometria-sintetica">geometria sintetikoaren</ConceptLink> sistema axiomatiko formala da. Hemen 7. argitalpenaren (1930) arabera aipatzen da: lehenengoak beste ordena batean zituen taldeak (paraleloak kongruentziaren aurretik) eta ordena-axioma erredundante bat zuen, E. H. Moorek 1902an adierazi zuena.
 
-Geometria sintetikoaren metodo formalista modernoaren paradigma fundazionala da: intuizio espazialetatik aldendu eta objektu geometrikoak <ConceptLink targetId="axioma">axiomek</ConceptLink> haien artean ezartzen dituzten erlazio formalen bidez soilik definitzen ditu.
+<ConceptLink targetId="metodo-axiomatico">Metodo axiomatiko</ConceptLink> modernoaren eredua da: intuizio espaziala alde batera uzten du, eta oinarrizko objektuak <ConceptLink targetId="axioma">axiomek</ConceptLink> haien artean ezartzen dituzten erlazioen bidez soilik ezaugarritzen ditu.
 
-<Definicion title="Hilberten Egitura eta Sinadura (3D)">
-  **Hiru dimentsioko geometria hilbertiarra** <ConceptLink targetId="logica">mota anitzeko logikako</ConceptLink> <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> baten bidez modelatzen da, zeinaren <ConceptLink targetId="signatura">sinadurak</ConceptLink> <ConceptLink targetId="conjunto-disjunto">binaka disjuntuak diren</ConceptLink> hiru <ConceptLink targetId="dominio">domeinu</ConceptLink> eta bost <ConceptLink targetId="concepto-primitivo">oinarrizko erlazio</ConceptLink> laburtezinez osatuta dagoen:
+<Definicion title="Hilberten Egitura eta Signatura (3D)">
+  **Hiru dimentsioko geometria hilbertiarra** <ConceptLink targetId="logica">mota anitzeko logikako</ConceptLink> <ConceptLink targetId="estructura-geometrica">egitura matematiko</ConceptLink> baten bidez modelatzen da, zeinaren <ConceptLink targetId="signatura">signaturak</ConceptLink> <ConceptLink targetId="conjunto-disjunto">binaka disjuntuak diren</ConceptLink> hiru <ConceptLink targetId="dominio">domeinu</ConceptLink> eta bost <ConceptLink targetId="concepto-primitivo">oinarrizko erlazio</ConceptLink> laburtezinez osatuta dagoen:
   $$
-  \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \equiv_{\text{seg}}, \equiv_{\angle})
+  \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})
   $$
   non:
   - $\mathcal{P}$, $\mathcal{L}$ eta $\Pi$ <ConceptLink targetId="punto">puntuen</ConceptLink>, <ConceptLink targetId="recta">zuzenen</ConceptLink> eta <ConceptLink targetId="plano">planoen</ConceptLink> domeinu disjuntuak diren.
   - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ eta $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$ puntu-zuzen eta puntu-plano <ConceptLink targetId="incidencia">intzidentzia-erlazio</ConceptLink> bitarrak diren.
   - $\mathbf{B} \subseteq \mathcal{P}^3$ <ConceptLink targetId="estar-entre">ordena eta bitartekotasun</ConceptLink> hirutarreko oinarrizko erlazioa den ($A * B * C$).
-  - $\equiv_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2$ <ConceptLink targetId="segmento">segmentuen</ConceptLink> (puntu-pareen) <ConceptLink targetId="congruencia">kongruentzia-erlazioa</ConceptLink> den.
-  - $\equiv_{\angle} \, \subseteq \mathcal{P}^6$ <ConceptLink targetId="angulo">angeluen</ConceptLink> <ConceptLink targetId="congruencia">kongruentzia-erlazioa</ConceptLink> den (<ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren puntuen hirukoteen arteko $\angle ABC \equiv \angle DEF$ erlazio bitarra, edo jatorri bereko <ConceptLink targetId="semirrecta">zuzenerdi-pareen</ConceptLink> gainean).
+  - $\cong_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2$ <ConceptLink targetId="segmento">segmentuen</ConceptLink> (puntu-pareen) <ConceptLink targetId="congruencia">kongruentzia-erlazioa</ConceptLink> den.
+  - $\cong_{\angle} \, \subseteq \mathcal{P}^6$ <ConceptLink targetId="angulo">angeluen</ConceptLink> <ConceptLink targetId="congruencia">kongruentzia-erlazioa</ConceptLink> den (<ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren puntu-hirukoteen artean, $\angle ABC \cong \angle DEF$, edo, baliokideki, jatorri bereko <ConceptLink targetId="semirrecta">zuzenerdi-pareen</ConceptLink> artean).
 </Definicion>
 
 <Separador />
 
 ### Hilberten bost talde axiomatikoak
 
-Sistema bost talde modularretan antolatutako 20 axiomak osatzen dute:
+Sistemak bost taldetan antolatutako 20 axioma ditu:
 
-1. **I. Taldea: <ConceptLink targetId="sistema-incidencia">Intzidentzia-Axiomak</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>etik <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>ra):** Puntuen, zuzenen eta planoen arteko posizio-kidetza finkatzen dute, <ConceptLink targetId="espacio">espazioaren</ConceptLink> gutxieneko <ConceptLink targetId="dimension">dimentsioa</ConceptLink> zehaztuz.
-2. **II. Taldea: <ConceptLink targetId="estar-entre">Ordena-Axiomak</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>etik <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>ra):** Bitartekotasuna $\mathbf{B}$ eta planoaren banaketa formalizatzen dute <ConceptLink targetId="axioma-orden-4">Paschen Axiomaren</ConceptLink> (<ConceptLink targetId="pasch">Moritz Pasch</ConceptLink>) bidez, <ConceptLink targetId="segmento">segmentuak</ConceptLink>, <ConceptLink targetId="semirrecta">zuzenerdiak</ConceptLink> eta <ConceptLink targetId="semiplano">planoerdiak</ConceptLink> definituz.
-3. **III. Taldea: <ConceptLink targetId="congruencia">Kongruentzia-Axiomak</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink>etik <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>era):** $\equiv_{\text{seg}}$ eta $\equiv_{\angle}$ erlazioen garraio zurruna arautzen dute <ConceptLink targetId="distancia">distantziaren</ConceptLink> nozio numerikorik gabe.
-4. **IV. Taldea: <ConceptLink targetId="paralelas">Paraleloen Axioma</ConceptLink> (<ConceptLink targetId="axioma-paralelas-euclides">IV</ConceptLink>):** Kanpoko puntu batetik paralelo bakarra igarotzen dela dioen postulatu <ConceptLink targetId="sistema-euclidiano">euklidearra</ConceptLink>.
-5. **V. Taldea: <ConceptLink targetId="continuidad">Jarraitutasun-Axiomak</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">V.1</ConceptLink> eta <ConceptLink targetId="axioma-completitud">V.2</ConceptLink>):** <ConceptLink targetId="arquimedes">Arkimedesen</ConceptLink> axioma eta osotasun lineala, lerro geometrikoetan hutsunerik ez dagoela bermatzen dutenak.
+1. **I. Taldea: <ConceptLink targetId="sistema-incidencia">Intzidentzia-Axiomak</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>etik <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>ra):** Puntuen, zuzenen eta planoen arteko intzidentzia arautzen dute eta <ConceptLink targetId="espacio">espazioaren</ConceptLink> <ConceptLink targetId="dimension">dimentsioa</ConceptLink> finkatzen dute: gutxienez hiru I.8ren arabera, eta gehienez hiru I.7ren arabera.
+2. **II. Taldea: <ConceptLink targetId="estar-entre">Ordena-Axiomak</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>etik <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>ra):** Bitartekotasuna $\mathbf{B}$ eta planoaren banaketa formalizatzen dute <ConceptLink targetId="axioma-orden-4">Paschen Axiomaren</ConceptLink> (<ConceptLink targetId="pasch">Moritz Pasch</ConceptLink>) bidez, <ConceptLink targetId="segmento">zuzenkiak</ConceptLink>, <ConceptLink targetId="semirrecta">zuzenerdiak</ConceptLink> eta <ConceptLink targetId="semiplano">planoerdiak</ConceptLink> definituz.
+3. **III. Taldea: <ConceptLink targetId="congruencia">Kongruentzia-Axiomak</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink>etik <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>era):** $\cong_{\text{seg}}$ eta $\cong_{\angle}$ erlazioak eta zuzenkien eta angeluen garraioa arautzen dituzte <ConceptLink targetId="distancia">distantziaren</ConceptLink> nozio numerikorik gabe.
+4. **IV. Taldea: <ConceptLink targetId="paralelas">Paraleloen Axioma</ConceptLink> (<ConceptLink targetId="axioma-paralelas-euclides">IV</ConceptLink>):** Zuzen batetik kanpoko puntu batetik gehienez paralelo bakarra igarotzen da (<ConceptLink targetId="sistema-euclidiano">geometria euklidearra</ConceptLink>); <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma hiperbolikoarekin</ConceptLink> ordezkatuz gero, <ConceptLink targetId="sistema-hiperbolico">geometria hiperbolikoa</ConceptLink> lortzen da.
+5. **V. Taldea: <ConceptLink targetId="continuidad">Jarraitutasun-Axiomak</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">V.1</ConceptLink> eta <ConceptLink targetId="axioma-completitud">V.2</ConceptLink>):** <ConceptLink targetId="arquimedes">Arkimedesen</ConceptLink> axioma, zuzenki infinitesimalak baztertzen dituena, eta osotasun lineala, zuzenean hutsunerik ez dagoela bermatzen duena.
 
 <Separador />
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Modularitatea eta egitura formala">
     <PropiedadItem 
-      id="independencia-grupos" 
-      title="Bost taldeen independentzia modularra"
-      formula="\forall i \neq j : \mathcal{G}_i \not\vdash \mathcal{G}_j"
+      id="independencia-axiomas-hilbert" 
+      title="Axioma jakin batzuen independentzia"
+      formula="\mathcal{T}_{\text{Hil}} \setminus \{\varphi\} \nvdash \varphi \quad (\varphi \in \{\text{III.5}, \text{IV}, \text{V.1}\})"
     >
-      Bost talde axiomatikoetako bakoitza (intzidentzia, ordena, kongruentzia, paraleloak eta jarraitutasuna) logikoki independentea da, <ConceptLink targetId="sistema-incidencia">intzidentzia-geometria</ConceptLink>, geometria ordenatua edo <ConceptLink targetId="sistema-absoluto">geometria absolutua</ConceptLink> bezalako azpisistema koherenteak bereiztea ahalbidetuz.
+      II. kapituluan, Hilbertek sistemaren <ConceptLink targetId="consistencia-logica">koherentzia</ConceptLink> frogatzen du eta, axioma guztiak bat izan ezik betetzen dituzten <ConceptLink targetId="teoria-modelos">ereduen</ConceptLink> bidez, axioma jakin batzuen <ConceptLink targetId="independencia-logica">independentzia</ConceptLink>: paraleloen axiomarena (IV), kongruentziako azkenarena (III.5) eta Arkimedesenarena (V.1). Ez da talde bakoitzak gainerakoekiko duen independentzia globala. Taldekako antolaketak, hala ere, azpisistemak bereiztea ahalbidetzen du, hala nola <ConceptLink targetId="sistema-incidencia">intzidentzia-geometria</ConceptLink>, geometria ordenatua edo <ConceptLink targetId="sistema-absoluto">geometria absolutua</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
       id="distincion-predicados-congruencia" 
       title="Kongruentziaren bereizketa kategoriala"
-      formula="\equiv_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2, \quad \equiv_{\angle} \, \subseteq \mathcal{P}^6"
+      formula="\cong_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2, \quad \cong_{\angle} \, \subseteq \mathcal{P}^6"
     >
-      Kongruentzia ez da predikatu monolitiko bakarra, aritate eta domeinu ontologiko desberdinak dituzten bi oinarrizko erlazio baizik: <ConceptLink targetId="segmento">segmentuen kongruentzia</ConceptLink> ($\equiv_{\text{seg}}$) eta <ConceptLink targetId="angulo">angeluen kongruentzia</ConceptLink> ($\equiv_{\angle}$).
+      Kongruentzia ez da predikatu bakarra, aritate desberdineko bi oinarrizko erlazio baizik: <ConceptLink targetId="segmento">segmentuen kongruentzia</ConceptLink> ($\cong_{\text{seg}}$) eta <ConceptLink targetId="angulo">angeluen kongruentzia</ConceptLink> ($\cong_{\angle}$).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

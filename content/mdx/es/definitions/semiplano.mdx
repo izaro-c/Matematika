@@ -6,24 +6,27 @@ export const metadata = {
   title: "Semiplano",
   description: "Cada una de las dos regiones abiertas en que una recta divide a los puntos de un plano.",
   branch: "51M",
-  hasSimulation: false,
+  hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §2 (Axioma II.4)", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
   ]
 };
 
-<Capitular letra="U" />n **semiplano** es cada una de las dos regiones en que una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> divide a los <ConceptLink targetId="punto">puntos</ConceptLink> de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>. La recta divisoria recibe el nombre de **borde** o frontera y no forma parte del semiplano.
+import { Semiplano } from '@content/diagrams/Definiciones/Semiplano';
+export const Simulation = Semiplano;
 
-En la <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink>, la partición del plano en exactamente dos regiones <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink> es consecuencia del Teorema de Separación del Plano, demostrado a partir del <ConceptLink targetId="axioma-orden-4" isDependency={true}>Axioma de Pasch</ConceptLink> (Axioma II.4) y los axiomas de <ConceptLink targetId="estar-entre">orden lineal</ConceptLink>.
+<Capitular letra="U" />n **semiplano** es cada una de las dos regiones en que una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> divide a los <ConceptLink targetId="punto">puntos</ConceptLink> de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> que la contiene. La recta divisoria recibe el nombre de **borde** y no forma parte del semiplano.
 
-<Definicion title="Definición Formal">
-  Sea $\pi$ un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> y sea $\ell$ una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> contenida en $\pi$. Sobre el conjunto de <ConceptLink targetId="punto">puntos</ConceptLink> del plano exteriores a la recta ($\pi \setminus \ell$), se define la relación binaria $\sim_\ell$:
+Que la recta divida el plano en exactamente dos regiones <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink> es el contenido del <ConceptLink targetId="teorema-separacion-plano" isDependency={true}>teorema de separación del plano</ConceptLink>, que Hilbert deduce del <ConceptLink targetId="axioma-orden-4" isDependency={true}>Axioma de Pasch</ConceptLink> (Axioma II.4) y de los demás axiomas de <ConceptLink targetId="estar-entre" isDependency={true}>orden</ConceptLink>. El semiplano es así el análogo plano de la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink>.
+
+<Definicion title="Definición formal de semiplano">
+  Sea $\pi$ un plano y sea <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> una recta con $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. Sobre el conjunto de puntos del plano que no inciden con la recta, $\operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$, se define la <ConceptLink targetId="relacion-binaria">relación binaria</ConceptLink> $\sim_\ell$:
   $$
-  A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \ell = \emptyset
+  A \sim_\ell B \iff A = B \lor \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) = \emptyset
   $$
-  donde $\operatorname{seg}(AB)$ representa el <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> abierto que une los puntos $A$ y $B$ (excluyendo sus extremos).
+  donde <VisualBind element="segAB" color="terracota">$\operatorname{seg}(AB)$</VisualBind> es el <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> abierto de extremos <VisualBind element="pA" color="terracota">$A$</VisualBind> y <VisualBind element="pB" color="terracota">$B$</VisualBind>.
 
-  Por el Teorema de Separación del Plano, $\sim_\ell$ es una relación de equivalencia que particiona $\pi \setminus \ell$ en exactamente dos clases de equivalencia en el espacio cociente $(\pi \setminus \ell) / {\sim_\ell} = \{ \mathcal{H}_1, \mathcal{H}_2 \}$. Cada una de estas clases $\mathcal{H}_1$ y $\mathcal{H}_2$ es un **semiplano** abierto determinado por $\ell$.
+  Por el teorema de separación del plano, $\sim_\ell$ es una <ConceptLink targetId="relacion-equivalencia">relación de equivalencia</ConceptLink> con exactamente dos <ConceptLink targetId="clase-equivalencia">clases de equivalencia</ConceptLink>: $(\operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)) / {\sim_\ell} = \{ \mathcal{H}_1, \mathcal{H}_2 \}$. Cada una de estas clases es un **semiplano** abierto de borde <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind>: <VisualBind element="semiplano-1" color="terracota">$\mathcal{H}_1$</VisualBind> y <VisualBind element="semiplano-2" color="pavo">$\mathcal{H}_2$</VisualBind>. El semiplano que contiene a un punto $B$ se denota $\mathcal{H}_\ell(B)$.
 </Definicion>
 
 <Separador />
@@ -31,19 +34,19 @@ En la <ConceptLink targetId="geometria-sintetica">geometría sintética</Concept
 <SeccionPropiedades>
   <PropiedadesGrupo title="Propiedades geométricas y convexidad">
     <PropiedadItem 
-      id="conjunto-convexo" 
+      id="convexidad-semiplano" 
       title="Convexidad del semiplano"
-      formula="A, B \in \mathcal{H} \implies \operatorname{seg}(AB) \subset \mathcal{H}"
+      formula="A, B \in \mathcal{H} \implies \operatorname{seg}(AB) \subseteq \mathcal{H}"
     >
-      Todo semiplano abierto $\mathcal{H}$ es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>: si contiene dos puntos distintos $A, B \in \mathcal{H}$, entonces el <ConceptLink targetId="segmento">segmento</ConceptLink> abierto completo $\operatorname{seg}(AB)$ que los une está íntegramente contenido en $\mathcal{H}$, como consecuencia directa del Teorema de Separación del Plano y del <ConceptLink targetId="axioma-orden-4">Axioma de Pasch</ConceptLink>.
+      Todo semiplano abierto $\mathcal{H}$ es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>: si <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in <VisualBind element="semiplano-1" color="terracota">\mathcal{H}_1</VisualBind>$, el <ConceptLink targetId="segmento">segmento</ConceptLink> abierto <VisualBind element="segAB" color="terracota">$\operatorname{seg}(AB)$</VisualBind> está contenido en $\mathcal{H}_1$. Por contra, para un punto <VisualBind element="pC" color="pavo">$C \in \mathcal{H}_2$</VisualBind> del semiplano opuesto, el segmento <VisualBind element="segAC" color="granada">$\operatorname{seg}(AC)$</VisualBind> corta a la recta borde <VisualBind element="recta-l" color="carbon">$\ell$</VisualBind> en un punto <VisualBind element="pX" color="granada">$X$</VisualBind>. Se deduce de la definición de $\sim_\ell$: si un punto $X$ de $\operatorname{seg}(AB)$ no estuviera en $\mathcal{H}$, o bien $X$ incidiría con $\ell$, o bien $\operatorname{seg}(AX)$ cortaría a $\ell$; en ambos casos $\operatorname{seg}(AB) \supseteq \operatorname{seg}(AX) \cup \{X\}$ cortaría a $\ell$, contra $A \sim_\ell B$.
     </PropiedadItem>
 
     <PropiedadItem 
       id="generacion-interiores-poligonales" 
-      title="Generación de regiones interiores poligonales"
-      formula="\operatorname{Int}(\mathcal{P}_n) = \bigcap_{i=1}^n \mathcal{H}_{\ell_i}"
+      title="Interiores como intersección de semiplanos"
+      formula="\operatorname{Int}(A_1 A_2 \cdots A_n) = \bigcap_{i=1}^n \mathcal{H}_i"
     >
-      La intersección finita de semiplanos abiertos determinados por las <ConceptLink targetId="recta">rectas</ConceptLink> soporte de una configuración planar permite definir formalmente la región interior de un <ConceptLink targetId="angulo">ángulo</ConceptLink> ($\operatorname{Int}(\angle AOB) = \mathcal{H}_1 \cap \mathcal{H}_2$), de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> y de cualquier <ConceptLink targetId="poligono">polígono convexo</ConceptLink>, preservando la convexidad por clausura bajo intersección.
+      La intersección finita de semiplanos abiertos permite definir la región interior de un <ConceptLink targetId="angulo">ángulo</ConceptLink>, $\operatorname{Int}(\angle AOB) = \mathcal{H}_{\overleftrightarrow{OA}}(B) \cap \mathcal{H}_{\overleftrightarrow{OB}}(A)$, de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> y de un <ConceptLink targetId="poligono-convexo">polígono convexo</ConceptLink> $A_1 A_2 \cdots A_n$, donde $\mathcal{H}_i$ es el semiplano de borde la <ConceptLink targetId="recta-soporte">recta soporte</ConceptLink> $\overleftrightarrow{A_i A_{i+1}}$ (índices módulo $n$) que contiene a los demás vértices. Estas regiones son convexas, pues la <ConceptLink targetId="interseccion">intersección</ConceptLink> de conjuntos convexos es convexa.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

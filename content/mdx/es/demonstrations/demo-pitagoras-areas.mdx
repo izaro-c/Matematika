@@ -1,16 +1,18 @@
 export const metadata = {
-  "id": "demo-pitagoras-areas",
-  "type": "demostracion",
-  "title": "Demostración: Teorema de Pitágoras (Método de Disección de Áreas)",
-  "description": "Demostración algebraica y geométrica mediante la descomposición del área de un cuadrado de lado (a+b) en cuatro triángulos rectángulos y un cuadrado central.",
-  "parentTheorem": "teorema-pitagoras",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["pitagoras"],
-  "tags": ["geometria", "triangulos", "areas", "algebra"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 47 (Demostración alternativa por descomposición)", role: "primary" }
+  id: "demo-pitagoras-areas",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Teorema de Pitágoras (Método de Disección de Áreas)",
+  description: "Demostración geométrica mediante la descomposición del área de un cuadrado de lado (a+b) en cuatro triángulos rectángulos y un cuadrado central de área c².",
+  parentTheorem: "teorema-pitagoras",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["pitagoras"],
+  tags: ["geometria", "triangulos", "areas", "algebra"],
+  layout: "split",
+  sources: [
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 47 (Demostración alternativa por descomposición)", role: "secondary" },
+    { title: "Zhoubi suanjing", author: "Tradición china clásica", locator: "Comentario de Zhao Shuang (c. siglo III)", role: "primary" }
   ]
 };
 
@@ -18,46 +20,46 @@ import { DemoPitagorasAreas } from "@content/diagrams/Demos/DemoPitagorasAreas";
 
 <DemonstrationSection diagram={<DemoPitagorasAreas />}>
 
-<Capitular letra="E" />n un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> con catetos $a, b$ e hipotenusa $c$, se demuestra el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> mediante la equidescomposición de la superficie de un <VisualBind element="outerSquare" color="carbon"><ConceptLink targetId="cuadrado">cuadrado exterior</ConceptLink></VisualBind> de lado $(a+b)$.
+<Capitular letra="E" />n todo <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink> con <ConceptLink targetId="cateto" isDependency={true}>catetos</ConceptLink> de <ConceptLink targetId="longitud" isDependency={true}>longitudes</ConceptLink> $a, b$ e <ConceptLink targetId="hipotenusa" isDependency={true}>hipotenusa</ConceptLink> $c$, se demuestra el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> mediante la descomposición del <ConceptLink targetId="teoria-medida-area" isDependency={true}>área</ConceptLink> de un <VisualBind element="outerSquare" color="carbon"><ConceptLink targetId="cuadrado">cuadrado exterior</ConceptLink></VisualBind> de lado $(a+b)$.
 
 <Separador />
 
 ### Demostración paso a paso
 
 <ProofStep number={1} target="outerSquare" title="Construcción del cuadrado exterior">
-Se construye un <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> envolvente de lado $(a+b)$. La superficie total de este cuadrado viene dada por el desarrollo algebraico:
+Se construye un <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> exterior envolvente de lado $(a+b)$. Por la definición de área del cuadrado (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>teorema del área del rectángulo</ConceptLink>), su área total satisface la identidad algebraica:
 
-<Formula>
-  $$ \text{Área Total} = (a+b)^2 = a^2 + 2ab + b^2 $$
-</Formula>
+$$
+\operatorname{A}(\text{exterior}) = (a+b)^2 = a^2 + 2ab + b^2
+$$
 </ProofStep>
 
 <ProofStep number={2} target="t1" title="Disposición de los cuatro triángulos rectángulos">
-En cada una de las cuatro esquinas del cuadrado exterior se ubica un triángulo rectángulo de catetos $a$ y $b$. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>, el área combinada de los cuatro triángulos congruentes es:
+En cada una de las cuatro esquinas del cuadrado exterior se dispone un <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink> de catetos $a$ y $b$ (<VisualBind element="t1" color="carbon">$T_1$</VisualBind>, <VisualBind element="t2" color="carbon">$T_2$</VisualBind>, <VisualBind element="t3" color="carbon">$T_3$</VisualBind>, <VisualBind element="t4" color="carbon">$T_4$</VisualBind>). Por el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, los cuatro triángulos son congruentes entre sí. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>, la suma de las áreas de los cuatro triángulos es:
 
-<Formula>
-  $$ 4 \times \left( \frac{1}{2} a b \right) = 2ab $$
-</Formula>
+$$
+4 \cdot \left(\frac{1}{2} a b\right) = 2ab
+$$
 </ProofStep>
 
 <ProofStep number={3} target="emptyC" title="Caracterización del cuadrado interior">
-Las cuatro hipotenusas de los triángulos forman la frontera de una región cuadrilátera central de lado $c$. Puesto que los ángulos agudos de cada triángulo suman $90^\circ$, el ángulo interior en cada vértice del cuadrilátero central es $180^\circ - 90^\circ = 90^\circ$. Por tanto, se trata de un cuadrado interior de área $c^2$.
+Las cuatro hipotenusas de los triángulos forman la frontera de una región cuadrilátera central <VisualBind element="emptyC" color="ocre">$Q_c$</VisualBind> de lados de longitud $c$. Como los dos <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> agudos de cada triángulo rectángulo son <ConceptLink targetId="angulos-suplementarios" isDependency={true}>complementarios</ConceptLink> y suman $90^\circ$, el ángulo interior en cada vértice del cuadrilátero central mide $180^\circ - 90^\circ = 90^\circ$. Al tener sus cuatro lados congruentes y sus cuatro ángulos rectos, $Q_c$ es un <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> interior de área $c^2$.
 </ProofStep>
 
-<ProofStep number={4} target="emptyA" title="Aplicación del principio de aditividad de áreas">
-Por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink>, el área del cuadrado exterior equivale a la suma del área del cuadrado interior central más las áreas de los cuatro triángulos:
+<ProofStep number={4} target="emptyA" title="Aplicación del teorema de aditividad del área">
+Por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink>, el área del cuadrado exterior equivale a la suma del área del cuadrado interior central más la suma de las áreas de los cuatro triángulos de las esquinas:
 
-<Formula>
-  $$ (a+b)^2 = c^2 + 4 \cdot \left( \frac{1}{2} a b \right) $$
-</Formula>
+$$
+(a+b)^2 = \operatorname{A}(Q_c) + 2ab = c^2 + 2ab
+$$
 </ProofStep>
 
 <ProofStep number={5} target="emptyB" title="Simplificación algebraica y conclusión">
-Expandiendo la expresión del miembro izquierdo y cancelando el término $2ab$ en ambos miembros:
+Restando el término $2ab$ en ambos miembros de la igualdad, o alternativamente reagrupando los cuatro triángulos en dos rectángulos de dimensiones $a \times b$ (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>teorema del área del rectángulo</ConceptLink>) que dejan al descubierto dos <ConceptLink targetId="cuadrado">cuadrados</ConceptLink> interiores <VisualBind element="emptyA" color="terracota">$Q_a$</VisualBind> (de área $a^2$) y <VisualBind element="emptyB" color="canela">$Q_b$</VisualBind> (de área $b^2$), se concluye formalmente:
 
-<Formula>
-  $$ a^2 + 2ab + b^2 = c^2 + 2ab \implies a^2 + b^2 = c^2 $$
-</Formula>
+$$
+a^2 + b^2 = c^2
+$$
 </ProofStep>
 
 <Separador />
@@ -65,7 +67,7 @@ Expandiendo la expresión del miembro izquierdo y cancelando el término $2ab$ e
 ### Análisis deductivo
 
 <Nota>
-  Demostración por disección visual y algebraica atribuida históricamente a las escuelas pitagóricas e hindúes (Bhaskara). Se basa en la invarianza del área bajo isometrías y la <ConceptLink targetId="teoria-medida-area">teoría de la medida de áreas</ConceptLink>.
+Esta demostración geométrica por disección y reordenamiento de áreas aparece atestiguada con gran antigüedad en la tradición matemática china (en el diagrama *Gougu* del *Zhoubi suanjing*, con comentarios de Zhao Shuang en el siglo III) y en diversas tradiciones clásicas mediterráneas e indias. Su validez rigurosa descansa en la invariancia del área bajo congruencias y el <ConceptLink targetId="teorema-area-aditividad">teorema de aditividad del área</ConceptLink>.
 </Nota>
 
 </DemonstrationSection>

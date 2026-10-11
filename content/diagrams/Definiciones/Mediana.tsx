@@ -576,7 +576,17 @@ export const MedianaSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Mueve A, B o C. Los puntos medios, las tres medianas y su intersección G se reconstruyen automáticamente."
+  "note": "Mueve A, B o C. Los puntos medios, las tres medianas y su intersección G se reconstruyen automáticamente.",
+  "translations": {
+    "eu": {
+      "title": "Erdibidekoak eta barizentroa",
+      "note": "Mugitu A, B edo C. Erdiko puntuak, hiru erdibidekoak eta haien G ebakidura automatikoki berreraikitzen dira."
+    },
+    "en": {
+      "title": "Medians and Centroid",
+      "note": "Move A, B, or C. Midpoints, the three medians, and their intersection G update automatically."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

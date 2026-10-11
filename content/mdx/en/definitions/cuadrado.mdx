@@ -2,43 +2,68 @@ export const metadata = {
   id: "cuadrado",
   lang: "en",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Square",
-  description: "Regular four-sided polygon characterized by having all four sides congruent and all four interior angles right.",
+  description: "Quadrilateral with its four sides congruent and its four angles right.",
   branch: "51M",
-  hasSimulation: false,
+  branches: ["51M", "51A"],
+  tags: ["geometria-euclidiana", "cuadrilatero", "angulo-recto"],
+  hasSimulation: true,
   sources: [
     { title: "Elements", author: "Euclid", locator: "Book I, Definition 22", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+    { title: "Elements", author: "Euclid", locator: "Book I, Proposition 46", role: "secondary" }
   ]
 };
 
-<Capitular letra="A" /> square is the regular four-sided polygon in Euclidean planar geometry. By combining the metric properties of a rhombus (four congruent sides) and a rectangle (four right angles), it constitutes the figure of maximal symmetry within the family of <ConceptLink targetId="cuadrilatero">quadrilaterals</ConceptLink>.
+import { Cuadrado } from '@content/diagrams/Definiciones/Cuadrado';
+export const Simulation = Cuadrado;
 
-<Definicion title="">
-  A convex <ConceptLink targetId="cuadrilatero" isDependency={true}>quadrilateral</ConceptLink> $ABCD$ is a square if and only if its four sides are mutually <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> and its four interior angles are <ConceptLink targetId="angulo-recto" isDependency={true}>right angles</ConceptLink>:
-  $$
-  (\overline{AB} \cong \overline{BC} \cong \overline{CD} \cong \overline{DA}) \land (\angle A \cong \angle B \cong \angle C \cong \angle D \cong 90^\circ)
-  $$
+<Capitular letra="A" /> square is a <ConceptLink targetId="cuadrilatero" isDependency={true}>quadrilateral</ConceptLink> whose four <VisualBind element="lados" color="terracota"><ConceptLink targetId="lado" isDependency={true}>sides</ConceptLink></VisualBind> are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> and whose four <VisualBind element="angulos-rectos" color="ocre"><ConceptLink targetId="angulo">angles</ConceptLink></VisualBind> are <ConceptLink targetId="angulo-recto" isDependency={true}>right</ConceptLink>.
+
+It is both a <ConceptLink targetId="rombo">rhombus</ConceptLink> and a <ConceptLink targetId="rectangulo">rectangle</ConceptLink>, and hence a <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink>. The square of unit side fixes the unit of <ConceptLink targetId="teoria-medida-area">area</ConceptLink>; its existence depends on the <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink>, and Euclid establishes it by constructing a square on a given segment (Elements I.46).
+
+<Definicion title="Definition of square">
+A <ConceptLink targetId="cuadrilatero">quadrilateral</ConceptLink> <VisualBind element="cuadrilatero" color="canela">$ABCD$</VisualBind> is a **square** if its four sides (<VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind>, <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind>, <VisualBind element="segDA" color="terracota">$\overline{DA}$</VisualBind>) are congruent and its four angles (<VisualBind element="angDAB" color="ocre">$\angle DAB$</VisualBind>, <VisualBind element="angABC" color="ocre">$\angle ABC$</VisualBind>, <VisualBind element="angBCD" color="ocre">$\angle BCD$</VisualBind>, <VisualBind element="angCDA" color="ocre">$\angle CDA$</VisualBind>) are right:
+
+$$
+\overline{AB} \cong \overline{BC} \cong \overline{CD} \cong \overline{DA}
+\quad \text{and} \quad
+\angle DAB,\ \angle ABC,\ \angle BCD,\ \angle CDA \ \text{are right}.
+$$
+
+Equivalently, each of the four <VisualBind element="angulos-rectos" color="ocre"><ConceptLink targetId="angulo">angles</ConceptLink></VisualBind> is congruent to its adjacent <ConceptLink targetId="angulos-suplementarios">supplement</ConceptLink>; in angle measure, $|\angle DAB| = |\angle ABC| = |\angle BCD| = |\angle CDA| = 90^\circ$.
 </Definicion>
 
 <Separador />
 
-### Geometric properties and symmetry
-
-- **Diagonals**: The two diagonals have equal length ($d = l\sqrt{2}$), bisect each other, and are mutually <ConceptLink targetId="perpendicular">perpendicular</ConceptLink>.
-- **Symmetry group**: The Euclidean automorphism group of the square is the dihedral group $D_4$, consisting of 4 rotations and 4 reflections across axes of symmetry.
-- **Incircle and circumcircle**: It admits concentric inscribed ($r = \frac{l}{2}$) and circumscribed ($R = \frac{l\sqrt{2}}{2}$) circles.
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Metrics and area">
-    <PropiedadItem id="teorema-area-rectangulo" title="Area of a square">
-      The area of a square with side length $l$ equals the square of its side: $\mu(ABCD) = l^2$.
+  <PropiedadesGrupo title="Euclidean properties">
+    <PropiedadItem
+      id="diagonales-cuadrado"
+      title="Diagonals"
+      formula="\overline{AC} \cong \overline{BD}, \quad \overleftrightarrow{AC} \perp \overleftrightarrow{BD}, \quad |AC| = \sqrt{2}\,|AB|"
+    >
+      The <VisualBind element="diagonales" color="mora"><ConceptLink targetId="diagonal">diagonals</ConceptLink></VisualBind> (<VisualBind element="diagAC" color="mora">$\overline{AC}$</VisualBind> and <VisualBind element="diagBD" color="mora">$\overline{BD}$</VisualBind>) of a square are congruent, <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> and bisect each other. Since $\triangle ABC$ is a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> with congruent legs, the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink> gives $|AC|^2 = |AB|^2 + |BC|^2 = 2\,|AB|^2$.
     </PropiedadItem>
-    <PropiedadItem id="teorema-pitagoras" title="Diagonal relation">
-      The diagonal length satisfies $d^2 = l^2 + l^2 = 2l^2 \implies d = l\sqrt{2}$.
+
+    <PropiedadItem
+      id="area-cuadrado"
+      title="Area"
+      formula="\operatorname{A}(ABCD) = |AB|^2"
+    >
+      The <ConceptLink targetId="teoria-medida-area">area</ConceptLink> of a square of side $|AB|$ is $|AB|^2$, a special case of the <ConceptLink targetId="teorema-area-rectangulo">rectangle area theorem</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="simetrias-cuadrado"
+      title="Symmetries"
+      formula="|D_4| = 8"
+    >
+      The <ConceptLink targetId="isometria">isometries</ConceptLink> of the plane that leave a square invariant form the <ConceptLink targetId="grupo-diedral">dihedral group</ConceptLink> $D_4$, of order $8$: four <ConceptLink targetId="rotacion">rotations</ConceptLink> about the centre and four <ConceptLink targetId="reflexion">reflections</ConceptLink> in the two <ConceptLink targetId="mediatriz">perpendicular bisectors</ConceptLink> of the sides and in the two diagonal lines.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
+
+<Nota>
+In <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, the existence of a single <ConceptLink targetId="rectangulo">rectangle</ConceptLink> is equivalent to the parallel axiom (Saccheri, Legendre). Hence in <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink> there are no squares: a quadrilateral with four congruent sides and four congruent angles has acute angles.
+</Nota>

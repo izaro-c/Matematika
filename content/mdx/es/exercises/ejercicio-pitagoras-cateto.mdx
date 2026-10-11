@@ -3,18 +3,18 @@ export const metadata = {
   lang: "es",
   type: "ejercicio",
   title: "Cálculo de un cateto en un triángulo rectángulo",
-  description: "Aplicación del teorema de Pitágoras para despejar y determinar la longitud de un cateto desconocido a partir de la hipotenusa y el otro cateto.",
+  description: "Aplicación del teorema de Pitágoras para calcular la longitud de un cateto desconocido a partir de la hipotenusa y del otro cateto.",
   branch: "51M",
   relatedTheorem: "teorema-pitagoras",
   difficulty: "básico",
-  hint: "El teorema de Pitágoras establece a² + b² = c². Para despejar un cateto, resta el cuadrado del cateto conocido al cuadrado de la hipotenusa: a² = c² - b².",
+  hint: "El teorema de Pitágoras establece a² + b² = c². Para despejar un cateto, resta el cuadrado del cateto conocido al cuadrado de la hipotenusa: b² = c² − a².",
   hasSimulation: true
 };
 
 import { EjercicioPitagorasCateto } from '@content/diagrams/Ejercicios/EjercicioPitagorasCateto';
 export const Simulation = EjercicioPitagorasCateto;
 
-<Capitular letra="D" />ado un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> con <ConceptLink targetId="perpendicular">ángulo recto</ConceptLink> en el <VisualBind element="pC" color="carbon">vértice $C$</VisualBind>, se conoce que la hipotenusa mide $c = |\overline{AB}| = 10$ unidades (<VisualBind element="segAB" color="mora">hipotenusa $c$</VisualBind>) y el cateto horizontal mide $b = |\overline{BC}| = 8$ unidades (<VisualBind element="segBC" color="terracota">cateto $b$</VisualBind>). Se requiere calcular la longitud exacta del <VisualBind element="segCA" color="canela">cateto vertical $a = |\overline{CA}|$</VisualBind>.
+<Capitular letra="S" />ea <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> un <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink> con <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> en el <ConceptLink targetId="vertice">vértice</ConceptLink> <VisualBind element="pC" color="carbon">$C$</VisualBind>. La <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> mide <VisualBind element="segAB" color="mora">$c = |AB| = 10$</VisualBind> unidades y el <ConceptLink targetId="cateto">cateto</ConceptLink> <VisualBind element="segBC" color="terracota">$a = |BC| = 8$</VisualBind> unidades. Se pide calcular la <ConceptLink targetId="longitud">longitud</ConceptLink> del otro cateto, <VisualBind element="segCA" color="canela">$b = |CA|$</VisualBind>.
 
 <Separador />
 
@@ -24,27 +24,27 @@ export const Simulation = EjercicioPitagorasCateto;
   titulo="Planteamiento de la ecuación"
   questionIds={["p1_q1"]}
 >
-  Identifica la formulación algebraica adecuada para plantear el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> en base a los datos conocidos:
+  Identifica la igualdad que expresa el <ConceptLink targetId="teorema-pitagoras" isDependency={true}>teorema de Pitágoras</ConceptLink> con los datos conocidos:
 
   <Pregunta
     id="p1_q1"
     correct="opt_correcta"
-    texto="¿Cuál de las siguientes relaciones describe correctamente el teorema para este triángulo?"
+    texto="¿Cuál de las siguientes relaciones expresa correctamente el teorema para este triángulo?"
     opciones={[
-      { value: 'opt_correcta', texto: "$a^2 + 8^2 = 10^2$" },
-      { value: 'opt_suma_catetos', texto: "$a^2 = 10^2 + 8^2$", feedback: "Has planteado la fórmula sumando las áreas como si buscaras la hipotenusa. Recuerda que la hipotenusa ya es conocida ($c=10$). Para despejar un cateto, debes restar las áreas: $a^2 = c^2 - b^2$." },
-      { value: 'opt_hipotenusa_err', texto: "$10^2 + a^2 = 8^2$", feedback: "Has sumado el cuadrado de la hipotenusa con el cateto. Recuerda que la hipotenusa al cuadrado debe quedar sola en el miembro de la igualdad: $a^2 + b^2 = c^2$." }
+      { value: 'opt_correcta', texto: "$8^2 + b^2 = 10^2$" },
+      { value: 'opt_suma_catetos', texto: "$b^2 = 10^2 + 8^2$", feedback: "Has sumado las áreas como si buscaras la hipotenusa, pero la hipotenusa ya es conocida ($c = 10$). Para despejar un cateto hay que restar: $b^2 = c^2 - a^2$." },
+      { value: 'opt_hipotenusa_err', texto: "$10^2 + b^2 = 8^2$", feedback: "Has sumado el cuadrado de la hipotenusa con el de un cateto. En el teorema, el cuadrado de la hipotenusa queda solo en un miembro de la igualdad: $a^2 + b^2 = c^2$." }
     ]}
   >
     <Pregunta.ErrorComun titulo="Sumar los cuadrados de los lados conocidos en lugar de restarlos">
-      Un error habitual al despejar un cateto es sumar las superficies conocidas: $a^2 = c^2 + b^2 = 100 + 64 = 164 \implies a \approx 12.8$. En todo triángulo rectángulo, la hipotenusa es estrictamente el lado de mayor longitud ($c > a$ y $c > b$); un cateto nunca puede superar a la hipotenusa.
+      Un error habitual al despejar un cateto es sumar las áreas conocidas: $b^2 = c^2 + a^2 = 100 + 64 = 164 \implies b \approx 12{,}8$. En todo <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> es el <ConceptLink targetId="lado">lado</ConceptLink> más largo ($c > a$ y $c > b$), así que un cateto nunca puede superarla.
     </Pregunta.ErrorComun>
 
     <Pregunta.Resolucion>
-      Por el teorema de Pitágoras $a^2 + b^2 = c^2$. Sustituyendo los datos conocidos $b = 8$ y $c = 10$, obtenemos la relación:
+      Por el teorema de Pitágoras, $a^2 + b^2 = c^2$. Al sustituir los datos $a = 8$ y $c = 10$ se obtiene:
       
       <Formula>
-        $$ a^2 + 8^2 = 10^2 $$
+        $$ 8^2 + b^2 = 10^2 $$
       </Formula>
     </Pregunta.Resolucion>
   </Pregunta>
@@ -59,26 +59,26 @@ export const Simulation = EjercicioPitagorasCateto;
   questionIds={["p2_q1"]}
   dependeDeQuestions={["p1_q1"]}
 >
-  Empareja cada elemento geométrico con su valor de área correspondiente:
+  Empareja cada <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> con su <ConceptLink targetId="teoria-medida-area">área</ConceptLink>:
 
   <Emparejar
     id="p2_q1"
     pregunta="Asocia cada cuadrado construido sobre los lados del triángulo con su área:"
     pairs={[
-      { left: "Cuadrado sobre hipotenusa $c=10$", right: "$c^2 = 100\\text{ u}^2$" },
-      { left: "Cuadrado sobre cateto $b=8$", right: "$b^2 = 64\\text{ u}^2$" },
-      { left: "Superficie sobre cateto desconocido $a$", right: "$a^2 = 100 - 64 = 36\\text{ u}^2$" }
+      { left: "Cuadrado sobre la hipotenusa $c = 10$", right: "$c^2 = 100\\text{ u}^2$" },
+      { left: "Cuadrado sobre el cateto $a = 8$", right: "$a^2 = 64\\text{ u}^2$" },
+      { left: "Cuadrado sobre el cateto desconocido $b$", right: "$b^2 = 100 - 64 = 36\\text{ u}^2$" }
     ]}
   >
-    <Emparejar.ErrorComun titulo="Confundir las áreas con las longitudes lineales">
-      El teorema de Pitágoras relaciona las áreas cuadradas ($a^2, b^2, c^2$), no directamente las longitudes lineales ($a, b, c$).
+    <Emparejar.ErrorComun titulo="Confundir áreas con longitudes">
+      El <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> relaciona las áreas de los cuadrados ($a^2, b^2, c^2$), no directamente las longitudes de los lados ($a, b, c$).
     </Emparejar.ErrorComun>
 
     <Emparejar.Resolucion>
-      Las áreas de los tres cuadrados correspondientes son:
+      Las áreas de los tres cuadrados son:
       
       <Formula>
-        $$ c^2 = 10^2 = 100, \quad b^2 = 8^2 = 64, \quad a^2 = 100 - 64 = 36 $$
+        $$ c^2 = 10^2 = 100, \quad a^2 = 8^2 = 64, \quad b^2 = 100 - 64 = 36 $$
       </Formula>
     </Emparejar.Resolucion>
   </Emparejar>
@@ -89,32 +89,32 @@ export const Simulation = EjercicioPitagorasCateto;
 <ExerciseStep
   id="p3"
   numero={3}
-  titulo="Secuencia de deducción algebraica"
+  titulo="Secuencia del despeje"
   questionIds={["p3_q1"]}
   dependeDeQuestions={["p2_q1"]}
 >
-  Ordena de forma lógica los pasos algebraicos para despejar la longitud exacta del cateto $a$:
+  Ordena los pasos algebraicos que permiten despejar la longitud del cateto $b$:
 
   <Ordenacion
     id="p3_q1"
-    pregunta="Arrastra los pasos para colocarlos en el orden deductivo correcto:"
+    pregunta="Arrastra los pasos para colocarlos en el orden correcto:"
     pasos={[
-      "$a^2 + 8^2 = 10^2$",
-      "$a^2 + 64 = 100$",
-      "$a^2 = 100 - 64$",
-      "$a = \\sqrt{36} = 6$"
+      "$8^2 + b^2 = 10^2$",
+      "$64 + b^2 = 100$",
+      "$b^2 = 100 - 64$",
+      "$b = \\sqrt{36} = 6$"
     ]}
   >
-    <Ordenacion.ErrorComun titulo="Extraer la raíz cuadrada antes de simplificar la resta">
-      No se puede aplicar la raíz término a término ($\sqrt{100 - 64} \neq \sqrt{100} - \sqrt{64} = 10 - 8 = 2$). Primero se debe calcular la diferencia $100 - 64 = 36$ y después extraer la raíz.
+    <Ordenacion.ErrorComun titulo="Extraer la raíz cuadrada antes de calcular la resta">
+      La <ConceptLink targetId="raiz-cuadrada">raíz cuadrada</ConceptLink> no se distribuye sobre la resta: $\sqrt{100 - 64} \neq \sqrt{100} - \sqrt{64} = 10 - 8 = 2$. Primero se calcula la diferencia $100 - 64 = 36$ y después se extrae la raíz.
     </Ordenacion.ErrorComun>
 
     <Ordenacion.Resolucion>
-      El orden deductivo correcto es:
-      - Planteamiento: $a^2 + 8^2 = 10^2$
-      - Cálculo de potencias: $a^2 + 64 = 100$
-      - Despeje de la incógnita cuadrática: $a^2 = 100 - 64 = 36$
-      - Extracción de raíz cuadrada: $a = \sqrt{36} = 6$
+      El orden correcto es:
+      - Planteamiento: $8^2 + b^2 = 10^2$
+      - Cálculo de las potencias: $64 + b^2 = 100$
+      - Despeje de $b^2$: $b^2 = 100 - 64 = 36$
+      - Extracción de la raíz cuadrada: $b = \sqrt{36} = 6$
     </Ordenacion.Resolucion>
   </Ordenacion>
 </ExerciseStep>
@@ -128,20 +128,20 @@ export const Simulation = EjercicioPitagorasCateto;
   questionIds={["p4_q1"]}
   dependeDeQuestions={["p3_q1"]}
 >
-  Introduce el valor numérico final obtenido para la longitud del cateto vertical $a$:
+  Introduce el valor numérico de la longitud del cateto $b$:
 
   <Hueco
     id="p4_q1"
-    pregunta="Longitud calculada del cateto vertical a:"
+    pregunta="Longitud del cateto b:"
     correct="6"
-    pista="¿Qué número real positivo al cuadrado resulta en 36?"
+    pista="¿Qué número real positivo elevado al cuadrado da 36?"
   >
-    <Hueco.ErrorComun titulo="Considerar la solución algebraica negativa">
-      Aunque $(-6)^2 = 36$, una distancia geométrica euclídea siempre es un número estrictamente positivo ($a > 0$).
+    <Hueco.ErrorComun titulo="Tomar la solución negativa">
+      Aunque $(-6)^2 = 36$, una <ConceptLink targetId="longitud">longitud</ConceptLink> es siempre un número positivo ($b > 0$).
     </Hueco.ErrorComun>
 
     <Hueco.Resolucion>
-      Extrayendo la raíz cuadrada al área obtenida ($a^2 = 36$), resulta $a = \sqrt{36} = 6$ unidades.
+      Al extraer la raíz cuadrada de $b^2 = 36$ resulta $b = \sqrt{36} = 6$ unidades.
     </Hueco.Resolucion>
   </Hueco>
 </ExerciseStep>

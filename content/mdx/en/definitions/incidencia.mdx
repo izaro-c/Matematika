@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Incidence",
-  description: "Primitive geometric relation establishing positional membership between points, lines, and planes.",
+  description: "Primitive geometric relation expressing when a point lies on a line or on a plane.",
   branch: "51A",
   hasSimulation: false,
   sources: [
@@ -12,22 +12,23 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="I" />**ncidence** is a <ConceptLink targetId="concepto-primitivo">primitive relation</ConceptLink> of geometry that formalizes the idea of membership or positional contact between geometric objects (such as <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>).
+<Capitular letra="I" />**ncidence** is a <ConceptLink targetId="concepto-primitivo">primitive relation</ConceptLink> of geometry expressing when a <ConceptLink targetId="punto">point</ConceptLink> lies on a <ConceptLink targetId="recta">line</ConceptLink> or on a <ConceptLink targetId="plano">plane</ConceptLink>.
 
-Being a primitive concept, it is not defined via algebraic formulas; its behavior is established by the axioms of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>. In common language, saying that a point and a line "are incident" means that the point lies on the line, or equivalently, that the line passes through that point.
+Being primitive, it is not defined in terms of prior notions; its behavior is determined by the axioms of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>. Saying that a point and a line "are incident" means that the point lies on the line or, equivalently, that the line passes through the point.
 
 <Definicion title="Formal Declaration">
-  In a many-sorted <ConceptLink targetId="estructura-geometrica">incidence structure</ConceptLink> $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, **incidence** is formulated through independent typed binary relations between <ConceptLink targetId="dominio">primitive domains</ConceptLink>:
+  In a many-sorted <ConceptLink targetId="estructura-geometrica">incidence structure</ConceptLink> $\mathcal{S} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi})$, **incidence** consists of two typed <ConceptLink targetId="relacion-binaria">binary relations</ConceptLink> between the <ConceptLink targetId="dominio">primitive domains</ConceptLink>:
   $$
   \mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}, \quad \mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi
   $$
-  - **Point and line:** If $(P, \ell) \in \mathbf{I}_{\mathcal{P}\mathcal{L}}$, we formally write $P \, \mathbf{I} \, \ell$ (point $P$ is incident with line $\ell$; the expression $P \in \ell$ is a common informal shorthand by abuse of language identifying a line with its incident points).
-  - **Point and plane:** If $(P, \pi) \in \mathbf{I}_{\mathcal{P}\Pi}$, we formally write $P \, \mathbf{I} \, \pi$ (point $P$ is incident with plane $\pi$; similarly, $P \in \pi$ by abuse of language).
+  - **Point and line:** If $(P, \ell) \in \mathbf{I}_{\mathcal{P}\mathcal{L}}$, we write $P \, \mathbf{I} \, \ell$ (point $P$ is incident with line $\ell$). The <ConceptLink targetId="traza">trace</ConceptLink> lets us express this in set notation without identifying the line with a set: $P \in \operatorname{tr}(\ell)$.
+  - **Point and plane:** If $(P, \pi) \in \mathbf{I}_{\mathcal{P}\Pi}$, we write $P \, \mathbf{I} \, \pi$ (point $P$ is incident with plane $\pi$); similarly, $P \in \operatorname{tr}(\pi)$.
 
-  The relation of a line lying on a plane ($\ell \subseteq \pi$) is not an independent primitive relation, but a derived concept established by <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink>:
+  A line lying in a plane is not a primitive relation but a derived notion, expressed through traces:
   $$
-  \ell \subseteq \pi \iff \forall P \in \mathcal{P} \, (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)
+  \operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \iff \forall P \in \mathcal{P} \, (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)
   $$
+  <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink> provides a criterion for it: it suffices that two distinct points of $\ell$ be incident with $\pi$.
 </Definicion>
 
 <Separador />
@@ -36,5 +37,5 @@ Being a primitive concept, it is not defined via algebraic formulas; its behavio
 
 Incidence constitutes the first deductive stratum of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>:
 
-- **In incidence systems:** Establishes the basic configuration of <ConceptLink targetId="espacio">space</ConceptLink> via axioms (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>), determining when points are <ConceptLink targetId="colinealidad">collinear</ConceptLink> or <ConceptLink targetId="coplanaridad">coplanar</ConceptLink>.
-- **Independence from metrics:** Incidence does not require notions of <ConceptLink targetId="distancia">distance</ConceptLink>, <ConceptLink targetId="angulo">angle</ConceptLink>, or <ConceptLink targetId="estar-entre">order</ConceptLink>, making it equally applicable to <ConceptLink targetId="continuidad">continuous</ConceptLink> and <ConceptLink targetId="modelo-fano">finite geometries</ConceptLink>.
+- **In incidence systems:** Axioms <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, <ConceptLink targetId="axioma-incidencia-3">I.3</ConceptLink>, <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>, <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, <ConceptLink targetId="axioma-incidencia-7">I.7</ConceptLink>, <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink> fix the basic configuration of <ConceptLink targetId="espacio">space</ConceptLink> and allow us to define when several points are <ConceptLink targetId="colinealidad">collinear</ConceptLink> (incident with one line) or <ConceptLink targetId="coplanaridad">coplanar</ConceptLink> (incident with one plane).
+- **Independence from metric notions:** Incidence requires no <ConceptLink targetId="distancia">distance</ConceptLink>, <ConceptLink targetId="angulo">angle</ConceptLink>, or <ConceptLink targetId="estar-entre">order</ConceptLink>, so it makes sense both in <ConceptLink targetId="continuidad">continuous</ConceptLink> geometries and in <ConceptLink targetId="geometria-finita">finite geometries</ConceptLink> such as the <ConceptLink targetId="modelo-fano">Fano plane</ConceptLink>.

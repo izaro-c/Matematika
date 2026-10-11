@@ -869,7 +869,17 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra B para hacer AB tan pequeño como se desee; el máximo de n se recalcula y siempre permite rebasar CD."
+  "note": "Arrastra B para hacer AB tan pequeño como se desee; el máximo de n se recalcula y siempre permite rebasar CD.",
+  "translations": {
+    "eu": {
+      "title": "Arkimedesen axioma",
+      "note": "Arrastatu B AB nahi bezain txiki egiteko; n-ren maximoa berriz kalkulatzen da eta beti ahalbidetzen du CD gainditzea."
+    },
+    "en": {
+      "title": "Archimedean Axiom",
+      "note": "Drag B to make AB as small as desired; the maximum n is recalculated and always allows surpassing CD."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

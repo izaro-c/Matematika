@@ -9,17 +9,17 @@ export const metadata = {
   hasSimulation: false,
   sources: [
     { title: "Dimension Theory", author: "Witold Hurewicz, Henry Wallman", locator: "Chapter I", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I", role: "secondary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §2", role: "secondary" }
   ]
 };
 
-<Capitular letra="D" />**imension** is the mathematical measure of the number of degrees of freedom or independent directions characterizing a <ConceptLink targetId="espacio">space</ConceptLink> or geometric figure.
+<Capitular letra="D" />**imension** is the number of degrees of freedom or independent directions characterizing a <ConceptLink targetId="espacio">space</ConceptLink> or geometric figure.
 
 In elementary geometry, objects are classified according to their degrees of freedom: a <ConceptLink targetId="punto">point</ConceptLink> has no extension (dimension 0), a <ConceptLink targetId="recta">line</ConceptLink> has a single direction of displacement (dimension 1), a <ConceptLink targetId="plano">plane</ConceptLink> admits two independent directions (dimension 2), and <ConceptLink targetId="espacio">three-dimensional space</ConceptLink> admits three (dimension 3).
 
 <Definicion title="Definition Across Mathematical Theories">
-  The concept of dimension is rigorously formalized across branches of mathematics:
-  - **In <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>:** It is bounded from below by <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> existential axioms (<ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink> imposes $\dim \ge 2$ by requiring at least 3 non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points, and <ConceptLink targetId="axioma-incidencia-8">Axiom I.8</ConceptLink> imposes $\dim \ge 3$ by requiring 4 non-<ConceptLink targetId="coplanaridad">coplanar</ConceptLink> points), while the upper bound is established by intersection and spatial closure axioms.
+  The concept of dimension is formalized differently in each branch of mathematics:
+  - **In <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink>:** It is not defined as a number; instead, <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> incidence axioms fix that <ConceptLink targetId="espacio">space</ConceptLink> is three-dimensional. The lower bounds come from existential axioms (<ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink> imposes $\dim \ge 2$ by requiring at least 3 non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points, and <ConceptLink targetId="axioma-incidencia-8">Axiom I.8</ConceptLink> imposes $\dim \ge 3$ by requiring 4 non-<ConceptLink targetId="coplanaridad">coplanar</ConceptLink> points); the upper bound, from <ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink>: two distinct planes sharing a point share a line, which rules out $\dim \ge 4$.
   - **In <ConceptLink targetId="algebra-lineal">linear algebra</ConceptLink>:** It is the <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> of any <ConceptLink targetId="base">basis</ConceptLink> $B$ of a <ConceptLink targetId="espacio-vectorial">vector space</ConceptLink> $V$ over a <ConceptLink targetId="cuerpo">field</ConceptLink> $\mathbb{K}$:
     $$
     \dim_{\mathbb{K}}(V) = |B|
@@ -32,6 +32,6 @@ In elementary geometry, objects are classified according to their degrees of fre
 ### Dimensional hierarchy
 
 - **Dimension 0:** The elementary <ConceptLink targetId="punto">point</ConceptLink> (lacking extension).
-- **Dimension 1:** The <ConceptLink targetId="recta">line</ConceptLink>, <ConceptLink targetId="segmento">segment</ConceptLink>, and <ConceptLink targetId="semirrecta">ray</ConceptLink> (purely linear extension).
-- **Dimension 2:** The <ConceptLink targetId="plano">plane</ConceptLink>, <ConceptLink targetId="semiplano">half-plane</ConceptLink>, and <ConceptLink targetId="poligono">polygons</ConceptLink> (areal/planar extension, formalized synthetically through relations of equidecomposition and complementation).
-- **Dimension 3:** <ConceptLink targetId="espacio">Three-dimensional space</ConceptLink> and <ConceptLink targetId="poliedro">polyhedra</ConceptLink> (spatial volumetric extension).
+- **Dimension 1:** The <ConceptLink targetId="recta">line</ConceptLink>, the <ConceptLink targetId="segmento">segment</ConceptLink>, the <ConceptLink targetId="semirrecta">ray</ConceptLink>, and figures made of segments, such as the <ConceptLink targetId="triangulo">triangle</ConceptLink> and the <ConceptLink targetId="poligono">polygon</ConceptLink> (whose trace is a union of segments).
+- **Dimension 2:** The <ConceptLink targetId="plano">plane</ConceptLink>, the <ConceptLink targetId="semiplano">half-plane</ConceptLink>, and the <ConceptLink targetId="region-poligonal">polygonal region</ConceptLink> (a polygon together with its interior), to which <ConceptLink targetId="teoria-medida-area">area</ConceptLink> is assigned.
+- **Dimension 3:** <ConceptLink targetId="espacio">Space</ConceptLink> and solids bounded by <ConceptLink targetId="poliedro">polyhedra</ConceptLink>.

@@ -1,10 +1,10 @@
 export const metadata = {
-  id: "camino-teorema-pitagoras",
+  id: "plan-de-estudio-camino-teorema-pitagoras",
   lang: "es",
   type: "plan-de-estudio",
   title: "El camino hacia el teorema de Pitágoras",
   subtitle: "Ruta axiomática y geométrica",
-  description: "Explora el rigor lógico y la belleza deductiva detrás de la relación métrica más célebre de la geometría euclídea, desde las definiciones elementales hasta la geolocalización por satélites.",
+  description: "Recorrido deductivo hasta el teorema de Pitágoras: desde los conceptos primitivos y la congruencia, pasando por el axioma de las paralelas y el teorema de Tales, hasta su aplicación en la localización por satélite.",
   branch: "51M",
   requiredNodes: [
     "punto",
@@ -23,15 +23,13 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="C" />onstruir una verdad matemática de forma rigurosa exige trazar una trayectoria impecable de justificaciones. El <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> es la consecuencia necesaria de una red estructurada de nociones primitivas, axiomas y teoremas interconectados en el espacio euclidiano.
-
-Este plan de estudio te guiará paso a paso por las cinco etapas lógicas indispensables para reconstruir, comprender y aplicar esta verdad fundamental.
+<Capitular letra="E" />l <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> no es una fórmula aislada: es el punto de llegada de una cadena de <ConceptLink targetId="concepto-primitivo">conceptos primitivos</ConceptLink>, <ConceptLink targetId="axioma">axiomas</ConceptLink> y <ConceptLink targetId="teorema">teoremas</ConceptLink> del <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>. Este plan de estudio recorre esa cadena en cinco fases, desde los objetos básicos hasta una aplicación tecnológica.
 
 <Separador />
 
 ### Fase 1: Los bloques fundacionales
 
-Antes de demostrar propiedades sobre figuras o áreas, debemos definir los objetos primitivos y las relaciones de orden que gobiernan el espacio. En la geometría axiomática de Hilbert, el concepto primitivo básico es el <ConceptLink targetId="punto">punto</ConceptLink> y la relación espacial de orden es <ConceptLink targetId="estar-entre">estar entre</ConceptLink>.
+Antes de demostrar propiedades de figuras o de áreas hay que fijar los objetos y las relaciones de partida. El <ConceptLink targetId="punto">punto</ConceptLink> es un concepto primitivo, y la relación de <ConceptLink targetId="estar-entre">estar entre</ConceptLink> ($A * B * C$) ordena los puntos de una <ConceptLink targetId="recta">recta</ConceptLink> según los <ConceptLink targetId="axiomas-orden">axiomas de orden</ConceptLink>.
 
 <StudyTask
   id="punto"
@@ -47,9 +45,9 @@ Antes de demostrar propiedades sobre figuras o áreas, debemos definir los objet
 
 <Separador />
 
-### Fase 2: Construcción de figuras y congruencia
+### Fase 2: Figuras y congruencia
 
-Al conectar tres puntos no colineales mediante segmentos obtenemos la figura geométrica primaria del plano: el <ConceptLink targetId="triangulo">triángulo</ConceptLink>. Para comparar triángulos entre sí sin recurrir a la intuición informal, aplicamos los axiomas de <ConceptLink targetId="congruencia">congruencia</ConceptLink>, especialmente el <ConceptLink targetId="axioma-congruencia-5">axioma SAS/LAL</ConceptLink>. Su primera gran aplicación demostrativa es el teorema del triángulo isósceles.
+Tres puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink> unidos por <ConceptLink targetId="segmento">segmentos</ConceptLink> forman un <ConceptLink targetId="triangulo">triángulo</ConceptLink>. Para comparar triángulos sin apelar a la intuición se usan los <ConceptLink targetId="axiomas-congruencia">axiomas de congruencia</ConceptLink>, en particular el <ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink>, que da la forma básica del criterio lado-ángulo-lado (LAL). Su primera aplicación es el <ConceptLink targetId="teorema-triangulo-isosceles">teorema del triángulo isósceles</ConceptLink>.
 
 <StudyTask
   id="triangulo"
@@ -60,29 +58,29 @@ Al conectar tres puntos no colineales mediante segmentos obtenemos la figura geo
 <StudyTask
   id="axioma-congruencia-5"
   type="axioma"
-  title="Axioma de congruencia III-5 (SAS / LAL)"
+  title="Axioma III.5 (LAL)"
 />
 
 <StudyTask
   id="teorema-triangulo-isosceles"
   type="teorema"
-  title="Teorema del triángulo isósceles (Pons Asinorum)"
+  title="Teorema del triángulo isósceles (pons asinorum)"
 />
 
 <StudyPlanCheckpoint
   id="checkpoint-pitagoras-congruencia"
-  explanation="El teorema del triángulo isósceles se demuestra mediante una congruencia por el criterio Lado-Ángulo-Lado (SAS/LAL), la cual fuerza a los ángulos basales correspondientes a ser congruentes."
+  explanation="El teorema del triángulo isósceles se demuestra aplicando el criterio lado-ángulo-lado (Axioma III.5) al triángulo y a sí mismo con los vértices de la base intercambiados; de ahí se obtiene que los ángulos de la base son congruentes."
 >
   <Pregunta
     id="checkpoint-pitagoras-congruencia"
-    question="¿Qué criterio de congruencia nos permite demostrar formalmente que los ángulos basales de un triángulo isósceles son iguales?"
+    question="¿Qué criterio de congruencia permite demostrar que los ángulos de la base de un triángulo isósceles son congruentes?"
     options={[
-      "Ángulo-Lado-Ángulo (ALA)",
-      "Lado-Ángulo-Lado (LAL / SAS)",
-      "Lado-Lado-Lado (LLL)",
-      "Ángulo-Ángulo-Lado (AAL)"
+      "Ángulo-lado-ángulo (ALA)",
+      "Lado-ángulo-lado (LAL)",
+      "Lado-lado-lado (LLL)",
+      "Lado-ángulo-ángulo (LAA)"
     ]}
-    correct="Lado-Ángulo-Lado (LAL / SAS)"
+    correct="Lado-ángulo-lado (LAL)"
   />
 </StudyPlanCheckpoint>
 
@@ -90,30 +88,30 @@ Al conectar tres puntos no colineales mediante segmentos obtenemos la figura geo
 
 ### Fase 3: Paralelismo y suma de ángulos
 
-El teorema de Pitágoras es exclusivo de la geometría euclídea plana. Esto se debe a que depende del <ConceptLink targetId="axioma-paralelas-euclides">quinto postulado de Euclides</ConceptLink>. Sin este axioma es imposible demostrar que la suma de los ángulos interiores de un triángulo es exactamente $180^\circ$.
+El teorema de Pitágoras es un teorema euclidiano: depende del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink> (Axioma IV, heredero del quinto postulado de <ConceptLink targetId="euclides">Euclides</ConceptLink>) y es falso en el <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink>. En el <ConceptLink targetId="sistema-absoluto">sistema absoluto</ConceptLink>, sin ese axioma, no puede demostrarse que la suma de los <ConceptLink targetId="angulo-interior">ángulos interiores</ConceptLink> de un triángulo sea congruente con dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink> ($180^\circ$).
 
 <StudyTask
   id="axioma-paralelas-euclides"
   type="axioma"
-  title="El quinto postulado (axioma de paralelas)"
+  title="Axioma IV (axioma de las paralelas)"
 />
 
 <StudyTask
   id="teorema-suma-angulos-triangulo"
   type="teorema"
-  title="Teorema de la suma de ángulos de un triángulo"
+  title="Teorema de la suma de los ángulos de un triángulo"
 />
 
 <StudyPlanCheckpoint
   id="checkpoint-pitagoras-paralelas"
-  explanation="Para probar que la suma angular es 180°, se traza una recta paralela a la base por el vértice opuesto. Esto requiere el Quinto Postulado para asegurar la igualdad de los ángulos alternos internos."
+  explanation="Para demostrar que la suma de los ángulos es 180°, se traza por el vértice opuesto la paralela a la base. Su existencia se prueba sin el axioma de las paralelas (por el teorema de los ángulos alternos internos), pero concluir que los ángulos alternos internos que forma son congruentes exige que esa paralela sea única, es decir, el Axioma IV."
 >
   <Emparejar
     id="checkpoint-pitagoras-paralelas"
-    pregunta="Relaciona cada propiedad geométrica con su fundamento clave en la Fase 3:"
+    pregunta="Relaciona cada paso de la demostración con su fundamento:"
     pairs={[
-      { left: "Suma de ángulos (180°)", right: "Quinto Postulado de las Paralelas" },
-      { left: "Ángulos alternos internos", right: "Línea paralela auxiliar por el vértice" }
+      { left: "Existencia de la paralela a la base por el vértice opuesto", right: "Teorema de los ángulos alternos internos" },
+      { left: "Congruencia de los ángulos alternos internos que forma esa paralela", right: "Axioma IV (unicidad de la paralela)" }
     ]}
   />
 </StudyPlanCheckpoint>
@@ -122,19 +120,19 @@ El teorema de Pitágoras es exclusivo de la geometría euclídea plana. Esto se 
 
 ### Fase 4: Proporcionalidad y semejanza
 
-Con una suma de ángulos fija en $180^\circ$, surge la noción de <ConceptLink targetId="semejanza">semejanza</ConceptLink> geométrica. El <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink> establece la proporcionalidad de los lados en triángulos semejantes, proporcionando la herramienta algebraica para operar con razones.
+En el sistema euclidiano existen triángulos con los mismos ángulos y distinto tamaño, y para compararlos se necesita la <ConceptLink targetId="proporcionalidad">proporcionalidad</ConceptLink> de segmentos. El <ConceptLink targetId="teorema-tales">teorema de Tales</ConceptLink> es la base de la teoría de la <ConceptLink targetId="semejanza">semejanza</ConceptLink>: una recta <ConceptLink targetId="paralelas">paralela</ConceptLink> a un lado de un triángulo determina sobre los otros dos lados segmentos proporcionales. Se demuestra a partir del <ConceptLink targetId="teorema-area-triangulo">área del triángulo</ConceptLink>.
 
 <StudyTask
   id="teorema-tales"
   type="teorema"
-  title="El teorema de Tales sobre semejanza"
+  title="El teorema de Tales"
 />
 
 <Separador />
 
 ### Fase 5: El teorema de Pitágoras y su aplicación
 
-Reuniendo congruencia, paralelismo y semejanza, demostramos la relación fundamental $a^2 + b^2 = c^2$. Consolidaremos este resultado teórico en el ejercicio de cálculo y en el <ConceptLink targetId="caso-gps-trilateracion">caso de uso del GPS</ConceptLink>.
+Con la congruencia, el paralelismo y la teoría del <ConceptLink targetId="teoria-medida-area">área</ConceptLink> se demuestra la relación $a^2 + b^2 = c^2$ entre los <ConceptLink targetId="cateto">catetos</ConceptLink> y la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> de un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink>. El resultado se consolida con un <ConceptLink targetId="ejercicio-pitagoras-cateto">ejercicio de cálculo</ConceptLink> y con el <ConceptLink targetId="caso-gps-trilateracion">caso de uso del GPS</ConceptLink>.
 
 <StudyTask
   id="teorema-pitagoras"
@@ -145,7 +143,7 @@ Reuniendo congruencia, paralelismo y semejanza, demostramos la relación fundame
 <StudyTask
   id="ejercicio-pitagoras-cateto"
   type="ejercicio"
-  title="Ejercicio: cálculo del cateto faltante"
+  title="Ejercicio: cálculo de un cateto"
 />
 
 <StudyTask

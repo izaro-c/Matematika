@@ -1,0 +1,69 @@
+export const metadata = {
+  id: "teorema-existencia-bisectriz",
+  lang: "eu",
+  type: "teorema",
+  title: "Erdikariaren existentzia eta bakartasunaren teorema",
+  description: "Plano bateko edozein angelu konbexutarako, erpinean jatorria duen eta angeluaren barnean dagoen zuzenerdi bakar bat existitzen da, angelua bi angelu kongruentetan banatzen duena.",
+  statement: "Plano bateko edozein ∠AOB angelu konbexutarako, O erpinean jatorria duen eta haren barnean dagoen OC zuzenerdi bakar bat existitzen da non ∠AOC ≅ ∠BOC den.",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "angulo", "bisectriz", "congruencia", "geometria-absoluta"],
+  hasSimulation: true,
+  authors: ["euclides", "hilbert"],
+  demos: ["demo-existencia-bisectriz"],
+  sources: [
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. Liburukia, 9. Proposizioa",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. Kapitulua, §5",
+      role: "primary"
+    }
+  ]
+};
+
+import { Bisectriz } from '@content/diagrams/Definiciones/Bisectriz';
+export const Simulation = Bisectriz;
+
+<Capitular letra="E" />dozein <ConceptLink targetId="plano" isDependency={true}>planotan</ConceptLink>, edozein <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> konbexutarako, <ConceptLink targetId="vertice" isDependency={true}>erpinean</ConceptLink> jatorria duen eta angeluaren barnean dagoen <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> bakar bat existitzen da, angelua bi angelu <ConceptLink targetId="congruencia" isDependency={true}>kongruentetan</ConceptLink> banatzen duena.
+
+<ConceptLink targetId="sistema-absoluto">Geometria absolutuaren</ConceptLink> oinarrizko <ConceptLink targetId="teorema">teorema</ConceptLink> hau, jatorriz <ConceptLink targetId="euclides">Euklidesek</ConceptLink> bere <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.9 Proposizioan formalizatu eta eraikia, intzidentzia-, <ConceptLink targetId="estar-entre">hurrenkera-</ConceptLink> eta kongruentzia-axiomek (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 Axioma</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>) dedukzioz bermatzen duten aldaezina da, <ConceptLink targetId="axioma-paralelas-euclides">paraleloen postulatuarekiko</ConceptLink> erabat independentea. Zuzenerdi horri angeluaren <ConceptLink targetId="bisectriz">erdikaria</ConceptLink> deritzo.
+
+<Definicion title="Erdikariaren existentzia eta bakartasunaren enuntziatu formala">
+Izan bitez <VisualBind element="pO" color="carbon">$O \in \mathcal{P}$</VisualBind> <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat $\pi \in \Pi$ <ConceptLink targetId="plano" isDependency={true}>planoan</ConceptLink>, eta <VisualBind element="rayOA" color="pavo">$\overrightarrow{OA}$</VisualBind> zein <VisualBind element="rayOB" color="pavo">$\overrightarrow{OB}$</VisualBind> aurkakoak ez diren eta bat ez datozen bi <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> $O$ jatorri komunarekin, $\angle AOB = \overrightarrow{OA} \cup \overrightarrow{OB}$ <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> konbexua mugatzen dutenak.
+
+<VisualBind element="pO" color="carbon">$O$</VisualBind> <ConceptLink targetId="vertice" isDependency={true}>erpinean</ConceptLink> jatorria duen <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> bakar bat existitzen da, $\overleftrightarrow{OA}$ zuzenarekiko <VisualBind element="pB" color="terracota">$B$</VisualBind> barne hartzen duen <ConceptLink targetId="semiplano" isDependency={true}>planoerdian</ConceptLink> eta $\angle AOB$ angeluaren barnean kokatua, non eratutako bi angeluak elkarrekiko <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> diren:
+
+$$
+\angle AOC \cong \angle BOC
+$$
+
+<VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdiari</ConceptLink> $\angle AOB$ <ConceptLink targetId="angulo" isDependency={true}>angeluaren</ConceptLink> <ConceptLink targetId="bisectriz">erdikaria</ConceptLink> deritzo.
+</Definicion>
+
+<Separador />
+
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ezaugarri geometrikoak eta aldaezinak">
+    <PropiedadItem 
+      id="caracterizacion-equidistancia-bisectriz" 
+      title="Aldeen zuzen euskarriekiko distantziakidetasuna"
+      formula="P \in \overrightarrow{OC} \iff d(P, \overleftrightarrow{OA}) = d(P, \overleftrightarrow{OB})"
+    >
+      <VisualBind element="bisAOB" color="pavo">$\overrightarrow{OC}$</VisualBind> <ConceptLink targetId="bisectriz">erdikariko</ConceptLink> edozein $P$ <ConceptLink targetId="punto">puntu</ConceptLink> distantziakidea da <ConceptLink targetId="angulo">angeluaren</ConceptLink> aldeen $\overleftrightarrow{OA}$ eta $\overleftrightarrow{OB}$ <ConceptLink targetId="recta">zuzen</ConceptLink> euskarriekiko.
+    </PropiedadItem>
+
+    <PropiedadItem 
+      id="ortogonalidad-bisectrices-adyacentes" 
+      title="Aldameneko angelu betegarrien erdikarien ortogonaltasuna"
+      formula="\overrightarrow{OC} \perp \overrightarrow{OD}"
+    >
+      Bi <ConceptLink targetId="angulos-suplementarios">angelu betegarri</ConceptLink> aldamenekoen <ConceptLink targetId="bisectriz">erdikariak</ConceptLink> elkarrekiko <ConceptLink targetId="perpendicular">perpendikularrak</ConceptLink> dira, <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> bat osatuz.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

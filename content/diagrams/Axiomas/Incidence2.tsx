@@ -214,7 +214,17 @@ export const Incidence2Spec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Toda recta contiene al menos dos puntos"
+  "note": "Toda recta contiene al menos dos puntos distintos.",
+  "translations": {
+    "eu": {
+      "title": "II. Intzidentzia-axioma",
+      "note": "Zuzen orok gutxienez bi puntu desberdin ditu."
+    },
+    "en": {
+      "title": "Incidence Axiom II",
+      "note": "Every line contains at least two distinct points."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

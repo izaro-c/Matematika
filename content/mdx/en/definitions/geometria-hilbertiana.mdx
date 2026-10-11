@@ -4,62 +4,63 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Hilbertian geometry",
-  description: "Rigorous axiomatic refundation of Euclidean geometry proposed by David Hilbert in 1899, based on 20 axioms divided into five independent groups.",
+  description: "Axiomatization of Euclidean geometry published by David Hilbert in 1899; in its canonical form (7th ed., 1930) it consists of 20 axioms in five groups.",
   branch: "51M",
   hasSimulation: false,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I", role: "primary" },
-    { title: "Hilbert's Foundations of Geometry", author: "Howard Eves", locator: "Chapter 5", role: "secondary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter II", role: "primary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Chapter 2", role: "secondary" }
   ]
 };
 
-<Capitular letra="H" />**ilbertian geometry** is the formal axiomatic system of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> developed by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in his seminal treatise *Grundlagen der Geometrie* (1899).
+<Capitular letra="H" />**ilbertian geometry** is the formal axiomatic system of <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> developed by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> in *Grundlagen der Geometrie* (1899). It is cited here from the 7th edition (1930): the first edition ordered the groups differently (parallels before congruence) and included a redundant order axiom, pointed out by E. H. Moore in 1902.
 
-It constitutes the foundational paradigm of modern formal synthetic mathematics: dispensing with spatial intuition and defining geometric entities solely through the formal relations that the <ConceptLink targetId="axioma">axioms</ConceptLink> establish among them.
+It is the model of the modern <ConceptLink targetId="metodo-axiomatico">axiomatic method</ConceptLink>: it dispenses with spatial intuition and characterizes the primitive objects solely through the relations that the <ConceptLink targetId="axioma">axioms</ConceptLink> impose among them.
 
 <Definicion title="Hilbert's Structure and Signature (3D)">
   **Three-dimensional Hilbertian geometry** is modeled by a <ConceptLink targetId="logica">many-sorted</ConceptLink> mathematical <ConceptLink targetId="estructura-geometrica">structure</ConceptLink> whose <ConceptLink targetId="signatura">signature</ConceptLink> comprises three <ConceptLink targetId="conjunto-disjunto">pairwise disjoint</ConceptLink> <ConceptLink targetId="dominio">domains</ConceptLink> and five irreducible <ConceptLink targetId="concepto-primitivo">primitive relations</ConceptLink>:
   $$
-  \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \equiv_{\text{seg}}, \equiv_{\angle})
+  \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})
   $$
   where:
   - $\mathcal{P}$, $\mathcal{L}$, and $\Pi$ are the disjoint domains of <ConceptLink targetId="punto">points</ConceptLink>, <ConceptLink targetId="recta">lines</ConceptLink>, and <ConceptLink targetId="plano">planes</ConceptLink>.
   - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ and $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$ are the typed binary <ConceptLink targetId="incidencia">incidence</ConceptLink> relations point-line and point-plane.
   - $\mathbf{B} \subseteq \mathcal{P}^3$ is the ternary <ConceptLink targetId="estar-entre">order and betweenness</ConceptLink> relation ($A * B * C$).
-  - $\equiv_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2$ is the <ConceptLink targetId="congruencia">congruence</ConceptLink> relation for <ConceptLink targetId="segmento">segments</ConceptLink> (point pairs).
-  - $\equiv_{\angle} \, \subseteq \mathcal{P}^6$ is the <ConceptLink targetId="congruencia">congruence</ConceptLink> relation for <ConceptLink targetId="angulo">angles</ConceptLink> (binary relation between non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> point triples $\angle ABC \equiv \angle DEF$, or on pairs of concurrent <ConceptLink targetId="semirrecta">rays</ConceptLink>).
+  - $\cong_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2$ is the <ConceptLink targetId="congruencia">congruence</ConceptLink> relation for <ConceptLink targetId="segmento">segments</ConceptLink> (point pairs).
+  - $\cong_{\angle} \, \subseteq \mathcal{P}^6$ is the <ConceptLink targetId="congruencia">congruence</ConceptLink> relation for <ConceptLink targetId="angulo">angles</ConceptLink> (between non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> point triples, $\angle ABC \cong \angle DEF$, or, equivalently, between pairs of <ConceptLink targetId="semirrecta">rays</ConceptLink> with a common origin).
 </Definicion>
 
 <Separador />
 
 ### Hilbert's five axiomatic groups
 
-The system is structured around 20 axioms grouped into five modular families:
+The system consists of 20 axioms organized into five groups:
 
-1. **Group I: <ConceptLink targetId="sistema-incidencia">Incidence Axioms</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink> to <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>):** Establish positional relations among points, lines, and planes, fixing the minimum <ConceptLink targetId="dimension">dimension</ConceptLink> of <ConceptLink targetId="espacio">space</ConceptLink>.
-2. **Group II: <ConceptLink targetId="estar-entre">Order Axioms</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink> to <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>):** Formalize betweenness $\mathbf{B}$ and plane separation via <ConceptLink targetId="axioma-orden-4">Pasch's Axiom</ConceptLink> (<ConceptLink targetId="pasch">Moritz Pasch</ConceptLink>), enabling rigorous definitions of <ConceptLink targetId="segmento">segments</ConceptLink>, <ConceptLink targetId="semirrecta">rays</ConceptLink>, and <ConceptLink targetId="semiplano">half-planes</ConceptLink>.
-3. **Group III: <ConceptLink targetId="congruencia">Congruence Axioms</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> to <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>):** Govern the behavior of $\equiv_{\text{seg}}$ and $\equiv_{\angle}$ and rigid transport without numerical <ConceptLink targetId="distancia">distances</ConceptLink>.
-4. **Group IV: <ConceptLink targetId="paralelas">Parallel Axiom</ConceptLink> (<ConceptLink targetId="axioma-paralelas-euclides">IV</ConceptLink>):** <ConceptLink targetId="sistema-euclidiano">Euclidean</ConceptLink> parallel uniqueness postulate through an external point.
-5. **Group V: <ConceptLink targetId="continuidad">Continuity Axioms</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">V.1</ConceptLink> and <ConceptLink targetId="axioma-completitud">V.2</ConceptLink>):** The <ConceptLink targetId="arquimedes">Archimedean</ConceptLink> axiom and line completeness, ensuring the geometric continuum is gap-free.
+1. **Group I: <ConceptLink targetId="sistema-incidencia">Incidence Axioms</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink> to <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>):** Govern incidence among points, lines, and planes and fix the <ConceptLink targetId="dimension">dimension</ConceptLink> of <ConceptLink targetId="espacio">space</ConceptLink>: at least three by I.8 and at most three by I.7.
+2. **Group II: <ConceptLink targetId="estar-entre">Order Axioms</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink> to <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>):** Formalize betweenness $\mathbf{B}$ and plane separation via <ConceptLink targetId="axioma-orden-4">Pasch's Axiom</ConceptLink> (<ConceptLink targetId="pasch">Moritz Pasch</ConceptLink>), enabling the definitions of <ConceptLink targetId="segmento">segments</ConceptLink>, <ConceptLink targetId="semirrecta">rays</ConceptLink>, and <ConceptLink targetId="semiplano">half-planes</ConceptLink>.
+3. **Group III: <ConceptLink targetId="congruencia">Congruence Axioms</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> to <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>):** Govern the behavior of $\cong_{\text{seg}}$ and $\cong_{\angle}$ and the transport of segments and angles without numerical <ConceptLink targetId="distancia">distances</ConceptLink>.
+4. **Group IV: <ConceptLink targetId="paralelas">Parallel Axiom</ConceptLink> (<ConceptLink targetId="axioma-paralelas-euclides">IV</ConceptLink>):** Through a point not on a line there passes at most one parallel (<ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>); replacing it with the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic axiom</ConceptLink> yields <ConceptLink targetId="sistema-hiperbolico">hyperbolic geometry</ConceptLink>.
+5. **Group V: <ConceptLink targetId="continuidad">Continuity Axioms</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">V.1</ConceptLink> and <ConceptLink targetId="axioma-completitud">V.2</ConceptLink>):** The <ConceptLink targetId="arquimedes">Archimedean</ConceptLink> axiom, which excludes infinitesimal segments, and line completeness, which excludes gaps in the line.
 
 <Separador />
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Modularity and Formal Structure">
     <PropiedadItem 
-      id="independencia-grupos" 
-      title="Modular Independence of the Five Axiom Groups"
-      formula="\forall i \neq j : \mathcal{G}_i \not\vdash \mathcal{G}_j"
+      id="independencia-axiomas-hilbert" 
+      title="Independence of Specific Axioms"
+      formula="\mathcal{T}_{\text{Hil}} \setminus \{\varphi\} \nvdash \varphi \quad (\varphi \in \{\text{III.5}, \text{IV}, \text{V.1}\})"
     >
-      Each of the five axiomatic groups (incidence, order, congruence, parallels, and continuity) is logically independent, allowing the isolation of consistent sub-theories such as <ConceptLink targetId="sistema-incidencia">incidence geometry</ConceptLink>, ordered geometry, or <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+      In Chapter II, Hilbert proves the <ConceptLink targetId="consistencia-logica">consistency</ConceptLink> of the system and, through <ConceptLink targetId="teoria-modelos">models</ConceptLink> satisfying all axioms but one, the <ConceptLink targetId="independencia-logica">independence</ConceptLink> of specific axioms: the parallel axiom (IV), the last congruence axiom (III.5), and the Archimedean axiom (V.1). This is not a global independence of each group from the others. The grouping nonetheless allows subsystems to be isolated, such as <ConceptLink targetId="sistema-incidencia">incidence geometry</ConceptLink>, ordered geometry, or <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
       id="distincion-predicados-congruencia" 
       title="Categorial Distinction of Congruence"
-      formula="\equiv_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2, \quad \equiv_{\angle} \, \subseteq \mathcal{P}^6"
+      formula="\cong_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2, \quad \cong_{\angle} \, \subseteq \mathcal{P}^6"
     >
-      Congruence is not a monolithic single predicate, but rather consists of two distinct primitive relations possessing different arities and ontological domains: <ConceptLink targetId="segmento">segment congruence</ConceptLink> ($\equiv_{\text{seg}}$) and <ConceptLink targetId="angulo">angle congruence</ConceptLink> ($\equiv_{\angle}$).
+      Congruence is not a single predicate, but two primitive relations with different arities: <ConceptLink targetId="segmento">segment congruence</ConceptLink> ($\cong_{\text{seg}}$) and <ConceptLink targetId="angulo">angle congruence</ConceptLink> ($\cong_{\angle}$).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

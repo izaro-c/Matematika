@@ -1,122 +1,797 @@
-import { useMathStore } from '@/lib/page-context/MathStoreContext';
+import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';
 
-export const DemoDesigualdadTriangular: React.FC = () => {
-  const highlight = useMathStore(state => state.variables['highlight']);
-  const step = useMathStore(state => state.variables['step']);
-
-  const isActive = (id: string) => {
-    const isH = Array.isArray(highlight) ? (highlight as unknown as string[]).includes(id) : highlight === id;
-    const isS = Array.isArray(step) ? (step as unknown as string[]).includes(id) : step === id;
-    return isH || isS;
-  };
-
-  const s2 = isActive('step2');
-  const s3 = isActive('step3');
-  const s4 = isActive('step4');
-  const s5 = isActive('step5');
-
-  const getOpacity = (target: string) => {
-    const anyH = highlight !== undefined && highlight !== null;
-    if (anyH) {
-      if (isActive(target)) return 1;
-      return 0.2;
+/* @matematika-diagram-spec:start */
+export const DemoDesigualdadTriangularSpec = createDiagramSpec(
+{
+  "version": 3,
+  "renderer": "matematika-diagram-renderer-v3",
+  "title": "Demostración: Desigualdad triangular",
+  "componentId": "demo-desigualdad-triangular",
+  "category": "Demos",
+  "mode": "simulation",
+  "axis": false,
+  "grid": false,
+  "showLabels": true,
+  "viewport": {
+    "bounds": [
+      -4.5,
+      4.5,
+      4.5,
+      -3
+    ],
+    "home": [
+      -4.5,
+      4.5,
+      4.5,
+      -3
+    ],
+    "minZoom": 0.3,
+    "maxZoom": 5,
+    "padding": 0.15
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "label": "Geometría base",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "construction",
+      "label": "Construcción auxiliar",
+      "order": 1,
+      "visible": true,
+      "locked": false
     }
-    return 1;
-  };
+  ],
+  "groups": [],
+  "objects": [
+    {
+      "id": "pA",
+      "label": "A",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 20,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértice A",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "pA",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -1.8
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "pB",
+      "label": "B",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 21,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértice B",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "pB",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 1.8,
+        "y": -1.8
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "pC",
+      "label": "C",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 22,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Vértice C (arrastrable)",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "pC",
+      "objectType": "point",
+      "definition": {
+        "type": "coordinates",
+        "x": 0.2,
+        "y": 0.8
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 7,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "pD",
+      "label": "D",
+      "color": "carbon",
+      "layerId": "construction",
+      "order": 23,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto extendido D",
+        "role": "construction"
+      },
+      "target": true,
+      "targetId": "punto-d",
+      "objectType": "point",
+      "definition": {
+        "type": "expression",
+        "x": "pC.x + (hypot(pB.x - pC.x, pB.y - pC.y) / hypot(pC.x - pA.x, pC.y - pA.y)) * (pC.x - pA.x)",
+        "y": "pC.y + (hypot(pB.x - pC.x, pB.y - pC.y) / hypot(pC.x - pA.x, pC.y - pA.y)) * (pC.y - pA.y)",
+        "fallback": [
+          2.03,
+          2.31
+        ]
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segAB",
+      "label": "Lado c (AB)",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 10,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado AB",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "lado-ab",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pB"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.6,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segBC",
+      "label": "Lado a (BC)",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 11,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado BC",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "lado-bc",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.6,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segAC",
+      "label": "Lado b (AC)",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 12,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Lado AC",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "lado-ac",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pA",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 2.6,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "polyABC",
+      "label": "Triángulo ABC",
+      "color": "canela",
+      "layerId": "geometry",
+      "order": 5,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo ABC",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "triangulo",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA",
+          "pB",
+          "pC"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 1,
+        "fillOpacity": 0.12,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segCD",
+      "label": "Extensión CD (≅ a)",
+      "color": "mora",
+      "layerId": "construction",
+      "order": 13,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Extensión CD",
+        "role": "construction"
+      },
+      "target": true,
+      "targetId": "lado-cd",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pC",
+          "pD"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.4,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "segBD",
+      "label": "Segmento BD",
+      "color": "canela",
+      "layerId": "construction",
+      "order": 14,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Segmento BD",
+        "role": "construction"
+      },
+      "target": true,
+      "targetId": "lado-bd",
+      "objectType": "path",
+      "geometry": {
+        "type": "segment",
+        "points": [
+          "pB",
+          "pD"
+        ]
+      },
+      "appearance": {
+        "dashed": true,
+        "strokeWidth": 2.2,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "polyBCD",
+      "label": "Triángulo isósceles BCD",
+      "color": "canela",
+      "layerId": "construction",
+      "order": 6,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo isósceles BCD",
+        "role": "construction"
+      },
+      "target": true,
+      "targetId": "triangulo-isosceles",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pC",
+          "pB",
+          "pD"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 1,
+        "fillOpacity": 0.16,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "polyABD",
+      "label": "Triángulo extendido ABD",
+      "color": "pavo",
+      "layerId": "construction",
+      "order": 4,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Triángulo ABD",
+        "role": "construction"
+      },
+      "target": true,
+      "targetId": "triangulo-abd",
+      "objectType": "path",
+      "geometry": {
+        "type": "polygon",
+        "points": [
+          "pA",
+          "pB",
+          "pD"
+        ]
+      },
+      "appearance": {
+        "strokeWidth": 1,
+        "fillOpacity": 0.08,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "congruenceBC",
+      "label": "Marca BC",
+      "color": "terracota",
+      "layerId": "geometry",
+      "order": 28,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia en BC",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruence-bc",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pB",
+          "pC"
+        ]
+      },
+      "count": 1,
+      "height": 0.4,
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "congruenceCD",
+      "label": "Marca CD",
+      "color": "terracota",
+      "layerId": "construction",
+      "order": 29,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Marca de congruencia en CD",
+        "role": "secondary"
+      },
+      "target": true,
+      "targetId": "congruence-cd",
+      "objectType": "mark",
+      "variant": "congruence",
+      "anchor": {
+        "type": "between-points",
+        "points": [
+          "pC",
+          "pD"
+        ]
+      },
+      "count": 1,
+      "height": 0.4,
+      "appearance": {
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "angCBD",
+      "label": "Ángulo CBD",
+      "color": "terracota",
+      "layerId": "construction",
+      "order": 17,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo CBD",
+        "role": "construction"
+      },
+      "target": true,
+      "targetId": "angulo-cbd",
+      "objectType": "angle",
+      "points": [
+        "pD",
+        "pB",
+        "pC"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.75,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "angCDB",
+      "label": "Ángulo CDB",
+      "color": "canela",
+      "layerId": "construction",
+      "order": 18,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo CDB",
+        "role": "construction"
+      },
+      "target": true,
+      "targetId": "angulo-cdb",
+      "objectType": "angle",
+      "points": [
+        "pC",
+        "pD",
+        "pB"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 0.75,
+        "preserveColorOnHighlight": true
+      }
+    },
+    {
+      "id": "angABD",
+      "label": "Ángulo ABD",
+      "color": "carbon",
+      "layerId": "construction",
+      "order": 19,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Ángulo ABD",
+        "role": "construction"
+      },
+      "target": true,
+      "targetId": "angulo-abd",
+      "objectType": "angle",
+      "points": [
+        "pD",
+        "pB",
+        "pA"
+      ],
+      "sweep": "non-reflex",
+      "marker": "arc",
+      "appearance": {
+        "radius": 1.05,
+        "preserveColorOnHighlight": true
+      }
+    }
+  ],
+  "relations": [],
+  "steps": [
+    {
+      "id": "step1",
+      "label": "El triángulo base",
+      "description": "Consideramos el triángulo △ABC con lados a = BC, b = CA y c = AB. Demostraremos que b + a > c.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "segAB",
+        "segBC",
+        "segAC",
+        "polyABC"
+      ],
+      "durationMs": 1000,
+      "objectStates": {
+        "polyABC": {
+          "emphasis": "primary"
+        },
+        "segAC": {
+          "emphasis": "primary"
+        },
+        "segBC": {
+          "emphasis": "primary"
+        },
+        "segAB": {
+          "emphasis": "secondary"
+        }
+      }
+    },
+    {
+      "id": "step2",
+      "label": "Extensión del lado AC",
+      "description": "Prolongamos AC más allá de C construyendo CD ≅ BC = a. La longitud total de AD es b + a.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "segAB",
+        "segBC",
+        "segAC",
+        "segCD",
+        "polyABC",
+        "congruenceBC",
+        "congruenceCD"
+      ],
+      "durationMs": 1000,
+      "objectStates": {
+        "pD": {
+          "emphasis": "primary"
+        },
+        "segCD": {
+          "emphasis": "primary"
+        },
+        "congruenceBC": {
+          "emphasis": "primary"
+        },
+        "congruenceCD": {
+          "emphasis": "primary"
+        }
+      }
+    },
+    {
+      "id": "step3",
+      "label": "Triángulo isósceles auxiliar BCD",
+      "description": "Trazamos BD. Como CD ≅ BC, △BCD es isósceles y sus ángulos base son congruentes: ∠CBD ≅ ∠CDB.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "segAB",
+        "segBC",
+        "segAC",
+        "segCD",
+        "segBD",
+        "polyABC",
+        "polyBCD",
+        "angCBD",
+        "angCDB"
+      ],
+      "durationMs": 1000,
+      "objectStates": {
+        "polyBCD": {
+          "emphasis": "primary"
+        },
+        "segBD": {
+          "emphasis": "primary"
+        },
+        "angCBD": {
+          "emphasis": "primary"
+        },
+        "angCDB": {
+          "emphasis": "primary"
+        }
+      }
+    },
+    {
+      "id": "step4",
+      "label": "Desigualdad angular en B",
+      "description": "∠ABD = ∠ABC + ∠CBD > ∠CBD ≅ ∠CDB = ∠ADB. Por tanto, ∠ABD > ∠ADB.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "segAB",
+        "segBC",
+        "segAC",
+        "segCD",
+        "segBD",
+        "polyABC",
+        "polyBCD",
+        "polyABD",
+        "angCBD",
+        "angCDB",
+        "angABD"
+      ],
+      "durationMs": 1000,
+      "objectStates": {
+        "angABD": {
+          "emphasis": "primary"
+        },
+        "angCDB": {
+          "emphasis": "secondary"
+        },
+        "polyABD": {
+          "emphasis": "secondary"
+        }
+      }
+    },
+    {
+      "id": "step5",
+      "label": "De ángulo mayor a lado mayor",
+      "description": "En △ABD, como ∠ABD > ∠ADB, el lado opuesto AD debe ser mayor que AB: AD > AB ⟹ b + a > c.",
+      "visibleTargets": [
+        "pA",
+        "pB",
+        "pC",
+        "pD",
+        "segAB",
+        "segBC",
+        "segAC",
+        "segCD",
+        "segBD",
+        "polyABC",
+        "polyABD",
+        "angABD",
+        "angCDB"
+      ],
+      "durationMs": 1000,
+      "objectStates": {
+        "segAB": {
+          "emphasis": "primary"
+        },
+        "segAC": {
+          "emphasis": "primary"
+        },
+        "segCD": {
+          "emphasis": "primary"
+        },
+        "polyABD": {
+          "emphasis": "primary"
+        }
+      }
+    }
+  ],
+  "note": "Arrastra el vértice C para modificar la forma del triángulo y observar cómo se recalcula la extensión D.",
+  "translations": {
+    "eu": {
+      "title": "Froga: Triangelu-desberdintza",
+      "note": "Arrastatu C erpina triangeluaren forma aldatzeko eta D luzapena nola birkalkulatzen den ikusteko.",
+      "steps": {
+        "step1": {
+          "label": "Oinarrizko triangelua",
+          "description": "△ABC triangelua hartzen dugu a = BC, b = CA eta c = AB aldeekin. b + a > c dela frogatuko dugu."
+        },
+        "step2": {
+          "label": "AC aldearen luzapena",
+          "description": "AC luzatzen dugu C-tik harantzago CD ≅ BC = a eraikiz. AD-ren luzera osoa b + a da."
+        },
+        "step3": {
+          "label": "BCD triangelu isoszele laguntzailea",
+          "description": "BD marrazten dugu. CD ≅ BC denez, △BCD isoszelea da eta bere oinarriko angeluak kongruenteak dira: ∠CBD ≅ ∠CDB."
+        },
+        "step4": {
+          "label": "Angelu-desberdintza B erpinean",
+          "description": "∠ABD = ∠ABC + ∠CBD > ∠CBD ≅ ∠CDB = ∠ADB. Beraz, ∠ABD > ∠ADB."
+        },
+        "step5": {
+          "label": "Angelu handiagotik alde handiagora",
+          "description": "△ABD-n, ∠ABD > ∠ADB denez, aurkako AD aldea AB baino handiagoa izan behar da: AD > AB ⟹ b + a > c."
+        }
+      }
+    },
+    "en": {
+      "title": "Proof: Triangle Inequality",
+      "note": "Drag vertex C to adjust the triangle shape and observe how extension D updates dynamically.",
+      "steps": {
+        "step1": {
+          "label": "Base triangle",
+          "description": "Consider triangle △ABC with sides a = BC, b = CA, and c = AB. We will prove that b + a > c."
+        },
+        "step2": {
+          "label": "Extension of side AC",
+          "description": "Extend AC past C by constructing CD ≅ BC = a. The total length of AD is b + a."
+        },
+        "step3": {
+          "label": "Auxiliary isosceles triangle BCD",
+          "description": "Draw BD. Since CD ≅ BC, △BCD is isosceles and its base angles are congruent: ∠CBD ≅ ∠CDB."
+        },
+        "step4": {
+          "label": "Angle inequality at B",
+          "description": "∠ABD = ∠ABC + ∠CBD > ∠CBD ≅ ∠CDB = ∠ADB. Therefore, ∠ABD > ∠ADB."
+        },
+        "step5": {
+          "label": "From larger angle to larger side",
+          "description": "In △ABD, since ∠ABD > ∠ADB, the opposite side AD must exceed AB: AD > AB ⟹ b + a > c."
+        }
+      }
+    }
+  }
+}
+);
+/* @matematika-diagram-spec:end */
 
-  const getColor = (target: string, defaultColor: string) => {
-    if (isActive(target)) return 'var(--theme-terracota)';
-    return defaultColor;
-  };
+export const DemoDesigualdadTriangular = () => <DiagramRenderer spec={DemoDesigualdadTriangularSpec} />;
 
-  const getStrokeWidth = (target: string, defaultWidth: number) => {
-    if (isActive(target)) return defaultWidth + 2;
-    return defaultWidth;
-  };
-
-  // Coordenadas
-  const A = { x: 80, y: 250 };
-  const B = { x: 220, y: 250 };
-  const C = { x: 180, y: 150 };
-  // CD debe ser igual a BC
-  // BC = sqrt((220-180)^2 + (250-150)^2) = sqrt(1600 + 10000) = sqrt(11600) ~ 107.7
-  // Vector AC = (100, -100). Unidad = (0.707, -0.707)
-  // D = C + 107.7 * (0.707, -0.707) = (180 + 76.15, 150 - 76.15) = (256.15, 73.85)
-  const D = { x: 256.15, y: 73.85 };
-
-  // Visibilidades
-  const showExt = s2 || s3 || s4 || s5 || isActive('punto-d') || isActive('lado-cd');
-  const showBD = s3 || s4 || s5 || isActive('lado-bd') || isActive('triangulo-isosceles');
-
-  // Angulos
-  // CBD (en B, de CB a DB)
-  // Vector BC = (40, 100)
-  // Vector BD = (36.15, -176.15)
-  // CDB (en D, de CD a BD)
-  // ABD (en B, de AB a DB)
-
-  const opIso = isActive('triangulo-isosceles') ? 0.3 : (s3 ? 0.1 : 0);
-  const opABD = isActive('angulo-abd') ? 0.5 : (s4 || s5 ? 0.2 : 0);
-  const opCBD = isActive('angulo-cbd') ? 0.8 : (s3 || s4 ? 0.4 : 0);
-  const opCDB = isActive('angulo-cdb') ? 0.8 : (s3 || s4 || s5 ? 0.4 : 0);
-
-  return (
-    <svg viewBox="0 0 350 300" className="w-full h-auto max-h-[60vh] drop-shadow-md touch-none min-h-[400px]">
-
-      {/* Triángulo isósceles relleno */}
-      <polygon points={`${C.x},${C.y} ${B.x},${B.y} ${D.x},${D.y}`} fill="var(--theme-canela)" opacity={opIso} className="transition-opacity duration-500" />
-
-      {/* Ángulo ABD (completo) */}
-      {/* Vector BA = (-140, 0) -> Angle 180 */}
-      {/* Vector BD = (36.15, -176.15) -> Angle aprox -78 o 282 */}
-      {/* SVG y axis is down, so BA is (-140, 0) -> 180 deg */}
-      {/* BD is (36.15, -176.15) -> up and right. angle = atan2(-176, 36) = -78 deg */}
-      {/* Arc from BD to BA */}
-      <path d={`M 240.2 153.2 A 40 40 0 0 0 180 250`} fill="var(--theme-carbon)" fillOpacity={opABD} stroke="var(--theme-carbon)" strokeOpacity={opABD > 0 ? 1 : 0} strokeWidth="2" className="transition-all duration-500" />
-
-      {/* Ángulo CBD */}
-      {/* Vector BC = (-40, -100). Angle = atan2(-100, -40) = -111 deg */}
-      {/* Arc from BD to BC */}
-      <path d={`M 235.1 176.4 A 30 30 0 0 0 168.8 221.8`} fill="var(--theme-terracota)" fillOpacity={opCBD} stroke="var(--theme-terracota)" strokeOpacity={opCBD > 0 ? 1 : 0} strokeWidth="2" className="transition-all duration-500" />
-
-      {/* Ángulo CDB */}
-      {/* Vector DC = (-76.15, 76.15). Angle = atan2(76, -76) = 135 deg */}
-      {/* Vector DB = (-36.15, 176.15). Angle = atan2(176, -36) = 101 deg */}
-      {/* Arc from DC to DB */}
-      <path d={`M 235 95 A 30 30 0 0 0 249.9 104.2`} fill="var(--theme-canela)" fillOpacity={opCDB} stroke="var(--theme-canela)" strokeOpacity={opCDB > 0 ? 1 : 0} strokeWidth="2" className="transition-all duration-500" />
-
-      {/* Base Triangle ABC */}
-      <line x1={A.x} y1={A.y} x2={B.x} y2={B.y} stroke={getColor('lado-ab', 'var(--theme-carbon)')} strokeWidth={getStrokeWidth('lado-ab', 3)} className="transition-all duration-300" opacity={getOpacity('lado-ab')}/>
-      <line x1={B.x} y1={B.y} x2={C.x} y2={C.y} stroke={getColor('lado-bc', 'var(--theme-carbon)')} strokeWidth={getStrokeWidth('lado-bc', 3)} className="transition-all duration-300" opacity={getOpacity('lado-bc')}/>
-      <line x1={A.x} y1={A.y} x2={C.x} y2={C.y} stroke={getColor('lado-ac', 'var(--theme-carbon)')} strokeWidth={getStrokeWidth('lado-ac', 3)} className="transition-all duration-300" opacity={getOpacity('lado-ac')}/>
-
-      {/* Labels para ABC */}
-      <text x={150} y={270} className="font-serif italic text-sm" opacity={getOpacity('lado-ab')}>c</text>
-      <text x={210} y={195} className="font-serif italic text-sm" opacity={getOpacity('lado-bc')}>a</text>
-      <text x={120} y={195} className="font-serif italic text-sm" opacity={getOpacity('lado-ac')}>b</text>
-
-      <circle cx={A.x} cy={A.y} r="4" fill="var(--theme-carbon)"/>
-      <text x={A.x - 20} y={A.y + 5} className="font-serif text-sm">A</text>
-
-      <circle cx={B.x} cy={B.y} r="4" fill="var(--theme-carbon)"/>
-      <text x={B.x + 10} y={B.y + 5} className="font-serif text-sm">B</text>
-
-      <circle cx={C.x} cy={C.y} r="4" fill="var(--theme-carbon)"/>
-      <text x={C.x - 20} y={C.y} className="font-serif text-sm">C</text>
-
-      {/* Extensión CD */}
-      <g opacity={showExt ? 1 : 0} className="transition-opacity duration-500">
-        <line x1={C.x} y1={C.y} x2={D.x} y2={D.y} stroke={getColor('lado-cd', 'var(--theme-mora)')} strokeWidth={getStrokeWidth('lado-cd', 3)} strokeDasharray="5,5" className="transition-all duration-300" opacity={getOpacity('lado-cd')}/>
-        <text x={225} y={110} className="font-serif italic text-sm" opacity={getOpacity('lado-cd')}>a</text>
-        <circle cx={D.x} cy={D.y} r="4" fill="var(--theme-carbon)"/>
-        <text x={D.x + 10} y={D.y - 5} className="font-serif text-sm">D</text>
-      </g>
-
-      {/* Línea BD */}
-      <g opacity={showBD ? 1 : 0} className="transition-opacity duration-500">
-        <line x1={B.x} y1={B.y} x2={D.x} y2={D.y} stroke={getColor('lado-bd', 'var(--theme-canela)')} strokeWidth={getStrokeWidth('lado-bd', 2)} strokeDasharray="3,3" className="transition-all duration-300" opacity={getOpacity('lado-bd')}/>
-      </g>
-
-    </svg>
-  );
-};

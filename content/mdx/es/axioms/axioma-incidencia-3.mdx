@@ -3,14 +3,14 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma I.3 (Puntos no colineales)",
-  description: "Existen al menos tres puntos que no pertenecen a una misma recta.",
+  description: "Existen al menos tres puntos que no inciden con una misma recta.",
   branch: "51A",
   tags: ["geometria", "incidencia", "axioma", "plano"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §2", role: "primary" }
   ]
 };
 
@@ -19,13 +19,13 @@ export const Simulation = Incidence3;
 
 <Capitular letra="E" />xisten al menos tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> que no están situados sobre una misma <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink>.
 
-Este axioma garantiza que la geometría no colapse en una única dimensión lineal, fundamentando la existencia de configuraciones bidimensionales y estableciendo la base de vértices para figuras como el <ConceptLink targetId="triangulo">triángulo</ConceptLink> en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
+Sin este axioma, todos los puntos podrían incidir con una sola recta y la geometría se reduciría a una <ConceptLink targetId="dimension">dimensión</ConceptLink>. Junto con los axiomas <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink> e <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, completa la parte plana del <ConceptLink targetId="sistema-incidencia">sistema de incidencia</ConceptLink>, que ya admite modelos finitos como el <ConceptLink targetId="modelo-tres-puntos">modelo de tres puntos</ConceptLink>.
 
-<Definicion title="Enunciado Formal">
+<Definicion title="Enunciado formal">
   Existen al menos tres <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> y <VisualBind element="pC" color="ocre">$C$</VisualBind> tales que ninguna <ConceptLink targetId="recta">recta</ConceptLink> $\ell \in \mathcal{L}$ <ConceptLink targetId="incidencia" isDependency={true}>incide</ConceptLink> simultáneamente con los tres:
   $$
   \exists A, B, C \in \mathcal{P} \ \bigl(A \neq B \land B \neq C \land A \neq C \land \forall \ell \in \mathcal{L} \ \neg(A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\bigr)
   $$
-  Una terna de puntos que satisface esta condición se denomina no <ConceptLink targetId="colinealidad">colineal</ConceptLink> y constituye los vértices fundamentales de la configuración que dará lugar al <ConceptLink targetId="triangulo">triángulo</ConceptLink> una vez introducido el <ConceptLink targetId="estar-entre">orden lineal</ConceptLink> (Grupo II).
+  Una terna de puntos que satisface esta condición se denomina no <ConceptLink targetId="colinealidad">colineal</ConceptLink>; sus puntos serán los <ConceptLink targetId="vertice">vértices</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> una vez definidos los <ConceptLink targetId="segmento">segmentos</ConceptLink> mediante los <ConceptLink targetId="estar-entre">axiomas de orden</ConceptLink> (Grupo II).
 </Definicion>
 

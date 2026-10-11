@@ -278,7 +278,17 @@ export const ParalelasSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve A y B para cambiar la dirección común; mueve P para elegir por dónde pasa la paralela."
+  "note": "Mueve A y B para cambiar la dirección común; mueve P para elegir por dónde pasa la paralela.",
+  "translations": {
+    "eu": {
+      "title": "Zuzen paraleloak kanpoko puntu batetik",
+      "note": "Mugitu A eta B norabide komuna aldatzeko; mugitu P paraleloa nondik pasatzen den aukeratzeko."
+    },
+    "en": {
+      "title": "Parallel Lines Through an External Point",
+      "note": "Move A and B to change the shared direction; move P to choose where the parallel passes."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

@@ -3,7 +3,7 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma V.1 (Axioma de Arquímedes)",
-  description: "Dados dos segmentos cualesquiera, siempre es posible superar la longitud del mayor transportando consecutivamente un número finito de copias del menor.",
+  description: "Dados dos segmentos arbitrarios sobre una semirrecta, la concatenación finita de copias congruentes del menor supera siempre la posición del mayor.",
   branch: "51M",
   axiomSystem: "sistema-absoluto",
   axiomFamily: "continuidad",
@@ -17,12 +17,14 @@ export const metadata = {
 import { AxiomaArquimedes } from '@content/diagrams/Axiomas/AxiomaArquimedes';
 export const Simulation = AxiomaArquimedes;
 
-<Capitular letra="E" />l axioma de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink> —incorporado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> como el primer principio del grupo de continuidad— descarta la presencia de magnitudes infinitamente pequeñas (infinitesimales) o infinitamente grandes en la geometría. Establece que cualquier distancia, por vasta que sea, puede ser superada mediante la adición sucesiva y finita de un <ConceptLink targetId="segmento">segmento</ConceptLink> elemental.
+<Capitular letra="D" />ados dos <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> arbitrarios $\overline{AB}$ y $\overline{CD}$ con $A \neq B$ y $C \neq D$, sobre la <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink> de origen $A$ que contiene a $B$, el transporte iterado de segmentos <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> a $\overline{CD}$ engendra una sucesión finita de <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> $A_1, A_2, \dots, A_n$ tal que $B$ queda <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $A_n$ ($A * B * A_n$).
 
-<Definicion title="Enunciado formal">
-  Dados dos <ConceptLink targetId="segmento">segmentos</ConceptLink> no nulos $\overline{AB}$ y $\overline{CD}$, existe un número natural $n \in \mathbb{N}$ tal que al transportar $n$ copias consecutivas de $\overline{AB}$ a lo largo de la semirrecta $\overrightarrow{CD}$ a partir de $C$, se supera la posición del <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $D$:
+Este postulado formaliza la ausencia de magnitudes infinitesimales o infinitamente grandes en la geometría arquimediana. Asegura que ningún segmento no nulo resulta inapreciable o despreciable frente a otro: cualquier <ConceptLink targetId="distancia">distancia</ConceptLink> prefijada, por extensa que sea, puede ser alcanzada y rebasada mediante la adición sucesiva y finita de un segmento base elemental.
+
+<Definicion title="Axioma V.1 (Axioma de Arquímedes)">
+  Sean $\overline{AB}$ y $\overline{CD}$ dos <ConceptLink targetId="segmento">segmentos</ConceptLink> arbitrarios con $A \neq B$ y $C \neq D$. Sobre la <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> de origen $A$ que contiene a $B$, existe una sucesión finita de <ConceptLink targetId="punto">puntos</ConceptLink> $A_1, A_2, \dots, A_n$ tales que fijando $A_0 = A$, el segmento inicial satisface $\overline{A_0 A_1} \cong \overline{CD}$, cada segmento consecutivo es <ConceptLink targetId="congruencia">congruente</ConceptLink> con el patrón ($\overline{A_{k-1} A_k} \cong \overline{CD}$ para todo $k \in \{1, \dots, n\}$), los puntos verifican la relación de <ConceptLink targetId="estar-entre">orden</ConceptLink> $A_{k-2} * A_{k-1} * A_k$ para todo $k \in \{2, \dots, n\}$, y el extremo $B$ yace <ConceptLink targetId="estar-entre">entre</ConceptLink> $A$ y $A_n$:
   $$
-  \forall \overline{AB}, \overline{CD} \ \bigl(A \neq B \land C \neq D \implies \exists n \in \mathbb{N} \ (n \cdot \overline{AB} > \overline{CD})\bigr)
+  \forall A, B, C, D \in \mathcal{P} \ \Biggl( A \neq B \land C \neq D \implies \exists n \in \mathbb{N}, \, \exists A_1, \dots, A_n \in \mathcal{P} \ \Bigl( A_0 = A \land \bigwedge_{k=1}^n \overline{A_{k-1} A_k} \cong \overline{CD} \land \bigwedge_{k=2}^n (A_{k-2} * A_{k-1} * A_k) \land A * B * A_n \Bigr) \Biggr)
   $$
 </Definicion>
 
@@ -30,18 +32,12 @@ export const Simulation = AxiomaArquimedes;
 
 ### Representación visual e interacción
 
-En la simulación interactiva, se confrontan el segmento elemental <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> y el segmento objetivo <VisualBind element="segCD" color="marino">$\overline{CD}$</VisualBind>. Mediante el deslizador dinámico <VisualBind element="n" color="ocre">$n$</VisualBind>, se acumulan las repeticiones consecutivas <VisualBind element="acumulado" color="terracota">$n \cdot \overline{AB}$</VisualBind> hasta alcanzar el umbral crítico <VisualBind element="lineDThreshold" color="marino">$D$</VisualBind>, visualizando en <VisualBind element="copiasSuperanCD" color="musgo">verde</VisualBind> el rebasamiento del objetivo para el valor minimal <VisualBind element="nMinimo" color="ocre">$n_{\min}$</VisualBind>.
+En la simulación interactiva, el segmento patrón <VisualBind element="segAB" color="canela">$\overline{AB}$</VisualBind> se confronta con el segmento objetivo <VisualBind element="segCD" color="carbon">$\overline{CD}$</VisualBind>. Mediante el control dinámico <VisualBind element="n" color="pavo">$n$</VisualBind>, se yuxtaponen iterativamente las repeticiones consecutivas <VisualBind element="acumulado" color="ocre">$n \cdot \overline{AB}$</VisualBind> sobre la semirrecta soporte. Al alcanzar el número natural minimal <VisualBind element="nMinimo" color="pavo">$n_{\min}$</VisualBind>, la longitud acumulada <VisualBind element="copiasSuperanCD" color="musgo">rebasa</VisualBind> la posición del extremo objetivo, confirmando de manera inmediata que ningún umbral lineal es inalcanzable.
 
 <Separador />
 
-### Significado geométrico y alcance
+### Significado geométrico y alcance deductivo
 
-Garantiza la propiedad arquimediana del espacio: no existen segmentos infinitesimales ni barreras insalvables por acumulación finita. Conecta la escala geométrica sintética con la estructura de orden arquimediano del cuerpo de los números reales $\mathbb{R}$ en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+El axioma de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink> actúa como la primera condición fundamental del grupo de <ConceptLink targetId="continuidad">continuidad</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>. Su presencia excluye geometrías no arquimedianas donde coexistirían elementos de escalas incomparables o infinitamente distantes.
 
-<Separador />
-
-### Propiedades
-
-- **Exclusión de infinitesimales:** Ningún segmento no nulo es infinitamente pequeño respecto a otro.
-- **Principio de acotación:** Todo subconjunto acotado de una recta puede ser cubierto por un número finito de pasos de longitud fija.
-- **Compatibilidad métrica:** Es indispensable para definir la medida de ángulos, la longitud de curvas y el área de polígonos mediante límites convergentes.
+En la arquitectura de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, el axioma permite extender la teoría de la proporción y fundamentar el cálculo de áreas y longitudes. Todo subconjunto acotado de una <ConceptLink targetId="recta">recta</ConceptLink> puede recubrirse mediante un número finito de pasos <ConceptLink targetId="congruencia">congruentes</ConceptLink> prefijados, lo cual constituye el soporte lógico indispensable para el método clásico de exhaución y para la posterior introducción de <ConceptLink targetId="distancia">métricas reales</ConceptLink> compatibles con las congruencias sintéticas.

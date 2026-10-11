@@ -12,7 +12,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Chapter I, §1",
+      locator: "Chapter I, §2",
       role: "primary"
     }
   ]
@@ -23,16 +23,12 @@ export const Simulation = Incidence8;
 
 <Capitular letra="T" />here exist at least four non-<ConceptLink targetId="coplanaridad">coplanar</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>; that is, points such that no <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> is simultaneously <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with all four.
 
-In the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>, this postulate sets the lower dimensional bound of <ConceptLink targetId="espacio">space</ConceptLink>, preventing all geometric entities from being confined to a single two-dimensional <ConceptLink targetId="plano">plane</ConceptLink>.
+This axiom sets the lower bound on the <ConceptLink targetId="dimension">dimension</ConceptLink> of <ConceptLink targetId="espacio">space</ConceptLink>: it prevents all points from being incident with a single <ConceptLink targetId="plano">plane</ConceptLink>. Together with the upper bound supplied by <ConceptLink targetId="axioma-incidencia-7">Axiom I.7</ConceptLink>, incidence space turns out to be three-dimensional. It is the last of <ConceptLink targetId="hilbert">Hilbert</ConceptLink>'s axioms of <ConceptLink targetId="incidencia">incidence</ConceptLink>.
 
-<Definicion title="Axiom I.8 (Three-Dimensional Space)">
-There exist at least four distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind>, and <VisualBind element="pD" color="carbon">$D$</VisualBind> not belonging to the same <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano-pi" color="azul">$\pi$</VisualBind>:
+<Definicion title="Formal statement">
+There exist at least four <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind>, and <VisualBind element="pD" color="carbon">$D$</VisualBind> not incident with the same <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano-pi" color="pavo">$\pi$</VisualBind>:
 
 $$
 \exists A, B, C, D \in \mathcal{P} \ \forall \pi \in \Pi \ \neg(A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi \land D \, \mathbf{I} \, \pi)
 $$
 </Definicion>
-
-<Nota>
-This axiom guarantees the existence of genuinely spatial configurations, establishing a minimum of three <ConceptLink targetId="dimension">dimensions</ConceptLink> for <ConceptLink targetId="espacio">space</ConceptLink>. This postulate concludes Hilbert's group of <ConceptLink targetId="incidencia">incidence</ConceptLink> axioms.
-</Nota>

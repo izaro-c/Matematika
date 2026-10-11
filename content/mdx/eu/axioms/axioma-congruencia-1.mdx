@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "III.1 axioma (Zuzenkien garraioa)",
-  description: "Edozein zuzenki eta jatorri jakin bateko zuzenerdi bat emanda, zuzenerdi horretan puntu bakar bat existitzen da jatorrizkoaren kongruentea den zuzenki bat zehazten duena.",
+  description: "Edozein zuzenki eta zuzenerdi emanda, zuzenerdian bada puntu bat, haren jatorriaren desberdina, jatorriarekin batera emandako zuzenkiarekiko kongruentea den zuzenki bat zehazten duena.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "congruencia", "hilbert"],
@@ -23,22 +23,26 @@ export const metadata = {
 import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
 export const Simulation = Congruence1;
 
-<Capitular letra="E" />dozein <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink> eta <ConceptLink targetId="punto" isDependency={true}>jatorri</ConceptLink> jakin bateko <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> bat emanda, zuzenerdi horren gainean <ConceptLink targetId="punto">puntu</ConceptLink> bakar bat existitzen da jatorrizko zuzenkiarekiko <ConceptLink targetId="congruencia" isDependency={true}>kongruentea</ConceptLink> den zuzenki bat osatzen duena.
+<Capitular letra="E" />dozein <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink> eta <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdi</ConceptLink> emanda, zuzenerdian bada <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bat, haren <ConceptLink targetId="origen-semirrecta">jatorriaren</ConceptLink> desberdina, jatorriarekin batera emandako zuzenkiarekiko <ConceptLink targetId="congruencia" isDependency={true}>kongruentea</ConceptLink> den zuzenki bat zehazten duena.
 
-Postulatu honek <ConceptLink targetId="espacio">espazioko</ConceptLink> edozein norabidetan luzerak modu unibokoan garraiatzeko aukera formalizatzen du, zenbakizko eskala metrikoetara edo koordenatu-sistemetara jo gabe.
+Axioma honi esker, zuzenki bat <ConceptLink targetId="espacio">espazioko</ConceptLink> edozein zuzenerditara garraia daiteke, zenbakizko neurrietara edo koordenatu-sistemetara jo gabe.
 
 <Definicion title="III.1 axioma (Zuzenkien garraioa)">
-<VisualBind element="segAB" color="ocre">$\overline{AB}$</VisualBind> <ConceptLink targetId="segmento">zuzenkia</ConceptLink> zehazten duten $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako (<VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> $\in \mathcal{P}$) eta <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ jatorria izanik <VisualBind element="pDir" color="pavo">$\text{dir}$</VisualBind> $\in \mathcal{P} \setminus \{C\}$ punturantz zuzendutako <VisualBind element="rayCDir" color="pavo">$r = \overrightarrow{C\,\text{dir}}$</VisualBind> <ConceptLink targetId="semirrecta">zuzenerdirako</ConceptLink>, $r \setminus \{C\}$ zuzenerdian <VisualBind element="pD" color="terracota">$D$</VisualBind> puntu bakar bat existitzen da non <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> zuzenkia $\overline{AB}$-rekiko <ConceptLink targetId="congruencia">kongruentea</ConceptLink> baita:
+<VisualBind element="segAB" color="ocre">$\overline{AB}$</VisualBind> <ConceptLink targetId="segmento">zuzenkia</ConceptLink> zehazten duten <VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pB" color="ocre">$B$</VisualBind> bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdin eta <VisualBind element="pC" color="terracota">$C$</VisualBind> puntuan jatorria duen eta <VisualBind element="pDir" color="pavo">$\text{dir} \neq C$</VisualBind> puntutik igarotzen den <VisualBind element="rayCDir" color="pavo">$\overrightarrow{C\,\text{dir}}$</VisualBind> <ConceptLink targetId="semirrecta">zuzenerdia</ConceptLink> emanda, bada <VisualBind element="pD" color="terracota">$D \in \overrightarrow{C\,\text{dir}} \setminus \{C\}$</VisualBind> puntu bat, non <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> zuzenkia $\overline{AB}$ zuzenkiarekiko <ConceptLink targetId="congruencia">kongruentea</ConceptLink> baita:
 
 $$
-\forall A, B \in \mathcal{P} \ \Biggl( A \neq B \implies \forall C, \text{dir} \in \mathcal{P} \ \Bigl( C \neq \text{dir} \implies \exists! D \in \operatorname{tr}(\overrightarrow{C\,\text{dir}}) \setminus \{C\} \ (\overline{AB} \cong \overline{CD}) \Bigr) \Biggr)
+\forall A, B, C, \text{dir} \in \mathcal{P} \ \Bigl( (A \neq B \land C \neq \text{dir}) \implies \exists D \in \overrightarrow{C\,\text{dir}} \setminus \{C\} \ (\overline{AB} \cong \overline{CD}) \Bigr)
 $$
 
-Halaber, edozein zuzenki bere buruarekiko kongruentea da: $\overline{AB} \cong \overline{AB}$ eta $\overline{AB} \cong \overline{BA}$.
+Halaber, zuzenki oro bere buruarekiko kongruentea da (<ConceptLink targetId="reflexividad">erreflexibotasuna</ConceptLink>):
+
+$$
+\forall A, B \in \mathcal{P} \ \bigl( A \neq B \implies (\overline{AB} \cong \overline{AB} \land \overline{AB} \cong \overline{BA}) \bigr)
+$$
 </Definicion>
 
 <Separador />
 
 <Nota>
-III.1 axioma eraikuntza euklidearretako konpas zurrunaren baliokide sintetiko eta zorrotza da, <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> garraio metrikoaren existentzia eta bakartasuna bermatuz.
+III.1 axioma eraikuntza euklidearretako konpasaren baliokide sintetikoa da. $D$ puntuaren existentzia baino ez du postulatzen: haren bakartasuna <ConceptLink targetId="teorema">teorema</ConceptLink> bat da, <ConceptLink targetId="teorema-unicidad-transporte-segmentos">zuzenkien garraioaren bakartasuna</ConceptLink>, <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink> <ConceptLink targetId="axioma-congruencia-4">III.4</ConceptLink> eta <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink> axiometatik ondorioztatzen dena.
 </Nota>

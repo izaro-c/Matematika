@@ -1,44 +1,44 @@
 export const metadata = {
   id: "teorema-area-rectangulo",
+  lang: "eu",
   type: "teorema",
-  title: "Angeluzuzenaren azaleraren teorema",
-  description: "Edozein eskualde angeluzuzenen azalera bere oinarriaren luzeraren eta altueraren luzeraren biderkadura da.",
-  statement: "b luzerako oinarria eta h luzerako altuera dituen R angeluzuzen orotan, Azalera(R) = b · h betetzen da modu bakarrean.",
+  title: "Laukizuzenaren azaleraren teorema",
+  description: "Laukizuzen baten eskualdearen azalera ondoz ondoko bi alderen luzeren biderkadura da.",
+  statement: "ABCD laukizuzena bada, |AB| = b eta |AD| = h izanik, orduan haren eskualdearen azalera A(ABCD) = b · h da.",
   branch: "51M",
+  tags: ["area", "rectangulo", "longitud", "geometria-euclidiana"],
   hasSimulation: false,
-  authors: ["euclides"],
+  difficulty: "intermedio",
+  authors: ["euclides", "hilbert"],
   demos: ["demo-area-rectangulo"],
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 35", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "IV. kapitulua", role: "secondary" },
+    { title: "Elementuak", author: "Euklides", locator: "II. liburua, 1. definizioa", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "5. kapitulua", role: "formalization" }
   ]
 };
 
-<Capitular letra="A" />ngeluzuzenaren azaleraren teoremak plano euklidetarreko <ConceptLink targetId="teoria-medida-area">azalera-neurketaren</ConceptLink> oinarrizko formula biderkatzailea ematen du. Gainerako figura poligonal guztien azalera-formulak deduzitzeko erreferentziazko oinarria da.
+<Capitular letra="E" />dozein <ConceptLink targetId="rectangulo" isDependency={true}>laukizuzenen</ConceptLink> eskualdearen <ConceptLink targetId="teoria-medida-area" isDependency={true}>azalera</ConceptLink> ondoz ondoko bi <ConceptLink targetId="lado">alderen</ConceptLink> <ConceptLink targetId="longitud" isDependency={true}>luzeren</ConceptLink> biderkadura da.
+
+Formula ez da definizio bat: <ConceptLink targetId="teoria-medida-area" isDependency={true}>azalera-funtzioak</ConceptLink> $1$ balioa baino ez dio finkatzen <ConceptLink targetId="cuadrado">karratu</ConceptLink> unitarioari, eta $b \cdot h$ biderkadura aldaezintasunetik, <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>batukortasun finitutik</ConceptLink> eta <ConceptLink targetId="monotonia-area">monotoniatik</ConceptLink> ondorioztatzen da. <ConceptLink targetId="demo-area-rectangulo">Frogapenak</ConceptLink> hiru etapa ditu: alde osoak (laukizuzena $m \cdot n$ karratu unitariotan zatitzen da), alde arrazionalak ($1/N$ aldeko karratuetan zatitzen da) eta alde errealak; azken horretan, <ConceptLink targetId="axioma-arquimedes">Arkimedesen axiomak</ConceptLink> ematen dituen beheranzko eta goranzko hurbilketa arrazionalek gero eta hurbilago dauden borneen artean ixten dute azalera. Emaitza hau <ConceptLink targetId="teorema-area-triangulo">triangeluaren azaleraren</ConceptLink> abiapuntua da.
+
+<Definicion title="Laukizuzenaren azaleraren teoremaren enuntziatu formala">
+Izan bedi $ABCD$ <ConceptLink targetId="sistema-euclidiano">sistema euklidearreko</ConceptLink> $\sigma$ <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bateko <ConceptLink targetId="rectangulo" isDependency={true}>laukizuzena</ConceptLink>, hau da, lau <ConceptLink targetId="angulo">angeluak</ConceptLink> <ConceptLink targetId="angulo-recto" isDependency={true}>zuzenak</ConceptLink> dituen <ConceptLink targetId="cuadrilatero" isDependency={true}>laukia</ConceptLink>, eta izan bitez $b = |AB|$ eta $h = |AD|$ ondoz ondoko bi alderen <ConceptLink targetId="longitud" isDependency={true}>luzerak</ConceptLink>, azalera-funtzioa normalizatzen duen <ConceptLink targetId="segmento-unidad">zuzenki unitarioarekin</ConceptLink> neurtuta. Orduan, $ABCD$ laukizuzenak mugatzen duen <ConceptLink targetId="region-poligonal" isDependency={true}>eskualde poligonalaren</ConceptLink> azalera hau da:
+
+$$
+\operatorname{A}(ABCD) = b \cdot h
+$$
+</Definicion>
 
 <Separador />
 
-### Enuntziatu formala
-
-Izan bedi $R$ plano euklidetarreko angeluzuzen bat, non bere <ConceptLink targetId="perpendicular">alde elkarzuten</ConceptLink> luzerak $b = |\overline{AB}|$ (oinarria) eta $h = |\overline{AD}|$ (altuera) diren. Eskualde angeluzuzenaren azalerak zorrozki betetzen du erlazio hau:
-
-<Formula>
-  $$ \text{Azalera}(R) = b \cdot h $$
-</Formula>
-
-Hau da, eskualde angeluzuzen baten azalera bere bi dimentsio ortogonalen luzeren biderkadura aritmetikoa da.
-
-<Separador />
-
-### Froga eta oinarritze axiomatikoa
-
-Oinarritze zorrotza hiru fasetan eraikitzen da <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>azaleraren aditibitate-teorema</ConceptLink> erabiliz:
-1. **Unitate eredua**: <ConceptLink targetId="cuadrado">Karratu unitarioaren</ConceptLink> azalera ($b=1, h=1$) axiomaz $1$ gisa definitzen da.
-2. **Dimentsio arrazionalak**: $b = \frac{p}{q}$ eta $h = \frac{m}{n}$ badira ($p, q, m, n \in \mathbb{N}$), angeluzuzena $\frac{1}{q \cdot n}$ aldeko $p \cdot m$ azpi-karratutan banatzen da. Azaleren baturak $\text{Azalera}(R) = \frac{p \cdot m}{q \cdot n} = b \cdot h$ dela frogatzen du.
-3. **Dimentsio errealak**: Jarraitutasun-propietatearen eta <ConceptLink targetId="axioma-arquimedes">Arkimedesen axiomaren</ConceptLink> bidez, emaitza neurtezinak diren luzera irrazionaletara hedatzen da.
-
-<Separador />
-
-### Garrantzi geometrikoa
-
-- **Paralelogramoaren formularen oinarria**: Edozein <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink> oinarri eta altuera bera dituen angeluzuzen batekin batera deskonposagarria da.
-- **Triangeluaren formularen oinarria**: Angeluzuzena bere diagonalak bi <ConceptLink targetId="triangulo">triangelu</ConceptLink> <ConceptLink targetId="congruencia">kongruentetan</ConceptLink> banatzen du; hortik ondorioztatzen da <ConceptLink targetId="teorema-area-triangulo">triangeluaren azalera</ConceptLink> $\frac{1}{2} b \cdot h$ dela.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Kasu bereziak eta ondorioak">
+    <PropiedadItem id="area-cuadrado" title="Karratuaren azalera" formula="\operatorname{A}(ABCD) = s^2">
+      Aldearen <ConceptLink targetId="longitud">luzera</ConceptLink> $s$ duen <ConceptLink targetId="cuadrado">karratua</ConceptLink> $b = h = s$ duen laukizuzena da; haren azalera $s^2$ da. Horixe da zenbaki bati aplikatutako «karratu» hitzaren esanahi geometrikoa.
+    </PropiedadItem>
+    <PropiedadItem id="area-triangulo-rectangulo-mitad" title="Laukizuzenaren erdia" formula="\operatorname{A}(\triangle ABD) = \tfrac{1}{2}\, b \cdot h">
+      $\overline{BD}$ <ConceptLink targetId="diagonal">diagonalak</ConceptLink> laukizuzena barnealde disjuntuko bi <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink> <ConceptLink targetId="congruencia-triangulos">kongruentetan</ConceptLink> zatitzen du; beraz, bakoitzaren azalera $\tfrac{1}{2}\, b \cdot h$ da. Hori da <ConceptLink targetId="teorema-area-triangulo">triangeluaren azaleraren teoremaren</ConceptLink> lehen urratsa.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

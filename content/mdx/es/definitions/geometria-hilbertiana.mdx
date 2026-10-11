@@ -4,62 +4,63 @@ export const metadata = {
   type: "definicion",
   subtype: "nominal",
   title: "Geometría hilbertiana",
-  description: "Refundación axiomática rigurosa de la geometría euclídea propuesta por David Hilbert en 1899, basada en 20 axiomas divididos en cinco grupos independientes.",
+  description: "Axiomatización de la geometría euclídea publicada por David Hilbert en 1899; en su forma canónica (7.ª ed., 1930) consta de 20 axiomas en cinco grupos.",
   branch: "51M",
   hasSimulation: false,
   sources: [
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I", role: "primary" },
-    { title: "Hilbert's Foundations of Geometry", author: "Howard Eves", locator: "Capítulo 5", role: "secondary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo II", role: "primary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Capítulo 2", role: "secondary" }
   ]
 };
 
-<Capitular letra="L" />a **geometría hilbertiana** es el sistema axiomático formal de <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> desarrollado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en su obra fundamental *Grundlagen der Geometrie* (1899).
+<Capitular letra="L" />a **geometría hilbertiana** es el sistema axiomático formal de <ConceptLink targetId="geometria-sintetica">geometría sintética</ConceptLink> desarrollado por <ConceptLink targetId="hilbert">David Hilbert</ConceptLink> en *Grundlagen der Geometrie* (1899). Se cita aquí por la 7.ª edición (1930): la primera ordenaba los grupos de otro modo (paralelas antes que congruencia) e incluía un axioma de orden redundante, señalado por E. H. Moore en 1902.
 
-Constituye el paradigma fundacional del formalismo moderno en geometría sintética: prescinde de intuiciones espaciales y define los objetos geométricos exclusivamente a través de las relaciones formales que los <ConceptLink targetId="axioma">axiomas</ConceptLink> imponen entre ellos.
+Es el modelo del <ConceptLink targetId="metodo-axiomatico">método axiomático</ConceptLink> moderno: prescinde de la intuición espacial y caracteriza los objetos primitivos solo a través de las relaciones que los <ConceptLink targetId="axioma">axiomas</ConceptLink> imponen entre ellos.
 
 <Definicion title="Estructura y Signatura de Hilbert (3D)">
   La **geometría hilbertiana tridimensional** se modela mediante una <ConceptLink targetId="estructura-geometrica">estructura matemática</ConceptLink> de <ConceptLink targetId="logica">lógica multitipo</ConceptLink> cuya <ConceptLink targetId="signatura">signatura</ConceptLink> reúne tres <ConceptLink targetId="dominio">dominios</ConceptLink> <ConceptLink targetId="conjunto-disjunto">disjuntos dos a dos</ConceptLink> y cinco <ConceptLink targetId="concepto-primitivo">relaciones primitivas</ConceptLink> irreducibles:
   $$
-  \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \equiv_{\text{seg}}, \equiv_{\angle})
+  \mathcal{S}_{\text{Hil}} = (\mathcal{P}, \mathcal{L}, \Pi, \mathbf{I}_{\mathcal{P}\mathcal{L}}, \mathbf{I}_{\mathcal{P}\Pi}, \mathbf{B}, \cong_{\text{seg}}, \cong_{\angle})
   $$
   donde:
   - $\mathcal{P}$, $\mathcal{L}$ y $\Pi$ son los dominios disjuntos de <ConceptLink targetId="punto">puntos</ConceptLink>, <ConceptLink targetId="recta">rectas</ConceptLink> y <ConceptLink targetId="plano">planos</ConceptLink>.
   - $\mathbf{I}_{\mathcal{P}\mathcal{L}} \subseteq \mathcal{P} \times \mathcal{L}$ e $\mathbf{I}_{\mathcal{P}\Pi} \subseteq \mathcal{P} \times \Pi$ son las relaciones binarias de <ConceptLink targetId="incidencia">incidencia</ConceptLink> tipadas punto-recta y punto-plano.
   - $\mathbf{B} \subseteq \mathcal{P}^3$ es la relación ternaria de <ConceptLink targetId="estar-entre">orden e intermediación</ConceptLink> ($A * B * C$).
-  - $\equiv_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2$ es la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> (pares de puntos).
-  - $\equiv_{\angle} \, \subseteq \mathcal{P}^6$ es la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="angulo">ángulos</ConceptLink> (relación binaria entre ternas de puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink> $\angle ABC \equiv \angle DEF$, o sobre pares de <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> concurrentes).
+  - $\cong_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2$ es la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="segmento">segmentos</ConceptLink> (pares de puntos).
+  - $\cong_{\angle} \, \subseteq \mathcal{P}^6$ es la relación de <ConceptLink targetId="congruencia">congruencia</ConceptLink> de <ConceptLink targetId="angulo">ángulos</ConceptLink> (entre ternas de puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink>, $\angle ABC \cong \angle DEF$, o, equivalentemente, entre pares de <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> de origen común).
 </Definicion>
 
 <Separador />
 
 ### Los cinco grupos axiomáticos de Hilbert
 
-El sistema se estructura en 20 axiomas organizados en cinco grupos modulares:
+El sistema consta de 20 axiomas organizados en cinco grupos:
 
-1. **Grupo I: <ConceptLink targetId="sistema-incidencia">Axiomas de Incidencia</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink> a <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>):** Establecen la pertenencia mutua entre puntos, rectas y planos, fijando la <ConceptLink targetId="dimension">dimensión</ConceptLink> mínima del <ConceptLink targetId="espacio">espacio</ConceptLink>.
+1. **Grupo I: <ConceptLink targetId="sistema-incidencia">Axiomas de Incidencia</ConceptLink> (<ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink> a <ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>):** Regulan la incidencia entre puntos, rectas y planos y fijan la <ConceptLink targetId="dimension">dimensión</ConceptLink> del <ConceptLink targetId="espacio">espacio</ConceptLink>: al menos tres por I.8 y a lo sumo tres por I.7.
 2. **Grupo II: <ConceptLink targetId="estar-entre">Axiomas de Orden</ConceptLink> (<ConceptLink targetId="axioma-orden-1">II.1</ConceptLink> a <ConceptLink targetId="axioma-orden-4">II.4</ConceptLink>):** Formalizan la intermediación $\mathbf{B}$ y la separación del plano mediante el <ConceptLink targetId="axioma-orden-4">Axioma de Pasch</ConceptLink> (<ConceptLink targetId="pasch">Moritz Pasch</ConceptLink>), permitiendo definir <ConceptLink targetId="segmento">segmentos</ConceptLink>, <ConceptLink targetId="semirrecta">semirrectas</ConceptLink> y <ConceptLink targetId="semiplano">semiplanos</ConceptLink>.
-3. **Grupo III: <ConceptLink targetId="congruencia">Axiomas de Congruencia</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> a <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>):** Gobiernan el comportamiento de $\equiv_{\text{seg}}$ y $\equiv_{\angle}$ y su transporte rígido sin recurrir a nociones métricas de <ConceptLink targetId="distancia">distancia</ConceptLink>.
-4. **Grupo IV: <ConceptLink targetId="paralelas">Axioma de las Paralelas</ConceptLink> (<ConceptLink targetId="axioma-paralelas-euclides">IV</ConceptLink>):** Postulado <ConceptLink targetId="sistema-euclidiano">euclidiano</ConceptLink> de unicidad de la paralela por un punto exterior.
-5. **Grupo V: <ConceptLink targetId="continuidad">Axiomas de Continuidad</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">V.1</ConceptLink> y <ConceptLink targetId="axioma-completitud">V.2</ConceptLink>):** El axioma de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink> y el de completitud lineal, que garantizan la ausencia de huecos en el continuo geométrico.
+3. **Grupo III: <ConceptLink targetId="congruencia">Axiomas de Congruencia</ConceptLink> (<ConceptLink targetId="axioma-congruencia-1">III.1</ConceptLink> a <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>):** Gobiernan el comportamiento de $\cong_{\text{seg}}$ y $\cong_{\angle}$ y el transporte de segmentos y ángulos sin recurrir a nociones métricas de <ConceptLink targetId="distancia">distancia</ConceptLink>.
+4. **Grupo IV: <ConceptLink targetId="paralelas">Axioma de las Paralelas</ConceptLink> (<ConceptLink targetId="axioma-paralelas-euclides">IV</ConceptLink>):** Por un punto exterior a una recta pasa a lo sumo una paralela (<ConceptLink targetId="sistema-euclidiano">geometría euclidiana</ConceptLink>); sustituirlo por el <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma hiperbólico</ConceptLink> da la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink>.
+5. **Grupo V: <ConceptLink targetId="continuidad">Axiomas de Continuidad</ConceptLink> (<ConceptLink targetId="axioma-arquimedes">V.1</ConceptLink> y <ConceptLink targetId="axioma-completitud">V.2</ConceptLink>):** El axioma de <ConceptLink targetId="arquimedes">Arquímedes</ConceptLink>, que excluye segmentos infinitesimales, y el de completitud lineal, que excluye huecos en la recta.
 
 <Separador />
 
 <SeccionPropiedades>
   <PropiedadesGrupo title="Modularidad y estructura formal">
     <PropiedadItem 
-      id="independencia-grupos" 
-      title="Independencia modular de los cinco grupos"
-      formula="\forall i \neq j : \mathcal{G}_i \not\vdash \mathcal{G}_j"
+      id="independencia-axiomas-hilbert" 
+      title="Independencia de axiomas concretos"
+      formula="\mathcal{T}_{\text{Hil}} \setminus \{\varphi\} \nvdash \varphi \quad (\varphi \in \{\text{III.5}, \text{IV}, \text{V.1}\})"
     >
-      Cada uno de los cinco grupos axiomáticos (incidencia, orden, congruencia, paralelas y continuidad) es lógicamente independiente, permitiendo aislar subsistemas coherentes como la <ConceptLink targetId="sistema-incidencia">geometría de incidencia</ConceptLink>, la geometría ordenada o la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+      En el capítulo II, Hilbert prueba la <ConceptLink targetId="consistencia-logica">consistencia</ConceptLink> del sistema y, mediante <ConceptLink targetId="teoria-modelos">modelos</ConceptLink> que satisfacen todos los axiomas salvo uno, la <ConceptLink targetId="independencia-logica">independencia</ConceptLink> de axiomas concretos: el de las paralelas (IV), el último de congruencia (III.5) y el de Arquímedes (V.1). No se trata de una independencia global de cada grupo respecto de los demás. La organización por grupos permite, con todo, aislar subsistemas como la <ConceptLink targetId="sistema-incidencia">geometría de incidencia</ConceptLink>, la geometría ordenada o la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
       id="distincion-predicados-congruencia" 
       title="Distinción categorial de la congruencia"
-      formula="\equiv_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2, \quad \equiv_{\angle} \, \subseteq \mathcal{P}^6"
+      formula="\cong_{\text{seg}} \, \subseteq \mathcal{P}^2 \times \mathcal{P}^2, \quad \cong_{\angle} \, \subseteq \mathcal{P}^6"
     >
-      La congruencia no es un predicado monolítico único, sino dos relaciones primitivas irreducibles con aridades y dominios ontológicos distintos: la <ConceptLink targetId="segmento">congruencia de segmentos</ConceptLink> ($\equiv_{\text{seg}}$) y la <ConceptLink targetId="angulo">congruencia de ángulos</ConceptLink> ($\equiv_{\angle}$).
+      La congruencia no es un único predicado, sino dos relaciones primitivas con aridades distintas: la <ConceptLink targetId="segmento">congruencia de segmentos</ConceptLink> ($\cong_{\text{seg}}$) y la <ConceptLink targetId="angulo">congruencia de ángulos</ConceptLink> ($\cong_{\angle}$).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

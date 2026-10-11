@@ -1,69 +1,79 @@
 export const metadata = {
-  "id": "demo-area-rectangulo",
-  "type": "demostracion",
-  "title": "Frogapena: Laukizuzenaren eremuaren teorema",
-  "description": "Frogapen axiomatikoa unitate-karratuen azpibanaketaren bidez eta irrazionaletarako Arkimedes-axioma erabiliz, Hilberten neurriaren teoriaren oinarritan.",
-  "parentTheorem": "teorema-area-rectangulo",
-  "lang": "eu",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides", "hilbert"],
-  "tags": ["geometria", "eremuak", "laukizuzena", "neurria"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementuak", "author": "Euklides", "locator": "I. Liburua, 35. Proposizioa", "role": "primary" },
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "locator": "V. Kapitulua, §22", "role": "secondary" }
+  id: "demo-area-rectangulo",
+  lang: "eu",
+  type: "demostracion",
+  title: "Frogapena: Laukizuzenaren azaleraren teorema",
+  description: "Hiru etapako frogapena: alde osoak (karratu unitarioak), alde arrazionalak (1/N aldeko karratuak) eta alde errealak; azken horretan, azalera beheranzko eta goranzko hurbilketen artean ixten da, azaleraren monotoniaren eta Arkimedesen axiomaren bidez.",
+  parentTheorem: "teorema-area-rectangulo",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["area", "rectangulo", "longitud", "arquimedes"],
+  layout: "split",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "IV. kapitulua", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "5. kapitulua", role: "formalization" }
   ]
 };
 
 <DemonstrationSection>
 
-<Capitular letra="L" />aukizuzenaren eremuaren formula hiru fase ordenatuetan frogatzen da, dimentsio entero, arrazional eta irrazionaletarako baliotasuna bermatuz.
+<Capitular letra="L" />aukizuzenaren <ConceptLink targetId="teorema-area-rectangulo">azaleraren teoremaren</ConceptLink> <ConceptLink targetId="metodo-directo" isDependency={true}>frogapen zuzena</ConceptLink>: lehenik, <ConceptLink targetId="rectangulo" isDependency={true}>laukizuzen</ConceptLink> baten azalera haren aldeen <ConceptLink targetId="longitud" isDependency={true}>luzeren</ConceptLink> menpe bakarrik dagoela eta horietako bakoitzean batukorra dela frogatzen da; hortik formula lortzen da alde osoetarako, gero alde arrazionaletarako eta, azkenik, alde errealetarako, <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Arkimedesen axiomaren</ConceptLink> bidez.
 
 <Separador />
 
-### Frogapena pausoz pauso
+### Frogapena urratsez urrats
 
-<ProofStep number={1} title="Normalizazioa: unitate-karratua">
-Axiomaz finkatzen da unitate-laukiaren eremua erreferentzia-unitate gisa:
-
-<Formula>
-  $$ \text{Eremua}(\text{unitate-karratua}) = 1 $$
-</Formula>
-
-Konbentzioa hau <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>eremuaren adibidotasun-axiomak</ConceptLink> bermatzen du.
+<ProofStep number={1} title="Azalera aldeen luzeren menpe bakarrik dago">
+Izan bitez $ABCD$ eta $A'B'C'D'$ bi <ConceptLink targetId="rectangulo" isDependency={true}>laukizuzen</ConceptLink>, $|AB| = |A'B'| = b$ eta $|AD| = |A'D'| = h$ izanik. $\triangle DAB$ eta $\triangle D'A'B'$ <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzenek</ConceptLink> <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzenak</ConceptLink> dituzte $A$ eta $A'$ erpinetan, eta katetoak kongruenteak dira; beraz, $\triangle DAB \cong \triangle D'A'B'$ <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL irizpidearen</ConceptLink> arabera, eta gauza bera gertatzen da $\triangle BCD$ eta $\triangle B'C'D'$ triangeluekin. Laukizuzen bakoitza bere bi triangeluen bildura da, eta horiek barnealde disjuntuak dituzte; beraz, <ConceptLink targetId="teoria-medida-area" isDependency={true}>azalera-funtzioaren</ConceptLink> kongruentziarekiko aldaezintasunak eta batukortasunak $\operatorname{A}(ABCD) = \operatorname{A}(A'B'C'D')$ ematen dute. Hortaz, $f(b, h)$ idatz dezakegu ondoz ondoko aldeen luzerak $b$ eta $h$ dituen edozein laukizuzenen azalerarako.
 </ProofStep>
 
-<ProofStep number={2} title="Dimentsio osoak">
-$m, n \in \mathbb{N}$ izanik, $m \times n$ laukizuzen batek $m \times n$ unitate-karratu ditu. Adibidotasunaren bidez:
+<ProofStep number={2} title="Batukortasuna alde bakoitzean">
+Izan bedi $b = b_1 + b_2$, $b_1, b_2 > 0$ izanik. <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axiomaren</ConceptLink> arabera, badaude $E \in \operatorname{seg}(AB)$ eta $F \in \operatorname{seg}(DC)$, $|AE| = |DF| = b_1$ izanik; $\overline{AE}$ eta $\overline{DF}$ kongruenteak direnez eta zuzen <ConceptLink targetId="paralelas" isDependency={true}>paraleloetan</ConceptLink> daudenez, $AEFD$ eta $EBCF$ laukizuzenak dira (<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioma</ConceptLink>), eta $\overline{EF}$ <ConceptLink targetId="segmento" isDependency={true}>zuzenkia</ConceptLink> baino ez dute komunean. <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren batukortasunagatik</ConceptLink>, eta beste aldearentzat argudio bera erabiliz,
 
-<Formula>
-  $$ \text{Eremua}(R) = m \cdot n $$
-</Formula>
+$$
+f(b_1 + b_2, h) = f(b_1, h) + f(b_2, h), \qquad f(b, h_1 + h_2) = f(b, h_1) + f(b, h_2)
+$$
 </ProofStep>
 
-<ProofStep number={3} title="Dimentsio arrazionalak">
-$b = \frac{p}{q}$ eta $h = \frac{m}{n}$ direnean, aldeak $\frac{1}{q}$ eta $\frac{1}{n}$ zatikietan banatzen dira. Lortutako $p \cdot m$ azpikuadratuen eremu-batura biderkaketa arrazionalera hedatzen da:
+<ProofStep number={3} title="Alde osoak">
+Aurreko urratsa behin eta berriz aplikatuz, $m, n \in \mathbb{N}$ eta $x, y > 0$ izanik, $f(m x, n y) = m \cdot n \cdot f(x, y)$ betetzen da: $m x$ eta $n y$ aldeko laukizuzena $x$ eta $y$ aldeko $m \cdot n$ laukizuzenetan zatitzen da. $x = y = 1$ hartuta eta <ConceptLink targetId="cuadrado" isDependency={true}>karratu</ConceptLink> unitarioaren $f(1, 1) = 1$ normalizazioa erabilita, laukizuzena $m \cdot n$ karratu unitariotan zatitzen da, eta
 
-<Formula>
-  $$ \text{Eremua}(R) = \frac{p}{q} \cdot \frac{m}{n} = b \cdot h $$
-</Formula>
+$$
+f(m, n) = m \cdot n
+$$
 </ProofStep>
 
-<ProofStep number={4} title="Luzapen erreala Arkimedes-axiomaren bidez">
-$b, h \in \mathbb{R}^+$ irrazionalak direnean, arrazional-segidak $b_k \nearrow b$ eta $h_k \nearrow h$ eraikitzen dira. <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Arkimedes-axiomak</ConceptLink> muga-balioa bakarrarekin bermatzen du:
+<ProofStep number={4} title="Alde arrazionalak">
+Izan bitez $b = p/q$ eta $h = m/n$, $p, q, m, n \in \mathbb{N}$ izanik, eta izan bedi $N = q n$. <ConceptLink targetId="longitud" isDependency={true}>Luzeraren</ConceptLink> propietateen arabera, jarraitutasun-axiometan oinarritzen direnak (<ConceptLink targetId="axioma-arquimedes" isDependency={true}>V.1 axioma</ConceptLink> eta <ConceptLink targetId="axioma-completitud" isDependency={true}>V.2 axioma</ConceptLink>), badago $1/N$ luzerako zuzenki bat. Karratu unitarioa $1/N$ aldeko $N^2$ karratutan zatitzen da; beraz, $1 = N^2 f(1/N, 1/N)$, eta horietako bakoitzaren azalera $1/N^2$ da. $b = (p n)/N$ eta $h = (m q)/N$ direnez, laukizuzena $1/N$ aldeko $(p n) \cdot (m q)$ karratutan zatitzen da, eta, ondorioz,
 
-<Formula>
-  $$ \text{Eremua}(R) = \lim_{k \to \infty} b_k \cdot h_k = b \cdot h $$
-</Formula>
+$$
+f(b, h) = \frac{(p n)(m q)}{(q n)^2} = \frac{p}{q} \cdot \frac{m}{n} = b \cdot h
+$$
 </ProofStep>
 
-<Separador />
+<ProofStep number={5} title="Monotonia">
+$0 < b' \leq b$ eta $0 < h' \leq h$ badira, 2. urratsaren arabera, $b, h$ aldeko laukizuzena $b', h'$ aldekoan eta, gehienez ere, beste bi laukizuzenetan deskonposatzen da; azaleraren positibotasunagatik,
 
-### Analisi deduktiboa
+$$
+f(b', h') \leq f(b, h)
+$$
+
+(<ConceptLink targetId="monotonia-area">azaleraren monotoniaren</ConceptLink> kasu bat da).
+</ProofStep>
+
+<ProofStep number={6} title="Alde errealak: beheranzko eta goranzko hurbilketa">
+Izan bitez $b, h > 0$ edozein eta $k \in \mathbb{N}$. Propietate arkimedestarraren arabera (<ConceptLink targetId="axioma-arquimedes" isDependency={true}>Arkimedesen axioma</ConceptLink>), badago $j/k \leq b$ betetzen duen $j \geq 0$ zenbaki oso handiena, eta, era berean, $i/k \leq h$ betetzen duen $i \geq 0$ zenbaki oso handiena; izan bitez $b_k = j/k$ eta $h_k = i/k$, eta, beraz, $b_k \leq b < b_k + 1/k$ eta $h_k \leq h < h_k + 1/k$. $k$ behar bezain handia bada, $b_k, h_k > 0$. 4. eta 5. urratsen arabera (muturrak arrazionalak dira), $f(b, h)$ eta $b \cdot h$ biak $[\, b_k h_k,\ (b_k + 1/k)(h_k + 1/k) \,]$ tartean daude, eta tarte horren luzera hau da:
+
+$$
+\left(b_k + \tfrac{1}{k}\right)\left(h_k + \tfrac{1}{k}\right) - b_k h_k = \frac{b_k + h_k}{k} + \frac{1}{k^2} \leq \frac{b + h + 1}{k}
+$$
+
+Hortaz, $|f(b, h) - b \cdot h| \leq (b + h + 1)/k$ behar bezain handia den edozein $k$-tarako. $f(b, h) \neq b \cdot h$ balitz, propietate arkimedestarrak $(b + h + 1)/k < |f(b, h) - b \cdot h|$ betetzen duen $k$ bat emango luke, eta hori absurdua da. Beraz, $\operatorname{A}(ABCD) = f(b, h) = b \cdot h$.
+</ProofStep>
 
 <Nota>
-  Frogapen honek Eudoxoren agortatze-metodoa erakusten du, Hilbertek axioma-hizkuntzan berreraiki zuena. Arrazionaletatik errealetarako hedapenak funtsean <ConceptLink targetId="axioma-arquimedes">Arkimedes-axioma</ConceptLink> erabiltzen du nahitaez.
+Azken urratsa <ConceptLink targetId="eudoxo">Eudoxoren</ConceptLink> agortze-metodoaren bertsio bat da, <ConceptLink targetId="arquimedes">Arkimedesek</ConceptLink> sistematikoki erabili zuena: magnitude bat zehazteko, beheranzko eta goranzko hurbilketen artean ixten da, haien arteko diferentzia emandako edozein kantitate baino txikiago egin daitekeela. <ConceptLink targetId="axioma-arquimedes">Arkimedesen axiomarik</ConceptLink> gabe ere, Hilbertek azaleraren teoria garatzen du (IV. kapitulua), baina balioak zuzenki-gorputz batean hartuta, ez $\mathbb{R}$-n.
 </Nota>
 
 </DemonstrationSection>

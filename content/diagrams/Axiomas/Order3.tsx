@@ -260,7 +260,17 @@ export const Order3Spec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra los puntos A, B y C para cambiar su orden sobre la recta"
+  "note": "Arrastra los puntos A, B y C para cambiar su orden sobre la recta",
+  "translations": {
+    "eu": {
+      "title": "III. Ordena-axioma",
+      "note": "Arrastatu A, B eta C puntuak zuzenean duten ordena aldatzeko."
+    },
+    "en": {
+      "title": "Order Axiom III",
+      "note": "Drag points A, B, and C to change their order on the line."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

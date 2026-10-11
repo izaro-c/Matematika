@@ -3,8 +3,10 @@ export const metadata = {
   lang: "en",
   type: "sistema-axiomatico",
   title: "Euclidean axiomatic system",
-  description: "The canonical axiomatic structure of standard planar geometry, comprising absolute geometry and Playfair's parallel axiom.",
+  description: "Axiomatic system of Euclidean geometry: absolute geometry plus Axiom IV on parallels, in Playfair's form.",
   branch: "51M",
+  branches: ["51M", "51A", "03B"],
+  tags: ["geometria-euclidiana", "paralelas", "hilbert", "fundamentos"],
   axiomas: [
     "axioma-incidencia-1",
     "axioma-incidencia-2",
@@ -34,38 +36,40 @@ export const metadata = {
   hasSimulation: false,
   sources: [
     { title: "Elements", author: "Euclid", locator: "Book I, Postulate 5", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §5", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §7", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter II", role: "secondary" }
   ]
 };
 
-<Capitular letra="T" />he Euclidean axiomatic system constitutes the classical formal framework of ordinary planar and spatial geometry. It is obtained by adjoining <ConceptLink targetId="euclides">Euclid's</ConceptLink> parallel postulate (in Playfair's uniqueness formulation) to the foundational base of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, establishing zero spatial curvature and admitting similar figures at arbitrary scales.
+<Capitular letra="T" />he **Euclidean axiomatic system** is the <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> obtained by adding to <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink> on <ConceptLink targetId="paralelas">parallels</ConceptLink>: through a <ConceptLink targetId="punto">point</ConceptLink> not on a <ConceptLink targetId="recta">line</ConceptLink> there passes, in the <ConceptLink targetId="plano">plane</ConceptLink> they determine, at most one parallel to it.
+
+The fifth postulate of <ConceptLink targetId="euclides">Euclid</ConceptLink>'s <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> was stated in terms of two lines cut by a <ConceptLink targetId="secante">transversal</ConceptLink>; <ConceptLink targetId="hilbert">Hilbert</ConceptLink> adopted the equivalent uniqueness form popularised by John Playfair (1795). Since the existence of at least one parallel is already a <ConceptLink targetId="teorema">theorem</ConceptLink> of absolute geometry, Axiom IV only has to impose uniqueness.
+
+<Definicion title="Formal structure">
+  A **Euclidean structure** is an absolute geometry structure $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi; \ \mathbf{I}, \ *, \ \cong_{\mathrm{seg}}, \ \cong_{\angle})$ that also satisfies <ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>, so that $\mathcal{T}_{\text{euc}} = \mathrm{I} \cup \mathrm{II} \cup \mathrm{III} \cup \mathrm{IV} \cup \mathrm{V}$. Together with the absolute theorem on the existence of parallels, Axiom IV gives existence and uniqueness: for every plane $\pi \in \Pi$, every line $\ell \in \mathcal{L}$ with $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$ and every point $P \in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$,
+  $$
+  \exists! \, m \in \mathcal{L} \ \bigl( \operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land P \,\mathbf{I}\, m \land m \parallel \ell \bigr)
+  $$
+  where the <ConceptLink targetId="traza">trace</ConceptLink> expresses <ConceptLink targetId="coplanaridad">coplanarity</ConceptLink> and $\parallel$ is the (reflexive) <ConceptLink targetId="paralelas">parallelism</ConceptLink> between coplanar lines.
+</Definicion>
 
 <Separador />
 
-### Axiomatic constitution
+### Characteristic theorems
 
-The Euclidean system incorporates all Hilbertian axiomatic groups alongside the uniqueness of parallels:
+Axiom IV is the source of the results that distinguish Euclidean from hyperbolic geometry:
 
-1. **Base of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>**: Gathers all axioms of <ConceptLink targetId="sistema-incidencia">incidence</ConceptLink> (I.1-I.8), <ConceptLink targetId="axioma-orden-1">order</ConceptLink> (II.1-II.4), <ConceptLink targetId="axioma-congruencia-1">congruence</ConceptLink> (III.1-III.5), and continuity (V.1-V.2).
-2. **<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euclidean parallel axiom (IV.1 / Playfair)</ConceptLink>**: Given a <ConceptLink targetId="recta">line</ConceptLink> $l$ and a <ConceptLink targetId="punto">point</ConceptLink> $P \notin l$ in a <ConceptLink targetId="plano">plane</ConceptLink> $\mathcal{P}$, there exists exactly one line $l'$ passing through $P$ that does not intersect $l$:
-   $$
-   \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists! l' \in \mathcal{L} \ (P \in l' \land l \cap l' = \emptyset)
-   $$
-
-<Separador />
-
-### Fundamental theorems of the system
-
-The Euclidean parallel axiom unlocks the hallmark theorems of synthetic geometry:
-
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Constant angle sum</ConceptLink>**: The sum of interior <ConceptLink targetId="angulo">angles</ConceptLink> in any <ConceptLink targetId="triangulo">triangle</ConceptLink> is exactly $180^\circ$ ($\pi\text{ rad}$).
-- **<ConceptLink targetId="teorema-tales">Thales's theorem and similarity</ConceptLink>**: Parallel lines cut by transversals intercept proportional line <ConceptLink targetId="segmento">segments</ConceptLink>, establishing the concept of similar figures of distinct sizes without angular distortion.
-- **<ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>**: In every <ConceptLink targetId="triangulo-rectangulo">right-angled triangle</ConceptLink>, the area of the square on the <ConceptLink targetId="hipotenusa">hypotenuse</ConceptLink> equals the sum of the areas of the squares on the <ConceptLink targetId="cateto">legs</ConceptLink> ($a^2 + b^2 = c^2$).
-- **Existence of parallelograms and rectangles**: Quadrilaterals with four right angles and congruent opposite sides exist.
+- **Alternate interior angles**: if two distinct parallel lines are cut by a transversal, the <ConceptLink targetId="angulos-alternos-internos">alternate interior angles</ConceptLink> are <ConceptLink targetId="congruencia">congruent</ConceptLink>; this is the direction of the <ConceptLink targetId="teorema-angulos-alternos-internos">alternate interior angles theorem</ConceptLink> that requires Axiom IV.
+- **<ConceptLink targetId="transitividad">Transitivity</ConceptLink> of parallelism**: in a plane, two lines parallel to a third are parallel to each other; parallelism is an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink>.
+- **Angle sum**: the <ConceptLink targetId="angulo">angles</ConceptLink> of every <ConceptLink targetId="triangulo">triangle</ConceptLink> add up to two <ConceptLink targetId="angulo-recto">right angles</ConceptLink>; with <ConceptLink targetId="medida-angular">angle measure</ConceptLink>, $|\alpha| + |\beta| + |\gamma| = 180^\circ$ (<ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink>).
+- **Rectangles**: there exist <ConceptLink targetId="cuadrilatero">quadrilaterals</ConceptLink> with four right angles (<ConceptLink targetId="rectangulo">rectangles</ConceptLink>), on which the <ConceptLink targetId="teoria-medida-area">theory of area</ConceptLink> is built.
+- **Proportion and <ConceptLink targetId="semejanza">similarity</ConceptLink>**: <ConceptLink targetId="teorema-tales">Thales' theorem</ConceptLink> and the existence of similar non-congruent triangles.
+- **<ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>**: in a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> $\triangle ABC$ with the right angle at $C$ and <ConceptLink targetId="longitud">lengths</ConceptLink> $a = |BC|$, $b = |CA|$ and $c = |AB|$, one has $a^2 + b^2 = c^2$.
 
 <Separador />
 
-### Canonical model and consistency
+### Model, consistency and categoricity
 
-- **<ConceptLink targetId="modelo-cartesiano">Cartesian model $\mathbb{R}^n$</ConceptLink>**: Serves as the canonical analytical model of Euclidean geometry, equipped with the standard inner product $\langle u, v \rangle = \sum u_i v_i$.
-- **Consistency and categoricity**: Hilbert proved that the consistency of the Euclidean axiomatic system is equiconsistent with the arithmetic of the real field $\mathbb{R}$. With the continuity axioms included, the system is categorical in every fixed dimension.
+The canonical model is Cartesian space $\mathbb{R}^3$ (<ConceptLink targetId="modelo-cartesiano">Cartesian model</ConceptLink>), in which points are triples of real numbers, lines and planes are described by linear equations and congruence is defined through the Euclidean <ConceptLink targetId="distancia">distance</ConceptLink>; its planar version $\mathbb{R}^2$ models the planar axioms. In Chapter II of the *Grundlagen*, Hilbert builds analytic models of this kind over a number <ConceptLink targetId="cuerpo">field</ConceptLink> and thereby proves that the system is <ConceptLink targetId="consistencia-logica">consistent</ConceptLink> if the arithmetic of that field is (relative consistency).
+
+With the continuity axioms V.1 and V.2 the system is <ConceptLink targetId="categoricidad">categorical</ConceptLink>: all its models are <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink> to $\mathbb{R}^3$ with its usual structure. Without <ConceptLink targetId="axioma-completitud">Axiom V.2</ConceptLink>, by contrast, there are non-isomorphic models, such as the space built over the field of real algebraic numbers.

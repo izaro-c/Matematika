@@ -1,16 +1,18 @@
 export const metadata = {
-  "id": "demo-pitagoras-euclides",
-  "type": "demostracion",
-  "title": "Frogapena: Pitagorasen teorema (Euklidesen metodoa)",
-  "description": "Frogapen euklidetar klasikoa, hipotenusaren gaineko karratua katetoen gaineko karratuen azalera bereko bi angeluzuzenetan banatuz.",
-  "parentTheorem": "teorema-pitagoras",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides", "hilbert"],
-  "tags": ["geometria", "triangulos", "areas", "hilbert"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 47", role: "primary" }
+  id: "demo-pitagoras-euclides",
+  lang: "eu",
+  type: "demostracion",
+  title: "Frogapena: Pitagorasen teorema (Euklidesen metodoa)",
+  description: "Frogapen euklidear klasikoa, hipotenusaren gaineko karratua katetoen gaineko karratuen azalera bereko bi angeluzuzenetan banatuz.",
+  parentTheorem: "teorema-pitagoras",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria", "triangulos", "areas", "hilbert"],
+  layout: "split",
+  sources: [
+    { title: "Elementuak", author: "Euklides", locator: "I. liburua, 47. proposizioa", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "IV. kapitulua", role: "secondary" }
   ]
 };
 
@@ -18,54 +20,54 @@ import { DemoPitagorasEuclides } from "@content/diagrams/Demos/DemoPitagorasEucl
 
 <DemonstrationSection diagram={<DemoPitagorasEuclides />}>
 
-<Capitular letra="C" /> erpinean angelu zuzena duen $\triangle ABC$ <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink> bat emanda, <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> formalki frogatzen da. Frogapenak ezartzen du <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">hipotenusaren gainean eraikitako karratuaren</ConceptLink></VisualBind> azalera $a$ katetoaren gaineko <VisualBind element="cuadrado-a" color="pavo">karratuaren</VisualBind> eta $b$ katetoaren gaineko <VisualBind element="cuadrado-b" color="terracota">karratuaren</VisualBind> azaleren baturaren berdina dela.
+<Capitular letra="C" /> erpina duen $\triangle ABC$ <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzen</ConceptLink> bat emanda, $C$ <ConceptLink targetId="vertice" isDependency={true}>erpinean</ConceptLink> <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzena</ConceptLink> duena, <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> formalki frogatzen da. Frogapenak ezartzen du <VisualBind element="sqC" color="ocre"><ConceptLink targetId="cuadrado">hipotenusaren gainean eraikitako karratuaren</ConceptLink></VisualBind> <ConceptLink targetId="teoria-medida-area" isDependency={true}>azalera</ConceptLink> <ConceptLink targetId="cateto" isDependency={true}>katetoen</ConceptLink> gainean eraikitako karratuen azaleren baturaren berdina dela: <VisualBind element="sqA" color="terracota">$a$ katetoaren gaineko karratuaren</VisualBind> eta <VisualBind element="sqB" color="canela">$b$ katetoaren gaineko karratuaren</VisualBind> azalerena.
 
 <Separador />
 
-### Froga urratsez urrats
+### Frogapena urratsez urrats
 
 <ProofStep number={1} target="triangulo" title="Oinarrizko triangelu angeluzuzenaren konfigurazioa">
-Izan bedi $\triangle ABC$ triangelu angeluzuzena, angelu zuzena $C$ erpinean duena. Katetoak <VisualBind element="cateto-a" color="pavo">$a = |\overline{BC}|$</VisualBind> eta <VisualBind element="cateto-b" color="terracota">$b = |\overline{CA}|$</VisualBind> bidez izendatzen dira, eta hipotenusa <VisualBind element="hipotenusa-c" color="ocre">$c = |\overline{AB}|$</VisualBind> bidez.
+Izan bedi <VisualBind element="polyABC" color="granada">$\triangle ABC$</VisualBind> <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzena</ConceptLink>, <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzena</ConceptLink> <VisualBind element="rightAngle" color="carbon">$\angle ACB$</VisualBind> <ConceptLink targetId="vertice" isDependency={true}>erpinean</ConceptLink> <VisualBind element="pC" color="carbon">$C$</VisualBind> duena. <ConceptLink targetId="cateto" isDependency={true}>Katetoen</ConceptLink> <ConceptLink targetId="longitud" isDependency={true}>luzerak</ConceptLink> $a = |BC|$ eta $b = |CA|$ bidez izendatzen dira, eta <ConceptLink targetId="hipotenusa" isDependency={true}>hipotenusaren</ConceptLink> luzera $c = |AB|$ bidez, muturrak <VisualBind element="pA" color="carbon">$A$</VisualBind> eta <VisualBind element="pB" color="carbon">$B$</VisualBind> puntuetan izanik.
 </ProofStep>
 
 <ProofStep number={2} target="cuadrados" title="Kanpoko hiru karratuen eraikuntza">
-$\triangle ABC$ triangeluaren hiru aldeen gainean poligonoarekiko kanpokoak diren hiru karratu eraikitzen dira: $b^2$ azalera duen <VisualBind element="cuadrado-b" color="terracota">$b$-ren gaineko karratua</VisualBind>, $a^2$ azalera duen <VisualBind element="cuadrado-a" color="pavo">$a$-ren gaineko karratua</VisualBind> eta $c^2$ azalera duen <VisualBind element="cuadrado-c" color="ocre">hipotenusaren gaineko karratua</VisualBind>.
+$\triangle ABC$ triangeluaren hiru aldeen gainean kanpoko hiru <ConceptLink targetId="cuadrado">karratu</ConceptLink> eraikitzen dira: $b$ katetoaren gaineko <VisualBind element="sqB" color="canela">karratua</VisualBind>, $b^2$ azalerakoa; $a$ katetoaren gaineko <VisualBind element="sqA" color="terracota">karratua</VisualBind>, $a^2$ azalerakoa; eta hipotenusaren gaineko <VisualBind element="sqC" color="mora">karratua</VisualBind>, $c^2$ azalerakoa, laguntza-erpinak <VisualBind element="pK" color="canela">$K$</VisualBind>, <VisualBind element="pF" color="terracota">$F$</VisualBind>, <VisualBind element="pD" color="mora">$D$</VisualBind> eta <VisualBind element="pE" color="mora">$E$</VisualBind> izanik.
 </ProofStep>
 
 <ProofStep number={3} target="altura" title="Hipotenusaren karratua altueraren bidez banatzea">
-$C$ erpin zuzenetik $\overline{AB}$ hipotenusarekiko <VisualBind element="recta-altura" color="carbon"><ConceptLink targetId="perpendicular">zuzen elkarzuta</ConceptLink></VisualBind> marrazten da. Hipotenusaren gaineko karratuan zehar luzatzean, lerro honek bi angeluzuzenetan banatzen du karratua: $R_L$ ($ADML$) <VisualBind element="rectangulo-izq" color="terracota">ezkerreko angeluzuzena</VisualBind> eta $R_R$ ($BEML$) <VisualBind element="rectangulo-der" color="pavo">eskuineko angeluzuzena</VisualBind>.
+$C$ erpin zuzenetik $\overline{AB}$ hipotenusarekiko <VisualBind element="altSegment" color="carbon"><ConceptLink targetId="perpendicular" isDependency={true}>zuzen elkarzuta</ConceptLink></VisualBind> marrazten da, oina <VisualBind element="pL" color="carbon">$L$</VisualBind> izanik. Hipotenusaren gaineko karratuan zehar <VisualBind element="pM" color="carbon">$M$</VisualBind> punturaino luzatzean, lerro honek karratua bi laukizuzenetan banatzen du: $R_L$ ($ADML$) <VisualBind element="rectADML" color="canela">ezkerreko laukizuzena</VisualBind> eta $R_R$ ($BEML$) <VisualBind element="rectBEML" color="terracota">eskuineko laukizuzena</VisualBind>.
 </ProofStep>
 
 <ProofStep number={4} target="triangulos-izq" title="Ezkerreko triangeluen eraikuntza eta kongruentzia">
-Laguntza-<ConceptLink targetId="segmento">zuzenkiak</ConceptLink> marrazten dira <VisualBind element="triangulo-acd" color="terracota">$\triangle ACD$</VisualBind> eta <VisualBind element="triangulo-akb" color="terracota">$\triangle AKB$</VisualBind> triangeluak eratzeko. AlAnAl <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>kongruentzia-axioma</ConceptLink> aplikatuz, <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> lortzen da:
+Laguntza-<ConceptLink targetId="segmento" isDependency={true}>zuzenkiak</ConceptLink> $\overline{CD}$ eta $\overline{KB}$ marrazten dira $\triangle ACD$ eta $\triangle AKB$ triangeluak eratzeko. Ikusten da $\overline{AD} \cong \overline{AB}$ dela ($c^2$ karratuaren aldeak) eta $\overline{AC} \cong \overline{AK}$ dela ($b^2$ karratuaren aldeak). Gainera, $\angle CAD$ eta $\angle KAB$ angeluak angelu zuzen baten eta $\angle CAB$ angeluaren baturak dira biak, beraz $\angle CAD \cong \angle KAB$. AlAnAl <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>kongruentzia-teorema</ConceptLink> (<ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 axioma</ConceptLink>) aplikatuz, <ConceptLink targetId="congruencia" isDependency={true}>kongruentzia</ConceptLink> lortzen da:
 
-<Formula>
-  $$ \triangle ACD \cong \triangle AKB $$
-</Formula>
+$$
+\triangle ACD \cong \triangle AKB
+$$
 </ProofStep>
 
-<ProofStep number={5} target="areas-izq" title="Ezkerreko triangeluaren eta angeluzuzenaren azaleren baliokidetasuna">
-$\triangle ACD$ triangeluak oinarri bera du $R_L$ <VisualBind element="rectangulo-izq" color="terracota">ezkerreko angeluzuzenarekin</VisualBind>, beraz bere azalera $R_L$-ren azaleraren erdia da. Bestalde, $\triangle AKB$ triangeluak oinarri bera du <VisualBind element="cuadrado-b" color="terracota">$b$-ren gaineko karratuarekin</VisualBind>, eta bere azalera $b^2$-ren erdia da. Bi triangeluen kongruentziatik ondorioztatzen da:
+<ProofStep number={5} target="areas-izq" title="Ezkerreko triangeluaren eta laukizuzenaren azaleren baliokidetasuna">
+$\triangle ACD$ triangeluak eta $R_L$ <VisualBind element="rectADML" color="canela">ezkerreko laukizuzenak</VisualBind> $\overline{AD}$ oinarri bera partekatzen dute eta $AL$ altuera bera dute; <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangeluaren azaleraren teoremaren</ConceptLink> eta <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>laukizuzenaren azaleraren teoremaren</ConceptLink> bidez, $\operatorname{A}(\triangle ACD) = \frac{1}{2} \operatorname{A}(R_L)$. Era berean, $\triangle AKB$ triangeluak eta <VisualBind element="sqB" color="canela">$b$-ren gaineko karratuak</VisualBind> $\overline{AK}$ oinarria eta $AC$ altuera partekatzen dituzte, beraz $\operatorname{A}(\triangle AKB) = \frac{1}{2} b^2$. Triangelu kongruenteek azalera bera dutenez <ConceptLink targetId="teoria-medida-area" isDependency={true}>azalera-neurriaren teoriaren</ConceptLink> arabera, ondorioztatzen da:
 
-<Formula>
-  $$ \text{Azalera}(R_L) = b^2 $$
-</Formula>
+$$
+\operatorname{A}(R_L) = b^2
+$$
 </ProofStep>
 
-<ProofStep number={6} target="areas-der" title="Eskuineko angeluzuzenaren azalera-baliokidetasuna">
-Eskuineko zatian <VisualBind element="triangulo-bce" color="pavo">$\triangle BCE$</VisualBind> eta <VisualBind element="triangulo-abf" color="pavo">$\triangle ABF$</VisualBind> laguntza-triangeluei aplikatutako prozedura simetriko beraren bidez, frogatzen da $R_R$ <VisualBind element="rectangulo-der" color="pavo">eskuineko angeluzuzenaren</VisualBind> azalera $a$ katetoaren gaineko karratuaren azaleraren berdina dela:
+<ProofStep number={6} target="areas-der" title="Eskuineko laukizuzenaren azalera-baliokidetasuna">
+Eskuineko aldean $\triangle BCE$ eta $\triangle ABF$ laguntza-triangeluekin egindako eraikuntza guztiz simetriko baten bidez, <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>AlAnAl irizpidearen</ConceptLink> bidezko $\triangle BCE \cong \triangle ABF$ kongruentziak eta <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangeluaren azaleraren teoremaren</ConceptLink> zein <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>laukizuzenaren azaleraren teoremaren</ConceptLink> bidezko oinarrien zein altueren alderaketak frogatzen dute $R_R$ <VisualBind element="rectBEML" color="terracota">eskuineko laukizuzenak</VisualBind> <VisualBind element="sqA" color="terracota">$a$ katetoaren gaineko karratuaren</VisualBind> azalera bera duela:
 
-<Formula>
-  $$ \text{Azalera}(R_R) = a^2 $$
-</Formula>
+$$
+\operatorname{A}(R_R) = a^2
+$$
 </ProofStep>
 
 <ProofStep number={7} target="cuadrados-final" title="Azaleren batura eta ondorio formala">
-<ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren aditibitate-teoremaren</ConceptLink> arabera, <VisualBind element="cuadrado-c" color="ocre">hipotenusaren gaineko karratuaren</VisualBind> azalera osoa $R_L$ eta $R_R$ bi angeluzuzenen azaleren batura da:
+<ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren aditibitate-teoremaren</ConceptLink> arabera, <VisualBind element="sqC" color="mora">hipotenusaren gaineko karratuaren</VisualBind> azalera osoa $R_L$ eta $R_R$ bi laukizuzen disjuntuen azaleren batura da:
 
-<Formula>
-  $$ a^2 + b^2 = c^2 $$
-</Formula>
+$$
+a^2 + b^2 = c^2
+$$
 </ProofStep>
 
 <Separador />
@@ -73,7 +75,7 @@ Eskuineko zatian <VisualBind element="triangulo-bce" color="pavo">$\triangle BCE
 ### Azterketa deduktiboa
 
 <Nota>
-  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.47 Proposizioa. Arrazoibide honek <ConceptLink targetId="sistema-euclidiano">sistema axiomatiko euklidetarra</ConceptLink> behar du eta Hilberten ereduan oinarritzen da.
+<ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko I.47 Proposizioa. Arrazoibide honek <ConceptLink targetId="sistema-euclidiano">sistema euklidearrean</ConceptLink> du oinarria eta <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> azalera-teoriaren bidez formalizatzen du deskonposaketa.
 </Nota>
 
 </DemonstrationSection>

@@ -1,45 +1,98 @@
 export const metadata = {
   id: "teorema-angulos-alternos-internos",
+  lang: "en",
   type: "teorema",
-  title: "Alternate Interior Angles Theorem",
-  description: "If two parallel lines in a plane are cut by a transversal line, the resulting alternate interior angles are respectively congruent.",
-  statement: "Given two parallel lines r and s cut by a transversal t, every pair of alternate interior angles α and α' satisfies α ≅ α'.",
+  title: "Alternate interior angles theorem",
+  description: "Two lines of a plane cut by a transversal are parallel if and only if the alternate interior angles are congruent; the direction \"congruent ⇒ parallel\" holds in absolute geometry and the converse requires Axiom IV.",
+  statement: "Two lines of a plane cut by a transversal at two distinct points are parallel if and only if the alternate interior angles they determine are congruent.",
   branch: "51M",
+  branches: ["51M", "51A"],
   hasSimulation: false,
   authors: ["euclides"],
   demos: ["demo-angulos-alternos-internos"],
+  tags: ["parallels", "angles", "absolute-geometry", "euclidean-geometry", "theorem"],
   sources: [
-    { title: "Elements", author: "Euclides", locator: "Book I, Propositions 27 & 29", role: "primary" }
+    { title: "Elements", author: "Euclid", locator: "Book I, Propositions 27 and 29", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §6 and §7", role: "secondary" }
   ]
 };
 
-<Capitular letra="T" />he alternate interior angles theorem establishes the metric equivalence between <ConceptLink targetId="angulo">angles</ConceptLink> located on opposite sides of a transversal line that intersects two <ConceptLink targetId="paralelas">parallel lines</ConceptLink> in the Euclidean plane.
+<Capitular letra="T" />wo <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> of a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>, cut by a <ConceptLink targetId="secante" isDependency={true}>transversal</ConceptLink> at two distinct points, are <ConceptLink targetId="paralelas" isDependency={true}>parallel</ConceptLink> if and only if the <ConceptLink targetId="angulos-alternos-internos" isDependency={true}>alternate interior angles</ConceptLink> they determine are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>. The direction "congruent ⇒ parallel" is a theorem of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>; the direction "parallel ⇒ congruent" requires <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axiom IV</ConceptLink> and is therefore a theorem of the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink>.
+
+The two directions differ in deductive nature. The first is Proposition I.27 of <ConceptLink targetId="euclides">Euclid</ConceptLink>'s <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>: it is proved with the <ConceptLink targetId="teorema-angulo-exterior">exterior angle theorem</ConceptLink>, without the parallel axiom or the continuity axioms, and it yields the existence of at least one parallel through an exterior point. The second is Proposition I.29, the first in the Elements to use the <ConceptLink targetId="quinto-postulado-euclides">fifth postulate</ConceptLink>; it fails in the <ConceptLink targetId="sistema-hiperbolico">hyperbolic system</ConceptLink>, where a transversal can cut two parallels forming non-congruent alternate interior angles.
+
+<Definicion title="Formal statement">
+  Let $\ell_1, \ell_2 \in \mathcal{L}$ be two <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> of a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi \in \Pi$ and let $t \in \mathcal{L}$ be a line of $\pi$, <ConceptLink targetId="secante" isDependency={true}>transversal</ConceptLink> to both, meeting $\ell_1$ at the <ConceptLink targetId="punto">point</ConceptLink> $A$ and $\ell_2$ at the point $B$, with $A \neq B$ (in particular $\ell_1 \neq t$, $\ell_2 \neq t$ and $\ell_1 \neq \ell_2$).
+
+  Let $P_1 \, \mathbf{I} \, \ell_1$ and $P_2 \, \mathbf{I} \, \ell_2$ be two points lying in opposite <ConceptLink targetId="semiplano" isDependency={true}>half-planes</ConceptLink> with respect to $t$, that is, $P_2 \notin \mathcal{H}_t(P_1)$ and $\neg(P_2 \, \mathbf{I} \, t)$. The <ConceptLink targetId="angulos-alternos-internos" isDependency={true}>alternate interior angles</ConceptLink> are:
+
+  $$
+  \alpha = \angle P_1AB, \quad \beta = \angle P_2BA
+  $$
+
+  Then:
+
+  $$
+  \ell_1 \parallel \ell_2 \iff \alpha \cong \beta
+  $$
+
+  The equivalence splits into two propositions:
+
+  1. **Direction (⇐), Euclid I.27, <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>** (without continuity axioms):
+  $$
+  \alpha \cong \beta \implies \ell_1 \parallel \ell_2
+  $$
+
+  2. **Direction (⇒), Euclid I.29, <ConceptLink targetId="sistema-euclidiano">Euclidean geometry</ConceptLink>** (uses <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axiom IV</ConceptLink>):
+  $$
+  \ell_1 \parallel \ell_2 \implies \alpha \cong \beta
+  $$
+</Definicion>
 
 <Separador />
 
-### Formal statement
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Equivalent angle criteria">
+    <PropiedadItem 
+      id="congruencia-angulos-correspondientes" 
+      title="Congruence of corresponding angles"
+      formula="\ell_1 \parallel \ell_2 \iff \angle P_1AB \cong \angle P_2'BC \qquad (P_2 * B * P_2',\ A * B * C)"
+    >
+      Two lines of a plane cut by a <ConceptLink targetId="secante">transversal</ConceptLink> are parallel if and only if the <ConceptLink targetId="angulos-correspondientes">corresponding angles</ConceptLink> are congruent. Indeed, $\angle P_2'BC$ and $\beta = \angle P_2BA$ are <ConceptLink targetId="angulos-opuestos-vertice">vertical angles</ConceptLink> (by the <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relations $P_2 * B * P_2'$ and $A * B * C$), hence congruent by the <ConceptLink targetId="teorema-angulos-opuestos-verticales">vertical angles theorem</ConceptLink>.
+    </PropiedadItem>
 
-Let $r$ and $s$ be two <ConceptLink targetId="paralelas">parallel lines</ConceptLink> in the plane $\mathcal{P}$ ($r \parallel s$), and let $t$ be a transversal line intersecting them at points $A$ and $B$ respectively. Let $\alpha$ and $\alpha'$ be two angles between the parallel lines $r$ and $s$, situated in opposite half-planes with respect to the transversal $t$. The <ConceptLink targetId="congruencia">congruence</ConceptLink> relation holds:
+    <PropiedadItem 
+      id="congruencia-angulos-alternos-externos" 
+      title="Congruence of alternate exterior angles"
+      formula="\ell_1 \parallel \ell_2 \iff \angle P_1AD \cong \angle P_2BC \qquad (B * A * D,\ A * B * C)"
+    >
+      Two lines of a plane cut by a <ConceptLink targetId="secante">transversal</ConceptLink> are parallel if and only if the <ConceptLink targetId="angulos-alternos-externos">alternate exterior angles</ConceptLink> are congruent. $\angle P_1AD$ and $\angle P_2BC$ are the <ConceptLink targetId="angulos-suplementarios">adjacent supplements</ConceptLink> of $\alpha$ and $\beta$, and two angles are congruent if and only if their supplements are (<ConceptLink targetId="teorema-congruencia-suplementos">congruence of supplements</ConceptLink>).
+    </PropiedadItem>
 
-<Formula>
-  $$ \alpha \cong \alpha' $$
-</Formula>
+    <PropiedadItem 
+      id="suplementariedad-angulos-conjugados-internos" 
+      title="Supplementarity of same-side interior angles"
+      formula="\ell_1 \parallel \ell_2 \iff \operatorname{Supl}(\angle P_1AB, \angle P_2'BA) \qquad (P_2 * B * P_2')"
+    >
+      Two lines of a plane cut by a <ConceptLink targetId="secante">transversal</ConceptLink> are parallel if and only if the <ConceptLink targetId="angulos-conjugados-internos">same-side interior angles</ConceptLink> $\alpha = \angle P_1AB$ and $\delta = \angle P_2'BA$, lying in the same <ConceptLink targetId="semiplano">half-plane</ConceptLink> with respect to $t$, are <ConceptLink targetId="angulos-suplementarios">supplementary</ConceptLink>, that is, $\alpha$ is congruent to the adjacent supplement of $\delta$, which is $\beta$. This is how Euclid's <ConceptLink targetId="quinto-postulado-euclides">fifth postulate</ConceptLink> frames the question.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-That is, the angular measures of both alternate interior angles are identical: $|\alpha| = |\alpha'|$.
+  <PropiedadesGrupo title="Consequences in the Euclidean system">
+    <PropiedadItem 
+      id="equivalencia-i29-playfair" 
+      title="Equivalence of direction (⇒) with the parallel axiom"
+      formula="\bigl(\ell_1 \parallel \ell_2 \implies \alpha \cong \beta\bigr) \iff \mathrm{IV}"
+    >
+      Over <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, direction (⇒) is <ConceptLink targetId="equivalencia-logica">equivalent</ConceptLink> to <ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink>. Axiom IV implies (⇒), as shown in the proof. Conversely, if (⇒) holds, given a line $\ell$ and an exterior point $P$, let $t$ be the <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> to $\ell$ through $P$: every parallel to $\ell$ through $P$ makes with $t$ an angle congruent to a <ConceptLink targetId="angulo-recto">right angle</ConceptLink>, and by the uniqueness in <ConceptLink targetId="axioma-congruencia-4">Axiom III.4</ConceptLink> there is only one such line.
+    </PropiedadItem>
 
-<Separador />
-
-### Axiomatic analysis and converse
-
-Euclid structures the behavior of angles formed by a transversal into two foundational propositions:
-- **Proposition I.27 (Absolute converse)**: If two coplanar lines cut by a transversal form congruent alternate interior angles, then the lines are <ConceptLink targetId="paralelas">parallel</ConceptLink>. This result is independent of the fifth postulate and holds in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
-- **Proposition I.29 (Euclidean direct statement)**: If two lines are <ConceptLink targetId="paralelas">parallel</ConceptLink>, the congruence of alternate interior angles strictly requires <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel postulate</ConceptLink>.
-
-<Separador />
-
-### Derived angle relationships
-
-Given two parallel lines cut by a transversal $t$:
-- **Corresponding angles**: Are congruent ($\alpha \cong \beta$).
-- **Alternate exterior angles**: Are congruent ($\gamma \cong \gamma'$).
-- **Consecutive interior angles**: Are <ConceptLink targetId="angulos-suplementarios">supplementary</ConceptLink> ($\alpha + \beta' = 180^\circ$).
+    <PropiedadItem 
+      id="suma-angular-triangulo" 
+      title="Angle sum of a triangle"
+      formula="|\alpha| + |\beta| + |\gamma| = 180^\circ"
+    >
+      Drawing through a vertex of a <ConceptLink targetId="triangulo">triangle</ConceptLink> the parallel to the line of the opposite side, direction (⇒) carries the other two angles to contiguous positions at that vertex; this proves the <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink>, expressed with <ConceptLink targetId="medida-angular">angle measure</ConceptLink> or, synthetically, as congruence with the sum of two <ConceptLink targetId="angulo-recto">right angles</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

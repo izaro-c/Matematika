@@ -93,7 +93,26 @@ export function classifyEmbeddedDiagramSource(source: string, _metadataType = ''
   }
 
   const generated = generateDiagramSource(editorModel, componentName);
-  if (generated.ok && generated.source === source && migrated.migratedFrom === null) {
+  const isLossless = generated.ok && generated.source === source && migrated.migratedFrom === null;
+
+  // Flexibilidad: si la envoltura TSX externa es canónica limpia y no contiene
+  // código arbitrario ni extensiones no representadas fuera del bloque spec,
+  // permitimos 'visual-exact' sin exigir igualdad cosmética byte a byte en el JSON interno.
+  const hasCleanEnvelope = (() => {
+    if (!generated.ok || migrated.migratedFrom !== null) return false;
+    const startIdx = source.indexOf(SPEC_START);
+    const endIdx = source.indexOf(SPEC_END);
+    if (startIdx === -1 || endIdx === -1) return false;
+
+    const prefix = source.slice(0, startIdx).trim();
+    const suffix = source.slice(endIdx + SPEC_END.length).trim();
+    const expectedPrefix = "import { createDiagramSpec, DiagramRenderer } from '@/diagrams/public';";
+    const expectedSuffix = `export const ${componentName} = () => <DiagramRenderer spec={${componentName}Spec} />;`;
+
+    return prefix === expectedPrefix && suffix === expectedSuffix;
+  })();
+
+  if (isLossless || hasCleanEnvelope) {
     return { status: 'visual-exact', model: editorModel, diagnostics: [] };
   }
 

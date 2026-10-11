@@ -2,43 +2,68 @@ export const metadata = {
   id: "cuadrado",
   lang: "es",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Cuadrado",
-  description: "Polígono regular de cuatro lados caracterizado por poseer todos sus lados congruentes y todos sus ángulos interiores rectos.",
+  description: "Cuadrilátero con sus cuatro lados congruentes y sus cuatro ángulos rectos.",
   branch: "51M",
-  hasSimulation: false,
+  branches: ["51M", "51A"],
+  tags: ["geometria-euclidiana", "cuadrilatero", "angulo-recto"],
+  hasSimulation: true,
   sources: [
     { title: "Elementos", author: "Euclides", locator: "Libro I, Definición 22", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §4", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 46", role: "secondary" }
   ]
 };
 
-<Capitular letra="E" />l cuadrado es el polígono regular de cuatro lados en la geometría euclidiana plana. Al combinar las propiedades métricas del rombo (cuatro lados congruentes) y del rectángulo (cuatro ángulos rectos), constituye la figura de máxima simetría dentro de la familia de los <ConceptLink targetId="cuadrilatero">cuadriláteros</ConceptLink>.
+import { Cuadrado } from '@content/diagrams/Definiciones/Cuadrado';
+export const Simulation = Cuadrado;
 
-<Definicion title="">
-  Un <ConceptLink targetId="cuadrilatero" isDependency={true}>cuadrilátero</ConceptLink> convexo $ABCD$ es un cuadrado si y solo si sus cuatro lados son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> entre sí y sus cuatro ángulos interiores son <ConceptLink targetId="angulo-recto" isDependency={true}>ángulos rectos</ConceptLink>:
-  $$
-  (\overline{AB} \cong \overline{BC} \cong \overline{CD} \cong \overline{DA}) \land (\angle A \cong \angle B \cong \angle C \cong \angle D \cong 90^\circ)
-  $$
+<Capitular letra="U" />n cuadrado es un <ConceptLink targetId="cuadrilatero" isDependency={true}>cuadrilátero</ConceptLink> cuyos cuatro <VisualBind element="lados" color="terracota"><ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink></VisualBind> son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> y cuyos cuatro <VisualBind element="angulos-rectos" color="ocre"><ConceptLink targetId="angulo">ángulos</ConceptLink></VisualBind> son <ConceptLink targetId="angulo-recto" isDependency={true}>rectos</ConceptLink>.
+
+Es a la vez <ConceptLink targetId="rombo">rombo</ConceptLink> y <ConceptLink targetId="rectangulo">rectángulo</ConceptLink>, y por tanto un <ConceptLink targetId="paralelogramo">paralelogramo</ConceptLink>. El cuadrado de lado unidad fija la unidad de <ConceptLink targetId="teoria-medida-area">área</ConceptLink>; su existencia depende del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>, y Euclides la establece construyendo un cuadrado sobre un segmento dado (Elementos I.46).
+
+<Definicion title="Definición de cuadrado">
+Un <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> <VisualBind element="cuadrilatero" color="canela">$ABCD$</VisualBind> es un **cuadrado** si sus cuatro lados (<VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind>, <VisualBind element="segBC" color="terracota">$\overline{BC}$</VisualBind>, <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind>, <VisualBind element="segDA" color="terracota">$\overline{DA}$</VisualBind>) son congruentes y sus cuatro ángulos (<VisualBind element="angDAB" color="ocre">$\angle DAB$</VisualBind>, <VisualBind element="angABC" color="ocre">$\angle ABC$</VisualBind>, <VisualBind element="angBCD" color="ocre">$\angle BCD$</VisualBind>, <VisualBind element="angCDA" color="ocre">$\angle CDA$</VisualBind>) son rectos:
+
+$$
+\overline{AB} \cong \overline{BC} \cong \overline{CD} \cong \overline{DA}
+\quad \text{y} \quad
+\angle DAB,\ \angle ABC,\ \angle BCD,\ \angle CDA \ \text{son rectos}.
+$$
+
+Equivalentemente, los cuatro <VisualBind element="angulos-rectos" color="ocre"><ConceptLink targetId="angulo">ángulos</ConceptLink></VisualBind> son congruentes con su <ConceptLink targetId="angulos-suplementarios">suplementario</ConceptLink> adyacente; en medida angular, $|\angle DAB| = |\angle ABC| = |\angle BCD| = |\angle CDA| = 90^\circ$.
 </Definicion>
 
 <Separador />
 
-### Propiedades geométricas y simetría
-
-- **Diagonales**: Las dos diagonales poseen exactamente la misma longitud ($d = l\sqrt{2}$), se bisecan mutuamente y son <ConceptLink targetId="perpendicular">perpendiculares</ConceptLink> entre sí.
-- **Grupo de simetrías**: El grupo de automorfismos euclidianos del cuadrado es el grupo diedral $D_4$, compuesto por 4 rotaciones y 4 reflexiones respecto a sus ejes de simetría.
-- **Inscripción y circunscripción**: Posee circunferencias inscrita ($r = \frac{l}{2}$) y circunscrita ($R = \frac{l\sqrt{2}}{2}$) concéntricas.
-
-<Separador />
-
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Métricas y área">
-    <PropiedadItem id="teorema-area-rectangulo" title="Área del cuadrado">
-      El área de un cuadrado de lado $l$ equivale al cuadrado de su longitud: $\mu(ABCD) = l^2$.
+  <PropiedadesGrupo title="Propiedades euclidianas">
+    <PropiedadItem
+      id="diagonales-cuadrado"
+      title="Diagonales"
+      formula="\overline{AC} \cong \overline{BD}, \quad \overleftrightarrow{AC} \perp \overleftrightarrow{BD}, \quad |AC| = \sqrt{2}\,|AB|"
+    >
+      Las <VisualBind element="diagonales" color="mora"><ConceptLink targetId="diagonal">diagonales</ConceptLink></VisualBind> (<VisualBind element="diagAC" color="mora">$\overline{AC}$</VisualBind> y <VisualBind element="diagBD" color="mora">$\overline{BD}$</VisualBind>) de un cuadrado son congruentes, <ConceptLink targetId="perpendicular">perpendiculares</ConceptLink> y se bisecan. Como $\triangle ABC$ es un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> con catetos congruentes, el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> da $|AC|^2 = |AB|^2 + |BC|^2 = 2\,|AB|^2$.
     </PropiedadItem>
-    <PropiedadItem id="teorema-pitagoras" title="Relación diagonal">
-      La longitud de la diagonal satisface $d^2 = l^2 + l^2 = 2l^2 \implies d = l\sqrt{2}$.
+
+    <PropiedadItem
+      id="area-cuadrado"
+      title="Área"
+      formula="\operatorname{A}(ABCD) = |AB|^2"
+    >
+      El <ConceptLink targetId="teoria-medida-area">área</ConceptLink> de un cuadrado de lado $|AB|$ es $|AB|^2$, caso particular del <ConceptLink targetId="teorema-area-rectangulo">teorema del área del rectángulo</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="simetrias-cuadrado"
+      title="Simetrías"
+      formula="|D_4| = 8"
+    >
+      Las <ConceptLink targetId="isometria">isometrías</ConceptLink> del plano que dejan invariante un cuadrado forman el <ConceptLink targetId="grupo-diedral">grupo diédrico</ConceptLink> $D_4$, de orden $8$: cuatro <ConceptLink targetId="rotacion">rotaciones</ConceptLink> alrededor del centro y cuatro <ConceptLink targetId="reflexion">reflexiones</ConceptLink> respecto a las dos <ConceptLink targetId="mediatriz">mediatrices</ConceptLink> de los lados y a las dos rectas diagonales.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
+
+<Nota>
+En la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, la existencia de un solo <ConceptLink targetId="rectangulo">rectángulo</ConceptLink> equivale al axioma de las paralelas (Saccheri, Legendre). Por eso en la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> no hay cuadrados: un cuadrilátero con cuatro lados congruentes y cuatro ángulos congruentes tiene ángulos agudos.
+</Nota>

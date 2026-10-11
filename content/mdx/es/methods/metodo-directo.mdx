@@ -13,36 +13,38 @@ export const metadata = {
 import { DirectoSimulation } from '@content/diagrams/Metodos/DirectoSimulation';
 export const Simulation = DirectoSimulation;
 
-<Capitular letra="E" />l método directo constituye la técnica fundamental de demostración deductiva para validar implicaciones lógicas de la forma $P \implies Q$. Su procedimiento asume formalmente la veracidad de la hipótesis $P$ y construye una secuencia finita y rigurosa de inferencias válidas que culmina necesariamente en la veracidad de la tesis $Q$.
+<Capitular letra="E" />l **método directo** es la forma de <ConceptLink targetId="demostracion">demostración</ConceptLink> que prueba una <ConceptLink targetId="implicacion" isDependency={true}>implicación</ConceptLink> $P \implies Q$ suponiendo la <ConceptLink targetId="hipotesis">hipótesis</ConceptLink> $P$ y deduciendo de ella la <ConceptLink targetId="tesis">tesis</ConceptLink> $Q$ mediante una sucesión finita de pasos, cada uno justificado.
+
+Es el esquema básico de toda deducción: los métodos indirectos, como la <ConceptLink targetId="metodo-contradiccion">demostración por contradicción</ConceptLink> o la prueba del <ConceptLink targetId="contraposicion">contrarrecíproco</ConceptLink> $\neg Q \implies \neg P$, transforman primero el enunciado y después razonan de forma directa.
 
 <Separador />
 
-### Estructura lógica formal
+### Estructura lógica
 
-El argumento deductivo encadena proposiciones mediante la regla clásica del *modus ponens*: si una proposición $A$ es verdadera y la implicación $A \implies B$ es válida, entonces $B$ es necesariamente verdadera:
+Cada paso aplica la regla de <ConceptLink targetId="modus-ponens" isDependency={true}>modus ponens</ConceptLink>: de $A$ y de $A \implies B$ se infiere $B$. Encadenando pasos se obtiene
 
 <Formula>
   $$ P \implies P_1 \implies P_2 \implies \dots \implies P_n \implies Q $$
 </Formula>
 
-Cada eslabón $P_k \implies P_{k+1}$ de la cadena deductiva se justifica exclusivamente mediante:
+y cada implicación $P_k \implies P_{k+1}$ se justifica con uno de estos recursos:
 
-- Axiomas fundamentales del sistema deductivo.
-- Teoremas, lemas o corolarios previamente demostrados.
-- Definiciones formales rigurosas de los entes involucrados.
-- Reglas sintácticas de la lógica de proposiciones y predicados.
-
-<Separador />
-
-### Aplicaciones paradigmáticas
-
-- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Suma de ángulos de un triángulo</ConceptLink>**: A partir de la definición de <ConceptLink targetId="triangulo">triángulo</ConceptLink> y del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>, se traza una recta <ConceptLink targetId="paralelas">paralela</ConceptLink> a la base por el vértice opuesto para derivar directamente que $\alpha + \beta + \gamma = 180^\circ$.
-- **<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>**: Mediante relaciones de <ConceptLink targetId="semejanza">semejanza</ConceptLink> y cálculo de áreas sobre un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink>, se deriva de manera directa la relación algebraica $a^2 + b^2 = c^2$.
+- la hipótesis $P$ o una afirmación ya obtenida en la cadena;
+- un <ConceptLink targetId="axioma">axioma</ConceptLink> del sistema;
+- un <ConceptLink targetId="teorema">teorema</ConceptLink>, <ConceptLink targetId="lema">lema</ConceptLink> o <ConceptLink targetId="corolario">corolario</ConceptLink> demostrado antes;
+- una <ConceptLink targetId="definicion">definición</ConceptLink>;
+- una regla de <ConceptLink targetId="inferencia">inferencia</ConceptLink> de la <ConceptLink targetId="logica">lógica</ConceptLink> de primer orden.
 
 <Separador />
 
-### Propiedades metodológicas
+### Ejemplos en geometría
 
-- **Constructividad**: Proporciona un camino directo y reproducible que transforma las condiciones iniciales en el resultado final.
-- **Verificabilidad local**: Cada paso deductivo intermedio es autónomo y puede auditarse de manera aislada.
-- **Preferencia epistemológica**: Es la estrategia idónea cuando la estructura de la hipótesis ofrece datos explícitos que pueden transformarse directamente sin requerir reducciones al absurdo auxiliares.
+- **<ConceptLink targetId="teorema-triangulo-isosceles">Teorema del triángulo isósceles</ConceptLink>**: de la hipótesis $\overline{AB} \cong \overline{AC}$ se obtiene, aplicando el <ConceptLink targetId="axioma-congruencia-5">Axioma III.5</ConceptLink> a los triángulos $\triangle ABC$ y $\triangle ACB$, que $\angle ABC \cong \angle ACB$.
+- **<ConceptLink targetId="teorema-suma-angulos-triangulo">Suma de los ángulos de un triángulo</ConceptLink>**: se traza por un vértice la <ConceptLink targetId="paralelas">paralela</ConceptLink> al lado opuesto, cuya unicidad garantiza el <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>, y la congruencia de <ConceptLink targetId="angulos-alternos-internos">ángulos alternos internos</ConceptLink> lleva a que los tres ángulos suman dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>.
+- **<ConceptLink targetId="teorema-pitagoras">Teorema de Pitágoras</ConceptLink>**: en la <ConceptLink targetId="demo-pitagoras-euclides">demostración de Euclides</ConceptLink>, criterios de congruencia y comparaciones de <ConceptLink targetId="area">áreas</ConceptLink> conducen directamente de la hipótesis «el ángulo en $C$ es recto» a la tesis $a^2 + b^2 = c^2$.
+
+<Separador />
+
+### Cuándo conviene
+
+El método directo es adecuado cuando la hipótesis aporta datos que pueden transformarse paso a paso en la tesis. Cada paso puede verificarse de forma aislada, y cuando la prueba afirma la existencia de un objeto suele construirlo explícitamente. Si la tesis es una afirmación de imposibilidad o de unicidad, suele ser más natural un método indirecto.

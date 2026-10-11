@@ -3,28 +3,31 @@ export const metadata = {
   lang: "en",
   type: "axioma",
   title: "Axiom I.4 (Determination of the plane)",
-  description: "Through any three non-collinear points passes at least one plane incident with them.",
+  description: "Through any three non-collinear points passes at least one plane, and every plane is incident with at least one point.",
   branch: "51A",
   tags: ["geometry", "incidence", "axiom", "plane"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §2", role: "primary" }
   ]
 };
 
 import { Incidence4 } from '@content/diagrams/Axiomas/Incidence4';
 export const Simulation = Incidence4;
 
-<Capitular letra="G" />iven any three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>, there exists at least one <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> incident with all three.
+<Capitular letra="G" />iven any three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>, there exists at least one <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> incident with all three. Every plane is incident with at least one point.
 
-This postulate extends the principle of linear determination to two-dimensional space: just as two points fix a line, three non-aligned points guarantee the existence of a plane in <ConceptLink targetId="espacio">space</ConceptLink>.
+The first clause is the analogue, for planes, of the existence part of <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>: just as two distinct points have a common line, three non-collinear points have a common plane; the uniqueness of that plane is supplied by <ConceptLink targetId="axioma-incidencia-5">Axiom I.5</ConceptLink>. The second clause rules out planes without points, so that no plane has an empty <ConceptLink targetId="traza">point trace</ConceptLink>.
 
-<Definicion title="Formal Statement">
-  For any three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind>, there exists at least one <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="polyTriangulo" color="canela">$\pi$</VisualBind> such that all three points <ConceptLink targetId="incidencia" isDependency={true}>are incident</ConceptLink> with $\pi$:
+<Definicion title="Formal statement">
+  For any three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind>, there exists at least one <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="polyTriangulo" color="canela">$\pi$</VisualBind> such that all three points <ConceptLink targetId="incidencia" isDependency={true}>are incident</ConceptLink> with $\pi$. Moreover, for every plane $\pi$ there exists a point $P$ incident with $\pi$:
   $$
-  \forall A, B, C \in \mathcal{P} \ \bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \implies \exists \pi \in \Pi \ (A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi)\bigr)
+  \begin{aligned}
+  &\forall A, B, C \in \mathcal{P} \ \bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \implies \exists \pi \in \Pi \ (A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi \land C \, \mathbf{I} \, \pi)\bigr) \\
+  &\land \ \forall \pi \in \Pi \ \exists P \in \mathcal{P} \ (P \, \mathbf{I} \, \pi)
+  \end{aligned}
   $$
 </Definicion>
 

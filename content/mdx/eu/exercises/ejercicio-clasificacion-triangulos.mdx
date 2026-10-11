@@ -2,8 +2,8 @@ export const metadata = {
   id: "ejercicio-clasificacion-triangulos",
   lang: "eu",
   type: "ejercicio",
-  title: "Triangeluen sailkapena beren angeluen arabera",
-  description: "Ariketa interaktiboa: triangeluak beren barne-angeluen arabera sailkatu, kontaketa-matrizea osatu eta egiaztapen bisuala egin.",
+  title: "Triangeluen sailkapena angeluen arabera",
+  description: "Ariketa interaktiboa: triangeluak angeluzuzen, zorrotz eta kamutsetan sailkatzea barne-angeluen neurriaren arabera, klase bakoitzeko kasuak zenbatzea eta oihal interaktiboan egiaztatzea.",
   branch: "51M",
   relatedTheorem: "teorema-suma-angulos-triangulo",
   difficulty: "básico",
@@ -12,7 +12,7 @@ export const metadata = {
 
 import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/EjercicioClasificacionTriangulos';
 
-<Capitular letra="I" />rudi geometrikoak beren angeluen propietateen arabera sailkatzea oinarrizko trebetasuna da <ConceptLink targetId="congruencia">kongruentzia</ConceptLink> eta <ConceptLink targetId="semejanza">antzekotasun</ConceptLink> teoremak aplikatzeko. Ariketa honetan hainbat <ConceptLink targetId="triangulo">triangelu-mota</ConceptLink> sailkatuko dituzu beren barne-angeluen arabera, kontaketa-bektorea eraikiko duzu eta propietateak oihal interaktiboan egiaztatuko dituzu.
+<Capitular letra="T" />riangelu bat <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>angeluzuzena</ConceptLink> da bere <ConceptLink targetId="angulo-interior">barne-angeluetako</ConceptLink> bat <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> bada; <ConceptLink targetId="triangulo-acutangulo" isDependency={true}>zorrotza</ConceptLink>, hiru angeluak <ConceptLink targetId="angulo-agudo">zorrotzak</ConceptLink> badira; eta <ConceptLink targetId="triangulo-obtusangulo" isDependency={true}>kamutsa</ConceptLink>, horietako bat <ConceptLink targetId="angulo-obtuso">kamutsa</ConceptLink> bada. Ariketa honetan hainbat <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> sailkatuko dituzu beren angeluen <ConceptLink targetId="medida-angular">neurriaren</ConceptLink> arabera, klase bakoitzean zenbat dauden zenbatuko duzu eta sailkapena oihal interaktiboan egiaztatuko duzu.
 
 <Separador />
 
@@ -22,14 +22,14 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
   titulo="Barne-angeluen araberako sailkapena"
   questionIds={["p1_q1"]}
 >
-  Eraman triangelu bakoitza dagokion kategoriara bere angeluen neurriaren arabera:
+  Eraman triangelu bakoitza bere kategoriara, angeluen neurriaren arabera:
 
   <Clasificador
     id="p1_q1"
-    pregunta="Sailkatu ondorengo triangeluak dagozkien kategorietan:"
+    pregunta="Sailkatu triangelu hauek dagozkien kategorietan:"
     buckets={[
       { id: "rectangulo", title: "Triangelu angeluzuzena (90°-ko angelu bat)" },
-      { id: "acutangulo", title: "Triangelu zorrotza (3 angeluak < 90°)" },
+      { id: "acutangulo", title: "Triangelu zorrotza (hiru angeluak < 90°)" },
       { id: "obtusangulo", title: "Triangelu kamutsa (angelu bat > 90°)" }
     ]}
     items={[
@@ -39,14 +39,14 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
       { id: "t4", content: "$3, 4, 5\\text{ (aldeak)}$", bucketId: "rectangulo" }
     ]}
   >
-    <Clasificador.ErrorComun titulo="Hirukote pitagorikoa edo angelu kamutsak nahastea">
-      Gogoratu <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremaren</ConceptLink> bidez ($3^2 + 4^2 = 5^2$) 3, 4 eta 5 aldeek triangelu angeluzuzena osatzen dutela. Era berean, 90° baino handiagoa den angelu bakar batek triangelua kamuts bihurtzen du.
+    <Clasificador.ErrorComun titulo="3, 4, 5 hirukotea edo angelu kamutsa ez ezagutzea">
+      3, 4 eta 5 <ConceptLink targetId="lado">aldeko</ConceptLink> triangeluaren angeluak ez dira ematen, baina haren <ConceptLink targetId="longitud">luzerek</ConceptLink> $3^2 + 4^2 = 5^2$ betetzen dute; <ConceptLink targetId="teorema-pitagoras-reciproco" isDependency={true}>Pitagorasen teoremaren alderantzizkoaren</ConceptLink> arabera, 5 luzerako aldearen aurkako angelua zuzena da. Bestalde, angelu kamuts bakar bat nahikoa da triangelua kamutsa izateko.
     </Clasificador.ErrorComun>
 
     <Clasificador.Resolucion>
-      - **Angeluzuzenak**: 90°-ko angelu bat dute ($90^\circ, 45^\circ, 45^\circ$ edo $3, 4, 5$ hirukotea).
-      - **Zorrotzak**: Beren 3 angeluak 90° baino zorrozki txikiagoak dira ($60^\circ, 60^\circ, 60^\circ$).
-      - **Kamutsak**: 90° baino zorrozki handiagoa den angelu bat dute ($120^\circ, 30^\circ, 30^\circ$).
+      - **Angeluzuzenak**: $90^\circ$-ko angelu bat dute ($90^\circ, 45^\circ, 45^\circ$, eta $3, 4, 5$ aldeko triangelua).
+      - **Zorrotzak**: hiru angeluek $90^\circ$ baino gutxiago neurtzen dute ($60^\circ, 60^\circ, 60^\circ$).
+      - **Kamutsak**: $90^\circ$ baino gehiagoko angelu bat dute ($120^\circ, 30^\circ, 30^\circ$).
     </Clasificador.Resolucion>
   </Clasificador>
 </ExerciseStep>
@@ -56,23 +56,23 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
 <ExerciseStep
   id="p2"
   numero={2}
-  titulo="Sailkapenaren matrize-kontaketa"
+  titulo="Kategoriakako zenbaketa"
   questionIds={["p2_q1"]}
   dependeDeQuestions={["p1_q1"]}
 >
-  Adierazi aurreko sailkapenaren emaitzak errenkada-bektore formatuan $[\text{Angeluzuzenak}, \text{Zorrotzak}, \text{Kamutsak}]$:
+  Zenbatu kategoria bakoitzean zenbat triangelu jarri dituzun, eta idatzi hiru zenbakiak errenkadan, ordena honetan: (angeluzuzenak, zorrotzak, kamutsak):
 
   <MatrizInteractiva
     id="p2_q1"
-    pregunta="Sartu kategoria bakoitzeko triangelu kopurua [Angeluzuzenak, Zorrotzak, Kamutsak]:"
+    pregunta="Kategoria bakoitzeko triangelu kopurua (angeluzuzenak, zorrotzak, kamutsak):"
     correct={[["2", "1", "1"]]}
   >
-    <MatrizInteractiva.ErrorComun titulo="Elementuen zenbaketa okerra">
-      Berrikusi aurreko urratseko elementuak: 2 triangelu angeluzuzen daude ($90^\circ, 45^\circ, 45^\circ$ eta $3, 4, 5$), zorroztasun bat ($60^\circ, 60^\circ, 60^\circ$) eta kamuts bat ($120^\circ, 30^\circ, 30^\circ$).
+    <MatrizInteractiva.ErrorComun titulo="Zenbaketa okerra">
+      Berrikusi aurreko urratseko sailkapena: 2 triangelu angeluzuzen daude ($90^\circ, 45^\circ, 45^\circ$ eta $3, 4, 5$ aldekoa), zorrotz bat ($60^\circ, 60^\circ, 60^\circ$) eta kamuts bat ($120^\circ, 30^\circ, 30^\circ$).
     </MatrizInteractiva.ErrorComun>
 
     <MatrizInteractiva.Resolucion>
-      Sailkatutako 4 triangeluak biltzean 2 angeluzuzen, 1 zorrotz eta 1 kamuts lortzen dira. Dagokion errenkada-matrizea $[2 \quad 1 \quad 1]$ da.
+      4 triangeluak honela banatzen dira: 2 angeluzuzen, 1 zorrotz eta 1 kamuts; beraz, errenkada $(2,\ 1,\ 1)$ da.
     </MatrizInteractiva.Resolucion>
   </MatrizInteractiva>
 </ExerciseStep>
@@ -82,26 +82,26 @@ import { EjercicioClasificacionTriangulos } from '@content/diagrams/Ejercicios/E
 <ExerciseStep
   id="p3"
   numero={3}
-  titulo="Egiaztapen bisuala oihalean"
+  titulo="Egiaztapena oihalean"
   questionIds={["p3_q1"]}
   dependeDeQuestions={["p2_q1"]}
 >
-  Egiaztatu sailkapena oihal interaktiboan angeluen irekidura aztertuz:
+  Egiaztatu sailkapena oihal interaktiboan triangelu bakoitzaren angeluak behatuz:
 
   <CanvasInteractivo
     id="p3_q1"
-    title="Angeluak ikuskatzeko oihala"
-    pregunta="Erabili oihaleko kontrolak triangelu-mota bakoitzaren irekidura egiaztatzeko:"
-    botonTexto="Balioztatu oihalaren analisia"
+    title="Angeluak egiaztatzeko oihala"
+    pregunta="Mugitu oihaleko erpinak eta behatu triangelu-mota bakoitzaren angeluen irekiera:"
+    botonTexto="Balioztatu egiaztapena"
   >
     <EjercicioClasificacionTriangulos />
 
-    <CanvasInteractivo.ErrorComun titulo="Angeluen baturaren errorea">
-      Gogoratu <ConceptLink targetId="teorema-suma-angulos-triangulo">angeluen baturaren teoremaren</ConceptLink> arabera edozein triangelu euklidearretan barne-angeluen batura zehazki 180° dela ($\alpha + \beta + \gamma = 180^\circ$).
+    <CanvasInteractivo.ErrorComun titulo="Angeluen batura ahaztea">
+      <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={true}>Triangeluaren angeluen baturaren teoremaren</ConceptLink> arabera, <ConceptLink targetId="sistema-euclidiano">sistema euklidearrean</ConceptLink> triangelu orotako barne-angeluek $|\alpha| + |\beta| + |\gamma| = 180^\circ$ betetzen dute. Horregatik, triangelu batek gehienez angelu zuzen edo kamuts bat du, eta hiru kategoriak ez dira gainjartzen.
     </CanvasInteractivo.ErrorComun>
 
     <CanvasInteractivo.Resolucion>
-      Oihalean egiaztatzen da barne-angeluen baturak kasu guztietan $\alpha + \beta + \gamma = 180^\circ$ betetzen duela, egindako sailkapen geometrikoa bermatuz.
+      Oihalean ikusten da kasu guztietan $|\alpha| + |\beta| + |\gamma| = 180^\circ$ betetzen dela, eta triangelu bakoitzak gehienez $90^\circ$-ko edo gehiagoko angelu bat duela; horrek sailkapena berresten du.
     </CanvasInteractivo.Resolucion>
   </CanvasInteractivo>
 </ExerciseStep>

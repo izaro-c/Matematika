@@ -5,7 +5,7 @@ export const metadata = {
   title: "Three-Point Model",
   description: "Minimal finite structure satisfying planar incidence axioms I.1, I.2, and I.3.",
   branch: "51A",
-  satisfies: "sistema-incidencia",
+  satisfies: [],
   axioms_verified: ["axioma-incidencia-1", "axioma-incidencia-2", "axioma-incidencia-3"],
   hasDiagram: true,
   sources: [
@@ -21,9 +21,9 @@ export const metadata = {
 import { ModeloTresPuntos } from '@content/diagrams/Models/ModeloTresPuntos';
 export const Diagram = ModeloTresPuntos;
 
-<Capitular letra="T" />he **three-point model** is a finite <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink> that satisfies the first three axioms of <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> planar <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>.
+<Capitular letra="T" />he **three-point model** is a finite <ConceptLink targetId="estructura-geometrica">geometric structure</ConceptLink> that satisfies the planar incidence axioms I.1–I.3 of <ConceptLink targetId="hilbert">David Hilbert's</ConceptLink> <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>. It contains no planes, so it does not model the spatial axioms I.4–I.8.
 
-In <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, it constitutes a minimal <ConceptLink targetId="incidencia">incidence</ConceptLink> plane of finite <ConceptLink targetId="cardinalidad">cardinality</ConceptLink>, serving as a semantic witness to the <ConceptLink targetId="consistencia-logica">logical consistency</ConceptLink> of planar incidence postulates.
+It is the <ConceptLink targetId="incidencia">incidence</ConceptLink> plane of smallest possible <ConceptLink targetId="cardinalidad">cardinality</ConceptLink> and, in the sense of <ConceptLink targetId="teoria-modelos">model theory</ConceptLink>, a witness to the <ConceptLink targetId="consistencia-logica">logical consistency</ConceptLink> of the planar incidence axioms.
 
 <Definicion title="Formal Structure of the Model">
 The model is defined as a tuple $\mathcal{M} = (\mathcal{P}, \mathcal{L}, \mathbf{I})$ consisting of finite and <ConceptLink targetId="conjunto-disjunto">disjoint sets</ConceptLink> ($\mathcal{P} \cap \mathcal{L} = \emptyset$):
@@ -42,27 +42,27 @@ The model is defined as a tuple $\mathcal{M} = (\mathcal{P}, \mathcal{L}, \mathb
 <SeccionPropiedades>
   <PropiedadesGrupo title="Incidence Axiom Satisfaction">
     <PropiedadItem 
-      id="axioma-incidencia-1" 
+      id="tres-puntos-verifica-i1" 
       title="Unique Line Determination"
-      formula="\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L})"
+      formula="\forall P, Q \in \mathcal{P} \ (P \neq Q \implies \exists! \ell \in \mathcal{L} \ (P \, \mathbf{I} \, \ell \land Q \, \mathbf{I} \, \ell))"
     >
       For any two distinct points in $\mathcal{P}$, there exists a unique line in $\mathcal{L}$ incident with both ($\{A, B\}$ determines $\ell_{AB}$, $\{B, C\}$ determines $\ell_{BC}$, and $\{C, A\}$ determines $\ell_{CA}$), satisfying <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="axioma-incidencia-2" 
+      id="tres-puntos-verifica-i2" 
       title="Incident Points per Line"
-      formula="|\operatorname{tr}(\ell)| = 2 \ge 2"
+      formula="\forall \ell \in \mathcal{L} \ \lvert \operatorname{tr}(\ell) \rvert = 2"
     >
       Every line $\ell \in \mathcal{L}$ is incident with exactly two distinct points ($\lvert \operatorname{tr}(\ell) \rvert = 2 \ge 2$), satisfying <ConceptLink targetId="axioma-incidencia-2">Axiom I.2</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="axioma-incidencia-3" 
+      id="tres-puntos-verifica-i3" 
       title="Existence of Non-Collinear Points"
-      formula="|\operatorname{tr}(\ell)| = 2 < 3 \implies \exists \{A, B, C\} \text{ non-collinear}"
+      formula="\neg \exists \ell \in \mathcal{L} \ (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)"
     >
-      No line contains all three points simultaneously in its trace ($C \notin \operatorname{tr}(\ell_{AB})$, $A \notin \operatorname{tr}(\ell_{BC})$, $B \notin \operatorname{tr}(\ell_{CA})$); consequently, there exist triples of non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points, satisfying <ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>.
+      No line has all three points in its trace ($C \notin \operatorname{tr}(\ell_{AB})$, $A \notin \operatorname{tr}(\ell_{BC})$, $B \notin \operatorname{tr}(\ell_{CA})$); consequently, there exist triples of non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> points, satisfying <ConceptLink targetId="axioma-incidencia-3">Axiom I.3</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 
@@ -80,15 +80,15 @@ The model is defined as a tuple $\mathcal{M} = (\mathcal{P}, \mathcal{L}, \mathb
       title="Absence of Parallelism"
       formula="\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset \quad (\forall i \neq j)"
     >
-      Any two distinct lines in $\mathcal{L}$ have non-disjoint traces ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$), always intersecting at a unique common point; therefore, the model contains no <ConceptLink targetId="paralelas">parallel lines</ConceptLink>.
+      Any two distinct lines of $\mathcal{L}$ have exactly one common point ($\operatorname{tr}(\ell_i) \cap \operatorname{tr}(\ell_j) \neq \emptyset$); therefore, regarding the model itself as a plane (the structure contains no planes), there are no two distinct <ConceptLink targetId="paralelas">parallel lines</ConceptLink>.
     </PropiedadItem>
 
     <PropiedadItem 
       id="autodualidad" 
       title="Self-Duality"
-      formula="\mathcal{P} \cong \mathcal{L}, \quad \mathbf{I} \cong \mathbf{I}^T"
+      formula="(\mathcal{P}, \mathcal{L}, \mathbf{I}) \cong (\mathcal{L}, \mathcal{P}, \mathbf{I}^{T})"
     >
-      The structure is <ConceptLink targetId="dualidad">self-dual</ConceptLink>: formally interchanging the domains $\mathcal{P}$ and $\mathcal{L}$ along with the <ConceptLink targetId="transposicion">transposition</ConceptLink> of the relation $\mathbf{I}$ yields an incidence structure strictly <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink> to the original.
+      The structure is <ConceptLink targetId="dualidad">self-dual</ConceptLink>: formally interchanging the domains $\mathcal{P}$ and $\mathcal{L}$ along with the <ConceptLink targetId="transposicion">transposition</ConceptLink> of the relation $\mathbf{I}$ yields an incidence structure <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink> to the original.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

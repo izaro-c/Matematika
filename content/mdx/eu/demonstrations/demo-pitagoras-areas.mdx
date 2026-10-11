@@ -1,16 +1,18 @@
 export const metadata = {
-  "id": "demo-pitagoras-areas",
-  "type": "demostracion",
-  "title": "Frogapena: Pitagorasen teorema (Azaleren bidez)",
-  "description": "(a+b) aldeko karratu baten azalera lau triangelu angeluzuzentan eta barne-karratu batean deskonposatuz egindako frogapen aljebraiko eta geometrikoa.",
-  "parentTheorem": "teorema-pitagoras",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["pitagoras"],
-  "tags": ["geometria", "triangulos", "areas", "algebra"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro I, Proposición 47 (Demostración alternativa por descomposición)", role: "primary" }
+  id: "demo-pitagoras-areas",
+  lang: "eu",
+  type: "demostracion",
+  title: "Frogapena: Pitagorasen teorema (Azaleren bidez)",
+  description: "(a+b) aldeko karratu baten azalera lau triangelu angeluzuzentan eta c² azalerako barne-karratu batean deskonposatuz egindako frogapen geometrikoa.",
+  parentTheorem: "teorema-pitagoras",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["pitagoras"],
+  tags: ["geometria", "triangulos", "areas", "algebra"],
+  layout: "split",
+  sources: [
+    { title: "Elementuak", author: "Euklides", locator: "I. liburua, 47. proposizioa (deskonposizio bidezko ordezko frogapena)", role: "secondary" },
+    { title: "Zhoubi suanjing", author: "Txinatar tradizio klasikoa", locator: "Zhao Shuang-en iruzkina (K.o. III. mendea)", role: "primary" }
   ]
 };
 
@@ -18,46 +20,46 @@ import { DemoPitagorasAreas } from "@content/diagrams/Demos/DemoPitagorasAreas";
 
 <DemonstrationSection diagram={<DemoPitagorasAreas />}>
 
-<Capitular letra="a" /> eta $b$ katetoak eta $c$ hipotenusa dituen <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzen</ConceptLink> batean, <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> frogatzen da $(a+b)$ aldeko <VisualBind element="outerSquare" color="carbon"><ConceptLink targetId="cuadrado">kanpoko karratu</ConceptLink></VisualBind> baten azaleraren deskonposizio baliokidearen bidez.
+<Capitular letra="E" />dozein <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzenean</ConceptLink>, $a, b$ <ConceptLink targetId="longitud" isDependency={true}>luzerako</ConceptLink> <ConceptLink targetId="cateto" isDependency={true}>katetoak</ConceptLink> eta $c$ <ConceptLink targetId="hipotenusa" isDependency={true}>hipotenusa</ConceptLink> izanik, <ConceptLink targetId="teorema-pitagoras">Pitagorasen teorema</ConceptLink> frogatzen da $(a+b)$ aldeko <VisualBind element="outerSquare" color="carbon"><ConceptLink targetId="cuadrado">kanpoko karratu</ConceptLink></VisualBind> baten <ConceptLink targetId="teoria-medida-area" isDependency={true}>azaleraren</ConceptLink> deskonposizioaren bidez.
 
 <Separador />
 
-### Froga urratsez urrats
+### Frogapena urratsez urrats
 
 <ProofStep number={1} target="outerSquare" title="Kanpoko karratuaren eraikuntza">
-$(a+b)$ aldeko kanpoko karratua eraikitzen da. Karratu honen azalera osoa garapen aljebraiko honen bidez ematen da:
+$(a+b)$ aldeko kanpoko <ConceptLink targetId="cuadrado">karratu</ConceptLink> biltzailea eraikitzen da. Karratuaren azaleraren definizioaren arabera (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>laukizuzenaren azaleraren teorema</ConceptLink>), bere azalera osoak berdintza aljebraiko hau betetzen du:
 
-<Formula>
-  $$ \text{Azalera Osoa} = (a+b)^2 = a^2 + 2ab + b^2 $$
-</Formula>
+$$
+\operatorname{A}(\text{exterior}) = (a+b)^2 = a^2 + 2ab + b^2
+$$
 </ProofStep>
 
 <ProofStep number={2} target="t1" title="Lau triangelu angeluzuzenen kokapena">
-Kanpoko karratuaren lau erpinetako bakoitzean $a$ eta $b$ katetoko triangelu angeluzuzen bat kokatzen da. <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Triangeluaren azaleraren teoremagatik</ConceptLink>, lau triangelu kongruenteen azalera konbinatua honako hau da:
+Kanpoko karratuaren lau erpinetako bakoitzean $a$ eta $b$ katetoko <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzen</ConceptLink> bat kokatzen da (<VisualBind element="t1" color="carbon">$T_1$</VisualBind>, <VisualBind element="t2" color="carbon">$T_2$</VisualBind>, <VisualBind element="t3" color="carbon">$T_3$</VisualBind>, <VisualBind element="t4" color="carbon">$T_4$</VisualBind>). <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>AlAnAl kongruentzia-teoremaren</ConceptLink> arabera, lau triangeluak elkarren artean kongruenteak dira. <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Triangeluaren azaleraren teoremagatik</ConceptLink>, lau triangeluen azaleren batura honako hau da:
 
-<Formula>
-  $$ 4 \times \left( \frac{1}{2} a b \right) = 2ab $$
-</Formula>
+$$
+4 \cdot \left(\frac{1}{2} a b\right) = 2ab
+$$
 </ProofStep>
 
 <ProofStep number={3} target="emptyC" title="Barne-karratuaren ezaugarritzea">
-Triangeluen lau hipotenusek $c$ aldeko erdiko eskualde bat mugatzen dute. Triangelu bakoitzeko angelu zorrotzen batura $90^\circ$ denez, erdiko laukiaren barne-angelu bakoitza $180^\circ - 90^\circ = 90^\circ$ da. Beraz, $c^2$ azalera duen barne-karratu bat da.
+Triangeluen lau hipotenusek $c$ luzerako aldeak dituen erdiko lauki-eskualde bat <VisualBind element="emptyC" color="ocre">$Q_c$</VisualBind> mugatzen dute. Triangelu angeluzuzen bakoitzeko bi <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> zorrotzak <ConceptLink targetId="angulos-suplementarios" isDependency={true}>osagarriak</ConceptLink> direnez eta $90^\circ$ batzen dutenez, erdiko laukiaren erpin bakoitzeko barne-angeluak $180^\circ - 90^\circ = 90^\circ$ neurtzen du. Lau aldeak kongruenteak eta lau angeluak zuzenak izanik, $Q_c$ $c^2$ azalera duen barne-<ConceptLink targetId="cuadrado">karratu</ConceptLink> bat da.
 </ProofStep>
 
-<ProofStep number={4} target="emptyA" title="Azaleraren aditibitatearen printzipioa aplikatzea">
-<ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren aditibitate-teoremaren</ConceptLink> arabera, kanpoko karratuaren azalera erdiko barne-karratuaren azaleraren eta lau triangeluen azaleren baturaren berdina da:
+<ProofStep number={4} target="emptyA" title="Azaleraren aditibitatearen teoremaren aplikazioa">
+<ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren aditibitate-teoremaren</ConceptLink> arabera, kanpoko karratuaren azalera erdiko barne-karratuaren azaleraren eta ertzetako lau triangeluen azaleren baturaren berdina da:
 
-<Formula>
-  $$ (a+b)^2 = c^2 + 4 \cdot \left( \frac{1}{2} a b \right) $$
-</Formula>
+$$
+(a+b)^2 = \operatorname{A}(Q_c) + 2ab = c^2 + 2ab
+$$
 </ProofStep>
 
 <ProofStep number={5} target="emptyB" title="Sinplifikazio aljebraikoa eta azken ondorioa">
-Ezkerreko adierazpena garatuz eta bi aldeetan $2ab$ gaia sinplifikatuz:
+Berdintzaren bi kideetan $2ab$ gaia kenduz, edo bestela lau triangeluak $a \times b$ neurriko bi laukizuzenetan berrantolatuz (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>laukizuzenaren azaleraren teorema</ConceptLink>) eta agerian <VisualBind element="emptyA" color="terracota">$Q_a$</VisualBind> ($a^2$ azalerakoa) eta <VisualBind element="emptyB" color="canela">$Q_b$</VisualBind> ($b^2$ azalerakoa) barne-<ConceptLink targetId="cuadrado">karratuak</ConceptLink> utziz, formalki ondorioztatzen da:
 
-<Formula>
-  $$ a^2 + 2ab + b^2 = c^2 + 2ab \implies a^2 + b^2 = c^2 $$
-</Formula>
+$$
+a^2 + b^2 = c^2
+$$
 </ProofStep>
 
 <Separador />
@@ -65,7 +67,7 @@ Ezkerreko adierazpena garatuz eta bi aldeetan $2ab$ gaia sinplifikatuz:
 ### Azterketa deduktiboa
 
 <Nota>
-  Eskola pitagorikoei eta indiarrei (Bhaskara) egotzitako frogapen bisual eta aljebraikoa. Isometrien peko azaleraren inbariantzian eta <ConceptLink targetId="teoria-medida-area">azalera-neurketaren teorian</ConceptLink> oinarritzen da.
+Azalerak moztuz eta berrantolatuz egindako frogapen geometriko hau antzinatasun handiz agertzen da txinatar tradizio matematikoan (*Zhoubi suanjing* laneko *Gougu* diagraman, Zhao Shuang-en III. mendeko iruzkinekin) zein Mediterraneoko eta Indiako tradizio klasikoetan. Bere baliozkotasun zorrotza kongruentzien peko azaleraren inbariantzian eta <ConceptLink targetId="teorema-area-aditividad">azaleraren aditibitate-teoreman</ConceptLink> oinarritzen da.
 </Nota>
 
 </DemonstrationSection>

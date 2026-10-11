@@ -1,46 +1,50 @@
 export const metadata = {
   id: "teorema-area-triangulo",
+  lang: "en",
   type: "teorema",
-  title: "Area of a Triangle Theorem",
-  description: "The area of any triangular region is equal to one-half the product of the length of one of its bases and the corresponding altitude.",
-  statement: "Given a triangle △ABC with base of length b and relative altitude h, it holds strictly that Area(△ABC) = (1/2) · b · h.",
+  title: "Triangle area theorem",
+  description: "The area of a triangle is half the product of the length of a side and that of the corresponding altitude, measured from the opposite vertex to the foot of the perpendicular.",
+  statement: "If H is the foot of the perpendicular from C to the line AB, b = |AB| and h = |CH|, then A(△ABC) = b · h / 2.",
   branch: "51M",
+  tags: ["area", "triangulo", "altura", "geometria-euclidiana"],
   hasSimulation: false,
+  difficulty: "intermedio",
   authors: ["euclides"],
   demos: ["demo-area-triangulo"],
   sources: [
-    { title: "Elements", author: "Euclides", locator: "Book I, Proposition 41", role: "primary" }
+    { title: "Elements", author: "Euclid", locator: "Book I, Proposition 41", role: "secondary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Chapter 5", role: "formalization" }
   ]
 };
 
-<Capitular letra="T" />he area of a triangle theorem determines the surface measurement of the foundational polygonal figure in planar geometry. It establishes that the area enclosed by three straight segments depends exclusively on the linear magnitude of one base and its perpendicular distance to the opposite vertex.
+<Capitular letra="T" />he <ConceptLink targetId="teoria-medida-area" isDependency={true}>area</ConceptLink> of a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> is half the product of the <ConceptLink targetId="longitud" isDependency={true}>length</ConceptLink> of a <ConceptLink targetId="lado">side</ConceptLink>, taken as <ConceptLink targetId="base">base</ConceptLink>, and the length of the corresponding <ConceptLink targetId="altura-triangulo" isDependency={true}>altitude</ConceptLink>.
+
+The proof rests on the foot of the altitude. If $H$ is the foot of the <ConceptLink targetId="perpendicular" isDependency={true}>perpendicular</ConceptLink> dropped from $C$ to the line $\overleftrightarrow{AB}$, the segment $\overline{CH}$ splits the triangle into two <ConceptLink targetId="triangulo-rectangulo">right triangles</ConceptLink>, each one half of a rectangle (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink>), when $H$ lies between $A$ and $B$; when $H$ falls outside the side, which happens if the triangle has an obtuse angle at $A$ or at $B$, the triangle is the difference of two right triangles. In both cases the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>additivity of area</ConceptLink> yields the formula (<ConceptLink targetId="demo-area-triangulo">proof</ConceptLink>). The result underlies the area proof of the <ConceptLink targetId="teorema-tales">intercept theorem</ConceptLink> and the classical proofs of the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>.
+
+<Definicion title="Formal statement of the triangle area theorem">
+Let $\triangle ABC$ be a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\sigma$ of the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink> and let $H$ be the foot of the <ConceptLink targetId="perpendicular" isDependency={true}>perpendicular</ConceptLink> to the <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $\overleftrightarrow{AB}$ passing through $C$. If $b = |AB|$ and $h = |CH|$ are the <ConceptLink targetId="longitud" isDependency={true}>lengths</ConceptLink> of the base and of the <ConceptLink targetId="altura-triangulo" isDependency={true}>altitude</ConceptLink>, the area of the <ConceptLink targetId="region-triangular" isDependency={true}>triangular region</ConceptLink> determined by $\triangle ABC$ is
+
+$$
+\operatorname{A}(\triangle ABC) = \frac{1}{2}\, b \cdot h
+$$
+</Definicion>
 
 <Separador />
 
-### Formal statement
-
-Let $\triangle ABC$ be a <ConceptLink targetId="triangulo">triangle</ConceptLink> in the Euclidean plane $\mathcal{P}$. Let $b = |\overline{AB}|$ be the length of one of its sides taken as a base, and let $h$ be the length of the <ConceptLink targetId="perpendicular">perpendicular altitude</ConceptLink> from the opposite vertex $C$ to the line containing side $\overline{AB}$. The area measure of triangle $\triangle ABC$ satisfies:
-
-<Formula>
-  $$ \text{Area}(\triangle ABC) = \frac{1}{2} b \cdot h $$
-</Formula>
-
-That is, the area of any triangle is rigorously equal to one-half the product of its base and corresponding altitude.
-
-<Separador />
-
-### Proof and equidecomposition
-
-The Euclidean proof is obtained by completing the triangle into a <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink>:
-1. A line <ConceptLink targetId="paralelas">parallel</ConceptLink> to $\overline{AB}$ is drawn through $C$, and a line parallel to $\overline{AC}$ is drawn through $B$, intersecting at point $D$.
-2. The quadrilateral $ABDC$ is a <ConceptLink targetId="paralelogramo">parallelogram</ConceptLink> with base $b$ and height $h$.
-3. The diagonal $\overline{BC}$ divides the parallelogram into two congruent <ConceptLink targetId="triangulo">triangles</ConceptLink>: $\triangle ABC \cong \triangle DCB$.
-4. By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>, $\text{Area}(ABDC) = \text{Area}(\triangle ABC) + \text{Area}(\triangle DCB) = 2 \cdot \text{Area}(\triangle ABC)$.
-5. Since $\text{Area}(ABDC) = b \cdot h$ from the <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>area of a rectangle theorem</ConceptLink>, it follows that $\text{Area}(\triangle ABC) = \frac{1}{2} b \cdot h$.
-
-<Separador />
-
-### Equivalent area formulas
-
-- **Heron's formula**: Given a triangle with side lengths $a, b, c$ and semiperimeter $s = \frac{a+b+c}{2}$, its area equals $\sqrt{s(s-a)(s-b)(s-c)}$.
-- **Trigonometric formula**: In terms of two sides and the included angle, $\text{Area} = \frac{1}{2} a b \sin(\gamma)$.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Consequences and equivalent formulas">
+    <PropiedadItem id="independencia-base-altura" title="Independence of the chosen base" formula="|BC| \cdot h_a = |CA| \cdot h_b = |AB| \cdot h_c">
+      Since the area does not depend on the chosen side, the product of each side and its <ConceptLink targetId="altura-triangulo">altitude</ConceptLink> is the same for the three sides ($h_a$, $h_b$, $h_c$ denote the altitudes from $A$, $B$ and $C$).
+    </PropiedadItem>
+    <PropiedadItem id="area-triangulos-misma-altura" title="Triangles with the same altitude" formula="\frac{\operatorname{A}(\triangle ABC)}{\operatorname{A}(\triangle A'B'C)} = \frac{|AB|}{|A'B'|}">
+      If the sides $\overline{AB}$ and $\overline{A'B'}$ lie on the same <ConceptLink targetId="recta">line</ConceptLink> and $C$ is not incident with it, the triangles $\triangle ABC$ and $\triangle A'B'C$ have the same altitude and their areas are proportional to their bases. This is the lemma used by <ConceptLink targetId="euclides">Euclid</ConceptLink>'s proof of the <ConceptLink targetId="teorema-tales">intercept theorem</ConceptLink> (Elements VI.1–VI.2).
+    </PropiedadItem>
+    <PropiedadItem id="area-triangulo-trigonometrica" title="Trigonometric formula" formula="\operatorname{A}(\triangle ABC) = \tfrac{1}{2}\, |CA| \cdot |CB| \cdot \operatorname{sen} |\angle ACB|">
+      The altitude from $A$ measures $|CA| \cdot \operatorname{sen} |\angle ACB|$, where $\operatorname{sen}$ is the <ConceptLink targetId="seno">sine</ConceptLink> function and $|\angle ACB|$ the <ConceptLink targetId="medida-angular">angle measure</ConceptLink> of the angle at $C$.
+    </PropiedadItem>
+    <PropiedadItem id="formula-heron" title="Heron's formula" formula="\operatorname{A}(\triangle ABC) = \sqrt{s(s - a)(s - b)(s - c)}">
+      If $a = |BC|$, $b = |CA|$, $c = |AB|$ and $s = \tfrac{1}{2}(a + b + c)$ is the <ConceptLink targetId="semiperimetro">semiperimeter</ConceptLink>, the area depends only on the side lengths (<ConceptLink targetId="formula-heron">Heron's formula</ConceptLink>); it follows from this theorem and the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

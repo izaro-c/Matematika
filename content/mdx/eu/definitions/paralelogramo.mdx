@@ -2,52 +2,82 @@ export const metadata = {
   id: "paralelogramo",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Paralelogramoa",
-  description: "Aurkako aldeen bikoteak binaka paraleloak dituen lauki ganbila.",
+  description: "Aurkako alde-bikote biak zuzen paraleloetan dituen laukia.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "cuadrilatero", "paralelas"],
   hasSimulation: true,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "I. Liburukia, 34. Proposizioa", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. Kapitulua, §4", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "I. liburua, 34. proposizioa", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §4", role: "secondary" }
   ]
 };
 
 import { Paralelogramo } from '@content/diagrams/Definiciones/Paralelogramo';
 export const Simulation = Paralelogramo;
 
-<Capitular letra="P" />aralelogramoa aurkako aldeen bi bikoteak <ConceptLink targetId="paralelas">zuzen paraleloen</ConceptLink> gainean dituen <ConceptLink targetId="cuadrilatero">lauki</ConceptLink> ganbila da. Azalerak kalkulatzeko eta <ConceptLink targetId="plano">planoan</ConceptLink> bektoreen batuketa geometrikoki irudikatzeko eredu estandarra da.
+<Capitular letra="P" />aralelogramoa aurkako <ConceptLink targetId="lado">alde</ConceptLink>-bikote biak <ConceptLink targetId="paralelas" isDependency={true}>zuzen paraleloetan</ConceptLink> dituen <ConceptLink targetId="cuadrilatero" isDependency={true}>laukia</ConceptLink> da.
 
-<Definicion title="">
-  $\mathcal{P}$ plano bateko <VisualBind element="poligono" color="musgo">$ABCD$</VisualBind> <ConceptLink targetId="cuadrilatero" isDependency={true}>lauki</ConceptLink> ganbila paralelogramoa da baldin eta soilik baldin bere aurkako aldeak binaka <ConceptLink targetId="paralelas" isDependency={true}>paraleloak</ConceptLink> badira:
-  $$
-  ABCD \text{ paralelogramoa da} \iff (\overline{AB} \parallel \overline{CD}) \land (\overline{BC} \parallel \overline{DA})
-  $$
-  Paralelotasun- eta kongruentzia-axiomen ondorioz, aurkako aldeak kongruenteak dira (<VisualBind element="lados-iguales" color="pavo">$\overline{AB} \cong \overline{CD}$</VisualBind> eta $\overline{BC} \cong \overline{DA}$).
+Paralelotasuna aldeen <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> euskarriei eskatzen zaie, ez <ConceptLink targetId="segmento">zuzenkiei</ConceptLink>. Definizioak zentzua du <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>, baina paralelogramoa ezaugarritzen duten propietate metrikoak (aurkako alde kongruenteak, elkar erdibitzen duten diagonalak) <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> mende daude.
+
+<Definicion title="Paralelogramoaren definizioa">
+$\sigma$ plano bateko <VisualBind element="poligono" color="carbon">$ABCD$</VisualBind> <ConceptLink targetId="cuadrilatero">laukia</ConceptLink> **paralelogramoa** da baldin eta haren <VisualBind element="lados-opuestos" color="carbon">aurkako aldeen</VisualBind> zuzen euskarriak <ConceptLink targetId="paralelas">paraleloak</ConceptLink> badira:
+
+$$
+ABCD \text{ paralelogramoa da} \iff \overleftrightarrow{AB} \parallel \overleftrightarrow{CD} \ \land \ \overleftrightarrow{BC} \parallel \overleftrightarrow{DA}.
+$$
+
+Lauki baten aurkako aldeak disjuntuak direnez, bikote bakoitzeko bi zuzenak desberdinak dira, eta haien <ConceptLink targetId="traza">puntu-trazadurek</ConceptLink> ez dute elkar ebakitzen.
 </Definicion>
 
-<Separador />
+### Kasu bereziak
 
-### Azpifamiliaren sailkapena
+| Irudia | Baldintza gehigarria |
+|---|---|
+| <ConceptLink targetId="rombo">Erronboa</ConceptLink> | Lau <VisualBind element="lados-iguales" color="pavo">alde kongruente</VisualBind> |
+| <ConceptLink targetId="rectangulo">Laukizuzena</ConceptLink> | Lau <VisualBind element="angulos-rectos" color="ocre">angelu zuzen</VisualBind> (<ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink>) |
+| <ConceptLink targetId="cuadrado">Karratua</ConceptLink> | Erronboa eta laukizuzena aldi berean |
 
-Paralelogramoak barne-angeluen neurrien eta aldeen kongruentziaren arabera bereizten dira:
-
-| Azpifamilia | Baldintza angeluarra | Aldeen baldintza |
-|---|---|---|
-| Laukizuzena | Lau <ConceptLink targetId="angulo-recto">angelu zuzen</ConceptLink> | Aurkako aldeak kongruenteak binaka |
-| Erronboa | <VisualBind element="angulos-opuestos" color="pavo">Aurkako angeluak kongruenteak</VisualBind> | Lau aldeak zorrozki kongruenteak |
-| <ConceptLink targetId="cuadrado">Karratua</ConceptLink> | Lau angelu zuzen | Lau aldeak zorrozki kongruenteak |
-| Erronboidea | Aurkako angelu ez-zuzenak | Alboko aldeak luzera desberdinekoak |
+Lau alde kongruente dituen lauki oro paralelogramoa da, baita paraleloen axiomarik gabe ere: <ConceptLink targetId="teorema-congruencia-lll">LLL irizpidearen</ConceptLink> bidez, $\overline{AC}$ diagonalak $\triangle ABC \cong \triangle CDA$ ematen du, eta barne-angelu alternoen kongruentziak paralelotasuna dakar (<ConceptLink targetId="teorema-angulos-alternos-internos">barne-angelu alternoen teorema</ConceptLink>).
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Diagonalak eta erlazio metrikoak">
-    <PropiedadItem id="teorema-suma-angulos-triangulo" title="Diagonalen erdibitzea">
-      Edozein paralelogramoren bi diagonalek haien erdiko puntu komunean ebakitzen dute elkar.
+  <PropiedadesGrupo title="Propietate absolutuak">
+    <PropiedadItem
+      id="convexidad-paralelogramo"
+      title="Ganbiltasuna"
+      formula="\operatorname{seg}(AC) \cap \operatorname{seg}(BD) \neq \emptyset"
+    >
+      Paralelogramo oro <ConceptLink targetId="cuadrilatero">ganbila</ConceptLink> da: $\overleftrightarrow{CD}$ zuzenak ez duenez $\overleftrightarrow{AB}$ ebakitzen, $C$ eta $D$ puntuak $\overleftrightarrow{AB}$ zuzenarekiko <ConceptLink targetId="semiplano">planoerdi</ConceptLink> berean daude, eta gauza bera gertatzen da gainerako aldeekin. Ondorioz, haren <VisualBind element="diagonales" color="musgo">diagonalek</VisualBind> elkar ebakitzen dute.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-rectangulo" title="Azaleraren kalkulua">
-      Itxitako azalera oinarriaren eta bere altuera perpendikularraren biderkadurak ematen du: $\mu(ABCD) = b \cdot h$.
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Propietate euklidearrak">
+    <PropiedadItem
+      id="teorema-lados-opuestos-paralelogramo"
+      title="Aurkako alde eta angelu kongruenteak"
+      formula="\overline{AB} \cong \overline{CD}, \quad \overline{BC} \cong \overline{DA}, \quad \angle DAB \cong \angle BCD, \quad \angle ABC \cong \angle CDA"
+    >
+      <ConceptLink targetId="sistema-euclidiano">Sistema euklidearrean</ConceptLink>, paralelogramo baten aurkako aldeak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> dira, bai eta haren <VisualBind element="angulos-opuestos" color="ocre">aurkako angeluak</VisualBind> ere (Euklides I.34). $\overline{AC}$ diagonalak paraleloekin barne-angelu alterno kongruenteak osatzen ditu, eta horrek <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axioma</ConceptLink> eskatzen du; <ConceptLink targetId="teorema-congruencia-ala">ALA irizpideak</ConceptLink> $\triangle ABC \cong \triangle CDA$ ematen du.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="diagonales-paralelogramo"
+      title="Diagonalek elkar erdibitzen dute"
+      formula="\operatorname{seg}(AC) \cap \operatorname{seg}(BD) = \{M\}, \quad \overline{AM} \cong \overline{MC}, \quad \overline{BM} \cong \overline{MD}"
+    >
+      Paralelogramo euklidear baten diagonalek beren <ConceptLink targetId="punto-medio">erdiko puntu</ConceptLink> komunean, <VisualBind element="M" color="terracota">$M$</VisualBind> puntuan, ebakitzen dute elkar: $\triangle ABM$ eta $\triangle CDM$ triangeluak kongruenteak dira ALA irizpideagatik.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="area-paralelogramo"
+      title="Azalera"
+      formula="\operatorname{A}(ABCD) = b\,h"
+    >
+      Paralelogramo baten <ConceptLink targetId="teoria-medida-area">azalera</ConceptLink> alde baten $b$ <ConceptLink targetId="longitud">luzeraren</ConceptLink> eta dagokion $h$ <ConceptLink targetId="altura">altueraren</ConceptLink> biderkadura da: osagarrien bidez oinarri eta altuera bereko <ConceptLink targetId="rectangulo">laukizuzen</ConceptLink> baten baliokidea da, eta haren azalera <ConceptLink targetId="teorema-area-rectangulo">laukizuzenaren azaleraren teoremak</ConceptLink> ematen du.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

@@ -1,52 +1,67 @@
 export const metadata = {
   id: "teorema-congruencia-ala",
+  lang: "eu",
   type: "teorema",
-  title: "Angelua-Aldea-Angelua (AnAlAn) kongruentzia-teorema",
-  description: "Bi triangeluk bi angelu eta horien arteko aldea hurrenez hurren kongruenteak badituzte, orduan bi triangeluak kongruenteak dira.",
-  statement: "△ABC eta △A'B'C' bi triangelu emanda, baldin ∠CAB ≅ ∠C'A'B', ∠ABC ≅ ∠A'B'C' eta AB ≅ A'B' badira, orduan △ABC ≅ △A'B'C' betetzen da.",
+  title: "Angelu-Alde-Angelu (ALA) kongruentzia-teorema",
+  description: "Bi triangeluk alde bat eta horren ondoko bi angeluak hurrenez hurren kongruenteak badituzte, orduan bi triangeluak elkarren artean kongruenteak dira.",
+  statement: "△ABC eta △A'B'C' triangeluetan, AB ≅ A'B', ∠CAB ≅ ∠C'A'B' eta ∠ABC ≅ ∠A'B'C' badira, orduan △ABC ≅ △A'B'C'.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetikoa", "triangelua", "kongruentzia", "geometria-absolutua"],
   hasSimulation: true,
   authors: ["euclides", "hilbert"],
-  demos: ["demo-existencia-bisectriz"],
+  demos: ["demo-congruencia-ala"],
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro I, Proposición 26", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §6", role: "secondary" }
+    {
+      title: "Elementuak",
+      author: "Euklides",
+      locator: "I. liburua, 26. proposizioa",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "I. kapitulua, §6",
+      role: "primary"
+    }
   ]
 };
 
 import { CongruenciaALA } from '@content/diagrams/Teoremas/CongruenciaALA';
 export const Simulation = CongruenciaALA;
 
-<Capitular letra="A" />ngelua-Aldea-Angelua (AnAlAn / ALA) kongruentzia-teoremak bi <ConceptLink targetId="triangulo">triangeluren</ConceptLink> arteko zurruntasun eta berdintza geometrikoa finkatzeko funtsezko irizpidea ezartzen du planoan. Egiaztatzen du <ConceptLink targetId="segmento">zuzenki</ConceptLink> bat eta bere muturretatik irteten diren bi erdi-zuzenen inklinazioak finkatzeak triangeluaren geometria bakarra zehazten duela.
+<Capitular letra="B" />i <ConceptLink targetId="triangulo" isDependency={true}>triangeluk</ConceptLink> <ConceptLink targetId="lado" isDependency={true}>alde</ConceptLink> bat eta alde horren ondoko bi <ConceptLink targetId="angulo" isDependency={true}>angeluak</ConceptLink> hurrenez hurren <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> badituzte, triangeluak kongruenteak dira.
+
+<ConceptLink targetId="euclides">Euklidesek</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> lanaren I.26 proposizioan enuntziatzen du, eta <ConceptLink targetId="hilbert">Hilbertek</ConceptLink> *Grundlagen der Geometrie* lanaren §6an frogatzen du, <ConceptLink targetId="sistema-absoluto">geometria absolutuko</ConceptLink> bigarren <ConceptLink targetId="criterio-congruencia">kongruentzia-irizpide</ConceptLink> gisa. <ConceptLink targetId="segmento" isDependency={true}>Zuzenki</ConceptLink> batek eta haren muturretan oinarritzen diren bi angeluek triangelua zehazten dute, kongruentzia salbu. Frogapenak <ConceptLink targetId="sistema-incidencia">intzidentzia-axiomak</ConceptLink> eta <ConceptLink targetId="estar-entre" isDependency={true}>ordena-axiomak</ConceptLink>, zuzenkien garraioa (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1 axioma</ConceptLink>), angeluen garraioaren bakartasuna (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 axioma</ConceptLink>) eta <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>LAL kongruentzia-teorema</ConceptLink> erabiltzen ditu, azken hori <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>III.5 axiomaren</ConceptLink> ondorioa delarik; ez dago <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axiomaren</ConceptLink> mende.
+
+<Definicion title="ALA kongruentzia-teoremaren enuntziatu formala">
+Izan bitez <VisualBind element="A1" color="canela">$A$</VisualBind>, <VisualBind element="B1" color="canela">$B$</VisualBind>, <VisualBind element="C1" color="canela">$C$</VisualBind> $\in \mathcal{P}$ eta <VisualBind element="A2" color="pavo">$A'$</VisualBind>, <VisualBind element="B2" color="pavo">$B'$</VisualBind>, <VisualBind element="C2" color="pavo">$C'$</VisualBind> $\in \mathcal{P}$ <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink>-hirukote, $\triangle ABC$ eta $\triangle A'B'C'$ <ConceptLink targetId="triangulo" isDependency={true}>triangeluak</ConceptLink> zehazten dituztenak.
+
+Demagun <ConceptLink targetId="congruencia" isDependency={true}>kongruentzia</ConceptLink>-erlazio hauek betetzen direla:
+1. Bi angeluen arteko <ConceptLink targetId="lado" isDependency={true}>aldea</ConceptLink> kongruentea da:
+   <VisualBind element="lado-ab" color="terracota">$\overline{AB} \cong \overline{A'B'}$</VisualBind>
+2. Alde horren ondoko <ConceptLink targetId="angulo" isDependency={true}>angeluak</ConceptLink> hurrenez hurren kongruenteak dira:
+   <VisualBind element="angulo-a" color="terracota">$\angle CAB \cong \angle C'A'B'$</VisualBind> $\quad\text{eta}\quad$ <VisualBind element="angulo-b" color="musgo">$\angle ABC \cong \angle A'B'C'$</VisualBind>
+
+Orduan, triangeluak kongruenteak dira (<ConceptLink targetId="congruencia-triangulos">triangeluen kongruentzia</ConceptLink>) $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$ korrespondentziarekiko:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+
+Bereziki, gainerako alde eta angelu homologoak kongruenteak dira: <VisualBind element="globalmente-congruentes" color="terracota">$\overline{BC} \cong \overline{B'C'}$</VisualBind>, $\overline{CA} \cong \overline{C'A'}$ eta $\angle BCA \cong \angle B'C'A'$.
+</Definicion>
 
 <Separador />
 
-### Enuntziatu formala
-
-Izan bitez $\triangle ABC$ eta $\triangle A'B'C'$ planoko bi <VisualBind element="triangulos" color="musgo"><ConceptLink targetId="triangulo">triangelu</ConceptLink></VisualBind>. Demagun honako <ConceptLink targetId="congruencia">kongruentzia-erlazioak</ConceptLink> betetzen direla:
-1. Tarteko aldea kongruentea da: $\overline{AB} \cong \overline{A'B'}$.
-2. Zuzenkiari atxikitako angeluak kongruenteak dira hurrenez hurren: $\angle CAB \cong \angle C'A'B'$ eta $\angle ABC \cong \angle A'B'C'$.
-
-Orduan, bi triangeluen arteko kongruentzia orokorra nahitaez betetzen da:
-
-<Formula>
-  $$ \triangle ABC \cong \triangle A'B'C' $$
-</Formula>
-
-Ondorioz, gainerako alde homologo guztiak eta hirugarren angeluak ere hurrenez hurren kongruenteak dira: $\overline{BC} \cong \overline{B'C'}$, $\overline{CA} \cong \overline{C'A'}$ eta $\angle BCA \cong \angle B'C'A'$.
-
-<Separador />
-
-### Froga eta oinarritze axiomatikoa
-
-<ConceptLink targetId="hilbert">David Hilberten</ConceptLink> axiomatizazioan, AlAnAl (Aldea-Angelua-Aldea) irizpidea <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>kongruentzia-axioma</ConceptLink> gisa onartzen da, eta AnAlAn irizpidea, berriz, <ConceptLink targetId="metodo-contradiccion" isDependency={true}>absurdora bideratuz</ConceptLink> frogatzen da:
-- $\overline{AC}$ ez balitz $\overline{A'C'}$-rekin kongruentea, erdi-zuzenean $D$ puntu bat existituko litzateke non $\overline{AD} \cong \overline{A'C'}$ beteko litzatekeen.
-- AlAnAl axiomagatik $\triangle ABD \cong \triangle A'B'C'$ beteko litzateke, eta beraz $\angle ABD \cong \angle A'B'C'$.
-- Horrek kontraesana sortuko luke angelu-garraioaren axiomarekin (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>III.4 Axioma</ConceptLink>), erdi-plano berean angelu desberdin bi neurri berarekin leudekeelako.
-
-<Separador />
-
-### Irizpide eratorriak
-
-- **AlAnAn irizpidea**: <ConceptLink targetId="teorema-suma-angulos-triangulo">Triangelu baten angeluen baturaren teoremarekin</ConceptLink> konbinatuz, irizpidea edozein bi angelu eta tartekoa ez den alde batera hedatzen da.
-- **Eraikuntzen bakartasuna**: Geodesian eta triangulazio topografikoan distantzia eskuraezinak neurtzeko oinarri teorikoa da.
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Ondorioak">
+    <PropiedadItem 
+      id="teorema-congruencia-laa" 
+      title="Alde-Angelu-Angelu (LAA) irizpidea"
+      formula="\angle CAB \cong \angle C'A'B' \land \angle ABC \cong \angle A'B'C' \land \overline{BC} \cong \overline{B'C'} \implies \triangle ABC \cong \triangle A'B'C'"
+    >
+      Bi <ConceptLink targetId="angulo">angelu</ConceptLink> eta horietako baten aurkako <ConceptLink targetId="lado">aldea</ConceptLink> hurrenez hurren <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira, triangeluak kongruenteak dira (<ConceptLink targetId="teorema-congruencia-laa">LAA irizpidea</ConceptLink>, <ConceptLink targetId="euclides">Euklidesen</ConceptLink> I.26 proposizioaren bigarren zatia). <ConceptLink targetId="sistema-absoluto">Geometria absolutuan</ConceptLink> betetzen da: teorema honekin eta <ConceptLink targetId="teorema-angulo-exterior">kanpo-angeluaren teoremarekin</ConceptLink> frogatzen da, paraleloen axiomarik gabe.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

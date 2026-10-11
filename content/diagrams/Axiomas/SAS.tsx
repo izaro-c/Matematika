@@ -1148,7 +1148,17 @@ export const SASSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastra A, B y C"
+  "note": "Arrastra A, B y C para modificar el triángulo y observar la congruencia LAL.",
+  "translations": {
+    "eu": {
+      "title": "V. Kongruentzia-axioma",
+      "note": "Arrastatu A, B eta C triangelua aldatzeko eta LAL kongruentzia ikusteko."
+    },
+    "en": {
+      "title": "Congruence Axiom V",
+      "note": "Drag A, B, and C to modify the triangle and observe SAS congruence."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

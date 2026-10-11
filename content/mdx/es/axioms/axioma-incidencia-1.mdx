@@ -10,7 +10,7 @@ export const metadata = {
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo I, §2", role: "primary" }
   ]
 };
 
@@ -19,13 +19,13 @@ export const Simulation = Incidence1;
 
 <Capitular letra="D" />ados dos <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> distintos cualesquiera, existe exactamente una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> que incide con ambos.
 
-Este axioma establece la conexión lineal elemental de la geometría: dos puntos distintos determinan de manera unívoca la posición de una única línea recta en el <ConceptLink targetId="espacio">espacio</ConceptLink>.
+El axioma reúne la existencia y la unicidad de la recta que pasa por dos puntos, que <ConceptLink targetId="hilbert">Hilbert</ConceptLink> enuncia por separado en sus dos primeros axiomas de <ConceptLink targetId="incidencia">incidencia</ConceptLink>. Gracias a la unicidad, la recta queda nombrada por cualquier par de sus puntos y tiene sentido la noción de <ConceptLink targetId="colinealidad">colinealidad</ConceptLink>: tres puntos son colineales cuando el tercero incide con la recta determinada por los otros dos.
 
-<Definicion title="Enunciado Formal">
+<Definicion title="Enunciado formal">
   Para cualesquiera dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind> y <VisualBind element="pB" color="ocre">$B$</VisualBind> ($A \neq B$), existe una única <ConceptLink targetId="recta">recta</ConceptLink> <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> tal que $A$ y $B$ <ConceptLink targetId="incidencia" isDependency={true}>inciden</ConceptLink> en $\ell$:
   $$
   \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)\bigr)
   $$
-  La recta determinada por los puntos $A$ y $B$ se denota comúnmente como $\overleftrightarrow{AB}$.
+  La recta determinada por los puntos $A$ y $B$ se denota $\overleftrightarrow{AB}$.
 </Definicion>
 

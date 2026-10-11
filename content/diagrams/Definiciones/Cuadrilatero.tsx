@@ -1956,7 +1956,17 @@ export const CuadrilateroSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Mueve C y D para descubrir los diferentes tipos de cuadriláteros"
+  "note": "Mueve C y D para descubrir los diferentes tipos de cuadriláteros",
+  "translations": {
+    "eu": {
+      "title": "Laukiak",
+      "note": "Mugitu C eta D lauki mota desberdinak ezagutzeko"
+    },
+    "en": {
+      "title": "Quadrilateral",
+      "note": "Move C and D to discover different types of quadrilaterals"
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

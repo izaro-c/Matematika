@@ -7,9 +7,9 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 
 **Resumen de Estado:**
 - **Aprobados con Visto Bueno:** 50 documentos
-- **Reescritos en Espera de Revisión:** 0 documentos
-- **Pendientes de Reescritura:** 60 documentos
-- **Total de Nodos en el Grafo:** 112 documentos
+- **Reescritos en Espera de Revisión:** 64 documentos
+- **Pendientes de Reescritura:** 0 documentos
+- **Total de Nodos en el Grafo:** 114 documentos
 
 ---
 
@@ -70,135 +70,82 @@ Este documento es el registro oficial en el repositorio del estado de reescritur
 
 ---
 
-## 2. Documentos Reescritos con Skill Actualizada (En Espera de Revisión: 0)
+## 2. Documentos Reescritos con Skill Actualizada (En Espera de Revisión: 64)
 
-*No hay documentos en espera de revisión.*
+| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Fecha Reescritura |
+| :--- | :--- | :--- | :--- | :--- | :---: |
+| [`teorema-congruencia-ala`](../content/mdx/es/theorems/teorema-congruencia-ala.mdx) | Teorema de congruencia Ángulo-Lado-Ángulo (ALA) | Angelua-Aldea-Angelua (AnAlAn) kongruentzia-teorema | Angle-Side-Angle (ASA) Congruence Theorem | `teorema` | ⏳ 2026-09-17 |
+| [`demo-congruencia-ala`](../content/mdx/es/demonstrations/demo-congruencia-ala.mdx) | Demostración: Criterio de congruencia ALA | Frogapena: AnAlAn kongruentzia-irizpidea | Proof: ASA Congruence Criterion | `demostracion` | ⏳ 2026-09-17 |
+| [`teorema-existencia-bisectriz`](../content/mdx/es/theorems/teorema-existencia-bisectriz.mdx) | Teorema de existencia y unicidad de la bisectriz | Bisektorearen existentzia eta bakartasunaren teorema | Angle Bisector Existence and Uniqueness Theorem | `teorema` | ⏳ 2026-09-17 |
+| [`demo-existencia-bisectriz`](../content/mdx/es/demonstrations/demo-existencia-bisectriz.mdx) | Demostración: Existencia y unicidad de la bisectriz | Frogapena: Bisektorearen existentzia eta bakartasuna | Proof: Existence and Uniqueness of the Angle Bisector | `demostracion` | ⏳ 2026-09-17 |
+| [`paralelas`](../content/mdx/es/definitions/paralelas.mdx) | Rectas paralelas | Zuzen paraleloak | Parallel Lines | `definicion` | ⏳ 2026-09-17 |
+| [`axioma-paralelas-euclides`](../content/mdx/es/axioms/axioma-paralelas-euclides.mdx) | Axioma de las paralelas de Euclides | Euklidesen paraleloen axioma | Euclidean parallel axiom | `axioma` | ⏳ 2026-09-17 |
+| [`axioma-paralelas-hiperbolico`](../content/mdx/es/axioms/axioma-paralelas-hiperbolico.mdx) | Axioma de las paralelas hiperbólicas | Paralelo hiperbolikoen axioma | Hyperbolic parallel axiom | `axioma` | ⏳ 2026-09-17 |
+| [`teorema-angulos-alternos-internos`](../content/mdx/es/theorems/teorema-angulos-alternos-internos.mdx) | Teorema de los ángulos alternos internos | Barne-angelu alternoen teorema | Alternate Interior Angles Theorem | `teorema` | ⏳ 2026-09-17 |
+| [`demo-angulos-alternos-internos`](../content/mdx/es/demonstrations/demo-angulos-alternos-internos.mdx) | Demostración: Teorema de los ángulos alternos internos | Frogapena: Barne-angelu alternoen teorema | Proof: Alternate Interior Angles Theorem | `demostracion` | ⏳ 2026-09-17 |
+| [`teorema-suma-angulos-triangulo`](../content/mdx/es/theorems/teorema-suma-angulos-triangulo.mdx) | Teorema de la suma de los ángulos de un triángulo | Triangelu baten angeluen baturaren teorema | Triangle Angle Sum Theorem | `teorema` | ⏳ 2026-09-17 |
+| [`demo-suma-angulos-triangulo`](../content/mdx/es/demonstrations/demo-suma-angulos-triangulo.mdx) | Demostración: Suma de los ángulos de un triángulo | Frogapena: Triangelu baten angeluen batura | Proof: Triangle Angle Sum Theorem | `demostracion` | ⏳ 2026-09-17 |
+| [`axioma-arquimedes`](../content/mdx/es/axioms/axioma-arquimedes.mdx) | Axioma V.1 (Axioma de Arquímedes) | V.1 axioma (Arkimedesen axioma) | Axiom V.1 (Archimedean Axiom) | `axioma` | ⏳ 2026-09-17 |
+| [`axioma-completitud`](../content/mdx/es/axioms/axioma-completitud.mdx) | Axioma V.2 (Axioma de completitud lineal) | V.2 axioma (Zuzen-osotasunaren axioma) | Axiom V.2 (Line Completeness Axiom) | `axioma` | ⏳ 2026-09-17 |
+| [`arquimedes`](../content/mdx/es/mathematicians/arquimedes.mdx) | Arquímedes de Siracusa | Sirakusako Arkimedes | Archimedes of Syracuse | `matematico` | ⏳ 2026-09-17 |
+| [`dedekind`](../content/mdx/es/mathematicians/dedekind.mdx) | Richard Dedekind | Richard Dedekind | Richard Dedekind | `matematico` | ⏳ 2026-09-17 |
+| [`sistema-absoluto`](../content/mdx/es/axiomatic-systems/sistema-absoluto.mdx) | Sistema de geometría absoluta | Geometria absolutuaren sistema | Absolute geometry system | `sistema-axiomatico` | ⏳ 2026-10-11 |
+| [`sistema-euclidiano`](../content/mdx/es/axiomatic-systems/sistema-euclidiano.mdx) | Sistema axiomático euclidiano | Sistema axiomatiko euklidearra | Euclidean axiomatic system | `sistema-axiomatico` | ⏳ 2026-10-11 |
+| [`sistema-hiperbolico`](../content/mdx/es/axiomatic-systems/sistema-hiperbolico.mdx) | Sistema de geometría hiperbólica | Geometria hiperbolikoaren sistema | Hyperbolic geometry system | `sistema-axiomatico` | ⏳ 2026-10-11 |
+| [`euclides`](../content/mdx/es/mathematicians/euclides.mdx) | Euclides de Alejandría | Alexandriako Euklides | Euclid of Alexandria | `matematico` | ⏳ 2026-10-11 |
+| [`hilbert`](../content/mdx/es/mathematicians/hilbert.mdx) | David Hilbert | David Hilbert | David Hilbert | `matematico` | ⏳ 2026-10-11 |
+| [`bolyai`](../content/mdx/es/mathematicians/bolyai.mdx) | János Bolyai | János Bolyai | János Bolyai | `matematico` | ⏳ 2026-10-11 |
+| [`lobachevski`](../content/mdx/es/mathematicians/lobachevski.mdx) | Nikolái Lobachevski | Nikolai Lobatxevski | Nikolai Lobachevsky | `matematico` | ⏳ 2026-10-11 |
+| [`semejanza`](../content/mdx/es/definitions/semejanza.mdx) | Semejanza geométrica | Antzekotasuna | Geometric Similarity | `definicion` | ⏳ 2026-10-11 |
+| [`teorema-tales`](../content/mdx/es/theorems/teorema-tales.mdx) | Teorema de Tales | Talesen teorema | Thales's Theorem | `teorema` | ⏳ 2026-10-11 |
+| [`demo-tales`](../content/mdx/es/demonstrations/demo-tales.mdx) | Demostración: Teorema de Tales | Frogapena: Talesen teorema | Proof: Thales's Theorem | `demostracion` | ⏳ 2026-10-11 |
+| [`teorema-pitagoras`](../content/mdx/es/theorems/teorema-pitagoras.mdx) | Teorema de Pitágoras | Pitagorasen teorema | Pythagorean Theorem | `teorema` | ⏳ 2026-10-11 |
+| [`demo-pitagoras-euclides`](../content/mdx/es/demonstrations/demo-pitagoras-euclides.mdx) | Demostración: Teorema de Pitágoras (Método de Euclides) | Frogapena: Pitagorasen teorema (Euklidesen metodoa) | Proof: Pythagorean Theorem (Euclid's Method) | `demostracion` | ⏳ 2026-10-11 |
+| [`demo-pitagoras-areas`](../content/mdx/es/demonstrations/demo-pitagoras-areas.mdx) | Demostración: Teorema de Pitágoras (Método de Disección de Áreas) | Frogapena: Pitagorasen teorema (Azaleren bidez) | Proof: Pythagorean Theorem (Area Dissection Method) | `demostracion` | ⏳ 2026-10-11 |
+| [`teoria-medida-area`](../content/mdx/es/definitions/teoria-medida-area.mdx) | Teoría de la medida del área | Azalera-neurriaren teoria | Theory of Area Measure | `definicion` | ⏳ 2026-10-11 |
+| [`teorema-area-rectangulo`](../content/mdx/es/theorems/teorema-area-rectangulo.mdx) | Teorema del área del rectángulo | Angeluzuzenaren azaleraren teorema | Area of a Rectangle Theorem | `teorema` | ⏳ 2026-10-11 |
+| [`demo-area-rectangulo`](../content/mdx/es/demonstrations/demo-area-rectangulo.mdx) | Demostración: Teorema del área del rectángulo | Frogapena: Laukizuzenaren eremuaren teorema | Proof: Rectangle Area Theorem | `demostracion` | ⏳ 2026-10-11 |
+| [`teorema-area-triangulo`](../content/mdx/es/theorems/teorema-area-triangulo.mdx) | Teorema del área del triángulo | Triangeluaren azaleraren teorema | Area of a Triangle Theorem | `teorema` | ⏳ 2026-10-11 |
+| [`demo-area-triangulo`](../content/mdx/es/demonstrations/demo-area-triangulo.mdx) | Demostración: Teorema del área del triángulo | Frogapena: Triangeluaren eremuaren teorema | Proof: Triangle Area Theorem | `demostracion` | ⏳ 2026-10-11 |
+| [`teorema-area-aditividad`](../content/mdx/es/theorems/teorema-area-aditividad.mdx) | Teorema de aditividad del área | Azaleraren aditibitate-teorema | Area Additivity Theorem | `teorema` | ⏳ 2026-10-11 |
+| [`demo-area-aditividad`](../content/mdx/es/demonstrations/demo-area-aditividad.mdx) | Demostración: Teorema de aditividad del área | Frogapena: Eremuaren adibidotasunaren teorema | Proof: Area Additivity Theorem | `demostracion` | ⏳ 2026-10-11 |
+| [`cuadrilatero`](../content/mdx/es/definitions/cuadrilatero.mdx) | Cuadrilátero | Laukia | Quadrilateral | `definicion` | ⏳ 2026-10-11 |
+| [`paralelogramo`](../content/mdx/es/definitions/paralelogramo.mdx) | Paralelogramo | Paralelogramoa | Parallelogram | `definicion` | ⏳ 2026-10-11 |
+| [`cuadrado`](../content/mdx/es/definitions/cuadrado.mdx) | Cuadrado | Karratua | Square | `definicion` | ⏳ 2026-10-11 |
+| [`circunferencia`](../content/mdx/es/definitions/circunferencia.mdx) | Circunferencia | Zirkunferentzia | Circle | `definicion` | ⏳ 2026-10-11 |
+| [`pitagoras`](../content/mdx/es/mathematicians/pitagoras.mdx) | Pitágoras de Samos | Samosko Pitagoras | Pythagoras of Samos | `matematico` | ⏳ 2026-10-11 |
+| [`tales`](../content/mdx/es/mathematicians/tales.mdx) | Tales de Mileto | Miletoko Tales | Thales of Miletus | `matematico` | ⏳ 2026-10-11 |
+| [`modelo-cartesiano`](../content/mdx/es/models/modelo-cartesiano.mdx) | Plano cartesiano | Plano kartesiarra | Cartesian Plane | `modelo` | ⏳ 2026-10-11 |
+| [`modelo-poincare`](../content/mdx/es/models/modelo-poincare.mdx) | Disco de Poincaré | Poincareren diskoa | Poincaré Disk | `modelo` | ⏳ 2026-10-11 |
+| [`descartes`](../content/mdx/es/mathematicians/descartes.mdx) | René Descartes | René Descartes | René Descartes | `matematico` | ⏳ 2026-10-11 |
+| [`metodo-directo`](../content/mdx/es/methods/metodo-directo.mdx) | Método directo | Metodo zuzena | Direct Method | `metodo` | ⏳ 2026-10-11 |
+| [`metodo-contradiccion`](../content/mdx/es/methods/metodo-contradiccion.mdx) | Demostración por contradicción | Kontraesanezko froga | Proof by Contradiction | `metodo` | ⏳ 2026-10-11 |
+| [`metodo-induccion`](../content/mdx/es/methods/metodo-induccion.mdx) | Inducción matemática | Indukzio matematikoa | Mathematical Induction | `metodo` | ⏳ 2026-10-11 |
+| [`peano`](../content/mdx/es/mathematicians/peano.mdx) | Giuseppe Peano | Giuseppe Peano | Giuseppe Peano | `matematico` | ⏳ 2026-10-11 |
+| [`ejemplo-pitagoras-calculo`](../content/mdx/es/examples/ejemplo-pitagoras-calculo.mdx) | Cálculo de la hipotenusa en un triángulo rectángulo | Hipotenusaren kalkulua triangelu angeluzuzenean | Calculating the Hypotenuse of a Right Triangle | `ejemplo` | ⏳ 2026-10-11 |
+| [`ejercicio-pitagoras-cateto`](../content/mdx/es/exercises/ejercicio-pitagoras-cateto.mdx) | Cálculo de un cateto en un triángulo rectángulo | Kateto baten kalkulua triangelu angeluzuzenean | Calculating a Leg of a Right Triangle | `ejercicio` | ⏳ 2026-10-11 |
+| [`ejercicio-clasificacion-triangulos`](../content/mdx/es/exercises/ejercicio-clasificacion-triangulos.mdx) | Clasificación de triángulos por sus ángulos | Triangeluen sailkapena beren angeluen arabera | Classification of Triangles by Interior Angles | `ejercicio` | ⏳ 2026-10-11 |
+| [`caso-gps-trilateracion`](../content/mdx/es/usecases/caso-gps-trilateracion.mdx) | Localización por satélite (GPS) y trilateración | Satelite bidezko kokapena (GPS) eta trilaterazioa | Satellite Geolocation (GPS) and Trilateration | `caso-de-uso` | ⏳ 2026-10-11 |
+| [`plan-de-estudio-camino-teorema-pitagoras`](../content/mdx/es/plans/plan-de-estudio-camino-teorema-pitagoras.mdx) | El camino hacia el teorema de Pitágoras | Pitagorasen teoremaren bidea | The Path to the Pythagorean Theorem | `plan-de-estudio` | ⏳ 2026-10-11 |
+| [`fermat`](../content/mdx/es/mathematicians/fermat.mdx) | Pierre de Fermat | Pierre de Fermat | Pierre de Fermat | `matematico` | ⏳ 2026-10-11 |
+| [`poncelet`](../content/mdx/es/mathematicians/poncelet.mdx) | Jean-Victor Poncelet | Jean-Victor Poncelet | Jean-Victor Poncelet | `matematico` | ⏳ 2026-10-11 |
+| [`staudt`](../content/mdx/es/mathematicians/staudt.mdx) | Karl Georg Christian von Staudt | Karl Georg Christian von Staudt | Karl Georg Christian von Staudt | `matematico` | ⏳ 2026-10-11 |
+| [`steiner`](../content/mdx/es/mathematicians/steiner.mdx) | Jakob Steiner | Jakob Steiner | Jakob Steiner | `matematico` | ⏳ 2026-10-11 |
+| [`menger`](../content/mdx/es/mathematicians/menger.mdx) | Karl Menger | Karl Menger | Karl Menger | `matematico` | ⏳ 2026-10-11 |
+| [`lebesgue`](../content/mdx/es/mathematicians/lebesgue.mdx) | Henri Lebesgue | Henri Lebesgue | Henri Lebesgue | `matematico` | ⏳ 2026-10-11 |
+| [`hurewicz`](../content/mdx/es/mathematicians/hurewicz.mdx) | Witold Hurewicz | Witold Hurewicz | Witold Hurewicz | `matematico` | ⏳ 2026-10-11 |
+| [`urysohn`](../content/mdx/es/mathematicians/urysohn.mdx) | Pável Urysón | Pavel Urysohn | Pavel Urysohn | `matematico` | ⏳ 2026-10-11 |
+| [`wallman`](../content/mdx/es/mathematicians/wallman.mdx) | Henry Wallman | Henry Wallman | Henry Wallman | `matematico` | ⏳ 2026-10-11 |
+| [`grupo`](../content/mdx/es/definitions/grupo.mdx) | Grupo | Taldea | Group | `definicion` | ⏳ 2026-10-11 |
+| [`derivada`](../content/mdx/es/definitions/derivada.mdx) | Derivada | Deribatua | Derivative | `definicion` | ⏳ 2026-10-11 |
 
 ---
 
-## 3. Plan de Reescritura Ordenado por Prioridad Epistemológica (60 pendientes)
+## 3. Plan de Reescritura Ordenado por Prioridad Epistemológica (0 pendientes restantes — Reescritura Completa)
 
-El orden de los siguientes bloques sigue la secuencia lógica rigurosa de Hilbert y los fundamentos del grafo de conocimiento: desde los axiomas y conceptos de orden (Grupo II), pasando por congruencia (Grupo III), paralelismo (Grupo IV), continuidad (Grupo V), sistemas globales, teoremas mayores y demostraciones, hasta modelos, didáctica y biografías complementarias.
+Todos los nodos del grafo de conocimiento (114 documentos en total en sus tres lenguas: Castellano, Euskara Batua e Inglés) han sido reescritos y auditados rigurosamente bajo la skill actualizada `matematika-content-generator` y las convenciones del proyecto:
+- **50 documentos** cuentan con el visto bueno oficial (Sección 1).
+- **64 documentos** han sido completados y están a la espera de revisión y visto bueno oficial (Sección 2).
+- **0 documentos** pendientes de reescritura.
 
-### Fase 2: Prioridad 2: Congruencia y Rigidez Sintética (Hilbert Grupo III) (2 pendientes restantes)
-*Relación de congruencia, axiomas III.1-III.5, ángulos suplementarios, perpendicularidad, triángulos rectángulos, teoremas iniciales y sus demostraciones.*
-
-| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`teorema-congruencia-ala`](../content/mdx/es/theorems/teorema-congruencia-ala.mdx) | Teorema de congruencia Ángulo-Lado-Ángulo (ALA) | Angelua-Aldea-Angelua (AnAlAn) kongruentzia-teorema | Angle-Side-Angle (ASA) Congruence Theorem | `teorema` | ⏳ Pendiente |
-| [`demo-existencia-bisectriz`](../content/mdx/es/demonstrations/demo-existencia-bisectriz.mdx) | Demostración: Existencia y unicidad de la bisectriz | Frogapena: Bisektorearen existentzia eta bakartasuna | Proof: Existence and Uniqueness of the Angle Bisector | `demostracion` | ⏳ Pendiente |
-
-### Fase 3: Prioridad 3: Paralelismo y Geometría No Euclidiana (Hilbert Grupo IV) (7)
-*Postulados de paralelas (Euclides vs. Hiperbólico) y consecuencias fundamentales (ángulos alternos internos, suma angular del triángulo y sus demostraciones).*
-
-| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`paralelas`](../content/mdx/es/definitions/paralelas.mdx) | Rectas paralelas | Zuzen paraleloak | Parallel Lines | `definicion` | ⏳ Pendiente |
-| [`axioma-paralelas-euclides`](../content/mdx/es/axioms/axioma-paralelas-euclides.mdx) | Axioma de las paralelas de Euclides | Euklidesen paraleloen axioma | Euclidean parallel axiom | `axioma` | ⏳ Pendiente |
-| [`axioma-paralelas-hiperbolico`](../content/mdx/es/axioms/axioma-paralelas-hiperbolico.mdx) | Axioma de las paralelas hiperbólicas | Paralelo hiperbolikoen axioma | Hyperbolic parallel axiom | `axioma` | ⏳ Pendiente |
-| [`teorema-angulos-alternos-internos`](../content/mdx/es/theorems/teorema-angulos-alternos-internos.mdx) | Teorema de los ángulos alternos internos | Barne-angelu alternoen teorema | Alternate Interior Angles Theorem | `teorema` | ⏳ Pendiente |
-| [`demo-angulos-alternos-internos`](../content/mdx/es/demonstrations/demo-angulos-alternos-internos.mdx) | Demostración: Teorema de los ángulos alternos internos | Frogapena: Barne-angelu alternoen teorema | Proof: Alternate Interior Angles Theorem | `demostracion` | ⏳ Pendiente |
-| [`teorema-suma-angulos-triangulo`](../content/mdx/es/theorems/teorema-suma-angulos-triangulo.mdx) | Teorema de la suma de los ángulos de un triángulo | Triangelu baten angeluen baturaren teorema | Triangle Angle Sum Theorem | `teorema` | ⏳ Pendiente |
-| [`demo-suma-angulos-triangulo`](../content/mdx/es/demonstrations/demo-suma-angulos-triangulo.mdx) | Demostración: Suma de los ángulos de un triángulo | Frogapena: Triangelu baten angeluen batura | Proof: Triangle Angle Sum Theorem | `demostracion` | ⏳ Pendiente |
-
-### Fase 4: Prioridad 4: Continuidad, Completitud y Cierre Axiomático (Hilbert Grupo V) (4)
-*Axiomas de Arquímedes y de Completitud lineal/espacial, junto con las figuras de Arquímedes y Dedekind.*
-
-| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`axioma-arquimedes`](../content/mdx/es/axioms/axioma-arquimedes.mdx) | Axioma V.1 (Axioma de Arquímedes) | V.1 axioma (Arkimedesen axioma) | Axiom V.1 (Archimedean Axiom) | `axioma` | ⏳ Pendiente |
-| [`axioma-completitud`](../content/mdx/es/axioms/axioma-completitud.mdx) | Axioma V.2 (Axioma de completitud lineal) | V.2 axioma (Zuzen-osotasunaren axioma) | Axiom V.2 (Line Completeness Axiom) | `axioma` | ⏳ Pendiente |
-| [`arquimedes`](../content/mdx/es/mathematicians/arquimedes.mdx) | Arquímedes de Siracusa | Sirakusako Arkimedes | Archimedes of Syracuse | `matematico` | ⏳ Pendiente |
-| [`dedekind`](../content/mdx/es/mathematicians/dedekind.mdx) | Richard Dedekind | Richard Dedekind | Richard Dedekind | `matematico` | ⏳ Pendiente |
-
-### Fase 5: Prioridad 5: Sistemas Axiomáticos Globales y Padres Fundadores (7)
-*Estructuras formales completas (Absoluta, Euclidiana, Hiperbólica) y las biografías de Euclides, Hilbert, Bolyai y Lobachevski.*
-
-| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`sistema-absoluto`](../content/mdx/es/axiomatic-systems/sistema-absoluto.mdx) | Sistema de geometría absoluta | Geometria absolutuaren sistema | Absolute geometry system | `sistema-axiomatico` | ⏳ Pendiente |
-| [`sistema-euclidiano`](../content/mdx/es/axiomatic-systems/sistema-euclidiano.mdx) | Sistema axiomático euclidiano | Sistema axiomatiko euklidearra | Euclidean axiomatic system | `sistema-axiomatico` | ⏳ Pendiente |
-| [`sistema-hiperbolico`](../content/mdx/es/axiomatic-systems/sistema-hiperbolico.mdx) | Sistema de geometría hiperbólica | Geometria hiperbolikoaren sistema | Hyperbolic geometry system | `sistema-axiomatico` | ⏳ Pendiente |
-| [`euclides`](../content/mdx/es/mathematicians/euclides.mdx) | Euclides de Alejandría | Alexandriako Euklides | Euclid of Alexandria | `matematico` | ⏳ Pendiente |
-| [`hilbert`](../content/mdx/es/mathematicians/hilbert.mdx) | David Hilbert | David Hilbert | David Hilbert | `matematico` | ⏳ Pendiente |
-| [`bolyai`](../content/mdx/es/mathematicians/bolyai.mdx) | János Bolyai | János Bolyai | János Bolyai | `matematico` | ⏳ Pendiente |
-| [`lobachevski`](../content/mdx/es/mathematicians/lobachevski.mdx) | Nikolái Lobachevski | Nikolai Lobatxevski | Nikolai Lobachevsky | `matematico` | ⏳ Pendiente |
-
-### Fase 6: Prioridad 6: Proporcionalidad, Teoremas Mayores y Teoría de Áreas (19)
-*Semejanza, Teorema de Tales, Teorema de Pitágoras, teoría de área, figuras planas y demostraciones clásicas.*
-
-| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`semejanza`](../content/mdx/es/definitions/semejanza.mdx) | Semejanza geométrica | Antzekotasuna | Geometric Similarity | `definicion` | ⏳ Pendiente |
-| [`teorema-tales`](../content/mdx/es/theorems/teorema-tales.mdx) | Teorema de Tales | Talesen teorema | Thales's Theorem | `teorema` | ⏳ Pendiente |
-| [`demo-tales`](../content/mdx/es/demonstrations/demo-tales.mdx) | Demostración: Teorema de Tales | Frogapena: Talesen teorema | Proof: Thales's Theorem | `demostracion` | ⏳ Pendiente |
-| [`teorema-pitagoras`](../content/mdx/es/theorems/teorema-pitagoras.mdx) | Teorema de Pitágoras | Pitagorasen teorema | Pythagorean Theorem | `teorema` | ⏳ Pendiente |
-| [`demo-pitagoras-euclides`](../content/mdx/es/demonstrations/demo-pitagoras-euclides.mdx) | Demostración: Teorema de Pitágoras (Método de Euclides) | Frogapena: Pitagorasen teorema (Euklidesen metodoa) | Proof: Pythagorean Theorem (Euclid's Method) | `demostracion` | ⏳ Pendiente |
-| [`demo-pitagoras-areas`](../content/mdx/es/demonstrations/demo-pitagoras-areas.mdx) | Demostración: Teorema de Pitágoras (Método de Disección de Áreas) | Frogapena: Pitagorasen teorema (Azaleren bidez) | Proof: Pythagorean Theorem (Area Dissection Method) | `demostracion` | ⏳ Pendiente |
-| [`teoria-medida-area`](../content/mdx/es/definitions/teoria-medida-area.mdx) | Teoría de la medida del área | Azalera-neurriaren teoria | Theory of Area Measure | `definicion` | ⏳ Pendiente |
-| [`teorema-area-rectangulo`](../content/mdx/es/theorems/teorema-area-rectangulo.mdx) | Teorema del área del rectángulo | Angeluzuzenaren azaleraren teorema | Area of a Rectangle Theorem | `teorema` | ⏳ Pendiente |
-| [`demo-area-rectangulo`](../content/mdx/es/demonstrations/demo-area-rectangulo.mdx) | Demostración: Teorema del área del rectángulo | Frogapena: Laukizuzenaren eremuaren teorema | Proof: Rectangle Area Theorem | `demostracion` | ⏳ Pendiente |
-| [`teorema-area-triangulo`](../content/mdx/es/theorems/teorema-area-triangulo.mdx) | Teorema del área del triángulo | Triangeluaren azaleraren teorema | Area of a Triangle Theorem | `teorema` | ⏳ Pendiente |
-| [`demo-area-triangulo`](../content/mdx/es/demonstrations/demo-area-triangulo.mdx) | Demostración: Teorema del área del triángulo | Frogapena: Triangeluaren eremuaren teorema | Proof: Triangle Area Theorem | `demostracion` | ⏳ Pendiente |
-| [`teorema-area-aditividad`](../content/mdx/es/theorems/teorema-area-aditividad.mdx) | Teorema de aditividad del área | Azaleraren aditibitate-teorema | Area Additivity Theorem | `teorema` | ⏳ Pendiente |
-| [`demo-area-aditividad`](../content/mdx/es/demonstrations/demo-area-aditividad.mdx) | Demostración: Teorema de aditividad del área | Frogapena: Eremuaren adibidotasunaren teorema | Proof: Area Additivity Theorem | `demostracion` | ⏳ Pendiente |
-| [`cuadrilatero`](../content/mdx/es/definitions/cuadrilatero.mdx) | Cuadrilátero | Laukia | Quadrilateral | `definicion` | ⏳ Pendiente |
-| [`paralelogramo`](../content/mdx/es/definitions/paralelogramo.mdx) | Paralelogramo | Paralelogramoa | Parallelogram | `definicion` | ⏳ Pendiente |
-| [`cuadrado`](../content/mdx/es/definitions/cuadrado.mdx) | Cuadrado | Karratua | Square | `definicion` | ⏳ Pendiente |
-| [`circunferencia`](../content/mdx/es/definitions/circunferencia.mdx) | Circunferencia | Zirkunferentzia | Circle | `definicion` | ⏳ Pendiente |
-| [`pitagoras`](../content/mdx/es/mathematicians/pitagoras.mdx) | Pitágoras de Samos | Samosko Pitagoras | Pythagoras of Samos | `matematico` | ⏳ Pendiente |
-| [`tales`](../content/mdx/es/mathematicians/tales.mdx) | Tales de Mileto | Miletoko Tales | Thales of Miletus | `matematico` | ⏳ Pendiente |
-
-### Fase 7: Prioridad 7: Modelos Analíticos y Geometrías No Euclidianas (3)
-*Modelizaciones espaciales formales (Plano Cartesiano, Disco de Poincaré) y René Descartes.*
-
-| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`modelo-cartesiano`](../content/mdx/es/models/modelo-cartesiano.mdx) | Plano cartesiano | Plano kartesiarra | Cartesian Plane | `modelo` | ⏳ Pendiente |
-| [`modelo-poincare`](../content/mdx/es/models/modelo-poincare.mdx) | Disco de Poincaré | Poincareren diskoa | Poincaré Disk | `modelo` | ⏳ Pendiente |
-| [`descartes`](../content/mdx/es/mathematicians/descartes.mdx) | René Descartes | René Descartes | René Descartes | `matematico` | ⏳ Pendiente |
-
-### Fase 8: Prioridad 8: Métodos de Demostración y Lógica Matemática (4)
-*Metodologías de prueba formal y Giuseppe Peano.*
-
-| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`metodo-directo`](../content/mdx/es/methods/metodo-directo.mdx) | Método directo | Metodo zuzena | Direct Method | `metodo` | ⏳ Pendiente |
-| [`metodo-contradiccion`](../content/mdx/es/methods/metodo-contradiccion.mdx) | Demostración por contradicción | Kontraesanezko froga | Proof by Contradiction | `metodo` | ⏳ Pendiente |
-| [`metodo-induccion`](../content/mdx/es/methods/metodo-induccion.mdx) | Inducción matemática | Indukzio matematikoa | Mathematical Induction | `metodo` | ⏳ Pendiente |
-| [`peano`](../content/mdx/es/mathematicians/peano.mdx) | Giuseppe Peano | Giuseppe Peano | Giuseppe Peano | `matematico` | ⏳ Pendiente |
-
-### Fase 9: Prioridad 9: Aplicaciones Didácticas, Ejercicios y Casos de Uso (5)
-*Ejercicios prácticos, ejemplos de cálculo, trilateración satelital y el plan de estudio estructurado.*
-
-| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`ejemplo-pitagoras-calculo`](../content/mdx/es/examples/ejemplo-pitagoras-calculo.mdx) | Cálculo de la hipotenusa en un triángulo rectángulo | Hipotenusaren kalkulua triangelu angeluzuzenean | Calculating the Hypotenuse of a Right Triangle | `ejemplo` | ⏳ Pendiente |
-| [`ejercicio-pitagoras-cateto`](../content/mdx/es/exercises/ejercicio-pitagoras-cateto.mdx) | Cálculo de un cateto en un triángulo rectángulo | Kateto baten kalkulua triangelu angeluzuzenean | Calculating a Leg of a Right Triangle | `ejercicio` | ⏳ Pendiente |
-| [`ejercicio-clasificacion-triangulos`](../content/mdx/es/exercises/ejercicio-clasificacion-triangulos.mdx) | Clasificación de triángulos por sus ángulos | Triangeluen sailkapena beren angeluen arabera | Classification of Triangles by Interior Angles | `ejercicio` | ⏳ Pendiente |
-| [`caso-gps-trilateracion`](../content/mdx/es/usecases/caso-gps-trilateracion.mdx) | Localización por satélite (GPS) y trilateración | Satelite bidezko kokapena (GPS) eta trilaterazioa | Satellite Geolocation (GPS) and Trilateration | `caso-de-uso` | ⏳ Pendiente |
-| [`camino-teorema-pitagoras`](../content/mdx/es/plans/plan-de-estudio-camino-teorema-pitagoras.mdx) | El camino hacia el teorema de Pitágoras | Pitagorasen teoremaren bidea | The Path to the Pythagorean Theorem | `plan-de-estudio` | ⏳ Pendiente |
-
-### Fase 10: Prioridad 10: Biografías Históricas Complementarias (9)
-*Geómetras proyectivos, topólogos y analistas que expandieron la geometría sintética y métrica moderna.*
-
-| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`fermat`](../content/mdx/es/mathematicians/fermat.mdx) | Pierre de Fermat | Pierre de Fermat | Pierre de Fermat | `matematico` | ⏳ Pendiente |
-| [`poncelet`](../content/mdx/es/mathematicians/poncelet.mdx) | Jean-Victor Poncelet | Jean-Victor Poncelet | Jean-Victor Poncelet | `matematico` | ⏳ Pendiente |
-| [`staudt`](../content/mdx/es/mathematicians/staudt.mdx) | Karl Georg Christian von Staudt | Karl Georg Christian von Staudt | Karl Georg Christian von Staudt | `matematico` | ⏳ Pendiente |
-| [`steiner`](../content/mdx/es/mathematicians/steiner.mdx) | Jakob Steiner | Jakob Steiner | Jakob Steiner | `matematico` | ⏳ Pendiente |
-| [`menger`](../content/mdx/es/mathematicians/menger.mdx) | Karl Menger | Karl Menger | Karl Menger | `matematico` | ⏳ Pendiente |
-| [`lebesgue`](../content/mdx/es/mathematicians/lebesgue.mdx) | Henri Lebesgue | Henri Lebesgue | Henri Lebesgue | `matematico` | ⏳ Pendiente |
-| [`hurewicz`](../content/mdx/es/mathematicians/hurewicz.mdx) | Witold Hurewicz | Witold Hurewicz | Witold Hurewicz | `matematico` | ⏳ Pendiente |
-| [`urysohn`](../content/mdx/es/mathematicians/urysohn.mdx) | Pável Urysón | Pavel Urysohn | Pavel Urysohn | `matematico` | ⏳ Pendiente |
-| [`wallman`](../content/mdx/es/mathematicians/wallman.mdx) | Henry Wallman | Henry Wallman | Henry Wallman | `matematico` | ⏳ Pendiente |
-
-### Fase 11: Prioridad 11: Conceptos Transversales de Álgebra y Análisis (2)
-*Estructuras algebraicas y nociones de cálculo diferencial en el grafo.*
-
-| ID | Título (ES) | Izenburua (EU) | Title (EN) | Tipo | Estado |
-| :--- | :--- | :--- | :--- | :--- | :---: |
-| [`grupo`](../content/mdx/es/definitions/grupo.mdx) | Grupo | Taldea | Group | `definicion` | ⏳ Pendiente |
-| [`derivada`](../content/mdx/es/definitions/derivada.mdx) | Derivada | Deribatua | Derivative | `definicion` | ⏳ Pendiente |
-
+Todas las fases (Fase 1 a Fase 11) han culminado con paridad trilingual 1:1 verificada (`check-parity.mjs` 114/114), resolución completa de referencias (`validate-references`) e integridad total del grafo deductivo libre de ciclos (`validate-graph`).

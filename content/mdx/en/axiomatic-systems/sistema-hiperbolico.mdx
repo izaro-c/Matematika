@@ -3,8 +3,10 @@ export const metadata = {
   lang: "en",
   type: "sistema-axiomatico",
   title: "Hyperbolic geometry system",
-  description: "The axiomatic framework of Lobachevsky, Bolyai, and Gauss based on absolute geometry and the hyperbolic parallel postulate.",
+  description: "Axiomatic system of hyperbolic geometry: absolute geometry plus the axiom stating that at least two parallels to a line pass through any point not on it.",
   branch: "51M",
+  branches: ["51M", "51A", "03B"],
+  tags: ["geometria-hiperbolica", "geometria-no-euclidiana", "paralelas", "fundamentos"],
   axiomas: [
     "axioma-incidencia-1",
     "axioma-incidencia-2",
@@ -34,41 +36,48 @@ export const metadata = {
   hasSimulation: false,
   sources: [
     { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolai Lobachevsky", locator: "1840", role: "primary" },
-    { title: "Appendix scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "1832", role: "primary" }
+    { title: "Appendix scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "1832", role: "primary" },
+    { title: "Saggio di interpretazione della geometria non-euclidea", author: "Eugenio Beltrami", locator: "1868", role: "secondary" }
   ]
 };
 
-<Capitular letra="T" />he system of hyperbolic geometry —discovered independently by <ConceptLink targetId="lobachevski">Nikolai Lobachevsky</ConceptLink> and <ConceptLink targetId="bolyai">János Bolyai</ConceptLink>— constitutes the first non-Euclidean geometric theory developed formally. It arises from adjoining the hyperbolic parallel postulate to the foundational base of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, endowing space with a constant negative Gaussian curvature ($K < 0$).
+<Capitular letra="T" />he **hyperbolic geometry system** is the <ConceptLink targetId="sistema-axiomatico">axiomatic system</ConceptLink> obtained by adding to <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic parallel axiom</ConceptLink>: through a <ConceptLink targetId="punto">point</ConceptLink> not on a <ConceptLink targetId="recta">line</ConceptLink> there pass, in the <ConceptLink targetId="plano">plane</ConceptLink> they determine, at least two distinct lines <ConceptLink targetId="paralelas">parallel</ConceptLink> to it.
+
+It was the first <ConceptLink targetId="geometria-no-euclidiana">non-Euclidean geometry</ConceptLink> developed systematically, independently by <ConceptLink targetId="lobachevski">Nikolai Lobachevsky</ConceptLink> (from 1829) and <ConceptLink targetId="bolyai">János Bolyai</ConceptLink> (1832); <ConceptLink targetId="gauss">Carl Friedrich Gauss</ConceptLink> had reached similar ideas without publishing them. None of them proved the consistency of the system: it was obtained later, through models.
+
+<Definicion title="Formal structure">
+  A **hyperbolic structure** is an absolute geometry structure $\mathcal{S}_{\text{abs}} = (\mathcal{P}, \mathcal{L}, \Pi; \ \mathbf{I}, \ *, \ \cong_{\mathrm{seg}}, \ \cong_{\angle})$ that also satisfies the <ConceptLink targetId="axioma-paralelas-hiperbolico">hyperbolic parallel axiom</ConceptLink>, so that $\mathcal{T}_{\text{hip}} = \mathrm{I} \cup \mathrm{II} \cup \mathrm{III} \cup \mathrm{IV}_{\text{hip}} \cup \mathrm{V}$. With planes $\sigma \in \Pi$ and the <ConceptLink targetId="traza">trace</ConceptLink> expressing <ConceptLink targetId="coplanaridad">coplanarity</ConceptLink>:
+  $$
+  \forall \sigma \in \Pi \ \forall \ell \in \mathcal{L} \ \forall P \in \mathcal{P} \ \Bigl( \bigl(\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\sigma) \land P \in \operatorname{tr}(\sigma) \setminus \operatorname{tr}(\ell)\bigr) \implies \exists m, n \in \mathcal{L} \ \bigl( m \neq n \land \operatorname{tr}(m) \cup \operatorname{tr}(n) \subseteq \operatorname{tr}(\sigma) \land P \,\mathbf{I}\, m \land P \,\mathbf{I}\, n \land m \parallel \ell \land n \parallel \ell \bigr) \Bigr)
+  $$
+</Definicion>
 
 <Separador />
 
-### Axiomatic structure
+### Characteristic theorems
 
-The hyperbolic system unifies the entire neutral deductive apparatus with the plural parallel postulate:
-
-1. **Base of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>**: Incorporates all axioms of <ConceptLink targetId="sistema-incidencia">incidence</ConceptLink> (I.1-I.8), <ConceptLink targetId="axioma-orden-1">order</ConceptLink> (II.1-II.4), <ConceptLink targetId="axioma-congruencia-1">congruence</ConceptLink> (III.1-III.5), and continuity (V.1-V.2).
-2. **<ConceptLink targetId="axioma-paralelas-hiperbolico" isDependency={true}>Hyperbolic parallel axiom (Lobachevsky-Bolyai axiom)</ConceptLink>**: Given a <ConceptLink targetId="recta">line</ConceptLink> $l$ and an external <ConceptLink targetId="punto">point</ConceptLink> $P \notin l$ in a <ConceptLink targetId="plano">plane</ConceptLink> $\mathcal{P}$, there exist at least two distinct lines $l_1, l_2$ passing through $P$ that do not intersect $l$:
-   $$
-   \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists l_1, l_2 \in \mathcal{L} \ \bigl(l_1 \neq l_2 \land P \in l_1 \cap l_2 \land l_1 \cap l = \emptyset \land l_2 \cap l = \emptyset\bigr)
-   $$
-
-<Separador />
-
-### Characteristic theorems of hyperbolic geometry
-
-Constant negative curvature introduces profound structural differences compared to Euclidean space:
-
-- **Angular defect and triangular bound**: The sum of interior <ConceptLink targetId="angulo">angles</ConceptLink> of any hyperbolic <ConceptLink targetId="triangulo">triangle</ConceptLink> is strictly less than $180^\circ$:
+- **Angle sum and defect**: every <ConceptLink targetId="triangulo">triangle</ConceptLink> has angle sum less than two <ConceptLink targetId="angulo-recto">right angles</ConceptLink>. With <ConceptLink targetId="medida-angular">angle measure</ConceptLink>, its <ConceptLink targetId="defecto-angular">defect</ConceptLink> is
   $$
-  \alpha + \beta + \gamma < 180^\circ \quad (\alpha + \beta + \gamma < \pi)
+  \delta(\triangle ABC) = 180^\circ - \bigl(|\alpha| + |\beta| + |\gamma|\bigr) > 0
   $$
-- **Area proportionality**: The hyperbolic area of a triangle is directly proportional to its angular defect $\delta(\triangle) = \pi - (\alpha + \beta + \gamma)$, yielding an absolute upper bound for triangle areas ($\text{Area}(\triangle) < \pi R^2$).
-- **Absence of rectangles and strict similarity**: No quadrilaterals with four right angles exist (Saccheri and Lambert quadrilaterals have acute summit angles). Two triangles with equal corresponding angles are necessarily congruent (AAA criterion).
-- **Lobachevsky's angle of parallelism**: The limiting angle $\Pi(x)$ between the perpendicular and an asymptotic line depends on the distance $x$ via the formula $\tan(\Pi(x)/2) = e^{-x/k}$.
+- **Length constant and area**: there is a characteristic <ConceptLink targetId="longitud">length</ConceptLink> $k > 0$, proper to each hyperbolic plane (changing $k$ amounts to changing the unit of length), such that the <ConceptLink targetId="area">area</ConceptLink> of a triangle is proportional to its defect:
+  $$
+  \operatorname{A}(\triangle ABC) = k^2 \cdot \frac{\pi}{180^\circ} \cdot \delta(\triangle ABC)
+  $$
+  Since $\delta < 180^\circ$, the area of every triangle is less than $\pi k^2$, however long its sides may be.
+- **<ConceptLink targetId="angulo-paralelismo">Angle of parallelism</ConceptLink>**: let $Q$ be the foot of the <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> dropped from $P$ to $\ell$ and $x = |PQ|$. The two <ConceptLink targetId="paralelas-limite">limiting parallels</ConceptLink> to $\ell$ through $P$ make with $\overrightarrow{PQ}$ the same acute angle $\theta(x)$, which depends only on $x$ (Lobachevsky's formula):
+  $$
+  \tan\frac{\theta(x)}{2} = e^{-x/k}
+  $$
+  The other parallels to $\ell$ through $P$ are <ConceptLink targetId="ultraparalelas">ultraparallel</ConceptLink> to it: they have a unique <ConceptLink targetId="perpendicular-comun">common perpendicular</ConceptLink> with $\ell$.
+- **No similarity**: two triangles with <ConceptLink targetId="congruencia">congruent</ConceptLink> corresponding angles are congruent (AAA criterion); there are no <ConceptLink targetId="semejanza">similar</ConceptLink> non-congruent triangles.
+- **No rectangles**: no <ConceptLink targetId="cuadrilatero">quadrilateral</ConceptLink> has four right angles; the summit angles of a <ConceptLink targetId="cuadrilatero-saccheri">Saccheri quadrilateral</ConceptLink> are acute.
+- **Non-transitive parallelism**: two lines parallel to a third are not, in general, parallel to each other.
 
 <Separador />
 
 ### Models and relative consistency
 
-- **<ConceptLink targetId="modelo-poincare">Poincaré disk model $\mathbb{D}^2$</ConceptLink>**: The conformal analytical model on the unit disk $\{z \in \mathbb{C} : |z| < 1\}$ endowed with Riemannian metric $ds^2 = \frac{4|dz|^2}{(1-|z|^2)^2}$.
-- **Equiconsistency**: Eugenio Beltrami, Henri Poincaré, and Felix Klein demonstrated that the consistency of hyperbolic geometry is equivalent to that of Euclidean geometry and the real number continuum $\mathbb{R}$.
+<ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868) gave the first interpretation of plane hyperbolic geometry inside Euclidean geometry; <ConceptLink targetId="klein">Felix Klein</ConceptLink> (1871) and <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> (1882) built the projective and conformal models. The <ConceptLink targetId="modelo-poincare">Poincaré disk</ConceptLink> $\mathbb{D}^2$ models the planar axioms; the Poincaré or Klein ball in $\mathbb{R}^3$ models the full spatial system. These models prove that the hyperbolic system is <ConceptLink targetId="consistencia-logica">consistent</ConceptLink> if Euclidean geometry is, and hence if the arithmetic of $\mathbb{R}$ is; consequently, <ConceptLink targetId="axioma-paralelas-euclides">Axiom IV</ConceptLink> is <ConceptLink targetId="independencia-axiomatica">independent</ConceptLink> of the others.
+
+In the analytic models, the hyperbolic plane with constant $k$ is a Riemannian surface of constant Gaussian <ConceptLink targetId="curvatura">curvature</ConceptLink> $-1/k^2$. This is a property of the differential model, not an axiom of the synthetic system. With the continuity axioms, the system is <ConceptLink targetId="categoricidad">categorical</ConceptLink>: all its models are <ConceptLink targetId="isomorfismo">isomorphic</ConceptLink>.

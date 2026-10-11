@@ -3,7 +3,7 @@ export const metadata = {
   lang: "es",
   type: "ejemplo",
   title: "Cálculo de la hipotenusa en un triángulo rectángulo",
-  description: "Aplicación del teorema de Pitágoras para calcular la longitud de la hipotenusa a partir de los catetos (5, 12, 13).",
+  description: "Aplicación del teorema de Pitágoras para calcular la longitud de la hipotenusa a partir de los catetos: la terna (5, 12, 13).",
   branch: "51M",
   relatedTheorem: "teorema-pitagoras",
   difficulty: "básico",
@@ -13,74 +13,74 @@ export const metadata = {
 import { EjemploPitagorasCalculo } from '@content/diagrams/Ejercicios/EjemploPitagorasCalculo';
 export const Simulation = EjemploPitagorasCalculo;
 
-<Capitular letra="S" />ea un <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> con <ConceptLink targetId="perpendicular">ángulo recto</ConceptLink> en el <VisualBind element="pC" color="carbon">vértice $C$</VisualBind>. Las longitudes de los catetos son $a = |\overline{CA}| = 5$ (<VisualBind element="segCA" color="canela">cateto vertical $a$</VisualBind>) y $b = |\overline{BC}| = 12$ (<VisualBind element="segBC" color="terracota">cateto horizontal $b$</VisualBind>) unidades respectivamente. Se determina la medida exacta de la hipotenusa <VisualBind element="segAB" color="mora">$c = |\overline{AB}|$</VisualBind> y se analiza la aritmética de la terna pitagórica resultante.
+<Capitular letra="S" />ea <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> un <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink> con <ConceptLink targetId="angulo-recto">ángulo recto</ConceptLink> en el <ConceptLink targetId="vertice">vértice</ConceptLink> <VisualBind element="pC" color="carbon">$C$</VisualBind>. Las <ConceptLink targetId="longitud">longitudes</ConceptLink> de los <ConceptLink targetId="cateto">catetos</ConceptLink> son <VisualBind element="segBC" color="terracota">$a = |BC| = 12$</VisualBind> y <VisualBind element="segCA" color="canela">$b = |CA| = 5$</VisualBind> unidades. Se calcula la longitud de la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink> <VisualBind element="segAB" color="mora">$c = |AB|$</VisualBind> y se comprueba que las tres longitudes forman una <ConceptLink targetId="terna-pitagorica">terna pitagórica</ConceptLink>.
 
 <Separador />
 
 ### Planteamiento del problema
 
-Calcular la longitud de la hipotenusa $c$ aplicando el teorema métrico fundamental y verificar las áreas de los cuadrados proyectados.
+Calcular la longitud $c$ de la hipotenusa mediante el <ConceptLink targetId="teorema-pitagoras">teorema de Pitágoras</ConceptLink> e interpretar el cálculo como una relación entre las <ConceptLink targetId="teoria-medida-area">áreas</ConceptLink> de los <ConceptLink targetId="cuadrado">cuadrados</ConceptLink> construidos sobre los lados.
 
 <Nota>
-  Una terna pitagórica es un conjunto de tres números enteros positivos $(a, b, c)$ que satisfacen la ecuación diofántica $a^2 + b^2 = c^2$. Cuando $\operatorname{mcd}(a, b, c) = 1$, la terna se denomina primitiva.
+  Una <ConceptLink targetId="terna-pitagorica">terna pitagórica</ConceptLink> es una terna $(a, b, c)$ de <ConceptLink targetId="numero-entero">números enteros</ConceptLink> positivos que satisface la <ConceptLink targetId="ecuacion-diofantica">ecuación diofántica</ConceptLink> $a^2 + b^2 = c^2$. Si además $\operatorname{mcd}(a, b, c) = 1$ (<ConceptLink targetId="maximo-comun-divisor">máximo común divisor</ConceptLink>), la terna es primitiva.
 </Nota>
 
 <Separador />
 
 <Solucion label="Resolución paso a paso">
-  <Paso numero={1} id="datos" titulo="Datos e hipótesis iniciales">
-    Las dimensiones conocidas de los catetos perpendiculares del triángulo son:
+  <Paso numero={1} id="datos" titulo="Datos del problema">
+    Los datos del <ConceptLink targetId="triangulo-rectangulo">triángulo rectángulo</ConceptLink> son:
     
-    - <VisualBind element="segCA" color="canela">Cateto vertical $a$</VisualBind>: $a = 5$
-    - <VisualBind element="segBC" color="terracota">Cateto horizontal $b$</VisualBind>: $b = 12$
-    - <VisualBind element="rightAng" color="carbon">Ángulo recto</VisualBind> en el vértice $C$: $\angle ACB = 90^\circ$
+    - <VisualBind element="segBC" color="terracota">Cateto $a$</VisualBind>: $a = |BC| = 12$
+    - <VisualBind element="segCA" color="canela">Cateto $b$</VisualBind>: $b = |CA| = 5$
+    - <VisualBind element="rightAng" color="carbon">Ángulo recto</VisualBind> en el vértice $C$: $|\angle ACB| = 90^\circ$ (<ConceptLink targetId="medida-angular">medida angular</ConceptLink>)
     
-    La longitud de la hipotenusa $c$ representa la incógnita del problema, siendo el segmento opuesto al vértice $C$.
+    La incógnita es la longitud $c = |AB|$ de la <ConceptLink targetId="hipotenusa">hipotenusa</ConceptLink>, el <ConceptLink targetId="lado">lado</ConceptLink> opuesto al ángulo recto.
   </Paso>
 
   <Paso numero={2} id="calculo" titulo="Aplicación del teorema de Pitágoras">
-    Por el <ConceptLink targetId="teorema-pitagoras" isDependency={true}>teorema de Pitágoras</ConceptLink>, la relación métrica fundamental en el triángulo rectángulo es:
+    Por el <ConceptLink targetId="teorema-pitagoras" isDependency={true}>teorema de Pitágoras</ConceptLink>, en el triángulo rectángulo se cumple:
     
     <Formula>
       $$ a^2 + b^2 = c^2 $$
     </Formula>
     
-    Sustituyendo los valores de los catetos conocidos:
+    Al sustituir las longitudes conocidas de los catetos:
     
     <Formula>
-      $$ 5^2 + 12^2 = c^2 $$
+      $$ 12^2 + 5^2 = c^2 $$
     </Formula>
     
-    Geométricamente, esta igualdad expresa la aditividad de las áreas de los cuadrados: el <VisualBind element="sqCA" color="canela">cuadrado de área $a^2 = 25$</VisualBind> sumado al <VisualBind element="sqBC" color="terracota">cuadrado de área $b^2 = 144$</VisualBind> equivale al <VisualBind element="sqAB" color="mora">cuadrado de área $c^2$</VisualBind>:
+    En términos de <ConceptLink targetId="teoria-medida-area">área</ConceptLink>, el <VisualBind element="sqBC" color="terracota">cuadrado de área $a^2 = 144$</VisualBind> y el <VisualBind element="sqCA" color="canela">cuadrado de área $b^2 = 25$</VisualBind> suman juntos el área del <VisualBind element="sqAB" color="mora">cuadrado de área $c^2$</VisualBind>:
     
     <Formula>
-      $$ 25 + 144 = 169 $$
+      $$ 144 + 25 = 169 $$
     </Formula>
   </Paso>
 
-  <Paso numero={3} id="resolucion" titulo="Despeje algebraico de la hipotenusa">
-    Igualando la suma de áreas con el cuadrado de la incógnita:
+  <Paso numero={3} id="resolucion" titulo="Despeje de la hipotenusa">
+    La suma de áreas da el cuadrado de la incógnita:
     
     <Formula>
       $$ c^2 = 169 $$
     </Formula>
     
-    Extrayendo la raíz cuadrada positiva en ambos miembros (dado que una distancia geométrica real satisface $c > 0$):
+    Como $c$ es una longitud, $c > 0$, y se toma la <ConceptLink targetId="raiz-cuadrada">raíz cuadrada</ConceptLink> positiva:
     
     <Formula>
       $$ c = \sqrt{169} = 13 $$
     </Formula>
     
-    Por consiguiente, la longitud de la <VisualBind element="segAB" color="mora">hipotenusa $c$</VisualBind> es exactamente $13$ unidades.
+    La <VisualBind element="segAB" color="mora">hipotenusa</VisualBind> mide $13$ unidades.
   </Paso>
 
   <Paso numero={4} id="terna" titulo="Verificación de la terna pitagórica">
-    Las longitudes $(5, 12, 13)$ son todos números enteros positivos que satisfacen la relación pitagórica:
+    Las longitudes $(a, b, c) = (12, 5, 13)$ son números enteros positivos que satisfacen la relación pitagórica:
     
     <Formula>
-      $$ 5^2 + 12^2 = 25 + 144 = 169 = 13^2 $$
+      $$ 12^2 + 5^2 = 144 + 25 = 169 = 13^2 $$
     </Formula>
     
-    Puesto que $\operatorname{mcd}(5, 12, 13) = 1$, la terna $(5, 12, 13)$ constituye una terna pitagórica primitiva.
+    Puesto que $\operatorname{mcd}(12, 5, 13) = 1$, la <ConceptLink targetId="terna-pitagorica">terna pitagórica</ConceptLink> $(5, 12, 13)$ es primitiva.
   </Paso>
 </Solucion>

@@ -3,13 +3,13 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "V.1 axioma (Arkimedesen axioma)",
-  description: "Edozein bi zuzenki emanda, handienaren luzera gainditu daiteke txikienaren kopia kopuru finitu bat jarraian garraiatuz.",
+  description: "Zuzenerdi batean emandako bi zuzenki arbitrariotarako, txikienaren kopia kongruenteen segida finitu batek handienaren posizioa gainditzen du beti.",
   branch: "51M",
   axiomSystem: "sistema-absoluto",
   axiomFamily: "continuidad",
   hasSimulation: true,
   sources: [
-    { title: "Esferaz eta zilindroaz", author: "Arquímedes", locator: "5. postulua", role: "primary" },
+    { title: "Esferaz eta zilindroaz", author: "Arkimedes", locator: "5. postulua", role: "primary" },
     { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "I. kapitulua, §6", role: "primary" }
   ]
 };
@@ -17,12 +17,14 @@ export const metadata = {
 import { AxiomaArquimedes } from '@content/diagrams/Axiomas/AxiomaArquimedes';
 export const Simulation = AxiomaArquimedes;
 
-<Capitular letra="A" />rkimedesen axiomak —<ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> jarraitutasun-taldeko lehen printzipio gisa txertatua— magnitude infinituki txikiak (infinitesimalak) edo infinituki handiak baztertzen ditu geometriatik. Ezarri egiten du edozein distantzia, handia izanik ere, gainditu daitekeela oinarrizko <ConceptLink targetId="segmento">zuzenki</ConceptLink> baten batuketa finitu eta jarraituaren bidez.
+<Capitular letra="E" />mandako bi <ConceptLink targetId="segmento" isDependency={true}>zuzenki</ConceptLink> arbitrariotarako, $\overline{AB}$ eta $\overline{CD}$ ($A \neq B$ eta $C \neq D$ izanik), $A$ jatorria duen eta $B$ barne hartzen duen <ConceptLink targetId="semirrecta" isDependency={true}>zuzenerdian</ConceptLink>, $\overline{CD}$ zuzenkiarekiko <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> diren zuzenkien garraio iteratuak $A_1, A_2, \dots, A_n$ <ConceptLink targetId="punto" isDependency={true}>puntuen</ConceptLink> segida finitu bat sortzen du, non $B$ puntua $A$ eta $A_n$ puntuen <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> geratzen den ($A * B * A_n$).
 
-<Definicion title="Enuntziatu formala">
-  Edozein bi $\overline{AB}$ eta $\overline{CD}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> ez-nulatara, $n \in \mathbb{N}$ zenbaki arrunta existitzen da non $\overrightarrow{CD}$ erdi-zuzenean zehar $C$-tik hasita $\overline{AB}$-ren $n$ kopia jarraian garraiatuz $D$ <ConceptLink targetId="punto" isDependency={true}>puntuaren</ConceptLink> posizioa gainditzen den:
+Postulatu honek geometria arkimedestarrean magnitude infinitesimalik edo infinituki handirik ez egotea formalizatzen du. Bermatzen du zuzenki ez-nulu bat bera ere ez dela mespretxagarria edo hutsala beste batekiko: edozein <ConceptLink targetId="distancia">distantzia</ConceptLink> finkatu, handia izanik ere, oinarrizko zuzenki baten pilaketa finitu eta jarraituaren bidez gainditu eta zeharkatu daiteke.
+
+<Definicion title="V.1 axioma (Arkimedesen axioma)">
+  Izan bitez $\overline{AB}$ eta $\overline{CD}$ bi <ConceptLink targetId="segmento">zuzenki</ConceptLink> arbitrario, $A \neq B$ eta $C \neq D$ izanik. $B$ barne hartzen duen eta $A$ jatorria duen <ConceptLink targetId="semirrecta">zuzenerdian</ConceptLink>, $A_1, A_2, \dots, A_n$ <ConceptLink targetId="punto">puntuen</ConceptLink> segida finitu bat existitzen da non $A_0 = A$ finkatuz, hasierako zuzenkiak $\overline{A_0 A_1} \cong \overline{CD}$ betetzen duen, ondoz ondoko zuzenki bakoitza ereduarekiko <ConceptLink targetId="congruencia">kongruentea</ConceptLink> den ($\overline{A_{k-1} A_k} \cong \overline{CD}$, $k \in \{1, \dots, n\}$ orotarako), puntuek $A_{k-2} * A_{k-1} * A_k$ <ConceptLink targetId="estar-entre">ordena-erlazioa</ConceptLink> betetzen duten ($k \in \{2, \dots, n\}$ orotarako), eta $B$ muturra $A$ eta $A_n$ puntuen <ConceptLink targetId="estar-entre">artean</ConceptLink> kokatzen den:
   $$
-  \forall \overline{AB}, \overline{CD} \ \bigl(A \neq B \land C \neq D \implies \exists n \in \mathbb{N} \ (n \cdot \overline{AB} > \overline{CD})\bigr)
+  \forall A, B, C, D \in \mathcal{P} \ \Biggl( A \neq B \land C \neq D \implies \exists n \in \mathbb{N}, \, \exists A_1, \dots, A_n \in \mathcal{P} \ \Bigl( A_0 = A \land \bigwedge_{k=1}^n \overline{A_{k-1} A_k} \cong \overline{CD} \land \bigwedge_{k=2}^n (A_{k-2} * A_{k-1} * A_k) \land A * B * A_n \Bigr) \Biggr)
   $$
 </Definicion>
 
@@ -30,18 +32,12 @@ export const Simulation = AxiomaArquimedes;
 
 ### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan, <VisualBind element="segAB" color="terracota">$\overline{AB}$</VisualBind> oinarrizko zuzenkia eta <VisualBind element="segCD" color="marino">$\overline{CD}$</VisualBind> helburu-zuzenkia alderatzen dira. <VisualBind element="n" color="ocre">$n$</VisualBind> graduatzaile dinamikoaren bidez, <VisualBind element="acumulado" color="terracota">$n \cdot \overline{AB}$</VisualBind> errepikapen jarraituak pilatzen dira <VisualBind element="lineDThreshold" color="marino">$D$</VisualBind> atalase kritikoa gainditu arte; une horretan, helburua gainditu izana <VisualBind element="copiasSuperanCD" color="musgo">berdez</VisualBind> nabarmentzen da <VisualBind element="nMinimo" color="ocre">$n_{\min}$</VisualBind> balio minimalerako.
+Simulazio interaktiboan, <VisualBind element="segAB" color="canela">$\overline{AB}$</VisualBind> eredu-zuzenkia eta <VisualBind element="segCD" color="carbon">$\overline{CD}$</VisualBind> helburu-zuzenkia aurrez aurre jartzen dira. <VisualBind element="n" color="pavo">$n$</VisualBind> kontrol dinamikoaren bidez, <VisualBind element="acumulado" color="ocre">$n \cdot \overline{AB}$</VisualBind> errepikapen jarraituak garraiatzen dira zuzenerdi euskarrian zehar. <VisualBind element="nMinimo" color="pavo">$n_{\min}$</VisualBind> zenbaki arrunt minimala lortzean, pilatutako luzerak helburu-muturraren posizioa <VisualBind element="copiasSuperanCD" color="musgo">gainditzen</VisualBind> du, berehala baieztatuz hesi lineal gaindiezinik ez dagoela.
 
 <Separador />
 
-### Esanahi geometrikoa eta esparrua
+### Esanahi geometrikoa eta hedadura deduktiboa
 
-Espazioaren arkimedestar izaera bermatzen du: ez dago beste batekiko infinituki txikia den zuzenkirik, ezta pilaketa finitu baten bidez gainditu ezin den hesi geometrikorik ere. Eskala geometriko sintetikoa $\mathbb{R}$ zenbaki errealen gorputzaren ordena arkimedestarrarekin lotzen du <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
+<ConceptLink targetId="arquimedes">Arkimedesen</ConceptLink> axiomak <ConceptLink targetId="hilbert">Hilberten</ConceptLink> <ConceptLink targetId="continuidad">jarraitutasun-taldeko</ConceptLink> oinarrizko lehen printzipio gisa jokatzen du. Axioma honen presentziak baztertu egiten ditu eskala konparaezinak edo infinituki urrunak elkarrekin biziko liratekeen geometria ez-arkimedestarrak.
 
-<Separador />
-
-### Propietateak
-
-- **Infinitesimalen bazterketa:** Zuzenki ez-nulu bat bera ere ez da infinituki txikia beste batekiko.
-- **Mugakidetasun-printzipioa:** Zuzen baten edozein azpimultzo mugatu luzera finkoko urrats-kopuru finitu batez estali daiteke.
-- **Bateragarritasun metrikoa:** Angeluen neurketa, kurben luzera eta poligonoen azalera muga konbergenteen bidez definitzeko ezinbestekoa da.
+<ConceptLink targetId="sistema-absoluto">Geometria absolutuaren</ConceptLink> egituran, axiomak proportzioaren teoria garatzea eta azaleren zein luzeren kalkulua oinarritzea ahalbidetzen du. <ConceptLink targetId="recta">Zuzen</ConceptLink> baten edozein azpimultzo mugatu urrats <ConceptLink targetId="congruencia">kongruente</ConceptLink> finkoen kopuru finitu batez estali daiteke; hori ezinbesteko oinarri logikoa da exhauzio-metodo klasikorako eta kongruentzia sintetikoekin bateragarriak diren <ConceptLink targetId="distancia">neurri errealak</ConceptLink> ondoren definitzeko.

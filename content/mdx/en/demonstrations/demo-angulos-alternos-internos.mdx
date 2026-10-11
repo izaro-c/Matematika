@@ -1,16 +1,19 @@
 export const metadata = {
-  "id": "demo-angulos-alternos-internos",
-  "type": "demostracion",
-  "title": "Proof: Alternate Interior Angles Theorem",
-  "description": "Proof by contradiction of the parallelism criterion based on congruent alternate interior angles.",
-  "parentTheorem": "teorema-angulos-alternos-internos",
-  "branch": "51M",
-  "proofMethod": "metodo-contradiccion",
-  "authors": ["euclides"],
-  "tags": ["geometria", "paralelas", "angulos"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elements", author: "Euclides", locator: "Book I, Proposition 27", role: "primary" }
+  id: "demo-angulos-alternos-internos",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Alternate interior angles theorem",
+  description: "Proof of both directions: congruence of the alternate interior angles implies parallelism (Euclid I.27, by contradiction with the exterior angle theorem, in absolute geometry) and parallelism implies congruence (Euclid I.29, via angle transport and Axiom IV).",
+  parentTheorem: "teorema-angulos-alternos-internos",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-contradiccion",
+  authors: ["euclides"],
+  tags: ["geometry", "parallels", "angles"],
+  layout: "split",
+  sources: [
+    { title: "Elements", author: "Euclid", locator: "Book I, Propositions 27 and 29", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §6 and §7", role: "secondary" }
   ]
 };
 
@@ -18,38 +21,46 @@ import { DemoAngulosAlternosInternos } from "@content/diagrams/Demos/DemoAngulos
 
 <DemonstrationSection diagram={<DemoAngulosAlternosInternos />}>
 
-<Capitular letra="G" />iven two coplanar <ConceptLink targetId="recta">lines</ConceptLink> $l$ and $m$ cut by a transversal $t$, the <ConceptLink targetId="teorema-angulos-alternos-internos">alternate interior angles theorem</ConceptLink> is proven. The argument demonstrates by <ConceptLink targetId="metodo-contradiccion" isDependency={true}>contradiction</ConceptLink> that congruent alternate interior angles imply that the lines are necessarily <ConceptLink targetId="paralelas">parallel</ConceptLink>.
+<Capitular letra="B" />oth directions of the <ConceptLink targetId="teorema-angulos-alternos-internos">alternate interior angles theorem</ConceptLink> are proved. Direction (⇐) is proved by the <ConceptLink targetId="metodo-contradiccion" isDependency={true}>method of contradiction</ConceptLink> with the <ConceptLink targetId="teorema-angulo-exterior" isDependency={true}>exterior angle theorem</ConceptLink>, without the parallel axiom or the continuity axioms; direction (⇒) is proved by the <ConceptLink targetId="metodo-directo" isDependency={true}>direct method</ConceptLink>, combining <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>, direction (⇐) and <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axiom IV</ConceptLink>.
 
 <Separador />
 
 ### Step-by-step proof
 
-<ProofStep number={1} target="config" title="Initial hypothesis">
-Consider two coplanar lines <VisualBind element="lineL" color="carbon">$l$</VisualBind> and <VisualBind element="lineM" color="carbon">$m$</VisualBind> intersected by transversal <VisualBind element="lineT" color="carbon">$t$</VisualBind> at points $A$ and $B$. It is assumed as a hypothesis that the alternate interior <ConceptLink targetId="angulo">angles</ConceptLink> <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> and <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> are congruent:
+<ProofStep number={1} target="config" diagramStep="step1" title="Hypotheses and notation">
+Let <VisualBind element="lineL1" color="carbon">$\ell_1$</VisualBind> and <VisualBind element="lineL2" color="carbon">$\ell_2$</VisualBind> be two <ConceptLink targetId="recta" isDependency={true}>lines</ConceptLink> of a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\pi$ and <VisualBind element="lineT" color="carbon">$t$</VisualBind> a <ConceptLink targetId="secante" isDependency={true}>transversal</ConceptLink> meeting them at the <ConceptLink targetId="punto">points</ConceptLink> $A$ and $B$, with $A \neq B$. Let $P_1 \, \mathbf{I} \, \ell_1$ and $P_2 \, \mathbf{I} \, \ell_2$ be points lying in opposite <ConceptLink targetId="semiplano" isDependency={true}>half-planes</ConceptLink> with respect to $t$, and let <VisualBind element="angleAlpha" color="terracota">$\alpha = \angle P_1AB$</VisualBind> and <VisualBind element="angleBeta" color="pavo">$\beta = \angle P_2BA$</VisualBind> be the <ConceptLink targetId="angulos-alternos-internos" isDependency={true}>alternate interior angles</ConceptLink>. Since $t$ meets $\ell_1$ only at $A$ and $\ell_2$ only at $B$, we have $\neg(B \, \mathbf{I} \, \ell_1)$ and $\neg(A \, \mathbf{I} \, \ell_2)$; in particular, $\ell_1 \neq \ell_2$.
+</ProofStep>
+
+<ProofStep number={2} target="trianguloABX" diagramStep="step2" title="Direction (⇐): contradiction hypothesis">
+Assume $\alpha \cong \beta$ and, for contradiction, that $\ell_1$ and $\ell_2$ are not <ConceptLink targetId="paralelas" isDependency={true}>parallel</ConceptLink>. Since they are coplanar and distinct, their <ConceptLink targetId="traza">traces</ConceptLink> share a point, unique by <ConceptLink targetId="axioma-incidencia-2" isDependency={true}>Axiom I.2</ConceptLink>. That point is not incident with $t$: otherwise it would be both $A$ and $B$. By the <ConceptLink targetId="axioma-orden-4" isDependency={true}>plane separation</ConceptLink>, the intersection point lies in $\mathcal{H}_t(P_2)$ or in $\mathcal{H}_t(P_1)$. Call it <VisualBind element="pointX" color="ocre">$X$</VisualBind> in the first case and <VisualBind element="pointY" color="ocre">$Y$</VisualBind> in the second.
+</ProofStep>
+
+<ProofStep number={3} target="angleABX" diagramStep="step3" title="Case X in the half-plane of P₂">
+$P_1$ and $X$ are points of $\ell_1$ in opposite half-planes with respect to $t$, so $\operatorname{seg}(P_1X)$ meets $t$, and it does so at $A$, the only common point of $\ell_1$ and $t$: $P_1 * A * X$ (<ConceptLink targetId="estar-entre" isDependency={true}>betweenness</ConceptLink>). Thus $\alpha$ and $\angle XAB$ are <ConceptLink targetId="angulos-suplementarios" isDependency={true}>adjacent supplementary</ConceptLink> angles, and $\alpha$ is an <ConceptLink targetId="angulo-exterior">exterior angle</ConceptLink> at $A$ of the <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> <VisualBind element="trianguloABX" color="ocre">$\triangle ABX$</VisualBind>. Moreover, $X$ and $P_2$ are points of $\ell_2$ in the same half-plane with respect to $t$, so $\overrightarrow{BX} = \overrightarrow{BP_2}$ (<ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink>) and the non-adjacent interior angle <VisualBind element="angleABX" color="ocre">$\angle ABX$</VisualBind> is $\beta$. The exterior angle theorem and the <ConceptLink targetId="orden-angulos" isDependency={true}>ordering of angles</ConceptLink> give:
 
 <Formula>
-  $$ \alpha \cong \beta $$
+  $$ \beta = \angle ABX < \alpha $$
 </Formula>
+
+But $\alpha \cong \beta$, and an angle cannot be both congruent to another and smaller than it (trichotomy of angle order): contradiction.
 </ProofStep>
 
-<ProofStep number={2} target="absurdo" title="Contradiction assumption">
-To show that $l$ and $m$ are parallel, suppose by the <ConceptLink targetId="metodo-contradiccion" isDependency={true}>method of contradiction</ConceptLink> that $l$ and $m$ are not parallel. Thus, they must intersect at some point <VisualBind element="pointP" color="ocre">$P$</VisualBind> in the plane.
+<ProofStep number={4} target="trianguloABY" diagramStep="step4" title="Case Y in the half-plane of P₁">
+This case is symmetric, exchanging the roles of $A$ and $B$. $P_2$ and $Y$ are points of $\ell_2$ in opposite half-planes with respect to $t$, so $P_2 * B * Y$, and $\beta$ is an exterior angle at $B$ of the triangle <VisualBind element="trianguloABY" color="ocre">$\triangle ABY$</VisualBind>. Since $\overrightarrow{AY} = \overrightarrow{AP_1}$, the non-adjacent interior angle <VisualBind element="angleBAY" color="ocre">$\angle BAY$</VisualBind> is $\alpha$, and the <ConceptLink targetId="teorema-angulo-exterior" isDependency={true}>exterior angle theorem</ConceptLink> gives $\alpha < \beta$, again contradicting $\alpha \cong \beta$. Therefore $\ell_1 \parallel \ell_2$.
 </ProofStep>
 
-<ProofStep number={3} target="triangulo" title="Construction of the auxiliary triangle">
-The intersection at $P$ forms a <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABP$ with vertices $A, B, P$. In this triangle, angle <VisualBind element="angleAlpha" color="terracota">$\alpha$</VisualBind> at vertex $A$ is an exterior angle relative to side $\overline{AP}$, while <VisualBind element="angleBeta" color="pavo">$\beta$</VisualBind> at vertex $B$ is a non-adjacent interior angle.
+<ProofStep number={5} target="lineL2" diagramStep="step5" title="Direction (⇒): transport of the angle">
+Now assume $\ell_1 \parallel \ell_2$. By <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axiom III.4</ConceptLink>, there is a unique ray $\overrightarrow{BQ}$ with $Q \in \mathcal{H}_t(P_2)$ such that $\angle QBA \cong \alpha$. Let $m = \overleftrightarrow{BQ}$, a line of $\pi$. With respect to the transversal $t$, the lines $\ell_1$ and $m$ form the alternate interior angles $\alpha$ and $\angle QBA$, which are <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink>; by direction (⇐), already proved, $m \parallel \ell_1$.
 </ProofStep>
 
-<ProofStep number={4} target="desigualdad" title="Application of the exterior angle theorem">
-By the exterior angle theorem in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, any exterior angle of a triangle is strictly greater than either non-adjacent interior angle. Applied to $\triangle ABP$:
+<ProofStep number={6} target="lineL2" diagramStep="step5" title="Conclusion with Axiom IV">
+The lines $m$ and <VisualBind element="lineL2" color="carbon">$\ell_2$</VisualBind> pass through $B$, which is not incident with $\ell_1$, and both are parallel to $\ell_1$ in $\pi$. By <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Axiom IV</ConceptLink>, $m = \ell_2$. Then $Q$ is a point of $\ell_2$ in the same half-plane as $P_2$ with respect to $t$, so $\overrightarrow{BQ} = \overrightarrow{BP_2}$ and $\angle QBA = \beta$. Consequently:
 
 <Formula>
-  $$ \alpha > \beta $$
+  $$ \beta = \angle QBA \cong \alpha $$
 </Formula>
-</ProofStep>
 
-<ProofStep number={5} target="conclusion" title="Contradiction and conclusion">
-The strict inequality $\alpha > \beta$ directly contradicts the initial hypothesis $\alpha \cong \beta$. Because assuming an intersection leads to a logical contradiction, the lines $l$ and $m$ cannot meet and are necessarily <ConceptLink targetId="paralelas">parallel</ConceptLink> ($l \parallel m$).
+The two directions together give $\ell_1 \parallel \ell_2 \iff \alpha \cong \beta$.
 </ProofStep>
 
 <Separador />
@@ -57,7 +68,7 @@ The strict inequality $\alpha > \beta$ directly contradicts the initial hypothes
 ### Deductive analysis
 
 <Nota>
-  Book I, Proposition 27 of <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink>. This proof does not use the <ConceptLink targetId="axioma-paralelas-euclides">parallel postulate</ConceptLink>, making it valid throughout <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+  Direction (⇐) is Proposition I.27 of <ConceptLink targetId="euclides">Euclid</ConceptLink>'s <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> and uses only the axioms of <ConceptLink targetId="incidencia">incidence</ConceptLink>, <ConceptLink targetId="estar-entre">order</ConceptLink> and <ConceptLink targetId="congruencia">congruence</ConceptLink>: it holds in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> without continuity axioms. Direction (⇒), Proposition I.29, uses Axiom IV only in step 6; in the <ConceptLink targetId="sistema-hiperbolico">hyperbolic system</ConceptLink> that step fails, because several parallels to $\ell_1$ pass through $B$.
 </Nota>
 
 </DemonstrationSection>

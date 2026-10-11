@@ -21,7 +21,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Capítulo I, §5 (Satz 11)",
+      locator: "Capítulo I, §6",
       role: "primary"
     }
   ]
@@ -32,10 +32,10 @@ export const Simulation = TrianguloIsosceles;
 
 <Capitular letra="E" />n todo <ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink>, si dos <ConceptLink targetId="lado" isDependency={true}>lados</ConceptLink> son <ConceptLink targetId="congruencia" isDependency={true}>congruentes</ConceptLink> entre sí, los <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> opuestos a dichos lados son mutuamente congruentes.
 
-Este resultado, atribuido tradicionalmente a <ConceptLink targetId="tales">Tales de Mileto</ConceptLink> y formalizado por <ConceptLink targetId="euclides">Euclides</ConceptLink> como la Proposición I.5 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> (conocida históricamente como el *Pons Asinorum*), constituye el primer gran <ConceptLink targetId="teorema">teorema</ConceptLink> de rigidez y <ConceptLink targetId="simetria">simetría</ConceptLink> angular en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. Su deducción es enteramente independiente del <ConceptLink targetId="axioma-paralelas-euclides">postulado de las paralelas</ConceptLink>, requiriendo únicamente los <ConceptLink targetId="sistema-incidencia">axiomas de incidencia</ConceptLink>, <ConceptLink targetId="estar-entre">orden</ConceptLink> y congruencia (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink> y <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5</ConceptLink>).
+Este resultado, atribuido tradicionalmente a <ConceptLink targetId="tales">Tales de Mileto</ConceptLink> y formalizado por <ConceptLink targetId="euclides">Euclides</ConceptLink> como la Proposición I.5 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink> (conocida históricamente como el *Pons Asinorum*), es uno de los primeros <ConceptLink targetId="teorema">teoremas</ConceptLink> de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> y expresa la <ConceptLink targetId="simetria">simetría</ConceptLink> del triángulo con dos lados congruentes. No depende del <ConceptLink targetId="axioma-paralelas-euclides">axioma de las paralelas</ConceptLink>: su prueba usa el <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5</ConceptLink>, la <ConceptLink targetId="reflexividad">reflexividad</ConceptLink> de la congruencia de ángulos (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>) y la simetría de la congruencia de segmentos, consecuencia de los axiomas <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>III.1</ConceptLink> y <ConceptLink targetId="axioma-congruencia-2" isDependency={true}>III.2</ConceptLink>.
 
 <Definicion title="Enunciado formal del teorema del triángulo isósceles">
-Sean <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$, determinando el <VisualBind element="polyABC" color="carbon"><ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink></VisualBind> $\triangle ABC = \overline{AB} \cup \overline{BC} \cup \overline{CA}$.
+Sean <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ tres <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> no <ConceptLink targetId="colinealidad">colineales</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$, determinando el <VisualBind element="polyABC" color="carbon"><ConceptLink targetId="triangulo" isDependency={true}>triángulo</ConceptLink></VisualBind> $\triangle ABC = \{\overline{AB}, \overline{BC}, \overline{CA}\}$.
 
 Si el <ConceptLink targetId="lado" isDependency={true}>lado</ConceptLink> lateral <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind> es <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> con el lado lateral <VisualBind element="segAC" color="carbon">$\overline{AC}$</VisualBind>, entonces el <ConceptLink targetId="angulo-base">ángulo de la base</ConceptLink> <VisualBind element="anguloB" color="mora">$\angle ABC$</VisualBind> es congruente con el ángulo de la base <VisualBind element="anguloC" color="mora">$\angle ACB$</VisualBind>:
 
@@ -55,7 +55,7 @@ El <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> r
       title="Teorema recíproco del triángulo isósceles"
       formula="\angle ABC \cong \angle ACB \implies \overline{AB} \cong \overline{AC}"
     >
-      Si en un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$ dos <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores son <ConceptLink targetId="congruencia">congruentes</ConceptLink>, los <ConceptLink targetId="lado">lados</ConceptLink> opuestos a dichos ángulos son congruentes entre sí (Proposición I.6 de <ConceptLink targetId="euclides">Euclides</ConceptLink>, Satz 12 en <ConceptLink targetId="hilbert">Hilbert</ConceptLink>).
+      Si en un <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$ dos <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores son <ConceptLink targetId="congruencia">congruentes</ConceptLink>, los <ConceptLink targetId="lado">lados</ConceptLink> opuestos a dichos ángulos son congruentes entre sí (Proposición I.6 de <ConceptLink targetId="euclides">Euclides</ConceptLink>; <ConceptLink targetId="hilbert">Hilbert</ConceptLink> lo demuestra en el §6).
     </PropiedadItem>
 
     <PropiedadItem 
@@ -63,7 +63,7 @@ El <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> r
       title="Equiangularidad del triángulo equilátero"
       formula="\overline{AB} \cong \overline{BC} \cong \overline{CA} \iff \angle ABC \cong \angle BCA \cong \angle CAB"
     >
-      Un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es <ConceptLink targetId="triangulo-equilatero">equilátero</ConceptLink> si y solo si es equiángulo, deduciéndose mediante la aplicación reiterada del <ConceptLink targetId="teorema">teorema</ConceptLink> y su recíproco a cada par de <ConceptLink targetId="lado">lados</ConceptLink>.
+      Un <ConceptLink targetId="triangulo">triángulo</ConceptLink> es <ConceptLink targetId="triangulo-equilatero">equilátero</ConceptLink> si y solo si es equiángulo; se deduce aplicando reiteradamente el <ConceptLink targetId="teorema">teorema</ConceptLink> y su recíproco a cada par de <ConceptLink targetId="lado">lados</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

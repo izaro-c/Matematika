@@ -12,7 +12,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Chapter I, §1",
+      locator: "Chapter I, §2",
       role: "primary"
     }
   ]
@@ -23,16 +23,16 @@ export const Simulation = Incidence6;
 
 <Capitular letra="I" />f two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> of a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> are <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>, then every point of that line is also incident with the plane.
 
-In the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>, this postulate complements planar flatness by ensuring that a <ConceptLink targetId="recta">line</ConceptLink> sharing two <ConceptLink targetId="punto">points</ConceptLink> with a <ConceptLink targetId="plano">plane</ConceptLink> remains entirely embedded within its surface in <ConceptLink targetId="espacio">space</ConceptLink>.
+Since lines and planes are primitive objects of different sorts, the phrase "the line lies in the plane" cannot mean an inclusion between them. This axiom gives it a precise, checkable content: it suffices that two distinct points of the line be incident with the plane for all of them to be.
 
-<Definicion title="Axiom I.6 (Inclusion of the Line in the Plane)">
-Let <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> be two distinct <ConceptLink targetId="punto">points</ConceptLink> of a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="recta" color="carbon">$\ell$</VisualBind>. If $A$ and $B$ are <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano" color="azul">$\pi$</VisualBind>, then any point incident with $\ell$ is also incident with $\pi$:
+<Definicion title="Formal statement">
+Let <VisualBind element="pA" color="terracota">$A$</VisualBind> and <VisualBind element="pB" color="terracota">$B$</VisualBind> be two distinct <ConceptLink targetId="punto">points</ConceptLink> of a <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="recta" color="carbon">$\ell$</VisualBind>. If $A$ and $B$ are <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano" color="pavo">$\pi$</VisualBind>, then every point incident with $\ell$ is also incident with $\pi$:
 
 $$
-\forall \ell \in \mathcal{L}, \, \forall \pi \in \Pi, \, \forall A, B \in \mathcal{P} \ \Biggl(\Bigl(A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi\Bigr) \implies \forall P \in \mathcal{P} \ (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)\Biggr)
+\forall \ell \in \mathcal{L} \ \forall \pi \in \Pi \ \forall A, B \in \mathcal{P} \ \Biggl(\Bigl(A \neq B \land A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land A \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \pi\Bigr) \implies \forall P \in \mathcal{P} \ (P \, \mathbf{I} \, \ell \implies P \, \mathbf{I} \, \pi)\Biggr)
 $$
 </Definicion>
 
 <Nota>
-In terms of <ConceptLink targetId="incidencia">incidence</ConceptLink> <ConceptLink targetId="conjunto">sets</ConceptLink>, the conclusion of the axiom expresses the inclusion of <ConceptLink targetId="traza">point traces</ConceptLink> $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. This property allows the <ConceptLink targetId="teorema">theorems</ConceptLink> of plane <ConceptLink targetId="geometria-sintetica">synthetic geometry</ConceptLink> to be systematically extended to the realm of three-dimensional <ConceptLink targetId="espacio">space</ConceptLink>.
+In terms of <ConceptLink targetId="traza">point traces</ConceptLink>, the conclusion of the axiom is the inclusion of point <ConceptLink targetId="conjunto">sets</ConceptLink> $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$. This is how planar statements, such as Pasch's <ConceptLink targetId="axioma-orden-4">Axiom II.4</ConceptLink>, express that a line lies in a given plane.
 </Nota>

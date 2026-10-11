@@ -1,47 +1,52 @@
 export const metadata = {
   id: "teorema-pitagoras",
+  lang: "en",
   type: "teorema",
   title: "Pythagorean Theorem",
-  description: "In any right-angled triangle, the area of the square whose side is the hypotenuse is equal to the sum of the areas of the squares on the other two sides.",
-  statement: "In any right triangle △ABC with right angle at C, the sum of the squares of the legs is equal to the square of the hypotenuse: a² + b² = c².",
+  description: "In any right triangle, the square of the length of the hypotenuse is equal to the sum of the squares of the lengths of the legs.",
+  statement: "If △ABC has a right angle at C, a = |BC|, b = |CA| and c = |AB|, then a² + b² = c².",
   branch: "51M",
+  tags: ["triangulo-rectangulo", "area", "longitud", "geometria-euclidiana"],
   hasSimulation: true,
-  authors: ["pitagoras", "euclides", "hilbert"],
+  difficulty: "intermedio",
+  authors: ["pitagoras", "euclides"],
   demos: ["demo-pitagoras-euclides", "demo-pitagoras-areas"],
   sources: [
-    { title: "Elements", author: "Euclides", locator: "Book I, Propositions 47 & 48", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV, §21", role: "secondary" }
+    { title: "Elements", author: "Euclid", locator: "Book I, Propositions 47 and 48", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV", role: "secondary" }
   ]
 };
 
 import { Pitagoras } from '@content/diagrams/Teoremas/Pitagoras';
 export const Simulation = Pitagoras;
 
-<Capitular letra="I" />n planar <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>, the metric relationship between the sides of a <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink></VisualBind> connects linear segment lengths directly to the <ConceptLink targetId="teoria-medida-area">area</ConceptLink> of the square surfaces built upon them.
+<Capitular letra="I" />n every <VisualBind element="triangulo" color="carbon"><ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink></VisualBind>, the square of the <ConceptLink targetId="longitud" isDependency={true}>length</ConceptLink> of the <ConceptLink targetId="hipotenusa" isDependency={true}>hypotenuse</ConceptLink> is equal to the sum of the squares of the lengths of the <ConceptLink targetId="cateto" isDependency={true}>legs</ConceptLink>.
+
+In terms of <ConceptLink targetId="teoria-medida-area" isDependency={true}>area</ConceptLink>, which is how <ConceptLink targetId="euclides">Euclid</ConceptLink> states it (Elements I.47), the <ConceptLink targetId="cuadrado">square</ConceptLink> constructed on the hypotenuse has the same area as the two squares constructed on the legs combined. The two <ConceptLink targetId="demostracion">proofs</ConceptLink> in this encyclopedia are proofs by area: that of <ConceptLink targetId="demo-pitagoras-euclides">Euclid</ConceptLink> divides the square on the hypotenuse into two rectangles, and that of <ConceptLink targetId="demo-pitagoras-areas">dissection</ConceptLink> compares two decompositions of the same square; both are based on the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>, the <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink> and <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity</ConceptLink>. It can also be proved by the <ConceptLink targetId="semejanza">similarity</ConceptLink> of the triangles determined by the altitude to the hypotenuse.
+
+<Definicion title="Formal statement of the Pythagorean theorem">
+Let $\triangle ABC$ be a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\sigma$ of the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink> with a <ConceptLink targetId="angulo-recto" isDependency={true}>right angle</ConceptLink> at $C$, and let <VisualBind element="cuadrado-a" color="pavo">$a = |BC|$</VisualBind> and <VisualBind element="cuadrado-b" color="terracota">$b = |CA|$</VisualBind> be the <ConceptLink targetId="longitud" isDependency={true}>lengths</ConceptLink> of the <ConceptLink targetId="cateto" isDependency={true}>legs</ConceptLink> and <VisualBind element="cuadrado-c" color="ocre">$c = |AB|$</VisualBind> that of the <ConceptLink targetId="hipotenusa" isDependency={true}>hypotenuse</ConceptLink>. Then
+
+$$
+a^2 + b^2 = c^2
+$$
+
+Equivalently, if $Q_a$, $Q_b$ and $Q_c$ are the regions of the squares constructed on $\overline{BC}$, $\overline{CA}$ and $\overline{AB}$, then $\operatorname{A}(Q_a) + \operatorname{A}(Q_b) = \operatorname{A}(Q_c)$.
+</Definicion>
 
 <Separador />
 
-### Formal statement
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Converse and scope">
+    <PropiedadItem id="teorema-reciproco-pitagoras" title="Converse theorem" formula="|BC|^2 + |CA|^2 = |AB|^2 \implies \angle ACB \text{ is right}">
+      If the <ConceptLink targetId="longitud">lengths</ConceptLink> of the sides of a <ConceptLink targetId="triangulo">triangle</ConceptLink> $\triangle ABC$ satisfy $a^2 + b^2 = c^2$, the angle opposite to side $\overline{AB}$ is <ConceptLink targetId="angulo-recto">right</ConceptLink> (Elements I.48; <ConceptLink targetId="teorema-reciproco-pitagoras">converse of the Pythagorean theorem</ConceptLink>). It allows recognizing right angles from <ConceptLink targetId="terna-pitagorica">Pythagorean triples</ConceptLink> such as $3, 4, 5$.
+    </PropiedadItem>
+    <PropiedadItem id="pitagoras-equivalente-paralelas" title="Equivalence with the parallel axiom">
+      Over <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, that the theorem holds for every right triangle is equivalent to the <ConceptLink targetId="axioma-paralelas-euclides">parallel axiom</ConceptLink>: in the <ConceptLink targetId="sistema-hiperbolico">hyperbolic plane</ConceptLink> the relation fails for every right triangle.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>
 
-Let $\triangle ABC$ be a <ConceptLink targetId="triangulo-rectangulo">right triangle</ConceptLink> in the Euclidean plane with a right angle at vertex $C$. Let $a = |\overline{BC}|$ and $b = |\overline{CA}|$ be the scalar lengths of the <VisualBind element="cateto-a" color="pavo">legs</VisualBind>, and $c = |\overline{AB}|$ the scalar length of the <VisualBind element="hipotenusa" color="terracota">hypotenuse</VisualBind>. The metric equality holds necessarily:
-
-<Formula>
-  $$ a^2 + b^2 = c^2 $$
-</Formula>
-
-In terms of planar region measures, the area of the <VisualBind element="cuadrado-c" color="ocre"><ConceptLink targetId="cuadrado">square</ConceptLink></VisualBind> constructed on the hypotenuse ($c^2$) is strictly equal to the sum of the areas of the squares constructed on leg $a$ ($a^2$) and leg $b$ ($b^2$).
-
-<Separador />
-
-### Axiomatic foundations and analysis
-
-The proof of this fundamental relation relies indispensably on the <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel postulate</ConceptLink> of <ConceptLink targetId="euclides">Euclid</ConceptLink>. In the axiomatic formulation established by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, this result is established using the theory of polygonal equidecomposability and the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>.
-
-In non-Euclidean geometries, such as spherical or hyperbolic geometry, the algebraic sum of linear squares is not preserved, requiring hyperbolic or spherical trigonometric formulations.
-
-<Separador />
-
-### Properties and converse
-
-- **Converse theorem**: If the side lengths of a triangle $\triangle ABC$ satisfy $a^2 + b^2 = c^2$, then the angle opposite to side $\overline{AB}$ is necessarily a right angle.
-- **Proof by similarity**: The altitude drawn to the hypotenuse divides the original triangle into two <ConceptLink targetId="semejanza">similar</ConceptLink> triangles, establishing the proportional relations $a^2 = c \cdot p$ and $b^2 = c \cdot q$.
+<Nota>
+In analytical models of non-Euclidean geometries the relation takes another form. In the normalized hyperbolic plane with curvature $-1$ (for example, the <ConceptLink targetId="modelo-poincare">Poincaré model</ConceptLink>), a right triangle satisfies $\cosh c = \cosh a \cosh b$; on a sphere of radius $1$ (<ConceptLink targetId="geometria-esferica">spherical geometry</ConceptLink>), it satisfies $\cos c = \cos a \cos b$. For small triangles, expanding both formulas up to second order yields $a^2 + b^2 = c^2$.
+</Nota>

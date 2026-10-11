@@ -2,48 +2,95 @@ export const metadata = {
   id: "semejanza",
   lang: "eu",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Antzekotasuna",
-  description: "Forma gordetzen duten eta distantzien arteko proportzionaltasun-arrazoi konstantea mantentzen duten irudi geometrikoen arteko baliokidetasun-erlazioa.",
+  description: "Bi triangelu antzekoak dira, erpinen arteko korrespondentzia batean, angelu homologoak kongruenteak eta alde homologoak proportzionalak badira.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-euclidiana", "proporcionalidad", "triangulo", "semejanza"],
   hasSimulation: false,
   sources: [
-    { title: "Elementuak", author: "Euklides", locator: "VI. Liburukia, 1. Definizioa", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "IV. Kapitulua, §20", role: "primary" }
+    { title: "Elementuak", author: "Euklides", locator: "VI. liburua, 1. definizioa", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "III. kapitulua", role: "secondary" }
   ]
 };
 
-<Capitular letra="A" />ntzekotasun geometrikoa forma bera gordetzen duten baina tamaina edo eskala orokorrean desberdinak izan daitezkeen <ConceptLink targetId="plano">planoko</ConceptLink> zein espazioko figuren arteko baliokidetasun-erlazioa da. Bi figura antzekoak dira transformazio baten bidez (<ConceptLink targetId="congruencia">isometria</ConceptLink> baten eta homotezia baten konposizioa) puntuen arteko distantzien proportzionaltasuna gordetzen bada eta <ConceptLink targetId="angulo">angeluak</ConceptLink> berdin mantentzen badira.
+<Capitular letra="B" />i <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> antzekoak dira baldin eta, haien <ConceptLink targetId="vertice">erpinen</ConceptLink> arteko korrespondentzia batean, <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> homologoak <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> eta <ConceptLink targetId="lado">alde</ConceptLink> homologoak <ConceptLink targetId="proporcionalidad">proportzionalak</ConceptLink> badira.
 
-<Definicion title="">
-  Izan bitez $F_1, F_2 \subset \mathcal{E}$ espazio metriko euklidear bateko bi puntu-azpimultzo. $F_1$ eta $F_2$ antzekoak dira ($F_1 \sim F_2$) baldin eta soilik baldin $k > 0$ eskala-konstante bat eta $g: \mathcal{E} \to \mathcal{E}$ bijekzio bat existitzen badira non $g(F_1) = F_2$ den eta edozein $A, B \in \mathcal{E}$ bikoterentzat honakoa betetzen den:
-  $$
-  d(g(A), g(B)) = k \cdot d(A, B)
-  $$
-  $k = 1$ denean, antzekotasuna <ConceptLink targetId="congruencia" isDependency={true}>kongruentzia</ConceptLink> bilakatzen da.
+Antzekotasunak forma eta tamaina bereizten ditu: bi triangelu antzekok angelu berak dituzte, eta gehienez ere haien <ConceptLink targetId="longitud" isDependency={true}>luzera</ConceptLink> guztiei dagokien eskala-faktore komun batean bereizten dira. <ConceptLink targetId="sistema-euclidiano">Sistema euklidearrari</ConceptLink> dagokion nozioa da: haren teoria <ConceptLink targetId="teorema-tales">Talesen teoreman</ConceptLink> oinarritzen da, eta, beraz, <ConceptLink targetId="axioma-paralelas-euclides">paraleloen axioman</ConceptLink>.
+
+<Definicion title="Triangeluen antzekotasuna">
+Izan bitez $\triangle ABC$ eta $\triangle A'B'C'$ plano euklidearreko bi <ConceptLink targetId="triangulo">triangelu</ConceptLink>, $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$ korrespondentzia ordenatuarekin hartuta. $\triangle ABC$ triangelua $\triangle A'B'C'$ triangeluaren **antzekoa** dela esaten da, eta $\triangle ABC \sim \triangle A'B'C'$ idazten da, baldin eta <ConceptLink targetId="angulo">angelu</ConceptLink> homologoen hiru bikoteak <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira eta $k > 0$ zenbaki erreal bat badago non <ConceptLink targetId="lado">alde</ConceptLink> homologoen <ConceptLink targetId="longitud">luzerek</ConceptLink> $k$ arrazoia gordetzen duten:
+
+$$
+\triangle ABC \sim \triangle A'B'C' \iff
+\begin{cases}
+\angle CAB \cong \angle C'A'B', \quad \angle ABC \cong \angle A'B'C', \quad \angle BCA \cong \angle B'C'A', \\[4pt]
+\dfrac{|A'B'|}{|AB|} = \dfrac{|B'C'|}{|BC|} = \dfrac{|C'A'|}{|CA|} = k.
+\end{cases}
+$$
+
+$k$ zenbakia **antzekotasun-arrazoia** da. $k = 1$ bada, alde homologoak kongruenteak dira eta triangeluak <ConceptLink targetId="congruencia-triangulos">kongruenteak</ConceptLink> dira.
 </Definicion>
 
-<Separador />
+### Irudien antzekotasuna
 
-### Triangeluen antzekotasun-irizpideak
+Irudi orokorretarako, nozioa $\sigma$ plano euklidearraren transformazioen bidez formulatzen da. **$k > 0$ arrazoiko antzekotasuna** luzera guztiak $k$ faktoreaz biderkatzen dituen $f\colon \operatorname{tr}(\sigma) \longrightarrow \operatorname{tr}(\sigma)$ <ConceptLink targetId="biyeccion">bijekzioa</ConceptLink> da:
 
-Geometria lauaren esparruan, bi <ConceptLink targetId="triangulo">triangeluren</ConceptLink> arteko antzekotasuna honako gutxieneko baldintzen bidez ezartzen da:
+$$
+|f(P)f(Q)| = k\,|PQ| \qquad \text{edozein } P, Q \in \operatorname{tr}(\sigma) \text{ punturentzat}.
+$$
 
-| Irizpidea | Formulazioa | Baldintza geometrikoa |
-|---|---|---|
-| An-An | Angelua-Angelua | Homologo diren bi angelu-bikote kongruenteak dira ($\alpha \cong \alpha' \land \beta \cong \beta'$) |
-| AL-An-AL | Aldea-Angelua-Aldea | Angelu kongruente bat eta inguruko aldeak proportzio berean ($\frac{a'}{a} = \frac{b'}{b} = k$) |
-| AL-AL-AL | Aldea-Aldea-Aldea | Hiru alde homologoen bikoteek $k$ arrazoi bera gordetzen dute |
+Antzekotasun oro $k$ arrazoiko <ConceptLink targetId="homotecia">homotezia</ConceptLink> baten eta <ConceptLink targetId="isometria">isometria</ConceptLink> baten <ConceptLink targetId="composicion-funciones">konposizioa</ConceptLink> da, eta angeluen kongruentzia gordetzen du. Bi $F, F' \subseteq \mathcal{P}$ irudi antzekoak dira $f(F) = F'$ betetzen duen $f$ antzekotasun bat badago. Triangeluetan bi definizioak bat datoz: antzekotasun batek $\triangle ABC$ aurreko zentzuan antzekoa den triangelu batera eramaten du, eta, alderantziz, bi triangelu antzeko bata bestearen irudia dira antzekotasun baten bidez. Isometria $1$ arrazoiko antzekotasuna da; ez da nahastu behar <ConceptLink targetId="congruencia">kongruentzia</ConceptLink>-erlazioarekin, zuzenki eta angeluentzat primitiboa baita.
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Proportzionaltasuna eta azalerak">
-    <PropiedadItem id="teorema-tales" title="Talesen teorema">
-      Bi zuzen ebakitzaileri ebakitzen dieten zuzen paraleloek zuzenki proportzional homologoak eratzen dituzte.
+  <PropiedadesGrupo title="Triangeluen antzekotasun-irizpideak">
+    <PropiedadItem
+      id="criterio-semejanza-aa"
+      title="Angelu-angelu irizpidea (AA)"
+      formula="\angle CAB \cong \angle C'A'B' \land \angle ABC \cong \angle A'B'C' \implies \triangle ABC \sim \triangle A'B'C'"
+    >
+      <ConceptLink targetId="triangulo">Triangelu</ConceptLink> baten bi <ConceptLink targetId="angulo">angelu</ConceptLink> beste baten bi angeluren <ConceptLink targetId="congruencia">kongruenteak</ConceptLink> badira, triangeluak antzekoak dira. Hirugarren angelu-bikotea kongruentea da <ConceptLink targetId="teorema-suma-angulos-triangulo" isDependency={true}>triangeluaren angeluen baturaren teoremagatik</ConceptLink>, eta aldeen proportzionaltasuna <ConceptLink targetId="teorema-tales" isDependency={true}>Talesen teorematik</ConceptLink> ondorioztatzen da, triangeluetako bat bestearen gainera garraiatu ondoren.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-triangulo" title="Azaleren eskala">
-      Bi figura lau antzekoak badira $k$ arrazoiarekin, haien azaleren arrazoia $\mu(F_2) = k^2 \cdot \mu(F_1)$ da.
+
+    <PropiedadItem
+      id="criterio-semejanza-lal"
+      title="Alde-angelu-alde irizpidea (LAL)"
+      formula="\angle CAB \cong \angle C'A'B' \land \frac{|A'B'|}{|AB|} = \frac{|A'C'|}{|AC|} \implies \triangle ABC \sim \triangle A'B'C'"
+    >
+      Triangelu baten <ConceptLink targetId="angulo">angelu</ConceptLink> bat beste baten angelu baten kongruentea bada eta hura osatzen duten <ConceptLink targetId="lado">aldeak</ConceptLink> <ConceptLink targetId="proporcionalidad">proportzionalak</ConceptLink> badira, triangeluak antzekoak dira. Frogapenak <ConceptLink targetId="teorema-tales" isDependency={true}>Talesen teoremaren</ConceptLink> alderantzizkoa erabiltzen du.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="criterio-semejanza-lll"
+      title="Alde-alde-alde irizpidea (LLL)"
+      formula="\frac{|A'B'|}{|AB|} = \frac{|B'C'|}{|BC|} = \frac{|C'A'|}{|CA|} \implies \triangle ABC \sim \triangle A'B'C'"
+    >
+      Triangelu baten hiru <ConceptLink targetId="lado">aldeak</ConceptLink> beste baten aldeekiko proportzionalak badira, triangeluak antzekoak dira; LAL irizpidera eta <ConceptLink targetId="teorema-congruencia-lll">LLL kongruentzia-irizpidera</ConceptLink> laburtzen da.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Egitura-propietateak">
+    <PropiedadItem
+      id="semejanza-relacion-equivalencia"
+      title="Baliokidetasun-erlazioa"
+      formula="\triangle ABC \sim \triangle ABC, \quad \triangle ABC \sim \triangle A'B'C' \implies \triangle A'B'C' \sim \triangle ABC"
+    >
+      Antzekotasuna <ConceptLink targetId="relacion-equivalencia">baliokidetasun-erlazioa</ConceptLink> da: <ConceptLink targetId="reflexividad">bihurkorra</ConceptLink> ($1$ arrazoia), <ConceptLink targetId="simetria">simetrikoa</ConceptLink> ($1/k$ arrazoia) eta <ConceptLink targetId="transitividad">iragankorra</ConceptLink> (arrazoiak biderkatu egiten dira).
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="razon-areas-semejanza"
+      title="Azaleren arrazoia"
+      formula="\triangle ABC \sim \triangle A'B'C' \implies \operatorname{A}(\triangle A'B'C') = k^2\,\operatorname{A}(\triangle ABC)"
+    >
+      Bi triangelu $k$ arrazoiarekin antzekoak badira, haien <ConceptLink targetId="teoria-medida-area">azaleren</ConceptLink> arrazoia $k^2$ da: <ConceptLink targetId="teorema-area-triangulo">triangeluaren azaleraren teoreman</ConceptLink> oinarria eta altuera $k$ faktoreaz biderkatzen dira. <ConceptLink targetId="teorema-area-aditividad">Batukortasunagatik</ConceptLink>, gauza bera betetzen da bi <ConceptLink targetId="region-poligonal">eskualde poligonal</ConceptLink> antzekotan.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
+
+<Nota>
+<ConceptLink targetId="sistema-hiperbolico">Geometria hiperbolikoan</ConceptLink> angelu homologo kongruenteak dituzten bi triangelu kongruenteak dira: ez dago $k \neq 1$ arrazoiko triangelu antzekorik. <ConceptLink targetId="wallis">John Wallisek</ConceptLink> 1663an triangelu antzeko ez-kongruenteen existentzia proposatu zuen bosgarren postulatuaren ordezko gisa; <ConceptLink targetId="sistema-absoluto">geometria absolutuaren</ConceptLink> axiomak onartuta, bi baieztapenak baliokideak dira.
+</Nota>

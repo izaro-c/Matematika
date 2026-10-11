@@ -12,7 +12,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Chapter I, §1",
+      locator: "Chapter I, §2",
       role: "primary"
     }
   ]
@@ -21,18 +21,14 @@ export const metadata = {
 import { Incidence5 } from '@content/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
 
-<Capitular letra="T" />hrough three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>, there passes at most one <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>.
+<Capitular letra="T" />hrough three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> there passes at most one <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>.
 
-In the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>, this postulate complements <ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink>, establishing the uniqueness of the <ConceptLink targetId="plano">plane</ConceptLink> determined by three <ConceptLink targetId="punto">points</ConceptLink> not lying on the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>.
+This axiom supplies the uniqueness that completes <ConceptLink targetId="axioma-incidencia-4">Axiom I.4</ConceptLink>: three points not incident with the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> determine one and only one plane. It is the analogue, for planes, of the uniqueness part of <ConceptLink targetId="axioma-incidencia-1">Axiom I.1</ConceptLink>.
 
-<Definicion title="Axiom I.5 (Uniqueness of the Plane)">
-Let <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> be three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink>. There exists at most one <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano" color="azul">$\pi$</VisualBind> <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with all three:
+<Definicion title="Formal statement">
+Let <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind>, and <VisualBind element="pC" color="terracota">$C$</VisualBind> be three non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink>. There exists at most one <ConceptLink targetId="plano">plane</ConceptLink> <VisualBind element="plano" color="pavo">$\pi$</VisualBind> <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with all three:
 
 $$
-\forall A, B, C \in \mathcal{P}, \, \forall \pi_1, \pi_2 \in \Pi \ \Biggl(\Bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land A, B, C \, \mathbf{I} \, \pi_1 \land A, B, C \, \mathbf{I} \, \pi_2\Bigr) \implies \pi_1 = \pi_2\Biggr)
+\forall A, B, C \in \mathcal{P} \ \forall \pi_1, \pi_2 \in \Pi \ \Biggl(\Bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land \bigwedge_{X \in \{A, B, C\}} (X \, \mathbf{I} \, \pi_1 \land X \, \mathbf{I} \, \pi_2)\Bigr) \implies \pi_1 = \pi_2\Biggr)
 $$
 </Definicion>
-
-<Nota>
-This axiom excludes the possibility of multiple distinct <ConceptLink targetId="plano">planes</ConceptLink> passing through the same non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> triplet of <ConceptLink targetId="punto">points</ConceptLink>, ensuring the two-dimensional rigidity of each plane within three-<ConceptLink targetId="dimension">dimensional</ConceptLink> <ConceptLink targetId="espacio">space</ConceptLink>.
-</Nota>

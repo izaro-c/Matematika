@@ -349,7 +349,17 @@ export const Incidence4Spec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra A, B y C"
+  "note": "Arrastra A, B y C: tres puntos no colineales determinan un único plano.",
+  "translations": {
+    "eu": {
+      "title": "IV. Intzidentzia-axioma",
+      "note": "Arrastatu A, B eta C: lerrokatu gabeko hiru puntuk plano bakar bat zehazten dute."
+    },
+    "en": {
+      "title": "Incidence Axiom IV",
+      "note": "Drag A, B, and C: three non-collinear points determine a unique plane."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

@@ -1,45 +1,56 @@
 export const metadata = {
   id: "teorema-tales",
+  lang: "es",
   type: "teorema",
   title: "Teorema de Tales",
-  description: "Si dos rectas secantes son cortadas por una familia de rectas paralelas, los segmentos determinados en una de las secantes son proporcionales a los segmentos correspondientes en la otra.",
-  statement: "Sean r y r' dos rectas secantes cortadas por tres rectas paralelas L1, L2 y L3 en los puntos A, B, C y A', B', C' respectivamente. Entonces: |AB| / |BC| = |A'B'| / |B'C'|.",
+  description: "Tres rectas paralelas de un plano determinan sobre dos transversales cualesquiera segmentos correspondientes proporcionales.",
+  statement: "Sean ℓ1, ℓ2, ℓ3 tres rectas paralelas distintas de un plano σ y t, t' dos rectas de σ secantes a ellas, que las cortan en A, B, C y A', B', C' respectivamente, con B entre A y C. Entonces |AB|/|BC| = |A'B'|/|B'C'|.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-euclidiana", "proporcionalidad", "paralelas", "semejanza"],
   hasSimulation: true,
   authors: ["tales", "euclides"],
   demos: ["demo-tales"],
+  difficulty: "intermedio",
   sources: [
-    { title: "Elementos", author: "Euclides", locator: "Libro VI, Proposición 2", role: "primary" }
+    { title: "Elementos", author: "Euclides", locator: "Libro VI, Proposición 2", role: "primary" },
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Capítulo III", role: "secondary" }
   ]
 };
 
 import { Tales } from '@content/diagrams/Teoremas/Tales';
 export const Simulation = Tales;
 
-<Capitular letra="E" />l teorema de Tales fundamenta la teoría de la <ConceptLink targetId="semejanza">semejanza</ConceptLink> geométrica y las proporciones en el plano euclidiano. Establece que la intersección de un sistema de <ConceptLink targetId="paralelas">rectas paralelas</ConceptLink> con dos <ConceptLink targetId="recta">rectas secantes</ConceptLink> conserva de manera invariantiva la razón entre las longitudes de los <ConceptLink targetId="segmento">segmentos</ConceptLink> interceptados.
+<Capitular letra="T" />res <ConceptLink targetId="paralelas" isDependency={true}>rectas paralelas</ConceptLink> de un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> determinan sobre dos <ConceptLink targetId="secante" isDependency={true}>transversales</ConceptLink> cualesquiera <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> correspondientes <ConceptLink targetId="proporcionalidad">proporcionales</ConceptLink>.
 
-<Separador />
+El teorema convierte el <ConceptLink targetId="paralelas">paralelismo</ConceptLink> en una relación entre <ConceptLink targetId="longitud" isDependency={true}>longitudes</ConceptLink> y es la base de la teoría de la <ConceptLink targetId="semejanza">semejanza</ConceptLink>. Es un resultado del <ConceptLink targetId="sistema-euclidiano">sistema euclidiano</ConceptLink>: depende del <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>axioma de las paralelas</ConceptLink> y, en la demostración clásica, del <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>.
 
-### Enunciado formal
+<Definicion title="Enunciado del teorema de Tales">
+Sean $\ell_1, \ell_2, \ell_3$ tres <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> <ConceptLink targetId="paralelas">paralelas</ConceptLink> distintas de un <ConceptLink targetId="plano">plano</ConceptLink> $\sigma$, y sean $t, t'$ dos rectas de $\sigma$ <ConceptLink targetId="secante">secantes</ConceptLink> a ellas. Sean $A, B, C$ los <ConceptLink targetId="punto" isDependency={true}>puntos</ConceptLink> en que $t$ corta a $\ell_1, \ell_2, \ell_3$, y $A', B', C'$ los puntos en que las corta $t'$, con $B$ <ConceptLink targetId="estar-entre" isDependency={true}>entre</ConceptLink> $A$ y $C$:
 
-Sean $r$ y $r'$ dos <ConceptLink targetId="recta">rectas secantes</ConceptLink> en el plano $\mathcal{P}$. Sean $L_1, L_2, L_3$ tres <VisualBind element="rectas-paralelas" color="musgo"><ConceptLink targetId="paralelas">rectas paralelas</ConceptLink></VisualBind> entre sí que cortan a la recta $r$ en los puntos <VisualBind element="punto-a" color="pavo">$A$</VisualBind>, <VisualBind element="punto-b" color="terracota">$B$</VisualBind>, $C$ y a la recta $r'$ en los puntos <VisualBind element="punto-a-primo" color="pavo">$A'$</VisualBind>, <VisualBind element="punto-b-primo" color="terracota">$B'$</VisualBind>, $C'$ respectivamente. Se satisface la igualdad de razones proporcionales:
+$$
+A * B * C, \quad \{A\} = \operatorname{tr}(t) \cap \operatorname{tr}(\ell_1), \ \dots, \ \{C'\} = \operatorname{tr}(t') \cap \operatorname{tr}(\ell_3).
+$$
 
-<Formula>
-  $$ \frac{|\overline{AB}|}{|\overline{BC}|} = \frac{|\overline{A'B'}|}{|\overline{B'C'}|} \quad \Longleftrightarrow \quad \frac{|\overline{AB}|}{|\overline{A'B'}|} = \frac{|\overline{BC}|}{|\overline{B'C'}|} $$
-</Formula>
+Entonces $A' * B' * C'$ y los segmentos correspondientes son proporcionales:
 
-De forma equivalente, la razón de las medidas de dos segmentos cualesquiera en la recta $r$ es rigurosamente idéntica a la razón de las medidas de sus segmentos homólogos sobre la recta $r'$.
+$$
+\frac{|AB|}{|BC|} = \frac{|A'B'|}{|B'C'|}, \qquad \frac{|AB|}{|AC|} = \frac{|A'B'|}{|A'C'|}.
+$$
 
-<Separador />
+Las transversales $t$ y $t'$ pueden ser paralelas o cortarse, incluso en un punto de alguna de las rectas $\ell_i$.
+</Definicion>
 
-### Corolario para triángulos
+### Corolario del triángulo
 
-En cualquier <ConceptLink targetId="triangulo">triángulo</ConceptLink> $\triangle ABC$, si trazamos una recta $r$ <ConceptLink targetId="paralelas">paralela</ConceptLink> al lado $\overline{BC}$ que interseca a los lados $\overline{AB}$ y $\overline{AC}$ en los puntos $D$ y $E$ respectivamente, se deduce que:
-- Los segmentos determinados en los lados son proporcionales: $\frac{|\overline{AD}|}{|\overline{DB}|} = \frac{|\overline{AE}|}{|\overline{EC}|}$.
-- El triángulo determinado $\triangle ADE$ es <ConceptLink targetId="semejanza">semejante</ConceptLink> al triángulo original $\triangle ABC$.
+Cuando las transversales se cortan en un punto de $\ell_1$, el teorema se refiere a un <ConceptLink targetId="triangulo">triángulo</ConceptLink>. Sea $\triangle ABC$ con vértices <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> y <VisualBind element="pC" color="terracota">$C$</VisualBind>, y sea $\ell$ la <VisualBind element="parCBD" color="ocre">recta paralela</VisualBind> a la recta <VisualBind element="lineBC" color="carbon">$\overleftrightarrow{BC}$</VisualBind>, distinta de ella, que corta al lado $\overline{AB}$ en un punto <VisualBind element="pD" color="terracota">$D$</VisualBind> y al lado $\overline{AC}$ en un punto <VisualBind element="intE" color="terracota">$E$</VisualBind>, ambos distintos de los vértices. Entonces
 
-<Separador />
+$$
+\frac{|AD|}{|DB|} = \frac{|AE|}{|EC|}, \qquad \frac{|AD|}{|AB|} = \frac{|AE|}{|AC|}.
+$$
 
-### Demostración y fundamentación axiomática
+Los segmentos <VisualBind element="segAD" color="carbon">$\overline{AD}$</VisualBind> y <VisualBind element="segDB" color="carbon">$\overline{DB}$</VisualBind> guardan la misma razón que <VisualBind element="segAE" color="carbon">$\overline{AE}$</VisualBind> y <VisualBind element="segEC" color="carbon">$\overline{EC}$</VisualBind>. Este caso es la Proposición VI.2 de los <ConceptLink targetId="elementos-euclides">Elementos</ConceptLink>, que también enuncia el <ConceptLink targetId="teorema-reciproco-tales">recíproco</ConceptLink>: si $D \in \operatorname{seg}(AB)$, $E \in \operatorname{seg}(AC)$ y $|AD|/|DB| = |AE|/|EC|$, entonces $\overleftrightarrow{DE} \parallel \overleftrightarrow{BC}$.
 
-La demostración euclidiana se apoya en el cálculo de <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>áreas de triángulos</ConceptLink> con la misma base o la misma altura comprendidos entre paralelas. En la estructura axiomática moderna, requiere la propiedad de <ConceptLink targetId="axioma-arquimedes">Arquímedes</ConceptLink> y la completitud de la recta real para garantizar la validez del teorema tanto para razones racionales como inconmensurables.
+<Nota>
+La demostración clásica, por áreas, utiliza la función área y la longitud real, y por tanto los <ConceptLink targetId="continuidad">axiomas de continuidad</ConceptLink> que intervienen en el <ConceptLink targetId="teorema-area-rectangulo">teorema del área del rectángulo</ConceptLink>. <ConceptLink targetId="hilbert">Hilbert</ConceptLink> mostró en el capítulo III de los *Grundlagen der Geometrie* que la teoría de la proporción y este teorema pueden fundarse sin continuidad, mediante un <ConceptLink targetId="calculo-segmentos">cálculo de segmentos</ConceptLink> basado en el <ConceptLink targetId="teorema-pascal">teorema de Pascal</ConceptLink>. En la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica</ConceptLink> el teorema no es válido en general.
+</Nota>

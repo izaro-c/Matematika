@@ -1394,7 +1394,17 @@ export const ParalelogramoSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Mueve D para descubrir los diferentes tipos de paralelogramo"
+  "note": "Mueve D para descubrir los diferentes tipos de paralelogramo",
+  "translations": {
+    "eu": {
+      "title": "Paralelogramoa",
+      "note": "Mugitu D paralelogramo mota desberdinak ezagutzeko"
+    },
+    "en": {
+      "title": "Parallelogram",
+      "note": "Move D to discover different types of parallelograms"
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

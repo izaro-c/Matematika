@@ -10,7 +10,7 @@ export const metadata = {
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §2", role: "primary" }
   ]
 };
 
@@ -19,12 +19,12 @@ export const Simulation = Incidence1;
 
 <Capitular letra="G" />iven any two distinct <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink>, there exists exactly one <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> incident with both.
 
-This postulate establishes the elementary linear connection of geometry: two distinct points uniquely determine the position of a single straight line in <ConceptLink targetId="espacio">space</ConceptLink>.
+The axiom combines the existence and the uniqueness of the line through two points, which <ConceptLink targetId="hilbert">Hilbert</ConceptLink> states separately in his first two axioms of <ConceptLink targetId="incidencia">incidence</ConceptLink>. Thanks to uniqueness, a line is named by any pair of its points and the notion of <ConceptLink targetId="colinealidad">collinearity</ConceptLink> makes sense: three points are collinear when the third is incident with the line determined by the other two.
 
-<Definicion title="Formal Statement">
+<Definicion title="Formal statement">
   For any two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind> and <VisualBind element="pB" color="ocre">$B$</VisualBind> ($A \neq B$), there exists a unique <ConceptLink targetId="recta">line</ConceptLink> <VisualBind element="lineAB" color="carbon">$\ell$</VisualBind> such that $A$ and $B$ <ConceptLink targetId="incidencia" isDependency={true}>are incident</ConceptLink> with $\ell$:
   $$
   \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists! \ell \in \mathcal{L} \ (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell)\bigr)
   $$
-  The line determined by points $A$ and $B$ is commonly denoted by $\overleftrightarrow{AB}$.
+  The line determined by the points $A$ and $B$ is denoted $\overleftrightarrow{AB}$.
 </Definicion>

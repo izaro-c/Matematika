@@ -19,7 +19,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Capítulo I, §4",
+      locator: "Capítulo I, §6",
       role: "primary"
     }
   ]
@@ -30,17 +30,17 @@ export const Simulation = Perpendicular;
 
 <Capitular letra="D" />os <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> <ConceptLink targetId="secante">secantes</ConceptLink> en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> son **perpendiculares** si su <ConceptLink targetId="punto">punto</ConceptLink> de intersección determina <ConceptLink targetId="angulo-recto" isDependency={true}>ángulos rectos</ConceptLink>.
 
-La relación de perpendicularidad formaliza la rigidez posicional entre rectas secantes en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, constituyendo la base para el estudio de los <ConceptLink targetId="triangulo-rectangulo">triángulos rectángulos</ConceptLink> y las construcciones ortogonales.
+La perpendicularidad se define sin ninguna medida, solo mediante la <ConceptLink targetId="congruencia">congruencia</ConceptLink> de ángulos, y pertenece a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>. Es la base para el estudio de los <ConceptLink targetId="triangulo-rectangulo">triángulos rectángulos</ConceptLink> y las construcciones ortogonales.
 
 <Definicion title="Definición formal de rectas perpendiculares">
 Sean <VisualBind element="lineAB" color="terracota">$\ell_1$</VisualBind>, <VisualBind element="perpABP" color="musgo">$\ell_2$</VisualBind> $\in \mathcal{L}$ dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> coplanares en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$ ($\operatorname{tr}(\ell_1) \cup \operatorname{tr}(\ell_2) \subseteq \operatorname{tr}(\pi)$) que son <ConceptLink targetId="secante">secantes</ConceptLink> en un único <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> de intersección <VisualBind element="pP" color="musgo">$P$</VisualBind> $\in \mathcal{P}$ ($\operatorname{tr}(\ell_1) \cap \operatorname{tr}(\ell_2) = \{P\}$).
 
 Sean <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> $\in \operatorname{tr}(\ell_1) \setminus \{P\}$ dos puntos tales que $P$ <ConceptLink targetId="estar-entre" isDependency={true}>está entre</ConceptLink> $A$ y $B$ ($A * P * B$), determinando las <ConceptLink targetId="semirrecta" isDependency={true}>semirrectas</ConceptLink> opuestas <VisualBind element="rayPA" color="terracota">$h_1 = \overrightarrow{PA}$</VisualBind> y <VisualBind element="rayPB" color="terracota">$h_1' = \overrightarrow{PB}$</VisualBind> sobre $\ell_1$. Sean <VisualBind element="pC" color="musgo">$C$</VisualBind>, <VisualBind element="pD" color="musgo">$D$</VisualBind> $\in \operatorname{tr}(\ell_2) \setminus \{P\}$ dos puntos tales que $P$ está entre $C$ y $D$ ($C * P * D$), determinando las semirrectas opuestas <VisualBind element="rayPC" color="musgo">$h_2 = \overrightarrow{PC}$</VisualBind> y <VisualBind element="rayPD" color="musgo">$h_2' = \overrightarrow{PD}$</VisualBind> sobre $\ell_2$.
 
-Las rectas $\ell_1$ y $\ell_2$ son **perpendiculares** ($\ell_1 \perp \ell_2$) si y solo si el <ConceptLink targetId="angulo">ángulo</ConceptLink> <VisualBind element="angleAPC" color="ocre">$\angle(h_1, h_2) = \angle APC$</VisualBind> formado en el <ConceptLink targetId="vertice">vértice</ConceptLink> $P$ es un <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink>:
+Las rectas $\ell_1$ y $\ell_2$ son **perpendiculares** ($\ell_1 \perp \ell_2$) si y solo si el <ConceptLink targetId="angulo">ángulo</ConceptLink> <VisualBind element="angleAPC" color="ocre">$\angle(h_1, h_2) = \angle APC$</VisualBind> formado en el <ConceptLink targetId="vertice">vértice</ConceptLink> $P$ es un <ConceptLink targetId="angulo-recto" isDependency={true}>ángulo recto</ConceptLink>, es decir, si es congruente con su <ConceptLink targetId="angulos-suplementarios">adyacente suplementario</ConceptLink> $\angle(h_1', h_2) = \angle BPC$:
 
 $$
-\ell_1 \perp \ell_2 \iff \operatorname{Recto}(\angle(h_1, h_2))
+\ell_1 \perp \ell_2 \iff \angle(h_1, h_2) \cong \angle(h_1', h_2)
 $$
 </Definicion>
 
@@ -53,7 +53,7 @@ $$
       title="Simetría de la relación de perpendicularidad"
       formula="\ell_1 \perp \ell_2 \iff \ell_2 \perp \ell_1"
     >
-      La relación de perpendicularidad entre <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="secante">secantes</ConceptLink> es estrictamente simétrica: si una recta es perpendicular a otra, la segunda es perpendicular a la primera.
+      La relación de perpendicularidad entre <ConceptLink targetId="recta">rectas</ConceptLink> <ConceptLink targetId="secante">secantes</ConceptLink> es simétrica: si una recta es perpendicular a otra, la segunda es perpendicular a la primera.
     </PropiedadItem>
 
     <PropiedadItem 
@@ -61,7 +61,7 @@ $$
       title="Congruencia simultánea de los cuatro ángulos rectos"
       formula="\ell_1 \perp \ell_2 \implies \angle(h_1, h_2) \cong \angle(h_1', h_2) \cong \angle(h_1', h_2') \cong \angle(h_1, h_2')"
     >
-      La intersección de dos rectas perpendiculares divide el plano en cuatro <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink> mutuamente <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí: <VisualBind element="angleAPC" color="ocre">$\angle APC$</VisualBind> $\cong$ <VisualBind element="angleBPC" color="ocre">$\angle BPC$</VisualBind> $\cong$ <VisualBind element="angleBPD" color="ocre">$\angle BPD$</VisualBind> $\cong$ <VisualBind element="angleAPD" color="ocre">$\angle APD$</VisualBind>.
+      Dos rectas perpendiculares determinan en su punto de corte cuatro <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink> <ConceptLink targetId="congruencia">congruentes</ConceptLink> entre sí, por la <ConceptLink targetId="teorema-congruencia-suplementos">congruencia de suplementos</ConceptLink> y el <ConceptLink targetId="teorema-angulos-opuestos-verticales">teorema de los ángulos opuestos por el vértice</ConceptLink>: <VisualBind element="angleAPC" color="ocre">$\angle APC$</VisualBind> $\cong$ <VisualBind element="angleBPC" color="ocre">$\angle BPC$</VisualBind> $\cong$ <VisualBind element="angleBPD" color="ocre">$\angle BPD$</VisualBind> $\cong$ <VisualBind element="angleAPD" color="ocre">$\angle APD$</VisualBind>.
     </PropiedadItem>
   </PropiedadesGrupo>
 
@@ -69,9 +69,9 @@ $$
     <PropiedadItem 
       id="existencia-unicidad-perpendicular" 
       title="Existencia y unicidad de la perpendicular en el plano"
-      formula="\forall \ell \in \mathcal{L}, \; \forall P \in \operatorname{tr}(\pi) \; \exists! \ell' \in \mathcal{L} \; (\operatorname{tr}(\ell') \subseteq \operatorname{tr}(\pi) \land P \in \operatorname{tr}(\ell') \land \ell' \perp \ell)"
+      formula="\forall \pi \in \Pi \; \forall \ell \in \mathcal{L} \; \forall P \in \operatorname{tr}(\pi) \; \Bigl(\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \implies \exists! \ell' \in \mathcal{L} \; (\operatorname{tr}(\ell') \subseteq \operatorname{tr}(\pi) \land P \in \operatorname{tr}(\ell') \land \ell' \perp \ell)\Bigr)"
     >
-      En cualquier plano $\pi$, por cada punto $P \in \operatorname{tr}(\pi)$ —pertenezca o no a la recta $\ell$— existe exactamente una única recta $\ell'$ coplanar con $\ell$ que incide con $P$ y es perpendicular a $\ell$. Este teorema es válido en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> sin requerir ningún <ConceptLink targetId="axioma-paralelas-euclides">axioma de paralelas</ConceptLink>.
+      En cualquier plano $\pi$, por cada punto $P \in \operatorname{tr}(\pi)$ —incida o no $P$ con la recta $\ell$— existe una única recta $\ell'$ de $\pi$ que incide con $P$ y es perpendicular a $\ell$. Este teorema (Hilbert, §6) es válido en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> sin requerir ningún <ConceptLink targetId="axioma-paralelas-euclides">axioma de paralelas</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>
@@ -79,5 +79,5 @@ $$
 <Separador />
 
 <Nota>
-En la jerarquía axiomática, la perpendicularidad es un concepto puramente sintético perteneciente a la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, anterior e independiente de cualquier <ConceptLink targetId="axioma-paralelas-euclides">axioma de paralelas</ConceptLink>. A diferencia del paralelismo único, la existencia y unicidad de la perpendicular por un punto no depende de la curvatura del espacio.
+La perpendicularidad es un concepto sintético de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>, anterior e independiente de cualquier <ConceptLink targetId="axioma-paralelas-euclides">axioma de paralelas</ConceptLink>. A diferencia de la unicidad de la paralela, que exige el Axioma IV, la existencia y unicidad de la perpendicular por un punto se demuestra solo con los axiomas de incidencia, orden y congruencia.
 </Nota>

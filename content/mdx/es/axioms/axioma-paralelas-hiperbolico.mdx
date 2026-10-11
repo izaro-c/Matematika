@@ -3,12 +3,13 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma de las paralelas hiperbólicas",
-  description: "Por un punto exterior a una recta pasan al menos dos rectas distintas que no la intersecan en el mismo plano.",
+  description: "Dada una recta y un punto exterior en un plano, existen al menos dos rectas distintas de ese plano que pasan por dicho punto y no cortan a la recta dada.",
   branch: "51M",
   axiomSystem: "sistema-hiperbolico",
   axiomFamily: "paralelas",
   alternativeGroup: "paralelismo",
   hasSimulation: true,
+  tags: ["geometria-hiperbolica", "paralelas", "axioma", "geometria-no-euclidiana"],
   sources: [
     { title: "Geometrische Untersuchungen zur Theorie der Parallellinien", author: "Nikolái Lobachevski", locator: "1840", role: "primary" },
     { title: "Appendix scientiam spatii absolute veram exhibens", author: "János Bolyai", locator: "1832", role: "primary" }
@@ -18,32 +19,39 @@ export const metadata = {
 import { HyperbolicParallel } from '@content/diagrams/Axiomas/HyperbolicParallel';
 export const Simulation = HyperbolicParallel;
 
-<Capitular letra="E" />l axioma de las paralelas hiperbólicas —formulado por <ConceptLink targetId="lobachevski">Nikolái Lobachevski</ConceptLink> y <ConceptLink targetId="bolyai">János Bolyai</ConceptLink>— es el postulado fundamental de la geometría hiperbólica. Sustituye la unicidad euclidiana por la existencia de una pluralidad de rectas que pasan por un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> exterior sin cortar a una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> dada en el mismo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>.
+<Capitular letra="D" />ada una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> y un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> no <ConceptLink targetId="incidencia" isDependency={true}>incidente</ConceptLink> con ella en un mismo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink>, existen al menos dos rectas distintas de ese plano que pasan por dicho punto y no cortan a la recta dada; ambas son, por tanto, <ConceptLink targetId="paralelas" isDependency={true}>paralelas</ConceptLink> a ella.
 
-<Definicion title="Enunciado formal">
-  Dada una <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $l \in \mathcal{L}$ y un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> exterior $P \notin l$ en un <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\mathcal{P}$, existen al menos dos rectas distintas $l_1, l_2 \subset \mathcal{P}$ que contienen a $P$ y no intersecan a $l$:
+Formulado de manera independiente por <ConceptLink targetId="lobachevski">Nikolái Lobachevski</ConceptLink> y <ConceptLink targetId="bolyai">János Bolyai</ConceptLink>, este axioma sustituye al <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink> de unicidad de la paralela. Añadido a los axiomas de la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink> (grupos I, II, III y V de <ConceptLink targetId="hilbert">Hilbert</ConceptLink>), fundamenta el <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink>. Su <ConceptLink targetId="consistencia-logica">consistencia</ConceptLink> relativa no la demostraron sus descubridores: la establecen los modelos de <ConceptLink targetId="beltrami">Beltrami</ConceptLink> (1868), <ConceptLink targetId="klein">Klein</ConceptLink> y <ConceptLink targetId="poincare">Poincaré</ConceptLink>.
+
+<Definicion title="Enunciado formal del axioma de las paralelas hiperbólicas">
+  Para todo <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> $\pi \in \Pi$, toda <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> <VisualBind element="lineL" color="pavo">$\ell \in \mathcal{L}$</VisualBind> cuya <ConceptLink targetId="traza">traza puntual</ConceptLink> esté contenida en la de $\pi$ ($\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$) y todo <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> <VisualBind element="pP" color="terracota">$P \in \mathcal{P}$</VisualBind> <ConceptLink targetId="incidencia" isDependency={true}>incidente</ConceptLink> con $\pi$ pero no con $\ell$ ($P \, \mathbf{I} \, \pi \land \neg(P \, \mathbf{I} \, \ell)$), existen dos rectas distintas <VisualBind element="lineM" color="terracota">$m \in \mathcal{L}$</VisualBind> y <VisualBind element="lineN" color="carbon">$n \in \mathcal{L}$</VisualBind> de $\pi$, incidentes con $P$, cuyas trazas son <ConceptLink targetId="conjunto-disjunto">disjuntas</ConceptLink> de la de $\ell$:
+
   $$
-  \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists l_1, l_2 \subset \mathcal{P} \ \bigl(l_1 \neq l_2 \land P \in l_1 \cap l_2 \land l_1 \cap l = \emptyset \land l_2 \cap l = \emptyset\bigr)
+  \forall \pi \in \Pi, \ \forall \ell \in \mathcal{L}, \ \forall P \in \mathcal{P} \ \Biggl( \Bigl( \operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \land P \, \mathbf{I} \, \pi \land \neg(P \, \mathbf{I} \, \ell) \Bigr) \implies \exists m, n \in \mathcal{L} \ \Bigl( m \neq n \land \operatorname{tr}(m) \subseteq \operatorname{tr}(\pi) \land \operatorname{tr}(n) \subseteq \operatorname{tr}(\pi) \land P \, \mathbf{I} \, m \land P \, \mathbf{I} \, n \land \operatorname{tr}(m) \cap \operatorname{tr}(\ell) = \emptyset \land \operatorname{tr}(n) \cap \operatorname{tr}(\ell) = \emptyset \Bigr) \Biggr)
+  $$
+
+  Como ambas rectas son <ConceptLink targetId="coplanaridad">coplanares</ConceptLink> con $\ell$ y no la cortan, son paralelas a ella:
+
+  $$
+  m \parallel \ell \quad \land \quad n \parallel \ell \quad \land \quad m \neq n
   $$
 </Definicion>
 
 <Separador />
 
-### Representación visual e interacción
+### Representación en el modelo del disco de Poincaré
 
-En la simulación interactiva en el disco de Poincaré, a través del punto <VisualBind element="pP" color="terracota">$P$</VisualBind> se trazan las dos rectas paralelas asintóticas límite <VisualBind element="lineM" color="carbon">$l_1$</VisualBind> y <VisualBind element="lineN" color="carbon">$l_2$</VisualBind>. Todo el haz de rectas comprendido en el ángulo interior entre ambas constituye una infinidad continua de rectas ultraparalelas que no intersecan a la recta base.
+En la simulación interactiva, el plano hiperbólico se representa mediante el <ConceptLink targetId="modelo-poincare">disco de Poincaré</ConceptLink>, cuyas rectas son los diámetros y los arcos de <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> ortogonales a la frontera del disco.
 
-<Separador />
-
-### Significado geométrico y alcance
-
-Este axioma dota al plano de una curvatura Gaussiana negativa constante ($K < 0$). Provoca que la suma de los <ConceptLink targetId="angulo">ángulos</ConceptLink> de un <ConceptLink targetId="triangulo">triángulo</ConceptLink> sea estrictamente menor que $180^\circ$ y que el área de cualquier polígono esté acotada por su defecto angular.
+Por el punto <VisualBind element="pP" color="terracota">$P$</VisualBind>, exterior a la recta <VisualBind element="lineL" color="pavo">$\ell$</VisualBind>, pasan las dos <ConceptLink targetId="paralelas-limite">paralelas límite</ConceptLink> <VisualBind element="lineM" color="terracota">$m$</VisualBind> y <VisualBind element="lineN" color="carbon">$n$</VisualBind>, que se acercan asintóticamente a $\ell$ y la «tocan» en puntos ideales de la frontera. Ambas determinan en $P$ dos pares de <ConceptLink targetId="angulos-opuestos-vertice">ángulos opuestos por el vértice</ConceptLink>. Las rectas por $P$ contenidas en el par que contiene la <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> trazada desde $P$ a $\ell$ cortan a $\ell$; las contenidas en el otro par no la cortan ni comparten con ella punto ideal, y son las <ConceptLink targetId="ultraparalelas">rectas ultraparalelas</ConceptLink>. El ángulo que forma cada paralela límite con esa perpendicular es el <ConceptLink targetId="angulo-paralelismo">ángulo de paralelismo</ConceptLink> $\theta(d)$, siempre <ConceptLink targetId="angulo-agudo">agudo</ConceptLink>, donde $d$ es la <ConceptLink targetId="longitud">longitud</ConceptLink> del segmento perpendicular.
 
 <Separador />
 
-### Propiedades
+### Consecuencias deductivas y alcance geométrico
 
-- **Ángulo de paralelismo:** Existe un ángulo agudo característico $\Pi(x) < 90^\circ$ que separa las rectas secantes de las rectas no secantes.
-- **Defecto angular:** En todo triángulo hiperbólico, $\alpha + \beta + \gamma < 180^\circ$.
-- **No transitividad del paralelismo:** Dos rectas paralelas a una misma tercera recta no son necesariamente paralelas entre sí.
-- **Inexistencia de rectángulos:** Ningún cuadrilátero puede poseer cuatro ángulos rectos.
+La existencia de varias paralelas por un punto altera la estructura deductiva de la geometría:
+
+- **Defecto angular de los triángulos:** la suma de las <ConceptLink targetId="medida-angular">medidas</ConceptLink> de los <ConceptLink targetId="angulo">ángulos</ConceptLink> interiores de todo <ConceptLink targetId="triangulo">triángulo</ConceptLink> es menor que dos <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>: $|\alpha| + |\beta| + |\gamma| < 180^\circ$. La diferencia $180^\circ - (|\alpha| + |\beta| + |\gamma|)$ es el <ConceptLink targetId="defecto-angular">defecto angular</ConceptLink>, proporcional al <ConceptLink targetId="area">área</ConceptLink> del triángulo.
+- **Inexistencia de triángulos semejantes no congruentes:** dos triángulos con ángulos respectivamente congruentes son <ConceptLink targetId="congruencia-triangulos">congruentes</ConceptLink> (criterio AAA); no hay <ConceptLink targetId="semejanza">semejanza</ConceptLink> con cambio de escala.
+- **Fallo de la <ConceptLink targetId="transitividad">transitividad</ConceptLink> del paralelismo:** dos rectas paralelas a una tercera no son necesariamente paralelas entre sí.
+- **Inexistencia de rectángulos:** ningún <ConceptLink targetId="cuadrilatero">cuadrilátero</ConceptLink> tiene cuatro <ConceptLink targetId="angulo-recto">ángulos rectos</ConceptLink>; los ángulos de la cima de los <ConceptLink targetId="cuadrilatero-saccheri">cuadriláteros de Saccheri</ConceptLink> y el cuarto ángulo de los de <ConceptLink targetId="cuadrilatero-lambert">Lambert</ConceptLink> son agudos.

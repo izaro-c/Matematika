@@ -3,7 +3,7 @@ export const metadata = {
   lang: "en",
   type: "axioma",
   title: "Axiom III.1 (Segment Transport)",
-  description: "Given any segment and a ray with a specified origin, there exists a unique point on the ray determining a segment congruent to the given one.",
+  description: "Given a segment and a ray, there exists on the ray a point, distinct from its origin, that determines with it a segment congruent to the given one.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "congruencia", "hilbert"],
@@ -23,22 +23,26 @@ export const metadata = {
 import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
 export const Simulation = Congruence1;
 
-<Capitular letra="G" />iven any <ConceptLink targetId="segmento" isDependency={true}>line segment</ConceptLink> and a <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink> with a specified <ConceptLink targetId="punto" isDependency={true}>origin</ConceptLink>, there exists exactly one <ConceptLink targetId="punto">point</ConceptLink> on that ray that forms a segment <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to the original one.
+<Capitular letra="G" />iven a <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> and a <ConceptLink targetId="semirrecta" isDependency={true}>ray</ConceptLink>, there exists on the ray a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink>, distinct from its <ConceptLink targetId="origen-semirrecta">origin</ConceptLink>, that determines with it a segment <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to the given one.
 
-This postulate formalizes the unique transport of lengths along any direction in <ConceptLink targetId="espacio">space</ConceptLink>, without appealing to numerical metric scales or coordinate systems.
+This axiom makes it possible to transport a segment onto any ray in <ConceptLink targetId="espacio">space</ConceptLink> without resorting to numerical measures or coordinate systems.
 
 <Definicion title="Axiom III.1 (Segment Transport)">
-Given two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ determining the <ConceptLink targetId="segmento">segment</ConceptLink> <VisualBind element="segAB" color="ocre">$\overline{AB}$</VisualBind>, and a <ConceptLink targetId="semirrecta">ray</ConceptLink> <VisualBind element="rayCDir" color="pavo">$r = \overrightarrow{C\,\text{dir}}$</VisualBind> with origin at <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ directed toward the point <VisualBind element="pDir" color="pavo">$\text{dir}$</VisualBind> $\in \mathcal{P} \setminus \{C\}$, there exists a unique point <VisualBind element="pD" color="terracota">$D$</VisualBind> on the ray $r \setminus \{C\}$ such that the segment <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> is <ConceptLink targetId="congruencia">congruent</ConceptLink> to $\overline{AB}$:
+Given two distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, which determine the <ConceptLink targetId="segmento">segment</ConceptLink> <VisualBind element="segAB" color="ocre">$\overline{AB}$</VisualBind>, and a <ConceptLink targetId="semirrecta">ray</ConceptLink> <VisualBind element="rayCDir" color="pavo">$\overrightarrow{C\,\text{dir}}$</VisualBind> with origin at the point <VisualBind element="pC" color="terracota">$C$</VisualBind> and passing through the point <VisualBind element="pDir" color="pavo">$\text{dir} \neq C$</VisualBind>, there exists a point <VisualBind element="pD" color="terracota">$D \in \overrightarrow{C\,\text{dir}} \setminus \{C\}$</VisualBind> such that the segment <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> is <ConceptLink targetId="congruencia">congruent</ConceptLink> to $\overline{AB}$:
 
 $$
-\forall A, B \in \mathcal{P} \ \Biggl( A \neq B \implies \forall C, \text{dir} \in \mathcal{P} \ \Bigl( C \neq \text{dir} \implies \exists! D \in \operatorname{tr}(\overrightarrow{C\,\text{dir}}) \setminus \{C\} \ (\overline{AB} \cong \overline{CD}) \Bigr) \Biggr)
+\forall A, B, C, \text{dir} \in \mathcal{P} \ \Bigl( (A \neq B \land C \neq \text{dir}) \implies \exists D \in \overrightarrow{C\,\text{dir}} \setminus \{C\} \ (\overline{AB} \cong \overline{CD}) \Bigr)
 $$
 
-Furthermore, every segment is congruent to itself: $\overline{AB} \cong \overline{AB}$ and $\overline{AB} \cong \overline{BA}$.
+Furthermore, every segment is congruent to itself (<ConceptLink targetId="reflexividad">reflexivity</ConceptLink>):
+
+$$
+\forall A, B \in \mathcal{P} \ \bigl( A \neq B \implies (\overline{AB} \cong \overline{AB} \land \overline{AB} \cong \overline{BA}) \bigr)
+$$
 </Definicion>
 
 <Separador />
 
 <Nota>
-Axiom III.1 constitutes the rigorous synthetic equivalent of the rigid compass in Euclidean constructions, guaranteeing the existence and uniqueness of metric transport in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
+Axiom III.1 is the synthetic counterpart of the compass in Euclidean constructions. It only postulates the existence of the point $D$: its uniqueness is a <ConceptLink targetId="teorema">theorem</ConceptLink>, the <ConceptLink targetId="teorema-unicidad-transporte-segmentos">uniqueness of segment transport</ConceptLink>, which follows from axioms <ConceptLink targetId="axioma-congruencia-4">III.4</ConceptLink> and <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink> in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>.
 </Nota>

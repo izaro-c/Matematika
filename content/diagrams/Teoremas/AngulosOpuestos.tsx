@@ -523,7 +523,17 @@ export const AngulosOpuestosSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve A o B para girar las rectas"
+  "note": "Mueve A o B para girar las rectas y comprobar la igualdad de los ángulos opuestos.",
+  "translations": {
+    "eu": {
+      "title": "Erpinez aurkako angeluak",
+      "note": "Mugitu A edo B zuzenak biratzeko eta erpinez aurkako angeluen berdintasuna egiaztatzeko."
+    },
+    "en": {
+      "title": "Vertically Opposite Angles",
+      "note": "Move A or B to rotate the lines and verify the equality of vertical angles."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

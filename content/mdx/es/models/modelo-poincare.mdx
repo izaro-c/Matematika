@@ -3,46 +3,132 @@ export const metadata = {
   lang: "es",
   type: "modelo",
   title: "Disco de Poincaré",
-  description: "Modelo conforme para la geometría hiperbólica bidimensional en el interior del disco unidad donde las rectas son arcos circulares ortogonales al borde.",
+  description: "Modelo conforme del plano hiperbólico en el disco unidad abierto, cuyas rectas son diámetros y arcos de circunferencia ortogonales al borde; satisface los axiomas planos del sistema hiperbólico.",
   branch: "51M",
+  branches: ["51M", "51A"],
   satisfies: ["sistema-hiperbolico", "sistema-absoluto"],
-  axioms_verified: ["axioma-incidencia-1", "axioma-paralelas-hiperbolico"],
-  hasDiagram: true
+  axioms_verified: [
+    "axioma-incidencia-1",
+    "axioma-incidencia-2",
+    "axioma-incidencia-3",
+    "axioma-orden-1",
+    "axioma-orden-2",
+    "axioma-orden-3",
+    "axioma-orden-4",
+    "axioma-congruencia-1",
+    "axioma-congruencia-2",
+    "axioma-congruencia-3",
+    "axioma-congruencia-4",
+    "axioma-congruencia-5",
+    "axioma-paralelas-hiperbolico",
+    "axioma-arquimedes",
+    "axioma-completitud"
+  ],
+  hasDiagram: true,
+  sources: [
+    { title: "Théorie des groupes fuchsiens", author: "Henri Poincaré", locator: "Acta Mathematica 1 (1882)", role: "primary" },
+    { title: "Saggio di interpretazione della geometria non-euclidea", author: "Eugenio Beltrami", locator: "1868", role: "secondary" }
+  ]
 };
 
 import { ModeloPoincare } from '@content/diagrams/Models/ModeloPoincare';
 export const Diagram = ModeloPoincare;
 
-<Capitular letra="E" />l modelo del disco de Poincaré $\mathbb{D}^2$ constituye una representación analítica conforme de la <ConceptLink targetId="sistema-hiperbolico">geometría hiperbólica bidimensional</ConceptLink>. Al situar el plano hiperbólico en el interior del disco unidad del plano complejo, permite visualizar rigurosamente la negación del postulado de las paralelas de Euclides preservando los ángulos euclídeos locales.
+<Capitular letra="E" />l **disco de Poincaré** es un modelo analítico del plano hiperbólico: sus <ConceptLink targetId="punto">puntos</ConceptLink> son los del disco unidad abierto $\mathbb{D}^2$, sus <ConceptLink targetId="recta">rectas</ConceptLink> son los diámetros y los arcos de <ConceptLink targetId="circunferencia">circunferencia</ConceptLink> ortogonales al borde, y satisface los axiomas planos del <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink> (I.1–I.3, II, III, el <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma de las paralelas hiperbólicas</ConceptLink> y V).
+
+Al estar construido dentro de la geometría euclidiana, el modelo prueba que la geometría hiperbólica plana es <ConceptLink targetId="consistencia-logica">consistente</ConceptLink> si lo es la euclidiana. <ConceptLink targetId="poincare">Henri Poincaré</ConceptLink> lo introdujo en 1882, después de los modelos de <ConceptLink targetId="beltrami">Eugenio Beltrami</ConceptLink> (1868) y <ConceptLink targetId="klein">Felix Klein</ConceptLink> (1871). Es <ConceptLink targetId="aplicacion-conforme">conforme</ConceptLink>: la medida de los ángulos hiperbólicos coincide con la de los ángulos euclídeos que forman las curvas.
+
+<Definicion title="Estructura del modelo">
+  El modelo es la <ConceptLink targetId="estructura-geometrica">estructura</ConceptLink> $\mathcal{M} = (\mathcal{P}, \mathcal{L}; \ \mathbf{I}, \ *, \ \cong_{\mathrm{seg}}, \ \cong_{\angle})$ definida así:
+
+  - **Puntos**: $\mathcal{P} = \mathbb{D}^2 = \{(x, y) \in \mathbb{R}^2 \mid x^2 + y^2 < 1\}$. Los puntos de la <VisualBind element="frontera" color="carbon">circunferencia frontera $\partial \mathbb{D}^2$</VisualBind> no pertenecen al modelo; se llaman *puntos ideales*.
+  - **Rectas**: las intersecciones con $\mathbb{D}^2$ de los diámetros del disco y de las circunferencias euclídeas que cortan a $\partial \mathbb{D}^2$ <ConceptLink targetId="perpendicular">perpendicularmente</ConceptLink>, como la recta <VisualBind element="geodesica-principal" color="terracota">$\ell$</VisualBind>. La <ConceptLink targetId="incidencia">incidencia</ConceptLink> es la pertenencia a ese arco o diámetro.
+  - **<ConceptLink targetId="estar-entre">Intermediación</ConceptLink>**: $A * B * C$ si $A$, $B$ y $C$ son puntos distintos de una misma recta y $B$ está en el arco euclídeo de extremos $A$ y $C$.
+  - **<ConceptLink targetId="congruencia">Congruencia</ConceptLink>**: $\overline{AB} \cong \overline{CD}$ si $d(A, B) = d(C, D)$ para la <ConceptLink targetId="distancia">distancia</ConceptLink> hiperbólica
+    $$
+    d(A, B) = \operatorname{arcosh}\!\left( 1 + \frac{2\,\lVert A - B \rVert^2}{(1 - \lVert A \rVert^2)(1 - \lVert B \rVert^2)} \right)
+    $$
+    y dos <ConceptLink targetId="angulo">ángulos</ConceptLink> son congruentes si los ángulos euclídeos entre las tangentes a sus lados tienen la misma medida.
+
+  La distancia procede del elemento de longitud $ds = \dfrac{2\sqrt{dx^2 + dy^2}}{1 - (x^2 + y^2)}$; cuando un punto se acerca a la frontera, su distancia a cualquier punto fijo del disco tiende a $+\infty$.
+</Definicion>
 
 <Separador />
 
-### Definición del modelo
+### Paralelismo en el modelo
 
-El universo geométrico se restringe al disco abierto unidad $\mathbb{D}^2 = \{(x, y) \in \mathbb{R}^2 \mid x^2 + y^2 < 1\}$:
+Sea <VisualBind element="geodesica-principal" color="terracota">$\ell$</VisualBind> una recta y <VisualBind element="P" color="terracota">$P$</VisualBind> un punto no incidente con ella. Las rectas por $P$ se reparten en tres clases:
 
-- **<ConceptLink targetId="punto">Puntos</ConceptLink>**: Son los puntos interiores del disco abierto. La <VisualBind element="frontera" color="carbon">frontera del disco $\partial \mathbb{D}^2$</VisualBind> representa el horizonte absoluto (puntos en el infinito).
-- **<ConceptLink targetId="recta">Rectas hiperbólicas (geodésicas)</ConceptLink>**: Son las intersecciones con $\mathbb{D}^2$ de:
-  - Diámetros euclídeos que pasan por el centro.
-  - Arcos de <ConceptLink targetId="circunferencia">circunferencias</ConceptLink> euclídeas que cortan a la <VisualBind element="frontera" color="carbon">frontera</VisualBind> de forma estrictamente <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> (ortogonal), como la <VisualBind element="geodesica-principal" color="terracota">recta principal $l$</VisualBind>.
-- **Métrica hiperbólica conforme**: El elemento de longitud diferencial viene dado por el tensor de Poincaré:
-  $$ ds = \frac{2\sqrt{dx^2 + dy^2}}{1 - (x^2 + y^2)} $$
-  A medida que un punto se aproxima a la frontera, la distancia métrica intrínseca diverge a $+\infty$.
+- las que cortan a $\ell$ en un punto de $\mathbb{D}^2$;
+- dos <ConceptLink targetId="paralelas-limite">paralelas límite</ConceptLink>, como <VisualBind element="limite1" color="ocre">la que muestra la figura</VisualBind>, que comparten con $\ell$ un punto ideal de $\partial \mathbb{D}^2$ pero ningún punto del modelo;
+- infinitas <ConceptLink targetId="ultraparalelas">ultraparalelas</ConceptLink>, como <VisualBind element="ultra1" color="canela">esta</VisualBind>, que no tienen con $\ell$ ningún punto común ni en $\mathbb{D}^2$ ni en $\partial \mathbb{D}^2$, y tienen con ella una única <ConceptLink targetId="perpendicular-comun">perpendicular común</ConceptLink>.
+
+Las paralelas límite y las ultraparalelas son <ConceptLink targetId="paralelas">paralelas</ConceptLink> a $\ell$, así que por $P$ pasan infinitas paralelas a $\ell$.
 
 <Separador />
 
-### Verificación del paralelismo hiperbólico
+<SeccionPropiedades>
+  <PropiedadesGrupo title="Satisfacción de axiomas del sistema hiperbólico">
+    <PropiedadItem
+      id="poincare-incidencia"
+      title="Axiomas de incidencia planos"
+    >
+      Por dos puntos distintos de $\mathbb{D}^2$ pasa un único diámetro o una única circunferencia ortogonal a $\partial \mathbb{D}^2$ (<ConceptLink targetId="axioma-incidencia-1">Axioma I.1</ConceptLink>); toda recta tiene infinitos puntos (<ConceptLink targetId="axioma-incidencia-2">Axioma I.2</ConceptLink>), y hay tres puntos no <ConceptLink targetId="colinealidad">colineales</ConceptLink> (<ConceptLink targetId="axioma-incidencia-3">Axioma I.3</ConceptLink>).
+    </PropiedadItem>
 
-El disco de Poincaré verifica con precisión el <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma de las paralelas hiperbólico</ConceptLink>:
+    <PropiedadItem
+      id="poincare-orden"
+      title="Axiomas de orden"
+    >
+      Cada recta es un arco abierto ordenado como un intervalo de $\mathbb{R}$, lo que da los axiomas <ConceptLink targetId="axioma-orden-1">II.1</ConceptLink>–<ConceptLink targetId="axioma-orden-3">II.3</ConceptLink>; cada recta separa el disco en dos regiones, los <ConceptLink targetId="semiplano">semiplanos</ConceptLink>, y se cumple el <ConceptLink targetId="axioma-orden-4">axioma de Pasch</ConceptLink>.
+    </PropiedadItem>
 
-- Dada una <VisualBind element="geodesica-principal" color="terracota">recta hiperbólica $l$</VisualBind> y un <VisualBind element="P" color="terracota">punto exterior $P \notin l$</VisualBind>, existen infinitas rectas hiperbólicas coplanares que pasan por $P$ y no intersecan a $l$.
-- **Paralelas límite (asintóticas)**: Existen exactamente dos geodésicas límite, como <VisualBind element="limite1" color="ocre">la paralela límite</VisualBind>, que comparten un punto frontera ideal en el infinito con $l$.
-- **Ultraparalelas (divergentes)**: Cualquier geodésica contenida estrictamente entre ambas paralelas límite, como la <VisualBind element="ultra1" color="canela">ultraparalela</VisualBind>, no interseca a $l$ ni en el disco ni en la frontera ideal, admitiendo una única perpendicular común.
+    <PropiedadItem
+      id="poincare-congruencia"
+      title="Axiomas de congruencia"
+      formula="z \longmapsto e^{i\varphi}\,\frac{z - a}{1 - \bar{a}\,z}, \quad |a| < 1"
+    >
+      Las transformaciones de Möbius anteriores (y sus composiciones con la conjugación) son las <ConceptLink targetId="isometria">isometrías</ConceptLink> del modelo: conservan $d$ y los ángulos, y actúan transitivamente sobre puntos y direcciones. Con ellas se transportan segmentos y ángulos (<ConceptLink targetId="axioma-congruencia-1">Axioma III.1</ConceptLink>, <ConceptLink targetId="axioma-congruencia-4">Axioma III.4</ConceptLink>), y se verifican <ConceptLink targetId="axioma-congruencia-2">III.2</ConceptLink>, <ConceptLink targetId="axioma-congruencia-3">III.3</ConceptLink> y <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink>.
+    </PropiedadItem>
 
-<Separador />
+    <PropiedadItem
+      id="poincare-paralelas"
+      title="Axioma de las paralelas hiperbólicas"
+    >
+      Como se ha visto, por un punto exterior a una recta pasan infinitas paralelas a ella; en particular, al menos dos, lo que satisface el <ConceptLink targetId="axioma-paralelas-hiperbolico">axioma de las paralelas hiperbólicas</ConceptLink> y refuta el <ConceptLink targetId="axioma-paralelas-euclides">Axioma IV</ConceptLink>.
+    </PropiedadItem>
 
-### Propiedades geométricas
+    <PropiedadItem
+      id="poincare-continuidad"
+      title="Axiomas de continuidad"
+    >
+      La distancia hiperbólica medida desde un punto fijo de una recta establece una <ConceptLink targetId="biyeccion">biyección</ConceptLink> que conserva el orden entre esa recta y $\mathbb{R}$; de la propiedad arquimediana y la completitud de $\mathbb{R}$ se siguen el <ConceptLink targetId="axioma-arquimedes">Axioma V.1</ConceptLink> y el <ConceptLink targetId="axioma-completitud">Axioma V.2</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
 
-- **Conformidad**: La medida del <ConceptLink targetId="angulo">ángulo</ConceptLink> entre dos geodésicas en el modelo coincide exactamente con el ángulo euclídeo entre las curvas tangentes.
-- **Defecto angular y área**: En cualquier <ConceptLink targetId="triangulo">triángulo hiperbólico</ConceptLink> con ángulos $\alpha, \beta, \gamma$, la suma angular satisface $\alpha + \beta + \gamma < \pi$, siendo su área proporcional al defecto angular:
-  $$ \text{Área}(\triangle) = \pi - (\alpha + \beta + \gamma) $$
+  <PropiedadesGrupo title="Propiedades estructurales y métricas">
+    <PropiedadItem
+      id="poincare-area-defecto"
+      title="Área y defecto angular"
+      formula="\operatorname{A}(\triangle ABC) = \pi - (\alpha + \beta + \gamma)"
+    >
+      Si $\alpha$, $\beta$ y $\gamma$ son las medidas en radianes de los ángulos de un <ConceptLink targetId="triangulo">triángulo</ConceptLink>, su suma es menor que $\pi$ y el <ConceptLink targetId="area">área</ConceptLink> hiperbólica del triángulo es igual a su <ConceptLink targetId="defecto-angular">defecto</ConceptLink>. Por tanto, ningún triángulo tiene área mayor o igual que $\pi$.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="poincare-curvatura"
+      title="Curvatura constante"
+      formula="K = -1"
+    >
+      Con el elemento de longitud $ds$, el disco es una superficie riemanniana de <ConceptLink targetId="curvatura">curvatura</ConceptLink> gaussiana constante $-1$; corresponde al plano hiperbólico con constante de longitud $k = 1$.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="poincare-modelo-espacial"
+      title="Modelo espacial"
+      formula="\mathbb{B}^3 = \{ x \in \mathbb{R}^3 \mid \lVert x \rVert < 1 \}"
+    >
+      El disco no tiene planos y por eso no puede satisfacer los axiomas espaciales <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink>–<ConceptLink targetId="axioma-incidencia-8">I.8</ConceptLink>. La bola de Poincaré $\mathbb{B}^3$, cuyos planos son los discos y casquetes esféricos ortogonales a su frontera, es modelo de todo el <ConceptLink targetId="sistema-hiperbolico">sistema hiperbólico</ConceptLink> y, en particular, del <ConceptLink targetId="sistema-absoluto">sistema absoluto</ConceptLink>.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+</SeccionPropiedades>

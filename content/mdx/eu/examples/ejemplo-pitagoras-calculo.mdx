@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "ejemplo",
   title: "Hipotenusaren kalkulua triangelu angeluzuzenean",
-  description: "Pitagorasen teoremaren aplikazioa katetoetatik (5, 12, 13) hipotenusaren luzera kalkulatzeko.",
+  description: "Pitagorasen teoremaren aplikazioa katetoetatik abiatuta hipotenusaren luzera kalkulatzeko: (5, 12, 13) hirukotea.",
   branch: "51M",
   relatedTheorem: "teorema-pitagoras",
   difficulty: "básico",
@@ -13,74 +13,74 @@ export const metadata = {
 import { EjemploPitagorasCalculo } from '@content/diagrams/Ejercicios/EjemploPitagorasCalculo';
 export const Simulation = EjemploPitagorasCalculo;
 
-<Capitular letra="I" />zan bedi <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> <ConceptLink targetId="triangulo-rectangulo">triangelu angeluzuzena</ConceptLink>, <VisualBind element="pC" color="carbon">$C$ erpinean</VisualBind> <ConceptLink targetId="perpendicular">angelu zuzena</ConceptLink> duena. Katetoen luzerak $a = |\overline{CA}| = 5$ (<VisualBind element="segCA" color="canela">$a$ kateto bertikala</VisualBind>) eta $b = |\overline{BC}| = 12$ (<VisualBind element="segBC" color="terracota">$b$ kateto horizontala</VisualBind>) unitatekoak dira hurrenez hurren. Hipotenusaren neurri zehatza <VisualBind element="segAB" color="mora">$c = |\overline{AB}|$</VisualBind> kalkulatzen da eta lortutako hirukote pitagorikoaren aritmetika aztertzen da.
+<Capitular letra="I" />zan bedi <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzena</ConceptLink>, <ConceptLink targetId="angulo-recto">angelu zuzena</ConceptLink> <VisualBind element="pC" color="carbon">$C$</VisualBind> <ConceptLink targetId="vertice">erpinean</ConceptLink> duena. <ConceptLink targetId="cateto">Katetoen</ConceptLink> <ConceptLink targetId="longitud">luzerak</ConceptLink> <VisualBind element="segBC" color="terracota">$a = |BC| = 12$</VisualBind> eta <VisualBind element="segCA" color="canela">$b = |CA| = 5$</VisualBind> unitate dira. <ConceptLink targetId="hipotenusa">Hipotenusaren</ConceptLink> luzera, <VisualBind element="segAB" color="mora">$c = |AB|$</VisualBind>, kalkulatzen da, eta hiru luzerek <ConceptLink targetId="terna-pitagorica">hirukote pitagorikoa</ConceptLink> osatzen dutela egiaztatzen da.
 
 <Separador />
 
-### Problematikaren planteamendua
+### Problemaren planteamendua
 
-Oinarrizko teorema metrikoa erabiliz $c$ hipotenusaren luzera kalkulatzea eta proiektatutako karratuen azalerak egiaztatzea.
+$c$ hipotenusaren luzera <ConceptLink targetId="teorema-pitagoras">Pitagorasen teoremaren</ConceptLink> bidez kalkulatzea, eta kalkulua aldeen gainean eraikitako <ConceptLink targetId="cuadrado">karratuen</ConceptLink> <ConceptLink targetId="teoria-medida-area">azaleren</ConceptLink> arteko erlazio gisa interpretatzea.
 
 <Nota>
-  Hirukote pitagorikoa $a^2 + b^2 = c^2$ ekuazio diofantikoa betetzen duten hiru zenbaki oso positiboz $(a, b, c)$ osatutako multzoa da. $\operatorname{mzk}(a, b, c) = 1$ denean, hirukote primitiboa deritzo.
+  <ConceptLink targetId="terna-pitagorica">Hirukote pitagorikoa</ConceptLink> $a^2 + b^2 = c^2$ <ConceptLink targetId="ecuacion-diofantica">ekuazio diofantikoa</ConceptLink> betetzen duen <ConceptLink targetId="numero-entero">zenbaki oso</ConceptLink> positiboen $(a, b, c)$ hirukotea da. Gainera $\operatorname{zkh}(a, b, c) = 1$ bada (<ConceptLink targetId="maximo-comun-divisor">zatitzaile komun handiena</ConceptLink>), hirukotea primitiboa da.
 </Nota>
 
 <Separador />
 
 <Solucion label="Ebazpena urratsez urrats">
-  <Paso numero={1} id="datos" titulo="Hasierako datuak eta hipotesia">
-    Triangeluaren kateto perpendikularren neurri ezagunak honako hauek dira:
+  <Paso numero={1} id="datos" titulo="Problemaren datuak">
+    <ConceptLink targetId="triangulo-rectangulo">Triangelu angeluzuzenaren</ConceptLink> datuak hauek dira:
     
-    - <VisualBind element="segCA" color="canela">$a$ kateto bertikala</VisualBind>: $a = 5$
-    - <VisualBind element="segBC" color="terracota">$b$ kateto horizontala</VisualBind>: $b = 12$
-    - <VisualBind element="rightAng" color="carbon">Angelu zuzena</VisualBind> $C$ erpinean: $\angle ACB = 90^\circ$
+    - <VisualBind element="segBC" color="terracota">$a$ katetoa</VisualBind>: $a = |BC| = 12$
+    - <VisualBind element="segCA" color="canela">$b$ katetoa</VisualBind>: $b = |CA| = 5$
+    - <VisualBind element="rightAng" color="carbon">Angelu zuzena</VisualBind> $C$ erpinean: $|\angle ACB| = 90^\circ$ (<ConceptLink targetId="medida-angular">angelu-neurria</ConceptLink>)
     
-    $c$ hipotenusaren luzera problemaren ezezaguna da, $C$ erpinaren kontrako zuzenkia izanik.
+    Ezezaguna <ConceptLink targetId="hipotenusa">hipotenusaren</ConceptLink> $c = |AB|$ luzera da, hau da, angelu zuzenaren aurkako <ConceptLink targetId="lado">aldearena</ConceptLink>.
   </Paso>
 
   <Paso numero={2} id="calculo" titulo="Pitagorasen teoremaren aplikazioa">
-    <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pitagorasen teoremaren</ConceptLink> arabera, triangelu angeluzuzenean funtsezko erlazio metriko hau betetzen da:
+    <ConceptLink targetId="teorema-pitagoras" isDependency={true}>Pitagorasen teoremaren</ConceptLink> arabera, triangelu angeluzuzenean hau betetzen da:
     
     <Formula>
       $$ a^2 + b^2 = c^2 $$
     </Formula>
     
-    Kateto ezagunen balioak ordezkatuz:
+    Katetoen luzera ezagunak ordezkatuz:
     
     <Formula>
-      $$ 5^2 + 12^2 = c^2 $$
+      $$ 12^2 + 5^2 = c^2 $$
     </Formula>
     
-    Geometrikoki, berdintza honek karratuen azaleren gehigarritasuna adierazten du: <VisualBind element="sqCA" color="canela">$a^2 = 25$ azalerako karratuari</VisualBind> <VisualBind element="sqBC" color="terracota">$b^2 = 144$ azalerako karratua</VisualBind> batuz gero, <VisualBind element="sqAB" color="mora">$c^2$ azalerako karratua</VisualBind> lortzen da:
+    <ConceptLink targetId="teoria-medida-area">Azaleraren</ConceptLink> ikuspegitik, <VisualBind element="sqBC" color="terracota">$a^2 = 144$ azalerako karratuak</VisualBind> eta <VisualBind element="sqCA" color="canela">$b^2 = 25$ azalerako karratuak</VisualBind> batera <VisualBind element="sqAB" color="mora">$c^2$ azalerako karratuaren</VisualBind> azalera osatzen dute:
     
     <Formula>
-      $$ 25 + 144 = 169 $$
+      $$ 144 + 25 = 169 $$
     </Formula>
   </Paso>
 
-  <Paso numero={3} id="resolucion" titulo="Hipotenusaren bakantze aljebraikoa">
-    Azaleren batura ezezagunaren karratuarekin berdinduz:
+  <Paso numero={3} id="resolucion" titulo="Hipotenusaren bakantzea">
+    Azaleren baturak ezezagunaren karratua ematen du:
     
     <Formula>
       $$ c^2 = 169 $$
     </Formula>
     
-    Bi kideetan erro karratu positiboa hartuz (distantzia geometriko erreala beti $c > 0$ denez):
+    $c$ luzera bat denez, $c > 0$ da, eta <ConceptLink targetId="raiz-cuadrada">erro karratu</ConceptLink> positiboa hartzen da:
     
     <Formula>
       $$ c = \sqrt{169} = 13 $$
     </Formula>
     
-    Ondorioz, <VisualBind element="segAB" color="mora">$c$ hipotenusaren</VisualBind> luzera zehazki $13$ unitatekoa da.
+    <VisualBind element="segAB" color="mora">Hipotenusak</VisualBind> $13$ unitate neurtzen ditu.
   </Paso>
 
   <Paso numero={4} id="terna" titulo="Hirukote pitagorikoaren egiaztapena">
-    $(5, 12, 13)$ luzerak zenbaki oso positiboak dira eta erlazio pitagorikoa betetzen dute:
+    $(a, b, c) = (12, 5, 13)$ luzerak zenbaki oso positiboak dira, eta erlazio pitagorikoa betetzen dute:
     
     <Formula>
-      $$ 5^2 + 12^2 = 25 + 144 = 169 = 13^2 $$
+      $$ 12^2 + 5^2 = 144 + 25 = 169 = 13^2 $$
     </Formula>
     
-    $\operatorname{mzk}(5, 12, 13) = 1$ denez, $(5, 12, 13)$ hirukote pitagoriko primitiboa da.
+    $\operatorname{zkh}(12, 5, 13) = 1$ denez, $(5, 12, 13)$ <ConceptLink targetId="terna-pitagorica">hirukote pitagorikoa</ConceptLink> primitiboa da.
   </Paso>
 </Solucion>

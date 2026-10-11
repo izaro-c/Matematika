@@ -606,7 +606,17 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Mueve A, B y C"
+  "note": "Mueve A, B y C: la longitud de cualquier lado es siempre menor que la suma de los otros dos.",
+  "translations": {
+    "eu": {
+      "title": "Triangelu-desberdintza",
+      "note": "Mugitu A, B eta C: edozein alderen luzera beste bien batura baino txikiagoa da beti."
+    },
+    "en": {
+      "title": "Triangle Inequality",
+      "note": "Move A, B, and C: the length of any side is always strictly less than the sum of the other two."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

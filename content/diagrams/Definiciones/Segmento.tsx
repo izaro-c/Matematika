@@ -230,7 +230,17 @@ export const SegmentoSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve A o B"
+  "note": "Mueve A o B",
+  "translations": {
+    "eu": {
+      "title": "Zuzenkia",
+      "note": "Mugitu A edo B"
+    },
+    "en": {
+      "title": "Segment",
+      "note": "Move A or B"
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

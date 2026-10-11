@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "V.2 axioma (Zuzen-osotasunaren axioma)",
-  description: "Zuzen bateko puntuen Dedekind-en ebakidura jarraitu orok muga-puntu bakar eta zehatz bat du.",
+  description: "Zuzen bateko puntuen sistemak bere ordena- eta kongruentzia-erlazioekin ez du hedapenik onartzen aurreko axiomak gordez; era baliokidean, bipartizio konexu orok elementu banatzaile bakarra du.",
   branch: "51M",
   axiomSystem: "sistema-absoluto",
   axiomFamily: "continuidad",
@@ -17,31 +17,28 @@ export const metadata = {
 import { AxiomaDedekind } from '@content/diagrams/Axiomas/AxiomaDedekind';
 export const Simulation = AxiomaDedekind;
 
-<Capitular letra="Z" />uzen-osotasunaren axiomak —<ConceptLink targetId="dedekind">Richard Dedekinden</ConceptLink> jarraitutasun-printzipioan oinarritua eta <ConceptLink targetId="hilbert">David Hilbertek</ConceptLink> formalizatua— hutsune edo etengabeko etenik eza bermatzen du zuzen geometrikoan. Ezarri egiten du <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bateko <ConceptLink targetId="punto" isDependency={true}>puntuen</ConceptLink> partizio jarraitu orok muga-puntu bakar bat duela.
+<Capitular letra="Z" /><ConceptLink targetId="recta" isDependency={true}>uzen</ConceptLink> bateko <ConceptLink targetId="punto" isDependency={true}>puntuek</ConceptLink> eta horien <ConceptLink targetId="estar-entre" isDependency={true}>ordena-</ConceptLink> zein <ConceptLink targetId="congruencia" isDependency={true}>kongruentzia-erlazio</ConceptLink> linealek osatutako sistemak ez du inolako hedapenik edo gehikuntzarik onartzen intzidentzia-, ordena- eta kongruentzia-axiomen eta <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Arkimedesen axiomaren</ConceptLink> baliozkotasuna aldi berean gordetzen duenik zuzen horretan.
 
-<Definicion title="Enuntziatu formala">
-  Izan bedi $l \in \mathcal{L}$ <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> bat. $l$ zuzeneko puntu guztiak bi $\Sigma_1$ eta $\Sigma_2$ klase ez-hutsetan banatzen badira ($l = \Sigma_1 \cup \Sigma_2$, $\Sigma_1 \cap \Sigma_2 = \emptyset$) $\Sigma_1$-eko puntu bat bera ere $\Sigma_2$-ko bi punturen <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> ez egoteko moduan eta alderantziz, orduan $P \in l$ <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> bakarra existitzen da bi klaseak zorrozki banatzen dituena:
+<ConceptLink targetId="dedekind">Richard Dedekinden</ConceptLink> ebakiduraren bidezko formulazio sintetiko baliokidean, zuzen bateko puntuen <ConceptLink targetId="particion">bipartizio</ConceptLink> konexu orok elementu banatzaile bakar bat du bi klase ez-hutsetan. Printzipio honek zuzen geometrikoaren erabateko <ConceptLink targetId="continuidad">jarraitutasuna</ConceptLink> bermatzen du, geometrian edozein motatako pitzadura, jauzi edo hutsune infinitesimal baztertuz.
+
+<Definicion title="V.2 axioma (Zuzen-osotasuna / Dedekinden jarraitutasuna)">
+  Izan bedi $\ell \in \mathcal{L}$ <ConceptLink targetId="recta">zuzen</ConceptLink> bat, $\operatorname{tr}(\ell)$ <ConceptLink targetId="traza">puntu-trazadurarekin</ConceptLink>. $\ell$ zuzeneko <ConceptLink targetId="punto">puntu</ConceptLink> guztiak bi $\Sigma_1$ eta $\Sigma_2$ klase ez-huts eta <ConceptLink targetId="conjunto-disjunto">disjuntutan</ConceptLink> banatzen badira ($\operatorname{tr}(\ell) = \Sigma_1 \cup \Sigma_2$ eta $\Sigma_1 \cap \Sigma_2 = \emptyset$), non $\Sigma_1$-eko puntu bat bera ere ez den $\Sigma_2$-ko bi punturen <ConceptLink targetId="estar-entre">artean</ConceptLink> geratzen eta alderantziz, orduan $P \in \operatorname{tr}(\ell)$ puntu bakarra existitzen da non edozein $A \in \Sigma_1 \setminus \{P\}$ eta $B \in \Sigma_2 \setminus \{P\}$ puntutarako $P$ puntua $A$ eta $B$ puntuen artean kokatzen den ($A * P * B$):
   $$
-  \forall \text{ partizio } (\Sigma_1, \Sigma_2), \ \exists! P \in l \ \bigl(\forall A \in \Sigma_1 \setminus \{P\}, \forall B \in \Sigma_2 \setminus \{P\} \implies A\text{-}P\text{-}B\bigr)
+  \forall \Sigma_1, \Sigma_2 \subseteq \operatorname{tr}(\ell) \ \Bigl(\operatorname{biparticion-conexa}(\Sigma_1, \Sigma_2, \ell) \implies \exists! P \in \operatorname{tr}(\ell) \ \forall A \in \Sigma_1 \setminus \{P\}, \, \forall B \in \Sigma_2 \setminus \{P\} \ (A * P * B)\Bigr)
   $$
+  <ConceptLink targetId="hilbert">David Hilberten</ConceptLink> maximaltasun-printzipioaren arabera, ezinezkoa da zuzen bati puntu berriak gehitzea lortutako egitura zabalduak <ConceptLink targetId="estar-entre">ordenaren</ConceptLink> eta <ConceptLink targetId="congruencia">kongruentziaren</ConceptLink> axiomak zein <ConceptLink targetId="axioma-arquimedes">Arkimedesen axioma</ConceptLink> betetzen jarrai dezan.
 </Definicion>
 
 <Separador />
 
 ### Ikus-irudikapena eta elkarrekintza
 
-Simulazio interaktiboan, <VisualBind element="recta" color="carbon">$l$</VisualBind> zuzen jarraitua ezkerreko <VisualBind element="claseL" color="terracota">$\Sigma_1$</VisualBind> klasean eta eskuineko <VisualBind element="claseR" color="marino">$\Sigma_2$</VisualBind> klasean banatzen da. <VisualBind element="pP" color="ocre">$P$</VisualBind> ebakidura-puntu mugikorrak muga banatzaile uniboko gisa jokatzen du; $P$ zuzenean zehar mugitzean, partizioa etengabe eguneratzen da inolako arrakala edo zehaztu gabeko punturik utzi gabe.
+Simulazio interaktiboan, <VisualBind element="recta" color="mora">$\ell$</VisualBind> zuzen jarraitua ezkerreko <VisualBind element="claseL" color="carbon">$\Sigma_1$</VisualBind> klasean eta eskuineko <VisualBind element="claseR" color="canela">$\Sigma_2$</VisualBind> klasean banatzen da. <VisualBind element="pP" color="terracota">$P$</VisualBind> ebakidura-puntu mugikorrak Dedekindek postulatutako muga banatzailea gorpuzten du: $P$ zuzenean zehar aske mugitzean, bi klaseak dinamikoki berregokitzen dira partizio perfektua gordez, inolako zirrikiturik edo puntu zehaztugaberik sortu gabe.
 
 <Separador />
 
-### Esanahi geometrikoa eta esparrua
+### Esanahi geometrikoa eta hedadura deduktiboa
 
-Zuzen sintetikoaren eta $\mathbb{R}$ zenbaki errealen gorputzaren arteko korrespondentzia bijektibo eta isomorfoa bermatzen du. Zirkunferentzien eta zuzen ebakitzaileen arteko ebakiduren existentzia frogatzea ahalbidetzen du, analisi matematikoa modu zorrotzean oinarrituz <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>.
+Zuzen-osotasunaren axiomak espazio jarraituaren oinarri hilbertarra burutzen du, <ConceptLink targetId="recta">zuzen</ConceptLink> geometriko sintetikoaren eta $\mathbb{R}$ zenbaki errealen <ConceptLink targetId="cuerpo">gorputz</ConceptLink> ordenatu jarraituaren arteko <ConceptLink targetId="isomorfismo">isomorfismo</ConceptLink> estruktural osoa bermatuz.
 
-<Separador />
-
-### Propietateak
-
-- **Jarraitutasun perfektua:** Zuzen geometrikoko edozein hutsune infinitesimal edo arrakala topologiko ezabatzen du.
-- **$\mathbb{R}$-rekiko isomorfismoa:** <ConceptLink targetId="axioma-arquimedes">Arkimedesen axiomarekin</ConceptLink> batera, zuzen geometrikoa $\mathbb{R}$ zuzen erreal euklidearrarekiko homeomorfoa eta isomorfoa dela ziurtatzen du.
-- **Kurba jarraituen ebakidura:** Eremu zirkular batean sartzen den zuzen batek haren zirkunferentzia-muga ebakitzen duela bermatzen du.
+Printzipio honek behin betiko ebazten ditu <ConceptLink targetId="euclides">Euklidesen</ConceptLink> *Elementuak* lanaren gabeziak; izan ere, lan klasiko horretan <ConceptLink targetId="secante">zuzen ebakitzaileen</ConceptLink> eta <ConceptLink targetId="circunferencia">zirkunferentzia</ConceptLink> bezalako kurba itxien arteko ebakidurak —edo bi zirkunferentzia ebakitzaileren artekoak— berezko froga formalik gabeko ebidentzia grafiko hutsez onartzen ziren. $\mathbb{Q}^2$ koordenatu arrazionaletara mugatutako eredu batean, zuzen ebakitzaile batek zirkunferentzia bat zeharka dezake inolako ebakidura-punturik partekatu gabe; V.2 axiomak formalki bermatzen du ebakidura-puntu horien existentzia, analisi matematikorako eta geometria diferentzialerako ezinbesteko giltzarria eskainiz.

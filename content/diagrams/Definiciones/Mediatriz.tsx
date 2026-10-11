@@ -518,7 +518,17 @@ export const MediatrizSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastra P sobre la mediatriz"
+  "note": "Arrastra P sobre la mediatriz",
+  "translations": {
+    "eu": {
+      "title": "Erdibitzaile perpendikularra",
+      "note": "Arrastatu P erdibitzailean zehar"
+    },
+    "en": {
+      "title": "Perpendicular Bisector",
+      "note": "Drag P along the perpendicular bisector"
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

@@ -13,15 +13,37 @@ export const DemoDosRectasUnPuntoSpec = createDiagramSpec(
   "grid": false,
   "showLabels": true,
   "viewport": {
-    "bounds": [-5, 5, 5, -5],
-    "home": [-5, 5, 5, -5],
+    "bounds": [
+      -5,
+      5,
+      5,
+      -5
+    ],
+    "home": [
+      -5,
+      5,
+      5,
+      -5
+    ],
     "minZoom": 0.2,
     "maxZoom": 10,
     "padding": 0.16
   },
   "layers": [
-    { "id": "geometry", "label": "Geometría", "order": 0, "visible": true, "locked": false },
-    { "id": "annotations", "label": "Anotaciones", "order": 1, "visible": true, "locked": false }
+    {
+      "id": "geometry",
+      "label": "Geometría",
+      "order": 0,
+      "visible": true,
+      "locked": false
+    },
+    {
+      "id": "annotations",
+      "label": "Anotaciones",
+      "order": 1,
+      "visible": true,
+      "locked": false
+    }
   ],
   "groups": [],
   "objects": [
@@ -34,13 +56,28 @@ export const DemoDosRectasUnPuntoSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Punto P", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto P",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "pP",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 0, "y": 0 },
-      "mobility": { "type": "free" },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 0,
+        "y": 0
+      },
+      "mobility": {
+        "type": "free"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
     },
     {
       "id": "pA",
@@ -51,11 +88,23 @@ export const DemoDosRectasUnPuntoSpec = createDiagramSpec(
       "visible": false,
       "locked": true,
       "groupIds": [],
-      "selection": { "selectable": false, "ariaLabel": "Punto A", "role": "construction" },
+      "selection": {
+        "selectable": false,
+        "ariaLabel": "Punto A",
+        "role": "construction"
+      },
       "target": false,
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": -3, "y": -1 },
-      "mobility": { "type": "fixed" }
+      "definition": {
+        "type": "coordinates",
+        "x": -3,
+        "y": -1
+      },
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "pB",
@@ -66,33 +115,23 @@ export const DemoDosRectasUnPuntoSpec = createDiagramSpec(
       "visible": false,
       "locked": true,
       "groupIds": [],
-      "selection": { "selectable": false, "ariaLabel": "Punto B", "role": "construction" },
+      "selection": {
+        "selectable": false,
+        "ariaLabel": "Punto B",
+        "role": "construction"
+      },
       "target": false,
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 3, "y": -1 },
-      "mobility": { "type": "fixed" }
-    },
-    {
-      "id": "rectaL",
-      "label": "l",
-      "color": "carbon",
-      "layerId": "geometry",
-      "order": 5,
-      "visible": true,
-      "locked": false,
-      "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Recta l", "role": "primary" },
-      "target": true,
-      "targetId": "rectaL",
-      "objectType": "path",
-      "geometry": {
-        "type": "line",
-        "construction": {
-          "type": "through-points",
-          "points": ["pP", "pA"]
-        }
+      "definition": {
+        "type": "coordinates",
+        "x": 3,
+        "y": -1
       },
-      "appearance": { "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+      "mobility": {
+        "type": "fixed"
+      },
+      "appearance": {},
+      "interaction": {}
     },
     {
       "id": "pQ",
@@ -103,13 +142,61 @@ export const DemoDosRectasUnPuntoSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Punto Q", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Punto Q",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "pQ",
       "objectType": "point",
-      "definition": { "type": "coordinates", "x": 3, "y": 1 },
-      "mobility": { "type": "on-support", "support": "rectaL" },
-      "appearance": { "size": 6, "labelVisible": true, "preserveColorOnHighlight": true }
+      "definition": {
+        "type": "coordinates",
+        "x": 3,
+        "y": 1
+      },
+      "mobility": {
+        "type": "on-support",
+        "support": "rectaL"
+      },
+      "appearance": {
+        "size": 6,
+        "labelVisible": true,
+        "preserveColorOnHighlight": true
+      },
+      "interaction": {}
+    },
+    {
+      "id": "rectaL",
+      "label": "l",
+      "color": "carbon",
+      "layerId": "geometry",
+      "order": 5,
+      "visible": true,
+      "locked": false,
+      "groupIds": [],
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta l",
+        "role": "primary"
+      },
+      "target": true,
+      "targetId": "rectaL",
+      "objectType": "path",
+      "geometry": {
+        "type": "line",
+        "construction": {
+          "type": "through-points",
+          "points": [
+            "pP",
+            "pA"
+          ]
+        }
+      },
+      "appearance": {
+        "strokeWidth": 2.5,
+        "preserveColorOnHighlight": true
+      }
     },
     {
       "id": "rectaM",
@@ -120,7 +207,11 @@ export const DemoDosRectasUnPuntoSpec = createDiagramSpec(
       "visible": true,
       "locked": false,
       "groupIds": [],
-      "selection": { "selectable": true, "ariaLabel": "Recta m", "role": "primary" },
+      "selection": {
+        "selectable": true,
+        "ariaLabel": "Recta m",
+        "role": "primary"
+      },
       "target": true,
       "targetId": "rectaM",
       "objectType": "path",
@@ -128,10 +219,16 @@ export const DemoDosRectasUnPuntoSpec = createDiagramSpec(
         "type": "line",
         "construction": {
           "type": "through-points",
-          "points": ["pP", "pB"]
+          "points": [
+            "pP",
+            "pB"
+          ]
         }
       },
-      "appearance": { "strokeWidth": 2.5, "preserveColorOnHighlight": true }
+      "appearance": {
+        "strokeWidth": 2.5,
+        "preserveColorOnHighlight": true
+      }
     }
   ],
   "relations": [],
@@ -140,40 +237,77 @@ export const DemoDosRectasUnPuntoSpec = createDiagramSpec(
       "id": "step1",
       "label": "Intersección en P",
       "description": "Dos rectas distintas l y m se cortan exactamente en un único punto P.",
-      "visibleTargets": ["pP", "rectaL", "rectaM"],
+      "visibleTargets": [
+        "pP",
+        "rectaL",
+        "rectaM"
+      ],
       "durationMs": 1000,
       "objectStates": {
-        "pP": { "visible": true, "emphasis": "primary" },
-        "rectaL": { "visible": true },
-        "rectaM": { "visible": true },
-        "pQ": { "visible": true }
+        "pP": {
+          "visible": true,
+          "emphasis": "primary"
+        },
+        "rectaL": {
+          "visible": true
+        },
+        "rectaM": {
+          "visible": true
+        },
+        "pQ": {
+          "visible": true
+        }
       }
     },
     {
       "id": "step2",
       "label": "Punto Q en l",
       "description": "Tomamos un segundo punto Q perteneniente a la recta l.",
-      "visibleTargets": ["pP", "pQ", "rectaL", "rectaM"],
+      "visibleTargets": [
+        "pP",
+        "pQ",
+        "rectaL",
+        "rectaM"
+      ],
       "durationMs": 1000,
       "objectStates": {
-        "pP": { "visible": true },
-        "pQ": { "visible": true, "emphasis": "primary" },
-        "rectaL": { "visible": true },
-        "rectaM": { "visible": true }
+        "pP": {
+          "visible": true
+        },
+        "pQ": {
+          "visible": true,
+          "emphasis": "primary"
+        },
+        "rectaL": {
+          "visible": true
+        },
+        "rectaM": {
+          "visible": true
+        }
       }
     },
     {
       "id": "step3",
       "label": "Giro de la recta m",
       "description": "Si la recta m gira hasta contener también a Q...",
-      "visibleTargets": ["pP", "pQ", "rectaL", "rectaM"],
+      "visibleTargets": [
+        "pP",
+        "pQ",
+        "rectaL",
+        "rectaM"
+      ],
       "durationMs": 1000
     },
     {
       "id": "step4",
       "label": "Coincidencia de rectas",
       "description": "Si dos rectas tienen dos puntos distintos en común (P y Q), ambas rectas deben coincidir.",
-      "visibleTargets": ["pP", "pQ", "rectaL", "rectaM"],
+      "visibleTargets": [
+        "pP",
+        "pQ",
+        "rectaL",
+        "rectaM"
+      ],
       "durationMs": 1000
     }
   ],

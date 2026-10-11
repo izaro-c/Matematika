@@ -5,25 +5,33 @@ export const metadata = {
   name: "Richard Dedekind",
   birthYear: 1831,
   deathYear: 1916,
-  country: "Germany",
+  country: "Brunswick (Germany)",
   title: "Richard Dedekind",
-  description: "German mathematician who rigorously formalized the real numbers via Dedekind cuts and revolutionized abstract algebra through the theory of ideals.",
+  description: "German mathematician who constructed the real numbers by means of cuts, created the theory of ideals and gave a set-theoretic foundation of the natural numbers.",
   branch: "01A"
 };
 
-<Capitular letra="R" />ichard Dedekind (1831–1916) was a German mathematician whose foundational work transformed the modern understanding of the real continuum, arithmetic, and abstract algebraic structures.
+<Capitular letra="R" />ichard Dedekind (1831–1916) was a German mathematician who was born and died in Brunswick. He obtained his doctorate at Göttingen in 1852 under <ConceptLink targetId="gauss">Carl Friedrich Gauss</ConceptLink> and was later trained alongside <ConceptLink targetId="dirichlet">Peter Gustav Lejeune Dirichlet</ConceptLink> and <ConceptLink targetId="riemann">Bernhard Riemann</ConceptLink>. After teaching at the Zurich Polytechnic (1858–1862), he was professor at the Technical University of Brunswick for the rest of his life. His work contributed decisively to the arithmetization of analysis and to the structural approach of modern algebra.
 
 <Separador />
 
 ### Main Contributions
 
-- **Dedekind Cuts**: In *Stetigkeit und irrationale Zahlen* (Continuity and Irrational Numbers, 1872), he constructed the real number continuum $\mathbb{R}$ purely from the rational numbers $\mathbb{Q}$ using ordered set partitions $(A, B)$, giving a precise definition to the <ConceptLink targetId="axioma-completitud">axiom of completeness</ConceptLink>.
-- **Theory of Ideals**: Introduced the foundational concept of an *ideal* in commutative rings to restore unique prime factorization in algebraic number fields, effectively founding commutative algebra and modern algebraic number theory.
-- **Foundations of Natural Numbers**: In *Was sind und was sollen die Zahlen?* (What are numbers and what should they be?, 1888), he provided the first rigorous set-theoretic definition of infinite sets and the logic of mathematical induction, anticipating Peano's axioms.
-- **Lattice and Module Theory**: Pioneered the structural study of modules, algebraic lattices (*Dualgruppen*), and abstract homomorphisms.
+- **Cuts and real numbers**: In *Stetigkeit und irrationale Zahlen* (1872) he constructed the <ConceptLink targetId="cuerpo">field</ConceptLink> of real numbers from the rationals. A cut is a <ConceptLink targetId="particion">partition</ConceptLink> of the rationals into two non-empty classes $(A, B)$ such that every element of $A$ is less than every element of $B$; each real number corresponds to a cut. Dedekind took as the essence of the <ConceptLink targetId="continuidad">continuity</ConceptLink> of the <ConceptLink targetId="recta">line</ConceptLink> the property that every cut of its points is produced by exactly one point. In the axiomatics of <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>, this Dedekind property is not the <ConceptLink targetId="axioma-completitud">axiom of completeness</ConceptLink> (Axiom V.2) on its own: in the presence of the axioms of <ConceptLink targetId="estar-entre">order</ConceptLink>, it is equivalent to the conjunction of the <ConceptLink targetId="axioma-arquimedes">Archimedean axiom</ConceptLink> (Axiom V.1) and the axiom of completeness.
+- **Theory of ideals**: In the supplements to Dirichlet's *Vorlesungen über Zahlentheorie*, which he edited (1871, 1879 and 1894), he introduced <ConceptLink targetId="ideal">ideals</ConceptLink> to recover unique factorization in rings of algebraic integers. In doing so he shaped notions such as <ConceptLink targetId="cuerpo">field</ConceptLink> (the term *Körper* is his), <ConceptLink targetId="anillo">ring</ConceptLink> and <ConceptLink targetId="modulo">module</ConceptLink>, and made systematic use of the concept of <ConceptLink targetId="grupo">group</ConceptLink> in Galois theory.
+- **Foundation of the natural numbers**: In *Was sind und was sollen die Zahlen?* (1888) he defined an <ConceptLink targetId="conjunto-infinito">infinite set</ConceptLink> as one that admits a <ConceptLink targetId="biyeccion">bijection</ConceptLink> with a proper subset, characterized the natural numbers through the notion of chain, and justified the principle of <ConceptLink targetId="metodo-induccion">mathematical induction</ConceptLink> and definitions by recursion. The axioms that <ConceptLink targetId="peano">Giuseppe Peano</ConceptLink> published in 1889 acknowledge this work as their source.
+- **Lattices**: In 1897 and 1900 he studied the structures he called *Dualgruppen*, now <ConceptLink targetId="reticulo">lattices</ConceptLink>, including the modular law, decades before the theory was developed systematically.
 
 <Separador />
 
 ### Influence and Legacy
 
-Dedekind freed mathematical analysis from its historical reliance on spatial intuition, completing the *arithmetization of analysis*. His conceptual and structural methodology directly influenced Emmy Noether, David Hilbert, and the twentieth-century Bourbaki group.
+Dedekind showed that continuity can be defined without appealing to geometric intuition. His ideals were the starting point of the algebra of <ConceptLink targetId="noether">Emmy Noether</ConceptLink>, who used to say "it is all already in Dedekind", and his correspondence with <ConceptLink targetId="cantor">Georg Cantor</ConceptLink> accompanied the birth of set theory.
+
+<Separador />
+
+### Notable Works
+
+- *Stetigkeit und irrationale Zahlen* (1872) — Construction of the real numbers by means of cuts.
+- Supplements to Dirichlet's *Vorlesungen über Zahlentheorie* (1871–1894) and *Sur la théorie des nombres entiers algébriques* (1876–1877) — Theory of <ConceptLink targetId="ideal">ideals</ConceptLink>.
+- *Was sind und was sollen die Zahlen?* (1888) — Definition of infinite set and foundation of arithmetic.

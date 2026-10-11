@@ -2,55 +2,89 @@ export const metadata = {
   id: "circunferencia",
   lang: "en",
   type: "definicion",
-  subtype: "nominal",
+  subtype: "derivado",
   title: "Circle",
-  description: "Geometric locus of all planar points equidistant from a fixed center point.",
+  description: "Set of the points of a plane such that the segment joining them to a fixed point, the centre, is congruent to a given segment.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometria-sintetica", "circunferencia", "congruencia"],
   hasSimulation: true,
   sources: [
-    { title: "Elements", author: "Euclid", locator: "Book I, Definition 15", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §4", role: "primary" }
+    { title: "Elements", author: "Euclid", locator: "Book I, Definitions 15–17", role: "primary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Chapter 2", role: "formalization" }
   ]
 };
 
 import { Circunferencia } from '@content/diagrams/Definiciones/Circunferencia';
 export const Simulation = Circunferencia;
 
-<Capitular letra="A" /> circle (or circumference) is the one-dimensional geometric locus of all <ConceptLink targetId="punto">points</ConceptLink> in a plane equidistant from a fixed center. It is the fundamental closed curve of planar geometry, bounding the two-dimensional convex region known as a disk or <VisualBind element="circulo" color="pavo">circle</VisualBind>.
+<Capitular letra="T" />he circle with centre $O$ through a point $A$ is the set of the <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> $P$ of the <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> for which the <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> $\overline{OP}$ is <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> to $\overline{OA}$.
 
-<Definicion title="">
-  Given a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> <VisualBind element="centro" color="musgo">$O$</VisualBind> in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\mathcal{P}$ and a positive real number $r > 0$, the circle <VisualBind element="circunferencia" color="musgo">$\mathcal{C}(O, r)$</VisualBind> of center $O$ and <VisualBind element="radio" color="pavo">radius</VisualBind> $r$ is the set of points $P \in \mathcal{P}$ whose distance to $O$ is identically $r$:
-  $$
-  \mathcal{C}(O, r) = \{ P \in \mathcal{P} \mid d(O, P) = r \}
-  $$
-  In Cartesian coordinates on $\mathbb{R}^2$ with center at $(x_0, y_0)$:
-  $$
-  (x - x_0)^2 + (y - y_0)^2 = r^2
-  $$
+The definition uses only congruence of segments, without numbers or distances, and therefore makes sense in <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>. When <ConceptLink targetId="longitud">length</ConceptLink> is available, it admits the usual metric description: the points at distance $r$ from the centre.
+
+<Definicion title="Definition of circle">
+Let <VisualBind element="centro" color="terracota">$O$</VisualBind> and $A$ be two distinct <ConceptLink targetId="punto">points</ConceptLink> of a <ConceptLink targetId="plano">plane</ConceptLink> $\sigma$. The **circle** with centre $O$ through $A$ is
+
+$$
+\mathcal{C}(O, A) = \{\, P \in \operatorname{tr}(\sigma) \mid \overline{OP} \cong \overline{OA} \,\}.
+$$
+
+Each segment $\overline{OP}$ with $P \in \mathcal{C}(O, A)$ is a <VisualBind element="radio" color="carbon"><ConceptLink targetId="radio">radius</ConceptLink></VisualBind>. The **disc** <VisualBind element="circulo" color="pavo">$\mathcal{D}(O, A)$</VisualBind> is the region formed by the circle and its <ConceptLink targetId="interior">interior</ConceptLink>, the points $P$ with $\overline{OP} < \overline{OA}$ (<ConceptLink targetId="orden-segmentos">order of segments</ConceptLink>).
+
+**Metric version.** If $r = |OA|$, the <VisualBind element="circunferencia" color="carbon">circle</VisualBind> is $\mathcal{C}(O, r) = \{\, P \in \operatorname{tr}(\sigma) \mid |OP| = r \,\}$.
+
+**Analytic version.** In the <ConceptLink targetId="modelo-cartesiano">Cartesian model</ConceptLink> $\mathbb{R}^2$, with centre $(x_0, y_0)$, it is the solution set of
+
+$$
+(x - x_0)^2 + (y - y_0)^2 = r^2.
+$$
 </Definicion>
 
-<Separador />
+### Elements
 
-### Linear elements and associated lines
-
-The geometry of the circle includes various fundamental linear elements:
-
-| Element | Geometric definition | Expression or property |
-|---|---|---|
-| <VisualBind element="cuerda" color="ocre">Chord</VisualBind> | Line segment joining two points on the curve | $\overline{AB} \text{ with } A, B \in \mathcal{C}$ |
-| <VisualBind element="diametro" color="terracota">Diameter</VisualBind> | Longest chord passing through the center | $d = 2r$ |
-| <VisualBind element="arco" color="canela">Arc</VisualBind> | Continuous portion of the circle between two points | $\widehat{AB} \subset \mathcal{C}$ |
-| <VisualBind element="tangente" color="mora">Tangent line</VisualBind> | Line intersecting the circle at exactly one point | Orthogonal to the radius at the tangency point |
+| Element | Definition |
+|---|---|
+| <VisualBind element="cuerda" color="ocre"><ConceptLink targetId="cuerda">Chord</ConceptLink></VisualBind> | Segment $\overline{QR}$ whose endpoints are points of the circle |
+| <VisualBind element="diametro" color="terracota"><ConceptLink targetId="diametro">Diameter</ConceptLink></VisualBind> | Chord through the centre; its length is $2r$ |
+| <VisualBind element="arco" color="musgo"><ConceptLink targetId="arco">Arc</ConceptLink></VisualBind> | Part of the circle between two of its points and lying in one of the half-planes of the chord |
+| <VisualBind element="tangente" color="ocre"><ConceptLink targetId="recta-tangente">Tangent line</ConceptLink></VisualBind> | Line of the plane with exactly one point in common with the circle |
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Metric properties and symmetry">
-    <PropiedadItem id="axioma-arquimedes" title="Perimeter and $\pi$">
-      The perimeter length of the closed curve satisfies $P = 2\pi r$.
+  <PropiedadesGrupo title="Absolute properties">
+    <PropiedadItem
+      id="interseccion-recta-circunferencia"
+      title="Intersection with a line"
+      formula="\lvert \operatorname{tr}(\ell) \cap \mathcal{C}(O, A) \rvert \leq 2"
+    >
+      A <ConceptLink targetId="recta">line</ConceptLink> meets a circle in at most two points: if there were three, $O$ would form with two pairs of them <ConceptLink targetId="triangulo-isosceles">isosceles triangles</ConceptLink> with congruent base angles, contradicting the <ConceptLink targetId="teorema-angulo-exterior">exterior angle theorem</ConceptLink>. If the line passes through an interior point, it meets the circle in exactly two points; this existence is proved with the <ConceptLink targetId="axioma-completitud">completeness axiom</ConceptLink>.
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-aditividad" title="Disk area">
-      The area of the disk enclosed by the circle is $\mu(D) = \pi r^2$.
+
+    <PropiedadItem
+      id="tangente-perpendicular-radio"
+      title="Tangent and radius"
+      formula="\ell \text{ tangent at } T \iff \ell \perp \overleftrightarrow{OT}"
+    >
+      A line through a point $T$ of the circle is tangent at $T$ if and only if it is <ConceptLink targetId="perpendicular">perpendicular</ConceptLink> to the radius $\overline{OT}$.
+    </PropiedadItem>
+  </PropiedadesGrupo>
+
+  <PropiedadesGrupo title="Analytic properties">
+    <PropiedadItem
+      id="longitud-circunferencia"
+      title="Length"
+      formula="L = 2\pi r"
+    >
+      The <ConceptLink targetId="longitud-curva">length</ConceptLink> of the circle, defined as the supremum of the perimeters of inscribed polygons, is $2\pi r$; the ratio of length to diameter is the <ConceptLink targetId="numero-pi">number $\pi$</ConceptLink>.
+    </PropiedadItem>
+
+    <PropiedadItem
+      id="area-circulo"
+      title="Area of the disc"
+      formula="\operatorname{A}(\mathcal{D}(O, r)) = \pi r^2"
+    >
+      The disc is not a <ConceptLink targetId="region-poligonal">polygonal region</ConceptLink>: its <ConceptLink targetId="teoria-medida-area">area</ConceptLink> is obtained as a limit of areas of inscribed and circumscribed polygons, by the <ConceptLink targetId="metodo-exhaucion">method of exhaustion</ConceptLink> of <ConceptLink targetId="arquimedes">Archimedes</ConceptLink>, and equals $\pi r^2$.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

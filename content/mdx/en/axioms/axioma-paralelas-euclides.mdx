@@ -3,27 +3,35 @@ export const metadata = {
   lang: "en",
   type: "axioma",
   title: "Euclidean parallel axiom",
-  description: "Through a point not on a line, at most one parallel line can be drawn in the same plane.",
+  description: "Given a line and a point not incident with it in a plane, there passes through that point at most one line parallel to the given line in the same plane.",
   branch: "51M",
+  branches: ["51M", "51A"],
+  tags: ["geometry", "parallels", "axiom", "euclid", "hilbert"],
   axiomSystem: "sistema-euclidiano",
   axiomFamily: "paralelas",
   alternativeGroup: "paralelismo",
   hasSimulation: true,
   sources: [
     { title: "Elements", author: "Euclid", locator: "Book I, Postulate 5", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §5", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §7 (Axiom IV)", role: "primary" }
   ]
 };
 
 import { EuclidParallel } from '@content/diagrams/Axiomas/EuclidParallel';
 export const Simulation = EuclidParallel;
 
-<Capitular letra="E" />uclid's parallel axiom —established in the equivalent uniqueness formulation by John Playfair and formalized by <ConceptLink targetId="hilbert">David Hilbert</ConceptLink>— is the hallmark postulate of classical Euclidean geometry. It asserts that through a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> not on a given <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>, there exists exactly one <ConceptLink targetId="paralelas">parallel</ConceptLink> line in the same <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>.
+<Capitular letra="G" />iven a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> and a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> not <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with it in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>, at most one line <ConceptLink targetId="paralelas" isDependency={true}>parallel</ConceptLink> to the given line passes through that point in the same plane.
 
-<Definicion title="Formal statement">
-  Given a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $l \in \mathcal{L}$ and a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> $P \notin l$ in a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\mathcal{P}$, there exists exactly one line $l' \subset \mathcal{P}$ passing through $P$ that does not intersect $l$:
+The existence of at least one parallel need not be postulated: it is a <ConceptLink targetId="teorema">theorem</ConceptLink> of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, a consequence of the converse direction of the <ConceptLink targetId="teorema-angulos-alternos-internos">alternate interior angles theorem</ConceptLink>, which uses only the axioms of <ConceptLink targetId="incidencia">incidence</ConceptLink>, <ConceptLink targetId="estar-entre">order</ConceptLink> and <ConceptLink targetId="congruencia">congruence</ConceptLink>. The axiom imposes only the upper bound, which fixes uniqueness and separates the <ConceptLink targetId="sistema-euclidiano">Euclidean system</ConceptLink> from the <ConceptLink targetId="sistema-hiperbolico">hyperbolic system</ConceptLink>.
+
+<Definicion title="Formal statement (Hilbert's Axiom IV, Playfair form)">
+  Let $\pi \in \Pi$ be a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink>, let <VisualBind element="lineBC" color="carbon">$\ell \in \mathcal{L}$</VisualBind> be a <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> whose <ConceptLink targetId="traza">trace</ConceptLink> satisfies $\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi)$, and let <VisualBind element="pA" color="ocre">$P \in \mathcal{P}$</VisualBind> be a <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink> of $\pi$ not <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with $\ell$, that is, $P \in \operatorname{tr}(\pi) \setminus \operatorname{tr}(\ell)$. There is at most one line <VisualBind element="parBCP" color="ocre">$\ell' \in \mathcal{L}$</VisualBind> of $\pi$ passing through $P$ and <ConceptLink targetId="paralelas" isDependency={true}>parallel</ConceptLink> to $\ell$:
   $$
-  \forall l \in \mathcal{L}, \forall P \in \mathcal{P} \setminus l, \ \exists! l' \subset \mathcal{P} \ (P \in l' \land l \cap l' = \emptyset)
+  \forall \ell'_1, \ell'_2 \in \mathcal{L} \ \Bigl(\bigl(\operatorname{tr}(\ell'_1) \cup \operatorname{tr}(\ell'_2) \subseteq \operatorname{tr}(\pi) \land P \, \mathbf{I} \, \ell'_1 \land P \, \mathbf{I} \, \ell'_2 \land \ell'_1 \parallel \ell \land \ell'_2 \parallel \ell\bigr) \implies \ell'_1 = \ell'_2\Bigr)
+  $$
+  Together with the existence <ConceptLink targetId="teorema">theorem</ConceptLink> of <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink>, the axiom yields existence and uniqueness of the parallel:
+  $$
+  \exists! \ell' \in \mathcal{L} \ \bigl(\operatorname{tr}(\ell') \subseteq \operatorname{tr}(\pi) \land P \, \mathbf{I} \, \ell' \land \ell' \parallel \ell\bigr)
   $$
 </Definicion>
 
@@ -31,19 +39,15 @@ export const Simulation = EuclidParallel;
 
 ### Visual representation and interaction
 
-In the interactive simulation, base line <VisualBind element="lineBC" color="carbon">$l$</VisualBind> determined by points <VisualBind element="pB" color="carbon">$B$</VisualBind> and <VisualBind element="pC" color="carbon">$C$</VisualBind> is accompanied by external point <VisualBind element="pA" color="terracota">$P$</VisualBind>. The geometric construction draws the unique parallel line <VisualBind element="parBCP" color="terracota">$l'$</VisualBind>. Freely dragging $P$ or rotating the base line recalculates the parallel, strictly maintaining distance and the complete absence of intersection in the plane.
+In the interactive figure, the base line <VisualBind element="lineBC" color="carbon">$\ell$</VisualBind> is determined by two of its points in the <ConceptLink targetId="plano">plane</ConceptLink>, while the exterior point <VisualBind element="pA" color="ocre">$P$</VisualBind> can be moved freely. The construction draws the unique <ConceptLink targetId="paralelas">parallel</ConceptLink> line <VisualBind element="parBCP" color="ocre">$\ell'$</VisualBind> incident with $P$. As the position of $P$ or the orientation of $\ell$ varies, the postulated uniqueness ensures that no other <ConceptLink targetId="coplanaridad">coplanar</ConceptLink> <ConceptLink targetId="recta">line</ConceptLink> incident with $P$ has a trace <ConceptLink targetId="conjunto-disjunto">disjoint</ConceptLink> from that of $\ell$.
 
 <Separador />
 
-### Geometric significance and scope
+### Scope and role in the deductive system
 
-This axiom fixes zero spatial curvature ($K = 0$). It is directly responsible for the constant angle sum of $180^\circ$ in every <ConceptLink targetId="triangulo">triangle</ConceptLink>, the existence of rectangles, and the theory of similar figures at arbitrary scales.
+Euclid formulated the <ConceptLink targetId="quinto-postulado-euclides">fifth postulate</ConceptLink> differently: if a <ConceptLink targetId="secante">transversal</ConceptLink> makes with two lines, on one side, two interior <ConceptLink targetId="angulo">angles</ConceptLink> whose sum is less than two <ConceptLink targetId="angulo-recto">right angles</ConceptLink>, those lines meet on that side. Over <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> both formulations are <ConceptLink targetId="equivalencia-logica">equivalent</ConceptLink>: each follows from the other with the help of the <ConceptLink targetId="teorema-angulos-alternos-internos">alternate interior angles theorem</ConceptLink>. The uniqueness form adopted by Hilbert goes back to <ConceptLink targetId="playfair">Playfair</ConceptLink> (1795) and is known as <ConceptLink targetId="axioma-playfair">Playfair's axiom</ConceptLink>. Among its consequences, developed in the corresponding <ConceptLink targetId="teorema">theorems</ConceptLink>, are:
 
-<Separador />
-
-### Properties
-
-- **Playfair equivalence:** Logically equivalent to Euclid's original fifth postulate on interior angles.
-- **Euclidean angle sum:** Directly proves the <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink> ($\alpha + \beta + \gamma = 180^\circ$).
-- **Transitivity of parallelism:** In Euclidean geometry, parallelism is an equivalence relation ($l_1 \parallel l_2 \land l_2 \parallel l_3 \implies l_1 \parallel l_3$).
-- **Metric foundation:** Enables proving <ConceptLink targetId="teorema-tales">Thales's theorem</ConceptLink> and the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>.
+- The <ConceptLink targetId="transitividad">transitivity</ConceptLink> of parallelism, which makes it an <ConceptLink targetId="relacion-equivalencia">equivalence relation</ConceptLink> on <ConceptLink targetId="recta">lines</ConceptLink>.
+- The direct direction of the <ConceptLink targetId="teorema-angulos-alternos-internos">alternate interior angles theorem</ConceptLink>: a <ConceptLink targetId="secante">transversal</ConceptLink> to two parallel lines forms <ConceptLink targetId="congruencia">congruent</ConceptLink> <ConceptLink targetId="angulos-alternos-internos">alternate interior angles</ConceptLink>.
+- The <ConceptLink targetId="teorema-suma-angulos-triangulo">triangle angle sum theorem</ConceptLink>: the interior angles of every <ConceptLink targetId="triangulo">triangle</ConceptLink> add up to two <ConceptLink targetId="angulo-recto">right angles</ConceptLink>.
+- The foundation of <ConceptLink targetId="semejanza">similarity</ConceptLink> of <ConceptLink targetId="triangulo">triangles</ConceptLink>, of <ConceptLink targetId="teorema-tales">Thales' theorem</ConceptLink> and of the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink>.

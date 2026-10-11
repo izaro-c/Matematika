@@ -397,7 +397,17 @@ export const AnguloSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve A y B"
+  "note": "Mueve A y B",
+  "translations": {
+    "eu": {
+      "title": "Angelua",
+      "note": "Mugitu A eta B"
+    },
+    "en": {
+      "title": "Angle",
+      "note": "Move A and B"
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

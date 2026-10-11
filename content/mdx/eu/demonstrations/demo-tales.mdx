@@ -1,16 +1,18 @@
 export const metadata = {
-  "id": "demo-tales",
-  "type": "demostracion",
-  "title": "Frogapena: Talesen teorema",
-  "description": "Zuzen paraleloek mugatutako zuzenkien proportzionaltasunaren frogapen zuzena, triangeluen azaleren arrazoien bidez.",
-  "parentTheorem": "teorema-tales",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["tales", "euclides"],
-  "tags": ["geometria", "proporcionalidad", "semejanza", "rectas"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementos", author: "Euclides", locator: "Libro VI, Proposición 2", role: "primary" }
+  id: "demo-tales",
+  lang: "eu",
+  type: "demostracion",
+  title: "Frogapena: Talesen teorema",
+  description: "Triangeluaren kasuaren azaleren bidezko frogapena (Euklides VI.2) eta hiru paralelo eta bi zuzen ebakitzaileren kasu orokorraren laburpena.",
+  parentTheorem: "teorema-tales",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides"],
+  tags: ["geometria-euclidiana", "proporcionalidad", "paralelas", "area"],
+  layout: "split",
+  sources: [
+    { title: "Elementuak", author: "Euklides", locator: "VI. liburua, 2. proposizioa", role: "primary" }
   ]
 };
 
@@ -18,44 +20,70 @@ import { DemoTales } from "@content/diagrams/Demos/DemoTales";
 
 <DemonstrationSection diagram={<DemoTales />}>
 
-<Capitular letra="B" />ere alde bati paraleloa zaion zuzen batek ebakitako $\triangle ABC$ <ConceptLink targetId="triangulo">triangelu</ConceptLink> bat emanda, <ConceptLink targetId="teorema-tales">Talesen teorema</ConceptLink> frogatzen da. Frogapenak egiaztatzen du alde batean zehaztutako <ConceptLink targetId="segmento">zuzenkien</ConceptLink> luzeren arteko arrazoia beste aldean zehaztutako zuzenkien arteko arrazoiaren berdina dela.
+<Capitular letra="T" />alesen teoremaren <ConceptLink targetId="metodo-directo" isDependency={true}>frogapen zuzenak</ConceptLink> <ConceptLink targetId="euclides">Euklidesi</ConceptLink> jarraitzen dio (Elementuak VI.2): lehenik <ConceptLink targetId="triangulo" isDependency={true}>triangeluaren</ConceptLink> kasua frogatzen da, <ConceptLink targetId="altura">altuera</ConceptLink> bera duten triangeluen <ConceptLink targetId="teoria-medida-area" isDependency={true}>azalerak</ConceptLink> alderatuz, eta ondoren hiru <ConceptLink targetId="paralelas" isDependency={true}>paralelo</ConceptLink> eta bi <ConceptLink targetId="secante">zuzen ebakitzaileren</ConceptLink> kasu orokorra kasu horretara laburtzen da. Emaitza frogatua <ConceptLink targetId="teorema-tales">Talesen teorema</ConceptLink> da.
+
+Funtsezko tresna <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangeluaren azaleraren teorema</ConceptLink> da, $\operatorname{A}(\triangle XYZ) = \tfrac{1}{2}\,b\,h$: altuera bera duten bi triangeluren azalerak haien oinarrien proportzionalak dira.
 
 <Separador />
 
-### Froga urratsez urrats
+### Frogapena urratsez urrats
 
-<ProofStep number={1} target="step1" title="Triangeluaren eta zuzen paraleloaren konfigurazioa">
-$\triangle ABC$ triangelua eta $\overline{BC}$ aldeari paraleloa zaion zuzen bat hartzen ditugu, $\overline{AB}$ eta $\overline{AC}$ aldeak hurrenez hurren $D$ eta $E$ puntuetan ebakitzen dituena eta $\overline{DE} \parallel \overline{BC}$ zuzenkia eratuz.
+<ProofStep number={1} target="step1" title="Triangeluaren kasuaren konfigurazioa">
+Izan bedi <VisualBind element="polyABC" color="carbon">$\triangle ABC$</VisualBind> <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink>, eta izan bedi $\ell$ $\overleftrightarrow{BC}$ zuzenaren <VisualBind element="parDBC" color="ocre">zuzen paraleloa</VisualBind>, hura ez dena, <VisualBind element="segAB" color="carbon">$\overline{AB}$</VisualBind> aldea <VisualBind element="pD" color="terracota">$D$</VisualBind> puntuan eta <VisualBind element="segCA" color="carbon">$\overline{CA}$</VisualBind> aldea <VisualBind element="pE" color="terracota">$E$</VisualBind> puntuan ebakitzen dituena, $A * D * B$ eta $A * E * C$ izanik (<ConceptLink targetId="estar-entre" isDependency={true}>bitartekotasuna</ConceptLink>). Hau frogatu behar da:
+
+$$
+\frac{|AD|}{|DB|} = \frac{|AE|}{|EC|}.
+$$
 </ProofStep>
 
-<ProofStep number={2} target="step2" title="Paraleloen arteko azaleren berdintasuna">
-$\overline{BE}$ eta $\overline{CD}$ laguntza-zuzenkiak marraztuz, $\triangle BDE$ eta $\triangle CDE$ triangeluak osatzen dira. Bi triangeluek $\overline{DE}$ oinarri bera partekatzen dute eta $\overline{DE}$ zein $\overline{BC}$ zuzen paraleloen artean kokatzen dira. Paraleloen arteko altuera bera dutenez, <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangeluaren azaleraren teoremak</ConceptLink> haien azaleren berdintasuna bermatzen du:
+<ProofStep number={2} target="step2" title="BDE eta CDE triangeluek azalera bera dute">
+<VisualBind element="polyBDE" color="ocre">$\triangle BDE$</VisualBind> eta <VisualBind element="polyCDE" color="ocre">$\triangle CDE$</VisualBind> triangeluek <VisualBind element="segDE" color="ocre">$\overline{DE}$</VisualBind> oinarria partekatzen dute. Izan bitez $B_0$ eta $C_0$ $B$ eta $C$ puntuetatik $\ell$ zuzenera marraztutako <ConceptLink targetId="perpendicular" isDependency={true}>perpendikularren</ConceptLink> oinak. $\overleftrightarrow{BB_0}$ eta $\overleftrightarrow{CC_0}$ zuzenak $\ell$ zuzenarekiko perpendikularrak dira, eta, beraz, elkarren paraleloak (<ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>barne-angelu alternoen teorema</ConceptLink>); gainera, $\overleftrightarrow{BC} \parallel \ell$. Hortaz, $BB_0C_0C$ <ConceptLink targetId="paralelogramo" isDependency={true}>paralelogramoa</ConceptLink> da, eta haren aurkako aldeak kongruenteak dira (<ConceptLink targetId="teorema-lados-opuestos-paralelogramo" isDependency={true}>paralelogramoaren aurkako aldeen teorema</ConceptLink>, <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioma</ConceptLink> erabiltzen duena): $|BB_0| = |CC_0| = h$. <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Triangeluaren azaleraren teoremagatik</ConceptLink>:
 
-<Formula>
-  $$ \text{Azalera}(\triangle BDE) = \text{Azalera}(\triangle CDE) $$
-</Formula>
+$$
+\operatorname{A}(\triangle BDE) = \tfrac{1}{2}\,|DE|\,h = \operatorname{A}(\triangle CDE).
+$$
 </ProofStep>
 
-<ProofStep number={3} target="step3" title="Azaleren arrazoia eta proportzionaltasunaren ondorioa">
-Triangelu horien azalerak goiko $\triangle ADE$ triangeluarenarekin alderatzen ditugu:
-1. $\triangle ADE$ eta $\triangle BDE$ triangeluek altuera bera dute $\overline{AB}$ zuzenarekiko; beraz, haien azaleren arrazoia oinarrien proportzionala da:
-$$ \frac{\text{Azalera}(\triangle ADE)}{\text{Azalera}(\triangle BDE)} = \frac{|\overline{AD}|}{|\overline{DB}|} $$
-2. Era berean, $\triangle ADE$ eta $\triangle CDE$ triangeluek altuera bera dute $\overline{AC}$ zuzenarekiko:
-$$ \frac{\text{Azalera}(\triangle ADE)}{\text{Azalera}(\triangle CDE)} = \frac{|\overline{AE}|}{|\overline{EC}|} $$
+<ProofStep number={3} target="step3" title="ADE eta BDE triangeluen arteko arrazoia">
+Izan bedi $H_1$ $E$ puntutik $\overleftrightarrow{AB}$ zuzenera marraztutako perpendikularraren oina, eta $h_1 = |EH_1|$. $A$, $D$ eta $B$ puntuak $\overleftrightarrow{AB}$ zuzenean daudenez, <VisualBind element="segH1" color="ocre">$\overline{EH_1}$</VisualBind> <ConceptLink targetId="altura" isDependency={true}>altuera</ConceptLink> aldi berean da <VisualBind element="polyADE" color="ocre">$\triangle ADE$</VisualBind> triangeluarena ($\overline{AD}$ oinarria) eta <VisualBind element="polyBDE" color="ocre">$\triangle BDE$</VisualBind> triangeluarena ($\overline{DB}$ oinarria). Triangeluaren azaleraren teoremagatik:
 
-Izendatzaileak berdinak direnez aurreko urratsagatik, arrazoien berdintasuna lortzen da:
-
-<Formula>
-  $$ \frac{|\overline{AD}|}{|\overline{DB}|} = \frac{|\overline{AE}|}{|\overline{EC}|} $$
-</Formula>
+$$
+\frac{\operatorname{A}(\triangle ADE)}{\operatorname{A}(\triangle BDE)} = \frac{\tfrac{1}{2}\,|AD|\,h_1}{\tfrac{1}{2}\,|DB|\,h_1} = \frac{|AD|}{|DB|}.
+$$
 </ProofStep>
 
-<Separador />
+<ProofStep number={4} target="step4" title="ADE eta CDE triangeluen arteko arrazoia">
+Era berean, izan bedi $H_2$ $D$ puntutik $\overleftrightarrow{AC}$ zuzenera marraztutako perpendikularraren oina, eta $h_2 = |DH_2|$. <VisualBind element="segH2" color="ocre">$\overline{DH_2}$</VisualBind> altuera komuna da <VisualBind element="polyADE" color="ocre">$\triangle ADE$</VisualBind> ($\overline{AE}$ oinarria) eta <VisualBind element="polyCDE" color="ocre">$\triangle CDE$</VisualBind> ($\overline{EC}$ oinarria) triangeluentzat. <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Triangeluaren azaleraren teoremagatik</ConceptLink>:
 
-### Azterketa deduktiboa
+$$
+\frac{\operatorname{A}(\triangle ADE)}{\operatorname{A}(\triangle CDE)} = \frac{\tfrac{1}{2}\,|AE|\,h_2}{\tfrac{1}{2}\,|EC|\,h_2} = \frac{|AE|}{|EC|}.
+$$
+</ProofStep>
 
-<Nota>
-  <ConceptLink targetId="euclides">Euklidesen</ConceptLink> <ConceptLink targetId="elementos-euclides">Elementuak</ConceptLink> laneko VI.2 Proposizioa, tradizioz <ConceptLink targetId="tales">Tales Miletokoari</ConceptLink> egotzita. Proportzionaltasun-teoriaren eta <ConceptLink targetId="semejanza">triangeluen antzekotasunaren</ConceptLink> oinarri nagusia da <ConceptLink targetId="sistema-euclidiano">sistema euklidetarrean</ConceptLink>.
-</Nota>
+<ProofStep number={5} target="step5" title="Ondorioa triangeluan">
+3. eta 4. urratsetako izendatzaileak berdinak dira 2. urratsagatik, eta ez dira nuluak <ConceptLink targetId="teoria-medida-area" isDependency={true}>azaleraren</ConceptLink> positibotasunagatik. Berdinduz:
+
+$$
+\frac{|AD|}{|DB|} = \frac{|AE|}{|EC|}.
+$$
+
+$A * D * B$ eta $A * E * C$ direnez, <ConceptLink targetId="longitud" isDependency={true}>luzera</ConceptLink> batukorra da: $|AB| = |AD| + |DB|$ eta $|AC| = |AE| + |EC|$. Bi atalen alderantzizkoei $1$ batuz, $|AB|/|AD| = |AC|/|AE|$ ere lortzen da, hau da, $|AD|/|AB| = |AE|/|AC|$.
+</ProofStep>
+
+<ProofStep number={6} target="step6" title="Kasu orokorra: hiru paralelo eta bi zuzen ebakitzaile">
+Izan bitez orain $\ell_1, \ell_2, \ell_3$ paralelo desberdinak, $t$ zuzena $A, B, C$ puntuetan eta $t'$ zuzena $A', B', C'$ puntuetan ebakitzen dituztenak, $A * B * C$ izanik.
+
+*Ordena $t'$ zuzenean.* $A$ eta $C$ puntuak $\ell_2$ zuzenarekiko <ConceptLink targetId="semiplano" isDependency={true}>planoerdi</ConceptLink> desberdinetan daude. $\overline{AA'}$ zuzenkia $\operatorname{tr}(\ell_1)$ multzoan dago, eta hark ez du $\ell_2$ ebakitzen; beraz, $A'$ puntua $A$ puntuaren planoerdian dago, eta, era berean, $C'$ puntua $C$ puntuarenean. Hortaz, $\operatorname{seg}(A'C')$ zuzenkiak $\ell_2$ ebakitzen du, eta ebaki-puntua $B'$ da, $t'$ eta $\ell_2$ zuzenen puntu komun bakarra: $A' * B' * C'$.
+
+*$t \parallel t'$ bada*, $ABB'A'$ eta $BCC'B'$ laukiak paralelogramoak dira; beraz, $|AB| = |A'B'|$ eta $|BC| = |B'C'|$, eta proportzioa berehalakoa da.
+
+*$t$ eta $t'$ ebakitzen badira*, izan bedi $m$ $A$ puntutik igarotzen den $t'$ zuzenaren paraleloa, bakarra <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axiomagatik</ConceptLink> ($m = t'$, $A = A'$ bada). $m$ zuzenak $\ell_2$ eta $\ell_3$ zuzenak $B''$ eta $C''$ puntuetan ebakitzen ditu, eta, aurreko arrazoibideagatik, $A * B'' * C''$. $AB''B'A'$ eta $B''C''C'B'$ laukiak paralelogramoak dira (edo endekatu egiten dira, $A = A'$ bada); beraz, $|AB''| = |A'B'|$ eta $|B''C''| = |B'C'|$. $m \neq t$ denez, $A$, $C$, $C''$ puntuak ez dira kolinealak, eta $\ell_2$ zuzena $\overleftrightarrow{CC''} = \ell_3$ zuzenaren paraleloa da, $\operatorname{seg}(AC)$ zuzenkia $B$ puntuan eta $\operatorname{seg}(AC'')$ zuzenkia $B''$ puntuan ebakitzen dituena. Triangeluaren kasua $\triangle ACC''$ triangeluari aplikatuz:
+
+$$
+\frac{|AB|}{|BC|} = \frac{|AB''|}{|B''C''|} = \frac{|A'B'|}{|B'C'|}.
+$$
+
+Enuntziatuko bigarren proportzioa 5. urratsean bezala lortzen da.
+</ProofStep>
 
 </DemonstrationSection>

@@ -1,64 +1,68 @@
 export const metadata = {
-  "id": "demo-area-triangulo",
-  "type": "demostracion",
-  "title": "Frogapena: Triangeluaren eremuaren teorema",
-  "description": "Frogapen geometrikoa triangeluaren eremua inguruan dagoen laukizuzenaren eremuaren erdia dela frogatuz, diagonalaren kongruentzia eta eremuaren adibidotasuna erabiliz.",
-  "parentTheorem": "teorema-area-triangulo",
-  "lang": "eu",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides"],
-  "tags": ["geometria", "eremuak", "triangelua", "neurria"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elementuak", "author": "Euklides", "locator": "I. Liburua, 41. Proposizioa", "role": "primary" }
+  id: "demo-area-triangulo",
+  lang: "eu",
+  type: "demostracion",
+  title: "Frogapena: Triangeluaren azaleraren teorema",
+  description: "Altueraren oinaren bidezko frogapena: triangelu angeluzuzen bat laukizuzen baten erdia da; oina oinarriaren muturren artean badago, triangelua bi triangelu angeluzuzenen batura da, eta kanpoan erortzen bada, haien diferentzia.",
+  parentTheorem: "teorema-area-triangulo",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["euclides"],
+  tags: ["area", "triangulo", "altura", "geometria-euclidiana"],
+  layout: "split",
+  sources: [
+    { title: "Elementuak", author: "Euklides", locator: "I. liburua, 41. proposizioa", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "5. kapitulua", role: "formalization" }
   ]
 };
 
 <DemonstrationSection>
 
-<Capitular letra="D" />ela $\triangle ABC$ <ConceptLink targetId="triangulo" isDependency={true}>triangelu</ConceptLink> bat $b = |\overline{AB}|$ oinarriarekin eta $h$ altuerarekin ($C$ erpinetik $\overline{AB}$ zuzenaren arteko distantzia perpendikularra). Frogapenak $\triangle$-ren eremua bikoizten duen laguntzako laukizuzen bat eraikitzen du.
+<Capitular letra="T" />riangeluaren <ConceptLink targetId="teorema-area-triangulo">azaleraren teoremaren</ConceptLink> <ConceptLink targetId="metodo-directo" isDependency={true}>frogapen zuzena</ConceptLink>, <ConceptLink targetId="altura-triangulo" isDependency={true}>altueraren</ConceptLink> oinaren bidez: lehenik, <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzen</ConceptLink> bat <ConceptLink targetId="rectangulo" isDependency={true}>laukizuzen</ConceptLink> baten erdia dela frogatzen da; ondoren, hiru kasu bereizten dira, altueraren oinak oinarriarekiko duen posizioaren arabera.
 
 <Separador />
 
-### Frogapena pausoz pauso
+### Frogapena urratsez urrats
 
-<ProofStep number={1} title="Inguruko laukizuzenaren eraiketa">
-$ABDE$ laukizuzena eraikitzen da $\overline{AB}$ oinarriarekin eta $h$ altuerarekin, $A$ eta $B$-tik <ConceptLink targetId="perpendicular" isDependency={true}>perpendikuluak</ConceptLink> trazatuz eta $C$-tik <ConceptLink targetId="paralelas" isDependency={true}>paraleloa</ConceptLink> $AB$-ri. <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>Laukizuzenaren eremuaren teoremaren</ConceptLink> arabera:
-
-<Formula>
-  $$ \text{Eremua}(ABDE) = b \cdot h $$
-</Formula>
+<ProofStep number={1} title="Altueraren oina eta hiru kasuak">
+Izan bedi $\triangle ABC$ $\sigma$ plano bateko <ConceptLink targetId="triangulo" isDependency={true}>triangelua</ConceptLink>. <ConceptLink targetId="teorema-existencia-perpendicular" isDependency={true}>Perpendikularraren existentzia- eta bakartasun-teoremaren</ConceptLink> arabera, $C$-tik igarotzen den eta $\overleftrightarrow{AB}$ zuzenarekiko <ConceptLink targetId="perpendicular" isDependency={true}>perpendikularra</ConceptLink> den zuzen bakarra dago; izan bedi $H$ zuzen horrek $\overleftrightarrow{AB}$ zuzenarekin duen ebaki-puntua. $C$ puntuak $\overleftrightarrow{AB}$ zuzenarekin intziditzen ez duenez, $H \neq C$ eta $h = |CH| > 0$. Izan bedi $b = |AB|$. <ConceptLink targetId="axioma-orden-3" isDependency={true}>Ordena-axiomak</ConceptLink> $\overleftrightarrow{AB}$ zuzeneko $A$, $B$ eta $H$ puntuei aplikatuz, kasu hauetako bat gertatzen da:
+1. $H = A$ edo $H = B$;
+2. $A * H * B$, hau da, $H$ puntua $A$ eta $B$ puntuen <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> dago;
+3. $A * B * H$ edo $H * A * B$.
 </ProofStep>
 
-<ProofStep number={2} title="AC diagonalak bi triangelu sortzen ditu">
-$\overline{AC}$ diagonalak $ABDE$ laukizuzena bi triangelutan zatitzen du. <ConceptLink targetId="teorema-congruencia-ala" isDependency={true}>ALA kongruentzia-irizpidearen</ConceptLink> arabera, $\triangle ABC$ eta $\triangle CAE$ <ConceptLink targetId="congruencia" isDependency={true}>kongruenteak</ConceptLink> dira: angelu zuzenak $B$ eta $E$-n, $\overline{AC}$ alde erkidea, eta $|\overline{AB}| = |\overline{CE}|$.
+<ProofStep number={2} title="Lema: triangelu angeluzuzen bat laukizuzen baten erdia da">
+Izan bedi $\triangle PQR$ $P$ erpinean <ConceptLink targetId="angulo-recto" isDependency={true}>angelu zuzena</ConceptLink> duen triangelua, $u = |PQ|$ eta $v = |PR|$ izanik. $Q$-tik igarotzen den $\overleftrightarrow{PQ}$ zuzenarekiko perpendikularra eta $R$-tik igarotzen den $\overleftrightarrow{PQ}$ zuzenarekiko <ConceptLink targetId="paralelas" isDependency={true}>paraleloa</ConceptLink> $S$ puntu batean ebakitzen dira, eta $PQSR$ laukizuzena da (<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>paraleloen axioma</ConceptLink>), aurkako aldeak kongruenteak dituena. Orduan, $\triangle QPR \cong \triangle RSQ$ <ConceptLink targetId="teorema-congruencia-lll" isDependency={true}>LLL irizpidearen</ConceptLink> arabera ($\overline{QP} \cong \overline{RS}$, $\overline{PR} \cong \overline{SQ}$ eta $\overline{QR}$ komuna). $P$ eta $S$ $\overleftrightarrow{QR}$ zuzenarekiko aurkako <ConceptLink targetId="semiplano" isDependency={true}>planoerdietan</ConceptLink> daudenez, bi eskualde triangeluarrek $\overline{QR}$ baino ez dute komunean, eta haien bildura laukizuzenaren eskualdea da. <ConceptLink targetId="teoria-medida-area" isDependency={true}>Azalera-funtzioaren</ConceptLink> aldaezintasunagatik, <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>batukortasunagatik</ConceptLink> eta <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>laukizuzenaren azaleraren teoremagatik</ConceptLink>, $u \cdot v = 2 \operatorname{A}(\triangle PQR)$, hau da,
+
+$$
+\operatorname{A}(\triangle PQR) = \frac{1}{2}\, u \cdot v
+$$
 </ProofStep>
 
-<ProofStep number={3} title="Eremuaren adibidotasunaren aplikazioa">
-Bi triangeluak kongruenteak direnez, eremua berdina dute. <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Eremuaren adibidotasun-teoremaren</ConceptLink> arabera:
-
-<Formula>
-  $$ \text{Eremua}(ABDE) = \text{Eremua}(\triangle ABC) + \text{Eremua}(\triangle CAE) = 2 \cdot \text{Eremua}(\triangle ABC) $$
-</Formula>
+<ProofStep number={3} title="1. kasua: oina erpin batekin bat dator">
+$H = A$ bada, $\angle BAC$ angelua zuzena da, eta, aurreko lemaren arabera (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>laukizuzenaren azaleraren teorema</ConceptLink>), $\operatorname{A}(\triangle ABC) = \tfrac{1}{2}\, |AB| \cdot |AC| = \tfrac{1}{2}\, b \cdot h$. $H = B$ kasua antzekoa da.
 </ProofStep>
 
-<ProofStep number={4} title="Ondorioa">
-Triangeluaren eremua despejikatuz:
+<ProofStep number={4} title="2. kasua: oina A eta B puntuen artean dago">
+$A * H * B$ bada, $\overline{CH}$ <ConceptLink targetId="segmento" isDependency={true}>zuzenkiak</ConceptLink> $\triangle ABC$ triangeluaren <ConceptLink targetId="region-triangular" isDependency={true}>eskualde triangeluarra</ConceptLink> $\triangle AHC$ eta $\triangle HBC$ triangeluenetan zatitzen du; horiek angelu zuzena dute $H$ erpinean eta $\overline{CH}$ baino ez dute komunean, $A$ eta $B$ $\overleftrightarrow{CH}$ zuzenarekiko aurkako planoerdietan baitaude. Batukortasunagatik, lemagatik eta <ConceptLink targetId="longitud" isDependency={true}>luzeraren</ConceptLink> batukortasunagatik ($|AH| + |HB| = |AB|$),
 
-<Formula>
-  $$ \text{Eremua}(\triangle ABC) = \frac{1}{2} \cdot b \cdot h $$
-</Formula>
-
-Berdintza hau edozein triangelurentzat balio du, zorrotza, angeluzuzena edo lauza, hiru kasuetan oinarri eta altuera berdineko laukizuzenean sartu daitekeelako.
+$$
+\operatorname{A}(\triangle ABC) = \frac{1}{2}\, |AH| \cdot h + \frac{1}{2}\, |HB| \cdot h = \frac{1}{2}\, (|AH| + |HB|) \cdot h = \frac{1}{2}\, b \cdot h
+$$
 </ProofStep>
 
-<Separador />
+<ProofStep number={5} title="3. kasua: oina oinarritik kanpo erortzen da">
+$A * B * H$ bada ($B$ erpineko angelua kamutsa da), $\triangle AHC$ triangeluaren eskualdea $\triangle ABC$ eta $\triangle BHC$ triangeluen eskualdeen bildura da, eta horiek $\overline{BC}$ baino ez dute komunean. $\triangle AHC$ eta $\triangle BHC$ triangeluek angelu zuzena dute $H$ erpinean, eta $|AH| = |AB| + |BH|$. <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren aditibitateagatik</ConceptLink> eta lemagatik,
 
-### Analisi deduktiboa
+$$
+\frac{1}{2}\, (b + |BH|) \cdot h = \operatorname{A}(\triangle ABC) + \frac{1}{2}\, |BH| \cdot h
+$$
+
+eta, beraz, $\operatorname{A}(\triangle ABC) = \tfrac{1}{2}\, b \cdot h$. $H * A * B$ kasua berdina da, $A$ eta $B$ puntuen rolak trukatuta. Hiru kasuetan, $\operatorname{A}(\triangle ABC) = \tfrac{1}{2}\, b \cdot h$.
+</ProofStep>
 
 <Nota>
-  Triangelu obtusanguluaren kasuan laukizuzena oinarritik kanpora hedatu behar da, baina adibidotasun- eta kongruentzia-argudioa aldatu gabe mantentzen da. Frogapenak <ConceptLink targetId="sistema-euclidiano">sistema axiomatiko euklidearraren</ConceptLink> barruan soilik funtzionatzen du nahitaez.
+<ConceptLink targetId="euclides">Euklidesek</ConceptLink> beste modu batera lortzen du emaitza (Elementuak I.41): triangelu baten oinarri bera duen eta paralelo beren artean dagoen <ConceptLink targetId="paralelogramo">paralelogramoa</ConceptLink> triangeluaren bikoitza da. Altueraren oinaren bidezko frogapenak paralelogramoen teoria saihesten du, eta laukizuzenak baino ez ditu erabiltzen.
 </Nota>
 
 </DemonstrationSection>

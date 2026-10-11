@@ -3,7 +3,7 @@ export const metadata = {
   lang: "eu",
   type: "axioma",
   title: "II.2 axioma (Zuzenaren hedapena)",
-  description: "Edozein A eta B puntu desberdin emanda, beti existitzen da gutxienez C puntu bat non B puntua A eta C-ren artean dagoen.",
+  description: "Edozein A eta B puntu desberdin emanda, gutxienez C puntu bat existitzen da, B puntua A eta C puntuen artean egonik.",
   branch: "51A",
   branches: ["51A", "03B"],
   tags: ["geometria-sintetica", "orden", "intermediacion", "hilbert"],
@@ -25,10 +25,10 @@ export const Simulation = Order2;
 
 <Capitular letra="E" />dozein bi <ConceptLink targetId="punto" isDependency={true}>puntu</ConceptLink> desberdin emanda, beti existitzen da gutxienez hirugarren puntu bat non bigarrena lehenengoaren eta puntu berri horren <ConceptLink targetId="estar-entre" isDependency={true}>artean</ConceptLink> dagoen.
 
-Postulatu honek bermatzen du <ConceptLink targetId="recta" isDependency={true}>zuzenek</ConceptLink> ez dutela muga-punturik edo muturreko mugarik, ordenatutako edozein puntu-bikoteren luzapen mugagabea ahalbidetuz.
+Axioma honek bermatzen du ezein <ConceptLink targetId="recta" isDependency={true}>zuzenek</ConceptLink> ez duela mutur-punturik: edozein $\overline{AB}$ <ConceptLink targetId="segmento">zuzenki</ConceptLink> $B$ puntuaz haraindi luza daiteke, eta, axioma $(B, A)$ bikoteari aplikatuz, baita $A$ puntuaz haraindi ere.
 
-<Definicion title="II.2 axioma (Zuzenaren hedapena)">
-$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> edozein bi <VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako, gutxienez <VisualBind element="pC" color="ocre">$C$</VisualBind> $\in \mathcal{P}$ puntu bat existitzen da non <VisualBind element="pB" color="terracota">$B$</VisualBind> puntua <VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind>-ren artean dagoen:
+<Definicion title="Enuntziatu formala">
+$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> edozein bi <VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pB" color="terracota">$B$</VisualBind> <ConceptLink targetId="punto">puntu</ConceptLink> desberdinetarako, gutxienez <VisualBind element="pC" color="ocre">$C$</VisualBind> $\in \mathcal{P}$ puntu bat existitzen da, <VisualBind element="pB" color="terracota">$B$</VisualBind> puntua <VisualBind element="pA" color="ocre">$A$</VisualBind> eta <VisualBind element="pC" color="ocre">$C$</VisualBind> puntuen artean egonik:
 
 $$
 \forall A, B \in \mathcal{P} \ \bigl(A \neq B \implies \exists C \in \mathcal{P} \ (A * B * C)\bigr)
@@ -36,5 +36,5 @@ $$
 </Definicion>
 
 <Nota>
-Axioma honek zuzenaren izaera ireki eta mugarik gabea bermatzen du <ConceptLink targetId="sistema-absoluto">geometria absolutuan</ConceptLink>. <ConceptLink targetId="axioma-orden-1">II.1 axiomarekin</ConceptLink> eta <ConceptLink targetId="incidencia">intzidentzia-axiomekin</ConceptLink> batera, edozein zuzenen $\operatorname{tr}(\ell)$ <ConceptLink targetId="traza">puntu-trazadura</ConceptLink> puntuen <ConceptLink targetId="conjunto-infinito">multzo infinitu</ConceptLink> bat dela ziurtatzen du, <ConceptLink targetId="orden-lineal">ordena lineala</ConceptLink> duten <ConceptLink targetId="geometria-finita">geometria finituak</ConceptLink> baztertuz.
+Zuzen bakoitzaren $\operatorname{tr}(\ell)$ <ConceptLink targetId="traza">puntu-trazadura</ConceptLink> infinitua izatea ez da axioma honetatik eta <ConceptLink targetId="axioma-orden-1">II.1 axiomatik</ConceptLink> soilik ondorioztatzen. <ConceptLink targetId="modelo-fano">Fanoren planoaren</ConceptLink> <ConceptLink targetId="geometria-finita">geometria finituan</ConceptLink>, zuzen bakoitzak hiru puntu ditu, eta nahikoa da zuzen bateko puntu bakoitza beste bien artean dagoela adieraztea I.1–I.3, II.1 eta II.2 axiomak betetzeko. <ConceptLink targetId="hilbert">Hilbertek</ConceptLink> frogatzen du edozein bi punturen artean infinitu puntu daudela, eta, beraz, $\operatorname{tr}(\ell)$ <ConceptLink targetId="conjunto-infinito">multzo infinitua</ConceptLink> dela, <ConceptLink targetId="axioma-orden-3">II.3 axioma</ConceptLink> eta Paschen <ConceptLink targetId="axioma-orden-4">II.4 axioma</ConceptLink> ere erabiliz.
 </Nota>

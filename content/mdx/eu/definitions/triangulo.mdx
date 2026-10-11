@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "derivado",
   title: "Triangelua",
-  description: "Erpin izeneko hiru puntu ez-kolinealek eta haiek binaka lotzen dituzten hiru zuzenkiek osatutako figura geometriko laua.",
+  description: "Erpin izeneko hiru puntu ez-kolinealek eta haiek binaka lotzen dituzten hiru zuzenkiek osatutako irudi laua.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "orden", "congruencia", "hilbert"],
@@ -28,22 +28,24 @@ export const metadata = {
 import { Triangulo } from '@content/diagrams/Definiciones/Triangulo';
 export const Simulation = Triangulo;
 
-<Capitular letra="T" />riangelua <ConceptLink targetId="colinealidad" isDependency={true}>kolinealak</ConceptLink> ez diren hiru <ConceptLink targetId="punto">puntuk</ConceptLink> eta puntu horiek binaka lotzen dituzten hiru <ConceptLink targetId="segmento" isDependency={true}>zuzenkiek</ConceptLink> osatutako figura geometriko laua da.
+<Capitular letra="T" />riangelua <ConceptLink targetId="colinealidad" isDependency={true}>kolinealak</ConceptLink> ez diren hiru <ConceptLink targetId="punto">puntuk</ConceptLink> eta puntu horiek binaka lotzen dituzten hiru <ConceptLink targetId="segmento" isDependency={true}>zuzenkiek</ConceptLink> osatutako irudi laua da.
 
-Triangelua ez da azalera-neurri bat ezta magnitude metriko bat ere, <ConceptLink targetId="estar-entre">bitartekotasun-erlaziotik</ConceptLink> eta <ConceptLink targetId="plano">planoko</ConceptLink> ez-<ConceptLink targetId="colinealidad">kolinealtasunetik</ConceptLink> abiatuta eraikitako egitura formala baizik.
+Triangelua ez da magnitude bat, ezta azalera-neurri bat ere: <ConceptLink targetId="estar-entre">bitartekotasun-erlaziotik</ConceptLink> eta <ConceptLink targetId="plano">planoko</ConceptLink> ez-<ConceptLink targetId="colinealidad">kolinealtasunetik</ConceptLink> eraikitako egitura da. <ConceptLink targetId="poligono">Poligono</ConceptLink> sinpleena da, eta <ConceptLink targetId="congruencia-triangulos">triangeluen kongruentziaren</ConceptLink> irizpideak haren gainean formulatzen dira.
 
 <Definicion title="Triangeluaren definizio formala">
-$\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> eta <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> hiru <ConceptLink targetId="punto">puntutarako</ConceptLink>, non $\{A, B, C\}$ hirukotea ez den <ConceptLink targetId="colinealidad">kolineala</ConceptLink>, <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> **triangelua** <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> zein <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind> hiru <ConceptLink targetId="segmento">zuzenkiek</ConceptLink> osatzen duten <ConceptLink targetId="conjunto">multzoa</ConceptLink> da:
+Izan bitez $\mathcal{P}$ <ConceptLink targetId="dominio">oinarrizko domeinuko</ConceptLink> <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> eta <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> hiru <ConceptLink targetId="punto">puntu</ConceptLink>, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez direnak. <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> **triangelua** <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> eta <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind> hiru <ConceptLink targetId="segmento">zuzenkiek</ConceptLink> osatzen duten <ConceptLink targetId="conjunto">multzoa</ConceptLink> da:
 
 $$
 \triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}
 $$
 
-$\overline{AB}$, $\overline{BC}$ eta $\overline{CA}$ zuzenkiei triangeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> deritze, eta haien mutur-puntu $A$, $B$ eta $C$-ri <ConceptLink targetId="vertice">erpinak</ConceptLink>. Haren lotutako $\operatorname{tr}(\triangle ABC) \subset \mathcal{P}$ <ConceptLink targetId="traza">**puntu-trazadura**</ConceptLink> aldeen <ConceptLink targetId="traza">trazen</ConceptLink> bildura da:
+$\overline{AB}$, $\overline{BC}$ eta $\overline{CA}$ zuzenkiei triangeluaren <ConceptLink targetId="lado">aldeak</ConceptLink> deritze, eta haien $A$, $B$ eta $C$ muturrei, <ConceptLink targetId="vertice">erpinak</ConceptLink>. Zuzenkiak dagoeneko puntu-multzoak direnez, triangeluaren **trazadura**, $\operatorname{tr}(\triangle ABC) \subseteq \mathcal{P}$, haren aldeen bildura da:
 
 $$
-\operatorname{tr}(\triangle ABC) = \operatorname{tr}(\overline{AB}) \cup \operatorname{tr}(\overline{BC}) \cup \operatorname{tr}(\overline{CA})
+\operatorname{tr}(\triangle ABC) = \overline{AB} \cup \overline{BC} \cup \overline{CA}
 $$
+
+$\angle CAB$, $\angle ABC$ eta $\angle BCA$ dira triangeluaren <ConceptLink targetId="angulo">angeluak</ConceptLink>. $\triangle ABC \cong \triangle A'B'C'$ <ConceptLink targetId="congruencia-triangulos">kongruentzia</ConceptLink>-idazkerak erpinen korrespondentzia ordenatuari egiten dio erreferentzia beti: $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$; alde eta angelu homologoak korrespondentzia horren bidez lotzen direnak dira.
 </Definicion>
 
 <Separador />
@@ -53,33 +55,33 @@ $$
     <PropiedadItem 
       id="simetria-vertices" 
       title="Erpinen permutazioekiko aldaezintasuna"
-      formula="\triangle ABC = \triangle \sigma(A)\sigma(B)\sigma(C) \quad (\forall \sigma \in S_3)"
+      formula="\triangle ABC = \triangle \tau(A)\tau(B)\tau(C) \quad (\forall \tau \in S_3)"
     >
-      Aldeen ordenatu gabeko multzotik abiatuta definitzen denez ($\triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}$), triangelua ez dago erpinak aipatzen diren ordenaren mende: $\triangle ABC = \triangle BCA = \triangle CAB = \triangle BAC = \triangle ACB = \triangle CBA$ multzo-<ConceptLink targetId="igualdad-matematica">berdintzak</ConceptLink> betez.
+      Bere aldeen multzo ez-ordenatua denez, triangelua ez dago erpinak izendatzeko ordenaren mende: $\triangle ABC = \triangle BCA = \triangle CAB = \triangle BAC = \triangle ACB = \triangle CBA$, multzoen arteko <ConceptLink targetId="igualdad-matematica">berdintza</ConceptLink> gisa. Erpinen ordenak <ConceptLink targetId="congruencia">kongruentziazko</ConceptLink> enuntziatuetan baino ez du garrantzirik, elementu homologoen arteko korrespondentzia finkatzen baitu.
     </PropiedadItem>
 
     <PropiedadItem 
       id="coplanaridad-soporte" 
-      title="Koplanartasuna eta plano euskarri bakarra"
-      formula="\exists! \pi \in \Pi : \operatorname{tr}(\triangle ABC) \subset \operatorname{tr}(\pi)"
+      title="Plano euskarri bakarra"
+      formula="\exists! \pi \in \Pi : \operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)"
     >
-      <ConceptLink targetId="axioma-incidencia-4">I.4 axiomaren</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5 axiomaren</ConceptLink> bidez, $\{A, B, C\}$ erpinen ez-<ConceptLink targetId="colinealidad">kolinealtasunak</ConceptLink> triangeluaren <ConceptLink targetId="traza">traza</ConceptLink> barne hartzen duen $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> bakar bat zehazten du: $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
+      <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> eta <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink> axiomen arabera, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren $A$, $B$ eta $C$ erpinek $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> bakarra zehazten dute; <ConceptLink targetId="axioma-incidencia-6">I.6 axiomaren</ConceptLink> arabera, hiru aldeen zuzen euskarriak plano horretan daude, eta, beraz, $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 
       id="interior-triangular" 
-      title="Barrualde triangeluarra eskualde ganbil gisa"
+      title="Triangeluaren barnealdea"
       formula="\operatorname{Int}(\triangle ABC) = \mathcal{H}_{\overleftrightarrow{AB}}(C) \cap \mathcal{H}_{\overleftrightarrow{BC}}(A) \cap \mathcal{H}_{\overleftrightarrow{CA}}(B)"
     >
-      $\pi$ plano bateko $\triangle ABC$ triangelu orok eskualde ireki eta mugatu bat zehazten du, **triangeluaren barrualdea** ($\operatorname{Int}(\triangle ABC)$) deitua, bere <ConceptLink targetId="recta">zuzen</ConceptLink> euskarriek zehaztutako hiru <ConceptLink targetId="semiplano">planoerdi</ConceptLink> irekien <ConceptLink targetId="interseccion">ebakidura</ConceptLink> gisa formalki definitua: $\overleftrightarrow{AB}$ zuzenarekiko $C$ barne hartzen duen planoerdia, $\overleftrightarrow{BC}$ zuzenarekiko $A$ barne hartzen duen planoerdia, eta $\overleftrightarrow{CA}$ zuzenarekiko $B$ barne hartzen duen planoerdia. Eskualde hori <ConceptLink targetId="conjunto-convexo">multzo ganbila</ConceptLink> da.
+      $\pi$ planoko $\triangle ABC$ triangelu orok bere **<ConceptLink targetId="interior-triangulo">barnealdea</ConceptLink>** zehazten du, $\operatorname{Int}(\triangle ABC)$: haren <ConceptLink targetId="recta-soporte">zuzen euskarriek</ConceptLink> mugatutako hiru <ConceptLink targetId="semiplano">planoerdi</ConceptLink> irekien <ConceptLink targetId="interseccion">ebakidura</ConceptLink>, hots, $\overleftrightarrow{AB}$ ertzeko eta $C$ daukan planoerdiarena, $\overleftrightarrow{BC}$ ertzeko eta $A$ daukanarena eta $\overleftrightarrow{CA}$ ertzeko eta $B$ daukanarena. <ConceptLink targetId="conjunto-convexo">Multzo ganbila</ConceptLink> da, planoerdien ebakidura baita.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="axioma-orden-4" 
-      title="Paschen ebakidura planarra"
-      formula="\ell \cap \operatorname{seg}(AB) \neq \emptyset \land C \notin \ell \implies (\ell \cap \operatorname{seg}(BC) \neq \emptyset \veebar \ell \cap \operatorname{seg}(CA) \neq \emptyset)"
+      id="interseccion-recta-triangulo" 
+      title="Zuzen baten eta triangelu baten ebakidura"
+      formula="\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \land A, B, C \notin \operatorname{tr}(\ell) \land \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) \neq \emptyset \implies \operatorname{seg}(BC) \cap \operatorname{tr}(\ell) \neq \emptyset \veebar \operatorname{seg}(CA) \cap \operatorname{tr}(\ell) \neq \emptyset"
     >
-      <ConceptLink targetId="axioma-orden-4">II.4 axiomaren</ConceptLink> bidez (Paschen axioma), triangelu baten alde baten barrualdea ebakitzen duen eta erpinetatik igarotzen ez den edozein zuzen koplanarrek nahitaez ebakitzen du beste bi aldeetako baten barrualdea, bere <ConceptLink targetId="frontera">mugaren</ConceptLink> osotasuna bermatuz.
+      Izan bedi $\ell$ triangeluaren $\pi$ planoko zuzen bat, triangeluaren erpinetako batekin ere intziditzen ez duena. $\ell$ zuzenak $\operatorname{seg}(AB)$ alde irekia ebakitzen badu, beste bi alde irekietako bat eta bakarra ebakitzen du. Bigarren ebaki-puntuaren existentzia <ConceptLink targetId="axioma-orden-4">II.4 axioma</ConceptLink> da (<ConceptLink targetId="pasch">Paschen</ConceptLink> axioma); esklusibotasuna, ordea, ez du axiomak ematen: Hilbertek §4an ordena-axiometatik ondorioztatzen duen <ConceptLink targetId="teorema">teorema</ConceptLink> bat da (zuzen batek ezin ditu hiru alde irekiak ebaki).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

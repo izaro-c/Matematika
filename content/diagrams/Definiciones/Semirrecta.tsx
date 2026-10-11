@@ -180,7 +180,17 @@ export const SemirrectaSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra el origen (O) o la dirección (A)"
+  "note": "Arrastra el origen (O) o la dirección (A)",
+  "translations": {
+    "eu": {
+      "title": "Zuzenerdia",
+      "note": "Arrastatu jatorria (O) edo norabidea (A)"
+    },
+    "en": {
+      "title": "Ray",
+      "note": "Drag the origin (O) or direction (A)"
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

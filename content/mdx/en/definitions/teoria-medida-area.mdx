@@ -2,47 +2,65 @@ export const metadata = {
   id: "teoria-medida-area",
   lang: "en",
   type: "definicion",
-  subtype: "fundamentada",
-  title: "Theory of Area Measure",
-  description: "Formal construction of Hilbert's theory of content and area based on polygonal equidecomposability and finite additivity.",
+  subtype: "derivado",
+  title: "Theory of area measure",
+  description: "Area function on the polygonal regions of a plane: positive, invariant under congruence, additive for regions with disjoint interiors and normalised by the unit square; equidecomposability and equicomplementability.",
   branch: "51M",
+  tags: ["area", "region-poligonal", "equidescomponibilidad", "geometria-euclidiana"],
   hasSimulation: false,
   sources: [
-    { title: "Elements", author: "Euclid", locator: "Book I, Common Notions & Propositions 35-41", role: "primary" },
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV, §17-§21", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV", role: "primary" },
+    { title: "Elements", author: "Euclid", locator: "Book I, Common notions and Propositions 35-41", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Chapter 5", role: "formalization" }
   ]
 };
 
-<Capitular letra="I" />n modern axiomatic foundations, the theory of area measure formalizes the two-dimensional quantification of space enclosed by planar geometric figures. Developed rigorously by David Hilbert as a theory of content, it replaces Euclid's intuitive notions through the equidecomposability of planar <ConceptLink targetId="poligono">polygons</ConceptLink> without requiring the analytic apparatus of continuous measure theory.
+<Capitular letra="A" />n area <ConceptLink targetId="funcion">function</ConceptLink> on a <ConceptLink targetId="plano" isDependency={true}>plane</ConceptLink> $\sigma$ assigns to each <ConceptLink targetId="region-poligonal" isDependency={true}>polygonal region</ConceptLink> of $\sigma$ a positive <ConceptLink targetId="numero-real">real number</ConceptLink>, in such a way that <ConceptLink targetId="congruencia" isDependency={true}>congruent</ConceptLink> triangular regions have the same area, the area of the union of two regions with disjoint interiors is the sum of their areas, and the <ConceptLink targetId="cuadrado" isDependency={true}>square</ConceptLink> of unit side has area $1$.
 
-<Definicion title="">
-  An area measure function $\mu: \mathcal{P}_{\text{pol}} \to \mathbb{R}^+$ on the set $\mathcal{P}_{\text{pol}}$ of all planar <ConceptLink targetId="poligono" isDependency={true}>polygons</ConceptLink> is an assignment satisfying:
-  1. **Positivity**: $\forall P \in \mathcal{P}_{\text{pol}}, \; \mu(P) > 0$.
-  2. **Invariance under congruence**: If $P \cong Q$ under an isometry, then $\mu(P) = \mu(Q)$.
-  3. **Finite additivity**: If $P = P_1 \cup P_2$ with $\text{int}(P_1) \cap \text{int}(P_2) = \emptyset$, then $\mu(P) = \mu(P_1) + \mu(P_2)$.
-  4. **Unit normalization**: If $U$ is a <ConceptLink targetId="cuadrado">square</ConceptLink> of unit side length ($l = 1$), $\mu(U) = 1$.
+The four conditions turn <ConceptLink targetId="euclides">Euclid</ConceptLink>'s common notions ("things which coincide with one another are equal", "the whole is greater than the part") into numbers, and they suffice to derive the classical formulas: they yield <ConceptLink targetId="teorema-area-aditividad">finite additivity</ConceptLink>, the <ConceptLink targetId="teorema-area-rectangulo">area of the rectangle</ConceptLink> and the <ConceptLink targetId="teorema-area-triangulo">area of the triangle</ConceptLink>, on which the <ConceptLink targetId="teorema-tales">intercept theorem</ConceptLink> and the <ConceptLink targetId="teorema-pitagoras">Pythagorean theorem</ConceptLink> rest. That a function with these properties exists, and that it is unique, is not part of the definition: it is a <ConceptLink targetId="teorema-existencia-area">theorem</ConceptLink> proved by <ConceptLink targetId="hilbert">Hilbert</ConceptLink> in chapter IV of the *Grundlagen der Geometrie*.
+
+<Definicion title="Area function on polygonal regions">
+A <ConceptLink targetId="region-triangular" isDependency={true}>triangular region</ConceptLink> is the union of the trace of a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> and its <ConceptLink targetId="interior-triangulo" isDependency={true}>interior</ConceptLink>, $\operatorname{tr}(\triangle ABC) \cup \operatorname{Int}(\triangle ABC)$; a <ConceptLink targetId="region-poligonal" isDependency={true}>polygonal region</ConceptLink> is a finite union of triangular regions contained in $\operatorname{tr}(\sigma)$. Let $\mathcal{R}_\sigma$ be the <ConceptLink targetId="conjunto">set</ConceptLink> of polygonal regions of $\sigma$. Two regions $R_1, R_2 \in \mathcal{R}_\sigma$ have **disjoint interiors** if their intersection is contained in a finite union of <ConceptLink targetId="segmento" isDependency={true}>segments</ConceptLink>. We write $\operatorname{A}(\triangle ABC)$ for the area of the triangular region determined by $\triangle ABC$.
+
+An **area function** is a map
+
+$$
+\begin{aligned}
+\operatorname{A}\colon \mathcal{R}_\sigma &\longrightarrow \mathbb{R}_{>0} \\
+R &\longmapsto \operatorname{A}(R)
+\end{aligned}
+$$
+
+satisfying:
+1. **Positivity**: $\operatorname{A}(R) > 0$ for every $R \in \mathcal{R}_\sigma$.
+2. **Invariance under congruence**: if $\triangle ABC \cong \triangle A'B'C'$ (<ConceptLink targetId="congruencia-triangulos" isDependency={true}>congruent triangles</ConceptLink>), then $\operatorname{A}(\triangle ABC) = \operatorname{A}(\triangle A'B'C')$.
+3. **Additivity**: if $R = R_1 \cup R_2$ with $R_1$ and $R_2$ having disjoint interiors, then $\operatorname{A}(R) = \operatorname{A}(R_1) + \operatorname{A}(R_2)$.
+4. **Normalisation**: if $Q$ is the region of a square whose <ConceptLink targetId="lado">side</ConceptLink> is congruent to the <ConceptLink targetId="segmento-unidad" isDependency={true}>unit segment</ConceptLink>, then $\operatorname{A}(Q) = 1$.
 </Definicion>
 
 <Separador />
 
-### Equidecomposability and Hilbert's content
+### Equidecomposability and equicomplementability
 
-In Hilbert's synthetic geometry:
-- **Polygons of equal content**: Two polygons $P$ and $Q$ are equidecomposable if there exist finite partitions $P = \bigcup_{i=1}^n T_i$ and $Q = \bigcup_{i=1}^n T'_i$ such that $T_i \cong T'_i$ for all $i$.
-- **Polygons of equal complement**: Two polygons are equivalent in content if they can be supplemented by congruent polygons to yield equidecomposable figures.
+Two polygonal regions $P, Q \in \mathcal{R}_\sigma$ are **<ConceptLink targetId="equidescomponibilidad">equidecomposable</ConceptLink>** if they admit decompositions $P = T_1 \cup \dots \cup T_n$ and $Q = T'_1 \cup \dots \cup T'_n$ into triangular regions with pairwise disjoint interiors such that $T_i \cong T'_i$ for each $i$. They are **equicomplementable** if there exist equidecomposable regions $P'$ and $Q'$, with interiors disjoint from those of $P$ and $Q$ respectively, such that $P \cup P'$ and $Q \cup Q'$ are equidecomposable.
+
+By invariance and additivity, two equidecomposable or equicomplementable regions have the same area. In chapter IV Hilbert constructs a measure of content without using the <ConceptLink targetId="continuidad">axioms of continuity</ConceptLink> and proves that two regions are equicomplementable if and only if they have the same measure; with the <ConceptLink targetId="axioma-arquimedes">Archimedean axiom</ConceptLink>, equicomplementability and equidecomposability coincide (<ConceptLink targetId="teorema-bolyai-gerwien">Bolyai–Gerwien theorem</ConceptLink>).
 
 <Separador />
 
 <SeccionPropiedades>
-  <PropiedadesGrupo title="Fundamental theorems of area">
-    <PropiedadItem id="teorema-area-aditividad" title="Additivity of area">
-      The area of the disjoint union of two polygons equals the sum of their individual areas.
+  <PropiedadesGrupo title="Consequences of the definition">
+    <PropiedadItem id="teorema-existencia-area" title="Existence and uniqueness of the area function">
+      In the <ConceptLink targetId="sistema-euclidiano">Euclidean plane</ConceptLink> there is exactly one area function for each choice of <ConceptLink targetId="segmento-unidad">unit segment</ConceptLink> (<ConceptLink targetId="teorema-existencia-area">area existence theorem</ConceptLink>).
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-rectangulo" title="Area of a rectangle">
-      The area of a rectangle with base $b$ and height $h$ is given uniquely by $\mu(R) = b \cdot h$.
+    <PropiedadItem id="teorema-area-aditividad" title="Finite additivity" formula="\operatorname{A}(R_1 \cup \dots \cup R_n) = \sum_{i=1}^{n} \operatorname{A}(R_i)">
+      If the <ConceptLink targetId="region-poligonal">polygonal regions</ConceptLink> $R_1, \dots, R_n$ have pairwise disjoint interiors, the area of their union is the sum of their areas (<ConceptLink targetId="teorema-area-aditividad">area additivity theorem</ConceptLink>).
     </PropiedadItem>
-    <PropiedadItem id="teorema-area-triangulo" title="Area of a triangle">
-      The area of any triangle with base $b$ and height $h$ satisfies $\mu(T) = \frac{b \cdot h}{2}$.
+    <PropiedadItem id="monotonia-area" title="Monotonicity" formula="R' \subseteq R \implies \operatorname{A}(R') \leq \operatorname{A}(R)">
+      If a <ConceptLink targetId="region-poligonal">polygonal region</ConceptLink> $R'$ is contained in another one $R$, the closure of $R \setminus R'$ is empty or a polygonal region whose interior is disjoint from that of $R'$; by additivity and positivity, $\operatorname{A}(R') \leq \operatorname{A}(R)$.
+    </PropiedadItem>
+    <PropiedadItem id="area-regiones-equidescomponibles" title="Equal area of equidecomposable regions">
+      Two <ConceptLink targetId="equidescomponibilidad">equidecomposable</ConceptLink> regions have the same area, since their pieces are pairwise <ConceptLink targetId="congruencia-triangulos">congruent triangles</ConceptLink>.
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

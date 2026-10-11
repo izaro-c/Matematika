@@ -444,7 +444,17 @@ export const Congruence1Spec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastra A y B"
+  "note": "Arrastra A y B para modificar el segmento transportado sobre la recta.",
+  "translations": {
+    "eu": {
+      "title": "I. Kongruentzia-axioma",
+      "note": "Arrastatu A eta B zuzenaren gainean garraiatutako segmentua aldatzeko."
+    },
+    "en": {
+      "title": "Congruence Axiom I",
+      "note": "Drag A and B to modify the segment transported onto the line."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

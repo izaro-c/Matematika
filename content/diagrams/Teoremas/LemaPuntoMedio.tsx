@@ -349,7 +349,17 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Mueve A o B"
+  "note": "Mueve A o B para comprobar que el punto medio M equidista de ambos extremos.",
+  "translations": {
+    "eu": {
+      "title": "Erdigunea",
+      "note": "Mugitu A edo B M erdigunea bi muturretatik distantzia berera dagoela egiaztatzeko."
+    },
+    "en": {
+      "title": "Midpoint Lemma",
+      "note": "Move A or B to verify that midpoint M is equidistant from both endpoints."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "derivado",
   title: "Triángulo",
-  description: "Figura geométrica plana constituida por tres puntos no colineales denominados vértices y los tres segmentos que los unen.",
+  description: "Figura plana formada por tres puntos no colineales denominados vértices y los tres segmentos que los unen.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "orden", "congruencia", "hilbert"],
@@ -28,22 +28,24 @@ export const metadata = {
 import { Triangulo } from '@content/diagrams/Definiciones/Triangulo';
 export const Simulation = Triangulo;
 
-<Capitular letra="U" />n triángulo es la figura geométrica plana constituida por tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad" isDependency={true}>colineales</ConceptLink> y los tres <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> que los unen dos a dos.
+<Capitular letra="U" />n triángulo es la figura plana formada por tres <ConceptLink targetId="punto">puntos</ConceptLink> no <ConceptLink targetId="colinealidad" isDependency={true}>colineales</ConceptLink> y los tres <ConceptLink targetId="segmento" isDependency={true}>segmentos</ConceptLink> que los unen dos a dos.
 
-El triángulo no es una magnitud métrica ni una medida de área, sino una estructura formal construida a partir de la relación de <ConceptLink targetId="estar-entre">intermediación</ConceptLink> y la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>.
+El triángulo no es una magnitud ni una medida de área, sino una estructura construida a partir de la relación de <ConceptLink targetId="estar-entre">intermediación</ConceptLink> y de la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> en el <ConceptLink targetId="plano">plano</ConceptLink>. Es el <ConceptLink targetId="poligono">polígono</ConceptLink> más simple y el objeto sobre el que se formulan los criterios de <ConceptLink targetId="congruencia-triangulos">congruencia de triángulos</ConceptLink>.
 
 <Definicion title="Definición formal de triángulo">
-Dados tres <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> y <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ tales que la terna $\{A, B, C\}$ no es <ConceptLink targetId="colinealidad">colineal</ConceptLink>, el **triángulo** <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> constituido por los tres <ConceptLink targetId="segmento">segmentos</ConceptLink> <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> y <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
+Dados tres <ConceptLink targetId="punto">puntos</ConceptLink> <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind> y <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> del <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ que no son <ConceptLink targetId="colinealidad">colineales</ConceptLink>, el **triángulo** <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> es el <ConceptLink targetId="conjunto">conjunto</ConceptLink> formado por los tres <ConceptLink targetId="segmento">segmentos</ConceptLink> <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind> y <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
 
 $$
 \triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}
 $$
 
-Los segmentos $\overline{AB}$, $\overline{BC}$ y $\overline{CA}$ se denominan los <ConceptLink targetId="lado">lados</ConceptLink> del triángulo, y sus puntos extremos $A$, $B$ y $C$ reciben el nombre de <ConceptLink targetId="vertice">vértices</ConceptLink>. Su <ConceptLink targetId="traza">**traza puntual**</ConceptLink> asociada $\operatorname{tr}(\triangle ABC) \subset \mathcal{P}$ es la unión conjuntista de las <ConceptLink targetId="traza">trazas</ConceptLink> de sus lados:
+Los segmentos $\overline{AB}$, $\overline{BC}$ y $\overline{CA}$ se denominan <ConceptLink targetId="lado">lados</ConceptLink> del triángulo, y sus extremos $A$, $B$ y $C$ reciben el nombre de <ConceptLink targetId="vertice">vértices</ConceptLink>. Como los segmentos ya son conjuntos de puntos, la **traza** del triángulo, $\operatorname{tr}(\triangle ABC) \subseteq \mathcal{P}$, es la unión de sus lados:
 
 $$
-\operatorname{tr}(\triangle ABC) = \operatorname{tr}(\overline{AB}) \cup \operatorname{tr}(\overline{BC}) \cup \operatorname{tr}(\overline{CA})
+\operatorname{tr}(\triangle ABC) = \overline{AB} \cup \overline{BC} \cup \overline{CA}
 $$
+
+Los ángulos $\angle CAB$, $\angle ABC$ y $\angle BCA$ son los <ConceptLink targetId="angulo">ángulos</ConceptLink> del triángulo. La notación $\triangle ABC \cong \triangle A'B'C'$ de <ConceptLink targetId="congruencia-triangulos">congruencia</ConceptLink> se refiere siempre a la correspondencia ordenada de vértices $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$: los lados y ángulos homólogos son los que se corresponden por ella.
 </Definicion>
 
 <Separador />
@@ -52,34 +54,34 @@ $$
   <PropiedadesGrupo title="Propiedades estructurales y de orden">
     <PropiedadItem 
       id="simetria-vertices" 
-      title="Invarianza bajo permutaciones de vértices"
-      formula="\triangle ABC = \triangle \sigma(A)\sigma(B)\sigma(C) \quad (\forall \sigma \in S_3)"
+      title="Invariancia bajo permutaciones de vértices"
+      formula="\triangle ABC = \triangle \tau(A)\tau(B)\tau(C) \quad (\forall \tau \in S_3)"
     >
-      Al definirse a partir del conjunto no ordenado de sus lados ($\triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}$), el triángulo es estrictamente invariante respecto al orden en que se enuncien sus vértices: $\triangle ABC = \triangle BCA = \triangle CAB = \triangle BAC = \triangle ACB = \triangle CBA$, satisfaciendo la <ConceptLink targetId="igualdad-matematica">igualdad de conjuntos</ConceptLink>.
+      Al ser el conjunto no ordenado de sus lados, el triángulo no depende del orden en que se nombran sus vértices: $\triangle ABC = \triangle BCA = \triangle CAB = \triangle BAC = \triangle ACB = \triangle CBA$ como <ConceptLink targetId="igualdad-matematica">igualdad de conjuntos</ConceptLink>. El orden de los vértices solo es significativo en los enunciados de <ConceptLink targetId="congruencia">congruencia</ConceptLink>, donde fija la correspondencia entre elementos homólogos.
     </PropiedadItem>
 
     <PropiedadItem 
       id="coplanaridad-soporte" 
-      title="Coplanaridad y plano soporte único"
-      formula="\exists! \pi \in \Pi : \operatorname{tr}(\triangle ABC) \subset \operatorname{tr}(\pi)"
+      title="Plano soporte único"
+      formula="\exists! \pi \in \Pi : \operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)"
     >
-      En virtud de los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, la no <ConceptLink targetId="colinealidad">colinealidad</ConceptLink> del conjunto de vértices $\{A, B, C\}$ determina de forma unívoca un único <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$ que contiene íntegramente a la <ConceptLink targetId="traza">traza puntual</ConceptLink> del triángulo: $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
+      Por los axiomas <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> e <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, los vértices no <ConceptLink targetId="colinealidad">colineales</ConceptLink> $A$, $B$ y $C$ determinan un único <ConceptLink targetId="plano">plano</ConceptLink> $\pi \in \Pi$; por el <ConceptLink targetId="axioma-incidencia-6">Axioma I.6</ConceptLink>, las rectas soporte de los tres lados están en él, de modo que $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 
       id="interior-triangular" 
-      title="Interior triangular como región convexa"
+      title="Interior del triángulo"
       formula="\operatorname{Int}(\triangle ABC) = \mathcal{H}_{\overleftrightarrow{AB}}(C) \cap \mathcal{H}_{\overleftrightarrow{BC}}(A) \cap \mathcal{H}_{\overleftrightarrow{CA}}(B)"
     >
-      Todo triángulo $\triangle ABC$ en un plano $\pi$ determina una región abierta y acotada denominada **interior del triángulo** ($\operatorname{Int}(\triangle ABC)$), definida formalmente como la <ConceptLink targetId="interseccion">intersección</ConceptLink> de los tres <ConceptLink targetId="semiplano">semiplanos</ConceptLink> abiertos determinados por sus <ConceptLink targetId="recta">rectas</ConceptLink> soporte: el semiplano respecto a $\overleftrightarrow{AB}$ que contiene a $C$, el semiplano respecto a $\overleftrightarrow{BC}$ que contiene a $A$, y el semiplano respecto a $\overleftrightarrow{CA}$ que contiene a $B$. Dicha región es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>.
+      Todo triángulo $\triangle ABC$ de un plano $\pi$ determina su **<ConceptLink targetId="interior-triangulo">interior</ConceptLink>** $\operatorname{Int}(\triangle ABC)$, definido como la <ConceptLink targetId="interseccion">intersección</ConceptLink> de tres <ConceptLink targetId="semiplano">semiplanos</ConceptLink> abiertos limitados por sus <ConceptLink targetId="recta-soporte">rectas soporte</ConceptLink>: el de borde $\overleftrightarrow{AB}$ que contiene a $C$, el de borde $\overleftrightarrow{BC}$ que contiene a $A$ y el de borde $\overleftrightarrow{CA}$ que contiene a $B$. Es un <ConceptLink targetId="conjunto-convexo">conjunto convexo</ConceptLink>, por ser intersección de semiplanos.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="axioma-orden-4" 
-      title="Intersección planar de Pasch"
-      formula="\ell \cap \operatorname{seg}(AB) \neq \emptyset \land C \notin \ell \implies (\ell \cap \operatorname{seg}(BC) \neq \emptyset \veebar \ell \cap \operatorname{seg}(CA) \neq \emptyset)"
+      id="interseccion-recta-triangulo" 
+      title="Intersección de una recta con un triángulo"
+      formula="\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \land A, B, C \notin \operatorname{tr}(\ell) \land \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) \neq \emptyset \implies \operatorname{seg}(BC) \cap \operatorname{tr}(\ell) \neq \emptyset \veebar \operatorname{seg}(CA) \cap \operatorname{tr}(\ell) \neq \emptyset"
     >
-      En virtud del <ConceptLink targetId="axioma-orden-4">Axioma II.4</ConceptLink> (Axioma de Pasch), toda recta coplanar que interseca el interior de uno de los lados de un triángulo y no pasa por ninguno de sus vértices, interseca necesariamente el interior de exactamente uno de los otros dos lados, garantizando la continuidad y cierre topológico de su <ConceptLink targetId="frontera">frontera</ConceptLink>.
+      Sea $\ell$ una recta del plano $\pi$ del triángulo que no incide con ninguno de sus vértices. Si $\ell$ corta al lado abierto $\operatorname{seg}(AB)$, entonces corta a exactamente uno de los otros dos lados abiertos. La existencia del segundo punto de corte es el <ConceptLink targetId="axioma-orden-4">Axioma II.4</ConceptLink> (axioma de <ConceptLink targetId="pasch">Pasch</ConceptLink>); la exclusividad, en cambio, no la da el axioma: es un <ConceptLink targetId="teorema">teorema</ConceptLink> que Hilbert deduce en el §4 a partir de los axiomas de orden (una recta no puede cortar a los tres lados abiertos).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

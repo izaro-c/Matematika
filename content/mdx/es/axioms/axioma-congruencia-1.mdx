@@ -3,7 +3,7 @@ export const metadata = {
   lang: "es",
   type: "axioma",
   title: "Axioma III.1 (Transporte de segmentos)",
-  description: "Dado un segmento cualquiera y una semirrecta con un origen dado, existe un único punto sobre la semirrecta que determina un segmento congruente al primero.",
+  description: "Dado un segmento y una semirrecta, existe sobre la semirrecta un punto, distinto de su origen, que determina con este un segmento congruente con el dado.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "congruencia", "hilbert"],
@@ -23,22 +23,26 @@ export const metadata = {
 import { Congruence1 } from '@content/diagrams/Axiomas/Congruence1';
 export const Simulation = Congruence1;
 
-<Capitular letra="D" />ado un <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> cualquiera y una <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink> con un <ConceptLink targetId="punto" isDependency={true}>origen</ConceptLink> dado, existe exactamente un <ConceptLink targetId="punto">punto</ConceptLink> sobre dicha semirrecta que conforma un segmento <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> con el segmento original.
+<Capitular letra="D" />ados un <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> y una <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink>, existe sobre la semirrecta un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink>, distinto de su <ConceptLink targetId="origen-semirrecta">origen</ConceptLink>, que determina con este un segmento <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> con el dado.
 
-Este postulado formaliza la posibilidad de trasladar longitudes de manera unívoca a lo largo de cualquier dirección en el <ConceptLink targetId="espacio">espacio</ConceptLink>, sin apelar a escalas métricas numéricas ni a sistemas de coordenadas.
+Este axioma permite transportar un segmento sobre cualquier semirrecta del <ConceptLink targetId="espacio">espacio</ConceptLink> sin recurrir a medidas numéricas ni a sistemas de coordenadas.
 
 <Definicion title="Axioma III.1 (Transporte de segmentos)">
-Dados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind> en el <ConceptLink targetId="dominio">dominio primitivo</ConceptLink> $\mathcal{P}$ que determinan el <ConceptLink targetId="segmento">segmento</ConceptLink> <VisualBind element="segAB" color="ocre">$\overline{AB}$</VisualBind>, y dada una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> <VisualBind element="rayCDir" color="pavo">$r = \overrightarrow{C\,\text{dir}}$</VisualBind> con origen en <VisualBind element="pC" color="terracota">$C$</VisualBind> $\in \mathcal{P}$ orientada hacia el punto <VisualBind element="pDir" color="pavo">$\text{dir}$</VisualBind> $\in \mathcal{P} \setminus \{C\}$, existe un único punto <VisualBind element="pD" color="terracota">$D$</VisualBind> en la semirrecta $r \setminus \{C\}$ tal que el segmento <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> es <ConceptLink targetId="congruencia">congruente</ConceptLink> con $\overline{AB}$:
+Dados dos <ConceptLink targetId="punto">puntos</ConceptLink> distintos <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, que determinan el <ConceptLink targetId="segmento">segmento</ConceptLink> <VisualBind element="segAB" color="ocre">$\overline{AB}$</VisualBind>, y una <ConceptLink targetId="semirrecta">semirrecta</ConceptLink> <VisualBind element="rayCDir" color="pavo">$\overrightarrow{C\,\text{dir}}$</VisualBind> con origen en el punto <VisualBind element="pC" color="terracota">$C$</VisualBind> y que pasa por el punto <VisualBind element="pDir" color="pavo">$\text{dir} \neq C$</VisualBind>, existe un punto <VisualBind element="pD" color="terracota">$D \in \overrightarrow{C\,\text{dir}} \setminus \{C\}$</VisualBind> tal que el segmento <VisualBind element="segCD" color="terracota">$\overline{CD}$</VisualBind> es <ConceptLink targetId="congruencia">congruente</ConceptLink> con $\overline{AB}$:
 
 $$
-\forall A, B \in \mathcal{P} \ \Biggl( A \neq B \implies \forall C, \text{dir} \in \mathcal{P} \ \Bigl( C \neq \text{dir} \implies \exists! D \in \operatorname{tr}(\overrightarrow{C\,\text{dir}}) \setminus \{C\} \ (\overline{AB} \cong \overline{CD}) \Bigr) \Biggr)
+\forall A, B, C, \text{dir} \in \mathcal{P} \ \Bigl( (A \neq B \land C \neq \text{dir}) \implies \exists D \in \overrightarrow{C\,\text{dir}} \setminus \{C\} \ (\overline{AB} \cong \overline{CD}) \Bigr)
 $$
 
-Asimismo, todo segmento es congruente consigo mismo: $\overline{AB} \cong \overline{AB}$ y $\overline{AB} \cong \overline{BA}$.
+Asimismo, todo segmento es congruente consigo mismo (<ConceptLink targetId="reflexividad">reflexividad</ConceptLink>):
+
+$$
+\forall A, B \in \mathcal{P} \ \bigl( A \neq B \implies (\overline{AB} \cong \overline{AB} \land \overline{AB} \cong \overline{BA}) \bigr)
+$$
 </Definicion>
 
 <Separador />
 
 <Nota>
-El Axioma III.1 constituye el análogo sintético y riguroso del compás rígido en las construcciones euclidianas, garantizando la existencia y unicidad del traslado métrico en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
+El Axioma III.1 es el análogo sintético del compás en las construcciones euclidianas. Solo postula la existencia del punto $D$: su unicidad es un <ConceptLink targetId="teorema">teorema</ConceptLink>, la <ConceptLink targetId="teorema-unicidad-transporte-segmentos">unicidad del transporte de segmentos</ConceptLink>, que se deduce de los axiomas <ConceptLink targetId="axioma-congruencia-4">III.4</ConceptLink> y <ConceptLink targetId="axioma-congruencia-5">III.5</ConceptLink> en la <ConceptLink targetId="sistema-absoluto">geometría absoluta</ConceptLink>.
 </Nota>

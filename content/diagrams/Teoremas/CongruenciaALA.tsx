@@ -1214,7 +1214,17 @@ export const CongruenciaALASpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastra A, B y C"
+  "note": "Arrastra A, B y C para verificar que dos ángulos y el lado comprendido determinan el triángulo.",
+  "translations": {
+    "eu": {
+      "title": "ALA kongruentzia-irizpidea",
+      "note": "Arrastatu A, B eta C bi angeluk eta haien arteko aldeak triangelua zehazten dutela egiaztatzeko."
+    },
+    "en": {
+      "title": "ASA Congruence Criterion",
+      "note": "Drag A, B, and C to verify that two angles and the included side determine the triangle."
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "primitivo",
   title: "Kongruentzia",
-  description: "Zuzenkien zein angeluen arteko zurruntasuna eta tamaina- zein forma-baliokidetasuna ezartzen dituen oinarrizko erlazioa.",
+  description: "Zuzenkien arteko eta angeluen arteko tamaina-berdintasuna adierazten duen oinarrizko erlazioa.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "congruencia", "hilbert", "rigidez"],
@@ -25,19 +25,23 @@ export const metadata = {
   ]
 };
 
-<Capitular letra="K" />ongruentzia geometrikoa <ConceptLink targetId="segmento">zuzenki</ConceptLink>-bikoteen zein <ConceptLink targetId="angulo">angelu</ConceptLink>-bikoteen arteko tamaina- eta forma-baliokidetasuna ezartzen duen zurruntasun formaleko <ConceptLink targetId="relacion">oinarrizko erlazio</ConceptLink> bat da.
+<Capitular letra="K" />ongruentzia geometrikoa bi <ConceptLink targetId="segmento">zuzenki</ConceptLink>, edo bi <ConceptLink targetId="angulo">angelu</ConceptLink>, objektu desberdinak izan arren tamainaz berdinak noiz diren adierazten duen <ConceptLink targetId="concepto-primitivo">oinarrizko</ConceptLink> <ConceptLink targetId="relacion">erlazioa</ConceptLink> da.
 
-Kongruentzia <ConceptLink targetId="estructura-geometrica">egitura geometrikoaren</ConceptLink> <ConceptLink targetId="signatura">sinadura formalean</ConceptLink> postulatzen den oinarrizko erlazioa da, eta haren portaera deduktiboa hirugarren <ConceptLink targetId="axioma">axioma</ConceptLink>-taldeak zehazten du (<ConceptLink targetId="axioma-congruencia-1">III.1 axiomatik</ConceptLink> <ConceptLink targetId="axioma-congruencia-5">III.5 axiomara</ConceptLink>).
+Ez da inolako neurritatik definitzen: <ConceptLink targetId="estructura-geometrica">egitura geometrikoaren</ConceptLink> <ConceptLink targetId="signatura">signaturan</ConceptLink> postulatzen da, eta haren propietateak hirugarren <ConceptLink targetId="axioma">axioma</ConceptLink>-taldeak finkatzen ditu (<ConceptLink targetId="axioma-congruencia-1">III.1 axiomatik</ConceptLink> <ConceptLink targetId="axioma-congruencia-5">III.5 axiomara</ConceptLink>). <ConceptLink targetId="longitud">Luzera</ConceptLink> eta <ConceptLink targetId="medida-angular">angelu-neurria</ConceptLink> geroago eraikitzen dira, kongruentziatik eta jarraitutasun-axiometatik abiatuta.
 
 <Definicion title="Kongruentzia sintetikoaren formalizazioa">
-<ConceptLink targetId="geometria-hilbertiana">Geometria hilbertiarraren</ConceptLink> sinaduran, **kongruentziak** ($\cong$) oinarrizko bi <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> independente barne hartzen ditu:
+<ConceptLink targetId="geometria-hilbertiana">Geometria hilbertiarraren</ConceptLink> signaturan, **kongruentziak** ($\cong$) oinarrizko bi <ConceptLink targetId="relacion-binaria">erlazio bitar</ConceptLink> desberdin hartzen ditu barne:
 
-1. **Zuzenkien kongruentzia**: $\mathcal{P}$ <ConceptLink targetId="dominio">domeinuko</ConceptLink> bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinek zehaztutako <ConceptLink targetId="segmento">zuzenkien</ConceptLink> <ConceptLink targetId="conjunto">multzoaren</ConceptLink> gaineko $\cong_{\text{seg}}$ erlazio bitarra, $A \neq B$ eta $C \neq D$ muturretarako $\overline{AB} \cong \overline{CD}$ gisa adierazia.
-2. **Angeluen kongruentzia**: <ConceptLink targetId="espacio">Espazioko</ConceptLink> <ConceptLink targetId="angulo">angeluen</ConceptLink> multzoaren gaineko $\cong_{\angle}$ erlazio bitarra, $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> batean koplanarrak diren eta <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren bi <ConceptLink targetId="semirrecta">zuzenerdik</ConceptLink> osatutako bikoteetarako $\angle AOB \cong \angle A'O'B'$ gisa adierazia.
+1. **Zuzenkien kongruentzia**: $\mathcal{P}$ <ConceptLink targetId="dominio">domeinuko</ConceptLink> bi <ConceptLink targetId="punto">puntu</ConceptLink> desberdinek zehaztutako <ConceptLink targetId="segmento">zuzenkien</ConceptLink> <ConceptLink targetId="conjunto">multzoaren</ConceptLink> gaineko $\cong_{\mathrm{seg}}$ erlazio bitarra; $\overline{AB} \cong \overline{CD}$ idazten da, $A \neq B$ eta $C \neq D$ muturrekin.
+2. **Angeluen kongruentzia**: <ConceptLink targetId="espacio">espazioko</ConceptLink> <ConceptLink targetId="angulo">angeluen</ConceptLink> multzoaren gaineko $\cong_{\angle}$ erlazio bitarra; $\angle AOB \cong \angle A'O'B'$ idazten da. Angelu bakoitza jatorri bera duten eta <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren bi <ConceptLink targetId="semirrecta">zuzenerdik</ConceptLink> osatzen dute, $\pi \in \Pi$ <ConceptLink targetId="plano">plano</ConceptLink> batean daudenak; alderatzen diren bi angeluak, ordea, plano desberdinetan egon daitezke.
 </Definicion>
 
 <Separador />
 
 <Nota>
-Zuzenkien eta angeluen gaineko oinarrizko kongruentzia-erlazioetatik abiatuta, nozioa figura konposatuetara hedatzen da formalki, hala nola <ConceptLink targetId="triangulo">triangeluetara</ConceptLink> eta <ConceptLink targetId="poligono">poligonoetara</ConceptLink>: bi figura kongruenteak dira baldin eta haien <ConceptLink targetId="vertice">erpinen</ConceptLink> artean elkarrekiko <ConceptLink targetId="lado">alde</ConceptLink> eta <ConceptLink targetId="angulo">angelu</ConceptLink> guztien kongruentzia gordetzen duen bijekzio bat existitzen bada.
+Zuzenkien eta angeluen gaineko oinarrizko erlazioetatik abiatuta, nozioa irudi konposatuetara hedatzen da, hala nola <ConceptLink targetId="triangulo">triangeluetara</ConceptLink> eta <ConceptLink targetId="poligono">poligonoetara</ConceptLink>: bi irudi kongruenteak dira, baldin eta haien <ConceptLink targetId="vertice">erpinen</ConceptLink> artean <ConceptLink targetId="lado">alde</ConceptLink> eta <ConceptLink targetId="angulo">angelu</ConceptLink> homologo guztiak kongruente bihurtzen dituen <ConceptLink targetId="biyeccion">bijekzio</ConceptLink> bat badago. Triangeluetan, $\triangle ABC \cong \triangle A'B'C'$ idazteak beti esan nahi du <ConceptLink targetId="congruencia-triangulos">kongruentzia</ConceptLink> $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$ korrespondentzia ordenatuarekiko dela:
+
+$$
+\triangle ABC \cong \triangle A'B'C' \iff \overline{AB} \cong \overline{A'B'} \land \overline{BC} \cong \overline{B'C'} \land \overline{CA} \cong \overline{C'A'} \land \angle CAB \cong \angle C'A'B' \land \angle ABC \cong \angle A'B'C' \land \angle BCA \cong \angle B'C'A'
+$$
 </Nota>

@@ -94,7 +94,7 @@ export const HeroSection = () => {
 
         <div className="mt-12 grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 w-full items-stretch">
           <HeroCard
-            href="/plan/camino-teorema-pitagoras"
+            href="/plan/plan-de-estudio-camino-teorema-pitagoras"
             eyebrow={t('hero', 'studyPlanEyebrow')}
             title={t('hero', 'studyPlanTitle')}
             cta={t('hero', 'studyPlanCta')}

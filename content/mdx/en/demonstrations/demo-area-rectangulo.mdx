@@ -1,71 +1,79 @@
 export const metadata = {
-  "id": "demo-area-rectangulo",
-  "type": "demostracion",
-  "title": "Proof: Rectangle Area Theorem",
-  "description": "Axiomatic proof by subdivision into unit squares and extension to irrational dimensions via density and the Archimedean axiom, grounded in Hilbert's measure theory.",
-  "parentTheorem": "teorema-area-rectangulo",
-  "lang": "en",
-  "branch": "51M",
-  "proofMethod": "metodo-directo",
-  "authors": ["euclides", "hilbert"],
-  "tags": ["geometry", "areas", "rectangle", "measure"],
-  "layout": "split",
-  "sources": [
-    { "title": "Elements", "author": "Euclid", "locator": "Book I, Proposition 35", "role": "primary" },
-    { "title": "Grundlagen der Geometrie", "author": "David Hilbert", "locator": "Chapter V, §22", "role": "secondary" }
+  id: "demo-area-rectangulo",
+  lang: "en",
+  type: "demostracion",
+  title: "Proof: Rectangle area theorem",
+  description: "Proof in three stages: integer sides (unit squares), rational sides (squares of side 1/N) and real sides, trapping the area between approximations from below and from above by means of the monotonicity of area and the Archimedean axiom.",
+  parentTheorem: "teorema-area-rectangulo",
+  branch: "51M",
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["area", "rectangulo", "longitud", "arquimedes"],
+  layout: "split",
+  sources: [
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter IV", role: "secondary" },
+    { title: "Geometry: Euclid and Beyond", author: "Robin Hartshorne", locator: "Chapter 5", role: "formalization" }
   ]
 };
 
 <DemonstrationSection>
 
-<Capitular letra="T" />he area formula for a <ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle</ConceptLink> is established in three successive stages that guarantee its validity for integer, rational, and irrational side lengths.
+<Capitular letra="D" />irect <ConceptLink targetId="metodo-directo" isDependency={true}>proof</ConceptLink> of the <ConceptLink targetId="teorema-area-rectangulo">rectangle area theorem</ConceptLink>: we first prove that the area of a <ConceptLink targetId="rectangulo" isDependency={true}>rectangle</ConceptLink> depends only on the <ConceptLink targetId="longitud" isDependency={true}>lengths</ConceptLink> of its sides and is additive in each of them; from this the formula follows for integer sides, then for rational sides and, finally, for real sides by means of the <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Archimedean axiom</ConceptLink>.
 
 <Separador />
 
-### Proof step by step
+### Step-by-step proof
 
-<ProofStep number={1} title="Normalization: the unit square">
-The unit square is axiomatically assigned area 1 as the reference unit:
-
-<Formula>
-  $$ \text{Area}(\text{unit square}) = 1 $$
-</Formula>
-
-This convention is ensured by the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity axiom</ConceptLink>, which assigns value $1$ to the unit square.
+<ProofStep number={1} title="The area depends only on the side lengths">
+Let $ABCD$ and $A'B'C'D'$ be two <ConceptLink targetId="rectangulo" isDependency={true}>rectangles</ConceptLink> with $|AB| = |A'B'| = b$ and $|AD| = |A'D'| = h$. The <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangles</ConceptLink> $\triangle DAB$ and $\triangle D'A'B'$ have <ConceptLink targetId="angulo-recto" isDependency={true}>right angles</ConceptLink> at $A$ and $A'$ and congruent legs, so $\triangle DAB \cong \triangle D'A'B'$ by the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS criterion</ConceptLink>; the same holds for $\triangle BCD$ and $\triangle B'C'D'$. Each rectangle is the union of its two triangles, which have disjoint interiors, so invariance under congruence and additivity of the <ConceptLink targetId="teoria-medida-area" isDependency={true}>area function</ConceptLink> give $\operatorname{A}(ABCD) = \operatorname{A}(A'B'C'D')$. We may therefore write $f(b, h)$ for the area of any rectangle with adjacent sides of lengths $b$ and $h$.
 </ProofStep>
 
-<ProofStep number={2} title="Integer dimensions">
-Let $R$ be a rectangle with base $m \in \mathbb{N}$ and height $n \in \mathbb{N}$. Subdivide $R$ into $m \times n$ unit squares using equidistant <ConceptLink targetId="paralelas" isDependency={true}>parallel lines</ConceptLink>. By additivity:
+<ProofStep number={2} title="Additivity in each side">
+Let $b = b_1 + b_2$ with $b_1, b_2 > 0$. By <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axiom III.1</ConceptLink> there are $E \in \operatorname{seg}(AB)$ and $F \in \operatorname{seg}(DC)$ with $|AE| = |DF| = b_1$; since $\overline{AE}$ and $\overline{DF}$ are congruent and lie on <ConceptLink targetId="paralelas" isDependency={true}>parallel</ConceptLink> lines, $AEFD$ and $EBCF$ are rectangles (<ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel axiom</ConceptLink>) that only share the <ConceptLink targetId="segmento" isDependency={true}>segment</ConceptLink> $\overline{EF}$. By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>additivity of area</ConceptLink>, and by the same argument for the other side,
 
-<Formula>
-  $$ \text{Area}(R) = m \cdot n \cdot 1 = m \cdot n $$
-</Formula>
+$$
+f(b_1 + b_2, h) = f(b_1, h) + f(b_2, h), \qquad f(b, h_1 + h_2) = f(b, h_1) + f(b, h_2)
+$$
 </ProofStep>
 
-<ProofStep number={3} title="Rational dimensions">
-Let $b = \frac{p}{q}$ and $h = \frac{m}{n}$ with $p, q, m, n \in \mathbb{N}$. Subdivide each side into fractions of length $\frac{1}{q}$ and $\frac{1}{n}$ respectively, obtaining $p \cdot m$ sub-squares of side $\frac{1}{qn}$. Additivity yields:
+<ProofStep number={3} title="Integer sides">
+Applying the previous step repeatedly, for $m, n \in \mathbb{N}$ and $x, y > 0$ we get $f(m x, n y) = m \cdot n \cdot f(x, y)$: the rectangle with sides $m x$ and $n y$ is divided into $m \cdot n$ rectangles with sides $x$ and $y$. With $x = y = 1$ and the normalisation $f(1, 1) = 1$ of the unit <ConceptLink targetId="cuadrado" isDependency={true}>square</ConceptLink>, the rectangle is divided into $m \cdot n$ unit squares and
 
-<Formula>
-  $$ \text{Area}(R) = \frac{p}{q} \cdot \frac{m}{n} = b \cdot h $$
-</Formula>
+$$
+f(m, n) = m \cdot n
+$$
 </ProofStep>
 
-<ProofStep number={4} title="Extension to reals via the Archimedean axiom">
-For $b, h \in \mathbb{R}^+$ irrational, construct rational sequences $(b_k)_{k \geq 1} \nearrow b$ and $(h_k)_{k \geq 1} \nearrow h$. By the <ConceptLink targetId="axioma-arquimedes" isDependency={true}>Archimedean axiom</ConceptLink> and monotonicity of the area measure:
+<ProofStep number={4} title="Rational sides">
+Let $b = p/q$ and $h = m/n$ with $p, q, m, n \in \mathbb{N}$, and let $N = q n$. By the properties of <ConceptLink targetId="longitud" isDependency={true}>length</ConceptLink>, which rest on the axioms of continuity (<ConceptLink targetId="axioma-arquimedes" isDependency={true}>Axiom V.1</ConceptLink> and <ConceptLink targetId="axioma-completitud" isDependency={true}>Axiom V.2</ConceptLink>), there is a segment of length $1/N$. The unit square is divided into $N^2$ squares of side $1/N$, hence $1 = N^2 f(1/N, 1/N)$ and each of them has area $1/N^2$. Since $b = (p n)/N$ and $h = (m q)/N$, the rectangle is divided into $(p n) \cdot (m q)$ squares of side $1/N$, so that
 
-<Formula>
-  $$ \text{Area}(R) = \lim_{k \to \infty} b_k \cdot h_k = b \cdot h $$
-</Formula>
-
-The uniqueness of this limit guarantees that no other continuous, additive area function assigns a different value to the rectangle.
+$$
+f(b, h) = \frac{(p n)(m q)}{(q n)^2} = \frac{p}{q} \cdot \frac{m}{n} = b \cdot h
+$$
 </ProofStep>
 
-<Separador />
+<ProofStep number={5} title="Monotonicity">
+If $0 < b' \leq b$ and $0 < h' \leq h$, by step 2 the rectangle with sides $b, h$ decomposes into the one with sides $b', h'$ and at most two further rectangles; by the positivity of area,
 
-### Deductive analysis
+$$
+f(b', h') \leq f(b, h)
+$$
+
+(this is a case of the <ConceptLink targetId="monotonia-area">monotonicity of area</ConceptLink>).
+</ProofStep>
+
+<ProofStep number={6} title="Real sides: approximation from below and from above">
+Let $b, h > 0$ be arbitrary and $k \in \mathbb{N}$. By the Archimedean property (<ConceptLink targetId="axioma-arquimedes" isDependency={true}>Archimedean axiom</ConceptLink>), there is a largest integer $j \geq 0$ with $j/k \leq b$, and likewise a largest integer $i \geq 0$ with $i/k \leq h$; let $b_k = j/k$ and $h_k = i/k$, so that $b_k \leq b < b_k + 1/k$ and $h_k \leq h < h_k + 1/k$. For $k$ large enough, $b_k, h_k > 0$. By steps 4 and 5 (the endpoints are rational), $f(b, h)$ and $b \cdot h$ both lie in the interval $[\, b_k h_k,\ (b_k + 1/k)(h_k + 1/k) \,]$, whose length is
+
+$$
+\left(b_k + \tfrac{1}{k}\right)\left(h_k + \tfrac{1}{k}\right) - b_k h_k = \frac{b_k + h_k}{k} + \frac{1}{k^2} \leq \frac{b + h + 1}{k}
+$$
+
+Thus $|f(b, h) - b \cdot h| \leq (b + h + 1)/k$ for every sufficiently large $k$. If $f(b, h) \neq b \cdot h$, the Archimedean property would give a $k$ with $(b + h + 1)/k < |f(b, h) - b \cdot h|$, which is absurd. Therefore $\operatorname{A}(ABCD) = f(b, h) = b \cdot h$.
+</ProofStep>
 
 <Nota>
-  This proof illustrates the classical method of exhaustion due to Eudoxus, reformulated in Hilbert's axiomatic language. The extension from rationals to reals relies essentially on the Archimedean property of the ordering of $\mathbb{R}$.
+The last step is a version of the method of exhaustion of <ConceptLink targetId="eudoxo">Eudoxus</ConceptLink>, which <ConceptLink targetId="arquimedes">Archimedes</ConceptLink> used systematically: a magnitude is determined by trapping it between approximations from below and from above whose difference can be made smaller than any given quantity. Without the <ConceptLink targetId="axioma-arquimedes">Archimedean axiom</ConceptLink>, Hilbert still develops the theory of area (chapter IV), but with values in a field of segments rather than in $\mathbb{R}$.
 </Nota>
 
 </DemonstrationSection>

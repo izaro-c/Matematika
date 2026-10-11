@@ -12,7 +12,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "Chapter I, §1",
+      locator: "Chapter I, §2",
       role: "primary"
     }
   ]
@@ -23,16 +23,16 @@ export const Simulation = Incidence7;
 
 <Capitular letra="I" />f two distinct <ConceptLink targetId="plano" isDependency={true}>planes</ConceptLink> <ConceptLink targetId="incidencia" isDependency={true}>are incident</ConceptLink> with the same <ConceptLink targetId="punto" isDependency={true}>point</ConceptLink>, then they are incident with at least a second common point.
 
-In the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>, this postulate describes the dimensional behavior of <ConceptLink targetId="espacio">space</ConceptLink>, preventing two distinct planes from intersecting at a single isolated point.
+The axiom is dimensional in character: it rules out two distinct planes having a single common point, a situation that does occur in <ConceptLink targetId="espacio">spaces</ConceptLink> of four or more <ConceptLink targetId="dimension">dimensions</ConceptLink>. It thus sets an upper bound on the dimension, while <ConceptLink targetId="axioma-incidencia-8">Axiom I.8</ConceptLink> sets the lower bound.
 
-<Definicion title="Axiom I.7 (Intersection of Planes)">
-Let <VisualBind element="plano-pi" color="azul">$\pi_1$</VisualBind> and <VisualBind element="plano-sigma" color="ocre">$\pi_2$</VisualBind> be two distinct <ConceptLink targetId="plano">planes</ConceptLink>. If both are <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="punto">point</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, there exists at least a second point <VisualBind element="pB" color="terracota">$B$</VisualBind> distinct from $A$ that is also incident with both planes:
+<Definicion title="Formal statement">
+Let <VisualBind element="plano-pi" color="pavo">$\pi$</VisualBind> and <VisualBind element="plano-sigma" color="ocre">$\sigma$</VisualBind> be two distinct <ConceptLink targetId="plano">planes</ConceptLink>. If both are <ConceptLink targetId="incidencia">incident</ConceptLink> with a <ConceptLink targetId="punto">point</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, there exists at least a second point <VisualBind element="pB" color="terracota">$B$</VisualBind>, distinct from $A$, that is also incident with both planes:
 
 $$
-\forall \pi_1, \pi_2 \in \Pi, \, \forall A \in \mathcal{P} \ \Biggl(\Bigl(\pi_1 \neq \pi_2 \land A \, \mathbf{I} \, \pi_1 \land A \, \mathbf{I} \, \pi_2\Bigr) \implies \exists B \in \mathcal{P} \ \Bigl(B \neq A \land B \, \mathbf{I} \, \pi_1 \land B \, \mathbf{I} \, \pi_2\Bigr)\Biggr)
+\forall \pi, \sigma \in \Pi \ \forall A \in \mathcal{P} \ \Biggl(\Bigl(\pi \neq \sigma \land A \, \mathbf{I} \, \pi \land A \, \mathbf{I} \, \sigma\Bigr) \implies \exists B \in \mathcal{P} \ \Bigl(B \neq A \land B \, \mathbf{I} \, \pi \land B \, \mathbf{I} \, \sigma\Bigr)\Biggr)
 $$
 </Definicion>
 
 <Nota>
-This postulate strictly asserts the existence of a second common <ConceptLink targetId="punto">point</ConceptLink>. The deduction that the full intersection of the <ConceptLink targetId="traza">point traces</ConceptLink> of both <ConceptLink targetId="plano">planes</ConceptLink> is exactly a single <ConceptLink targetId="recta">line</ConceptLink> ($\operatorname{tr}(\pi_1) \cap \operatorname{tr}(\pi_2) = \operatorname{tr}(\overleftrightarrow{AB})$) constitutes the <ConceptLink targetId="teorema-interseccion-planos">plane intersection line theorem</ConceptLink>, proved by combining this axiom with postulates <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>.
+The axiom only asserts the existence of a second common <ConceptLink targetId="punto">point</ConceptLink>. That the intersection of the <ConceptLink targetId="traza">point traces</ConceptLink> of both <ConceptLink targetId="plano">planes</ConceptLink> is exactly the trace of a <ConceptLink targetId="recta">line</ConceptLink>, <VisualBind element="recta-l" color="carbon">$\operatorname{tr}(\pi) \cap \operatorname{tr}(\sigma) = \operatorname{tr}(\overleftrightarrow{AB})$</VisualBind>, is the <ConceptLink targetId="teorema-interseccion-planos">intersection line theorem</ConceptLink>, proved by combining this axiom with axioms <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink>, <ConceptLink targetId="axioma-incidencia-6">I.6</ConceptLink>, and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>.
 </Nota>

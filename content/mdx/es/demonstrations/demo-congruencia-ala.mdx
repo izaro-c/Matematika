@@ -1,0 +1,95 @@
+export const metadata = {
+  id: "demo-congruencia-ala",
+  lang: "es",
+  type: "demostracion",
+  title: "Demostración: Criterio de congruencia ALA",
+  description: "Demostración directa: se transporta un segmento auxiliar, se aplica el teorema LAL y la unicidad del transporte de ángulos fuerza la coincidencia de los vértices.",
+  parentTheorem: "teorema-congruencia-ala",
+  branch: "51M",
+  branches: ["51M", "51A"],
+  proofMethod: "metodo-directo",
+  authors: ["euclides", "hilbert"],
+  tags: ["geometria-sintetica", "triangulo", "congruencia", "geometria-absoluta"],
+  layout: "split",
+  sources: [
+    {
+      title: "Elementos",
+      author: "Euclides",
+      locator: "Libro I, Proposición 26",
+      role: "primary"
+    },
+    {
+      title: "Grundlagen der Geometrie",
+      author: "David Hilbert",
+      locator: "Capítulo I, §6",
+      role: "primary"
+    }
+  ]
+};
+
+import { DemoCongruenciaALA } from "@content/diagrams/Demos/DemoCongruenciaALA";
+
+<DemonstrationSection diagram={<DemoCongruenciaALA />}>
+
+<Capitular letra="L" />a prueba del <ConceptLink targetId="teorema-congruencia-ala">teorema de congruencia ALA</ConceptLink> sigue el <ConceptLink targetId="metodo-directo" isDependency={true}>método directo</ConceptLink> de <ConceptLink targetId="hilbert">Hilbert</ConceptLink> (§6): se construye sobre la <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink> $\overrightarrow{A'C'}$ un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> $C^*$ con $\overline{A'C^*} \cong \overline{AC}$ y se prueba que $C^* = C'$. Intervienen el transporte de segmentos (<ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>), el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink> y la unicidad del transporte de ángulos (<ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>).
+
+<Separador />
+
+### Demostración paso a paso
+
+<ProofStep number={1} target="step1" title="Hipótesis y transporte auxiliar del segmento">
+Sean dos <ConceptLink targetId="triangulo" isDependency={true}>triángulos</ConceptLink> <VisualBind element="triangle1" color="granada">$\triangle ABC$</VisualBind> y <VisualBind element="triangle2" color="granada">$\triangle A'B'C'$</VisualBind> que satisfacen por hipótesis:
+1. Congruencia del <ConceptLink targetId="lado" isDependency={true}>lado</ConceptLink> comprendido: <VisualBind element="sideAB" color="granada">$\overline{AB} \cong \overline{A'B'}$</VisualBind>.
+2. Congruencia de los <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> adyacentes: <VisualBind element="angleA" color="granada">$\angle CAB \cong \angle C'A'B'$</VisualBind> y <VisualBind element="angleB" color="granada">$\angle ABC \cong \angle A'B'C'$</VisualBind>.
+
+Por el <ConceptLink targetId="axioma-congruencia-1" isDependency={true}>Axioma III.1</ConceptLink>, existe un <ConceptLink targetId="punto" isDependency={true}>punto</ConceptLink> <VisualBind element="pointC" color="mora">$C^*$</VisualBind> de la <ConceptLink targetId="semirrecta" isDependency={true}>semirrecta</ConceptLink> <VisualBind element="rayAC" color="mora">$\overrightarrow{A'C'}$</VisualBind>, distinto de su origen ($C^* \neq A'$), tal que el <ConceptLink targetId="segmento" isDependency={true}>segmento</ConceptLink> <VisualBind element="A2Cstar" color="mora">$\overline{A'C^*}$</VisualBind> es <ConceptLink targetId="congruencia" isDependency={true}>congruente</ConceptLink> con <VisualBind element="AC" color="granada">$\overline{AC}$</VisualBind>:
+
+$$
+C^* \in \overrightarrow{A'C'} \setminus \{A'\}, \qquad \overline{A'C^*} \cong \overline{AC}
+$$
+
+Como $C^*$ es incidente con la <ConceptLink targetId="recta" isDependency={true}>recta</ConceptLink> $\overleftrightarrow{A'C'}$ y es distinto de $A'$, y $B'$ no es incidente con ella ($\neg\operatorname{Col}(A',B',C')$), los puntos $A'$, $B'$, $C^*$ no son <ConceptLink targetId="colinealidad">colineales</ConceptLink> y determinan el triángulo <VisualBind element="triConstructed" color="mora">$\triangle A'B'C^*$</VisualBind>.
+</ProofStep>
+
+<ProofStep number={2} target="step2" title="Aplicación del teorema LAL">
+Comparamos <VisualBind element="triangle1" color="granada">$\triangle ABC$</VisualBind> con <VisualBind element="triConstructed" color="mora">$\triangle A'B'C^*$</VisualBind>:
+1. <VisualBind element="sideAB" color="granada">$\overline{AB} \cong \overline{A'B'}$</VisualBind> (hipótesis).
+2. Como $C^* \in \overrightarrow{A'C'} \setminus \{A'\}$, la semirrecta $\overrightarrow{A'C^*}$ coincide con $\overrightarrow{A'C'}$; por tanto, $\angle C^*A'B' = \angle C'A'B'$ y, por hipótesis, <VisualBind element="angleA" color="granada">$\angle CAB \cong \angle C^*A'B'$</VisualBind>.
+3. <VisualBind element="A2Cstar" color="mora">$\overline{AC} \cong \overline{A'C^*}$</VisualBind> (paso 1, con la <ConceptLink targetId="simetria">simetría</ConceptLink> de la congruencia de segmentos).
+
+Por el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, consecuencia del <ConceptLink targetId="axioma-congruencia-5" isDependency={true}>Axioma III.5</ConceptLink>, $\triangle ABC \cong \triangle A'B'C^*$ (<ConceptLink targetId="congruencia-triangulos">congruencia de triángulos</ConceptLink>). En particular:
+
+$$
+\angle ABC \cong \angle A'B'C^*
+$$
+</ProofStep>
+
+<ProofStep number={3} target="step3" title="Unicidad del transporte angular: C* = C'">
+Por hipótesis, <VisualBind element="angleB" color="granada">$\angle ABC \cong \angle A'B'C'$</VisualBind>. Por la <ConceptLink targetId="simetria">simetría</ConceptLink> y la <ConceptLink targetId="transitividad">transitividad</ConceptLink> de la congruencia de ángulos (<ConceptLink targetId="teorema-congruencia-angulos-equivalencia" isDependency={true}>teorema de equivalencia de la congruencia angular</ConceptLink>, Hilbert, §6):
+
+$$
+\angle A'B'C^* \cong \angle A'B'C'
+$$
+
+Los puntos $C^*$ y $C'$ están en el mismo <ConceptLink targetId="semiplano" isDependency={true}>semiplano</ConceptLink> respecto a $\overleftrightarrow{A'B'}$: ambos pertenecen a $\overrightarrow{A'C'} \setminus \{A'\}$, luego $A' \notin \overline{C^*C'}$ por la definición de semirrecta y la <ConceptLink targetId="estar-entre" isDependency={true}>intermediación</ConceptLink>; como $\overleftrightarrow{A'C'}$ y $\overleftrightarrow{A'B'}$ solo comparten el punto $A'$, se tiene $\overline{C^*C'} \cap \operatorname{tr}(\overleftrightarrow{A'B'}) = \emptyset$, es decir, $C^* \in \mathcal{H}_{\overleftrightarrow{A'B'}}(C')$.
+
+Así, $\overrightarrow{B'C^*}$ y $\overrightarrow{B'C'}$ forman con $\overrightarrow{B'A'}$ ángulos congruentes con $\angle ABC$ y están en el mismo semiplano. Por la unicidad del <ConceptLink targetId="axioma-congruencia-4" isDependency={true}>Axioma III.4</ConceptLink>:
+
+$$
+\overrightarrow{B'C^*} = \overrightarrow{B'C'}
+$$
+
+Entonces $C^*$ y $C'$ son incidentes con las dos <ConceptLink targetId="recta" isDependency={true}>rectas</ConceptLink> $\overleftrightarrow{A'C'}$ y $\overleftrightarrow{B'C'}$, que son distintas porque $A'$, $B'$, $C'$ no son colineales. Por el <ConceptLink targetId="axioma-incidencia-1" isDependency={true}>Axioma I.1</ConceptLink>, dos rectas distintas tienen a lo sumo un punto común; por tanto:
+
+$$
+C^* = C'
+$$
+
+Sustituyendo en el paso 2, $\triangle ABC \cong \triangle A'B'C^* = \triangle A'B'C'$, es decir:
+
+$$
+\triangle ABC \cong \triangle A'B'C'
+$$
+</ProofStep>
+
+</DemonstrationSection>

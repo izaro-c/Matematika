@@ -12,7 +12,7 @@ export const metadata = {
     {
       title: "Grundlagen der Geometrie",
       author: "David Hilbert",
-      locator: "I. kapitulua, §1",
+      locator: "I. kapitulua, §2",
       role: "primary"
     }
   ]
@@ -21,18 +21,14 @@ export const metadata = {
 import { Incidence5 } from '@content/diagrams/Axiomas/Incidence5';
 export const Simulation = Incidence5;
 
-<Capitular letra="K" />olinealak ez diren hiru <ConceptLink targetId="punto" isDependency={true}>puntutatik</ConceptLink> gehienez <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bakar bat igarotzen da.
+<Capitular letra="K" />olinealak ez diren hiru <ConceptLink targetId="punto" isDependency={true}>puntutatik</ConceptLink> gehienez <ConceptLink targetId="plano" isDependency={true}>plano</ConceptLink> bat igarotzen da.
 
-<ConceptLink targetId="sistema-incidencia">Intzidentzia-sisteman</ConceptLink>, postulatu honek <ConceptLink targetId="axioma-incidencia-4">I.4 axioma</ConceptLink> osatzen du, eta <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> berekoak ez diren hiru <ConceptLink targetId="punto">puntuk</ConceptLink> zehaztutako <ConceptLink targetId="plano">planoaren</ConceptLink> bakartasuna finkatzen du <ConceptLink targetId="espacio">espazioan</ConceptLink>.
+Axioma honek <ConceptLink targetId="axioma-incidencia-4">I.4 axioma</ConceptLink> osatzen duen bakartasuna ematen du: <ConceptLink targetId="recta" isDependency={true}>zuzen</ConceptLink> berarekin intziditzen ez duten hiru puntuk plano bat eta bakarra zehazten dute. <ConceptLink targetId="axioma-incidencia-1">I.1 axiomaren</ConceptLink> bakartasun-zatiaren baliokidea da planoetarako.
 
-<Definicion title="I.5 axioma (Planoaren bakartasuna)">
-Izan bitez <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru <ConceptLink targetId="punto">puntu</ConceptLink> <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind>. Gehienez <VisualBind element="plano" color="azul">$\pi$</VisualBind> <ConceptLink targetId="plano">plano</ConceptLink> bakar bat existitzen da hirurekin <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> duena:
+<Definicion title="Enuntziatu formala">
+Izan bitez <VisualBind element="pA" color="terracota">$A$</VisualBind>, <VisualBind element="pB" color="terracota">$B$</VisualBind> eta <VisualBind element="pC" color="terracota">$C$</VisualBind>, <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru <ConceptLink targetId="punto">puntu</ConceptLink>. Hirurekin <ConceptLink targetId="incidencia" isDependency={true}>intziditzen</ConceptLink> duen <ConceptLink targetId="plano">plano</ConceptLink> <VisualBind element="plano" color="pavo">$\pi$</VisualBind> bat existitzen da gehienez:
 
 $$
-\forall A, B, C \in \mathcal{P}, \, \forall \pi_1, \pi_2 \in \Pi \ \Biggl(\Bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land A, B, C \, \mathbf{I} \, \pi_1 \land A, B, C \, \mathbf{I} \, \pi_2\Bigr) \implies \pi_1 = \pi_2\Biggr)
+\forall A, B, C \in \mathcal{P} \ \forall \pi_1, \pi_2 \in \Pi \ \Biggl(\Bigl(\neg \exists \ell \in \mathcal{L} \, (A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell) \land \bigwedge_{X \in \{A, B, C\}} (X \, \mathbf{I} \, \pi_1 \land X \, \mathbf{I} \, \pi_2)\Bigr) \implies \pi_1 = \pi_2\Biggr)
 $$
 </Definicion>
-
-<Nota>
-Axioma honek ezinezko egiten du <ConceptLink targetId="colinealidad">kolinealak</ConceptLink> ez diren hiru <ConceptLink targetId="punto">puntu</ConceptLink> beretatik <ConceptLink targetId="plano">plano</ConceptLink> desberdin bat baino gehiago igarotzea, plano bakoitzaren izaera bidimentsionalaren zurruntasuna bermatuz hiru <ConceptLink targetId="dimension">dimentsioko</ConceptLink> <ConceptLink targetId="espacio">espazioan</ConceptLink>.
-</Nota>

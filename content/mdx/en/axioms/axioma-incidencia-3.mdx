@@ -3,14 +3,14 @@ export const metadata = {
   lang: "en",
   type: "axioma",
   title: "Axiom I.3 (Non-collinear points)",
-  description: "There exist at least three points that do not belong to the same line.",
+  description: "There exist at least three points that are not incident with the same line.",
   branch: "51A",
   tags: ["geometry", "incidence", "axiom", "plane"],
   axiomSystem: "sistema-incidencia",
   axiomFamily: "incidencia",
   hasSimulation: true,
   sources: [
-    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §1", role: "primary" }
+    { title: "Grundlagen der Geometrie", author: "David Hilbert", locator: "Chapter I, §2", role: "primary" }
   ]
 };
 
@@ -19,13 +19,13 @@ export const Simulation = Incidence3;
 
 <Capitular letra="T" />here exist at least three <ConceptLink targetId="punto" isDependency={true}>points</ConceptLink> not lying on the same <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink>.
 
-This axiom ensures that geometry does not collapse into a single linear dimension, establishing the foundation for two-dimensional configurations and setting the vertex basis for figures such as the <ConceptLink targetId="triangulo">triangle</ConceptLink> in <ConceptLink targetId="espacio">space</ConceptLink>.
+Without this axiom, all points could be incident with a single line and geometry would reduce to one <ConceptLink targetId="dimension">dimension</ConceptLink>. Together with axioms <ConceptLink targetId="axioma-incidencia-1">I.1</ConceptLink> and <ConceptLink targetId="axioma-incidencia-2">I.2</ConceptLink>, it completes the planar part of the <ConceptLink targetId="sistema-incidencia">incidence system</ConceptLink>, which already admits finite models such as the <ConceptLink targetId="modelo-tres-puntos">three-point model</ConceptLink>.
 
-<Definicion title="Formal Statement">
+<Definicion title="Formal statement">
   There exist at least three distinct <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="pA" color="ocre">$A$</VisualBind>, <VisualBind element="pB" color="ocre">$B$</VisualBind>, and <VisualBind element="pC" color="ocre">$C$</VisualBind> such that no <ConceptLink targetId="recta" isDependency={true}>line</ConceptLink> $\ell \in \mathcal{L}$ is simultaneously <ConceptLink targetId="incidencia" isDependency={true}>incident</ConceptLink> with all three:
   $$
   \exists A, B, C \in \mathcal{P} \ \bigl(A \neq B \land B \neq C \land A \neq C \land \forall \ell \in \mathcal{L} \ \neg(A \, \mathbf{I} \, \ell \land B \, \mathbf{I} \, \ell \land C \, \mathbf{I} \, \ell)\bigr)
   $$
-  A triple of points satisfying this condition is called non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> and constitutes the fundamental vertex configuration that gives rise to the <ConceptLink targetId="triangulo">triangle</ConceptLink> once <ConceptLink targetId="estar-entre">linear order</ConceptLink> (Group II) is introduced.
+  A triple of points satisfying this condition is called non-<ConceptLink targetId="colinealidad">collinear</ConceptLink>; its points will be the <ConceptLink targetId="vertice">vertices</ConceptLink> of a <ConceptLink targetId="triangulo">triangle</ConceptLink> once <ConceptLink targetId="segmento">segments</ConceptLink> have been defined through the <ConceptLink targetId="estar-entre">axioms of order</ConceptLink> (Group II).
 </Definicion>
 

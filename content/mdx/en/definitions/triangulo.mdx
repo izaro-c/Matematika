@@ -4,7 +4,7 @@ export const metadata = {
   type: "definicion",
   subtype: "derivado",
   title: "Triangle",
-  description: "Planar geometric figure constituted by three non-collinear points called vertices and the three segments joining them pairwise.",
+  description: "Planar figure formed by three non-collinear points called vertices and the three segments joining them pairwise.",
   branch: "51A",
   branches: ["51A", "51M"],
   tags: ["geometria-sintetica", "orden", "congruencia", "hilbert"],
@@ -28,22 +28,24 @@ export const metadata = {
 import { Triangulo } from '@content/diagrams/Definiciones/Triangulo';
 export const Simulation = Triangulo;
 
-<Capitular letra="A" /> triangle is the planar geometric figure constituted by three non-<ConceptLink targetId="colinealidad" isDependency={true}>collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> and the three <ConceptLink targetId="segmento" isDependency={true}>segments</ConceptLink> joining them pairwise.
+<Capitular letra="A" /> triangle is the planar figure formed by three non-<ConceptLink targetId="colinealidad" isDependency={true}>collinear</ConceptLink> <ConceptLink targetId="punto">points</ConceptLink> and the three <ConceptLink targetId="segmento" isDependency={true}>segments</ConceptLink> joining them pairwise.
 
-The triangle is neither a metric magnitude nor an area measure, but a formal structure constructed from the <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation and non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>.
+The triangle is neither a magnitude nor an area measure, but a structure built from the <ConceptLink targetId="estar-entre">betweenness</ConceptLink> relation and non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> in the <ConceptLink targetId="plano">plane</ConceptLink>. It is the simplest <ConceptLink targetId="poligono">polygon</ConceptLink> and the object on which the criteria of <ConceptLink targetId="congruencia-triangulos">triangle congruence</ConceptLink> are stated.
 
 <Definicion title="Formal Definition of Triangle">
-Given three <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind>, and <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> in the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ such that the triple $\{A, B, C\}$ is not <ConceptLink targetId="colinealidad">collinear</ConceptLink>, the **triangle** <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> is the <ConceptLink targetId="conjunto">set</ConceptLink> constituted by the three <ConceptLink targetId="segmento">segments</ConceptLink> <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind>, and <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
+Given three <ConceptLink targetId="punto">points</ConceptLink> <VisualBind element="vertice-a" color="musgo">$A$</VisualBind>, <VisualBind element="vertice-b" color="musgo">$B$</VisualBind>, and <VisualBind element="vertice-c" color="musgo">$C$</VisualBind> of the primitive <ConceptLink targetId="dominio">domain</ConceptLink> $\mathcal{P}$ that are not <ConceptLink targetId="colinealidad">collinear</ConceptLink>, the **triangle** <VisualBind element="triangulo" color="musgo">$\triangle ABC$</VisualBind> is the <ConceptLink targetId="conjunto">set</ConceptLink> formed by the three <ConceptLink targetId="segmento">segments</ConceptLink> <VisualBind element="lado-ab" color="pavo">$\overline{AB}$</VisualBind>, <VisualBind element="lado-bc" color="terracota">$\overline{BC}$</VisualBind>, and <VisualBind element="lado-ca" color="ocre">$\overline{CA}$</VisualBind>:
 
 $$
 \triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}
 $$
 
-The segments $\overline{AB}$, $\overline{BC}$, and $\overline{CA}$ are called the <ConceptLink targetId="lado">sides</ConceptLink> of the triangle, and their endpoints $A$, $B$, and $C$ are called the <ConceptLink targetId="vertice">vertices</ConceptLink>. Its associated <ConceptLink targetId="traza">**point trace**</ConceptLink> $\operatorname{tr}(\triangle ABC) \subset \mathcal{P}$ is the set union of the <ConceptLink targetId="traza">traces</ConceptLink> of its sides:
+The segments $\overline{AB}$, $\overline{BC}$, and $\overline{CA}$ are called the <ConceptLink targetId="lado">sides</ConceptLink> of the triangle, and their endpoints $A$, $B$, and $C$ are called its <ConceptLink targetId="vertice">vertices</ConceptLink>. Since segments are already sets of points, the **trace** of the triangle, $\operatorname{tr}(\triangle ABC) \subseteq \mathcal{P}$, is the union of its sides:
 
 $$
-\operatorname{tr}(\triangle ABC) = \operatorname{tr}(\overline{AB}) \cup \operatorname{tr}(\overline{BC}) \cup \operatorname{tr}(\overline{CA})
+\operatorname{tr}(\triangle ABC) = \overline{AB} \cup \overline{BC} \cup \overline{CA}
 $$
+
+The angles $\angle CAB$, $\angle ABC$, and $\angle BCA$ are the <ConceptLink targetId="angulo">angles</ConceptLink> of the triangle. The <ConceptLink targetId="congruencia-triangulos">congruence</ConceptLink> notation $\triangle ABC \cong \triangle A'B'C'$ always refers to the ordered correspondence of vertices $A \mapsto A'$, $B \mapsto B'$, $C \mapsto C'$: corresponding sides and angles are those matched by it.
 </Definicion>
 
 <Separador />
@@ -53,33 +55,33 @@ $$
     <PropiedadItem 
       id="simetria-vertices" 
       title="Invariance under Vertex Permutations"
-      formula="\triangle ABC = \triangle \sigma(A)\sigma(B)\sigma(C) \quad (\forall \sigma \in S_3)"
+      formula="\triangle ABC = \triangle \tau(A)\tau(B)\tau(C) \quad (\forall \tau \in S_3)"
     >
-      Since it is defined from the unordered set of its sides ($\triangle ABC = \{ \overline{AB}, \overline{BC}, \overline{CA} \}$), the triangle is strictly invariant with respect to the order in which its vertices are stated: $\triangle ABC = \triangle BCA = \triangle CAB = \triangle BAC = \triangle ACB = \triangle CBA$, satisfying <ConceptLink targetId="igualdad-matematica">set equality</ConceptLink>.
+      Being the unordered set of its sides, the triangle does not depend on the order in which its vertices are named: $\triangle ABC = \triangle BCA = \triangle CAB = \triangle BAC = \triangle ACB = \triangle CBA$ as an <ConceptLink targetId="igualdad-matematica">equality of sets</ConceptLink>. The order of the vertices matters only in <ConceptLink targetId="congruencia">congruence</ConceptLink> statements, where it fixes the correspondence between homologous elements.
     </PropiedadItem>
 
     <PropiedadItem 
       id="coplanaridad-soporte" 
-      title="Coplanarity and Unique Supporting Plane"
-      formula="\exists! \pi \in \Pi : \operatorname{tr}(\triangle ABC) \subset \operatorname{tr}(\pi)"
+      title="Unique Supporting Plane"
+      formula="\exists! \pi \in \Pi : \operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)"
     >
-      By Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, the non-<ConceptLink targetId="colinealidad">collinearity</ConceptLink> of the vertex set $\{A, B, C\}$ uniquely determines a single <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$ that contains the entire <ConceptLink targetId="traza">point trace</ConceptLink> of the triangle: $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
+      By Axioms <ConceptLink targetId="axioma-incidencia-4">I.4</ConceptLink> and <ConceptLink targetId="axioma-incidencia-5">I.5</ConceptLink>, the non-<ConceptLink targetId="colinealidad">collinear</ConceptLink> vertices $A$, $B$, and $C$ determine a unique <ConceptLink targetId="plano">plane</ConceptLink> $\pi \in \Pi$; by <ConceptLink targetId="axioma-incidencia-6">Axiom I.6</ConceptLink>, the supporting lines of the three sides lie in it, so that $\operatorname{tr}(\triangle ABC) \subseteq \operatorname{tr}(\pi)$.
     </PropiedadItem>
 
     <PropiedadItem 
       id="interior-triangular" 
-      title="Triangular Interior as a Convex Region"
+      title="Interior of the Triangle"
       formula="\operatorname{Int}(\triangle ABC) = \mathcal{H}_{\overleftrightarrow{AB}}(C) \cap \mathcal{H}_{\overleftrightarrow{BC}}(A) \cap \mathcal{H}_{\overleftrightarrow{CA}}(B)"
     >
-      Every triangle $\triangle ABC$ in a plane $\pi$ defines an open and bounded region known as the **interior of the triangle** ($\operatorname{Int}(\triangle ABC)$), formally defined as the <ConceptLink targetId="interseccion">intersection</ConceptLink> of the three open <ConceptLink targetId="semiplano">half-planes</ConceptLink> determined by its supporting <ConceptLink targetId="recta">lines</ConceptLink>: the half-plane with respect to $\overleftrightarrow{AB}$ containing $C$, the half-plane with respect to $\overleftrightarrow{BC}$ containing $A$, and the half-plane with respect to $\overleftrightarrow{CA}$ containing $B$. This region is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>.
+      Every triangle $\triangle ABC$ in a plane $\pi$ determines its **<ConceptLink targetId="interior-triangulo">interior</ConceptLink>** $\operatorname{Int}(\triangle ABC)$, defined as the <ConceptLink targetId="interseccion">intersection</ConceptLink> of three open <ConceptLink targetId="semiplano">half-planes</ConceptLink> bounded by its <ConceptLink targetId="recta-soporte">supporting lines</ConceptLink>: the one with edge $\overleftrightarrow{AB}$ containing $C$, the one with edge $\overleftrightarrow{BC}$ containing $A$, and the one with edge $\overleftrightarrow{CA}$ containing $B$. It is a <ConceptLink targetId="conjunto-convexo">convex set</ConceptLink>, being an intersection of half-planes.
     </PropiedadItem>
 
     <PropiedadItem 
-      id="axioma-orden-4" 
-      title="Pasch's Planar Intersection"
-      formula="\ell \cap \operatorname{seg}(AB) \neq \emptyset \land C \notin \ell \implies (\ell \cap \operatorname{seg}(BC) \neq \emptyset \veebar \ell \cap \operatorname{seg}(CA) \neq \emptyset)"
+      id="interseccion-recta-triangulo" 
+      title="Intersection of a Line with a Triangle"
+      formula="\operatorname{tr}(\ell) \subseteq \operatorname{tr}(\pi) \land A, B, C \notin \operatorname{tr}(\ell) \land \operatorname{seg}(AB) \cap \operatorname{tr}(\ell) \neq \emptyset \implies \operatorname{seg}(BC) \cap \operatorname{tr}(\ell) \neq \emptyset \veebar \operatorname{seg}(CA) \cap \operatorname{tr}(\ell) \neq \emptyset"
     >
-      By <ConceptLink targetId="axioma-orden-4">Axiom II.4</ConceptLink> (Pasch's Axiom), any coplanar line that intersects the interior of one side of a triangle and does not pass through any of its vertices necessarily intersects the interior of exactly one of the remaining two sides, ensuring the topological integrity of its <ConceptLink targetId="frontera">boundary</ConceptLink>.
+      Let $\ell$ be a line in the plane $\pi$ of the triangle incident with none of its vertices. If $\ell$ meets the open side $\operatorname{seg}(AB)$, then it meets exactly one of the other two open sides. The existence of the second intersection point is <ConceptLink targetId="axioma-orden-4">Axiom II.4</ConceptLink> (<ConceptLink targetId="pasch">Pasch</ConceptLink>'s axiom); the exclusivity, however, is not given by the axiom: it is a <ConceptLink targetId="teorema">theorem</ConceptLink> that Hilbert derives in §4 from the order axioms (a line cannot meet all three open sides).
     </PropiedadItem>
   </PropiedadesGrupo>
 </SeccionPropiedades>

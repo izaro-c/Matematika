@@ -1,48 +1,56 @@
 export const metadata = {
   id: "teorema-suma-angulos-triangulo",
+  lang: "en",
   type: "teorema",
   title: "Triangle Angle Sum Theorem",
-  description: "In Euclidean geometry, the sum of the interior angle measures of any triangle is equal to two right angles (180° or π radians).",
-  statement: "Given a triangle △ABC in the Euclidean plane with interior angles α, β, and γ, it holds that α + β + γ = 180°.",
+  description: "In any plane triangle in Euclidean geometry, the sum of the measures of its three interior angles equals two right angles (180° or π radians).",
+  statement: "Given a triangle △ABC in the Euclidean plane with interior angles α, β, and γ, it holds that α + β + γ = 180° (or two right angles).",
   branch: "51M",
   hasSimulation: true,
   authors: ["euclides", "hilbert"],
   demos: ["demo-suma-angulos-triangulo"],
   sources: [
-    { title: "Elements", author: "Euclides", locator: "Book I, Proposition 32", role: "primary" }
+    { title: "Elements", author: "Euclid", locator: "Book I, Proposition 32", role: "primary" }
   ]
 };
 
 import { SumaAngulos } from '@content/diagrams/Teoremas/SumaAngulos';
 export const Simulation = SumaAngulos;
 
-<Capitular letra="T" />he triangle angle sum theorem is one of the most famous and universal properties in <ConceptLink targetId="geometria-euclidiana">Euclidean geometry</ConceptLink>. It characterizes the zero curvature of the Euclidean plane by establishing that the sum of the three interior <ConceptLink targetId="angulo">angles</ConceptLink> of any <ConceptLink targetId="triangulo">triangle</ConceptLink> equals a <ConceptLink targetId="angulos-suplementarios">straight angle</ConceptLink>.
+<Capitular letra="I" />n any <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> in the Euclidean plane, the sum of the measures of its three interior <ConceptLink targetId="angulo">angles</ConceptLink> is constant and equal to two <ConceptLink targetId="angulo-recto">right angles</ConceptLink> ($180^\circ$ or $\pi$ radians).
+
+This fundamental property characterizes the zero curvature of flat space and depends decisively on parallel line construction. Along a supporting <ConceptLink targetId="recta">line</ConceptLink>, the combination of the three angles reproduces the measure of a <ConceptLink targetId="angulos-suplementarios" isDependency={true}>straight angle</ConceptLink>.
 
 <Separador />
 
 ### Formal statement
 
-Let $\triangle ABC$ be an arbitrary <VisualBind element="triangulo" color="musgo"><ConceptLink targetId="triangulo">triangle</ConceptLink></VisualBind> in the Euclidean plane $\mathcal{P}$. Let $\alpha = \angle CAB$, $\beta = \angle ABC$, and $\gamma = \angle BCA$ be the measures of its three <VisualBind element="angulos-interiores" color="terracota">interior angles</VisualBind>. The equality holds strictly:
+Let <VisualBind element="triangulo" color="terracota">$\triangle ABC$</VisualBind> be a <ConceptLink targetId="triangulo" isDependency={true}>triangle</ConceptLink> in a Euclidean plane $\pi \in \Pi$, whose interior <ConceptLink targetId="angulo">angles</ConceptLink> are given by <VisualBind element="angulos" color="musgo">$\alpha = \angle CAB$</VisualBind>, $\beta = \angle ABC$, and $\gamma = \angle BCA$. The equality holds rigorously:
 
 <Formula>
   $$ \alpha + \beta + \gamma = 180^\circ \quad (\text{or } \pi \text{ rad}) $$
 </Formula>
 
-That is, the sum of the interior angles of any triangle is equivalent to two right angles.
+In a synthetic formulation independent of metric magnitudes:
+
+<Formula>
+  $$ \alpha + \beta + \gamma \cong 2\text{ right angles} $$
+</Formula>
 
 <Separador />
 
-### Proof via the parallel line
+### Deductive foundation and the parallel line
 
-The classical construction in <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> draws a <ConceptLink targetId="paralelas">parallel line</ConceptLink> through vertex $C$ to the opposite side $\overline{AB}$:
-1. The parallel line and sides $\overline{AC}$ and $\overline{BC}$ form pairs of congruent <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>alternate interior angles</ConceptLink> ($\alpha \cong \alpha'$ and $\beta \cong \beta'$).
-2. The three consecutive angles along the parallel line form a <ConceptLink targetId="angulos-suplementarios">straight angle</ConceptLink> of $180^\circ$: $\alpha' + \gamma + \beta' = 180^\circ$.
-3. By angle substitution, one directly obtains $\alpha + \beta + \gamma = 180^\circ$.
+The classical proof of Proposition I.32 in <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="elementos-euclides">Elements</ConceptLink> rests on the construction of a <ConceptLink targetId="paralelas">parallel</ConceptLink> <ConceptLink targetId="recta">line</ConceptLink>:
+- Through vertex $C$ ($C\,\mathbf{I}\,\pi \land \neg(C\,\mathbf{I}\,\overleftrightarrow{AB})$), the unique <ConceptLink targetId="recta">line</ConceptLink> parallel to side $\overline{AB}$ is constructed, guaranteed by <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euclid's parallel postulate</ConceptLink>.
+- Sides $\overline{AC}$ and $\overline{BC}$ act as transversal <ConceptLink targetId="secante">secants</ConceptLink>, determining pairs of congruent alternate interior angles at $C$ ($\alpha \cong \alpha'$ and $\beta \cong \beta'$) via the <ConceptLink targetId="teorema-angulos-alternos-internos" isDependency={true}>alternate interior angles theorem</ConceptLink> and angle <ConceptLink targetId="congruencia" isDependency={true}>congruence</ConceptLink>.
+- The three adjacent angles $\alpha'$, $\gamma$, and $\beta'$ lie along the parallel line forming a <ConceptLink targetId="angulos-suplementarios" isDependency={true}>straight angle</ConceptLink> ($\alpha' + \gamma + \beta' = 180^\circ$), immediately yielding $\alpha + \beta + \gamma = 180^\circ$.
 
 <Separador />
 
-### Equivalence to the Parallel Postulate
+### Equivalence to the parallel postulate and non-Euclidean curvature
 
-This theorem is logically equivalent to <ConceptLink targetId="euclides">Euclid's</ConceptLink> <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>parallel postulate</ConceptLink>:
-- **Hyperbolic geometry**: The sum of the interior angles is strictly less than $180^\circ$ ($\alpha + \beta + \gamma < 180^\circ$), with the angular defect being proportional to the triangle's area.
-- **Spherical geometry**: The sum is strictly greater than $180^\circ$ ($\alpha + \beta + \gamma > 180^\circ$), defining the spherical excess.
+This <ConceptLink targetId="teorema">theorem</ConceptLink> is logically equivalent to <ConceptLink targetId="axioma-paralelas-euclides" isDependency={true}>Euclid's parallel postulate</ConceptLink>, establishing a central criterion in geometry classification:
+- **Hyperbolic geometry**: In the <ConceptLink targetId="sistema-hiperbolico">hyperbolic system</ConceptLink>, the sum of the angles of any triangle is strictly less than two right angles ($\alpha + \beta + \gamma < 180^\circ$). The difference $\delta(\triangle) = 180^\circ - (\alpha + \beta + \gamma)$ defines the *angular defect*, a positive quantity directly proportional to the area of the triangle.
+- **Elliptic and spherical geometry**: In <ConceptLink targetId="geometria-eliptica">elliptic geometry</ConceptLink>, the sum of the interior angles strictly exceeds two right angles ($\alpha + \beta + \gamma > 180^\circ$), generating the *spherical excess* $\varepsilon(\triangle) = (\alpha + \beta + \gamma) - 180^\circ$.
+- **Absolute framework**: In <ConceptLink targetId="sistema-absoluto">absolute geometry</ConceptLink> (the Saccheri-Legendre theorem), it is proved that the angle sum can never exceed two right angles ($\alpha + \beta + \gamma \le 180^\circ$), but the strict equality to $180^\circ$ requires Euclid's postulate without exception.
