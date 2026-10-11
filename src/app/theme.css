@@ -79,8 +79,8 @@
   --ac-cta-shadow-hover: 0 20px 40px -10px color-mix(in srgb, var(--theme-terracota) 50%, transparent);
 
   /* ── 4e. Materialidad de papel y tinta (lectura) ─────────────────────────── */
-  --ink-grain-opacity: 0.32;
-  --ink-stroke-opacity: 0.78;
+  --ink-grain-opacity: 0.20;
+  --ink-stroke-opacity: 0.82;
   --ink-grain-z: 98;
   --ink-grain-size: 200px;
 
