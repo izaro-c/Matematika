@@ -339,4 +339,3 @@ export function useDiagramState() {
     linkToMdxPage,
   };
 }
-export type UseDiagramStateReturn = ReturnType<typeof useDiagramState>;

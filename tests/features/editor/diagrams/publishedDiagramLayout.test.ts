@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { pageTypeFromContentPath, publishedDiagramArea, publishedLayoutForPageType } from '../../../../src/fixed-pages/editor/diagrams/model/scene/publishedDiagramLayout';
+import {
+  publishedDiagramArea,
+  publishedLayoutForPageType,
+} from '../../../../src/fixed-pages/editor/diagrams/model/scene/publishedDiagramLayout';
 
 describe('published diagram layout dimensions', () => {
   it.each([
@@ -26,12 +29,5 @@ describe('published diagram layout dimensions', () => {
     expect(publishedLayoutForPageType('metodo')).toBe('balanced');
     expect(publishedLayoutForPageType('demostracion')).toBe('demonstration');
     expect(publishedLayoutForPageType('modelo')).toBe('standard');
-  });
-
-  it('infers the page type of standalone diagrams from the generated usage index path', () => {
-    expect(pageTypeFromContentPath('content/mdx/theorems/teorema-pitagoras.mdx')).toBe('teorema');
-    expect(pageTypeFromContentPath('content/mdx/definitions/paralelogramo.mdx')).toBe('definicion');
-    expect(pageTypeFromContentPath('content/mdx/demonstrations/demo-pitagoras-areas.mdx')).toBe('demostracion');
-    expect(pageTypeFromContentPath('content/mdx/models/modelo-poincare.mdx')).toBe('modelo');
   });
 });

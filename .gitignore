@@ -16,7 +16,7 @@ out/
 
 # Coverage & reports
 coverage
-eslint-report.json
+eslint_report.json
 tmp/
 
 # Editor directories and files
@@ -29,18 +29,8 @@ tmp/
 *.njsproj
 *.sln
 *.sw?
-.aider*
-
-# Lean/Lake build artifacts
-lean/.lake/
 
 # Project specific ignores
-.opencode/node_modules/
-.opencode/.cache/
-.opencode/cache/
-.opencode/tmp/
-.opencode/*.log
-.opencode/*.tmp
 docs/api/
 docs/dependency_report.html
 docs/dependency_graph.svg

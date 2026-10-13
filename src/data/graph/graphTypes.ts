@@ -61,13 +61,3 @@ export interface SystemInfo {
   /** Lista de axiomas que componen este sistema */
   axioms: string[];
 }
-
-/**
- * Representa una arista o enlace dirigido dentro del grafo visual.
- */
-export interface GraphEdge {
-  /** Identificador del nodo origen (dependencia) */
-  source: string;
-  /** Identificador del nodo destino (dependiente) */
-  target: string;
-}

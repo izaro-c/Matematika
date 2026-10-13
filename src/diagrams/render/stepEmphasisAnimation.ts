@@ -142,17 +142,6 @@ export function resolveStepEmphasisSceneOpacity(
   return sceneOpacity;
 }
 
-export function applyPolygonBorderEmphasis(
-  element: {
-    setAttribute?: (attrs: Record<string, unknown>) => void;
-    borders?: Array<{ setAttribute?: (attrs: Record<string, unknown>) => void }>;
-  },
-  borderAttrs: Record<string, unknown>,
-) {
-  element.setAttribute?.({ borders: borderAttrs });
-  element.borders?.forEach(border => border.setAttribute?.(borderAttrs));
-}
-
 export function buildLineEmphasisAttributes(
   color: string,
   style: StepEmphasisStyle | undefined,

@@ -13,16 +13,6 @@ export interface EditorCatalogFilters {
   language?: string;
 }
 
-export interface EditorConceptualItem {
-  conceptId: string;
-  type: string;
-  kind: FileNode['kind'];
-  title: string;
-  primaryFile: FileNode;
-  variants: Record<string, FileNode>;
-  availableLangs: string[];
-}
-
 export interface EditorWorkspacePreferences {
   version: number;
   level: EditorWorkspaceLevel;
@@ -173,19 +163,11 @@ const ACCENTED_WORDS: Record<string, string> = {
   triangulacion: 'triangulación',
 };
 
-import {
-  getContentTypeLabel,
-  CONTENT_TYPE_LABELS_SINGULAR,
-  CONTENT_TYPE_LABELS_PLURAL,
-} from '@/lib/theme/constants';
-
-export const CATEGORY_LABELS_SINGULAR = CONTENT_TYPE_LABELS_SINGULAR;
-export const CATEGORY_LABELS_PLURAL = CONTENT_TYPE_LABELS_PLURAL;
+import { getContentTypeLabel } from '@/lib/theme/constants';
 
 export function getCategoryDisplayName(type: string, form: 'singular' | 'plural' = 'singular', lang?: string): string {
   return getContentTypeLabel(type, form, lang);
 }
-
 
 export function resourceDisplayName(file: FileNode): string {
   if (file.title && file.title.trim()) return file.title;
@@ -223,37 +205,6 @@ export function extractResourceIdentity(file: FileNode): { conceptId: string; la
   };
 }
 
-export function groupResourcesByConcept(files: FileNode[]): EditorConceptualItem[] {
-  const groups = new Map<string, EditorConceptualItem>();
-  for (const file of files) {
-    const { conceptId, lang } = extractResourceIdentity(file);
-    const key = `${file.kind}:${file.type}:${conceptId}`;
-    const existing = groups.get(key);
-    const langKey = lang || 'es';
-    if (!existing) {
-      groups.set(key, {
-        conceptId,
-        type: file.type,
-        kind: file.kind,
-        title: resourceDisplayName(file),
-        primaryFile: file,
-        variants: { [langKey]: file },
-        availableLangs: [langKey],
-      });
-    } else {
-      existing.variants[langKey] = file;
-      if (!existing.availableLangs.includes(langKey)) {
-        existing.availableLangs.push(langKey);
-      }
-      if (langKey === 'es' || !existing.primaryFile) {
-        existing.primaryFile = file;
-        existing.title = resourceDisplayName(file);
-      }
-    }
-  }
-  return [...groups.values()];
-}
-
 export function filterCatalogResources(
   files: FileNode[],
   section: EditorResourceSection,
@@ -281,15 +232,6 @@ export function recordRecentPath(paths: string[], path: string, limit = 8): stri
 
 export function toggleFavoritePath(paths: string[], path: string): string[] {
   return paths.includes(path) ? paths.filter(candidate => candidate !== path) : [...paths, path];
-}
-
-export function pruneWorkspacePaths(preferences: EditorWorkspacePreferences, files: FileNode[]): EditorWorkspacePreferences {
-  const available = new Set(files.map(file => file.path));
-  return {
-    ...preferences,
-    favoritePaths: preferences.favoritePaths.filter(path => available.has(path)),
-    recentPaths: preferences.recentPaths.filter(path => available.has(path)),
-  };
 }
 
 export const EDITOR_PANEL_LIMITS = {

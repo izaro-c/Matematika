@@ -1,6 +1,4 @@
-# `src` — application code (new layout)
-
-Scaffold only. Current app still runs from `src/`.
+# `src` — application code
 
 ## Where is X?
 

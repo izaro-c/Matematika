@@ -7,7 +7,6 @@ import {
 import type { CanvasTool, VisualDiagramModel } from '../types';
 
 const ANGLE_REFERENCE_LABELS = ['Punto del primer lado', 'Vértice', 'Punto del segundo lado'] as const;
-export const INTERSECTION_SUPPORT_KINDS = new Set(['segment', 'line', 'ray', 'perpendicular', 'parallel', 'angleBisector']);
 
 export function toolReferenceLabel(tool: CanvasTool, index: number): string {
   const slotLabel = tool === 'select' || tool === 'point'
@@ -62,17 +61,6 @@ export function toolReferencePurpose(tool: CanvasTool, index: number): string {
   return purposes[tool]?.[index] ?? `Referencia ${index + 1} necesaria para construir el objeto.`;
 }
 
-export function toolReferenceSequenceDescription(tool: CanvasTool): string {
-  const count = refsNeededForTool(tool);
-  if (count === 0) return 'No requiere seleccionar referencias.';
-  const roles = Array.from({ length: count }, (_, index) => {
-    const label = toolReferenceLabel(tool, index).toLocaleLowerCase('es');
-    const purpose = toolReferencePurpose(tool, index).replace(/\.$/, '');
-    return `${label} — ${purpose}`;
-  });
-  return `Seleccione, en orden: ${roles.join(' → ')}.`;
-}
-
 export function toolReferenceCandidates(model: VisualDiagramModel, tool: CanvasTool) {
   if (tool === 'point' || tool === 'select') return [];
   const firstSlot = referenceSlotsForLegacyKind(tool)[0];
@@ -114,17 +102,6 @@ export function addToolReference(tool: CanvasTool, refs: readonly string[], refe
   if (openIndex >= 0) normalized[openIndex] = referenceId;
   else if (tool === 'polygon' || tool === 'areaIntersection') normalized.push(referenceId);
   return normalized;
-}
-
-export function updateToolReference(tool: CanvasTool, refs: readonly string[], index: number, referenceId: string): string[] {
-  const normalized = normalizedToolReferences(tool, refs);
-  if (index < 0 || index >= normalized.length) return normalized;
-  normalized[index] = referenceId;
-  return normalized;
-}
-
-export function completedToolReferenceCount(tool: CanvasTool, refs: readonly string[]): number {
-  return normalizedToolReferences(tool, refs).filter(Boolean).length;
 }
 
 export function toolReferencesAreReady(tool: CanvasTool, refs: readonly string[]): boolean {

@@ -1,4 +1,4 @@
-import type { Block, ProofStepData } from './parser';
+import type { Block } from './parser';
 
 export type EditorMode = 'visual' | 'code';
 export type DirtyState = 'clean' | 'draft' | 'dirty' | 'saving' | 'blocked';
@@ -54,6 +54,3 @@ export interface EditorDocument {
   dirtyState: DirtyState;
   validation: EditorValidationResult;
 }
-
-export type EditorBlock = Block;
-export type EditorProofStep = ProofStepData;

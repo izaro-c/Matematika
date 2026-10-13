@@ -1,5 +1,5 @@
-import { cleanTargetId, updatePoint } from '../elements/diagramElements';
-import type { PointConstraint, VisualConstraint, VisualDiagramModel } from '../types';
+import { cleanTargetId } from '../elements/diagramElements';
+import type { VisualConstraint, VisualDiagramModel } from '../types';
 import { getConstraintConflictReason } from '../constraints/relationCompatibility';
 
 export interface ConstraintPresentation {
@@ -203,19 +203,6 @@ export function withConstraintDependencies(model: VisualDiagramModel, constraint
   };
 }
 
-export function relationCatalogEntry(kind: VisualConstraint['kind']): RelationCatalogEntry {
-  const entry = RELATION_CATALOG.find(item => item.value === kind);
-  if (entry) return entry;
-  const presentation = constraintPresentation(kind);
-  return {
-    ...presentation,
-    value: kind,
-    category: 'expression',
-    scopes: ['point'],
-    preferredSurface: 'point',
-  };
-}
-
 export function relationsForScope(scope: RelationScope): RelationCatalogEntry[] {
   return RELATION_CATALOG.filter(entry => entry.scopes.includes(scope));
 }
@@ -289,56 +276,4 @@ export function getConstraintDisabledReason(
     default:
       return 'Se necesitan más objetos en el diagrama para establecer esta relación.';
   }
-}
-
-const LEGACY_MOVEMENT_MODES = new Set<PointConstraint>(['horizontal', 'vertical', 'glider']);
-
-/** Convierte modos de movimiento heredados a relaciones combinables en `constrained`. */
-export function migrateLegacyPointToConstrained(model: VisualDiagramModel, pointId: string): VisualDiagramModel {
-  const point = model.points.find(item => item.id === pointId);
-  if (!point || !LEGACY_MOVEMENT_MODES.has(point.constraint)) {
-    return model;
-  }
-
-  let next = model;
-  const constraintIds = [...(point.constraintIds ?? [])];
-  let kind: VisualConstraint['kind'];
-  if (point.constraint === 'horizontal') kind = 'horizontal';
-  else if (point.constraint === 'vertical') kind = 'vertical';
-  else kind = 'on';
-
-  const refs = point.constraint === 'glider' && point.gliderTarget
-    ? [pointId, point.gliderTarget]
-    : defaultConstraintRefs(next, kind, pointId);
-
-  if (refs.length >= constraintPresentation(kind).refs) {
-    const id = uniqueConstraintId(next);
-    const constraint: VisualConstraint = {
-      id,
-      label: constraintPresentation(kind).label,
-      kind,
-      refs,
-      enabled: true,
-    };
-    next = withConstraintDependencies(next, id, refs);
-    next = {
-      ...next,
-      constraints: [...(next.constraints || []), constraint],
-    };
-    constraintIds.push(id);
-  }
-
-  return updatePoint(next, pointId, {
-    constraint: 'constrained',
-    constraintIds,
-    gliderTarget: undefined,
-  });
-}
-
-export function ensureConstrainedMode(model: VisualDiagramModel, pointId: string): VisualDiagramModel {
-  const point = model.points.find(item => item.id === pointId);
-  if (!point) return model;
-  if (LEGACY_MOVEMENT_MODES.has(point.constraint)) return migrateLegacyPointToConstrained(model, pointId);
-  if (point.constraint === 'constrained') return model;
-  return updatePoint(model, pointId, { constraint: 'constrained' });
 }

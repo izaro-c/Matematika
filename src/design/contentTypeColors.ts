@@ -46,8 +46,6 @@ const CONTENT_TYPE_ROLE_MAP = {
   msc2020:             'conceptAccent',
 } as const satisfies Record<ContentTypeKey, keyof typeof SEMANTIC_COLOR_ROLES>;
 
-export type ContentTypeRoleMap = typeof CONTENT_TYPE_ROLE_MAP;
-
 // ── Tabla derivada — fuente de verdad para todos los consumidores ────────────
 
 export const CONTENT_TYPE_COLORS = Object.fromEntries(
@@ -160,5 +158,4 @@ export const CONTENT_TYPE_ALIASES: Record<string, string> = {
 };
 
 export const ENGLISH_TO_SPANISH = CONTENT_TYPE_ALIASES;
-
 

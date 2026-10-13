@@ -166,18 +166,6 @@ export const ExerciseSchema = z.object({
   ...BaseContentSchemaFields,
 });
 
-// Tipos Inferidos
-export type MathematicianMeta = z.infer<typeof MathematicianSchema>;
-export type TheoremMeta = z.infer<typeof TheoremSchema>;
-export type MethodMeta = z.infer<typeof MethodSchema>;
-export type DemoMeta = z.infer<typeof DemoSchema>;
-export type DefinitionMeta = z.infer<typeof DefinitionSchema>;
-export type ExampleMeta = z.infer<typeof ExampleSchema>;
-export type ExerciseMeta = z.infer<typeof ExerciseSchema>;
-export type AxiomMeta = z.infer<typeof AxiomSchema>;
-export type ModelMeta = z.infer<typeof ModelSchema>;
-export type AxiomaticSystemMeta = z.infer<typeof AxiomaticSystemSchema>;
-
 /**
  * AxiomSchema - Esquema para Axiomas (Nodos Raíz lógicos)
  */
@@ -259,8 +247,6 @@ export const UseCaseSchema = z.object({
   ...BaseContentSchemaFields,
 });
 
-export type UseCaseMeta = z.infer<typeof UseCaseSchema>;
-
 /**
  * StudyPlanSchema - Esquema para Planes de Estudio
  * 
@@ -275,5 +261,3 @@ export const StudyPlanSchema = z.object({
   requiredNodes: z.array(z.string()).optional(),
   ...BaseContentSchemaFields,
 });
-
-export type StudyPlanMeta = z.infer<typeof StudyPlanSchema>;

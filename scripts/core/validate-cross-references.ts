@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { listMdxFiles as getMdxFiles, readMdxMetadata } from './mdxSource';
 
 const CONTENT_DIR = path.resolve('./content/mdx');
 let errors = 0;
@@ -12,19 +13,13 @@ interface ContentIndex {
 
 const allContent: Map<string, ContentIndex> = new Map();
 
-function parseMetadata(content: string, filePath: string) {
-  const metadataRegex = /export\s+const\s+metadata\s*=\s*(\{[\s\S]*?\n\});?/;
-  const match = content.match(metadataRegex);
-  if (!match) return null;
-  try {
-    // eslint-disable-next-line sonarjs/code-eval -- internal script, trusted MDX content
-    const fn = new Function(`return ${match[1]}`);
-    return fn();
-  } catch {
+function parseMetadata(content: string, filePath: string): Record<string, any> | null {
+  const result = readMdxMetadata(content);
+  if (result.status === 'invalid') {
     console.error(`[ERROR] Sintaxis inválida en metadatos: ${filePath}`);
     errors++;
-    return null;
   }
+  return result.status === 'ok' ? result.metadata : null;
 }
 
 function extractTargetIds(content: string, tag: string, attr: string): string[] {
@@ -35,20 +30,6 @@ function extractTargetIds(content: string, tag: string, attr: string): string[] 
     ids.add(match[1]);
   }
   return Array.from(ids);
-}
-
-function getMdxFiles(dir: string): string[] {
-  if (!fs.existsSync(dir)) return [];
-  const files: string[] = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      files.push(...getMdxFiles(full));
-    } else if (entry.name.endsWith('.mdx')) {
-      files.push(full);
-    }
-  }
-  return files;
 }
 
 function error(msg: string) {

@@ -9,13 +9,11 @@ import {
 } from '@/fixed-pages/editor/document';
 import {
   buildAuthoringIntegrityReport,
-  buildDocumentOutline,
   createPagePath,
   createPageSource,
   extractSemanticReferences,
   PAGE_TYPE_DIRECTORIES,
 } from '@/fixed-pages/editor/review/authoringModel';
-import type { Block } from '@/fixed-pages/editor/session/parser';
 import { discoverMdxFiles } from '../../../../scripts/editor/corpusAuditCore';
 
 const definitionSource = `export const metadata = {
@@ -79,18 +77,9 @@ describe('Lossless authoring UX engine', () => {
     expect(updated.source).not.toContain("from 'content/diagrams/");
   });
 
-  it('projects outline, semantic references and actionable integrity diagnostics', () => {
+  it('projects semantic references and actionable integrity diagnostics', () => {
     const document = parseEditorDocument(definitionSource.replace('targetId="punto"', 'targetId="no-existe"'));
-    const blocks: Block[] = document.bodyBlocks.map(block => ({
-      id: block.id,
-      type: block.kind === 'editable' ? block.blockType : 'advancedMdx',
-      content: block.kind === 'editable' && typeof (block.data as { text?: unknown }).text === 'string'
-        ? String((block.data as { text: unknown }).text)
-        : '',
-      metadata: block.kind === 'editable' ? { location: block.location } : {},
-    })) as Block[];
 
-    expect(buildDocumentOutline(blocks)).toHaveLength(document.bodyBlocks.length);
     expect(extractSemanticReferences(document.source)).toEqual(expect.arrayContaining([
       expect.objectContaining({ tag: 'ConceptLink', targetId: 'no-existe' }),
     ]));

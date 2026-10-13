@@ -1,44 +1,20 @@
 import fs from 'fs';
 import path from 'path';
+import { listMdxFiles, readMdxMetadata } from './mdxSource';
 
-// Parse MDX function, extracts metadata
-function parseMetadata(content: string, filePath: string) {
-  const metadataRegex = /export\s+const\s+metadata\s*=\s*(\{[\s\S]*?\n\});?/;
-  const match = content.match(metadataRegex);
-  if (match) {
-    try {
-      // eslint-disable-next-line sonarjs/code-eval -- internal script, trusted MDX content
-      const fn = new Function(`return ${match[1]}`);
-      return fn();
-    } catch (e) {
-      console.error(`\n[ERROR CRÍTICO] Fallo de sintaxis en los metadatos de: ${filePath}`);
-      console.error(e);
-      return null;
-    }
+function parseMetadata(content: string, filePath: string): Record<string, any> | null {
+  const result = readMdxMetadata(content);
+  if (result.status === 'invalid') {
+    console.error(`\n[ERROR CRÍTICO] Fallo de sintaxis en los metadatos de: ${filePath}`);
+    console.error(result.error);
   }
-  return null;
-}
-
-
-
-function getMdxFiles(dir: string, fileList: string[] = []) {
-  if (!fs.existsSync(dir)) return fileList;
-  const files = fs.readdirSync(dir);
-  for (const file of files) {
-    const fullPath = path.join(dir, file);
-    if (fs.statSync(fullPath).isDirectory()) {
-      getMdxFiles(fullPath, fileList);
-    } else if (fullPath.endsWith('.mdx')) {
-      fileList.push(fullPath);
-    }
-  }
-  return fileList;
+  return result.status === 'ok' ? result.metadata : null;
 }
 
 console.log("Iniciando validación del DAG lógico y reconstrucción del árbol...");
 
 const contentDir = path.resolve(process.cwd(), 'content/mdx');
-const mdxFiles = getMdxFiles(contentDir);
+const mdxFiles = listMdxFiles(contentDir);
 
 const allNodes = new Set<string>();
 const metadataMap = new Map<string, Record<string, unknown>>();

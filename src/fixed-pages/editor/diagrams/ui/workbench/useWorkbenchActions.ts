@@ -56,29 +56,10 @@ export function workbenchIsBlocked(status: string, hasError: boolean): boolean {
   return ['invalid-source', 'diverged', 'conflict'].includes(status) || hasError;
 }
 
-export function sourceCanRegenerate(parseStatus: string, status: string): boolean {
-  return parseStatus === 'visual-exact' && !['source-authoritative', 'diverged'].includes(status);
-}
-
-export function saveDiagramInFileMode(isFileMode: boolean, save: () => Promise<boolean>): void {
-  if (isFileMode) void save();
-}
-
-export function shouldShowCodeFallback(model: VisualDiagramModel | null, source: string, diagnosticCount: number): boolean {
-  return !model && (source.length > 0 || diagnosticCount > 0);
-}
-
 export interface DeleteConfirmationRequest {
   objectId: string;
   dependentIds: string[];
   onConfirm: () => void;
-}
-
-export function buildDeleteConfirmationMessage(_objectId: string, dependentIds: string[]): string {
-  const details = dependentIds.length > 0
-    ? `También se eliminarán ${dependentIds.length} dependiente(s): ${dependentIds.join(', ')}.`
-    : '';
-  return `${details}${details ? '\n\n' : ''}Puede deshacer esta operación.`.trim();
 }
 
 function appendDiagramElement(model: VisualDiagramModel, kind: ElementKind, explicitRefs?: string[]): { model: VisualDiagramModel; id: string } {

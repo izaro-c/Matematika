@@ -100,13 +100,6 @@ export function getNodeUrlPrefix(type: string): string {
   return NODE_URL_PREFIX[type] ?? 'teorema';
 }
 
-export const AXIOM_GROUPS = [
-  { test: (id: string) => id.startsWith('axioma-incidencia'), color: CONTENT_TYPE_COLORS.teorema.cssVar, label: 'Incidencia' },
-  { test: (id: string) => id.startsWith('axioma-orden'), color: CONTENT_TYPE_COLORS.lema.cssVar, label: 'Orden' },
-  { test: (id: string) => id.startsWith('axioma-congruencia'), color: CONTENT_TYPE_COLORS.definicion.cssVar, label: 'Congruencia' },
-  { test: (id: string) => ['axioma-paralelas-euclides', 'axioma-paralelas-hiperbolico'].includes(id), color: CONTENT_TYPE_COLORS.axioma.cssVar, label: 'Paralelas' },
-];
-
 export function getAxiomGroup(id: string, lang?: string): { color: string; label: string; familyKey: string } | null {
   const dict = getLanguage(lang).dictionary.axiomFamilies;
   if (id.startsWith('axioma-incidencia')) return { color: CONTENT_TYPE_COLORS.teorema.cssVar, label: dict.incidencia, familyKey: 'incidencia' };

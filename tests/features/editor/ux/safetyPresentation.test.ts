@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { buildDiagramAuthorityPresentation, buildEditorSafetyPresentation } from '../../../../src/fixed-pages/editor/review/safetyPresentation';
+import {
+  buildEditorSafetyPresentation,
+} from '../../../../src/fixed-pages/editor/review/safetyPresentation';
 import type { EditorValidationResult } from '../../../../src/fixed-pages/editor/session/editorTypes';
 import type { EditorPersistenceStatus } from '../../../../src/fixed-pages/editor/save/editorPersistenceState';
 
@@ -73,13 +75,5 @@ describe('safe editor presentation', () => {
     expect(unsafe.level).toBe('error');
     expect(unsafe.blockedActions.map(action => action.id)).toContain('edit-visual');
     expect(unsafe.reasons[0]?.description).toContain('línea 4');
-  });
-
-  it('marks diagram divergence as blocking and explains authority ambiguity', () => {
-    const diagram = buildDiagramAuthorityPresentation('diverged', true);
-
-    expect(diagram.level).toBe('blocked');
-    expect(diagram.blockedActions.map(action => action.id)).toContain('apply-file');
-    expect(diagram.description).toContain('elegir una autoridad');
   });
 });

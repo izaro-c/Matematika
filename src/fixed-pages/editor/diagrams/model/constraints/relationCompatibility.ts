@@ -48,5 +48,3 @@ export function getConstraintConflictReason(
 
   return undefined;
 }
-
-export const EXCLUDED_POINT_RELATION_KINDS = new Set<VisualConstraint['kind']>(['fixed', 'expression']);

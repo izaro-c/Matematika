@@ -6,7 +6,6 @@ import {
   ALL_TYPES,
   TYPE_COLORS,
   TYPE_ICONS,
-  TYPE_LABELS,
   TYPE_RESULT_LABELS,
   SEARCH_FUSE_OPTIONS,
   buildSearchIndex,
@@ -20,7 +19,6 @@ describe('search contracts', () => {
   it('defines an icon and color for every result type', () => {
     expect(new Set(Object.keys(TYPE_ICONS))).toEqual(new Set(ALL_TYPES));
     expect(new Set(Object.keys(TYPE_COLORS))).toEqual(new Set(ALL_TYPES));
-    expect(new Set(Object.keys(TYPE_LABELS))).toEqual(new Set(ALL_TYPES));
     expect(new Set(Object.keys(TYPE_RESULT_LABELS))).toEqual(new Set(ALL_TYPES));
   });
 

@@ -1,7 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import {
-  gliderSupportElements,
-  isGliderSupportKind,
   minimumRefsForKind,
   refsForKind,
   refsNeededForTool,
@@ -70,36 +68,6 @@ describe('ElementReferenceRules', () => {
     it('no exige referencias para selección ni punto libre', () => {
       expect(refsNeededForTool('select')).toBe(0);
       expect(refsNeededForTool('point')).toBe(0);
-    });
-  });
-
-  describe('glider support kinds', () => {
-    it('reconoce soportes geométricos compatibles con gliders', () => {
-      const supported: ElementKind[] = [
-        'segment', 'line', 'ray', 'circle', 'arc', 'functionCurve', 'parametricCurve',
-        'perpendicular', 'parallel', 'angleBisector', 'poincareGeodesic', 'poincareArc',
-      ];
-      for (const kind of supported) {
-        expect(isGliderSupportKind(kind)).toBe(true);
-      }
-    });
-
-    it('excluye regiones, marcas y puntos construidos', () => {
-      const unsupported: ElementKind[] = [
-        'polygon', 'areaDecomposition', 'grid', 'intersection', 'midpoint', 'angle', 'label',
-      ];
-      for (const kind of unsupported) {
-        expect(isGliderSupportKind(kind)).toBe(false);
-      }
-    });
-
-    it('filtra elementos del modelo por capacidad de soporte', () => {
-      const elements = [
-        { id: 'segAB', kind: 'segment' as const },
-        { id: 'poly', kind: 'polygon' as const },
-        { id: 'geo', kind: 'poincareGeodesic' as const },
-      ];
-      expect(gliderSupportElements(elements).map(item => item.id)).toEqual(['segAB', 'geo']);
     });
   });
 });

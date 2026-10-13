@@ -1,13 +1,5 @@
-import { legacyElementCapabilities, referenceSlotsForLegacyKind } from '@/diagrams';
+import { referenceSlotsForLegacyKind } from '@/diagrams';
 import type { CanvasTool, ElementKind } from '../types';
-
-export function isGliderSupportKind(kind: ElementKind): boolean {
-  return legacyElementCapabilities(kind).has('support');
-}
-
-export function gliderSupportElements<T extends { kind: ElementKind }>(elements: readonly T[]): T[] {
-  return elements.filter(item => isGliderSupportKind(item.kind));
-}
 
 export function minimumRefsForKind(kind: ElementKind): number {
   const slots = referenceSlotsForLegacyKind(kind) ?? [];

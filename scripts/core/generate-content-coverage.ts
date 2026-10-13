@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { pathToFileURL } from 'url';
+import { listMdxFiles as getMdxFiles, readMdxMetadata } from './mdxSource';
 
 const CONTENT_DIR = path.resolve('./content/mdx');
 const OUTPUT_PATH = path.resolve('./src/data/content/contentCoverage.json');
@@ -82,31 +83,13 @@ function countProofSteps(content: string): number {
   return [...content.matchAll(/<ProofStep\b/g)].length;
 }
 
-function getMdxFiles(dir: string, fileList: string[] = []): string[] {
-  if (!fs.existsSync(dir)) return fileList;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      getMdxFiles(fullPath, fileList);
-    } else if (entry.name.endsWith('.mdx')) {
-      fileList.push(fullPath);
-    }
-  }
-  return fileList;
-}
-
 function parseMetadata(content: string, filePath: string): Record<string, unknown> | null {
-  const metadataRegex = /export\s+const\s+metadata\s*=\s*(\{[\s\S]*?\n\});?/;
-  const match = content.match(metadataRegex);
-  if (!match) return null;
-  try {
-    // eslint-disable-next-line sonarjs/code-eval -- internal script, trusted MDX content
-    const fn = new Function(`return ${match[1]}`);
-    return fn();
-  } catch (error) {
+  const result = readMdxMetadata(content);
+  if (result.status === 'invalid') {
+    const { error } = result;
     console.warn(`[WARN] Invalid metadata syntax in ${filePath}: ${error instanceof Error ? error.message : String(error)}`);
-    return null;
   }
+  return result.status === 'ok' ? result.metadata : null;
 }
 
 export function loadContentMetadata(contentDir: string): Map<string, ContentMetadataEntry> {

@@ -96,16 +96,6 @@ export function toEditorModel(value: unknown): VisualDiagramModel | null {
   }
 }
 
-/** Aplica un patch estilo escena sobre el modelo canónico. */
-export function patchEditorScene(
-  model: VisualDiagramModel,
-  patch: Partial<DiagramSpecV2> | ((scene: DiagramSpecV2) => DiagramSpecV2),
-): VisualDiagramModel {
-  const current = workingScene(model);
-  const next = typeof patch === 'function' ? patch(current) : { ...current, ...patch };
-  return materializeEditorModel(next);
-}
-
 /**
  * Mutación V3-first: el caller opera sobre la escena de trabajo y recibe
  * VisualDiagramModel canónico. Un solo roundtrip en el model layer.
@@ -118,8 +108,4 @@ export function applySceneMutation(
 }
 
 /** Reify V3 puro (sin campos de escena) para proyección/capacidades. */
-export function toCanonicalV3(model: VisualDiagramModel): DiagramSpecV3 {
-  return migrateDiagramSpecV2ToV3(workingScene(model));
-}
-
 export type { DiagramSpec };

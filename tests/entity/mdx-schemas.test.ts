@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'fs';
 import path from 'path';
-import { parseMDX } from '@/lib/mdx/mdxParser';
+import { readMdxMetadata } from '../../scripts/core/mdxSource';
 import {
   MathematicianSchema,
   TheoremSchema,
@@ -69,12 +69,13 @@ describe('MDX metadata validates against Zod schemas', () => {
           for (const file of files) {
             it(`${file} metadata is valid`, () => {
               const content = fs.readFileSync(path.join(dirPath, file), 'utf-8');
-              const parsed = parseMDX(content);
+              const parsed = readMdxMetadata(content);
 
-              expect(parsed.metadata).toBeDefined();
-              expect(Object.keys(parsed.metadata).length).toBeGreaterThan(0);
+              expect(parsed.status).toBe('ok');
+              const metadata = parsed.status === 'ok' ? parsed.metadata : {};
+              expect(Object.keys(metadata).length).toBeGreaterThan(0);
 
-              const result = schema.passthrough().safeParse(parsed.metadata);
+              const result = schema.passthrough().safeParse(metadata);
               if (!result.success) {
                 throw new Error(
                   `${lang}/${dirName}/${file} failed schema validation: ${JSON.stringify(result.error.issues, null, 2)}`

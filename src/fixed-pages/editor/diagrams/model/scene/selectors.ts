@@ -1,5 +1,5 @@
 import type { DiagramTarget, DiagramTargetRegistry } from '@/fixed-pages/editor/session/editorTypes';
-import type { VisualDiagramModel, ElementKind, ColorToken } from '../types';
+import type { VisualDiagramModel, ElementKind } from '../types';
 import type { DiagramState } from '@/fixed-pages/editor/diagrams/history/types';
 
 function deepEqual(left: unknown, right: unknown): boolean {
@@ -57,34 +57,6 @@ export function buildTargets(model: VisualDiagramModel): DiagramTargetRegistry {
   const stepTargets = model.steps
     .map(item => ({ id: item.id, objectId: item.id, scopeId: model.componentId, qualifiedId: `${model.componentId}:${item.id}`, label: item.label, color: 'ocre' as const, kind: 'step' as const }));
   return [...pointTargets, ...elementTargets, ...sliderTargets, ...groupTargets, ...stepTargets];
-}
-
-export function safeColorToken(value: string): ColorToken {
-  const tokens: ColorToken[] = ['carbon', 'terracota', 'canela', 'mora', 'ocre', 'pavo', 'granada', 'musgo'];
-  return tokens.includes(value as ColorToken) ? (value as ColorToken) : 'terracota';
-}
-
-export function targetText(target: DiagramTarget): string {
-  return target.label.replace(/^Punto\s+/i, '').trim() || target.id;
-}
-
-export function safeMdxText(value: string): string {
-  return value.replace(/[<>{}]/g, '').trim() || 'texto';
-}
-
-export function interactiveElementSnippet(target: DiagramTarget): string {
-  const color = safeColorToken(target.color);
-  return `<InteractiveElement target="${target.id}" color="${color}">${safeMdxText(targetText(target))}</InteractiveElement>`;
-}
-
-export function conceptHighlightSnippet(target: DiagramTarget): string {
-  const color = safeColorToken(target.color);
-  return `<ConceptLink targetId="concepto-id" highlightTarget="${target.id}" highlightColor="${color}">${safeMdxText(targetText(target))}</ConceptLink>`;
-}
-
-// Model selectors
-export function canSaveDiagram(model: VisualDiagramModel): boolean {
-  return Boolean(model.title.trim() && model.componentId.trim() && model.points.length > 0);
 }
 
 export type DiagramSaveBlockReason =

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { pathToFileURL } from 'url';
+import { listMdxFiles as getMdxFiles, readMdxMetadata } from './mdxSource';
 
 const CONTENT_DIR = path.resolve('./content/mdx');
 const OUTPUT_PATH = path.resolve('./src/data/content/contentIndex.json');
@@ -48,34 +49,10 @@ function extractBodyMentions(content: string): string[] {
 }
 
 function parseMetadata(content: string, filePath: string): Record<string, unknown> | null {
-  const metadataRegex = /export\s+const\s+metadata\s*=\s*(\{[\s\S]*?\n\});?/;
-  const match = content.match(metadataRegex);
-  if (!match) {
-    console.warn(`  [WARN] No metadata export found: ${filePath}`);
-    return null;
-  }
-  try {
-    // eslint-disable-next-line sonarjs/code-eval -- internal script, trusted MDX content
-    const fn = new Function(`return ${match[1]}`);
-    return fn();
-  } catch {
-    console.warn(`  [WARN] Invalid metadata syntax: ${filePath}`);
-    return null;
-  }
-}
-
-function getMdxFiles(dir: string): string[] {
-  if (!fs.existsSync(dir)) return [];
-  const files: string[] = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      files.push(...getMdxFiles(full));
-    } else if (entry.name.endsWith('.mdx')) {
-      files.push(full);
-    }
-  }
-  return files;
+  const result = readMdxMetadata(content);
+  if (result.status === 'missing') console.warn(`  [WARN] No metadata export found: ${filePath}`);
+  if (result.status === 'invalid') console.warn(`  [WARN] Invalid metadata syntax: ${filePath}`);
+  return result.status === 'ok' ? result.metadata : null;
 }
 
 const contentTypes: Record<string, string> = {

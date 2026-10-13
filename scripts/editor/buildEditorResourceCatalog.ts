@@ -6,7 +6,7 @@ import {
   isEditableCatalogResource,
   type EditorResourceCapability,
   type EditorResourceCatalogEntry,
-} from '../../src/fixed-pages/editor/templates/resourceCatalogTypes';
+} from './resourceCatalogTypes';
 import { parseDiagramSourceAST } from './parseDiagramSourceAST';
 
 function walkFiles(root: string): string[] {

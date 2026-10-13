@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@content/*": ["content/*"]
+      "@/*": ["./src/*"],
+      "@content/*": ["./content/*"]
     }
   },
   "files": [],

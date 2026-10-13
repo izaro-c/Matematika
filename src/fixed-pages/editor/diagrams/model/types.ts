@@ -9,7 +9,6 @@ export type TemplateKind =
   | 'modelo-estatico';
 
 export type ConstructionKind = 'mediatriz' | 'mediana' | 'altura' | 'bisectriz';
-export type WorkbenchTab = 'visual' | 'source';
 import type {
   DiagramColorToken,
   DiagramElement,
@@ -29,12 +28,6 @@ export type ElementKind = DiagramElementKind;
 export type CanvasTool = 'select' | 'point' | ElementKind;
 export type PointConstraint = DiagramPointConstraint;
 
-export interface RefSlot {
-  label: string;
-  value: string;
-  index: number;
-}
-
 export type ConstructionRefKey = 'a' | 'b' | 'c';
 
 export interface ConstructionSlot {
@@ -47,7 +40,6 @@ export type VisualElement = DiagramElement;
 export type VisualSlider = DiagramSlider;
 export type VisualStep = DiagramStep;
 export type VisualConstraint = DiagramConstraint;
-export type VisualDependency = DiagramDependency;
 
 /**
  * Modelo del workbench: V3 canónico + escena V2 materializada (mutable).

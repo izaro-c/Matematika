@@ -2,26 +2,14 @@ import {
   isAreaElement,
   legacyItemHasCapability,
   legacyReferenceCandidates,
-  objectHasCapability,
   type DiagramCapability,
   type DiagramElement,
   type DiagramSceneItem,
 } from '@/diagrams';
-import type { DiagramObject, DiagramSpecV3 } from '@/diagrams/model/schema/v3';
-import { workingScene, toCanonicalV3 } from '../scene/editorModel';
+import { workingScene } from '../scene/editorModel';
 import type { VisualDiagramModel } from '../types';
 
 const REFLECTION_AXIS_KINDS = new Set(['segment', 'line', 'ray']);
-
-/** Reify del modelo de editor al contrato v3 puro. */
-export function projectEditorModelToV3(model: VisualDiagramModel): DiagramSpecV3 {
-  return toCanonicalV3(model);
-}
-
-/** Objetos v3 que declaran la capacidad pedida. */
-export function v3ObjectsWithCapability(model: VisualDiagramModel, capability: DiagramCapability): DiagramObject[] {
-  return projectEditorModelToV3(model).objects.filter(object => objectHasCapability(object, capability));
-}
 
 /** Candidatos de escena filtrados por capacidad semántica. */
 export function legacySceneCandidates(model: VisualDiagramModel, capability: DiagramCapability): DiagramSceneItem[] {

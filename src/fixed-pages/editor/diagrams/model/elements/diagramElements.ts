@@ -32,22 +32,6 @@ export function point(id: string, label: string, x: number, y: number, fixed = f
   };
 }
 
-export function derivedPoint(id: string, label: string, xExpression: string, yExpression: string, dependencies: string[], fallback = { x: 0, y: 0 }, color: ColorToken = 'ocre'): VisualPoint {
-  return {
-    ...point(id, label, fallback.x, fallback.y, true, color, 'derived'),
-    fixed: true,
-    dependencies,
-    xExpression,
-    yExpression,
-    selection: { selectable: true, role: 'construction', ariaLabel: `Punto derivado ${label}` },
-    style: {
-      pointSize: 7,
-      highlightPointSize: 10,
-      preserveColorOnHighlight: true,
-    },
-  };
-}
-
 export function diagramConstraint(id: string, label: string, kind: VisualConstraint['kind'], refs: string[], extra: Partial<VisualConstraint> = {}): VisualConstraint {
   return { id, label, kind, refs, enabled: true, ...extra };
 }
@@ -221,18 +205,6 @@ export function nextPointId(points: VisualPoint[]): string {
     if (!points.some(item => item.id === `p${letter}`)) return `p${letter}`;
   }
   return `p${points.length + 1}`;
-}
-
-export function nextSliderId(sliders: VisualSlider[]): string {
-  let index = sliders.length + 1;
-  while (sliders.some(item => item.id === `slider${index}`)) index += 1;
-  return `slider${index}`;
-}
-
-export function nextStepId(steps: VisualStep[]): string {
-  let index = steps.length + 1;
-  while (steps.some(item => item.id === `step${index}`)) index += 1;
-  return `step${index}`;
 }
 
 export { refsNeededForTool } from '../tools/referenceRules';

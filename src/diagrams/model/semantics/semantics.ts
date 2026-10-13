@@ -114,5 +114,3 @@ export function objectHasCapability(object: DiagramObject, capability: DiagramCa
 }
 
 export function isPoint(object: DiagramObject): boolean { return objectHasCapability(object, 'point'); }
-export function isLinearSupport(object: DiagramObject): boolean { return objectHasCapability(object, 'linear-support'); }
-export function isMeasurable(object: DiagramObject): boolean { return objectHasCapability(object, 'measurable'); }

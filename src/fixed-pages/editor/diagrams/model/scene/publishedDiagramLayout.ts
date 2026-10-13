@@ -45,22 +45,6 @@ export function publishedLayoutForPageType(pageType?: string): PublishedDiagramL
   return 'standard';
 }
 
-/** Deduce el tipo de página a partir de una entrada del índice de usos. */
-export function pageTypeFromContentPath(contentPath?: string): string {
-  const normalized = contentPath?.replace(/\\/g, '/') ?? '';
-  if (normalized.includes('/theorems/')) return 'teorema';
-  if (normalized.includes('/definitions/')) return 'definicion';
-  if (normalized.includes('/methods/')) return 'metodo';
-  if (normalized.includes('/demonstrations/')) return 'demostracion';
-  if (normalized.includes('/models/')) return 'modelo';
-  if (normalized.includes('/axioms/')) return 'axioma';
-  if (normalized.includes('/axiomatic-systems/')) return 'sistema-axiomatico';
-  if (normalized.includes('/exercises/')) return 'ejercicio';
-  if (normalized.includes('/examples/')) return 'ejemplo';
-  if (normalized.includes('/usecases/')) return 'caso-de-uso';
-  return '';
-}
-
 /**
  * Reproduce las reglas dimensionales de content-layout-columns.css y codex-layout.css.
  * Devuelve el rectángulo que recibe DiagramRenderer, no el viewport completo.

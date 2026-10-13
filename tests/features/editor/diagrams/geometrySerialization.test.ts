@@ -6,7 +6,13 @@ import marksFixture from '../../../fixtures/diagrams/marks-angles.json';
 import primitivesFixture from '../../../fixtures/diagrams/euclidean-primitives.json';
 import { parseDiagramSourceAST } from '../../../../scripts/editor/parseDiagramSourceAST';
 import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
-import { convertAngleKind, setEqualAngleConstraint, setSegmentMeasureTicks, toEditorModel, workingScene } from '../../../../src/fixed-pages/editor/diagrams/model';
+import {
+  convertAngleKind,
+  setEqualAngleConstraint,
+  setSegmentCongruenceMark,
+  toEditorModel,
+  workingScene,
+} from '../../../../src/fixed-pages/editor/diagrams/model';
 import type { VisualDiagramModel } from '../../../../src/fixed-pages/editor/diagrams/model/types';
 
 function asModel(value: unknown): VisualDiagramModel {
@@ -225,17 +231,17 @@ describe('Diagram source serialization', () => {
     expect(regenerated.ok && regenerated.source).toBe(generated.source);
   });
 
-  it('roundtrips measure marks added from the segment inspector byte for byte', () => {
+  it('roundtrips congruence marks added from the segment inspector byte for byte', () => {
     const base = asModel(primitivesFixture);
-    const model = setSegmentMeasureTicks(base, 'segAB', 2);
-    const generated = generateDiagramSource(model, 'SegmentMeasureMarks');
+    const model = setSegmentCongruenceMark(base, 'segAB', 2);
+    const generated = generateDiagramSource(model, 'SegmentCongruenceMarks');
     expect(generated.ok).toBe(true);
     if (!generated.ok) return;
     const parsed = parseDiagramSourceAST(generated.source);
     expect(parsed.status).toBe('visual-exact');
     if (parsed.status !== 'visual-exact') return;
     expect(withoutDerivedGraph(parsed.model)).toEqual(withoutDerivedGraph(model));
-    const regenerated = generateDiagramSource(parsed.model, 'SegmentMeasureMarks');
+    const regenerated = generateDiagramSource(parsed.model, 'SegmentCongruenceMarks');
     expect(regenerated.ok && regenerated.source).toBe(generated.source);
   });
 

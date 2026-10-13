@@ -15,13 +15,6 @@ function viewportV2(spec: ViewportSpec): DiagramSpecV2 {
   return spec.version === 3 ? prepareSceneSpec(spec) : spec;
 }
 
-export interface ViewportLimits {
-  minX: number;
-  maxX: number;
-  minY: number;
-  maxY: number;
-}
-
 export interface ViewportChangeOptions {
   /** Persiste los límites en el modelo (viewport.bounds). */
   persist?: boolean;
@@ -36,15 +29,6 @@ export function normalizeViewportBounds(bounds: readonly number[]): DiagramBound
   if (![left, top, right, bottom].every(Number.isFinite)) return null;
   if (right <= left || top <= bottom) return null;
   return [left, top, right, bottom];
-}
-
-export function boundsFromLimits(limits: ViewportLimits): DiagramBounds | null {
-  return normalizeViewportBounds([limits.minX, limits.maxY, limits.maxX, limits.minY]);
-}
-
-export function limitsFromBounds(bounds: DiagramBounds): ViewportLimits {
-  const [left, top, right, bottom] = bounds;
-  return { minX: left, maxX: right, minY: bottom, maxY: top };
 }
 
 export function resolveHomeViewport(spec: ViewportSpec): DiagramBounds {
@@ -96,17 +80,6 @@ export function specWithStepSliderValues(input: ViewportSpec, stepId: string): D
 
 export function isEffectivelyVisible(entry: PlannedSceneItem): boolean {
   return entry.visible;
-}
-
-export function isEffectivelyVisibleAtStep(spec: ViewportSpec, itemId: string, stepId?: string): boolean {
-  const plan = createScenePlan(spec, stepId ? { activeStepId: stepId } : {});
-  return plan.find(entry => entry.item.id === itemId)?.visible ?? false;
-}
-
-export function isEffectivelyVisibleInAnyStep(spec: ViewportSpec, itemId: string): boolean {
-  const v2 = viewportV2(spec);
-  if (v2.steps.length === 0) return isEffectivelyVisibleAtStep(v2, itemId);
-  return v2.steps.some(step => isEffectivelyVisibleAtStep(v2, itemId, step.id));
 }
 
 export function computeElementBoundsAtStep(spec: ViewportSpec, itemId: string, stepId?: string): DiagramBounds | null {

@@ -53,31 +53,6 @@ export function DiagramSkeleton({ label = 'Preparando visualización…' }: { la
   );
 }
 
-/** Skeleton compacto para grafos de metadatos / red de conexiones. */
-export function GraphSkeleton({
-  height = 200,
-  label = 'Trazando conexiones…',
-}: {
-  height?: number;
-  label?: string;
-}) {
-  return (
-    <SkeletonShell variant="graph" label={label} height={height}>
-      <svg className="sk__figure sk__figure--graph" viewBox="0 0 160 100">
-        <line x1="80" y1="48" x2="28" y2="28" stroke="currentColor" strokeWidth="1.1" />
-        <line x1="80" y1="48" x2="132" y2="30" stroke="currentColor" strokeWidth="1.1" />
-        <line x1="80" y1="48" x2="118" y2="78" stroke="currentColor" strokeWidth="1.1" />
-        <line x1="80" y1="48" x2="42" y2="76" stroke="currentColor" strokeWidth="1.1" />
-        <circle cx="80" cy="48" r="7" fill="none" stroke="currentColor" strokeWidth="1.4" />
-        <circle cx="28" cy="28" r="4.5" fill="none" stroke="currentColor" strokeWidth="1.15" />
-        <circle cx="132" cy="30" r="4.5" fill="none" stroke="currentColor" strokeWidth="1.15" />
-        <circle cx="118" cy="78" r="4" fill="none" stroke="currentColor" strokeWidth="1.15" />
-        <circle cx="42" cy="76" r="4" fill="none" stroke="currentColor" strokeWidth="1.15" />
-      </svg>
-    </SkeletonShell>
-  );
-}
-
 type DiagramPaintGate = { reportReady: () => void };
 
 const DiagramPaintContext = createContext<DiagramPaintGate | null>(null);

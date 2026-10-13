@@ -239,19 +239,9 @@ export const CONTENT_TYPE_CONFIG: Record<string, ContentTypeConfig> = {
   },
 };
 
-export const GRAPH_NODE_COLORS: Record<string, string> = {
-  central: CONTENT_TYPE_COLORS.matematico.cssVar,
-  branch:  CONTENT_TYPE_COLORS.teorema.cssVar,
-  ...Object.fromEntries(
-    Object.values(CONTENT_TYPE_CONFIG).map(cfg => [cfg.graphGroup, cfg.nodeStyle.bg]),
-  ),
-};
-
 export const TYPE_STYLES: Record<string, ContentTypeStyle> = Object.fromEntries(
   Object.entries(CONTENT_TYPE_CONFIG).map(([id, cfg]) => [id, cfg.nodeStyle]),
 );
-
-export const SITE_TAGLINE = 'Enciclopedia de estructuras formales — teoremas, definiciones y demostraciones';
 
 // ── Tablas derivadas y funciones utilitarias canónicas ───────────────────────
 
@@ -358,15 +348,6 @@ export function getContentTypeBadge(rawKey?: string | null, lang?: string): stri
   }
   return CONTENT_TYPE_CONFIG[canonical]?.nodeStyle.badge ?? cleanKey.toUpperCase();
 }
-
-export function getContentTypeRoutePrefix(rawKey?: string | null): string {
-  if (typeof rawKey !== 'string' || !rawKey.trim()) return '';
-  const cleanKey = rawKey.startsWith('diagram-') ? rawKey.slice('diagram-'.length) : rawKey;
-  const normalized = cleanKey.toLowerCase().trim();
-  const canonical = CONTENT_TYPE_ALIASES[normalized] ?? normalized;
-  return CONTENT_TYPE_CONFIG[canonical]?.routePrefix ?? '';
-}
-
 
 export const typeLabels: Record<string, string> = CONTENT_TYPE_LABELS_SINGULAR;
 

@@ -2,9 +2,6 @@ import { describe, expect, it } from 'vitest';
 import v2Fixture from '../fixtures/diagrams/diagram-spec-v2.json';
 import {computeAutoFitBounds,
   fitVisibleItemsAtStep,
-  isEffectivelyVisibleAtStep,
-  isEffectivelyVisibleInAnyStep,
-  limitsFromBounds,
   migrateDiagramSpec,
   normalizeViewportBounds,
   prepareSceneSpec,
@@ -43,7 +40,6 @@ describe('diagram viewport semantics', () => {
   it('normalizes and converts viewport limits', () => {
     expect(normalizeViewportBounds([-2, 2, 2, -2])).toEqual([-2, 2, 2, -2]);
     expect(normalizeViewportBounds([2, 2, -2, -2])).toBeNull();
-    expect(limitsFromBounds([-2, 2, 2, -2])).toEqual({ minX: -2, maxX: 2, minY: -2, maxY: 2 });
   });
 
   it('uses configured bounds as camera authority and home as reset target', () => {
@@ -74,8 +70,6 @@ describe('diagram viewport semantics', () => {
       ],
     });
 
-    expect(isEffectivelyVisibleInAnyStep(spec, 'pFarHidden')).toBe(false);
-    expect(isEffectivelyVisibleInAnyStep(spec, 'pLater')).toBe(true);
     const fitted = computeAutoFitBounds(spec, 0);
     expect(fitted).not.toBeNull();
     expect(fitted![0]).toBeLessThanOrEqual(0);
@@ -92,8 +86,6 @@ describe('diagram viewport semantics', () => {
         { id: 's3', label: '3', description: 'A again', visibleTargets: ['pA'] },
       ],
     });
-    expect(isEffectivelyVisibleAtStep(spec, 'pMid', 's1')).toBe(false);
-    expect(isEffectivelyVisibleAtStep(spec, 'pMid', 's2')).toBe(true);
     const fitted = computeAutoFitBounds(spec, 0);
     expect(fitted![2]).toBeGreaterThanOrEqual(6);
   });
@@ -110,7 +102,6 @@ describe('diagram viewport semantics', () => {
       ],
       steps: [{ id: 's1', label: '1', description: 'x', visibleTargets: ['pHiddenLayer', 'pVisible'] }],
     });
-    expect(isEffectivelyVisibleInAnyStep(hiddenLayerSpec, 'pHiddenLayer')).toBe(false);
     const fitted = computeAutoFitBounds(hiddenLayerSpec, 0);
     expect(fitted![2]).toBeLessThan(5);
 
@@ -129,7 +120,7 @@ describe('diagram viewport semantics', () => {
       ],
       steps: [{ id: 's1', label: '1', description: 'x', visibleTargets: ['pGrouped', 'pVisible'] }],
     });
-    expect(isEffectivelyVisibleInAnyStep(hiddenGroupSpec, 'pGrouped')).toBe(false);
+    expect(computeAutoFitBounds(hiddenGroupSpec, 0)![2]).toBeLessThan(5);
   });
 
   it('respects explicit step visibility overrides over base visibility', () => {
@@ -143,7 +134,9 @@ describe('diagram viewport semantics', () => {
         objectStates: { pBaseHidden: { visible: true } },
       }],
     });
-    expect(isEffectivelyVisibleInAnyStep(spec, 'pBaseHidden')).toBe(true);
+    const fitted = computeAutoFitBounds(spec, 0);
+    expect(fitted).not.toBeNull();
+    expect(fitted![2]).toBeGreaterThanOrEqual(3);
   });
 
   it('returns null auto-fit when no element is visible', () => {
@@ -199,7 +192,6 @@ describe('diagram viewport semantics', () => {
       ],
     });
 
-    expect(isEffectivelyVisibleInAnyStep(spec, 'pAuxFar')).toBe(false);
     const fitted = computeAutoFitBounds(spec, 0);
     expect(fitted).not.toBeNull();
     expect(fitted![2]).toBeGreaterThanOrEqual(3);

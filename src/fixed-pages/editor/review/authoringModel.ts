@@ -1,34 +1,6 @@
 import contentIndex from '@/data/content/contentIndex.json';
-import type { Block, BlockType } from '@/fixed-pages/editor/session/parser';
 import { parseAttributes } from '@/fixed-pages/editor/session/parser';
 import type { DiagramTargetRegistry, EditorValidationIssue } from '@/fixed-pages/editor/session/editorTypes';
-
-export interface OutlineItem {
-  id: string;
-  label: string;
-  kind: BlockType;
-  level: number;
-  sourceStart?: number;
-}
-
-const BLOCK_LABELS: Partial<Record<BlockType, string>> = {
-  paragraph: 'Párrafo', heading: 'Sección', list: 'Lista', table: 'Tabla', formula: 'Fórmula',
-  definition_box: 'Definición', note: 'Advertencia o nota', citation: 'Cita',
-  demonstration: 'Paso de demostración', exercise: 'Ejercicio', diagram: 'Diagrama',
-  advancedMdx: 'Fragmento preservado', separator: 'Separador',
-};
-
-export function buildDocumentOutline(blocks: Block[]): OutlineItem[] {
-  return blocks.map((block, index) => ({
-    id: block.id,
-    label: block.type === 'heading'
-      ? block.content.trim() || `Sección ${index + 1}`
-      : `${BLOCK_LABELS[block.type] ?? block.type} ${index + 1}`,
-    kind: block.type,
-    level: block.type === 'heading' ? Number(block.metadata?.level) || 3 : 4,
-    sourceStart: block.metadata?.location?.range?.start,
-  }));
-}
 
 interface IndexedEntry {
   id: string;

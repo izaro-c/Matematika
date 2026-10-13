@@ -1,7 +1,6 @@
 import type { EditorMode, EditorValidationResult } from '@/fixed-pages/editor/session/editorTypes';
 import type { VisualCompatibility } from '../document/documentTypes';
 import type { EditorPersistenceStatus } from '@/fixed-pages/editor/save/editorPersistenceState';
-import type { DiagramSyncStatus } from '../diagrams/history/types';
 
 export type SafetyLevel = 'safe' | 'attention' | 'blocked' | 'error';
 
@@ -335,93 +334,4 @@ export function buildEditorSafetyPresentation(input: EditorSafetyInput): SafetyP
       .filter((action, index, actions) => actions.findIndex(candidate => candidate.id === action.id) === index),
     recommendedAction: save.recommendedAction ?? compatibility.recommendedAction,
   };
-}
-
-export function buildDiagramAuthorityPresentation(status: DiagramSyncStatus, isDirty: boolean): SafetyPresentation {
-  switch (status) {
-    case 'synced':
-      return {
-        level: 'safe',
-        title: 'Modelo y fuente sincronizados',
-        description: isDirty ? 'Hay cambios locales pendientes de confirmar.' : 'La vista visual y el TSX representan el mismo diagrama.',
-        reasons: [],
-        allowedActions: [ACTIONS.editVisual, ACTIONS.editCode],
-        blockedActions: [],
-        recommendedAction: isDirty ? ACTIONS.applyFile : undefined,
-      };
-    case 'visual-authoritative':
-      return {
-        level: 'attention',
-        title: 'Modelo visual autoritativo',
-        description: 'El modelo visual contiene los cambios recientes. Guarde para persistir la fuente generada.',
-        reasons: [],
-        allowedActions: [ACTIONS.applyFile],
-        blockedActions: [],
-        recommendedAction: ACTIONS.applyFile,
-      };
-    case 'source-authoritative':
-      return {
-        level: 'attention',
-        title: 'Edición de código con vista previa',
-        description: isDirty
-          ? 'El TSX completo contiene cambios locales. La vista visual no puede regenerarlo sin perder código.'
-          : 'El TSX completo es la única representación autoritativa; se ejecuta una vista previa del componente guardado.',
-        reasons: [],
-        allowedActions: isDirty ? [ACTIONS.applyFile, ACTIONS.editCode] : [ACTIONS.editCode],
-        blockedActions: [],
-        recommendedAction: isDirty ? ACTIONS.applyFile : ACTIONS.editCode,
-      };
-    case 'diverged':
-      return {
-        level: 'blocked',
-        title: 'Modelo y fuente divergentes',
-        description: 'Ambas representaciones cambiaron. El guardado está bloqueado hasta elegir una autoridad.',
-        reasons: [{
-          id: 'diagram-diverged',
-          level: 'blocked',
-          title: 'Autoridad ambigua',
-          description: 'Guardar ahora podría descartar cambios de una representación.',
-        }],
-        allowedActions: [ACTIONS.editCode, ACTIONS.editVisual],
-        blockedActions: [ACTIONS.applyFile],
-      };
-    case 'invalid-source':
-      return {
-        level: 'error',
-        title: 'Fuente inválida',
-        description: 'El TSX no puede convertirse en modelo. No se reutiliza el modelo anterior como representación actual.',
-        reasons: [{
-          id: 'diagram-invalid-source',
-          level: 'error',
-          title: 'Parseo de fuente fallido',
-          description: 'Corrija el código o conserve el modelo visual tras revisar los cambios.',
-        }],
-        allowedActions: [ACTIONS.editCode],
-        blockedActions: [ACTIONS.applyFile],
-      };
-    case 'saving':
-      return {
-        level: 'attention',
-        title: 'Guardando diagrama',
-        description: 'La fuente TSX se está persistiendo mediante la API segura.',
-        reasons: [],
-        allowedActions: [],
-        blockedActions: [ACTIONS.applyFile],
-      };
-    case 'conflict':
-      return {
-        level: 'error',
-        title: 'Conflicto del diagrama',
-        description: 'El TSX cambió externamente. Compare antes de reintentar.',
-        reasons: [{
-          id: 'diagram-conflict',
-          level: 'error',
-          title: 'Versión externa detectada',
-          description: 'La versión local no se sobrescribirá automáticamente.',
-        }],
-        allowedActions: [ACTIONS.resolveConflict],
-        blockedActions: [ACTIONS.applyFile],
-        recommendedAction: ACTIONS.resolveConflict,
-      };
-  }
 }

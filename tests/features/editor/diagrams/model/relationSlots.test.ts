@@ -3,7 +3,6 @@ import { createTemplateModel, element, point } from '../../../../../src/fixed-pa
 import {
   candidatesForSlot,
   editableSlotsFor,
-  isIdAllowedForSlot,
   relationAvailability,
 } from '../../../../../src/fixed-pages/editor/diagrams/model/constraints/relationSlots';
 
@@ -45,12 +44,6 @@ describe('relationSlots', () => {
     const ids = candidatesForSlot(model, 'on', 1, ['pA']).map(item => item.id);
     expect(ids).toEqual(expect.arrayContaining(['lineAB', 'segBC']));
     expect(ids).not.toContain('pB');
-  });
-
-  it('isIdAllowedForSlot rejects incompatible canvas picks', () => {
-    const model = modelWithPointsAndLine();
-    expect(isIdAllowedForSlot(model, 'distance', 1, ['pA'], 'pB')).toBe(true);
-    expect(isIdAllowedForSlot(model, 'distance', 1, ['pA'], 'lineAB')).toBe(false);
   });
 
   it('relationAvailability disables distance when only one point exists', () => {

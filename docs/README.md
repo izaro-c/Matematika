@@ -13,13 +13,13 @@ El proyecto combina tres ideas centrales:
 
 | Sección | Documento | Qué explica |
 |---|---|---|
-| **Arquitectura** | [docs/architecture/fsd-design.md](file:///home/izaro/Proiektuak/Matematika_Drafts/docs/architecture/fsd-design.md) | Estructura FSD en `src/`, capas, rutas en Wouter, Zustand stores y tokens visuales. |
-| | [docs/architecture/editor-engine.md](file:///home/izaro/Proiektuak/Matematika_Drafts/docs/architecture/editor-engine.md) | Cómo funciona por dentro el editor MDX, parsing AST por offsets, Monaco y reglas de seguridad. |
-| | [docs/architecture/diagram-engine.md](file:///home/izaro/Proiektuak/Matematika_Drafts/docs/architecture/diagram-engine.md) | Integración de JSXGraph con React, capas KaTeX para fórmulas y reactividad con `MathStore`. |
-| | [docs/architecture/knowledge-graph.md](file:///home/izaro/Proiektuak/Matematika_Drafts/docs/architecture/knowledge-graph.md) | Grafo lógico de conceptos (DAG), niveles de jerarquía, axiomas incompatibles y visualización 2D. |
-| **Contenido** | [docs/content/mdx-authoring-guide.md](file:///home/izaro/Proiektuak/Matematika_Drafts/docs/content/mdx-authoring-guide.md) | Guía práctica para crear o editar MDX, metadatos Zod, enlaces `<ConceptLink>` y comandos de comprobación. |
-| **Calidad y CI** | [docs/quality-and-ci/validation-pipelines.md](file:///home/izaro/Proiektuak/Matematika_Drafts/docs/quality-and-ci/validation-pipelines.md) | Explicación de los scripts en `scripts/`, comprobaciones de grafo, referencias y el gate de release. |
-| **Testing** | [docs/testing/testing-strategy.md](file:///home/izaro/Proiektuak/Matematika_Drafts/docs/testing/testing-strategy.md) | Pruebas unitarias con Vitest, E2E con Puppeteer, pruebas de diagramas y auditorías roundtrip del corpus. |
+| **Arquitectura** | [docs/architecture/fsd-design.md](architecture/fsd-design.md) | Estructura FSD en `src/`, capas, rutas en Wouter, Zustand stores y tokens visuales. |
+| | [docs/architecture/editor-engine.md](architecture/editor-engine.md) | Cómo funciona por dentro el editor MDX, parsing AST por offsets, Monaco y reglas de seguridad. |
+| | [docs/architecture/diagram-engine.md](architecture/diagram-engine.md) | Integración de JSXGraph con React, capas KaTeX para fórmulas y reactividad con `MathStore`. |
+| | [docs/architecture/knowledge-graph.md](architecture/knowledge-graph.md) | Grafo lógico de conceptos (DAG), niveles de jerarquía, axiomas incompatibles y visualización 2D. |
+| **Contenido** | [docs/content/mdx-authoring-guide.md](content/mdx-authoring-guide.md) | Guía práctica para crear o editar MDX, metadatos Zod, enlaces `<ConceptLink>` y comandos de comprobación. |
+| **Calidad y CI** | [docs/quality-and-ci/validation-pipelines.md](quality-and-ci/validation-pipelines.md) | Explicación de los scripts en `scripts/`, comprobaciones de grafo, referencias y el gate de release. |
+| **Testing** | [docs/testing/testing-strategy.md](testing/testing-strategy.md) | Pruebas unitarias con Vitest, E2E con Puppeteer, pruebas de diagramas y auditorías roundtrip del corpus. |
 
 ---
 
@@ -49,4 +49,4 @@ npm run editor:release-check
 npm run editor:roundtrip:check
 ```
 
-Para normas de contribución y guías de desarrollo de agentes, consulta [AGENTS.md](file:///home/izaro/Proiektuak/Matematika_Drafts/AGENTS.md).
+Las skills de agentes (contenido, diagramas, grafo de código) están en [`.agents/skills/`](../.agents/skills/).

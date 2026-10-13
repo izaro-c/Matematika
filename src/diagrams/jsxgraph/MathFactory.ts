@@ -1042,27 +1042,10 @@ export function createTicks(
   } as never) as JXG.Ticks;
 }
 
-export function createRightAngle(
-  board: JXG.Board,
-  points: [PointSupport, PointSupport, PointSupport],
-  options: AngleOptions = {},
-  theme: ThemeColors,
-): JXG.Angle {
-  return board.create('angle', points, {
-    type: 'sectordot',
-    size: 20,
-    fillColor: theme.carbon,
-    strokeColor: theme.carbon,
-    ...options,
-  } as never) as JXG.Angle;
-}
-
 function pointCoords(point: PointSupport): Coordinates {
   if (typeof point === 'string' || Array.isArray(point)) return { x: 0, y: 0 };
   return { x: point.X(), y: point.Y() };
 }
-
-export const CURVE_AREA_MAX_VERTICES = 64;
 
 export function createDynamicAreaPolygon(
   board: JXG.Board,

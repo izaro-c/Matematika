@@ -23,16 +23,6 @@ export function syncDiagramTextScale(element: HTMLElement | null | undefined): n
   return scale;
 }
 
-/** Fluid font-size from authored desktop px using inherited `--diagram-text-scale`. */
-export function diagramScaledFontSizeCss(authoredPx: number): string {
-  return `calc(${authoredPx}px * var(--diagram-text-scale, 1))`;
-}
-
-/** CSS for elements that expose `--diagram-authored-font-size`. */
-export function diagramAuthoredFontSizeCss(fallbackPx: number = 14): string {
-  return `calc(var(--diagram-authored-font-size, ${fallbackPx}px) * var(--diagram-text-scale, 1))`;
-}
-
 /** Publish authored desktop px; stylesheet owns the scaled font-size. */
 export function applyDiagramAuthoredFontSize(
   node: HTMLElement | null | undefined,

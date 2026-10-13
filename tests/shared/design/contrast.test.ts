@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { CONTENT_TYPE_CONFIG, GRAPH_NODE_COLORS } from '@/lib/theme/constants';
+import { CONTENT_TYPE_CONFIG } from '@/lib/theme/constants';
 
 const CANONICAL_NAMES = ['lienzo', 'carbon', 'canela', 'terracota', 'mora', 'ocre', 'pavo', 'granada', 'musgo'] as const;
 const ACCENT_NAMES = CANONICAL_NAMES.filter(name => name !== 'lienzo' && name !== 'carbon');
@@ -90,10 +90,6 @@ describe('graph theme color contract', () => {
       expect(config.nodeStyle.bg).toBe(config.graphColor);
       expect(config.nodeStyle.border).toBe(config.graphColor);
       expect(config.nodeStyle.ringColor).toBe(config.graphColor);
-    }
-
-    for (const color of Object.values(GRAPH_NODE_COLORS)) {
-      expect(color).toMatch(/^var\(--theme-/);
     }
   });
 });

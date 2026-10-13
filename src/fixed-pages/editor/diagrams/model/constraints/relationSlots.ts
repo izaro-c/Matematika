@@ -214,16 +214,6 @@ export function editableSlotsFor(kind: VisualConstraint['kind']): RelationSlot[]
   return slotsFor(kind).filter(slot => !slot.subject);
 }
 
-export function isIdAllowedForSlot(
-  model: VisualDiagramModel,
-  kind: VisualConstraint['kind'],
-  index: number,
-  refs: readonly string[],
-  id: string,
-): boolean {
-  return candidatesForSlot(model, kind, index, refs).some(item => item.id === id);
-}
-
 export function relationAvailability(
   model: VisualDiagramModel,
   kind: VisualConstraint['kind'],

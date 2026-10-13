@@ -26,7 +26,3 @@ export type JxgElementMap = Record<string, JxgElementAdapter | undefined>;
 export function hasCoordinates(element: JxgElementAdapter | undefined): element is JxgElementAdapter & Required<Pick<JxgElementAdapter, 'X' | 'Y'>> {
   return typeof element?.X === 'function' && typeof element.Y === 'function';
 }
-
-export function existingElements(elements: JxgElementMap): JxgElementAdapter[] {
-  return Object.values(elements).filter((element): element is JxgElementAdapter => Boolean(element));
-}

@@ -1,5 +1,4 @@
 import type {
-  DiagramBounds,
   DiagramColorToken,
   DiagramControlAction,
   DiagramGroup,
@@ -268,11 +267,3 @@ export interface DiagramSpecV3 {
 
 /** Contrato canónico del runtime y de persistencia. */
 export type DiagramSpec = DiagramSpecV3;
-
-export function isPointObject(object: DiagramObject): object is PointObject {
-  return object.objectType === 'point';
-}
-
-export function diagramBounds(value: DiagramBounds): DiagramBounds {
-  return [...value];
-}

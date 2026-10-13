@@ -62,7 +62,6 @@ export interface BlockContainer {
   attributes?: Record<string, string>;
 }
 
-
 export interface OpaqueBlock {
   kind: 'opaque';
   id: string;
@@ -130,7 +129,6 @@ export type StructuralOperationKind =
   | 'bind-diagram'
   | 'assign-step';
 
-
 export interface MutationPreview {
   title: string;
   summary: string;
@@ -147,18 +145,8 @@ export interface DocumentMutationPlan {
   preview: MutationPreview;
 }
 
-/** Temporary alias for consumers being migrated from the phase-2 prototype. */
-export type EditorDocumentWithLegacyBlocks = EditorDocument & { blocks?: never };
-
 export interface SourceEditResult {
   success: boolean;
   output?: string;
   error?: string;
-}
-
-export interface VisualCapabilities {
-  canViewVisual: boolean;
-  canEditSafeBlocks: boolean;
-  canApplyVisualChanges: boolean;
-  canSwitchFromCodeToVisual: boolean;
 }

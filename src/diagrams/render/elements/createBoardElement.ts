@@ -81,10 +81,6 @@ export const COMPASS_LAYOUT: Record<string, {
   lrt:  { anchorX: 'left',   anchorY: 'top',    offset: [LABEL_GAP_DIAG, -LABEL_GAP_DIAG] },
 };
 
-export const COMPASS_OFFSET: Record<string, [number, number]> = Object.fromEntries(
-  Object.entries(COMPASS_LAYOUT).map(([k, v]) => [k, v.offset]),
-);
-
 /** Explicit compass preset, or JSXGraph default (urt) for Automática — no custom auto-pick. */
 export function nativeLabelPlacementOptions(
   labelPosition?: string | number,

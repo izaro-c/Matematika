@@ -180,5 +180,3 @@ export function useInspectorHandlers({
     handleStepChange,
   };
 }
-
-export type InspectorHandlers = ReturnType<typeof useInspectorHandlers>;

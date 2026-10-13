@@ -9,13 +9,8 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 export default defineConfig([
   globalIgnores([
     'dist',
-    '.auxiliary',
-    'lean/.lake',
-    'lean/.lake/**',
     '.agents/skills/**/examples',
     '.agents/skills/**/examples/**',
-    'Matematika/.agents/skills/**/examples',
-    'Matematika/.agents/skills/**/examples/**',
   ]),
   {
     linterOptions: {
@@ -59,7 +54,6 @@ export default defineConfig([
     /* Pruebas, scripts y contenido de diagramas interactivos (JSXGraph, mocks, datos) */
     files: [
       'content/**/*.{ts,tsx}',
-      'content_archive/**/*.{ts,tsx}',
       'tests/**/*.{ts,tsx}',
       'scripts/**/*.{ts,tsx}',
       'src/diagrams/**/*.{ts,tsx}'

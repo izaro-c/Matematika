@@ -41,22 +41,6 @@ export const TYPE_ICONS: Record<SearchResultType, string> = {
 
 export const TYPE_COLORS: Record<SearchResultType, string> = PAGE_ACCENTS;
 
-export const TYPE_LABELS: Record<SearchResultType, string> = {
-  teorema: 'Teoremas',
-  método: 'Métodos',
-  definición: 'Definiciones',
-  axioma: 'Axiomas',
-  modelo: 'Modelos',
-  sistema_axiomatico: 'Sistemas axiomáticos',
-  ejemplo: 'Ejemplos',
-  ejercicio: 'Ejercicios',
-  demo: 'Demostraciones',
-  matemático: 'Biografías',
-  caso_uso: 'Casos de uso',
-  glosario: 'Glosario',
-  msc2020: 'Ramas MSC2020',
-};
-
 export const TYPE_RESULT_LABELS: Record<SearchResultType, string> = {
   teorema: 'Teorema',
   método: 'Método',
@@ -232,6 +216,4 @@ export function getSearchIndex(lang?: string): SearchResult[] {
   }
   return searchIndexes[key];
 }
-
-export const getSearchIndexLazy = getSearchIndex;
 

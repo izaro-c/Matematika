@@ -14,7 +14,7 @@ import {
   workingScene,
   moveStep,
   removeStep,
-  renameElement,
+  renameDiagramId,
   updateStepObjectState,
 } from '../../../../src/fixed-pages/editor/diagrams/model';
 import { generateDiagramSource } from '../../../../src/fixed-pages/editor/diagrams/source/generator';
@@ -76,7 +76,7 @@ describe('Diagram step model and execution', () => {
 
   it('preserves the public target when the internal object is renamed', () => {
     const model = complexSequence();
-    const renamed = renameElement(model, 'segAB', 'segmentoInterno');
+    const renamed = renameDiagramId(model, 'segAB', 'segmentoInterno');
     const item = renamed.elements.find(element => element.id === 'segmentoInterno');
     expect(item?.targetId).toBe('base-estable');
     expect(renamed.steps.every(step => !step.visibleTargets.includes('segAB'))).toBe(true);
@@ -92,7 +92,7 @@ describe('Diagram step model and execution', () => {
       dependencies: [...(base.dependencies ?? []), { sourceId: 'segAB', targetId: pointId, relation: 'constraint' as const }],
     };
 
-    const renamed = renameElement(model, 'segAB', 'guiaBase');
+    const renamed = renameDiagramId(model, 'segAB', 'guiaBase');
 
     expect(renamed.points.find(point => point.id === pointId)?.attractorIds).toEqual(['guiaBase']);
     expect(renamed.dependencies).toContainEqual({ sourceId: 'guiaBase', targetId: pointId, relation: 'constraint' });

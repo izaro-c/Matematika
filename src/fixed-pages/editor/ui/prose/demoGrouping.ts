@@ -74,13 +74,6 @@ export function autoCapitularLetter(text: string): string | undefined {
   return match ? match[0].toUpperCase() : undefined;
 }
 
-/** Editor keeps the full paragraph; source stores Capitular + rest without duplicating the letter. */
-export function splitCapitularContent(fullText: string): { letter?: string; content: string } {
-  const letter = autoCapitularLetter(fullText);
-  if (!letter) return { content: fullText };
-  return { letter, content: fullText };
-}
-
 /** In-group 0-based index for a ProofStep (matches DemonstrationCanvas / diagram sync). */
 export function demoStepIndexInGroup(blocks: Block[], blockId: string): number {
   for (const group of groupVisualBlocks(blocks)) {
