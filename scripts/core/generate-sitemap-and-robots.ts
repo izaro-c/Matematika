@@ -14,7 +14,7 @@ const DIST_DIR = path.resolve('./dist');
 const LANG_CODES = SUPPORTED_LANGUAGES.map((l) => l.code);
 
 const routeSegments: Record<string, Record<string, string>> = Object.fromEntries(
-  SUPPORTED_LANGUAGES.map((l) => [l.code, l.routeSegments as Record<string, string>])
+  SUPPORTED_LANGUAGES.map((l) => [l.code, Object.fromEntries(Object.entries(l.routeSegments))])
 );
 
 const contentTypeToCanonical: Record<string, string> = {

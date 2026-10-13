@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { readMdxMetadata } from '../core/mdxSource';
 
 const ROOT = process.cwd();
 const CONTENT_DIR = path.join(ROOT, 'content/mdx');
@@ -48,16 +49,8 @@ function stableHash(input: string): string {
 }
 
 function parseMetadata(content: string): Record<string, unknown> | null {
-  const metadataRegex = /export\s+const\s+metadata\s*=\s*(\{[\s\S]*?\n\});?/;
-  const match = content.match(metadataRegex);
-  if (!match) return null;
-  try {
-    // eslint-disable-next-line sonarjs/code-eval
-    const fn = new Function(`return ${match[1]}`);
-    return fn();
-  } catch {
-    return null;
-  }
+  const result = readMdxMetadata(content);
+  return result.status === 'ok' ? result.metadata : null;
 }
 
 function computeCorpusHash(files: string[]): string {
@@ -109,7 +102,7 @@ export function generateDiagramUsageIndex(): DiagramUsageIndex {
   for (const mdxFile of mdxFiles.sort((a, b) => relativePath(a).localeCompare(relativePath(b)))) {
     const content = fs.readFileSync(mdxFile, 'utf-8');
     const metadata = parseMetadata(content);
-    const contentId = metadata?.id || path.basename(mdxFile, '.mdx');
+    const contentId = (typeof metadata?.id === 'string' && metadata.id) || path.basename(mdxFile, '.mdx');
     const relMdxPath = relativePath(mdxFile);
 
     // Find import lines matching diagrams

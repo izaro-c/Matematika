@@ -92,7 +92,7 @@ function reversibleEdit(source: string): { exact: boolean | null; operationIds: 
   return { exact: serializeCurrentSource(leaveVisualMode(session)) === source, operationIds: session.appliedOperationIds };
 }
 
-function classifyRoundTrip(opening: EditorDocument, finalDocument: EditorDocument, exact: boolean,
+function classifyRoundTrip(opening: EditorDocument, exact: boolean,
   idempotent: boolean): RoundTripClassification {
   if (!idempotent) return 'non-idempotent';
   if (opening.diagnostics.some(item => item.code === 'PARSE_EXCEPTION')) return 'parse-error';
@@ -130,7 +130,7 @@ export function auditSource(source: string, relativePath: string): CorpusAuditEn
 
   const exact = source === thirdCycle;
   const idempotent = firstCycle === secondCycle && secondCycle === thirdCycle;
-  const classification = classifyRoundTrip(opening, finalDocument, exact, idempotent);
+  const classification = classifyRoundTrip(opening, exact, idempotent);
 
   return {
     path: relativePath,

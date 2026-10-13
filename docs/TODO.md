@@ -11,7 +11,7 @@
     - [] ReferenceIDak editatzea ahalbidetu diagrametan
     - [] helbideak hobetu (adib. /Matematika/eu/editor/axioma/axioma-congruencia-2)
 - [] imprimatzeko modua jarri
-- [] Motak zuzendu `scripts/` eta `tests/` karpetetan (~410 errore; ez dago tsconfig-ik haiek egiaztatzeko, beraz `npm run typecheck`-ek ez ditu ikusten). Lehentasun ertain-baxua: ez du produkzioa hausten, baina testak eta scriptak APItik urrundu daitezke ohartu gabe.
-    - [] Lehenik `scripts/core` (21 errore, build-katean exekutatzen dira)
-    - [] `tsconfig.test.json` sortu (`tests` + `scripts`, `vitest/globals` motekin) eta `typecheck`-era gehitu
+- [] Motak zuzendu `tests/` karpetan (~390 errore; ez dago tsconfig-ik haiek egiaztatzeko, beraz `npm run typecheck`-ek ez ditu ikusten). Lehentasun ertain-baxua: ez du produkzioa hausten, baina testak APItik urrundu daitezke ohartu gabe. V2 migrazioaren ondoren egin.
+    - [x] `scripts/` (`tsconfig.scripts.json`, `typecheck`-en barne)
+    - [] `tsconfig.test.json` sortu (`tests`, `vitest/globals` motekin) eta `tsconfig.json`-eko `references`-era gehitu
     - [] Testetako erroreak pixkanaka konpondu

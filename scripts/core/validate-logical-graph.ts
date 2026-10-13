@@ -17,7 +17,16 @@ const contentDir = path.resolve(process.cwd(), 'content/mdx');
 const mdxFiles = listMdxFiles(contentDir);
 
 const allNodes = new Set<string>();
-const metadataMap = new Map<string, Record<string, unknown>>();
+/** Campos de metadatos que usa la validación del grafo; el resto se conserva sin tipar. */
+interface NodeMeta extends Record<string, unknown> {
+  type?: string;
+  subtype?: string;
+  title?: string;
+  description?: string;
+  parentTheorem?: string;
+}
+
+const metadataMap = new Map<string, NodeMeta>();
 const contentDepsMap = new Map<string, string[]>();
 
 function extractConceptLinkDependencies(content: string): string[] {
@@ -57,7 +66,7 @@ function processMdxFile(file: string) {
     const slug = path.basename(file, '.mdx');
     const id = (metadata.id as string) || slug;
     metadata._filePath = file;
-    metadataMap.set(id, metadata as Record<string, unknown>);
+    metadataMap.set(id, metadata as NodeMeta);
     allNodes.add(id);
 
     // Graph edges come from explicit metadata arrays and ConceptLink with isDependency={true}
@@ -132,7 +141,7 @@ interface GraphNode {
 const graphNodes: Record<string, GraphNode> = {};
 
 for (const id of allNodes) {
-  const meta = metadataMap.get(id);
+  const meta = metadataMap.get(id)!; // en este punto allNodes solo contiene IDs con metadatos
   graphNodes[id] = {
     id,
     type: meta.type || 'unknown',
@@ -166,9 +175,9 @@ let linkedProofs = 0;
 
 // Map proofs to their parent theorems
 for (const id of allNodes) {
-  const meta = metadataMap.get(id);
+  const meta = metadataMap.get(id)!;
   const deps = contentDepsMap.get(id) || [];
-  const nodeLevel = HIERARCHY_LEVEL[meta.type] ?? 100;
+  const nodeLevel = HIERARCHY_LEVEL[meta.type ?? ''] ?? 100;
 
   if (meta.type === 'demostracion') {
     const parentTheoremId = meta.parentTheorem;
@@ -180,7 +189,7 @@ for (const id of allNodes) {
         if (!depMeta) return false;
         // Las definiciones primitivas son accesibles desde cualquier nivel (Grado 0 absoluto)
         const isDepPrimitive = depMeta.type === 'definicion' && depMeta.subtype === 'primitivo';
-        const depLevel = isDepPrimitive ? -1 : (HIERARCHY_LEVEL[depMeta.type] ?? 100);
+        const depLevel = isDepPrimitive ? -1 : (HIERARCHY_LEVEL[depMeta.type ?? ''] ?? 100);
         return depLevel <= nodeLevel;
       });
       graphNodes[parentTheoremId].proofs.push({
@@ -206,7 +215,7 @@ for (const id of allNodes) {
         }
         // Las definiciones primitivas son accesibles desde cualquier nivel (Grado 0 absoluto)
         const isDepPrimitive = depMeta.type === 'definicion' && depMeta.subtype === 'primitivo';
-        const depLevel = isDepPrimitive ? -1 : (HIERARCHY_LEVEL[depMeta.type] ?? 100);
+        const depLevel = isDepPrimitive ? -1 : (HIERARCHY_LEVEL[depMeta.type ?? ''] ?? 100);
         return depLevel <= nodeLevel;
       });
       graphNodes[id].directDependencies = filteredDeps;
