@@ -23,3 +23,4 @@ export * from './scene/selectors';
 export * from './scene/savePresentation';
 export * from './types';
 export { projectPointToSupport, supportElements } from '@/diagrams';
+export * from './scene/translationEdits';

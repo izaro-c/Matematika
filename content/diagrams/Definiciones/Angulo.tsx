@@ -413,6 +413,15 @@ export const AnguloSpec = createDiagramSpec(
         "infoPanel4": "Informazio-panela",
         "lineBO": "Zuzena",
         "perpB4O": "Perpendikularra"
+      },
+      "rules": {
+        "infoPanel4": [
+          "$\\text{Zorrotza }(0<\\alpha<\\pi/2)$",
+          "$\\text{Zuzena }(\\alpha=\\pi/2)$",
+          "$\\text{Kamutsa }(\\pi / 2<\\alpha<\\pi)$",
+          "$\\text{Laua }(\\alpha=\\pi)$",
+          "$\\text{Ahurra }(\\pi <\\alpha<2\\pi)$"
+        ]
       }
     },
     "en": {
@@ -428,6 +437,15 @@ export const AnguloSpec = createDiagramSpec(
         "angleBOA": "Oriented angle",
         "infoPanel4": "Information panel",
         "lineBO": "Line"
+      },
+      "rules": {
+        "infoPanel4": [
+          "$\\text{Acute }(0<\\alpha<\\pi/2)$",
+          "$\\text{Right }(\\alpha=\\pi/2)$",
+          "$\\text{Obtuse }(\\pi / 2<\\alpha<\\pi)$",
+          "$\\text{Straight }(\\alpha=\\pi)$",
+          "$\\text{Reflex }(\\pi <\\alpha<2\\pi)$"
+        ]
       }
     }
   }

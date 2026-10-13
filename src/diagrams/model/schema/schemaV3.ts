@@ -452,6 +452,8 @@ export const diagramSpecV3Schema = z.object({
     texts: z.record(z.string(), z.string()).optional(),
     descriptions: z.record(z.string(), z.string()).optional(),
     ariaLabels: z.record(z.string(), z.string()).optional(),
+    rules: z.record(z.string(), z.array(z.string())).optional(),
+    blocks: z.record(z.string(), z.record(z.string(), z.object({ title: z.string().optional(), text: z.string().optional(), rules: z.array(z.string()).optional() }).strict())).optional(),
   })).optional(),
 }).strict().superRefine((spec, context) => {
   const current = spec as DiagramSpecV3;

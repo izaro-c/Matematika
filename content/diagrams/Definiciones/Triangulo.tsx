@@ -1455,6 +1455,26 @@ export const TrianguloSpec = createDiagramSpec(
         "congruenceMarkAB": "AB aldearen kongruentzia-marka",
         "congruenceMarkCA": "CA aldearen kongruentzia-marka",
         "infoPanel26": "Informazio-panela"
+      },
+      "blocks": {
+        "infoPanel26": {
+          "por-lados": {
+            "text": "**Eskalenoa**",
+            "rules": [
+              "Definitu gabe: erpinek ez dute triangelu ez-endekaturik osatzen",
+              "**Aldeberdina**",
+              "**Isoszelea**"
+            ]
+          },
+          "por-angulos": {
+            "text": "*Angeluzorrotza*",
+            "rules": [
+              "Definitu gabe: erpinek ez dute triangelu ez-endekaturik osatzen",
+              "*Angeluzuzena*",
+              "*Angelukamutsa*"
+            ]
+          }
+        }
       }
     },
     "en": {
@@ -1493,6 +1513,26 @@ export const TrianguloSpec = createDiagramSpec(
         "congruenceMarkAB": "Congruence mark of side AB",
         "congruenceMarkCA": "Congruence mark of side CA",
         "infoPanel26": "Information panel"
+      },
+      "blocks": {
+        "infoPanel26": {
+          "por-lados": {
+            "text": "**Scalene**",
+            "rules": [
+              "Undefined: the vertices do not form a non-degenerate triangle",
+              "**Equilateral**",
+              "**Isosceles**"
+            ]
+          },
+          "por-angulos": {
+            "text": "*Acute*",
+            "rules": [
+              "Undefined: the vertices do not form a non-degenerate triangle",
+              "*Right*",
+              "*Obtuse*"
+            ]
+          }
+        }
       }
     }
   }

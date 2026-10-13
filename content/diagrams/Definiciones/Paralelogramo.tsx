@@ -1431,6 +1431,14 @@ export const ParalelogramoSpec = createDiagramSpec(
         "BD": "BD diagonala",
         "M": "M erdiko puntu komuna",
         "clasificacion": "Paralelogramoaren sailkapen dinamikoa"
+      },
+      "rules": {
+        "clasificacion": [
+          "Karratua $\\\\$ 4 alde berdin · 4 angelu zuzen",
+          "Laukizuzena $\\\\$ 4 angelu zuzen",
+          "Erronboa $\\\\$ 4 alde berdin",
+          "Paralelogramoa $\\\\$ aurkako alde paraleloen 2 pare"
+        ]
       }
     },
     "en": {
@@ -1466,6 +1474,14 @@ export const ParalelogramoSpec = createDiagramSpec(
         "anguloD": "Angle D",
         "M": "Common midpoint M",
         "clasificacion": "Live classification of the parallelogram"
+      },
+      "rules": {
+        "clasificacion": [
+          "Square $\\\\$ 4 equal sides · 4 right angles",
+          "Rectangle $\\\\$ 4 right angles",
+          "Rhombus $\\\\$ 4 equal sides",
+          "Parallelogram $\\\\$ 2 pairs of parallel opposite sides"
+        ]
       }
     }
   }

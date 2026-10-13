@@ -57,6 +57,7 @@ import { usePanelResize } from '@/fixed-pages/editor/ui/page/usePanelResize';
 import { UI } from '@/design';
 import { DiagramDataPanel } from './DiagramDataPanel';
 import { localizeDiagramSpec } from '@/diagrams/model/localizeDiagram';
+import { applyLocalizedModelEdit } from '../../model/scene/translationEdits';
 import { PresetsModal } from '../modals/PresetsModal';
 import { CodeModal } from '../modals/CodeModal';
 import { DiagramSettingsModal } from '../modals/DiagramSettingsModal';
@@ -202,6 +203,26 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
   const localizedModel = useMemo(
     () => (model ? localizeDiagramSpec(model, diagramLang) : null),
     [model, diagramLang],
+  );
+  const isTranslating = diagramLang !== 'es';
+  /** Modelo que ven el lienzo y el inspector: en otra lengua, sus textos son los traducidos. */
+  const editingModel = isTranslating ? (localizedModel ?? model) : model;
+
+  /** En otra lengua, los textos editados se guardan como traducción y el resto va al modelo base. */
+  const commitEdit = useCallback(
+    (nextModel: VisualDiagramModel, command: Parameters<typeof handleVisualEdit>[1]) => {
+      if (!model) return;
+      if (!isTranslating || !localizedModel) {
+        handleVisualEdit(nextModel, command);
+        return;
+      }
+      const label = command && 'label' in command && command.label ? `${command.label} (${diagramLang.toUpperCase()})` : undefined;
+      handleVisualEdit(
+        applyLocalizedModelEdit(model, localizedModel, nextModel, diagramLang),
+        label ? { ...command, label } : command,
+      );
+    },
+    [diagramLang, handleVisualEdit, isTranslating, localizedModel, model],
   );
 
   const [presetsOpen, setPresetsOpen] = useState(false);
@@ -528,33 +549,33 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
   const handleUpdatePoint = useCallback(
     (id: string, updates: Partial<VisualPoint>) => {
-      if (!model) return;
-      handleVisualEdit(updatePoint(model, id, updates), { label: `Editar punto ${id}` });
+      if (!editingModel) return;
+      commitEdit(updatePoint(editingModel, id, updates), { label: `Editar punto ${id}` });
     },
-    [handleVisualEdit, model]
+    [commitEdit, editingModel]
   );
 
   const handleUpdateElement = useCallback(
     (id: string, updates: Partial<VisualElement>) => {
-      if (!model) return;
-      handleVisualEdit(updateElement(model, id, updates), { label: `Editar elemento ${id}` });
+      if (!editingModel) return;
+      commitEdit(updateElement(editingModel, id, updates), { label: `Editar elemento ${id}` });
     },
-    [handleVisualEdit, model]
+    [commitEdit, editingModel]
   );
 
   const handleUpdateSlider = useCallback(
     (id: string, updates: Partial<VisualSlider>) => {
-      if (!model) return;
-      handleVisualEdit(updateSlider(model, id, updates), { label: `Editar deslizador ${id}` });
+      if (!editingModel) return;
+      commitEdit(updateSlider(editingModel, id, updates), { label: `Editar deslizador ${id}` });
     },
-    [handleVisualEdit, model]
+    [commitEdit, editingModel]
   );
 
   const handleUpdateModel = useCallback(
     (nextModel: VisualDiagramModel, label: string) => {
-      handleVisualEdit(nextModel, { label });
+      commitEdit(nextModel, { label });
     },
-    [handleVisualEdit]
+    [commitEdit]
   );
 
   const requestDeleteIds = useCallback((ids: string[]) => {
@@ -820,7 +841,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
         <main className="relative flex min-h-0 min-w-0 flex-1 overflow-hidden" aria-label="Lienzo del diagrama">
         <CanvasStage
-          model={localizedModel ?? model}
+          model={editingModel}
           lang={diagramLang}
           selectedIds={effectiveSelectedIds}
           activeTool={activeTool}
@@ -849,7 +870,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
             handleSelectStepIndex(idx);
           }}
           onSelect={handleSelectObjects}
-          onModelEdit={(nextModel, cmd) => handleVisualEdit(nextModel, cmd)}
+          onModelEdit={commitEdit}
           onChooseReferenceForTool={handleChooseReferenceForTool}
           onCompleteTool={handleCompleteTool}
           onCancelTool={handleCancelTool}
@@ -895,7 +916,7 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
           >
             {activeTab === 'scene' && (
               <WorkbenchSceneTree
-                model={model}
+                model={editingModel}
                 selectedIds={effectiveSelectedIds}
                 onSelectObjects={(ids, additive) => handleSelectObjects(ids, additive)}
                 onUpdatePoint={handleUpdatePoint}
@@ -921,9 +942,14 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
               />
             )}
 
+            {activeTab === 'properties' && isTranslating && (
+              <p className="mx-4 mt-3 rounded-xl border border-canela/30 bg-canela/10 px-3 py-2 text-[11px] leading-snug text-carbon/75" role="status">
+                Editando textos en <strong>{diagramLang.toUpperCase()}</strong>: etiquetas, textos y variantes de paneles se guardan como traducción (vacío = texto en castellano). Los demás cambios afectan a todas las lenguas.
+              </p>
+            )}
             {activeTab === 'properties' && (
               <WorkbenchElementInspector
-                model={model}
+                model={editingModel}
                 selectedId={primarySelectedId}
                 onUpdatePoint={handleUpdatePoint}
                 onUpdateElement={handleUpdateElement}
@@ -936,17 +962,17 @@ export const DiagramWorkbench: React.FC<DiagramWorkbenchProps> = ({
 
             {activeTab === 'steps' && (
               <WorkbenchStepsEditor
-                model={model}
+                model={editingModel}
                 activeStepIndex={activeStepIndex}
                 selectedIds={effectiveSelectedIds}
                 pickingStepIndex={pickingStepIndex}
                 onSelectStepIndex={handleSelectStepIndex}
                 onAddStep={handleAddStepClick}
                 onUpdateStep={(idx, updates) => {
-                  if (!model) return;
-                  const nextSteps = [...(model.steps || [])];
+                  if (!editingModel) return;
+                  const nextSteps = [...(editingModel.steps || [])];
                   nextSteps[idx] = { ...nextSteps[idx], ...updates };
-                  handleVisualEdit({ ...model, steps: nextSteps }, { label: `Editar paso ${idx + 1}` });
+                  commitEdit({ ...editingModel, steps: nextSteps }, { label: `Editar paso ${idx + 1}` });
                 }}
                 onDeleteStep={idx => {
                   if (!model) return;

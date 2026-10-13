@@ -1,4 +1,27 @@
-import type { DiagramSpecV2, DiagramSpecV3, DiagramTranslation, DiagramObject } from './schema';
+import type { DiagramSpecV2, DiagramSpecV3, DiagramTranslation, DiagramObject, DiagramPanelBlockTranslation } from './schema';
+
+type TextRule = { text: string };
+type PanelBlock = { id: string; title?: string; text: string; rules?: TextRule[] };
+
+/** Sustituye los textos de las variantes por índice; un hueco o "" conserva el texto base. */
+export function localizeTextRules<T extends TextRule>(rules: T[] | undefined, texts: string[] | undefined): T[] | undefined {
+  if (!rules || !texts?.length) return rules;
+  return rules.map((rule, index) => (texts[index] ? { ...rule, text: texts[index] } : rule));
+}
+
+export function localizePanelBlocks<T extends PanelBlock>(blocks: T[] | undefined, translations: Record<string, DiagramPanelBlockTranslation> | undefined): T[] | undefined {
+  if (!blocks || !translations) return blocks;
+  return blocks.map(block => {
+    const tr = translations[block.id];
+    if (!tr) return block;
+    return {
+      ...block,
+      ...(tr.title ? { title: tr.title } : {}),
+      ...(tr.text ? { text: tr.text } : {}),
+      ...(block.rules ? { rules: localizeTextRules(block.rules, tr.rules) } : {}),
+    };
+  });
+}
 
 export function localizeDiagramSpec<T extends DiagramSpecV2 | DiagramSpecV3>(spec: T, lang?: string): T {
   if (!lang || !spec) return spec;
@@ -92,6 +115,8 @@ export function localizeDiagramSpec<T extends DiagramSpecV2 | DiagramSpecV3>(spe
           ...(titleVal ? { title: titleVal } : {}),
           ...(subVal ? { subtitle: subVal } : {}),
           ...(descVal ? { description: descVal } : {}),
+          ...(updatedObj.content.rules ? { rules: localizeTextRules(updatedObj.content.rules, tr.rules?.[obj.id]) } : {}),
+          ...(updatedObj.content.blocks ? { blocks: localizePanelBlocks(updatedObj.content.blocks, tr.blocks?.[obj.id]) } : {}),
         };
       }
 
@@ -163,6 +188,8 @@ export function localizeDiagramSpec<T extends DiagramSpecV2 | DiagramSpecV3>(spe
             props[k] = getLocalizedProp(el.id, props[k], k);
           }
         }
+        if (props.textRules) props.textRules = localizeTextRules(props.textRules, tr.rules?.[el.id]);
+        if (props.infoPanelBlocks) props.infoPanelBlocks = localizePanelBlocks(props.infoPanelBlocks, tr.blocks?.[el.id]);
         updated.properties = props;
       }
 

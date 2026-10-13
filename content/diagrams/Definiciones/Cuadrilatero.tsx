@@ -2005,6 +2005,17 @@ export const CuadrilateroSpec = createDiagramSpec(
         "AC": "AC diagonala",
         "BD": "BD diagonala",
         "clasificacion": "Laukiaren sailkapen dinamikoa"
+      },
+      "rules": {
+        "clasificacion": [
+          "Karratua · 4 alde berdin · 4 angelu zuzen",
+          "Laukizuzena · 4 angelu zuzen",
+          "Erronboa · 4 alde berdin",
+          "Paralelogramoa · aurkako alde paraleloen 2 pare",
+          "Deltoidea · ondoz ondoko alde berdinen 2 pare",
+          "Trapezioa · aurkako alde paraleloen pare 1",
+          "Trapezoidea · aurkako alde paralelorik ez"
+        ]
       }
     },
     "en": {
@@ -2052,6 +2063,17 @@ export const CuadrilateroSpec = createDiagramSpec(
         "anguloC": "Interior angle C",
         "anguloD": "Interior angle D",
         "clasificacion": "Live classification of the quadrilateral"
+      },
+      "rules": {
+        "clasificacion": [
+          "Square · 4 equal sides · 4 right angles",
+          "Rectangle · 4 right angles",
+          "Rhombus · 4 equal sides",
+          "Parallelogram · 2 pairs of parallel opposite sides",
+          "Kite · 2 pairs of equal adjacent sides",
+          "Trapezoid · 1 pair of parallel opposite sides",
+          "Irregular quadrilateral · no pair of parallel opposite sides"
+        ]
       }
     }
   }

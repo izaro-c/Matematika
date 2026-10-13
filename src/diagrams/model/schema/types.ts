@@ -429,6 +429,13 @@ export interface DiagramStepTranslation {
   overlays?: Record<string, { title?: string; content?: string }>;
 }
 
+/** Traducción de un bloque de panel; `rules` se alinea por índice con `block.rules` ("" = texto base). */
+export interface DiagramPanelBlockTranslation {
+  title?: string;
+  text?: string;
+  rules?: string[];
+}
+
 export interface DiagramTranslation {
   title?: string;
   subtitle?: string;
@@ -443,6 +450,10 @@ export interface DiagramTranslation {
   descriptions?: Record<string, string>;
   /** Etiquetas accesibles (`selection.ariaLabel`) por id de objeto. */
   ariaLabels?: Record<string, string>;
+  /** Textos de las variantes condicionales (`content.rules`) por id de objeto, alineados por índice ("" = texto base). */
+  rules?: Record<string, string[]>;
+  /** Bloques de paneles informativos por id de objeto y id de bloque. */
+  blocks?: Record<string, Record<string, DiagramPanelBlockTranslation>>;
 }
 
 export interface DiagramSpecV2 {

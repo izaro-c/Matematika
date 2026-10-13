@@ -153,11 +153,16 @@ Todo texto visible debe existir en `eu` y `en`. Claves por idioma (todas opciona
     "titles": { "panelId": "…" },
     "texts": { "annotationId": "…" },
     "descriptions": { "objId": "…" },
-    "ariaLabels": { "objId": "…" }
+    "ariaLabels": { "objId": "…" },
+    "rules": { "panelId": ["…", "", "…"] },
+    "blocks": { "panelId": { "blockId": { "title": "…", "text": "…", "rules": ["…"] } } }
   }
 }
 ```
 - `labels`: `label` de puntos, trazados y controles (botones/deslizadores).
 - `titles` / `texts`: `content.title` / `content.text` de anotaciones (`panel`, `label`, `measurement`); conserva `{value}` y el LaTeX tal cual.
 - `ariaLabels`: `selection.ariaLabel` (lector de pantalla). Tradúcelas también.
+- `rules`: textos de las variantes condicionales `content.rules`, **alineados por índice**; `""` hereda el texto en castellano.
+- `blocks`: bloques `content.blocks` de paneles, por id de bloque (`title`, `text` y `rules` alineadas por índice). Las fórmulas puras no necesitan traducción.
+- En el editor visual, al elegir EU/EN, el inspector muestra y edita estos textos directamente: se guardan en `translations` sin tocar el castellano.
 - Las claves no declaradas en el esquema Zod (`schemaV3.ts`) se eliminan al parsear: si añades una nueva, declárala allí.
