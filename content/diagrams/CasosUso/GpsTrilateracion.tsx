@@ -598,7 +598,39 @@ export const GpsTrilateracionSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Mueve R. Cada distancia define una circunferencia de posiciones posibles; las tres restricciones coinciden en el receptor."
+  "note": "Mueve R. Cada distancia define una circunferencia de posiciones posibles; las tres restricciones coinciden en el receptor.",
+  "translations": {
+    "eu": {
+      "title": "Trilaterazioa planoan",
+      "note": "Mugitu R. Distantzia bakoitzak posizio posibleen zirkunferentzia bat definitzen du; hiru murrizketak hartzailean bat datoz.",
+      "ariaLabels": {
+        "S1": "S₁ puntu finkoa",
+        "S2": "S₂ puntu finkoa",
+        "S3": "S₃ puntu finkoa",
+        "R": "Mugitu R puntua",
+        "H1": "H₁ puntu eraikia",
+        "circ1": "S₁ seinalearen zirkunferentzia",
+        "circ2": "S₂ seinalearen zirkunferentzia",
+        "circ3": "S₃ seinalearen zirkunferentzia",
+        "right1": "Angelu zuzena"
+      }
+    },
+    "en": {
+      "title": "Trilateration in the plane",
+      "note": "Move R. Each distance defines a circle of possible positions; the three constraints meet at the receiver.",
+      "ariaLabels": {
+        "S1": "Fixed point S₁",
+        "S2": "Fixed point S₂",
+        "S3": "Fixed point S₃",
+        "R": "Move point R",
+        "H1": "Constructed point H₁",
+        "circ1": "Signal circle S₁",
+        "circ2": "Signal circle S₂",
+        "circ3": "Signal circle S₃",
+        "right1": "Right angle"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

@@ -1235,6 +1235,35 @@ export const DemoCongruenciaAALSpec = createDiagramSpec(
           "label": "Ondorioa LAL bidez",
           "description": "Absurdora eramanez, AB ≅ A'B'. LAL bidez ondorioztatzen dugu △ABC ≅ △A'B'C'."
         }
+      },
+      "ariaLabels": {
+        "pB": "B erpina",
+        "pC": "C erpina",
+        "pA": "A erpina (arrastagarria)",
+        "pB2": "B' erpina",
+        "pC2": "C' erpina",
+        "pA2": "A' erpina",
+        "pD": "D puntu laguntzailea",
+        "segAB": "AB aldea",
+        "segBC": "BC aldea",
+        "segAC": "AC aldea",
+        "polyABC": "ABC triangelua",
+        "segA2B2": "A'B' aldea",
+        "segB2C2": "B'C' aldea",
+        "segA2C2": "A'C' aldea",
+        "polyA2B2C2": "A'B'C' triangelua",
+        "angA": "A angelua",
+        "angB": "B angelua",
+        "angA2": "A' angelua",
+        "angB2": "B' angelua",
+        "congruenceBC": "Kongruentzia-marka BC-n",
+        "congruenceB2C2": "Kongruentzia-marka B'C'-n",
+        "segBD": "BD segmentu garraiatua",
+        "segCD": "CD segmentu laguntzailea",
+        "polyDBC": "DBC triangelu laguntzailea",
+        "polyADC": "ADC triangelua",
+        "angBDC": "BDC angelua",
+        "angExtD": "D-ko kanpo-angelua"
       }
     },
     "en": {
@@ -1265,6 +1294,35 @@ export const DemoCongruenciaAALSpec = createDiagramSpec(
           "label": "Conclusion via SAS",
           "description": "By contradiction, AB ≅ A'B'. Therefore, by SAS we conclude △ABC ≅ △A'B'C'."
         }
+      },
+      "ariaLabels": {
+        "pB": "Vertex B",
+        "pC": "Vertex C",
+        "pA": "Vertex A (draggable)",
+        "pB2": "Vertex B'",
+        "pC2": "Vertex C'",
+        "pA2": "Vertex A'",
+        "pD": "Auxiliary point D",
+        "segAB": "Side AB",
+        "segBC": "Side BC",
+        "segAC": "Side AC",
+        "polyABC": "Triangle ABC",
+        "segA2B2": "Side A'B'",
+        "segB2C2": "Side B'C'",
+        "segA2C2": "Side A'C'",
+        "polyA2B2C2": "Triangle A'B'C'",
+        "angA": "Angle A",
+        "angB": "Angle B",
+        "angA2": "Angle A'",
+        "angB2": "Angle B'",
+        "congruenceBC": "Congruence mark on BC",
+        "congruenceB2C2": "Congruence mark on B'C'",
+        "segBD": "Transported segment BD",
+        "segCD": "Auxiliary segment CD",
+        "polyDBC": "Auxiliary triangle DBC",
+        "polyADC": "Triangle ADC",
+        "angBDC": "Angle BDC",
+        "angExtD": "Exterior angle at D"
       }
     }
   }

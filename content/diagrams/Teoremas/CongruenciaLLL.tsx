@@ -1078,11 +1078,67 @@ export const CongruenciaLLLSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "LLL kongruentzia-irizpidea",
-      "note": "Arrastatu A, B eta C hiru alde kongruentek triangelu kongruenteak zehazten dituztela egiaztatzeko."
+      "note": "Arrastatu A, B eta C hiru alde kongruentek triangelu kongruenteak zehazten dituztela egiaztatzeko.",
+      "ariaLabels": {
+        "pA1": "A puntua",
+        "pB1": "B puntua",
+        "pC1": "C puntua",
+        "pA2": "D puntua",
+        "pB2": "A puntua",
+        "pC2": "A puntua",
+        "polygonA1B1C1": "Poligonoa",
+        "polygonA2B2C2": "Poligonoa",
+        "segA1B1": "Segmentua",
+        "segB1C1": "Segmentua",
+        "segA1C1": "Segmentua",
+        "segA2B2": "Segmentua",
+        "segB2C2": "Segmentua",
+        "segA2C2": "Segmentua",
+        "congruenceMarkA1C1": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkB1C1": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkA1B1": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkA2B2": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkB2C2": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkA2C2": "Segmentuaren kongruentzia-marka",
+        "nonReflexAngleB1A1C1": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleC1B1A1": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleA1C1B1": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleA2B2C2": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleB2C2A2": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleC2A2B2": "Angelu ez-erreflexua (≤ 180°)"
+      }
     },
     "en": {
       "title": "SSS Congruence Criterion",
-      "note": "Drag A, B, and C to verify that three congruent sides determine congruent triangles."
+      "note": "Drag A, B, and C to verify that three congruent sides determine congruent triangles.",
+      "ariaLabels": {
+        "pA1": "Point A",
+        "pB1": "Point B",
+        "pC1": "Point C",
+        "pA2": "Point D",
+        "pB2": "Point A",
+        "pC2": "Point A",
+        "polygonA1B1C1": "Polygon",
+        "polygonA2B2C2": "Polygon",
+        "segA1B1": "Segment",
+        "segB1C1": "Segment",
+        "segA1C1": "Segment",
+        "segA2B2": "Segment",
+        "segB2C2": "Segment",
+        "segA2C2": "Segment",
+        "congruenceMarkA1C1": "Segment congruence mark",
+        "congruenceMarkB1C1": "Segment congruence mark",
+        "congruenceMarkA1B1": "Segment congruence mark",
+        "congruenceMarkA2B2": "Segment congruence mark",
+        "congruenceMarkB2C2": "Segment congruence mark",
+        "congruenceMarkA2C2": "Segment congruence mark",
+        "nonReflexAngleB1A1C1": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleC1B1A1": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleA1C1B1": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleA2B2C2": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleB2C2A2": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleC2A2B2": "Non-reflex angle (≤ 180°)"
+      }
     }
   }
 }

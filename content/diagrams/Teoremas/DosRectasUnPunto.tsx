@@ -381,11 +381,29 @@ export const DosRectasUnPuntoSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Bi zuzen desberdinek gehienez puntu bat partekatzen dute",
-      "note": "Mugitu A, B, C eta D bi zuzen desberdinen ebakidura esploratzeko."
+      "note": "Mugitu A, B, C eta D bi zuzen desberdinen ebakidura esploratzeko.",
+      "ariaLabels": {
+        "A": "Mugitu A puntua",
+        "B": "Mugitu B puntua",
+        "C": "Mugitu C puntua",
+        "D": "Mugitu D puntua",
+        "line1": "l zuzena",
+        "line2": "m zuzena",
+        "infoPanel4": "Informazio-panela"
+      }
     },
     "en": {
       "title": "Two Distinct Lines Share at Most One Point",
-      "note": "Move A, B, C, and D to explore the intersection of two distinct lines."
+      "note": "Move A, B, C, and D to explore the intersection of two distinct lines.",
+      "ariaLabels": {
+        "A": "Move point A",
+        "B": "Move point B",
+        "C": "Move point C",
+        "D": "Move point D",
+        "line1": "Line l",
+        "line2": "Line m",
+        "infoPanel4": "Information panel"
+      }
     }
   }
 }

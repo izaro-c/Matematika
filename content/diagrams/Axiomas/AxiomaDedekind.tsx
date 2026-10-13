@@ -477,11 +477,37 @@ export const AxiomaDedekindSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Osotasuna: Dedekinden ebakidura",
-      "note": "Arrastatu P zuzenean zehar: L eta R aldatzen dira, baina muga bakarra izaten jarraitzen du."
+      "note": "Arrastatu P zuzenean zehar: L eta R aldatzen dira, baina muga bakarra izaten jarraitzen du.",
+      "ariaLabels": {
+        "pLeft": "Zuzenaren ezkerreko norabidea",
+        "pRight": "Zuzenaren eskuineko norabidea",
+        "pP": "P ebaki-puntu mugikorra",
+        "realLine": "Zatitzen den zuzen osoa",
+        "rayL": "L klasea: P baino txikiagoak edo berdinak diren puntuak",
+        "labelL": "L klasearen etiketa",
+        "rayR": "R klasea: P baino handiagoak diren puntuak",
+        "labelR": "R klasearen etiketa",
+        "readingP": "P-ren irakurketa dinamikoa",
+        "sampleL": "L-ko elementu baten adibide dinamikoa",
+        "sampleR": "R-ko elementu baten adibide dinamikoa"
+      }
     },
     "en": {
       "title": "Completeness: Dedekind Cut",
-      "note": "Drag P along the line: L and R change, but the boundary remains unique."
+      "note": "Drag P along the line: L and R change, but the boundary remains unique.",
+      "ariaLabels": {
+        "pLeft": "Leftward direction of the line",
+        "pRight": "Rightward direction of the line",
+        "pP": "Movable cut point P",
+        "realLine": "Whole line being partitioned",
+        "rayL": "Class L: points less than or equal to P",
+        "labelL": "Label of class L",
+        "rayR": "Class R: points greater than P",
+        "labelR": "Label of class R",
+        "readingP": "Live reading of P",
+        "sampleL": "Live example of an element of L",
+        "sampleR": "Live example of an element of R"
+      }
     }
   }
 }

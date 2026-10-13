@@ -3,6 +3,7 @@ import { renderHook } from '@testing-library/react';
 import { db } from '@/data/content';
 import { getLanguage, isSupportedLanguage, SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, localizePath, useI18n } from '@/i18n';
 import { localizeDiagramSpec } from '@/diagrams';
+import { DemoAreaAditividadSpec } from '@content/diagrams/Demos/DemoAreaAditividad';
 
 describe('i18n system', () => {
   it('supports registered languages', () => {
@@ -120,6 +121,17 @@ describe('i18n system', () => {
     const esSpec = localizeDiagramSpec(sampleSpec, 'es');
     expect(esSpec.title).toBe('Teorema de Pitágoras');
     expect(esSpec.objects[0].label).toBe('triángulo ABC');
+  });
+
+  it('keeps text and aria translations through createDiagramSpec', () => {
+    const enSpec: any = localizeDiagramSpec(DemoAreaAditividadSpec, 'en');
+    const panel = enSpec.objects.find((object: any) => object.id === 'areaInfo');
+    expect(panel.content.text).toBe('Cont(P₁ ∪ P₂) = Cont(P₁) + Cont(P₂)');
+    expect(panel.content.title).toBe('Additivity');
+    expect(panel.selection.ariaLabel).toBe('Additivity');
+
+    const euSpec: any = localizeDiagramSpec(DemoAreaAditividadSpec, 'eu');
+    expect(euSpec.objects.find((object: any) => object.id === 'areaInfo').content.text).toBe('Ed(P₁ ∪ P₂) = Ed(P₁) + Ed(P₂)');
   });
 
   it('provides complete seals translations for ES and EU', () => {

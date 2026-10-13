@@ -234,11 +234,25 @@ export const SegmentoSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Zuzenkia",
-      "note": "Mugitu A edo B"
+      "note": "Mugitu A edo B",
+      "ariaLabels": {
+        "A": "Mugitu A puntua",
+        "B": "Mugitu B puntua",
+        "carrier": "l euskarri-zuzena",
+        "segment": "AB segmentua",
+        "length": "AB luzera"
+      }
     },
     "en": {
       "title": "Segment",
-      "note": "Move A or B"
+      "note": "Move A or B",
+      "ariaLabels": {
+        "A": "Move point A",
+        "B": "Move point B",
+        "carrier": "Supporting line l",
+        "segment": "Segment AB",
+        "length": "Length AB"
+      }
     }
   }
 }

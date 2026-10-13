@@ -1056,7 +1056,93 @@ export const DemoCongruenciaALASpec = createDiagramSpec(
       }
     }
   ],
-  "note": "Avanza por los pasos y mueve C. La copia transportada se actualiza sin romper las correspondencias."
+  "note": "Avanza por los pasos y mueve C. La copia transportada se actualiza sin romper las correspondencias.",
+  "translations": {
+    "eu": {
+      "title": "ALA irizpidearen froga",
+      "note": "Aurreratu urratsetan eta mugitu C. Garraiatutako kopia eguneratzen da korrespondentziak hautsi gabe.",
+      "steps": {
+        "step1": {
+          "label": "Garraioa",
+          "description": "AC A'-ren zuzenerdian kopiatzen da C* lortzeko."
+        },
+        "step2": {
+          "label": "LAL aplikatzea",
+          "description": "ABC eta A′B′C* triangeluek LAL betetzen dute."
+        },
+        "step3": {
+          "label": "Bakartasuna",
+          "description": "B′-tik abiatzen diren zuzenerdiek bat egiten dute, eta beraz C* = C′."
+        }
+      },
+      "titles": {
+        "alaProofInfo": "Frogaren ideia"
+      },
+      "texts": {
+        "alaProofInfo": "AC garraiatzean C* lortzen da; angeluaren bakartasunak C* = C′ izatera behartzen du."
+      },
+      "ariaLabels": {
+        "A": "A puntu finkoa",
+        "B": "B puntu finkoa",
+        "C": "Mugitu C puntua",
+        "A2": "A' puntu finkoa",
+        "B2": "B' puntu eraikia",
+        "C2": "C' puntu eraikia",
+        "Cstar": "C* puntu eraikia",
+        "tri1": "ABC triangelua",
+        "tri2": "A'B'C' triangelua",
+        "triConstructed": "A'B'C* triangelua",
+        "rayAC": "A'C* zuzenerdia",
+        "angA": "A angelua",
+        "angA2": "A' angelua",
+        "angB": "B angelua",
+        "angB2": "B' angelua",
+        "alaProofInfo": "Frogaren ideia"
+      }
+    },
+    "en": {
+      "title": "Proof of the ASA criterion",
+      "note": "Step through the proof and move C. The transported copy updates without breaking the correspondences.",
+      "steps": {
+        "step1": {
+          "label": "Transport",
+          "description": "AC is copied onto the ray from A′ to obtain C*."
+        },
+        "step2": {
+          "label": "Applying SAS",
+          "description": "The triangles ABC and A′B′C* satisfy SAS."
+        },
+        "step3": {
+          "label": "Uniqueness",
+          "description": "The rays from B′ coincide, and therefore C* = C′."
+        }
+      },
+      "titles": {
+        "alaProofInfo": "Idea of the proof"
+      },
+      "texts": {
+        "alaProofInfo": "Transporting AC yields C*; uniqueness of the angle forces C* = C′."
+      },
+      "ariaLabels": {
+        "A": "Fixed point A",
+        "B": "Fixed point B",
+        "C": "Move point C",
+        "A2": "Fixed point A'",
+        "B2": "Constructed point B'",
+        "C2": "Constructed point C'",
+        "Cstar": "Constructed point C*",
+        "tri1": "Triangle ABC",
+        "tri2": "Triangle A'B'C'",
+        "triConstructed": "Triangle A'B'C*",
+        "rayAC": "Ray A'C*",
+        "angA": "Angle A",
+        "angA2": "Angle A'",
+        "angB": "Angle B",
+        "angB2": "Angle B'",
+        "alaProofInfo": "Idea of the proof"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

@@ -765,11 +765,51 @@ export const Congruence3Spec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "III. Kongruentzia-axioma",
-      "note": "Arrastatu A, B eta C puntuak segmentu kongruenteen batura egiaztatzeko (AC ≅ DF)."
+      "note": "Arrastatu A, B eta C puntuak segmentu kongruenteen batura egiaztatzeko (AC ≅ DF).",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pD": "D puntua",
+        "pE": "E puntua",
+        "pF": "F puntua",
+        "pC": "C puntua",
+        "segAC": "Segmentua",
+        "segDF": "Segmentua",
+        "segAB": "Segmentua",
+        "segBC": "Segmentua",
+        "segDE": "Segmentua",
+        "segEF": "Segmentua",
+        "congruenceMarkAB": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkDE": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkBC": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkEF": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkAC": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkDF": "Segmentuaren kongruentzia-marka"
+      }
     },
     "en": {
       "title": "Congruence Axiom III",
-      "note": "Drag points A, B, and C to verify the addition of congruent segments (AC ≅ DF)."
+      "note": "Drag points A, B, and C to verify the addition of congruent segments (AC ≅ DF).",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pD": "Point D",
+        "pE": "Point E",
+        "pF": "Point F",
+        "pC": "Point C",
+        "segAC": "Segment",
+        "segDF": "Segment",
+        "segAB": "Segment",
+        "segBC": "Segment",
+        "segDE": "Segment",
+        "segEF": "Segment",
+        "congruenceMarkAB": "Segment congruence mark",
+        "congruenceMarkDE": "Segment congruence mark",
+        "congruenceMarkBC": "Segment congruence mark",
+        "congruenceMarkEF": "Segment congruence mark",
+        "congruenceMarkAC": "Segment congruence mark",
+        "congruenceMarkDF": "Segment congruence mark"
+      }
     }
   }
 }

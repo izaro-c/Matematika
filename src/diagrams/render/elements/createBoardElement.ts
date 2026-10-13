@@ -153,6 +153,8 @@ export function createElement(
   if (item.kind === 'line') return refs.length >= 2 ? createLine(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'ray') return refs.length >= 2 ? createRay(board, [refs[0], refs[1]], lineOptions, theme) : null;
   if (item.kind === 'polygon') return refs.length >= 3 ? createPolygon(board, refs, withDiagramHoverTransition({
+    name: renderKatexTextToHtml(item.label),
+    ...(labelVisible ? { withLabel: true, label: labelOptions } : {}),
     hasInnerPoints: true,
     fillColor: theme[item.color], highlightFillColor: hoverColor, fillOpacity: item.style?.fillOpacity ?? 0.1,
     highlightFillOpacity: item.style?.highlightFillOpacity ?? 0.24,
@@ -347,7 +349,7 @@ export function createElement(
   }
   const anchor = refs[0];
   const dynamicText = () => annotationTextHtml(item, elements, spec);
-  const textOffset = item.style?.textOffset ?? (item.kind === 'label' ? [0.04, 0.04] : [0.25, 0.35]);
+  const textOffset = item.style?.textOffset ?? item.style?.labelOffset ?? (item.kind === 'label' ? [0.04, 0.04] : [0.25, 0.35]);
   const viewportPosition = item.kind === 'infoPanel' && item.properties?.anchorMode === 'viewport'
     ? item.properties.viewportPosition
     : undefined;

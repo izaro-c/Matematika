@@ -132,6 +132,32 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
         />
       </div>
 
+      {/* Tamaño de la etiqueta o cota */}
+      {isLabelVisible && (
+        <div>
+          <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+            {isCota ? 'Tamaño de la cota (px)' : isMedida ? 'Tamaño de la medida (px)' : 'Tamaño de la etiqueta (px)'}
+          </label>
+          <input
+            type="number"
+            min="6"
+            max="72"
+            step="1"
+            aria-label={isCota ? 'Tamaño de cota' : isMedida ? 'Tamaño de medida' : 'Tamaño de etiqueta'}
+            value={element.style?.labelSize ?? (isCota ? 14 : 16)}
+            onChange={e =>
+              onUpdateElement(element.id, {
+                style: {
+                  ...(element.style || {}),
+                  labelSize: parseOptionalNumber(e.target.value, isCota ? 14 : 16),
+                },
+              })
+            }
+            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+          />
+        </div>
+      )}
+
       {/* Mostrar como subtítulo / Información bajo el título */}
       {isMeasurableOrHeadingCandidate && (
         <div className="space-y-2 rounded-lg border border-canela/20 bg-canela/[0.03] p-2.5">
@@ -233,22 +259,46 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
               />
             </div>
           </div>
-          <div>
-            <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-              Unidad
-            </label>
-            <input
-              type="text"
-              aria-label="Unidad de cota"
-              value={element.properties?.unit ?? ''}
-              onChange={e =>
-                onUpdateElement(element.id, {
-                  properties: { ...(element.properties || {}), unit: e.target.value },
-                })
-              }
-              placeholder="ej. cm, m, °"
-              className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
-            />
+          <div className="grid grid-cols-2 gap-2.5">
+            <div>
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+                Unidad
+              </label>
+              <input
+                type="text"
+                aria-label="Unidad de cota"
+                value={element.properties?.unit ?? ''}
+                onChange={e =>
+                  onUpdateElement(element.id, {
+                    properties: { ...(element.properties || {}), unit: e.target.value },
+                  })
+                }
+                placeholder="ej. cm, m, °"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+                Tamaño (px)
+              </label>
+              <input
+                type="number"
+                min="6"
+                max="72"
+                step="1"
+                aria-label="Tamaño de cota"
+                value={element.style?.labelSize ?? 14}
+                onChange={e =>
+                  onUpdateElement(element.id, {
+                    style: {
+                      ...(element.style || {}),
+                      labelSize: parseOptionalNumber(e.target.value, 14),
+                    },
+                  })
+                }
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+              />
+            </div>
           </div>
         </div>
       )}
@@ -259,7 +309,7 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
           <span className="block text-[10px] font-bold text-canela uppercase tracking-wider">
             Ajustes de Medida
           </span>
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-3 gap-2">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
                 Unidad
@@ -289,6 +339,28 @@ export const ElementContentSection: React.FC<ElementPanelProps> = ({
                 onChange={e =>
                   onUpdateElement(element.id, {
                     properties: { ...(element.properties || {}), precision: parseOptionalNumber(e.target.value, 2) },
+                  })
+                }
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+                Tamaño (px)
+              </label>
+              <input
+                type="number"
+                min="6"
+                max="72"
+                step="1"
+                aria-label="Tamaño de medida"
+                value={element.style?.labelSize ?? 16}
+                onChange={e =>
+                  onUpdateElement(element.id, {
+                    style: {
+                      ...(element.style || {}),
+                      labelSize: parseOptionalNumber(e.target.value, 16),
+                    },
                   })
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"

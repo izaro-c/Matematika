@@ -448,11 +448,33 @@ export const Congruence1Spec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "I. Kongruentzia-axioma",
-      "note": "Arrastatu A eta B zuzenaren gainean garraiatutako segmentua aldatzeko."
+      "note": "Arrastatu A eta B zuzenaren gainean garraiatutako segmentua aldatzeko.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "pD": "D puntua",
+        "pDir": "E puntua",
+        "segAB": "Segmentua",
+        "segCD": "Segmentua",
+        "circleCD": "Zirkunferentzia",
+        "rayCDir": "Zuzenerdia"
+      }
     },
     "en": {
       "title": "Congruence Axiom I",
-      "note": "Drag A and B to modify the segment transported onto the line."
+      "note": "Drag A and B to modify the segment transported onto the line.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "pD": "Point D",
+        "pDir": "Point E",
+        "segAB": "Segment",
+        "segCD": "Segment",
+        "circleCD": "Circle",
+        "rayCDir": "Ray"
+      }
     }
   }
 }

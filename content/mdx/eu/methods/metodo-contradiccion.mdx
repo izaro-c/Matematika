@@ -13,22 +13,41 @@ export const metadata = {
 import { ContradictionSimulation } from '@content/diagrams/Metodos/ContradictionSimulation';
 export const Simulation = ContradictionSimulation;
 
-<Capitular letra="K" />ontraesanezko froga, historikoki *absurdora eramatea* (*reductio ad absurdum*) gisa ezaguna, zeharkako froga-teknika bat da. $P$ proposizio baten egiazkotasuna frogatzeko, behin-behinean bere $\neg P$ ukapena onartzen da hipotesitzat, eta hortik abiatuz $R \land \neg R \equiv \bot$ motako kontraesan logiko formal batera iristen da ezinbestean.
+<Capitular letra="K" />ontraesanezko froga, historikoki *absurdora eramatea* (*reductio ad absurdum*) gisa ezaguna, zeharkako froga-teknika bat da. <VisualBind element="pP" color="terracota">$P$</VisualBind> proposizio baten egiazkotasuna frogatzeko, behin-behinean bere $\neg P$ ukapena onartzen da hipotesitzat, eta hortik abiatuz <VisualBind element="pAbsurdo" color="granada">$R \land \neg R \equiv \bot$</VisualBind> motako kontraesan logiko formal batera iristen da ezinbestean.
 
 <Separador />
 
-### Oinarri logikoa eta hirugarren baztertuaren printzipioa
+### Oinarri logikoa eta absurdora eramatearen faseak
 
-Metodoa logika klasikoaren oinarrizko legeetan bermatzen da:
+Metodoa logika klasikoaren oinarrizko legeetan bermatzen da (ez-kontraesanaren printzipioa $\neg (R \land \neg R)$ eta hirugarren baztertuaren printzipioa $P \lor \neg P$). Baldintzazko $P \implies Q$ inplikazio bat frogatzeko, prozedura lau fase kanonikotan egituratzen da:
 
-- **Ez-kontraesanaren printzipioa**: Proposizio bat ezin da aldi berean egiazkoa eta gezurrezkoa izan testuinguru formal berean: $\neg (R \land \neg R)$.
-- **Hirugarren baztertuaren printzipioa**: Edozein $P$ proposizio nahitaez egiazkoa edo gezurrezkoa da ($P \lor \neg P$).
-- **Inplikazioaren baliokidetza**: $(\neg P \implies \bot)$ frogatzea logikoki $P$-ren egiazkotasun ukaezina ezartzearen baliokidea da:
+<ProofStep number={1} target={["pP", "pNotQ"]} diagramStep="paso-supuesto" title="¬Q behin-behineko hipotesia planteatzea">
+  Abiapuntuko <VisualBind element="pP" color="terracota">$P$</VisualBind> hipotesiarekin batera, behin-behinean tesiaren faltsutasuna onartzen da <VisualBind element="pNotQ" color="canela">$\neg Q$</VisualBind> suposizioaren bidez:
   <Formula>
-    $$ (\neg P \implies \bot) \iff P $$
+    $$ P \land \neg Q \text{ (Hasierako suposizio konbinatua)} $$
   </Formula>
+</ProofStep>
 
-$P \implies Q$ inplikazio baldintzatu baten kasuan, prozedurak $P$ hipotesia eta $\neg Q$ tesiaren ukapena aldi berean onartzen ditu, sistemako axiomekin edo aurretiazko teoremeekin bateraezintasun logiko bat lortuz.
+<ProofStep number={2} target={["pR", "pNotR", "segPR", "segNotQNotR"]} diagramStep="paso-deduccion-dual" title="Ondorio bateraezinak deduzitzea">
+  <VisualBind element="pP" color="terracota">$P$</VisualBind> hipotesitik baliozkotasunez deduzitzen da <VisualBind element="pR" color="terracota">$R$</VisualBind> ondorioa; aldi berean, <VisualBind element="pNotQ" color="canela">$\neg Q$</VisualBind> suposiziotik deduktiboki <VisualBind element="pNotR" color="canela">$\neg R$</VisualBind> eratorriz:
+  <Formula>
+    $$ P \implies R \quad \text{eta paraleloan} \quad \neg Q \implies \neg R $$
+  </Formula>
+</ProofStep>
+
+<ProofStep number={3} target={["pAbsurdo", "segRColision", "segNotRColision"]} diagramStep="paso-colision-absurdo" title="Talka formala eta kontraesana (⊥)">
+  Deduzitutako bi ondorioak ezin dira aldi berean existitu sistema formalean. Haien konjuntzioak talka logiko konponezina eragiten du <VisualBind element="pAbsurdo" color="granada">$\bot$</VisualBind>:
+  <Formula>
+    $$ R \land \neg R \equiv \bot \text{ (Absurdoa)} $$
+  </Formula>
+</ProofStep>
+
+<ProofStep number={4} target={["pP", "pNotQ", "pAbsurdo"]} diagramStep="paso-conclusion-verdad" title="Hipotesia baztertzea eta Q ondorioztatzea">
+  $\neg Q$ suposatzeak ezinbestean $\bot$ kontraesan formal batera eramaten duenez, behin-behineko suposizioa ezeztatu eta jatorrizko $Q$ tesia frogatuta geratzen da:
+  <Formula>
+    $$ (\neg Q \implies \bot) \iff Q \implies (P \implies Q) $$
+  </Formula>
+</ProofStep>
 
 <Separador />
 

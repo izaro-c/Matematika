@@ -522,11 +522,43 @@ export const MediatrizSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Erdibitzaile perpendikularra",
-      "note": "Arrastatu P erdibitzailean zehar"
+      "note": "Arrastatu P erdibitzailean zehar",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pP": "P puntua",
+        "p4": "4. puntua",
+        "segAB": "AB segmentua",
+        "midAB": "AB-ren erdiko puntua",
+        "lineMediatriz": "AB-ren erdibitzaile perpendikularra",
+        "segPA": "PA distantzia",
+        "segPB": "PB distantzia",
+        "congruenceMarkA4": "Kongruentzia-marka",
+        "congruenceMark4B": "Kongruentzia-marka",
+        "congruenceMarkPB": "Kongruentzia-marka",
+        "congruenceMarkAP": "Kongruentzia-marka",
+        "measurementPB": "Neurketa"
+      }
     },
     "en": {
       "title": "Perpendicular Bisector",
-      "note": "Drag P along the perpendicular bisector"
+      "note": "Drag P along the perpendicular bisector",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pP": "Point P",
+        "p4": "Point 4",
+        "segAB": "Segment AB",
+        "midAB": "Midpoint of AB",
+        "lineMediatriz": "Perpendicular bisector of AB",
+        "segPA": "Distance PA",
+        "segPB": "Distance PB",
+        "congruenceMarkA4": "Congruence mark",
+        "congruenceMark4B": "Congruence mark",
+        "congruenceMarkPB": "Congruence mark",
+        "congruenceMarkAP": "Congruence mark",
+        "measurementPB": "Measurement"
+      }
     }
   }
 }

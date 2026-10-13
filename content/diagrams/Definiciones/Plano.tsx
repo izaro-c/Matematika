@@ -6,6 +6,7 @@ import { OrbitControls, Html } from '@react-three/drei';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { useStepBinding } from '@/components/ui/StepBinding';
 import { useDiagramTargetRegistry, matchesScopedDiagramTarget } from '@/lib/page-context/DiagramTargetRegistryContext';
+import { useDiagramLang } from '@/diagrams/public';
 
 const SCOPE_ID = 'plano';
 
@@ -119,23 +120,43 @@ function SceneContent() {
   );
 }
 
+const LABELS: Record<string, Record<string, string>> = {
+  eu: {
+    'Plano π': 'π planoa',
+    'Punto A': 'A puntua',
+    'Punto B': 'B puntua',
+    'Punto C': 'C puntua',
+    'Rota la escena en 3D con el ratón': 'Biratu 3D eszena saguarekin',
+  },
+  en: {
+    'Plano π': 'Plane π',
+    'Punto A': 'Point A',
+    'Punto B': 'Point B',
+    'Punto C': 'Point C',
+    'Rota la escena en 3D con el ratón': 'Rotate the 3D scene with the mouse',
+  },
+};
+
+const tr = (lang: string, text: string) => LABELS[lang]?.[text] ?? text;
+
 export const Plano = () => {
   const targetRegistry = useDiagramTargetRegistry();
+  const lang = useDiagramLang();
   useEffect(() => {
     return targetRegistry.register(SCOPE_ID, [
-      { targetId: 'plano', objectId: 'planeMesh', label: 'Plano π', kind: 'object' },
-      { targetId: 'planeMesh', objectId: 'planeMesh', label: 'Plano π', kind: 'object' },
-      { targetId: 'plano-pi', objectId: 'planeMesh', label: 'Plano π', kind: 'object' },
-      { targetId: 'pA', objectId: 'pA', label: 'Punto A', kind: 'object' },
-      { targetId: 'pB', objectId: 'pB', label: 'Punto B', kind: 'object' },
-      { targetId: 'pC', objectId: 'pC', label: 'Punto C', kind: 'object' },
+      { targetId: 'plano', objectId: 'planeMesh', label: tr(lang, 'Plano π'), kind: 'object' },
+      { targetId: 'planeMesh', objectId: 'planeMesh', label: tr(lang, 'Plano π'), kind: 'object' },
+      { targetId: 'plano-pi', objectId: 'planeMesh', label: tr(lang, 'Plano π'), kind: 'object' },
+      { targetId: 'pA', objectId: 'pA', label: tr(lang, 'Punto A'), kind: 'object' },
+      { targetId: 'pB', objectId: 'pB', label: tr(lang, 'Punto B'), kind: 'object' },
+      { targetId: 'pC', objectId: 'pC', label: tr(lang, 'Punto C'), kind: 'object' },
     ]);
-  }, [targetRegistry]);
+  }, [targetRegistry, lang]);
 
   return (
     <div className="w-full h-full min-h-[400px] relative bg-lienzo/40 border border-mora/10 rounded-sm overflow-hidden">
       <div className="absolute top-2 left-3 z-10 text-xs font-serif italic text-mora/50 pointer-events-none">
-        Rota la escena en 3D con el ratón
+        {tr(lang, 'Rota la escena en 3D con el ratón')}
       </div>
       <Canvas gl={{ antialias: true }} style={{ width: '100%', height: '100%' }}>
         <SceneContent />

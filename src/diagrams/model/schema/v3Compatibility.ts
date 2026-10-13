@@ -288,6 +288,7 @@ function annotationContentFromV2(element: DiagramElement): AnnotationObject['con
     ...(props?.precision !== undefined ? { precision: props.precision } : {}),
     ...(props?.textRules ? { rules: props.textRules } : {}),
     ...(props?.title ? { title: props.title } : {}),
+    ...(props?.subtitle ? { subtitle: props.subtitle } : {}),
     ...(props?.infoPanelBlocks ? { blocks: props.infoPanelBlocks } : {}),
     ...(props?.infoPanelLayout ? { layout: props.infoPanelLayout } : {}),
   };
@@ -430,10 +431,12 @@ export function migrateDiagramSpecV2ToV3(spec: DiagramSpecV2): DiagramSpecV3 {
     ...spec.sliders.map<ControlObject>(slider => ({
       ...commonFromV2(slider),
       objectType: 'control',
-      variant: 'slider',
+      variant: slider.variant ?? 'slider',
       position: [slider.x, slider.y],
       range: { min: slider.min, max: slider.max, ...(slider.maxExpression ? { maxExpression: slider.maxExpression } : {}), step: slider.step },
       value: slider.value,
+      ...(slider.width !== undefined ? { width: slider.width } : {}),
+      ...(slider.action ? { action: structuredClone(slider.action) } : {}),
     })),
   ];
   const relations = constraints.map(constraint => relationFromConstraint(constraint, spec)).filter((relation): relation is DiagramRelation => relation !== null);
@@ -791,7 +794,7 @@ function annotationKindToV2(object: AnnotationObject): DiagramElementKind {
 function annotationToElement(object: AnnotationObject): DiagramElement {
   const base = commonToV2(object);
   const style = legacyStyle(object);
-  const properties: DiagramElementProperties = { ...(object.content.expression ? { expression: object.content.expression } : {}), ...(object.content.unit ? { unit: object.content.unit } : {}), ...(object.content.precision !== undefined ? { precision: object.content.precision } : {}), ...(object.content.rules ? { textRules: object.content.rules } : {}), ...(object.content.title ? { title: object.content.title } : {}), ...(object.content.blocks ? { infoPanelBlocks: object.content.blocks } : {}), ...(object.content.layout ? { infoPanelLayout: object.content.layout } : {}), ...(object.visibleWhen ? { visibleWhen: object.visibleWhen } : {}) };
+  const properties: DiagramElementProperties = { ...(object.content.expression ? { expression: object.content.expression } : {}), ...(object.content.unit ? { unit: object.content.unit } : {}), ...(object.content.precision !== undefined ? { precision: object.content.precision } : {}), ...(object.content.rules ? { textRules: object.content.rules } : {}), ...(object.content.title ? { title: object.content.title } : {}), ...(object.content.subtitle ? { subtitle: object.content.subtitle } : {}), ...(object.content.blocks ? { infoPanelBlocks: object.content.blocks } : {}), ...(object.content.layout ? { infoPanelLayout: object.content.layout } : {}), ...(object.visibleWhen ? { visibleWhen: object.visibleWhen } : {}) };
   if (object.anchor.type === 'viewport') { properties.anchorMode = 'viewport'; properties.viewportPosition = object.anchor.position; }
   else {
     properties.anchorMode = 'reference';
@@ -943,7 +946,7 @@ export function toWorkingSceneV2(spec: DiagramSpecV3): DiagramSpecV2 {
     }
     return [objectToElement(object)];
   });
-  const sliders = spec.objects.filter((object): object is ControlObject => object.objectType === 'control').map(object => ({ ...commonToV2(object), ...(object.visibleWhen ? { visibleWhen: object.visibleWhen } : {}), x: object.position[0], y: object.position[1], min: object.range.min, max: object.range.max, ...(object.range.maxExpression ? { maxExpression: object.range.maxExpression } : {}), value: object.value, step: object.range.step }));
+  const sliders = spec.objects.filter((object): object is ControlObject => object.objectType === 'control').map(object => ({ ...commonToV2(object), ...(object.visibleWhen ? { visibleWhen: object.visibleWhen } : {}), x: object.position[0], y: object.position[1], min: object.range.min, max: object.range.max, ...(object.range.maxExpression ? { maxExpression: object.range.maxExpression } : {}), value: object.value, step: object.range.step, ...(object.width !== undefined ? { width: object.width } : {}), ...(object.variant === 'button' ? { variant: 'button' as const } : {}), ...(object.action ? { action: structuredClone(object.action) } : {}) }));
   const markerRelationIds = new Set(spec.objects
     .filter((object): object is AngleObject => object.objectType === 'angle' && object.marker === 'square')
     .map(object => object.perpendicularRelationId)

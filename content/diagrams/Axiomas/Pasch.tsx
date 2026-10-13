@@ -506,11 +506,43 @@ export const PaschSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "IV. Ordena-axioma (Paschena)",
-      "note": "Arrastatu triangeluaren erpinak edo zuzena: alde bat ebakitzen badu, beste alde bat ebakitzen du edo erpin batetik igarotzen da."
+      "note": "Arrastatu triangeluaren erpinak edo zuzena: alde bat ebakitzen badu, beste alde bat ebakitzen du edo erpin batetik igarotzen da.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "pP": "P puntua",
+        "pDir": "Norabide-puntua",
+        "polyTriangulo": "Triangelua",
+        "segAB": "AB aldea",
+        "segBC": "BC aldea",
+        "segCA": "CA aldea",
+        "lineDirP": "Zuzena",
+        "intQCA": "Q ebakidura CA aldean",
+        "intQBC": "Q ebakidura BC aldean",
+        "segAC": "Segmentua",
+        "segBC_2": "Segmentua"
+      }
     },
     "en": {
       "title": "Order Axiom IV (Pasch's Axiom)",
-      "note": "Drag the triangle vertices or the line: if it intersects one side, it intersects another side or passes through a vertex."
+      "note": "Drag the triangle vertices or the line: if it intersects one side, it intersects another side or passes through a vertex.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "pP": "Point P",
+        "pDir": "Direction point",
+        "polyTriangulo": "Triangle",
+        "segAB": "Side AB",
+        "segBC": "Side BC",
+        "segCA": "Side CA",
+        "lineDirP": "Line",
+        "intQCA": "Intersection Q on side CA",
+        "intQBC": "Intersection Q on side BC",
+        "segAC": "Segment",
+        "segBC_2": "Segment"
+      }
     }
   }
 }

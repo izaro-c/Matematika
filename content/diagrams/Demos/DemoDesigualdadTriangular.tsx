@@ -760,6 +760,25 @@ export const DemoDesigualdadTriangularSpec = createDiagramSpec(
           "label": "Angelu handiagotik alde handiagora",
           "description": "△ABD-n, ∠ABD > ∠ADB denez, aurkako AD aldea AB baino handiagoa izan behar da: AD > AB ⟹ b + a > c."
         }
+      },
+      "ariaLabels": {
+        "pA": "A erpina",
+        "pB": "B erpina",
+        "pC": "C erpina (arrastagarria)",
+        "pD": "D puntu luzatua",
+        "segAB": "AB aldea",
+        "segBC": "BC aldea",
+        "segAC": "AC aldea",
+        "polyABC": "ABC triangelua",
+        "segCD": "CD luzapena",
+        "segBD": "BD segmentua",
+        "polyBCD": "BCD triangelu isoszelea",
+        "polyABD": "ABD triangelua",
+        "congruenceBC": "Kongruentzia-marka BC-n",
+        "congruenceCD": "Kongruentzia-marka CD-n",
+        "angCBD": "CBD angelua",
+        "angCDB": "CDB angelua",
+        "angABD": "ABD angelua"
       }
     },
     "en": {
@@ -786,6 +805,25 @@ export const DemoDesigualdadTriangularSpec = createDiagramSpec(
           "label": "From larger angle to larger side",
           "description": "In △ABD, since ∠ABD > ∠ADB, the opposite side AD must exceed AB: AD > AB ⟹ b + a > c."
         }
+      },
+      "ariaLabels": {
+        "pA": "Vertex A",
+        "pB": "Vertex B",
+        "pC": "Vertex C (draggable)",
+        "pD": "Extended point D",
+        "segAB": "Side AB",
+        "segBC": "Side BC",
+        "segAC": "Side AC",
+        "polyABC": "Triangle ABC",
+        "segCD": "Extension CD",
+        "segBD": "Segment BD",
+        "polyBCD": "Isosceles triangle BCD",
+        "polyABD": "Triangle ABD",
+        "congruenceBC": "Congruence mark on BC",
+        "congruenceCD": "Congruence mark on CD",
+        "angCBD": "Angle CBD",
+        "angCDB": "Angle CDB",
+        "angABD": "Angle ABD"
       }
     }
   }

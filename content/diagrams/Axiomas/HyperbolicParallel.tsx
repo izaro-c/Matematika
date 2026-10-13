@@ -498,11 +498,39 @@ export const HyperbolicParallelSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Lobachevskiren paraleloak",
-      "note": "Arrastatu P: l-tik kanpoko posizio bakoitzean, m eta n zuzenak P-tik igarotzen dira disko barruan l ebaki gabe. Ertzak puntu idealak adierazten ditu eta ez dagokio planoari."
+      "note": "Arrastatu P: l-tik kanpoko posizio bakoitzean, m eta n zuzenak P-tik igarotzen dira disko barruan l ebaki gabe. Ertzak puntu idealak adierazten ditu eta ez dagokio planoari.",
+      "ariaLabels": {
+        "O": "Poincaréren diskoaren zentroa",
+        "R": "Diskoaren erradioa zehazten duen puntua",
+        "L1": "l zuzenaren ezkerreko mutur ideala",
+        "L2": "l zuzenaren eskuineko mutur ideala",
+        "pP": "P kanpo-puntua, goiko erdidiskoaren barruan arrasta daitekeena",
+        "frontera": "Muga ideala, plano hiperbolikotik kanpo",
+        "lineL": "l zuzen hiperbolikoa",
+        "lineM": "P-tik igarotzen den lehen m paralelo limitea",
+        "lineN": "P-tik igarotzen den bigarren n paralelo limitea",
+        "labelL": "l etiketa",
+        "labelM": "m etiketa",
+        "labelN": "n etiketa"
+      }
     },
     "en": {
       "title": "Lobachevskian Parallels",
-      "note": "Drag P: at each position outside l, lines m and n pass through P without intersecting l inside the disk. The boundary represents ideal points and does not belong to the plane."
+      "note": "Drag P: at each position outside l, lines m and n pass through P without intersecting l inside the disk. The boundary represents ideal points and does not belong to the plane.",
+      "ariaLabels": {
+        "O": "Centre of the Poincaré disk",
+        "R": "Point that sets the radius of the disk",
+        "L1": "Left ideal endpoint of line l",
+        "L2": "Right ideal endpoint of line l",
+        "pP": "Exterior point P, draggable within the upper half-disk",
+        "frontera": "Ideal boundary, excluded from the hyperbolic plane",
+        "lineL": "Hyperbolic line l",
+        "lineM": "First limiting parallel m through P",
+        "lineN": "Second limiting parallel n through P",
+        "labelL": "Label l",
+        "labelM": "Label m",
+        "labelN": "Label n"
+      }
     }
   }
 }

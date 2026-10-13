@@ -3,6 +3,7 @@ import type {DiagramColorToken, DiagramElement, DiagramSpecV2} from '@/diagrams/
 import {evaluateMathExpression, interpolateDiagramTemplate} from '@/diagrams/model'
 import {evaluateStepOverlayContent} from '@/diagrams/geometry';
 import { DiagramInfoPanel } from '@/components/ui/DiagramOverlay';
+import { KatexText } from '@/components/ui/KatexText';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import {
   annotationTextHtml,
@@ -268,8 +269,8 @@ export function StepOverlayPanels({
         {entries.map(({ objectId, overlay }) => {
           return (
             <div key={objectId} data-step-overlay={objectId}>
-              {overlay.title && <strong className="block">{overlay.title}</strong>}
-              <span>{evaluateStepOverlayContent(overlay, variables)}</span>
+              {overlay.title && <em className="diagram-info-panel__subtitle"><KatexText text={overlay.title} /></em>}
+              <KatexText text={evaluateStepOverlayContent(overlay, variables)} />
             </div>
           );
         })}

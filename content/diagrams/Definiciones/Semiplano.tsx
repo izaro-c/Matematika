@@ -489,11 +489,37 @@ export const SemiplanoSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Planoerdia",
-      "note": "Mugitu A eta B H₁ barruan: haien AB zuzenkiak ez du inoiz ℓ ertz-zuzena ebakitzen (ganbiltasuna). C puntua kontrako H₂ planoerdian dago; beraz, AC zuzenkiak beti ebakitzen du ℓ X puntuan (planoaren banaketa)."
+      "note": "Mugitu A eta B H₁ barruan: haien AB zuzenkiak ez du inoiz ℓ ertz-zuzena ebakitzen (ganbiltasuna). C puntua kontrako H₂ planoerdian dago; beraz, AC zuzenkiak beti ebakitzen du ℓ X puntuan (planoaren banaketa).",
+      "ariaLabels": {
+        "pP1": "P₁ muga-puntua",
+        "pP2": "P₂ muga-puntua",
+        "lineL": "ℓ ertz-zuzena",
+        "pA": "A puntua H₁ erdiplanoan",
+        "pB": "B puntua H₁ erdiplanoan",
+        "pC": "C puntua H₂ erdiplanoan",
+        "areaH1": "H₁ erdiplanoa",
+        "areaH2": "H₂ erdiplanoa",
+        "segAB": "H₁-en dagoen AB segmentua",
+        "segAC": "ℓ zuzena ebakitzen duen AC segmentua",
+        "pX": "AC-ren eta ℓ-ren arteko X ebaki-puntua"
+      }
     },
     "en": {
       "title": "Half-Plane",
-      "note": "Drag A and B within H₁: their segment AB never crosses the boundary line ℓ (convexity). Point C lies in the opposite half-plane H₂, so segment AC always intersects ℓ at point X (plane separation)."
+      "note": "Drag A and B within H₁: their segment AB never crosses the boundary line ℓ (convexity). Point C lies in the opposite half-plane H₂, so segment AC always intersects ℓ at point X (plane separation).",
+      "ariaLabels": {
+        "pP1": "Boundary point P₁",
+        "pP2": "Boundary point P₂",
+        "lineL": "Edge line ℓ",
+        "pA": "Point A in half-plane H₁",
+        "pB": "Point B in half-plane H₁",
+        "pC": "Point C in half-plane H₂",
+        "areaH1": "Half-plane H₁",
+        "areaH2": "Half-plane H₂",
+        "segAB": "Segment AB contained in H₁",
+        "segAC": "Segment AC crossing the line ℓ",
+        "pX": "Intersection point X between AC and ℓ"
+      }
     }
   }
 }

@@ -71,7 +71,7 @@ export const DiagramInfoPanel: React.FC<DiagramInfoPanelProps> = ({
   } : {};
 
   const layoutClasses = layout === 'overlay'
-    ? 'absolute z-10 bg-lienzo/90 backdrop-blur-[2px]'
+    ? 'absolute z-10 rounded-[1px] bg-[var(--diagram-folio-bg)] backdrop-blur-[2px]'
     : 'relative w-full bg-transparent';
 
   const blockLayoutClasses = blockLayout === 'columns'
@@ -80,7 +80,7 @@ export const DiagramInfoPanel: React.FC<DiagramInfoPanelProps> = ({
 
   return (
     <aside
-      className={`${layoutClasses} max-w-[min(36rem,calc(100%-1.5rem))] min-w-[10rem] border-l-2 border-ocre/70 px-2.5 py-1.5 sm:px-3.5 sm:py-2 font-diagram leading-relaxed text-carbon/80 select-none ${className}`}
+      className={`${layoutClasses} max-w-[min(36rem,calc(100%-1.5rem))] min-w-[10rem] px-3 py-2 sm:px-3.5 sm:py-2.5 font-diagram leading-relaxed text-ink-body select-none ${className}`}
       data-diagram-info-panel
       data-layout={layout}
       data-block-layout={blockLayout}
@@ -88,7 +88,7 @@ export const DiagramInfoPanel: React.FC<DiagramInfoPanelProps> = ({
       style={{ '--diagram-authored-font-size': `${fontSize}px`, ...positionStyle } as React.CSSProperties}
     >
       {title && (
-        <div className="mb-1 font-diagram font-semibold leading-tight text-carbon" style={{ fontSize: '1.15em' }}>
+        <div className="diagram-info-panel__title mb-1 font-diagram">
           {title}
         </div>
       )}

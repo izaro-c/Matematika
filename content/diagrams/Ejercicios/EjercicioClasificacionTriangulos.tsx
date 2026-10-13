@@ -973,7 +973,79 @@ export const EjercicioClasificacionTriangulosSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Construye los 3 triángulos ajustando los vértices móviles C1, C2 y C3."
+  "note": "Construye los 3 triángulos ajustando los vértices móviles C1, C2 y C3.",
+  "translations": {
+    "eu": {
+      "title": "Triangeluen sailkapena eta azterketa",
+      "note": "Eraiki 3 triangeluak C1, C2 eta C3 erpin mugikorrak doituz.",
+      "labels": {
+        "pathR12": "Zuzena",
+        "pathA12": "Angeluzorrotza",
+        "pathO12": "Angelukamutsa"
+      },
+      "ariaLabels": {
+        "pR1": "R1 erpina",
+        "pR2": "R2 erpina",
+        "pR3": "C1 erpin mugikorra",
+        "pA1": "A1 erpina",
+        "pA2": "A2 erpina",
+        "pA3": "C2 erpin mugikorra",
+        "pO1": "O1 erpina",
+        "pO2": "O2 erpina",
+        "pO3": "C3 erpin mugikorra",
+        "pathR12": "R1R2 aldea",
+        "pathR13": "R1C1 aldea",
+        "pathR23": "R2C1 aldea",
+        "angleR": "R1 angelua",
+        "pathA12": "A1A2 aldea",
+        "pathA13": "A1C2 aldea",
+        "pathA23": "A2C2 aldea",
+        "pathO12": "O1O2 aldea",
+        "pathO13": "O1C3 aldea",
+        "pathO23": "O2C3 aldea",
+        "nonReflexAngleA2A1A3": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleO2O1O3": "Angelu ez-erreflexua (≤ 180°)",
+        "perpR2A1R1": "Perpendikularra",
+        "perpR1A1R2": "Perpendikularra",
+        "perpR2A2A1": "Perpendikularra",
+        "perpA1O1A2": "Perpendikularra",
+        "perpA1O2O1": "Perpendikularra",
+        "perpA2O1O2": "Perpendikularra"
+      }
+    },
+    "en": {
+      "title": "Classifying and inspecting triangles",
+      "note": "Build the 3 triangles by adjusting the movable vertices C1, C2 and C3.",
+      "labels": {
+        "pathR12": "Right",
+        "pathA12": "Acute",
+        "pathO12": "Obtuse"
+      },
+      "ariaLabels": {
+        "pR1": "Vertex R1",
+        "pR2": "Vertex R2",
+        "pR3": "Movable vertex C1",
+        "pA1": "Vertex A1",
+        "pA2": "Vertex A2",
+        "pA3": "Movable vertex C2",
+        "pO1": "Vertex O1",
+        "pO2": "Vertex O2",
+        "pO3": "Movable vertex C3",
+        "pathR12": "Side R1R2",
+        "pathR13": "Side R1C1",
+        "pathR23": "Side R2C1",
+        "angleR": "Angle R1",
+        "pathA12": "Side A1A2",
+        "pathA13": "Side A1C2",
+        "pathA23": "Side A2C2",
+        "pathO12": "Side O1O2",
+        "pathO13": "Side O1C3",
+        "pathO23": "Side O2C3",
+        "nonReflexAngleA2A1A3": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleO2O1O3": "Non-reflex angle (≤ 180°)"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

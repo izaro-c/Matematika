@@ -13,22 +13,45 @@ export const metadata = {
 import { DirectoSimulation } from '@content/diagrams/Metodos/DirectoSimulation';
 export const Simulation = DirectoSimulation;
 
-<Capitular letra="E" />l **método directo** es la forma de <ConceptLink targetId="demostracion">demostración</ConceptLink> que prueba una <ConceptLink targetId="implicacion" isDependency={true}>implicación</ConceptLink> $P \implies Q$ suponiendo la <ConceptLink targetId="hipotesis">hipótesis</ConceptLink> $P$ y deduciendo de ella la <ConceptLink targetId="tesis">tesis</ConceptLink> $Q$ mediante una sucesión finita de pasos, cada uno justificado.
+<Capitular letra="E" />l **método directo** es la forma de <ConceptLink targetId="demostracion">demostración</ConceptLink> que prueba una <ConceptLink targetId="implicacion" isDependency={true}>implicación</ConceptLink> $P \implies Q$ suponiendo la <ConceptLink targetId="hipotesis">hipótesis</ConceptLink> <VisualBind element="pP" color="terracota">$P$</VisualBind> y deduciendo de ella la <ConceptLink targetId="tesis">tesis</ConceptLink> <VisualBind element="pQ" color="canela">$Q$</VisualBind> mediante una sucesión finita de pasos, cada uno justificado.
 
 Es el esquema básico de toda deducción: los métodos indirectos, como la <ConceptLink targetId="metodo-contradiccion">demostración por contradicción</ConceptLink> o la prueba del <ConceptLink targetId="contraposicion">contrarrecíproco</ConceptLink> $\neg Q \implies \neg P$, transforman primero el enunciado y después razonan de forma directa.
 
 <Separador />
 
-### Estructura lógica
+### Estructura lógica y encadenamiento
 
-Cada paso aplica la regla de <ConceptLink targetId="modus-ponens" isDependency={true}>modus ponens</ConceptLink>: de $A$ y de $A \implies B$ se infiere $B$. Encadenando pasos se obtiene
+La deducción directa articula la inferencia paso a paso aplicando la regla de <ConceptLink targetId="modus-ponens" isDependency={true}>modus ponens</ConceptLink> ($A \land (A \implies B) \vdash B$):
 
-<Formula>
-  $$ P \implies P_1 \implies P_2 \implies \dots \implies P_n \implies Q $$
-</Formula>
+<ProofStep number={1} target="pP" diagramStep="paso-hipotesis" title="Planteamiento de la hipótesis P">
+  Se establece la hipótesis inicial <VisualBind element="pP" color="terracota">$P$</VisualBind> como premisa indiscutible y punto de partida de la deducción:
+  <Formula>
+    $$ P \text{ (Premisa inicial dada)} $$
+  </Formula>
+</ProofStep>
 
-y cada implicación $P_k \implies P_{k+1}$ se justifica con uno de estos recursos:
+<ProofStep number={2} target={["pP1", "segPP1"]} diagramStep="paso-primera-inferencia" title="Primera deducción: P ⇒ P₁">
+  Aplicando un <ConceptLink targetId="axioma">axioma</ConceptLink> o definición mediante modus ponens, de <VisualBind element="pP" color="terracota">$P$</VisualBind> se deduce válidamente la proposición intermedia <VisualBind element="pP1" color="carbon">$P_1$</VisualBind>:
+  <Formula>
+    $$ P \implies P_1 $$
+  </Formula>
+</ProofStep>
 
+<ProofStep number={3} target={["pP2", "segP1P2"]} diagramStep="paso-segunda-inferencia" title="Encadenamiento: P₁ ⇒ P₂">
+  A partir de <VisualBind element="pP1" color="carbon">$P_1$</VisualBind> y recurriendo a un <ConceptLink targetId="teorema">teorema</ConceptLink> o <ConceptLink targetId="lema">lema</ConceptLink> previo, se deriva el siguiente eslabón deductivo <VisualBind element="pP2" color="carbon">$P_2$</VisualBind>:
+  <Formula>
+    $$ P_1 \implies P_2 \implies \dots \implies P_n $$
+  </Formula>
+</ProofStep>
+
+<ProofStep number={4} target={["pQ", "segP2Q"]} diagramStep="paso-conclusion" title="Conclusión final: P₂ ⇒ Q">
+  El encadenamiento deductivo alcanza finalmente la tesis buscada <VisualBind element="pQ" color="canela">$Q$</VisualBind>, completando la demostración directa de $P \implies Q$:
+  <Formula>
+    $$ P \implies P_1 \implies P_2 \implies \dots \implies Q $$
+  </Formula>
+</ProofStep>
+
+Cada implicación intermedia $P_k \implies P_{k+1}$ se fundamenta rigurosamente en:
 - la hipótesis $P$ o una afirmación ya obtenida en la cadena;
 - un <ConceptLink targetId="axioma">axioma</ConceptLink> del sistema;
 - un <ConceptLink targetId="teorema">teorema</ConceptLink>, <ConceptLink targetId="lema">lema</ConceptLink> o <ConceptLink targetId="corolario">corolario</ConceptLink> demostrado antes;

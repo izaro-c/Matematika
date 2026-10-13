@@ -634,7 +634,83 @@ export const DemoAreaAditividadSpec = createDiagramSpec(
       }
     }
   ],
-  "note": "Recorre los tres pasos. El borde común no aporta área y las dos familias de triángulos cubren exactamente P."
+  "note": "Recorre los tres pasos. El borde común no aporta área y las dos familias de triángulos cubren exactamente P.",
+  "translations": {
+    "eu": {
+      "title": "Edukiaren batukortasuna",
+      "note": "Igaro hiru urratsak. Ertz komunak ez du azalerarik ematen, eta bi triangelu-familiek P zehazki estaltzen dute.",
+      "steps": {
+        "step1": {
+          "label": "Triangelazioak",
+          "description": "Poligono bakoitza barnealde disjuntuak dituzten triangeluen bildura gisa adierazten da."
+        },
+        "step2": {
+          "label": "Bildura",
+          "description": "Bi triangelazioak muga komunean zehar elkartzen dira."
+        },
+        "step3": {
+          "label": "Edukia",
+          "description": "Triangeluen edukien batura bi familietan banatzen da."
+        }
+      },
+      "titles": {
+        "areaInfo": "Batukortasuna"
+      },
+      "texts": {
+        "areaInfo": "Ed(P₁ ∪ P₂) = Ed(P₁) + Ed(P₂)"
+      },
+      "ariaLabels": {
+        "A": "A puntu finkoa",
+        "B": "B puntu finkoa",
+        "C": "C puntu finkoa",
+        "D": "D puntu finkoa",
+        "E": "E puntu finkoa",
+        "p1": "P₁ poligonoa",
+        "p2": "P₂ poligonoa",
+        "shared": "Muga komuna",
+        "t1a": "A₁ triangelua",
+        "t2a": "B₁ triangelua",
+        "areaInfo": "Batukortasuna"
+      }
+    },
+    "en": {
+      "title": "Additivity of content",
+      "note": "Go through the three steps. The common edge adds no area and the two families of triangles cover P exactly.",
+      "steps": {
+        "step1": {
+          "label": "Triangulations",
+          "description": "Each polygon is written as a union of triangles with disjoint interiors."
+        },
+        "step2": {
+          "label": "Union",
+          "description": "Both triangulations fit together along the common boundary."
+        },
+        "step3": {
+          "label": "Content",
+          "description": "The sum of the triangular contents splits into the two families."
+        }
+      },
+      "titles": {
+        "areaInfo": "Additivity"
+      },
+      "texts": {
+        "areaInfo": "Cont(P₁ ∪ P₂) = Cont(P₁) + Cont(P₂)"
+      },
+      "ariaLabels": {
+        "A": "Fixed point A",
+        "B": "Fixed point B",
+        "C": "Fixed point C",
+        "D": "Fixed point D",
+        "E": "Fixed point E",
+        "p1": "Polygon P₁",
+        "p2": "Polygon P₂",
+        "shared": "Common boundary",
+        "t1a": "Triangle A₁",
+        "t2a": "Triangle B₁",
+        "areaInfo": "Additivity"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

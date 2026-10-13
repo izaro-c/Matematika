@@ -397,6 +397,42 @@ export const DemoTriangulacionPoligonoSpec = createDiagramSpec(
           "label": "Urrats induktiboa",
           "description": "Belarria kenduz gero erpin kopurua n-1era murrizten da, indukzio bidez triangelatzea ahalbidetuz."
         }
+      },
+      "ariaLabels": {
+        "p1": "P1 erpina",
+        "p2": "P2 erpina",
+        "p3": "P3 erpina",
+        "p4": "P4 erpina (belarria)",
+        "p5": "P5 erpina",
+        "poly": "5 erpineko poligono osoa",
+        "diag": "P3-P5 barne-diagonala",
+        "oreja": "P3-P4-P5 belarri-triangelua",
+        "resto": "Gainerako P1-P2-P3-P5 azpipoligonoa"
+      }
+    },
+    "en": {
+      "title": "Triangulation of a polygon",
+      "note": "Move the vertices to explore convex or concave polygons.",
+      "steps": {
+        "step1": {
+          "label": "Finding an ear",
+          "description": "Every simple polygon with at least 4 vertices has an ear (a triangle formed by three consecutive vertices with an interior diagonal)."
+        },
+        "step2": {
+          "label": "Inductive step",
+          "description": "Removing the ear reduces the number of vertices to n-1, allowing the full triangulation by induction."
+        }
+      },
+      "ariaLabels": {
+        "p1": "Vertex P1",
+        "p2": "Vertex P2",
+        "p3": "Vertex P3",
+        "p4": "Vertex P4 (ear)",
+        "p5": "Vertex P5",
+        "poly": "Full 5-vertex polygon",
+        "diag": "Interior diagonal P3-P5",
+        "oreja": "Ear triangle P3-P4-P5",
+        "resto": "Remaining subpolygon P1-P2-P3-P5"
       }
     }
   }

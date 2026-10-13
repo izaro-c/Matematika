@@ -574,7 +574,55 @@ export const ModeloFanoSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "El plano proyectivo de orden 2 (PG(2,2)): el plano finito más pequeño. Cada punto pertenece a exactamente 3 rectas y cada recta contiene exactamente 3 puntos."
+  "note": "El plano proyectivo de orden 2 (PG(2,2)): el plano finito más pequeño. Cada punto pertenece a exactamente 3 rectas y cada recta contiene exactamente 3 puntos.",
+  "translations": {
+    "eu": {
+      "title": "Fanoren planoa",
+      "note": "2 ordenako plano proiektiboa (PG(2,2)): plano finitu txikiena. Puntu bakoitza zehazki 3 zuzenetan dago, eta zuzen bakoitzak zehazki 3 puntu ditu.",
+      "texts": {
+        "info": "7 puntu · 7 zuzen · puntu bakoitza 3 zuzenetan · zuzen bakoitzak 3 puntu"
+      },
+      "ariaLabels": {
+        "p1": "1. puntua",
+        "p2": "2. puntua",
+        "p3": "3. puntua",
+        "p4": "4. puntua",
+        "p5": "5. puntua",
+        "p6": "6. puntua",
+        "p7": "7. puntua (zentroa)",
+        "l1": "l₁ zuzena (1–2)",
+        "l2": "l₂ zuzena (2–3)",
+        "l3": "l₃ zuzena (3–1)",
+        "l4": "l₄ zuzena (1–4)",
+        "l5": "l₅ zuzena (2–5)",
+        "l6": "l₆ zuzena (3–6)",
+        "l7": "l₇ zuzena (barne-zirkulua: 4–5–6)"
+      }
+    },
+    "en": {
+      "title": "Fano plane",
+      "note": "The projective plane of order 2 (PG(2,2)): the smallest finite plane. Each point lies on exactly 3 lines and each line contains exactly 3 points.",
+      "texts": {
+        "info": "7 points · 7 lines · each point on 3 lines · each line with 3 points"
+      },
+      "ariaLabels": {
+        "p1": "Point 1",
+        "p2": "Point 2",
+        "p3": "Point 3",
+        "p4": "Point 4",
+        "p5": "Point 5",
+        "p6": "Point 6",
+        "p7": "Point 7 (centre)",
+        "l1": "Line l₁ (1–2)",
+        "l2": "Line l₂ (2–3)",
+        "l3": "Line l₃ (3–1)",
+        "l4": "Line l₄ (1–4)",
+        "l5": "Line l₅ (2–5)",
+        "l6": "Line l₆ (3–6)",
+        "l7": "Line l₇ (inner circle: 4–5–6)"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

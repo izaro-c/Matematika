@@ -26,7 +26,7 @@ import { DemoPitagorasAreas } from "@content/diagrams/Demos/DemoPitagorasAreas";
 
 ### Step-by-step proof
 
-<ProofStep number={1} target="outerSquare" title="Construction of the bounding outer square">
+<ProofStep number={1} target="outerSquare" diagramStep="step1" title="Construction of the bounding outer square">
 An enclosing exterior <ConceptLink targetId="cuadrado">square</ConceptLink> of side $(a+b)$ is constructed. By the definition of the area of a square (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink>), its total area satisfies the algebraic identity:
 
 $$
@@ -34,19 +34,19 @@ $$
 $$
 </ProofStep>
 
-<ProofStep number={2} target="t1" title="Placement of the four right triangles">
-In each of the four corners of the outer square, a <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink> with legs $a$ and $b$ is placed (<VisualBind element="t1" color="carbon">$T_1$</VisualBind>, <VisualBind element="t2" color="carbon">$T_2$</VisualBind>, <VisualBind element="t3" color="carbon">$T_3$</VisualBind>, <VisualBind element="t4" color="carbon">$T_4$</VisualBind>). By the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, the four triangles are mutually congruent. By the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>, the sum of the areas of the four triangles is:
+<ProofStep number={2} target="t1" diagramStep="step2" title="Placement of the four right triangles">
+In each of the four corners of the outer square, a <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>right triangle</ConceptLink> with legs $a$ and $b$ is placed (<VisualBind element="t1" color="canela">$T_1$</VisualBind>, <VisualBind element="t2" color="canela">$T_2$</VisualBind>, <VisualBind element="t3" color="canela">$T_3$</VisualBind>, <VisualBind element="t4" color="canela">$T_4$</VisualBind>). By the <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>SAS congruence theorem</ConceptLink>, the four triangles are mutually congruent. By the <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>triangle area theorem</ConceptLink>, the sum of the areas of the four triangles is:
 
 $$
 4 \cdot \left(\frac{1}{2} a b\right) = 2ab
 $$
 </ProofStep>
 
-<ProofStep number={3} target="emptyC" title="Characterization of the interior square">
+<ProofStep number={3} target="emptyC" diagramStep="step3" title="Characterization of the interior square">
 The four hypotenuses of the triangles form the boundary of a central quadrilateral region <VisualBind element="emptyC" color="ocre">$Q_c$</VisualBind> with sides of length $c$. Since the two acute <ConceptLink targetId="angulo" isDependency={true}>angles</ConceptLink> of each right triangle are <ConceptLink targetId="angulos-suplementarios" isDependency={true}>complementary</ConceptLink> and sum to $90^\circ$, the interior angle at each vertex of the central quadrilateral measures $180^\circ - 90^\circ = 90^\circ$. Having all four sides congruent and all four angles right, $Q_c$ is an interior <ConceptLink targetId="cuadrado">square</ConceptLink> of area $c^2$.
 </ProofStep>
 
-<ProofStep number={4} target="emptyA" title="Application of the area additivity theorem">
+<ProofStep number={4} target="emptyC" diagramStep="step4" title="Application of the area additivity theorem">
 By the <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>area additivity theorem</ConceptLink>, the area of the outer square equals the area of the central interior square plus the sum of the areas of the four corner triangles:
 
 $$
@@ -54,8 +54,8 @@ $$
 $$
 </ProofStep>
 
-<ProofStep number={5} target="emptyB" title="Algebraic simplification and conclusion">
-Subtracting the term $2ab$ from both sides of the equality, or alternatively rearranging the four triangles into two rectangles of dimensions $a \times b$ (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink>) that leave exposed two interior <ConceptLink targetId="cuadrado">squares</ConceptLink> <VisualBind element="emptyA" color="terracota">$Q_a$</VisualBind> (of area $a^2$) and <VisualBind element="emptyB" color="canela">$Q_b$</VisualBind> (of area $b^2$), one formally concludes:
+<ProofStep number={5} target="emptyA" diagramStep="step5" title="Algebraic simplification and conclusion">
+Subtracting the term $2ab$ from both sides of the equality, or alternatively rearranging the four triangles into two rectangles of dimensions $a \times b$ (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>rectangle area theorem</ConceptLink>) that leave exposed two interior <ConceptLink targetId="cuadrado">squares</ConceptLink> <VisualBind element="emptyA" color="terracota">$Q_a$</VisualBind> (of area $a^2$) and <VisualBind element="emptyB" color="pavo">$Q_b$</VisualBind> (of area $b^2$), one formally concludes:
 
 $$
 a^2 + b^2 = c^2

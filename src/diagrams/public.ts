@@ -10,4 +10,5 @@
 export * from './model';
 export * from './geometry';
 export * from './render/DiagramRenderer';
+export * from './render/useDiagramLang';
 export * from './constants';

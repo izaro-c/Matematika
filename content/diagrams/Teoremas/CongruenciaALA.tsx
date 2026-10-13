@@ -1218,11 +1218,27 @@ export const CongruenciaALASpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "ALA kongruentzia-irizpidea",
-      "note": "Arrastatu A, B eta C bi angeluk eta haien arteko aldeak triangelua zehazten dutela egiaztatzeko."
+      "note": "Arrastatu A, B eta C bi angeluk eta haien arteko aldeak triangelua zehazten dutela egiaztatzeko.",
+      "ariaLabels": {
+        "anguloA1": "Angelu ez-erreflexua (≤ 180°)",
+        "anguloB1": "Angelu ez-erreflexua (≤ 180°)",
+        "anguloC1": "Angelu ez-erreflexua (≤ 180°)",
+        "anguloB2": "Angelu ez-erreflexua (≤ 180°)",
+        "anguloA2": "Angelu ez-erreflexua (≤ 180°)",
+        "anguloC2": "Angelu ez-erreflexua (≤ 180°)"
+      }
     },
     "en": {
       "title": "ASA Congruence Criterion",
-      "note": "Drag A, B, and C to verify that two angles and the included side determine the triangle."
+      "note": "Drag A, B, and C to verify that two angles and the included side determine the triangle.",
+      "ariaLabels": {
+        "anguloA1": "Non-reflex angle (≤ 180°)",
+        "anguloB1": "Non-reflex angle (≤ 180°)",
+        "anguloC1": "Non-reflex angle (≤ 180°)",
+        "anguloB2": "Non-reflex angle (≤ 180°)",
+        "anguloA2": "Non-reflex angle (≤ 180°)",
+        "anguloC2": "Non-reflex angle (≤ 180°)"
+      }
     }
   }
 }

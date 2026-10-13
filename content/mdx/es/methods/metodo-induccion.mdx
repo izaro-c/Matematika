@@ -21,21 +21,33 @@ export const Simulation = InduccionSimulation;
 
 Una demostración por inducción consta rigurosamente de dos etapas canónicas indispensables:
 
-1. **Caso base**: Se demuestra directamente que la proposición se cumple para el primer elemento del conjunto (habitualmente $n = 1$ o $n = 0$):
-   <Formula>
-     $$ P(1) \text{ es verdadero} $$
-   </Formula>
+<ProofStep number={1} target="domino1" diagramStep="paso-caso-base" title="Caso base: P(1)">
+  Se demuestra directamente que la proposición se cumple para el primer elemento del conjunto (habitualmente $n = 1$ o $n = 0$), asegurando la caída de la primera ficha <VisualBind element="domino1" color="terracota">$P(1)$</VisualBind>:
+  <Formula>
+    $$ P(1) \text{ es verdadero} $$
+  </Formula>
+</ProofStep>
 
-2. **Paso inductivo**: Se asume como *hipótesis de inducción* que la propiedad se verifica para un entero arbitrario $k \ge 1$ ($P(k)$) y, a partir de ella, se demuestra que necesariamente se verifica para el sucesor $k + 1$:
-   <Formula>
-     $$ \forall k \in \mathbb{N}, \quad P(k) \implies P(k+1) $$
-   </Formula>
+<ProofStep number={2} target="dominok" diagramStep="paso-hipotesis-induccion" title="Hipótesis inductiva: P(k)">
+  Se asume como hipótesis de inducción que la propiedad se verifica para un entero arbitrario $k \ge 1$, representada por la ficha <VisualBind element="dominok" color="ocre">$P(k)$</VisualBind>:
+  <Formula>
+    $$ P(k) \text{ se asume verdadero para un } k \ge 1 $$
+  </Formula>
+</ProofStep>
 
-Al verificarse ambas condiciones, el principio de inducción garantiza formalmente la validez universal:
+<ProofStep number={3} target="dominok1" diagramStep="paso-inductivo" title="Paso inductivo: P(k) ⇒ P(k+1)">
+  A partir de la veracidad de <VisualBind element="dominok" color="ocre">$P(k)$</VisualBind>, se demuestra deductivamente que necesariamente se verifica para el sucesor <VisualBind element="dominok1" color="mora">$P(k+1)$</VisualBind>, garantizando que cada ficha empuja a su inmediata sucesora:
+  <Formula>
+    $$ \forall k \in \mathbb{N}, \quad P(k) \implies P(k+1) $$
+  </Formula>
+</ProofStep>
 
-<Formula>
-  $$ [P(1) \land (\forall k \ge 1, \, P(k) \implies P(k+1))] \implies \forall n \in \mathbb{N}, \, P(n) $$
-</Formula>
+<ProofStep number={4} target={["domino1", "domino2", "domino3", "dominok", "dominok1"]} diagramStep="paso-conclusion-universal" title="Conclusión universal: ∀n ∈ ℕ, P(n)">
+  Al verificarse conjuntamente el caso base y el paso inductivo, el principio de inducción asegura formalmente que la cadena infinita de fichas cae por completo:
+  <Formula>
+    $$ [P(1) \land (\forall k \ge 1, \, P(k) \implies P(k+1))] \implies \forall n \in \mathbb{N}, \, P(n) $$
+  </Formula>
+</ProofStep>
 
 <Separador />
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDiagramLang } from '@/diagrams/public';
 
 const CASES = [
   { id: 'pp', label: 'a ≥ 0, b ≥ 0', color: 'var(--theme-terracota)', x: 1, y: 1 },
@@ -7,8 +8,43 @@ const CASES = [
   { id: 'nn', label: 'a < 0, b < 0', color: 'var(--theme-pavo)', x: 2, y: 2 },
 ];
 
+const TEXT = {
+  es: {
+    title: 'Partición exhaustiva',
+    proven: '✓ Probado',
+    clickToProve: 'Clic para probar',
+    start: 'Prueba cada caso por separado',
+    progress: (n: number) => `${n} de 4 casos probados`,
+    done: '✓ Todos los casos probados. La afirmación es cierta.',
+    reset: '⟳ Reiniciar',
+    footer: 'Si los casos cubren todas las posibilidades y cada uno se prueba, la afirmación queda demostrada.',
+  },
+  eu: {
+    title: 'Banaketa osoa',
+    proven: '✓ Frogatuta',
+    clickToProve: 'Egin klik frogatzeko',
+    start: 'Frogatu kasu bakoitza bere aldetik',
+    progress: (n: number) => `4 kasutatik ${n} frogatuta`,
+    done: '✓ Kasu guztiak frogatuta. Baieztapena egia da.',
+    reset: '⟳ Berrabiarazi',
+    footer: 'Kasuek aukera guztiak estaltzen badituzte eta bakoitza frogatzen bada, baieztapena frogatuta geratzen da.',
+  },
+  en: {
+    title: 'Exhaustive partition',
+    proven: '✓ Proven',
+    clickToProve: 'Click to prove',
+    start: 'Prove each case separately',
+    progress: (n: number) => `${n} of 4 cases proven`,
+    done: '✓ All cases proven. The statement is true.',
+    reset: '⟳ Reset',
+    footer: 'If the cases cover every possibility and each one is proven, the statement is proven.',
+  },
+};
+
 export const ExhaustivoSimulation = () => {
   const [proven, setProven] = useState(new Set<string>());
+  const lang = useDiagramLang();
+  const t = TEXT[lang as keyof typeof TEXT] ?? TEXT.es;
   const allDone = proven.size === 4;
 
   const prove = (id: string) => setProven(p => new Set([...p, id]));
@@ -17,7 +53,7 @@ export const ExhaustivoSimulation = () => {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center select-none font-serif">
       {/* Título */}
-      <p className="ac-eyebrow ac-eyebrow--sm text-carbon/45 mb-4">Partición exhaustiva</p>
+      <p className="ac-eyebrow ac-eyebrow--sm text-carbon/45 mb-4">{t.title}</p>
 
       {/* Grid 2×2 con ejes */}
       <div className="relative" style={{ width: 300, height: 280 }}>
@@ -66,10 +102,10 @@ export const ExhaustivoSimulation = () => {
                   </span>
                   {/* Check */}
                   {done && (
-                    <span className="text-sm font-bold animate-fade-in" style={{ color: c.color }}>✓ Probado</span>
+                    <span className="text-sm font-bold animate-fade-in" style={{ color: c.color }}>{t.proven}</span>
                   )}
                   {!done && (
-                    <span className="text-[9px] text-mora/25">Clic para probar</span>
+                    <span className="text-[9px] text-mora/25">{t.clickToProve}</span>
                   )}
                 </div>
               );
@@ -91,25 +127,25 @@ export const ExhaustivoSimulation = () => {
       {/* Mensaje */}
       <div className="h-8 flex items-center justify-center mt-2">
         {proven.size === 0 && (
-          <p className="text-sm text-mora/35 italic">Prueba cada caso por separado</p>
+          <p className="text-sm text-mora/35 italic">{t.start}</p>
         )}
         {proven.size > 0 && !allDone && (
-          <p className="text-sm text-mora/50">{proven.size} de 4 casos probados</p>
+          <p className="text-sm text-mora/50">{t.progress(proven.size)}</p>
         )}
         {allDone && (
-          <p className="text-sm text-carbon font-bold">✓ Todos los casos probados. La afirmación es cierta.</p>
+          <p className="text-sm text-carbon font-bold">{t.done}</p>
         )}
       </div>
 
       {/* Botón */}
       {allDone && (
         <button onClick={reset} className="mt-1 px-4 py-2 text-sm rounded-sm font-serif border border-mora/12 text-mora/50 hover:text-mora hover:bg-mora/5 transition-all">
-          ⟳ Reiniciar
+          {t.reset}
         </button>
       )}
 
       <p className="text-[10px] text-mora/25 text-center max-w-[260px] leading-relaxed mt-2">
-        Si los casos cubren todas las posibilidades y cada uno se prueba, la afirmación queda demostrada.
+        {t.footer}
       </p>
     </div>
   );

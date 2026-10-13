@@ -289,6 +289,13 @@ export const DemoRectasCoincidentesSpec = createDiagramSpec(
           "label": "Kointzidentzia osoa",
           "description": "I-1 Axiomaren arabera, zuzen bakar bat igarotzen da bi puntu emanik: m = l."
         }
+      },
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pBrot": "B puntu biratua",
+        "rectaL": "l zuzena",
+        "rectaM": "m zuzena"
       }
     },
     "en": {
@@ -315,6 +322,13 @@ export const DemoRectasCoincidentesSpec = createDiagramSpec(
           "label": "Total coincidence",
           "description": "By Axiom I-1, there exists a unique line passing through two given points, so m = l."
         }
+      },
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pBrot": "Rotated point B",
+        "rectaL": "Line l",
+        "rectaM": "Line m"
       }
     }
   }

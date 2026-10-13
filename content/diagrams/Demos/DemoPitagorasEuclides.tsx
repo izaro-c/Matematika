@@ -163,9 +163,13 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "targetId": "pK",
       "objectType": "point",
       "definition": {
-        "type": "coordinates",
-        "x": -4,
-        "y": 4
+        "type": "expression",
+        "x": "pA.x-pA.y",
+        "y": "pA.y",
+        "fallback": [
+          -4,
+          4
+        ]
       },
       "mobility": {
         "type": "fixed"
@@ -194,9 +198,13 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "target": false,
       "objectType": "point",
       "definition": {
-        "type": "coordinates",
-        "x": -4,
-        "y": 0
+        "type": "expression",
+        "x": "pC.x-pA.y",
+        "y": "pC.y",
+        "fallback": [
+          -4,
+          0
+        ]
       },
       "mobility": {
         "type": "fixed"
@@ -222,9 +230,13 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "targetId": "pF",
       "objectType": "point",
       "definition": {
-        "type": "coordinates",
-        "x": 5,
-        "y": -5
+        "type": "expression",
+        "x": "pB.x",
+        "y": "pB.y-pB.x",
+        "fallback": [
+          5,
+          -5
+        ]
       },
       "mobility": {
         "type": "fixed"
@@ -253,9 +265,13 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "target": false,
       "objectType": "point",
       "definition": {
-        "type": "coordinates",
-        "x": 0,
-        "y": -5
+        "type": "expression",
+        "x": "pC.x",
+        "y": "pC.y-pB.x",
+        "fallback": [
+          0,
+          -5
+        ]
       },
       "mobility": {
         "type": "fixed"
@@ -281,9 +297,13 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "targetId": "pD",
       "objectType": "point",
       "definition": {
-        "type": "coordinates",
-        "x": 4,
-        "y": 9
+        "type": "expression",
+        "x": "pA.x+pA.y",
+        "y": "pA.y+pB.x",
+        "fallback": [
+          4,
+          9
+        ]
       },
       "mobility": {
         "type": "fixed"
@@ -313,9 +333,13 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "targetId": "pE",
       "objectType": "point",
       "definition": {
-        "type": "coordinates",
-        "x": 9,
-        "y": 5
+        "type": "expression",
+        "x": "pB.x+pA.y",
+        "y": "pB.y+pB.x",
+        "fallback": [
+          9,
+          5
+        ]
       },
       "mobility": {
         "type": "fixed"
@@ -345,9 +369,13 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "targetId": "pL",
       "objectType": "point",
       "definition": {
-        "type": "coordinates",
-        "x": 1.95,
-        "y": 2.44
+        "type": "expression",
+        "x": "pB.x*pA.y^2/(pB.x^2+pA.y^2)",
+        "y": "pA.y*pB.x^2/(pB.x^2+pA.y^2)",
+        "fallback": [
+          1.95,
+          2.44
+        ]
       },
       "mobility": {
         "type": "fixed"
@@ -377,9 +405,13 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "targetId": "pM",
       "objectType": "point",
       "definition": {
-        "type": "coordinates",
-        "x": 5.85,
-        "y": 7.32
+        "type": "expression",
+        "x": "pL.x+pA.y",
+        "y": "pL.y+pB.x",
+        "fallback": [
+          5.85,
+          7.32
+        ]
       },
       "mobility": {
         "type": "fixed"
@@ -720,21 +752,6 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
       "durationMs": 1000
     },
     {
-      "id": "triangulos-der",
-      "label": "Congruencia derecha (BCE ≅ ABF)",
-      "description": "De forma análoga, los triángulos BCE y ABF son congruentes por LAL.",
-      "visibleTargets": [
-        "polyABC",
-        "pC",
-        "pA",
-        "pB",
-        "sqA",
-        "rectBEML",
-        "altSegment"
-      ],
-      "durationMs": 1000
-    },
-    {
       "id": "areas-der",
       "label": "Igualdad de área: Cuadrado a² = Rectángulo BEML",
       "description": "El cuadrado a² tiene la misma área que el rectángulo BEML.",
@@ -794,10 +811,6 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
           "label": "Azalera-berdintasuna: b² karratua = ADML angeluzuzena",
           "description": "AKB triangeluaren azalera b² karratuaren erdia da, eta ACD-ren azalera ADML angeluzuzenaren erdia."
         },
-        "triangulos-der": {
-          "label": "Eskuineko kongruentzia (BCE ≅ ABF)",
-          "description": "Modu analogoan, BCE eta ABF triangeluak kongruenteak dira LAL bidez."
-        },
         "areas-der": {
           "label": "Azalera-berdintasuna: a² karratua = BEML angeluzuzena",
           "description": "a² karratuak BEML angeluzuzenaren azalera bera du."
@@ -806,6 +819,27 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
           "label": "Ondorioa: a² + b² = c²",
           "description": "Bi azalerak batuz, hipotenusaren gaineko karratua katetoen gaineko karratuen batura da."
         }
+      },
+      "ariaLabels": {
+        "pC": "C puntua (angelu zuzena)",
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pK": "K puntua",
+        "pH": "H puntua",
+        "pF": "F puntua",
+        "pG": "G puntua",
+        "pD": "D puntua",
+        "pE": "E puntua",
+        "pL": "L puntua (altueraren oina)",
+        "pM": "M puntua",
+        "polyABC": "ABC triangelu zuzen nagusia",
+        "rightAngle": "Angelu zuzena C-n",
+        "sqB": "b katetoaren gainean eraikitako karratua",
+        "sqA": "a katetoaren gainean eraikitako karratua",
+        "sqC": "c hipotenusaren gainean eraikitako karratua",
+        "altSegment": "Altueraren segmentu luzatua",
+        "rectADML": "ADML laukizuzena (b²-ren baliokidea)",
+        "rectBEML": "BEML laukizuzena (a²-ren baliokidea)"
       }
     },
     "en": {
@@ -832,10 +866,6 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
           "label": "Equal area: Square b² = Rectangle ADML",
           "description": "The area of triangle AKB is half of square b², and the area of ACD is half of rectangle ADML."
         },
-        "triangulos-der": {
-          "label": "Right congruence (BCE ≅ ABF)",
-          "description": "Similarly, triangles BCE and ABF are congruent by SAS."
-        },
         "areas-der": {
           "label": "Equal area: Square a² = Rectangle BEML",
           "description": "Square a² has the same area as rectangle BEML."
@@ -844,6 +874,27 @@ export const DemoPitagorasEuclidesSpec = createDiagramSpec(
           "label": "Conclusion: a² + b² = c²",
           "description": "Summing both areas, the square on the hypotenuse c² is the sum of the squares on legs a² + b²."
         }
+      },
+      "ariaLabels": {
+        "pC": "Point C (right angle)",
+        "pA": "Point A",
+        "pB": "Point B",
+        "pK": "Point K",
+        "pH": "Point H",
+        "pF": "Point F",
+        "pG": "Point G",
+        "pD": "Point D",
+        "pE": "Point E",
+        "pL": "Point L (foot of the altitude)",
+        "pM": "Point M",
+        "polyABC": "Main right triangle ABC",
+        "rightAngle": "Right angle at C",
+        "sqB": "Square built on the leg b",
+        "sqA": "Square built on the leg a",
+        "sqC": "Square built on the hypotenuse c",
+        "altSegment": "Extended altitude segment",
+        "rectADML": "Rectangle ADML (equivalent to b²)",
+        "rectBEML": "Rectangle BEML (equivalent to a²)"
       }
     }
   }

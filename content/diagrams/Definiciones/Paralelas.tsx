@@ -282,11 +282,39 @@ export const ParalelasSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Zuzen paraleloak kanpoko puntu batetik",
-      "note": "Mugitu A eta B norabide komuna aldatzeko; mugitu P paraleloa nondik pasatzen den aukeratzeko."
+      "note": "Mugitu A eta B norabide komuna aldatzeko; mugitu P paraleloa nondik pasatzen den aukeratzeko.",
+      "titles": {
+        "parallelInfo": "Aldaezina"
+      },
+      "texts": {
+        "parallelInfo": "l ∥ m: norabide bera dute eta ez dute punturik partekatzen."
+      },
+      "ariaLabels": {
+        "A": "Mugitu A puntua",
+        "B": "Mugitu B puntua",
+        "P": "Mugitu P puntua",
+        "base": "l zuzena",
+        "parallel": "l-ren paraleloa den m zuzena",
+        "parallelInfo": "Aldaezina"
+      }
     },
     "en": {
       "title": "Parallel Lines Through an External Point",
-      "note": "Move A and B to change the shared direction; move P to choose where the parallel passes."
+      "note": "Move A and B to change the shared direction; move P to choose where the parallel passes.",
+      "titles": {
+        "parallelInfo": "Invariant"
+      },
+      "texts": {
+        "parallelInfo": "l ∥ m: they share a direction and share no points."
+      },
+      "ariaLabels": {
+        "A": "Move point A",
+        "B": "Move point B",
+        "P": "Move point P",
+        "base": "Line l",
+        "parallel": "Line m parallel to l",
+        "parallelInfo": "Invariant"
+      }
     }
   }
 }

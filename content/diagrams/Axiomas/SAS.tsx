@@ -1152,11 +1152,63 @@ export const SASSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "V. Kongruentzia-axioma",
-      "note": "Arrastatu A, B eta C triangelua aldatzeko eta LAL kongruentzia ikusteko."
+      "note": "Arrastatu A, B eta C triangelua aldatzeko eta LAL kongruentzia ikusteko.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "pAA": "D puntua",
+        "pBB": "D puntua",
+        "pCC": "D puntua",
+        "segAB": "Segmentua",
+        "segAC": "Segmentua",
+        "segBC": "Segmentua",
+        "nonReflexAngleBAC": "Angelu ez-erreflexua (≤ 180°)",
+        "segAABB": "Segmentua",
+        "segAACC": "Segmentua",
+        "segBBCC": "Segmentua",
+        "nonReflexAngleBBAACC": "Angelu ez-erreflexua (≤ 180°)",
+        "congruenceMarkAB": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkAC": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkAABB": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkAACC": "Segmentuaren kongruentzia-marka",
+        "nonReflexAngleCBA": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleACB": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleBBCCAA": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleAABBCC": "Angelu ez-erreflexua (≤ 180°)",
+        "congruenceMarkBC": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkBBCC": "Segmentuaren kongruentzia-marka"
+      }
     },
     "en": {
       "title": "Congruence Axiom V",
-      "note": "Drag A, B, and C to modify the triangle and observe SAS congruence."
+      "note": "Drag A, B, and C to modify the triangle and observe SAS congruence.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "pAA": "Point D",
+        "pBB": "Point D",
+        "pCC": "Point D",
+        "segAB": "Segment",
+        "segAC": "Segment",
+        "segBC": "Segment",
+        "nonReflexAngleBAC": "Non-reflex angle (≤ 180°)",
+        "segAABB": "Segment",
+        "segAACC": "Segment",
+        "segBBCC": "Segment",
+        "nonReflexAngleBBAACC": "Non-reflex angle (≤ 180°)",
+        "congruenceMarkAB": "Segment congruence mark",
+        "congruenceMarkAC": "Segment congruence mark",
+        "congruenceMarkAABB": "Segment congruence mark",
+        "congruenceMarkAACC": "Segment congruence mark",
+        "nonReflexAngleCBA": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleACB": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleBBCCAA": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleAABBCC": "Non-reflex angle (≤ 180°)",
+        "congruenceMarkBC": "Segment congruence mark",
+        "congruenceMarkBBCC": "Segment congruence mark"
+      }
     }
   }
 }

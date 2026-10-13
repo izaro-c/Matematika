@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls, Html } from '@react-three/drei';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { useDiagramTargetRegistry, matchesScopedDiagramTarget } from '@/lib/page-context/DiagramTargetRegistryContext';
+import { useDiagramLang } from '@/diagrams/public';
 
 const SCOPE_ID = 'incidence5';
 
@@ -92,17 +93,35 @@ function SceneContent() {
   );
 }
 
+const LABELS: Record<string, Record<string, string>> = {
+  eu: {
+    'Punto A': 'A puntua',
+    'Punto B': 'B puntua',
+    'Punto C': 'C puntua',
+    'Plano π': 'π planoa',
+  },
+  en: {
+    'Punto A': 'Point A',
+    'Punto B': 'Point B',
+    'Punto C': 'Point C',
+    'Plano π': 'Plane π',
+  },
+};
+
+const tr = (lang: string, text: string) => LABELS[lang]?.[text] ?? text;
+
 export const Incidence5 = () => {
   const targetRegistry = useDiagramTargetRegistry();
+  const lang = useDiagramLang();
   useEffect(() => {
     return targetRegistry.register(SCOPE_ID, [
-      { targetId: 'pA', objectId: 'pA', label: 'Punto A', kind: 'object' },
-      { targetId: 'pB', objectId: 'pB', label: 'Punto B', kind: 'object' },
-      { targetId: 'pC', objectId: 'pC', label: 'Punto C', kind: 'object' },
-      { targetId: 'plano', objectId: 'plano', label: 'Plano π', kind: 'object' },
-      { targetId: 'plano-pi', objectId: 'plano', label: 'Plano π', kind: 'object' },
+      { targetId: 'pA', objectId: 'pA', label: tr(lang, 'Punto A'), kind: 'object' },
+      { targetId: 'pB', objectId: 'pB', label: tr(lang, 'Punto B'), kind: 'object' },
+      { targetId: 'pC', objectId: 'pC', label: tr(lang, 'Punto C'), kind: 'object' },
+      { targetId: 'plano', objectId: 'plano', label: tr(lang, 'Plano π'), kind: 'object' },
+      { targetId: 'plano-pi', objectId: 'plano', label: tr(lang, 'Plano π'), kind: 'object' },
     ]);
-  }, [targetRegistry]);
+  }, [targetRegistry, lang]);
 
   return (
     <div className="w-full h-full min-h-[350px] relative bg-lienzo/40 border border-mora/10 rounded-sm overflow-hidden">

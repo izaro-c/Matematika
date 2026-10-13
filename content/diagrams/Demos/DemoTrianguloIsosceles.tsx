@@ -641,6 +641,20 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec(
           "label": "Oinarriko angeluen kongruentzia (III.5 Axioma)",
           "description": "Hilbert-en III.5 Axioma zuzenean aplikatuz, B eta C erpinetako angelu homologoak kongruenteak dira: ∠ABC ≅ ∠ACB."
         }
+      },
+      "ariaLabels": {
+        "pB": "B erpina",
+        "pC": "C erpina",
+        "pA": "A erpina",
+        "ladoAB": "AB aldea",
+        "ladoAC": "AC aldea",
+        "ladoBC": "BC oinarria",
+        "polyABC": "ABC triangelu isoszelea",
+        "congruenceMarkAB": "Kongruentzia-marka AB-n",
+        "congruenceMarkAC": "Kongruentzia-marka AC-n",
+        "anguloA": "A erpineko angelua",
+        "anguloB": "B erpineko angelua",
+        "anguloC": "C erpineko angelua"
       }
     },
     "en": {
@@ -663,6 +677,19 @@ export const DemoTrianguloIsoscelesSpec = createDiagramSpec(
           "label": "Congruence of base angles (Axiom III.5)",
           "description": "By direct application of Hilbert's Axiom III.5, the corresponding homologous angles are congruent: ∠ABC ≅ ∠ACB."
         }
+      },
+      "ariaLabels": {
+        "pB": "Vertex B",
+        "pC": "Vertex C",
+        "pA": "Vertex A",
+        "ladoAB": "Side AB",
+        "ladoAC": "Side AC",
+        "polyABC": "Isosceles triangle ABC",
+        "congruenceMarkAB": "Congruence mark on AB",
+        "congruenceMarkAC": "Congruence mark on AC",
+        "anguloA": "Angle at vertex A",
+        "anguloB": "Angle at vertex B",
+        "anguloC": "Angle at vertex C"
       }
     }
   }

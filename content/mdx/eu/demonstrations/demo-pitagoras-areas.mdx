@@ -26,7 +26,7 @@ import { DemoPitagorasAreas } from "@content/diagrams/Demos/DemoPitagorasAreas";
 
 ### Frogapena urratsez urrats
 
-<ProofStep number={1} target="outerSquare" title="Kanpoko karratuaren eraikuntza">
+<ProofStep number={1} target="outerSquare" diagramStep="step1" title="Kanpoko karratuaren eraikuntza">
 $(a+b)$ aldeko kanpoko <ConceptLink targetId="cuadrado">karratu</ConceptLink> biltzailea eraikitzen da. Karratuaren azaleraren definizioaren arabera (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>laukizuzenaren azaleraren teorema</ConceptLink>), bere azalera osoak berdintza aljebraiko hau betetzen du:
 
 $$
@@ -34,19 +34,19 @@ $$
 $$
 </ProofStep>
 
-<ProofStep number={2} target="t1" title="Lau triangelu angeluzuzenen kokapena">
-Kanpoko karratuaren lau erpinetako bakoitzean $a$ eta $b$ katetoko <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzen</ConceptLink> bat kokatzen da (<VisualBind element="t1" color="carbon">$T_1$</VisualBind>, <VisualBind element="t2" color="carbon">$T_2$</VisualBind>, <VisualBind element="t3" color="carbon">$T_3$</VisualBind>, <VisualBind element="t4" color="carbon">$T_4$</VisualBind>). <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>AlAnAl kongruentzia-teoremaren</ConceptLink> arabera, lau triangeluak elkarren artean kongruenteak dira. <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Triangeluaren azaleraren teoremagatik</ConceptLink>, lau triangeluen azaleren batura honako hau da:
+<ProofStep number={2} target="t1" diagramStep="step2" title="Lau triangelu angeluzuzenen kokapena">
+Kanpoko karratuaren lau erpinetako bakoitzean $a$ eta $b$ katetoko <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triangelu angeluzuzen</ConceptLink> bat kokatzen da (<VisualBind element="t1" color="canela">$T_1$</VisualBind>, <VisualBind element="t2" color="canela">$T_2$</VisualBind>, <VisualBind element="t3" color="canela">$T_3$</VisualBind>, <VisualBind element="t4" color="canela">$T_4$</VisualBind>). <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>AlAnAl kongruentzia-teoremaren</ConceptLink> arabera, lau triangeluak elkarren artean kongruenteak dira. <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>Triangeluaren azaleraren teoremagatik</ConceptLink>, lau triangeluen azaleren batura honako hau da:
 
 $$
 4 \cdot \left(\frac{1}{2} a b\right) = 2ab
 $$
 </ProofStep>
 
-<ProofStep number={3} target="emptyC" title="Barne-karratuaren ezaugarritzea">
+<ProofStep number={3} target="emptyC" diagramStep="step3" title="Barne-karratuaren ezaugarritzea">
 Triangeluen lau hipotenusek $c$ luzerako aldeak dituen erdiko lauki-eskualde bat <VisualBind element="emptyC" color="ocre">$Q_c$</VisualBind> mugatzen dute. Triangelu angeluzuzen bakoitzeko bi <ConceptLink targetId="angulo" isDependency={true}>angelu</ConceptLink> zorrotzak <ConceptLink targetId="angulos-suplementarios" isDependency={true}>osagarriak</ConceptLink> direnez eta $90^\circ$ batzen dutenez, erdiko laukiaren erpin bakoitzeko barne-angeluak $180^\circ - 90^\circ = 90^\circ$ neurtzen du. Lau aldeak kongruenteak eta lau angeluak zuzenak izanik, $Q_c$ $c^2$ azalera duen barne-<ConceptLink targetId="cuadrado">karratu</ConceptLink> bat da.
 </ProofStep>
 
-<ProofStep number={4} target="emptyA" title="Azaleraren aditibitatearen teoremaren aplikazioa">
+<ProofStep number={4} target="emptyC" diagramStep="step4" title="Azaleraren aditibitatearen teoremaren aplikazioa">
 <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>Azaleraren aditibitate-teoremaren</ConceptLink> arabera, kanpoko karratuaren azalera erdiko barne-karratuaren azaleraren eta ertzetako lau triangeluen azaleren baturaren berdina da:
 
 $$
@@ -54,8 +54,8 @@ $$
 $$
 </ProofStep>
 
-<ProofStep number={5} target="emptyB" title="Sinplifikazio aljebraikoa eta azken ondorioa">
-Berdintzaren bi kideetan $2ab$ gaia kenduz, edo bestela lau triangeluak $a \times b$ neurriko bi laukizuzenetan berrantolatuz (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>laukizuzenaren azaleraren teorema</ConceptLink>) eta agerian <VisualBind element="emptyA" color="terracota">$Q_a$</VisualBind> ($a^2$ azalerakoa) eta <VisualBind element="emptyB" color="canela">$Q_b$</VisualBind> ($b^2$ azalerakoa) barne-<ConceptLink targetId="cuadrado">karratuak</ConceptLink> utziz, formalki ondorioztatzen da:
+<ProofStep number={5} target="emptyA" diagramStep="step5" title="Sinplifikazio aljebraikoa eta azken ondorioa">
+Berdintzaren bi kideetan $2ab$ gaia kenduz, edo bestela lau triangeluak $a \times b$ neurriko bi laukizuzenetan berrantolatuz (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>laukizuzenaren azaleraren teorema</ConceptLink>) eta agerian <VisualBind element="emptyA" color="terracota">$Q_a$</VisualBind> ($a^2$ azalerakoa) eta <VisualBind element="emptyB" color="pavo">$Q_b$</VisualBind> ($b^2$ azalerakoa) barne-<ConceptLink targetId="cuadrado">karratuak</ConceptLink> utziz, formalki ondorioztatzen da:
 
 $$
 a^2 + b^2 = c^2

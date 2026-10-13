@@ -1,9 +1,48 @@
 import { useState } from 'react';
+import { useDiagramLang } from '@/diagrams/public';
 
 type Step = 0 | 1 | 2 | 3;
 
+const TEXT = {
+  es: {
+    eyebrow: 'Demostración por transformación',
+    start: 'Partimos de un paralelogramo',
+    overflow: 'El paralelogramo desborda el rectángulo por la izquierda',
+    missing: 'y le falta por la derecha',
+    slide: 'Deslizamos',
+    slideRest: 'el sobrante izquierdo al hueco derecho. Al ser congruentes, encaja.',
+    conclusion: 'El área del paralelogramo es base × altura.',
+    buttons: ['Empezar', 'Alturas', 'Deslizar', 'Concluir'],
+    footer: 'El paralelogramo desborda el rectángulo por un lado y le falta por el otro. Al trasladar el sobrante, encaja.',
+  },
+  eu: {
+    eyebrow: 'Eraldaketa bidezko froga',
+    start: 'Paralelogramo batetik abiatzen gara',
+    overflow: 'Paralelogramoa laukizuzenetik ateratzen da ezkerretik',
+    missing: 'eta falta zaio eskuinetik',
+    slide: 'Lerrarazten dugu',
+    slideRest: 'ezkerreko soberakina eskuineko hutsunera. Kongruenteak direnez, ongi sartzen da.',
+    conclusion: 'Paralelogramoaren azalera oinarria × altuera da.',
+    buttons: ['Hasi', 'Altuerak', 'Lerrarazi', 'Ondorioztatu'],
+    footer: 'Paralelogramoa laukizuzenetik ateratzen da alde batetik eta falta zaio bestetik. Soberakina lekualdatzean, ongi sartzen da.',
+  },
+  en: {
+    eyebrow: 'Proof by transformation',
+    start: 'We start from a parallelogram',
+    overflow: 'The parallelogram sticks out of the rectangle on the left',
+    missing: 'and falls short on the right',
+    slide: 'We slide',
+    slideRest: 'the left overhang into the right gap. Being congruent, it fits.',
+    conclusion: 'The area of the parallelogram is base × height.',
+    buttons: ['Start', 'Heights', 'Slide', 'Conclude'],
+    footer: 'The parallelogram sticks out of the rectangle on one side and falls short on the other. Moving the overhang, it fits.',
+  },
+};
+
 export const GeometricoSimulation = () => {
   const [step, setStep] = useState<Step>(0);
+  const lang = useDiagramLang();
+  const t = TEXT[lang as keyof typeof TEXT] ?? TEXT.es;
   const s = (n: Step) => step >= n;
 
   // El triangulo SOBRANTE de la izquierda (fuera del rectangulo)
@@ -14,7 +53,7 @@ export const GeometricoSimulation = () => {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center select-none font-serif">
       <p className="ac-eyebrow ac-eyebrow--sm text-carbon/45 mb-3">
-        Demostracion por transformacion
+        {t.eyebrow}
       </p>
 
       <div className="relative" style={{ width: 350, height: 250 }}>
@@ -87,23 +126,23 @@ export const GeometricoSimulation = () => {
       </div>
 
       <div className="h-10 flex flex-col items-center justify-center gap-0.5">
-        {step === 0 && <p className="text-sm text-mora/35 italic">Partimos de un paralelogramo</p>}
-        {step === 1 && <p className="text-xs"><span className="text-mora/50">El paralelogramo desborda el rectangulo por la izquierda</span>{' '}<span className="font-bold" style={{color:'var(--theme-terracota)'}}>y le falta por la derecha</span></p>}
-        {step === 2 && <p className="text-xs"><span className="font-bold" style={{color:'var(--theme-terracota)'}}>Deslizamos</span>{' '}<span className="text-mora/40">el sobrante izquierdo al hueco derecho. Al ser congruentes, encaja.</span></p>}
-        {step === 3 && <p className="text-sm font-bold text-carbon">El area del paralelogramo es base x altura.</p>}
+        {step === 0 && <p className="text-sm text-mora/35 italic">{t.start}</p>}
+        {step === 1 && <p className="text-xs"><span className="text-mora/50">{t.overflow}</span>{' '}<span className="font-bold" style={{color:'var(--theme-terracota)'}}>{t.missing}</span></p>}
+        {step === 2 && <p className="text-xs"><span className="font-bold" style={{color:'var(--theme-terracota)'}}>{t.slide}</span>{' '}<span className="text-mora/40">{t.slideRest}</span></p>}
+        {step === 3 && <p className="text-sm font-bold text-carbon">{t.conclusion}</p>}
       </div>
 
       <div className="flex gap-3 pt-1">
         <button onClick={() => setStep(s => Math.min(s + 1, 3) as Step)} disabled={step >= 3}
           className="px-5 py-2 text-sm rounded-sm font-serif transition-all bg-mora text-lienzo hover:bg-mora/85 disabled:opacity-25 disabled:cursor-default">
-          {['Empezar', 'Alturas', 'Deslizar', 'Concluir'][step]}
+          {t.buttons[step]}
         </button>
         {step >= 3 && <button onClick={() => setStep(0)}
           className="px-3 py-2 text-sm rounded-sm font-serif border border-mora/12 text-mora/50 hover:text-mora hover:bg-mora/5 transition-all">⟳</button>}
       </div>
 
       <p className="text-[10px] text-mora/25 text-center max-w-[280px] leading-relaxed mt-2">
-        El paralelogramo desborda el rectangulo por un lado y le falta por el otro. Al trasladar el sobrante, encaja.
+        {t.footer}
       </p>
     </div>
   );

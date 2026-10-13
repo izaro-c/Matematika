@@ -175,25 +175,25 @@ export function annotationTextHtml(item: DiagramElement, elements: JxgElementMap
   const body = reactiveText(item, elements, spec) ?? (item.kind === 'measurement' || item.properties?.expression || hasBraces
     ? measurementText(item, elements, spec)
     : defaultText);
-  const blocks = item.kind === 'infoPanel' ? item.properties?.infoPanelBlocks : undefined;
-  if (blocks?.length) {
-    const variables = liveVariables(elements, spec);
-    const layout = item.properties?.infoPanelLayout ?? 'stack';
-    const intro = body ? `<div class="matematika-info-panel__intro">${renderKatexTextToHtml(body)}</div>` : '';
-    const blockHtml = blocks.map(block => {
-      const resolved = resolveInfoPanelBlock(block, variables);
-      const title = resolved.title
-        ? `<strong class="matematika-info-panel__block-title">${renderKatexTextToHtml(resolved.title)}</strong>`
-        : '';
-      const colorClass = resolved.color ? ` matematika-info-panel__block--${resolved.color}` : '';
-      return `<div class="matematika-info-panel__block${colorClass}" data-info-panel-block="${block.id}">${title}<span>${renderKatexTextToHtml(resolved.text)}</span></div>`;
-    }).join('');
-    const title = item.properties?.title
-      ? `<strong class="matematika-info-panel__title">${renderKatexTextToHtml(item.properties.title)}</strong>`
+  if (item.kind !== 'infoPanel') return renderKatexTextToHtml(body);
+  const title = item.properties?.title
+    ? `<strong class="matematika-info-panel__title">${renderKatexTextToHtml(item.properties.title)}</strong>`
+    : '';
+  const subtitle = item.properties?.subtitle
+    ? `<em class="matematika-info-panel__subtitle">${renderKatexTextToHtml(item.properties.subtitle)}</em>`
+    : '';
+  const intro = body ? `<div class="matematika-info-panel__intro">${renderKatexTextToHtml(body)}</div>` : '';
+  const blocks = item.properties?.infoPanelBlocks;
+  if (!blocks?.length) return `${title}${subtitle}${intro}`;
+  const variables = liveVariables(elements, spec);
+  const layout = item.properties?.infoPanelLayout ?? 'stack';
+  const blockHtml = blocks.map(block => {
+    const resolved = resolveInfoPanelBlock(block, variables);
+    const blockTitle = resolved.title
+      ? `<strong class="matematika-info-panel__block-title">${renderKatexTextToHtml(resolved.title)}</strong>`
       : '';
-    return `${title}${intro}<div class="matematika-info-panel__blocks" data-info-panel-layout="${layout}">${blockHtml}</div>`;
-  }
-  return item.kind === 'infoPanel' && item.properties?.title
-    ? `<strong>${renderKatexTextToHtml(item.properties.title)}</strong><br/>${renderKatexTextToHtml(body)}`
-    : renderKatexTextToHtml(body);
+    const colorClass = resolved.color ? ` matematika-info-panel__block--${resolved.color}` : '';
+    return `<div class="matematika-info-panel__block${colorClass}" data-info-panel-block="${block.id}">${blockTitle}<span>${renderKatexTextToHtml(resolved.text)}</span></div>`;
+  }).join('');
+  return `${title}${subtitle}${intro}<div class="matematika-info-panel__blocks" data-info-panel-layout="${layout}">${blockHtml}</div>`;
 }

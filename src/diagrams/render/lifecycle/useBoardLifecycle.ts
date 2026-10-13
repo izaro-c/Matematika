@@ -12,6 +12,7 @@ import {
   createSlider,
 } from '@/diagrams/jsxgraph/MathFactory';
 import { applyBoardStackLayer } from '@/diagrams/jsxgraph/htmlTextLayer';
+import { createDiagramButton, isDiagramButton } from '@/diagrams/render/elements/diagramButton';
 import { renderKatexTextToHtml } from '@/components/ui/KatexText';
 import {DEFAULT_RIGHT_ANGLE_RADIUS, evaluateMathExpression, type DiagramBounds, type DiagramSpecV2} from '@/diagrams/model'
 import {createSceneConstructionPlan, createScenePlan, itemLayerNumber, withMovedPoint, curveActsAsArea, onSupportTargetId, sampleCurveElement} from '@/diagrams/geometry';
@@ -615,9 +616,34 @@ export function useBoardLifecycle({
             });
           });
         }
+      } else if (sceneItem.variant === 'button') {
+        elements[sceneItem.id] = createDiagramButton(board, sceneItem, {
+          labelHtml: renderKatexTextToHtml(sceneItem.label),
+          theme,
+          disabled: directInteractionLocked,
+          layer: itemLayerNumber(spec, sceneItem),
+          runEffect: effect => {
+            const evaluate = (source: string) => evaluateMathExpression(source, liveVariables(elements, spec));
+            try {
+              if (effect.when && evaluate(effect.when) === 0) return;
+              const control = elements[effect.control];
+              if (effect.do === 'play') {
+                if (isDiagramButton(control)) control.play(effect.from ? evaluate(effect.from) : undefined);
+              } else if (isDiagramButton(control)) control.resetValue();
+              else {
+                const initial = spec.sliders.find(slider => slider.id === effect.control)?.value;
+                if (initial !== undefined) control?.setValue?.(initial);
+              }
+              safeBoardUpdate(board);
+            } catch {
+              // Una expresión inválida no debe bloquear la pulsación; el esquema ya la señala.
+            }
+          },
+        });
       } else {
         const maximum = sliderMaximum(sceneItem, elements, spec);
-        elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + 2.6, sceneItem.y]], [sceneItem.min, Math.min(sceneItem.value, maximum), maximum], withDiagramHoverTransition({
+        const sliderWidth = sceneItem.width ?? 2.6;
+        elements[sceneItem.id] = createSlider(board, [[sceneItem.x, sceneItem.y], [sceneItem.x + sliderWidth, sceneItem.y]], [sceneItem.min, Math.min(sceneItem.value, maximum), maximum], withDiagramHoverTransition({
           name: renderKatexTextToHtml(sceneItem.label),
           snapWidth: sceneItem.step,
           fillColor: theme[sceneItem.color],
@@ -634,9 +660,13 @@ export function useBoardLifecycle({
           fixed: directInteractionLocked,
           layer: itemLayerNumber(spec, sceneItem),
         }), theme);
-        if (!directInteractionLocked) elements[sceneItem.id]?.on?.('up', () => {
-          interactionCallbacksRef.current.onSliderChange?.(sceneItem.id, elements[sceneItem.id].Value());
-        });
+        if (!directInteractionLocked) {
+          const notifySliderChange = () => {
+            interactionCallbacksRef.current.onSliderChange?.(sceneItem.id, elements[sceneItem.id].Value());
+          };
+          elements[sceneItem.id]?.on?.('drag', notifySliderChange);
+          elements[sceneItem.id]?.on?.('up', notifySliderChange);
+        }
       }
       const element = elements[sceneItem.id];
       const keyboardAdjust = 'constraint' in sceneItem && !directInteractionLocked && sceneItem.constraint !== 'derived'
@@ -672,7 +702,7 @@ export function useBoardLifecycle({
           const node = element.rendNode as HTMLElement | undefined;
           node?.setAttribute('aria-label', `${sceneItem.selection.ariaLabel ?? sceneItem.label}: x ${element.X().toFixed(2)}, y ${element.Y().toFixed(2)}`);
         }
-        : 'min' in sceneItem && !directInteractionLocked
+        : 'min' in sceneItem && !directInteractionLocked && sceneItem.variant !== 'button'
           ? (key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Home' | 'End', largeStep: boolean) => {
             const delta = sceneItem.step * (largeStep ? 10 : 1);
             const current = element.Value?.() ?? sceneItem.value;
@@ -745,7 +775,7 @@ export function useBoardLifecycle({
     sceneHasExternalHighlight: boolean,
     sceneShouldDimOthers: boolean,
     primaryPulseAmount: number,
-    options: { pulseVisualsOnly?: boolean } = {},
+    options: { pulseVisualsOnly?: boolean; durationMs?: number } = {},
   ) => {
     const hoverController = hoverControllerRef.current;
     const hoverActive = hoverController.isHovered(item.id);
@@ -854,6 +884,21 @@ export function useBoardLifecycle({
         strokeColor: color,
         fillOpacity: resolveStepEmphasisPointFillOpacity(opacity, emphasisState),
       }, shouldAnimate);
+    } else if ('min' in item && isDiagramButton(element)) {
+      if (entry.stepValue !== undefined && element.__matematikaStepValue !== entry.stepValue) {
+        const animated = typeof options.durationMs === 'number' && options.durationMs > 0;
+        if (animated) element.animateTo(entry.stepValue);
+        else element.setValue(entry.stepValue);
+        element.__matematikaStepValue = entry.stepValue;
+      } else if (entry.stepValue === undefined && element.__matematikaStepValue !== undefined) {
+        element.resetValue();
+        delete element.__matematikaStepValue;
+      }
+      if (element.__matematikaVisible !== base.visible) {
+        element.setAttribute?.({ visible: base.visible });
+        element.__matematikaVisible = base.visible;
+      }
+      if (element.rendNode) element.rendNode.style.opacity = String(opacity);
     } else if ('min' in item) {
       const maximum = sliderMaximum(item, sceneElements, spec);
       if (element.__matematikaMaximum !== maximum) {
@@ -862,8 +907,23 @@ export function useBoardLifecycle({
         element.setValue?.(Math.min(maximum, Math.max(item.min, current)));
         element.__matematikaMaximum = maximum;
       }
+      const currentStepDuration = options.durationMs;
       if (entry.stepValue !== undefined && element.__matematikaStepValue !== entry.stepValue) {
-        element.setValue?.(Math.min(maximum, entry.stepValue));
+        const targetVal = Math.min(maximum, entry.stepValue);
+        const shouldSmoothAnimate = typeof currentStepDuration === 'number' && currentStepDuration > 0
+          && element.point1 && element.point2 && typeof element.moveTo === 'function';
+        if (shouldSmoothAnimate) {
+          const p1 = element.point1;
+          const p2 = element.point2;
+          const min = typeof element._smin === 'number' ? element._smin : item.min;
+          const max = typeof element._smax === 'number' ? element._smax : maximum;
+          const ratio = max > min ? Math.max(0, Math.min(1, (targetVal - min) / (max - min))) : 0;
+          const targetX = p1.X() + ratio * (p2.X() - p1.X());
+          const targetY = p1.Y() + ratio * (p2.Y() - p1.Y());
+          element.moveTo([targetX, targetY], currentStepDuration);
+        } else {
+          element.setValue?.(targetVal);
+        }
         element.__matematikaStepValue = entry.stepValue;
       } else if (entry.stepValue === undefined && element.__matematikaStepValue !== undefined) {
         element.setValue?.(Math.min(maximum, item.value));
@@ -1167,12 +1227,15 @@ export function useBoardLifecycle({
       });
       installDiagramHitTesting(spec, elements, plan, () => hoverControllerRef.current.getHoveredId());
     }
+    const activeStepObj = spec.steps.find(step => step.id === effectiveStep);
+    const durationMs = activeStepObj?.durationMs ?? 600;
     plan.forEach(entry => {
       const item = entry.item;
       const element = elements[item.id];
       if (!element) return;
       applyEntrySceneVisuals(
         entry, item, element, elements, theme, hasExternalHighlight, shouldDimOthers, primaryPulseAmount,
+        { durationMs },
       );
     });
 

@@ -613,7 +613,71 @@ export const EjercicioPitagorasCatetoSpec = createDiagramSpec(
         "p3": {
           "label": "3. urratsa: Erro karratua (b = √36)",
           "description": "Katetoaren luzera b = √36 = 6 da."
+        },
+        "p4": {
+          "label": "4. urratsa: soluzio osoa (b = 6)",
+          "description": "Aldeek (6, 8, 10) hirukotea osatzen dute: 8² + 6² = 10²."
         }
+      },
+      "ariaLabels": {
+        "pC": "C erpina (angelu zuzena)",
+        "pA": "A erpina",
+        "pB": "B erpina",
+        "pA_sq": "b² karratuaren erpin laguntzailea",
+        "pC_sq": "b² karratuaren erpin laguntzailea",
+        "pC_sq2": "a² karratuaren erpin laguntzailea",
+        "pB_sq2": "a² karratuaren erpin laguntzailea",
+        "pB_sq3": "c² karratuaren erpin laguntzailea",
+        "pA_sq3": "c² karratuaren erpin laguntzailea",
+        "segCA": "b katetoa (bakandu beharreko ezezaguna)",
+        "segBC": "a = 8 kateto ezaguna",
+        "segAB": "c = 10 hipotenusa ezaguna",
+        "polyABC": "6-8-10 triangelu zuzena",
+        "rightAng": "Angelu zuzena C-n",
+        "sqCA": "b² = 36 azalerako karratua",
+        "sqBC": "a² = 64 azalerako karratua",
+        "sqAB": "c² = 100 azalerako karratua"
+      }
+    },
+    "en": {
+      "title": "Solving for a leg in Pythagoras' theorem",
+      "note": "Work through the steps of the exercise to reveal the values found.",
+      "steps": {
+        "p1": {
+          "label": "Step 1: Setup (c = 10, a = 8)",
+          "description": "The hypotenuse c = 10 and the leg a = 8 are known. We look for the leg b."
+        },
+        "p2": {
+          "label": "Step 2: Isolating the area (b² = c² − a²)",
+          "description": "Subtract the areas: b² = 100 − 64 = 36."
+        },
+        "p3": {
+          "label": "Step 3: Taking the root (b = √36)",
+          "description": "The length of the leg is b = √36 = 6."
+        },
+        "p4": {
+          "label": "Step 4: Full solution (b = 6)",
+          "description": "The sides form the triple (6, 8, 10): 8² + 6² = 10²."
+        }
+      },
+      "ariaLabels": {
+        "pC": "Vertex C (right angle)",
+        "pA": "Vertex A",
+        "pB": "Vertex B",
+        "pA_sq": "Auxiliary vertex of square b²",
+        "pC_sq": "Auxiliary vertex of square b²",
+        "pC_sq2": "Auxiliary vertex of square a²",
+        "pB_sq2": "Auxiliary vertex of square a²",
+        "pB_sq3": "Auxiliary vertex of square c²",
+        "pA_sq3": "Auxiliary vertex of square c²",
+        "segCA": "Leg b (unknown to solve for)",
+        "segBC": "Known leg a = 8",
+        "segAB": "Known hypotenuse c = 10",
+        "polyABC": "6-8-10 right triangle",
+        "rightAng": "Right angle at C",
+        "sqCA": "Square of area b² = 36",
+        "sqBC": "Square of area a² = 64",
+        "sqAB": "Square of area c² = 100"
       }
     }
   }

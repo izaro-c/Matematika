@@ -353,11 +353,21 @@ export const LemaPuntoMedioSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Erdigunea",
-      "note": "Mugitu A edo B M erdigunea bi muturretatik distantzia berera dagoela egiaztatzeko."
+      "note": "Mugitu A edo B M erdigunea bi muturretatik distantzia berera dagoela egiaztatzeko.",
+      "ariaLabels": {
+        "A": "Mugitu A puntua",
+        "B": "Mugitu B puntua",
+        "AB": "AB segmentua"
+      }
     },
     "en": {
       "title": "Midpoint Lemma",
-      "note": "Move A or B to verify that midpoint M is equidistant from both endpoints."
+      "note": "Move A or B to verify that midpoint M is equidistant from both endpoints.",
+      "ariaLabels": {
+        "A": "Move point A",
+        "B": "Move point B",
+        "AB": "Segment AB"
+      }
     }
   }
 }

@@ -89,7 +89,17 @@ export const PuntoSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Puntua",
-      "note": "Mugitu P puntua planoan zehar."
+      "note": "Mugitu P puntua planoan zehar.",
+      "ariaLabels": {
+        "P": "Mugitu P puntua"
+      }
+    },
+    "en": {
+      "title": "Point",
+      "note": "Move the point P around the plane.",
+      "ariaLabels": {
+        "P": "Move point P"
+      }
     }
   }
 }

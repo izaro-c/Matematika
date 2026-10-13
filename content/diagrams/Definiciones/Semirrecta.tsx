@@ -184,11 +184,23 @@ export const SemirrectaSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Zuzenerdia",
-      "note": "Arrastatu jatorria (O) edo norabidea (A)"
+      "note": "Arrastatu jatorria (O) edo norabidea (A)",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pO": "B puntua",
+        "lineOA": "Zuzena",
+        "rayOA": "Zuzenerdia"
+      }
     },
     "en": {
       "title": "Ray",
-      "note": "Drag the origin (O) or direction (A)"
+      "note": "Drag the origin (O) or direction (A)",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pO": "Point B",
+        "lineOA": "Line",
+        "rayOA": "Ray"
+      }
     }
   }
 }

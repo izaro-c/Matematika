@@ -613,7 +613,71 @@ export const EjemploPitagorasCalculoSpec = createDiagramSpec(
         "resolucion": {
           "label": "Ebazpena: c = √169 = 13",
           "description": "c² = 169 azaleraren erro karratua eginez hipotenusak c = 13 neurtzen duela lortzen da."
+        },
+        "terna": {
+          "label": "Hirukote pitagoriarra (5, 12, 13)",
+          "description": "(5, 12, 13) hiru zenbaki osoek hirukote pitagoriar zehatza osatzen dute."
         }
+      },
+      "ariaLabels": {
+        "pC": "C erpina (angelu zuzena)",
+        "pA": "A erpina",
+        "pB": "B erpina",
+        "pA_sq": "b² karratuaren erpin laguntzailea",
+        "pC_sq": "b² karratuaren erpin laguntzailea",
+        "pC_sq2": "a² karratuaren erpin laguntzailea",
+        "pB_sq2": "a² karratuaren erpin laguntzailea",
+        "pB_sq3": "c² karratuaren erpin laguntzailea",
+        "pA_sq3": "c² karratuaren erpin laguntzailea",
+        "segCA": "5 luzerako b katetoa",
+        "segBC": "12 luzerako a katetoa",
+        "segAB": "13 luzerako c hipotenusa",
+        "polyABC": "5-12-13 triangelu zuzena",
+        "rightAng": "Angelu zuzena C-n",
+        "sqCA": "b² = 25 azalerako karratua",
+        "sqBC": "a² = 144 azalerako karratua",
+        "sqAB": "c² = 169 azalerako karratua"
+      }
+    },
+    "en": {
+      "title": "Computing the hypotenuse (triple 5, 12, 13)",
+      "note": "Highlight each square or side to examine the Pythagorean triple (5, 12, 13).",
+      "steps": {
+        "datos": {
+          "label": "Problem data (a = 12, b = 5)",
+          "description": "Given a right triangle with legs a = 12 and b = 5, we look for the hypotenuse c."
+        },
+        "calculo": {
+          "label": "Computing areas (a² + b² = c²)",
+          "description": "The areas a² = 144 and b² = 25 are computed. Their sum a² + b² = 169 is the area c²."
+        },
+        "resolucion": {
+          "label": "Solution: c = √169 = 13",
+          "description": "Taking the square root of the area c² = 169 we get that the hypotenuse measures c = 13."
+        },
+        "terna": {
+          "label": "Pythagorean triple (5, 12, 13)",
+          "description": "The three integers (5, 12, 13) form an exact Pythagorean triple."
+        }
+      },
+      "ariaLabels": {
+        "pC": "Vertex C (right angle)",
+        "pA": "Vertex A",
+        "pB": "Vertex B",
+        "pA_sq": "Auxiliary vertex of square b²",
+        "pC_sq": "Auxiliary vertex of square b²",
+        "pC_sq2": "Auxiliary vertex of square a²",
+        "pB_sq2": "Auxiliary vertex of square a²",
+        "pB_sq3": "Auxiliary vertex of square c²",
+        "pA_sq3": "Auxiliary vertex of square c²",
+        "segCA": "Leg b of length 5",
+        "segBC": "Leg a of length 12",
+        "segAB": "Hypotenuse c of length 13",
+        "polyABC": "5-12-13 right triangle",
+        "rightAng": "Right angle at C",
+        "sqCA": "Square of area b² = 25",
+        "sqBC": "Square of area a² = 144",
+        "sqAB": "Square of area c² = 169"
       }
     }
   }

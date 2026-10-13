@@ -21,21 +21,33 @@ export const Simulation = InduccionSimulation;
 
 Indukziozko froga batek nahitaezko bi etapa kanoniko ditu:
 
-1. **Oinarrizko kasua**: Proposizioa multzoko lehen elementurako betetzen dela frogatzen da (normalean $n = 1$ edo $n = 0$ kasuan):
-   <Formula>
-     $$ P(1) \text{ egiazkoa da} $$
-   </Formula>
+<ProofStep number={1} target="domino1" diagramStep="paso-caso-base" title="Oinarrizko kasua: P(1)">
+  Proposizioa multzoko lehen elementurako betetzen dela frogatzen da (normalean $n = 1$ edo $n = 0$ kasuan), lehenengo <VisualBind element="domino1" color="terracota">$P(1)$</VisualBind> fitxa erortzen dela bermatuz:
+  <Formula>
+    $$ P(1) \text{ egiazkoa da} $$
+  </Formula>
+</ProofStep>
 
-2. **Urrats induktiboa**: *Indukzio-hipotesitzat* onartzen da propietatea $k \ge 1$ osoko hautazko baterako betetzen dela ($P(k)$), eta hortik abiatuz nahitaez $k + 1$ ondorengorako ere betetzen dela frogatzen da:
-   <Formula>
-     $$ \forall k \in \mathbb{N}, \quad P(k) \implies P(k+1) $$
-   </Formula>
+<ProofStep number={2} target="dominok" diagramStep="paso-hipotesis-induccion" title="Indukzio-hipotesia: P(k)">
+  *Indukzio-hipotesitzat* onartzen da propietatea $k \ge 1$ osoko hautazko baterako betetzen dela, <VisualBind element="dominok" color="ocre">$P(k)$</VisualBind> fitxak adierazten duena:
+  <Formula>
+    $$ P(k) \text{ egiazkotzat jotzen da } k \ge 1 \text{ baterako} $$
+  </Formula>
+</ProofStep>
 
-Bi baldintzak betetzean, indukzio-printzipioak formalki bermatzen du adierazpenaren baliozkotasun unibertsala:
+<ProofStep number={3} target="dominok1" diagramStep="paso-inductivo" title="Urrats induktiboa: P(k) ⇒ P(k+1)">
+  <VisualBind element="dominok" color="ocre">$P(k)$</VisualBind>-ren egiazkotasunetik abiatuz, nahitaez <VisualBind element="dominok1" color="mora">$P(k+1)$</VisualBind> ondorengorako ere betetzen dela deduzitzen da, fitxa bakoitzak hurrengoa botatzen duela ziurtatuz:
+  <Formula>
+    $$ \forall k \in \mathbb{N}, \quad P(k) \implies P(k+1) $$
+  </Formula>
+</ProofStep>
 
-<Formula>
-  $$ [P(1) \land (\forall k \ge 1, \, P(k) \implies P(k+1))] \implies \forall n \in \mathbb{N}, \, P(n) $$
-</Formula>
+<ProofStep number={4} target={["domino1", "domino2", "domino3", "dominok", "dominok1"]} diagramStep="paso-conclusion-universal" title="Ondorio unibertsala: ∀n ∈ ℕ, P(n)">
+  Bi baldintzak betetzean, indukzio-printzipioak formalki bermatzen du domino-kate infinitu osoa erortzen dela eta adierazpenaren baliozkotasun unibertsala betetzen dela:
+  <Formula>
+    $$ [P(1) \land (\forall k \ge 1, \, P(k) \implies P(k+1))] \implies \forall n \in \mathbb{N}, \, P(n) $$
+  </Formula>
+</ProofStep>
 
 <Separador />
 

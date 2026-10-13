@@ -158,7 +158,21 @@ export const RectaSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Zuzena",
-      "note": "Arrastatu A edo B puntuak zuzena birbideratzeko."
+      "note": "Arrastatu A edo B puntuak zuzena birbideratzeko.",
+      "ariaLabels": {
+        "A": "Mugitu A puntua",
+        "B": "Mugitu B puntua",
+        "line": "l = AB zuzena"
+      }
+    },
+    "en": {
+      "title": "Line",
+      "note": "Drag points A or B to reorient the line.",
+      "ariaLabels": {
+        "A": "Move point A",
+        "B": "Move point B",
+        "line": "Line l = AB"
+      }
     }
   }
 }

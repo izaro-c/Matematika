@@ -1177,7 +1177,85 @@ export const DemoAngulosAlternosInternosSpec = createDiagramSpec(
       }
     }
   ],
-  "note": "Recorre los pasos: los dos casos de la reducción al absurdo (corte en X o en Y) y la dirección directa."
+  "note": "Recorre los pasos: los dos casos de la reducción al absurdo (corte en X o en Y) y la dirección directa.",
+  "translations": {
+    "eu": {
+      "title": "Barne-angelu txandakatuen teorema",
+      "note": "Igaro urratsak: absurdora eramateko bi kasuak (X-n edo Y-n ebakitzea) eta norabide zuzena.",
+      "steps": {
+        "step1": {
+          "label": "Konfigurazioa",
+          "description": "t-k A-n eta B-n ebakitako bi zuzen; α eta β barne-angelu txandakatuak dira."
+        },
+        "step2": {
+          "label": "X kasua",
+          "description": "Suposatzen da ℓ₁ eta ℓ₂ X-n ebakitzen direla, P₂-ren erdiplanoan."
+        },
+        "step3": {
+          "label": "Kanpo-angelua A-n",
+          "description": "α ABX triangeluaren kanpo-angelua da A-n, eta ∠ABX ondokoa ez den barne-angelua."
+        },
+        "step4": {
+          "label": "Y kasua",
+          "description": "Ebakidura Y-n, P₁-en erdiplanoan: β ABY triangeluaren kanpo-angelua da B-n."
+        },
+        "step5": {
+          "label": "Norabide zuzena",
+          "description": "ℓ₁ ∥ ℓ₂ izanik, B-n α-ren kongruentea den angelua osatzen duen zuzenak bat egiten du ℓ₂-rekin."
+        }
+      },
+      "ariaLabels": {
+        "t": "t ebakitzailea",
+        "l1": "ℓ₁ zuzena",
+        "l2": "ℓ₂ zuzena",
+        "h1": "ℓ₂ ebakitzailetzat hartua (X kasua)",
+        "h2": "ℓ₁ ebakitzailetzat hartua (Y kasua)",
+        "AX": "AX aldea",
+        "BX": "BX aldea",
+        "AY": "AY aldea",
+        "BY": "BY aldea",
+        "AB": "AB aldea"
+      }
+    },
+    "en": {
+      "title": "Alternate interior angles theorem",
+      "note": "Go through the steps: the two cases of the proof by contradiction (meeting at X or at Y) and the direct implication.",
+      "steps": {
+        "step1": {
+          "label": "Configuration",
+          "description": "Two lines cut by t at A and B; α and β are alternate interior angles."
+        },
+        "step2": {
+          "label": "Case X",
+          "description": "Suppose ℓ₁ and ℓ₂ meet at X, in the half-plane of P₂."
+        },
+        "step3": {
+          "label": "Exterior angle at A",
+          "description": "α is the exterior angle at A of triangle ABX, and ∠ABX is a non-adjacent interior angle."
+        },
+        "step4": {
+          "label": "Case Y",
+          "description": "Meeting at Y, in the half-plane of P₁: β is the exterior angle at B of triangle ABY."
+        },
+        "step5": {
+          "label": "Direct implication",
+          "description": "With ℓ₁ ∥ ℓ₂, the line forming at B an angle congruent to α coincides with ℓ₂."
+        }
+      },
+      "ariaLabels": {
+        "t": "Transversal t",
+        "l1": "Line ℓ₁",
+        "l2": "Line ℓ₂",
+        "h1": "ℓ₂ assumed to intersect (case X)",
+        "h2": "ℓ₁ assumed to intersect (case Y)",
+        "AX": "Side AX",
+        "BX": "Side BX",
+        "AY": "Side AY",
+        "BY": "Side BY",
+        "AB": "Side AB"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

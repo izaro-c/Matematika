@@ -610,11 +610,25 @@ export const DesigualdadTriangularSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Triangelu-desberdintza",
-      "note": "Mugitu A, B eta C: edozein alderen luzera beste bien batura baino txikiagoa da beti."
+      "note": "Mugitu A, B eta C: edozein alderen luzera beste bien batura baino txikiagoa da beti.",
+      "ariaLabels": {
+        "A": "Mugitu A puntua",
+        "B": "Mugitu B puntua",
+        "C": "Mugitu C puntua",
+        "poly": "ABC triangelua",
+        "slack": "Desberdintzaren tartea"
+      }
     },
     "en": {
       "title": "Triangle Inequality",
-      "note": "Move A, B, and C: the length of any side is always strictly less than the sum of the other two."
+      "note": "Move A, B, and C: the length of any side is always strictly less than the sum of the other two.",
+      "ariaLabels": {
+        "A": "Move point A",
+        "B": "Move point B",
+        "C": "Move point C",
+        "poly": "Triangle ABC",
+        "slack": "Margin of the inequality"
+      }
     }
   }
 }

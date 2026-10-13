@@ -873,11 +873,67 @@ export const AxiomaArquimedesSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Arkimedesen axioma",
-      "note": "Arrastatu B AB nahi bezain txiki egiteko; n-ren maximoa berriz kalkulatzen da eta beti ahalbidetzen du CD gainditzea."
+      "note": "Arrastatu B AB nahi bezain txiki egiteko; n-ren maximoa berriz kalkulatzen da eta beti ahalbidetzen du CD gainditzea.",
+      "texts": {
+        "readingRequired": "n minimoa = {value}"
+      },
+      "ariaLabels": {
+        "pA": "Segmentu txikiaren A muturra",
+        "pBMin": "B-ren muga minimoa",
+        "pBMax": "B-ren muga maximoa",
+        "pB": "B mutur mugikorra; AB-ren luzera doitzen du",
+        "pC": "Erreferentziako segmentuaren C muturra",
+        "pD": "Erreferentziako segmentuaren D muturra",
+        "pBase": "Jukstaposizioaren jatorria",
+        "pThreshold": "D muturraren proiekzioa",
+        "pAccumulated": "n bider AB luzera metatuaren muturra",
+        "supportAB": "B-ren ibilbide baimendua",
+        "segAB": "AB segmentu txikia",
+        "segCD": "CD erreferentzia-segmentua",
+        "readingAB": "AB luzeraren irakurketa dinamikoa",
+        "readingN": "Kopia kopuruaren irakurketa dinamikoa",
+        "readingProduct": "n bider AB-ren irakurketa dinamikoa",
+        "readingCD": "CD luzeraren irakurketa dinamikoa",
+        "accumulatedCarrier": "AB-ren n kopien euskarri laguntzailea",
+        "accumulatedBefore": "Oraindik CD gainditzen ez duen luzera metatua",
+        "accumulatedAfter": "CD gainditzen duen luzera metatua",
+        "copyTicks": "AB-ren ondoz ondoko kopiak bereizten dituzten markak",
+        "readingRequired": "CD gainditzen duen lehen zenbaki arrunta",
+        "lineDThreshold": "Zuzena",
+        "n": "Kopien n zenbaki arrunta"
+      }
     },
     "en": {
       "title": "Archimedean Axiom",
-      "note": "Drag B to make AB as small as desired; the maximum n is recalculated and always allows surpassing CD."
+      "note": "Drag B to make AB as small as desired; the maximum n is recalculated and always allows surpassing CD.",
+      "texts": {
+        "readingRequired": "minimum n = {value}"
+      },
+      "ariaLabels": {
+        "pA": "Endpoint A of the shorter segment",
+        "pBMin": "Lower limit of B",
+        "pBMax": "Upper limit of B",
+        "pB": "Movable endpoint B; adjusts the length of AB",
+        "pC": "Endpoint C of the reference segment",
+        "pD": "Endpoint D of the reference segment",
+        "pBase": "Origin of the juxtaposition",
+        "pThreshold": "Projection of endpoint D",
+        "pAccumulated": "Endpoint of the accumulated length n times AB",
+        "supportAB": "Allowed path of B",
+        "segAB": "Shorter segment AB",
+        "segCD": "Reference segment CD",
+        "readingAB": "Live reading of length AB",
+        "readingN": "Live reading of the number of copies",
+        "readingProduct": "Live reading of n times AB",
+        "readingCD": "Live reading of length CD",
+        "accumulatedCarrier": "Auxiliary support for n copies of AB",
+        "accumulatedBefore": "Accumulated length not yet exceeding CD",
+        "accumulatedAfter": "Accumulated length exceeding CD",
+        "copyTicks": "Marks separating consecutive copies of AB",
+        "readingRequired": "First natural number exceeding CD",
+        "lineDThreshold": "Line",
+        "n": "Natural number of copies n"
+      }
     }
   }
 }

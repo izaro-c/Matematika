@@ -441,11 +441,35 @@ export const TrianguloRectanguloSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Triangelu angeluzuzena",
-      "note": "Mugitu C triangelua lekualdatzeko, A oinarria biratu eta aldatzeko, eta B perpendikularrean zehar altuera aldatzeko angelu zuzena mantenduz."
+      "note": "Mugitu C triangelua lekualdatzeko, A oinarria biratu eta aldatzeko, eta B perpendikularrean zehar altuera aldatzeko angelu zuzena mantenduz.",
+      "ariaLabels": {
+        "pC": "C erpina, angelu zuzenekoa",
+        "pA": "A erpina",
+        "pB": "B erpina perpendikularrean",
+        "lineCA": "CA euskarri-zuzena",
+        "lineCB": "CB euskarri-zuzena",
+        "polyABC": "ABC triangelu zuzena",
+        "segCA": "CA katetoa",
+        "segCB": "CB katetoa",
+        "segAB": "AB hipotenusa",
+        "angC": "Angelu zuzena C-n"
+      }
     },
     "en": {
       "title": "Right Triangle",
-      "note": "Drag C to move the triangle, A to rotate and stretch the base, and B along the perpendicular to change height while preserving the right angle."
+      "note": "Drag C to move the triangle, A to rotate and stretch the base, and B along the perpendicular to change height while preserving the right angle.",
+      "ariaLabels": {
+        "pC": "Vertex C with the right angle",
+        "pA": "Vertex A",
+        "pB": "Vertex B on the perpendicular",
+        "lineCA": "Supporting line CA",
+        "lineCB": "Supporting line CB",
+        "polyABC": "Right triangle ABC",
+        "segCA": "Leg CA",
+        "segCB": "Leg CB",
+        "segAB": "Hypotenuse AB",
+        "angC": "Right angle at C"
+      }
     }
   }
 }

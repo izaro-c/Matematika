@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls, Html, Line } from '@react-three/drei';
 import { useMathStore } from '@/lib/page-context/MathStoreContext';
 import { useDiagramTargetRegistry, matchesScopedDiagramTarget } from '@/lib/page-context/DiagramTargetRegistryContext';
+import { useDiagramLang } from '@/diagrams/public';
 
 const SCOPE_ID = 'incidence7';
 
@@ -103,19 +104,39 @@ function SceneContent() {
   );
 }
 
+const LABELS: Record<string, Record<string, string>> = {
+  eu: {
+    'Punto común A': 'A puntu komuna',
+    'Punto común B': 'B puntu komuna',
+    'Plano π': 'π planoa',
+    'Plano σ': 'σ planoa',
+    'Recta de intersección l': 'l ebakidura-zuzena',
+  },
+  en: {
+    'Punto común A': 'Common point A',
+    'Punto común B': 'Common point B',
+    'Plano π': 'Plane π',
+    'Plano σ': 'Plane σ',
+    'Recta de intersección l': 'Intersection line l',
+  },
+};
+
+const tr = (lang: string, text: string) => LABELS[lang]?.[text] ?? text;
+
 export const Incidence7: React.FC = () => {
   const targetRegistry = useDiagramTargetRegistry();
+  const lang = useDiagramLang();
   useEffect(() => {
     return targetRegistry.register(SCOPE_ID, [
-      { targetId: 'pA', objectId: 'pA', label: 'Punto común A', kind: 'object' },
-      { targetId: 'pB', objectId: 'pB', label: 'Punto común B', kind: 'object' },
-      { targetId: 'plano-pi', objectId: 'plano-pi', label: 'Plano π', kind: 'object' },
-      { targetId: 'plano', objectId: 'plano-pi', label: 'Plano π', kind: 'object' },
-      { targetId: 'plano-sigma', objectId: 'plano-sigma', label: 'Plano σ', kind: 'object' },
-      { targetId: 'recta-l', objectId: 'recta-l', label: 'Recta de intersección l', kind: 'object' },
-      { targetId: 'recta', objectId: 'recta-l', label: 'Recta de intersección l', kind: 'object' },
+      { targetId: 'pA', objectId: 'pA', label: tr(lang, 'Punto común A'), kind: 'object' },
+      { targetId: 'pB', objectId: 'pB', label: tr(lang, 'Punto común B'), kind: 'object' },
+      { targetId: 'plano-pi', objectId: 'plano-pi', label: tr(lang, 'Plano π'), kind: 'object' },
+      { targetId: 'plano', objectId: 'plano-pi', label: tr(lang, 'Plano π'), kind: 'object' },
+      { targetId: 'plano-sigma', objectId: 'plano-sigma', label: tr(lang, 'Plano σ'), kind: 'object' },
+      { targetId: 'recta-l', objectId: 'recta-l', label: tr(lang, 'Recta de intersección l'), kind: 'object' },
+      { targetId: 'recta', objectId: 'recta-l', label: tr(lang, 'Recta de intersección l'), kind: 'object' },
     ]);
-  }, [targetRegistry]);
+  }, [targetRegistry, lang]);
 
   return (
     <div className="w-full h-full min-h-[350px] relative bg-lienzo/40 border border-mora/10 rounded-sm overflow-hidden">

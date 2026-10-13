@@ -610,11 +610,41 @@ export const CircunferenciaSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Zirkunferentzia eta bere elementu nabarmenak",
-      "note": "Mugitu O eta P. Jarri fokua testuko esteketan elementu nabarmen bakoitza bistaratzeko figura berriz kargatu gabe."
+      "note": "Mugitu O eta P. Jarri fokua testuko esteketan elementu nabarmen bakoitza bistaratzeko figura berriz kargatu gabe.",
+      "ariaLabels": {
+        "O": "O zentroa; mugi daiteke",
+        "P": "Erradioa zehazten duen P puntua; mugi daiteke",
+        "D": "Diametroaren D muturra, P-ren aurkakoa",
+        "Q": "Kordaren Q muturra; zirkunferentzian zehar lerratzen da",
+        "R": "Kordaren R muturra; zirkunferentzian zehar lerratzen da",
+        "T": "T ukipen-puntua; zirkunferentzian zehar lerratzen da",
+        "discoInterior": "Zirkulua: zirkunferentziaren barne-eskualdea",
+        "circunferenciaBase": "O zentroa eta OP erradioa dituen zirkunferentzia",
+        "diametroDP": "O zentrotik igarotzen den DP diametroa",
+        "radioOP": "OP erradioa",
+        "cuerdaQR": "QR korda",
+        "arcoQR": "QR arku txikia",
+        "tangenteT": "T-ko zuzen ukitzailea, OT erradioarekiko perpendikularra"
+      }
     },
     "en": {
       "title": "Circle and Its Key Elements",
-      "note": "Move O and P. Focus on the text links to reveal each key element without reloading the diagram."
+      "note": "Move O and P. Focus on the text links to reveal each key element without reloading the diagram.",
+      "ariaLabels": {
+        "O": "Centre O; it can be moved",
+        "P": "Point P that sets the radius; it can be moved",
+        "D": "Endpoint D of the diameter, opposite P",
+        "Q": "Endpoint Q of the chord; slides along the circle",
+        "R": "Endpoint R of the chord; slides along the circle",
+        "T": "Point of tangency T; slides along the circle",
+        "discoInterior": "Disk: interior region of the circle",
+        "circunferenciaBase": "Circle with centre O and radius OP",
+        "diametroDP": "Diameter DP through the centre O",
+        "radioOP": "Radius OP",
+        "cuerdaQR": "Chord QR",
+        "arcoQR": "Minor arc QR",
+        "tangenteT": "Tangent line at T, perpendicular to the radius OT"
+      }
     }
   }
 }

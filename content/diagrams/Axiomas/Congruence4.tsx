@@ -566,11 +566,43 @@ export const Congruence4Spec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "IV. Kongruentzia-axioma",
-      "note": "Arrastatu A, B, O, A' eta O' angeluaren garraioa ikusteko."
+      "note": "Arrastatu A, B, O, A' eta O' angeluaren garraioa ikusteko.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pO": "C puntua",
+        "pAA": "C puntua",
+        "pBB": "C puntua",
+        "pOO": "C puntua",
+        "rayOB": "Zuzenerdia",
+        "rayOA": "Zuzenerdia",
+        "rayOOBB": "Zuzenerdia",
+        "rayOOAA": "Zuzenerdia",
+        "nonReflexAngleAOB": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleAAOOBB": "Angelu ez-erreflexua (≤ 180°)",
+        "Semiplano": "Erdiplanoa",
+        "r": "Zuzena"
+      }
     },
     "en": {
       "title": "Congruence Axiom IV",
-      "note": "Drag A, B, O, A', and O' to observe angle transport."
+      "note": "Drag A, B, O, A', and O' to observe angle transport.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pO": "Point C",
+        "pAA": "Point C",
+        "pBB": "Point C",
+        "pOO": "Point C",
+        "rayOB": "Ray",
+        "rayOA": "Ray",
+        "rayOOBB": "Ray",
+        "rayOOAA": "Ray",
+        "nonReflexAngleAOB": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleAAOOBB": "Non-reflex angle (≤ 180°)",
+        "Semiplano": "Half-plane",
+        "r": "Line"
+      }
     }
   }
 }

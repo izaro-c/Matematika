@@ -305,8 +305,13 @@
     opacity var(--diagram-visual-transition) var(--ease-interactive);
 }
 
-/* Panel informativo en lienzo JSXGraph: tipografía carbon, sin borde.
- * Los acentos opcionales van en __block--token (fondo), no en reglas. */
+/* Panel informativo como folio de libro antiguo: papel algo más tostado que el
+ * lienzo, sin bordes ni sombras; jerarquía solo tipográfica (versalitas, cursiva).
+ * Compartido por los paneles del lienzo y DiagramInfoPanel (overlays de paso). */
+:root {
+  --diagram-folio-bg: color-mix(in srgb, color-mix(in srgb, var(--theme-canela) 7%, var(--theme-lienzo)) 93%, transparent);
+}
+
 .matematika-info-panel {
   display: block !important;
   box-sizing: border-box;
@@ -319,10 +324,11 @@
   font-weight: 400 !important;
   font-style: normal !important;
   line-height: 1.45;
-  color: color-mix(in srgb, var(--theme-carbon) 80%, transparent) !important;
+  color: var(--ink-text-body) !important;
   border: none !important;
-  padding: 0;
-  background: transparent;
+  border-radius: 1px;
+  padding: 0.5rem 0.8rem 0.55rem;
+  background: var(--diagram-folio-bg);
   /* Anula el stroke/halo de .JXGtext (pensado para etiquetas de punto). */
   paint-order: normal;
   stroke: none !important;
@@ -334,14 +340,33 @@
   color: inherit !important;
 }
 
-.matematika-info-panel__title {
+.matematika-info-panel__title,
+[data-diagram-info-panel] .diagram-info-panel__title {
   display: block;
-  margin-bottom: 0.35rem;
-  color: var(--theme-carbon);
-  font-size: 1.15em;
+  color: var(--ink-text);
+  font-size: 1.12em;
+  font-weight: 600;
+  font-variant-caps: small-caps;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
 }
 
-.matematika-info-panel__intro {
+.matematika-info-panel__subtitle,
+[data-diagram-info-panel] .diagram-info-panel__subtitle {
+  display: block;
+  color: var(--ink-text-muted);
+  font-style: italic;
+  line-height: 1.3;
+}
+
+.matematika-info-panel__title + .matematika-info-panel__intro,
+.matematika-info-panel__subtitle + .matematika-info-panel__intro,
+.matematika-info-panel__title + .matematika-info-panel__blocks,
+.matematika-info-panel__subtitle + .matematika-info-panel__blocks {
+  margin-top: 0.35rem;
+}
+
+.matematika-info-panel__intro:not(:last-child) {
   margin-bottom: 0.45rem;
 }
 
@@ -388,8 +413,11 @@
 .matematika-info-panel__block-title {
   display: block;
   margin-bottom: 0.1rem;
-  color: var(--theme-carbon);
-  font-size: 0.92em;
+  color: var(--ink-text-muted);
+  font-size: 0.95em;
+  font-weight: 600;
+  font-variant-caps: small-caps;
+  letter-spacing: 0.04em;
 }
 
 @media (max-width: 36rem) {
@@ -443,6 +471,70 @@
   left: var(--diagram-side-pad, 1rem);
   width: calc(var(--diagram-side-chrome, 36%) - 2 * var(--diagram-side-pad, 1rem));
   max-width: calc(var(--diagram-side-chrome, 36%) - 2 * var(--diagram-side-pad, 1rem));
+}
+
+/* Botones de control en el lienzo (diagramButton.ts): rótulo impreso.
+ * Rectángulo con un solo filete, papel de folio, versalitas y manícula ☞ en el
+ * color del control. Activo: filete en el color del control y la manícula se vuelve (☜). */
+.diagram-control-button > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0.3rem 0.85rem 0.35rem 0.7rem;
+  border: 1px solid var(--diagram-button-accent);
+  border-radius: 1px;
+  color: var(--ink-text);
+  font-family: var(--font-diagram-family);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-variant-caps: small-caps;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  white-space: nowrap;
+  transition:
+    border-color var(--transition-normal, 0.2s) var(--ease-interactive, ease),
+    background-color var(--transition-normal, 0.2s) var(--ease-interactive, ease);
+}
+
+.diagram-control-button > button::before {
+  content: "☞";
+  flex: none;
+  font-size: 1.1em;
+  font-variant-caps: normal;
+  line-height: 1;
+  color: var(--diagram-button-accent, var(--ink-text-muted));
+}
+
+.diagram-control-button > button[data-pressed="true"] {
+  border-color: var(--diagram-button-accent, var(--theme-carbon));
+  background: var(--diagram-button-accent);
+  color: var(--theme-lienzo);
+}
+
+.diagram-control-button > button[data-pressed="true"]::before {
+  content: "☜";
+  color: var(--theme-lienzo);
+}
+
+.diagram-control-button > button:not(:disabled):hover {
+  border-color: var(--diagram-button-accent);
+  color: var(--diagram-button-accent);
+}
+
+.diagram-control-button > button[data-pressed="true"]:not(:disabled):hover {
+  background: color-mix(in srgb, var(--diagram-button-accent) 80%, var(--theme-lienzo));
+  color: var(--theme-lienzo);
+}
+
+.diagram-control-button > button:focus-visible {
+  outline: 2px solid var(--theme-pavo);
+  outline-offset: 2px;
+}
+
+.diagram-control-button > button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 /* La barra responde al ancho real del lienzo, no al de la ventana. */

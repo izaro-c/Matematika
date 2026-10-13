@@ -942,7 +942,85 @@ export const DemoCongruenciaLLLSpec = createDiagramSpec(
       }
     }
   ],
-  "note": "Mueve C′ y recorre los pasos. C* se mantiene como su reflejo respecto de A′B′, haciendo visibles los dos triángulos isósceles auxiliares."
+  "note": "Mueve C′ y recorre los pasos. C* se mantiene como su reflejo respecto de A′B′, haciendo visibles los dos triángulos isósceles auxiliares.",
+  "translations": {
+    "eu": {
+      "title": "LLL irizpidearen froga",
+      "note": "Mugitu C′ eta igaro urratsak. C* C′-ren islapena da A′B′-rekiko, eta bi triangelu isoszele laguntzaileak ikusgai uzten ditu.",
+      "steps": {
+        "step1": {
+          "label": "Garraioa",
+          "description": "C* eraikitzen da angelua islatuz eta A′C′ kopiatuz."
+        },
+        "step2": {
+          "label": "LAL",
+          "description": "Garraiatutako triangelua erreferentziako jatorrizkoaren kongruentea da."
+        },
+        "step3": {
+          "label": "Isoszele laguntzaileak",
+          "description": "C′C* segmentuak bi triangelu isoszele osatzen ditu."
+        },
+        "step4": {
+          "label": "Ondorioa",
+          "description": "Angelu-berdintasunei esker, LAL azken triangeluei aplika dakieke."
+        }
+      },
+      "titles": {
+        "lllProofInfo": "Ispilu-eraikuntza"
+      },
+      "texts": {
+        "lllProofInfo": "C′ eta C* A′ eta B′ zentroak dituzten zirkunferentzien bi ebakidurak dira."
+      },
+      "ariaLabels": {
+        "A": "A' puntu finkoa",
+        "B": "B' puntu finkoa",
+        "C": "Mugitu C' puntua",
+        "Cstar": "C* puntu eraikia",
+        "triPrime": "A'B'C' triangelua",
+        "triStar": "A'B'C* triangelua",
+        "angC": "C'-ko angelua",
+        "lllProofInfo": "Ispilu-eraikuntza"
+      }
+    },
+    "en": {
+      "title": "Proof of the SSS criterion",
+      "note": "Move C′ and go through the steps. C* stays as its reflection across A′B′, making the two auxiliary isosceles triangles visible.",
+      "steps": {
+        "step1": {
+          "label": "Transport",
+          "description": "C* is constructed by reflecting the angle and copying A′C′."
+        },
+        "step2": {
+          "label": "SAS",
+          "description": "The transported triangle is congruent to the original reference triangle."
+        },
+        "step3": {
+          "label": "Auxiliary isosceles triangles",
+          "description": "The segment C′C* forms two isosceles triangles."
+        },
+        "step4": {
+          "label": "Conclusion",
+          "description": "The angle equalities allow SAS to be applied to the final triangles."
+        }
+      },
+      "titles": {
+        "lllProofInfo": "Mirror construction"
+      },
+      "texts": {
+        "lllProofInfo": "C′ and C* are the two intersections of the circles centred at A′ and B′."
+      },
+      "ariaLabels": {
+        "A": "Fixed point A'",
+        "B": "Fixed point B'",
+        "C": "Move point C'",
+        "Cstar": "Constructed point C*",
+        "triPrime": "Triangle A'B'C'",
+        "triStar": "Triangle A'B'C*",
+        "angC": "Angle at C'",
+        "lllProofInfo": "Mirror construction"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

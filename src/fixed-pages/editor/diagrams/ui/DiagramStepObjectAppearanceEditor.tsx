@@ -1,12 +1,12 @@
 import React from 'react';
 import { DEFAULT_ANGLE_RADIUS, DEFAULT_RIGHT_ANGLE_RADIUS } from '@/diagrams/public';
 import type { DiagramStepObjectState, DiagramStepVisualStyle } from '@/diagrams';
-import type { VisualElement, VisualPoint } from '../model/types';
+import type { VisualElement, VisualPoint, VisualSlider } from '../model/types';
 import { COLOR_OPTIONS } from '../model';
 import { elementInspectorCapabilities } from '../model/elements/elementInspectorCapabilities';
 import { DiagramField } from './primitives';
 
-type StepSceneItem = VisualPoint | VisualElement;
+type StepSceneItem = VisualPoint | VisualElement | VisualSlider;
 
 interface DiagramStepObjectAppearanceEditorProps {
   object: StepSceneItem;
@@ -18,8 +18,8 @@ function isPoint(object: StepSceneItem): object is VisualPoint {
   return 'constraint' in object;
 }
 
-function isSlider(object: StepSceneItem): object is VisualElement & { min: number } {
-  return 'min' in object;
+function isSlider(object: StepSceneItem): object is VisualSlider {
+  return 'min' in object && 'max' in object && 'value' in object;
 }
 
 function angleRadiusFallback(element: VisualElement): number {
@@ -50,7 +50,9 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
 }) => {
   const capabilities = isPoint(object)
     ? { stroke: false, fill: false, dashed: false, pointSize: true, angleRadius: false, markHeight: false, fontSize: true, attachedLabel: true }
-    : elementInspectorCapabilities(object.kind);
+    : isSlider(object)
+      ? { stroke: false, fill: false, dashed: false, pointSize: false, angleRadius: false, markHeight: false, fontSize: true, attachedLabel: true }
+      : elementInspectorCapabilities(object.kind);
   const baseStyle = object.style ?? {};
   const stepStyle = state.style ?? {};
   const hasAppearanceControls = capabilities.stroke || capabilities.fill || capabilities.pointSize
@@ -143,6 +145,56 @@ export const DiagramStepObjectAppearanceEditor: React.FC<DiagramStepObjectAppear
           </div>
         )}
       </fieldset>
+
+      {isSlider(object) && (
+        <fieldset className="space-y-3 rounded border border-carbon/10 bg-lienzo p-2">
+          <legend className="px-1 ac-label ac-label--sm ac-label--soft">Valor del deslizador en este paso</legend>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-bold text-carbon">Valor temporal:</span>
+              <span className="font-mono font-bold text-canela">
+                {state.value !== undefined ? state.value : `${object.value} (base)`}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="range"
+                min={object.min}
+                max={object.max}
+                step={object.step || 0.01}
+                value={state.value !== undefined ? state.value : object.value}
+                onChange={event => onStateChange(
+                  { value: Number(event.target.value) },
+                  'Editar valor del deslizador en el paso',
+                )}
+                className="w-full accent-canela cursor-pointer"
+              />
+              <input
+                type="number"
+                min={object.min}
+                max={object.max}
+                step={object.step || 0.01}
+                value={state.value !== undefined ? state.value : ''}
+                placeholder={String(object.value)}
+                onChange={event => onStateChange(
+                  { value: event.target.value !== '' ? Number(event.target.value) : undefined },
+                  'Editar valor numérico del deslizador en el paso',
+                )}
+                className="w-20 rounded border border-carbon/20 bg-lienzo p-1 text-xs text-right font-mono"
+              />
+            </div>
+            {state.value !== undefined && (
+              <button
+                type="button"
+                onClick={() => onStateChange({ value: undefined }, 'Restablecer valor base del deslizador')}
+                className="text-[10px] text-carbon/60 hover:text-granada underline cursor-pointer"
+              >
+                Restablecer valor base ({object.value})
+              </button>
+            )}
+          </div>
+        </fieldset>
+      )}
 
       {!isSlider(object) && (
         <fieldset className="space-y-3 rounded border border-carbon/10 bg-lienzo p-2">

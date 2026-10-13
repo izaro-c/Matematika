@@ -895,7 +895,87 @@ export const DemoAngulosOpuestosSpec = createDiagramSpec(
       }
     }
   ],
-  "note": "Arrastra los puntos A o B para cambiar la orientación de las rectas secantes"
+  "note": "Arrastra los puntos A o B para cambiar la orientación de las rectas secantes",
+  "translations": {
+    "eu": {
+      "title": "Froga: erpinez aurkako angeluak",
+      "note": "Arrastatu A edo B puntuak zuzen ebakitzaileen orientazioa aldatzeko",
+      "steps": {
+        "step1": {
+          "label": "Osagarriak l-n",
+          "description": "α eta β angeluek bikote ondoko bat osatzen dute l zuzenaren gainean."
+        },
+        "step2": {
+          "label": "Osagarriak m-n",
+          "description": "β eta α' angeluek bikote ondoko bat osatzen dute m zuzenaren gainean."
+        },
+        "step3": {
+          "label": "Angelu komunaren erreflexibotasuna",
+          "description": "β angelu ondoko komunak β ≅ β betetzen du."
+        },
+        "step4": {
+          "label": "α ≅ α' kongruentzia",
+          "description": "β angelu beraren osagarriak direnez, α ≅ α' ondorioztatzen da."
+        },
+        "step5": {
+          "label": "Bigarren bikote aurkakoa β ≅ β'",
+          "description": "Arrazoibide berak bigarren bikote aurkakoaren kongruentzia ematen du."
+        }
+      },
+      "ariaLabels": {
+        "O": "O ebaki-puntua",
+        "A": "A puntua l zuzenean",
+        "Ap": "A' puntu aurkakoa l zuzenean",
+        "B": "B puntua m zuzenean",
+        "Bp": "B' puntu aurkakoa m zuzenean",
+        "lineL": "l zuzena",
+        "lineM": "m zuzena",
+        "angle1": "α angelua",
+        "angle2": "β angelua",
+        "angle3": "α' angelua",
+        "angle4": "β' angelua"
+      }
+    },
+    "en": {
+      "title": "Proof: vertical angles",
+      "note": "Drag points A or B to change the orientation of the intersecting lines",
+      "steps": {
+        "step1": {
+          "label": "Supplementary on l",
+          "description": "The angles α and β form a linear pair on the line l."
+        },
+        "step2": {
+          "label": "Supplementary on m",
+          "description": "The angles β and α' form a linear pair on the line m."
+        },
+        "step3": {
+          "label": "Reflexivity of the common angle",
+          "description": "The common adjacent angle β satisfies β ≅ β."
+        },
+        "step4": {
+          "label": "Congruence α ≅ α'",
+          "description": "Being supplementary to the same angle β, it follows that α ≅ α'."
+        },
+        "step5": {
+          "label": "Second vertical pair β ≅ β'",
+          "description": "An identical argument proves the congruence of the second vertical pair."
+        }
+      },
+      "ariaLabels": {
+        "O": "Intersection point O",
+        "A": "Point A on line l",
+        "Ap": "Opposite point A' on line l",
+        "B": "Point B on line m",
+        "Bp": "Opposite point B' on line m",
+        "lineL": "Line l",
+        "lineM": "Line m",
+        "angle1": "Angle α",
+        "angle2": "Angle β",
+        "angle3": "Angle α'",
+        "angle4": "Angle β'"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

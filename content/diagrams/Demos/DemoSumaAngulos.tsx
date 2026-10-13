@@ -999,7 +999,90 @@ export const DemoSumaAngulosSpec = createDiagramSpec(
       }
     }
   ],
-  "note": "Recorre los cinco pasos y mueve C. La paralela se reconstruye y los ángulos alternos siguen completando un ángulo llano."
+  "note": "Recorre los cinco pasos y mueve C. La paralela se reconstruye y los ángulos alternos siguen completando un ángulo llano.",
+  "translations": {
+    "eu": {
+      "title": "Angeluen baturaren froga",
+      "note": "Igaro bost urratsak eta mugitu C. Paraleloa berreraikitzen da, eta angelu txandakatuek angelu laua osatzen jarraitzen dute.",
+      "steps": {
+        "step1": {
+          "label": "Oinarrizko triangelua",
+          "description": "Hiru barne-angeluak finkatzen dira."
+        },
+        "step2": {
+          "label": "C-tik paraleloa",
+          "description": "C-tik igarotzen den AB-ren paralelo bakarra eraikitzen da."
+        },
+        "step3": {
+          "label": "Barne txandakatuak I",
+          "description": "AC-k α C erpinera garraiatzen du."
+        },
+        "step4": {
+          "label": "Barne txandakatuak II",
+          "description": "BC-k β C erpinera garraiatzen du."
+        },
+        "step5": {
+          "label": "Angelu laua",
+          "description": "Ondoz ondoko hiru sektoreek 180° osatzen dituzte."
+        }
+      },
+      "titles": {
+        "sumProofInfo": "Angelu laua C-n"
+      },
+      "ariaLabels": {
+        "A": "A puntu finkoa",
+        "B": "B puntu finkoa",
+        "C": "Mugitu C puntua",
+        "L": "L puntu eraikia",
+        "R": "R puntu eraikia",
+        "poly": "ABC triangelua",
+        "AB": "AB oinarria",
+        "AC": "AC zeharkakoa",
+        "BC": "BC zeharkakoa",
+        "parallel": "C-tiko paraleloa",
+        "sumProofInfo": "Angelu laua C-n"
+      }
+    },
+    "en": {
+      "title": "Proof of the angle sum",
+      "note": "Go through the five steps and move C. The parallel is rebuilt and the alternate angles still complete a straight angle.",
+      "steps": {
+        "step1": {
+          "label": "Base triangle",
+          "description": "The three interior angles are fixed."
+        },
+        "step2": {
+          "label": "Parallel through C",
+          "description": "The unique parallel to AB through C is constructed."
+        },
+        "step3": {
+          "label": "Alternate interior I",
+          "description": "AC transports α to the vertex C."
+        },
+        "step4": {
+          "label": "Alternate interior II",
+          "description": "BC transports β to the vertex C."
+        },
+        "step5": {
+          "label": "Straight angle",
+          "description": "The three consecutive sectors complete 180°."
+        }
+      },
+      "titles": {
+        "sumProofInfo": "Straight angle at C"
+      },
+      "ariaLabels": {
+        "A": "Fixed point A",
+        "B": "Fixed point B",
+        "C": "Move point C",
+        "L": "Constructed point L",
+        "R": "Constructed point R",
+        "poly": "Triangle ABC",
+        "parallel": "Parallel through C",
+        "sumProofInfo": "Straight angle at C"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

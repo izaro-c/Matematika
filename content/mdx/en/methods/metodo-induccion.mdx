@@ -21,21 +21,33 @@ export const Simulation = InduccionSimulation;
 
 A proof by mathematical induction consists of two mandatory canonical stages:
 
-1. **Base Case**: Demonstrating directly that the statement holds for the initial element (typically $n = 1$ or $n = 0$):
-   <Formula>
-     $$ P(1) \text{ is true} $$
-   </Formula>
+<ProofStep number={1} target="domino1" diagramStep="paso-caso-base" title="Base Case: P(1)">
+  Demonstrating directly that the statement holds for the initial element (typically $n = 1$ or $n = 0$), ensuring the first domino <VisualBind element="domino1" color="terracota">$P(1)$</VisualBind> falls:
+  <Formula>
+    $$ P(1) \text{ is true} $$
+  </Formula>
+</ProofStep>
 
-2. **Inductive Step**: Assuming as the *induction hypothesis* that the statement holds for an arbitrary positive integer $k \ge 1$ ($P(k)$), and rigorously deriving that it must also hold for the successor $k + 1$:
-   <Formula>
-     $$ \forall k \in \mathbb{N}, \quad P(k) \implies P(k+1) $$
-   </Formula>
+<ProofStep number={2} target="dominok" diagramStep="paso-hipotesis-induccion" title="Inductive Hypothesis: P(k)">
+  Assuming as the *induction hypothesis* that the statement holds for an arbitrary positive integer $k \ge 1$, represented by domino <VisualBind element="dominok" color="ocre">$P(k)$</VisualBind>:
+  <Formula>
+    $$ P(k) \text{ is assumed true for some } k \ge 1 $$
+  </Formula>
+</ProofStep>
 
-Once both conditions are verified, the principle of mathematical induction establishes universal truth across all natural numbers:
+<ProofStep number={3} target="dominok1" diagramStep="paso-inductivo" title="Inductive Step: P(k) ⇒ P(k+1)">
+  From the truth of <VisualBind element="dominok" color="ocre">$P(k)$</VisualBind>, deriving that the statement must also hold for the successor <VisualBind element="dominok1" color="mora">$P(k+1)$</VisualBind>, guaranteeing that each domino topples its neighbor:
+  <Formula>
+    $$ \forall k \in \mathbb{N}, \quad P(k) \implies P(k+1) $$
+  </Formula>
+</ProofStep>
 
-<Formula>
-  $$ [P(1) \land (\forall k \ge 1, \, P(k) \implies P(k+1))] \implies \forall n \in \mathbb{N}, \, P(n) $$
-</Formula>
+<ProofStep number={4} target={["domino1", "domino2", "domino3", "dominok", "dominok1"]} diagramStep="paso-conclusion-universal" title="Universal Conclusion: ∀n ∈ ℕ, P(n)">
+  Once both conditions are verified, the principle of mathematical induction establishes that the entire infinite domino chain falls:
+  <Formula>
+    $$ [P(1) \land (\forall k \ge 1, \, P(k) \implies P(k+1))] \implies \forall n \in \mathbb{N}, \, P(n) $$
+  </Formula>
+</ProofStep>
 
 <Separador />
 

@@ -864,6 +864,27 @@ export const DemoReciprocoTrianguloIsoscelesSpec = createDiagramSpec(
           "label": "Ondorioa: AB ≅ AC",
           "description": "Desberdintza absurdora eramanez baztertuta, AB ≅ AC ondorioztatzen dugu: triangelua isoszelea da."
         }
+      },
+      "ariaLabels": {
+        "pB": "B erpina",
+        "pC": "C erpina",
+        "pA": "A erpina (arrastagarria)",
+        "pD": "D puntu laguntzailea",
+        "segAB": "AB aldea",
+        "segBC": "BC aldea (oinarria)",
+        "segAC": "AC aldea",
+        "polyABC": "ABC triangelua",
+        "segAD": "AD segmentu garraiatua",
+        "segCD": "CD segmentu laguntzailea",
+        "polyADC": "ADC triangelu isoszele laguntzailea",
+        "polyBDC": "BDC triangelua",
+        "angB": "B erpineko angelua",
+        "angC": "C erpineko angelua",
+        "angADC": "ADC angelua",
+        "angACD": "ACD angelua",
+        "angExtD": "D-ko kanpo-angelua",
+        "congruenceAD": "Kongruentzia-marka AD-n",
+        "congruenceAC": "Kongruentzia-marka AC-n"
       }
     },
     "en": {
@@ -894,6 +915,27 @@ export const DemoReciprocoTrianguloIsoscelesSpec = createDiagramSpec(
           "label": "Conclusion: AB ≅ AC",
           "description": "Having ruled out inequality by contradiction, we conclude AB ≅ AC: the triangle is isosceles."
         }
+      },
+      "ariaLabels": {
+        "pB": "Vertex B",
+        "pC": "Vertex C",
+        "pA": "Vertex A (draggable)",
+        "pD": "Auxiliary point D",
+        "segAB": "Side AB",
+        "segBC": "Side BC (base)",
+        "segAC": "Side AC",
+        "polyABC": "Triangle ABC",
+        "segAD": "Transported segment AD",
+        "segCD": "Auxiliary segment CD",
+        "polyADC": "Auxiliary isosceles triangle ADC",
+        "polyBDC": "Triangle BDC",
+        "angB": "Angle at vertex B",
+        "angC": "Angle at vertex C",
+        "angADC": "Angle ADC",
+        "angACD": "Angle ACD",
+        "angExtD": "Exterior angle at D",
+        "congruenceAD": "Congruence mark on AD",
+        "congruenceAC": "Congruence mark on AC"
       }
     }
   }

@@ -129,6 +129,8 @@ export interface DiagramElementProperties {
   rows?: number;
   columns?: number;
   title?: string;
+  /** Subtítulo de un panel informativo (cursiva bajo el título). */
+  subtitle?: string;
   /** Define si una anotación sigue un objeto geométrico o una posición estable del viewport. */
   anchorMode?: 'reference' | 'viewport';
   /** Posición normalizada [x, y] desde la esquina superior izquierda del viewport. */
@@ -293,6 +295,49 @@ export interface DiagramSlider extends DiagramSceneItemBase {
   maxExpression?: string;
   value: number;
   step: number;
+  /** Longitud o anchura visual del slider en unidades del sistema de coordenadas (por defecto 2.6). */
+  width?: number;
+  /** Representación del control: deslizador (por defecto) o botón que anima su valor. */
+  variant?: DiagramControlVariant;
+  /** Animación que dispara un control de tipo botón; obligatoria cuando `variant` es `button`. */
+  action?: DiagramControlAction;
+}
+
+export type DiagramControlVariant = 'slider' | 'button';
+
+export type DiagramControlEasing = 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+
+/**
+ * Animación temporal de un control botón. Al pulsarlo, su valor viaja hacia `to`
+ * durante `durationMs`; las expresiones que leen el control se recalculan en cada fotograma.
+ * - `toggle`: una segunda pulsación devuelve el valor a `min` con la misma animación.
+ * - `restart`: cada pulsación reinicia el valor en `min` y vuelve a animar hasta `to`.
+ */
+export interface DiagramControlAction {
+  to: number;
+  durationMs: number;
+  /** Duración del viaje de vuelta a `min` (desactivar un `toggle`); por defecto `durationMs`. */
+  returnDurationMs?: number;
+  easing: DiagramControlEasing;
+  behavior: 'toggle' | 'restart';
+  /** Efectos sobre otros controles encadenados a las pulsaciones de este botón. */
+  effects?: DiagramControlEffect[];
+}
+
+/**
+ * Efecto de un botón sobre otro control.
+ * - `on`: `press` (pulsación que lleva el valor hacia `to`), `release` (pulsación que lo
+ *   devuelve a `min` en un botón `toggle`) o `complete` (la animación alcanza `to`).
+ * - `do`: `reset` devuelve el control a su valor inicial; `play` lo anima desde `from`
+ *   (expresión, por defecto su mínimo) hasta su propio destino.
+ * - `when`: condición opcional evaluada con los valores vivos del diagrama.
+ */
+export interface DiagramControlEffect {
+  on: 'press' | 'release' | 'complete';
+  control: string;
+  do: 'reset' | 'play';
+  from?: string;
+  when?: string;
 }
 
 export type DiagramStepEmphasis = 'none' | 'secondary' | 'primary';
@@ -377,18 +422,27 @@ export interface DiagramViewport {
   padding: number;
 }
 
+/** Traducción de un paso; `overlays` se indexa por id del objeto que porta el panel. */
+export interface DiagramStepTranslation {
+  label?: string;
+  description?: string;
+  overlays?: Record<string, { title?: string; content?: string }>;
+}
+
 export interface DiagramTranslation {
   title?: string;
   subtitle?: string;
   note?: string;
   description?: string;
-  steps?: Record<string, string | { label?: string; description?: string }>;
+  steps?: Record<string, string | DiagramStepTranslation>;
   labels?: Record<string, string>;
   annotations?: Record<string, string>;
   titles?: Record<string, string>;
   subtitles?: Record<string, string>;
   texts?: Record<string, string>;
   descriptions?: Record<string, string>;
+  /** Etiquetas accesibles (`selection.ariaLabel`) por id de objeto. */
+  ariaLabels?: Record<string, string>;
 }
 
 export interface DiagramSpecV2 {

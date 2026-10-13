@@ -125,6 +125,12 @@ describe('V2ElementPropertiesEditability', () => {
         properties: expect.objectContaining({ title: 'Teorema de Pitágoras' }),
       }));
 
+      const subtitleInput = screen.getByLabelText(/Subtítulo opcional del panel/i);
+      fireEvent.change(subtitleInput, { target: { value: 'Prueba por áreas' } });
+      expect(onUpdateElement).toHaveBeenCalledWith('el-infoPanel', expect.objectContaining({
+        properties: expect.objectContaining({ subtitle: 'Prueba por áreas' }),
+      }));
+
       const bodyInput = screen.getByLabelText(/Contenido del panel/i);
       fireEvent.change(bodyInput, { target: { value: 'Demostración visual en $R^2$' } });
       expect(onUpdateElement).toHaveBeenCalledWith('el-infoPanel', expect.objectContaining({

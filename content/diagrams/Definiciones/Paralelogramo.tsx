@@ -1398,11 +1398,75 @@ export const ParalelogramoSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Paralelogramoa",
-      "note": "Mugitu D paralelogramo mota desberdinak ezagutzeko"
+      "note": "Mugitu D paralelogramo mota desberdinak ezagutzeko",
+      "ariaLabels": {
+        "A": "A erpin finkoa",
+        "B": "B erpin finkoa",
+        "D": "Mugitu D paralelogramoa sailkatzeko",
+        "C": "Traslazioz eraikitako C erpina",
+        "guiaRectangulo": "Angelu zuzeneko gida magnetikoa",
+        "guiaLadosIguales": "Alde berdinen gida magnetikoa",
+        "poligono": "ABCD paralelogramoa",
+        "AB": "AB aldea",
+        "BC": "BC aldea",
+        "CD": "CD aldea",
+        "DA": "DA aldea",
+        "parAB": "Gezi bat: AB CD-ren paraleloa",
+        "parCD": "Gezi bat: CD AB-ren paraleloa",
+        "parBC": "Bi gezi: BC DA-ren paraleloa",
+        "parDA": "Bi gezi: DA BC-ren paraleloa",
+        "igualAB": "Berdintasun-marka AB-n",
+        "igualBC": "Berdintasun-marka BC-n",
+        "igualCD": "Berdintasun-marka CD-n",
+        "igualDA": "Berdintasun-marka DA-n",
+        "rectoA": "Angelu zuzena A-n",
+        "rectoB": "Angelu zuzena B-n",
+        "rectoC": "Angelu zuzena C-n",
+        "rectoD": "Angelu zuzena D-n",
+        "anguloA": "A angelua",
+        "anguloB": "B angelua",
+        "anguloC": "C angelua",
+        "anguloD": "D angelua",
+        "AC": "AC diagonala",
+        "BD": "BD diagonala",
+        "M": "M erdiko puntu komuna",
+        "clasificacion": "Paralelogramoaren sailkapen dinamikoa"
+      }
     },
     "en": {
       "title": "Parallelogram",
-      "note": "Move D to discover different types of parallelograms"
+      "note": "Move D to discover different types of parallelograms",
+      "ariaLabels": {
+        "A": "Fixed vertex A",
+        "B": "Fixed vertex B",
+        "D": "Move D to classify the parallelogram",
+        "C": "Vertex C constructed by translation",
+        "guiaRectangulo": "Right-angle magnetic guide",
+        "guiaLadosIguales": "Equal-sides magnetic guide",
+        "poligono": "Parallelogram ABCD",
+        "AB": "Side AB",
+        "BC": "Side BC",
+        "CD": "Side CD",
+        "DA": "Side DA",
+        "parAB": "One arrow: AB parallel to CD",
+        "parCD": "One arrow: CD parallel to AB",
+        "parBC": "Two arrows: BC parallel to DA",
+        "parDA": "Two arrows: DA parallel to BC",
+        "igualAB": "Equality mark on AB",
+        "igualBC": "Equality mark on BC",
+        "igualCD": "Equality mark on CD",
+        "igualDA": "Equality mark on DA",
+        "rectoA": "Right angle at A",
+        "rectoB": "Right angle at B",
+        "rectoC": "Right angle at C",
+        "rectoD": "Right angle at D",
+        "anguloA": "Angle A",
+        "anguloB": "Angle B",
+        "anguloC": "Angle C",
+        "anguloD": "Angle D",
+        "M": "Common midpoint M",
+        "clasificacion": "Live classification of the parallelogram"
+      }
     }
   }
 }

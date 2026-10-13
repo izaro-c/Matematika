@@ -875,7 +875,17 @@ export const ModeloPoincareSpec = createDiagramSpec(
     }
   ],
   "steps": [],
-  "note": "Arrastre L₁ y L₂ sobre la frontera y P dentro del disco"
+  "note": "Arrastre L₁ y L₂ sobre la frontera y P dentro del disco",
+  "translations": {
+    "eu": {
+      "title": "Poincaréren diskoa",
+      "note": "Arrastatu L₁ eta L₂ mugan zehar, eta P diskoaren barruan"
+    },
+    "en": {
+      "title": "Poincaré disk",
+      "note": "Drag L₁ and L₂ along the boundary and P inside the disk"
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

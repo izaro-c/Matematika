@@ -90,6 +90,7 @@ const elementPropertiesSchema = z.object({
   rows: z.number().int().min(1).max(100).optional(),
   columns: z.number().int().min(1).max(100).optional(),
   title: z.string().min(1).optional(),
+  subtitle: z.string().min(1).optional(),
   anchorMode: z.enum(['reference', 'viewport']).optional(),
   viewportPosition: z.tuple([
     finiteNumber.min(0).max(1),
@@ -215,6 +216,21 @@ const sliderSchema = z.object({
   maxExpression: expressionSchema.optional(),
   value: finiteNumber,
   step: finiteNumber.positive(),
+  variant: z.enum(['slider', 'button']).optional(),
+  action: z.object({
+    to: finiteNumber,
+    durationMs: finiteNumber.int().min(0).max(60000),
+    returnDurationMs: finiteNumber.int().min(0).max(60000).optional(),
+    easing: z.enum(['linear', 'ease-in', 'ease-out', 'ease-in-out']),
+    behavior: z.enum(['toggle', 'restart']),
+    effects: z.array(z.object({
+      on: z.enum(['press', 'release', 'complete']),
+      control: idSchema,
+      do: z.enum(['reset', 'play']),
+      from: expressionSchema.optional(),
+      when: expressionSchema.optional(),
+    }).strict()).max(16).optional(),
+  }).strict().optional(),
 }).strict().superRefine((slider, context) => {
   if (slider.max <= slider.min) context.addIssue({ code: 'custom', message: 'max debe ser mayor que min.', path: ['max'] });
   if (slider.value < slider.min || slider.value > slider.max) context.addIssue({ code: 'custom', message: 'value debe estar dentro de [min, max].', path: ['value'] });

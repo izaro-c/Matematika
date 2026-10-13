@@ -334,7 +334,41 @@ export const ModeloTresPuntosSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "El modelo más pequeño que satisface los tres axiomas de incidencia: exactamente 3 puntos, 3 rectas y 1 plano."
+  "note": "El modelo más pequeño que satisface los tres axiomas de incidencia: exactamente 3 puntos, 3 rectas y 1 plano.",
+  "translations": {
+    "eu": {
+      "title": "Hiru puntuko eredua",
+      "note": "Intzidentziaren hiru axiomak betetzen dituen eredu txikiena: zehazki 3 puntu, 3 zuzen eta plano 1.",
+      "texts": {
+        "info": "3 puntu · 3 zuzen · plano 1"
+      },
+      "ariaLabels": {
+        "A": "A puntua",
+        "B": "B puntua",
+        "C": "C puntua",
+        "plano": "Planoa (eskualde triangeluarra)",
+        "rAB": "AB zuzena",
+        "rBC": "BC zuzena",
+        "rCA": "CA zuzena"
+      }
+    },
+    "en": {
+      "title": "Three-point model",
+      "note": "The smallest model satisfying the three incidence axioms: exactly 3 points, 3 lines and 1 plane.",
+      "texts": {
+        "info": "3 points · 3 lines · 1 plane"
+      },
+      "ariaLabels": {
+        "A": "Point A",
+        "B": "Point B",
+        "C": "Point C",
+        "plano": "Plane (triangular region)",
+        "rAB": "Line AB",
+        "rBC": "Line BC",
+        "rCA": "Line CA"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

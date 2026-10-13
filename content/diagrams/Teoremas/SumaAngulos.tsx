@@ -575,11 +575,37 @@ export const SumaAngulosSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Triangelu baten angeluen batura",
-      "note": "Mugitu A, B eta C barne-angeluen batura beti 180° dela egiaztatzeko."
+      "note": "Mugitu A, B eta C barne-angeluen batura beti 180° dela egiaztatzeko.",
+      "ariaLabels": {
+        "A": "Mugitu A puntua",
+        "B": "Mugitu B puntua",
+        "C": "Mugitu C puntua",
+        "poly": "ABC triangelua",
+        "nonReflexAngleBAC": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleABC": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleACB": "Angelu ez-erreflexua (≤ 180°)",
+        "label-nonReflexAngleACB": "c etiketa",
+        "label-nonReflexAngleBAC": "a etiketa",
+        "label-nonReflexAngleABC": "b etiketa",
+        "infoPanel11": "Informazio-panela"
+      }
     },
     "en": {
       "title": "Sum of Angles in a Triangle",
-      "note": "Move A, B, and C to verify that the sum of interior angles is always 180°."
+      "note": "Move A, B, and C to verify that the sum of interior angles is always 180°.",
+      "ariaLabels": {
+        "A": "Move point A",
+        "B": "Move point B",
+        "C": "Move point C",
+        "poly": "Triangle ABC",
+        "nonReflexAngleBAC": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleABC": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleACB": "Non-reflex angle (≤ 180°)",
+        "label-nonReflexAngleACB": "Label c",
+        "label-nonReflexAngleBAC": "Label a",
+        "label-nonReflexAngleABC": "Label b",
+        "infoPanel11": "Information panel"
+      }
     }
   }
 }

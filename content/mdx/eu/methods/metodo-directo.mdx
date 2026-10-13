@@ -13,22 +13,45 @@ export const metadata = {
 import { DirectoSimulation } from '@content/diagrams/Metodos/DirectoSimulation';
 export const Simulation = DirectoSimulation;
 
-<Capitular letra="M" />**etodo zuzena** $P \implies Q$ <ConceptLink targetId="implicacion" isDependency={true}>inplikazio</ConceptLink> bat frogatzeko <ConceptLink targetId="demostracion">frogapen</ConceptLink>-modua da: $P$ <ConceptLink targetId="hipotesis">hipotesia</ConceptLink> onartzen da, eta hartatik $Q$ <ConceptLink targetId="tesis">tesia</ConceptLink> ondorioztatzen da urrats-segida finitu baten bidez, urrats bakoitza justifikatuta.
+<Capitular letra="M" />**etodo zuzena** $P \implies Q$ <ConceptLink targetId="implicacion" isDependency={true}>inplikazio</ConceptLink> bat frogatzeko <ConceptLink targetId="demostracion">frogapen</ConceptLink>-modua da: <VisualBind element="pP" color="terracota">$P$</VisualBind> <ConceptLink targetId="hipotesis">hipotesia</ConceptLink> onartzen da, eta hartatik <VisualBind element="pQ" color="canela">$Q$</VisualBind> <ConceptLink targetId="tesis">tesia</ConceptLink> ondorioztatzen da urrats-segida finitu baten bidez, urrats bakoitza justifikatuta.
 
 Dedukzio ororen oinarrizko eskema da: zeharkako metodoek, hala nola <ConceptLink targetId="metodo-contradiccion">kontraesanezko frogapenak</ConceptLink> edo $\neg Q \implies \neg P$ <ConceptLink targetId="contraposicion">kontrajarria</ConceptLink> frogatzeak, enuntziatua eraldatzen dute lehenik, eta gero zuzenean arrazoitzen dute.
 
 <Separador />
 
-### Egitura logikoa
+### Egitura logikoa eta kateamendua
 
-Urrats bakoitzak <ConceptLink targetId="modus-ponens" isDependency={true}>modus ponens</ConceptLink> araua aplikatzen du: $A$ eta $A \implies B$ izanik, $B$ ondorioztatzen da. Urratsak kateatuz, hau lortzen da:
+Dedukzio zuzenak urratsez urratseko inferentzia egituratzen du <ConceptLink targetId="modus-ponens" isDependency={true}>modus ponens</ConceptLink> araua aplikatuz ($A \land (A \implies B) \vdash B$):
 
-<Formula>
-  $$ P \implies P_1 \implies P_2 \implies \dots \implies P_n \implies Q $$
-</Formula>
+<ProofStep number={1} target="pP" diagramStep="paso-hipotesis" title="P hipotesia planteatzea">
+  Hasierako <VisualBind element="pP" color="terracota">$P$</VisualBind> hipotesia ezartzen da abiapuntuko premisa ukaezin gisa:
+  <Formula>
+    $$ P \text{ (Hasierako premisa)} $$
+  </Formula>
+</ProofStep>
 
-eta $P_k \implies P_{k+1}$ inplikazio bakoitza baliabide hauetako batekin justifikatzen da:
+<ProofStep number={2} target={["pP1", "segPP1"]} diagramStep="paso-primera-inferencia" title="Lehen dedukzioa: P ⇒ P₁">
+  <ConceptLink targetId="axioma">Axioma</ConceptLink> edo definizio bat modus ponens bidez aplikatuz, <VisualBind element="pP" color="terracota">$P$</VisualBind>-tik baliozkotasunez ondorioztatzen da tarteko <VisualBind element="pP1" color="carbon">$P_1$</VisualBind> proposizioa:
+  <Formula>
+    $$ P \implies P_1 $$
+  </Formula>
+</ProofStep>
 
+<ProofStep number={3} target={["pP2", "segP1P2"]} diagramStep="paso-segunda-inferencia" title="Kateatzea: P₁ ⇒ P₂">
+  <VisualBind element="pP1" color="carbon">$P_1$</VisualBind>-etik abiatuta eta aurretiazko <ConceptLink targetId="teorema">teorema</ConceptLink> edo <ConceptLink targetId="lema">lema</ConceptLink> batera joz, hurrengo <VisualBind element="pP2" color="carbon">$P_2$</VisualBind> katebegi deduktiboa lortzen da:
+  <Formula>
+    $$ P_1 \implies P_2 \implies \dots \implies P_n $$
+  </Formula>
+</ProofStep>
+
+<ProofStep number={4} target={["pQ", "segP2Q"]} diagramStep="paso-conclusion" title="Azken ondorioa: P₂ ⇒ Q">
+  Kateamendu deduktiboak azkenean bilatutako <VisualBind element="pQ" color="canela">$Q$</VisualBind> tesia lortzen du, $P \implies Q$-ren froga zuzena osatuz:
+  <Formula>
+    $$ P \implies P_1 \implies P_2 \implies \dots \implies Q $$
+  </Formula>
+</ProofStep>
+
+Tarteko $P_k \implies P_{k+1}$ inplikazio bakoitza baliabide hauetako batekin justifikatzen da:
 - $P$ hipotesia edo katean lehendik lortutako baieztapen bat;
 - sistemaren <ConceptLink targetId="axioma">axioma</ConceptLink> bat;
 - aurretik frogatutako <ConceptLink targetId="teorema">teorema</ConceptLink>, <ConceptLink targetId="lema">lema</ConceptLink> edo <ConceptLink targetId="corolario">korolario</ConceptLink> bat;

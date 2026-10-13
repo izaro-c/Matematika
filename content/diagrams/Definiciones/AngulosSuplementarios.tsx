@@ -396,11 +396,35 @@ export const AngulosSuplementariosSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Angelu betegarriak",
-      "note": "Mugitu O, A eta C puntuak angelu auzokideek zuzen jarraitu bat nola osatzen duten aztertzeko."
+      "note": "Mugitu O, A eta C puntuak angelu auzokideek zuzen jarraitu bat nola osatzen duten aztertzeko.",
+      "ariaLabels": {
+        "pO": "O erpin komuna",
+        "pA": "A puntua h zuzenerdian",
+        "pB": "B puntua h' zuzenerdi aurkakoan",
+        "pC": "C puntua k alde komunean",
+        "lineL": "ℓ euskarri-zuzena",
+        "rayOA": "h = OA zuzenerdia",
+        "rayOB": "h' = OB zuzenerdi aurkakoa",
+        "rayOC": "k = OC alde komuna",
+        "angAOC": "AOC angelua",
+        "angBOC": "BOC angelua"
+      }
     },
     "en": {
       "title": "Supplementary Angles",
-      "note": "Drag points O, A, and C to observe how the adjacent angles form a continuous straight line."
+      "note": "Drag points O, A, and C to observe how the adjacent angles form a continuous straight line.",
+      "ariaLabels": {
+        "pO": "Common vertex O",
+        "pA": "Point A on ray h",
+        "pB": "Point B on the opposite ray h'",
+        "pC": "Point C on the common side k",
+        "lineL": "Supporting line ℓ",
+        "rayOA": "Ray h = OA",
+        "rayOB": "Opposite ray h' = OB",
+        "rayOC": "Common side k = OC",
+        "angAOC": "Angle AOC",
+        "angBOC": "Angle BOC"
+      }
     }
   }
 }

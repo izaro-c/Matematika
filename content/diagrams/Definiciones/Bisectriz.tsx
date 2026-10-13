@@ -477,11 +477,40 @@ export const BisectrizSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Erdibitzailea",
-      "note": "Mugitu A eta B"
+      "note": "Mugitu A eta B",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pO": "C puntua",
+        "p4": "4. puntua",
+        "p4_copy": "4. puntua",
+        "p6": "6. puntua",
+        "rayOA": "Zuzenerdia",
+        "rayOB": "Zuzenerdia",
+        "lineBO": "Zuzena",
+        "perpB4O": "Perpendikularra",
+        "bisAOB": "AOB-ren erdikaria",
+        "nonReflexAngleBO6": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngle6OA": "Angelu ez-erreflexua (≤ 180°)"
+      }
     },
     "en": {
       "title": "Angle Bisector",
-      "note": "Move A and B"
+      "note": "Move A and B",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pO": "Point C",
+        "p4": "Point 4",
+        "p4_copy": "Point 4",
+        "p6": "Point 6",
+        "rayOA": "Ray",
+        "rayOB": "Ray",
+        "lineBO": "Line",
+        "bisAOB": "Bisector of AOB",
+        "nonReflexAngleBO6": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngle6OA": "Non-reflex angle (≤ 180°)"
+      }
     }
   }
 }

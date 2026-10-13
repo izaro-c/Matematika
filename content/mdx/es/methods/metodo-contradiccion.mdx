@@ -13,22 +13,41 @@ export const metadata = {
 import { ContradictionSimulation } from '@content/diagrams/Metodos/ContradictionSimulation';
 export const Simulation = ContradictionSimulation;
 
-<Capitular letra="L" />a demostración por contradicción, conocida históricamente como *reductio ad absurdum*, es una técnica de demostración indirecta que establece la veracidad de una proposición $P$ asumiendo provisionalmente su negación $\neg P$ y derivando rigurosamente a partir de ella una contradicción lógica formal del tipo $R \land \neg R \equiv \bot$.
+<Capitular letra="L" />a demostración por contradicción, conocida históricamente como *reductio ad absurdum*, es una técnica de demostración indirecta que establece la veracidad de una proposición <VisualBind element="pP" color="terracota">$P$</VisualBind> asumiendo provisionalmente su negación $\neg P$ y derivando rigurosamente a partir de ella una contradicción lógica formal del tipo <VisualBind element="pAbsurdo" color="granada">$R \land \neg R \equiv \bot$</VisualBind>.
 
 <Separador />
 
-### Fundamento lógico y principio del tercero excluso
+### Fundamento lógico y fases de la reducción al absurdo
 
-El método se apoya en las leyes fundamentales de la lógica clásica:
+El método se apoya en las leyes fundamentales de la lógica clásica (principio de no contradicción $\neg (R \land \neg R)$ y del tercero excluso $P \lor \neg P$). Para demostrar una implicación condicional $P \implies Q$, el procedimiento se desglosa en cuatro fases canónicas:
 
-- **Principio de no contradicción**: Una proposición no puede ser verdadera y falsa simultáneamente en el mismo contexto formal: $\neg (R \land \neg R)$.
-- **Principio del tercero excluso**: Toda proposición $P$ es necesariamente verdadera o falsa ($P \lor \neg P$).
-- **Equivalencia de implicación**: Demostrar $(\neg P \implies \bot)$ equivale lógicamente a demostrar la veracidad indiscutible de $P$:
+<ProofStep number={1} target={["pP", "pNotQ"]} diagramStep="paso-supuesto" title="Planteamiento del supuesto provisional ¬Q">
+  Junto con la hipótesis de partida <VisualBind element="pP" color="terracota">$P$</VisualBind>, se asume provisionalmente la falsedad de la tesis mediante el supuesto <VisualBind element="pNotQ" color="canela">$\neg Q$</VisualBind>:
   <Formula>
-    $$ (\neg P \implies \bot) \iff P $$
+    $$ P \land \neg Q \text{ (Supuesto conjunto inicial)} $$
   </Formula>
+</ProofStep>
 
-Para una implicación condicional $P \implies Q$, el procedimiento consiste en suponer conjuntamente la hipótesis $P$ y la negación de la tesis $\neg Q$, deduciendo una incompatibilidad lógica con los axiomas o teoremas del sistema.
+<ProofStep number={2} target={["pR", "pNotR", "segPR", "segNotQNotR"]} diagramStep="paso-deduccion-dual" title="Deducción de consecuencias incompatibles">
+  De la hipótesis <VisualBind element="pP" color="terracota">$P$</VisualBind> se deduce válidamente la consecuencia <VisualBind element="pR" color="terracota">$R$</VisualBind>; en paralelo, del supuesto <VisualBind element="pNotQ" color="canela">$\neg Q$</VisualBind> se deriva deductivamente <VisualBind element="pNotR" color="canela">$\neg R$</VisualBind>:
+  <Formula>
+    $$ P \implies R \quad \text{y en paralelo} \quad \neg Q \implies \neg R $$
+  </Formula>
+</ProofStep>
+
+<ProofStep number={3} target={["pAbsurdo", "segRColision", "segNotRColision"]} diagramStep="paso-colision-absurdo" title="Colisión formal y contradicción (⊥)">
+  Las dos consecuencias deducidas no pueden coexistir en el sistema formal. Su conjunción genera una colisión lógica irreparable <VisualBind element="pAbsurdo" color="granada">$\bot$</VisualBind>:
+  <Formula>
+    $$ R \land \neg R \equiv \bot \text{ (Absurdo)} $$
+  </Formula>
+</ProofStep>
+
+<ProofStep number={4} target={["pP", "pNotQ", "pAbsurdo"]} diagramStep="paso-conclusion-verdad" title="Rechazo del supuesto y conclusión de Q">
+  Dado que suponer $\neg Q$ conduce inevitablemente a una contradicción formal $\bot$, el supuesto provisional queda refutado y la tesis original $Q$ queda demostrada:
+  <Formula>
+    $$ (\neg Q \implies \bot) \iff Q \implies (P \implies Q) $$
+  </Formula>
+</ProofStep>
 
 <Separador />
 

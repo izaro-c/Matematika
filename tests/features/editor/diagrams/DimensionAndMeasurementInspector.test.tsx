@@ -125,6 +125,21 @@ describe('Dimension and Measurement Inspector Editability', () => {
         style: expect.objectContaining({ textOffset: [0.1, -0.3] }),
       });
     });
+
+    it('allows changing font size (labelSize) of dimensionLine', () => {
+      const dimLine = element('dim-1', 'AB', 'dimensionLine', ['p1', 'p2'], 'mora', true, {
+        style: { labelSize: 14 },
+      });
+
+      const { onUpdateElement } = setupInspectorWithElement(dimLine);
+
+      const sizeInputs = screen.getAllByLabelText(/Tamaño de cota/i);
+      expect(sizeInputs.length).toBeGreaterThanOrEqual(1);
+      fireEvent.change(sizeInputs[0], { target: { value: '20' } });
+      expect(onUpdateElement).toHaveBeenCalledWith('dim-1', {
+        style: expect.objectContaining({ labelSize: 20 }),
+      });
+    });
   });
 
   describe('measurement (Medidas)', () => {
@@ -154,6 +169,39 @@ describe('Dimension and Measurement Inspector Editability', () => {
       fireEvent.change(precisionInput, { target: { value: '1' } });
       expect(onUpdateElement).toHaveBeenCalledWith('meas-1', {
         properties: { anchorParameter: 0.5, unit: 'cm', precision: 1 },
+      });
+    });
+
+    it('allows changing font size (labelSize) of measurement', () => {
+      const meas = element('meas-1', 'm_1', 'measurement', ['seg-1'], 'terracota', true, {
+        style: { labelSize: 16 },
+      });
+
+      const { onUpdateElement } = setupInspectorWithElement(meas);
+
+      const sizeInputs = screen.getAllByLabelText(/Tamaño de medida/i);
+      expect(sizeInputs.length).toBeGreaterThanOrEqual(1);
+      fireEvent.change(sizeInputs[0], { target: { value: '18' } });
+      expect(onUpdateElement).toHaveBeenCalledWith('meas-1', {
+        style: expect.objectContaining({ labelSize: 18 }),
+      });
+    });
+  });
+
+  describe('label (Etiquetas)', () => {
+    it('allows changing font size (labelSize) of label', () => {
+      const lbl = element('lbl-1', 'Etiqueta', 'label', ['p1'], 'carbon', true, {
+        text: 'Hipotenusa',
+        style: { labelSize: 16 },
+      });
+
+      const { onUpdateElement } = setupInspectorWithElement(lbl);
+
+      const sizeInputs = screen.getAllByLabelText(/Tamaño de etiqueta/i);
+      expect(sizeInputs.length).toBeGreaterThanOrEqual(1);
+      fireEvent.change(sizeInputs[0], { target: { value: '22' } });
+      expect(onUpdateElement).toHaveBeenCalledWith('lbl-1', {
+        style: expect.objectContaining({ labelSize: 22 }),
       });
     });
   });

@@ -21,10 +21,22 @@ export function localizeDiagramSpec<T extends DiagramSpecV2 | DiagramSpecV3>(spe
       if (typeof stepTr === 'string') {
         return { ...step, label: stepTr };
       }
+      const overlayTr = stepTr.overlays;
+      const objectStates = overlayTr && step.objectStates
+        ? Object.fromEntries(Object.entries(step.objectStates).map(([objectId, state]) => {
+          const tr = overlayTr[objectId];
+          if (!tr || !state?.overlay) return [objectId, state];
+          return [objectId, {
+            ...state,
+            overlay: { ...state.overlay, title: tr.title ?? state.overlay.title, content: tr.content ?? state.overlay.content },
+          }];
+        }))
+        : step.objectStates;
       return {
         ...step,
         label: stepTr.label ?? step.label,
         description: stepTr.description ?? step.description,
+        ...(objectStates ? { objectStates } : {}),
       };
     });
   }
@@ -62,6 +74,9 @@ export function localizeDiagramSpec<T extends DiagramSpecV2 | DiagramSpecV3>(spe
       }
       if (tr.subtitles?.[obj.id] && updatedObj.subtitle) {
         updatedObj.subtitle = tr.subtitles[obj.id];
+      }
+      if (tr.ariaLabels?.[obj.id] && updatedObj.selection) {
+        updatedObj.selection = { ...updatedObj.selection, ariaLabel: tr.ariaLabels[obj.id] };
       }
 
       // Handle obj.content

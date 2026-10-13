@@ -146,20 +146,42 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                       />
                     </div>
                   </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">Unidad</label>
-                    <input
-                      type="text"
-                      placeholder="ej. cm"
-                      aria-label="Unidad de cota"
-                      value={dimLine.properties?.unit ?? ''}
-                      onChange={e =>
-                        onUpdateElement(dimLine.id, {
-                          properties: { ...(dimLine.properties || {}), unit: e.target.value },
-                        })
-                      }
-                      className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
-                    />
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">Unidad</label>
+                      <input
+                        type="text"
+                        placeholder="ej. cm"
+                        aria-label="Unidad de cota"
+                        value={dimLine.properties?.unit ?? ''}
+                        onChange={e =>
+                          onUpdateElement(dimLine.id, {
+                            properties: { ...(dimLine.properties || {}), unit: e.target.value },
+                          })
+                        }
+                        className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">Tamaño (px)</label>
+                      <input
+                        type="number"
+                        min="6"
+                        max="72"
+                        step="1"
+                        aria-label="Tamaño de cota"
+                        value={dimLine.style?.labelSize ?? 14}
+                        onChange={e =>
+                          onUpdateElement(dimLine.id, {
+                            style: {
+                              ...(dimLine.style || {}),
+                              labelSize: parseOptionalNumber(e.target.value, 14),
+                            },
+                          })
+                        }
+                        className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
+                      />
+                    </div>
                   </div>
                 </div>
               )}
@@ -277,15 +299,56 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
               />
             </div>
           </div>
+          <div className="grid grid-cols-2 gap-2.5">
+            <div>
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+                Unidad
+              </label>
+              <input
+                type="text"
+                aria-label="Unidad de cota"
+                value={element.properties?.unit ?? ''}
+                onChange={e =>
+                  onUpdateElement(element.id, {
+                    properties: { ...(element.properties || {}), unit: e.target.value },
+                  })
+                }
+                placeholder="ej. cm, m, °"
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+                Tamaño (px)
+              </label>
+              <input
+                type="number"
+                min="6"
+                max="72"
+                step="1"
+                aria-label="Tamaño de cota"
+                value={element.style?.labelSize ?? 14}
+                onChange={e =>
+                  onUpdateElement(element.id, {
+                    style: {
+                      ...(element.style || {}),
+                      labelSize: parseOptionalNumber(e.target.value, 14),
+                    },
+                  })
+                }
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+              />
+            </div>
+          </div>
         </div>
       )}
 
       {showsMeasurementProps(element.kind) && (
         <div className="space-y-2.5">
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-3 gap-2">
             <div>
               <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
-                Posición a lo largo del padre
+                Posición padre
               </label>
               <input
                 type="number"
@@ -313,6 +376,28 @@ export const ElementMarksSection: React.FC<ElementPanelProps> = ({
                 onChange={e =>
                   onUpdateElement(element.id, {
                     properties: { ...(element.properties || {}), unit: e.target.value },
+                  })
+                }
+                className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+                Tamaño (px)
+              </label>
+              <input
+                type="number"
+                min="6"
+                max="72"
+                step="1"
+                aria-label="Tamaño de medida"
+                value={element.style?.labelSize ?? 16}
+                onChange={e =>
+                  onUpdateElement(element.id, {
+                    style: {
+                      ...(element.style || {}),
+                      labelSize: parseOptionalNumber(e.target.value, 16),
+                    },
                   })
                 }
                 className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon font-bold shadow-2xs focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"

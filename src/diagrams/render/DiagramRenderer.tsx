@@ -308,7 +308,7 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
         stackRevision={stackRevision}
         safeArea={safeArea}
         viewportSafeArea={viewportSafeArea}
-        ariaLabel={`${spec.title}. Diagrama matemático interactivo.`}
+        ariaLabel={`${spec.title}. ${t('common', 'interactiveDiagram')}.`}
         className={`relative h-full w-full overflow-hidden ${roundedClass} font-diagram ${className?.includes('!min-h-0') ? '!min-h-0' : 'min-h-[200px]'}`}
         onBoundingBoxChange={(next) => {
           if (next.some((value, index) => Math.abs(value - bounds[index]) > 1e-7)) commitCamera(next);
@@ -379,7 +379,8 @@ const DiagramRendererContent: React.FC<DiagramRendererProps> = ({
             )}
           </header>
         )}
-        <DiagramKatexOverlay spec={spec} activeStepId={effectiveStepId} variables={liveSceneVariables} />
+        {/* El editor pasa '' en la vista base: los paneles de paso muestran entonces el primero, como la página publicada. */}
+        <DiagramKatexOverlay spec={spec} activeStepId={effectiveStepId || spec.steps[0]?.id} variables={liveSceneVariables} />
         {showToolbar && (
           <div
             ref={toolbarRef}

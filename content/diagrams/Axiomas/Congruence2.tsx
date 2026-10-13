@@ -557,11 +557,39 @@ export const Congruence2Spec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "II. Kongruentzia-axioma",
-      "note": "Arrastatu A, B, C, D, E eta F kongruentziaren iragankortasuna esploratzeko."
+      "note": "Arrastatu A, B, C, D, E eta F kongruentziaren iragankortasuna esploratzeko.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "pD": "D puntua",
+        "pE": "E puntua",
+        "pF": "F puntua",
+        "segAB": "Segmentua",
+        "segCD": "Segmentua",
+        "segEF": "Segmentua",
+        "tickssegCD": "Segmentuaren neurri-markak",
+        "tickssegEF": "Segmentuaren neurri-markak",
+        "tickssegAB": "Segmentuaren neurri-markak"
+      }
     },
     "en": {
       "title": "Congruence Axiom II",
-      "note": "Drag A, B, C, D, E, and F to explore the transitivity of congruence."
+      "note": "Drag A, B, C, D, E, and F to explore the transitivity of congruence.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "pD": "Point D",
+        "pE": "Point E",
+        "pF": "Point F",
+        "segAB": "Segment",
+        "segCD": "Segment",
+        "segEF": "Segment",
+        "tickssegCD": "Segment measurement marks",
+        "tickssegEF": "Segment measurement marks",
+        "tickssegAB": "Segment measurement marks"
+      }
     }
   }
 }

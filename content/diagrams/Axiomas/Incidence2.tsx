@@ -218,11 +218,25 @@ export const Incidence2Spec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "II. Intzidentzia-axioma",
-      "note": "Zuzen orok gutxienez bi puntu desberdin ditu."
+      "note": "Zuzen orok gutxienez bi puntu desberdin ditu.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "pD": "D puntua",
+        "lineCD": "Zuzena"
+      }
     },
     "en": {
       "title": "Incidence Axiom II",
-      "note": "Every line contains at least two distinct points."
+      "note": "Every line contains at least two distinct points.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "pD": "Point D",
+        "lineCD": "Line"
+      }
     }
   }
 }

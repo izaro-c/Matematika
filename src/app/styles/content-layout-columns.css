@@ -311,7 +311,7 @@
   border-radius: 0;
 }
 
-.content-layout[data-page-type="metodo"] .content-diagram-surface {
+.content-layout[data-page-type="metodo"] .content-diagram-surface:not(:has([data-math-board])) {
   overflow: hidden;
   border: 2px solid var(--page-accent);
   border-radius: 20px;

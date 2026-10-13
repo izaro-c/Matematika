@@ -59,7 +59,8 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
     : (allObjects[0]?.id || '');
   const selectedObjectId = selectedIds[0] ?? '';
   const selectedObject = model.points.find(point => point.id === selectedObjectId)
-    ?? model.elements.find(element => element.id === selectedObjectId);
+    ?? model.elements.find(element => element.id === selectedObjectId)
+    ?? model.sliders.find(slider => slider.id === selectedObjectId);
 
   const syncActiveAfterReorder = (nextSteps: VisualStep[], previousId?: string) => {
     const id = previousId ?? (activeStepIndex !== null ? steps[activeStepIndex]?.id : undefined);
@@ -274,6 +275,27 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                   placeholder="Descripción explicativa del paso..."
                 />
 
+                <div className="flex items-center justify-between gap-2 mb-2 bg-lienzo/50 px-2 py-1.5 rounded-lg border border-carbon/10">
+                  <label className="text-[10px] font-bold text-carbon/70 uppercase tracking-wider">
+                    Transición (ms)
+                  </label>
+                  <div className="flex items-center gap-1.5">
+                    <input
+                      type="number"
+                      min="0"
+                      step="100"
+                      value={st.durationMs ?? ''}
+                      onChange={(e) => {
+                        const val = e.target.value === '' ? undefined : Number(e.target.value);
+                        onUpdateStep(idx, { durationMs: val });
+                      }}
+                      placeholder="1800"
+                      className="w-20 bg-lienzo border border-carbon/20 rounded px-2 py-0.5 text-xs text-right text-carbon focus:border-canela focus:outline-none"
+                    />
+                    <span className="text-[10px] text-carbon/40 font-mono">ms</span>
+                  </div>
+                </div>
+
                 <div>
                   <div className="flex flex-wrap items-center justify-between gap-1.5 mb-1">
                     <label className="block text-[10px] font-bold text-carbon/60 uppercase tracking-wider">
@@ -370,6 +392,73 @@ export const WorkbenchStepsEditor: React.FC<WorkbenchStepsEditorProps> = ({
                     })}
                   </div>
                 </div>
+
+                {model.sliders.length > 0 && (
+                  <div className="mt-2 p-2 bg-lienzo/50 rounded-lg border border-carbon/10 space-y-1.5">
+                    <label className="block text-[10px] font-bold text-carbon/60 uppercase tracking-wider">
+                      Valores de deslizadores en este paso
+                    </label>
+                    <div className="space-y-1.5">
+                      {model.sliders.map(sl => {
+                        const stepVal = st.objectStates?.[sl.id]?.value;
+                        const isOverridden = stepVal !== undefined;
+                        return (
+                          <div key={sl.id} className="flex items-center justify-between gap-2 text-[11px]">
+                            <span className="font-mono text-carbon truncate flex-1" title={sl.label || sl.id}>
+                              {sl.label || sl.id}
+                              <span className="text-[10px] text-carbon/40 ml-1">
+                                ({sl.min}..{sl.max})
+                              </span>
+                            </span>
+                            <div className="flex items-center gap-1.5">
+                              <input
+                                type="number"
+                                min={sl.min}
+                                max={sl.max}
+                                step={sl.step || 0.01}
+                                value={stepVal ?? ''}
+                                placeholder={String(sl.value)}
+                                onChange={e => {
+                                  const val = e.target.value === '' ? undefined : Number(e.target.value);
+                                  onUpdateStep(idx, {
+                                    objectStates: {
+                                      ...(st.objectStates || {}),
+                                      [sl.id]: {
+                                        ...(st.objectStates?.[sl.id] || {}),
+                                        value: val,
+                                      },
+                                    },
+                                  });
+                                }}
+                                className="w-16 bg-lienzo border border-carbon/20 rounded px-1.5 py-0.5 text-xs text-right font-mono text-carbon focus:border-canela focus:outline-none"
+                              />
+                              {isOverridden && (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    onUpdateStep(idx, {
+                                      objectStates: {
+                                        ...(st.objectStates || {}),
+                                        [sl.id]: {
+                                          ...(st.objectStates?.[sl.id] || {}),
+                                          value: undefined,
+                                        },
+                                      },
+                                    });
+                                  }}
+                                  className="text-carbon/40 hover:text-granada p-0.5 text-[10px] cursor-pointer"
+                                  title="Restablecer a valor base"
+                                >
+                                  ×
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
                 {isActive && selectedObject && (
                   <div className="mt-2 rounded-xl border border-canela/25 bg-canela/5 p-2.5">
                     <div className="mb-2 flex items-center justify-between">

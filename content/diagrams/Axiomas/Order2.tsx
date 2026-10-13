@@ -278,11 +278,29 @@ export const Order2Spec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "II. Ordena-axioma",
-      "note": "Arrastatu A, B eta C tarteko eta kanpoko puntuen existentzia esploratzeko."
+      "note": "Arrastatu A, B eta C tarteko eta kanpoko puntuen existentzia esploratzeko.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pC": "C puntua",
+        "pL": "C puntua",
+        "pD": "D puntua",
+        "pB": "B puntua",
+        "lineDC": "Zuzena",
+        "segAC": "Segmentua"
+      }
     },
     "en": {
       "title": "Order Axiom II",
-      "note": "Drag A, B, and C to explore the existence of intermediate and outer points."
+      "note": "Drag A, B, and C to explore the existence of intermediate and outer points.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pC": "Point C",
+        "pL": "Point C",
+        "pD": "Point D",
+        "pB": "Point B",
+        "lineDC": "Line",
+        "segAC": "Segment"
+      }
     }
   }
 }

@@ -749,11 +749,57 @@ export const TalesSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Talesen teorema",
-      "note": "Mugitu A, B, C eta D paraleloen arteko segmentuen proportzionaltasuna egiaztatzeko."
+      "note": "Mugitu A, B, C eta D paraleloen arteko segmentuen proportzionaltasuna egiaztatzeko.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "pD": "D puntua",
+        "polygonABC": "Poligonoa",
+        "segAB": "Segmentua",
+        "segBC": "Segmentua",
+        "segAC": "Segmentua",
+        "lineBC": "Zuzena",
+        "parCBD": "Paraleloa",
+        "intE": "Ebakidura",
+        "segDE": "Segmentua",
+        "segAD": "Segmentua",
+        "segAE": "Segmentua",
+        "segEC": "Segmentua",
+        "segDB": "Segmentua",
+        "label-segDB": "Segmentuaren etiketa",
+        "label-segAD": "Segmentuaren etiketa",
+        "label-segAE": "Segmentuaren etiketa",
+        "label-segEC": "Segmentuaren etiketa",
+        "infoPanel17": "Informazio-panela"
+      }
     },
     "en": {
       "title": "Thales's Theorem",
-      "note": "Move A, B, C, and D to verify the proportionality of segments between parallel lines."
+      "note": "Move A, B, C, and D to verify the proportionality of segments between parallel lines.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "pD": "Point D",
+        "polygonABC": "Polygon",
+        "segAB": "Segment",
+        "segBC": "Segment",
+        "segAC": "Segment",
+        "lineBC": "Line",
+        "parCBD": "Parallel",
+        "intE": "Intersection",
+        "segDE": "Segment",
+        "segAD": "Segment",
+        "segAE": "Segment",
+        "segEC": "Segment",
+        "segDB": "Segment",
+        "label-segDB": "Segment label",
+        "label-segAD": "Segment label",
+        "label-segAE": "Segment label",
+        "label-segEC": "Segment label",
+        "infoPanel17": "Information panel"
+      }
     }
   }
 }

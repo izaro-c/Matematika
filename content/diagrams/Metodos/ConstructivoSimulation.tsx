@@ -1,9 +1,51 @@
 import { useState } from 'react';
+import { useDiagramLang } from '@/diagrams/public';
 
 type Step = 0 | 1 | 2 | 3 | 4 | 5;
 
+const TEXT = {
+  es: {
+    tags: ['① Circ. A', '② Circ. B', '③ ∩ C, D', '④ Recta CD', '⑤ M'],
+    messages: [
+      'Dados dos puntos, construimos',
+      'Circunferencia con centro en A',
+      'Circunferencia con centro en B',
+      'Las circunferencias se cortan en C y D',
+      'La recta CD es la mediatriz de AB',
+      '✓ M es el punto medio de AB',
+    ],
+    buttons: ['Construir', 'Circunferencia A', 'Circunferencia B', 'Intersecar', 'Trazar mediatriz', '✓ Punto medio'],
+  },
+  eu: {
+    tags: ['① A zirk.', '② B zirk.', '③ ∩ C, D', '④ CD zuzena', '⑤ M'],
+    messages: [
+      'Bi puntu emanda, eraikitzen dugu',
+      'A zentroa duen zirkunferentzia',
+      'B zentroa duen zirkunferentzia',
+      'Zirkunferentziak C-n eta D-n ebakitzen dira',
+      'CD zuzena AB-ren erdibitzaile perpendikularra da',
+      '✓ M AB-ren erdiko puntua da',
+    ],
+    buttons: ['Eraiki', 'A zirkunferentzia', 'B zirkunferentzia', 'Ebaki', 'Erdibitzailea marraztu', '✓ Erdiko puntua'],
+  },
+  en: {
+    tags: ['① Circ. A', '② Circ. B', '③ ∩ C, D', '④ Line CD', '⑤ M'],
+    messages: [
+      'Given two points, we construct',
+      'Circle centred at A',
+      'Circle centred at B',
+      'The circles meet at C and D',
+      'The line CD is the perpendicular bisector of AB',
+      '✓ M is the midpoint of AB',
+    ],
+    buttons: ['Construct', 'Circle A', 'Circle B', 'Intersect', 'Draw bisector', '✓ Midpoint'],
+  },
+};
+
 export const ConstructivoSimulation = () => {
   const [step, setStep] = useState<Step>(0);
+  const lang = useDiagramLang();
+  const t = TEXT[lang as keyof typeof TEXT] ?? TEXT.es;
 
   const s = (n: Step) => step >= n;
 
@@ -87,22 +129,22 @@ export const ConstructivoSimulation = () => {
 
         {/* Etiquetas de paso */}
         <div className="absolute top-0 left-0 right-0 flex justify-between px-6 pt-2">
-          <span className={`text-[10px] transition-all duration-500 ${s(1) ? 'text-canela/70' : 'text-transparent'}`}>① Circ. A</span>
-          <span className={`text-[10px] transition-all duration-500 ${s(2) ? 'text-mora/70' : 'text-transparent'}`}>② Circ. B</span>
-          <span className={`text-[10px] transition-all duration-500 ${s(3) ? 'text-canela/70' : 'text-transparent'}`}>③ ∩ C, D</span>
-          <span className={`text-[10px] transition-all duration-500 ${s(4) ? 'text-carbon/60' : 'text-transparent'}`}>④ Recta CD</span>
-          <span className={`text-[10px] transition-all duration-500 ${s(5) ? 'text-terracota/70' : 'text-transparent'}`}>⑤ M</span>
+          <span className={`text-[10px] transition-all duration-500 ${s(1) ? 'text-canela/70' : 'text-transparent'}`}>{t.tags[0]}</span>
+          <span className={`text-[10px] transition-all duration-500 ${s(2) ? 'text-mora/70' : 'text-transparent'}`}>{t.tags[1]}</span>
+          <span className={`text-[10px] transition-all duration-500 ${s(3) ? 'text-canela/70' : 'text-transparent'}`}>{t.tags[2]}</span>
+          <span className={`text-[10px] transition-all duration-500 ${s(4) ? 'text-carbon/60' : 'text-transparent'}`}>{t.tags[3]}</span>
+          <span className={`text-[10px] transition-all duration-500 ${s(5) ? 'text-terracota/70' : 'text-transparent'}`}>{t.tags[4]}</span>
         </div>
       </div>
 
       {/* Mensaje */}
       <div className="h-7 flex items-center justify-center">
-        {step === 0 && <p className="text-sm text-mora/35 italic">Dados dos puntos, construimos</p>}
-        {step === 1 && <p className="text-sm text-canela/60">Circunferencia con centro en A</p>}
-        {step === 2 && <p className="text-sm text-mora/60">Circunferencia con centro en B</p>}
-        {step === 3 && <p className="text-sm text-mora/50">Las circunferencias se cortan en C y D</p>}
-        {step === 4 && <p className="text-sm text-mora/50">La recta CD es la mediatriz de AB</p>}
-        {step === 5 && <p className="text-sm text-terracota font-bold">✓ M es el punto medio de AB</p>}
+        {step === 0 && <p className="text-sm text-mora/35 italic">{t.messages[0]}</p>}
+        {step === 1 && <p className="text-sm text-canela/60">{t.messages[1]}</p>}
+        {step === 2 && <p className="text-sm text-mora/60">{t.messages[2]}</p>}
+        {step === 3 && <p className="text-sm text-mora/50">{t.messages[3]}</p>}
+        {step === 4 && <p className="text-sm text-mora/50">{t.messages[4]}</p>}
+        {step === 5 && <p className="text-sm text-terracota font-bold">{t.messages[5]}</p>}
       </div>
 
       {/* Botón */}
@@ -114,7 +156,7 @@ export const ConstructivoSimulation = () => {
             bg-mora text-lienzo hover:bg-mora/85
             disabled:opacity-25 disabled:cursor-default"
         >
-          {['Construir', 'Circunferencia A', 'Circunferencia B', 'Intersecar', 'Trazar mediatriz', '✓ Punto medio'][step]}
+          {t.buttons[step]}
         </button>
         {step >= 5 && (
           <button onClick={() => setStep(0)} className="px-3 py-2 text-sm rounded-sm font-serif border border-mora/12 text-mora/50 hover:text-mora hover:bg-mora/5 transition-all">

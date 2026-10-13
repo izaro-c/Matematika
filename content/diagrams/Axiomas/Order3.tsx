@@ -264,11 +264,27 @@ export const Order3Spec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "III. Ordena-axioma",
-      "note": "Arrastatu A, B eta C puntuak zuzenean duten ordena aldatzeko."
+      "note": "Arrastatu A, B eta C puntuak zuzenean duten ordena aldatzeko.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "pD": "D puntua",
+        "pE": "E puntua",
+        "lineDE": "l zuzena"
+      }
     },
     "en": {
       "title": "Order Axiom III",
-      "note": "Drag points A, B, and C to change their order on the line."
+      "note": "Drag points A, B, and C to change their order on the line.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "pD": "Point D",
+        "pE": "Point E",
+        "lineDE": "Line l"
+      }
     }
   }
 }

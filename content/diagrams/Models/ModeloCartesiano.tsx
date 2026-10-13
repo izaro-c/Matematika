@@ -299,7 +299,37 @@ export const ModeloCartesianoSpec = createDiagramSpec(
   ],
   "relations": [],
   "steps": [],
-  "note": "Arrastra A, B y P. La recta l′ permanece paralela a l."
+  "note": "Arrastra A, B y P. La recta l′ permanece paralela a l.",
+  "translations": {
+    "eu": {
+      "title": "ℝ² eredu kartesiarra",
+      "note": "Arrastatu A, B eta P. l′ zuzenak l-ren paralelo izaten jarraitzen du.",
+      "texts": {
+        "infoCarte": "puntuak → $(x, y)\\\\$ zuzenak → $ax + by + c = 0\\\\$$l' ∥ l$, $P$-tik"
+      },
+      "ariaLabels": {
+        "A": "A puntua",
+        "B": "B puntua",
+        "P": "P puntua",
+        "lineAB": "A-tik eta B-tik igarotzen den l zuzena",
+        "parallelP": "P-tik igarotzen den l-ren paralelo l′ zuzena"
+      }
+    },
+    "en": {
+      "title": "Cartesian model ℝ²",
+      "note": "Drag A, B and P. The line l′ stays parallel to l.",
+      "texts": {
+        "infoCarte": "points → $(x, y)\\\\$ lines → $ax + by + c = 0\\\\$$l' ∥ l$ through $P$"
+      },
+      "ariaLabels": {
+        "A": "Point A",
+        "B": "Point B",
+        "P": "Point P",
+        "lineAB": "Line l through A and B",
+        "parallelP": "Line l′ parallel to l through P"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

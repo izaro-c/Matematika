@@ -148,6 +148,9 @@ describe('catálogo seguro del editor', () => {
       'content/diagrams/Ejercicios/EjemploPitagorasCalculo.tsx',
       'content/diagrams/Ejercicios/EjercicioClasificacionTriangulos.tsx',
       'content/diagrams/Ejercicios/EjercicioPitagorasCateto.tsx',
+      'content/diagrams/Metodos/ContradictionSimulation.tsx',
+      'content/diagrams/Metodos/DirectoSimulation.tsx',
+      'content/diagrams/Metodos/InduccionSimulation.tsx',
       'content/diagrams/Models/ModeloCartesiano.tsx',
       'content/diagrams/Models/ModeloFano.tsx',
       'content/diagrams/Models/ModeloPoincare.tsx',
@@ -164,7 +167,7 @@ describe('catálogo seguro del editor', () => {
       'content/diagrams/Teoremas/Tales.tsx',
       'content/diagrams/Teoremas/TrianguloIsosceles.tsx',
     ]);
-    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(12);
+    expect(diagrams.filter(item => item.capability === 'code-preview')).toHaveLength(9);
     expect(editable.some(item => ['MathBoard.tsx', 'MathFactory.ts', 'MathUtils.ts', 'InteractiveGeometryCanvas.tsx'].includes(item.name))).toBe(false);
   });
 });

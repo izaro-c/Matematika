@@ -45,7 +45,7 @@ export function applyDiagramAuthoredFontSize(
     return;
   }
   node.style.setProperty('--diagram-authored-font-size', `${authoredPx}px`);
-  node.style.removeProperty('font-size');
+  node.style.setProperty('font-size', `calc(${authoredPx}px * var(--diagram-text-scale, 1))`, 'important');
 }
 
 type VisualTextHost = {

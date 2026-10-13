@@ -26,7 +26,7 @@ import { DemoPitagorasAreas } from "@content/diagrams/Demos/DemoPitagorasAreas";
 
 ### Demostración paso a paso
 
-<ProofStep number={1} target="outerSquare" title="Construcción del cuadrado exterior">
+<ProofStep number={1} target="outerSquare" diagramStep="step1" title="Construcción del cuadrado exterior">
 Se construye un <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> exterior envolvente de lado $(a+b)$. Por la definición de área del cuadrado (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>teorema del área del rectángulo</ConceptLink>), su área total satisface la identidad algebraica:
 
 $$
@@ -34,19 +34,19 @@ $$
 $$
 </ProofStep>
 
-<ProofStep number={2} target="t1" title="Disposición de los cuatro triángulos rectángulos">
-En cada una de las cuatro esquinas del cuadrado exterior se dispone un <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink> de catetos $a$ y $b$ (<VisualBind element="t1" color="carbon">$T_1$</VisualBind>, <VisualBind element="t2" color="carbon">$T_2$</VisualBind>, <VisualBind element="t3" color="carbon">$T_3$</VisualBind>, <VisualBind element="t4" color="carbon">$T_4$</VisualBind>). Por el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, los cuatro triángulos son congruentes entre sí. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>, la suma de las áreas de los cuatro triángulos es:
+<ProofStep number={2} target="t1" diagramStep="step2" title="Disposición de los cuatro triángulos rectángulos">
+En cada una de las cuatro esquinas del cuadrado exterior se dispone un <ConceptLink targetId="triangulo-rectangulo" isDependency={true}>triángulo rectángulo</ConceptLink> de catetos $a$ y $b$ (<VisualBind element="t1" color="canela">$T_1$</VisualBind>, <VisualBind element="t2" color="canela">$T_2$</VisualBind>, <VisualBind element="t3" color="canela">$T_3$</VisualBind>, <VisualBind element="t4" color="canela">$T_4$</VisualBind>). Por el <ConceptLink targetId="teorema-congruencia-lal" isDependency={true}>teorema de congruencia LAL</ConceptLink>, los cuatro triángulos son congruentes entre sí. Por el <ConceptLink targetId="teorema-area-triangulo" isDependency={true}>teorema del área del triángulo</ConceptLink>, la suma de las áreas de los cuatro triángulos es:
 
 $$
 4 \cdot \left(\frac{1}{2} a b\right) = 2ab
 $$
 </ProofStep>
 
-<ProofStep number={3} target="emptyC" title="Caracterización del cuadrado interior">
+<ProofStep number={3} target="emptyC" diagramStep="step3" title="Caracterización del cuadrado interior">
 Las cuatro hipotenusas de los triángulos forman la frontera de una región cuadrilátera central <VisualBind element="emptyC" color="ocre">$Q_c$</VisualBind> de lados de longitud $c$. Como los dos <ConceptLink targetId="angulo" isDependency={true}>ángulos</ConceptLink> agudos de cada triángulo rectángulo son <ConceptLink targetId="angulos-suplementarios" isDependency={true}>complementarios</ConceptLink> y suman $90^\circ$, el ángulo interior en cada vértice del cuadrilátero central mide $180^\circ - 90^\circ = 90^\circ$. Al tener sus cuatro lados congruentes y sus cuatro ángulos rectos, $Q_c$ es un <ConceptLink targetId="cuadrado">cuadrado</ConceptLink> interior de área $c^2$.
 </ProofStep>
 
-<ProofStep number={4} target="emptyA" title="Aplicación del teorema de aditividad del área">
+<ProofStep number={4} target="emptyC" diagramStep="step4" title="Aplicación del teorema de aditividad del área">
 Por el <ConceptLink targetId="teorema-area-aditividad" isDependency={true}>teorema de aditividad del área</ConceptLink>, el área del cuadrado exterior equivale a la suma del área del cuadrado interior central más la suma de las áreas de los cuatro triángulos de las esquinas:
 
 $$
@@ -54,8 +54,8 @@ $$
 $$
 </ProofStep>
 
-<ProofStep number={5} target="emptyB" title="Simplificación algebraica y conclusión">
-Restando el término $2ab$ en ambos miembros de la igualdad, o alternativamente reagrupando los cuatro triángulos en dos rectángulos de dimensiones $a \times b$ (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>teorema del área del rectángulo</ConceptLink>) que dejan al descubierto dos <ConceptLink targetId="cuadrado">cuadrados</ConceptLink> interiores <VisualBind element="emptyA" color="terracota">$Q_a$</VisualBind> (de área $a^2$) y <VisualBind element="emptyB" color="canela">$Q_b$</VisualBind> (de área $b^2$), se concluye formalmente:
+<ProofStep number={5} target="emptyA" diagramStep="step5" title="Simplificación algebraica y conclusión">
+Restando el término $2ab$ en ambos miembros de la igualdad, o alternativamente reagrupando los cuatro triángulos en dos rectángulos de dimensiones $a \times b$ (<ConceptLink targetId="teorema-area-rectangulo" isDependency={true}>teorema del área del rectángulo</ConceptLink>) que dejan al descubierto dos <ConceptLink targetId="cuadrado">cuadrados</ConceptLink> interiores <VisualBind element="emptyA" color="terracota">$Q_a$</VisualBind> (de área $a^2$) y <VisualBind element="emptyB" color="pavo">$Q_b$</VisualBind> (de área $b^2$), se concluye formalmente:
 
 $$
 a^2 + b^2 = c^2

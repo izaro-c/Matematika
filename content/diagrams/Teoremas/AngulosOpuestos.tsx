@@ -527,11 +527,29 @@ export const AngulosOpuestosSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Erpinez aurkako angeluak",
-      "note": "Mugitu A edo B zuzenak biratzeko eta erpinez aurkako angeluen berdintasuna egiaztatzeko."
+      "note": "Mugitu A edo B zuzenak biratzeko eta erpinez aurkako angeluen berdintasuna egiaztatzeko.",
+      "ariaLabels": {
+        "O": "O ebaki-puntua",
+        "A": "A puntua l zuzenean",
+        "B": "B puntua m zuzenean",
+        "Ap": "A' puntu aurkakoa l zuzenean",
+        "Bp": "B' puntu aurkakoa m zuzenean",
+        "lineL": "l zuzena",
+        "lineM": "m zuzena"
+      }
     },
     "en": {
       "title": "Vertically Opposite Angles",
-      "note": "Move A or B to rotate the lines and verify the equality of vertical angles."
+      "note": "Move A or B to rotate the lines and verify the equality of vertical angles.",
+      "ariaLabels": {
+        "O": "Intersection point O",
+        "A": "Point A on line l",
+        "B": "Point B on line m",
+        "Ap": "Opposite point A' on line l",
+        "Bp": "Opposite point B' on line m",
+        "lineL": "Line l",
+        "lineM": "Line m"
+      }
     }
   }
 }

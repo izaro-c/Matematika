@@ -542,7 +542,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "triangulo",
-      "label": "ABC hirukia",
+      "label": "Triángulo ABC",
       "color": "carbon",
       "layerId": "geometria",
       "order": 0,
@@ -575,7 +575,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "segBC",
-      "label": "a katetoa",
+      "label": "Cateto a",
       "color": "pavo",
       "layerId": "geometria",
       "order": 1,
@@ -606,7 +606,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "segCA",
-      "label": "b katetoa",
+      "label": "Cateto b",
       "color": "terracota",
       "layerId": "geometria",
       "order": 2,
@@ -637,7 +637,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "segAB",
-      "label": "c hipotenusa",
+      "label": "Hipotenusa c",
       "color": "ocre",
       "layerId": "geometria",
       "order": 3,
@@ -668,7 +668,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "cuadradoA",
-      "label": "karratua a-ren gainean",
+      "label": "Cuadrado sobre a",
       "color": "pavo",
       "layerId": "areas",
       "order": 0,
@@ -705,7 +705,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "cuadradoB",
-      "label": "karratua b-ren gainean",
+      "label": "Cuadrado sobre b",
       "color": "terracota",
       "layerId": "areas",
       "order": 1,
@@ -742,7 +742,7 @@ export const PitagorasSpec = createDiagramSpec(
     },
     {
       "id": "cuadradoC",
-      "label": "karratua c-ren gainean",
+      "label": "Cuadrado sobre c",
       "color": "ocre",
       "layerId": "areas",
       "order": 2,
@@ -864,10 +864,13 @@ export const PitagorasSpec = createDiagramSpec(
         "segBC": "a katetoa",
         "segCA": "b katetoa",
         "segAB": "c hipotenusa",
-        "anguloRecto": "angelu zuzena C-n",
         "cuadradoA": "karratua a-ren gainean",
         "cuadradoB": "karratua b-ren gainean",
         "cuadradoC": "karratua c-ren gainean"
+      },
+      "ariaLabels": {
+        "identidad": "Informazio-panela",
+        "nonReflexAngleBCA": "Angelu ez-erreflexua (≤ 180°)"
       }
     },
     "en": {
@@ -878,10 +881,13 @@ export const PitagorasSpec = createDiagramSpec(
         "segBC": "Leg a",
         "segCA": "Leg b",
         "segAB": "Hypotenuse c",
-        "anguloRecto": "Right angle at C",
         "cuadradoA": "Square on a",
         "cuadradoB": "Square on b",
         "cuadradoC": "Square on c"
+      },
+      "ariaLabels": {
+        "identidad": "Information panel",
+        "nonReflexAngleBCA": "Non-reflex angle (≤ 180°)"
       }
     }
   }

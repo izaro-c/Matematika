@@ -153,7 +153,30 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
         </div>
       )}
 
-      {(capabilities.fontSize || capabilities.textOffset) && (
+      {['dimensionLine', 'measurement', 'label', 'text', 'formula'].includes(element.kind) ? (
+        <div className="pt-2 border-t border-carbon/10">
+          <label className="block text-[11px] font-bold text-carbon/75 tracking-tight mb-1">
+            {element.kind === 'dimensionLine' ? 'Tamaño de la Cota (px)' : 'Tamaño de la Etiqueta (px)'}
+          </label>
+          <input
+            type="number"
+            min="6"
+            max="72"
+            step="1"
+            aria-label={element.kind === 'dimensionLine' ? 'Tamaño de cota' : 'Tamaño de etiqueta'}
+            value={element.style?.labelSize ?? (element.kind === 'dimensionLine' ? 14 : 16)}
+            onChange={e =>
+              onUpdateElement(element.id, {
+                style: {
+                  ...(element.style || {}),
+                  labelSize: parseOptionalNumber(e.target.value, element.kind === 'dimensionLine' ? 14 : 16),
+                },
+              })
+            }
+            className="w-full rounded-lg border border-carbon/15 bg-lienzo px-3 py-1.5 text-xs text-carbon shadow-2xs transition-colors focus:border-canela focus:outline-none focus:ring-2 focus:ring-canela/20"
+          />
+        </div>
+      ) : (capabilities.fontSize || capabilities.textOffset) ? (
         <DiagramNativeLabelEditor
           label={element.label}
           visible={element.showLabel === true}
@@ -164,21 +187,45 @@ export const ElementStyleSection: React.FC<ElementPanelProps> = ({
           onVisibleChange={showLabel => onUpdateElement(element.id, { showLabel })}
           onStyleChange={style => onUpdateElement(element.id, { style: { ...element.style, ...style } })}
         />
-      )}
+      ) : null}
 
       {capabilities.attachedLabel && (
         <div className="rounded-lg border border-canela/20 bg-canela/5 p-2.5 text-xs">
           <p className="font-bold text-carbon">Etiqueta vinculada</p>
           {attachedLabel ? (
-            <label className="mt-1.5 flex items-center gap-2 text-carbon cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={attachedLabel.visible !== false}
-                onChange={event => onUpdateElement(attachedLabel.id, { visible: event.target.checked })}
-                className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
-              />
-              Mostrar junto al elemento
-            </label>
+            <div className="mt-1.5 space-y-2">
+              <label className="flex items-center gap-2 text-carbon cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={attachedLabel.visible !== false}
+                  onChange={event => onUpdateElement(attachedLabel.id, { visible: event.target.checked })}
+                  className="rounded border-carbon/30 text-canela focus:ring-canela cursor-pointer"
+                />
+                Mostrar junto al elemento
+              </label>
+              {attachedLabel.visible !== false && (
+                <div>
+                  <label className="block text-[10px] font-bold text-carbon/70 mb-0.5">Tamaño de la etiqueta (px)</label>
+                  <input
+                    type="number"
+                    min="6"
+                    max="72"
+                    step="1"
+                    aria-label="Tamaño de etiqueta vinculada"
+                    value={attachedLabel.style?.labelSize ?? 14}
+                    onChange={e =>
+                      onUpdateElement(attachedLabel.id, {
+                        style: {
+                          ...(attachedLabel.style || {}),
+                          labelSize: parseOptionalNumber(e.target.value, 14),
+                        },
+                      })
+                    }
+                    className="w-full rounded border border-carbon/15 bg-lienzo px-2 py-1 text-xs text-carbon shadow-2xs focus:border-canela focus:outline-none"
+                  />
+                </div>
+              )}
+            </div>
           ) : (
             <p className="mt-1 text-[10px] text-carbon/55">Añade una etiqueta y ancla su referencia a este objeto para vincularla.</p>
           )}

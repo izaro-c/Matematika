@@ -204,11 +204,25 @@ export const EuclidParallelSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Euklidesen paraleloen axioma",
-      "note": "Arrastatu P puntua bertatik igarotzen den zuzen paralelo bakarra dagoela egiaztatzeko."
+      "note": "Arrastatu P puntua bertatik igarotzen den zuzen paralelo bakarra dagoela egiaztatzeko.",
+      "ariaLabels": {
+        "pP": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "lineBC": "Zuzena",
+        "parBCP": "Paraleloa"
+      }
     },
     "en": {
       "title": "Euclid's Parallel Postulate",
-      "note": "Drag point P to verify that there is a unique parallel line passing through it."
+      "note": "Drag point P to verify that there is a unique parallel line passing through it.",
+      "ariaLabels": {
+        "pP": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "lineBC": "Line",
+        "parBCP": "Parallel"
+      }
     }
   }
 }

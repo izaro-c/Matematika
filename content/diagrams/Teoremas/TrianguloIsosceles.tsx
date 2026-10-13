@@ -499,11 +499,42 @@ export const TrianguloIsoscelesSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Triangelu Isoszelea",
-      "note": "Arrastatu A erpina ardatzean zehar triangeluaren altuera aldatzeko, AB ≅ AC mantenduz."
+      "note": "Arrastatu A erpina ardatzean zehar triangeluaren altuera aldatzeko, AB ≅ AC mantenduz.",
+      "ariaLabels": {
+        "pB": "B erpina",
+        "pC": "C erpina",
+        "pA": "A erpina",
+        "midBC": "BC-ren erdiko puntua",
+        "lineMediatriz": "BC-ren erdibitzaile perpendikularra",
+        "polyABC": "ABC triangelu isoszelea",
+        "segBC": "BC oinarria",
+        "segAB": "AB aldea",
+        "segAC": "AC aldea",
+        "congruenceMarkAB": "Kongruentzia-marka AB-n",
+        "congruenceMarkAC": "Kongruentzia-marka AC-n",
+        "anguloB": "B erpineko angelua",
+        "anguloC": "C erpineko angelua",
+        "measurementSides": "Aldeen neurketa"
+      }
     },
     "en": {
       "title": "Isosceles Triangle",
-      "note": "Drag vertex A along the axis to change the height while maintaining AB ≅ AC."
+      "note": "Drag vertex A along the axis to change the height while maintaining AB ≅ AC.",
+      "ariaLabels": {
+        "pB": "Vertex B",
+        "pC": "Vertex C",
+        "pA": "Vertex A",
+        "midBC": "Midpoint of BC",
+        "lineMediatriz": "Perpendicular bisector of BC",
+        "polyABC": "Isosceles triangle ABC",
+        "segAB": "Side AB",
+        "segAC": "Side AC",
+        "congruenceMarkAB": "Congruence mark on AB",
+        "congruenceMarkAC": "Congruence mark on AC",
+        "anguloB": "Angle at vertex B",
+        "anguloC": "Angle at vertex C",
+        "measurementSides": "Side measurement"
+      }
     }
   }
 }

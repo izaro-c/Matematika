@@ -471,7 +471,69 @@ export const DemoAreaRectanguloConmensurableSpec = createDiagramSpec(
       }
     }
   ],
-  "note": "La cuadrícula interna traduce el producto b · h en un conteo de cuadrados unidad."
+  "note": "La cuadrícula interna traduce el producto b · h en un conteo de cuadrados unidad.",
+  "translations": {
+    "eu": {
+      "title": "Laukizuzenaren azalera: kasu konmentsuragarria",
+      "note": "Barneko saretak b · h biderkadura unitate-karratuen zenbaketa bihurtzen du.",
+      "steps": {
+        "step1": {
+          "label": "Kasu konmentsuragarria",
+          "description": "Saretak unitate-karratuaren m · n kopia zenbatzen ditu."
+        }
+      },
+      "titles": {
+        "gridInfo": "Unitateen zenbaketa"
+      },
+      "texts": {
+        "gridInfo": "6 × 4 unitate-karratu ⇒ Ed(R) = b · h"
+      },
+      "ariaLabels": {
+        "A": "A puntu finkoa",
+        "B": "B puntu finkoa",
+        "C": "C puntu finkoa",
+        "D": "D puntu finkoa",
+        "U1": "U₁ puntu finkoa",
+        "U2": "U₂ puntu finkoa",
+        "U3": "U₃ puntu finkoa",
+        "U4": "U₄ puntu finkoa",
+        "rect": "R laukizuzena",
+        "grid": "Unitate-sareta",
+        "unit": "Unitate-karratua",
+        "gridInfo": "Unitateen zenbaketa"
+      }
+    },
+    "en": {
+      "title": "Area of the rectangle: commensurable case",
+      "note": "The inner grid turns the product b · h into a count of unit squares.",
+      "steps": {
+        "step1": {
+          "label": "Commensurable case",
+          "description": "The grid counts m · n copies of the unit square."
+        }
+      },
+      "titles": {
+        "gridInfo": "Counting units"
+      },
+      "texts": {
+        "gridInfo": "6 × 4 unit squares ⇒ Cont(R) = b · h"
+      },
+      "ariaLabels": {
+        "A": "Fixed point A",
+        "B": "Fixed point B",
+        "C": "Fixed point C",
+        "D": "Fixed point D",
+        "U1": "Fixed point U₁",
+        "U2": "Fixed point U₂",
+        "U3": "Fixed point U₃",
+        "U4": "Fixed point U₄",
+        "rect": "Rectangle R",
+        "grid": "Unit grid",
+        "unit": "Unit square",
+        "gridInfo": "Counting units"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

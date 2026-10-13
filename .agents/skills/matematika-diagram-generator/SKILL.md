@@ -138,7 +138,93 @@ export const NombreDiagrama = () => <DiagramRenderer spec={NombreDiagramaSpec} /
 
 ---
 
-## 5. Referencias Técnicas Adicionales
-- [spec-v3-schema.md](./references/spec-v3-schema.md): Especificación detallada del esquema Zod de objetos, geometrías y relaciones.
-- [paleta-y-estilos.md](./references/paleta-y-estilos.md): Sistema de diseño, tokens de color y roles de selección.
+---
+
+## 5. Animaciones Continuas y Transiciones entre Pasos
+
+Los diagramas soportan animaciones fluidas y desplazamientos de piezas mediante tres mecanismos complementarios:
+
+### A. Deslizador de Control / Parámetro de Animación (`control` / `slider`)
+Se define un objeto `control` con variante `slider` (típicamente `animT` con rango de `0` a `1` y paso `0.01`):
+```json
+{
+  "id": "animT",
+  "label": "t",
+  "color": "terracota",
+  "layerId": "annotations",
+  "order": 0,
+  "visible": true,
+  "locked": false,
+  "groupIds": [],
+  "selection": { "selectable": true, "role": "primary", "ariaLabel": "Control de animación" },
+  "target": false,
+  "objectType": "control",
+  "variant": "slider",
+  "position": [1.2, -1.7],
+  "range": { "min": 0, "max": 1, "step": 0.01 },
+  "value": 0
+}
+```
+
+### B. Geometría Interpolada y Reactiva (`expression`)
+Puntos y posiciones se parametrizan en función del deslizador mediante expresiones matemáticas analíticas (interpolación lineal o transformaciones):
+```json
+{
+  "id": "pMovil",
+  "label": "P",
+  "objectType": "point",
+  "definition": {
+    "type": "expression",
+    "x": "xIni + (xFin - xIni) * animT",
+    "y": "yIni + (yFin - yIni) * animT",
+    "fallback": [0, 0]
+  },
+  "mobility": { "type": "fixed" }
+}
+```
+
+### C. Visibilidad Condicional Reactiva (`visibleWhen`)
+Para mostrar/ocultar cotas, áreas o elementos auxiliares en momentos precisos de la animación (por ejemplo, sólo al inicio o al finalizar el desplazamiento):
+```json
+{
+  "id": "cotaFinal",
+  "visible": false,
+  "visibleWhen": "gt(animT, 0.98)"
+}
+```
+*(Funciones soportadas: `gt(a, b)`, `lt(a, b)`, `gte(a, b)`, `lte(a, b)`, `eq(a, b)`, etc.)*
+
+### D. Duración y Asignación de Deslizador por Paso (`steps`)
+Al pasar de un paso a otro en la demostración:
+1. **`durationMs`**: Duración en milisegundos de la transición suave entre pasos (ej. `1000` o `1200` ms).
+2. **`objectStates[sliderId].value`**: Asigna el valor objetivo del deslizador en dicho paso. El motor interpola suavemente el valor del deslizador durante `durationMs`, ejecutando la animación de todas las piezas dependientes.
+```json
+{
+  "id": "paso-reordenacion",
+  "label": "Desplazamiento a la segunda configuración",
+  "description": "Las piezas se deslizan suavemente...",
+  "durationMs": 1200,
+  "visibleTargets": ["figuraBase", "pMovil", "poligonoMovil"],
+  "objectStates": {
+    "animT": { "value": 1 },
+    "figuraBase": { "emphasis": "primary" }
+  }
+}
+```
+### E. Controles Genéricos y Modelado de Causalidad Didáctica
+1. **Controles y Deslizadores (`control` con variant `slider`)**:
+   - `width`: Anchura / longitud visual configurable en unidades de coordenadas (por defecto `2.6`). En simulaciones con múltiples parámetros o botones compactos, usar valores entre `1.4` y `1.8` para no saturar el viewport.
+   - **Reactividad instantánea**: Los deslizadores disparan actualizaciones de forma continua durante el arrastre (`drag`) y al soltar (`up`), permitiendo respuestas visuales fluidas.
+   - Editable interactivamente desde el inspector del Editor Visual (`SliderInspector`).
+2. **Causalidad Didáctica en Cadenas Lógicas (ej. Inducción Matemática / Efecto Dominó)**:
+   - Al modelar dependencias deductivas (como $P(1) \land [P(k) \implies P(k+1)] \implies \forall n\, P(n)$):
+     - El **caso base** $P(1)$ debe activar el impulso inicial de la cadena.
+     - La **hipótesis/paso inductivo** $P(k) \implies P(k+1)$ debe modelar el *puente de transmisión* (ej. separación geométrica entre fichas tal que si el paso no está probado, la distancia $d > H$ impide el contacto y la propagación se interrumpe).
+     - Solo cuando ambos controles son verdaderos la cadena se propaga íntegramente hacia el infinito.
+
+---
+
+## 6. Referencias Técnicas Adicionales
+- [spec-v3-schema.md](./references/spec-v3-schema.md): Especificación detallada del esquema Zod de objetos, geometrías, controles y relaciones.
+- [paleta-y-estilos.md](./references/paleta-y-estilos.md): Sistema de diseño, tokens de color y **estilo del chrome** (botones, paneles, anotaciones). **Leer antes de cambiar cualquier estilo visual de diagramas.**
 - [pedagogia-geometria.md](./references/pedagogia-geometria.md): Buenas prácticas en didáctica matemática interactiva.

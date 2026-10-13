@@ -596,11 +596,45 @@ export const PerpendicularSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Perpendikularra",
-      "note": "Arrastatu A, B, C, D edo P"
+      "note": "Arrastatu A, B, C, D edo P",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pP": "P puntua",
+        "pC": "C puntua",
+        "pD": "D puntua",
+        "lineAB": "l1 zuzena",
+        "perpABP": "l2 zuzen perpendikularra",
+        "rayPA": "h1 zuzenerdia (PA)",
+        "rayPB": "h1' zuzenerdia (PB)",
+        "rayPC": "h2 zuzenerdia (PC)",
+        "rayPD": "h2' zuzenerdia (PD)",
+        "angleAPC": "APC angelu zuzena",
+        "angleBPC": "BPC angelu zuzena",
+        "angleBPD": "BPD angelu zuzena",
+        "angleAPD": "APD angelu zuzena"
+      }
     },
     "en": {
       "title": "Perpendicular",
-      "note": "Drag A, B, C, D, or P"
+      "note": "Drag A, B, C, D, or P",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pP": "Point P",
+        "pC": "Point C",
+        "pD": "Point D",
+        "lineAB": "Line l1",
+        "perpABP": "Perpendicular line l2",
+        "rayPA": "Ray h1 (PA)",
+        "rayPB": "Ray h1' (PB)",
+        "rayPC": "Ray h2 (PC)",
+        "rayPD": "Ray h2' (PD)",
+        "angleAPC": "Right angle APC",
+        "angleBPC": "Right angle BPC",
+        "angleBPD": "Right angle BPD",
+        "angleAPD": "Right angle APD"
+      }
     }
   }
 }

@@ -401,11 +401,34 @@ export const AnguloSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Angelua",
-      "note": "Mugitu A eta B"
+      "note": "Mugitu A eta B",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pO": "C puntua",
+        "p4": "4. puntua",
+        "rayOA": "Zuzenerdia",
+        "rayOB": "Zuzenerdia",
+        "angleBOA": "Angelu orientatua",
+        "infoPanel4": "Informazio-panela",
+        "lineBO": "Zuzena",
+        "perpB4O": "Perpendikularra"
+      }
     },
     "en": {
       "title": "Angle",
-      "note": "Move A and B"
+      "note": "Move A and B",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pO": "Point C",
+        "p4": "Point 4",
+        "rayOA": "Ray",
+        "rayOB": "Ray",
+        "angleBOA": "Oriented angle",
+        "infoPanel4": "Information panel",
+        "lineBO": "Line"
+      }
     }
   }
 }

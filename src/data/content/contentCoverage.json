@@ -1342,7 +1342,7 @@
       ],
       "diagramStatus": "exported",
       "sourcesCount": 0,
-      "proofSteps": 0,
+      "proofSteps": 4,
       "parentTheorem": null,
       "demos": []
     },
@@ -1357,7 +1357,7 @@
       ],
       "diagramStatus": "exported",
       "sourcesCount": 0,
-      "proofSteps": 0,
+      "proofSteps": 4,
       "parentTheorem": null,
       "demos": []
     },
@@ -1372,7 +1372,7 @@
       ],
       "diagramStatus": "exported",
       "sourcesCount": 0,
-      "proofSteps": 0,
+      "proofSteps": 4,
       "parentTheorem": null,
       "demos": []
     },

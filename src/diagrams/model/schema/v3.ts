@@ -1,6 +1,7 @@
 import type {
   DiagramBounds,
   DiagramColorToken,
+  DiagramControlAction,
   DiagramGroup,
   DiagramInfoPanelBlock,
   DiagramHeaderConfiguration,
@@ -199,6 +200,7 @@ export interface AnnotationObject extends DiagramObjectBase {
     precision?: number;
     rules?: DiagramTextRule[];
     title?: string;
+    subtitle?: string;
     blocks?: DiagramInfoPanelBlock[];
     layout?: 'stack' | 'columns';
   };
@@ -214,10 +216,13 @@ export interface AnnotationObject extends DiagramObjectBase {
 
 export interface ControlObject extends DiagramObjectBase {
   objectType: 'control';
-  variant: 'slider';
+  variant: 'slider' | 'button';
   position: [number, number];
   range: { min: number; max: number; maxExpression?: string; step: number };
   value: number;
+  width?: number;
+  /** Solo para `variant: 'button'`: animación del valor al pulsar. */
+  action?: DiagramControlAction;
 }
 
 export type DiagramObject = PointObject | PathObject | AngleObject | RegionObject | AreaObject | MarkObject | AnnotationObject | ControlObject;

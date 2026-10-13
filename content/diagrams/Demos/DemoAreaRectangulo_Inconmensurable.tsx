@@ -660,7 +660,79 @@ export const DemoAreaRectanguloInconmensurableSpec = createDiagramSpec(
       }
     }
   ],
-  "note": "Ajusta ε. Los rectángulos racionales interior y exterior se aproximan simultáneamente a R."
+  "note": "Ajusta ε. Los rectángulos racionales interior y exterior se aproximan simultáneamente a R.",
+  "translations": {
+    "eu": {
+      "title": "Laukizuzenaren azalera: kasu inkonmentsuragarria",
+      "note": "Doitu ε. Barneko eta kanpoko laukizuzen arrazionalak aldi berean hurbiltzen zaizkio R-ri.",
+      "steps": {
+        "step2": {
+          "label": "Kasu inkonmentsuragarria",
+          "description": "Barneko eta kanpoko laukizuzen arrazionalek R estutzen dute."
+        }
+      },
+      "titles": {
+        "squeezeInfo": "Estutze arkimedestarra"
+      },
+      "texts": {
+        "squeezeInfo": "Rₖ⁻ ⊂ R ⊂ Rₖ⁺; ε txikitzean, bi azalerek R-rena bornatzen dute."
+      },
+      "ariaLabels": {
+        "A": "A puntu finkoa",
+        "B": "B puntu finkoa",
+        "C": "C puntu finkoa",
+        "D": "D puntu finkoa",
+        "Ai": "Ai puntu eraikia",
+        "Bi": "Bi puntu eraikia",
+        "Ci": "Ci puntu eraikia",
+        "Di": "Di puntu eraikia",
+        "Ao": "Ao puntu eraikia",
+        "Bo": "Bo puntu eraikia",
+        "Co": "Co puntu eraikia",
+        "Do": "Do puntu eraikia",
+        "outer": "Rₖ⁺ kanpo-laukizuzena",
+        "rect": "R laukizuzena",
+        "inner": "Rₖ⁻ barne-laukizuzena",
+        "squeezeInfo": "Estutze arkimedestarra",
+        "epsilon": "Doitu ε"
+      }
+    },
+    "en": {
+      "title": "Area of the rectangle: incommensurable case",
+      "note": "Adjust ε. The inner and outer rational rectangles approach R simultaneously.",
+      "steps": {
+        "step2": {
+          "label": "Incommensurable case",
+          "description": "The inner and outer rational rectangles squeeze R."
+        }
+      },
+      "titles": {
+        "squeezeInfo": "Archimedean squeeze"
+      },
+      "texts": {
+        "squeezeInfo": "Rₖ⁻ ⊂ R ⊂ Rₖ⁺; as ε shrinks, both areas bound that of R."
+      },
+      "ariaLabels": {
+        "A": "Fixed point A",
+        "B": "Fixed point B",
+        "C": "Fixed point C",
+        "D": "Fixed point D",
+        "Ai": "Constructed point Ai",
+        "Bi": "Constructed point Bi",
+        "Ci": "Constructed point Ci",
+        "Di": "Constructed point Di",
+        "Ao": "Constructed point Ao",
+        "Bo": "Constructed point Bo",
+        "Co": "Constructed point Co",
+        "Do": "Constructed point Do",
+        "outer": "Outer rectangle Rₖ⁺",
+        "rect": "Rectangle R",
+        "inner": "Inner rectangle Rₖ⁻",
+        "squeezeInfo": "Archimedean squeeze",
+        "epsilon": "Adjust ε"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

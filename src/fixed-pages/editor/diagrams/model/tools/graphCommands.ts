@@ -97,6 +97,12 @@ export function renameDiagramId(model: VisualDiagramModel, oldId: string, reques
       ...(slider.targetId === oldId ? { targetId: newId } : {}),
       maxExpression: safeRenameExpression(slider.maxExpression, oldId, newId),
       visibleWhen: safeRenameExpression(slider.visibleWhen, oldId, newId),
+      ...(slider.action?.effects ? { action: { ...slider.action, effects: slider.action.effects.map(effect => ({
+        ...effect,
+        control: renameRef(effect.control),
+        ...(effect.from ? { from: safeRenameExpression(effect.from, oldId, newId) } : {}),
+        ...(effect.when ? { when: safeRenameExpression(effect.when, oldId, newId) } : {}),
+      })) } } : {}),
     })),
     layers: model.layers.map(layer => layer.id === oldId ? { ...layer, id: newId } : layer),
     groups: model.groups.map(group => ({
@@ -201,7 +207,11 @@ export function deleteDiagramCascade(model: VisualDiagramModel, requestedId: str
       points,
       layers: model.layers.filter(item => !removed.has(item.id)),
       elements: model.elements.filter(item => !removed.has(item.id)).map(item => ({ ...item, groupIds: item.groupIds.filter(id => !removed.has(id)) })),
-      sliders: model.sliders.filter(item => !removed.has(item.id)).map(item => ({ ...item, groupIds: item.groupIds.filter(id => !removed.has(id)) })),
+      sliders: model.sliders.filter(item => !removed.has(item.id)).map(item => ({
+        ...item,
+        groupIds: item.groupIds.filter(id => !removed.has(id)),
+        ...(item.action?.effects ? { action: withoutRemovedEffects(item.action, removed) } : {}),
+      })),
       steps: model.steps.filter(item => !removed.has(item.id)).map(step => ({
         ...step,
         visibleTargets: step.visibleTargets.filter(id => !removed.has(id)),
@@ -220,4 +230,11 @@ export function deleteDiagramCascade(model: VisualDiagramModel, requestedId: str
       dependencies: model.dependencies?.filter(edge => !removed.has(edge.sourceId) && !removed.has(edge.targetId) && (!edge.constraintId || !relationIds.has(edge.constraintId))),
     },
   };
+}
+
+function withoutRemovedEffects(action: NonNullable<VisualSlider['action']>, removed: ReadonlySet<string>): NonNullable<VisualSlider['action']> {
+  const effects = action.effects?.filter(effect => !removed.has(effect.control));
+  const next = { ...action, effects };
+  if (!effects?.length) delete next.effects;
+  return next;
 }

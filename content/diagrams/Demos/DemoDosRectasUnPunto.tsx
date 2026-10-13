@@ -262,7 +262,7 @@ export const DemoDosRectasUnPuntoSpec = createDiagramSpec(
     {
       "id": "step2",
       "label": "Punto Q en l",
-      "description": "Tomamos un segundo punto Q perteneniente a la recta l.",
+      "description": "Tomamos un segundo punto Q perteneciente a la recta l.",
       "visibleTargets": [
         "pP",
         "pQ",
@@ -333,6 +333,44 @@ export const DemoDosRectasUnPuntoSpec = createDiagramSpec(
           "label": "Zuzenen kointzidentzia",
           "description": "Bi zuzenek bi puntu desberdin komunean badituzte (P eta Q), bi zuzenek bat egin behar dute."
         }
+      },
+      "ariaLabels": {
+        "pP": "P puntua",
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pQ": "Q puntua",
+        "rectaL": "l zuzena",
+        "rectaM": "m zuzena"
+      }
+    },
+    "en": {
+      "title": "Two lines and a point",
+      "note": "Click on the lines or points to highlight them.",
+      "steps": {
+        "step1": {
+          "label": "Intersection at P",
+          "description": "Two distinct lines l and m meet at exactly one point P."
+        },
+        "step2": {
+          "label": "Point Q on l",
+          "description": "We take a second point Q on the line l."
+        },
+        "step3": {
+          "label": "Rotating line m",
+          "description": "If the line m rotates until it also contains Q..."
+        },
+        "step4": {
+          "label": "Coinciding lines",
+          "description": "If two lines have two distinct points in common (P and Q), the two lines must coincide."
+        }
+      },
+      "ariaLabels": {
+        "pP": "Point P",
+        "pA": "Point A",
+        "pB": "Point B",
+        "pQ": "Point Q",
+        "rectaL": "Line l",
+        "rectaM": "Line m"
       }
     }
   }

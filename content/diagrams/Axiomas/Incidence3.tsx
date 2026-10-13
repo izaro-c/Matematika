@@ -180,11 +180,23 @@ export const Incidence3Spec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "III. Intzidentzia-axioma",
-      "note": "Arrastatu A, B eta C: planoan lerrokatu gabeko gutxienez hiru puntu existitzen dira."
+      "note": "Arrastatu A, B eta C: planoan lerrokatu gabeko gutxienez hiru puntu existitzen dira.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "polygonABC": "Poligonoa"
+      }
     },
     "en": {
       "title": "Incidence Axiom III",
-      "note": "Drag A, B, and C: there exist at least three non-collinear points in the plane."
+      "note": "Drag A, B, and C: there exist at least three non-collinear points in the plane.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "polygonABC": "Polygon"
+      }
     }
   }
 }

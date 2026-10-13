@@ -830,6 +830,26 @@ export const DemoExistenciaPerpendicularSpec = createDiagramSpec(
           "label": "Bakartasuna kanpo-angeluaren teoremagatik",
           "description": "Bigarren M' oin batek bi angelu zuzen dituen △PMM' sortuko luke, kanpo-angeluaren teoremaren aurka."
         }
+      },
+      "ariaLabels": {
+        "pA": "A erreferentzia-puntua",
+        "pB": "B puntua zuzenean",
+        "lineL": "l zuzena",
+        "pP": "P kanpo-puntua (arrastagarria)",
+        "pM": "Perpendikularraren M oina",
+        "pC": "C puntu simetriko garraiatua",
+        "segPC": "PC segmentua",
+        "linePM": "PM zuzen perpendikularra",
+        "segAP": "AP segmentua",
+        "segAC": "AC segmentua",
+        "polyPAM": "PAM triangelua",
+        "polyCAM": "CAM triangelua",
+        "angMAP": "MAP angelua",
+        "angMAC": "MAC angelua",
+        "angPMA": "PMA angelu zuzena",
+        "angCMA": "CMA angelu zuzena",
+        "congruenceAP": "Kongruentzia-marka AP-n",
+        "congruenceAC": "Kongruentzia-marka AC-n"
       }
     },
     "en": {
@@ -860,6 +880,26 @@ export const DemoExistenciaPerpendicularSpec = createDiagramSpec(
           "label": "Uniqueness via exterior angle theorem",
           "description": "A second foot M' would yield △PMM' with two right angles, contradicting the exterior angle theorem."
         }
+      },
+      "ariaLabels": {
+        "pA": "Reference point A",
+        "pB": "Point B on the line",
+        "lineL": "Line l",
+        "pP": "Exterior point P (draggable)",
+        "pM": "Foot of the perpendicular M",
+        "pC": "Transported symmetric point C",
+        "segPC": "Segment PC",
+        "linePM": "Perpendicular line PM",
+        "segAP": "Segment AP",
+        "segAC": "Segment AC",
+        "polyPAM": "Triangle PAM",
+        "polyCAM": "Triangle CAM",
+        "angMAP": "Angle MAP",
+        "angMAC": "Angle MAC",
+        "angPMA": "Right angle PMA",
+        "angCMA": "Right angle CMA",
+        "congruenceAP": "Congruence mark on AP",
+        "congruenceAC": "Congruence mark on AC"
       }
     }
   }

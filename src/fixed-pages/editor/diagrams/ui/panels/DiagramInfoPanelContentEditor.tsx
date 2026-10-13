@@ -307,6 +307,9 @@ export const DiagramInfoPanelContentEditor: React.FC<DiagramInfoPanelContentEdit
           <DiagramField label="Título principal del panel">
             <input aria-label="Título del panel" className="font-semibold shadow-inner" value={panel.properties?.title ?? ''} onChange={event => onPropertiesChange({ title: event.target.value || undefined })} placeholder="Ej. Clasificación de Triángulos" />
           </DiagramField>
+          <DiagramField label="Subtítulo opcional">
+            <input aria-label="Subtítulo opcional del panel" className="italic shadow-inner" value={panel.properties?.subtitle ?? ''} onChange={event => onPropertiesChange({ subtitle: event.target.value || undefined })} placeholder="Ej. Según sus lados" />
+          </DiagramField>
           <DiagramTemplateField richText model={model} label="Texto introductorio opcional" ariaLabel="Contenido del panel" value={panel.text || ''} onChange={onTextChange} placeholder="Texto explicativo común que se muestra antes de todos los bloques…" rows={3} />
         </DiagramPanel>
         </div>

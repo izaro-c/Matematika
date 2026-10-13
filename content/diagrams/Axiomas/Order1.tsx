@@ -284,11 +284,29 @@ export const Order1Spec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "I. Ordena-axioma",
-      "note": "Arrastatu B: B A-ren eta C-ren artean badago, orduan B C-ren eta A-ren artean dago."
+      "note": "Arrastatu B: B A-ren eta C-ren artean badago, orduan B C-ren eta A-ren artean dago.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pC": "C puntua",
+        "pL": "C puntua",
+        "pD": "D puntua",
+        "pB": "B puntua",
+        "lineDC": "Zuzena",
+        "segAB": "Segmentua"
+      }
     },
     "en": {
       "title": "Order Axiom I",
-      "note": "Drag B: if B is between A and C, then B is between C and A."
+      "note": "Drag B: if B is between A and C, then B is between C and A.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pC": "Point C",
+        "pL": "Point C",
+        "pD": "Point D",
+        "pB": "Point B",
+        "lineDC": "Line",
+        "segAB": "Segment"
+      }
     }
   }
 }

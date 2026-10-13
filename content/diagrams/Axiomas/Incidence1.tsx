@@ -149,11 +149,21 @@ export const Incidence1Spec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "1. Intzidentzia-axioma",
-      "note": "Arrastatu A eta B puntuak: bietatik igarotzen den zuzen bakar bat zehazten dute."
+      "note": "Arrastatu A eta B puntuak: bietatik igarotzen den zuzen bakar bat zehazten dute.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "lineAB": "Zuzena"
+      }
     },
     "en": {
       "title": "Incidence Axiom 1",
-      "note": "Drag points A and B: they determine a unique line passing through both."
+      "note": "Drag points A and B: they determine a unique line passing through both.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "lineAB": "Line"
+      }
     }
   }
 }

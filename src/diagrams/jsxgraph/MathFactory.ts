@@ -225,7 +225,7 @@ export function createPolygon(
   theme: ThemeColors,
 ): JXGPolygon {
   const borderHighlight = options.highlight === false ? { highlight: false as const } : {};
-  return board.create('polygon', vertices, {
+  const poly = board.create('polygon', vertices, {
     fillColor: theme.canela,
     fillOpacity: 0.12,
     borders: { strokeColor: theme.canela, strokeWidth: 1.5, ...borderHighlight },
@@ -235,6 +235,14 @@ export function createPolygon(
       ? { borders: { strokeColor: theme.canela, strokeWidth: 1.5, ...borderHighlight, ...options.borders } }
       : {}),
   } as never) as unknown as JXGPolygon;
+  if (poly.label) {
+    settleHtmlTextLayer(poly.label);
+    const fontSize = typeof options.label === 'object' && options.label && 'fontSize' in options.label
+      ? (options.label as { fontSize?: number }).fontSize
+      : undefined;
+    applyDiagramAuthoredFontSize(poly.label.rendNode as HTMLElement | undefined, fontSize);
+  }
+  return poly;
 }
 
 export function createCircle(
@@ -987,8 +995,8 @@ export function createSlider(
   theme: ThemeColors,
 ): JXGSlider {
   const { label, ...attributes } = options;
-  return board.create('slider', [anchors[0], anchors[1], values], {
-    name: '',
+  const slider = board.create('slider', [anchors[0], anchors[1], values], {
+    name: options.name ?? '',
     baseline: { strokeColor: theme.mora, strokeWidth: 2 },
     highline: { strokeColor: theme.terracota, strokeWidth: 3 },
     fillColor: theme.terracota,
@@ -1003,6 +1011,14 @@ export function createSlider(
       ...label,
     },
   } as never) as unknown as JXGSlider;
+  if (slider.label) {
+    settleHtmlTextLayer(slider.label);
+    const fontSize = typeof label === 'object' && label && 'fontSize' in label
+      ? (label as { fontSize?: number }).fontSize
+      : undefined;
+    applyDiagramAuthoredFontSize(slider.label.rendNode as HTMLElement | undefined, fontSize);
+  }
+  return slider;
 }
 
 export function createTicks(

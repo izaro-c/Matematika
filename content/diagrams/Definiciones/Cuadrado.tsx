@@ -670,11 +670,43 @@ export const CuadradoSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Karratua",
-      "note": "Mugitu A eta B erpinak karratua biratzeko, lekualdatzeko edo eskalatzeko, lau aldeak berdin eta lau angeluak zuzen mantenduz."
+      "note": "Mugitu A eta B erpinak karratua biratzeko, lekualdatzeko edo eskalatzeko, lau aldeak berdin eta lau angeluak zuzen mantenduz.",
+      "ariaLabels": {
+        "pA": "A erpina",
+        "pB": "B erpina",
+        "pC": "C erpina",
+        "pD": "D erpina",
+        "polyABCD": "ABCD karratua",
+        "segAB": "AB aldea",
+        "segBC": "BC aldea",
+        "segCD": "CD aldea",
+        "segDA": "DA aldea",
+        "diagAC": "AC diagonala",
+        "diagBD": "BD diagonala",
+        "angA": "Angelu zuzena A-n",
+        "angB": "Angelu zuzena B-n",
+        "angC": "Angelu zuzena C-n",
+        "angD": "Angelu zuzena D-n"
+      }
     },
     "en": {
       "title": "Square",
-      "note": "Drag vertices A and B to rotate, translate, or scale the square while preserving its four equal sides and four right angles."
+      "note": "Drag vertices A and B to rotate, translate, or scale the square while preserving its four equal sides and four right angles.",
+      "ariaLabels": {
+        "pA": "Vertex A",
+        "pB": "Vertex B",
+        "pC": "Vertex C",
+        "pD": "Vertex D",
+        "polyABCD": "Square ABCD",
+        "segAB": "Side AB",
+        "segBC": "Side BC",
+        "segCD": "Side CD",
+        "segDA": "Side DA",
+        "angA": "Right angle at A",
+        "angB": "Right angle at B",
+        "angC": "Right angle at C",
+        "angD": "Right angle at D"
+      }
     }
   }
 }

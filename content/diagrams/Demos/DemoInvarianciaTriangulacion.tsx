@@ -558,6 +558,52 @@ export const DemoInvarianciaTriangulacionSpec = createDiagramSpec(
           "label": "Gainezartzea (T* birfindetze komuna)",
           "description": "Bi triangelatzeen superposizioak T* birfindetze komuna sortzen du, azalera bera babestuz."
         }
+      },
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "pD": "D puntua",
+        "polyABCD": "ABCD kanpo-poligonoa",
+        "segAC": "AC diagonala (T1 triangelazioa)",
+        "segBD": "BD diagonala (T2 triangelazioa)",
+        "polyABC": "ABC triangelua",
+        "polyACD": "ACD triangelua",
+        "polyABD": "ABD triangelua",
+        "polyBCD": "BCD triangelua",
+        "pInter": "Diagonalen ebaki-puntua"
+      }
+    },
+    "en": {
+      "title": "Invariance of the triangulation",
+      "note": "Move the vertices A, B, C or D to change the polygon.",
+      "steps": {
+        "step1": {
+          "label": "Triangulation T1",
+          "description": "First triangulation of the polygon using the diagonal AC."
+        },
+        "step2": {
+          "label": "Triangulation T2",
+          "description": "Alternative second triangulation using the diagonal BD."
+        },
+        "step3": {
+          "label": "Overlay (common refinement T*)",
+          "description": "Overlaying both triangulations produces a common refinement T* with the same total area."
+        }
+      },
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "pD": "Point D",
+        "polyABCD": "Outer polygon ABCD",
+        "segAC": "Diagonal AC (triangulation T1)",
+        "segBD": "Diagonal BD (triangulation T2)",
+        "polyABC": "Triangle ABC",
+        "polyACD": "Triangle ACD",
+        "polyABD": "Triangle ABD",
+        "polyBCD": "Triangle BCD",
+        "pInter": "Intersection point of the diagonals"
       }
     }
   }

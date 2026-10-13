@@ -135,7 +135,7 @@ const header = z.object({
 }).strict();
 const annotationObject = z.object({
   ...objectBase, objectType: z.literal('annotation'), variant: z.enum(['text', 'formula', 'label', 'panel', 'measurement']),
-  content: z.object({ text: z.string(), expression: expression.optional(), unit: z.string().max(32).optional(), precision: z.number().int().min(0).max(12).optional(), rules: z.array(textRule).max(12).optional(), title: z.string().min(1).optional(), blocks: z.array(infoBlock).min(1).max(12).optional(), layout: z.enum(['stack', 'columns']).optional() }).strict(),
+  content: z.object({ text: z.string(), expression: expression.optional(), unit: z.string().max(32).optional(), precision: z.number().int().min(0).max(12).optional(), rules: z.array(textRule).max(12).optional(), title: z.string().min(1).optional(), subtitle: z.string().min(1).optional(), blocks: z.array(infoBlock).min(1).max(12).optional(), layout: z.enum(['stack', 'columns']).optional() }).strict(),
   anchor: z.discriminatedUnion('type', [
     z.object({ type: z.literal('object'), object: id, parameter: number.min(0).max(1).optional(), offset: z.tuple([number, number]).optional() }).strict(),
     z.object({ type: z.literal('viewport'), position: z.tuple([number.min(0).max(1), number.min(0).max(1)]) }).strict(),
@@ -143,9 +143,19 @@ const annotationObject = z.object({
   measurement: z.object({ refs: z.union([z.tuple([id]), pair]), mode: z.enum(['distance', 'value']) }).strict().optional(),
   appearance: z.object({ fontSize: number.min(6).max(72).optional(), opacity: number.min(0).max(1).optional(), labelVisible: z.boolean().optional(), preserveColorOnHighlight: z.boolean().optional() }).strict().optional(),
 }).strict();
+const controlAction = z.object({
+  to: number, durationMs: number.int().min(0).max(60000), returnDurationMs: number.int().min(0).max(60000).optional(), easing: z.enum(['linear', 'ease-in', 'ease-out', 'ease-in-out']),
+  behavior: z.enum(['toggle', 'restart']),
+  effects: z.array(z.object({
+    on: z.enum(['press', 'release', 'complete']), control: id, do: z.enum(['reset', 'play']),
+    from: expression.optional(), when: expression.optional(),
+  }).strict()).max(16).optional(),
+}).strict();
 const controlObject = z.object({
-  ...objectBase, objectType: z.literal('control'), variant: z.literal('slider'), position: z.tuple([number, number]),
+  ...objectBase, objectType: z.literal('control'), variant: z.enum(['slider', 'button']), position: z.tuple([number, number]),
   range: z.object({ min: number, max: number, maxExpression: expression.optional(), step: number.positive() }).strict(), value: number,
+  width: number.positive().optional(),
+  action: controlAction.optional(),
 }).strict();
 const diagramObject = z.discriminatedUnion('objectType', [pointObject, pathObject, angleObject, regionObject, areaObject, markObject, annotationObject, controlObject]);
 const relationBase = { id, label: z.string().min(1), enabled: z.boolean() };
@@ -341,7 +351,37 @@ function validateObject(object: DiagramObject, index: number, validation: Valida
     const perpendicular = object.perpendicularRelationId ? validation.relationMap.get(object.perpendicularRelationId) : undefined;
     if (perpendicular?.type !== 'perpendicular') addIssue(context, ['objects', index, 'perpendicularRelationId'], 'Un marcador cuadrado exige una relación explícita de perpendicularidad.');
   }
+  if (object.objectType === 'control') validateControlObject(object, index, validation, context);
   validateExpressionSources(object, index, validation, context);
+}
+
+function validateControlObject(object: Extract<DiagramObject, { objectType: 'control' }>, index: number, validation: ValidationIndex, context: z.RefinementCtx): void {
+  if (object.variant === 'slider') {
+    if (object.action) addIssue(context, ['objects', index, 'action'], 'Solo un control botón admite action.');
+    return;
+  }
+  if (!object.action) {
+    addIssue(context, ['objects', index, 'action'], 'Un control botón necesita action.');
+    return;
+  }
+  if (object.action.to < object.range.min || object.action.to > object.range.max) {
+    addIssue(context, ['objects', index, 'action', 'to'], 'action.to debe estar dentro de [min, max].');
+  }
+  object.action.effects?.forEach((effect, effectIndex) => {
+    const path = ['objects', index, 'action', 'effects', effectIndex];
+    const target = validation.objectMap.get(effect.control);
+    if (target?.objectType !== 'control') addIssue(context, [...path, 'control'], `${effect.control} debe ser un control.`);
+    if (effect.do === 'play' && target?.objectType === 'control' && target.variant !== 'button') addIssue(context, [...path, 'do'], `${effect.control} debe ser un botón para poder animarse.`);
+    if (effect.on === 'release' && object.action?.behavior !== 'toggle') addIssue(context, [...path, 'on'], 'release solo existe en botones toggle.');
+    [effect.from, effect.when].forEach(source => {
+      if (!source) return;
+      try {
+        extractMathExpressionIdentifiers(source).forEach(identifier => {
+          if (!validation.objectMap.has(identifier.split('.')[0])) addIssue(context, path, `La variable ${identifier} no corresponde a un objeto.`);
+        });
+      } catch { /* el esquema de expresión ya informa del error */ }
+    });
+  });
 }
 
 function validateLinearRelation(relation: Extract<DiagramRelation, { type: 'perpendicular' | 'parallel' }>, index: number, validation: ValidationIndex): void {
@@ -401,10 +441,17 @@ export const diagramSpecV3Schema = z.object({
   layers: z.array(layer).min(1), groups: z.array(group), objects: z.array(diagramObject).min(1), relations: z.array(relation), steps: z.array(step), note: z.string(),
   translations: z.record(z.string(), z.object({
     title: z.string().optional(),
+    subtitle: z.string().optional(),
     note: z.string().optional(),
-    steps: z.record(z.string(), z.union([z.string(), z.object({ label: z.string().optional(), description: z.string().optional() })])).optional(),
+    description: z.string().optional(),
+    steps: z.record(z.string(), z.union([z.string(), z.object({ label: z.string().optional(), description: z.string().optional(), overlays: z.record(z.string(), z.object({ title: z.string().optional(), content: z.string().optional() }).strict()).optional() })])).optional(),
     labels: z.record(z.string(), z.string()).optional(),
     annotations: z.record(z.string(), z.string()).optional(),
+    titles: z.record(z.string(), z.string()).optional(),
+    subtitles: z.record(z.string(), z.string()).optional(),
+    texts: z.record(z.string(), z.string()).optional(),
+    descriptions: z.record(z.string(), z.string()).optional(),
+    ariaLabels: z.record(z.string(), z.string()).optional(),
   })).optional(),
 }).strict().superRefine((spec, context) => {
   const current = spec as DiagramSpecV3;

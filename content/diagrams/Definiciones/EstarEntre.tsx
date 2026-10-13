@@ -405,19 +405,18 @@ export const EstarEntreSpec = createDiagramSpec(
         "step-orden": {
           "label": "Bitartekotasuna A * B * C",
           "description": "B puntua A eta C-k mugatutako segmentuaren barnean kokatzen da."
-        },
-        "step-simetria": {
-          "label": "II-1 Axioma: Simetria",
-          "description": "Erlazioa aldaezina da muturrak alderantzikatzean: A * B * C eta C * B * A baliokideak dira."
-        },
-        "step-extension": {
-          "label": "II-2 Axioma: Luzapena",
-          "description": "Edozein bi A eta C puntutarako, beti existitzen da gutxienez D puntu bat non A * C * D betetzen den."
-        },
-        "step-exclusividad": {
-          "label": "II-3 Axioma: Esklusibotasuna",
-          "description": "Hiru puntu lerrokide desberdinetatik, bat eta bakarra dago beste bien artean."
         }
+      },
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pC": "C puntua",
+        "pB": "B tarteko puntua",
+        "pD": "D kanpo-puntua",
+        "lineAC": "r euskarri-zuzena",
+        "segAB": "AB segmentua",
+        "segBC": "BC segmentua",
+        "segAC": "AC segmentu osoa",
+        "segCD": "CD segmentu luzatua"
       }
     },
     "en": {
@@ -427,19 +426,18 @@ export const EstarEntreSpec = createDiagramSpec(
         "step-orden": {
           "label": "Betweenness A * B * C",
           "description": "Point B lies strictly within the segment bounded by A and C."
-        },
-        "step-simetria": {
-          "label": "Axiom II-1: Symmetry",
-          "description": "The relation is invariant under reversing endpoints: A * B * C and C * B * A are equivalent."
-        },
-        "step-extension": {
-          "label": "Axiom II-2: Extension",
-          "description": "For any two points A and C, there always exists at least one point D such that A * C * D."
-        },
-        "step-exclusividad": {
-          "label": "Axiom II-3: Exclusivity",
-          "description": "Out of any three distinct collinear points, exactly one lies between the other two."
         }
+      },
+      "ariaLabels": {
+        "pA": "Point A",
+        "pC": "Point C",
+        "pB": "Intermediate point B",
+        "pD": "Exterior point D",
+        "lineAC": "Supporting line r",
+        "segAB": "Segment AB",
+        "segBC": "Segment BC",
+        "segAC": "Whole segment AC",
+        "segCD": "Extended segment CD"
       }
     }
   }

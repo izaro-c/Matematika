@@ -602,11 +602,47 @@ export const PuntoMedioPerpendicularSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Erdibitzailea",
-      "note": "Arrastatu P erdibitzailean zehar A eta B muturretatik distantzia berera dagoela egiaztatzeko."
+      "note": "Arrastatu P erdibitzailean zehar A eta B muturretatik distantzia berera dagoela egiaztatzeko.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pP": "P puntua",
+        "p4": "4. puntua",
+        "pM": "C puntua",
+        "segAB": "AB segmentua",
+        "midAB": "AB-ren erdiko puntua",
+        "lineMediatriz": "AB-ren erdibitzaile perpendikularra",
+        "segPA": "PA distantzia",
+        "segPB": "PB distantzia",
+        "congruenceMarkA4": "Kongruentzia-marka",
+        "congruenceMark4B": "Kongruentzia-marka",
+        "congruenceMarkPB": "Kongruentzia-marka",
+        "congruenceMarkAP": "Kongruentzia-marka",
+        "measurementPB": "Neurketa",
+        "perpendicularMarkBMP": "Perpendikulartasun-marka"
+      }
     },
     "en": {
       "title": "Perpendicular Bisector",
-      "note": "Drag P along the perpendicular bisector to verify it is equidistant from endpoints A and B."
+      "note": "Drag P along the perpendicular bisector to verify it is equidistant from endpoints A and B.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pP": "Point P",
+        "p4": "Point 4",
+        "pM": "Point C",
+        "segAB": "Segment AB",
+        "midAB": "Midpoint of AB",
+        "lineMediatriz": "Perpendicular bisector of AB",
+        "segPA": "Distance PA",
+        "segPB": "Distance PB",
+        "congruenceMarkA4": "Congruence mark",
+        "congruenceMark4B": "Congruence mark",
+        "congruenceMarkPB": "Congruence mark",
+        "congruenceMarkAP": "Congruence mark",
+        "measurementPB": "Measurement",
+        "perpendicularMarkBMP": "Perpendicularity mark"
+      }
     }
   }
 }

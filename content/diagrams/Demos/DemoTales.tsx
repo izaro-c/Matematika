@@ -843,6 +843,72 @@ export const DemoTalesSpec = createDiagramSpec(
           "label": "Kasu orokorra",
           "description": "Hiru paralelo eta bi zuzen ebakitzailerekin, A puntutik marraztutako paralelo laguntzaile batek eta bi paralelogramok teorema triangeluaren kasura laburtzen dute."
         }
+      },
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "pD": "D puntua AB-n",
+        "segAB": "AB aldea",
+        "segBC": "BC aldea",
+        "segCA": "CA aldea",
+        "polyABC": "ABC triangelua",
+        "parDBC": "D-tik igarotzen den BC-ren zuzen paraleloa",
+        "pE": "E puntua: paraleloaren eta CA-ren ebakidura",
+        "segDE": "BC-ren paraleloa den DE segmentua",
+        "polyADE": "ADE triangelua",
+        "polyBDE": "BDE triangelua",
+        "polyCDE": "CDE triangelua",
+        "segH1": "E-tik AB-rako altuera",
+        "segH2": "D-tik AC-rako altuera"
+      }
+    },
+    "en": {
+      "title": "Thales' theorem",
+      "note": "Slide point D along side AB: E is always the intersection of the parallel to BC with side CA.",
+      "steps": {
+        "step1": {
+          "label": "Triangle ABC and parallel through D",
+          "description": "The line through D parallel to BC meets side CA at E."
+        },
+        "step2": {
+          "label": "Triangles BDE and CDE",
+          "description": "They share the base DE and their vertices B and C lie on a parallel to DE: they have the same height and the same area."
+        },
+        "step3": {
+          "label": "Triangles ADE and BDE",
+          "description": "They have the same height EH1 with respect to the line AB: their areas are proportional to AD and DB."
+        },
+        "step4": {
+          "label": "Triangles ADE and CDE",
+          "description": "They have the same height DH2 with respect to the line AC: their areas are proportional to AE and EC."
+        },
+        "step5": {
+          "label": "Conclusion in the triangle",
+          "description": "From the equality of areas we obtain AD/DB = AE/EC."
+        },
+        "step6": {
+          "label": "General case",
+          "description": "With three parallels and two transversals, an auxiliary parallel through A and two parallelograms reduce the theorem to the triangle case."
+        }
+      },
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "pD": "Point D on AB",
+        "segAB": "Side AB",
+        "segBC": "Side BC",
+        "segCA": "Side CA",
+        "polyABC": "Triangle ABC",
+        "parDBC": "Line through D parallel to BC",
+        "pE": "Point E: intersection of the parallel with CA",
+        "segDE": "Segment DE parallel to BC",
+        "polyADE": "Triangle ADE",
+        "polyBDE": "Triangle BDE",
+        "polyCDE": "Triangle CDE",
+        "segH1": "Altitude from E to AB",
+        "segH2": "Altitude from D to AC"
       }
     }
   }

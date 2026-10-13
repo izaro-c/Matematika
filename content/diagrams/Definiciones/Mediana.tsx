@@ -580,11 +580,59 @@ export const MedianaSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Erdibidekoak eta barizentroa",
-      "note": "Mugitu A, B edo C. Erdiko puntuak, hiru erdibidekoak eta haien G ebakidura automatikoki berreraikitzen dira."
+      "note": "Mugitu A, B edo C. Erdiko puntuak, hiru erdibidekoak eta haien G ebakidura automatikoki berreraikitzen dira.",
+      "labels": {
+        "Ma": "BC-ren erdiko puntua",
+        "Mb": "CA-ren erdiko puntua",
+        "Mc": "AB-ren erdiko puntua"
+      },
+      "titles": {
+        "ratio": "Barizentroaren propietatea"
+      },
+      "texts": {
+        "ratio": "Mediana bakoitzean, erpina–G : G–erdiko puntua = 2 : 1."
+      },
+      "ariaLabels": {
+        "A": "Mugitu A puntua",
+        "B": "Mugitu B puntua",
+        "C": "Mugitu C puntua",
+        "triangle": "ABC triangelua",
+        "Ma": "BC-ren erdiko puntua",
+        "Mb": "CA-ren erdiko puntua",
+        "Mc": "AB-ren erdiko puntua",
+        "medA": "A-tiko mediana",
+        "medB": "B-tiko mediana",
+        "medC": "C-tiko mediana",
+        "ratio": "Barizentroaren propietatea"
+      }
     },
     "en": {
       "title": "Medians and Centroid",
-      "note": "Move A, B, or C. Midpoints, the three medians, and their intersection G update automatically."
+      "note": "Move A, B, or C. Midpoints, the three medians, and their intersection G update automatically.",
+      "labels": {
+        "Ma": "Midpoint of BC",
+        "Mb": "Midpoint of CA",
+        "Mc": "Midpoint of AB"
+      },
+      "titles": {
+        "ratio": "Centroid property"
+      },
+      "texts": {
+        "ratio": "On each median, vertex–G : G–midpoint = 2 : 1."
+      },
+      "ariaLabels": {
+        "A": "Move point A",
+        "B": "Move point B",
+        "C": "Move point C",
+        "triangle": "Triangle ABC",
+        "Ma": "Midpoint of BC",
+        "Mb": "Midpoint of CA",
+        "Mc": "Midpoint of AB",
+        "medA": "Median from A",
+        "medB": "Median from B",
+        "medC": "Median from C",
+        "ratio": "Centroid property"
+      }
     }
   }
 }

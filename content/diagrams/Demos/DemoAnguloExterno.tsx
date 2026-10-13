@@ -1919,7 +1919,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "initial",
       "label": "Hipótesis",
-      "description": "",
+      "description": "Sea △ABC y D un punto de la prolongación de BC más allá de C. El ángulo externo ∠ACD es mayor que cada ángulo interno no adyacente.",
       "visibleTargets": [
         "segAB",
         "segBC",
@@ -2208,7 +2208,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "step1",
       "label": "Construcción inicial",
-      "description": "Se añade punto E",
+      "description": "Sea E el punto medio de AC (AE ≅ EC); se traza el segmento BE.",
       "visibleTargets": [
         "pA",
         "pB",
@@ -2484,7 +2484,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "step2",
       "label": "Prolongación de BE",
-      "description": "Se añade punto E",
+      "description": "Se prolonga BE más allá de E mediante la semirrecta BE.",
       "visibleTargets": [
         "pA",
         "pB",
@@ -2761,7 +2761,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "step3",
       "label": "Duplicación de la mediana",
-      "description": "Describa qué cambia y por qué.",
+      "description": "Sobre la semirrecta BE se toma F tal que EF ≅ EB.",
       "visibleTargets": [
         "pA",
         "pB",
@@ -3053,7 +3053,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "step4",
       "label": "Congruencia LAL",
-      "description": "Describa qué cambia y por qué.",
+      "description": "AE ≅ EC, ∠AEB ≅ ∠CEF (opuestos por el vértice) y EB ≅ EF; por LAL, △ABE ≅ △CFE.",
       "visibleTargets": [
         "pA",
         "pB",
@@ -3350,7 +3350,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "step5",
       "label": "Ángulos congruentes",
-      "description": "Describa qué cambia y por qué.",
+      "description": "De la congruencia se deduce ∠BAC ≅ ∠ECF.",
       "visibleTargets": [
         "pA",
         "pB",
@@ -3643,7 +3643,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "step6",
       "label": "Contenencia angular",
-      "description": "Describa qué cambia y por qué.",
+      "description": "F está en el mismo lado de AC que D y en el mismo lado de BC que A, luego la semirrecta CF está en el interior de ∠ACD.",
       "visibleTargets": [
         "pA",
         "pB",
@@ -3937,7 +3937,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "step7",
       "label": "Contenencia angular 2",
-      "description": "Describa qué cambia y por qué.",
+      "description": "Por tanto ∠ECF < ∠ACD y, como ∠ECF ≅ ∠BAC, resulta ∠BAC < ∠ACD.",
       "visibleTargets": [
         "pA",
         "pB",
@@ -4223,8 +4223,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     },
     {
       "id": "step8",
-      "label": "Paso 8",
-      "description": "Descripción del nuevo paso de la demostración.",
+      "label": "Punto medio G de BC",
+      "description": "Análogamente, sea G el punto medio de BC; se prolonga AG hasta H con GH ≅ AG, y AC más allá de C hasta K.",
       "visibleTargets": [
         "midG",
         "segBC",
@@ -4426,8 +4426,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     },
     {
       "id": "step9",
-      "label": "Paso 9",
-      "description": "Descripción del nuevo paso de la demostración.",
+      "label": "Segunda congruencia LAL",
+      "description": "Por LAL, △ABG ≅ △HCG, luego ∠ABC ≅ ∠GCH; como CH está en el interior de ∠BCK, ∠ABC < ∠BCK.",
       "visibleTargets": [
         "midG",
         "segBC",
@@ -4645,8 +4645,8 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     },
     {
       "id": "step10",
-      "label": "Paso 10",
-      "description": "Descripción del nuevo paso de la demostración.",
+      "label": "Ángulos opuestos por el vértice",
+      "description": "∠BCK y ∠ACD son opuestos por el vértice, luego ∠BCK ≅ ∠ACD y, por tanto, ∠ABC < ∠ACD.",
       "visibleTargets": [
         "segBC",
         "pB",
@@ -4856,7 +4856,7 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
     {
       "id": "step11",
       "label": "Conclusión",
-      "description": "",
+      "description": "El ángulo externo ∠ACD es mayor que los dos ángulos internos no adyacentes: ∠ACD > ∠BAC y ∠ACD > ∠ABC.",
       "visibleTargets": [
         "segAB",
         "segBC",
@@ -5146,7 +5146,239 @@ export const DemoAnguloExternoSpec = createDiagramSpec(
       }
     }
   ],
-  "note": "Arrastra A, B y C"
+  "note": "Arrastra A, B y C",
+  "translations": {
+    "eu": {
+      "title": "Kanpo-angeluaren teorema",
+      "note": "Arrastatu A, B eta C",
+      "steps": {
+        "initial": {
+          "label": "Hipotesia",
+          "description": "Izan bitez △ABC eta D, BC-ren luzapenean C-tik haratago dagoen puntu bat. ∠ACD kanpo-angelua ondokoak ez diren barne-angelu bakoitza baino handiagoa da."
+        },
+        "step1": {
+          "label": "Hasierako eraikuntza",
+          "description": "Izan bedi E AC-ren erdiko puntua (AE ≅ EC); BE segmentua marrazten da."
+        },
+        "step2": {
+          "label": "BE-ren luzapena",
+          "description": "BE luzatzen da E-tik haratago BE zuzenerdiaren bidez."
+        },
+        "step3": {
+          "label": "Medianaren bikoizketa",
+          "description": "BE zuzenerdian F hartzen da, EF ≅ EB izan dadin."
+        },
+        "step4": {
+          "label": "LAL kongruentzia",
+          "description": "AE ≅ EC, ∠AEB ≅ ∠CEF (erpinez aurkakoak) eta EB ≅ EF; LAL bidez, △ABE ≅ △CFE."
+        },
+        "step5": {
+          "label": "Angelu kongruenteak",
+          "description": "Kongruentziatik ∠BAC ≅ ∠ECF ondorioztatzen da."
+        },
+        "step6": {
+          "label": "Angeluaren barnekotasuna",
+          "description": "F AC-ren alde berean dago D bezala, eta BC-ren alde berean A bezala; beraz, CF zuzenerdia ∠ACD-ren barnean dago."
+        },
+        "step7": {
+          "label": "Angeluaren barnekotasuna 2",
+          "description": "Ondorioz ∠ECF < ∠ACD, eta ∠ECF ≅ ∠BAC denez, ∠BAC < ∠ACD."
+        },
+        "step8": {
+          "label": "BC-ren G erdiko puntua",
+          "description": "Era berean, izan bedi G BC-ren erdiko puntua; AG luzatzen da H-raino GH ≅ AG izan dadin, eta AC C-tik haratago K-raino."
+        },
+        "step9": {
+          "label": "Bigarren LAL kongruentzia",
+          "description": "LAL bidez, △ABG ≅ △HCG; beraz ∠ABC ≅ ∠GCH. CH ∠BCK-ren barnean dagoenez, ∠ABC < ∠BCK."
+        },
+        "step10": {
+          "label": "Erpinez aurkako angeluak",
+          "description": "∠BCK eta ∠ACD erpinez aurkakoak dira; beraz ∠BCK ≅ ∠ACD eta, ondorioz, ∠ABC < ∠ACD."
+        },
+        "step11": {
+          "label": "Ondorioa",
+          "description": "∠ACD kanpo-angelua ondokoak ez diren bi barne-angeluak baino handiagoa da: ∠ACD > ∠BAC eta ∠ACD > ∠ABC."
+        }
+      },
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "pD": "D puntua",
+        "pF": "6. puntua",
+        "pH": "E puntua",
+        "paux": "E puntua",
+        "paux2": "E puntua",
+        "pK": "E puntua",
+        "polygonABC": "Poligonoa",
+        "segAB": "Segmentua",
+        "segBC": "Segmentua",
+        "segAC": "Segmentua",
+        "rayBC": "Zuzenerdia",
+        "nonReflexAngleABC": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleBAC": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleBCA": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleBCD": "Angelu ez-erreflexua (≤ 180°)",
+        "midAC": "Erdiko puntua",
+        "segBmidAC": "Segmentua",
+        "rayBmidAC": "Zuzenerdia",
+        "segmidACF": "Segmentua",
+        "segCF": "Segmentua",
+        "polygonABmidAC": "Poligonoa",
+        "polygonCFmidAC": "Poligonoa",
+        "nonReflexAngleAmidACB": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleCmidACF": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAnglemidACCF": "Angelu ez-erreflexua (≤ 180°)",
+        "rayCF": "Zuzenerdia",
+        "nonReflexAngleACD": "Angelu ez-erreflexua (≤ 180°)",
+        "segAmidAC": "Segmentua",
+        "segmidACC": "Segmentua",
+        "congruenceMarkAmidAC": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkmidACC": "Segmentuaren kongruentzia-marka",
+        "congruenceMarkBmidAC": "EB segmentuaren kongruentzia-marka",
+        "congruenceMarkmidACF": "EF segmentuaren kongruentzia-marka",
+        "rayCF_2": "Zuzenerdia",
+        "midG": "Erdiko puntua",
+        "segAH": "Segmentua",
+        "congruenceMarkmidBCG": "Kongruentzia-marka",
+        "congruenceMarkAmidBC": "Kongruentzia-marka",
+        "segBmidAC_2": "Segmentua",
+        "halfACD": "Erdiplanoa",
+        "halfBCA": "Erdiplanoa",
+        "rayCA": "Zuzenerdia",
+        "rayCaux": "Zuzenerdia",
+        "rayAC": "Zuzenerdia",
+        "rayCaux2": "Zuzenerdia",
+        "congruenceMarkCmidG": "Kongruentzia-marka",
+        "congruenceMarkmidGB": "Kongruentzia-marka",
+        "polygonABmidG": "Poligonoa",
+        "polygonHmidGC": "Poligonoa",
+        "nonReflexAngleAmidGB": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleCmidGH": "Angelu ez-erreflexua (≤ 180°)",
+        "rayCH": "Zuzenerdia",
+        "nonReflexAngleHCmidG": "Angelu ez-erreflexua (≤ 180°)",
+        "nonReflexAngleKCB": "Angelu ez-erreflexua (≤ 180°)",
+        "rayCB": "Zuzenerdia",
+        "areaInthalfACDhalfBCA": "Eremuen ebakidura"
+      }
+    },
+    "en": {
+      "title": "Exterior angle theorem",
+      "note": "Drag A, B and C",
+      "steps": {
+        "initial": {
+          "label": "Hypothesis",
+          "description": "Let △ABC be a triangle and D a point on the extension of BC beyond C. The exterior angle ∠ACD is greater than each non-adjacent interior angle."
+        },
+        "step1": {
+          "label": "Initial construction",
+          "description": "Let E be the midpoint of AC (AE ≅ EC); draw the segment BE."
+        },
+        "step2": {
+          "label": "Extension of BE",
+          "description": "Extend BE beyond E along the ray BE."
+        },
+        "step3": {
+          "label": "Doubling the median",
+          "description": "On the ray BE take F such that EF ≅ EB."
+        },
+        "step4": {
+          "label": "SAS congruence",
+          "description": "AE ≅ EC, ∠AEB ≅ ∠CEF (vertical angles) and EB ≅ EF; by SAS, △ABE ≅ △CFE."
+        },
+        "step5": {
+          "label": "Congruent angles",
+          "description": "From the congruence it follows that ∠BAC ≅ ∠ECF."
+        },
+        "step6": {
+          "label": "Angle containment",
+          "description": "F lies on the same side of AC as D and on the same side of BC as A, so the ray CF lies in the interior of ∠ACD."
+        },
+        "step7": {
+          "label": "Angle containment 2",
+          "description": "Hence ∠ECF < ∠ACD and, since ∠ECF ≅ ∠BAC, we get ∠BAC < ∠ACD."
+        },
+        "step8": {
+          "label": "Midpoint G of BC",
+          "description": "Similarly, let G be the midpoint of BC; extend AG to H with GH ≅ AG, and AC beyond C to K."
+        },
+        "step9": {
+          "label": "Second SAS congruence",
+          "description": "By SAS, △ABG ≅ △HCG, so ∠ABC ≅ ∠GCH; since CH lies in the interior of ∠BCK, ∠ABC < ∠BCK."
+        },
+        "step10": {
+          "label": "Vertical angles",
+          "description": "∠BCK and ∠ACD are vertical angles, so ∠BCK ≅ ∠ACD and therefore ∠ABC < ∠ACD."
+        },
+        "step11": {
+          "label": "Conclusion",
+          "description": "The exterior angle ∠ACD is greater than both non-adjacent interior angles: ∠ACD > ∠BAC and ∠ACD > ∠ABC."
+        }
+      },
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "pD": "Point D",
+        "pF": "Point 6",
+        "pH": "Point E",
+        "paux": "Point E",
+        "paux2": "Point E",
+        "pK": "Point E",
+        "polygonABC": "Polygon",
+        "segAB": "Segment",
+        "segBC": "Segment",
+        "segAC": "Segment",
+        "rayBC": "Ray",
+        "nonReflexAngleABC": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleBAC": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleBCA": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleBCD": "Non-reflex angle (≤ 180°)",
+        "midAC": "Midpoint",
+        "segBmidAC": "Segment",
+        "rayBmidAC": "Ray",
+        "segmidACF": "Segment",
+        "segCF": "Segment",
+        "polygonABmidAC": "Polygon",
+        "polygonCFmidAC": "Polygon",
+        "nonReflexAngleAmidACB": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleCmidACF": "Non-reflex angle (≤ 180°)",
+        "nonReflexAnglemidACCF": "Non-reflex angle (≤ 180°)",
+        "rayCF": "Ray",
+        "nonReflexAngleACD": "Non-reflex angle (≤ 180°)",
+        "segAmidAC": "Segment",
+        "segmidACC": "Segment",
+        "congruenceMarkAmidAC": "Segment congruence mark",
+        "congruenceMarkmidACC": "Segment congruence mark",
+        "congruenceMarkBmidAC": "Congruence mark of segment EB",
+        "congruenceMarkmidACF": "Congruence mark of segment EF",
+        "rayCF_2": "Ray",
+        "midG": "Midpoint",
+        "segAH": "Segment",
+        "congruenceMarkmidBCG": "Congruence mark",
+        "congruenceMarkAmidBC": "Congruence mark",
+        "segBmidAC_2": "Segment",
+        "halfACD": "Half-plane",
+        "halfBCA": "Half-plane",
+        "rayCA": "Ray",
+        "rayCaux": "Ray",
+        "rayAC": "Ray",
+        "rayCaux2": "Ray",
+        "congruenceMarkCmidG": "Congruence mark",
+        "congruenceMarkmidGB": "Congruence mark",
+        "polygonABmidG": "Polygon",
+        "polygonHmidGC": "Polygon",
+        "nonReflexAngleAmidGB": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleCmidGH": "Non-reflex angle (≤ 180°)",
+        "rayCH": "Ray",
+        "nonReflexAngleHCmidG": "Non-reflex angle (≤ 180°)",
+        "nonReflexAngleKCB": "Non-reflex angle (≤ 180°)",
+        "rayCB": "Ray",
+        "areaInthalfACDhalfBCA": "Intersection of regions"
+      }
+    }
+  }
 }
 );
 /* @matematika-diagram-spec:end */

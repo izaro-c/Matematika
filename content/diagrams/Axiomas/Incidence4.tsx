@@ -353,11 +353,35 @@ export const Incidence4Spec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "IV. Intzidentzia-axioma",
-      "note": "Arrastatu A, B eta C: lerrokatu gabeko hiru puntuk plano bakar bat zehazten dute."
+      "note": "Arrastatu A, B eta C: lerrokatu gabeko hiru puntuk plano bakar bat zehazten dute.",
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "polyTriangulo": "Triangelua",
+        "segAB": "AB aldea",
+        "segBC": "BC aldea",
+        "segCA": "CA aldea",
+        "lineAB": "Zuzena",
+        "lineAC": "Zuzena",
+        "lineCB": "Zuzena"
+      }
     },
     "en": {
       "title": "Incidence Axiom IV",
-      "note": "Drag A, B, and C: three non-collinear points determine a unique plane."
+      "note": "Drag A, B, and C: three non-collinear points determine a unique plane.",
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "polyTriangulo": "Triangle",
+        "segAB": "Side AB",
+        "segBC": "Side BC",
+        "segCA": "Side CA",
+        "lineAB": "Line",
+        "lineAC": "Line",
+        "lineCB": "Line"
+      }
     }
   }
 }

@@ -877,8 +877,8 @@ export const AlturaSpec = createDiagramSpec(
   "steps": [
     {
       "id": "step1",
-      "label": "Paso 1",
-      "description": "Descripción del nuevo paso de la demostración.",
+      "label": "Altura desde C",
+      "description": "La altura desde C es el segmento perpendicular trazado desde C hasta la recta AB.",
       "visibleTargets": [
         "pA",
         "pB",
@@ -937,7 +937,7 @@ export const AlturaSpec = createDiagramSpec(
     {
       "id": "step2",
       "label": "Ortocentro",
-      "description": "Descripción del nuevo paso de la demostración.",
+      "description": "Las tres alturas (o sus prolongaciones) se cortan en un único punto O, el ortocentro del triángulo.",
       "visibleTargets": [
         "pA",
         "pB",
@@ -981,7 +981,79 @@ export const AlturaSpec = createDiagramSpec(
   "translations": {
     "eu": {
       "title": "Altuera",
-      "note": "Mugitu A, B eta C"
+      "note": "Mugitu A, B eta C",
+      "steps": {
+        "step1": {
+          "label": "C-tiko altuera",
+          "description": "C-tiko altuera C-tik AB zuzenera marraztutako segmentu perpendikularra da."
+        },
+        "step2": {
+          "label": "Ortozentroa",
+          "description": "Hiru altuerek (edo haien luzapenek) puntu bakar batean ebakitzen dute elkar: O, triangeluaren ortozentroa."
+        }
+      },
+      "ariaLabels": {
+        "pA": "A puntua",
+        "pB": "B puntua",
+        "pC": "C puntua",
+        "polygonABC": "Poligonoa",
+        "footCAB": "CAB altueraren oina",
+        "extAlturaCAB": "AB oinarriaren luzapena",
+        "segAlturaCAB": "C-tik AB-rako altuera",
+        "rightAngleAlturaCAB": "Altueraren angelu zuzena",
+        "footABC": "ABC altueraren oina",
+        "extAlturaABC": "BC oinarriaren luzapena",
+        "segAlturaABC": "A-tik BC-rako altuera",
+        "rightAngleAlturaABC": "Altueraren angelu zuzena",
+        "footBAC": "BAC altueraren oina",
+        "extAlturaBAC": "AC oinarriaren luzapena",
+        "segAlturaBAC": "B-tik AC-rako altuera",
+        "rightAngleAlturaBAC": "Altueraren angelu zuzena",
+        "intsegAlturaABCsegAlturaCAB": "Ebakidura",
+        "lineAfootABC": "Zuzena",
+        "linefootBACB": "Zuzena",
+        "extfootABCAintsegAlturaABCsegAlturaCAB": "Segmentuaren luzapena",
+        "extBfootBACintsegAlturaABCsegAlturaCAB": "Segmentuaren luzapena",
+        "extCfootCABintsegAlturaABCsegAlturaCAB": "Segmentuaren luzapena"
+      }
+    },
+    "en": {
+      "title": "Altitude",
+      "note": "Drag A, B and C",
+      "steps": {
+        "step1": {
+          "label": "Altitude from C",
+          "description": "The altitude from C is the perpendicular segment drawn from C to the line AB."
+        },
+        "step2": {
+          "label": "Orthocenter",
+          "description": "The three altitudes (or their extensions) meet at a single point O, the orthocenter of the triangle."
+        }
+      },
+      "ariaLabels": {
+        "pA": "Point A",
+        "pB": "Point B",
+        "pC": "Point C",
+        "polygonABC": "Polygon",
+        "footCAB": "Foot of altitude CAB",
+        "extAlturaCAB": "Extension of base AB",
+        "segAlturaCAB": "Altitude from C to AB",
+        "rightAngleAlturaCAB": "Right angle of the altitude",
+        "footABC": "Foot of altitude ABC",
+        "extAlturaABC": "Extension of base BC",
+        "segAlturaABC": "Altitude from A to BC",
+        "rightAngleAlturaABC": "Right angle of the altitude",
+        "footBAC": "Foot of altitude BAC",
+        "extAlturaBAC": "Extension of base AC",
+        "segAlturaBAC": "Altitude from B to AC",
+        "rightAngleAlturaBAC": "Right angle of the altitude",
+        "intsegAlturaABCsegAlturaCAB": "Intersection",
+        "lineAfootABC": "Line",
+        "linefootBACB": "Line",
+        "extfootABCAintsegAlturaABCsegAlturaCAB": "Segment extension",
+        "extBfootBACintsegAlturaABCsegAlturaCAB": "Segment extension",
+        "extCfootCABintsegAlturaABCsegAlturaCAB": "Segment extension"
+      }
     }
   }
 }
